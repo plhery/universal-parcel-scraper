@@ -51,8 +51,8 @@ import { imileCountryClock } from '../../carriers/imile/clock.js';
 import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
-import { destinationRelay, europeanAbroad, royalMailRelayClock } from '../../carriers/royal-mail/clock.js';
-import { USPS_FACILITY_KIND, uspsMailerLabel } from '../../carriers/usps/clock.js';
+import { destinationRelay, europeanAbroad, royalMailPartnerCountry, royalMailPartnerWall, royalMailRelayClock } from '../../carriers/royal-mail/clock.js';
+import { USPS_FACILITY_KIND, uspsMailerLabel, uspsScanZone } from '../../carriers/usps/clock.js';
 import { yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
@@ -470,6 +470,11 @@ const CAINIAO_LAST_MILE = [
  * `WALL_CLOCKS`). Borrowed from its scans in Shenzhen, they came 15 hours
  * early on a parcel to California.
  *
+ * USPS's inbound customs scans, which it gives no place, are at its
+ * international service centre in the US: borrowed from its origin leg's
+ * departure from the UK, the release from customs at Los Angeles came eight
+ * hours early, before Royal Mail's copy of its receipt there.
+ *
  * A scan on a fixed clock borrows no neighbour's: borrowed from a GOFO
  * parcel's Florida scans, the label came 3 hours early and Cainiao's "Order
  * received" 12 hours after it, 19 seconds on China time. One in the
@@ -521,6 +526,9 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
       'presented to import customs', 'released from import customs', 'departed from destination import office']), zone: DESTINATION,
       main: true },
     { wording: EMS_LAST_MILE, zone: DESTINATION },
+  ]],
+  ['usps', [
+    { wording: /^inbound (?:into|out of) customs$/i, zone: DESTINATION, to: 'US' },
   ]],
   ['ecoscooting', [
     { wording: /^(?:shipment data information received|shipment has left cainiao express's partner facility|shipment is in transit to cainiao express)$/i,
@@ -774,6 +782,55 @@ const ROYAL_MAIL_NAMES = new Set(['royalmail', 'parcelforce', 'parcelforceworldw
 function royalMailRelay(location: string, status: string, destination: string | null): boolean {
   const country = countryCode(lastPlace(location));
   return country ? europeanAbroad(country) : destinationRelay(location, status, destination);
+}
+
+/** The zone a Royal Mail partner's place names in `country`: a USPS facility's state, or a town's. */
+function royalMailPartnerPlaceZone(location: string, country: string): string | null {
+  const named = location.split(',');
+  const site = named.length > 1 && countryCode(named.at(-1)!.trim()) === country ? named.slice(0, -1).join(',').trim() : location;
+  const facility = country === 'US' ? uspsScanZone(site) : null;
+  if (facility) return facility;
+  const found = site === location && countryCode(location) === country ? null : locatePlace(site, { countries: [country] });
+  return found?.country === country && (found.precision === 'city' || found.region) ? placeTimeZone(found) : null;
+}
+
+const partnerZoneCache = new WeakMap<Record<string, unknown>, Map<string, string | null>>();
+/** The one zone Royal Mail's partner rows of a reply place in each such country, or null where they place none or several. */
+function royalMailPartnerZones(payload: Record<string, unknown>): Map<string, string | null> {
+  const cached = partnerZoneCache.get(payload);
+  if (cached) return cached;
+  const zones = new Map<string, Set<string>>();
+  for (const state of Array.isArray(payload.states) ? payload.states : []) {
+    if (!isRecord(state) || !ROYAL_MAIL_NAMES.has(nameKey(stateCarrierName(payload, state)))) continue;
+    const location = typeof state.location === 'string' ? state.location.trim() : '';
+    const country = royalMailPartnerCountry(location);
+    const zone = country ? royalMailPartnerPlaceZone(location, country) : null;
+    if (country && zone) zones.set(country, (zones.get(country) ?? new Set()).add(zone));
+  }
+  const single = new Map([...zones].map(([country, found]) => [country, found.size === 1 ? [...found][0]! : null] as const));
+  partnerZoneCache.set(payload, single);
+  return single;
+}
+
+/**
+ * A Royal Mail row at a partner's office in a country whose offices Royal Mail labels with one
+ * offset, the United States' or Australia's (carriers/royal-mail/clock.ts): ParcelsApp has that
+ * label's instant on London's clock, so its digits go back to the office's wall clock, read on its
+ * place's clock. A row that names only the country takes the one zone Royal Mail's other rows
+ * there place, as its "Released from Customs" in the United States takes the clock of its receipt
+ * at the international service centre; with none, or several, it keeps the wall clock (null).
+ */
+function royalMailPartnerRelay(payload: Record<string, unknown>, name: unknown, date: unknown, location: unknown): {
+  zone: string | null; date: string; basis: 'place' | 'neighbour';
+} | null {
+  if (!ROYAL_MAIL_NAMES.has(nameKey(name))) return null;
+  const place = typeof location === 'string' ? location.trim() : '';
+  const country = royalMailPartnerCountry(place);
+  const label = country ? mislabeledLocalTime(date, 'Europe/London') : null;
+  const wall = country && label ? royalMailPartnerWall(country, DateTime.fromISO(label.iso, { setZone: true })) : null;
+  if (!country || !wall) return null;
+  const placed = royalMailPartnerPlaceZone(place, country);
+  return { zone: placed ?? royalMailPartnerZones(payload).get(country) ?? null, date: `${wall}Z`, basis: placed ? 'place' : 'neighbour' };
 }
 /**
  * Pitney Bowes's catalog clock, London's, is only its UK hub's. Its tracker
@@ -1680,10 +1737,13 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const location = scanLocation(name, raw.location);
   const offset = ownOffset(name, raw.date, location);
   const wallClock = WALL_CLOCKS.has(nameKey(name)) && !offset && !uspsLabelRow(name, status);
+  const partner = royalMailPartnerRelay(payload, name, raw.date, raw.location);
   const relay = polandPostRelay(name, raw.date, location, number, destination) ?? laPosteLetterRelay(name, raw.date, location, number)
-    ?? correosDeMexicoRelay(name, raw.date, location, origin, destination);
+    ?? correosDeMexicoRelay(name, raw.date, location, origin, destination) ?? partner;
   const pitneyBowes = relay ? undefined : pitneyBowesClock(payload, raw, status, destination);
-  const own = relay?.zone ?? (pitneyBowes ? pitneyBowes.zone : carrierClock(payload, raw, number, status, destination));
+  // A Royal Mail partner's row that nothing places keeps its wall clock, not Royal Mail's home clock.
+  const own = partner !== null && relay === partner ? partner.zone
+    : relay?.zone ?? (pitneyBowes ? pitneyBowes.zone : carrierClock(payload, raw, number, status, destination));
   // iMile's page writes every scan on the recipient country's clock, wherever it happened, and
   // ParcelsApp has its digits; read on iMile's catalog zone they came out early. A destination
   // of one zone places them, and without one they keep their wall clock. So do China Post's
@@ -1694,7 +1754,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   // line on its place's clock that its place does not date (`PLACE_CLOCK_LINES`), and Pitney
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
-  const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
+  const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null || (partner !== null && relay === partner)
     || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international', 'posta-shqiptare', 'juxi-express'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
     || PLACE_CLOCK_LINES.has(ownCarrier) || (nameKey(name) === 'easyship' && epostGlobalCopyZone(status, feedWordings(payload)) === null));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination, distrusted) : undefined;
@@ -1711,7 +1771,8 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   return { name, date: relay?.date ?? raw.date, zone, placed: placed ?? null, sited: sited ?? null, guessed: placed === undefined && !wallClock,
     offset, location, wallClock, nationwide, office,
     // How the zone was chosen (`zoneBasis`), and whether the date is an instant the carrier stated.
-    basis: own === undefined && sited !== undefined ? 'place' as const : 'carrier' as const, instant: own === null,
+    basis: partner !== null && relay === partner ? partner.basis : own === undefined && sited !== undefined ? 'place' as const : 'carrier' as const,
+    instant: own === null,
     local: zone !== null && zone === regionScanZone(name, location, inNorthAmerica, distrusted)?.zone,
     fallback: wallClock || office ? fitsPlace(fallback, location) : null, known: known?.zone ?? null, arrival: known?.country ?? null,
     // With no zone, a scan whose label nothing vouches for keeps its wall clock, as does one on a clock its place cannot tell (`siteZone`).
@@ -1727,7 +1788,7 @@ type ZoneStep = 'carrier' | 'place' | 'copy' | 'borrowed' | 'routing' | 'known' 
  * ParcelsApp's UTC label because nothing placed it. A date its carrier states
  * as an instant, or with an offset, has none.
  */
-function zoneBasis(entry: { basis: 'place' | 'carrier'; instant: boolean; offset: unknown; office: string | null; arrival: string | null; zone: string | null },
+function zoneBasis(entry: { basis: 'place' | 'carrier' | 'neighbour'; instant: boolean; offset: unknown; office: string | null; arrival: string | null; zone: string | null },
   step: ZoneStep, zone: string | null): string | undefined {
   if (!zone) return entry.instant || entry.offset ? undefined : 'label';
   if (step === 'copy' || step === 'borrowed') return 'neighbour';

@@ -398,7 +398,10 @@ step exists for future protocol changes.
   delivery partner's, on their facility's clock, and from "Arrived at Destination Airport"
   they are in the destination: on a parcel to California, its copies of GOFO's scans had
   GOFO's digits, and read on Beijing's clock, its arrival in Los Angeles came twelve
-  minutes after the flight left Shenzhen.
+  minutes after the flight left Shenzhen. USPS's inbound customs scans ("Inbound Out of
+  Customs"), which name no place, are in the US: borrowed from its departure from the UK
+  before them, a release in Los Angeles came eight hours early, before Royal Mail's copy of
+  the receipt there.
 
   The destination is the country the reply names (`destinationCode` or `destination`),
   else the one an EcoScooting reference names ("CNPRT" for Portugal, "CNESP" for Spain).
@@ -494,7 +497,13 @@ step exists for future protocol changes.
   Colombia's or Peru's; Mexico's and Chile's several clocks leave them as they are. "Royal Mail", "Parcelforce" and "Parcelforce Worldwide" have the labels
   of Royal Mail's tracker, on London time at home and beyond Europe: a South African
   office's scans have the instants of the South African post's own clock that way.
-  Their European partners' relays are on another clock (below). Correios Brazil's ("Brazil
+  Their European partners' relays are on another clock (below), and so are their rows at
+  partners' offices in the United States and Australia, which Royal Mail labels with one offset
+  per country ([Royal Mail](../../carriers/royal-mail/README.md)). Read back to the office's
+  wall clock, such a row is placed by its USPS facility's state or its town; one that names
+  only the country takes the one zone Royal Mail's other rows place there, and otherwise keeps
+  that wall clock. Read on London time, a receipt at USPS's service centre in Los Angeles
+  came three hours before USPS's own. Correios Brazil's ("Brazil
   Post") have the digits of Correios' own tracker, whose rows name America/Sao_Paulo, and
   17TRACK's -03:00 copies in Brazil agree: they are read on Brasília's clock, which the
   catalog's UTC and Brazil's several zones left out. Its copies of the sending post's scans

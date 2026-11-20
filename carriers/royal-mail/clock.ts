@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { countryTimeZone, firstOccurrence } from '../../core/time/index.js';
+import { countryCode, countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 
 import { locatePlace } from '../../places/index.js';
 
@@ -16,11 +16,35 @@ export function royalMailRelayClock(wall: string): string {
 }
 
 /**
- * The offset Royal Mail labels an Australian office's wall clock with, central
- * Australia's standard time, wherever the office is: Australia Post dates the
- * same scans 30 minutes earlier in Brisbane and 1 h 30 earlier in Sydney's summer.
+ * The offset Royal Mail labels a partner office's wall clock with in a country of several clocks,
+ * one per country wherever the office is. Australia's is central Australia's standard time:
+ * Australia Post dates the same scans 30 minutes earlier in Brisbane and 1 h 30 earlier in
+ * Sydney's summer. The United States' is Eastern standard time, all year: USPS dates the same
+ * scans at its international service centre in Los Angeles three hours earlier, the receipt at
+ * 07:39 that Royal Mail gives at 12:39 UK time, and the customs release at 19:04 that it gives at
+ * 00:04; in October, an hour earlier at an office in Kentucky, on Eastern daylight time.
  */
-export const ROYAL_MAIL_AUSTRALIA_LABEL = 'UTC+9:30';
+const PARTNER_LABELS: Readonly<Record<string, string>> = { AU: 'UTC+9:30', US: 'UTC-5' };
+
+// A USPS facility, which Royal Mail names with or without its country: "ISC EXAMPLE CITY CA (USPS)".
+const USPS_FACILITY = /\(USPS\)\s*(?:,|$)/i;
+
+/** Whether Royal Mail labels a country's partner offices with one offset (`PARTNER_LABELS`). */
+export const royalMailLabelsPartners = (country: string | null): country is string => Boolean(country && Object.hasOwn(PARTNER_LABELS, country));
+
+/** The country of a place whose partner offices Royal Mail labels with one offset, or null. */
+export function royalMailPartnerCountry(location: string): string | null {
+  const country = countryCode(/(?:^|,)\s*([^,]+)$/.exec(location)?.[1]) ?? (USPS_FACILITY.test(location) ? 'US' : null);
+  return royalMailLabelsPartners(country) ? country : null;
+}
+
+/**
+ * The partner office's wall clock of a Royal Mail scan in `country`, from the instant Royal Mail's
+ * label gives, or null for a country whose offices it labels otherwise.
+ */
+export function royalMailPartnerWall(country: string | null, instant: DateTime): string | null {
+  return royalMailLabelsPartners(country) && instant.isValid ? instant.setZone(PARTNER_LABELS[country]).toFormat("yyyy-MM-dd'T'HH:mm:ss") : null;
+}
 
 /** The UK and the Crown Dependencies, which keep the UK's clock. */
 export const ROYAL_MAIL_HOME: ReadonlySet<string> = new Set(['GB', 'JE', 'GG', 'IM']);

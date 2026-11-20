@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { countryCode, explicitOffsetTime, isoTime } from '../../core/time/index.js';
-import { destinationRelay, europeanAbroad, partnerPlace, ROYAL_MAIL_AUSTRALIA_LABEL, ROYAL_MAIL_HOME, royalMailRelayClock } from './clock.js';
+import { destinationRelay, europeanAbroad, partnerPlace, ROYAL_MAIL_HOME, royalMailPartnerCountry, royalMailPartnerWall, royalMailRelayClock } from './clock.js';
 import { isRecord } from '../../core/types.js';
 import { isRoyalMailDomesticReference } from '../../core/detection/royalMail.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
@@ -75,22 +75,19 @@ const placeCountry = (location: string) => countryCode(/(?:^|,)\s*([^,]+)$/.exec
  * the country of origin when it comes before the scan that leaves that country
  * (`departure`). A Dutch delivery office's arrival came a minute after the three
  * partner scans placed in the Netherlands before it, on their clock, three times.
- * A scan placed in Australia keeps the wall clock under Royal Mail's label
- * (`ROYAL_MAIL_AUSTRALIA_LABEL`): the country names none of its several zones.
- * Null for any other scan: beyond Europe, Royal Mail's label is the scan's
- * instant, as at home. The South African post's own tracker dates a South
+ * A scan placed in Australia or the United States, or at a USPS facility, keeps
+ * the wall clock under the offset Royal Mail labels that country's offices with
+ * (`royalMailPartnerWall`), for its place to date. Null for any other scan:
+ * beyond Europe, Royal Mail's label is otherwise the scan's instant, as at home. The South African post's own tracker dates a South
  * African office's scans at those instants.
  */
 function abroadClock(raw: string, location: string, description: string, destination: string | null,
   departure: number | null, leftUk: number | null): { time: string } | { local_time: string } | null {
   const label = eventTime(raw);
   if (!label) return null;
+  const partner = royalMailPartnerWall(royalMailPartnerCountry(location), DateTime.fromISO(label, { setZone: true }));
+  if (partner) return { local_time: partner };
   const country = placeCountry(location);
-  if (country === 'AU') {
-    const wall = DateTime.fromISO(label, { setZone: true }).setZone(ROYAL_MAIL_AUSTRALIA_LABEL)
-      .toISO({ includeOffset: false, suppressMilliseconds: true });
-    return wall ? { local_time: wall } : null;
-  }
   const bare = partnerPlace(location) && Boolean(location);
   const relayed = country ? europeanAbroad(country)
     : destinationRelay(location, description, destination)

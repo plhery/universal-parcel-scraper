@@ -26,7 +26,7 @@ import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '.
 import { classifyEvent, event, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
 import {
-  borrowsRoutingZone, carrierHomeZone, lendsZone, originLeg, royalMailAustralianWall, royalMailLeavesForAustralia, serviceZone, wallClock, type Zoned,
+  borrowsRoutingZone, carrierHomeZone, lendsZone, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
 } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
@@ -118,8 +118,8 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     alone: payload.track.events !== undefined && services.size === 1
       && (!isValidS10TrackingNumber(number) || number.slice(-2) === destination) };
   const scans: { wall: string | null; service: string; origin: boolean; lends: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
-  // Whether Royal Mail's scan leaving the UK for Australia has come: its later scans are Australian.
-  let leftForAustralia = false;
+  // The destination Royal Mail's scan leaving the UK has left for, whose post's scans the later ones are.
+  let leftFor: string | null = null;
   for (const raw of rawEvents as unknown[]) {
     if (!isRecord(raw)) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event');
     const description = text(raw.dsc);
@@ -127,9 +127,9 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     if (typeof raw.dt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?/.test(raw.dt)
       || !DateTime.fromISO(raw.dt, { zone: 'UTC' }).isValid) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event date');
     const service = text(raw.ds);
-    const australian = royalMailAustralianWall(service, raw.dt, leftForAustralia);
-    leftForAustralia ||= royalMailLeavesForAustralia(service, description, destination);
-    const wall = australian ?? wallClock(service, raw.dt, text(raw.loc), description, carrier);
+    const partner = royalMailPartnerScanWall(service, raw.dt, leftFor);
+    leftFor ??= royalMailLeavesFor(service, description, destination);
+    const wall = partner ?? wallClock(service, raw.dt, text(raw.loc), description, carrier);
     const reporting = named.has(service) ? { reporting_carrier: service } : {};
     if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
       const parsed = event(wall, description, serviceStage(service, description));
@@ -139,7 +139,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
       const { stage } = classified;
       // A scan's location (loc) is read only for its clock.
       const scan = { service, description, wall, location: text(raw.loc), delivered: stage === 'delivered' };
-      scans.push({ wall, service, origin: originLeg(scan), lends: lendsZone(scan), zone: australian ? false : serviceZone(scan, journey),
+      scans.push({ wall, service, origin: originLeg(scan), lends: lendsZone(scan), zone: partner ? false : serviceZone(scan, journey),
         event: { description, ...classified, ...reporting } });
     }
   }

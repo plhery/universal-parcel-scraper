@@ -104,12 +104,12 @@ capture failure.
   that office's clock in any history; a scan that names none borrows a zone like any other.
   Read on a carrier's zone they borrowed, Royal Mail's London time, the copies came hours early
   and showed beside Royal Mail's own, and DHL's scans in Germany an hour early on Berlin's.
-  On an item bound for Australia, Royal Mail's scans after the one leaving the UK are the
-  Australian post's. Royal Mail labels an Australian office's wall clock with central Australia's
-  offset, +09:30 ([Royal Mail](../../carriers/royal-mail/README.md)), and Postal Ninja gives that
-  instant on the UK's clock: its "Item Received" at 00:34 was Australia Post's arrival at customs
-  at 10:04 Sydney summer time. Those scans keep the wall clock under the label, since Australia
-  has several zones.
+  On an item bound for Australia or the United States, Royal Mail's scans after the one leaving
+  the UK are the destination post's. Royal Mail labels its offices' wall clock with one offset per
+  country, +09:30 and -05:00 ([Royal Mail](../../carriers/royal-mail/README.md)), and Postal Ninja
+  gives that instant on the UK's clock: its "Item Received" at 00:34 was Australia Post's arrival
+  at customs at 10:04 Sydney summer time. Those scans keep the wall clock under the label, since
+  both countries have several zones.
   Spring GDS's scans dated to the minute are PostNL's, whose feed marks a scan's local time as
   UTC ([Spring GDS](../../carriers/spring-gds/README.md)). Postal Ninja reads it as UTC and gives
   it on Amsterdam's clock: three sorting scans at 14:18 and 14:19 Dutch time came at 15:18 and

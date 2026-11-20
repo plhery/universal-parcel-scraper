@@ -3113,7 +3113,6 @@ describe('ParcelsApp result parsing', () => {
       states: [scan('2026-07-21T19:30:00Z', 'Item Received', 'EXAMPLE IPC, France')] }, number, identity()).events?.[0]?.time)
       .toBe('2026-07-21T17:30:00.000Z');
     // Beyond Europe the label is on London time: the South African post's own clock gives these scans the same instants.
-    expect(times('US', [scan('2026-09-11T23:38:00Z', 'Item Received', 'Example City, USA')])).toEqual(['2026-09-11T22:38:00.000Z']);
     expect(times('ZA', [
       scan('2026-10-20T23:07:00Z', 'Released from Customs', 'South Africa'),
       scan('2026-10-20T22:55:00Z', 'Your item is currently with Customs in the destination country', 'EXAMPLE EMS'),
@@ -3124,6 +3123,46 @@ describe('ParcelsApp result parsing', () => {
       scan('2026-07-21T11:24:00Z', 'Your item is currently with Customs in the destination country.'),
       scan('2026-07-20T09:02:00Z', 'Item Received', 'Jersey'),
     ])).toEqual(['2026-07-21T10:24:00.000Z', '2026-07-20T08:02:00.000Z']);
+  });
+
+  it('reads Royal Mail\'s rows at its US partner\'s offices on their wall clock, and USPS\'s inbound customs in the US', () => {
+    // USPS dates its receipt at its international service centre at 07:39 and its release from customs at 19:04, Los Angeles
+    // time; Royal Mail labels the same scans with Eastern standard time, at 12:39 and 00:04 UK time.
+    const scan = (carrier: number, date: string, status: string, location?: string) => ({ carrier, date, status, ...(location ? { location } : {}) });
+    const states = [
+      scan(1, '2026-11-19T22:28:00Z', 'Departed USPS Regional Facility', 'EXAMPLE CITY CA DISTRIBUTION CENTER'),
+      scan(1, '2026-11-19T20:58:00Z', 'Arrived at USPS Regional Facility', 'EXAMPLE CITY CA DISTRIBUTION CENTER'),
+      scan(0, '2026-11-20T00:04:00Z', 'Released from Customs', 'United States of America'),
+      scan(0, '2026-11-19T22:01:00Z', 'Item received at Sorting Office', 'Los Angeles, United States of America'),
+      scan(1, '2026-11-19T19:04:00Z', 'Inbound Out of Customs'),
+      scan(0, '2026-11-19T12:38:00Z', 'Your item is currently with Customs in the destination country', 'ISC EXAMPLE CITY CA (USPS)'),
+      scan(0, '2026-11-18T12:39:00Z', 'Item Received', 'ISC EXAMPLE CITY CA (USPS), United States of America'),
+      scan(0, '2026-11-17T03:34:00Z', 'Item Leaving the UK'),
+      scan(1, '2026-11-17T03:34:00Z', 'Departed', 'UNITED KINGDOM'),
+    ];
+    const clocks = (feed: Record<string, unknown>[]) => parseParcelsAppResponse({ carriers: ['Royal Mail', 'USPS'], originCode: 'GB',
+      destinationCode: 'US', states: feed }, number, identity(), 'Europe/London').events?.map((event) => [event.time, event.time_zone, event.time_zone_basis]);
+    expect(clocks(states)).toEqual([
+      ['2026-11-20T06:28:00.000Z', 'America/Los_Angeles', 'place'],
+      ['2026-11-20T04:58:00.000Z', 'America/Los_Angeles', 'place'],
+      // A row that names only the country takes the clock Royal Mail's rows place there; USPS's customs scan, which names
+      // none, borrows only a US scan's, not that of its departure from the UK.
+      ['2026-11-20T03:04:00.000Z', 'America/Los_Angeles', 'neighbour'],
+      ['2026-11-20T03:04:00.000Z', 'America/Los_Angeles', 'neighbour'],
+      ['2026-11-20T01:01:00.000Z', 'America/Los_Angeles', 'place'],
+      ['2026-11-19T15:38:00.000Z', 'America/Los_Angeles', 'place'],
+      ['2026-11-18T15:39:00.000Z', 'America/Los_Angeles', 'place'],
+      ['2026-11-17T03:34:00.000Z', 'Europe/London', 'carrier'],
+      ['2026-11-17T03:34:00.000Z', 'Europe/London', 'place'],
+    ]);
+    // With no row placing the country, Royal Mail's keeps the wall clock.
+    expect(parseParcelsAppResponse({ carriers: ['Royal Mail'], originCode: 'GB', destinationCode: 'US', states: [states[2]!] }, number, identity(),
+      'Europe/London').events?.map((event) => [event.time, event.local_time])).toEqual([[undefined, '2026-11-19T19:04:00.000']]);
+    // So does a row in Australia, labelled with central Australia's standard time: Australia Post's arrival at customs at
+    // 10:04 Sydney summer time came at 00:34 UK time.
+    expect(parseParcelsAppResponse({ carriers: ['Royal Mail'], originCode: 'GB', destinationCode: 'AU',
+      states: [scan(0, '2026-11-18T00:34:00Z', 'Item Received', 'Australia')] }, number, identity(), 'Europe/London')
+      .events?.map((event) => [event.time, event.local_time])).toEqual([[undefined, '2026-11-18T10:04:00.000']]);
   });
 
   it("reads Interpost's import declaration and clearance on a Pitney Bowes parcel on the clock of the country they name", () => {

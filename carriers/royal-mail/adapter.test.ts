@@ -385,9 +385,9 @@ describe('Royal Mail structured response', () => {
     expect(result.events?.map(event => event.stage)).toEqual([
       'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'accepted', 'registered',
     ]);
-    // Beyond Europe, Royal Mail's label is the delivery's instant.
-    expect(result).toMatchObject({ status: 'delivered', destination_country: 'US', delivered_at: '2026-01-09T15:24:00+01:00' });
-    expect(result.events?.[0]).toMatchObject({ time: '2026-01-09T15:24:00+01:00' });
+    // A delivery placed in the United States keeps its wall clock under Royal Mail's Eastern standard label.
+    expect(result).toMatchObject({ status: 'delivered', destination_country: 'US' });
+    expect(result.events?.[0]).toMatchObject({ local_time: '2026-01-09T09:24:00' });
     expect(result.events?.[1]).toMatchObject({ time: '2026-01-09T13:10:00+01:00' });
     expect(result.events?.map(event => event.location)).toEqual([
       'Exampleville, United States of America', undefined, undefined, undefined, undefined, undefined, undefined, undefined, 'Example Post Office', 'Example DO [Main]', undefined,
@@ -617,12 +617,11 @@ describe('Royal Mail structured response', () => {
         { eventCode: 'EVJIA', eventName: 'Released from Customs', eventDateTime: '2026-10-20T23:07:00+01:00', locationName: 'South Africa' },
         { eventCode: 'EVJBA', eventName: 'Your item is currently with Customs in the destination country', eventDateTime: '2026-10-20T22:55:00+01:00', locationName: 'EXAMPLE EMS' },
         { eventCode: 'EVJOE', eventName: 'Item Received', eventDateTime: '2026-10-20T22:54:00+01:00', locationName: 'EXAMPLE EMS, South Africa' },
-        { eventCode: 'EVIIS', eventName: 'Item received at Sorting Office', eventDateTime: '2026-10-11T08:00:00+01:00', locationName: 'Exampleville, United States of America' },
         { eventCode: 'EVHOE', eventName: 'Item Leaving the UK', eventDateTime: '2026-10-10T03:31:09+01:00' },
       ],
     } }, IN_TRANSIT_NUMBER);
     expect(result.events?.map(event => event.time)).toEqual([
-      '2026-10-20T23:07:00+01:00', '2026-10-20T22:55:00+01:00', '2026-10-20T22:54:00+01:00', '2026-10-11T08:00:00+01:00', '2026-10-10T03:31:09+01:00',
+      '2026-10-20T23:07:00+01:00', '2026-10-20T22:55:00+01:00', '2026-10-20T22:54:00+01:00', '2026-10-10T03:31:09+01:00',
     ]);
     expect(result.last_update).toBe('2026-10-20T23:07:00+01:00');
   });
@@ -645,6 +644,35 @@ describe('Royal Mail structured response', () => {
     expect(dateLocalClocks('parcelforce', result).events?.map(event => [event.time, event.time_zone])).toEqual([
       ['2026-11-18T00:22:00+11:00', 'Australia/Sydney'], ['2026-11-17T14:01:00+11:00', 'Australia/Sydney'],
     ]);
+  });
+
+  it('keeps the wall clock of a scan placed in the United States, which Royal Mail labels with Eastern standard time', () => {
+    // Shape of a parcel to the US, whose post dates the receipt at its international service centre at 07:39 and the
+    // release from customs at 19:04, Los Angeles time.
+    const result = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit', destinationCountryCode: 'US' },
+      events: [
+        { eventCode: 'EVJIA', eventName: 'Released from Customs', eventDateTime: '2026-11-20T00:04:00+00:00', locationName: 'United States of America' },
+        { eventCode: 'EVIIS', eventName: 'Item received at Sorting Office', eventDateTime: '2026-11-19T22:01:00+00:00',
+          locationName: 'Los Angeles, United States of America' },
+        { eventCode: 'EVJOE', eventName: 'Item Received', eventDateTime: '2026-11-18T12:39:00+00:00', locationName: 'ISC EXAMPLE CITY CA (USPS)' },
+        { eventCode: 'EVHOE', eventName: 'Item Leaving the UK', eventDateTime: '2026-11-17T03:34:00+00:00' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => [event.time, event.local_time])).toEqual([
+      [undefined, '2026-11-19T19:04:00'], [undefined, '2026-11-19T17:01:00'], [undefined, '2026-11-18T07:39:00'], ['2026-11-17T03:34:00Z', undefined],
+    ]);
+    // A USPS facility's state or a town places them; the country alone takes its neighbours' clock.
+    expect(dateLocalClocks('royal-mail', result).events?.map(event => [event.time, event.time_zone_basis])).toEqual([
+      ['2026-11-19T19:04:00-08:00', 'neighbour'], ['2026-11-19T17:01:00-08:00', 'place'], ['2026-11-18T07:39:00-08:00', 'place'],
+      ['2026-11-17T03:34:00Z', undefined],
+    ]);
+    // In the US's summer the label is the same: USPS dates an acceptance in Kentucky at 14:41, Eastern daylight time.
+    const summer = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit', destinationCountryCode: 'GB' },
+      events: [{ eventCode: 'EVOAC', eventName: 'Item received at', eventDateTime: '2026-10-07T19:41:00+00:00', locationName: 'United States of America' }],
+    } }, IN_TRANSIT_NUMBER);
+    expect(summer.events?.[0]?.local_time).toBe('2026-10-07T14:41:00');
   });
 
   it('reads a receipt worded as an acceptance after the item moved as transit', () => {

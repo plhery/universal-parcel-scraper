@@ -231,7 +231,7 @@ describe('Postal Ninja result parsing', () => {
       german, 'Europe/Berlin'))).toEqual(['2026-11-05T09:40:00.000Z']);
   });
 
-  it('gives Royal Mail\'s Australian scans, after it leaves the UK, the wall clock under Royal Mail\'s label', () => {
+  it('gives Royal Mail\'s Australian and American scans, after it leaves the UK, the wall clock under Royal Mail\'s label', () => {
     // Australia Post's arrival at customs at 10:04 Sydney summer time, labelled +09:30 by Royal Mail, came at 00:34 UK time.
     const item = 'RR123456785GB';
     const scans = [
@@ -241,6 +241,10 @@ describe('Postal Ninja result parsing', () => {
     ];
     expect(times(parsePostalNinjaResponse(postal(item, 'AU', scans), item, 'Europe/London')))
       .toEqual(['local 2026-11-18T10:04:00', '2026-11-14T06:50:00.000Z', '2026-11-13T18:52:00.000Z']);
+    // Bound for the United States, they are USPS's, which Royal Mail labels with Eastern standard time: the receipt at its
+    // international service centre at 07:39 in Los Angeles came at 12:39 UK time.
+    const american = [...scans.slice(0, 2), { ds: 'Royal Mail', dt: '2026-11-18T12:39:00', dsc: 'Item Received' }];
+    expect(times(parsePostalNinjaResponse(postal(item, 'US', american), item, 'Europe/London'))?.[0]).toBe('local 2026-11-18T07:39:00');
     // Bound elsewhere, or before the scan leaving the UK, Royal Mail's scans keep the UK's clock.
     expect(times(parsePostalNinjaResponse(postal(item, 'NZ', scans), item, 'Europe/London'))?.[0]).toBe('2026-11-18T00:34:00.000Z');
     expect(times(parsePostalNinjaResponse(postal(item, 'AU', [scans[0], scans[2]]), item, 'Europe/London'))?.[0])

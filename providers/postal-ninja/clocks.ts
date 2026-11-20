@@ -9,7 +9,7 @@
  * a guess, or keep their wall time.
  */
 import { CAINIAO_CHINA_ZONE, cainiaoInChina } from '../../carriers/aliexpress/clock.js';
-import { ROYAL_MAIL_AUSTRALIA_LABEL } from '../../carriers/royal-mail/clock.js';
+import { royalMailLabelsPartners, royalMailPartnerWall } from '../../carriers/royal-mail/clock.js';
 import { POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { uspsMailerLabel, uspsScanZone } from '../../carriers/usps/clock.js';
@@ -107,29 +107,29 @@ const TO_THE_MINUTE = /T\d{2}:\d{2}(?::00(?:\.0+)?)?$/;
 const POSTNL_UTC_RECORDS = /^(?:the shipping label has been created|the item is being processed)[.!]?$/i;
 
 /**
- * Royal Mail's scans on an item bound for Australia, once its scan leaving the UK has come: they
- * are the Australian post's, whose office's wall clock Royal Mail labels with central Australia's
- * offset wherever the office is (carriers/royal-mail/clock.ts), and Postal Ninja gives that
- * labelled instant on the UK's clock. Royal Mail's "Item Received" at 00:34 was Australia Post's
- * arrival at customs at 10:04 Sydney summer time, 09:04:25 under Australia Post's own +10:00.
+ * Royal Mail's scans on an item bound for Australia or the United States, once its scan leaving
+ * the UK has come: they are the destination post's, whose office's wall clock Royal Mail labels
+ * with one offset for the country wherever the office is (carriers/royal-mail/clock.ts), and
+ * Postal Ninja gives that labelled instant on the UK's clock. Royal Mail's "Item Received" at
+ * 00:34 was Australia Post's arrival at customs at 10:04 Sydney summer time, 09:04:25 under
+ * Australia Post's own +10:00.
  */
 const ROYAL_MAIL = 'Royal Mail';
 const ROYAL_MAIL_SHOWN = 'Europe/London';
 const LEAVING_THE_UK = /^item leaving the uk\b/i;
 
-/** Whether a Royal Mail scan on an item bound for Australia is its scan leaving the UK. */
-export const royalMailLeavesForAustralia = (service: string, description: string, destination: string | null): boolean =>
-  service === ROYAL_MAIL && destination === 'AU' && LEAVING_THE_UK.test(description.trim());
+/** The destination a Royal Mail scan leaves the UK for, when that country's offices have Royal Mail's one label. */
+export const royalMailLeavesFor = (service: string, description: string, destination: string | null): string | null =>
+  service === ROYAL_MAIL && royalMailLabelsPartners(destination) && LEAVING_THE_UK.test(description.trim()) ? destination : null;
 
 /**
- * The Australian office's wall clock of a Royal Mail scan after it left the UK for Australia, back
- * under Royal Mail's label. Australia keeps several clocks, so it keeps that wall clock. Null for
- * any other scan.
+ * The destination office's wall clock of a Royal Mail scan after it left the UK for `leftFor`,
+ * back under Royal Mail's label. Those countries keep several clocks, so it keeps that wall clock.
+ * Null for any other scan.
  */
-export function royalMailAustralianWall(service: string, dt: string, leftForAustralia: boolean): string | null {
-  if (service !== ROYAL_MAIL || !leftForAustralia) return null;
-  const shown = firstOccurrence(DateTime.fromISO(dt, { zone: ROYAL_MAIL_SHOWN }));
-  return shown.isValid ? shown.setZone(ROYAL_MAIL_AUSTRALIA_LABEL).toFormat("yyyy-MM-dd'T'HH:mm:ss") : null;
+export function royalMailPartnerScanWall(service: string, dt: string, leftFor: string | null): string | null {
+  if (service !== ROYAL_MAIL || !leftFor) return null;
+  return royalMailPartnerWall(leftFor, firstOccurrence(DateTime.fromISO(dt, { zone: ROYAL_MAIL_SHOWN })));
 }
 
 /** The zone of the office a scan of DHL Germany's copies names by UPU code. */
