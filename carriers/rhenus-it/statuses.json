@@ -1,4 +1,53 @@
 {
   "carrier": "rhenus-it",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Consegnata",
+      "stage": "delivered",
+      "language": "it",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "In Consegna",
+      "stage": "out_for_delivery",
+      "language": "it",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Prenotato",
+      "stage": "pending",
+      "language": "it",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trasferita",
+      "stage": "in_transit",
+      "language": "it",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "In Viaggio",
+      "stage": "in_transit",
+      "language": "it",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Consegna rifiutata al telefono",
+      "stage": "exception",
+      "language": "it",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entrata in Magazzino",
+      "stage": "accepted",
+      "language": "it",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Ordine Creato",
+      "stage": "registered",
+      "language": "it",
+      "confirmedBy": "live"
+    }
+  ]
 }

@@ -2343,6 +2343,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'rhenus-it': 'An unknown number opens the same service-unavailable page as an outage and gives no shipment identifier.',
   'best-express-th': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
   'best-express-vn': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
   peddler: 'the tracker answers only after its Turnstile, so the link opens the form with the number filled in; native retrieval submits it in a scoped browser helper',

@@ -49245,7 +49245,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Rome",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rhenus-it",
+      "localClocks": true
     },
     "canaryUrl": "https://www.rhenus.group/it/it/",
     "trackingUrlTemplate": "https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s={trackingNumber}",
