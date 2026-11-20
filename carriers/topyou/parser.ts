@@ -42,11 +42,14 @@ const OWN_OFFSET = '+08:00';
 // legs and clearances, which it states +08:00 on other waybills, come without an offset on some: read
 // on the destination's clock, the arrival in the destination country came six hours after the lookup
 // that found it, and 17TRACK's and ParcelsApp's copies have the instants of their digits on China's.
-// Its import clearance read on Oslo's clock came seven hours after 17TRACK's copy.
+// Its import clearance read on Oslo's clock came seven hours after 17TRACK's copy. Its arrival in the
+// destination country and the cargo terminal's notice after it, which follow scans stated +08:00, came
+// five and six hours after the lookups that found them when read on Germany's clock.
 const OWN_WITHOUT_OFFSET = new RegExp(`^(?:${[
   'shipment completed the customs clearance process at destination',
   'airline arrived at (?:destination|transit) country(?: or district)?', 'airline departed from transit or district country',
-  '(?:export|import) clearance success', 'arrive at destination country',
+  '(?:export|import) clearance success', 'arrive at destination country', 'arrived in destination country/region',
+  'the destination port cargo terminal notifies the delivery',
 ].join('|')})\\.?$`, 'i');
 const OWN_ZONE = 'Asia/Shanghai';
 

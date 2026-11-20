@@ -41,7 +41,9 @@ clearance success", "Import clearance success" and the like), which it states `+
 without an offset and are read on China's clock all the same, which the scan names: read on the
 destination's, the clearance fell after the hand-over TopYou scans next, or after the lookup that
 first found it, and the arrival in the destination country came after the lookup that found it,
-hours after 17TRACK's and ParcelsApp's copies of it. A reply with no
+hours after 17TRACK's and ParcelsApp's copies of it. So do its "Arrived in destination
+country/region" and the cargo terminal's notice after it, which each came after the lookup that
+found it when read on Germany's clock. A reply with no
 scans and no destination is the page's "查询不到" (not found); one with a destination and no scans
 is an order announced but not received, and the number's own entry with `success: "false"` is the
 page's "暂无轨迹信息" (no tracking yet): both are known numbers without history. A reply whose
