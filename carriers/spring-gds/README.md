@@ -38,16 +38,17 @@ it; everything user-facing says PostNL.
      a batch; only the item whose `item` equals the requested number is read.
    - Each call replays once after a transport failure or HTTP 502/503/504. The token call
      replays after a 429 only when it carries a valid `Retry-After` that ends before the
-     lookup does. The tracking call replays a 429 after its `Retry-After` or 2 s, whichever
-     is shorter, up to five requests while the lookup has time left; a 429 without a wait
-     is left standing. Both calls share a cancellable deadline; other errors are not retried.
-     A 429 left standing is a rate limit whose message names the call, the try it met and the
-     wait PostNL asked for, or that it named none, so a host's log shows whether a replay met
-     it and whether waiting longer would have served the lookup.
+     lookup does. The tracking call replays a 429 every 2 s, and 250 ms after each wait PostNL
+     named (`Retry-After`, or else `x-rate-limit-reset`) ends, while a try still fits 1.5 s
+     before the lookup's deadline. A replay that fails or does not answer by then leaves the
+     429 standing. Both calls share a cancellable deadline; other errors are not retried. A
+     429 left standing is a rate limit whose message names the call, how many tries it made
+     over how long and the wait PostNL asked for, or that it named none, so a host's log shows
+     how often replays meet it. A lookup cancelled during a pause ends as cancelled.
    - Lookups that send through one transport take turns at the tracking endpoint, one call and
      its replays at a time, so two lookups do not replay into the same full minute. After a
-     call whose five requests were all refused, no call goes out until the soonest
-     `Retry-After` they named (at least 2 s, at most a minute, 30 s when none named one). A
+     call refused on five tries or more, no call goes out until the soonest `Retry-After`
+     they named that has not passed (at least 2 s, at most a minute, 30 s when none named one). A
      lookup that cannot wait for its turn or that rest and keep 3 s for its own calls fails at
      once as a rate limit with the reason `self_paced` and the wait, without a request. A
      restart forgets the turns and the rest.
@@ -142,10 +143,11 @@ it; everything user-facing says PostNL.
 - The tracking endpoint admits 20 calls a minute on each of several backends, shared with
   every visitor of the site, so a lookup meets HTTP 429 whatever its own rate. Each backend
   keeps its own minute: the `Retry-After` of calls a few seconds apart jumps by tens of
-  seconds, and a call refused with a long wait can go through two seconds later. Waiting
-  out the wait mostly meets another full backend, so the tracking call pauses briefly
-  instead. A lookup whose five requests all meet a full backend fails as a rate limit, and
-  the lookups after it rest (see `direct`).
+  seconds, and a call refused with a long wait can go through two seconds later. A try goes
+  through only now and then, so the tracking call keeps trying every 2 s for as long as the
+  lookup lasts. A lookup whose every try meets a full backend fails as a rate limit, and the
+  lookups after it rest (see `direct`). A lookup holds its turn while it replays, so another
+  one through the same transport waits that long.
 - A `3S` parcel sent within the Netherlands is only on PostNL's domestic tracker, which shows
   it only with its delivery postcode. Without one, the lookup asks for it and other sources
   are asked. The domestic tracker also shows parcels PostNL delivers abroad, under the

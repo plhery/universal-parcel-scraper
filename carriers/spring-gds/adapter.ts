@@ -13,9 +13,9 @@
  * HTTP 502/503/504. The token call replays after an HTTP 429 only when it
  * supplies a short, valid `Retry-After` that ends before the lookup does. The
  * tracking call's quota is kept by several backends and shared with every
- * visitor, so a 429 there is replayed after its `Retry-After` or 2 s, whichever
- * is shorter, up to five requests. A 429 left standing names the try it met and
- * the wait PostNL asked for.
+ * visitor, so a 429 there is replayed every 2 s, and just after each wait PostNL
+ * names, until the lookup's deadline. A 429 left standing names how many tries
+ * the call made and the wait PostNL asked for.
  *
  * The response echoes the requested barcodes, so the item whose `item` equals
  * the requested number is the only one read. PostNL answers an unknown barcode
@@ -60,21 +60,24 @@ const LOOKUP_TIMEOUT_MS = 25_000;
 /**
  * The tracking call's quota of 20 calls a minute is kept by each of several backends and shared with every visitor of
  * the site. A refusal's `Retry-After` names the window of the backend that refused, which jumps by tens of seconds
- * between calls a few seconds apart, while another backend often has room: a refused call is replayed after its wait
- * or this pause, whichever is shorter, up to `TRACKING_TRIES` requests.
+ * between calls a few seconds apart, while another backend often has room, and a try succeeds only now and then: a
+ * refused call is replayed every `QUOTA_PAUSE_MS`, and `WAIT_MARGIN_MS` after each wait PostNL named ends, while a
+ * try still fits before the lookup's deadline with `REQUEST_RESERVE_MS` for the request itself.
  */
 const QUOTA_PAUSE_MS = 2_000;
-const TRACKING_TRIES = 5;
+const MIN_QUOTA_PAUSE_MS = 1_000;
+const WAIT_MARGIN_MS = 250;
+const REQUEST_RESERVE_MS = 1_500;
 /**
- * A tracking call whose every try PostNL refused met the quota full on each backend it reached. No call goes out after
- * it until the soonest `Retry-After` its tries were given, `QUOTA_REST_MS` without one, and at most `QUOTA_REST_MAX_MS`.
+ * A tracking call refused on at least `TRACKING_TRIES` tries met the quota full on each backend it reached. No call
+ * goes out after it until the soonest `Retry-After` its tries were given that has not passed, 2 s when all have,
+ * `QUOTA_REST_MS` when none was given, and at most `QUOTA_REST_MAX_MS`.
  */
+const TRACKING_TRIES = 5;
 const QUOTA_REST_MS = 30_000;
 const QUOTA_REST_MAX_MS = 60_000;
 /** The time a lookup that waited for its turn or the rest keeps for its own calls. */
 const TURN_RESERVE_MS = 3_000;
-/** A request in a call: its first try and its replays. */
-const TRIES = ['on the first try', 'on its replay', 'on its second replay', 'on its third replay', 'on its fourth replay'];
 const MAX_TOKEN_LENGTH = 16_384;
 // Visitor tokens last a day (`expires_in: 86400`); one is renewed this long before it expires.
 const MAX_TOKEN_LIFETIME_MS = 86_400_000;
@@ -344,15 +347,23 @@ export function parsePostNLDomesticResponse(value: unknown, trackingNumber: stri
 }
 
 /**
- * PostNL's refusal of a request for being too many, with the try it met and the wait it asked for in its wording, so
- * a host's log shows whether a replay met it and whether waiting longer would have served the lookup.
+ * PostNL's refusal of a request for being too many, with the number of tries the call made, how long they took and the
+ * wait it asked for in its wording, so a host's log shows how often replays meet it and whether waiting longer would
+ * have served the lookup.
  */
-function rateLimited(error: UpstreamHttpError, tries: number): RateLimitedError {
+function rateLimited(error: UpstreamHttpError, tries: number, elapsedMs?: number): RateLimitedError {
   const wait = error.retryAfterMs === undefined ? 'without saying how long to wait'
     : `asking to wait ${Math.round(error.retryAfterMs / 1000)} s`;
-  const attempt = TRIES[tries - 1];
+  const attempt = tries <= 1 ? ' on the first try'
+    : ` on each of ${tries} tries${elapsedMs === undefined ? '' : ` over ${Math.round(elapsedMs / 1000)} s`}`;
   return new RateLimitedError(PROVIDER, error.retryAfterMs,
-    `${error.provider} refused the request with HTTP 429${attempt ? ` ${attempt}` : ''}, ${wait}`, { cause: error, status: 429 });
+    `${error.provider} refused the request with HTTP 429${tries > 0 ? attempt : ''}, ${wait}`, { cause: error, status: 429 });
+}
+
+/** Whether the caller, rather than the lookup's deadline, ended `signal`. */
+function cancelled(signal: AbortSignal): boolean {
+  const reason: unknown = signal.reason;
+  return signal.aborted && !(reason instanceof DOMException && reason.name === 'TimeoutError');
 }
 
 /** A `Retry-After` header's wait in milliseconds, given in seconds or as a date; undefined when absent or unreadable. */
@@ -361,6 +372,12 @@ function retryAfterOf(header: string | null): number | undefined {
   if (!value) return undefined;
   const wait = /^\d+$/.test(value) ? Number(value) * 1_000 : Date.parse(value) - Date.now();
   return Number.isFinite(wait) ? Math.max(0, wait) : undefined;
+}
+
+/** The wait a refusal names: its `Retry-After`, or else the end of the window `x-rate-limit-reset` gives as a date. */
+function quotaWaitOf(headers: Headers): number | undefined {
+  const reset = headers.get('x-rate-limit-reset')?.trim();
+  return retryAfterOf(headers.get('retry-after')) ?? (reset && !/^\d+$/.test(reset) ? retryAfterOf(reset) : undefined);
 }
 
 /** A fetcher that counts the requests it makes, so a refusal can say which try met it. */
@@ -489,13 +506,28 @@ export class PostNLTracker {
   }
 
   /**
-   * The tracking request. A token PostNL refuses with HTTP 401 is not kept. A refusal as too many is replayed after its
-   * `Retry-After` or `QUOTA_PAUSE_MS`, whichever is shorter, while the lookup has time left, up to `TRACKING_TRIES`
-   * requests; one without a wait is left standing.
+   * The tracking request. A token PostNL refuses with HTTP 401 is not kept. A refusal as too many is replayed every
+   * `QUOTA_PAUSE_MS`, and just after each wait PostNL named ends, while a try still fits before `deadline`: the last
+   * pause shortens to fit, down to `MIN_QUOTA_PAUSE_MS`. A replay that fails or runs into the deadline leaves the
+   * refusal standing; a caller's cancellation is reported as such.
    */
   private async track(trackingNumber: string, accessToken: string, signal: AbortSignal, deadline: number): Promise<Uint8Array> {
     const counted = counting(this.fetcher);
-    let earliestExpiry: number | undefined;
+    const startedAt = performance.now();
+    /** When each wait PostNL named ends, on `Date.now()`'s clock. */
+    const expiries: number[] = [];
+    let refusal: UpstreamHttpError | undefined;
+    const standing = (current: UpstreamHttpError): RateLimitedError => {
+      if (cancelled(signal)) signal.throwIfAborted();
+      if (counted.tries() >= TRACKING_TRIES) {
+        const quota = postNLQuota(this.fetcher);
+        const now = Date.now();
+        const pending = expiries.filter((expiry) => expiry > now);
+        const rest = pending.length ? Math.min(...pending) - now : expiries.length ? QUOTA_PAUSE_MS : QUOTA_REST_MS;
+        quota.restUntil = Math.max(quota.restUntil, now + Math.min(QUOTA_REST_MAX_MS, Math.max(QUOTA_PAUSE_MS, rest)));
+      }
+      return rateLimited(current, counted.tries(), performance.now() - startedAt);
+    };
     for (;;) {
       let reply: { response: Response; bytes: Uint8Array };
       try {
@@ -509,7 +541,8 @@ export class PostNLTracker {
           },
           {
             provider: 'PostNL tracking',
-            timeoutMs: TRACK_TIMEOUT_MS,
+            // A replay ends before the lookup does, so the refusal it follows can still stand.
+            timeoutMs: refusal ? Math.max(1, Math.min(TRACK_TIMEOUT_MS, Math.floor(deadline - performance.now() - 100))) : TRACK_TIMEOUT_MS,
             maxBytes: 1_000_000,
             retryTransient: counted.tries() === 0,
             allowHttpStatuses: [429],
@@ -519,21 +552,18 @@ export class PostNLTracker {
         );
       } catch (error) {
         if (error instanceof UpstreamHttpError && error.status === 401 && this.cachedToken?.value === accessToken) this.cachedToken = null;
+        if (refusal && !(error instanceof UpstreamHttpError && error.status === 401)) throw standing(refusal);
         throw error;
       }
       if (reply.response.status !== 429) return reply.bytes;
-      const refusal = new UpstreamHttpError('PostNL tracking', 429, retryAfterOf(reply.response.headers.get('retry-after')));
+      refusal = new UpstreamHttpError('PostNL tracking', 429, quotaWaitOf(reply.response.headers));
       const now = Date.now();
-      if (refusal.retryAfterMs !== undefined) earliestExpiry = Math.min(earliestExpiry ?? Infinity, now + refusal.retryAfterMs);
-      const pause = refusal.retryAfterMs === undefined ? undefined : Math.min(QUOTA_PAUSE_MS, Math.max(1_000, refusal.retryAfterMs));
-      if (counted.tries() >= TRACKING_TRIES) {
-        const quota = postNLQuota(this.fetcher);
-        const remaining = earliestExpiry === undefined ? QUOTA_REST_MS : earliestExpiry - now;
-        quota.restUntil = Math.max(quota.restUntil, now + Math.min(QUOTA_REST_MAX_MS, Math.max(QUOTA_PAUSE_MS, remaining)));
-      }
-      if (pause === undefined || counted.tries() >= TRACKING_TRIES || performance.now() + pause >= deadline || !await paused(pause, signal)) {
-        throw rateLimited(refusal, counted.tries());
-      }
+      if (refusal.retryAfterMs !== undefined) expiries.push(now + refusal.retryAfterMs);
+      const pending = expiries.filter((expiry) => expiry > now);
+      const untilWaitEnds = pending.length ? Math.min(...pending) - now + WAIT_MARGIN_MS : Infinity;
+      const pause = Math.min(QUOTA_PAUSE_MS, Math.max(MIN_QUOTA_PAUSE_MS, untilWaitEnds),
+        deadline - REQUEST_RESERVE_MS - performance.now());
+      if (pause < MIN_QUOTA_PAUSE_MS || !await paused(pause, signal)) throw standing(refusal);
     }
   }
 
@@ -671,7 +701,7 @@ export const adapter: AdapterFactory = (environment) => {
     recordsSteps: true,
     // The domestic tracker runs only for a 3S barcode or a valid S10 number with a postcode it can take. The
     // international visitor token and lookup are one step: both are keyless HTTP
-    // on the same host, and each replays inside the step, the tracking call up to four times after a 429.
+    // on the same host, and each replays inside the step, the tracking call after a 429 until the step's deadline.
     steps: ['domestic', 'direct'],
     track: (input, context) => tracker.fetch(input.number, context, input.postcode, input.postcodeCountry),
     // Only the series the catalog's recognition pattern names: a 3S barcode PostNL
