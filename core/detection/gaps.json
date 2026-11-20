@@ -1057,6 +1057,12 @@
     "reason": "DPD Austria also delivers parcels numbered at other DPD networks' depots; other DPD entries suggest those, and DPD Austria's rule takes only its own depots' codes."
   },
   {
+    "carrier": "dpd-gr",
+    "pattern": "^\\d{14}$",
+    "kind": "open",
+    "reason": "An archived DPD Greece result binds a fourteen-digit parcel number, and detection offers other carriers without DPD Greece."
+  },
+  {
     "carrier": "dpd-ie",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
