@@ -50963,6 +50963,12 @@
     ]
   },
   {
+    "input": "509206348",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "50926038413",
     "carrier": "unknown",
     "confidence": "low",
@@ -50999,6 +51005,12 @@
     ]
   },
   {
+    "input": "509395381",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "509466710003247",
     "carrier": "unknown",
     "confidence": "low",
@@ -51014,6 +51026,12 @@
     "asked": [
       "brt"
     ]
+  },
+  {
+    "input": "509528291",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "5101637912",

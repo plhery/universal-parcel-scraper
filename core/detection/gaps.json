@@ -1021,6 +1021,12 @@
     "reason": "Domain Logistics numbers are bare twelve-digit runs that many carriers share, so no rule claims them."
   },
   {
+    "carrier": "domesa",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "Detection does not offer Domesa Venezuela for the nine-digit waybills that customers reported after a forwarding handoff."
+  },
+  {
     "carrier": "domex",
     "pattern": "^\\d{8,9}$",
     "kind": "by_design",
