@@ -4814,5 +4814,11 @@
     "pattern": "^6890\\d{8}$",
     "kind": "open",
     "reason": "An indexed SLX tracker URL contains a twelve-digit waybill with this prefix. Detection offers other carriers and omits SLX."
+  },
+  {
+    "carrier": "skif-cargo",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "A public court decision identifies two Skif-Cargo application numbers accepted for freight carriage. The carrier’s public tracking page asks for such an application number, and detection omits Skif-Cargo."
   }
 ]
