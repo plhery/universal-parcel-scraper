@@ -27546,6 +27546,35 @@
     ],
     "detectionRules": []
   },
+  "gintracom": {
+    "displayName": "Gintracom",
+    "color": "#E53025",
+    "countries": [
+      "EC"
+    ],
+    "selectable": true,
+    "timezone": "America/Guayaquil",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gintracom",
+      "browser": true
+    },
+    "canaryUrl": "https://ec.gintracom.site/tracking",
+    "trackingUrlTemplate": "https://ec.gintracom.site/tracking?guia={trackingNumber}",
+    "trackingSearchUrl": "https://ec.gintracom.site/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "ec.gintracom.site"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "guia"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "gio-express": {
     "displayName": "GIO Express",
     "color": "#571216",

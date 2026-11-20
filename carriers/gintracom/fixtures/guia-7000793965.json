@@ -1,0 +1,48 @@
+{
+  "guia": "7000793965",
+  "etapa": null,
+  "intentos_contacto": 1,
+  "estado": {
+    "codigo": "devuelta",
+    "titulo": "Dev. entregada a origen",
+    "texto": "El pedido fue devuelto a la tienda."
+  },
+  "fecha_clave": null,
+  "historial": [
+    {
+      "texto": "Devuelto a la tienda",
+      "fecha": "13 feb · 11:28",
+      "tipo": "devolucion"
+    },
+    {
+      "texto": "Devolución en camino a la tienda",
+      "fecha": "12 feb · 09:16",
+      "tipo": "devolucion"
+    },
+    {
+      "texto": "En devolución a la tienda",
+      "fecha": "5 feb · 03:02",
+      "tipo": "devolucion"
+    },
+    {
+      "texto": "Intento de contacto sin respuesta",
+      "fecha": "29 ene · 08:50",
+      "tipo": "contacto"
+    },
+    {
+      "texto": "En reparto",
+      "fecha": "29 ene · 06:00",
+      "tipo": "reparto"
+    },
+    {
+      "texto": "Packing: pedido empacado",
+      "fecha": "28 ene · 09:43",
+      "tipo": "inicio"
+    },
+    {
+      "texto": "Guía generada",
+      "fecha": "27 ene · 16:42",
+      "tipo": "inicio"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "carrier": "gintracom",
+  "records": [
+    {
+      "number": "7000793965",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.scribd.com/document/841483696/5295-2-21978-117380141497536",
+        "date": "2025-01-27",
+        "dateKind": "label date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Cash-on-delivery parcel for an online shop",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "A Gintracom shipping label a shop posted to Scribd, with the guide number beside its barcode. The tracker answers it with a parcel generated, packed, taken out for delivery, unanswered at the door and returned to the shop."
+    }
+  ]
+}

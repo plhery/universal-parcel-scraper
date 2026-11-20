@@ -5498,5 +5498,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "gintracom",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Ten-digit Gintracom guides share their shape with many carriers' numeric waybills, so the shape cannot name Gintracom."
   }
 ]
