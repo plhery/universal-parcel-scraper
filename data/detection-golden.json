@@ -85260,6 +85260,18 @@
     ]
   },
   {
+    "input": "CLAMCWPN26172288",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "CLAMCWPN26201624",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "CLC000422873",
     "carrier": "consegnia",
     "confidence": "high",
@@ -87245,6 +87257,12 @@
     "candidates": [
       "poste-italiane"
     ]
+  },
+  {
+    "input": "CWLQCWPS26270874",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "CX00A00217339570130009D",

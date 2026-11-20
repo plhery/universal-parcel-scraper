@@ -2497,6 +2497,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'crowley': 'The public FCL page submits the original bill number through a form, so the link opens the search page.',
   'mol-ace': 'The official tracker posts the numeric bill from a public form, so the tracking link opens that form.',
   'sallaum-lines': 'The official shipment page looks up the vehicle serial through its public tracker, so the link opens the VIN form.',
   'hoegh-autoliners': 'The public My Cargo form submits the bill through its API, so the link opens the search form.',

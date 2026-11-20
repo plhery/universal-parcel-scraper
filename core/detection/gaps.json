@@ -5779,5 +5779,10 @@
     "carrier": "mol-ace",
     "kind": "open",
     "reason": "The MOLU-prefixed manifest bills match the carrier's numeric form. Detection is pending a review of historical and current MOL formats."
+  },
+  {
+    "carrier": "crowley",
+    "kind": "open",
+    "reason": "SCAC-qualified bills match the carrier's native search. The manifest patterns need a collision review before automatic detection."
   }
 ]

@@ -1,0 +1,35 @@
+{
+  "actions": [
+    {
+      "state": "SUCCESS",
+      "returnValue": {
+        "returnValue": {
+          "equipNumVsListOfEventsMap": {
+            "CMCU4335564": [
+              {
+                "EVENT TYPE": "Strip Container Empty(SRE)",
+                "EVENT DATE & TIME (LOCAL TIME)": "2026-11-13 13:54:01",
+                "LOCATION": "Christiansted, St Croix, USVI(VICTD)"
+              },
+              {
+                "EVENT TYPE": "Vessel Unload Full(VUF)",
+                "EVENT DATE & TIME (LOCAL TIME)": "2026-10-12 08:21:00",
+                "LOCATION": "Christiansted, St Croix, USVI(VICTD)"
+              },
+              {
+                "EVENT TYPE": "Load on Vessel Full(VLF)",
+                "EVENT DATE & TIME (LOCAL TIME)": "2026-10-07 22:18:00",
+                "LOCATION": "Port Everglades, FL(USPEF)"
+              },
+              {
+                "EVENT TYPE": "Stuff Container Full(SFF)",
+                "EVENT DATE & TIME (LOCAL TIME)": "2026-10-07 10:54:00",
+                "LOCATION": "Port Everglades, FL(USPEF)"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

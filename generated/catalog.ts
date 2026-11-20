@@ -17355,6 +17355,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "crowley": {
+    "displayName": "Crowley",
+    "color": "#00467f",
+    "aliases": [
+      "Crowley Logistics",
+      "Crowley Liner Services",
+      "Crowley Latin America Services",
+      "Crowley Caribbean Services"
+    ],
+    "countries": [
+      "US",
+      "HN",
+      "VI"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "crowley",
+      "localClocks": true
+    },
+    "canaryUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
+    "trackingUrlTemplate": "https://csight.crowley.com/crowley/s/shipment-tracking",
+    "trackingSearchUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cruz-del-sur": {
     "displayName": "Cruz del Sur",
     "color": "#2a367c",
@@ -67136,6 +67163,7 @@ export const CARRIER_IDS = [
   "cristao-shipping",
   "crossflight",
   "crosswin",
+  "crowley",
   "cruz-del-sur",
   "cruz-del-sur-pe",
   "cse-russia",
@@ -69056,6 +69084,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cristao-shipping": [],
   "crossflight": [],
   "crosswin": [],
+  "crowley": [],
   "cruz-del-sur": [],
   "cruz-del-sur-pe": [],
   "cse-russia": [],

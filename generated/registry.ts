@@ -171,6 +171,7 @@ import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter
 import { adapter as cotaxi } from '../carriers/cotaxi/adapter.js';
 import { adapter as courierCenter } from '../carriers/courier-center/adapter.js';
 import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js';
+import { adapter as crowley } from '../carriers/crowley/adapter.js';
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
 import { adapter as cseRussia } from '../carriers/cse-russia/adapter.js';
 import { adapter as ctt } from '../carriers/ctt/adapter.js';
@@ -1119,6 +1120,7 @@ export const REGISTRY: RegistryDefinition = {
     "cotaxi": cotaxi,
     "courier-center": courierCenter,
     "couriersplease": couriersplease,
+    "crowley": crowley,
     "cruz-del-sur": cruzDelSur,
     "cse-russia": cseRussia,
     "ctt": ctt,
@@ -2267,6 +2269,7 @@ export const REGISTRY: RegistryDefinition = {
     "cristao-shipping": "universal",
     "crossflight": "universal",
     "crosswin": "universal",
+    "crowley": "crowley",
     "cruz-del-sur": "cruz-del-sur",
     "cruz-del-sur-pe": "universal",
     "cse-russia": "cse-russia",
