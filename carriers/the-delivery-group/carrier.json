@@ -18,18 +18,54 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "the-delivery-group",
+    "steps": [
+      "direct"
+    ],
+    "requirements": [
+      {
+        "field": "postcode",
+        "validator": "internationalPostcode",
+        "optional": true,
+        "showsMore": true,
+        "label": "Delivery postcode",
+        "type": "text",
+        "help": "The delivery postcode can unlock TDG history. An unresolved reference leaves other sources available.",
+        "pattern": "^(?=.{3,12}$)(?=.*[0-9])[A-Za-z0-9]+(?:[ -][A-Za-z0-9]+)*$",
+        "maxLength": 12,
+        "inputMode": "text",
+        "autoComplete": "postal-code"
+      }
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://tracking.dockethub.com/shipment/{trackingNumber}?style=TDG",
     "searchUrl": "https://tracking.dockethub.com/shipment/?style=TDG",
     "canaryUrl": "https://tracking.dockethub.com/shipment/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "Tracking reference",
+      "Item milestones",
+      "Local scan clocks"
+    ],
+    "scraped": [
+      "Tracking reference",
+      "Item milestones",
+      "Local scan clocks"
+    ],
+    "discarded": [
+      "Recipient and address details",
+      "Proof of delivery and images",
+      "Map coordinates",
+      "Free relay notes",
+      "Linked shipments",
+      "Aggregate progress clocks"
+    ],
+    "unavailable": [
+      "Expected delivery"
+    ]
   },
   "links": [],
   "detection": []

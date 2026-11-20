@@ -10,6 +10,7 @@
  * universal providers, whose map is the reading they give a scan
  * (`providers/status.ts`).
  */
+import { statusMap as theDeliveryGroup } from '../../carriers/the-delivery-group/status.js';
 import { statusMap as thabitLogistics } from '../../carriers/thabit-logistics/status.js';
 import { statusMap as tramaco } from '../../carriers/tramaco/status.js';
 import { statusMap as tejCouriers } from '../../carriers/tej-couriers/status.js';
@@ -850,6 +851,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'hellmann': hellmannStatus,
   'honducor': honducorStatus,
   'xls-futar': xlsFutarStatus,
+  'the-delivery-group': theDeliveryGroup,
   'thabit-logistics': thabitLogistics,
   'tramaco': tramaco,
   'tej-couriers': tejCouriers,

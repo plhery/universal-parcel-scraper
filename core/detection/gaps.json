@@ -3752,6 +3752,12 @@
     "reason": "Short waybills are too generic for a rule."
   },
   {
+    "carrier": "the-delivery-group",
+    "pattern": "^[A-Z0-9]{8,30}$",
+    "kind": "by_design",
+    "reason": "TDG accepts references shared with other issuers. A selected lookup needs whole shipment and item binding plus native TDG ownership, without an automatic number rule."
+  },
+  {
     "carrier": "tiki",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

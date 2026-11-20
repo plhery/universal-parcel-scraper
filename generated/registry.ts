@@ -737,6 +737,7 @@ import { adapter as tforceLogistics } from '../carriers/tforce-logistics/adapter
 import { adapter as thabitLogistics } from '../carriers/thabit-logistics/adapter.js';
 import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
+import { adapter as theDeliveryGroup } from '../carriers/the-delivery-group/adapter.js';
 import { adapter as thhy } from '../carriers/thhy/adapter.js';
 import { adapter as tiki } from '../carriers/tiki/adapter.js';
 import { adapter as timeMatters } from '../carriers/time-matters/adapter.js';
@@ -1584,6 +1585,7 @@ export const REGISTRY: RegistryDefinition = {
     "thabit-logistics": thabitLogistics,
     "thailand-post": thailandPost,
     "the-courier-guy": theCourierGuy,
+    "the-delivery-group": theDeliveryGroup,
     "thhy": thhy,
     "tiki": tiki,
     "time-matters": timeMatters,
@@ -3280,7 +3282,7 @@ export const REGISTRY: RegistryDefinition = {
     "thabit-logistics": "thabit-logistics",
     "thailand-post": "thailand-post",
     "the-courier-guy": "the-courier-guy",
-    "the-delivery-group": "universal",
+    "the-delivery-group": "the-delivery-group",
     "the-human-express": "universal",
     "thelorry": "universal",
     "thhy": "thhy",

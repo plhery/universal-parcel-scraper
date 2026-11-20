@@ -1,0 +1,1 @@
+Synthetic DocketHub replies based on the public merchant-posted [tracking link](https://www.trustpilot.com/review/capouk.com?search=tracking.dockethub.com). Identifiers, locations, contacts and unused fields are fictitious. Native milestone wording and local clocks are preserved.

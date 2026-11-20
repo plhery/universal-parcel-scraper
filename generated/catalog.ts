@@ -56781,7 +56781,22 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "the-delivery-group",
+      "requirements": [
+        {
+          "field": "postcode",
+          "validator": "internationalPostcode",
+          "optional": true,
+          "showsMore": true,
+          "label": "Delivery postcode",
+          "type": "text",
+          "help": "The delivery postcode can unlock TDG history. An unresolved reference leaves other sources available.",
+          "pattern": "^(?=.{3,12}$)(?=.*[0-9])[A-Za-z0-9]+(?:[ -][A-Za-z0-9]+)*$",
+          "maxLength": 12,
+          "inputMode": "text",
+          "autoComplete": "postal-code"
+        }
+      ]
     },
     "canaryUrl": "https://tracking.dockethub.com/shipment/",
     "trackingUrlTemplate": "https://tracking.dockethub.com/shipment/{trackingNumber}?style=TDG",

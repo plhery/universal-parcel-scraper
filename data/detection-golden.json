@@ -95028,6 +95028,21 @@
     ]
   },
   {
+    "input": "JJD0002234751512367",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "inpost",
+      "dhl"
+    ],
+    "preferred": [
+      "inpost"
+    ],
+    "asked": [
+      "inpost"
+    ]
+  },
+  {
     "input": "JJD0002247735827849",
     "carrier": "unknown",
     "confidence": "low",

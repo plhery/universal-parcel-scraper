@@ -1,30 +1,21 @@
 # The Delivery Group
 
-The Delivery Group parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads the anonymous DocketHub shipment POST with an optional delivery postcode.
+The empty reply can also mean that a known parcel needs its postcode, so it stays inconclusive. A reply must name TDG as carrier,
+bind the whole requested reference or its returned alias, and identify one consistent item.
+Branding the shared portal with `style=TDG` alone does not establish ownership. Multi-item
+replies remain inconclusive so a sibling's delivery cannot complete the requested parcel.
 
-The Delivery Group (TDG) is a UK managed mail, packet and parcel company based in Warrington. It
-delivers mail, packets, parcels and pallets across the UK and sends items abroad, as ETrak for
-international parcels. Its site is thedeliverygroup.co.uk.
+Native item milestones include TDG handling and its delivery partner's scans. An explicit
+partner delay stays a delay instead of becoming the relay's generic delivery-attempt notice.
+Unsupported milestones leave provider fallback available.
 
-## Numbers
+Minute scan clocks remain local and offset-free. The SDK can infer a summary zone from the
+catalog; item scans state no zone. Aggregate progress timestamps do not replace item clocks.
+Contacts, proof-of-delivery images, coordinates, linked shipments and free relay notes are omitted.
 
-Its tracking IDs are 8 to 30 letters and digits. That fits many other carriers' numbers, and no
-public page shows one, so there is no rule.
+The existing DocketHub link opens its guest form. No number rule is added for references shared
+with other issuers.
 
-## Why there is no adapter
-
-Its tracking page is a TDG-styled page on DocketHub, a tracking platform other senders use too.
-The page posts the reference, with an optional postcode, to
-`tracking.dockethub.com/Shipment/trackShipment` and can show a partner's leg with its own link.
-No public number is known to see a found reply.
-
-## Links
-
-`tracking.dockethub.com/shipment/<number>?style=TDG` opens one parcel. The page serves every
-DocketHub sender and only its style parameter names TDG. A link rule cannot require that
-parameter while it reads the number from the path, so there is no rule.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run live tests with `THE_DELIVERY_GROUP_NUMBER` and its `THE_DELIVERY_GROUP_POSTCODE` outside Git and
+`npm run test:carriers:live -- carriers/the-delivery-group/adapter.live.test.ts`.

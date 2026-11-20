@@ -1,4 +1,53 @@
 {
   "carrier": "the-delivery-group",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Advised to Carrier",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Scanned",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item Placed Into Container",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Dispatched to Delivery Agent",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "We are informing you that you may experience delays with our service in delivering your parcel.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

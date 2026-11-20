@@ -47,6 +47,31 @@
         "confidence": "none"
       },
       "note": "An archived DocketHub tracking link names TDG in its style parameter and contains this exact shipment reference. The archived and current guest pages returned the form without a shipment history."
+    },
+    {
+      "number": "JJD0002234751512367",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/review/capouk.com?search=tracking.dockethub.com",
+        "date": "2026-09-29",
+        "dateKind": "merchant reply",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "TDG UTrak with InPost last mile",
+        "reportedRole": "shipment tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "inpost",
+          "dhl"
+        ]
+      },
+      "note": "The merchant publishes the whole reference and postcode in its DocketHub link. The native reply names The Delivery Group as carrier, confirms this whole reference at shipment and item level, and contains TDG collection and dispatch scans before the InPost last-mile history. The public source includes the delivery postcode used by the guest form."
     }
   ]
 }

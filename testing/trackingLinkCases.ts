@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'the-delivery-group', number: 'TDGZZZZZZZZ000001',
+    route: /^https:\/\/tracking\.dockethub\.com\/shipment\/TDGZZZZZZZZ000001\?style=TDG$/,
+    marker: /Track Shipment/ },
   { carrier: 'thabit-logistics', number: 'ZZ000000014',
     route: /^https:\/\/thabit-logistics\.com\/track-shipment\/ZZ000000014$/,
     marker: /Record Not Found/ },
