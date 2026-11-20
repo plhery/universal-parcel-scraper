@@ -42,6 +42,11 @@ const CODES = new Map<string, ClassifiedStatus>([
   ...['605', '16', '18'].map((code) => [code, { stage: 'customs', status: 'in_transit' } as const] as const),
 ]);
 
+/** The codes that say a shipment is under customs clearance, at origin or at destination alike. */
+export const SF_CUSTOMS_CODES: ReadonlySet<string> = new Set(['605', '16', '18']);
+/** The codes of a flight: taken off, at a stopover, or departed from or arrived at a transit place. */
+export const SF_FLIGHT_CODES: ReadonlySet<string> = new Set(['105', '115', '116', '10', '11', '1105', '1106']);
+
 // Code 99 carries several notices: one on its way back to the sender, or one
 // sent on to another address. Other remarks stay unclassified.
 const NOTICES: readonly (readonly [RegExp, ClassifiedStatus])[] = [

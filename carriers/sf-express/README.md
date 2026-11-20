@@ -80,6 +80,9 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
   arrival (305) names: SF gives no other. A Chinese name stays as SF writes it. A remark about a courier or a signature
   may name a person there, so it gets none, and neither does a delivered scan or a country code
   given twice ("AU,AU").
+- SF words customs clearance the same at origin and at destination (`605`, `16`, `18`). One before
+  the first flight, with a flight after it, is the export clearance and reads in transit; without a
+  later flight it stays customs, since a shipment by road may be cleared on import before any flight.
 - Not used: [SF International](https://www.sf-international.com/us/en/support/querySupport/waybill)
   (Tencent verification) and the Mainland China portal (GeeTest plus phone verification).
 - Not used: SF's Android apps. `com.sf.hmto` posts to

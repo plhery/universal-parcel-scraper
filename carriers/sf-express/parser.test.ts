@@ -248,6 +248,23 @@ describe('SF Express public route parsing', () => {
     expect(centres[1]).toMatchObject({ description: routes[4]!.remark, location: 'Sample Town' });
   });
 
+  it('reads customs clearance before the first flight as the export clearance, in transit, and customs after it as customs', () => {
+    const value = copy(); const routes = value.result[0]!.routes;
+    const scan = (scanDateTime: string, opCode: string, remark: string) => ({ ...routes[0]!, scanDateTime, opCode, remark });
+    value.result[0]!.routes = [
+      scan('2026-01-04 12:00:00', '950', 'The shipment has been collected by SF Express'),
+      scan('2026-01-05 11:38:36', '605', 'Under customs clearance, please wait patiently.'),
+      scan('2026-01-05 19:44:00', '105', 'The package is on a flight and has already taken off.'),
+      scan('2026-01-07 09:00:00', '605', 'Under customs clearance, please wait patiently.'),
+    ];
+    expect(parse(value, NUMBER).events!.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['605', 'customs'], ['105', 'in_transit'], ['605', 'in_transit'], ['950', 'accepted']]);
+    // Without a later flight, a clearance may be an import by road: it stays customs.
+    value.result[0]!.routes = value.result[0]!.routes.slice(0, 2);
+    Object.assign(value.result[0]!, { expressState: '99', signed: false });
+    expect(parse(value, NUMBER)).toMatchObject({ current_stage: 'customs', events: [{ provider_code: '605', stage: 'customs' }, {}] });
+  });
+
   it('bounds retained and inspected scans, deduplicates exact repeats and sorts like the portal', () => {
     const value = copy(); value.result[0]!.routes.reverse(); value.result[0]!.routes.push(value.result[0]!.routes[0]!);
     expect(parse(value, NUMBER).events).toHaveLength(6);

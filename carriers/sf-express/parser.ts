@@ -8,7 +8,7 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { sfExpressEventStatus, sfExpressSummaryStatus } from './status.js';
+import { SF_CUSTOMS_CODES, SF_FLIGHT_CODES, sfExpressEventStatus, sfExpressSummaryStatus } from './status.js';
 
 const PROVIDER = 'SF Express';
 const MAX_EVENTS = 100;
@@ -142,6 +142,15 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   // The official frontend orders by these same wall clocks, which share one zone.
   if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((a, b) => b.local.localeCompare(a.local));
+  // Customs clearance before the first flight, with a flight after it, is the export clearance at origin: the
+  // shipment goes on abroad, so the scan is in transit. Without a later flight it may be an import by road.
+  let firstFlight = -1;
+  scans.forEach((scan, index) => { if (SF_FLIGHT_CODES.has(scan.event.provider_code!)) firstFlight = index; });
+  scans.forEach((scan, index) => {
+    if (firstFlight < 0 || index <= firstFlight || !SF_CUSTOMS_CODES.has(scan.event.provider_code!)) return;
+    scan.status = { stage: 'in_transit', status: 'in_transit' };
+    scan.event.stage = 'in_transit';
+  });
   const latest = scans[0]!;
   const state = clean(shipment.expressState, 64);
   const summaryStatus = sfExpressSummaryStatus(state, shipment.signed === true);

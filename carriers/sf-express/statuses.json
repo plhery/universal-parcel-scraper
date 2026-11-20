@@ -314,7 +314,7 @@
       "stage": "customs",
       "confirmedBy": "live",
       "firstSeen": "2026-10-20",
-      "note": "Official Taiwan routes opCode; the remark says the shipment is under customs clearance."
+      "note": "Official Taiwan routes opCode; the remark says the shipment is under customs clearance. Before the first flight, with a flight after it, it is the export clearance and the parser reads it in transit."
     },
     {
       "code": "16",
