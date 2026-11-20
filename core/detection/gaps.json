@@ -4964,5 +4964,11 @@
     "pattern": "^PSEAPNYC\\d{8}$",
     "kind": "open",
     "reason": "Public U.S. manifest records identify LX Pantos house bills with this prefix and length. Detection does not offer LX Pantos."
+  },
+  {
+    "carrier": "logsis",
+    "pattern": "^\\d{5}$",
+    "kind": "open",
+    "reason": "A customer publishes a five-digit Logsis waybill. Detection does not offer Logsis for that sample."
   }
 ]
