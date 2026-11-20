@@ -7,7 +7,7 @@
     {"code": "150", "wording": "进行处理，订单已操作入库", "language": "zh", "stage": "accepted", "confirmedBy": "live"},
     {"code": "181", "wording": "processing assembling operation", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Packed into a bag at the warehouse."},
     {"code": "190", "wording": "processing, order has been outbounded", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"code": "402", "wording": "clearance in progress", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "The export declaration; the plugin labels it apply To customs."},
+    {"code": "402", "wording": "clearance in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The export declaration; the plugin labels it apply To customs. It comes at origin, after the warehouse sends the parcel out, and reads as transit like other export clearances."},
     {"code": "191", "wording": "Delivery to the airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The plugin does not list the action."},
     {"code": "220", "wording": "Cargo flight departured", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "230", "wording": "Cargo flight arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},

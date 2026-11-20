@@ -13,7 +13,7 @@ const ACTIONS: ReadonlyMap<string, Stage> = new Map([
   ['181', 'in_transit'], // Packed into a bag.
   ['190', 'in_transit'], // Out of the warehouse.
   ['191', 'in_transit'], // Handed over for the flight.
-  ['402', 'customs'], // Export declaration.
+  ['402', 'in_transit'], // Export declaration, at origin: a step on the way, as export clearances read elsewhere.
   ['220', 'in_transit'], // Flight departed.
   ['230', 'in_transit'], // Flight arrived.
   ['350', 'customs'], // Collected from the airport for import clearance.

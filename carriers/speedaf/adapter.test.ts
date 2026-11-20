@@ -82,7 +82,7 @@ describe('Speedaf HTTP adapter', () => {
       ['360:36001', 'customs', 'pending Tax'],
       ['220', 'in_transit', 'Cargo flight departured'],
       ['191', 'in_transit', 'Delivery to the airport'],
-      ['402', 'customs', 'clearance in progress'],
+      ['402', 'in_transit', 'clearance in progress'],
       ['150', 'accepted', '[Guangzhou warehouse] [InternationalLogistics] processing, order has been inbounded'],
     ]);
     expect(JSON.stringify(result)).not.toMatch(/Sample (?:Courier|Picker)|0000000000|Problem|pod\/view|topay|Android/);
