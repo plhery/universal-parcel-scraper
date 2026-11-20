@@ -1,5 +1,27 @@
 {
   "carrier": "onex",
-  "gap": "Onex tracks parcels by the number of the carrier that brought them to its warehouse abroad.",
-  "records": []
+  "records": [
+    {
+      "number": "TM800329354AM",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240502054638id_/https://onex.am/hy/onextrack?track=TM800329354AM",
+        "date": "2024-05-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Onex parcel tracking",
+        "reportedRole": "tracking number",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "The archive preserves this exact input in a direct Onex tracking link. The Armenia S10 reference could belong to a postal handoff, and the archive returned only the tracker page without shipment history. Lookup blocked by verification. The current tracker returned HTTP 403."
+    }
+  ]
 }
