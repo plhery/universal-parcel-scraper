@@ -5704,5 +5704,10 @@
     "carrier": "ou-yi-hang",
     "kind": "open",
     "reason": "The carrier publishes one working waybill. Further evidence is needed to distinguish its numbers from other carriers."
+  },
+  {
+    "carrier": "airbaltic-cargo",
+    "kind": "open",
+    "reason": "The full air waybill identifies airBaltic in its own lookup. Eleven-digit numbers overlap other carriers and are kept explicit pending review."
   }
 ]

@@ -60920,6 +60920,31 @@
     "candidates": []
   },
   {
+    "input": "657-32006306",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress",
+      "ppl",
+      "speedy"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics",
+      "ppl"
+    ]
+  },
+  {
     "input": "6585909118",
     "carrier": "unknown",
     "confidence": "low",

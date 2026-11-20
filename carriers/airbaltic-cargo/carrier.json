@@ -1,0 +1,59 @@
+{
+  "id": "airbaltic-cargo",
+  "displayName": "airBaltic Cargo",
+  "aliases": [
+    "Air Baltic Cargo",
+    "Air Baltic Corporation Cargo",
+    "airBaltic Air Cargo"
+  ],
+  "region": {
+    "countries": [
+      "LV",
+      "EE",
+      "LT"
+    ]
+  },
+  "brand": {
+    "color": "#b0d435"
+  },
+  "selectable": true,
+  "timezone": "Europe/Riga",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "airbaltic-cargo",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.airbaltic.com/en/cargo",
+    "searchUrl": "https://www.airbaltic.com/en/cargo",
+    "canaryUrl": "https://cargotrack.airbaltic.com/",
+    "shows": [
+      "status",
+      "history",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -7341,6 +7341,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "airbaltic-cargo": {
+    "displayName": "airBaltic Cargo",
+    "color": "#b0d435",
+    "aliases": [
+      "Air Baltic Cargo",
+      "Air Baltic Corporation Cargo",
+      "airBaltic Air Cargo"
+    ],
+    "countries": [
+      "LV",
+      "EE",
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Riga",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "airbaltic-cargo"
+    },
+    "canaryUrl": "https://cargotrack.airbaltic.com/",
+    "trackingUrlTemplate": "https://www.airbaltic.com/en/cargo",
+    "trackingSearchUrl": "https://www.airbaltic.com/en/cargo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "airmee": {
     "displayName": "Airmee",
     "color": "#000000",
@@ -66480,6 +66505,7 @@ export const CARRIER_IDS = [
   "aics",
   "aiolos-courier",
   "air-star-xpress",
+  "airbaltic-cargo",
   "airmee",
   "airpak-express",
   "airroad",
@@ -68385,6 +68411,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aics": [],
   "aiolos-courier": [],
   "air-star-xpress": [],
+  "airbaltic-cargo": [],
   "airmee": [],
   "airpak-express": [],
   "airroad": [],
