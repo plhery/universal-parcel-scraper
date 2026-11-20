@@ -10,6 +10,14 @@ describe('shared provider result', () => {
     expect(classifyEvent('Handed over to the customs').stage).toBe('customs');
   });
 
+  it('reads the destination post taking the item over as a hand-over on the way, not the acceptance', () => {
+    // Australia Post's INT-2185, as Ship24 relays it without its code, days after the item left Australia.
+    expect(classifyEvent('Item handed over to the local postal authority')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+    expect(classifyEvent('Handed over to local carrier').stage).toBe('in_transit');
+    // The sender's hand-over is still the acceptance.
+    expect(classifyEvent('Item handed over').stage).toBe('accepted');
+  });
+
   it("reads DHL's \"Available for pickup shortly\" relayed by a provider as on its way to the outlet, as DHL does", () => {
     expect(classifyEvent('Available for pickup shortly').stage).toBe('in_transit');
     expect(classifyEvent('Will be available for collection tomorrow').stage).toBe('in_transit');

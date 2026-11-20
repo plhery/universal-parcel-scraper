@@ -280,8 +280,11 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // ("label voided, new label created") is not read as a cancellation.
   if (/^(?:parcel|package|shipment|(?:shipping )?label) (?:(?:has been|was|is) )?void(?:ed)?[.!]?$/i.test(description)) return 'exception';
   // Hand-overs on the way: also MailAmericas' airline delivering the bags in the destination
-  // country ("Delivered by Airline") and its last-mile distributor taking the item ("Deliver to distributor").
+  // country ("Delivered by Airline") and its last-mile distributor taking the item ("Deliver to distributor"),
+  // and the destination post taking the item over ("Item handed over to the local postal authority", Australia
+  // Post's INT-2185 as Ship24 relays it without its code).
   if (/deliver(?:ed)? to (?:the )?(?:local carrier|delivery partner|post office|distributor)|delivered by (?:the )?airline/i.test(description)) return 'in_transit';
+  if (/\bhanded over to (?:the )?local (?:postal (?:authority|operator|service)|carrier|delivery (?:agent|partner))\b/i.test(description)) return 'in_transit';
   // DHL's "Available for pickup shortly" is the way to the outlet, as DHL's own map reads it.
   if (/will be available for (?:pickup|collection)|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b/i.test(description)) return 'in_transit';
   // InPost's steps as aggregators relay them, as its own map reads them: a logistics centre taking the parcel in on
