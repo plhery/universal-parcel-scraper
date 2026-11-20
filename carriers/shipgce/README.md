@@ -2,6 +2,12 @@
 
 Feiyang GCEx (飛洋轉運) ships parcels from the United States to mainland China, Hong Kong and Taiwan.
 
+## Numbers
+
+The public waybill is GC, nine digits and US, the shape of a U.S. postal item, but its last digit
+is not that item's S10 check digit. Rule `shipgce-1` suggests GCEx for the shape; a number that
+passes the check is detected as a postal item first.
+
 ## Retrieval
 
 The express tracker serves a public HTML result at `express.shipgce.com/postcheck.htm` with

@@ -378,6 +378,15 @@
     "reason": "Chronopost's low-confidence rule accepts any S10 code with a passing check digit, so it overlaps the postal fallback for suffixes no carrier owns; the country-specific high-confidence rule decides."
   },
   {
+    "shape": "AA9{9}AW with a valid S10 check digit",
+    "carriers": [
+      "aruba-post",
+      "chronopost",
+      "intl-post"
+    ],
+    "reason": "The Aruban issuer suffix suggests Post Aruba but does not establish the delivering carrier; the postal fallback remains selected until recognition confirms a direct carrier."
+  },
+  {
     "shape": "AA9{9}AA",
     "carriers": [
       "chronopost",

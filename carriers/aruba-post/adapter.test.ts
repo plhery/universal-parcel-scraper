@@ -1,6 +1,9 @@
 import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { NotFoundError } from '../../core/errors/index.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter } from './adapter.js';
 import { parseTracking } from './parser.js';
 
 const found = readFileSync(new URL('./fixtures/outbound.html', import.meta.url), 'utf8');
@@ -19,5 +22,20 @@ describe('Post Aruba IPS history', () => {
     expect(() => parseTracking(missing, 'RR999999995AW')).toThrow(NotFoundError);
     expect(() => parseTracking(found, 'RR999999995AW')).toThrow(/another item/i);
     expect(() => parseTracking('<html></html>', 'RR999999995AW')).toThrow(/missing Post Aruba/i);
+  });
+
+  it('is asked about the items Aruba issues and answers from the item page', async () => {
+    // Synthetic codes with valid S10 check digits.
+    expect(recognitionAskedCarriers('RR123456785AW')).toContain('aruba-post');
+    expect(recognitionAskedCarriers('RR123456785CN')).not.toContain('aruba-post');
+    const carrier = (body: string) => {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(body, { headers: { 'Content-Type': 'text/html' } }));
+      return { fetcher, aruba: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null }) };
+    };
+    await expect(carrier(found).aruba.recognize!('RR927248745AW')).resolves.toMatchObject({ known: true });
+    await expect(carrier(missing).aruba.recognize!('RR123456785AW')).resolves.toEqual({ known: false });
+    const unasked = carrier(found);
+    await expect(unasked.aruba.recognize!('1Z999AA10123456784')).resolves.toEqual({ known: false });
+    expect(unasked.fetcher).not.toHaveBeenCalled();
   });
 });

@@ -18,7 +18,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "shipgce"
+        ]
       },
       "note": "The carrier’s indexable public tracking URL publishes the input in lowercase. Its tracking response gives a matching courier bill and dated movement through delivery."
     }

@@ -9809,6 +9809,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "aruba-post",
+      "recognitionRank": 18,
       "localClocks": true
     },
     "canaryUrl": "https://www.postaruba.com/",
@@ -9825,7 +9826,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{2}\\d{9}AW$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
+      }
+    ]
   },
   "asap-couriers": {
     "displayName": "ASAP Couriers",
@@ -52054,7 +52062,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "query": "^(?=(?:.*&)?type=identity(?:&|$))(?:.*&)?checkvalue=([^&]+)(?=&|$)"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^GC\\d{9}US$",
+        "confidence": "low"
+      }
+    ]
   },
   "shipglobal-in": {
     "displayName": "ShipGlobal India",
@@ -67366,7 +67379,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ark-express": ["ark-express-1"],
   "arrow-express": [],
   "arrow-xl": [],
-  "aruba-post": [],
+  "aruba-post": ["aruba-post-s10"],
   "asap-couriers": [],
   "ase-express": [],
   "asiafly": [],
@@ -68604,7 +68617,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shipa": ["shipa-1"],
   "shipblu": [],
   "shipentegra": ["shipentegra-1"],
-  "shipgce": [],
+  "shipgce": ["shipgce-1"],
   "shipglobal-in": ["shipglobal-in-1"],
   "shipglobal-us": ["shipglobal-us-1"],
   "shiplowcost": [],

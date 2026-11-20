@@ -107225,6 +107225,7 @@
       "intl-post"
     ],
     "asked": [
+      "aruba-post",
       "chronopost"
     ]
   },
@@ -116384,8 +116385,10 @@
   {
     "input": "gc512271603us",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "shipgce"
+    ]
   },
   {
     "input": "glb0110003072419",

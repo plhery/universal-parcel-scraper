@@ -21,6 +21,9 @@
     "steps": [
       "direct"
     ],
+    "recognition": {
+      "rank": 18
+    },
     "localClocks": true
   },
   "capabilities": [
@@ -55,5 +58,13 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "aruba-post-s10",
+      "pattern": "^[A-Z]{2}\\d{9}AW$",
+      "confidence": "low",
+      "preferred": true,
+      "checksum": "s10"
+    }
+  ]
 }

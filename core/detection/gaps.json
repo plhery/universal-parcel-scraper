@@ -4966,12 +4966,6 @@
     "reason": "Six-digit ShipLowCost numbers share their shape with other carriers' numeric numbers, so the shape cannot name ShipLowCost."
   },
   {
-    "carrier": "shipgce",
-    "pattern": "^GC\\d{9}US$",
-    "kind": "collision",
-    "reason": "This waybill has the S10 shape of a U.S.-issued postal item, which USPS's rule suggests, so the shape cannot name Feiyang GCEx."
-  },
-  {
     "carrier": "scan-global-logistics",
     "pattern": "^UCI\\d{8}$",
     "kind": "open",

@@ -4,7 +4,8 @@ RPX Online parcels use enabled universal providers. There is no dedicated adapte
 
 RPX is Hong Kong Lenton Group’s eCommerce parcel operation. Its tracker shares an app and
 backend with DPD Hong Kong, Hub-ez and Linex; access to that backend does not establish which
-operation owns a shipment.
+operation owns a shipment. Its reply names no operation either: the tracker picks its branding
+from the host name and reads only the number, status, countries, pieces and scan rows.
 
 ## Retrieval
 
