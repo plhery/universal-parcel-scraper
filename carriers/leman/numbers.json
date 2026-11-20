@@ -1,5 +1,59 @@
 {
   "carrier": "leman",
-  "gap": "No public page shows a LEMAN number.",
-  "records": []
+  "records": [
+    {
+      "number": "TAO000329414",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://importkey.com/i/leman-usa-inc",
+        "date": "2026-10-08",
+        "dateKind": "manifest listing date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "LEMAN maritime forwarding from China to the United States",
+        "reportedRole": "HBL",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "The public manifest identifies this exact house bill on a shipment from LEMAN’s Qingdao branch to LEMAN USA under SCAC LIST. It remains unclear whether LEMAN’s public booking tracker accepts this house-bill family."
+    },
+    {
+      "number": "TAO000329385",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://importkey.com/i/leman-usa-inc",
+        "date": "2026-10-08",
+        "dateKind": "manifest listing date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "LEMAN maritime forwarding from China to the United States",
+        "reportedRole": "HBL",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "The public manifest identifies this exact house bill on a shipment from LEMAN’s Qingdao branch to LEMAN USA under SCAC LIST. It remains unclear whether LEMAN’s public booking tracker accepts this house-bill family."
+    }
+  ]
 }
