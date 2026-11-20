@@ -19280,7 +19280,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Athens",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "diakinisis",
+      "localClocks": true
     },
     "canaryUrl": "https://pod.diakinisis.gr/tnt.php",
     "trackingSearchUrl": "https://pod.diakinisis.gr/tnt.php",

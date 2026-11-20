@@ -184,6 +184,7 @@ import { adapter as dhlEcommerceUk } from '../carriers/dhl-ecommerce-uk/adapter.
 import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dhlFreight } from '../carriers/dhl-freight/adapter.js';
 import { adapter as dhlink } from '../carriers/dhlink/adapter.js';
+import { adapter as diakinisis } from '../carriers/diakinisis/adapter.js';
 import { adapter as directFreightExpress } from '../carriers/direct-freight-express/adapter.js';
 import { adapter as direx } from '../carriers/direx/adapter.js';
 import { adapter as dobropost } from '../carriers/dobropost/adapter.js';
@@ -1027,6 +1028,7 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-express": dhlExpress,
     "dhl-freight": dhlFreight,
     "dhlink": dhlink,
+    "diakinisis": diakinisis,
     "direct-freight-express": directFreightExpress,
     "direx": direx,
     "dobropost": dobropost,
@@ -2114,7 +2116,7 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-freight": "dhl-freight",
     "dhlink": "dhlink",
     "dhx": "universal",
-    "diakinisis": "universal",
+    "diakinisis": "diakinisis",
     "dialogo-logistica": "universal",
     "dida-international": "universal",
     "diera": "universal",
