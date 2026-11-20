@@ -602,6 +602,17 @@ describe('SPX Express Brazil status vocabulary', () => {
   });
 });
 
-it('closes a seller return only at F999', () => {
-  expect(['F988', 'F999'].map(code => spxBrStage(code, '')?.stage)).toEqual(['exception', 'returned']);
+it('reads the return to the seller from F988 and the sorting scans after it as the way back, until a round', () => {
+  expect(['F988', 'F999'].map(code => spxBrStage(code, '')?.stage)).toEqual(['returned', 'returned']);
+  const row = (tracking_code: string, actual_time: number, description = 'Sintético') =>
+    ({ tracking_code, tracking_name: 'Sintético', description, actual_time, display_flag: 1 });
+  const history = (...records: Row[]) => parseSpxBr(changed('in-transit', (tracking) => { tracking.records = records; }), IN_TRANSIT);
+  const back = history(row('F540', 1_779_160_000), row('F510', 1_779_150_000),
+    row('F988', 1_779_140_000, 'Pedido será devolvido ao vendedor. Por favor, aguarde.'), row('F510', 1_779_130_000), row('F100', 1_779_120_000));
+  expect(back).toMatchObject({ status: 'exception', current_stage: 'returned' });
+  expect(back.events?.map(event => event.stage)).toEqual(['returned', 'returned', 'returned', 'in_transit', 'accepted']);
+  // A delivery round after it takes the parcel to the buyer again, and the scans before the round too.
+  const again = history(row('F600', 1_779_170_000), row('F540', 1_779_160_000), row('F988', 1_779_140_000), row('F100', 1_779_120_000));
+  expect(again).toMatchObject({ current_stage: 'out_for_delivery' });
+  expect(again.events?.map(event => event.stage)).toEqual(['out_for_delivery', 'in_transit', 'returned', 'accepted']);
 });

@@ -226,6 +226,13 @@ function summarize(scans: readonly Scan[]): CarrierResult {
     }
   });
 
+  // A return to the seller (F680, or F988 asking the buyer to wait) starts the way back: the sorting scans since the latest
+  // one carry the parcel back. A round after it takes the parcel to the buyer again, and the scans before the round too.
+  const start = events.findIndex((event) => event.stage && event.stage !== 'in_transit');
+  if (start > 0 && RETURN_STARTS.has(events[start]!.provider_code ?? '')) {
+    for (const event of events.slice(0, start)) if (event.stage === 'in_transit') Object.assign(event, { stage: 'returned', stage_source: 'carrier_map' });
+  }
+
   const newest = events[0]!;
   const staged = events.find((event) => event.stage);
   const stage = staged?.stage as Stage | undefined;
@@ -242,6 +249,8 @@ function summarize(scans: readonly Scan[]): CarrierResult {
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };
 }
+
+const RETURN_STARTS = new Set(['F680', 'F988']);
 
 // The fleet feed's answer for a number it holds no scans for.
 const FLEET_NO_HISTORY = -1217;

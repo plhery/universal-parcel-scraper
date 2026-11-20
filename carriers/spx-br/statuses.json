@@ -442,10 +442,10 @@
       "code": "F988",
       "wording": "Pedido será devolvido ao vendedor. Por favor, aguarde.",
       "language": "pt",
-      "stage": "exception",
+      "stage": "returned",
       "confirmedBy": "live",
       "firstSeen": "2026-11-13",
-      "note": "F680's words with a request to wait: the parcel goes back to the seller, as F680 does."
+      "note": "F680's words with a request to wait: the parcel goes back to the seller, as F680 does. The sorting scans after it carry it back."
     },
     {
       "code": "F999",

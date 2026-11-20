@@ -97,7 +97,9 @@ label's first fifteen characters.
 - Tracking codes give the stages, and fleet statuses read like the order codes live parcels
   paired them with. A courier's hand-over at a service point ("Pacote entrege") is transit, as
   the page's milestones stay at sorting. Brazilian customs holding or inspecting a parcel is customs, its refusal to
-  import is an exception, and the F988 return announcement stays an exception until F999 confirms receipt by the seller. A parcel lost (F969) or disposed
+  import is an exception. The F988 return announcement starts the return, as F680 does: the sorting
+  scans after it carry the parcel back towards the seller, until a delivery round takes it to the
+  buyer again, and F999 confirms the seller's receipt. A parcel lost (F969) or disposed
   of (F996, "Pedido descartado") is an exception: it reaches neither the buyer nor the seller.
 
 ## Limitations
