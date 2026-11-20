@@ -1,5 +1,47 @@
 {
   "carrier": "hey-couriers",
-  "gap": "No public page shows a Hey Couriers tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "NEXAU1022601722YQ",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://gioz2xnbi5.apidog.io/doc-733952",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "house air waybill",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "pflogistics"
+        ]
+      },
+      "note": "Hey Couriers lists this HAWB in its proof-of-delivery API documentation. The carrier's public tracker returned package not found."
+    },
+    {
+      "number": "NEXAU1022660372YQ",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://gioz2xnbi5.apidog.io/doc-733952",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "house air waybill",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "pflogistics"
+        ]
+      },
+      "note": "Hey Couriers lists this HAWB in its proof-of-delivery API documentation. The carrier's public tracker returned package not found."
+    }
+  ]
 }
