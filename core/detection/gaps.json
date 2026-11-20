@@ -566,6 +566,12 @@
     "reason": "Celeritas references are bare nine digits, a shape TNT, XPO Logistics and many others share, and nothing in the number points to Celeritas."
   },
   {
+    "carrier": "celero",
+    "pattern": "^MU\\d{12}$",
+    "kind": "open",
+    "reason": "A published Celero invoice lists a Mauritius air waybill with the MU prefix and twelve digits, and Celero's tracker shows its clearance. Detection suggests Speedaf, whose numbers have that shape."
+  },
+  {
     "carrier": "central-transport",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

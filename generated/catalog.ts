@@ -14115,9 +14115,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Indian/Mauritius",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "celero",
+      "localClocks": true
     },
     "canaryUrl": "https://celerogroup.com/",
+    "trackingUrlTemplate": "https://celerogroup.com/",
     "trackingSearchUrl": "https://celerogroup.com/",
     "linkRules": [],
     "detectionRules": []

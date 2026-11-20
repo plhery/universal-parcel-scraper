@@ -1,4 +1,7 @@
 {
   "carrier": "celero",
-  "entries": []
+  "entries": [
+    {"wording": "MANIFEST RECEIVED", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The manifest naming the parcel reaches Celero before the parcel does; seen twice the same day."},
+    {"wording": "CUSTOMS CLEARED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Customs in Mauritius released the parcel; the tracker dates it by its day, at midnight, with the declaration's reference as the remark."}
+  ]
 }

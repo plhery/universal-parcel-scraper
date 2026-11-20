@@ -106,6 +106,7 @@ import { adapter as ccfs } from '../carriers/ccfs/adapter.js';
 import { adapter as cdek } from '../carriers/cdek/adapter.js';
 import { adapter as cdl } from '../carriers/cdl/adapter.js';
 import { adapter as celeritas } from '../carriers/celeritas/adapter.js';
+import { adapter as celero } from '../carriers/celero/adapter.js';
 import { adapter as centralTransport } from '../carriers/central-transport/adapter.js';
 import { adapter as ceskaPosta } from '../carriers/ceska-posta/adapter.js';
 import { adapter as cevaLogistics } from '../carriers/ceva-logistics/adapter.js';
@@ -943,6 +944,7 @@ export const REGISTRY: RegistryDefinition = {
     "cdek": cdek,
     "cdl": cdl,
     "celeritas": celeritas,
+    "celero": celero,
     "central-transport": centralTransport,
     "ceska-posta": ceskaPosta,
     "ceva-logistics": cevaLogistics,
@@ -1939,7 +1941,7 @@ export const REGISTRY: RegistryDefinition = {
     "cdl": "cdl",
     "cel-changda": "universal",
     "celeritas": "celeritas",
-    "celero": "universal",
+    "celero": "celero",
     "central-transport": "central-transport",
     "centurion-transport": "universal",
     "ceska-posta": "ceska-posta",

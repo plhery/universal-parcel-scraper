@@ -17,17 +17,32 @@
   "timezone": "Indian/Mauritius",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "celero",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
+    "url": "https://celerogroup.com/",
     "searchUrl": "https://celerogroup.com/",
     "canaryUrl": "https://celerogroup.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

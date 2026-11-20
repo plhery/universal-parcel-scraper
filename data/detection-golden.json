@@ -97614,6 +97614,17 @@
     ]
   },
   {
+    "input": "MU120109191821",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "speedaf"
+    ],
+    "asked": [
+      "speedaf"
+    ]
+  },
+  {
     "input": "MUS11289883",
     "carrier": "unknown",
     "confidence": "none",

@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "count": 1,
+  "data": {
+    "MU120109191821": [
+      {
+        "ID": 7798296,
+        "awb_num": "MU120109191821",
+        "awb_date": "2026-04-11 00:00:00",
+        "awb_status": "CUSTOMS CLEARED",
+        "awb_fault": "",
+        "awb_remarks": " SD3C260338527",
+        "downloaded": 0
+      },
+      {
+        "ID": 7721121,
+        "awb_num": "MU120109191821",
+        "awb_date": "2026-04-06 13:53:00",
+        "awb_status": "MANIFEST RECEIVED",
+        "awb_fault": "",
+        "awb_remarks": "MANIFEST RECEIVED",
+        "downloaded": 0
+      },
+      {
+        "ID": 7715622,
+        "awb_num": "MU120109191821",
+        "awb_date": "2026-04-06 10:00:00",
+        "awb_status": "MANIFEST RECEIVED",
+        "awb_fault": "",
+        "awb_remarks": "MANIFEST RECEIVED",
+        "downloaded": 0
+      }
+    ]
+  },
+  "errors": {}
+}
