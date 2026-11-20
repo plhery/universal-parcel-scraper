@@ -4892,5 +4892,11 @@
     "pattern": "^\\d{7}$",
     "kind": "open",
     "reason": "A Peshkariki representative confirms a seven-digit courier order in a public forum. The published tracking input is not offered for Peshkariki by detection."
+  },
+  {
+    "carrier": "pds-direct",
+    "pattern": "^[0-9A-F]{32}$",
+    "kind": "open",
+    "reason": "Archived PDS Direct tracking links use UUID-shaped shipment references. Detection does not offer PDS Direct for those references."
   }
 ]

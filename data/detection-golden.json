@@ -24133,6 +24133,12 @@
     ]
   },
   {
+    "input": "17B56B40-2234-426A-9B5A-4DC5BBA0B4E8",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "18-0912-2601",
     "carrier": "unknown",
     "confidence": "low",
@@ -52738,6 +52744,12 @@
     "candidates": []
   },
   {
+    "input": "5347F777-014C-4EE2-8BBB-6CC5924983B0",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "535401009581",
     "carrier": "unknown",
     "confidence": "low",
@@ -62811,6 +62823,12 @@
       "dpd-de",
       "chronopost"
     ]
+  },
+  {
+    "input": "710F6C15-39A5-4414-A268-82A62BFB7042",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "71123456789123456787",
