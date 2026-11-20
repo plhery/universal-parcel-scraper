@@ -124,6 +124,7 @@ import { adapter as cevaLogistics } from '../carriers/ceva-logistics/adapter.js'
 import { adapter as chazki } from '../carriers/chazki/adapter.js';
 import { adapter as chilexpress } from '../carriers/chilexpress/adapter.js';
 import { adapter as chinaPost } from '../carriers/china-post/adapter.js';
+import { adapter as chinaUnitedLines } from '../carriers/china-united-lines/adapter.js';
 import { adapter as chitChats } from '../carriers/chit-chats/adapter.js';
 import { adapter as chronodiali } from '../carriers/chronodiali/adapter.js';
 import { adapter as chronopost } from '../carriers/chronopost/adapter.js';
@@ -1026,6 +1027,7 @@ export const REGISTRY: RegistryDefinition = {
     "chazki": chazki,
     "chilexpress": chilexpress,
     "china-post": chinaPost,
+    "china-united-lines": chinaUnitedLines,
     "chit-chats": chitChats,
     "chronodiali": chronodiali,
     "chronopost": chronopost,
@@ -2085,6 +2087,7 @@ export const REGISTRY: RegistryDefinition = {
     "chilexpress": "chilexpress",
     "china-post": "china-post",
     "china-railway-express": "universal",
+    "china-united-lines": "china-united-lines",
     "chinz-logistics": "universal",
     "chit-chats": "chit-chats",
     "choir-express": "universal",

@@ -5549,5 +5549,10 @@
     "carrier": "eimskip",
     "kind": "open",
     "reason": "The guest tracker accepts a bare shipment number. Eimskip is selected explicitly."
+  },
+  {
+    "carrier": "china-united-lines",
+    "kind": "open",
+    "reason": "CU Lines uses equipment identifiers shared across lines and sailings."
   }
 ]

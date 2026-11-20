@@ -14601,6 +14601,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "china-united-lines": {
+    "displayName": "China United Lines",
+    "color": "#003e80",
+    "aliases": [
+      "CU Lines",
+      "CULines",
+      "China United Lines Ltd",
+      "中联航运"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "china-united-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.culines.com/en/site/bill",
+    "trackingUrlTemplate": "https://www.culines.com/en/site/bill",
+    "trackingSearchUrl": "https://www.culines.com/en/site/bill",
+    "trackingSiteName": "CU Lines Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "chinz-logistics": {
     "displayName": "Chinz Logistics",
     "color": "#c9122e",
@@ -65914,6 +65940,7 @@ export const CARRIER_IDS = [
   "chic-express",
   "chilexpress",
   "china-railway-express",
+  "china-united-lines",
   "chinz-logistics",
   "chit-chats",
   "choir-express",
@@ -67788,6 +67815,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chic-express": [],
   "chilexpress": [],
   "china-railway-express": [],
+  "china-united-lines": [],
   "chinz-logistics": [],
   "chit-chats": ["chit-chats-1"],
   "choir-express": [],
