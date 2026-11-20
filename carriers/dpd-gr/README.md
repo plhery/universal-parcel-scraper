@@ -12,7 +12,9 @@ no rule.
 
 ## Why there is no adapter
 
-services.dpd.gr serves a Cloudflare challenge before its tracker. DPD Romania's adapter reads
+services.dpd.gr serves a Cloudflare challenge before its tracker, whose form then asks for its own
+Turnstile token. It shows MySpeedy's public page, `myspeedy.speedy.bg/pub/web-site/<waybill>`, in a
+frame, the service the [Speedy](../speedy/README.md) adapter reads without a token. DPD Romania's adapter reads
 the anonymous endpoint behind MyDPD instead. DPD Greece runs the same MyDPD at mydpd.dpd.gr, with
 the tracker script DPD Romania's serves, which asks the same
 `/rest/public/track?id=<waybill>&language=en` path. Unlike DPD Romania's, its settings publish a
