@@ -74,6 +74,22 @@ describe('CarryBee tracker', () => {
     }
   });
 
+  it('keeps a partial delivery and a return on its way open, and closes the return at its receipt', () => {
+    const step = (slug: string) => {
+      const p = fixture();
+      p.data.order.current_status = 'Synthetic status'; p.data.order.current_status_id = 99;
+      p.data.states.push({ slug, plain_text: slug, status: 1, happened_at: 'Sep 12, 2025 10:00 AM', happened_at_utc: '1757649600' });
+      return parseCarryBee(p, NUMBER);
+    };
+    for (const slug of ['partial_delivery', 'return']) {
+      const result = step(slug);
+      expect(result, slug).toMatchObject({ status: 'exception', current_stage: 'exception' });
+      expect(result, slug).not.toHaveProperty('delivered_at');
+      expect(result.events![0], slug).toMatchObject({ provider_code: slug, stage: 'exception' });
+    }
+    expect(step('paid_return')).toMatchObject({ current_stage: 'returned' });
+  });
+
   it('leaves a new wording or step unmapped, and records the exchange step as a gap', () => {
     const p = fixture();
     p.data.order.current_status = 'Hold'; p.data.order.current_status_id = 30;

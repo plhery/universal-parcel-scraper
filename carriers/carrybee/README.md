@@ -20,7 +20,9 @@ The reply must name the requested number as its `consignment_id`. It holds two l
   others (picked, in transit, received at the last-mile hub) fill gaps the history leaves. Epoch
   clocks are shown in Dhaka's time, the one offset Bangladesh keeps all year.
 
-The current stage comes from the order's `current_status`, else the newest scan. The rider's name
+The current stage comes from the order's `current_status`, else the newest scan. A partial
+delivery leaves items outstanding and a return step is the parcel on its way back, so both stay
+open as exceptions; the paid return, its receipt, is the return. The rider's name
 and phone number after "Your parcel is out for delivery by" are taken out of the wording. The
 recipient, merchant, rider, contents, weight and amounts in the same reply are never read.
 
