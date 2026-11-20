@@ -80,6 +80,20 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['shipments were sent', 'in_transit'],
   ['parcel has been collected.', 'in_transit'],
   ['parcel has been shipped out of the warehouse.', 'in_transit'],
+  // The same line's departure to the service provider, before the hand-over to the airline, and the
+  // import clearance after the flight lands, relayed without a code.
+  ['parcel departed from facility to service provider.', 'in_transit'],
+  ['the goods are clearing customs', 'customs'],
+  // A destination post's scans after the hand-off: its posting record of the parcel HuaHan gave it,
+  // not the parcel's acceptance, its exchange office's departure and arrival, its transport, its
+  // notice of the coming delivery, and two rounds that did not deliver, under FI.
+  ['posting/collection', 'in_transit'],
+  ['departure to country of destination', 'in_transit'],
+  ['arrival from abroad', 'in_transit'],
+  ['in transport', 'in_transit'],
+  ['your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days.', 'in_transit'],
+  ['unsuccessful (physical) delivery', 'failed_attempt'],
+  ['not delivered - addressee not present- message left', 'failed_attempt'],
 ]);
 // Milestones in Chinese with the English after them, and lines with a day, a flight, a time or a place.
 const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
@@ -112,8 +126,9 @@ const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
 // HuaHan's own codes are two capitals; a provider relaying its scans puts its own code on them.
 const OWN_CODE = /^[A-Z]{2}$/;
 // HuaHan's codes for the destination carrier's scans that its words stage. On the postal line DR
-// also carries the destination post's arrivals, and ND USPS's facility scans.
-const CARRIER_SCAN_CODES = new Set(['IA', 'CA', 'DR', 'ND']);
+// also carries the destination post's arrivals, ND USPS's facility scans and FI a post's rounds
+// that did not deliver.
+const CARRIER_SCAN_CODES = new Set(['IA', 'CA', 'DR', 'ND', 'FI']);
 // HuaHan's codes for the destination carrier's last steps. It also puts CB on USPS's departure
 // from a distribution centre, so the relayed words decide when they name a step, the code otherwise.
 const LAST_STEP_CODES = new Set(['CB', 'PB', 'CC']);

@@ -425,6 +425,23 @@ describe('HuaHan status map', () => {
     }
   });
 
+  it('reads a destination post\'s posting after the hand-off as transit and its rounds under FI by their words', () => {
+    for (const [code, description, stage] of [
+      [null, 'Parcel departed from facility to service provider.', 'in_transit'],
+      [null, 'The goods are clearing customs', 'customs'],
+      // HuaHan accepted the parcel in China: the post's posting record takes it on.
+      ['IA', 'Posting/collection', 'in_transit'],
+      ['IA', 'Departure to country of destination', 'in_transit'],
+      [null, 'Arrival from abroad', 'in_transit'],
+      ['CA', 'In transport', 'in_transit'],
+      ['FI', 'Unsuccessful (physical) delivery', 'failed_attempt'],
+      ['FI', 'Not Delivered - addressee not present- message left', 'failed_attempt'],
+    ] as const) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
+      expect(huahanStage(code ?? '', description), description).toEqual({ stage, source: 'carrier_map' });
+    }
+  });
+
   it('reads Landmark Global\'s relayed depot scans by their words, its departure under CB as transit', () => {
     for (const [code, description, stage] of [
       [null, 'Shipment Data Uploaded', 'registered'],
