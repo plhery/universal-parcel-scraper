@@ -83505,6 +83505,36 @@
     ]
   },
   {
+    "input": "COSU6452418336",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "COSU6455175780",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "COSU6503593910",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "COSU6505013130",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "COSU6505334960",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "CP000846674BO",
     "carrier": "intl-post",
     "confidence": "high",

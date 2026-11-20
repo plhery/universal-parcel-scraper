@@ -1,0 +1,12 @@
+{
+  "carrier": "cosco-shipping-lines",
+  "entries": [
+    {"code": "Laden Return Time", "wording": "Laden Return Time", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The shipper returns the loaded container to the terminal at the place of receipt."},
+    {"code": "ATD", "wording": "ATD", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel's departure from a port of loading or transshipment."},
+    {"code": "ATA", "wording": "ATA", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel's arrival at a port of transshipment or discharge."},
+    {"code": "Cargo Pickup Time", "wording": "Cargo Pickup Time", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker collects the loaded container at the final destination."},
+    {"wording": "Discharged at Port of Transshipment", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Empty Returned", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee has unloaded the container and returned it empty to COSCO's yard."},
+    {"wording": "Empty Return", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The same return, as COSCO's inbound trucking words it."}
+  ]
+}

@@ -722,6 +722,12 @@
     "reason": "AGBC issues some registered numbers in the S10 layout whose check digit does not validate; generic postal detection skips them and national posts get no S10 rule."
   },
   {
+    "carrier": "cosco-shipping-lines",
+    "pattern": "^COSU\\d{10}$",
+    "kind": "open",
+    "reason": "Import records list COSCO master bills as COSU, its carrier code, and the booking's ten digits; COSCO's tracker returns each sample. Detection does not offer COSCO."
+  },
+  {
     "carrier": "courier-center",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

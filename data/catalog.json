@@ -16523,6 +16523,26 @@
     ],
     "detectionRules": []
   },
+  "cosco-shipping-lines": {
+    "displayName": "COSCO SHIPPING Lines",
+    "color": "#004b8d",
+    "aliases": [
+      "COSCO",
+      "COSCO Shipping"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cosco-shipping-lines",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "trackingSearchUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "coship": {
     "displayName": "COSHIP",
     "color": "#e40613",

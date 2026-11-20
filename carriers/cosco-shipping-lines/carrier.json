@@ -1,0 +1,67 @@
+{
+  "id": "cosco-shipping-lines",
+  "displayName": "COSCO SHIPPING Lines",
+  "aliases": [
+    "COSCO",
+    "COSCO Shipping"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#004b8d"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cosco-shipping-lines",
+    "steps": [
+      "direct",
+      "retry",
+      "browser"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "searchUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "canaryUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta",
+      "customs_status"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "customs_status"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "weight"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

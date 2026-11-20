@@ -16527,6 +16527,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cosco-shipping-lines": {
+    "displayName": "COSCO SHIPPING Lines",
+    "color": "#004b8d",
+    "aliases": [
+      "COSCO",
+      "COSCO Shipping"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cosco-shipping-lines",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "trackingSearchUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "coship": {
     "displayName": "COSHIP",
     "color": "#e40613",
@@ -65546,6 +65566,7 @@ export const CARRIER_IDS = [
   "correos-el-salvador",
   "correos-nicaragua",
   "correos-panama",
+  "cosco-shipping-lines",
   "coship",
   "costco-logistics",
   "cot-uy",
@@ -67409,6 +67430,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "correos-el-salvador": [],
   "correos-nicaragua": [],
   "correos-panama": [],
+  "cosco-shipping-lines": [],
   "coship": [],
   "costco-logistics": ["costco-logistics-1"],
   "cot-uy": [],
