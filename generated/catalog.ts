@@ -15997,6 +15997,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "cootranstame": {
+    "displayName": "CootransTame",
+    "color": "#0a3d75",
+    "aliases": [
+      "Cooperativa de Transportadores de Tame",
+      "Cootranstame Carga"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cootranstame",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.cootranstame.com/rastreo-envios",
+    "trackingUrlTemplate": "https://www.cootranstame.com/rastreo-envios",
+    "trackingSearchUrl": "https://www.cootranstame.com/rastreo-envios",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "copa-courier": {
     "displayName": "Copa Airlines Courier",
     "color": "#0032a0",
@@ -65966,6 +65989,7 @@ export const CARRIER_IDS = [
   "conveyor-uni-express",
   "conwest-logistics",
   "coordinadora",
+  "cootranstame",
   "copa-courier",
   "cope-sensitive-freight",
   "corlan-post-express",
@@ -67841,6 +67865,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "conveyor-uni-express": [],
   "conwest-logistics": [],
   "coordinadora": ["coordinadora-1"],
+  "cootranstame": [],
   "copa-courier": ["copa-courier-1"],
   "cope-sensitive-freight": [],
   "corlan-post-express": [],

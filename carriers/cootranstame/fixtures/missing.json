@@ -1,0 +1,11 @@
+{
+  "serverMemo": {
+    "data": {
+      "guia": "000000000000000",
+      "tipoServicio": "110",
+      "error": "La guia no se encuentra registrada",
+      "NumeroGuia": "000000000000000",
+      "dataJson": null
+    }
+  }
+}

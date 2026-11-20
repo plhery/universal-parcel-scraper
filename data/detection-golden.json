@@ -32242,6 +32242,14 @@
     ]
   },
   {
+    "input": "2257392",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ]
+  },
+  {
     "input": "2257658197",
     "carrier": "unknown",
     "confidence": "low",

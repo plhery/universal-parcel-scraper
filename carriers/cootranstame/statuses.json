@@ -1,0 +1,8 @@
+{
+  "carrier": "cootranstame",
+  "entries": [
+    { "code": null, "wording": "RECOGIDA", "stage": "accepted", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "OFICINA ORIGEN", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "TRANSITO", "stage": "in_transit", "language": "es", "confirmedBy": "live" }
+  ]
+}

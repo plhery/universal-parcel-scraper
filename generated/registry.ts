@@ -145,6 +145,7 @@ import { adapter as colisweb } from '../carriers/colisweb/adapter.js';
 import { adapter as connectCouriers } from '../carriers/connect-couriers/adapter.js';
 import { adapter as consegnia } from '../carriers/consegnia/adapter.js';
 import { adapter as coordinadora } from '../carriers/coordinadora/adapter.js';
+import { adapter as cootranstame } from '../carriers/cootranstame/adapter.js';
 import { adapter as copaCourier } from '../carriers/copa-courier/adapter.js';
 import { adapter as corre } from '../carriers/corre/adapter.js';
 import { adapter as correiosBr } from '../carriers/correios-br/adapter.js';
@@ -1047,6 +1048,7 @@ export const REGISTRY: RegistryDefinition = {
     "connect-couriers": connectCouriers,
     "consegnia": consegnia,
     "coordinadora": coordinadora,
+    "cootranstame": cootranstame,
     "copa-courier": copaCourier,
     "corre": corre,
     "correios-br": correiosBr,
@@ -2127,6 +2129,7 @@ export const REGISTRY: RegistryDefinition = {
     "conveyor-uni-express": "universal",
     "conwest-logistics": "universal",
     "coordinadora": "coordinadora",
+    "cootranstame": "cootranstame",
     "copa-courier": "copa-courier",
     "cope-sensitive-freight": "universal",
     "corlan-post-express": "universal",

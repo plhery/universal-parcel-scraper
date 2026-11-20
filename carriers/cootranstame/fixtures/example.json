@@ -1,0 +1,38 @@
+{
+  "serverMemo": {
+    "data": {
+      "guia": "2257392",
+      "tipoServicio": "110",
+      "error": "",
+      "NumeroGuia": "2257392",
+      "dataJson": {
+        "ProcesoExitoso": true,
+        "Datos": {
+          "NumeroDocumento": 2257392,
+          "Trazabilidad": [
+            {
+              "Ciudad": "CPV-01 KUBOX LOGISTIC",
+              "Fecha": "2025-07-08T09:48:26.523",
+              "Estado": "RECOGIDA"
+            },
+            {
+              "Ciudad": "BOGOTA",
+              "Fecha": "2025-07-08T23:12:37.110",
+              "Estado": "TRANSITO"
+            },
+            {
+              "Ciudad": "BOGOTA",
+              "Fecha": "2025-07-08T23:12:50.353",
+              "Estado": "OFICINA ORIGEN"
+            },
+            {
+              "Ciudad": "BOGOTA",
+              "Fecha": "2025-07-09T04:01:40.110",
+              "Estado": "TRANSITO"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

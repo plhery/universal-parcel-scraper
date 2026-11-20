@@ -15993,6 +15993,29 @@
       }
     ]
   },
+  "cootranstame": {
+    "displayName": "CootransTame",
+    "color": "#0a3d75",
+    "aliases": [
+      "Cooperativa de Transportadores de Tame",
+      "Cootranstame Carga"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cootranstame",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.cootranstame.com/rastreo-envios",
+    "trackingUrlTemplate": "https://www.cootranstame.com/rastreo-envios",
+    "trackingSearchUrl": "https://www.cootranstame.com/rastreo-envios",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "copa-courier": {
     "displayName": "Copa Airlines Courier",
     "color": "#0032a0",

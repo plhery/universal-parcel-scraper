@@ -5562,5 +5562,10 @@
     "kind": "open",
     "carrier": "paqmex",
     "reason": "The native tracker confirms one public Y-prefixed guide. Explicit selection is available while its guide formats and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "cootranstame",
+    "reason": "The native tracker confirms one public numeric guide. The carrier is selectable while its numbering and overlaps remain open."
   }
 ]
