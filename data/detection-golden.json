@@ -89505,6 +89505,17 @@
     ]
   },
   {
+    "input": "FAN1204215",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "FARGO2600243284YQ",
     "carrier": "far-international",
     "confidence": "high",
