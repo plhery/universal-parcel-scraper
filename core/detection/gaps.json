@@ -4928,5 +4928,11 @@
     "pattern": "^010026\\d{10}$",
     "kind": "open",
     "reason": "A published biber post registered-mail label carries this sixteen-digit UPOC. Detection offers other carriers and omits MZZ-Briefdienst."
+  },
+  {
+    "carrier": "movvi",
+    "pattern": "^\\d{6}$",
+    "kind": "open",
+    "reason": "A public invoice names Movvi as the carrier and instructs the customer to track with the six-digit invoice reference. Detection does not offer Movvi."
   }
 ]
