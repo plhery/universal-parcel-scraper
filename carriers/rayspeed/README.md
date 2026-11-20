@@ -1,26 +1,11 @@
 # RaySpeed Asia
 
-RaySpeed Asia parcels use enabled universal providers. There is no dedicated adapter.
+Select RaySpeed Asia to track a cross-border air waybill. The public tracker issues a
+guest session and a form token. The adapter uses them for a single waybill lookup and
+checks both the result key and the waybill on each scan.
 
-RaySpeed Asia, run by PT Rayspid Indonesia, ships parcels from Indonesia to other countries, among
-them goods bought from Indonesian online shops and parcels for Indonesians living abroad. Its site
-is rayspeed.com.
+Scans keep the carrier's local date and clock. Day-only notices keep their precision,
+and the adapter leaves the proof-of-delivery attachments outside the result.
 
-## Numbers
-
-No public page shows one of its air waybill numbers or states their layout, so there is no rule.
-
-## Why there is no adapter
-
-The tracker posts air waybill numbers with the page's session token and gets JSON back, without a
-CAPTCHA; an unknown number gets an empty list. No public number has shown a known parcel's reply
-yet.
-
-## Links
-
-The tracker posts the numbers and has no address for one parcel, so there are no tracking links.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `RAYSPEED_TRACKING_NUMBER` and run
+`npm run test:carriers:live -- carriers/rayspeed`.
