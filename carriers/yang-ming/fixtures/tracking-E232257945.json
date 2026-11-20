@@ -1,0 +1,347 @@
+{
+ "successCnt": 1,
+ "containerList": [],
+ "blList": [
+  {
+   "queryTrackNo": "E232257945",
+   "returnTrackNo": "E232257945",
+   "trackType": "B/L No",
+   "trackTypeCode": "BLNO",
+   "blType": " (Seaway Bill)",
+   "bkgRef": "E232257945",
+   "basicInfo": {
+    "receipt": "NINGBO, ZJ (CNNGB)",
+    "loading": "NINGBO, ZJ (CNNGB)",
+    "discharge": "SAVANNAH, GA (USSAV)",
+    "delivery": "SAVANNAH, GA (USSAV)",
+    "vesselName": "YM TRUST",
+    "vesselComn": "105E",
+    "voyageCode": "EC12625E",
+    "vesselCode": "YTRS",
+    "obDate": "2026/06/30",
+    "serviceTerm": "Container Yard - Container Yard",
+    "numPkg": 2182,
+    "pkgType": "CT",
+    "grossWgt": 11672.77,
+    "grossWgtUnit": "KGS",
+    "cbm": 62.409,
+    "cbmUnit": "CBM",
+    "scacCode": "YMJA",
+    "erdCutOffDateReference": null,
+    "ctnrUnit": "1 unit (1 * 40')"
+   },
+   "routingInfo": {
+    "routingSchedule": [
+     {
+      "seq": 1,
+      "picQlfr": "VESSEL",
+      "placeName": "NINGBO",
+      "dateTime": "2026/06/30 22:30",
+      "dateQlfr": "Actual",
+      "berthInfo": null
+     },
+     {
+      "seq": 2,
+      "picQlfr": "DESTINATION",
+      "placeName": "SAVANNAH",
+      "dateTime": "2026/09/05 09:48",
+      "dateQlfr": "Actual",
+      "berthInfo": "Berthing time at terminal: 2026/09/05 14:12 (Actual)"
+     }
+    ],
+    "routingDschPortTml": "<A HREF=http://www.gaports.com/ target=_blank TITLE='Link to web site'>GARDEN CITY TERMINAL</A> (Firms code:L738)"
+   },
+   "additionalInfo": [
+    {
+     "infoSeq": 1,
+     "mainTitleWording": "24 Hour Advance Manifest",
+     "statusDesc": null,
+     "ymlEnsFilingType": null,
+     "filingTypeDesc": null,
+     "rowList": [
+      {
+       "seq": 1,
+       "statusTitleWording": "ACE Status (filed by carrier)",
+       "statusValue": "ACE accepted",
+       "tableData": null
+      },
+      {
+       "seq": 2,
+       "statusTitleWording": "ACI Status (filed by carrier)",
+       "statusValue": " ",
+       "tableData": null
+      },
+      {
+       "seq": 3,
+       "statusTitleWording": "ACI Sublocation Code",
+       "statusValue": " ",
+       "tableData": null
+      }
+     ]
+    },
+    {
+     "infoSeq": 2,
+     "mainTitleWording": "CBP Importer Security Filing(ISF)",
+     "statusDesc": null,
+     "ymlEnsFilingType": null,
+     "filingTypeDesc": null,
+     "rowList": [
+      {
+       "seq": 1,
+       "statusTitleWording": "ISF Status (filed by importer/broker)",
+       "statusValue": "ISF-10 accepted (3Z)",
+       "tableData": null
+      }
+     ]
+    },
+    {
+     "infoSeq": 3,
+     "mainTitleWording": "Release Status",
+     "statusDesc": null,
+     "ymlEnsFilingType": null,
+     "filingTypeDesc": null,
+     "rowList": [
+      {
+       "seq": 1,
+       "statusTitleWording": "Carrier Status",
+       "statusValue": "Steamship Release  2026/08/27 01:50",
+       "tableData": null
+      },
+      {
+       "seq": 2,
+       "statusTitleWording": "Customs Status",
+       "statusValue": "Customs Release",
+       "tableData": [
+        {
+         "tableKind": "CustomsStatus",
+         "tableRowList": [
+          {
+           "seq": 1,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/09/08 09:50",
+           "eventDesc": "55",
+           "codeActivity": "Carrier bill   add",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 2182,
+           "districtPort": "SAVANNAH,GA",
+           "remarks": "CARR AMEND ADD",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 2,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/09/08 09:50",
+           "eventDesc": "54",
+           "codeActivity": "Carrier bill   delete",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 2182,
+           "districtPort": "SAVANNAH,GA",
+           "remarks": "CARR BILL DELETE",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 3,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/08/31 02:05",
+           "eventDesc": "55",
+           "codeActivity": "Carrier bill   add",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 2182,
+           "districtPort": "SAVANNAH,GA",
+           "remarks": "CARR AMEND ADD",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 4,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/08/31 02:05",
+           "eventDesc": "54",
+           "codeActivity": "Carrier bill   delete",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 2182,
+           "districtPort": "SAVANNAH,GA",
+           "remarks": "CARR BILL DELETE",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 5,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/08/30 02:05",
+           "eventDesc": "1C",
+           "codeActivity": "Entered and released:  General examination",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": "SCS39256134",
+           "pieces": 2182,
+           "districtPort": "SAVANNAH,GA",
+           "remarks": null,
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 6,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/08/24 12:30",
+           "eventDesc": "55",
+           "codeActivity": "Carrier bill   add",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 2182,
+           "districtPort": "SAVANNAH,GA",
+           "remarks": "CARR AMEND ADD",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 7,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/08/24 12:30",
+           "eventDesc": "54",
+           "codeActivity": "Carrier bill   delete",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 2182,
+           "districtPort": "SAVANNAH,GA",
+           "remarks": "CARR BILL DELETE",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "seq": 3,
+       "statusTitleWording": "Last Free Date",
+       "statusValue": " ",
+       "tableData": null
+      },
+      {
+       "seq": 4,
+       "statusTitleWording": "Terminal Last Free Date",
+       "statusValue": "2026/09/20, SAVANNAH (GARDEN CITY TERMINAL)",
+       "tableData": [
+        {
+         "tableKind": "TerminalFreeDateStatus",
+         "tableRowList": [
+          {
+           "seq": 0,
+           "title": null,
+           "value": null,
+           "dateTime": null,
+           "eventDesc": null,
+           "codeActivity": null,
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 0,
+           "districtPort": null,
+           "remarks": null,
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": "BMOU6146904",
+           "lastFreeDate": "2026/09/20",
+           "place": "SAVANNAH (GARDEN CITY TERMINAL)"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "seq": 5,
+       "statusTitleWording": "Ramp Last Free Date",
+       "statusValue": " ",
+       "tableData": null
+      }
+     ]
+    }
+   ],
+   "ctnrUnit": null,
+   "containerInfo": [
+    {
+     "trackPositionOut": "BL_CT",
+     "seq": 1,
+     "ctnrNo": "BMOU6146904",
+     "cnSize": "40",
+     "cnType": "HQ-9'6'' container",
+     "cnTypeDesc": null,
+     "sealNo": "YMAW507411",
+     "moveType": "FCL/FCL",
+     "moveDate": "2026/09/17 05:36",
+     "lastEvent": "Empty Returned",
+     "place": "SAVANNAH - GARDEN CITY TERMINAL",
+     "dportETA": null,
+     "vgm": 15522.77,
+     "vgmUnit": "KGS"
+    }
+   ],
+   "dcsaContainerInfo": [
+    {
+     "trackPositionOut": "BL_CT",
+     "seq": 1,
+     "ctnrNo": "BMOU6146904",
+     "cnSize": "40",
+     "cnType": "HQ-9'6'' container",
+     "cnTypeDesc": null,
+     "sealNo": "YMAW507411",
+     "moveType": "FCL/FCL",
+     "moveDate": "2026/09/17 05:36",
+     "lastEvent": "Gate in of Empty Equipment by Truck at Port terminal",
+     "place": "SAVANNAH - GARDEN CITY MARINE TERMINAL",
+     "eventClassifie": "Actual",
+     "vgm": 15522.77,
+     "vgmUnit": "KGS"
+    }
+   ],
+   "responeMessage": null,
+   "statusCode": null
+  }
+ ],
+ "bookingList": [],
+ "emptyList": [],
+ "responeMessage": [],
+ "maintenanceInfo": null,
+ "blockStatus": null
+}

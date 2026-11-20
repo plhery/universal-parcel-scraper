@@ -1,0 +1,254 @@
+{
+ "successCnt": 1,
+ "containerList": [],
+ "blList": [
+  {
+   "queryTrackNo": "W501000129",
+   "returnTrackNo": "W501000129",
+   "trackType": "B/L No",
+   "trackTypeCode": "BLNO",
+   "blType": " (Seaway Bill)",
+   "bkgRef": "W501000129",
+   "basicInfo": {
+    "receipt": "PIPAVAV (VICTOR) PORT (INPAA)",
+    "loading": "PIPAVAV (VICTOR) PORT (INPAA)",
+    "discharge": "LOS ANGELES, CA (USLAX)",
+    "delivery": "LOS ANGELES, CA (USLAX)",
+    "vesselName": "YM MODESTY",
+    "vesselComn": "080E",
+    "voyageCode": "PS52641E",
+    "vesselCode": "YMTY",
+    "obDate": "2026/09/10",
+    "serviceTerm": "Container Yard - Container Yard",
+    "numPkg": 19,
+    "pkgType": "PK",
+    "grossWgt": 19404.83,
+    "grossWgtUnit": "KGS",
+    "cbm": 0,
+    "cbmUnit": "CBM",
+    "scacCode": "YMJA",
+    "erdCutOffDateReference": null,
+    "ctnrUnit": "1 unit (1 * 40')"
+   },
+   "routingInfo": {
+    "routingSchedule": [
+     {
+      "seq": 1,
+      "picQlfr": "VESSEL",
+      "placeName": "PIPAVAV (VICTOR) PORT",
+      "dateTime": "2026/09/10 15:20",
+      "dateQlfr": "Actual",
+      "berthInfo": null
+     },
+     {
+      "seq": 2,
+      "picQlfr": "VESSEL",
+      "placeName": "SINGAPORE",
+      "dateTime": "2026/09/23 09:30",
+      "dateQlfr": "Actual",
+      "berthInfo": "Berthing time at terminal: 2026/09/23 12:25 (Actual)"
+     },
+     {
+      "seq": 3,
+      "picQlfr": "DESTINATION",
+      "placeName": "LOS ANGELES",
+      "dateTime": "2026/11/07 01:48",
+      "dateQlfr": "Actual",
+      "berthInfo": "Berthing time at terminal: 2026/11/07 03:30 (Actual)"
+     }
+    ],
+    "routingDschPortTml": "<A HREF=http://www.trapac.com target=_blank TITLE='Link to web site'>TraPac, Inc. (LAX)</A> (Firms code:Y258)"
+   },
+   "additionalInfo": [
+    {
+     "infoSeq": 1,
+     "mainTitleWording": "24 Hour Advance Manifest",
+     "statusDesc": null,
+     "ymlEnsFilingType": null,
+     "filingTypeDesc": null,
+     "rowList": [
+      {
+       "seq": 1,
+       "statusTitleWording": "ACE Status (filed by carrier)",
+       "statusValue": "ACE accepted",
+       "tableData": null
+      },
+      {
+       "seq": 2,
+       "statusTitleWording": "ACI Status (filed by carrier)",
+       "statusValue": " ",
+       "tableData": null
+      },
+      {
+       "seq": 3,
+       "statusTitleWording": "ACI Sublocation Code",
+       "statusValue": " ",
+       "tableData": null
+      }
+     ]
+    },
+    {
+     "infoSeq": 2,
+     "mainTitleWording": "CBP Importer Security Filing(ISF)",
+     "statusDesc": null,
+     "ymlEnsFilingType": null,
+     "filingTypeDesc": null,
+     "rowList": [
+      {
+       "seq": 1,
+       "statusTitleWording": "ISF Status (filed by importer/broker)",
+       "statusValue": "ISF-10 accepted (3Z)",
+       "tableData": null
+      }
+     ]
+    },
+    {
+     "infoSeq": 3,
+     "mainTitleWording": "Release Status",
+     "statusDesc": null,
+     "ymlEnsFilingType": null,
+     "filingTypeDesc": null,
+     "rowList": [
+      {
+       "seq": 1,
+       "statusTitleWording": "Carrier Status",
+       "statusValue": "Steamship Release  2026/11/02 17:19",
+       "tableData": null
+      },
+      {
+       "seq": 2,
+       "statusTitleWording": "Customs Status",
+       "statusValue": "Customs Release",
+       "tableData": [
+        {
+         "tableKind": "CustomsStatus",
+         "tableRowList": [
+          {
+           "seq": 1,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/11/05 13:40",
+           "eventDesc": "1C",
+           "codeActivity": "Entered and released:  General examination",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": "W0200064669",
+           "pieces": 19,
+           "districtPort": "LOS ANGELES,CA",
+           "remarks": null,
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 2,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/10/30 17:00",
+           "eventDesc": "55",
+           "codeActivity": "Carrier bill   add",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 19,
+           "districtPort": "LOS ANGELES,CA",
+           "remarks": "CARR AMEND ADD",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          },
+          {
+           "seq": 3,
+           "title": null,
+           "value": null,
+           "dateTime": "2026/10/30 17:00",
+           "eventDesc": "54",
+           "codeActivity": "Carrier bill   delete",
+           "itNumber": null,
+           "itLocation": null,
+           "entryNumber": null,
+           "pieces": 19,
+           "districtPort": "LOS ANGELES,CA",
+           "remarks": "CARR BILL DELETE",
+           "ctnrNo": null,
+           "rampLastFreeDate": null,
+           "ctnrNum": null,
+           "lastFreeDate": null,
+           "place": null
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "seq": 3,
+       "statusTitleWording": "Last Free Date",
+       "statusValue": " ",
+       "tableData": null
+      },
+      {
+       "seq": 4,
+       "statusTitleWording": "Terminal Last Free Date",
+       "statusValue": " ",
+       "tableData": null
+      },
+      {
+       "seq": 5,
+       "statusTitleWording": "Ramp Last Free Date",
+       "statusValue": " ",
+       "tableData": null
+      }
+     ]
+    }
+   ],
+   "ctnrUnit": null,
+   "containerInfo": [
+    {
+     "trackPositionOut": "BL_CT",
+     "seq": 1,
+     "ctnrNo": "YMMU7065510",
+     "cnSize": "40",
+     "cnType": "HQ-9'6'' container",
+     "cnTypeDesc": null,
+     "sealNo": "INYM211946",
+     "moveType": "FCL/FCL",
+     "moveDate": "2026/11/16 19:06",
+     "lastEvent": "Empty Returned",
+     "place": "LOS ANGELES - Yusen Terminal",
+     "dportETA": null,
+     "vgm": 23180.0,
+     "vgmUnit": "KGS"
+    }
+   ],
+   "dcsaContainerInfo": [
+    {
+     "trackPositionOut": "BL_CT",
+     "seq": 1,
+     "ctnrNo": "YMMU7065510",
+     "cnSize": "40",
+     "cnType": "HQ-9'6'' container",
+     "cnTypeDesc": null,
+     "sealNo": "INYM211946",
+     "moveType": "FCL/FCL",
+     "moveDate": "2026/11/16 19:06",
+     "lastEvent": "Gate in of Empty Equipment by Truck at Port terminal",
+     "place": "LOS ANGELES - YUSEN CONTAINER TERMINAL (YTI)",
+     "eventClassifie": "Actual",
+     "vgm": 23180.0,
+     "vgmUnit": "KGS"
+    }
+   ],
+   "responeMessage": null,
+   "statusCode": null
+  }
+ ],
+ "bookingList": [],
+ "emptyList": [],
+ "responeMessage": [],
+ "maintenanceInfo": null,
+ "blockStatus": null
+}

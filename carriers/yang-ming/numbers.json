@@ -1,0 +1,131 @@
+{
+  "carrier": "yang-ming",
+  "records": [
+    {
+      "number": "YMJAW501000129",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/ym-movement/9660011",
+        "date": "2026-11-07",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9660011 lists this Yang Ming master bill, under the YMJA SCAC, for YM MODESTY's call at Los Angeles. Yang Ming's tracker returns its one container from Pipavav through Singapore to Los Angeles, returned empty."
+    },
+    {
+      "number": "YMJAW501000128",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/ym-movement/9660011",
+        "date": "2026-11-07",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed beside the first sample on the same vessel page. Yang Ming's tracker returns its one container from Pipavav to Los Angeles, returned empty."
+    },
+    {
+      "number": "YMJAE232257945",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/ym-trust/9789972",
+        "date": "2026-09-05",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for YM TRUST lists this Yang Ming master bill for the ship's call at Savannah. Yang Ming's tracker returns its one container from Ningbo to Savannah, returned empty."
+    },
+    {
+      "number": "YMJAE232258601",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/ym-trust/9789972",
+        "date": "2026-09-05",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed beside the third sample on the same vessel page; Yang Ming's tracker returns its one container, returned empty at Savannah."
+    },
+    {
+      "number": "YMJAE232258659",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/ym-trust/9789972",
+        "date": "2026-09-05",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed beside the third sample on the same vessel page; Yang Ming's tracker returns its one container, returned empty at Savannah."
+    },
+    {
+      "number": "YMJAE232258648",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/ym-trust/9789972",
+        "date": "2026-09-05",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed beside the third sample on the same vessel page; Yang Ming's tracker returns its one container, returned empty at Savannah."
+    }
+  ]
+}
