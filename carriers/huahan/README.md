@@ -48,6 +48,9 @@ to the destination carrier's scans.
 - The reply can list a destination carrier's scan twice at the same minute: in that carrier's
   words at its place, and in HuaHan's generic words without one. The placed line stays, with
   the generic line's code when it came without one, so it keeps the code's stage.
+- A missed delivery told again within 12 hours, with no new round between, is the partner's
+  detail of the same attempt (where the parcel waits now): a notice, so the parcel shows one
+  attempt.
 - HuaHan's codes are two capitals. A tracking provider relays its scans in HuaHan's words
   under the provider's own codes, so the status map reads those scans by their words.
 - An American partner's scans ("Picked up by Shipping Partner", its facility's arrival and

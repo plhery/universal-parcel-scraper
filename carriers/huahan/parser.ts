@@ -145,6 +145,8 @@ export function huahanRefusal(payload: Record<string, unknown>): never {
 }
 
 /** The public form submits one whole waybill; aliases and partner numbers do not bind its reply. */
+const SAME_ROUND_MS = 12 * 3_600_000;
+
 export function parseHuahan(payload: unknown, raw: string): CarrierResult {
   const number = normalizeHuahanNumber(raw);
   if (!isRecord(payload)) throw new SchemaError(PROVIDER, 'HuaHan returned an invalid envelope');
@@ -174,13 +176,22 @@ export function parseHuahan(payload: unknown, raw: string): CarrierResult {
   // Oldest first: a notice keeps the stage of the scan before it, and an acceptance after the hand-off to
   // the destination carrier (JY), such as the post's posting of the parcel a partner handed it, is a
   // hand-over on the way.
+  // A missed delivery told again the same day with no new round between, as DPD details the attempt and the
+  // parcel shop it chose, is that attempt: a notice.
   let handed = false;
   let before: Stage | undefined;
+  let attemptAt = Number.NaN;
   for (const event of [...events].reverse()) {
     if (huahanNotice(event.provider_code ?? '', event.description!)) {
       Object.assign(event, before ? { stage: before, stage_source: 'none' } : { stage_source: 'none' });
       continue;
     }
+    const at = Date.parse(`${event.local_time}Z`);
+    if (event.stage === 'failed_attempt' && before === 'failed_attempt' && at - attemptAt <= SAME_ROUND_MS) {
+      event.stage_source = 'none';
+      continue;
+    }
+    if (event.stage === 'failed_attempt') attemptAt = at;
     if (event.stage === 'accepted' && handed) Object.assign(event, { stage: 'in_transit', stage_source: 'carrier_map' });
     handed ||= event.provider_code === 'JY';
     if (event.stage) before = event.stage as Stage;
@@ -191,7 +202,7 @@ export function parseHuahan(payload: unknown, raw: string): CarrierResult {
   const staged = events.find((event) => event.stage && event.stage_source !== 'none');
   const current: ClassifiedWording | null = newest.stage && newest.stage_source !== 'none'
     ? { stage: newest.stage as Stage, source: newest.stage_source as ClassifiedWording['source'] }
-    : huahanNotice(newest.provider_code ?? '', newest.description!)
+    : newest.stage_source === 'none'
       ? (staged ? { stage: staged.stage as Stage, source: staged.stage_source as ClassifiedWording['source'] } : null)
       : huahanStage('', text(row, 'Status'));
   const country = countryCode(partnerText(row, 'Country_code')) ?? undefined;

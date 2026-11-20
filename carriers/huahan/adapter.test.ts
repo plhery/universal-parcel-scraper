@@ -157,6 +157,21 @@ describe('HuaHan guest tracking', () => {
     });
   });
 
+  it('reads a missed delivery told again the same day without a new round as that attempt', () => {
+    const reply = fixture();
+    Object.assign(reply.data[0]!, { Status: 'Delivery Attempted' });
+    reply.data[0]!.Detail = [
+      { Occur_date: '2026-01-03 12:02:00', Status: '', Comment: 'Delivery Attempted, Unfortunately we have not been able to deliver your parcel. Pickup parcelshop delivery after first delivery attempt.', track_area: '' },
+      { Occur_date: '2026-01-03 10:15:00', Status: '', Comment: 'Delivery Attempted', track_area: '' },
+      { Occur_date: '2026-01-03 09:27:00', Status: 'CB', Comment: 'Out for Delivery, Out for delivery.', track_area: '' },
+      ...reply.data[0]!.Detail.slice(1),
+    ];
+    const result = parseHuahan(reply, NUMBER);
+    expect(result.events!.slice(0, 3).map((event) => [event.stage, event.stage_source])).toEqual([
+      ['failed_attempt', 'none'], ['failed_attempt', 'carrier_map'], ['out_for_delivery', 'carrier_map']]);
+    expect(result).toMatchObject({ current_stage: 'failed_attempt', current_stage_source: 'carrier_map' });
+  });
+
   it('names the carrier of the number a transfer row gives when the partner fields name none', () => {
     const transfer = (local: Record<string, unknown>, comment = '转单:1Z999AA10123456784') => {
       const reply = fixture();
