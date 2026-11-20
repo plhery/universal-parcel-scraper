@@ -46,12 +46,14 @@ describe('BYT numbers', () => {
 });
 
 describe('BYT tracking adapter', () => {
-  it('asks its own Hualei tracker for the whole number over plain HTTP', async () => {
+  it('asks its own Hualei tracker for the whole number over HTTPS', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(json(fixture('track')));
     await expect(new BytTracker({ fetcher, recorder: NOOP_RECORDER }).fetch(NUMBER.toLowerCase())).resolves.toMatchObject({ current_stage: 'customs' });
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`${BYT_ORIGIN}/selectTrack.htm?documentCode=${NUMBER}`);
-    expect(BYT_ORIGIN).toBe('http://byt56.com.cn:8082');
+    // The number never travels in the clear: the tracker's HTTPS host answers as its plain-HTTP port does.
+    expect(BYT_ORIGIN).toBe('https://tms.byt56.com.cn');
+    expect(String(url)).toMatch(/^https:\/\//);
     expect(init).toMatchObject({ method: 'GET', signal: expect.any(AbortSignal) });
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(adapter(environment(fetcher))).toMatchObject({ id: 'byt', recordsSteps: true, steps: ['direct', 'retry'] });

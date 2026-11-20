@@ -3,7 +3,8 @@ import { parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hu
 import { bytStage } from './status.js';
 
 export const PROVIDER = 'BYT';
-export const BYT_ORIGIN = 'http://byt56.com.cn:8082';
+// The tracker's HTTPS host; `byt56.com.cn:8082` serves the same tracker over plain HTTP.
+export const BYT_ORIGIN = 'https://tms.byt56.com.cn';
 
 // A copy BYT writes after some wordings, most often the English again: "The flight has landed(中文:The flight has landed)".
 const CHINESE_COPY = /^([\s\S]*?)\s*[(（]中文[:：]([\s\S]*?)[)）]\s*$/;

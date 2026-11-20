@@ -8,12 +8,13 @@ status map and row cleaning.
 ## How it works
 
 1. `direct`: one GET to `selectTrack.htm?documentCode=<number>` on the tracker at
-   `byt56.com.cn:8082`, then, when the interface holds no row for the number, one POST of the
+   `tms.byt56.com.cn`, then, when the interface holds no row for the number, one POST of the
    same `documentCode` to the tracking page `trackIndex.htm`, which settles not-found
    ([hualei.ts](../gzyl/hualei.ts)).
 2. `retry`: the same read once more after a request fails to reach the tracker or hangs.
 
-The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser is needed. The
+The tracker's HTTPS host gives the same answers as the plain-HTTP port 8082 the site links to,
+so the number never travels in the clear. No account, key, cookie, CAPTCHA or browser is needed. The
 search box on the site's home page opens a page of placeholder rows, whatever the number, so no
 portal link is published.
 

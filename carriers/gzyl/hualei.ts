@@ -1,7 +1,7 @@
 /**
  * The Hualei (华磊) forwarder platform, which GZYL, Tianhui Hengyuan, JRT,
  * Meiteshun, Mayi Yinfu and BYHD each run as a tenant: a Tomcat tracker on port 8082
- * of a bare IP or the carrier's own domain, plain HTTP only. `selectTrack.htm` is the platform's documented track
+ * of a bare IP or the carrier's own domain, most over plain HTTP only. `selectTrack.htm` is the platform's documented track
  * interface, JSON encoded in GBK; `trackIndex.htm` is the tracking page the
  * carriers' sites open, in HTML. Each carrier keeps its own host and status
  * map; this module holds the requests and parsers they share.
@@ -37,7 +37,7 @@ export interface HualeiTenant {
   readonly carrier: string;
   /** The name errors carry. */
   readonly provider: string;
-  /** The tracker's origin, `http://<address>:8082`. */
+  /** The tracker's origin, `http://<address>:8082`, or the HTTPS host of a tenant that has one. */
   readonly origin: string;
   /** The stage the carrier's map gives a row, by its kind code (null without one) and `normalizeStatusWording` wording. */
   readonly stage: (code: string | null, wording: string) => Stage | undefined;
