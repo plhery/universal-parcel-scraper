@@ -4736,5 +4736,11 @@
     "pattern": "^\\d{7}$",
     "kind": "open",
     "reason": "XLS Futár’s guest tracker shows a delivered parcel for a seven-digit number. Detection offers only SEUR for this input."
+  },
+  {
+    "carrier": "xindus",
+    "pattern": "^X\\d{9}$",
+    "kind": "open",
+    "reason": "A public Xindus Lite shipment report identifies air waybills with X followed by nine digits. Detection currently offers Australia Post for both inputs."
   }
 ]
