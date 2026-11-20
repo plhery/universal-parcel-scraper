@@ -94888,6 +94888,12 @@
     ]
   },
   {
+    "input": "LEXDO0038488007",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "LEXRT0002055865VNA",
     "carrier": "unknown",
     "confidence": "low",
@@ -110889,6 +110895,12 @@
       "tnt-au",
       "purolator"
     ]
+  },
+  {
+    "input": "XB070002348362",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "XC9999999980CN",

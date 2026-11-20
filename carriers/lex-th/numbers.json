@@ -1,5 +1,48 @@
 {
   "carrier": "lex-th",
-  "gap": "No public page shows a LEX Thailand number.",
-  "records": []
+  "records": [
+    {
+      "number": "LEXDO0038488007",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pantip.com/topic/41402039",
+        "date": "2022-04-29",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Lazada Thailand delivery by LEX",
+        "reportedRole": "parcel number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The buyer identifies LEX Thailand and posts this as the parcel number for a Lazada delivery held at its destination station."
+    },
+    {
+      "number": "XB070002348362",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pantip.com/topic/39518798",
+        "date": "2019-12-27",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Lazada cross-border handoff from Cainiao to LEX Thailand",
+        "reportedRole": "parcel number",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The buyer's tracking history names Cainiao in China and a planned handoff to LEX Thailand. It leaves open whether LEX accepted the parcel under this number."
+    }
+  ]
 }

@@ -2154,6 +2154,12 @@
     "reason": "Two letters and nine or ten digits are printed by several carriers and no known check sets Leopards apart."
   },
   {
+    "carrier": "lex-th",
+    "pattern": "^LEXDO\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer LEX Thailand for the LEXDO-prefixed parcel number reported by a Lazada Thailand buyer."
+  },
+  {
     "carrier": "libanpost",
     "pattern": "^PX\\d{11}$",
     "kind": "by_design",
