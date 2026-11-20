@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'rist-transport', number: '21509962',
+    route: /^https:\/\/ltl-tracking\.risttransport\.com\/boldetail\.htm\?nav=top&wbtn=PRO&wpro1=21509962$/,
+    marker: /Shipment Number|Shipment Status/i },
   { carrier: 'sun-logistics', number: '33807093',
     route: /^https:\/\/tracking\.carrierlogistics\.com\/scripts\/snle\.pol\/facts\.htm\?startpage=protrace&pronum=33807093$/,
     marker: /Shipment number|Shipment history/i },

@@ -50732,6 +50732,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "rist-transport": {
+    "displayName": "RIST Transport",
+    "color": "#233B65",
+    "aliases": [
+      "RIST Transport Ltd.",
+      "RIST LTL"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "rist-transport",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ltl-tracking.risttransport.com/shipmenttrace.htm",
+    "trackingUrlTemplate": "https://ltl-tracking.risttransport.com/boldetail.htm?nav=top&wbtn=PRO&wpro1={trackingNumber}",
+    "trackingSearchUrl": "https://ltl-tracking.risttransport.com/shipmenttrace.htm",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rivigo": {
     "displayName": "Rivigo",
     "color": "#f4162d",
@@ -68569,6 +68592,7 @@ export const CARRIER_IDS = [
   "riders-express",
   "rika-express",
   "rincos",
+  "rist-transport",
   "rivigo",
   "rl-carriers",
   "roadie",
@@ -70508,6 +70532,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "riders-express": [],
   "rika-express": [],
   "rincos": [],
+  "rist-transport": [],
   "rivigo": [],
   "rl-carriers": ["rl-carriers-1","rl-carriers-2","rl-carriers-3"],
   "roadie": ["roadie-1","roadie-2"],

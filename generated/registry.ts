@@ -704,6 +704,7 @@ import { adapter as relaytech } from '../carriers/relaytech/adapter.js';
 import { adapter as rexIndonesia } from '../carriers/rex-indonesia/adapter.js';
 import { adapter as rhenusIt } from '../carriers/rhenus-it/adapter.js';
 import { adapter as rincos } from '../carriers/rincos/adapter.js';
+import { adapter as ristTransport } from '../carriers/rist-transport/adapter.js';
 import { adapter as rivigo } from '../carriers/rivigo/adapter.js';
 import { adapter as rlCarriers } from '../carriers/rl-carriers/adapter.js';
 import { adapter as roadie } from '../carriers/roadie/adapter.js';
@@ -1671,6 +1672,7 @@ export const REGISTRY: RegistryDefinition = {
     "rex-indonesia": rexIndonesia,
     "rhenus-it": rhenusIt,
     "rincos": rincos,
+    "rist-transport": ristTransport,
     "rivigo": rivigo,
     "rl-carriers": rlCarriers,
     "roadie": roadie,
@@ -3346,6 +3348,7 @@ export const REGISTRY: RegistryDefinition = {
     "riders-express": "universal",
     "rika-express": "universal",
     "rincos": "rincos",
+    "rist-transport": "rist-transport",
     "rivigo": "rivigo",
     "rl-carriers": "rl-carriers",
     "roadie": "roadie",

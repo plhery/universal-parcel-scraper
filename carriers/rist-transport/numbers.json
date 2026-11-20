@@ -1,0 +1,74 @@
+{
+  "carrier": "rist-transport",
+  "records": [
+    {
+      "number": "21509962",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking.carrierlogistics.com/scripts/hwep.pol/boldetail.htm?nav=top&wbtn=PRO&wpro1=21509962",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The indexed RIST shipment-detail page exposes this PRO as a public result.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The portal shows six movement rows, including two descriptions of the same completed delivery."
+    },
+    {
+      "number": "11259040",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking.carrierlogistics.com/scripts/hwep.pol/boldetail.htm?nav=top&wbtn=PRO&wpro1=11259040",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The indexed RIST shipment-detail page exposes this PRO as a public result.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The portal shows seven movement rows through delivery in Massachusetts."
+    },
+    {
+      "number": "11169582",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking.carrierlogistics.com/scripts/hwep.pol/boldetail.htm?nav=top&wbtn=PRO&wpro1=11169582",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The indexed RIST shipment-detail page exposes this PRO as a public result.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The portal confirms shipment identity and a delivered history, including intermediate New England terminals."
+    }
+  ]
+}

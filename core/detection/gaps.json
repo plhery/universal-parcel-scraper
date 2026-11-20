@@ -5869,5 +5869,10 @@
     "carrier": "sun-logistics",
     "kind": "open",
     "reason": "The observed Sun Logistics PRO consists of eight generic digits. Select Sun Logistics explicitly."
+  },
+  {
+    "carrier": "rist-transport",
+    "kind": "open",
+    "reason": "The verified RIST PRO numbers contain eight generic digits. Select RIST Transport explicitly."
   }
 ]
