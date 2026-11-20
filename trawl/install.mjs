@@ -193,7 +193,7 @@ writeFileSync(orchestratorPath, orchestrator.replace(attempt, attempt + '\n     
 
 // A USPS session sent to the outage page is dropped rather than replayed.
 writeFileSync(orchestratorPath, forgetUspsOutageSessions(readFileSync(orchestratorPath, 'utf8')));
-// USPS tracking reads share one kept session: USPS refuses each session's first read.
+// USPS tracking reads go through sessions prepared ahead: USPS refuses each session's first read.
 writeFileSync(orchestratorPath, keepUspsSession(readFileSync(orchestratorPath, 'utf8')));
 
 // FedEx's verified session keeps its browser: the pool returns to it and holds it past

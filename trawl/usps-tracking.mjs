@@ -71,32 +71,56 @@ const SESSION_PATCHES = [
 
 // USPS sends the first read of every browser session to the outage page, and keeps sending some
 // sessions there; a session it has let through keeps loading tracking, minutes apart or back to
-// back. So reads without a proxy of their own go one at a time through one of TRAWL's named
-// sessions, which keeps its context and its browser. A new session gets a few reads, spaced out,
-// before it is replaced; one USPS has let through is replaced once it is refused twice in a row.
+// back, until USPS turns it away again. So reads without a proxy of their own go through TRAWL's
+// named sessions, which keep their context and their browser, and only through sessions USPS has
+// already let through. Those are prepared in the background, away from any lookup: a new session
+// reads the last requested tracking page a few times, spaced out, and is kept once tracking loads.
+// Two are kept, so a lookup turned away by one is read again through the other.
 const SESSION_PREFIX = 'usps-tracking-';
 export const USPS_SESSION_SPACING_MS = 10_000;
 export const USPS_SESSION_TRIAL_READS = 3;
 export const USPS_SESSION_LOST_AFTER = 2;
 export const USPS_SESSION_MAX_AGE_MS = 2 * 60 * 60_000;
-// Below this a read would only be cut short: a turn or a spacing wait that leaves less is not taken.
+export const USPS_READY_SESSIONS = 2;
+// After this many sessions in a row that USPS let none through, no new one is tried for the rest,
+// which doubles each time up to sixteen minutes until USPS lets one through: USPS turns nearly every
+// session away for hours at a time, and reads it would refuse are not worth sending.
+export const USPS_TRIALS_BEFORE_REST = 4;
+export const USPS_REST_MS = 2 * 60_000;
+const LONGEST_REST = 8;
+// Without a lookup for this long, no session is prepared; TRAWL's idle sweep closes the kept ones.
+export const USPS_IDLE_MS = 30 * 60_000;
+// How long a lookup waits for a session being prepared before it gives up.
+export const USPS_WAIT_FOR_SESSION_MS = 20_000;
+const TRIAL_READ_MS = 30_000;
+// Below this a read would only be cut short: a session that leaves less is not taken.
 const MIN_READ_MS = 8_000;
+const TRACKING = /\bid=["']?trackingNum\b/;
 const reportSession = fields => console.warn(JSON.stringify({ level: 'warn', event: 'usps.session', ...fields }));
 
 const statusOf = error => (typeof error?.statusCode === 'number' ? error.statusCode : undefined);
+const unready = () => Object.assign(new Error('No USPS browser session is ready'), { statusCode: 503 });
 
 export class UspsSessions {
-  #current;
-  #turn = Promise.resolve();
+  #ready = [];
+  #preparing = 0;
+  #failedTrials = 0;
+  #restUntil = 0;
+  #rests = 0;
+  #lastLookupAt = 0;
   #serial = 0;
+  #changed = new Set();
+  #template; #sessions; #scrape;
 
   constructor({ now = Date.now, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)), report = reportSession,
     spacingMs = USPS_SESSION_SPACING_MS, trialReads = USPS_SESSION_TRIAL_READS, lostAfter = USPS_SESSION_LOST_AFTER,
-    maxAgeMs = USPS_SESSION_MAX_AGE_MS, minReadMs = MIN_READ_MS } = {}) {
-    Object.assign(this, { now, sleep, report, spacingMs, trialReads, lostAfter, maxAgeMs, minReadMs });
+    maxAgeMs = USPS_SESSION_MAX_AGE_MS, readySessions = USPS_READY_SESSIONS, trialsBeforeRest = USPS_TRIALS_BEFORE_REST,
+    restMs = USPS_REST_MS, idleMs = USPS_IDLE_MS, waitMs = USPS_WAIT_FOR_SESSION_MS, minReadMs = MIN_READ_MS } = {}) {
+    Object.assign(this, { now, sleep, report, spacingMs, trialReads, lostAfter, maxAgeMs, readySessions, trialsBeforeRest,
+      restMs, idleMs, waitMs, minReadMs });
   }
 
-  /** Whether a scrape request is an ordinary USPS tracking read the kept session serves. */
+  /** Whether a scrape request is an ordinary USPS tracking read the kept sessions serve. */
   routes(req, sessions) {
     return Boolean(sessions) && !req?.sessionId && req?.proxy === undefined && !req?.cookies?.length
       && (req.maxTier ?? 4) >= 3 && uspsCaptureNumber(req.url, req) !== null;
@@ -106,84 +130,136 @@ export class UspsSessions {
     try { this.report(fields); } catch { /* Diagnostics never change a read. */ }
   }
 
-  async #end(sessions, session, reason) {
-    if (this.#current !== session) return;
-    this.#current = undefined;
+  #notify() {
+    for (const wake of [...this.#changed]) wake();
+  }
+
+  async #end(session, reason) {
+    const kept = this.#ready.indexOf(session);
+    if (kept >= 0) this.#ready.splice(kept, 1);
+    else if (session.accepted) return;
     this.#report({ state: 'ended', reason, reads: session.reads, accepted: session.accepted,
       ageMs: Math.max(0, this.now() - session.created) });
-    try { await sessions.destroy(session.id); } catch { /* Already gone, or its sweep removes it. */ }
+    try { await this.#sessions.destroy(session.id); } catch { /* Already gone, or its sweep removes it. */ }
+    this.#prepare();
   }
 
-  async #session(sessions) {
-    const current = this.#current;
-    if (current) {
-      const live = (await sessions.list()).some(entry => entry.id === current.id);
-      if (!live) await this.#end(sessions, current, 'expired');
-      else if (this.now() - current.created >= this.maxAgeMs) await this.#end(sessions, current, 'max_age');
+  /** Opens sessions in the background until enough are ready, unless USPS just refused several or no lookup came. */
+  #prepare() {
+    if (!this.#template || this.now() < this.#restUntil || this.now() - this.#lastLookupAt >= this.idleMs) return;
+    while (this.#ready.length + this.#preparing < this.readySessions
+      && this.#failedTrials + this.#preparing < this.trialsBeforeRest) {
+      this.#preparing++;
+      void this.#trial().catch(() => false).then(accepted => {
+        this.#preparing--;
+        if (accepted) this.#failedTrials = this.#rests = 0;
+        else if (++this.#failedTrials >= this.trialsBeforeRest && this.#restUntil <= this.now()) {
+          this.#failedTrials = 0;
+          const rest = this.restMs * Math.min(LONGEST_REST, 2 ** this.#rests++);
+          this.#restUntil = this.now() + rest;
+          this.#report({ state: 'resting', ready: this.#ready.length, restMs: rest });
+          void this.sleep(rest).then(() => this.#prepare());
+        }
+        this.#notify();
+        this.#prepare();
+      });
     }
-    if (!this.#current) {
-      const id = `${SESSION_PREFIX}${++this.#serial}`;
-      await sessions.create({ id });
-      this.#current = { id, created: this.now(), reads: 0, refusals: 0, failures: 0, accepted: false, lastReadAt: undefined };
-      this.#report({ state: 'created' });
-    }
-    return this.#current;
   }
 
-  /** Reads `req` through the kept session; `scrape` runs one read of a named session. */
+  /** One new session's spaced reads of the last requested page; whether USPS let it through. */
+  async #trial() {
+    const sessions = this.#sessions;
+    const session = { id: `${SESSION_PREFIX}${++this.#serial}`, created: this.now(), reads: 0, refusals: 0, failures: 0,
+      accepted: false, busy: false };
+    await sessions.create({ id: session.id });
+    this.#report({ state: 'created' });
+    for (let read = 0; read < this.trialReads && !session.accepted; read++) {
+      if (read) await this.sleep(this.spacingMs);
+      session.reads++;
+      let result;
+      try { result = await this.#scrape({ ...this.#template, sessionId: session.id, maxTimeout: TRIAL_READ_MS }); }
+      catch (error) {
+        if ([404, 410].includes(statusOf(error))) break;
+        continue;
+      }
+      session.accepted = !uspsOutage(result) && TRACKING.test(result?.html ?? '');
+    }
+    if (!session.accepted) {
+      await this.#end(session, 'not_accepted');
+      return false;
+    }
+    this.#report({ state: 'accepted', reads: session.reads, ageMs: Math.max(0, this.now() - session.created) });
+    this.#ready.push(session);
+    return true;
+  }
+
+  /** A ready session no read holds and this lookup has not tried, waiting up to `waitMs` for one. */
+  async #take(tried, waitMs) {
+    const deadline = this.now() + waitMs;
+    for (;;) {
+      const live = new Set((await this.#sessions.list()).map(entry => entry.id));
+      for (const session of [...this.#ready]) {
+        if (session.busy) continue;
+        if (!live.has(session.id)) await this.#end(session, 'expired');
+        else if (this.now() - session.created >= this.maxAgeMs) await this.#end(session, 'max_age');
+      }
+      this.#prepare();
+      const free = this.#ready.find(session => !session.busy && !tried.has(session));
+      // Taken before the caller resumes: two lookups waiting together never get the same session.
+      if (free) { free.busy = true; return free; }
+      const waitable = this.#preparing > 0 || this.#ready.some(session => session.busy && !tried.has(session));
+      const remaining = deadline - this.now();
+      if (!waitable || remaining <= 0) return undefined;
+      let wake;
+      const changed = new Promise(resolve => { wake = resolve; });
+      this.#changed.add(wake);
+      let timer;
+      await Promise.race([changed, new Promise(resolve => { timer = setTimeout(resolve, remaining); })]);
+      clearTimeout(timer);
+      this.#changed.delete(wake);
+    }
+  }
+
+  /** Reads `req` through a session USPS has let through; `scrape` runs one read of a named session. */
   async run(req, sessions, scrape) {
     const started = this.now();
     const total = req.maxTimeout ?? 60_000;
     const left = () => total - (this.now() - started);
-    const previous = this.#turn;
-    let release, ready = false;
-    this.#turn = new Promise(resolve => { release = resolve; });
-    try {
-      let timer;
-      ready = await Promise.race([previous.then(() => true), new Promise(resolve => {
-        timer = setTimeout(() => resolve(false), Math.max(0, left() - this.minReadMs));
-      })]);
-      clearTimeout(timer);
-      if (!ready) throw Object.assign(new Error('USPS browser session is busy'), { statusCode: 429 });
-      let session;
-      try { session = await this.#session(sessions); }
-      catch (error) {
-        // Without a session of its own, the read goes as before, in a fresh browser.
-        if (statusOf(error) === 429 || statusOf(error) === 503) return await scrape({ ...req, maxTimeout: Math.max(1, Math.floor(left())) });
-        throw error;
+    this.#lastLookupAt = started;
+    this.#template = { ...req };
+    this.#sessions = sessions;
+    this.#scrape = scrape;
+    const tried = new Set();
+    let refused;
+    for (;;) {
+      // A lookup one session turned away is read once more, through the other when it is free.
+      const session = await this.#take(tried, refused ? 0 : Math.min(this.waitMs, left() - this.minReadMs));
+      if (session && left() < this.minReadMs) { session.busy = false; this.#notify(); }
+      if (!session || left() < this.minReadMs) {
+        if (refused) return refused;
+        throw unready();
       }
-      if (!session.accepted && session.lastReadAt !== undefined) {
-        const wait = this.spacingMs - (this.now() - session.lastReadAt);
-        if (wait > 0 && left() - wait >= this.minReadMs) await this.sleep(wait);
-      }
+      tried.add(session);
       session.reads++;
-      session.lastReadAt = this.now();
       let result;
       try { result = await scrape({ ...req, sessionId: session.id, maxTimeout: Math.max(1, Math.floor(left())) }); }
       catch (error) {
-        session.failures++;
-        if ([404, 410].includes(statusOf(error))) await this.#end(sessions, session, 'gone');
-        else if (session.failures >= 2) await this.#end(sessions, session, 'failed');
+        session.busy = false;
+        if ([404, 410].includes(statusOf(error))) await this.#end(session, 'gone');
+        else if (++session.failures >= 2) await this.#end(session, 'failed');
+        this.#notify();
         throw error;
       }
+      session.busy = false;
       session.failures = 0;
-      if (uspsOutage(result)) {
-        session.refusals++;
-        if (session.accepted ? session.refusals >= this.lostAfter : session.reads >= this.trialReads) {
-          await this.#end(sessions, session, session.accepted ? 'refused' : 'not_accepted');
-        }
-      } else if (/\bid=["']?trackingNum\b/.test(result?.html ?? '')) {
-        if (!session.accepted) this.#report({ state: 'accepted', reads: session.reads, ageMs: Math.max(0, this.now() - session.created) });
-        session.accepted = true;
-        session.refusals = 0;
-      } else if (!session.accepted && session.reads >= this.trialReads) {
-        await this.#end(sessions, session, 'not_accepted');
+      if (!uspsOutage(result)) {
+        if (TRACKING.test(result?.html ?? '')) session.refusals = 0;
+        this.#notify();
+        return result;
       }
-      return result;
-    } finally {
-      // A read that gave up waiting passes its turn on only once the read before it ends.
-      if (ready) release();
-      else void previous.then(release);
+      if (++session.refusals >= this.lostAfter) await this.#end(session, 'refused');
+      this.#notify();
+      refused = result;
     }
   }
 }

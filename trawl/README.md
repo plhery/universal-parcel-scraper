@@ -41,8 +41,8 @@ That redirect can leave the verification wrapper blank; retaining it lets the
 adapter distinguish temporary unavailability from an unresolved challenge.
 A cookie session USPS sent there is dropped instead of replayed, and a fresh browser sent
 there saves none ([usps-tracking.mjs](usps-tracking.mjs)). USPS sends the first read of every
-browser session there, so tracking reads without a proxy of their own go one at a time through
-one of TRAWL's named sessions (see Sessions).
+browser session there, so tracking reads without a proxy of their own go through TRAWL's named
+sessions that USPS has already let through (see Sessions).
 
 Spee-Dee also uses the service's HTTP tier after a refused direct connection; the benefit
 is the service's network, and no browser is launched. MTCaptcha (Hongkong Post)
@@ -97,13 +97,19 @@ browsers keep TRAWL's policy. The constants are in [fedex-session.mjs](fedex-ses
 A `fedex.browser-hold` warning records each hold that starts, ends or is declined, with
 its reason, browser slot, lookups, age and memory share.
 
-USPS keeps one named TRAWL session, `usps-tracking-<n>`, which keeps its context and its
-browser. USPS refuses each session's first read and lets only some sessions through, whatever
-the browser or address; one it lets through keeps loading tracking. A new session gets three
-reads, ten seconds apart, before it is replaced; one USPS has let through is replaced after two
-refusals in a row, after two hours, or when its browser goes. Reads wait their turn within their
-own budget. Without room for a session, a read uses a fresh context as before. A `usps.session`
-warning records each session created, let through and ended, with its reason, reads and age.
+USPS reads go through named TRAWL sessions, `usps-tracking-<n>`, which keep their context and
+their browser. USPS refuses each session's first read and lets only some sessions through,
+whatever the browser or address; one it lets through keeps loading tracking for a while. So
+sessions are prepared in the background, away from any lookup: a new one reads the last requested
+tracking page up to three times, ten seconds apart, and is kept once tracking loads. Two are kept.
+A lookup reads through one of them, and once more through the other when the first turns it away.
+A session is replaced after two refusals in a row, after two hours, or when its browser goes.
+After four new sessions in a row that USPS let none through, none is opened for two minutes, a
+rest that doubles up to sixteen minutes until one is let through, and none is opened once no
+lookup has come for half an hour. A lookup waits up to twenty seconds for a session
+being prepared; with none ready it fails without reading, since a fresh context's read is always
+refused. A `usps.session` warning records each session created, let through and ended, with its
+reason, reads and age, and each rest.
 
 Australia Post, DHL Express, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta and ZTO use fresh contexts.
 Australia Post also uses its capture helper through a request's proxy, keeping that route's
