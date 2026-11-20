@@ -5959,5 +5959,10 @@
     "carrier": "pressex-logistics",
     "kind": "open",
     "reason": "One published PressEx guide does not establish a carrier-specific range. Select PressEx Logistics explicitly."
+  },
+  {
+    "carrier": "bermuda-container-line",
+    "kind": "open",
+    "reason": "The verified ISO container identifier and booking do not establish an exclusive number range. Select Bermuda Container Line explicitly."
   }
 ]

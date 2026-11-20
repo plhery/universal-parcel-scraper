@@ -1,0 +1,54 @@
+{
+  "carrier": "bermuda-container-line",
+  "records": [
+    {
+      "number": "BCLU8009690",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/bermuda-institute-of-ocean-sciences",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "Public customs record names Bermuda Container Line and the equipment. The carrier’s guest lookup returns the exact container and five recent dated movements."
+      },
+      "note": "The container has since moved on a later voyage than the published customs record."
+    },
+    {
+      "number": "IM09189",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/bermuda-institute-of-ocean-sciences",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "The carrier’s public tracker names this booking for the publicly documented container BCLU8009690. Searching that booking independently confirms the same equipment and history."
+      }
+    },
+    {
+      "number": "BCLU2388WBC86217",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "source": {
+        "url": "https://www.importgenius.com/importers/sazerac-distillers-of-canada-inc",
+        "access": "full_page"
+      },
+      "note": "Public customs master bill. The carrier’s guest booking and container lookup reports no match for the full printed bill."
+    }
+  ]
+}

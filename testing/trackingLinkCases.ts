@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'bermuda-container-line', number: 'BCLU8009690',
+    route: /^https:\/\/neptunebermuda\.com\/track-shipment\/?$/,
+    marker: /Booking or Container Number|Bermuda Container Line/i, forwarding: 'none' },
   { carrier: 'pressex-logistics', number: 'BOG00100600000409',
     route: /^https:\/\/plataforma\.nuvix\.co\/auth\/rastreoGuia\/pressex\/?$/,
     marker: /Rastrear mi envio|Numero de guía o remesa/iu, forwarding: 'none', renderTimeoutMs: 12000 },

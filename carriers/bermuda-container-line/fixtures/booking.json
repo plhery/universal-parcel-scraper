@@ -1,0 +1,68 @@
+{
+  "query": "IM09189",
+  "resultCount": 1,
+  "groups": [
+    {
+      "documentCode": "IM09189",
+      "containers": [
+        {
+          "containerNumber": "BCLU8009690",
+          "lastActivity": "In-Gate",
+          "isComplete": true,
+          "moves": [
+            {
+              "date": "6 November 2026",
+              "time": "11:38 am",
+              "type": "In-Gate",
+              "state": "Empty",
+              "location": "HAMILTON",
+              "locationType": "Bermuda",
+              "isCompletion": false,
+              "isLatest": true
+            },
+            {
+              "date": "5 November 2026",
+              "time": "10:35 am",
+              "type": "Out-Gate",
+              "state": "Load Full",
+              "location": "HAMILTON",
+              "locationType": "Bermuda",
+              "isCompletion": false,
+              "isLatest": false
+            },
+            {
+              "date": "2 November 2026",
+              "time": "6:54 pm",
+              "type": "Unloaded From Vessel",
+              "state": "Load Full",
+              "location": "HAMILTON",
+              "locationType": "Bermuda",
+              "isCompletion": true,
+              "isLatest": false
+            },
+            {
+              "date": "30 October 2026",
+              "time": "10:41 am",
+              "type": "Loaded on Vessel",
+              "state": "Load Full",
+              "location": "Maher",
+              "locationType": "U.S.A.",
+              "isCompletion": false,
+              "isLatest": false
+            },
+            {
+              "date": "30 October 2026",
+              "time": "7:02 am",
+              "type": "In-Gate (322)",
+              "state": "Load Full",
+              "location": "Maher",
+              "locationType": "U.S.A.",
+              "isCompletion": false,
+              "isLatest": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

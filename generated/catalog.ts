@@ -11080,6 +11080,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "bermuda-container-line": {
+    "displayName": "Bermuda Container Line",
+    "color": "#253F60",
+    "aliases": [
+      "Neptune Bermuda Container Line",
+      "Bermuda Container Line Ltd"
+    ],
+    "countries": [
+      "BM",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "Atlantic/Bermuda",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bermuda-container-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://neptunebermuda.com/track-shipment/",
+    "trackingUrlTemplate": "https://neptunebermuda.com/track-shipment/",
+    "trackingSearchUrl": "https://neptunebermuda.com/track-shipment/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "best-courier-ro": {
     "displayName": "Best Courier",
     "color": "#154687",
@@ -67821,6 +67845,7 @@ export const CARRIER_IDS = [
   "bel",
   "belpost",
   "bergen-transport-sentral",
+  "bermuda-container-line",
   "best-courier-ro",
   "best-express-kh",
   "best-express-my",
@@ -69778,6 +69803,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bel": [],
   "belpost": ["belpost-s10"],
   "bergen-transport-sentral": [],
+  "bermuda-container-line": [],
   "best-courier-ro": [],
   "best-express-kh": [],
   "best-express-my": ["best-express-my-1"],
