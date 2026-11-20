@@ -144,8 +144,8 @@ the same arrival at the destination. The app copies the destination post's
 own scans on that post's wall clock, to the minute of the post's own record or
 UPU's: arrival at and departure from its processing centre, the import office of
 exchange's hold, import customs' presentation, hold and release, arrivals at the
-delivery office, rounds, deliveries and departures from a transit office (codes
-459 to 463, 485 to 487, 489 and 493). Those keep the wall clock alone, which the shared clock step dates by
+delivery office, rounds, deliveries and arrivals at and departures from a transit office (codes
+459 to 463, 485 to 489 and 493). Those keep the wall clock alone, which the shared clock step dates by
 the destination it names. The arrival in the destination country (516) stays on
 China's, unless it falls on the minute and office of that post's arrival at its
 processing centre, which it then copies: on China's clock, one such arrival in

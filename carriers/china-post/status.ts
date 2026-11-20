@@ -36,6 +36,8 @@ const CODES: Readonly<Record<string, ClassifiedStatus>> = {
   '459': IN_TRANSIT,
   '460': IN_TRANSIT,
   '461': IN_TRANSIT,
+  // Arrived at and left a transit office abroad (到达境外经转局, 离开境外经转局).
+  '488': IN_TRANSIT,
   '489': IN_TRANSIT,
   // Domestic flight legs: departed (已起飞) and landed (已落地).
   '911': IN_TRANSIT,

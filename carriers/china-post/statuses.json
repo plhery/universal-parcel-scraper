@@ -86,6 +86,13 @@
       "note": "Scan code (operationCode). 境外进口海关留存待验 (held by import customs abroad for inspection)."
     },
     {
+      "code": "488",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Scan code (operationCode). 到达境外经转局 (arrived at a foreign transit office), on the destination post's clock."
+    },
+    {
       "code": "489",
       "stage": "in_transit",
       "confirmedBy": "live",
