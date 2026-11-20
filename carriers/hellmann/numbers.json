@@ -1,5 +1,85 @@
 {
   "carrier": "hellmann",
-  "gap": "No public page shows a Hellmann Worldwide Logistics number.",
-  "records": []
+  "records": [
+    {
+      "number": "73854401",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221003212112id_/https://public.tracking.hellmann.net/search/73854401",
+        "date": "2022-10-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Hellmann public tracking",
+        "reportedRole": "shipment query path reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The exact number appears in the Wayback capture URL of Hellmann's public shipment tracker. The archived and current HTML are application shells without shipment details."
+    },
+    {
+      "number": "00340997551002094961",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250711065615id_/https://public.tracking.hellmann.net/search/00340997551002094961",
+        "date": "2025-07-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Hellmann public tracking",
+        "reportedRole": "possible logistics-unit barcode",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "The archived Hellmann search URL preserves this exact query. Its format matches an NVE shipping-unit barcode, whose issuer could be a shipper. The public HTML did not disclose a result."
+    },
+    {
+      "number": "00340997554002328852",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260202234147id_/https://public.tracking.hellmann.net/search/road?hps.collino=00340997554002328852",
+        "date": "2026-02-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Hellmann road freight",
+        "reportedRole": "hps.collino package query",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "The archived road freight page supplies this exact value in its package query. A shipper can issue the NVE identifier, and the archived and live HTML disclose no shipment result."
+    }
+  ]
 }
