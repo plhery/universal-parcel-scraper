@@ -21,7 +21,9 @@ customs too. A code the map does not know gives no stage, and the parcel keeps i
 known one, except a delivery, which a newer unknown code may have undone.
 
 Scans carry a wall clock without an offset, so they are local clocks; a clock that ends with an
-offset is read as an instant.
+offset is read as an instant. A clock's fraction of a second is kept to the millisecond, so scans
+apart by less than a second stay apart, and the app's identity policy lets such a scan take over
+the row stored on its whole second.
 
 ## Numbers
 

@@ -46,16 +46,21 @@ export function parseMemphisReply(status: number, body: string, rawNumber: strin
 
 
 
-/** A scan's clock: the service's wall clock, which states an offset only where it ends with one. */
+/**
+ * A scan's clock: the service's wall clock, which states an offset only where it ends with one.
+ * A fraction of a second is kept to the millisecond, the precision results carry.
+ */
 function clockOf(value: unknown): { local_time: string } | { time: string } | null {
-  const match = typeof value === 'string' ? /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,7})?(Z|[+-]\d{2}:\d{2})?$/.exec(value.trim()) : null;
+  const match = typeof value === 'string' ? /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.(\d{1,7}))?(Z|[+-]\d{2}:\d{2})?$/.exec(value.trim()) : null;
   if (!match) return null;
-  const [, wall, offset] = match;
+  const [, wall, fraction, offset] = match;
   // A day or an hour out of range does not round-trip, such as 30 February.
   const date = new Date(`${wall!}Z`);
   if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 19) !== wall) return null;
-  if (!offset) return { local_time: wall };
-  const instant = explicitOffsetTime(`${wall}${offset}`);
+  const millis = (fraction ?? '').slice(0, 3).padEnd(3, '0');
+  const clock = millis === '000' ? wall! : `${wall}.${millis}`;
+  if (!offset) return { local_time: clock };
+  const instant = explicitOffsetTime(`${clock}${offset}`);
   return instant ? { time: instant.iso } : null;
 }
 
@@ -84,7 +89,8 @@ export function parseMemphis(payload: unknown, rawNumber: string): CarrierResult
     const location = clean(item.location, 80);
     const event: CarrierEvent = { ...clock, description, ...(location ? { location } : {}), ...(code ? { provider_code: code } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
-    const identity = JSON.stringify(event);
+    // Two scans apart by less than a millisecond stay apart by the service's own fraction.
+    const identity = JSON.stringify([String(item.date).trim(), event]);
     if (seen.has(identity)) return;
     seen.add(identity);
     // The list runs newest first, so an earlier row of the same clock is the later scan.

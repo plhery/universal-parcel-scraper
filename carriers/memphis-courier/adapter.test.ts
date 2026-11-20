@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { languageStageStatus, STAGES } from '../../core/status/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -40,9 +41,9 @@ describe('Memphis Courier guest adapter', () => {
       last_status_text: 'Encomenda em transferência', expected_delivery: null, weight_kg: 0.75, last_update: null, last_update_local: '2026-03-12T09:15:00',
       events: [
         { local_time: '2026-03-12T09:15:00', description: 'Encomenda em transferência', provider_code: 'TRA', stage: 'in_transit', stage_source: 'carrier_map' },
-        { local_time: '2026-03-10T07:20:11', description: 'Encomenda em trânsito', provider_code: 'ENO', stage: 'in_transit', stage_source: 'carrier_map' },
+        { local_time: '2026-03-10T07:20:11.500', description: 'Encomenda em trânsito', provider_code: 'ENO', stage: 'in_transit', stage_source: 'carrier_map' },
         { local_time: '2026-03-09T06:05:42', description: 'Entrada registrada no Centro de Distribuição', provider_code: 'CHK', stage: 'in_transit', stage_source: 'carrier_map' },
-        { local_time: '2026-03-03T14:30:27', description: 'Seu pedido foi criado com sucesso', provider_code: 'FLT', stage: 'registered', stage_source: 'carrier_map' },
+        { local_time: '2026-03-03T14:30:27.123', description: 'Seu pedido foi criado com sucesso', provider_code: 'FLT', stage: 'registered', stage_source: 'carrier_map' },
       ] });
     // Rows out of order are put newest first; rows of one clock keep the reply's order.
     const shuffled = parseMemphis(changed(h => { h.events.reverse(); }), NUMBER);
@@ -54,6 +55,28 @@ describe('Memphis Courier guest adapter', () => {
     expect(zoned).toMatchObject({ current_stage: 'delivered', status: languageStageStatus('delivered'), last_update: '2026-03-14T12:00:00-03:00' });
     expect(zoned.events![0]).toEqual({ time: '2026-03-14T12:00:00-03:00', description: 'Synthetic wording', location: 'SP', provider_code: 'DLV', stage: 'delivered', stage_source: 'carrier_map' });
     expect(zoned.last_update_local).toBeUndefined();
+  });
+
+  it('keeps a clock\'s fraction of a second, and two scans apart by one', () => {
+    const twice = parseMemphis(changed(h => {
+      h.events.unshift(scan({ date: '2026-03-13T10:00:00.6' }), scan({ date: '2026-03-13T10:00:00' }));
+    }), NUMBER);
+    expect(twice.events!.slice(0, 2).map(event => event.local_time)).toEqual(['2026-03-13T10:00:00.600', '2026-03-13T10:00:00']);
+    expect(twice.last_update_local).toBe('2026-03-13T10:00:00.600');
+    // Seven digits keep their milliseconds; a fraction of zeros is the whole second.
+    const fine = parseMemphis(changed(h => { h.events.unshift(scan({ date: '2026-03-13T10:00:00.1234567' }), scan({ date: '2026-03-13T09:00:00.000-03:00' })); }), NUMBER);
+    expect(fine.events![0]!.local_time).toBe('2026-03-13T10:00:00.123');
+    expect(fine.events!.find(event => event.time)!.time).toBe('2026-03-13T09:00:00-03:00');
+    const zoned = parseMemphis(changed(h => { h.events.unshift(scan({ date: '2026-03-14T12:00:00.25-03:00' })); }), NUMBER);
+    expect(zoned.events![0]!.time).toBe('2026-03-14T12:00:00.250-03:00');
+    // The same scan stored on the whole second is the scan with its fraction.
+    const policy = sameInstantIdentityPolicy('memphis-courier', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ matchWithinMinute: true });
+    const stored = { stage: 'in_transit', description: 'Encomenda em trânsito', location: '', providerCode: 'ENO' };
+    expect(policy?.matches?.({ ...stored, description: ' Encomenda em  trânsito ' }, stored)).toBe(true);
+    for (const other of [{ ...stored, providerCode: 'TRA' }, { ...stored, location: 'SP' }, { ...stored, description: 'Encomenda em transferência' }]) {
+      expect(policy?.matches?.(other, stored)).toBe(false);
+    }
   });
 
   it('rejects a scan whose clock or wording it cannot read', () => {
