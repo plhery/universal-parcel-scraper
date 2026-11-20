@@ -1,0 +1,245 @@
+{
+  "result": [
+    {
+      "found": true,
+      "showEvents": false,
+      "header": {
+        "code": "12763027370",
+        "nf": "000002367",
+        "reference": "247885503",
+        "service": "URGENTE/KG",
+        "serviceName": "URGENTE",
+        "pieces": 1.0,
+        "weight": 2.0
+      },
+      "routing": {
+        "origin": {
+          "code": "PNZ",
+          "name": "MC RUPOLO EIRELI - ME",
+          "document": "22101659000177",
+          "phoneNumber": "(87) 30150001",
+          "email": "pnzfk@voegol.com.br",
+          "address": "Rua. Alfredo Viana",
+          "addressNumber": "06",
+          "addressComplement": "",
+          "postalCode": "56309050",
+          "city": "PETROLINA",
+          "state": "PE",
+          "country": "BRA",
+          "availableForBooking": "true",
+          "linkedAirportCode": null,
+          "officeHours": [
+            {
+              "name": "Manhã",
+              "from": "8:00 AM",
+              "to": "12:00 PM"
+            },
+            {
+              "name": "Tarde",
+              "from": "2:00 PM",
+              "to": "6:00 PM"
+            }
+          ],
+          "latitude": "-9.37741",
+          "longitude": "-40.51599",
+          "distance": 0.0
+        },
+        "destination": {
+          "code": "VDC",
+          "name": "DINASE LOGISTICA E DISTRIBUICAO LTDA - ME",
+          "document": "34930608000137",
+          "phoneNumber": null,
+          "email": "gollog.vdc@voegol.com.br",
+          "address": "Rua. B",
+          "addressNumber": "1",
+          "addressComplement": "(D Aeroporto) ",
+          "postalCode": "45051585",
+          "city": "VITÓRIA DA CONQUISTA",
+          "state": "BA",
+          "country": "BRA",
+          "availableForBooking": "true",
+          "linkedAirportCode": null,
+          "officeHours": [
+            {
+              "name": "Manhã",
+              "from": "9:00 AM",
+              "to": "12:00 PM"
+            },
+            {
+              "name": "Tarde",
+              "from": "12:01 PM",
+              "to": "6:00 PM"
+            }
+          ],
+          "latitude": "-14.8775678",
+          "longitude": "-40.8500471",
+          "distance": 0.0
+        }
+      },
+      "events": [
+        {
+          "agent": "REBECA SANTIAGO FREITAS",
+          "pid": "317966148",
+          "date": "2026-10-19T11:14:59Z",
+          "code": "DLV",
+          "codeDescription": "Entrega",
+          "station": "VDC",
+          "arrivalPoint": null,
+          "message": "1 volume retirado na loja GOLLOG - VDC por ESDRAS DIAS VIEIRA",
+          "scheduleType": null
+        },
+        {
+          "agent": "REBECA SANTIAGO FREITAS",
+          "pid": "317966147",
+          "date": "2026-10-19T11:13:59Z",
+          "code": "OND",
+          "codeDescription": "Saiu para entrega",
+          "station": "VDC",
+          "arrivalPoint": null,
+          "message": "1 volume em processo de entrega ao destinatário",
+          "scheduleType": null
+        },
+        {
+          "agent": "REBECA SANTIAGO FREITAS",
+          "pid": "317815467",
+          "date": "2026-10-18T02:56:26Z",
+          "code": "RCF",
+          "codeDescription": "Recebida no destino",
+          "station": "VDC",
+          "arrivalPoint": "VDC",
+          "message": "1 volume desembarcado no destino VDC no transporte G31570",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "NEXLOG SERVICE",
+          "pid": "317800900",
+          "date": "2026-10-17T21:41:39Z",
+          "code": "DEP",
+          "codeDescription": "Despachada",
+          "station": "GRU",
+          "arrivalPoint": "VDC",
+          "message": "1 volume está em transferência de GRU para VDC no transporte G31570",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "KEVEN ALEIXO",
+          "pid": "317774892",
+          "date": "2026-10-17T15:00:18Z",
+          "code": "MAN",
+          "codeDescription": "Manifestada",
+          "station": "GRU",
+          "arrivalPoint": "VDC",
+          "message": "1 volume foi manifestado no transporte G31570",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "CARLOS DANIEL SILVA DE ALMEIDA",
+          "pid": "317331136",
+          "date": "2026-10-15T09:30:41Z",
+          "code": "CIE",
+          "codeDescription": "Recebimento em base intermediária",
+          "station": "GRU",
+          "arrivalPoint": "GRU",
+          "message": "1 volume foi recebido na unidade GRU no transporte G31697 para conexão",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "NEXLOG SERVICE",
+          "pid": "317301939",
+          "date": "2026-10-15T06:05:08Z",
+          "code": "DEP",
+          "codeDescription": "Despachada",
+          "station": "SSA",
+          "arrivalPoint": "GRU",
+          "message": "1 volume está em transferência de SSA para GRU no transporte G31697",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "ANDREY BARRETO ARAUJO",
+          "pid": "317270683",
+          "date": "2026-10-15T00:22:43Z",
+          "code": "MAN",
+          "codeDescription": "Manifestada",
+          "station": "SSA",
+          "arrivalPoint": "GRU",
+          "message": "1 volume foi manifestado no transporte G31697",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "JULIO CEZAR SANTOS DE FREITAS",
+          "pid": "317113571",
+          "date": "2026-10-14T06:55:54Z",
+          "code": "CIE",
+          "codeDescription": "Recebimento em base intermediária",
+          "station": "SSA",
+          "arrivalPoint": "SSA",
+          "message": "1 volume foi recebido na unidade SSA no transporte G31941 para conexão",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "NEXLOG SERVICE",
+          "pid": "317104884",
+          "date": "2026-10-14T05:14:28Z",
+          "code": "DEP",
+          "codeDescription": "Despachada",
+          "station": "PNZ",
+          "arrivalPoint": "SSA",
+          "message": "1 volume está em transferência de PNZ para SSA no transporte G31941",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "KALINE DE CASTRO FERNANDES",
+          "pid": "317029070",
+          "date": "2026-10-13T18:12:38Z",
+          "code": "MAN",
+          "codeDescription": "Manifestada",
+          "station": "PNZ",
+          "arrivalPoint": "SSA",
+          "message": "1 volume foi manifestado no transporte G31941",
+          "scheduleType": "Air"
+        },
+        {
+          "agent": "CLEANE DO NASCIMENTO OLIVEIRA",
+          "pid": "317008940",
+          "date": "2026-10-13T16:11:37Z",
+          "code": "RCS",
+          "codeDescription": "Emitida",
+          "station": "PNZ",
+          "arrivalPoint": null,
+          "message": "1 volume foi recebido na loja GOLLOG - PNZ",
+          "scheduleType": null
+        }
+      ],
+      "originAdvancedPost": "PNZ - INTERNACIONAL (PETROLINA)",
+      "destinationAdvancedPost": "VDC - VITORIA DA CONQUISTA (VITÓRIA DA CONQUISTA)",
+      "nfeCode": null,
+      "isHomeDelivery": false,
+      "deliveryPlace": "pick-up",
+      "isCancelled": false,
+      "cancellationDateTime": null,
+      "expectedDeliveryDate": "16/10",
+      "deliveryDeadline": "16/10",
+      "lastStatus": {
+        "code": "DLV",
+        "description": "1 volume retirado na loja GOLLOG - VDC por ESDRAS DIAS VIEIRA",
+        "supportedCodes": []
+      },
+      "rcs": true,
+      "dep": true,
+      "dlv": true,
+      "ond": true,
+      "gre": false,
+      "crc": false,
+      "crcOccurredAtDestiny": false,
+      "ccd": false,
+      "ccdOccurredAtDestiny": false,
+      "rcf": true,
+      "deliveryAddress": null
+    }
+  ],
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__eaf": true
+}

@@ -320,6 +320,7 @@ import { adapter as gofoFr } from '../carriers/gofo-fr/adapter.js';
 import { adapter as gofoIt } from '../carriers/gofo-it/adapter.js';
 import { adapter as gofoNl } from '../carriers/gofo-nl/adapter.js';
 import { adapter as gogoXpress } from '../carriers/gogo-xpress/adapter.js';
+import { adapter as gollog } from '../carriers/gollog/adapter.js';
 import { adapter as grandSlamExpress } from '../carriers/grand-slam-express/adapter.js';
 import { adapter as gruberLogistics } from '../carriers/gruber-logistics/adapter.js';
 import { adapter as gsPostbox } from '../carriers/gs-postbox/adapter.js';
@@ -1153,6 +1154,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-it": gofoIt,
     "gofo-nl": gofoNl,
     "gogo-xpress": gogoXpress,
+    "gollog": gollog,
     "grand-slam-express": grandSlamExpress,
     "gruber-logistics": gruberLogistics,
     "gs-postbox": gsPostbox,
@@ -2376,7 +2378,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-nl": "gofo-nl",
     "gogo-xpress": "gogo-xpress",
     "golilla": "universal",
-    "gollog": "universal",
+    "gollog": "gollog",
     "golucky": "universal",
     "goodluck-courier": "universal",
     "goodmaji": "universal",

@@ -16,17 +16,37 @@
   "timezone": "America/Sao_Paulo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "gollog",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://servicos.gollog.com.br/app/site/tracking?code={trackingNumber}",
     "searchUrl": "https://servicos.gollog.com.br/app/site/tracking",
     "canaryUrl": "https://servicos.gollog.com.br/app/site/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "weight_kg",
+      "expected_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "weight_kg"
+    ],
+    "discarded": [
+      "expected_delivery"
+    ],
     "unavailable": []
   },
   "links": [

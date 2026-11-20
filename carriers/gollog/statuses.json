@@ -1,4 +1,71 @@
 {
   "carrier": "gollog",
-  "entries": []
+  "entries": [
+    {
+      "code": "RCS",
+      "wording": "Emitida",
+      "stage": "accepted",
+      "language": "pt",
+      "confirmedBy": "live",
+      "note": "The tracking page labels this milestone as received for dispatch."
+    },
+    {
+      "code": "DEP",
+      "wording": "Despachada",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CIE",
+      "wording": "Recebimento em base intermediária",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RCF",
+      "wording": "Recebida no destino",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "OND",
+      "wording": "Saiu para entrega",
+      "stage": "out_for_delivery",
+      "language": "pt",
+      "confirmedBy": "live",
+      "note": "When the carrier has selected store collection, the page instead labels this milestone ready for pickup."
+    },
+    {
+      "code": "DLV",
+      "wording": "Entrega",
+      "stage": "delivered",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CND",
+      "wording": "Conhecimento de transporte cancelado",
+      "stage": "exception",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "AWR",
+      "wording": "Documento recebido",
+      "stage": "registered",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "MAN",
+      "wording": "Manifestada",
+      "stage": "pending",
+      "language": "pt",
+      "confirmedBy": "live",
+      "note": "A manifest entry shown in the payload before departure and omitted from the public timeline."
+    }
+  ]
 }
