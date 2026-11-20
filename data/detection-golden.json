@@ -18981,6 +18981,16 @@
     ]
   },
   {
+    "input": "12847572",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
     "input": "1287681540123295",
     "carrier": "unknown",
     "confidence": "low",
@@ -59167,6 +59177,38 @@
       "inpost",
       "austrian-post",
       "ciblex"
+    ]
+  },
+  {
+    "input": "620X42712895",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post",
+      "colis-prive"
+    ],
+    "preferred": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post",
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "620X43658402",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post",
+      "colis-prive"
+    ],
+    "preferred": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post",
+      "colis-prive"
     ]
   },
   {

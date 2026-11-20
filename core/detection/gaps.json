@@ -5564,5 +5564,10 @@
     "carrier": "fraktjakt",
     "kind": "by_design",
     "reason": "Fraktjakt public tracking codes share an opaque hexadecimal shape. Select the carrier or use its shipment link."
+  },
+  {
+    "carrier": "marken",
+    "kind": "by_design",
+    "reason": "Marken lookup supports public job references without an automatic number rule. Select Marken or use its tracking link."
   }
 ]

@@ -39409,6 +39409,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "marken": {
+    "displayName": "Marken",
+    "color": "#0a2663",
+    "aliases": [
+      "Marken Logistics",
+      "Marken, UPS Healthcare"
+    ],
+    "countries": [
+      "US",
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "marken",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.marken.com/track-shipment",
+    "trackingUrlTemplate": "https://www.marken.com/track-shipment?jobNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.marken.com/track-shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "www.marken.com",
+          "marken.com",
+          "es.marken.com"
+        ],
+        "pathPattern": "^/track-shipment/?$",
+        "params": [
+          "jobNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "maruti-air": {
     "displayName": "Maruti Air Couriers & Cargo",
     "color": "#ed3237",
@@ -66730,6 +66766,7 @@ export const CARRIER_IDS = [
   "maraton",
   "maritime-ontario",
   "mark-express",
+  "marken",
   "maruti-air",
   "marvisur",
   "matkahuolto",
@@ -68608,6 +68645,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maraton": [],
   "maritime-ontario": [],
   "mark-express": [],
+  "marken": [],
   "maruti-air": [],
   "marvisur": [],
   "matkahuolto": ["matkahuolto-1","matkahuolto-2","matkahuolto-3","matkahuolto-4"],

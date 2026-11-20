@@ -2499,6 +2499,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  marken: 'The carrier accepts overlapping numeric shipment references. A published job verifies the rendered link separately.',
   fraktjakt: 'The shipment link takes a carrier-issued opaque tracking code. The live adapter and browser checks use published codes, and the daily link check cannot safely manufacture one.',
   'neighbour-express': 'The return tracker needs a fresh guest reCAPTCHA token before its lookup; native retrieval captures that whole-reference request in a scoped browser helper.',
   'the-delivery-group': 'The known parcel can need its delivery postcode; a number-only empty reply is inconclusive, and no rendered-page control was completed for this link.',

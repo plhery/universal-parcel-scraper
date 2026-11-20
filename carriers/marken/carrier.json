@@ -1,0 +1,28 @@
+{
+  "id": "marken",
+  "displayName": "Marken",
+  "aliases": ["Marken Logistics", "Marken, UPS Healthcare"],
+  "region": { "countries": ["US", "GB"] },
+  "brand": { "color": "#0a2663" },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": { "mode": "automatic", "adapter": "marken", "steps": ["direct"], "localClocks": true },
+  "capabilities": ["history", "provider_code", "weight"],
+  "portal": {
+    "url": "https://www.marken.com/track-shipment?jobNumber={trackingNumber}",
+    "searchUrl": "https://www.marken.com/track-shipment",
+    "canaryUrl": "https://www.marken.com/track-shipment",
+    "shows": ["status", "history", "weight", "parcel_count", "destination_country", "eta", "signature"],
+    "scraped": ["status", "history", "provider_code", "weight"],
+    "discarded": ["parcel_count", "destination_country", "eta", "signature"],
+    "unavailable": ["location", "offset_timestamps"]
+  },
+  "links": [
+    {
+      "domains": ["www.marken.com", "marken.com", "es.marken.com"],
+      "pathPattern": "^/track-shipment/?$",
+      "params": ["jobNumber"]
+    }
+  ],
+  "detection": []
+}
