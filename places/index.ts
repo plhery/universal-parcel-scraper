@@ -795,6 +795,8 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   }
   const station = stationPlace(data, text, context, carriers);
   if (station) return station;
+  // A station code no airport places names no town either: iMile's Italian "CAN 01" is not Çan, in Turkey.
+  if (STATION.test(text)) return null;
   // "CAN" on a parcel to Canada: a country's three-letter code, where the parcel is, is that country.
   const countryCode = split ? countryCodePlace(data, text, context) : null;
   if (countryCode) return countryCode;

@@ -296,7 +296,7 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   known to be there and no town has its letters for a name.
 - A station named by an airport's code and a number, as iMile names its Italian ones ("BLQ
   01"), is in that airport's town, when the parcel is in the airport's country. Elsewhere the
-  code places nothing.
+  code places nothing, not even a town whose name is its letters ("CAN 01" is not Çan).
 - `hubs.json` lists hubs named after a place that is not their town ("ROISSY" is the
   Charles de Gaulle airport, not Roissy-en-Brie), with the town and airport they stand for,
   and hubs the gazetteer cannot place by name, with their point and its source: in a village

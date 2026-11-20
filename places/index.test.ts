@@ -283,6 +283,11 @@ describe('locatePlace', () => {
     // Three letters no airport has, or a station number too long for one.
     expect(place('QQX 03', ['IT'])).toBeNull();
     expect(place('BLQ 0123', ['IT'])).toBeNull();
+    // Nor a town that shares a station's letters: iMile's Italian "CAN 01", whose code is Guangzhou's airport, is not
+    // Çan, in Turkey.
+    expect(placesForEvents(['Milan center', 'CAN 01'], { destinationCountry: 'IT', carriers: ['imile'] })).toEqual([
+      expect.objectContaining({ country: 'IT', name: 'Milan' }), null]);
+    expect(place('CAN 01', ['IT', 'TR'])).toBeNull();
     expect(placesForEvents(['Milan center', 'Milan center', 'BLQ 01', 'BLQ 01'], { destinationCountry: 'IT', carriers: ['imile'] })
       .map((found) => found?.name)).toEqual(['Milan', 'Milan', 'Bologna', 'Bologna']);
   });
