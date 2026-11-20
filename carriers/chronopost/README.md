@@ -70,7 +70,9 @@ which can come hours before the point's arrival scan, or after that scan. Before
 has moved, a pickup point's scan of it at another point than the one planned is the
 sender's drop-off there, which the point hands to the courier next: it accepts the
 parcel, which does not wait for the recipient. The point's hand-over to the courier
-(TT) is part of that acceptance too, a minute before the courier's take-over (PC). Observed
+(TT) is part of that acceptance too, a minute before the courier's take-over (PC). A
+collection has no scan of its own: the departure agency's sort (SC, EC) right after the
+sender's announcement is the acceptance. Observed
 codes are used only when their wording agrees, because partner scans can reuse
 codes; a code can carry several wordings, each read on its own. A delivery partner's
 missed round (N, "Colis non livré", with or without a reason after the colon) is a failed

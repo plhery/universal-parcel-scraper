@@ -80,7 +80,7 @@
       "code": "SC",
       "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Right after the sender's announcement it is the collection, which has no scan of its own: the acceptance.",
       "wording": "Tri effectué dans l'agence de départ",
       "language": "fr"
     },
@@ -89,7 +89,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The first depot's sort as it takes the parcel over, worded like SC.",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The first depot's sort as it takes the parcel over, worded like SC; right after the sender's announcement, the acceptance.",
       "wording": "Tri effectué dans l'agence de départ",
       "language": "fr"
     },

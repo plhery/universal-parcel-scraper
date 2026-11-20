@@ -359,6 +359,19 @@ describe('Chronopost direct tracking', () => {
     expect(statusMap.gaps.map(gap => gap.code)).toEqual(['SM', 'CL']);
   });
 
+  it("reads the departure agency's sort right after the sender's announcement as the collection", () => {
+    const sorted = (code: string, at: string) => scan(code, at, "Tri effectué dans l'agence de départ");
+    const collected = parseChronopostTrackingXml(history(prepared, sorted('EC', '2026-06-27T08:46:52+02:00')), number);
+    expect(collected).toMatchObject({ status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map' });
+    const moved = parseChronopostTrackingXml(history(prepared, sorted('SC', '2026-06-27T08:46:52+02:00'),
+      scan('TS', '2026-06-27T08:46:53+02:00', "Colis en cours d'acheminement")), number);
+    expect(moved.events?.map(event => [event.provider_code, event.stage])).toEqual([['TS', 'in_transit'], ['SC', 'accepted'], ['DC', 'registered']]);
+    // After the sender's drop-off, the sort is on the way.
+    const dropped = scan('DB', '2026-06-27T08:00:00+02:00', "Colis déposé par l'expéditeur");
+    expect(parseChronopostTrackingXml(history(prepared, dropped, sorted('SC', '2026-06-27T08:46:52+02:00')), number))
+      .toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('reads a delivery after the parcel started back to the sender as returned', () => {
     const customs = scan('SJ', '2026-04-22T14:42:00+02:00', "Problème douanier résolu, colis en cours d'acheminement");
     const sentBack = scan('R', '2026-04-22T14:49:00+02:00', 'Colis en retour expéditeur', { Motif: 'Synthetic reason' });

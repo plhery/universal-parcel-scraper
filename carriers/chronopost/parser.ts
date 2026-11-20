@@ -18,6 +18,8 @@ const SOAP = 'http://schemas.xmlsoap.org/soap/envelope/';
 export const CHRONOPOST_NAMESPACE = 'http://cxf.tracking.soap.chronopost.fr/';
 const MAX_EVENTS = 500;
 const UNMOVED: ReadonlySet<Stage> = new Set(['pending', 'registered', 'accepted']);
+// "Tri effectué dans l'agence de départ".
+const DEPARTURE_SORTS: ReadonlySet<string> = new Set(['SC', 'EC']);
 // The courier's drop-off at the pickup point (RB) is part of the round that carries the parcel
 // there, and comes before the point's arrival scan or just after it: it keeps either stage.
 const DROP_OFF_KEEPS: ReadonlySet<Stage> = new Set(['out_for_delivery', 'ready_for_pickup']);
@@ -261,9 +263,11 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     // Once the parcel starts back to the sender, the scans that follow are the return's,
     // and a delivery reaches the sender.
     returning ||= scan.returnStart;
+    // Right after the sender's announcement, the departure agency's sort is the collection, which has no scan of its own.
+    const collected = stage === 'registered' && DEPARTURE_SORTS.has(scan.event.provider_code ?? '') && scan.mapped.stage === 'in_transit';
     // Before the parcel has moved, a pickup point's scan of it at another point than the one
     // planned is the sender's drop-off there: the point hands the parcel to the courier next.
-    const mapped: ClassifiedWording = scan.otherPoint && UNMOVED.has(stage) ? { stage: 'accepted' as const, source: 'carrier_map' }
+    const mapped: ClassifiedWording = (scan.otherPoint && UNMOVED.has(stage)) || collected ? { stage: 'accepted' as const, source: 'carrier_map' }
       : returning && scan.mapped.stage === 'delivered' ? { ...scan.mapped, stage: 'returned' as const } : scan.mapped;
     if (!kept && mapped.source !== 'none') {
       stage = mapped.stage;
