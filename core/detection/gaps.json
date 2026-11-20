@@ -5749,5 +5749,10 @@
     "carrier": "enviamos-comunicaciones",
     "kind": "open",
     "reason": "The full numeric guides work in the carrier's own tracker. Length and prefix overlap other carriers and do not establish a unique format."
+  },
+  {
+    "carrier": "xanh-thl",
+    "kind": "open",
+    "reason": "The carrier publishes one live X-prefixed guide. Similar layouts occur across multiple carrier catalogs and need review."
   }
 ]

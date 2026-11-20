@@ -1,0 +1,28 @@
+{
+  "carrier": "xanh-thl",
+  "records": [
+    {
+      "number": "X00000213",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://xanhthl.com/huong-dan-tra-cuu-van-don-tracking-bill/",
+        "access": "full_page",
+        "date": "2026-11-14",
+        "dateKind": "publication"
+      },
+      "context": {
+        "reportedRole": "full waybill in the carrier’s parcel label and tracking walkthrough",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc"
+        ]
+      },
+      "note": "The public tracker returned the exact waybill, the walkthrough’s pickup and a later movement at its Hồ Chí Minh office."
+    }
+  ]
+}

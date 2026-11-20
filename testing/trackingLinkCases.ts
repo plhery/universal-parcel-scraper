@@ -2494,6 +2494,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'xanh-thl': 'The number goes into a homepage form and is posted to the guest API, so the tracking link opens the form.',
   'mandde': 'The public page submits the guide through its API and clears query parameters, so the link opens the search form.',
   'cotaxi': 'The official PDF lookup uses separate prefix and serial fields, so the tracking link opens the search form.',
   'sendbox-argentina': 'The public SendBox form submits the Z and the guide number in separate fields.',

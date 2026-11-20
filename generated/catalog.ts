@@ -64253,6 +64253,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "xanh-thl": {
+    "displayName": "Xanh THL Logistics",
+    "color": "#18a558",
+    "aliases": [
+      "XanhTHL",
+      "Xanh THL",
+      "Thái Hà Xanh Logistics"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xanh-thl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://xanhthl.com/",
+    "trackingUrlTemplate": "https://xanhthl.com/#xanhTrackingForm",
+    "trackingSearchUrl": "https://xanhthl.com/#xanhTrackingForm",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "xcargo": {
     "displayName": "X-Cargo",
     "color": "#18fb8c",
@@ -68376,6 +68400,7 @@ export const CARRIER_IDS = [
   "x-express-rs",
   "x-trac",
   "xalq-global",
+  "xanh-thl",
   "xcargo",
   "xd-express",
   "xde-logistics",
@@ -70290,6 +70315,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "x-express-rs": [],
   "x-trac": ["x-trac-1"],
   "xalq-global": [],
+  "xanh-thl": [],
   "xcargo": [],
   "xd-express": [],
   "xde-logistics": [],
