@@ -24,6 +24,8 @@ import { tforceParsPro } from '../../carriers/tforce-freight/number.js';
 import { normalizeTntItalyNumber } from '../../carriers/tnt-it/number.js';
 import { ZR_EXPRESS_LAYOUT, zrExpressRequestNumber } from '../../carriers/zr-express/number.js';
 import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
+import { normalizeNumber as rhenusItalyNumber, RHENUS_IT_HOME_LAYOUT } from '../../carriers/rhenus-it/number.js';
+import { normalizeNumber as swayNumber, SWAY_RESTORED_LAYOUT } from '../../carriers/sway/number.js';
 import { normalizeUpayaNumber, UPAYA_LAYOUT } from '../../carriers/upaya/number.js';
 import { YANDEX_DELIVERY_LAYOUT, yandexDeliveryRequestNumber } from '../../carriers/yandex-delivery/number.js';
 import type { CarrierId } from '../../generated/catalog.js';
@@ -94,6 +96,10 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
   if (carrierId === 'yandex-delivery' && YANDEX_DELIVERY_LAYOUT.test(normalized)) return yandexDeliveryRequestNumber(normalized);
   // Ecoscooting's page finds a Cainiao reference only with its CN.
   if (carrierId === 'ecoscooting' && ecoscootingReference(normalized) !== normalized) return ecoscootingReference(normalized);
+  // Rhenus Italia's page finds a home-delivery number only with the hyphen before its suffix.
+  if (carrierId === 'rhenus-it' && RHENUS_IT_HOME_LAYOUT.test(normalized)) return rhenusItalyNumber(normalized);
+  // Sway's tracker finds an SWY number only with its hyphen, and an older Swyft id only in lowercase.
+  if (carrierId === 'sway' && SWAY_RESTORED_LAYOUT.test(normalized)) return swayNumber(normalized);
   return raw;
 }
 

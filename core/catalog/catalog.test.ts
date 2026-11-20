@@ -123,6 +123,14 @@ describe('the derived CARRIERS record', () => {
     expect(trackingNumberForLink('flippost', 'SAMPLE')).toBe('SAMPLE');
     expect(CARRIERS.flippost.trackingUrl?.('000000009')).toBe('https://flippost.com/instruments/online/?number=00-0000009');
     expect(trackingNumberForLink('ecoscooting', 'prt 0000000 1234 000000001')).toBe('CNPRT00000001234000000001');
+    expect(trackingNumberForLink('rhenus-it', '00000001701')).toBe('000000017-01');
+    expect(trackingNumberForLink('rhenus-it', '000000017-01')).toBe('000000017-01');
+    expect(trackingNumberForLink('rhenus-it', 'SAMPLE')).toBe('SAMPLE');
+    expect(CARRIERS['rhenus-it'].trackingUrl?.('00000001701')).toBe('https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s=000000017-01');
+    expect(trackingNumberForLink('sway', 'swy000000017')).toBe('SWY-000000017');
+    expect(trackingNumberForLink('sway', 'C000000000000000000A')).toBe('c000000000000000000a');
+    expect(trackingNumberForLink('sway', 'SAMPLE')).toBe('SAMPLE');
+    expect(CARRIERS.sway.trackingUrl?.('SWY000000017')).toBe('https://track.shipsway.com/SWY-000000017');
     expect(trackingNumberForLink('ecoscooting', 'CNPRT00000001234000000001')).toBe('CNPRT00000001234000000001');
     expect(trackingNumberForLink('ecoscooting', '000000000000000001')).toBe('000000000000000001');
     expect(CARRIERS.postlogistics.trackingUrl?.('19999980001'))

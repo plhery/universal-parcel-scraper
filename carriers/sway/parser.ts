@@ -4,19 +4,10 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { PROVIDER } from './number.js';
 import { stageForScan } from './status.js';
 
-export const PROVIDER = 'Sway';
-
-export function normalizeNumber(raw: string): string {
-  const number = raw.trim();
-  if (!/^[A-Z0-9][A-Z0-9-]{5,39}$/i.test(number)) throw new InvalidInputError(PROVIDER, 'Enter a Sway tracking number');
-  // The public form shows SWY- plus nine digits. The older Swyft id is case-sensitive.
-  const branded = /^SWY-?(\d{9})$/i.exec(number);
-  if (branded) return `SWY-${branded[1]}`;
-  if (/^C[A-Z0-9]{19}$/i.test(number)) return number.toLowerCase();
-  return number;
-}
+export { normalizeNumber, PROVIDER } from './number.js';
 
 interface DatedScan {
   event: CarrierEvent;

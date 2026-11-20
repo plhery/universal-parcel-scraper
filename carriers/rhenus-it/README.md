@@ -7,7 +7,8 @@ Tracks Rhenus Italia home deliveries, including deliveries to the floor.
 The public tracking page takes the shipment number in `s`. Its result must
 display the same shipment number beside the timeline. Home delivery numbers
 with a nine-digit body and two-digit suffix need the printed hyphen between
-them. The adapter restores it if the input has been compacted.
+them. The adapter and the tracking link restore it if the input has been
+compacted.
 
 The adapter reads the Italian scan text and local clock times from the
 timeline. An appointment booking keeps the stage of the preceding movement.

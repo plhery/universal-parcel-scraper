@@ -14,9 +14,9 @@ change a delivery are outside the history lookup.
 
 ## Numbers
 
-Select Sway explicitly or open its tracking link. The request restores the
-lowercase form of older Swyft IDs and the hyphen in the form's `SWY-` number
-format.
+Select Sway explicitly or open its tracking link. The request and the tracking
+link restore the lowercase form of older Swyft IDs and the hyphen in the form's
+`SWY-` number format.
 
 ## Testing
 

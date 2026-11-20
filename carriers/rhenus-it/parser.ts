@@ -1,21 +1,15 @@
 import { load } from 'cheerio';
-import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { leadingScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { PROVIDER } from './number.js';
 import { scanStages } from './status.js';
 
-export const PROVIDER = 'Rhenus Italia';
-
-export function normalizeNumber(raw: string): string {
-  const number = raw.trim().toUpperCase();
-  if (!/^[A-Z0-9][A-Z0-9-]{0,39}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Enter a Rhenus Italia shipment number');
-  // The home-delivery lookup requires the printed separator, which the shared input drops.
-  return number.replace(/^(\d{9})(\d{2})$/, '$1-$2');
-}
+export { normalizeNumber, PROVIDER } from './number.js';
 
 export function parseTracking(body: string, number: string): CarrierResult {
   if (/_cf_chl_opt|<title>\s*(?:Just a moment|Access denied|Request rejected)/i.test(body)) {
