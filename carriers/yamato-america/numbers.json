@@ -1,5 +1,43 @@
 {
   "carrier": "yamato-america",
-  "gap": "Yamato Transport U.S.A.'s slips are twelve digits with Yamato's check digit, as Yamato Transport's in Japan are, and the two archived lookups found on its tracker have expired.",
-  "records": []
+  "records": [
+    {
+      "number": "972944203486",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220303115800/https://www.yamatoamerica.com/tracking/?slipnumber=972944203486",
+        "date": "2022-03-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "reportedRole": "slip number in tracking URL",
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "Wayback captured the number in Yamato America's tracking URL, but did not preserve a shipment result. Lookup blocked by verification (HTTP 403 from the public tracker)."
+    }
+  ]
 }
