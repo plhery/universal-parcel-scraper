@@ -16,18 +16,73 @@
   "timezone": "Europe/Rome",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "golilla",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "location",
+    "delivered_at",
+    "eta",
+    "offset_timestamps"
+  ],
   "portal": {
+    "url": "https://my.golilla.it/segui?ldv={trackingNumber}",
     "searchUrl": "https://my.golilla.it/segui",
     "canaryUrl": "https://www.golilla.it/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "eta_window",
+      "offset_timestamps",
+      "progress_rail",
+      "parcel_count",
+      "destination",
+      "postcodes",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "location",
+      "delivered_at",
+      "eta",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "progress_rail",
+      "parcel_count",
+      "destination",
+      "postcodes",
+      "coordinates",
+      "eta_window"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "pickup_point"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "my.golilla.it"
+      ],
+      "pathPattern": "^/segui/?$",
+      "params": [
+        "ldv"
+      ]
+    }
+  ],
   "detection": []
 }

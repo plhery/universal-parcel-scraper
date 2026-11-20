@@ -1,0 +1,202 @@
+{
+  "status": {
+    "code": 200,
+    "message": "Success"
+  },
+  "tracking": {
+    "avanzamenti": [
+      {
+        "codiceAvanzamento": "00",
+        "codiceAvanzamentoId": 1,
+        "dataOra": "2026-02-27T14:32:19Z",
+        "descrizioneAvanzamento": "SPEDIZIONE REGISTRATA A SISTEMA"
+      },
+      {
+        "codiceAvanzamento": "98",
+        "codiceAvanzamentoId": 19,
+        "dataOra": "2026-02-27T14:32:20Z",
+        "descrizioneAvanzamento": "SPEDIZIONE CHIUSA"
+      },
+      {
+        "codiceAvanzamento": "14",
+        "codiceAvanzamentoId": 23,
+        "dataOra": "2026-03-02T09:41:27Z",
+        "descrizioneAvanzamento": "ORDINE PRESO IN CARICO"
+      },
+      {
+        "codiceAvanzamento": "07",
+        "codiceAvanzamentoId": 22,
+        "dataOra": "2026-03-02T09:41:28Z",
+        "descrizioneAvanzamento": "CHECK IN SU FILIALE DI DESTINO"
+      },
+      {
+        "codiceAvanzamento": "51",
+        "codiceAvanzamentoId": 51,
+        "dataOra": "2026-03-02T12:11:52Z",
+        "descrizioneAvanzamento": "IN TRANSITO"
+      },
+      {
+        "codiceAvanzamento": "31",
+        "codiceAvanzamentoId": 10,
+        "dataOra": "2026-03-02T15:09:29Z",
+        "descrizioneAvanzamento": "CONSEGNA PRENOTATA"
+      },
+      {
+        "codiceAvanzamento": "82",
+        "codiceAvanzamentoId": 25,
+        "dataOra": "2026-03-02T15:10:03Z",
+        "descrizioneAvanzamento": "PRENOTAZIONE ANNULLATA"
+      },
+      {
+        "codiceAvanzamento": "31",
+        "codiceAvanzamentoId": 10,
+        "dataOra": "2026-03-04T12:50:14Z",
+        "descrizioneAvanzamento": "CONSEGNA PRENOTATA"
+      },
+      {
+        "codiceAvanzamento": "10",
+        "codiceAvanzamentoId": 5,
+        "dataOra": "2026-03-05T05:00:14Z",
+        "deliveryListId": 418599,
+        "descrizioneAvanzamento": "IN CONSEGNA"
+      },
+      {
+        "codiceAvanzamento": "90",
+        "codiceAvanzamentoId": 7,
+        "dataOra": "2026-03-05T16:28:05Z",
+        "deliveryListId": 418599,
+        "descrizioneAvanzamento": "SPEDIZIONE CONSEGNATA"
+      }
+    ],
+    "bookingCanBeCanceled": false,
+    "capDest": "20090",
+    "codEvento": 1,
+    "codServizio": "PW",
+    "colli": [
+      {
+        "clientReferenceNumber": "00801796541302615736",
+        "esiti": [
+          {
+            "ID": 46762448,
+            "codEsito": 50,
+            "descEsito": "RICEZIONE FILE",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-02-27T14:32:19Z",
+            "eventRegistrationDateTime": "2026-02-27T14:33:14Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46771448,
+            "codEsito": 4,
+            "descEsito": "SPEDIZIONE PRESA IN CARICO",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-02T09:41:27Z",
+            "eventRegistrationDateTime": "2026-03-02T09:41:28Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46771449,
+            "codEsito": 72,
+            "descEsito": "ARRIVO SU FILIALE DI DESTINO",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-02T09:41:28Z",
+            "eventRegistrationDateTime": "2026-03-02T09:41:28Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46775120,
+            "codEsito": 48,
+            "descEsito": "IN TRANSITO",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-02T12:11:52Z",
+            "eventRegistrationDateTime": "2026-03-02T12:11:52Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46779580,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-02T15:09:29Z",
+            "eventRegistrationDateTime": "2026-03-02T15:09:29Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46779603,
+            "codEsito": 82,
+            "descEsito": "PRENOTAZIONE ANNULLATA",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-02T15:10:03Z",
+            "eventRegistrationDateTime": "2026-03-02T15:10:03Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46779736,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-02T15:19:32Z",
+            "eventRegistrationDateTime": "2026-03-02T15:19:32Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46809972,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-04T12:50:14Z",
+            "eventRegistrationDateTime": "2026-03-04T12:50:14Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46814621,
+            "codEsito": 51,
+            "descEsito": "CARICO VETTURA",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-04T16:45:53Z",
+            "eventRegistrationDateTime": "2026-03-04T16:45:53Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46816030,
+            "codEsito": 52,
+            "descEsito": "IN CONSEGNA",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-05T05:00:14Z",
+            "eventRegistrationDateTime": "2026-03-05T05:01:14Z",
+            "filiale": "ITR"
+          },
+          {
+            "ID": 46830309,
+            "codEsito": 1,
+            "descEsito": "SPEDIZIONE CONSEGNATA",
+            "descFiliale": "Golilla Milano Est",
+            "eventDateTime": "2026-03-05T16:28:05Z",
+            "eventRegistrationDateTime": "2026-03-05T16:28:06Z",
+            "filiale": "ITR"
+          }
+        ],
+        "packageIdentifier": 11192008
+      }
+    ],
+    "contrassegno": 0.0,
+    "dataPrevistaConsegnaAggiornata": "2026-03-03",
+    "dataPrevistaConsegnaTeorica": "2026-03-03",
+    "dataSp": "2026-02-27",
+    "dateTimeEv": "2026-03-05T16:28:05Z",
+    "descEvento": "SPEDIZIONE CONSEGNATA",
+    "descFiliale": "Golilla Milano Est",
+    "directDeliveryFromCustomerWarehouse": false,
+    "filiale": "ITR",
+    "isShipmentBookable": true,
+    "ldv": 4550534,
+    "localitaDest": "Cesano Boscone",
+    "numColli": 1,
+    "podId": 661951,
+    "provinciaDest": "MI",
+    "returnEnabled": false,
+    "rifMittente": "005-035-323993",
+    "rsm": "LEROYMERLIN",
+    "serviceCodeBookable": true
+  }
+}

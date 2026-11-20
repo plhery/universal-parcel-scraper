@@ -1,0 +1,377 @@
+{
+  "status": {
+    "code": 200,
+    "message": "Success"
+  },
+  "tracking": {
+    "avanzamenti": [
+      {
+        "codiceAvanzamento": "00",
+        "codiceAvanzamentoId": 1,
+        "dataOra": "2025-06-17T10:15:28Z",
+        "descrizioneAvanzamento": "SPEDIZIONE REGISTRATA A SISTEMA"
+      },
+      {
+        "codiceAvanzamento": "98",
+        "codiceAvanzamentoId": 19,
+        "dataOra": "2025-06-17T10:15:37Z",
+        "descrizioneAvanzamento": "SPEDIZIONE CHIUSA"
+      },
+      {
+        "codiceAvanzamento": "14",
+        "codiceAvanzamentoId": 23,
+        "dataOra": "2025-06-18T08:55:38Z",
+        "descrizioneAvanzamento": "ORDINE PRESO IN CARICO"
+      },
+      {
+        "codiceAvanzamento": "07",
+        "codiceAvanzamentoId": 22,
+        "dataOra": "2025-06-18T08:55:39Z",
+        "descrizioneAvanzamento": "CHECK IN SU FILIALE DI DESTINO"
+      },
+      {
+        "codiceAvanzamento": "51",
+        "codiceAvanzamentoId": 51,
+        "dataOra": "2025-06-18T08:56:56Z",
+        "descrizioneAvanzamento": "IN TRANSITO"
+      },
+      {
+        "codiceAvanzamento": "31",
+        "codiceAvanzamentoId": 10,
+        "dataOra": "2025-06-24T15:09:15Z",
+        "descrizioneAvanzamento": "CONSEGNA PRENOTATA"
+      },
+      {
+        "codiceAvanzamento": "10",
+        "codiceAvanzamentoId": 5,
+        "dataOra": "2025-06-25T06:43:01Z",
+        "deliveryListId": 403206,
+        "descrizioneAvanzamento": "IN CONSEGNA"
+      },
+      {
+        "codiceAvanzamento": "91",
+        "codiceAvanzamentoId": 17,
+        "dataOra": "2025-06-25T08:33:00Z",
+        "deliveryListId": 403206,
+        "descrizioneAvanzamento": "CONSEGNA PARZIALE"
+      },
+      {
+        "codiceAvanzamento": "91",
+        "codiceAvanzamentoId": 17,
+        "dataOra": "2025-06-25T08:33:00Z",
+        "deliveryListId": 403206,
+        "descrizioneAvanzamento": "CONSEGNA PARZIALE"
+      },
+      {
+        "codiceAvanzamento": "90",
+        "codiceAvanzamentoId": 7,
+        "dataOra": "2025-06-25T08:33:00Z",
+        "deliveryListId": 403206,
+        "descrizioneAvanzamento": "SPEDIZIONE CONSEGNATA"
+      }
+    ],
+    "bookingCanBeCanceled": false,
+    "capDest": "52041",
+    "codEvento": 1,
+    "codServizio": "AW",
+    "colli": [
+      {
+        "clientReferenceNumber": "0000500375302801",
+        "esiti": [
+          {
+            "ID": 44313289,
+            "codEsito": 50,
+            "descEsito": "RICEZIONE FILE",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-17T10:15:28Z",
+            "eventRegistrationDateTime": "2025-06-17T10:16:01Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44329045,
+            "codEsito": 4,
+            "descEsito": "SPEDIZIONE PRESA IN CARICO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:55:38Z",
+            "eventRegistrationDateTime": "2025-06-18T08:55:39Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44329047,
+            "codEsito": 72,
+            "descEsito": "ARRIVO SU FILIALE DI DESTINO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:55:39Z",
+            "eventRegistrationDateTime": "2025-06-18T08:55:40Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44329102,
+            "codEsito": 48,
+            "descEsito": "IN TRANSITO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:56:54Z",
+            "eventRegistrationDateTime": "2025-06-18T08:56:54Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44406910,
+            "codEsito": 48,
+            "descEsito": "IN TRANSITO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T13:48:19Z",
+            "eventRegistrationDateTime": "2025-06-24T13:48:19Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44408379,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T15:03:58Z",
+            "eventRegistrationDateTime": "2025-06-24T15:03:58Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44408431,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T15:09:15Z",
+            "eventRegistrationDateTime": "2025-06-24T15:09:15Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44411973,
+            "codEsito": 51,
+            "descEsito": "CARICO VETTURA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T06:37:37Z",
+            "eventRegistrationDateTime": "2025-06-25T06:37:37Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44412042,
+            "codEsito": 52,
+            "descEsito": "IN CONSEGNA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T06:43:01Z",
+            "eventRegistrationDateTime": "2025-06-25T06:43:01Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44414069,
+            "codEsito": 1,
+            "descEsito": "SPEDIZIONE CONSEGNATA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T08:33:00Z",
+            "eventRegistrationDateTime": "2025-06-25T08:33:02Z",
+            "filiale": "GPT"
+          }
+        ],
+        "packageIdentifier": 10961930
+      },
+      {
+        "clientReferenceNumber": "0000500375302802",
+        "esiti": [
+          {
+            "ID": 44313293,
+            "codEsito": 50,
+            "descEsito": "RICEZIONE FILE",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-17T10:15:28Z",
+            "eventRegistrationDateTime": "2025-06-17T10:16:03Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44327664,
+            "codEsito": 4,
+            "descEsito": "SPEDIZIONE PRESA IN CARICO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:16:56Z",
+            "eventRegistrationDateTime": "2025-06-18T08:16:57Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44327665,
+            "codEsito": 72,
+            "descEsito": "ARRIVO SU FILIALE DI DESTINO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:16:57Z",
+            "eventRegistrationDateTime": "2025-06-18T08:16:57Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44329101,
+            "codEsito": 48,
+            "descEsito": "IN TRANSITO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:56:54Z",
+            "eventRegistrationDateTime": "2025-06-18T08:56:54Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44408380,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T15:03:58Z",
+            "eventRegistrationDateTime": "2025-06-24T15:03:58Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44408432,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T15:09:15Z",
+            "eventRegistrationDateTime": "2025-06-24T15:09:15Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44411976,
+            "codEsito": 51,
+            "descEsito": "CARICO VETTURA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T06:37:44Z",
+            "eventRegistrationDateTime": "2025-06-25T06:37:44Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44412043,
+            "codEsito": 52,
+            "descEsito": "IN CONSEGNA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T06:43:01Z",
+            "eventRegistrationDateTime": "2025-06-25T06:43:01Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44414068,
+            "codEsito": 1,
+            "descEsito": "SPEDIZIONE CONSEGNATA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T08:33:00Z",
+            "eventRegistrationDateTime": "2025-06-25T08:33:01Z",
+            "filiale": "GPT"
+          }
+        ],
+        "packageIdentifier": 10961931
+      },
+      {
+        "clientReferenceNumber": "0000500375302803",
+        "esiti": [
+          {
+            "ID": 44313297,
+            "codEsito": 50,
+            "descEsito": "RICEZIONE FILE",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-17T10:15:28Z",
+            "eventRegistrationDateTime": "2025-06-17T10:16:03Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44327717,
+            "codEsito": 4,
+            "descEsito": "SPEDIZIONE PRESA IN CARICO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:18:01Z",
+            "eventRegistrationDateTime": "2025-06-18T08:18:02Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44327719,
+            "codEsito": 72,
+            "descEsito": "ARRIVO SU FILIALE DI DESTINO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:18:02Z",
+            "eventRegistrationDateTime": "2025-06-18T08:18:02Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44329103,
+            "codEsito": 48,
+            "descEsito": "IN TRANSITO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-18T08:56:56Z",
+            "eventRegistrationDateTime": "2025-06-18T08:56:56Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44406913,
+            "codEsito": 48,
+            "descEsito": "IN TRANSITO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T13:48:21Z",
+            "eventRegistrationDateTime": "2025-06-24T13:48:21Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44408381,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T15:03:58Z",
+            "eventRegistrationDateTime": "2025-06-24T15:03:58Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44408433,
+            "codEsito": 58,
+            "descEsito": "SERVIZIO PROGRAMMATO",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-24T15:09:15Z",
+            "eventRegistrationDateTime": "2025-06-24T15:09:15Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44411972,
+            "codEsito": 51,
+            "descEsito": "CARICO VETTURA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T06:37:35Z",
+            "eventRegistrationDateTime": "2025-06-25T06:37:35Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44412041,
+            "codEsito": 52,
+            "descEsito": "IN CONSEGNA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T06:43:01Z",
+            "eventRegistrationDateTime": "2025-06-25T06:43:01Z",
+            "filiale": "GPT"
+          },
+          {
+            "ID": 44414067,
+            "codEsito": 1,
+            "descEsito": "SPEDIZIONE CONSEGNATA",
+            "descFiliale": "Golilla Firenze Nord",
+            "eventDateTime": "2025-06-25T08:33:00Z",
+            "eventRegistrationDateTime": "2025-06-25T08:33:01Z",
+            "filiale": "GPT"
+          }
+        ],
+        "packageIdentifier": 10961932
+      }
+    ],
+    "contrassegno": 0.0,
+    "dataPrevistaConsegnaAggiornata": "2025-06-26",
+    "dataPrevistaConsegnaTeorica": "2025-06-26",
+    "dataSp": "2025-06-17",
+    "dateTimeEv": "2025-06-25T08:33:00Z",
+    "descEvento": "SPEDIZIONE CONSEGNATA",
+    "descFiliale": "Golilla Firenze Nord",
+    "directDeliveryFromCustomerWarehouse": false,
+    "filiale": "GPT",
+    "isShipmentBookable": false,
+    "ldv": 4391636,
+    "localitaDest": "Civitella in Val di Chiana",
+    "numColli": 3,
+    "provinciaDest": "AR",
+    "returnEnabled": false,
+    "rifMittente": "005-003-753028",
+    "rsm": "LM003",
+    "serviceCodeBookable": true
+  }
+}

@@ -1,5 +1,53 @@
 {
   "carrier": "golilla",
-  "gap": "No public page shows a Golilla shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "4391636",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/ritardo-consegna-piastrelle-e-/a4100c83346910675d",
+        "date": "2025-06-24",
+        "dateKind": "complaint publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Italy bulky home delivery",
+        "reportedRole": "delivery number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The recipient reports this exact delivery number in a complaint to Golilla. The carrier's tracker returns the shipment."
+    },
+    {
+      "number": "4550534",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/consegna/914e54f62ebe315749",
+        "date": "2026-04-11",
+        "dateKind": "complaint publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Italy bulky home delivery",
+        "reportedRole": "Golilla delivery code",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The recipient explicitly labels this exact identifier as Golilla’s delivery code. The carrier's tracker returns the shipment."
+    }
+  ]
 }

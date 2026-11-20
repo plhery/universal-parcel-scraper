@@ -4712,5 +4712,11 @@
     "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
     "kind": "open",
     "reason": "Polish customers report these three Rohlig SUUS prefixes on parcel numbers with nine digits, and SUUS's guest tracker shows each one. Detection does not offer Rohlig SUUS."
+  },
+  {
+    "carrier": "golilla",
+    "pattern": "^[1-9][0-9]{6,7}$",
+    "kind": "by_design",
+    "reason": "Golilla's shipment numbers are a counter of seven digits, a length many carriers share, so no rule claims them."
   }
 ]
