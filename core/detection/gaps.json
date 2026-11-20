@@ -5909,5 +5909,10 @@
     "carrier": "ddx-global-express",
     "kind": "open",
     "reason": "One published DDX reference is insufficient to establish a unique prefix rule. Select DDX Global Express explicitly."
+  },
+  {
+    "carrier": "global-express-logistics-tanzania",
+    "kind": "open",
+    "reason": "One published GEL reference is insufficient to establish a carrier-specific prefix rule. Select Global Express Logistics Tanzania explicitly."
   }
 ]

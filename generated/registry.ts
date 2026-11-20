@@ -349,6 +349,7 @@ import { adapter as geodis } from '../carriers/geodis/adapter.js';
 import { adapter as geodisPl } from '../carriers/geodis-pl/adapter.js';
 import { adapter as gigLogistics } from '../carriers/gig-logistics/adapter.js';
 import { adapter as globalDeliveryNetwork } from '../carriers/global-delivery-network/adapter.js';
+import { adapter as globalExpressLogisticsTanzania } from '../carriers/global-express-logistics-tanzania/adapter.js';
 import { adapter as globalpost } from '../carriers/globalpost/adapter.js';
 import { adapter as glsCa } from '../carriers/gls-ca/adapter.js';
 import { adapter as glsCh } from '../carriers/gls-ch/adapter.js';
@@ -1324,6 +1325,7 @@ export const REGISTRY: RegistryDefinition = {
     "geodis-pl": geodisPl,
     "gig-logistics": gigLogistics,
     "global-delivery-network": globalDeliveryNetwork,
+    "global-express-logistics-tanzania": globalExpressLogisticsTanzania,
     "globalpost": globalpost,
     "gls-ca": glsCa,
     "gls-ch": glsCh,
@@ -2661,6 +2663,7 @@ export const REGISTRY: RegistryDefinition = {
     "gle-colombia": "universal",
     "global-business-tw": "universal",
     "global-delivery-network": "global-delivery-network",
+    "global-express-logistics-tanzania": "global-express-logistics-tanzania",
     "global-parcel-service": "universal",
     "globalpost": "globalpost",
     "globex-post": "universal",

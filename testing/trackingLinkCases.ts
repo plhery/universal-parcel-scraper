@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'global-express-logistics-tanzania', number: 'GEL-2026-000001',
+    route: /^https:\/\/globalexpress\.co\.tz\/tracking\?number=GEL-2026-000001$/,
+    marker: /Track (Your Parcel|& Trace)|Tracking history/i },
   { carrier: 'ddx-global-express', number: 'DDX178722',
     route: /^https:\/\/ddxpress\.vn\/tracking\/?\?code=DDX178722$/,
     marker: /Tra cứu vận đơn|Mã vận đơn|Shipment history/iu },

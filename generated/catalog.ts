@@ -28445,6 +28445,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "global-express-logistics-tanzania": {
+    "displayName": "Global Express Logistics Tanzania",
+    "color": "#1C4A94",
+    "aliases": [
+      "Global Express Tanzania",
+      "Global Express Logistics TZ"
+    ],
+    "countries": [
+      "TZ"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Dar_es_Salaam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "global-express-logistics-tanzania"
+    },
+    "canaryUrl": "https://globalexpress.co.tz/tracking",
+    "trackingUrlTemplate": "https://globalexpress.co.tz/tracking?number={trackingNumber}",
+    "trackingSearchUrl": "https://globalexpress.co.tz/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "global-parcel-service": {
     "displayName": "Global Parcel Service",
     "color": "#556aa1",
@@ -68087,6 +68109,7 @@ export const CARRIER_IDS = [
   "gle-colombia",
   "global-business-tw",
   "global-delivery-network",
+  "global-express-logistics-tanzania",
   "global-parcel-service",
   "globalpost",
   "globex-post",
@@ -70034,6 +70057,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gle-colombia": [],
   "global-business-tw": [],
   "global-delivery-network": [],
+  "global-express-logistics-tanzania": [],
   "global-parcel-service": [],
   "globalpost": ["globalpost-1"],
   "globex-post": [],

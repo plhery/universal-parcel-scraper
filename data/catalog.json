@@ -28441,6 +28441,28 @@
     ],
     "detectionRules": []
   },
+  "global-express-logistics-tanzania": {
+    "displayName": "Global Express Logistics Tanzania",
+    "color": "#1C4A94",
+    "aliases": [
+      "Global Express Tanzania",
+      "Global Express Logistics TZ"
+    ],
+    "countries": [
+      "TZ"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Dar_es_Salaam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "global-express-logistics-tanzania"
+    },
+    "canaryUrl": "https://globalexpress.co.tz/tracking",
+    "trackingUrlTemplate": "https://globalexpress.co.tz/tracking?number={trackingNumber}",
+    "trackingSearchUrl": "https://globalexpress.co.tz/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "global-parcel-service": {
     "displayName": "Global Parcel Service",
     "color": "#556aa1",

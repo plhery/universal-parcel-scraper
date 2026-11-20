@@ -92768,6 +92768,12 @@
     "candidates": []
   },
   {
+    "input": "GEL-2026-000001",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "GEO/KU9907603812489",
     "carrier": "unknown",
     "confidence": "none",
