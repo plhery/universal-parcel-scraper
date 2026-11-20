@@ -88315,6 +88315,12 @@
     ]
   },
   {
+    "input": "ETENE000007143",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "ETH220178652KR",
     "carrier": "eparcel-kr",
     "confidence": "high",
@@ -92882,6 +92888,21 @@
   },
   {
     "input": "JJD0002233564270287",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "inpost",
+      "dhl"
+    ],
+    "preferred": [
+      "inpost"
+    ],
+    "asked": [
+      "inpost"
+    ]
+  },
+  {
+    "input": "JJD0002247735827849",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [

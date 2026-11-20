@@ -4790,5 +4790,11 @@
     "pattern": "^\\d{15}$",
     "kind": "open",
     "reason": "A public Trackings.GE tracking link carries a fifteen-digit number. Detection lists other carriers that share the length."
+  },
+  {
+    "carrier": "the-delivery-group",
+    "pattern": "^ETENE\\d{9}$",
+    "kind": "open",
+    "reason": "An archived DocketHub link in the TDG tracking interface uses an ETENE reference. Detection does not offer The Delivery Group."
   }
 ]
