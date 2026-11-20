@@ -1,5 +1,95 @@
 {
   "carrier": "ambro-express",
-  "gap": "No public page shows an Ambro Express shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "2060002762700",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ambro-express",
+        "date": "2026-09-06",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "A recipient named Ambro Express and published the shipment number in a GlobKurier review. The carrier's tracker returned a delivery scan dated 2026-09-03."
+    },
+    {
+      "number": "2114001247376",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ambro-express",
+        "date": "2026-08-04",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "A recipient named Ambro Express and published the shipment number in a GlobKurier review. The carrier's tracker returned a delivery scan dated 2026-08-04."
+    },
+    {
+      "number": "2116000693321",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-ambro-express",
+        "date": "2026-04-28",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "A recipient named Ambro Express and published the shipment number in a GlobKurier review. The carrier's tracker returned a delivery scan dated 2026-04-28."
+    }
+  ]
 }

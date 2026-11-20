@@ -28634,6 +28634,25 @@
     ]
   },
   {
+    "input": "2060002762700",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "fan-courier",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery",
+      "fan-courier"
+    ]
+  },
+  {
     "input": "20620019490000169",
     "carrier": "unknown",
     "confidence": "low",
@@ -29762,6 +29781,44 @@
       "packeta",
       "dhl-ecommerce-es",
       "box-now"
+    ]
+  },
+  {
+    "input": "2114001247376",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "fan-courier",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery",
+      "fan-courier"
+    ]
+  },
+  {
+    "input": "2116000693321",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "fan-courier",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery",
+      "fan-courier"
     ]
   },
   {
