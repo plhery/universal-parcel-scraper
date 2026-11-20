@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -14,13 +14,7 @@ export function parseTracking(body: string, number: string): CarrierResult {
   }
   const $ = load(body);
   const tables = $('table.tg');
-  if (!tables.length) {
-    const visible = clean($('body').text());
-    if ($('textarea[name="txtguia"]').length && /no se encontr(?:ó|aron)|no existe|sin registros|no hay resultados/i.test(visible)) {
-      throw new NotFoundError(provider);
-    }
-    throw new SchemaError(provider, 'Conexiones Empresariales omitted the guide table');
-  }
+  if (!tables.length) throw new SchemaError(provider, 'Conexiones Empresariales omitted the guide table');
   if (tables.length !== 1) throw new IndeterminateError(provider, 'Conexiones Empresariales returned more than one guide');
 
   const fields = new Map<string, string>();

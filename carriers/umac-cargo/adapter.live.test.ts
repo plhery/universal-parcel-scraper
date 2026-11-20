@@ -2,7 +2,7 @@ import { expect, it } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 
-const { UMAC_TRACKING_NUMBER: number, UMAC_MISSING_NUMBER: missing } = process.env;
+const { UMAC_CARGO_TRACKING_NUMBER: number, UMAC_CARGO_MISSING_NUMBER: missing } = process.env;
 const tracker = adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 it.skipIf(!number)('returns the exact box’s dated UMAC milestones', async () => {

@@ -62,7 +62,6 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'best-express-my': 'www.best-inc.my sends phone-sized screens to a tracking page with no waybill field; the desktop page has it',
   'best-express-vn': 'www.best-inc.vn sends phone-sized screens to a tracking page that renders blank in automated browsers; the desktop page has the waybill field',
   'chunghwa-post': 'the tracker draws its form only when its menu template loads before its site map, a race a fresh browser often loses; its Track & Trace menu then opens the form',
-  crowley: 'the bill of lading field appears after choosing FCL Cargo on the guest page; verified on a phone-sized browser',
   'custom-companies': 'the Shipment ID box sits in the desktop banner of www.customco.com, which the phone-size check does not show',
   'daylight-transport': 'the Track PRO # field sits in the desktop header of dylt.com, which the phone-size check does not show',
   dellin: 'the tracker answers automated browsers with a Qrator check (HTTP 401); in a regular browser it shows its order-number field',

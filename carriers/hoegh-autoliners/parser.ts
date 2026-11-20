@@ -36,7 +36,7 @@ export function parseTracking(body: string, bill: string): CarrierResult {
     if (clean(row.bol_number) !== bill) throw new IndeterminateError(provider, 'Höegh Autoliners returned a different bill');
     statuses.add(clean(row.status_code));
     if (!Array.isArray(row.routes)) continue;
-    for (const route of row.routes as unknown[]) {
+    for (const [leg, route] of (row.routes as unknown[]).entries()) {
       if (!isRecord(route)) continue;
       const location = /^[A-Z]{2}[A-Z0-9]{3}$/.test(clean(route.portLoad)) ? clean(route.portNameLoad) : '';
       const milestones = [
@@ -46,7 +46,7 @@ export function parseTracking(body: string, bill: string): CarrierResult {
       for (const { description, date } of milestones) {
         const day = localDate(date);
         if (!day) continue;
-        const stage = scanStages.get(description);
+        const stage = leg > 0 && description === 'Received' ? 'in_transit' : scanStages.get(description);
         events.set(JSON.stringify([day, description, location]), {
           description, local_time: day,
           ...(location && !hasPrivateDeliveryDetails(location) && { location }),

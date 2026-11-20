@@ -21,7 +21,6 @@ import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
 import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
 import { adapter as airEuropaCargo } from '../carriers/air-europa-cargo/adapter.js';
 import { adapter as airGreenland } from '../carriers/air-greenland/adapter.js';
-import { adapter as airbalticCargo } from '../carriers/airbaltic-cargo/adapter.js';
 import { adapter as airpakExpress } from '../carriers/airpak-express/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as airwaysCourierIn } from '../carriers/airways-courier-in/adapter.js';
@@ -156,7 +155,6 @@ import { adapter as cne } from '../carriers/cne/adapter.js';
 import { adapter as colisPrive } from '../carriers/colis-prive/adapter.js';
 import { adapter as colisweb } from '../carriers/colisweb/adapter.js';
 import { adapter as conexionesEmpresariales } from '../carriers/conexiones-empresariales/adapter.js';
-import { adapter as confirmedFreight } from '../carriers/confirmed-freight/adapter.js';
 import { adapter as connectCouriers } from '../carriers/connect-couriers/adapter.js';
 import { adapter as consegnia } from '../carriers/consegnia/adapter.js';
 import { adapter as coordinadora } from '../carriers/coordinadora/adapter.js';
@@ -180,7 +178,6 @@ import { adapter as cotaxi } from '../carriers/cotaxi/adapter.js';
 import { adapter as courierCenter } from '../carriers/courier-center/adapter.js';
 import { adapter as courieritNz } from '../carriers/courierit-nz/adapter.js';
 import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js';
-import { adapter as crowley } from '../carriers/crowley/adapter.js';
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
 import { adapter as cseRussia } from '../carriers/cse-russia/adapter.js';
 import { adapter as ctt } from '../carriers/ctt/adapter.js';
@@ -461,7 +458,6 @@ import { adapter as jch } from '../carriers/jch/adapter.js';
 import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
 import { adapter as jeebly } from '../carriers/jeebly/adapter.js';
 import { adapter as jerseyPost } from '../carriers/jersey-post/adapter.js';
-import { adapter as jetDelivery } from '../carriers/jet-delivery/adapter.js';
 import { adapter as jetLogistic } from '../carriers/jet-logistic/adapter.js';
 import { adapter as jetizz } from '../carriers/jetizz/adapter.js';
 import { adapter as jetlineCouriers } from '../carriers/jetline-couriers/adapter.js';
@@ -547,7 +543,6 @@ import { adapter as mainfreight } from '../carriers/mainfreight/adapter.js';
 import { adapter as makatiExpress } from '../carriers/makati-express/adapter.js';
 import { adapter as maltapost } from '../carriers/maltapost/adapter.js';
 import { adapter as mandae } from '../carriers/mandae/adapter.js';
-import { adapter as mandde } from '../carriers/mandde/adapter.js';
 import { adapter as maritimeOntario } from '../carriers/maritime-ontario/adapter.js';
 import { adapter as marken } from '../carriers/marken/adapter.js';
 import { adapter as marutiAir } from '../carriers/maruti-air/adapter.js';
@@ -748,7 +743,6 @@ import { adapter as seaLegendLine } from '../carriers/sea-legend-line/adapter.js
 import { adapter as seino } from '../carriers/seino/adapter.js';
 import { adapter as seinoSuperExpress } from '../carriers/seino-super-express/adapter.js';
 import { adapter as seko } from '../carriers/seko/adapter.js';
-import { adapter as sendboxArgentina } from '../carriers/sendbox-argentina/adapter.js';
 import { adapter as sendex } from '../carriers/sendex/adapter.js';
 import { adapter as sending } from '../carriers/sending/adapter.js';
 import { adapter as sendle } from '../carriers/sendle/adapter.js';
@@ -940,7 +934,6 @@ import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
 import { adapter as wpGround } from '../carriers/wp-ground/adapter.js';
-import { adapter as xanhThl } from '../carriers/xanh-thl/adapter.js';
 import { adapter as xcargo } from '../carriers/xcargo/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
@@ -1005,7 +998,6 @@ export const REGISTRY: RegistryDefinition = {
     "aex-paraguay": aexParaguay,
     "air-europa-cargo": airEuropaCargo,
     "air-greenland": airGreenland,
-    "airbaltic-cargo": airbalticCargo,
     "airpak-express": airpakExpress,
     "airspeed": airspeed,
     "airways-courier-in": airwaysCourierIn,
@@ -1140,7 +1132,6 @@ export const REGISTRY: RegistryDefinition = {
     "colis-prive": colisPrive,
     "colisweb": colisweb,
     "conexiones-empresariales": conexionesEmpresariales,
-    "confirmed-freight": confirmedFreight,
     "connect-couriers": connectCouriers,
     "consegnia": consegnia,
     "coordinadora": coordinadora,
@@ -1164,7 +1155,6 @@ export const REGISTRY: RegistryDefinition = {
     "courier-center": courierCenter,
     "courierit-nz": courieritNz,
     "couriersplease": couriersplease,
-    "crowley": crowley,
     "cruz-del-sur": cruzDelSur,
     "cse-russia": cseRussia,
     "ctt": ctt,
@@ -1445,7 +1435,6 @@ export const REGISTRY: RegistryDefinition = {
     "jd-logistics": jdLogistics,
     "jeebly": jeebly,
     "jersey-post": jerseyPost,
-    "jet-delivery": jetDelivery,
     "jet-logistic": jetLogistic,
     "jetizz": jetizz,
     "jetline-couriers": jetlineCouriers,
@@ -1531,7 +1520,6 @@ export const REGISTRY: RegistryDefinition = {
     "makati-express": makatiExpress,
     "maltapost": maltapost,
     "mandae": mandae,
-    "mandde": mandde,
     "maritime-ontario": maritimeOntario,
     "marken": marken,
     "maruti-air": marutiAir,
@@ -1732,7 +1720,6 @@ export const REGISTRY: RegistryDefinition = {
     "seino": seino,
     "seino-super-express": seinoSuperExpress,
     "seko": seko,
-    "sendbox-argentina": sendboxArgentina,
     "sendex": sendex,
     "sending": sending,
     "sendle": sendle,
@@ -1924,7 +1911,6 @@ export const REGISTRY: RegistryDefinition = {
     "winit": winit,
     "wooliiporter": wooliiporter,
     "wp-ground": wpGround,
-    "xanh-thl": xanhThl,
     "xcargo": xcargo,
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
@@ -2021,7 +2007,6 @@ export const REGISTRY: RegistryDefinition = {
     "air-europa-cargo": "air-europa-cargo",
     "air-greenland": "air-greenland",
     "air-star-xpress": "universal",
-    "airbaltic-cargo": "airbaltic-cargo",
     "airmee": "universal",
     "airpak-express": "airpak-express",
     "airroad": "universal",
@@ -2299,7 +2284,6 @@ export const REGISTRY: RegistryDefinition = {
     "collicare": "universal",
     "comone-express": "universal",
     "conexiones-empresariales": "conexiones-empresariales",
-    "confirmed-freight": "confirmed-freight",
     "connect-couriers": "connect-couriers",
     "consegnia": "consegnia",
     "conveyor-uni-express": "universal",
@@ -2348,7 +2332,6 @@ export const REGISTRY: RegistryDefinition = {
     "cristao-shipping": "universal",
     "crossflight": "universal",
     "crosswin": "universal",
-    "crowley": "crowley",
     "cruz-del-sur": "cruz-del-sur",
     "cruz-del-sur-pe": "universal",
     "cse-russia": "cse-russia",
@@ -2878,7 +2861,6 @@ export const REGISTRY: RegistryDefinition = {
     "jdiex": "universal",
     "jeebly": "jeebly",
     "jersey-post": "jersey-post",
-    "jet-delivery": "jet-delivery",
     "jet-dp": "universal",
     "jet-express-ee": "universal",
     "jet-global": "universal",
@@ -3049,7 +3031,6 @@ export const REGISTRY: RegistryDefinition = {
     "maldives-post": "universal",
     "maltapost": "maltapost",
     "mandae": "mandae",
-    "mandde": "mandde",
     "maple-logistics": "universal",
     "maraton": "universal",
     "maritime-ontario": "maritime-ontario",
@@ -3452,7 +3433,6 @@ export const REGISTRY: RegistryDefinition = {
     "seino-super-express": "seino-super-express",
     "seko": "seko",
     "senda-insular": "universal",
-    "sendbox-argentina": "sendbox-argentina",
     "sendex": "sendex",
     "sending": "sending",
     "sendle": "sendle",
@@ -3837,7 +3817,6 @@ export const REGISTRY: RegistryDefinition = {
     "x-express-rs": "universal",
     "x-trac": "universal",
     "xalq-global": "universal",
-    "xanh-thl": "xanh-thl",
     "xcargo": "xcargo",
     "xd-express": "universal",
     "xde-logistics": "xde-logistics",

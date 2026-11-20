@@ -5,6 +5,5 @@ Select Sallaum Lines and enter the 17-character VIN. The adapter uses the carrie
 The adapter keeps the dated intake, vessel shipment and discharge records. It preserves day precision for midnight placeholders and local clock precision for timed records. The public page labels its discharge summary “Unit delivered at destination”. The event is a vessel discharge, so the adapter records it as a port movement. It omits vehicle model, vessel and voyage references.
 
 ```sh
-SALLAUM_LINES_TRACKING_NUMBER=4T1BF3EK0BU179179 SALLAUM_LINES_UNKNOWN_NUMBER=00000000000000000 npm run test:carriers:live -- carriers/sallaum-lines
-SALLAUM_LINES_TRACKING_NUMBER=4T1BE46K77U557013 npm run test:carriers:live -- carriers/sallaum-lines
+SALLAUM_LINES_TRACKING_NUMBER=… SALLAUM_LINES_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/sallaum-lines
 ```

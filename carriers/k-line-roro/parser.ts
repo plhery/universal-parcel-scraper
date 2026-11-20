@@ -27,7 +27,6 @@ export function parseBooking(body: string, bill: string, status: number): string
   const data = parseReply(body);
   if (status === 400 && isRecord(data) && data.Message === 'No Booking or B/L found.') throw new NotFoundError(provider);
   if (status !== 200 || !Array.isArray(data)) throw new SchemaError(provider, 'K Line omitted the bill lookup');
-  if (!data.length) throw new NotFoundError(provider);
   const candidates: unknown[] = data;
   const matches = candidates.filter(isRecord).filter(row => billNumber(row) === bill);
   const bookings = [...new Set(matches.map(row => clean(row.BookingNum)))];
@@ -56,7 +55,7 @@ export function parseTracking(body: string, bill: string): CarrierResult {
       description, local_time: clock.toFormat("yyyy-MM-dd'T'HH:mm"), stage, stage_source: 'carrier_map',
       ...(location && !hasPrivateDeliveryDetails(location) && { location }),
     }];
-  }).sort((first, second) => second.local_time.localeCompare(first.local_time));
+  }).reverse().sort((first, second) => second.local_time.localeCompare(first.local_time));
   const latest = events[0];
   if (!latest) throw new IndeterminateError(provider, 'K Line lists the bill without actual port movements', { reason: 'listed' });
   return {

@@ -5,6 +5,5 @@ Select MOL Auto Carrier Express and enter the 11-digit bill of lading. The adapt
 The adapter keeps completed departure and arrival cells from the paired ATD / ETD and ATA / ETA columns. It retains minute precision in the carrier’s local clocks and omits scheduled movements and individual vehicle details. Port arrival is a transit movement.
 
 ```sh
-MOL_ACE_TRACKING_NUMBER=MOLU18009522892 MOL_ACE_UNKNOWN_NUMBER=99999999999 npm run test:carriers:live -- carriers/mol-ace
-MOL_ACE_TRACKING_NUMBER=MOLU18009458031 npm run test:carriers:live -- carriers/mol-ace
+MOL_ACE_TRACKING_NUMBER=… MOL_ACE_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/mol-ace
 ```

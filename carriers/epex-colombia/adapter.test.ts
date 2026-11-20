@@ -23,7 +23,7 @@ it('posts the full guide and preserves the dated status and distinct tied scans'
   });
   expect(result.events).toHaveLength(5);
   expect(result.events?.filter(event => event.local_time === '2021-10-07T08:36:39').map(event => event.description))
-    .toEqual(['Descargado', 'Pendiente En Agencia']);
+    .toEqual(['Pendiente En Agencia', 'Descargado']);
   expect(result.events?.find(event => event.description === 'Pendiente En Agencia')).not.toHaveProperty('stage');
   expect(result).not.toHaveProperty('last_update');
 });

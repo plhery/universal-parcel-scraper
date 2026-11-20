@@ -51,7 +51,7 @@ export function parseTracking(body: string, number: string): CarrierResult {
   if (!events.length && !currentStage) {
     throw new IndeterminateError(provider, 'EPEX listed the guide without a mapped status or dated movements', { reason: 'listed' });
   }
-  events.sort((first, second) => (second.local_time ?? '').localeCompare(first.local_time ?? ''));
+  events.reverse().sort((first, second) => (second.local_time ?? '').localeCompare(first.local_time ?? ''));
   return {
     status: currentStage ? languageStageStatus(currentStage) : 'unknown',
     ...(currentStage && { current_stage: currentStage, current_stage_source: 'carrier_map' }),

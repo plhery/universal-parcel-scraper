@@ -7408,31 +7408,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "airbaltic-cargo": {
-    "displayName": "airBaltic Cargo",
-    "color": "#b0d435",
-    "aliases": [
-      "Air Baltic Cargo",
-      "Air Baltic Corporation Cargo",
-      "airBaltic Air Cargo"
-    ],
-    "countries": [
-      "LV",
-      "EE",
-      "LT"
-    ],
-    "selectable": true,
-    "timezone": "Europe/Riga",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "airbaltic-cargo"
-    },
-    "canaryUrl": "https://cargotrack.airbaltic.com/",
-    "trackingUrlTemplate": "https://www.airbaltic.com/en/cargo",
-    "trackingSearchUrl": "https://www.airbaltic.com/en/cargo",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "airmee": {
     "displayName": "Airmee",
     "color": "#000000",
@@ -16106,29 +16081,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "confirmed-freight": {
-    "displayName": "Confirmed Freight",
-    "color": "#267ca8",
-    "aliases": [
-      "Confirmed Freight LLC",
-      "Confirmed Freight, LLC"
-    ],
-    "countries": [
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "confirmed-freight",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.confirmedfreight.com/services/tracking.htm",
-    "trackingUrlTemplate": "https://www.confirmedfreight.com/track/{trackingNumber}/",
-    "trackingSearchUrl": "https://www.confirmedfreight.com/services/tracking.htm",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "connect-couriers": {
     "displayName": "Connect Couriers",
     "color": "#9c231b",
@@ -17561,33 +17513,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/tracking/([^/]+)/?$"
       }
     ],
-    "detectionRules": []
-  },
-  "crowley": {
-    "displayName": "Crowley",
-    "color": "#00467f",
-    "aliases": [
-      "Crowley Logistics",
-      "Crowley Liner Services",
-      "Crowley Latin America Services",
-      "Crowley Caribbean Services"
-    ],
-    "countries": [
-      "US",
-      "HN",
-      "VI"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "crowley",
-      "localClocks": true
-    },
-    "canaryUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
-    "trackingUrlTemplate": "https://csight.crowley.com/crowley/s/shipment-tracking",
-    "trackingSearchUrl": "https://csight.crowley.com/crowley/s/shipment-tracking",
-    "linkRules": [],
     "detectionRules": []
   },
   "cruz-del-sur": {
@@ -34781,28 +34706,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "jet-delivery": {
-    "displayName": "Jet Delivery",
-    "color": "#1d5192",
-    "aliases": [
-      "Jet Delivery Inc.",
-      "Jet Delivery USA"
-    ],
-    "countries": [
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "America/Los_Angeles",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "jet-delivery"
-    },
-    "canaryUrl": "https://www.jetdelivery.com/track/",
-    "trackingUrlTemplate": "https://www.jetdelivery.com/track/?idx={trackingNumber}",
-    "trackingSearchUrl": "https://www.jetdelivery.com/track/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "jet-dp": {
     "displayName": "JET DP",
     "color": "#3b5159",
@@ -40334,29 +40237,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/rastreamento/([A-Za-z0-9]+)/?$"
       }
     ],
-    "detectionRules": []
-  },
-  "mandde": {
-    "displayName": "MANDDE",
-    "color": "#022f73",
-    "aliases": [
-      "MANDDE S.A.S.",
-      "MANDDE Colombia"
-    ],
-    "countries": [
-      "CO"
-    ],
-    "selectable": true,
-    "timezone": "America/Bogota",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "mandde",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.mandde.com.co/rastreo.html",
-    "trackingUrlTemplate": "https://www.mandde.com.co/rastreo.html",
-    "trackingSearchUrl": "https://www.mandde.com.co/rastreo.html",
-    "linkRules": [],
     "detectionRules": []
   },
   "maple-logistics": {
@@ -53030,29 +52910,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "sendbox-argentina": {
-    "displayName": "SendBox Argentina",
-    "color": "#d82027",
-    "aliases": [
-      "SendBox",
-      "SendBox AR",
-      "Sedex Argentina"
-    ],
-    "countries": [
-      "AR"
-    ],
-    "selectable": true,
-    "timezone": "America/Argentina/Cordoba",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sendbox-argentina"
-    },
-    "canaryUrl": "https://www.sendbox.com.ar/seguimiento/",
-    "trackingUrlTemplate": "https://www.sendbox.com.ar/seguimiento/",
-    "trackingSearchUrl": "https://www.sendbox.com.ar/seguimiento/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "sendex": {
     "displayName": "Sendex",
     "color": "#de172e",
@@ -65151,30 +65008,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "xanh-thl": {
-    "displayName": "Xanh THL Logistics",
-    "color": "#18a558",
-    "aliases": [
-      "XanhTHL",
-      "Xanh THL",
-      "Thái Hà Xanh Logistics"
-    ],
-    "countries": [
-      "VN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Ho_Chi_Minh",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "xanh-thl",
-      "localClocks": true
-    },
-    "canaryUrl": "https://xanhthl.com/",
-    "trackingUrlTemplate": "https://xanhthl.com/#xanhTrackingForm",
-    "trackingSearchUrl": "https://xanhthl.com/#xanhTrackingForm",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "xcargo": {
     "displayName": "X-Cargo",
     "color": "#18fb8c",
@@ -67707,7 +67540,6 @@ export const CARRIER_IDS = [
   "air-europa-cargo",
   "air-greenland",
   "air-star-xpress",
-  "airbaltic-cargo",
   "airmee",
   "airpak-express",
   "airroad",
@@ -67965,7 +67797,6 @@ export const CARRIER_IDS = [
   "collicare",
   "comone-express",
   "conexiones-empresariales",
-  "confirmed-freight",
   "connect-couriers",
   "consegnia",
   "conveyor-uni-express",
@@ -68010,7 +67841,6 @@ export const CARRIER_IDS = [
   "cristao-shipping",
   "crossflight",
   "crosswin",
-  "crowley",
   "cruz-del-sur",
   "cruz-del-sur-pe",
   "cse-russia",
@@ -68509,7 +68339,6 @@ export const CARRIER_IDS = [
   "jdiex",
   "jeebly",
   "jersey-post",
-  "jet-delivery",
   "jet-dp",
   "jet-express-ee",
   "jet-global",
@@ -68677,7 +68506,6 @@ export const CARRIER_IDS = [
   "maldives-post",
   "maltapost",
   "mandae",
-  "mandde",
   "maple-logistics",
   "maraton",
   "maritime-ontario",
@@ -69059,7 +68887,6 @@ export const CARRIER_IDS = [
   "seino-super-express",
   "seko",
   "senda-insular",
-  "sendbox-argentina",
   "sendex",
   "sending",
   "sendle",
@@ -69424,7 +69251,6 @@ export const CARRIER_IDS = [
   "x-express-rs",
   "x-trac",
   "xalq-global",
-  "xanh-thl",
   "xcargo",
   "xd-express",
   "xde-logistics",
@@ -69661,7 +69487,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "air-europa-cargo": [],
   "air-greenland": [],
   "air-star-xpress": [],
-  "airbaltic-cargo": [],
   "airmee": [],
   "airpak-express": [],
   "airroad": [],
@@ -69919,7 +69744,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "collicare": [],
   "comone-express": [],
   "conexiones-empresariales": [],
-  "confirmed-freight": [],
   "connect-couriers": [],
   "consegnia": ["consegnia-1"],
   "conveyor-uni-express": [],
@@ -69964,7 +69788,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cristao-shipping": [],
   "crossflight": [],
   "crosswin": [],
-  "crowley": [],
   "cruz-del-sur": [],
   "cruz-del-sur-pe": [],
   "cse-russia": [],
@@ -70463,7 +70286,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jdiex": [],
   "jeebly": ["jeebly-1"],
   "jersey-post": ["jersey-post-s10"],
-  "jet-delivery": [],
   "jet-dp": [],
   "jet-express-ee": [],
   "jet-global": [],
@@ -70631,7 +70453,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maldives-post": [],
   "maltapost": ["maltapost-s10","maltapost-sengi"],
   "mandae": [],
-  "mandde": [],
   "maple-logistics": [],
   "maraton": [],
   "maritime-ontario": [],
@@ -71013,7 +70834,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "seino-super-express": [],
   "seko": [],
   "senda-insular": [],
-  "sendbox-argentina": [],
   "sendex": [],
   "sending": ["sending-1"],
   "sendle": ["sendle-1"],
@@ -71378,7 +71198,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "x-express-rs": [],
   "x-trac": ["x-trac-1"],
   "xalq-global": [],
-  "xanh-thl": [],
   "xcargo": [],
   "xd-express": [],
   "xde-logistics": [],

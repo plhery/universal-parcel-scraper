@@ -131,11 +131,6 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to Air Star Xpress."
   },
   {
-    "carrier": "airbaltic-cargo",
-    "kind": "open",
-    "reason": "The full air waybill identifies airBaltic in its own lookup. Eleven-digit numbers overlap other carriers and are kept explicit pending review."
-  },
-  {
     "carrier": "airpak-express",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
@@ -791,11 +786,6 @@
     "reason": "The court-published guides are short numeric references. The sample does not establish a unique detection rule."
   },
   {
-    "carrier": "confirmed-freight",
-    "kind": "open",
-    "reason": "The public shipment demonstration does not establish the carrier's customer reference formats."
-  },
-  {
     "carrier": "connect-couriers",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
@@ -862,11 +852,6 @@
     "pattern": "^\\d{15}$",
     "kind": "collision",
     "reason": "Credifin's fifteen-digit package labels are a bare digit run that many carriers' numbers share, so the shape cannot name Credifin."
-  },
-  {
-    "carrier": "crowley",
-    "kind": "open",
-    "reason": "SCAC-qualified bills match the carrier's native search. The manifest patterns need a collision review before automatic detection."
   },
   {
     "carrier": "cruz-del-sur",
@@ -2235,11 +2220,6 @@
     "reason": "Jeebly's six-digit JB and JBP numbers appear only as documentation examples, and short two- or three-letter composites are shared by many carriers."
   },
   {
-    "carrier": "jet-delivery",
-    "kind": "open",
-    "reason": "Jet Delivery's published examples are seven digits, a shape shared with other carriers. The adapter is explicitly selectable."
-  },
-  {
     "carrier": "jet-logistic",
     "pattern": "^\\d{12}$",
     "kind": "collision",
@@ -2607,11 +2587,6 @@
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "A bare nine-digit code is a generic numeric shape."
-  },
-  {
-    "carrier": "mandde",
-    "kind": "open",
-    "reason": "The carrier confirms its published numeric guide. More samples and a collision review are needed to establish a detection rule."
   },
   {
     "carrier": "maritime-ontario",
@@ -3614,11 +3589,6 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to SEKO."
   },
   {
-    "carrier": "sendbox-argentina",
-    "kind": "open",
-    "reason": "The two guide components identify shipments in the selected SendBox tracker. The numeric components also fit other carriers."
-  },
-  {
     "carrier": "sendex",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
@@ -4498,11 +4468,6 @@
     "pattern": "^\\d{8}$",
     "kind": "by_design",
     "reason": "Eight bare digits are printed by many carriers."
-  },
-  {
-    "carrier": "xanh-thl",
-    "kind": "open",
-    "reason": "The carrier publishes one live X-prefixed guide. Similar layouts occur across multiple carrier catalogs and need review."
   },
   {
     "carrier": "xde-logistics",
