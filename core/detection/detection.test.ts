@@ -388,6 +388,9 @@ describe('normalization', () => {
     expect(normalizeTrackingNumber('FR5820461937 FR5820461937')).toBe('FR5820461937');
     expect(detectCarrierMatch('FR5820461937FR5820461937')).toMatchObject({ carrier: 'amazon-logistics', confidence: 'high' });
     expect(normalizeTrackingNumber('RR123456785CNRR123456785CN')).toBe('RR123456785CN');
+    // Synthetic numbers. Eleven digits pasted twice fit Australia Post's 22-digit shape: only a GS1 check digit that holds keeps them whole.
+    expect(normalizeTrackingNumber('03141592653 03141592653')).toBe('03141592653');
+    expect(normalizeTrackingNumber('0123456789001234567890')).toBe('0123456789001234567890');
     // Two different numbers, or a repeat shorter than ten characters, stay as typed.
     for (const typed of ['FR5820461937FR4820461937', '123456789123456789', 'ABCABC', '0'.repeat(26)]) {
       expect(normalizeTrackingNumber(typed), typed).toBe(typed);

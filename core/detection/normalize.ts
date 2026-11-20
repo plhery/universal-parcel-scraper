@@ -1,5 +1,6 @@
 import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
+import { CHECKSUMS } from './checksums.js';
 import { restsOnCheckDigit, ruleFits } from './rules.js';
 import { noLimitShipmentNumber } from './noLimit.js';
 import { hasS10CheckDigit } from './s10CheckDigit.js';
@@ -9,14 +10,24 @@ import { hasS10CheckDigit } from './s10CheckDigit.js';
  *
  * What it is: the one place that decides what "the same number" means, plus
  * the printed grouping carriers use on their labels.
- * What it is not: no carrier lookup and no provider I/O. The only check digit
- * it reads is an S10 serial's, to tell a typed letter O from a zero.
+ * What it is not: no carrier lookup and no provider I/O. It reads check digits only to tell
+ * a typed letter O from a zero in an S10 serial and a whole barcode from a number pasted twice.
  */
 
 // A repeated block may itself be a whole barcode, as a USPS one whose halves repeat. A shape with
-// its own prefix and check digit tells it from a number pasted twice; a length or a check digit alone does not.
+// its own prefix and a check digit that holds tells it from a number pasted twice; a length or a check
+// digit alone does not, nor a shape whose check digit fails.
+// A check that normalizes the number it is given (USPS's) reads it whole meanwhile.
+let checking = false;
 function hasCheckedShape(number: string): boolean {
-  return Object.values(CARRIER_DEFINITIONS).some(carrier => carrier.detectionRules.some(rule => rule.checksum !== undefined && !restsOnCheckDigit(rule) && ruleFits(rule, number, number)));
+  if (checking) return true;
+  checking = true;
+  try {
+    return Object.values(CARRIER_DEFINITIONS).some(carrier => carrier.detectionRules.some(rule => rule.checksum !== undefined
+      && !restsOnCheckDigit(rule) && ruleFits(rule, number, number) && CHECKSUMS[rule.checksum](number)));
+  } finally {
+    checking = false;
+  }
 }
 
 /**
