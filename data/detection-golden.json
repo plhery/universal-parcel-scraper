@@ -97,6 +97,12 @@
     "candidates": []
   },
   {
+    "input": "000.004.870",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "00000000000000000000000000",
     "carrier": "unknown",
     "confidence": "none",
