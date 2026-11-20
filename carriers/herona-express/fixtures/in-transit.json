@@ -1,0 +1,28 @@
+{
+  "data": {
+    "asal": "TASIKMALAYA",
+    "tujuan": "JAKARTA"
+  },
+  "history": [
+    {
+      "id": "2",
+      "status": "DITERIMA DI KANTOR HE TSM",
+      "date_created": "19 Jun 2023, 11:22:49"
+    },
+    {
+      "id": "4",
+      "status": "PROSES MUAT DAN PEMBERANGKATAN",
+      "date_created": "19 Jun 2023, 15:34:47"
+    },
+    {
+      "id": "12",
+      "status": "TRANSIT DI KANTOR BANDUNG STASIUN",
+      "date_created": "20 Jun 2023, 11:11:28"
+    },
+    {
+      "id": "13",
+      "status": "BERANGKAT DARI KANTOR TRANSIT BANDUNG STASIUN",
+      "date_created": "20 Jun 2023, 11:11:31"
+    }
+  ]
+}

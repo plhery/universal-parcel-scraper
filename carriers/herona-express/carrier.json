@@ -16,16 +16,30 @@
   "timezone": "Asia/Jakarta",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "herona-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "searchUrl": "https://tracking.heronaexpress.co.id/lacak.php",
     "canaryUrl": "https://www.heronaexpress.co.id/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "sender",
+      "recipient"
+    ],
     "unavailable": []
   },
   "links": [],
