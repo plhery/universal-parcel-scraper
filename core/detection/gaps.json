@@ -5036,5 +5036,11 @@
     "pattern": "^[0-9]{7,8}$",
     "kind": "open",
     "reason": "NSD public tracking links and recipient reports use these seven- and eight-digit references. Detection does not offer Hub Group Final Mile."
+  },
+  {
+    "carrier": "hop-envios",
+    "pattern": "^3999999[0-9]{8}$",
+    "kind": "open",
+    "reason": "The archived HOP tracker confirms this pickup-point shipment number. Detection does not offer HOP Envíos."
   }
 ]
