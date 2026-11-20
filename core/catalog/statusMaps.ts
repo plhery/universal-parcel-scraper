@@ -1,3 +1,4 @@
+import { statusMap as paquetEx } from '../../carriers/paquetex/status.js';
 import { statusMap as jomaLogistics } from '../../carriers/joma-logistics/status.js';
 import { statusMap as pochtaiAsr } from '../../carriers/pochtai-asr/status.js';
 import { statusMap as paqueteriaVencedor } from '../../carriers/paqueteria-vencedor/status.js';
@@ -902,6 +903,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  paquetex: paquetEx,
   'joma-logistics': jomaLogistics,
   'pochtai-asr': pochtaiAsr,
   'paqueteria-vencedor': paqueteriaVencedor,

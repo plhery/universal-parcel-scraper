@@ -44382,6 +44382,32 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "paquetex": {
+    "displayName": "PaquetEx",
+    "color": "#003893",
+    "aliases": [
+      "Jump Express LLC"
+    ],
+    "countries": [
+      "GT",
+      "HN",
+      "MX",
+      "NI",
+      "SV",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "paquetex"
+    },
+    "canaryUrl": "https://paquetex.net/tracking",
+    "trackingUrlTemplate": "https://paquetex.net/tracking?q={trackingNumber}",
+    "trackingSearchUrl": "https://paquetex.net/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "paquetexpress": {
     "displayName": "Paquetexpress",
     "color": "#002a52",

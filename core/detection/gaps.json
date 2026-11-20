@@ -5506,6 +5506,12 @@
     "reason": "Swift Drop publishes a demo order. It confirms the tracking route and does not establish an issued number range."
   },
   {
+    "carrier": "paquetex",
+    "number": "46086",
+    "kind": "by_design",
+    "reason": "PaquetEx box numbers overlap other carriers' references. Use explicit selection."
+  },
+  {
     "carrier": "paqueteria-vencedor",
     "kind": "open",
     "reason": "Vencedor's guest tracker confirms these ten-digit guides. Several other carriers share the shape, so Vencedor is offered through explicit selection."

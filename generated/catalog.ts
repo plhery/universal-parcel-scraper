@@ -44386,6 +44386,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "paquetex": {
+    "displayName": "PaquetEx",
+    "color": "#003893",
+    "aliases": [
+      "Jump Express LLC"
+    ],
+    "countries": [
+      "GT",
+      "HN",
+      "MX",
+      "NI",
+      "SV",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "paquetex"
+    },
+    "canaryUrl": "https://paquetex.net/tracking",
+    "trackingUrlTemplate": "https://paquetex.net/tracking?q={trackingNumber}",
+    "trackingSearchUrl": "https://paquetex.net/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "paquetexpress": {
     "displayName": "Paquetexpress",
     "color": "#002a52",
@@ -66659,6 +66685,7 @@ export const CARRIER_IDS = [
   "paps",
   "paqline",
   "paqueteria-vencedor",
+  "paquetex",
   "paquetexpress",
   "paquexpress-urgente",
   "parcel-one",
@@ -68528,6 +68555,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paps": [],
   "paqline": [],
   "paqueteria-vencedor": [],
+  "paquetex": [],
   "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
   "paquexpress-urgente": [],
   "parcel-one": [],
