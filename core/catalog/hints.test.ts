@@ -250,7 +250,7 @@ describe('carrier names reported by universal providers', () => {
     ['Finland Post', 'posti'], ['Spain Post', 'correos-spain'], ['Portugal CTT', 'ctt'],
     ['Portugal Post - Portugal CTT', 'ctt'], ['Posten Norge - Norway Post', 'bring-posten'], ['Italy Post', 'poste-italiane'],
     ['Italy SDA', 'poste-italiane'],
-    ['SDA Express Courier', 'poste-italiane'], ['4PX Express', 'four-px'], ['Asendia United States', 'asendia'],
+    ['SDA Express Courier', 'poste-italiane'], ['4PX Express', 'four-px'], ['Asendia United States', 'asendia'], ['WnDirect/Asendia UK', 'asendia'],
     ['Deutsche Post - DHL Paket', 'dhl'], ['DHL eCommerce Global Mail', 'dhl-ecommerce'], ['DHL eCommerce Asia', 'dhl-ecommerce'],
     ['DHL eCommerce US', 'dhl-ecommerce'],
     ['Correos de España', 'correos-spain'], ['Correos Spain', 'correos-spain'], ['Austria Post', 'austrian-post'],

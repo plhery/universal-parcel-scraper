@@ -6,8 +6,7 @@ last mile. It runs two public trackers:
 - **A1** (Asendia USA), `a1.asendiausa.com/tracking/` (also `a1.asendia.com`). Its page reads a
   JSON API with no challenge. [adapter.ts](adapter.ts) asks it first.
 - **Global portal** `track.asendia.com`, which serves the other subsidiaries, Asendia UK
-  included. Every
-  search needs a fresh Cloudflare Turnstile token. The optional `trawl` step submits its
+  (formerly wnDirect) included. Every search needs a fresh Cloudflare Turnstile token. The optional `trawl` step submits its
   browser form after verification; [probe.ts](probe.ts) keeps the HTTP protocol canary.
 
 Without a browser service, a number A1 does not know is not-found for this tracker only. With one configured, the adapter also asks the global portal. Peek can enrich

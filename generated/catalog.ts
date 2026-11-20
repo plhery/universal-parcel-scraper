@@ -1953,6 +1953,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Asendia Management",
       "Asendia UK",
+      "wnDirect",
+      "WnDirect/Asendia UK",
       "asendia.com",
       "Asendia USA",
       "Globegistics",
