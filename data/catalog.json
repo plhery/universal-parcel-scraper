@@ -7800,6 +7800,29 @@
     ],
     "detectionRules": []
   },
+  "akr-express": {
+    "displayName": "AKR Express",
+    "color": "#d5232e",
+    "aliases": [
+      "AKR Express Parcel Service",
+      "AKR Express Parcel Service Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "akr-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://akrexpress.com/",
+    "trackingUrlTemplate": "https://akrexpress.com/",
+    "trackingSearchUrl": "https://akrexpress.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "akropost": {
     "displayName": "Akropost",
     "color": "#157cc0",

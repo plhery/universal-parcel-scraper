@@ -5544,5 +5544,10 @@
     "carrier": "lalji-mulji-transport",
     "kind": "by_design",
     "reason": "The two published Lalji Mulji lorry receipts are numeric. Select the carrier explicitly."
+  },
+  {
+    "carrier": "akr-express",
+    "kind": "by_design",
+    "reason": "AKR Express lorry receipts start with one letter followed by six or seven digits. Select the carrier explicitly."
   }
 ]

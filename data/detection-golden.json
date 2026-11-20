@@ -102405,6 +102405,14 @@
     ]
   },
   {
+    "input": "P125600",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "flecha-amarilla"
+    ]
+  },
+  {
     "input": "P1401MRNQJCAP",
     "carrier": "unknown",
     "confidence": "low",

@@ -7804,6 +7804,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "akr-express": {
+    "displayName": "AKR Express",
+    "color": "#d5232e",
+    "aliases": [
+      "AKR Express Parcel Service",
+      "AKR Express Parcel Service Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "akr-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://akrexpress.com/",
+    "trackingUrlTemplate": "https://akrexpress.com/",
+    "trackingSearchUrl": "https://akrexpress.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "akropost": {
     "displayName": "Akropost",
     "color": "#157cc0",
@@ -65685,6 +65708,7 @@ export const CARRIER_IDS = [
   "akasa-air-cargo",
   "akash-ganga",
   "akis-express",
+  "akr-express",
   "akropost",
   "aks-express",
   "aland-post",
@@ -67558,6 +67582,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "akasa-air-cargo": [],
   "akash-ganga": [],
   "akis-express": [],
+  "akr-express": [],
   "akropost": [],
   "aks-express": [],
   "aland-post": [],
