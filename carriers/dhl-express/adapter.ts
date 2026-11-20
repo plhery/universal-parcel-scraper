@@ -14,7 +14,7 @@ import { isRecord } from '../../core/types.js';
 import { DhlTrackingApi, isMissingShipment } from './api.js';
 import { facilityZone } from './clock.js';
 import { DhlMobileApi, MobilePacedError } from './mobile.js';
-import { dhlExpressStage, isDhlExpressPieceDelivery, withCustomsHolds, withPieceDeliveries } from './status.js';
+import { dhlExpressStage, isDhlExpressNotice, isDhlExpressPieceDelivery, withCustomsHolds, withPieceDeliveries } from './status.js';
 
 const PROVIDER = 'DHL Express';
 const BROWSER_API = 'https://www.dhl.com/utapi';
@@ -140,8 +140,8 @@ function unifiedResult(shipment: Record<string, unknown>): CarrierResult {
   };
   const events = withCustomsHolds(withPieceDeliveries(shipment.events.map(event)));
   const status = withCustomsHolds([event(shipment.status), ...events])[0]!;
-  const current = isDhlExpressPieceDelivery(status.description ?? '')
-    ? { ...status, stage: events.find((row) => !isDhlExpressPieceDelivery(row.description ?? ''))?.stage ?? 'registered', stage_source: 'none' } : status;
+  const current = isDhlExpressNotice(status.description ?? '')
+    ? { ...status, stage: events.find((row) => !isDhlExpressNotice(row.description ?? ''))?.stage ?? 'registered', stage_source: 'none' } : status;
   const parcel: CarrierStatus = current.stage === 'delivered' ? 'delivered' : current.stage === 'out_for_delivery' ? 'out_for_delivery'
     : ['exception', 'failed_attempt', 'returned'].includes(current.stage!) ? 'exception'
       : ['pending', 'registered'].includes(current.stage!) ? 'pending' : 'in_transit';

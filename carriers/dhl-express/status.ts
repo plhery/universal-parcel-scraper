@@ -67,17 +67,31 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
 // in the minute the last of them is delivered. It neither delivers the shipment nor moves it back.
 const PIECE_DELIVERY = 'partial delivery of one or more pieces of a multi-piece shipment';
 
+// DHL's note that the destination's clearance "may start while the shipment is in transit to the destination", written
+// at the destination's facilities from the pickup on, while the parcel can still be in the origin country.
+const CLEARANCE_AHEAD = 'customs clearance status updated. note - the customs clearance process may start while the shipment is in transit to the destination.';
+
 /** Whether a checkpoint is the delivery of some of the shipment's pieces, which keeps the stage of the scan before it. */
 export function isDhlExpressPieceDelivery(description: string): boolean {
   return description.replace(/\s+/g, ' ').trim().toLowerCase() === PIECE_DELIVERY;
 }
 
-/** Events newest first, each piece delivery on the stage of the staged scan before it. */
+/** Whether a checkpoint is the note that clearance may start while the parcel travels, which keeps the stage before it too. */
+export function isDhlExpressClearanceAhead(description: string): boolean {
+  return description.replace(/\s+/g, ' ').trim().toLowerCase().replace(/\.?$/, '.') === CLEARANCE_AHEAD;
+}
+
+/** Whether a checkpoint moves nothing and keeps the stage of the scan before it. */
+export function isDhlExpressNotice(description: string): boolean {
+  return isDhlExpressPieceDelivery(description) || isDhlExpressClearanceAhead(description);
+}
+
+/** Events newest first, each piece delivery and clearance note on the stage of the staged scan before it. */
 export function withPieceDeliveries<T extends { description?: string; stage?: string; stage_source?: string }>(events: T[]): T[] {
   const read = [...events];
   for (let index = read.length - 1; index >= 0; index--) {
-    if (!isDhlExpressPieceDelivery(read[index]!.description ?? '')) continue;
-    const previous = read.slice(index + 1).find((event) => !isDhlExpressPieceDelivery(event.description ?? ''))?.stage ?? 'registered';
+    if (!isDhlExpressNotice(read[index]!.description ?? '')) continue;
+    const previous = read.slice(index + 1).find((event) => !isDhlExpressNotice(event.description ?? ''))?.stage ?? 'registered';
     read[index] = { ...read[index]!, stage: previous, stage_source: 'none' };
   }
   return read;
@@ -117,9 +131,11 @@ export function dhlExpressStage(description: string, code?: string | null): { st
 
 /** What the map says about one scan: its checkpoint wording, else its event code. The web feed has no codes. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => checkpointStage(wording, code),
+  stage: (code, wording) => (isDhlExpressNotice(wording) ? undefined : checkpointStage(wording, code)),
   gaps: [],
   gapNote: (_code, wording) => (isDhlExpressPieceDelivery(wording)
     ? 'The delivery of some pieces of a multi-piece shipment, while others are on the way or in the minute the rest is delivered: the shipment keeps the stage it had.'
-    : undefined),
+    : isDhlExpressClearanceAhead(wording)
+      ? "The note that the destination's clearance may start while the parcel travels, written from the pickup on: the shipment keeps the stage it had."
+      : undefined),
 };

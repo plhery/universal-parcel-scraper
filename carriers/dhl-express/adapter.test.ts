@@ -159,6 +159,17 @@ describe('DHL Express projection', () => {
     expect(dhlExpressStage('Synthetic checkpoint', 'XX').source).not.toBe('carrier_map');
     expect(dhlExpressStage('Customs clearance status updated. Note - The Customs clearance process is under way.'))
       .toEqual({ stage: 'customs', source: 'carrier_map' });
+    // The note that clearance may start while the parcel travels comes from the pickup on: it keeps the stage before it.
+    const ahead = 'Customs clearance status updated. Note - The Customs clearance process may start while the shipment is in transit to the destination.';
+    const web = payload();
+    web.results[0]!.checkpoints = [
+      { description: ahead, date: 'Tuesday, October 06, 2026', time: '17:45', location: 'EXAMPLE CITY - BELGIUM' },
+      { description: 'Shipment picked up', date: 'Monday, October 05, 2026', time: '03:26', location: 'EXAMPLE TOWN - USA' },
+    ];
+    expect(parse(web, number)).toMatchObject({ current_stage: 'accepted', current_stage_source: 'none',
+      events: [{ stage: 'accepted', stage_source: 'none' }, { stage: 'accepted', stage_source: 'carrier_map' }] });
+    expect(statusMapAnswer({ carrier: 'dhl-express', providerCode: null, description: ahead }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
   });
   it('dates a scan where its location settles the facility zone', () => {
     const clock = (location: string, date = 'Monday, October 05, 2026') => {
