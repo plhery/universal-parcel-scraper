@@ -133,7 +133,9 @@ match on their start. Other wording goes to the shared classifier.
 clearance still under way stays in customs. Only the stage changes, so stored
 scans keep their identity. A partial delivery of a multi-piece shipment hands over
 some pieces while others are still on the way, and DHL writes it again in the minute
-the last piece is delivered, so it keeps the stage of the scan before it.
+the last piece is delivered, so it keeps the stage of the scan before it. A hold
+written in the same minute as a "Clearance Event", a pair DHL repeats each day the
+parcel waits in clearance, is that customs hold; a hold alone is a problem.
 
 ## Limits
 

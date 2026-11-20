@@ -83,6 +83,22 @@ export function withPieceDeliveries<T extends { description?: string; stage?: st
   return read;
 }
 
+const ON_HOLD = 'shipment is on hold';
+const CLEARANCE_STEP = 'clearance event';
+
+/**
+ * Events newest first, a hold written in the same minute as a clearance step read as that customs hold. DHL
+ * repeats the pair each day the parcel waits in clearance, so the hold alone would set the parcel to a problem
+ * and back each day.
+ */
+export function withCustomsHolds<T extends { description?: string; stage?: string; stage_source?: string; time?: string | null; local_time?: string }>(events: T[]): T[] {
+  const clock = (event: T) => event.time ?? event.local_time ?? '';
+  const wording = (event: T) => (event.description ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const clearance = new Set(events.filter((event) => wording(event) === CLEARANCE_STEP && clock(event)).map(clock));
+  return events.map((event) => wording(event) === ON_HOLD && clearance.has(clock(event))
+    ? { ...event, stage: 'customs', stage_source: 'carrier_map' } : event);
+}
+
 /** The checkpoint's stage from DHL's own wording, if the wording is one of DHL's checkpoints. */
 export function dhlExpressCheckpointStage(description: string): Stage | undefined {
   const text = description.toLowerCase();

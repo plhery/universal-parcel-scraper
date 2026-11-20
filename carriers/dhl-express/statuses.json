@@ -27,7 +27,8 @@
       "language": "en",
       "stage": "exception",
       "confirmedBy": "live",
-      "firstSeen": "2026-10-05"
+      "firstSeen": "2026-10-05",
+      "note": "A hold alone is a problem. Written in the same minute as a Clearance event, a pair DHL repeats each day the parcel waits in clearance, it is that customs hold (see the adapter)."
     },
     {
       "wording": "Delivery attempted but no response at Consignee address",

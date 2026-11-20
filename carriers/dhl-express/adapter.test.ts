@@ -88,6 +88,24 @@ describe('DHL Express projection', () => {
     expect(statusMapAnswer({ carrier: 'dhl-express', providerCode: null, description: partial }))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
   });
+  it('reads a hold written in the same minute as a clearance step as that customs hold, and a hold alone as a problem', () => {
+    const web = payload();
+    web.results[0]!.checkpoints = [
+      { description: 'Clearance Event', date: 'Tuesday, October 13, 2026', time: '01:33', location: 'EXAMPLE CITY - PORTUGAL' },
+      { description: 'Shipment is on hold', date: 'Tuesday, October 13, 2026', time: '01:33', location: 'EXAMPLE CITY - PORTUGAL' },
+      { description: 'Shipment is on hold', date: 'Monday, October 12, 2026', time: '05:45', location: 'EXAMPLE CITY - PORTUGAL' },
+      { description: 'Processed for clearance at EXAMPLE CITY - PORTUGAL', date: 'Monday, October 12, 2026', time: '01:52', location: 'EXAMPLE CITY - PORTUGAL' },
+    ];
+    expect(parse(web, number).events?.map((event) => event.stage)).toEqual(['customs', 'customs', 'exception', 'customs']);
+    const unified = unifiedPayload();
+    const hold = { description: 'Shipment is on hold', statusCode: 'transit', status: 'OH', timestamp: '2026-10-13T01:33:00+01:00' };
+    unified.shipments[0]!.status = hold;
+    unified.shipments[0]!.events = [hold, { description: 'Clearance Event', statusCode: 'transit', status: 'CD', timestamp: '2026-10-13T01:33:00+01:00' },
+      ...unified.shipments[0]!.events.slice(1)] as typeof unified.shipments[0]['events'];
+    const read = parseUnified(unified, number);
+    expect(read).toMatchObject({ current_stage: 'customs', current_stage_source: 'carrier_map' });
+    expect(read.events?.slice(0, 2).map((event) => event.stage)).toEqual(['customs', 'customs']);
+  });
   it('maps DHL checkpoints that end with their facility, and leaves other wording to the classifier', () => {
     expect([
       'Shipment information received',

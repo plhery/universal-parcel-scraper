@@ -14,7 +14,7 @@ import { isRecord } from '../../core/types.js';
 import { DhlTrackingApi, isMissingShipment } from './api.js';
 import { facilityZone } from './clock.js';
 import { DhlMobileApi, MobilePacedError } from './mobile.js';
-import { dhlExpressStage, isDhlExpressPieceDelivery, withPieceDeliveries } from './status.js';
+import { dhlExpressStage, isDhlExpressPieceDelivery, withCustomsHolds, withPieceDeliveries } from './status.js';
 
 const PROVIDER = 'DHL Express';
 const BROWSER_API = 'https://www.dhl.com/utapi';
@@ -138,8 +138,8 @@ function unifiedResult(shipment: Record<string, unknown>): CarrierResult {
       ...(time ? { time } : {}), ...(typeof address.addressLocality === 'string' ? { location: clean(address.addressLocality).slice(0, 300) } : {}),
       ...(typeof row.status === 'string' ? { provider_code: row.status.slice(0, 100) } : {}) };
   };
-  const events = withPieceDeliveries(shipment.events.map(event));
-  const status = event(shipment.status);
+  const events = withCustomsHolds(withPieceDeliveries(shipment.events.map(event)));
+  const status = withCustomsHolds([event(shipment.status), ...events])[0]!;
   const current = isDhlExpressPieceDelivery(status.description ?? '')
     ? { ...status, stage: events.find((row) => !isDhlExpressPieceDelivery(row.description ?? ''))?.stage ?? 'registered', stage_source: 'none' } : status;
   const parcel: CarrierStatus = current.stage === 'delivered' ? 'delivered' : current.stage === 'out_for_delivery' ? 'out_for_delivery'
@@ -186,14 +186,14 @@ export function parse(payload: unknown, raw: string): CarrierResult {
   if (shipment.checkpoints.length === 1 && blankCheckpoint(shipment.checkpoints[0])) {
     throw new IndeterminateError(PROVIDER, 'DHL Express shows nothing for the waybill', { reason: 'portal_not_found' });
   }
-  const events: CarrierEvent[] = withPieceDeliveries(shipment.checkpoints.map((row): CarrierEvent => {
+  const events: CarrierEvent[] = withCustomsHolds(withPieceDeliveries(shipment.checkpoints.map((row): CarrierEvent => {
     if (!isRecord(row) || typeof row.description !== 'string' || !row.description.trim()) throw new SchemaError(PROVIDER, 'DHL Express returned an invalid checkpoint');
     const description = clean(row.description).slice(0, 1000);
     const mapped = dhlExpressStage(description);
     const location = typeof row.location === 'string' ? clean(row.location).slice(0, 300) : '';
     return { description, ...clock(row.date, row.time, location), ...(typeof row.location === 'string' ? { location } : {}),
       stage: mapped.stage, stage_source: mapped.source };
-  }));
+  })));
   const current = events[0]!;
   const status: CarrierStatus = current.stage === 'delivered' ? 'delivered' : current.stage === 'out_for_delivery' ? 'out_for_delivery'
     : ['exception', 'failed_attempt', 'returned'].includes(current.stage!) ? 'exception'
