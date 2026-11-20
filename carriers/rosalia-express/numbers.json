@@ -1,0 +1,40 @@
+{
+  "carrier": "rosalia-express",
+  "records": [
+    {
+      "number": "076250118711",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://id.scribd.com/document/853722708/AWB-Rosalia-Kirim-Jan-31-2025",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "The published January 2025 Rosalia Express waybill resolves to five dated events from registration through delivery."
+    }
+  ]
+}

@@ -50211,6 +50211,30 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "rosalia-express": {
+    "displayName": "Rosalia Express",
+    "color": "#e32b2b",
+    "aliases": [
+      "Rosin Express",
+      "Rosalia Indah Express"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "rosalia-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.rosalia-express.com/cek-paket",
+    "trackingUrlTemplate": "https://www.rosalia-express.com/cek-paket",
+    "trackingSearchUrl": "https://www.rosalia-express.com/cek-paket",
+    "helpUrl": "https://www.rosalia-express.com/faq",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ross-express": {
     "displayName": "Ross Express",
     "color": "#bc010c",

@@ -1,0 +1,13 @@
+{
+  "serverMemo": {
+    "data": {
+      "receipt": "INVALID SAMPLE"
+    },
+    "errors": {
+      "receipt": [
+        "No. Surat pengiriman maks. 12 karakter.",
+        "Format tidak sesuai, No. SP hanya diperbolehkan angka."
+      ]
+    }
+  }
+}

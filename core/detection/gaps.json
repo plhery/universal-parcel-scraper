@@ -5612,5 +5612,10 @@
     "kind": "open",
     "carrier": "bss-express-direct",
     "reason": "The site confirms the published BSS receipt. Explicit selection is available while receipt families and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "rosalia-express",
+    "reason": "The native tracker confirms a public twelve-digit receipt with its leading zero. Explicit selection is available while numeric overlaps remain open."
   }
 ]

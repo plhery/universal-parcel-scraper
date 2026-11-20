@@ -1,0 +1,28 @@
+{
+  "id": "rosalia-express",
+  "displayName": "Rosalia Express",
+  "aliases": ["Rosin Express", "Rosalia Indah Express"],
+  "region": { "countries": ["ID"] },
+  "brand": { "color": "#e32b2b" },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "rosalia-express",
+    "steps": ["direct"],
+    "localClocks": true
+  },
+  "capabilities": ["history", "provider_code"],
+  "portal": {
+    "url": "https://www.rosalia-express.com/cek-paket",
+    "searchUrl": "https://www.rosalia-express.com/cek-paket",
+    "canaryUrl": "https://www.rosalia-express.com/cek-paket",
+    "helpUrl": "https://www.rosalia-express.com/faq",
+    "shows": ["status", "history", "event_locations", "delivery_details"],
+    "scraped": ["status", "history", "event_locations", "provider_code"],
+    "discarded": ["delivery_details", "free_text_notes"],
+    "unavailable": ["clock_offsets"]
+  },
+  "links": [],
+  "detection": []
+}

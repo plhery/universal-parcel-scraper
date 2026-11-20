@@ -50215,6 +50215,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "rosalia-express": {
+    "displayName": "Rosalia Express",
+    "color": "#e32b2b",
+    "aliases": [
+      "Rosin Express",
+      "Rosalia Indah Express"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "rosalia-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.rosalia-express.com/cek-paket",
+    "trackingUrlTemplate": "https://www.rosalia-express.com/cek-paket",
+    "trackingSearchUrl": "https://www.rosalia-express.com/cek-paket",
+    "helpUrl": "https://www.rosalia-express.com/faq",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ross-express": {
     "displayName": "Ross Express",
     "color": "#bc010c",
@@ -67207,6 +67231,7 @@ export const CARRIER_IDS = [
   "rohlig",
   "rohlig-suus",
   "rojas-express",
+  "rosalia-express",
   "ross-express",
   "route1-fulfilment",
   "royal-express-mm",
@@ -69092,6 +69117,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rohlig": [],
   "rohlig-suus": [],
   "rojas-express": [],
+  "rosalia-express": [],
   "ross-express": [],
   "route1-fulfilment": [],
   "royal-express-mm": [],

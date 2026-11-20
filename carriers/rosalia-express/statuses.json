@@ -1,0 +1,15 @@
+{
+  "carrier": "rosalia-express",
+  "entries": [
+    { "code": "Tunggu berangkat", "wording": "Tunggu berangkat", "stage": "registered", "language": "id", "confirmedBy": "live",
+      "note": "The origin agent created the shipment transaction." },
+    { "code": "Perjalanan", "wording": "Perjalanan", "stage": "in_transit", "language": "id", "confirmedBy": "live",
+      "note": "The tracker uses this short status for transport between agents." },
+    { "code": "Ke Cargo Delivery", "wording": "Ke Cargo Delivery", "stage": "in_transit", "language": "id", "confirmedBy": "live",
+      "note": "Arrival at the destination agent precedes the delivery run." },
+    { "code": null, "wording": "Paket dalam proses delivery oleh agen", "stage": "out_for_delivery", "language": "id", "confirmedBy": "live",
+      "note": "The longer event label identifies active delivery even though its short status is Perjalanan." },
+    { "code": "Selesai, telah diambil", "wording": "Selesai, telah diambil", "stage": "delivered", "language": "id", "confirmedBy": "live",
+      "note": "The detail confirms that the recipient has received the item." }
+  ]
+}
