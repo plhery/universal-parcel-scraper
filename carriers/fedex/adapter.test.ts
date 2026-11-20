@@ -12,6 +12,7 @@ import {
   parseFedExTrackingHtml,
   parseFedExTrackingResponse,
 } from './adapter.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { FEDEX_CODE_STAGE, fedexStage, fedexStatus, statusMap } from './status.js';
 
@@ -119,6 +120,9 @@ describe('FedEx status vocabulary', () => {
     expect(fedexStatus('XX', 'Wording FedEx has not used before')).toBe('unknown');
     expect(fedexStatus('XX', 'Wording FedEx has not used before', true)).toBe('in_transit');
     expect(fedexStage('Wording FedEx has not used before')).toBeNull();
+    // The package summary stored as a row without a code: its code or the newest scan stages it, not its words.
+    expect(fedexStage('We have your package')).toBeNull();
+    expect(statusMapAnswer({ carrier: 'fedex', providerCode: null, description: 'We have your package' })).toMatchObject({ kind: 'intentional_gap' });
   });
 
   it('reads a hold at location as ready for pickup only once the parcel waits there', () => {

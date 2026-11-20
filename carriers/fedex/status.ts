@@ -160,4 +160,10 @@ export function fedexScanStage(code: string | null, wording: string): Stage | un
  * when the map knows the code. The wording stages a scan whose code the map does not know, and
  * one stored or relayed without a code.
  */
-export const statusMap: CarrierStatusMap = { stage: fedexScanStage, gaps: [] };
+export const statusMap: CarrierStatusMap = {
+  stage: fedexScanStage,
+  gaps: [{
+    wording: 'we have your package',
+    note: "FedEx's package summary, which a host can store as a row without a code: its code stages it, in transit under IT, else the newest scan, In FedEx possession or the pickup.",
+  }],
+};
