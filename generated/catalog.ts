@@ -40934,6 +40934,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "muser": {
+    "displayName": "Muser International Logistics",
+    "color": "#8e8e93",
+    "aliases": [
+      "Muser",
+      "Shenzhen Muser International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mvp-courier": {
     "displayName": "MVP Courier",
     "color": "#093d64",
@@ -66327,6 +66347,7 @@ export const CARRIER_IDS = [
   "multidrop",
   "multientrega",
   "mundi-express",
+  "muser",
   "mvp-courier",
   "myanmar-post",
   "mylerz",
@@ -68190,6 +68211,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "multidrop": [],
   "multientrega": [],
   "mundi-express": [],
+  "muser": [],
   "mvp-courier": [],
   "myanmar-post": [],
   "mylerz": ["mylerz-1"],
