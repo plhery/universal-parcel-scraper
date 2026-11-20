@@ -173,6 +173,20 @@ describe('DHL eCommerce Iberia parser', () => {
     expect(parseDhlEcommerceEs(noticed, NUMBER)).toMatchObject({ current_stage: 'delivered', last_update_local: '2026-03-12T11:00:00' });
   });
 
+  it('reads the round that takes the parcel to its ServicePoint as out for delivery, after the request it fulfils', () => {
+    const payload = clone();
+    // The recipient asked for a ServicePoint the day before; the next round took the parcel there.
+    payload.Tracking = [payload.Tracking[0]!, payload.Tracking[1]!, payload.Tracking[2]!, payload.Tracking[6]!,
+      { Date: '10/03/2026', Time: '21:30', Description: 'Delivery at DHL ServicePoint requested', Code: 'SPO', Town: 'Madrid' },
+      { ...payload.Tracking[3]!, Date: '10/03/2026', Time: '21:30' }, ...payload.Tracking.slice(7)];
+    const result = parseDhlEcommerceEs(payload, NUMBER);
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([['RS', 'delivered'], ['IS', 'ready_for_pickup'],
+      ['ES', 'out_for_delivery'], ['A', 'out_for_delivery'], ['AS', 'in_transit'], ['SPO', 'in_transit'], ['ZZZ', 'in_transit'],
+      ['ZZZ', 'in_transit'], ['DOC', 'registered']]);
+    // After a failed round, the way to the ServicePoint is transit.
+    expect(parseDhlEcommerceEs(clone(), NUMBER).events?.find((event) => event.provider_code === 'ES')?.stage).toBe('in_transit');
+  });
+
   it('leaves a malformed clock out and never guesses one', () => {
     const payload = clone();
     payload.Tracking[0]!.Date = '31/02/2026';

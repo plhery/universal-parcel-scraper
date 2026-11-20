@@ -43,6 +43,11 @@ the gateway behind its customer tracking page. German DHL Paket is
   from the shipment's own status number.
 - A delivery stays the current stage when a notice follows it, but not when a
   later delivery round or failed attempt shows it came early.
+- "On its way to our DHL ServicePoint" (`ES`) straight after "Out for delivery"
+  is the round taking the parcel there: out for delivery. After a failed
+  attempt it stays in transit. The recipient's request for a ServicePoint
+  (`SPO`), written at the minute of its result (`AS`) and listed after it, is
+  put first.
 - The weight is shown in kilos.
 - The `ServicePoint` block is the DHL ServicePoint shop, as the page's
   ServicePoint card shows it; the anonymous answer has no recipient address.

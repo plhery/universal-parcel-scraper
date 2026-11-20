@@ -91,6 +91,18 @@ export function parseDhlEcommerceEs(payload: unknown, rawNumber: string): Carrie
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) });
   }
   if (!events.length) throw new IndeterminateError(PROVIDER, 'DHL eCommerce Iberia returned no parcel history');
+  for (const [index, event] of events.entries()) {
+    // The recipient's request for a ServicePoint, written at the minute of its result, came before it.
+    const older = events[index + 1];
+    if (event.provider_code === 'SPO' && older?.provider_code === 'AS' && event.local_time && event.local_time === older.local_time) {
+      [events[index], events[index + 1]] = [older, event];
+    }
+  }
+  for (const [index, event] of events.entries()) {
+    // On its way to the ServicePoint straight after Out for delivery, the round carries it there.
+    const before = events.slice(index + 1).find((older) => older.stage);
+    if (event.provider_code === 'ES' && before?.stage === 'out_for_delivery') event.stage = 'out_for_delivery';
+  }
   const latest = events[0]!;
   const final = events.findIndex((event) => event.stage && FINAL.includes(event.stage));
   const reopened = events.slice(0, Math.max(final, 0)).some((event) => event.stage && ROUND.includes(event.stage));
