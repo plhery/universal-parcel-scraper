@@ -1,4 +1,5 @@
 import { statusMap as astralAviation } from '../../carriers/astral-aviation/status.js';
+import { statusMap as paqmex } from '../../carriers/paqmex/status.js';
 import { statusMap as ibexExpressBo } from '../../carriers/ibex-express-bo/status.js';
 import { statusMap as redecarga } from '../../carriers/redecarga/status.js';
 import { statusMap as logeximExpress } from '../../carriers/logexim-express/status.js';
@@ -907,6 +908,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  paqmex,
   'astral-aviation': astralAviation,
   'ibex-express-bo': ibexExpressBo,
   redecarga,

@@ -1,0 +1,17 @@
+{
+  "carrier": "paqmex",
+  "records": [
+    {
+      "number": "Y128037",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://guiapaqueteria.com/paqueteria/autolineas-villareal/",
+        "access": "full_page"
+      },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "A 2022 customer comment identifies this as its PaqMex guide. The native tracker still returned ten dated scans in November 2026."
+    }
+  ]
+}

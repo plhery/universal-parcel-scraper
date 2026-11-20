@@ -44428,6 +44428,30 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "paqmex": {
+    "displayName": "PaqMex",
+    "color": "#143764",
+    "aliases": [
+      "Autolíneas Villarreal",
+      "Autolineas Villarreal",
+      "Autolíneas Villareal"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "paqmex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://paqmex.com/rastreo",
+    "trackingUrlTemplate": "https://paqmex.com/rastreo?guias={trackingNumber}",
+    "trackingSearchUrl": "https://paqmex.com/rastreo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "paqueteria-vencedor": {
     "displayName": "Paquetería Vencedor",
     "color": "#ae232a",

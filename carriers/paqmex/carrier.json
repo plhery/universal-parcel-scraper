@@ -1,0 +1,53 @@
+{
+  "id": "paqmex",
+  "displayName": "PaqMex",
+  "aliases": [
+    "Autolíneas Villarreal",
+    "Autolineas Villarreal",
+    "Autolíneas Villareal"
+  ],
+  "region": {
+    "countries": [
+      "MX"
+    ]
+  },
+  "brand": {
+    "color": "#143764"
+  },
+  "selectable": true,
+  "timezone": "America/Mexico_City",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "paqmex",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://paqmex.com/rastreo?guias={trackingNumber}",
+    "searchUrl": "https://paqmex.com/rastreo",
+    "canaryUrl": "https://paqmex.com/rastreo",
+    "shows": [
+      "status",
+      "history",
+      "actual_delivery_date",
+      "origin_and_destination"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "origin_and_destination"
+    ],
+    "unavailable": [
+      "scan_offsets"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

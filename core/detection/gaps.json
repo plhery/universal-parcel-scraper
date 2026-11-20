@@ -5557,5 +5557,10 @@
     "pattern": "^JL[0-9]{13}$",
     "kind": "open",
     "reason": "The carrier's public invoice example returns a dated departure history. Detection does not offer JOMA for the normalized departure reference."
+  },
+  {
+    "kind": "open",
+    "carrier": "paqmex",
+    "reason": "The native tracker confirms one public Y-prefixed guide. Explicit selection is available while its guide formats and overlaps remain open."
   }
 ]

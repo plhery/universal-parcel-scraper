@@ -44432,6 +44432,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "paqmex": {
+    "displayName": "PaqMex",
+    "color": "#143764",
+    "aliases": [
+      "Autolíneas Villarreal",
+      "Autolineas Villarreal",
+      "Autolíneas Villareal"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "paqmex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://paqmex.com/rastreo",
+    "trackingUrlTemplate": "https://paqmex.com/rastreo?guias={trackingNumber}",
+    "trackingSearchUrl": "https://paqmex.com/rastreo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "paqueteria-vencedor": {
     "displayName": "Paquetería Vencedor",
     "color": "#ae232a",
@@ -66778,6 +66802,7 @@ export const CARRIER_IDS = [
   "paperfly",
   "paps",
   "paqline",
+  "paqmex",
   "paqueteria-vencedor",
   "paquetex",
   "paquetexpress",
@@ -68652,6 +68677,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paperfly": ["paperfly-1","paperfly-2","paperfly-3"],
   "paps": [],
   "paqline": [],
+  "paqmex": [],
   "paqueteria-vencedor": [],
   "paquetex": [],
   "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
