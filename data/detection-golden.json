@@ -90362,6 +90362,17 @@
     "candidates": []
   },
   {
+    "input": "GCX-SN6629790",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
     "input": "GD552162373CA",
     "carrier": "canada-post",
     "confidence": "high",
@@ -107270,6 +107281,28 @@
     ],
     "asked": [
       "etomars"
+    ]
+  },
+  {
+    "input": "SN7062052",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "rl-carriers"
+    ],
+    "asked": [
+      "rl-carriers"
+    ]
+  },
+  {
+    "input": "SN8094856",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "rl-carriers"
+    ],
+    "asked": [
+      "rl-carriers"
     ]
   },
   {

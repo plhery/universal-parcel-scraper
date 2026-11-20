@@ -5066,5 +5066,11 @@
     "pattern": "^4[0-9]{6}$",
     "kind": "open",
     "reason": "Customer reports identify these seven-digit Golilla delivery codes separately from their shop orders. Detection does not offer Golilla."
+  },
+  {
+    "carrier": "gcx",
+    "pattern": "^(?:GCX)?SN[0-9]{7}$",
+    "kind": "open",
+    "reason": "GCX customer reports publish the SN family both with and without the carrier prefix. Detection does not offer GCX."
   }
 ]
