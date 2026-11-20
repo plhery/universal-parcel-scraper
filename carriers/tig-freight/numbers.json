@@ -1,5 +1,35 @@
 {
   "carrier": "tig-freight",
-  "gap": "No public page shows a TIG Freight number of its own.",
-  "records": []
+  "records": [
+    {
+      "number": "7377475001311",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://4246600.fs1.hubspotusercontent-ap1.net/hubfs/4246600/TIG%20Pronto%20Webinar%20-%20May%202022%20%281%29.pdf",
+        "date": "2018-04-27",
+        "dateKind": "delivery shown in webinar",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "OpenFreight tracking with Toll local delivery",
+        "reportedRole": "consignment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "Slide 21 of the TIG and Pronto webinar shows the same complete consignment number in TIG’s Track & Trace results and on the Toll proof of delivery. The historic tracker marks it delivered. The current Open360 page returned its application shell."
+    }
+  ]
 }
