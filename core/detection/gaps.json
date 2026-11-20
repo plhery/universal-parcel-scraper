@@ -4772,5 +4772,11 @@
     "pattern": "^031\\d{12}$",
     "kind": "open",
     "reason": "A published account of an Ecuadorian customs inspection identifies a Tramaco Express parcel guide with this prefix and length. Detection offers other carriers."
+  },
+  {
+    "carrier": "trackings-ge",
+    "pattern": "^\\d{15}$",
+    "kind": "open",
+    "reason": "A public Trackings.GE tracking link carries a fifteen-digit number. Detection lists other carriers that share the length."
   }
 ]
