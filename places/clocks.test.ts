@@ -46,6 +46,15 @@ describe('placeTimeZone', () => {
     expect(splitRegionTownZone('US', 'KY', 'BOWLING GREEN')).toBe('America/Chicago');
   });
 
+  it("keeps Central time in Indiana's north-western and south-western counties, Eastern in the rest", () => {
+    for (const town of ['Gary, IN', 'Michigan City, IN', 'Valparaiso, IN', 'Knox, IN', 'Rensselaer, IN', 'Evansville, IN',
+      'Princeton, IN', 'Boonville, IN', 'Tell City, IN']) expect(zoneOf(town), town).toBe('America/Chicago');
+    for (const town of ['South Bend, IN', 'Plymouth, IN', 'Winamac, IN', 'Monticello, IN', 'Indianapolis, IN', 'Vincennes, IN',
+      'Petersburg, IN', 'Jasper, IN', 'English, IN', 'Corydon, IN']) expect(zoneOf(town), town).toBe('America/New_York');
+    expect(splitRegionTownZone('US', 'IN', 'EVANSVILLE')).toBe('America/Chicago');
+    expect(splitRegionTownZone('US', 'IN', 'Indianapolis')).toBe('America/New_York');
+  });
+
   it('keeps Acre\'s offset in Amazonas west of the line from Tabatinga to Porto Acre, Manaus\'s east of it', () => {
     // The tz database's own examples on either side.
     for (const town of ['Eirunepé, AM', 'Envira, AM', 'Ipixuna, AM', 'Benjamin Constant, AM', 'Atalaia do Norte, AM']) {

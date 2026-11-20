@@ -199,6 +199,23 @@ const KENTUCKY_CENTRAL = [
   [36.616, -84.975], [36, -84.975], [36, -90], [38.9, -90]
 ] as const;
 
+// Indiana's Central-time counties as 49 CFR 71.5 lists them: Lake, Porter, LaPorte, Newton, Jasper and Starke in the
+// north-west, Gibson, Posey, Vanderburgh, Warrick, Spencer and Perry in the south-west. Each line follows their
+// boundary with the state's Eastern counties in the Census Bureau's cartographic county outlines, [latitude, longitude]
+// from the Michigan line and from the Wabash, and each ring closes beyond the state's borders.
+const INDIANA_NORTHWEST_CENTRAL = [
+  [42.2, -86.524], [41.76, -86.524], [41.65, -86.527], [41.571, -86.486], [41.433, -86.525], [41.433, -86.467],
+  [41.171, -86.467], [41.172, -86.93], [40.912, -86.931], [40.838, -86.986], [40.838, -87.1], [40.736, -87.098],
+  [40.737, -87.267], [40.737, -87.526], [40.737, -88.5], [42.2, -88.5]
+] as const;
+
+const INDIANA_SOUTHWEST_CENTRAL = [
+  [38.416, -87.74], [38.451, -87.599], [38.533, -87.463], [38.376, -87.408], [38.375, -87.316], [38.246, -87.317],
+  [38.233, -87.073], [38.204, -87.073], [38.204, -87.017], [38.205, -86.791], [38.249, -86.792], [38.263, -86.68],
+  [38.266, -86.57], [38.208, -86.572], [38.207, -86.46], [38.082, -86.427], [37.5, -86.427], [37.5, -88.5],
+  [38.416, -88.5]
+] as const;
+
 /** Whether a point lies inside a ring of [latitude, longitude] points. */
 function insideRing(ring: readonly (readonly [number, number])[], latitude: number, longitude: number): boolean {
   let inside = false;
@@ -213,13 +230,17 @@ function insideRing(ring: readonly (readonly [number, number])[], latitude: numb
 /**
  * The zone of a point in a state split between zones, where its place decides: Florida's
  * Panhandle keeps Central time, Texas's El Paso and Hudspeth counties Mountain time, eastern
- * Tennessee Eastern time, western Kentucky Central time and western Amazonas Acre's.
+ * Tennessee Eastern time, western Kentucky and Indiana's north-western and south-western
+ * corners Central time, and western Amazonas Acre's.
  * Null where the state's main zone holds.
  */
 export function splitRegionZone(country: string, region: string, latitude: number, longitude: number): string | null {
   if (country === 'US' && region === 'TX') return longitude < CULBERSON_COUNTY_WEST ? 'America/Denver' : null;
   if (country === 'US' && region === 'TN') return insideRing(TENNESSEE_EASTERN, latitude, longitude) ? 'America/New_York' : null;
   if (country === 'US' && region === 'KY') return insideRing(KENTUCKY_CENTRAL, latitude, longitude) ? 'America/Chicago' : null;
+  if (country === 'US' && region === 'IN') {
+    return [INDIANA_NORTHWEST_CENTRAL, INDIANA_SOUTHWEST_CENTRAL].some((ring) => insideRing(ring, latitude, longitude)) ? 'America/Chicago' : null;
+  }
   if (country === 'BR' && region === 'AM') return longitude < along(TABATINGA_PORTO_ACRE, latitude) ? 'America/Eirunepe' : null;
   if (country !== 'US' || region !== 'FL') return null;
   const central = longitude < GULF_COUNTY_WEST
