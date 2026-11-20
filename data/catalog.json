@@ -11913,6 +11913,34 @@
     ],
     "detectionRules": []
   },
+  "bob-go": {
+    "displayName": "Bob Go",
+    "color": "#139e83",
+    "aliases": [
+      "BobGo"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bob-go"
+    },
+    "canaryUrl": "https://track.bobgo.co.za/",
+    "trackingUrlTemplate": "https://track.bobgo.co.za/{trackingNumber}",
+    "trackingSearchUrl": "https://track.bobgo.co.za/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.bobgo.co.za"
+        ],
+        "path": "^/([A-Za-z0-9]{6,30})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "bolt-kargo": {
     "displayName": "BOLT Kargo",
     "color": "#fce029",
@@ -21181,6 +21209,29 @@
     "canaryUrl": "https://track.mydynalogic.eu/track/login",
     "trackingUrlTemplate": "https://track.mydynalogic.eu/track/login?ordernumber={trackingNumber}",
     "trackingSearchUrl": "https://track.mydynalogic.eu/track/login",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "dypaq": {
+    "displayName": "DYPAQ",
+    "color": "#f08226",
+    "aliases": [
+      "Dypaq",
+      "DYPAQ Mensajería",
+      "Dypaq Paquetería"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Merida",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dypaq",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.dypaq.com/",
+    "trackingSearchUrl": "https://www.dypaq.com/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41274,6 +41325,38 @@
     "canaryUrl": "https://navata.com/track-consignment",
     "trackingSearchUrl": "https://navata.com/track-consignment",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "navex": {
+    "displayName": "Navex Delivery",
+    "color": "#062a43",
+    "aliases": [
+      "Navex",
+      "NAVEX"
+    ],
+    "countries": [
+      "TN"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Tunis",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "navex"
+    },
+    "canaryUrl": "https://app.navex.tn/track.php",
+    "trackingUrlTemplate": "https://app.navex.tn/track.php?track={trackingNumber}",
+    "trackingSearchUrl": "https://app.navex.tn/track.php",
+    "linkRules": [
+      {
+        "domains": [
+          "app.navex.tn"
+        ],
+        "pathPattern": "^/track\\.php$",
+        "params": [
+          "track"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "ncs-courier": {

@@ -1,0 +1,83 @@
+{
+  "id": "navex",
+  "displayName": "Navex Delivery",
+  "aliases": [
+    "Navex",
+    "NAVEX"
+  ],
+  "region": {
+    "countries": [
+      "TN"
+    ]
+  },
+  "brand": {
+    "color": "#062a43"
+  },
+  "selectable": true,
+  "timezone": "Africa/Tunis",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "navex",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "delivered_at",
+    "sender_name",
+    "receiver_address"
+  ],
+  "portal": {
+    "url": "https://app.navex.tn/track.php?track={trackingNumber}",
+    "searchUrl": "https://app.navex.tn/track.php",
+    "canaryUrl": "https://app.navex.tn/track.php",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "destination",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "delivered_at",
+      "sender_name",
+      "destination"
+    ],
+    "discarded": [
+      "recipient_name",
+      "remarks"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "pickup_point",
+      "destination_country",
+      "proof_of_delivery",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "app.navex.tn"
+      ],
+      "pathPattern": "^/track\\.php$",
+      "params": [
+        "track"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1261,6 +1261,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'nationex', number: '900000009',
     route: /^https:\/\/nationex\.com\/reperage(?:\/900000009|\?error=true&searchId=900000009)$/,
     marker: /Aucun résultat trouvé pour le numéro de suivi|Numéro d’envoi \(9 chiffres\)/ },
+  { carrier: 'navex', number: '000000000000',
+    route: /^https:\/\/app\.navex\.tn\/track\.php\?track=000000000000$/,
+    marker: /Aucun colis trouvé pour ce numéro de suivi/ },
   // An unknown shipment ID is redirected to the search page, whose notice names it.
   { carrier: 'chit-chats', number: 'Z9Z9Z9Z9Z9',
     route: /^https:\/\/chitchats\.com\/tracking$/,
@@ -2473,6 +2476,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   peddler: 'the tracker answers only after its Turnstile, so the link opens the form with the number filled in; native retrieval submits it in a scoped browser helper',
   'rohlig-suus': 'the order page asks for its order only with its own invisible reCAPTCHA token, which the daily link check does not wait for; native retrieval captures that lookup in a scoped browser helper',
   celero: 'the tracking form sits on the home page and takes no number from the address, so the link opens the page alone; native retrieval posts the number to the service behind the form',
+  'bob-go': 'the tracker sends a reference it does not hold back to its empty home page, without the reference or a notice, so only a real reference verifies the link',
   'bm-cargo': 'iPlus returns an empty form for a missing warehouse receipt, without the number or a notice, so only a retained receipt verifies the link',
   pasarex: 'the tracker answers only after its reCAPTCHA checkbox, so the link opens the form with the number filled in; native retrieval ticks the checkbox in a scoped browser helper',
   onex: 'Cloudflare challenges the tracker before it loads, which the daily link check does not wait for; native retrieval captures the page\'s own lookup in a scoped browser helper',

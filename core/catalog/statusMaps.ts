@@ -1,3 +1,6 @@
+import { statusMap as bobGo } from '../../carriers/bob-go/status.js';
+import { statusMap as dypaq } from '../../carriers/dypaq/status.js';
+import { statusMap as navex } from '../../carriers/navex/status.js';
 import { statusMap as altexCurier } from '../../carriers/altex-curier/status.js';
 import { statusMap as bmCargo } from '../../carriers/bm-cargo/status.js';
 import { statusMap as cargoX } from '../../carriers/cargox/status.js';
@@ -1042,6 +1045,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
   yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
+  'bob-go': bobGo, dypaq, navex,
 };
 
 /** The carrier the app files the universal providers' scans under. */

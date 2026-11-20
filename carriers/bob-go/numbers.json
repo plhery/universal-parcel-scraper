@@ -1,0 +1,31 @@
+{
+  "carrier": "bob-go",
+  "records": [
+    {
+      "number": "UAE6ZK3X",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ca.trustpilot.com/review/www.bobgo.co.za",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "A buyer quoted this reference in a review of Bob Go; Bob Go's tracking service answers it with a delivered history."
+    }
+  ]
+}

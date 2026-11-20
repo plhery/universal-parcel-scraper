@@ -1,0 +1,27 @@
+{
+  "return_code": 200,
+  "return_message": "OK",
+  "result": {
+    "delivery": [
+      {
+        "Descripcion": "Guia: ",
+        "Valor": "ZZ000000000"
+      },
+      {
+        "Descripcion": "Cod. Postal Destino: ",
+        "Valor": {}
+      },
+      {
+        "Descripcion": "Direccion_Entrega",
+        "Valor": {}
+      },
+      {
+        "Descripcion": "Destinatario:",
+        "Valor": {}
+      }
+    ],
+    "tracking": [],
+    "recipient": {}
+  },
+  "errors": []
+}

@@ -85,6 +85,7 @@ import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
 import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
 import { adapter as blueex } from '../carriers/blueex/adapter.js';
 import { adapter as bmCargo } from '../carriers/bm-cargo/adapter.js';
+import { adapter as bobGo } from '../carriers/bob-go/adapter.js';
 import { adapter as bombino } from '../carriers/bombino/adapter.js';
 import { adapter as bookurier } from '../carriers/bookurier/adapter.js';
 import { adapter as borderExpress } from '../carriers/border-express/adapter.js';
@@ -223,6 +224,7 @@ import { adapter as dsv } from '../carriers/dsv/adapter.js';
 import { adapter as dtdc } from '../carriers/dtdc/adapter.js';
 import { adapter as dx } from '../carriers/dx/adapter.js';
 import { adapter as dynalogic } from '../carriers/dynalogic/adapter.js';
+import { adapter as dypaq } from '../carriers/dypaq/adapter.js';
 import { adapter as eCommerceInternational } from '../carriers/e-commerce-international/adapter.js';
 import { adapter as earlyBird } from '../carriers/early-bird/adapter.js';
 import { adapter as easyMail } from '../carriers/easy-mail/adapter.js';
@@ -526,6 +528,7 @@ import { adapter as mylerz } from '../carriers/mylerz/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
 import { adapter as naqel } from '../carriers/naqel/adapter.js';
 import { adapter as nationex } from '../carriers/nationex/adapter.js';
+import { adapter as navex } from '../carriers/navex/adapter.js';
 import { adapter as neighbourExpress } from '../carriers/neighbour-express/adapter.js';
 import { adapter as nepalPost } from '../carriers/nepal-post/adapter.js';
 import { adapter as nextLevelDelivery } from '../carriers/next-level-delivery/adapter.js';
@@ -978,6 +981,7 @@ export const REGISTRY: RegistryDefinition = {
     "blue-express": blueExpress,
     "blueex": blueex,
     "bm-cargo": bmCargo,
+    "bob-go": bobGo,
     "bombino": bombino,
     "bookurier": bookurier,
     "border-express": borderExpress,
@@ -1116,6 +1120,7 @@ export const REGISTRY: RegistryDefinition = {
     "dtdc": dtdc,
     "dx": dx,
     "dynalogic": dynalogic,
+    "dypaq": dypaq,
     "e-commerce-international": eCommerceInternational,
     "early-bird": earlyBird,
     "easy-mail": easyMail,
@@ -1419,6 +1424,7 @@ export const REGISTRY: RegistryDefinition = {
     "nacex": nacex,
     "naqel": naqel,
     "nationex": nationex,
+    "navex": navex,
     "neighbour-express": neighbourExpress,
     "nepal-post": nepalPost,
     "next-level-delivery": nextLevelDelivery,
@@ -1979,6 +1985,7 @@ export const REGISTRY: RegistryDefinition = {
     "bluesky-parcel": "universal",
     "bluestreak-couriers": "universal",
     "bm-cargo": "bm-cargo",
+    "bob-go": "bob-go",
     "bolt-kargo": "universal",
     "bombax": "universal",
     "bombino": "bombino",
@@ -2267,6 +2274,7 @@ export const REGISTRY: RegistryDefinition = {
     "dx": "dx",
     "dylo-express": "universal",
     "dynalogic": "dynalogic",
+    "dypaq": "dypaq",
     "e-cargo": "universal",
     "e-commerce-international": "e-commerce-international",
     "e-pick": "universal",
@@ -2896,6 +2904,7 @@ export const REGISTRY: RegistryDefinition = {
     "national-delivery-systems": "universal",
     "nationex": "nationex",
     "navata": "universal",
+    "navex": "navex",
     "ncs-courier": "universal",
     "nege": "universal",
     "neighbour-express": "neighbour-express",

@@ -424,6 +424,12 @@
     "reason": "Ten digits are shared by many carriers and no known prefix or check digit sets BlueEX apart."
   },
   {
+    "carrier": "bob-go",
+    "pattern": "^UA[A-Z0-9]{6}$",
+    "kind": "by_design",
+    "reason": "Bob Go's references are short runs of capitals and digits, and a single public reference shows the layout."
+  },
+  {
     "carrier": "bombino",
     "pattern": "^\\d{7,10}$",
     "kind": "by_design",
@@ -1162,6 +1168,12 @@
     "pattern": "^\\d{14}$",
     "kind": "by_design",
     "reason": "Fourteen digits are shared by several carriers and nothing in the number points to Dynalogic."
+  },
+  {
+    "carrier": "dypaq",
+    "pattern": "^[A-Z]{2}\\d{9}$",
+    "kind": "by_design",
+    "reason": "Two letters and nine digits are shared with other carriers, and DYPAQ's API documentation shows a single real guía."
   },
   {
     "carrier": "early-bird",
@@ -2554,6 +2566,12 @@
     "pattern": "^\\d{14}$",
     "kind": "by_design",
     "reason": "Fourteen bare digits are shared with DPD and many other carriers."
+  },
+  {
+    "carrier": "navex",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Twelve bare digits are shared with many carriers, and a single public Navex number shows the layout."
   },
   {
     "carrier": "noest",

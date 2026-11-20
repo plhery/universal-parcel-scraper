@@ -11917,6 +11917,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "bob-go": {
+    "displayName": "Bob Go",
+    "color": "#139e83",
+    "aliases": [
+      "BobGo"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bob-go"
+    },
+    "canaryUrl": "https://track.bobgo.co.za/",
+    "trackingUrlTemplate": "https://track.bobgo.co.za/{trackingNumber}",
+    "trackingSearchUrl": "https://track.bobgo.co.za/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.bobgo.co.za"
+        ],
+        "path": "^/([A-Za-z0-9]{6,30})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "bolt-kargo": {
     "displayName": "BOLT Kargo",
     "color": "#fce029",
@@ -21185,6 +21213,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.mydynalogic.eu/track/login",
     "trackingUrlTemplate": "https://track.mydynalogic.eu/track/login?ordernumber={trackingNumber}",
     "trackingSearchUrl": "https://track.mydynalogic.eu/track/login",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "dypaq": {
+    "displayName": "DYPAQ",
+    "color": "#f08226",
+    "aliases": [
+      "Dypaq",
+      "DYPAQ Mensajería",
+      "Dypaq Paquetería"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Merida",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dypaq",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.dypaq.com/",
+    "trackingSearchUrl": "https://www.dypaq.com/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41278,6 +41329,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://navata.com/track-consignment",
     "trackingSearchUrl": "https://navata.com/track-consignment",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "navex": {
+    "displayName": "Navex Delivery",
+    "color": "#062a43",
+    "aliases": [
+      "Navex",
+      "NAVEX"
+    ],
+    "countries": [
+      "TN"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Tunis",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "navex"
+    },
+    "canaryUrl": "https://app.navex.tn/track.php",
+    "trackingUrlTemplate": "https://app.navex.tn/track.php?track={trackingNumber}",
+    "trackingSearchUrl": "https://app.navex.tn/track.php",
+    "linkRules": [
+      {
+        "domains": [
+          "app.navex.tn"
+        ],
+        "pathPattern": "^/track\\.php$",
+        "params": [
+          "track"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "ncs-courier": {
@@ -65604,6 +65687,7 @@ export const CARRIER_IDS = [
   "bluesky-parcel",
   "bluestreak-couriers",
   "bm-cargo",
+  "bob-go",
   "bolt-kargo",
   "bombax",
   "bombino",
@@ -65867,6 +65951,7 @@ export const CARRIER_IDS = [
   "dx",
   "dylo-express",
   "dynalogic",
+  "dypaq",
   "e-cargo",
   "e-commerce-international",
   "e-pick",
@@ -66469,6 +66554,7 @@ export const CARRIER_IDS = [
   "national-delivery-systems",
   "nationex",
   "navata",
+  "navex",
   "ncs-courier",
   "nege",
   "neighbour-express",
@@ -67469,6 +67555,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bluesky-parcel": [],
   "bluestreak-couriers": [],
   "bm-cargo": [],
+  "bob-go": [],
   "bolt-kargo": [],
   "bombax": [],
   "bombino": [],
@@ -67732,6 +67819,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dx": ["dx-1","dx-2"],
   "dylo-express": [],
   "dynalogic": [],
+  "dypaq": [],
   "e-cargo": [],
   "e-commerce-international": ["e-commerce-international-1"],
   "e-pick": [],
@@ -68334,6 +68422,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "national-delivery-systems": [],
   "nationex": [],
   "navata": [],
+  "navex": [],
   "ncs-courier": [],
   "nege": [],
   "neighbour-express": [],
