@@ -1,4 +1,68 @@
 {
   "carrier": "dpdex",
-  "entries": []
+  "entries": [
+    {
+      "code": "IR",
+      "wording": "Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件电子信息已经收到: the waybill's information reached DpdEx, before it has the parcel."
+    },
+    {
+      "code": "AF",
+      "wording": "We have your parcel",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件到达分拨中心: the parcel reached DpdEx's hub in Shenzhen."
+    },
+    {
+      "code": "DF",
+      "wording": "Your parcel has left the depot and is on its way to airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件已离开分拨中心: left the hub for the airport."
+    },
+    {
+      "code": "AA",
+      "wording": "Export Scan",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件出口报关中: export clearance under way."
+    },
+    {
+      "code": "HCAP",
+      "wording": "Release by Customs",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件出口报关放行: export clearance done."
+    },
+    {
+      "code": "STTA",
+      "wording": "Your parcel arrive at international airports",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件抵达国际机场: handed to the airline."
+    },
+    {
+      "code": "HBQF",
+      "wording": "Flight departure",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件航班起飞: the flight left."
+    },
+    {
+      "wording": "We have received the details for this parcel and expect it to reach the Evri network shortly",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Evri's label, relayed when DpdEx books a parcel for the United Kingdom."
+    }
+  ]
 }

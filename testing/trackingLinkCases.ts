@@ -1657,6 +1657,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'sfyd-express', number: 'SFYD00000000000',
     route: /^https:\/\/sfydexpress\.com\/tracking\.html\?c=SFYD00000000000$/,
     marker: /数据获取失败|物流查询|运单号/ },
+  // The page fills its box from `track_number` and looks the number up on load.
+  { carrier: 'dpdex', number: 'DPE99999999999',
+    route: /^https:\/\/client\.duopudaexpress\.com\/track_query\.aspx\?track_number=DPE99999999999$/,
+    marker: /输入查询单号|一次支持30条/ },
   { carrier: 'dealersend', number: 'DSLAF9000000001YQ',
     route: /^https:\/\/dealer-send\.com\/en-US\/track-my-shipment\?trackingNumber=DSLAF9000000001YQ$/,
     marker: /Track My Shipment/ },

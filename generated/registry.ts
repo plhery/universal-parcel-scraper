@@ -215,6 +215,7 @@ import { adapter as dpdPt } from '../carriers/dpd-pt/adapter.js';
 import { adapter as dpdRo } from '../carriers/dpd-ro/adapter.js';
 import { adapter as dpdUk } from '../carriers/dpd-uk/adapter.js';
 import { adapter as dpdZa } from '../carriers/dpd-za/adapter.js';
+import { adapter as dpdex } from '../carriers/dpdex/adapter.js';
 import { adapter as dpex } from '../carriers/dpex/adapter.js';
 import { adapter as dragonStarCurier } from '../carriers/dragon-star-curier/adapter.js';
 import { adapter as drop2shop } from '../carriers/drop2shop/adapter.js';
@@ -1116,6 +1117,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-ro": dpdRo,
     "dpd-uk": dpdUk,
     "dpd-za": dpdZa,
+    "dpdex": dpdex,
     "dpex": dpex,
     "dragon-star-curier": dragonStarCurier,
     "drop2shop": drop2shop,
@@ -2270,7 +2272,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-ro": "dpd-ro",
     "dpd-uk": "dpd-uk",
     "dpd-za": "dpd-za",
-    "dpdex": "universal",
+    "dpdex": "dpdex",
     "dpe-express": "universal",
     "dpex": "dpex",
     "dpx-logistics": "universal",

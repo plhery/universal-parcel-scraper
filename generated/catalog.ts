@@ -20745,11 +20745,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "dpdex",
+      "localClocks": true
     },
     "canaryUrl": "https://www.duopudaexpress.com/",
-    "trackingSearchUrl": "https://www.duopudaexpress.com/",
-    "linkRules": [],
+    "trackingUrlTemplate": "https://client.duopudaexpress.com/track_query.aspx?track_number={trackingNumber}",
+    "trackingSearchUrl": "https://client.duopudaexpress.com/track_query.aspx",
+    "linkRules": [
+      {
+        "domains": [
+          "client.duopudaexpress.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^DPE\\d{11}$",
