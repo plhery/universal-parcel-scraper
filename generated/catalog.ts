@@ -26459,6 +26459,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "fraktjakt": {
+    "displayName": "Fraktjakt",
+    "color": "#50852d",
+    "aliases": [
+      "Fraktjakt AB"
+    ],
+    "countries": [
+      "SE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Stockholm",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fraktjakt",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.fraktjakt.se/trace",
+    "trackingUrlTemplate": "https://www.fraktjakt.se/trace/shipment/{trackingNumber}?locale=en",
+    "trackingSearchUrl": "https://www.fraktjakt.se/trace?locale=en",
+    "linkRules": [
+      {
+        "domains": [
+          "fraktjakt.se",
+          "www.fraktjakt.se"
+        ],
+        "pathPattern": "^/trace(?:/shipment/[0-9a-f]{32})?/?$",
+        "path": "^/trace/shipment/([0-9a-f]{32})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "franch-express": {
     "displayName": "Franch Express",
     "color": "#ec1b24",
@@ -66292,6 +66323,7 @@ export const CARRIER_IDS = [
   "foxpost",
   "foz-post",
   "fragilepak",
+  "fraktjakt",
   "franch-express",
   "freight-club",
   "freightways-global",
@@ -68168,6 +68200,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "foxpost": ["foxpost-1","foxpost-home-delivery"],
   "foz-post": [],
   "fragilepak": ["fragilepak-1"],
+  "fraktjakt": [],
   "franch-express": [],
   "freight-club": [],
   "freightways-global": [],

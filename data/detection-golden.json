@@ -50997,6 +50997,12 @@
     ]
   },
   {
+    "input": "4eddd5183ea5ce03e2a16231f0c1f5a6",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "500000000532150GLS",
     "carrier": "unknown",
     "confidence": "none",
@@ -116951,6 +116957,12 @@
     "asked": [
       "chronopost"
     ]
+  },
+  {
+    "input": "e14ec8a285e7388929a3580068ed2a60",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "e253332d-7088-43ae-8056-02fbbba45691",

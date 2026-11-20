@@ -5559,5 +5559,10 @@
     "carrier": "globkurier",
     "kind": "by_design",
     "reason": "The published GlobKurier GK tracking reference has no automatic rule. Select the carrier explicitly."
+  },
+  {
+    "carrier": "fraktjakt",
+    "kind": "by_design",
+    "reason": "Fraktjakt public tracking codes share an opaque hexadecimal shape. Select the carrier or use its shipment link."
   }
 ]
