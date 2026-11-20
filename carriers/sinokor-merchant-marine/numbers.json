@@ -1,0 +1,25 @@
+{
+  "carrier": "sinokor-merchant-marine",
+  "records": [
+    {
+      "number": "SNKO010190308832",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.studocu.vn/vn/document/truong-dai-hoc-giao-thong-van-tai/nhap-mon-nganh-logistics-va-qlccu/bo-chung-tu-lam-bai-tap-nhom-bao-hiem-hang-hoa-xnk-so-10/109949004",
+        "date": "2019-03-30",
+        "dateKind": "shipment_date",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean sea waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The publicly posted arrival notice and sea waybill identify this Sinokor bill. Its guest tracker returned the identical bill and actual milestones."
+    }
+  ]
+}

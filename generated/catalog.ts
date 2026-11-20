@@ -52979,6 +52979,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sinokor-merchant-marine": {
+    "displayName": "Sinokor Merchant Marine",
+    "color": "#003f70",
+    "aliases": [
+      "Sinokor",
+      "Sinokor Merchant Marine Co Ltd",
+      "SNKO",
+      "장금상선"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sinokor-merchant-marine",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebiz.sinokor.co.kr/Tracking",
+    "trackingUrlTemplate": "https://ebiz.sinokor.co.kr/Tracking",
+    "trackingSearchUrl": "https://ebiz.sinokor.co.kr/Tracking",
+    "trackingSiteName": "Sinokor E-Biz Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sitc-container-lines": {
     "displayName": "SITC Container Lines",
     "color": "#1490c7",
@@ -67063,6 +67089,7 @@ export const CARRIER_IDS = [
   "sicepat",
   "silpo-pack",
   "sinapseria",
+  "sinokor-merchant-marine",
   "sitc-container-lines",
   "sitra-es",
   "siuntos-autobusais",
@@ -68938,6 +68965,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sicepat": [],
   "silpo-pack": [],
   "sinapseria": [],
+  "sinokor-merchant-marine": [],
   "sitc-container-lines": [],
   "sitra-es": [],
   "siuntos-autobusais": [],

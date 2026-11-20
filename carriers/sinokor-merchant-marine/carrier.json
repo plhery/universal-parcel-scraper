@@ -1,0 +1,57 @@
+{
+  "id": "sinokor-merchant-marine",
+  "displayName": "Sinokor Merchant Marine",
+  "aliases": [
+    "Sinokor",
+    "Sinokor Merchant Marine Co Ltd",
+    "SNKO",
+    "장금상선"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#003f70"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sinokor-merchant-marine",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://ebiz.sinokor.co.kr/Tracking",
+    "searchUrl": "https://ebiz.sinokor.co.kr/Tracking",
+    "canaryUrl": "https://ebiz.sinokor.co.kr/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "eta",
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "Sinokor E-Biz Tracking"
+  },
+  "links": [],
+  "detection": []
+}

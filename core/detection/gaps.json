@@ -5554,5 +5554,10 @@
     "carrier": "china-united-lines",
     "kind": "open",
     "reason": "CU Lines uses equipment identifiers shared across lines and sailings."
+  },
+  {
+    "carrier": "sinokor-merchant-marine",
+    "kind": "open",
+    "reason": "The guest site confirms the full Sinokor bill of lading. The adapter is selected explicitly."
   }
 ]
