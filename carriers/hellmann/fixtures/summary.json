@@ -1,0 +1,24 @@
+{
+  "internalShipmentId": "56012345678",
+  "depShipmentNumber": "SYNTHETIC-DEPOT-REFERENCE",
+  "roadStatusFilter": "DELIVERED",
+  "roadProduct": "Groupage",
+  "latestActualDateTime": "2026-02-10T08:58:00",
+  "roadTransportPlanIcons": {
+    "shipmentInDb": true,
+    "shipmentWasTakenOverIcon": true,
+    "shipmentOnRouteToDepotIcon": true,
+    "shipmentDischargedIcon": true,
+    "shipmentOnRouteToConsigneeIcon": true,
+    "shipmentDeliveredIcon": true,
+    "shipmentClosedByAnotherShipmentIcon": false
+  },
+  "collis": [
+    {
+      "nve": "00937284651028374650",
+      "status": null
+    }
+  ],
+  "consignorReference": "SYNTHETIC PRIVATE REFERENCE",
+  "consigneeReference": "SYNTHETIC PRIVATE REFERENCE"
+}

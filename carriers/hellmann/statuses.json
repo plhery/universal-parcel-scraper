@@ -1,4 +1,6 @@
 {
   "carrier": "hellmann",
-  "entries": []
+  "entries": [
+    { "wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
 }

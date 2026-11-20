@@ -29646,7 +29646,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Berlin",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "hellmann",
+      "localClocks": true
     },
     "canaryUrl": "https://www.hellmann.com/en/track-trace",
     "trackingUrlTemplate": "https://public.tracking.hellmann.net/search/{trackingNumber}",

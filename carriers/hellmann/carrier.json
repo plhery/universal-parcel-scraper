@@ -16,18 +16,31 @@
   "timezone": "Europe/Berlin",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "hellmann",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
   "capabilities": [],
   "portal": {
     "url": "https://public.tracking.hellmann.net/search/{trackingNumber}",
     "searchUrl": "https://www.hellmann.com/en/track-trace",
     "canaryUrl": "https://www.hellmann.com/en/track-trace",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "Current road package status",
+      "Last-change clock"
+    ],
+    "scraped": [
+      "Current road package status",
+      "Last-change clock"
+    ],
+    "discarded": [
+      "Shipment references and cargo details"
+    ],
+    "unavailable": [
+      "Dated scan history"
+    ]
   },
   "links": [
     {

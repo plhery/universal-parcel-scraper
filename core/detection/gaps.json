@@ -4718,5 +4718,11 @@
     "pattern": "^\\d{7}$",
     "kind": "open",
     "reason": "The public guest summary confirms a parcel, but this shared numeric shape supplies no unique ownership evidence. Number recognition remains open."
+  },
+  {
+    "carrier": "hellmann",
+    "pattern": "^(?:\\d{8}|00\\d{18})$",
+    "kind": "by_design",
+    "reason": "The archived shipment reference and NVE package reference share shapes used by other networks and issuers. A selected Hellmann road package needs a whole native match, without an automatic ownership rule."
   }
 ]
