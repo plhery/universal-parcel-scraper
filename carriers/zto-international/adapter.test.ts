@@ -129,6 +129,8 @@ describe('ZTO International HTTP adapter', () => {
       ['150', null, '2026-06-01T19:21:31+08:00', 'Asia/Shanghai', 'carrier'],
     ]);
     expect(result.last_update).toBe('2026-06-05T14:08:56+08:00');
+    // Code 100 copies the last-mile carrier's round under an arrival's English words; its Chinese line says 派件中.
+    expect(result).toMatchObject({ current_stage: 'out_for_delivery' });
   });
 
   it('reads the bare reply, which an unknown waybill and an unread request share, as inconclusive', async () => {

@@ -20,8 +20,9 @@ const CODES = new Map<string, Stage>([
   ['16', 'ready_for_pickup'],
   // The order checked before the overseas warehouse receives the parcel.
   ['30', 'registered'],
-  // Copied from the last-mile carrier abroad, as an arrival.
-  ['100', 'in_transit'],
+  // Copied from the last-mile carrier abroad under an arrival's words: the copy seen is the carrier's round, at the
+  // same second as its out-for-delivery scan, and the next came a day after a round's exception (-581).
+  ['100', 'out_for_delivery'],
   // The overseas warehouse received the parcel: the first scan of an import.
   ['150', 'accepted'],
   ['180', 'in_transit'],

@@ -35,6 +35,9 @@ Tracked through the lookup its mobile tracking page makes.
   station in Germany came after the lookup that returned them; on Shanghai's, each falls at the
   minute of 17TRACK's copy. [`identity.ts`](identity.ts) lets a scan take over the row an app
   stored for its wall clock under another offset, with the same place, wording and code.
+- On an export to Europe, codes 100, 375 and 415 copy the last-mile carrier's scans. Code 100
+  has an arrival's English words ("Arrival at inward office of exchange.") but its Chinese line
+  says 派件中 and its copy falls at the second of the carrier's out-for-delivery scan: the round.
 - A scan's description is its English line without the place in brackets that opens it; a
   scan without English keeps its Chinese line. Both lose the clauses naming a courier, scanner,
   picker, signer, operator, collection point, bag or phone. The place is the station a delivery
