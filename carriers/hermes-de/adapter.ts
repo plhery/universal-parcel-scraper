@@ -24,6 +24,9 @@ const API = 'https://api.my-deliveries.de/tnt/v2/shipments/search/';
 const PROVIDER = 'Hermes Germany tracking';
 const CARRIER = 'Hermes Germany';
 const DEFAULT_TIMEOUT_MS = 15_000;
+const SHOP_READY_ABROAD = 'INTERNATIONAL_PUDO_READY_FOR_COLLECTION';
+const ABROAD_SORTED = 'INTERNATIONAL_SORTED';
+const SHOP_ECHO_MS = 30 * 60_000;
 
 export interface HermesGermanyOptions {
   timeoutMs?: number;
@@ -224,7 +227,17 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
   events.sort((a, b) => b.timestamp - a.timestamp);
   let uncollected = false;
   let sentBack = false;
+  let shopReadyAt: number | null = null;
   for (const entry of [...events].reverse()) {
+    const code = entry.event.provider_code;
+    // The partner abroad sorting the parcel minutes after the shop reported it ready for collection
+    // tells that receipt again: a notice that keeps the parcel waiting at the shop.
+    if (code === ABROAD_SORTED && shopReadyAt !== null && entry.timestamp - shopReadyAt <= SHOP_ECHO_MS) {
+      entry.metadata = hermesGermanyMilestone(SHOP_READY_ABROAD);
+      Object.assign(entry.event, { stage: 'ready_for_pickup', stage_source: 'none' });
+      continue;
+    }
+    shopReadyAt = code === SHOP_READY_ABROAD ? entry.timestamp : null;
     if (entry.event.provider_code === NOT_COLLECTED_ABROAD) uncollected = true;
     else if ((uncollected && entry.event.provider_code === DELIVERED_ABROAD) || (sentBack && entry.event.provider_code === RETURN_SORTED)) {
       entry.metadata = RETURN_HANDOVER;

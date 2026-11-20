@@ -267,6 +267,21 @@ describe('Hermes Germany', () => {
     expect(result.events?.[0]).toMatchObject({ stage: 'delivered', provider_code: 'DELIVERED_INHOUSE' });
   });
 
+  it("reads the partner's sort minutes after the shop abroad reported the parcel ready as a notice of that receipt", () => {
+    const rows = [
+      { parcelStatus: 'INTERNATIONAL_SORTED', timestamp: '2026-09-02T09:00:00Z' },
+      { parcelStatus: 'INTERNATIONAL_PUDO_READY_FOR_COLLECTION', timestamp: '2026-09-02T10:55:00Z' },
+      { parcelStatus: 'INTERNATIONAL_SORTED', timestamp: '2026-09-02T11:00:00Z', historyText: 'The shipment was prepared in EXEMPLEVILLE for further shipping (France).' },
+    ];
+    const result = parseHermesGermanyResponse([{ barcode: NUMBER, parcelProgress: rows }], NUMBER);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup' });
+    expect(result.events?.[0]).toMatchObject({ stage: 'ready_for_pickup', stage_source: 'none', provider_code: 'INTERNATIONAL_SORTED' });
+    // Hours later, the sort moves the parcel on.
+    const later = parseHermesGermanyResponse([{ barcode: NUMBER, parcelProgress: [...rows.slice(0, 2),
+      { parcelStatus: 'INTERNATIONAL_SORTED', timestamp: '2026-09-02T15:00:00Z' }] }], NUMBER);
+    expect(later).toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('reads a parcel abroad its recipient did not collect as going back, whatever the delivered flag says', () => {
     const rows = [
       { parcelStatus: 'INTERNATIONAL_SORTED', timestamp: '2026-09-02T09:00:00Z' },

@@ -79,6 +79,9 @@ tracking page shows them in the visitor's zone like Hermes's own.
   reported under a code we don't know yet is still recognised. It counts only
   when the newest row is unmapped or reads as delivered: Hermes also sets it on
   a return delivered to the sender, which stays returned.
+- The partner's sort (`INTERNATIONAL_SORTED`) within half an hour after the shop abroad reports
+  the parcel ready for collection tells that receipt again. It is a notice that keeps the parcel
+  waiting at the shop.
 - A parcel abroad its recipient did not collect from the parcel shop
   (`INTERNATIONAL_PUDO_NOT_COLLECTED`) goes back to the sender. A later
   `INTERNATIONAL_DELIVERED` records a hand-over on that return journey. The shipment stays
