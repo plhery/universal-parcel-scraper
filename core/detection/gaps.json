@@ -668,6 +668,12 @@
     "reason": "CEVA's lettered references vary with the shipper and service, and nothing in them points to CEVA alone."
   },
   {
+    "carrier": "chapar",
+    "pattern": "^541000\\d{11}$",
+    "kind": "open",
+    "reason": "Archived Chapar tracking links use 17-digit references starting 541000. Detection suggests other carriers for these inputs."
+  },
+  {
     "carrier": "chazki",
     "pattern": "^\\d{12}$",
     "kind": "collision",

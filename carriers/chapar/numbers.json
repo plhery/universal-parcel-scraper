@@ -1,5 +1,74 @@
 {
   "carrier": "chapar",
-  "gap": "No public page shows a Chapar number.",
-  "records": []
+  "records": [
+    {
+      "number": "54100006593505101",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20200525120726/http://chaparnet.com:80/track/54100006593505101",
+        "date": "2020-05-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "colis-prive"
+        ]
+      },
+      "note": "The Wayback Machine captured Chapar's own numbered tracking link. The capture shows the tracking interface. The current carrier page returned no shipment."
+    },
+    {
+      "number": "54100007043218101",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220507182032/https://chaparnet.com/track/54100007043218101",
+        "date": "2022-05-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "colis-prive"
+        ]
+      },
+      "note": "The Wayback Machine captured Chapar's own numbered tracking link. The capture shows the tracking interface."
+    },
+    {
+      "number": "54100006801164101",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230721065858/https://chaparnet.com/track/54100006801164101",
+        "date": "2023-07-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "colis-prive"
+        ]
+      },
+      "note": "The Wayback Machine captured Chapar's own numbered tracking link. The capture shows the tracking interface."
+    }
+  ]
 }
