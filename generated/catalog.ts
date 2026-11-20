@@ -6800,6 +6800,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "acpl-cargo": {
+    "displayName": "ACPL Cargo",
+    "color": "#101B33",
+    "aliases": [
+      "Avinash Cargo",
+      "Avinash Cargo Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "acpl-cargo"
+    },
+    "canaryUrl": "https://acplcargo.com/tracking",
+    "trackingUrlTemplate": "https://acplcargo.com/tracking?gcNumber={trackingNumber}",
+    "trackingSearchUrl": "https://acplcargo.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "acplcargo.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "gcNumber",
+          "gc",
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "acs-courier": {
     "displayName": "ACS Courier",
     "color": "#e42229",
@@ -65439,6 +65473,7 @@ export const CARRIER_IDS = [
   "ace-lv",
   "acex",
   "aci-express-kr",
+  "acpl-cargo",
   "acs-courier",
   "act-argos",
   "act-logistics",
@@ -67304,6 +67339,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ace-lv": [],
   "acex": [],
   "aci-express-kr": [],
+  "acpl-cargo": [],
   "acs-courier": ["acs-courier-1"],
   "act-argos": [],
   "act-logistics": [],

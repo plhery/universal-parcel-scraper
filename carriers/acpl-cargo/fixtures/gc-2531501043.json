@@ -1,0 +1,107 @@
+{
+  "etransBookingMaster": [
+    {
+      "id": 16529251,
+      "docketNo": "2531501043",
+      "referenceNo": null,
+      "origin": "JPR-JAIPUR",
+      "destination": "PUN-LONAVALA",
+      "currentLocation": "PUN-LONAVALA",
+      "expectedDate": "21/06/2025",
+      "pickupDate": "18/06/2025",
+      "status": "Delivered",
+      "vehicleno": "MH14CP0929",
+      "nature": "Attached",
+      "pod": true
+    }
+  ],
+  "etransBookingDetails": [
+    {
+      "gcno": "2531501043",
+      "bookingDate": "18/06/2025",
+      "pkg": 4,
+      "from Station": "JPR-JAIPUR",
+      "fromAddress": "E-153-A,ROAD NO.11-HJAIPUR",
+      "to Station": "PUN-LONAVALA",
+      "toAddress": "RS NO 48/2, UDEY INDUSTRIAL PARK, NADURGAON",
+      "expectedDelDate": "21/06/2025",
+      "status": "BILL SUBMISSION DONE",
+      "weight": 100.0,
+      "assured_Dly_Date": "30/06/2025",
+      "remark": "Auto finalized unloading sheet after 6 hrs.",
+      "deliveredDate": "30/06/2025"
+    }
+  ],
+  "etransDispatchDetails": [
+    {
+      "sortOrder": 0,
+      "date": "2025-06-18 18:47:03",
+      "location": "JPR-JAIPUR",
+      "status": "Booking GC",
+      "docNo": "2531501043"
+    },
+    {
+      "sortOrder": 1,
+      "date": "2025-06-18 20:03:39",
+      "location": "JPR-JAIPUR",
+      "status": "Out for next station",
+      "docNo": "16109073"
+    },
+    {
+      "sortOrder": 2,
+      "date": "2025-06-18 20:07:02",
+      "location": "JAIPUR HUB",
+      "status": "Arrived",
+      "docNo": "1298389"
+    },
+    {
+      "sortOrder": 1,
+      "date": "2025-06-18 20:12:24",
+      "location": "JAIPUR HUB",
+      "status": "Out for next station",
+      "docNo": "16110604"
+    },
+    {
+      "sortOrder": 2,
+      "date": "2025-06-20 10:39:17",
+      "location": "ASLALI HUB",
+      "status": "Arrived",
+      "docNo": "1302142"
+    },
+    {
+      "sortOrder": 1,
+      "date": "2025-06-20 22:09:10",
+      "location": "ASLALI HUB",
+      "status": "Out for next station",
+      "docNo": "16249316"
+    },
+    {
+      "sortOrder": 2,
+      "date": "2025-06-26 00:24:14",
+      "location": "PUNE HUB",
+      "status": "Arrived",
+      "docNo": "1315235"
+    },
+    {
+      "sortOrder": 1,
+      "date": "2025-06-26 09:30:27",
+      "location": "PUNE HUB",
+      "status": "Out for next station",
+      "docNo": "16529251"
+    },
+    {
+      "sortOrder": 2,
+      "date": "2025-06-26 16:31:31",
+      "location": "PUN-LONAVALA",
+      "status": "Arrived",
+      "docNo": "1316365"
+    },
+    {
+      "sortOrder": 3,
+      "date": "2025-06-30 15:51:38",
+      "location": "PUN-LONAVALA",
+      "status": "Delivered",
+      "docNo": "722436"
+    }
+  ]
+}

@@ -2254,6 +2254,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.acieshop\.com\/pod\.php\?OrderNo=000000000000$/,
     marker: /Track Shipments Detailed Results/,
     forwarding: { notFound: /Tracking Number\s*받는 사람\s*\*/ } },
+  // The page puts the number from its address in its form and asks the form's own sum before looking it up.
+  { carrier: 'acpl-cargo', number: '0000000000',
+    route: /^https:\/\/acplcargo\.com\/tracking\?gcNumber=0000000000$/,
+    marker: /GC \/ LR \/ Consignment Number/ },
   // The page's script looks up the number in its address on load and names an unknown one beside the not-found notice.
   { carrier: 'morning-global', number: 'BR000000000MG',
     route: /^https:\/\/www\.morninglobal\.com\/trace-track\/\?tracking_number=BR000000000MG$/,

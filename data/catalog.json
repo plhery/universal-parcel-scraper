@@ -6796,6 +6796,40 @@
     ],
     "detectionRules": []
   },
+  "acpl-cargo": {
+    "displayName": "ACPL Cargo",
+    "color": "#101B33",
+    "aliases": [
+      "Avinash Cargo",
+      "Avinash Cargo Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "acpl-cargo"
+    },
+    "canaryUrl": "https://acplcargo.com/tracking",
+    "trackingUrlTemplate": "https://acplcargo.com/tracking?gcNumber={trackingNumber}",
+    "trackingSearchUrl": "https://acplcargo.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "acplcargo.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "gcNumber",
+          "gc",
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "acs-courier": {
     "displayName": "ACS Courier",
     "color": "#e42229",

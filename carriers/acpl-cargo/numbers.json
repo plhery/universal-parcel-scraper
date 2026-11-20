@@ -1,0 +1,35 @@
+{
+  "carrier": "acpl-cargo",
+  "records": [
+    {
+      "number": "2531501043",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://acplcargo.com/tracking",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Road freight",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The example ACPL Cargo's tracking form prints in its search box. The tracker answers it with a consignment booked at Jaipur and delivered at Lonavala."
+    }
+  ]
+}

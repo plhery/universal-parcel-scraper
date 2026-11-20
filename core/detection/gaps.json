@@ -96,6 +96,12 @@
     "reason": "ACI hands e-commerce parcels to Korea Post for delivery in Korea, whose rule suggests these thirteen-digit registered numbers."
   },
   {
+    "carrier": "acpl-cargo",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Ten-digit ACPL Cargo GC numbers share their shape with many carriers' numeric waybills, so the shape cannot name ACPL Cargo."
+  },
+  {
     "carrier": "aex-paraguay",
     "pattern": "^A\\d{9}$",
     "kind": "collision",

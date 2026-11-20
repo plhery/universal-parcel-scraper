@@ -1,0 +1,95 @@
+{
+  "id": "acpl-cargo",
+  "displayName": "ACPL Cargo",
+  "aliases": [
+    "Avinash Cargo",
+    "Avinash Cargo Pvt. Ltd."
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#101B33"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "acpl-cargo",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta",
+    "delivered_at"
+  ],
+  "portal": {
+    "url": "https://acplcargo.com/tracking?gcNumber={trackingNumber}",
+    "searchUrl": "https://acplcargo.com/tracking",
+    "canaryUrl": "https://acplcargo.com/tracking",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "departure_date",
+      "eta",
+      "parcel_count",
+      "weight",
+      "sender_address",
+      "recipient_address",
+      "delivered_at",
+      "vehicle",
+      "remarks",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "delivered_at"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "departure_date",
+      "parcel_count",
+      "weight",
+      "sender_address",
+      "recipient_address",
+      "vehicle",
+      "remarks",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "recipient_name",
+      "signatory"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "acplcargo.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "gcNumber",
+        "gc",
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}
