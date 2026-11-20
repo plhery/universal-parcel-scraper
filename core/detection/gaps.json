@@ -4712,5 +4712,11 @@
     "pattern": "^950\\d{6}$",
     "kind": "open",
     "reason": "Two public shipment reports give nine-digit Yol Kargo numbers beginning with 950. Detection does not offer Yol Kargo for either number."
+  },
+  {
+    "carrier": "xpressen",
+    "pattern": "^003707\\d{14}$",
+    "kind": "open",
+    "reason": "Xpressen’s archived tracker shows a delivered package for a 20-digit SSCC input. Detection offers other carriers for that package number."
   }
 ]
