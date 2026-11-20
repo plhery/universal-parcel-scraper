@@ -3,6 +3,7 @@
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
 Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, DPD UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, APM Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -29,6 +30,13 @@ reCAPTCHA Enterprise token and asks for the order. The helper captures that look
 204 for a number the tracker does not know and an empty 500 for a missing token, and passes on the
 events and countries without addresses, names, references or documents. When reCAPTCHA scores the
 token too low, the tracker answers 400 and the helper reloads the page once for a new token.
+
+APM Logistics opens its tracker page for the waybill, `cek-resi?resi=<waybill>`. The page gets
+its own reCAPTCHA v3 token and posts it with the waybill. The helper captures that post alone
+and passes on the checkpoints, their towns and branches, the hubs and cities of origin and
+destination and the delivery status, without names, addresses, phones, rates, staff or
+couriers. A token reCAPTCHA refuses gets `Google Captcha Error`, and the helper reloads the page
+once for a new token.
 
 Onex opens its English tracker for the number once Cloudflare lets the page load, and the page
 submits the number from its address. The helper captures that lookup alone and passes on the

@@ -45,6 +45,7 @@ COPY correios-browser.mjs /app/packages/tiers/src/utils/correios-browser.mjs
 COPY dao-browser.mjs /app/packages/tiers/src/utils/dao-browser.mjs
 COPY peddler-browser.mjs /app/packages/tiers/src/utils/peddler-browser.mjs
 COPY rohlig-suus-browser.mjs /app/packages/tiers/src/utils/rohlig-suus-browser.mjs
+COPY apm-logistics-browser.mjs /app/packages/tiers/src/utils/apm-logistics-browser.mjs
 COPY onex-browser.mjs /app/packages/tiers/src/utils/onex-browser.mjs
 COPY neighbour-express-browser.mjs /app/packages/tiers/src/utils/neighbour-express-browser.mjs
 COPY magic-trans-browser.mjs /app/packages/tiers/src/utils/magic-trans-browser.mjs

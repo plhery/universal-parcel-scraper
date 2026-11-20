@@ -9541,6 +9541,39 @@
     ],
     "detectionRules": []
   },
+  "apm-logistics": {
+    "displayName": "APM Logistics",
+    "color": "#132f5e",
+    "aliases": [
+      "PT APM Logistics"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "apm-logistics",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://apmlogistics.id/cek-resi",
+    "trackingUrlTemplate": "https://apmlogistics.id/cek-resi?resi={trackingNumber}",
+    "trackingSearchUrl": "https://apmlogistics.id/cek-resi",
+    "linkRules": [
+      {
+        "domains": [
+          "apmlogistics.id"
+        ],
+        "pathPattern": "^/cek-resi/?$",
+        "params": [
+          "resi"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "apollo-budbiler": {
     "displayName": "Apollo Budbiler",
     "color": "#e9540d",

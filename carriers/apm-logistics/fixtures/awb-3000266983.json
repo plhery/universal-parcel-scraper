@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "messages": "Shipment ditemukan",
+  "shipment": {
+    "awb": "3000266983",
+    "origin_hub": "MES",
+    "dest_hub": "JKTM1"
+  },
+  "origin": {
+    "city": "KAB. DELI SERDANG"
+  },
+  "destination": {
+    "city": "KOTA JAKARTA TIMUR"
+  },
+  "checkpoint": [
+    {
+      "datetime": "2025-01-13 17:09:26",
+      "awb_number": "3000266983",
+      "code_checkpoint": "PAKET DITERIMA CABANG",
+      "origin_citycode": "KAB. DELI SERDANG",
+      "origin_branch": "APM LOGISTICS MEDAN"
+    },
+    {
+      "datetime": "2025-01-13 17:10:25",
+      "awb_number": "3000266983",
+      "code_checkpoint": "PAKET DITERIMA VENDOR",
+      "origin_citycode": "KAB. DELI SERDANG",
+      "origin_branch": "APM LOGISTICS MEDAN"
+    }
+  ],
+  "delivery": {
+    "status": "-",
+    "date": "-",
+    "time": "-"
+  }
+}

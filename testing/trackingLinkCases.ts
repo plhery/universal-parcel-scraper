@@ -1342,6 +1342,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'apc-overnight', number: '2026030599999999999991',
     route: /^https:\/\/apcchoice\.apc-overnight\.com\/track-parcel\?id=2026030599999999999991$/,
     marker: /Your consignment could not be found|CONSIGNMENT SUMMARY/ },
+  // The page prefills its field with the waybill in its address and posts it once reCAPTCHA gives a token.
+  { carrier: 'apm-logistics', number: '0000000000',
+    route: /^https:\/\/apmlogistics\.id\/cek-resi\?resi=0000000000$/,
+    marker: /Lacak Pengiriman Anda|Resi saya tidak ditemukan/ },
   // The page prefills its field with the number in its address and looks it up on load.
   { carrier: 'polonez', number: 'POL904MP752683',
     route: /^https:\/\/tracking-iframe\.meest\.com\/t\/en\/POL904MP752683$/, marker: /Status language|Track shipment/ },

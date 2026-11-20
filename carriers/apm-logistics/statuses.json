@@ -1,0 +1,10 @@
+{
+  "carrier": "apm-logistics",
+  "entries": [
+    {"code": "PAKET DITERIMA CABANG", "wording": "PAKET DITERIMA CABANG", "stage": "accepted", "language": "id", "confirmedBy": "live", "note": "The branch that took the parcel received it."},
+    {"code": "PAKET DITERIMA VENDOR", "wording": "PAKET DITERUSKAN KE KOTA TUJUAN", "stage": "in_transit", "language": "id", "confirmedBy": "live", "note": "A partner took the parcel on to its destination city. The tracker shows the handover in these words."},
+    {"code": "FC", "wording": "PAKET DITERUSKAN KE KOTA TUJUAN", "stage": "in_transit", "language": "id", "confirmedBy": "bundle", "note": "The tracker's script words this code as the handover to a partner."},
+    {"code": "TERKIRIM", "wording": "TERKIRIM", "stage": "delivered", "language": "id", "confirmedBy": "bundle", "note": "A delivery status the tracker's script reads as delivered."},
+    {"code": "DELIVERED", "wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "A delivery status the tracker's script reads as delivered."}
+  ]
+}

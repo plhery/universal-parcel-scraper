@@ -9545,6 +9545,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "apm-logistics": {
+    "displayName": "APM Logistics",
+    "color": "#132f5e",
+    "aliases": [
+      "PT APM Logistics"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "apm-logistics",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://apmlogistics.id/cek-resi",
+    "trackingUrlTemplate": "https://apmlogistics.id/cek-resi?resi={trackingNumber}",
+    "trackingSearchUrl": "https://apmlogistics.id/cek-resi",
+    "linkRules": [
+      {
+        "domains": [
+          "apmlogistics.id"
+        ],
+        "pathPattern": "^/cek-resi/?$",
+        "params": [
+          "resi"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "apollo-budbiler": {
     "displayName": "Apollo Budbiler",
     "color": "#e9540d",
@@ -68713,6 +68746,7 @@ export const CARRIER_IDS = [
   "apd-parcel",
   "apg-ecommerce",
   "apg-global",
+  "apm-logistics",
   "apollo-budbiler",
   "apple-express",
   "apx-logistics",
@@ -70702,6 +70736,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "apd-parcel": [],
   "apg-ecommerce": [],
   "apg-global": [],
+  "apm-logistics": [],
   "apollo-budbiler": [],
   "apple-express": ["apple-express-1"],
   "apx-logistics": [],
