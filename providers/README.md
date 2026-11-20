@@ -76,7 +76,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   notices with the moment they answer. A result made only of input prompts raises `input_required`.
   A generic "On the way" beside a specific scan at the same instant and place, as FedEx
   writes it, is a copy of that scan and is dropped. A location that only repeats the scan's
-  wording names no place and is dropped too. Cainiao's "Pending shipping by the
+  wording names no place and is dropped too, as is a Singapore Post status title given as the
+  location, "Despatched to overseas (Country code: XX)": its country is the destination's, also on
+  the despatch abroad. Cainiao's "Pending shipping by the
   seller" and the sentence of GLS's progress bar that points to the detailed tracking below
   keep no time when dated after the lookup: the seller's deadline and GLS's delivery estimate.
   Cainiao's "Last-mile delivery forecast", its order data sent ahead to the courier, keeps the

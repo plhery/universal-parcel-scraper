@@ -69,6 +69,10 @@ export function isNotice(description: string): boolean {
 // Polska's "International Postal System" for a scan relayed from abroad and China Post's "目的国"
 // ("destination country"), which its feed gives an airline's arrival where it names no country's code.
 const NOT_PLACES = /^(?:(?:[A-Z]{2}, )?system(?:, system)*(?:, \[?[A-Z]{2}\]?)?|(?:uni )?data cent(?:er|re)|linehaul agent|centro di smistamento(?: - hub)?|international postal system|the carrier|目的国)$/i;
+// Singapore Post's status titles, which end with the country they concern ("Despatched to overseas
+// (Country code: XX)", "Arrival at Destination Post (Country: XX)") and which a feed relays where the
+// place belongs: they name no place, and the country is the destination's, also on the despatch abroad.
+const COUNTRY_TITLE = /^\p{L}[\p{L} /'-]{2,80}\s\(country(?: code)?:\s*[A-Z]{2}\)$/iu;
 // JCEX's places as 17TRACK relays them, followed by the row's UTC offset: a town in the United
 // States with its state and postcode, "Example Town;CA;99999;-07:00", or the country JCEX files
 // the row under, "US+08:00".
@@ -197,7 +201,8 @@ function offsetPlace(location: string): string | undefined {
  * The place a provider reports for a scan, without the words before a depot's
  * town, a branch's postcode, which can narrow down a sender's or recipient's
  * area, a "Country" label or a status given before the place, unless it is a
- * label or placeholder ("--") that names no place or Posti's "abroad" label. A
+ * label or placeholder ("--") that names no place, a status title ending with
+ * the country it concerns (`COUNTRY_TITLE`) or Posti's "abroad" label. A
  * postcode given alone is the country its code names, if any, and one given
  * after the country goes. A place with its
  * row's offset after it is read without it (`offsetPlace`), and a US facility's town
@@ -209,7 +214,7 @@ export function place(value: unknown): string {
   const read = withoutRepeatedParts(text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(OFFICE_CODE, '').replace(COUNTRY_LABEL, ''));
   const location = statusPlace(read) ?? offsetPlace(read) ?? usFacilityPlace(read) ?? postcodeCountry(read)
     ?? withoutAddedCountry(withoutPostcodeAfterCountry(read));
-  return /[\p{L}\p{N}]/u.test(location) && !NOT_PLACES.test(location) && !isPostiAbroadLabel(location)
+  return /[\p{L}\p{N}]/u.test(location) && !NOT_PLACES.test(location) && !COUNTRY_TITLE.test(location) && !isPostiAbroadLabel(location)
     ? location : '';
 }
 

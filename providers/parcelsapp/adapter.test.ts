@@ -47,6 +47,12 @@ it('keeps scan locations from the API while excluding a delivery-service label a
     'International Postal System', '目的国']) {
     expect(parse(location), location).not.toHaveProperty('location');
   }
+  // Singapore Post's status titles, given where the place belongs with the country they concern.
+  for (const location of ['Despatched to overseas (Country code: AM)', 'Arrival at Destination Post (Country: AM)',
+    'Arrival at Processing Center (Country code: AM)']) {
+    expect(parse(location), location).not.toHaveProperty('location');
+  }
+  expect(parse('Example Town (Example Region)')?.location).toBe('Example Town (Example Region)');
   expect(parse('from the operational headquarters in EXAMPLE TOWN (Example Region)')?.location).toBe('EXAMPLE TOWN (Example Region)');
   expect(parse('dalla sede operativa di EXAMPLE TOWN (XX)')?.location).toBe('EXAMPLE TOWN (XX)');
   // Correios Brazil's "País" label before a unit abroad, translated.
