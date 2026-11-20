@@ -1,0 +1,47 @@
+{
+  "carrier": "heung-a-line",
+  "entries": [
+    {
+      "wording": "Pickup (1/1)",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Return (1/1)",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Surrendered",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "A/N Issued",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "D/O Issued",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Departure",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrival",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}

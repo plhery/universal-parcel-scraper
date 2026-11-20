@@ -30106,6 +30106,33 @@
       }
     ]
   },
+  "heung-a-line": {
+    "displayName": "Heung-A Line",
+    "color": "#d12024",
+    "aliases": [
+      "Heung A Line",
+      "Heung A Line Co Ltd",
+      "HAL",
+      "HASL",
+      "흥아라인"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "heung-a-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebiz.heungaline.com/Tracking",
+    "trackingUrlTemplate": "https://ebiz.heungaline.com/Tracking",
+    "trackingSearchUrl": "https://ebiz.heungaline.com/Tracking",
+    "trackingSiteName": "Heung-A e-Service Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hey-couriers": {
     "displayName": "Hey Couriers",
     "color": "#f5551e",

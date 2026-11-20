@@ -5584,5 +5584,10 @@
     "carrier": "g2-ocean",
     "kind": "open",
     "reason": "The public search accepts the bare bill reference. Select G2 Ocean explicitly."
+  },
+  {
+    "carrier": "heung-a-line",
+    "kind": "open",
+    "reason": "The e-service confirms the full bill of lading. Select Heung-A Line explicitly."
   }
 ]

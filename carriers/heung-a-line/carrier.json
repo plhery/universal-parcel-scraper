@@ -1,0 +1,58 @@
+{
+  "id": "heung-a-line",
+  "displayName": "Heung-A Line",
+  "aliases": [
+    "Heung A Line",
+    "Heung A Line Co Ltd",
+    "HAL",
+    "HASL",
+    "흥아라인"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#d12024"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "heung-a-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://ebiz.heungaline.com/Tracking",
+    "searchUrl": "https://ebiz.heungaline.com/Tracking",
+    "canaryUrl": "https://ebiz.heungaline.com/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "eta",
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "Heung-A e-Service Tracking"
+  },
+  "links": [],
+  "detection": []
+}

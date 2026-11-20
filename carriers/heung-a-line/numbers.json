@@ -1,0 +1,25 @@
+{
+  "carrier": "heung-a-line",
+  "records": [
+    {
+      "number": "HASLS21241201659",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://03560320522565865207.googlegroups.com/attach/3ba59ecd447db/GS-008717-288_SUR%20BL.pdf?part=0.3",
+        "date": "2024-12-24",
+        "dateKind": "document_issue",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "carrier-issued ocean bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The publicly indexed bill copy names Heung-A Line and gives this bill and its container. The guest tracker returned the exact bill with dated movements."
+    }
+  ]
+}

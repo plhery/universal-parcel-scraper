@@ -30110,6 +30110,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "heung-a-line": {
+    "displayName": "Heung-A Line",
+    "color": "#d12024",
+    "aliases": [
+      "Heung A Line",
+      "Heung A Line Co Ltd",
+      "HAL",
+      "HASL",
+      "흥아라인"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "heung-a-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebiz.heungaline.com/Tracking",
+    "trackingUrlTemplate": "https://ebiz.heungaline.com/Tracking",
+    "trackingSearchUrl": "https://ebiz.heungaline.com/Tracking",
+    "trackingSiteName": "Heung-A e-Service Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hey-couriers": {
     "displayName": "Hey Couriers",
     "color": "#f5551e",
@@ -66534,6 +66561,7 @@ export const CARRIER_IDS = [
   "hercules-freight",
   "hermes-at",
   "herona-express",
+  "heung-a-line",
   "hey-couriers",
   "hfd",
   "hi-trans",
@@ -68415,6 +68443,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hercules-freight": [],
   "hermes-at": [],
   "herona-express": ["herona-express-1"],
+  "heung-a-line": [],
   "hey-couriers": [],
   "hfd": [],
   "hi-trans": [],

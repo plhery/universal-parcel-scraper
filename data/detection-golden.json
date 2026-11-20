@@ -93633,6 +93633,12 @@
     "candidates": []
   },
   {
+    "input": "HASLS21241201659",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "HC000002746LT",
     "carrier": "unknown",
     "confidence": "low",
