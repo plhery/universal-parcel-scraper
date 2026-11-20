@@ -10,8 +10,10 @@ digits are printed by many carriers, so no rule claims them.
 
 ## Links
 
-The tracking page's script opens `gel-express.de/sendungsverfolgung/?snr={number}`; the
-tracker then asks for the recipient's postcode before it shows the parcel. The former tracker,
+The [tracking form](https://www.gel-express.de/de/sendungsverfolgung/) posts `snr` to
+`/de/sendungsverfolgung`. Its header search opens
+`gel-express.de/sendungsverfolgung/?snr={number}`. The separate safe-drop authorization
+asks for the recipient's postcode. The former tracker,
 run by GEL's IT provider, read the number from `sean` on `thalmaier.de/gelsend/suche.php`.
 
 ## Testing

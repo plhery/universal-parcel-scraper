@@ -8,14 +8,14 @@ navata.com.
 
 ## Numbers
 
-The tracking form's example shows a waybill as one letter and six digits. That shape fits many
-carriers, and no public page shows a real waybill, so there is no rule.
+The tracking form's example shows a waybill as one letter and six digits. That shape is shared
+with other carriers.
 
-## Why there is no adapter
+## Retrieval
 
 A lookup needs the waybill number and its booking date. The tracking page reads both from
 `online.navata.com/SENDMAIL/wbtrackjson.jsp`, which answers JSON, and does not search on a
-waybill number alone.
+waybill number alone. The library does not accept a booking date as a tracking input.
 
 ## Links
 

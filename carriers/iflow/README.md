@@ -10,9 +10,12 @@ delivers their online orders.
 Its tracker takes the number in the order's confirmation email. Its example starts with OR. A
 published tracker result shows TRI and thirteen digits, which rule `iflow-1` suggests iFLOW for.
 
-## Why there is no adapter
+## Guest retrieval
 
-No public number is known to check its tracker's replies against.
+The [web client](https://tracking.iflow21.com/) resolves a parcel code through
+`api-btp.iflow21.com/tracking/order/search/{code}`, then reads
+`/tracking/order/{tracking_id}` with the returned identifier. Its “not yet trackable”
+notice also covers failed API requests.
 
 ## Links
 
