@@ -1362,6 +1362,12 @@
     "reason": "Twelve bare digits are shared by many carriers and nothing in the number points to First Delivery."
   },
   {
+    "carrier": "first-flight-me",
+    "pattern": "^[A-Z]{3}\\d{6,7}$",
+    "kind": "open",
+    "reason": "First Flight Middle East's archived waybills have three letters and six or seven digits. Detection does not offer First Flight Middle East."
+  },
+  {
     "carrier": "first-fly-express",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
