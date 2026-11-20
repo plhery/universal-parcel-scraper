@@ -1,4 +1,77 @@
 {
   "carrier": "chinz-logistics",
-  "entries": []
+  "entries": [
+    {
+      "code": "0",
+      "wording": "物流单已生成",
+      "stage": "registered",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "2",
+      "wording": "货物已入库",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "6",
+      "wording": "货物正在等待转运",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "7",
+      "wording": "货物正在等待出港",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "8",
+      "wording": "货物已出港",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "9",
+      "wording": "货物已到达，等待清关",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "GOT",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "ARRIVAL",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "DEPARTURE",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "SENT_SCAN",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "SIGNED",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "portal"
+    }
+  ]
 }
