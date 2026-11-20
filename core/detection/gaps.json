@@ -6106,5 +6106,11 @@
     "pattern": "^(?:WHLC)?\\d{3}[A-Z][A-Z\\d]\\d{5}$",
     "kind": "open",
     "reason": "Wan Hai's bookings and bills are three digits for the office, a letter, a letter or digit and five digits, after its SCAC in import records; detection has no rule for them yet."
+  },
+  {
+    "carrier": "swire-shipping",
+    "pattern": "^(?:PLLU)?[A-Z]{2}\\d{8}$",
+    "kind": "open",
+    "reason": "Swire Shipping's bills are two letters for the country of their port of loading and eight digits, after PLLU in US import records; detection has no rule for them yet."
   }
 ]

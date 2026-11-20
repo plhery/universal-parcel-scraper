@@ -1,0 +1,89 @@
+{
+  "carrier": "swire-shipping",
+  "records": [
+    {
+      "number": "PLLUAS00249400",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/songa-tiger/9435246",
+        "date": "2026-11-12",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for SONGA TIGER lists this bill under PLLU on its call at Long Beach from Pago Pago. Swire's page tracks it without PLLU and returns its ten containers, discharged at Long Beach."
+    },
+    {
+      "number": "PLLUAS00248200",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/songa-tiger/9435246",
+        "date": "2026-11-12",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for SONGA TIGER lists this bill under PLLU on its call at Long Beach from Pago Pago. Swire's page tracks it without PLLU."
+    },
+    {
+      "number": "PLLUWS00104400",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/songa-tiger/9435246",
+        "date": "2026-11-12",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for SONGA TIGER lists this bill under PLLU on its call at Long Beach from Apia. Swire's page tracks it without PLLU and returns its three containers, picked up full at Long Beach."
+    },
+    {
+      "number": "PLLUTO00059000",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/songa-tiger/9435246",
+        "date": "2026-11-12",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for SONGA TIGER lists this bill under PLLU on its call at Long Beach from Nuku'alofa. Swire's page tracks it without PLLU and returns its one container, moved through Apia."
+    }
+  ]
+}
