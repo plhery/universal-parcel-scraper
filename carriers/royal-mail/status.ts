@@ -29,6 +29,9 @@ const IN_TRANSIT_TERMS = ['despatched', 'dispatched', 'redirected', 'in transit'
 // The sender's despatch notice and a booked collection precede acceptance.
 const EVENT_STAGES = new Map<string, Stage>([
   ['EVKOP', 'delivered'],
+  // The delivery office handing an item to the Post Office branch that keeps it for its recipient
+  // ("Delivered to your collection point"), before the branch's own "Available for collection".
+  ['EVKLC', 'in_transit'],
   ['EVKDN', 'delivered'],
   ['EVGPD', 'out_for_delivery'],
   ['EVKPD', 'out_for_delivery'],

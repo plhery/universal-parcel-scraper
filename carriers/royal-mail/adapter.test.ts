@@ -197,6 +197,24 @@ describe('Royal Mail structured response', () => {
     expect(JSON.stringify(result)).not.toContain('**');
   });
 
+  it("reads the delivery office's hand-over to a collection point as transit until the branch has the item", () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: DELIVERED_NUMBER,
+      summary: { statusCategory: 'Ready for collection', statusDescription: 'Available for collection' },
+      events: [
+        { eventCode: 'EVPLA', eventName: 'Available for collection', eventDateTime: '2026-01-03T11:01:05+00:00', locationName: 'Example Post Office' },
+        { eventCode: 'EVKLC', eventName: 'Delivered to your collection point', eventDateTime: '2026-01-03T10:56:35+00:00', locationName: 'Example DO' },
+        { eventCode: 'EVKOP', eventName: '**Delivered by**', eventDateTime: '2026-01-03T10:04:24+00:00', locationName: 'Example DO' },
+        { eventCode: 'EVGPD', eventName: '**Due to be delivered today by**', eventDateTime: '2026-01-03T10:02:56+00:00', locationName: 'Example DO' },
+      ],
+    } }, DELIVERED_NUMBER);
+    expect(result.events?.map(event => [event.provider_code, event.stage])).toEqual([
+      ['EVPLA', 'ready_for_pickup'], ['EVKLC', 'in_transit'], ['EVKOP', 'in_transit'], ['EVGPD', 'out_for_delivery'],
+    ]);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup' });
+    expect(result).not.toHaveProperty('delivered_at');
+  });
+
   it('places a customs release and the redelivery after a missed delivery by their codes', () => {
     const result = parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: IN_TRANSIT_NUMBER,

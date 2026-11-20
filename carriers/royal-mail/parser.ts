@@ -258,6 +258,13 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
     // Mail a sender hands in at a parcel hub or a mail centre, or a collection
     // one of them receives first, has no acceptance scan before that receipt,
     // which the summary then calls "We've got it".
+    // The delivery office's own delivery scan just before its hand-over to a collection point, at
+    // the same office, is that hand-over: the item still waits for its recipient.
+    for (const [index, event] of events.entries()) {
+      if (event.provider_code !== 'EVKLC') continue;
+      const before = events.slice(index + 1).find(older => older.stage && older.stage !== 'pending');
+      if (before?.provider_code === 'EVKOP' && before.stage === 'delivered' && before.location === event.location) before.stage = 'in_transit';
+    }
     const first = [...events].reverse().find(event => event.stage !== 'registered' && event.stage !== 'pending');
     if (first?.stage === 'in_transit' && FIRST_RECEIPTS.has(first.provider_code ?? '')) {
       first.stage = 'accepted';

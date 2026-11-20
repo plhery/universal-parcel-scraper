@@ -96,7 +96,16 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-05",
-      "note": "Full-history code takes precedence over repeated display wording."
+      "note": "Full-history code takes precedence over repeated display wording. Just before EVKLC at the same office, it is the hand-over to the collection point and reads as transit."
+    },
+    {
+      "code": "EVKLC",
+      "wording": "Delivered to your collection point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The delivery office hands the item to the Post Office branch that keeps it, minutes before the branch's Available for collection."
     },
     {
       "code": "EVGPD",

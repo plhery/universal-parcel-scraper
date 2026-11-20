@@ -51,6 +51,9 @@ answers are not retried. An unavailable browser fails fast.
   code places the parcel further along (the receipt after a drop-off, the
   round, customs), the code's stage stands. Receipts after a first receipt,
   the acceptance itself, stay under "We've got it".
+- An item sent to a Post Office for collection gets the delivery office's delivery scan, then
+  "Delivered to your collection point" (`EVKLC`), then the branch's "Available for collection".
+  The first two are the way to the branch and read as transit.
 - An item leaving a Customer Service Point ("Collected and Signed at",
   "Collected From Your Customer Service Point") gets no stage: these scans came
   just before a booked redelivery's round, and they could as well be the
