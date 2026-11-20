@@ -849,6 +849,7 @@ import { adapter as westernBid } from '../carriers/western-bid/adapter.js';
 import { adapter as whatsship } from '../carriers/whatsship/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
 import { adapter as whizDelivery } from '../carriers/whiz-delivery/adapter.js';
+import { adapter as whwdt } from '../carriers/whwdt/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
@@ -1741,6 +1742,7 @@ export const REGISTRY: RegistryDefinition = {
     "whatsship": whatsship,
     "whistl": whistl,
     "whiz-delivery": whizDelivery,
+    "whwdt": whwdt,
     "wiio": wiio,
     "winit": winit,
     "wooliiporter": wooliiporter,
@@ -3551,6 +3553,7 @@ export const REGISTRY: RegistryDefinition = {
     "whatsship": "whatsship",
     "whistl": "whistl",
     "whiz-delivery": "whiz-delivery",
+    "whwdt": "whwdt",
     "widect": "universal",
     "wiio": "wiio",
     "winion-logis": "universal",

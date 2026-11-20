@@ -62492,6 +62492,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "whwdt": {
+    "displayName": "Wuhan Wodetong",
+    "color": "#8e8e93",
+    "aliases": [
+      "WHWDT",
+      "武汉沃德通",
+      "Wuhan Wodetong Supply Chain Technology",
+      "沃德通"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "whwdt",
+      "localClocks": true
+    },
+    "canaryUrl": "https://hyd.itdida.com/itdida-flash/website/landing",
+    "trackingSearchUrl": "https://hyd.itdida.com/itdida-flash/website/landing",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "widect": {
     "displayName": "Widect",
     "color": "#e2001b",
@@ -67084,6 +67108,7 @@ export const CARRIER_IDS = [
   "whatsship",
   "whistl",
   "whiz-delivery",
+  "whwdt",
   "widect",
   "wiio",
   "winion-logis",
@@ -68949,6 +68974,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "whatsship": ["whatsship-1"],
   "whistl": ["whistl-1"],
   "whiz-delivery": ["whiz-delivery-1"],
+  "whwdt": [],
   "widect": [],
   "wiio": ["wiio-1"],
   "winion-logis": [],

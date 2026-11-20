@@ -5498,5 +5498,10 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "whwdt",
+    "kind": "open",
+    "reason": "One confirmed waybill, a letter, twelve digits and a letter, is too few to tell its series from other carriers' numbers. The ITDIDA lookup supports explicit selection."
   }
 ]

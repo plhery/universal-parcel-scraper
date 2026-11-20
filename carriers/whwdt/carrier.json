@@ -1,0 +1,61 @@
+{
+  "id": "whwdt",
+  "displayName": "Wuhan Wodetong",
+  "aliases": [
+    "WHWDT",
+    "武汉沃德通",
+    "Wuhan Wodetong Supply Chain Technology",
+    "沃德通"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#8e8e93"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "whwdt",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://hyd.itdida.com/itdida-flash/website/landing",
+    "canaryUrl": "https://hyd.itdida.com/itdida-flash/website/landing",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference"
+    ],
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

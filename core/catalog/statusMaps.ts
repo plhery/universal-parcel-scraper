@@ -54,6 +54,7 @@ import { statusMap as westernBid } from '../../carriers/western-bid/status.js';
 import { statusMap as libanpost } from '../../carriers/libanpost/status.js';
 import { statusMap as omLogistics } from '../../carriers/om-logistics/status.js';
 import { statusMap as zesExpress } from '../../carriers/zes-express/status.js';
+import { statusMap as whwdt } from '../../carriers/whwdt/status.js';
 import { statusMap as sengiExpress } from '../../carriers/sengi-express/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
@@ -941,6 +942,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'memphis-courier': memphisCourier,
   'xpress-logistics-lu': xpressLogisticsLu,
   'zes-express': zesExpress,
+  whwdt,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,
