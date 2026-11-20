@@ -4808,5 +4808,11 @@
     "pattern": "^SP\\d{8}$",
     "kind": "open",
     "reason": "Spark’s indexed freight document identifies an SP-prefixed waybill with eight digits. Detection offers another carrier."
+  },
+  {
+    "carrier": "slx-kr",
+    "pattern": "^6890\\d{8}$",
+    "kind": "open",
+    "reason": "An indexed SLX tracker URL contains a twelve-digit waybill with this prefix. Detection offers other carriers and omits SLX."
   }
 ]

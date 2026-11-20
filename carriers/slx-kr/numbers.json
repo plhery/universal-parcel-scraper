@@ -1,5 +1,38 @@
 {
   "carrier": "slx-kr",
-  "gap": "No public page shows an SLX number.",
-  "records": []
+  "records": [
+    {
+      "number": "689071608276",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://net.slx.co.kr/info/tracking.jsp?iv_no=689071608276",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Korea domestic parcel delivery",
+        "reportedRole": "운송장번호",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A search index preserves the carrier’s direct tracking link. The official page formats the number with hyphens in the waybill field and leaves the shipment-event table empty."
+    }
+  ]
 }
