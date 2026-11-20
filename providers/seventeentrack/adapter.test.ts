@@ -1174,6 +1174,10 @@ describe('17TRACK result parsing', () => {
       '2026-11-10T19:09:00.000Z', '2026-11-10T15:03:00.000Z', '2026-11-10T13:58:00.000Z']);
     expect(times(14081, 'NO', norwayRows, 'ZZ123456785NO')).toEqual(['2026-11-16T09:00:00.000Z', '2026-11-11T02:09:00.000Z',
       '2026-11-11T02:09:00.000Z', '2026-11-10T22:03:00.000Z', '2026-11-10T20:58:00.000Z']);
+    // 17TRACK can give Norway Post's own offset as the carrier's: the copies keep China Post's digits.
+    const labelled = norwayRows.map(raw => ({ ...raw, time_raw: { ...raw.time_raw, timezone: '+01:00' } }));
+    expect(times(14081, 'NO', labelled, 'ZZ123456785CN')).toEqual(['2026-11-16T09:00:00.000Z', '2026-11-10T19:09:00.000Z',
+      '2026-11-10T19:09:00.000Z', '2026-11-10T15:03:00.000Z', '2026-11-10T13:58:00.000Z']);
   });
 
   it("reads the origin post's scans Correo Argentino relays, marked (Otb) or (EDI-received), on that post's clock", () => {

@@ -259,7 +259,8 @@ carrier.
   a foreign S10 issuer on a single clock supplies the zone.
 - ePOST's leg for Korea Post (carrier key 11051), Pakistan Post's (16011), Saudi Post's
   (19071) and Norway Post's (14081) relay the origin post's scans the same way under `+09:00`,
-  `+05:00`, `+03:00` and `+01:00`, each repeating China Post's own Beijing minute. A copy worded
+  `+05:00`, `+03:00` and `+01:00`, each repeating China Post's own Beijing minute, whether 17TRACK
+  adds the offset or gives it as the carrier's (Norway Post's can come either way). A copy worded
   as the origin's (Korea Post's posting and outward exchange scans, Pakistan Post's "… in origin
   country", Norway Post's collection, export terminal, export clearance and departure from the
   origin country) or placed in the origin country is read on that country's clock, as Japan

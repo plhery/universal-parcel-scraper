@@ -855,7 +855,9 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         || anjunExpress || shiprocket || daiPost || quickRabbit || sent !== undefined || sending !== undefined || mexican !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland || posted ? null : seasonZone(raw, labelled, now);
-      const wall = posted ?? mexican?.wall ?? (relayed || hywl || sending !== undefined ? rawClock(raw) : read || season ? facilityWall(raw) : null);
+      // A destination post's copy of the origin post's scan keeps that post's digits under whatever offset labels them, its own included.
+      const wall = posted ?? mexican?.wall ?? (relayed || hywl || sending !== undefined || (relay && exchange) ? rawClock(raw)
+        : read || season ? facilityWall(raw) : null);
       // A label its mailer wrote on UTC, as USPS's adapter reads it.
       const scanned = facility && wall ? uspsRowZone(wall, facility, text(raw.description), now.toMillis()) : facility;
       // The zone the wall clock is read on, and how it was chosen.
