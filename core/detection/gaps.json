@@ -5114,5 +5114,11 @@
     "pattern": "^[0-9]{11}$",
     "kind": "open",
     "reason": "Colombian court documents attribute these eleven-digit delivery guides to Domina. Detection does not offer Domina."
+  },
+  {
+    "carrier": "biz-courier",
+    "pattern": "^SWS[0-9]{8}$",
+    "kind": "open",
+    "reason": "BIZ Courier's public tracking page provides shipment histories for these SWS references. Detection does not currently offer BIZ Courier."
   }
 ]
