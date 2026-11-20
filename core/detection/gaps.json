@@ -2362,6 +2362,12 @@
     "reason": "Ten digits are shared by many carriers, and nothing in the bare number points to KIT."
   },
   {
+    "carrier": "kmtc",
+    "pattern": "^(?:KORP)?[A-Z]{3}\\d{7}$",
+    "kind": "open",
+    "reason": "KMTC's bills are three letters for the office and seven digits, after KORP, its SCAC, in US import records; detection has no rule for them yet."
+  },
+  {
     "carrier": "kolay-gelsin",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

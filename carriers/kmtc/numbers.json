@@ -1,0 +1,194 @@
+{
+  "carrier": "kmtc",
+  "records": [
+    {
+      "number": "KORPPNC4828463",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/kmtc-logistics",
+        "date": "2026-06-14",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for KMTC Logistics lists this master bill under KMTC's US SCAC, KORP, on KMTC SEOUL's call at Long Beach from Busan. KMTC's page returns its four containers, each returned empty at Long Beach."
+    },
+    {
+      "number": "KORPNBO9602122",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-seoul/9882205",
+        "date": "2026-06-14",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9882205 lists this master bill on KMTC SEOUL's call at Long Beach from Ningbo. KMTC's page returns its one container, returned empty."
+    },
+    {
+      "number": "KORPNBO9601238",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-seoul/9882205",
+        "date": "2026-06-14",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9882205 lists this master bill on KMTC SEOUL's call at Long Beach from Ningbo. KMTC's page returns its one container, returned empty."
+    },
+    {
+      "number": "KORPNBO9602049",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-seoul/9882205",
+        "date": "2026-06-14",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9882205 lists this master bill on KMTC SEOUL's call at Long Beach from Ningbo. KMTC's page returns its one container, returned empty."
+    },
+    {
+      "number": "KORPNBO9596683",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-seoul/9882205",
+        "date": "2026-06-14",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9882205 lists this KMTC bill as the master of a forwarder's house bill on KMTC SEOUL's call at Long Beach from Ningbo. KMTC's page returns its one container, returned empty."
+    },
+    {
+      "number": "KORPPNC4932614",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-ningbo/9626405",
+        "date": "2026-11-04",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9626405 lists this master bill on KMTC NINGBO's call at Long Beach from Busan. KMTC's page returns its six containers; five were returned empty and one was still with the consignee."
+    },
+    {
+      "number": "KORPPNC4932596",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-ningbo/9626405",
+        "date": "2026-11-04",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9626405 lists this master bill on KMTC NINGBO's call at Long Beach from Busan. KMTC's page returns its one container, returned empty."
+    },
+    {
+      "number": "KORPPNC4932478",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-ningbo/9626405",
+        "date": "2026-11-04",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9626405 lists this master bill on KMTC NINGBO's call at Long Beach from Busan. KMTC's page returns its one container, returned empty, and finds it by its booking too."
+    },
+    {
+      "number": "KORPPNC4932453",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/kmtc-ningbo/9626405",
+        "date": "2026-11-04",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9626405 lists this master bill on KMTC NINGBO's call at Long Beach from Busan. KMTC's page returns its one container, moved between Busan terminals before loading and returned empty."
+    }
+  ]
+}
