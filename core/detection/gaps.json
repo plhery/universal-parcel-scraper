@@ -6004,5 +6004,11 @@
     "carrier": "yitu",
     "kind": "open",
     "reason": "One public waybill, Y, twelve digits and T: too few to tell the series from other carriers' numbers."
+  },
+  {
+    "carrier": "bir-gunde-kargo",
+    "pattern": "^[0-9]{12}$",
+    "kind": "by_design",
+    "reason": "Bir Günde Kargo also tracks a parcel by the sending shop's order number, whose shape differs from shop to shop, so detection cannot name the carrier from it."
   }
 ]

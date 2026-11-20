@@ -880,6 +880,7 @@ import { statusMap as jAndTBr } from '../../carriers/j-and-t-br/status.js';
 import { statusMap as zheldor } from '../../carriers/zheldor/status.js';
 import { statusMap as costcoLogistics } from '../../carriers/costco-logistics/status.js';
 import { statusMap as kargoturk } from '../../carriers/kargoturk/status.js';
+import { statusMap as birGundeKargo } from '../../carriers/bir-gunde-kargo/status.js';
 import { statusMap as profitFields } from '../../carriers/profit-fields/status.js';
 import { statusMap as ftdNz } from '../../carriers/ftd-nz/status.js';
 import { statusMap as bestFreightCn } from '../../carriers/best-freight-cn/status.js';
@@ -1009,6 +1010,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'moran-transportation': moranTransportation, paxel, 'pxc-pacific': pxcPacific, rayspeed, 'relay-express': relayExpress, 'rhenus-it': rhenusIt, shipgce, sway, tamex, 'tig-freight': tigFreight,
   'usea-express': useaExpress, 'velocity-express-in': velocityExpressIn, 'wangjing-3cq': wangjing3cq, xindus, 'uof-express': uofExpress, 'delivery-auto': deliveryAuto, 'fastway-za': fastwayZa,
   'gls-ca': glsCa, gollog, 'lex-th': lexTh, 'sentral-cargo': sentralCargo,
+  'ftd-nz': ftdNz, 'best-freight-cn': bestFreightCn, lhtex, polonez, 'v-xpress': vXpress, airspeed, topdelivery, kargoturk, 'bir-gunde-kargo': birGundeKargo, expedico, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa, pdu,
   'fez-delivery': fezDelivery,
   'junfeng-international': junfengInternational,
   'shipglobal-us': shipglobalUs,

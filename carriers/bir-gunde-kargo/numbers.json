@@ -14,7 +14,7 @@
       "context": {
         "service": "Turkish domestic parcel delivery",
         "reportedRole": "parcel tracking number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -23,7 +23,7 @@
           "australia-post"
         ]
       },
-      "note": "The customer quotes this lowercase tracking number in a complaint about a parcel at the carrier's İzmir Konak branch. Carrier lookup blocked by verification."
+      "note": "The customer quotes this lowercase tracking number in a complaint about a parcel at the carrier's İzmir Konak branch. The carrier's tracking page shows its dated movements."
     },
     {
       "number": "bgk03965617",
@@ -42,7 +42,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "The customer quotes this lowercase code as the carrier's tracking number and reports that the code was created without a collection event. Carrier lookup blocked by verification."
+      "note": "The customer quotes this lowercase code as the carrier's tracking number and reports that the code was created without a collection event. The carrier's tracking form rejects it."
     },
     {
       "number": "3126111397344310",
@@ -67,7 +67,42 @@
           "tnt"
         ]
       },
-      "note": "The customer distinguishes this tracking number from the retailer's order reference and names the carrier's Başiskele branch. Carrier lookup blocked by verification."
+      "note": "The customer distinguishes this tracking number from the retailer's order reference and names the carrier's Başiskele branch. The carrier's tracking form rejects it."
+    },
+    {
+      "number": "471375644078",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/bir-gunde-kargo/kargo-teslimi-gecikmesi-ve-musteri-temsilcisine-ulasilamamasi",
+        "date": "2026-10-15",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish domestic parcel delivery",
+        "reportedRole": "parcel number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The customer quotes this number for a parcel held at the carrier's Yenimahalle branch. The tracking form takes it as the shop's order number, and the page says the parcel's round is complete."
     }
   ]
 }
