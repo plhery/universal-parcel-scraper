@@ -142,6 +142,16 @@ describe('dateLocalClocks', () => {
     ] }).events![0]).toMatchObject({ time_zone: 'America/Jamaica' });
   });
 
+  it('dates a place-less scan between rows in China, written with the country first, on China\'s clock', () => {
+    // On a parcel to the United States, "China, Sorting Center" is no China in Maine.
+    const events = dateLocalClocks('js-express', { status: 'in_transit', destination_country: 'US', events: [
+      { time: '2026-10-31T03:43:40+08:00', description: 'Item outbound in sorting center.', location: 'China, Sorting Center' },
+      { local_time: '2026-10-30T04:53:57', description: 'Item departed from origin.' },
+      { time: '2026-10-30T00:41:12+08:00', description: 'Item inbound in sorting center.', location: 'China, Sorting Center' },
+    ] }).events!;
+    expect(dated(events[1])).toEqual(['2026-10-30T04:53:57+08:00', 'Asia/Shanghai', 'neighbour']);
+  });
+
   it('takes the next place once a scan on the leg says the parcel landed', () => {
     const result = dateLocalClocks('yunexpress', { status: 'in_transit', destination_country: 'ES', events: [
       { local_time: '2026-10-15T10:00:00', description: 'Accepted', location: 'Hanoi' },

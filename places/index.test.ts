@@ -171,6 +171,17 @@ describe('locatePlace', () => {
     expect(place('JAMAICA', ['US'])).toMatchObject({ precision: 'country', country: 'JM' });
   });
 
+  it('reads a country named before other words as that country, not a small town named after it', () => {
+    // JS Express's warehouse rows on a parcel to the United States are in China, not in China, Maine.
+    for (const location of ['China, Sorting Center', 'China, Example Branch']) {
+      expect(place(location, ['US'])).toMatchObject({ precision: 'country', country: 'CN' });
+    }
+    expect(place('China, Shenzhen', ['US'])).toMatchObject({ precision: 'city', country: 'CN', name: 'Shenzhen' });
+    // A state written after it keeps the town.
+    expect(place('China, ME', ['US'])).toMatchObject({ precision: 'city', country: 'US', name: 'China' });
+    expect(place('China, Maine', ['US'])).toMatchObject({ precision: 'city', country: 'US', name: 'China' });
+  });
+
   it('places the cities Toronto absorbed, which Canada Post still addresses', () => {
     const scarborough = { country: 'CA', name: 'Scarborough', latitude: 43.77, longitude: -79.25 };
     expectPlace('SCARBOROUGH - ONTARIO - CANADA', scarborough);

@@ -867,6 +867,8 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   const atOwnAirport = ownAirport ? atAirport(ownAirport, carriers) : null;
   if (atOwnAirport) return atOwnAirport;
   const fieldTokens = fields.map((field) => tokens(field));
+  // The country the first of several fields names alone, as "China" in "China, Sorting Center".
+  const leadingCountry = fields.length > 1 ? (({ country: named, place }) => place ? null : named)(trackingPlace(fields[0]!)) : null;
   // "Frankfurt (Oder)": a town whose name has brackets of its own, or whose name joins what the brackets
   // tell it apart by: "Neustadt (Holstein)" is Neustadt in Holstein. In a country the text names, it
   // is that town however small, and no part of its name is another: "Essen (Oldenburg)" is not Essen.
@@ -955,6 +957,11 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
         const hint = hinted.indexOf(place.country);
         const postcodeMatch = postcode !== null && postcode.country === place.country
           && distanceKm(postcode.latitude, postcode.longitude, place.latitude, place.longitude) < 30;
+        // A country's name that opens the text before other words is that country, not a small town
+        // named after it where the parcel goes: JS Express's "China, Sorting Center" on a parcel to the
+        // United States is no China in Maine. A state written after it keeps the town: "China, ME".
+        if (fieldIndex === 0 && fields.length > 1 && phrase.whole && !inCountry && !adminMatch && !postcodeMatch
+          && place.thousands < NAMESAKE_THOUSANDS && leadingCountry !== null) continue;
         const confirmed = inCountry || hint >= 0 || adminMatch || postcodeMatch;
         if (!confirmed && (place.thousands < UNCONFIRMED_MIN_THOUSANDS || (countryCoded && !place.hub))) continue;
         // A town's other names include old ones (Trenton was Mill Hill): nothing confirming it, only a city's are known enough.
@@ -1098,6 +1105,8 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
     }));
     country = named.find((set) => set.size === 1)?.values().next().value ?? null;
   }
+  // With no town, a country the first field names alone: "China, Sorting Center".
+  country ??= leadingCountry;
   // A town the reader does not know keeps the state or province written after it, and so its clock.
   const region = guessed ? null : statedRegion(data, stated, country, context);
   const inState = region && countryPlace(data, region.country, true);
