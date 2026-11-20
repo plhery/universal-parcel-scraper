@@ -5939,5 +5939,10 @@
     "carrier": "quickship-canada",
     "kind": "open",
     "reason": "The verified QuickShip AWB overlaps GLS and Loggi candidates. The second reference belongs to the last-mile carrier. Select QuickShip explicitly."
+  },
+  {
+    "carrier": "one-logistics-egypt",
+    "kind": "open",
+    "reason": "The published Odoo freight reference uses a generic Freight prefix and does not establish a carrier-specific family. Select ONE Logistics Egypt explicitly."
   }
 ]

@@ -44220,6 +44220,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "one-logistics-egypt": {
+    "displayName": "ONE Logistics Egypt",
+    "color": "#093387",
+    "aliases": [
+      "One Logistics EG",
+      "One Logistics for Logistics Services"
+    ],
+    "countries": [
+      "EG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Cairo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "one-logistics-egypt"
+    },
+    "canaryUrl": "https://onelogisticseg.com/ar/",
+    "trackingUrlTemplate": "https://onelogisticseg.com/ar/",
+    "trackingSearchUrl": "https://onelogisticseg.com/ar/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "one-world-express": {
     "displayName": "One World Express",
     "color": "#161c5e",
@@ -68712,6 +68734,7 @@ export const CARRIER_IDS = [
   "omgo",
   "omniva",
   "ondot-courier",
+  "one-logistics-egypt",
   "one-world-express",
   "onex",
   "online-worldwide-logistics",
@@ -70665,6 +70688,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "omgo": ["omgo-1"],
   "omniva": ["omniva-1","omniva-2","omniva-own","omniva-s10"],
   "ondot-courier": [],
+  "one-logistics-egypt": [],
   "one-world-express": ["one-world-express-1"],
   "onex": [],
   "online-worldwide-logistics": [],

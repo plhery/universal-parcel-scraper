@@ -44216,6 +44216,28 @@
     ],
     "detectionRules": []
   },
+  "one-logistics-egypt": {
+    "displayName": "ONE Logistics Egypt",
+    "color": "#093387",
+    "aliases": [
+      "One Logistics EG",
+      "One Logistics for Logistics Services"
+    ],
+    "countries": [
+      "EG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Cairo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "one-logistics-egypt"
+    },
+    "canaryUrl": "https://onelogisticseg.com/ar/",
+    "trackingUrlTemplate": "https://onelogisticseg.com/ar/",
+    "trackingSearchUrl": "https://onelogisticseg.com/ar/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "one-world-express": {
     "displayName": "One World Express",
     "color": "#161c5e",

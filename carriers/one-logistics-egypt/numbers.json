@@ -1,0 +1,22 @@
+{
+  "carrier": "one-logistics-egypt",
+  "records": [
+    {
+      "number": "Freight/2025/158",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://onelogisticseg.com/ar/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "The carrier publishes the reference in its tracking form. Its guest endpoint echoes the exact reference and reports the file as closed."
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      }
+    }
+  ]
+}

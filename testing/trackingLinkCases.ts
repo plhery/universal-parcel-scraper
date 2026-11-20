@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'one-logistics-egypt', number: 'Freight/2025/158',
+    route: /^https:\/\/onelogisticseg\.com\/ar\/$/,
+    marker: /تتبع شحنتك|رقم المرجع|Track your shipment/iu, forwarding: 'none' },
   { carrier: 'quickship-canada', number: 'QS207431',
     route: /^https:\/\/track\.quickshipnow\.com\/\?awb=QS207431$/,
     marker: /Track Your Order|Tracking History/i, renderTimeoutMs: 10000 },
