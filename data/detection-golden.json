@@ -79484,6 +79484,12 @@
     ]
   },
   {
+    "input": "ANR10415172",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "ANS8000000000046UA",
     "carrier": "unknown",
     "confidence": "low",
@@ -105926,6 +105932,17 @@
     "candidates": []
   },
   {
+    "input": "S104946569",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "S15967765.BO.SGP91-Z04.1025146144",
     "carrier": "ghtk",
     "confidence": "high",
@@ -105983,6 +106000,17 @@
     "confidence": "high",
     "candidates": [
       "canpar"
+    ]
+  },
+  {
+    "input": "S610415172",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
     ]
   },
   {
@@ -106652,6 +106680,21 @@
     ],
     "asked": [
       "gls-us"
+    ]
+  },
+  {
+    "input": "SHA104946569",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "purolator",
+      "tnt-au"
+    ],
+    "asked": [
+      "colis-prive",
+      "tnt-au",
+      "purolator"
     ]
   },
   {
