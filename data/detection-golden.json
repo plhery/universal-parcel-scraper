@@ -105574,6 +105574,18 @@
     ]
   },
   {
+    "input": "RF100500604428",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "RF100500604555",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "RF101270452CH",
     "carrier": "swiss-post",
     "confidence": "high",

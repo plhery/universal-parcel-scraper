@@ -1661,6 +1661,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dpdex', number: 'DPE99999999999',
     route: /^https:\/\/client\.duopudaexpress\.com\/track_query\.aspx\?track_number=DPE99999999999$/,
     marker: /输入查询单号|一次支持30条/ },
+  // The page reads `key` and looks the number up; an unknown one gets 暂不支持查询此单号.
+  { carrier: 'runforint', number: 'RF999999999999',
+    route: /^https:\/\/www\.runforint\.com\/index\.php\?m=home&c=Lists&a=index&tid=137&key=RF999999999999$/,
+    marker: /暂不支持查询此单号|单号不能为空|运单号/ },
   { carrier: 'dealersend', number: 'DSLAF9000000001YQ',
     route: /^https:\/\/dealer-send\.com\/en-US\/track-my-shipment\?trackingNumber=DSLAF9000000001YQ$/,
     marker: /Track My Shipment/ },

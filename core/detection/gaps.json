@@ -5543,5 +5543,10 @@
     "carrier": "sfyd-express",
     "kind": "open",
     "reason": "SFYD Express waybills are SFYD and digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "runforint",
+    "kind": "open",
+    "reason": "Runforint waybills are RF and twelve digits; two public samples from one series are too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   }
 ]

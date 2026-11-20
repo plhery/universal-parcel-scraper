@@ -50254,7 +50254,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "runforint",
+      "localClocks": true
     },
     "canaryUrl": "https://www.runforint.com/",
     "trackingUrlTemplate": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137&key={trackingNumber}",
