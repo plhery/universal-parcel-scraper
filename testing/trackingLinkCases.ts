@@ -2463,6 +2463,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'salam-pacific-indonesia-lines': 'The mySPIL home page opens the guest Track & Trace form.',
   'ellerman-city-liners': 'The community portal embeds the Ellerman guest container search.',
   'tanto-intim-line': 'The official home page opens the container tracking form in a modal.',
   'cdp-courier': 'The CDP guest tracking form submits the reference from the official home page.',

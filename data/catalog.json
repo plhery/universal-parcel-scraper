@@ -50853,6 +50853,31 @@
     ],
     "detectionRules": []
   },
+  "salam-pacific-indonesia-lines": {
+    "displayName": "Salam Pacific Indonesia Lines",
+    "color": "#008046",
+    "aliases": [
+      "SPIL",
+      "PT Salam Pacific Indonesia Lines",
+      "mySPIL"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "salam-pacific-indonesia-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://myspil.com/",
+    "trackingUrlTemplate": "https://myspil.com/",
+    "trackingSearchUrl": "https://myspil.com/",
+    "trackingSiteName": "mySPIL Track & Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sameday": {
     "displayName": "Sameday",
     "color": "#e92427",

@@ -50857,6 +50857,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "salam-pacific-indonesia-lines": {
+    "displayName": "Salam Pacific Indonesia Lines",
+    "color": "#008046",
+    "aliases": [
+      "SPIL",
+      "PT Salam Pacific Indonesia Lines",
+      "mySPIL"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "salam-pacific-indonesia-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://myspil.com/",
+    "trackingUrlTemplate": "https://myspil.com/",
+    "trackingSearchUrl": "https://myspil.com/",
+    "trackingSiteName": "mySPIL Track & Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sameday": {
     "displayName": "Sameday",
     "color": "#e92427",
@@ -67102,6 +67127,7 @@ export const CARRIER_IDS = [
   "sahara-express",
   "saia",
   "sailpost",
+  "salam-pacific-indonesia-lines",
   "sameday",
   "samex",
   "samoa-post",
@@ -68981,6 +69007,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sahara-express": [],
   "saia": ["saia-1"],
   "sailpost": [],
+  "salam-pacific-indonesia-lines": [],
   "sameday": ["sameday-1","sameday-2","sameday-3"],
   "samex": [],
   "samoa-post": [],

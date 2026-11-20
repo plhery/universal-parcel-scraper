@@ -1,0 +1,55 @@
+{
+  "id": "salam-pacific-indonesia-lines",
+  "displayName": "Salam Pacific Indonesia Lines",
+  "aliases": [
+    "SPIL",
+    "PT Salam Pacific Indonesia Lines",
+    "mySPIL"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#008046"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "salam-pacific-indonesia-lines",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://myspil.com/",
+    "searchUrl": "https://myspil.com/",
+    "canaryUrl": "https://myspil.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "mySPIL Track & Trace"
+  },
+  "links": [],
+  "detection": []
+}

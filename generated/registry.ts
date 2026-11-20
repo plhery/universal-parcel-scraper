@@ -680,6 +680,7 @@ import { adapter as sagawa } from '../carriers/sagawa/adapter.js';
 import { adapter as sagawaGlobal } from '../carriers/sagawa-global/adapter.js';
 import { adapter as saia } from '../carriers/saia/adapter.js';
 import { adapter as sailpost } from '../carriers/sailpost/adapter.js';
+import { adapter as salamPacificIndonesiaLines } from '../carriers/salam-pacific-indonesia-lines/adapter.js';
 import { adapter as sameday } from '../carriers/sameday/adapter.js';
 import { adapter as sapxExpress } from '../carriers/sapx-express/adapter.js';
 import { adapter as satUkraine } from '../carriers/sat-ukraine/adapter.js';
@@ -1587,6 +1588,7 @@ export const REGISTRY: RegistryDefinition = {
     "sagawa-global": sagawaGlobal,
     "saia": saia,
     "sailpost": sailpost,
+    "salam-pacific-indonesia-lines": salamPacificIndonesiaLines,
     "sameday": sameday,
     "sapx-express": sapxExpress,
     "sat-ukraine": satUkraine,
@@ -3218,6 +3220,7 @@ export const REGISTRY: RegistryDefinition = {
     "sahara-express": "universal",
     "saia": "saia",
     "sailpost": "sailpost",
+    "salam-pacific-indonesia-lines": "salam-pacific-indonesia-lines",
     "sameday": "sameday",
     "samex": "universal",
     "samoa-post": "universal",
