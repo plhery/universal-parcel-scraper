@@ -754,6 +754,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // TNT Italy's departure from the origin depot, and the US Postal Service's hand-off to the international
   // gateway after customs.
   if (/^la spedizione (?:e'|e) regolarmente partita$|^tendered to (?:the )?international gateway$/.test(text)) return 'in_transit';
+  // Singapore Post's despatch abroad (DO), as ParcelsApp relays it with the destination's country code.
+  if (/^despatched to overseas(?: \(country code: [a-z]{2}\))?$/.test(text)) return 'in_transit';
   // Landmark Global's hub abroad receiving the parcel after it crossed the border, as providers relay it:
   // an international processing centre is never where a parcel is accepted.
   if (/^received at (?:the |an )?international processing cent(?:er|re)$/.test(text)) return 'in_transit';

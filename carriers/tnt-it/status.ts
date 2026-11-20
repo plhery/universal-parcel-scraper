@@ -11,6 +11,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['P', 'accepted'], // Left at a FedEx Location for the courier to collect.
   ['07', 'in_transit'], // Left the origin depot.
   ['12', 'in_transit'],
+  ['16', 'in_transit'], // Being handled at the depot of the transit scan before it.
   ['14', 'out_for_delivery'],
   // Held at the destination depot for collection.
   ['20', 'ready_for_pickup'],

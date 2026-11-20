@@ -98,8 +98,9 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed, and
   // one to the receiver's address instead of the access point, the receiver's request for another day, and the parcel
-  // held in the network until that day. A missort UPS has rerouted (34) goes on too.
-  ['AL', 'in_transit'], ['HM', 'in_transit'], ['34', 'in_transit'], ['H6', 'in_transit'], ['TB', 'in_transit'], ['VM', 'in_transit'],
+  // held in the network until that day. A missort UPS has rerouted (34) goes on too, and so does the parcel once UPS
+  // corrected its apartment number (A8).
+  ['AL', 'in_transit'], ['A8', 'in_transit'], ['HM', 'in_transit'], ['34', 'in_transit'], ['H6', 'in_transit'], ['TB', 'in_transit'], ['VM', 'in_transit'],
   ['O1', 'in_transit'], ['MF', 'in_transit'],
   ['ZA', 'in_transit'], ['ZB', 'in_transit'], ['ZC', 'in_transit'],
   // Ground Saver's hand-off to the post office: moving there, transferred, and
@@ -178,7 +179,7 @@ const NOTICE_CODES = new Set(['L0', 'L8', 'WH']);
  * changes of address, access point or delivery, and an upgrade or a Saturday delivery asked for. Before UPS has the
  * parcel they move nothing.
  */
-const REQUEST_CODES = new Set(['AL', 'H6', 'TB', 'VM', 'ZA', 'ZB', 'ZC', 'RF']);
+const REQUEST_CODES = new Set(['AL', 'A8', 'H6', 'TB', 'VM', 'ZA', 'ZB', 'ZC', 'RF']);
 
 /** Whether a scan's `actCode` is a request rather than a movement. */
 export function isUpsRequest(code: string | undefined): boolean {

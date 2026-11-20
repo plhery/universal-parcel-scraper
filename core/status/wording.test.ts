@@ -1169,6 +1169,7 @@ describe('classifyWording', () => {
       ['Collo von der nox Niederlassung weiterverladen. Sendung weiterverladen', 'in_transit'],
       ['Collo is reloaded by the nox branch. Consignment reloaded', 'in_transit'],
       ["La spedizione e' regolarmente partita", 'in_transit'], ['Tendered to International Gateway.', 'in_transit'],
+      ['Despatched to overseas (Country code: UY)', 'in_transit'],
       ['Received at international processing center', 'in_transit'], ['Received at the International Processing Centre.', 'in_transit'],
       ['Item has left the overseas International Processing Centre', 'in_transit'],
       ['[Shenzhen CHN] The order information has been sent', 'registered'],
