@@ -14,7 +14,7 @@
       "context": {
         "service": "Russian road freight",
         "reportedRole": "Заявка and экспедиторская расписка",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -25,7 +25,7 @@
           "xpo-ltl"
         ]
       },
-      "note": "The arbitral decision names Skif-Cargo as the freight forwarder and identifies this exact application and receipt for accepted freight. The carrier’s public form accepts an application number. A live result remains unverified."
+      "note": "The arbitral decision names Skif-Cargo as the freight forwarder and identifies this application and its receipt for accepted freight. Skif-Cargo's tracker knows the shipment, from the collection to its issue to the consignee."
     },
     {
       "number": "94664-2412",
@@ -40,13 +40,13 @@
       "context": {
         "service": "Russian road freight",
         "reportedRole": "Заявка and экспедиторская расписка",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "The arbitral decision ties this separate application and freight receipt to carriage accepted by Skif-Cargo. A live result remains unverified."
+      "note": "The arbitral decision ties this separate application and freight receipt to carriage accepted by Skif-Cargo. Skif-Cargo's tracker knows the shipment, from the collection to its issue to the consignee."
     }
   ]
 }

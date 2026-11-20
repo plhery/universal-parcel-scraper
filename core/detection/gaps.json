@@ -6028,5 +6028,11 @@
     "pattern": "^950\\d{6}$",
     "kind": "open",
     "reason": "Two public shipment reports give nine-digit Yol Kargo numbers beginning with 950, and Yol Kargo's lookup returns both. Detection does not offer Yol Kargo for either number."
+  },
+  {
+    "carrier": "skif-cargo",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "A public court decision gives two Skif-Cargo application numbers, five digits, a dash and four digits, which its tracker finds by their nine digits. Nine digits are shared by many carriers, so detection omits Skif-Cargo."
   }
 ]

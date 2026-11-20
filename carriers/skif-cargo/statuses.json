@@ -1,4 +1,10 @@
 {
   "carrier": "skif-cargo",
-  "entries": []
+  "entries": [
+    {"wording": "Забор груза у отправителя", "stage": "accepted", "language": "ru", "confirmedBy": "live", "note": "The route's first point: Skif-Cargo collects the cargo from the sender. Reached, it is the collection; not yet reached, a planned step."},
+    {"wording": "Обработка на складе", "stage": "in_transit", "language": "ru", "confirmedBy": "live", "note": "A point at one of Skif-Cargo's warehouses on the route, the sending and receiving branches included."},
+    {"wording": "Доставка груза получателю", "stage": "out_for_delivery", "language": "ru", "confirmedBy": "live", "note": "The route's last point: delivery to the consignee. The issue itself is the shipment's state «Груз выдан получателю.» with the issue's date and time."},
+    {"wording": "Груз выдан получателю.", "stage": "delivered", "language": "ru", "confirmedBy": "live", "note": "The shipment's state once issued to the consignee; the reply gives the issue's date and time beside it."},
+    {"wording": "В обработке. Ожидайте звонка.", "stage": "registered", "language": "ru", "confirmedBy": "official-doc", "note": "The state the site's account pages give an application not yet handled, which the customer may still cancel there (www.skif-cargo.ru app script)."}
+  ]
 }
