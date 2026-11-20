@@ -6,9 +6,11 @@ import { parcelOwners } from '../core/result/partial.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
 import { parseTrackingInput } from '../core/detection/index.js';
-import { UniversalTracker, UniversalTrackingError, universalPlan, universalSources, UNIVERSAL_SOURCES, type UniversalTrackerOptions } from './universal.js';
+import { UniversalTracker, UniversalTrackingError, orderUniversalSources, universalPlan, universalSources, UNIVERSAL_SOURCES, type UniversalTrackerOptions } from './universal.js';
+import type { UniversalSource } from './types.js';
 
-const number = 'ZZ12340678900';
+// Its draw asks ParcelsApp before Ship24 (plan.ts): the chain tests below start with ParcelsApp's reply.
+const number = 'ZZ12340678904';
 const identity = (value = number) => `<div class="tracking-info"><div class="parcel"><table class="parcel-attributes"><tr><td>Tracking number</td><td>${value}</td></tr></table></div></div>`;
 const track17 = {
   meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
@@ -32,22 +34,53 @@ const browserResponse = (source: '17TRACK' | 'ParcelsApp', data: unknown, overri
 describe('universal discovery chain', () => {
   it('prefers 17TRACK only for validated China Post C/L families', () => {
     for (const postal of ['LZ000000005CN', 'CY000000005CN', 'lz 0000 0000 5 cn']) {
-      expect(universalSources(false, postal)).toEqual(['17TRACK', 'ParcelsApp', 'Ship24', 'UPU']);
-      expect(universalSources(true, postal)).toEqual(['17TRACK', 'ParcelsApp', 'Ship24', 'Postal Ninja', 'UPU']);
+      expect(universalSources(false, postal)[0]).toBe('17TRACK');
+      expect(universalSources(true, postal).slice(-2)).toEqual(['Postal Ninja', 'UPU']);
     }
+    // Someone may be waiting: the HTTP providers lead every other number.
     for (const other of ['EB999999987CN', 'RR000000005CN', 'LZ000000005NL', 'LZ000000006CN', '1234/12345678']) {
-      expect(universalSources(false, other)[0]).toBe('ParcelsApp');
+      expect(['ParcelsApp', 'Ship24']).toContain(universalSources(false, other)[0]);
     }
   });
 
   it('keeps the persisted provider names and the opt-in position of Postal Ninja', () => {
     expect(UNIVERSAL_SOURCES).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Track718', 'UPU']);
-    expect(universalSources()).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'UPU']);
-    expect(universalSources(true)).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU']);
+    // Without a number, the largest share leads.
+    expect(universalSources()).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'UPU']);
+    expect(universalSources(true)).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
     expect(universalSources(false, number)).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
-    expect(universalSources(false, 'EB999999987CN')).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'UPU']);
+    expect(universalSources(false, 'EB999999987CN').at(-1)).toBe('UPU');
     // A carrier's coverage evidence reorders them.
     expect(universalPlan({ carriers: ['usps'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
+  });
+
+  it('shares the numbers among equal providers by their share, each number keeping its order', () => {
+    const numbers = Array.from({ length: 4000 }, (_, index) => `ZZ${10_000_000_000 + index * 7919}`);
+    const leads = (background: boolean) => {
+      const counts: Partial<Record<UniversalSource, number>> = {};
+      for (const trackingNumber of numbers) {
+        const [first] = universalPlan({ trackingNumber, background }).sources;
+        counts[first!] = (counts[first!] ?? 0) + 1;
+      }
+      return counts;
+    };
+    // Someone may be waiting: the HTTP providers lead, Ship24 for two numbers in three.
+    const waiting = leads(false);
+    expect(Object.keys(waiting).sort()).toEqual(['ParcelsApp', 'Ship24']);
+    expect(waiting.Ship24! / numbers.length).toBeCloseTo(4 / 6, 1);
+    // In the background the browser providers take their part too.
+    const background = leads(true);
+    expect(background.Ship24! / numbers.length).toBeCloseTo(4 / 7, 1);
+    expect(background.ParcelsApp! / numbers.length).toBeCloseTo(2 / 7, 1);
+    expect(background['17TRACK']! / numbers.length).toBeCloseTo(1 / 7, 1);
+    // However the number is written.
+    expect(universalSources(false, 'zz 1234-0678.904')).toEqual(universalSources(false, number));
+    // A provider left out leaves the others in their order.
+    for (const trackingNumber of numbers.slice(0, 200)) {
+      const all = orderUniversalSources(['ParcelsApp', 'Ship24', '17TRACK'], null, { trackingNumber, background: true });
+      expect(orderUniversalSources(['ParcelsApp', '17TRACK'], null, { trackingNumber, background: true }))
+        .toEqual(all.filter((source) => source !== 'Ship24'));
+    }
   });
 
   it('asks no provider about a carrier none has answered for, unless another carrier is named first', () => {
@@ -126,7 +159,7 @@ describe('universal discovery chain', () => {
     const tracker = new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'],  fetcher, trawlUrl: '' });
     await expect(tracker.fetch(postalNumber)).resolves.toMatchObject({ tracking_provider: 'UPU', current_stage: 'accepted' });
     expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname))
-      .toEqual(['parcelsapp.com', 'api.ship24.com', 'globaltracktrace.ptc.post']);
+      .toEqual(['api.ship24.com', 'parcelsapp.com', 'globaltracktrace.ptc.post']);
   });
 
   it('falls through an unrelated ParcelsApp result to 17TRACK', async () => {

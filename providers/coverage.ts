@@ -19,6 +19,10 @@
  * parcel the provider would know today. So an empty provider is asked last,
  * never skipped; only a wrong parcel, a refused format or a courier kept for
  * subscribers excludes it.
+ *
+ * A consumer that counts its own lookups (`ObservedCoverage`) has stronger
+ * evidence than a few references, in both directions, and its counts replace
+ * the references' tier once they cover enough parcels.
  */
 import data from './coverage.json' with { type: 'json' };
 import type { UniversalSource } from './types.js';
@@ -45,7 +49,22 @@ export interface CarrierCoverage {
 }
 export type CoverageTier = 'full' | 'partial' | 'unknown' | 'empty' | 'excluded';
 
+/**
+ * A consumer's own count of one carrier's parcels at one provider, each parcel
+ * counted once, over a period the consumer chooses. A lookup no source had
+ * history for says nothing about the provider and is not counted.
+ */
+export interface ObservedCoverage {
+  /** Parcels the provider returned history for. */
+  history: number;
+  /** Parcels it had no history for in a lookup where another source did. */
+  missed: number;
+}
+
+/** The providers every carrier's comparison reference states, COVERAGE.md's columns. */
 export const COVERAGE_SOURCES: readonly UniversalSource[] = ['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU'];
+/** Those, and Track123: references name it only for the carriers whose courier page was asked. */
+const GRADED_SOURCES: readonly UniversalSource[] = [...COVERAGE_SOURCES, 'Track123'];
 const ANSWERS = new Set<string>(['history', 'no_history', 'summary_only', 'undated', 'sign_in', 'postcode_prompt',
   'wrong_carrier', 'refused', 'subscriber_only', 'error', 'blocked', 'unverified', 'n/a']);
 const EMPTY = new Set<CoverageCell>(['no_history', 'summary_only', 'undated', 'sign_in', 'postcode_prompt']);
@@ -63,7 +82,7 @@ export function coverageProblems(entry: CarrierCoverage): string[] {
   if (!entry.references.length) problems.push('no reference');
   for (const [index, reference] of entry.references.entries()) {
     for (const [source, cell] of Object.entries(reference.results)) {
-      if (!COVERAGE_SOURCES.includes(source as UniversalSource)) problems.push(`reference ${index + 1}: unknown source ${source}`);
+      if (!GRADED_SOURCES.includes(source as UniversalSource)) problems.push(`reference ${index + 1}: unknown source ${source}`);
       const valid = typeof cell === 'number' ? Number.isInteger(cell) && cell > 0
         : typeof cell === 'string' ? ANSWERS.has(cell)
           : typeof cell === 'object' && cell !== null && Number.isInteger(cell.rows) && cell.rows > 0
@@ -90,9 +109,44 @@ function tierOf(source: UniversalSource, references: readonly CoverageReference[
   return seen.some((reference) => !reference.stale && EMPTY.has(reference.results[source]!)) ? 'empty' : 'unknown';
 }
 
-/** Each provider's tier for a carrier, or null when the carrier has no coverage evidence. */
-export function coverageTiers(carrier: string | null | undefined): Record<UniversalSource, CoverageTier> | null {
-  const entry = carrier ? BY_CARRIER.get(carrier) : undefined;
-  if (!entry) return null;
-  return Object.fromEntries(COVERAGE_SOURCES.map((source) => [source, tierOf(source, entry.references)])) as Record<UniversalSource, CoverageTier>;
+/** Fewer parcels than this say nothing about a provider. */
+const OBSERVED_PARCELS = 10;
+
+/**
+ * The tier a consumer's counts give a provider, or null when they cover too few
+ * parcels: history for four parcels in five is `full`, for one in five
+ * `partial`, for fewer `empty`, and for none `excluded`.
+ */
+function observedTier(seen: ObservedCoverage | undefined): CoverageTier | null {
+  const count = (value: number | undefined) => Number.isFinite(value) && value! > 0 ? value! : 0;
+  const history = count(seen?.history);
+  const parcels = history + count(seen?.missed);
+  if (parcels < OBSERVED_PARCELS) return null;
+  const rate = history / parcels;
+  return rate >= 0.8 ? 'full' : rate >= 0.2 ? 'partial' : rate > 0 ? 'empty' : 'excluded';
+}
+
+/**
+ * Each provider's tier for a carrier, or null when nothing says anything about
+ * it: no reference, and no count of `observed` that covers enough parcels.
+ *
+ * A count replaces the tier the references give, except where it cannot see
+ * what they saw: a provider they exclude stays out (another carrier's parcel
+ * counts as history), and history they mark partial stays partial (a count
+ * sees parcels, not rows).
+ */
+export function coverageTiers(
+  carrier: string | null | undefined,
+  observed?: Partial<Record<UniversalSource, ObservedCoverage>>,
+): Record<UniversalSource, CoverageTier> | null {
+  const references = (carrier ? BY_CARRIER.get(carrier) : undefined)?.references;
+  const counted = (Object.keys(observed ?? {}) as UniversalSource[]).filter((source) => observedTier(observed![source]));
+  if (!references && !counted.length) return null;
+  return Object.fromEntries([...new Set([...GRADED_SOURCES, ...counted])].map((source) => {
+    const stated = tierOf(source, references ?? []);
+    const seen = observedTier(observed?.[source]);
+    if (!seen || stated === 'excluded') return [source, stated];
+    const marked = references?.some((reference) => typeof reference.results[source] === 'object');
+    return [source, seen === 'full' && marked ? 'partial' : seen];
+  })) as Record<UniversalSource, CoverageTier>;
 }

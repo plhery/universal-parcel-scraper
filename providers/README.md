@@ -19,18 +19,43 @@ number. [universal.ts](universal.ts) owns the factories, the order and the provi
 
 ## Order
 
-The default order is **ParcelsApp → Ship24 → 17TRACK → UPU**. Selecting `Postal Ninja` adds
-it after the other aggregators, for a number no carrier is named for and for a carrier whose
-evidence shows Postal Ninja history. A carrier with results in [coverage.json](coverage.json) gets
-its own order, graded by [coverage.ts](coverage.ts), but Postal Ninja stays after the other
-aggregators. UPU needs a checksum-valid S10 number and always stays last. Checksum-valid China Post `C…CN` and `L…CN` numbers start with 17TRACK.
+`universalPlan()` orders the eligible providers of one number in three steps.
+
+1. **Coverage.** A carrier with results in [coverage.json](coverage.json) puts the providers
+   with fuller history for it first, graded by [coverage.ts](coverage.ts). Neither speed nor
+   load moves a provider ahead of one with fuller history.
+2. **Speed.** Someone may be waiting for the answer, so among providers with equally full
+   history the HTTP ones are asked before the browser ones. A lookup nobody waits for says
+   so with `background: true` and skips this step.
+3. **Load.** Providers that are still equal share the numbers. Each number draws its own
+   order, the same at every lookup, and a provider leads a part of the numbers in proportion
+   to its `share` in `UNIVERSAL_PROVIDERS` ([plan.ts](plan.ts)). The share is large for a
+   provider whose loss would cost little and small for one that several carriers have as
+   their only source. Without a number, the largest share leads: **Ship24 → ParcelsApp →
+   17TRACK → UPU**.
+
+Selecting `Postal Ninja` adds it after the other aggregators, for a number no carrier is
+named for and for a carrier whose evidence shows Postal Ninja history. Selecting `Track123`
+adds it for the carrier a lookup is for, when it has a verified courier page for that carrier,
+at the place its history there gives it. UPU needs a
+checksum-valid S10 number and always stays last. Checksum-valid China Post `C…CN` and
+`L…CN` numbers start with 17TRACK.
+
+A consumer that counts its own lookups passes the counts as `observed`: for the lookup's
+carrier and each provider, the parcels it returned history for and the parcels it had no
+history for in a lookup where another source did. From ten parcels on, a count replaces the
+tier the references give, so a provider that has history for most of a carrier's parcels
+shares them with the others that do, and one that has it for none is no longer asked. The
+consumer chooses the period it counts over; a provider left out returns once that period
+holds no lookup of it.
+
 [COMPARISON.md](COMPARISON.md) explains the order, and [COVERAGE.md](COVERAGE.md) compares
 results carrier by carrier.
 
-Each provider is asked once per lookup. Remembering which one answered for a parcel, and
-resting one that failed, is the consumer's job. Peek's
-[routing notes](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md) show
-one way to do it.
+Each provider is asked once per lookup. Remembering which one answered for a parcel, resting
+one that failed and capping how many lookups one receives in an hour are the consumer's job.
+Peek's [routing notes](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)
+show one way to do it.
 
 ## Reach
 
@@ -190,10 +215,10 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 
 - Keep the adapter, parser tests, fixtures and one README in its folder.
 - Add the name to `UniversalSource` in `types.ts` and `shared/result.ts` and to
-  `COVERAGE_SOURCES` in `coverage.ts`. Register the factory in `universal.ts`, and add the
-  name to `BROWSER_SOURCES` in `plan.ts` when it needs the browser service. A new name is a
-  minor release, and consumers that store names have to accept it.
-- Change the default order only with evidence, and record it in
+  `COVERAGE_SOURCES` in `coverage.ts`. Register the factory in `universal.ts`, and give it a
+  row in `UNIVERSAL_PROVIDERS` in `plan.ts`: its transport, its lookup budget and its share. A
+  new name is a minor release, and consumers that store names have to accept it.
+- Change a share only with evidence, and record the reason in
   [COMPARISON.md](COMPARISON.md).
 - Add the provider's results to [coverage.json](coverage.json) with
   `scripts/coverage-probe.mjs`, then run `npm run generate` to rebuild the COVERAGE.md
@@ -205,4 +230,7 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 Track718 is an opt-in source restricted to Juxi Express. The provider plan leaves it out, so it
 answers only an explicit request. See [the scoped integration](track718/README.md).
 
-[Track123](track123/README.md) is an additional opt-in public-page fallback restricted to named FedEx lookups. Its guest flow uses no paid API credentials.
+[Track123](track123/README.md) is an opt-in source asked through a courier's own public page, so
+only about the carrier a lookup is for, and only when that page returned history for the
+carrier's public numbers ([couriers.ts](track123/couriers.ts)). Its guest flow uses no paid
+API credentials.

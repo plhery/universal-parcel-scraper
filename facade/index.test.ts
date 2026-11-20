@@ -22,7 +22,8 @@ vi.mock(import('../providers/coverage.js'), async (importOriginal) => {
   return { ...actual, coverageTiers: (carrier) => carrier === 'ups' || carrier === 'royal-mail' ? null : actual.coverageTiers(carrier) };
 });
 
-const number = '1Z999AA10123456784';
+// A valid UPS number whose draw asks ParcelsApp before Ship24 (providers/plan.ts).
+const number = '1Z999AA10123456819';
 const environment: AdapterEnvironment = { trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} };
 function registry(track: CarrierAdapter['track'], recordsSteps = false): AdapterRegistry {
   const factory: AdapterFactory = () => ({ id: 'ups', steps: ['direct'], recordsSteps, track });

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { CARRIER_CATALOG } from '../generated/catalog.js';
 import { CARRIER_COVERAGE, COVERAGE_SOURCES, coverageProblems, coverageTiers, isHistory, type CoverageCell } from './coverage.js';
-import { orderUniversalSources, universalPlan } from './universal.js';
+import { orderUniversalSources, universalPlan, UNIVERSAL_PROVIDERS } from './universal.js';
 import type { UniversalSource } from './shared/result.js';
 
 const providersDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -48,8 +48,16 @@ function lookupOrder(): string {
       ? ['full', 'partial'].includes(tier[other]) : !['full', 'partial'].includes(tier[other]))).length;
     return `| ${source} | ${known} | ${full} | ${known - full} | ${only} |`;
   });
-  const chain = (carrier?: string) => universalPlan({ carriers: [carrier], enablePostalNinja: true }).sources
-    .filter((source) => source !== 'UPU').join(' → ');
+  // Providers of one tier share a carrier's numbers; the tiers are asked in turn.
+  const chain = (carrier?: string) => {
+    const plan = universalPlan({ carriers: [carrier], enablePostalNinja: true, enableTrack123: true, background: true });
+    const tiers = new Map<string, UniversalSource[]>();
+    for (const source of plan.sources.filter((source) => source !== 'UPU')) {
+      const tier = `${UNIVERSAL_PROVIDERS[source].after ?? 0}:${plan.rank(source)}`;
+      tiers.set(tier, [...(tiers.get(tier) ?? []), source]);
+    }
+    return [...tiers.values()].map((sources) => sources.join(' · ')).join(' → ');
+  };
   const unnamed = chain();
   const standard = chain(Object.keys(catalog).find((carrier) => carrier !== 'unknown' && !coverageTiers(carrier)));
   const orders = CARRIER_COVERAGE.filter((entry) => chain(entry.carrier) !== standard)
@@ -59,7 +67,7 @@ function lookupOrder(): string {
     '| --- | ---: | ---: | ---: | ---: |',
     ...totals,
     '',
-    `With Postal Ninja enabled, a number no carrier is named for uses ${unnamed}. A carrier without its own order uses ${standard}. These carriers have their own:`,
+    `Providers joined by a dot have equally full history for the carrier and share its numbers; an arrow leads to those asked when they have none. With Postal Ninja enabled, a number no carrier is named for uses ${unnamed}. A carrier without its own order uses ${standard}. These carriers have their own:`,
     '',
     '| Carrier | Order |',
     '| --- | --- |',
@@ -144,11 +152,20 @@ describe('coverage-based lookup order', () => {
   const plan = (carrier: string, options: { trackingNumber?: string; enablePostalNinja?: boolean } = {}) =>
     universalPlan({ carriers: [carrier], enablePostalNinja: true, ...options });
 
-  it('asks fuller history first, HTTP before the browser service within a tier', () => {
+  it('asks fuller history first, and HTTP before the browser service within a tier unless the lookup runs in the background', () => {
     expect(plan('usps').sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24', 'UPU']);
     expect(plan('la-poste').sources).toEqual(['ParcelsApp', '17TRACK', 'Ship24', 'Postal Ninja', 'UPU']);
     expect(plan('spring-gds').sources).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
     expect(plan('la-poste').rank('ParcelsApp')).toBeLessThan(plan('la-poste').rank('Ship24'));
+    // ParcelsApp and 17TRACK have La Poste's history equally: in the background each leads some numbers,
+    // and Ship24's partial history stays behind both.
+    const leaders = new Set<UniversalSource>();
+    for (let index = 0; index < 200; index++) {
+      const { sources } = universalPlan({ carriers: ['la-poste'], trackingNumber: `6A${10_000_000_000 + index * 7919}`, background: true });
+      expect(sources.indexOf('Ship24')).toBe(2);
+      leaders.add(sources[0]!);
+    }
+    expect([...leaders].sort()).toEqual(['17TRACK', 'ParcelsApp']);
   });
 
   it('asks Postal Ninja after the other aggregators and never ranks it fuller than them', () => {
@@ -166,7 +183,7 @@ describe('coverage-based lookup order', () => {
     for (const carrier of ['usps', 'quickpac', 'purolator', 'imile']) expect(plan(carrier).sources, carrier).not.toContain('Postal Ninja');
     expect(universalPlan({ carriers: ['unknown', null, 'royal-mail'], enablePostalNinja: true }).sources).toContain('Postal Ninja');
     // A number no carrier is named for.
-    expect(universalPlan({ carriers: ['unknown'], enablePostalNinja: true }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU']);
+    expect(universalPlan({ carriers: ['unknown'], enablePostalNinja: true }).sources).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
     expect(universalPlan({ enablePostalNinja: true }).sources).toContain('Postal Ninja');
   });
 
@@ -175,7 +192,7 @@ describe('coverage-based lookup order', () => {
     expect(plan('ups').sources).toEqual(['ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
     // Not even as the provider a ten-digit number puts first.
     expect(plan('sf-express', { trackingNumber: '1234567891' }).sources).not.toContain('Ship24');
-    expect(plan('australia-post', { enablePostalNinja: false }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'UPU']);
+    expect(plan('australia-post', { enablePostalNinja: false }).sources).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'UPU']);
   });
 
   it('keeps UPU last and postal-only, and China Post C/L numbers on 17TRACK first', () => {
@@ -187,15 +204,65 @@ describe('coverage-based lookup order', () => {
   it('uses the first carrier with evidence, else the default order', () => {
     expect(universalPlan({ carriers: ['unknown', null, 'usps'] })).toMatchObject({ carrier: 'usps', sources: ['17TRACK', 'ParcelsApp', 'Ship24', 'UPU'] });
     const standard = universalPlan({ carriers: ['unknown'] });
-    expect(standard).toMatchObject({ carrier: null, sources: ['ParcelsApp', 'Ship24', '17TRACK', 'UPU'] });
+    expect(standard).toMatchObject({ carrier: null, sources: ['Ship24', 'ParcelsApp', '17TRACK', 'UPU'] });
     expect(standard.tier('Ship24')).toBe('unknown');
     expect(standard.rank('Ship24')).toBe(standard.rank('17TRACK'));
   });
 
   it('keeps every provider when evidence would exclude them all', () => {
     const excluded: Partial<Record<UniversalSource, 'excluded'>> = { Ship24: 'excluded', ParcelsApp: 'excluded', '17TRACK': 'excluded' };
-    expect(orderUniversalSources(['ParcelsApp', 'Ship24', '17TRACK', 'UPU'], excluded)).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'UPU']);
+    expect(orderUniversalSources(['ParcelsApp', 'Ship24', '17TRACK', 'UPU'], excluded)).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'UPU']);
     expect(orderUniversalSources(['ParcelsApp', 'Ship24', '17TRACK', 'UPU'], { Ship24: 'excluded', UPU: 'full' }))
       .toEqual(['ParcelsApp', '17TRACK', 'UPU']);
+  });
+});
+
+describe("a consumer's own counts", () => {
+  it('replace the tier the references give once they cover ten parcels', () => {
+    expect(coverageTiers('usps', { ParcelsApp: { history: 9, missed: 0 } })).toMatchObject({ ParcelsApp: 'partial' });
+    expect(coverageTiers('usps', { ParcelsApp: { history: 45, missed: 5 }, '17TRACK': { history: 6, missed: 6 }, Ship24: { history: 1, missed: 60 } }))
+      .toMatchObject({ ParcelsApp: 'full', '17TRACK': 'partial', Ship24: 'empty' });
+    expect(coverageTiers('usps', { Ship24: { history: 0, missed: 10 } })).toMatchObject({ Ship24: 'excluded', '17TRACK': 'full' });
+    // Counts that are no counts say nothing.
+    expect(coverageTiers('usps', { ParcelsApp: { history: Number.NaN, missed: -40 } })).toEqual(coverageTiers('usps'));
+  });
+
+  it('keep what a count cannot see: a provider the references exclude, and history they mark partial', () => {
+    expect(coverageTiers('ups', { Ship24: { history: 50, missed: 0 } })).toMatchObject({ Ship24: 'excluded' });
+    expect(coverageTiers('la-poste', { Ship24: { history: 50, missed: 0 } })).toMatchObject({ Ship24: 'partial' });
+    expect(coverageTiers('la-poste', { Ship24: { history: 0, missed: 50 } })).toMatchObject({ Ship24: 'excluded' });
+  });
+
+  it('grade a carrier that has no reference', () => {
+    expect(coverageTiers('azul-cargo')).toBeNull();
+    expect(coverageTiers('azul-cargo', { Ship24: { history: 3, missed: 1 } })).toBeNull();
+    expect(coverageTiers('azul-cargo', { Ship24: { history: 12, missed: 1 }, Track123: { history: 0, missed: 14 } }))
+      .toMatchObject({ Ship24: 'full', ParcelsApp: 'unknown', Track123: 'excluded' });
+  });
+
+  it('order the plan of the carrier the lookup is for', () => {
+    const number = '9400100000000000000000';
+    // The references alone put 17TRACK before ParcelsApp for USPS.
+    expect(universalPlan({ carriers: ['usps'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
+    const observed = { ParcelsApp: { history: 45, missed: 5 }, Ship24: { history: 0, missed: 30 } };
+    // Counted as full, ParcelsApp answers first for someone waiting, and Ship24 is no longer asked.
+    const plan = universalPlan({ carriers: ['usps'], trackingNumber: number, observed });
+    expect(plan.sources).toEqual(['ParcelsApp', '17TRACK']);
+    expect(plan.tier('ParcelsApp')).toBe('full');
+    expect(plan.rank('ParcelsApp')).toBe(plan.rank('17TRACK'));
+    // In the background the two share USPS's numbers.
+    const leaders = new Set<UniversalSource>();
+    for (let index = 0; index < 200; index++) {
+      leaders.add(universalPlan({ carriers: ['usps'], trackingNumber: String(9_400_100_000_000_000_000_000n + BigInt(index * 7919)), observed, background: true }).sources[0]!);
+    }
+    expect([...leaders].sort()).toEqual(['17TRACK', 'ParcelsApp']);
+    // A carrier without references is ordered by the counts alone.
+    const counted = { '17TRACK': { history: 12, missed: 1 }, Ship24: { history: 0, missed: 12 } };
+    expect(universalPlan({ carriers: ['azul-cargo'], trackingNumber: number, observed: counted }))
+      .toMatchObject({ carrier: 'azul-cargo', sources: ['17TRACK', 'ParcelsApp'] });
+    // The counts are that carrier's: they say nothing of a carrier confirmed or discovered for the number.
+    expect(universalPlan({ carriers: ['azul-cargo', 'usps'], trackingNumber: number, observed: { Ship24: { history: 1, missed: 2 } } }))
+      .toMatchObject({ carrier: 'usps', sources: ['17TRACK', 'ParcelsApp', 'Ship24'] });
+    expect(universalPlan({ carriers: [undefined, 'usps'], trackingNumber: number, observed: counted }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
   });
 });

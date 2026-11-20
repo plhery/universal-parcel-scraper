@@ -65,11 +65,25 @@ describe('Track123 public courier history', () => {
     payload.data.landWaybillLists[0]!.localDetails[0]!.timezone = '';
     expect(parseTrack123Response(payload, NUMBER).events![0]).not.toHaveProperty('time');
   });
-  it('is opt-in and restricted to the requested FedEx carrier', () => {
+  it('is opt-in, and asked only about the carrier the lookup is for when its courier page is listed', () => {
     expect(universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER }).sources).not.toContain('Track123');
-    expect(universalPlan({ carriers: ['ups', 'fedex'], trackingNumber: NUMBER, enableTrack123: true }).sources).not.toContain('Track123');
-    expect(universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER, enableTrack123: true }).sources[0]).toBe('Track123');
-    expect(universalPlan({ carriers: ['fedex'], trackingNumber: 'EXAMPLE123', enableTrack123: true }).sources).not.toContain('Track123');
+    expect(universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER, enableTrack123: true }).sources).toContain('Track123');
+    expect(universalPlan({ carriers: ['dhl'], trackingNumber: PAKET, enableTrack123: true }).sources).toContain('Track123');
+    // Its page for a carrier that is only confirmed or discovered for the number could answer for another parcel.
+    expect(universalPlan({ carriers: ['usps', 'fedex'], trackingNumber: NUMBER, enableTrack123: true }).sources).not.toContain('Track123');
+    expect(universalPlan({ carriers: [undefined, 'fedex'], trackingNumber: NUMBER, enableTrack123: true }).sources).not.toContain('Track123');
+    expect(universalPlan({ trackingNumber: NUMBER, enableTrack123: true }).sources).not.toContain('Track123');
+  });
+  it('takes its place by the history its page had for the carrier, among the browser providers', () => {
+    // Someone waits: the HTTP providers with the same history are asked first.
+    const waited = universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER, enableTrack123: true });
+    expect(waited.tier('Track123')).toBe('full');
+    expect(waited.sources.indexOf('Track123')).toBeGreaterThan(waited.sources.indexOf('ParcelsApp'));
+    // Nobody waits: it shares the carrier's numbers with the providers of its tier.
+    const first = new Set(Array.from({ length: 400 }, (_, index) => universalPlan({ carriers: ['fedex'],
+      trackingNumber: String(900000000000 + index), enableTrack123: true, background: true }).sources[0]));
+    expect(first).toContain('Track123');
+    expect(first).toContain('ParcelsApp');
   });
   it('does not hide a failed poll behind an earlier history', async () => {
     const trawl = { scrape: async () => ({ capturedResponses: [
