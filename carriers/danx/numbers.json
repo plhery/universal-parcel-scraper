@@ -1,0 +1,24 @@
+{
+  "carrier": "danx",
+  "records": [
+    {
+      "number": "KU00001",
+      "role": "shipment",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://vetdiagnostik.ku.dk/dokumenter/Webbooking_DanX_manual_Dansk__004__Vetlab.pdf",
+        "date": "2025-02-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The University of Copenhagen's veterinary lab tells the clinics that send it samples by DANX to enter the barcode of each of its labels, giving this one as the example; DANX's tracker answers it with a delivered shipment."
+    }
+  ]
+}

@@ -2582,4 +2582,5 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   usps: 'tools.usps.com answers automated Chrome with an anti-bot script instead of the page',
   'xpo-ltl': 'the shipment page asks for a reCAPTCHA checkbox before it shows a result, so number forwarding cannot be verified',
   'quick-fort': 'An unknown number gets a notice that sends the browser back to the home page after three seconds, and no public number opens an order page.',
+  danx: 'the portal takes the number only in its form, and the tracker page the form opens names it in base64, so the link opens the portal alone; native retrieval asks the service behind the tracker page',
 };

@@ -1,0 +1,65 @@
+{
+  "carrier": "danx",
+  "entries": [
+    {
+      "code": "PSIP",
+      "wording": "Pickup collected",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The tracker's legend under its table; DANX has collected the shipment from the sender."
+    },
+    {
+      "code": "TERM",
+      "wording": "Terminal scan",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "A scan at one of DANX's terminals, which the row names."
+    },
+    {
+      "code": "CONS",
+      "wording": "Consolidated",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The shipment was put together with others for the night's distribution."
+    },
+    {
+      "code": "POD",
+      "wording": "Successfully delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The row also gives the name of whoever signed for it, which the adapter leaves out."
+    },
+    {
+      "code": "POD1",
+      "wording": "Delivered from PUDO",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "Collected from a pickup and drop-off point."
+    },
+    {
+      "code": "CNA",
+      "wording": "Pickup/Delivery not possible",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The legend gives one code for a failed pickup and a failed delivery, so it does not read as a delivery attempt."
+    },
+    {
+      "code": "DEL",
+      "wording": "Not included in the shipments from shipper",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The booked shipment was missing from what the sender handed over."
+    }
+  ]
+}

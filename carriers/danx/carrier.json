@@ -1,0 +1,77 @@
+{
+  "id": "danx",
+  "displayName": "DANX",
+  "aliases": [
+    "Danx A/S",
+    "DANX Carousel"
+  ],
+  "region": {
+    "countries": [
+      "DK",
+      "SE",
+      "NO",
+      "FI",
+      "EE",
+      "LV"
+    ]
+  },
+  "brand": {
+    "color": "#003D7D"
+  },
+  "selectable": true,
+  "timezone": "Europe/Copenhagen",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "danx",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://login.danx.com/",
+    "searchUrl": "https://login.danx.com/",
+    "canaryUrl": "https://login.danx.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "sender",
+      "receiver",
+      "signatory",
+      "weight",
+      "volume",
+      "remarks",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "sender",
+      "receiver",
+      "signatory",
+      "weight",
+      "volume",
+      "remarks",
+      "customer_reference"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

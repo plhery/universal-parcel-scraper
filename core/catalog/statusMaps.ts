@@ -209,6 +209,7 @@ import { statusMap as cyprusPost } from '../../carriers/cyprus-post/status.js';
 import { statusMap as dExpress } from '../../carriers/d-express/status.js';
 import { statusMap as daiPost } from '../../carriers/dai-post/status.js';
 import { statusMap as danskeFragtmaend } from '../../carriers/danske-fragtmaend/status.js';
+import { statusMap as danx } from '../../carriers/danx/status.js';
 import { statusMap as dayone } from '../../carriers/dayone/status.js';
 import { statusMap as daylightTransport } from '../../carriers/daylight-transport/status.js';
 import { statusMap as dayRoss } from '../../carriers/day-ross/status.js';
@@ -975,7 +976,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'copa-courier': copaCourier, corre,
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain,
   'courier-center': courierCenter, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
-  'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'day-ross': dayRoss,
+  'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, danx, dao, 'day-ross': dayRoss,
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, dellin, delnext, deppon, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
   'dhl-freight': dhlFreight, dhlink, direx, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, dongdu, dpd,
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,

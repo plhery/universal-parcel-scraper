@@ -96707,6 +96707,12 @@
     "candidates": []
   },
   {
+    "input": "KU00001",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "KU990760364FR",
     "carrier": "la-poste",
     "confidence": "high",
