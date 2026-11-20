@@ -62,7 +62,8 @@ instead.
   that a universal provider's copies of them are set aside too: GZYL's order row alone is kept while the script fills a provider's
   history. The record's own summary status is not read; the stage comes from the rows kept.
   After a row a tenant's map reads as returned, a move or a delivery is the parcel going, or
-  delivered, back to the sender, and is returned too.
+  delivered, back to the sender, and is returned too, until a row says the shipper received
+  it: the rows after that are the parcel sent again.
 - GZYL's script ends in a delivery row the platform writes in an evening batch, at a clock the day
   after the script's last row and in Beijing's office hours whatever the destination, Mexico's and
   Canada's included. Readers who got no parcel marked it wrong. On a record with rows written

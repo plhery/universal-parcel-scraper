@@ -108,6 +108,22 @@ describe('SXW Express tracking adapter', () => {
     ]);
   });
 
+  it('reads the rows after the shipper took the parcel back as the parcel sent again', () => {
+    const payload = JSON.parse(own('track.json'));
+    const row = (date: string, content: string, location: string) =>
+      ({ ...payload[0].data[0].trackDetails[0], track_date: date, track_createdate: date, track_content: content, track_location: location });
+    Object.assign(payload[0].data[0], { consigneeCountry: 'FI', trackDetails: [
+      row('2026-11-12 09:00:00', 'Arrived at sort facility', 'EXAMPLETOWN, EXAMPLE, FI'),
+      row('2026-11-11 14:00:00', 'International flight has departed', ''),
+      row('2026-11-11 10:00:00', 'Arrived at origin facility', 'Mainland China, CN'),
+      row('2026-11-10 10:00:00', 'Returned parcel has been recieved by shipper', 'Mainland China, CN'),
+      row('2026-11-09 10:00:00', 'Arrived at origin facility', 'Mainland China, CN'),
+    ] });
+    const result = parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-13T00:00:00Z'))!;
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit', 'returned', 'in_transit']);
+    expect(result.current_stage).toBe('in_transit');
+  });
+
   it('settles the interface’s no-row answer with the page', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(shared('no-track.json')))
       .mockResolvedValueOnce(reply(shared('page-unknown.html').replaceAll('NOTFOUND000001', UNKNOWN)));

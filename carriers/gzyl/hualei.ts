@@ -392,18 +392,23 @@ const hourApart = (left: string, right: string): boolean => Math.abs(Date.parse(
 
 const RETURN_LEG: ReadonlySet<string> = new Set(['in_transit', 'out_for_delivery', 'delivered']);
 
+// A return the shipper received ends the way back: SXW Express's seller can send the parcel again
+// under the same waybill, and the rows after it are that journey.
+const BACK_WITH_SHIPPER = /\brec(?:ei|ie)ved by (?:the )?(?:shipper|sender)\b/i;
+
 /**
  * Which scans, newest first, are on the way back: after a row the tenant's map
  * reads as returned, a move or a delivery is the parcel going, or delivered,
- * back to the sender. A return only the shared wording rules read starts none.
+ * back to the sender, until the shipper has it. A return only the shared
+ * wording rules read starts none.
  */
 function returnLeg(events: readonly CarrierEvent[]): boolean[] {
   const leg = events.map(() => false);
   let back = false;
   for (let index = events.length - 1; index >= 0; index--) {
-    const { stage, stage_source: source } = events[index]!;
+    const { stage, stage_source: source, description } = events[index]!;
     if (back && stage && RETURN_LEG.has(stage)) leg[index] = true;
-    else if (stage === 'returned' && source === 'carrier_map') back = true;
+    else if (stage === 'returned' && source === 'carrier_map') back = !BACK_WITH_SHIPPER.test(description ?? '');
   }
   return leg;
 }
