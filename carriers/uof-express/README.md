@@ -1,29 +1,23 @@
 # UOF International
 
-UOF International parcels use enabled universal providers. There is no dedicated adapter.
+UOF International (骏佳国际) carries freight and small parcels from China to Japan and clears them
+through Japanese customs.
 
-UOF International (骏佳国际), run by Shanghai Junjiayi Supply Chain Management after Shanghai
-Junjia International Logistics, sends sea and air freight and online orders' small parcels from
-China to Japan, clears them through Japanese customs and takes stock to Amazon's warehouses
-there. Yamato and Japan Post deliver in Japan. Its site is uofexp.com.
+## Retrieval
 
-## Numbers
+The carrier's tracking page calls `oms.uofexp.com/webservice/Service.ashx` for one or more waybills.
+The adapter asks for one number and reads the JSONP reply as data. The page computes its request
+checksum from the query itself. The adapter requires an exact match with the reply's customs waybill.
 
-Its tracker shows its own waybill number, a customs number and the number of the carrier that
-delivers in Japan. No public page shows one of its numbers or states their layout, so there is no
-rule.
+The newest scan sets the status ahead of the summary, which can still say in transit after delivery.
+Events with no stated offset keep their wall clocks. Customs appointments are listed as plans.
+Document inspections keep their wording without setting a stage in the adapter.
 
-## Why there is no adapter
+## Scope and links
 
-The tracker asks an open service that answers in JSONP, with a hash of the request the page
-computes, without a session or CAPTCHA. No public number has shown a known parcel's reply yet.
-An adapter can follow.
-
-## Links
-
-Tracking links carry the number as `trackNumber` on the tracking page.
+Select UOF International to use the adapter. Its waybill layout is unverified. The carrier's
+tracking page opens a number from its `trackNumber` parameter. Only its own lookup history is read.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`UOF_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/uof-express`
