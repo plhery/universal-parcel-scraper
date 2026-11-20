@@ -52,8 +52,14 @@ export function glsSwitzerlandStatus(value: unknown): ClassifiedStatus['status']
  */
 export const PARCELSHOP_SCAN = /^(?:the )?parcel has reached the parcel ?shop[.!]?$/i;
 
+/** A parcel kept at the parcel centre for address details it lacks: no round went out, and it waits for them. */
+export const ADDRESS_HOLD = /^(?:the )?parcel is stored in the parcel cent(?:er|re)\. it cannot be delivered as further address information is needed\.?$/i;
+/** The parcel centre's daily row for a parcel it keeps. */
+export const STORED = /^(?:the )?parcel is stored in the parcel cent(?:er|re)\.?$/i;
+
 /** Classify a history row that carries no status code, from its wording alone. */
 export function classifyDescription(description: string): ClassifiedStatus {
+  if (ADDRESS_HOLD.test(description.trim())) return { status: 'exception', stage: 'exception' };
   // GLS knows of the parcel but does not have it yet: no acceptance. The sender has it ready for
   // GLS to collect, or has not handed it over.
   if (/^(?:the )?parcel (?:has not been handed over to gls|was provided by the sender for collection by gls)[.!]?$/i.test(description.trim())) {

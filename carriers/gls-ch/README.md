@@ -66,6 +66,10 @@ upstream error.
   sender's drop-off, `accepted`: GLS collects the parcel from the shop next.
   After one, the parcel waits there for its recipient, `ready_for_pickup`. The
   app's review leaves that row to the adapter.
+- "The parcel is stored in the parcel center. It cannot be delivered as further
+  address information is needed." is an `exception`: no round went out, and the
+  parcel waits for the details. The parcel centre's daily "The parcel is stored
+  in the parcel center." after it is that hold too; alone it is transit.
 - Scan date and time arrive as separate offset-less fields and are read in
   `Europe/Zurich` (gls-de relabels the timezone only).
 - The estimate is the first date of the `arrivalTime` text, dropped once the parcel is

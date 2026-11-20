@@ -301,6 +301,24 @@ describe('GLS Switzerland response normalization', () => {
       .toBe('in_transit');
   });
 
+  it('reads a parcel the parcel centre keeps for its address details as that hold, through its daily rows', () => {
+    const stored = 'The parcel is stored in the parcel center.';
+    const history = [
+      { date: '2026-06-22', time: '03:16:03', evtDscr: stored },
+      { date: '2026-06-21', time: '07:05:52', evtDscr: stored },
+      { date: '2026-06-21', time: '05:59:46', evtDscr: `${stored} It cannot be delivered as further address information is needed.` },
+      { date: '2026-06-21', time: '05:49:35', evtDscr: 'The parcel has reached the parcel center.' },
+      { date: '2026-06-20', time: '20:09:13', evtDscr: 'The parcel was handed over to GLS.' },
+    ];
+    const read = (rows: JsonObject[]) => parseGLSSwitzerlandTrackingResponse({ tuNo: OFFICIAL_TEST_PARCEL_NUMBER, progressBar: {}, history: rows },
+      OFFICIAL_TEST_PARCEL_NUMBER);
+    // No round went out: the parcel waits for the details, an exception rather than an attempt.
+    expect(read(history).events?.map((event) => event.stage)).toEqual(['exception', 'exception', 'exception', 'in_transit', 'accepted']);
+    expect(read(history)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    // Without the hold, the parcel centre's row is transit.
+    expect(read([history[0]!, ...history.slice(3)]).events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'accepted']);
+  });
+
   it.each([
     ['The parcel has been released by customs.', 'in_transit'],
     ['The parcel has been handed over to GLS.', 'accepted'],

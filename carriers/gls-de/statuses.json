@@ -29,6 +29,7 @@
     { "wording": "The parcel is expected to be delivered during the day.", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-13", "note": "INDELIVERY's wording on a history row without its code; checked before the shared rules, which read the phrase as a forecast." },
     { "wording": "ready for pickup / parcelshop / locker", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "prior-art", "firstSeen": "2026-08-30", "note": "Wording rule." },
     { "wording": "returned to sender / cancelled / delivery failed / not delivered", "language": "en", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-08-30", "note": "Returns take 'returned'; the other phrases take 'failed_attempt'. Checked before the broad 'delivered' word." },
+    { "wording": "The parcel is stored in the parcel center. It cannot be delivered as further address information is needed.", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Kept at the parcel centre for address details, with no round out. The daily \"The parcel is stored in the parcel center.\" after it is that hold too." },
     { "wording": "any other wording", "confirmedBy": "prior-art", "firstSeen": "2026-08-30", "note": "Falls through to the package's shared multilingual classifier (core/status); if that also declines, the row is reported as status 'unknown' with stage in_transit and recorded for review." }
   ]
 }

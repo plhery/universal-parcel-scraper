@@ -11,7 +11,7 @@ import { paddedDate } from '../../core/time/fields.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { classifyDescription, GLS_STATUSES, PARCELSHOP_SCAN, statusCode } from './status.js';
+import { ADDRESS_HOLD, classifyDescription, GLS_STATUSES, PARCELSHOP_SCAN, STORED, statusCode } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://gls-group.eu/EU/en/parcel-tracking
@@ -352,6 +352,14 @@ function parseEvents(parcel: JsonObject): ParsedEvent[] {
       && ['accepted', 'in_transit', 'out_for_delivery', 'failed_attempt', 'customs', 'ready_for_pickup', 'delivered'].includes(other.event.stage ?? '')
       && (other.coded || !PARCELSHOP_SCAN.test(other.event.description ?? '')));
     if (!carried) Object.assign(entry, { status: 'in_transit', event: { ...entry.event, stage: 'accepted' } });
+  }
+  // The parcel centre's daily rows for a parcel it keeps for its address details are that hold.
+  let held = false;
+  for (const entry of [...parsed].reverse()) {
+    const description = entry.coded ? '' : entry.event.description ?? '';
+    if (ADDRESS_HOLD.test(description)) held = true;
+    else if (held && STORED.test(description)) Object.assign(entry, { status: 'exception', event: { ...entry.event, stage: 'exception' } });
+    else if (entry.status !== 'unknown') held = false;
   }
   return parsed.slice(0, MAX_EVENTS_TO_RETURN);
 }
