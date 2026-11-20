@@ -1,5 +1,58 @@
 {
   "carrier": "ondot-courier",
-  "gap": "No public page shows an Ondot air waybill number.",
-  "records": []
+  "records": [
+    {
+      "number": "642578408",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.consumercomplaints.in/on-dot-couriers-cargo-b103472",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Domestic Indian courier",
+        "reportedRole": "docket number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The indexed On-Dot complaints directory reproduces a customer’s complete docket number in the subject of a delivery complaint. The current tracking URL returned the page without a shipment history."
+    },
+    {
+      "number": "11001775816",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.consumercomplaints.in/on-dot-couriers-cargo-b103472",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Domestic Indian courier",
+        "reportedRole": "way bill no.",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A separate indexed On-Dot complaint title identifies this exact waybill. A match on the current tracker remains unverified."
+    }
+  ]
 }
