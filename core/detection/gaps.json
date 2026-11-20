@@ -4988,5 +4988,11 @@
     "pattern": "^[0-9]{3}S0JA9[A-Z0-9]{10}[0-9]{4}$",
     "kind": "open",
     "reason": "Archived Kurly Nextmile invoice query links contain this hyphenated identifier family. Detection does not offer Kurly Nextmile."
+  },
+  {
+    "carrier": "king-kong-express",
+    "pattern": "^[0-9]{10}$",
+    "kind": "open",
+    "reason": "Chinese judgments name 京廣速遞 on these ten-digit waybills, and its carrier tracker recognized two. Detection does not offer King Kong Express."
   }
 ]
