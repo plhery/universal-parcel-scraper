@@ -18,16 +18,27 @@
   "timezone": "Europe/Sofia",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "cvc",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://my.e-cvc.bg/track?wb={trackingNumber}&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8",
     "searchUrl": "https://my.e-cvc.bg/track",
     "canaryUrl": "https://my.e-cvc.bg/track",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
     "unavailable": []
   },

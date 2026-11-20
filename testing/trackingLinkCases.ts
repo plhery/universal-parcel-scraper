@@ -29,6 +29,10 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'cvc', number: '00000000000000000000',
+    route: /^https:\/\/my\.e-cvc\.bg\/track\?wb=00000000000000000000&checkit=/,
+    marker: /Пратката не е открита!/,
+    forwarding: { notFound: /Пратката не е открита!/ } },
   { carrier: 'ambro-express', number: 'ZZZS6OUTSIDE0',
     route: /^https:\/\/ambroexpress\.pl\/sledzenie-przesylek#ZZZS6OUTSIDE0$/,
     marker: /WPISZ NUMER PRZESYŁKI, ABY POZNAĆ JEJ AKTUALNY STATUS/i },

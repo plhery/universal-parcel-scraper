@@ -17457,7 +17457,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Sofia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cvc",
+      "localClocks": true
     },
     "canaryUrl": "https://my.e-cvc.bg/track",
     "trackingUrlTemplate": "https://my.e-cvc.bg/track?wb={trackingNumber}&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8",
