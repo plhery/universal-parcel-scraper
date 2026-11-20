@@ -31726,6 +31726,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hulak-logistics": {
+    "displayName": "Hulak Logistics",
+    "color": "#194C7B",
+    "aliases": [
+      "Hulak Logistics Nepal",
+      "Hulak Express"
+    ],
+    "countries": [
+      "NP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kathmandu",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hulak-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://logistics.hulakexpress.com/tracking/",
+    "trackingUrlTemplate": "https://logistics.hulakexpress.com/tracking/?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://logistics.hulakexpress.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hunter-express": {
     "displayName": "Hunter Express",
     "color": "#f7aa3a",
@@ -68114,6 +68137,7 @@ export const CARRIER_IDS = [
   "huaya-express",
   "hub-delivery",
   "hub-group-final-mile",
+  "hulak-logistics",
   "hunter-express",
   "hurtig-gutta",
   "huuneh",
@@ -70058,6 +70082,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "huaya-express": ["huaya-express-1"],
   "hub-delivery": [],
   "hub-group-final-mile": [],
+  "hulak-logistics": [],
   "hunter-express": [],
   "hurtig-gutta": [],
   "huuneh": [],

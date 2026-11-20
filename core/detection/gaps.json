@@ -5894,5 +5894,10 @@
     "carrier": "ag-cargo-india",
     "kind": "open",
     "reason": "The AG Cargo LR sample uses nine generic digits. Select AG Cargo explicitly."
+  },
+  {
+    "carrier": "hulak-logistics",
+    "kind": "open",
+    "reason": "Two published Hulak references have different layouts. Select Hulak Logistics explicitly."
   }
 ]

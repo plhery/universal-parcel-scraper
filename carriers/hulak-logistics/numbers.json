@@ -1,0 +1,41 @@
+{
+  "carrier": "hulak-logistics",
+  "records": [
+    {
+      "number": "POKH1-20260826-302931",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://logistics.hulakexpress.com/tracking/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "This complete reference is published in Hulak’s tracking input. Its public numbered reply confirms the exact reference.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier confirms delivery and presents a dated pickup-order creation. It shows no dated delivery scan."
+    },
+    {
+      "number": "HL334158257POKH1",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://logistics.hulakexpress.com/tracking/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "This complete reference is published in Hulak’s tracking input. Its public numbered reply confirms the exact reference.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier confirms a pickup order was created and shows its local creation time."
+    }
+  ]
+}

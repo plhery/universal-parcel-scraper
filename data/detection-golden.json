@@ -94798,6 +94798,12 @@
     ]
   },
   {
+    "input": "HL334158257POKH1",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "HL60000000239",
     "carrier": "unknown",
     "confidence": "low",
@@ -104888,6 +104894,12 @@
     "preferred": [
       "magyar-posta"
     ]
+  },
+  {
+    "input": "POKH1-20260826-302931",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "POL031MP009843",
