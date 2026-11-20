@@ -1,6 +1,7 @@
 # DPD UK
 
-DPD's United Kingdom public parcel history, using fourteen-digit parcel numbers.
+DPD's United Kingdom public parcel history, using fourteen-digit parcel numbers
+or their last ten digits.
 Switzerland, Germany and France have separate carrier ids.
 
 ## How it works
@@ -16,6 +17,11 @@ before reading history under the returned handle.
 - A number typed with the label's check character is looked up by its
   fourteen digits, as in [dpd](../dpd/README.md). The replies print that
   character too, a digit or a letter.
+- The ten digits after a parcel number's four-digit prefix find the parcel too.
+  The reference lookup resolves them, and the adapter keeps only the parcel whose
+  number ends in them; several such parcels leave the answer inconclusive.
+  Detection does not offer DPD UK for a bare run of ten digits, which many
+  carriers print; a universal provider's carrier hint can name it.
 - Each scan row names the DPD network, a partner network abroad or the
   sender that recorded it, never a place, so events carry no location.
 - The sender is the account that booked the parcel, under the name the page

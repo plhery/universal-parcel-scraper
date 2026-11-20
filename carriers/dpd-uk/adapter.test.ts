@@ -295,8 +295,26 @@ describe('DPD UK recognition', () => {
       .resolves.toEqual({ known: false });
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(absent('Not Found'))).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
     const fetcher = vi.fn<typeof fetch>();
-    for (const number of ['ORDER-REFERENCE', '1550000000000', `${NUMBER}N`]) await expect(carrier(fetcher).recognize!(number)).resolves.toEqual({ known: false });
+    for (const number of ['ORDER-REFERENCE', '1550000000000', NUMBER.slice(5), `${NUMBER}N`]) await expect(carrier(fetcher).recognize!(number)).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('looks a parcel up by the ten digits after its prefix and binds the reply to them', async () => {
+    const payload = fixture();
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(payload.reference)).mockResolvedValueOnce(json(payload.detail)).mockResolvedValueOnce(json(payload.history));
+    await expect(carrier(fetcher).recognize!(` ${NUMBER.slice(4)} `)).resolves.toMatchObject({ known: true });
+    expect(fetcher.mock.calls[0]?.[0]).toBe(`https://apis.track.dpd.co.uk/v1/reference?origin=PRTK&postcode=&referenceNumber=${NUMBER.slice(4)}`);
+    expect(normalizeDpdUkNumber(NUMBER.slice(4))).toBe(NUMBER.slice(4));
+    expect(parseDpdUkHistory(payload.detail, payload.history, NUMBER.slice(4), CODE)).toMatchObject({ status: 'delivered' });
+    // Other last digits, or a prefix's digits, are another parcel.
+    for (const number of ['0000000002', NUMBER.slice(0, 10)]) expect(() => parseDpdUkReference(payload.reference, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseDpdUkHistory(payload.detail, payload.history, '0000000002', CODE)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    const other = { parcelNumber: '1597 0000 000 001 X', parcelCode: '15970000000001*10000' };
+    const unrelated = { parcelNumber: '1550 0000 000 002 X', parcelCode: '15500000000002*10000' };
+    expect(parseDpdUkReference({ data: [unrelated, ...payload.reference.data] }, NUMBER.slice(4))).toBe(CODE);
+    expect(() => parseDpdUkReference({ data: [other, ...payload.reference.data] }, NUMBER.slice(4))).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    // The fourteen digits name one parcel only.
+    expect(() => parseDpdUkReference({ data: [unrelated, ...payload.reference.data] }, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 });
 

@@ -12,9 +12,14 @@ import { dpdUkWording, isDpdUkNotice, withoutDriverName } from './wording.js';
 
 export const PROVIDER = 'DPD UK';
 
+/**
+ * The fourteen-digit parcel number, with or without its check character, or the ten digits that
+ * follow its four-digit prefix, which the reference lookup resolves to the parcel too.
+ */
 export function normalizeDpdUkNumber(raw: string): string {
-  const number = dpdParcelNumber(normalizeTrackingNumber(raw));
-  if (!number) throw new InvalidInputError(PROVIDER, 'DPD UK requires a fourteen-digit parcel number, with or without its check character');
+  const typed = normalizeTrackingNumber(raw);
+  const number = /^\d{10}$/.test(typed) ? typed : dpdParcelNumber(typed);
+  if (!number) throw new InvalidInputError(PROVIDER, 'DPD UK requires a fourteen-digit parcel number, with or without its check character, or its last ten digits');
   return number;
 }
 
@@ -26,14 +31,24 @@ function parcelNumber(value: unknown): string | null {
   return match?.[1] ?? null;
 }
 
+/** Whether a reply's parcel number is the one asked for, whole or by its last ten digits. */
+function isParcel(value: unknown, number: string): boolean {
+  const parcel = parcelNumber(value);
+  return parcel !== null && (number.length === 10 ? parcel.slice(4) === number : parcel === number);
+}
+
 /** Resolve one exact parcel, keeping its issued code opaque and lookup-local. */
 export function parseDpdUkReference(payload: unknown, number: string): string {
   if (!isRecord(payload) || !Array.isArray(payload.data) || payload.data.length > 100) throw new SchemaError(PROVIDER);
   if (!payload.data.length) throw new IndeterminateError(PROVIDER, 'DPD UK returned no matching parcel');
-  if (payload.data.length !== 1 || !isRecord(payload.data[0]) || parcelNumber(payload.data[0].parcelNumber) !== number) {
+  if (!payload.data.every(isRecord)) throw new SchemaError(PROVIDER);
+  // Ten digits may name the parcels of several prefixes: only one of them is the parcel asked for.
+  const matches = payload.data.filter(row => isParcel(row.parcelNumber, number));
+  if (number.length === 10 && matches.length > 1) throw new IndeterminateError(PROVIDER, 'DPD UK returned several parcels for these digits');
+  if (matches.length !== 1 || (number.length === 14 && payload.data.length !== 1)) {
     throw new SchemaError(PROVIDER, 'DPD UK returned a different or ambiguous parcel');
   }
-  const code = payload.data[0].parcelCode;
+  const code = matches[0]!.parcelCode;
   if (typeof code !== 'string' || !/^[A-Za-z0-9*_-]{1,128}$/.test(code)) throw new SchemaError(PROVIDER, 'DPD UK returned an invalid parcel handle');
   return code;
 }
@@ -45,7 +60,7 @@ export function isDpdUkReferenceAbsent(payload: unknown): boolean {
 }
 
 export function validateDpdUkParcel(payload: unknown, number: string, code: string): Record<string, unknown> {
-  if (!isRecord(payload) || !isRecord(payload.data) || parcelNumber(payload.data.parcelNumber) !== number
+  if (!isRecord(payload) || !isRecord(payload.data) || !isParcel(payload.data.parcelNumber, number)
     || payload.data.parcelCode !== code) throw new SchemaError(PROVIDER, 'DPD UK returned a different parcel');
   return payload.data;
 }
@@ -164,7 +179,7 @@ export function parseDpdUkHistory(detailPayload: unknown, historyPayload: unknow
   // The official page renders these rows newest first. Do not reorder uncertain clocks.
   const events: CarrierEvent[] = historyPayload.data.map(row => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER);
-    if ((row.parcelNumber !== undefined && parcelNumber(row.parcelNumber) !== number)
+    if ((row.parcelNumber !== undefined && !isParcel(row.parcelNumber, number))
       || (row.parcelCode !== undefined && row.parcelCode !== code)) throw new SchemaError(PROVIDER, 'DPD UK returned a different scan identity');
     const description = publicDescription(row.eventText);
     const clock = clean(row.eventDate, 64);
