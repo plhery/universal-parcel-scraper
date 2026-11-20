@@ -1,5 +1,45 @@
 {
   "carrier": "wangjing-3cq",
-  "gap": "No public page shows a Wangjing 3CQ number.",
-  "records": []
+  "records": [
+    {
+      "number": "888002598569574",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.17track.net/zh-cn/carriers/3cq?nums=888002598569574",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "China to Brazil",
+        "reportedRole": "tracking number in a carrier-specific link",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "j-and-t-br",
+        "confidence": "high"
+      },
+      "note": "The indexed 17TRACK link names 3CQ, and the number shares the 888002 waybill family already confirmed for J&T Express Brazil. The carrier’s tracker returned its application shell without shipment history, leaving 3CQ’s role unresolved."
+    },
+    {
+      "number": "888002507522830",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.17track.net/zh-cn/carriers/3cq?nums=888002507522830",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "China to Brazil",
+        "reportedRole": "tracking number in a carrier-specific link",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "j-and-t-br",
+        "confidence": "high"
+      },
+      "note": "The indexed 17TRACK link names 3CQ, and the number shares the 888002 waybill family already confirmed for J&T Express Brazil. The carrier’s tracker returned its application shell without shipment history, leaving 3CQ’s role unresolved."
+    }
+  ]
 }
