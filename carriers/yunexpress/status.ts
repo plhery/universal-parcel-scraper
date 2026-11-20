@@ -259,6 +259,14 @@ export function keepBrokerAfterClearance(events: readonly CarrierEvent[]): void 
   }
 }
 
+// DPD's data records, relayed with the depot that will receive the parcel while it is still in China: no place it has been.
+const DATA_RECORDS = new Set(['Sender goods issue', 'Parcel data transmitted'].map(normalizeStatusWording));
+
+/** Whether the wording is a last-mile carrier's data record, whose place the parcel has not reached. */
+export function isYunExpressDataRecord(description: string): boolean {
+  return DATA_RECORDS.has(normalizeStatusWording(description));
+}
+
 /** Whether the wording is a relayed notice the map gives no stage on purpose. */
 export function isYunExpressNotice(description: string): boolean {
   return normalizeStatusWording(description) === NOTICE;

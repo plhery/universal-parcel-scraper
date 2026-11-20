@@ -105,6 +105,17 @@ describe('YunExpress captured response projection', () => {
     expect(beforeClearance.events![0]!.stage).toBe('customs');
   });
 
+  it("names no place for DPD's data record, relayed with the depot that will receive the parcel", () => {
+    const reply = fixture();
+    const item = reply.ResultList[0];
+    const scan = (date: string, content: string) => ({ ProcessDetailList: [{ ProcessDate: date, ProcessContent: `${content}----Exampletown`, IsSignature: false, Comments: [], marks: [] }] });
+    item.TrackData.ProcessGroupList.splice(0, 0, scan('2026-03-25T10:00:00', 'Sender goods issue'));
+    Object.assign(item.TrackInfo.LastTrackEvent, { ProcessDate: '2026-03-25T10:00:00', ProcessContent: 'Sender goods issue', ProcessLocation: 'Exampletown' });
+    const result = parse(reply, NUMBER);
+    expect(result.events![0]).toMatchObject({ description: 'Sender goods issue', location: '' });
+    expect(result.events!.slice(1).some((event) => event.location)).toBe(true);
+  });
+
   it('stages the destination leg, and a hand-over to the local carrier is no delivery', () => {
     expect(yunExpressStatus('Delivered to local carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Package accepted at courier partner')).toEqual({ status: 'in_transit', stage: 'in_transit' });

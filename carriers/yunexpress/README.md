@@ -62,7 +62,8 @@ stored for its wall clock under another offset, with the same place and wording.
 reply is inconclusive when its latest summary does not match the first scan.
 A shorter projection than the returned raw history is incomplete. An older row
 with a place but no wording is skipped. Each row joins wording and place with
-`----`; a dash given as the place is no place. A partner's place can give its
+`----`; a dash given as the place is no place, and neither is the depot DPD's data
+records ("Sender goods issue") name while the parcel is still in China. A partner's place can give its
 town twice ("MADRID, MADRID, ES"), which is read once, and the row takes over
 the one an app stored with the repeat.
 
