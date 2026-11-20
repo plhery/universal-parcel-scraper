@@ -99947,6 +99947,14 @@
     ]
   },
   {
+    "input": "P050549",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "flecha-amarilla"
+    ]
+  },
+  {
     "input": "P06321818332",
     "carrier": "unknown",
     "confidence": "low",
@@ -110891,6 +110899,12 @@
     ]
   },
   {
+    "input": "W030361",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "W0646715B",
     "carrier": "unknown",
     "confidence": "low",
@@ -112050,6 +112064,12 @@
     "asked": [
       "dhlink"
     ]
+  },
+  {
+    "input": "Y030158",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "Y2F0B87U1H",
