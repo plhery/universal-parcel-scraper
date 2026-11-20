@@ -7,7 +7,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, SPX_BR_API, SPX_BR_FLEET_API, spxBrFleetQuery, SpxBrTracker } from './adapter.js';
-import { normalizeSpxBrNumber, parseSpxBr, parseSpxBrFleet, spxBrPlacedText, spxBrSigner, spxBrStageWording, spxBrWording } from './parser.js';
+import { normalizeSpxBrNumber, parseSpxBr, parseSpxBrFleet, spxBrHubPlace, spxBrPlacedText, spxBrSigner, spxBrStageWording, spxBrWording } from './parser.js';
 import { spxBrStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -360,15 +360,15 @@ describe('SPX Express Brazil HTTP adapter', () => {
       expect(result.events!.map((event) => [event.time, event.provider_code, event.stage, event.location ?? null, event.description])).toEqual([
         ['2026-05-19T12:53:20Z', 'Delivered', 'delivered', null, 'Seu pacote foi entregue a [Destinatária Sintética]'],
         // A round keeps the hub that sends the courier out, which tells it from the bare line of the order's creation.
-        ['2026-05-19T08:26:40Z', 'Delivering', 'out_for_delivery', null, '[LM Hub_RJ_Porto Modelo] Seu pacote está sendo entregue pelo entregador'],
-        // A hub taking the parcel in is the scan's place; the hub leaves the wording.
+        ['2026-05-19T08:26:40Z', 'Delivering', 'out_for_delivery', null, '[Porto Modelo, RJ] Seu pacote está sendo entregue pelo entregador'],
+        // A hub taking the parcel in is the scan's place, read from its code; the hub leaves the wording.
         // A hub's own scan stands for the line haul's unloading there, which leaves.
-        ['2026-05-19T03:43:20Z', 'LMHub_Received', 'in_transit', 'LM Hub_RJ_Porto Modelo', 'Seu pacote foi recebido pelo centro de distribuição'],
+        ['2026-05-19T03:43:20Z', 'LMHub_Received', 'in_transit', 'Porto Modelo, RJ', 'Seu pacote foi recebido pelo centro de distribuição'],
         // A line haul's transfer id leaves; the hub it names is where it goes, not its place.
-        ['2026-05-18T16:46:40Z', 'SOC_LHTransporting', 'in_transit', null, 'Pacote está sendo transportado para LM Hub_RJ_Porto Modelo'],
-        ['2026-05-17T16:46:40Z', 'SOC_Received', 'in_transit', 'SoC_SP_Cidade Exemplo', 'Seu pacote foi recebido pelo centro de triagem'],
-        ['2026-05-17T14:20:00Z', 'FMHub_LHTransporting', 'in_transit', null, 'Pacote está sendo transportado para SoC_SP_Cidade Exemplo'],
-        ['2026-05-17T00:30:00Z', 'FMHub_Received', 'in_transit', 'FM Hub_SP_Vila Amostra', 'Seu pacote foi recebido pelo hub de coleta'],
+        ['2026-05-18T16:46:40Z', 'SOC_LHTransporting', 'in_transit', null, 'Pacote está sendo transportado para Porto Modelo, RJ'],
+        ['2026-05-17T16:46:40Z', 'SOC_Received', 'in_transit', 'Cidade Exemplo, SP', 'Seu pacote foi recebido pelo centro de triagem'],
+        ['2026-05-17T14:20:00Z', 'FMHub_LHTransporting', 'in_transit', null, 'Pacote está sendo transportado para Cidade Exemplo, SP'],
+        ['2026-05-17T00:30:00Z', 'FMHub_Received', 'in_transit', 'Vila Amostra, SP', 'Seu pacote foi recebido pelo hub de coleta'],
         // The hub that made a pickup is not where it happened.
         ['2026-05-16T22:23:20Z', 'FMHub_Pickup_Done', 'accepted', null, 'Seu pacote foi coletado'],
         ['2026-05-16T13:36:40Z', 'Created', 'registered', null, 'O pedido foi criado'],
@@ -391,8 +391,8 @@ describe('SPX Express Brazil HTTP adapter', () => {
     ];
     const result = parseSpxBrFleet(fleet, 'BR2600000000045');
     expect(result.events!.map((event) => [event.provider_code, event.stage, event.location ?? null, event.description])).toEqual([
-      ['LMHub_Received', 'in_transit', 'LM Hub_RJ_Porto Modelo', 'Seu pacote foi recebido pelo centro de distribuição'],
-      ['SOC_LHUnloading', 'in_transit', 'SoC_SP_Cidade Exemplo', 'Unloading'],
+      ['LMHub_Received', 'in_transit', 'Porto Modelo, RJ', 'Seu pacote foi recebido pelo centro de distribuição'],
+      ['SOC_LHUnloading', 'in_transit', 'Cidade Exemplo, SP', 'Unloading'],
       ['FMHub_Pickup_Onhold', 'accepted', null, 'Coleta do pacote em espera. Motivo:[Baú com capacidade atingida]'],
       ['DOP_Received', 'accepted', null, 'Seu pacote foi recebido pelo ponto de coleta'],
     ]);
@@ -414,6 +414,44 @@ describe('SPX Express Brazil HTTP adapter', () => {
       last_status_text: 'Pacote foi entregue', events: [{ provider_code: '3PL_Delivered', stage: 'delivered', description: 'Pacote foi entregue' }] });
   });
 
+  it('reads a hub\'s code as its town and state, and a scan stored with the code as the same scan', () => {
+    for (const [code, place] of [
+      ['SoC_ES_Exemplo', 'Exemplo, ES'],
+      ['SoC_SP_Cidade Exemplo_A1', 'Cidade Exemplo, SP'],
+      ['SoC_SP_Cidade Exemplo_02', 'Cidade Exemplo, SP'],
+      ['LM Hub_RJ_Porto Modelo_ Bairro Amostra', 'Porto Modelo - Bairro Amostra, RJ'],
+      ['LM Hub_GO_Vila Amostra_ Jd. Exemplo_02', 'Vila Amostra - Jd. Exemplo, GO'],
+      ['FM Hub_3PL_PR_Exemplo_01', 'Exemplo, PR'],
+      ['FM Hub_3PL_SP_XX_Vila_Amostra-02', 'XX - Vila - Amostra, SP'],
+      ['XPT_MA_Porto Modelo Norte', 'Porto Modelo Norte, MA'],
+    ]) expect(spxBrHubPlace(code!), code).toBe(place);
+    // Another code, or a place already read, stays as it is.
+    for (const text of ['SoC_XX_Exemplo', 'SoC_SP_01', 'Cidade Exemplo - SP', 'Exemplo, ES', '']) expect(spxBrHubPlace(text)).toBe(text);
+
+    const fleet = fixture('fleet-delivered') as unknown as { data: { tracking_list: Record<string, unknown>[] } };
+    fleet.data.tracking_list = [
+      { timestamp: 1_779_090_100, status: 'SOC_Received', message: '[SoC_ES_Exemplo_A1] Seu pacote foi recebido pelo centro de triagem' },
+      { timestamp: 1_779_090_000, status: 'SOC_LHUnloading', message: '[TO20260517TEST1] unloading at [SoC_ES_Exemplo_A1] via Linehaul Trip [LT0TEST00001A1]' },
+      { timestamp: 1_779_080_000, status: 'FMHub_LHTransporting', message: 'Pacote [TO20260517TEST1] está sendo transportado para [SoC_ES_Exemplo_A1]' },
+    ];
+    // The unloading still leaves for the hub's own scan there.
+    expect(parseSpxBrFleet(fleet, 'BR2600000000045').events!.map((event) => [event.provider_code, event.location ?? null, event.description])).toEqual([
+      ['SOC_Received', 'Exemplo, ES', 'Seu pacote foi recebido pelo centro de triagem'],
+      ['FMHub_LHTransporting', null, 'Pacote está sendo transportado para Exemplo, ES'],
+    ]);
+
+    const policy = sameInstantIdentityPolicy('spx-br', { supportsScanMatching: true });
+    const received = { stage: 'in_transit', description: 'Seu pacote foi recebido pelo centro de triagem', location: 'Exemplo, ES', providerCode: 'SOC_Received' };
+    expect(policy?.matches?.(received, { ...received, location: 'SoC_ES_Exemplo_A1' })).toBe(true);
+    expect(policy?.matches?.(received, { ...received, location: 'SoC_SP_Exemplo' })).toBe(false);
+    const leaving = { stage: 'in_transit', description: 'Pacote está sendo transportado para Exemplo, ES', location: '', providerCode: 'FMHub_LHTransporting' };
+    expect(policy?.matches?.(leaving, { ...leaving, description: 'Pacote está sendo transportado para SoC_ES_Exemplo_A1' })).toBe(true);
+    const round = { stage: 'out_for_delivery', description: '[Porto Modelo, RJ] Seu pacote está sendo entregue pelo entregador', location: '', providerCode: 'Delivering' };
+    expect(policy?.matches?.(round, { ...round, description: '[LM Hub_RJ_Porto Modelo] Seu pacote está sendo entregue pelo entregador' })).toBe(true);
+    expect(policy?.matches?.(round, { ...round, description: '[LM Hub_SP_Porto Modelo] Seu pacote está sendo entregue pelo entregador' })).toBe(false);
+    expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'Delivering', description: round.description })).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
+  });
+
   it('reads the bare "Delivering" of the order\'s creation as transit, and only a hub\'s round as out for delivery', () => {
     const fleet = fixture('fleet-delivered') as unknown as { data: { tracking_list: Record<string, unknown>[] } };
     const line = 'Seu pacote está sendo entregue pelo entregador';
@@ -423,10 +461,10 @@ describe('SPX Express Brazil HTTP adapter', () => {
     ];
     expect(parseSpxBrFleet(fleet, FLEET)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
       events: [{ provider_code: 'Delivering', stage: 'in_transit', description: line }, { provider_code: 'Created', stage: 'registered' }] });
-    for (const hub of ['OF Hub_SP_Exemplo', 'XPT_SP_Exemplo', 'LM Hub_RJ_Porto Modelo']) {
+    for (const [hub, place] of [['OF Hub_SP_Exemplo', 'Exemplo, SP'], ['XPT_SP_Exemplo', 'Exemplo, SP'], ['LM Hub_RJ_Porto Modelo', 'Porto Modelo, RJ']]) {
       fleet.data.tracking_list = [{ timestamp: 1_779_140_000, status: 'Delivering', message: `[${hub}] ${line}` }, ...fleet.data.tracking_list.slice(-2)];
       expect(parseSpxBrFleet(fleet, FLEET), hub).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery',
-        events: [{ provider_code: 'Delivering', stage: 'out_for_delivery', description: `[${hub}] ${line}` }, { stage: 'in_transit' }, { stage: 'registered' }] });
+        events: [{ provider_code: 'Delivering', stage: 'out_for_delivery', description: `[${place}] ${line}` }, { stage: 'in_transit' }, { stage: 'registered' }] });
     }
     // Stored rows read again the same way.
     expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'Delivering', description: line })).toEqual({ kind: 'mapped', stage: 'in_transit' });
