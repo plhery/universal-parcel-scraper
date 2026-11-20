@@ -1,4 +1,49 @@
 {
   "carrier": "bir-gunde-kargo",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Hazırlanıyor",
+      "stage": "registered",
+      "language": "tr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The shop is preparing the parcel; the hand-over to the carrier follows as its own movement."
+    },
+    {
+      "wording": "Kargoya Verildi",
+      "stage": "accepted",
+      "language": "tr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20"
+    },
+    {
+      "wording": "Aktarım Merkezine Geldi",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20"
+    },
+    {
+      "wording": "Kargo Şubesine Geldi",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20"
+    },
+    {
+      "wording": "Dağıtıma Çıkarıldı",
+      "stage": "out_for_delivery",
+      "language": "tr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20"
+    },
+    {
+      "wording": "Devir - Tekrar Dağıtıma Çıkacak",
+      "stage": "failed_attempt",
+      "language": "tr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "\"Devir\" carries the parcel over to another delivery round after a round that did not deliver it; it goes out again later."
+    }
+  ]
 }

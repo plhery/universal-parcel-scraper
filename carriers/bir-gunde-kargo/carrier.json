@@ -18,18 +18,69 @@
   "timezone": "Europe/Istanbul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "bir-gunde-kargo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "eta",
+    "sender_name",
+    "canonical_tracking_number"
+  ],
   "portal": {
+    "url": "https://takip.birgundekargo.com/intranet/Tracking_kargo.asp?bgk_barkod={trackingNumber}",
     "searchUrl": "https://www.birgundekargo.com/",
     "canaryUrl": "https://www.birgundekargo.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "sender_name",
+      "receiver_name",
+      "receiver_address",
+      "receiver_phone",
+      "merchant_reference",
+      "sending_date",
+      "courier",
+      "delivery_branch",
+      "canonical_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta",
+      "sender_name",
+      "canonical_tracking_number"
+    ],
+    "discarded": [
+      "receiver_name",
+      "receiver_address",
+      "receiver_phone",
+      "merchant_reference",
+      "sending_date",
+      "courier",
+      "delivery_branch"
+    ],
+    "unavailable": [
+      "location",
+      "offset_timestamps"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "takip.birgundekargo.com"
+      ],
+      "pathPattern": "^/intranet/Tracking_kargo\\.asp$",
+      "params": [
+        "bgk_barkod",
+        "alici_musteri_kodu"
+      ]
+    }
+  ],
   "detection": []
 }

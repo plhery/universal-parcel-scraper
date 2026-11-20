@@ -1,0 +1,473 @@
+
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+				<meta name="google" content="notranslate">
+				<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+				<title>Bir Günde Kargo Gönderi Sorgulama</title><link rel="icon" href="/intranet/Admin/images/bgk.ico">
+	
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+				<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+				<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+				<link rel="stylesheet" type="text/css" href="/intranet/inc/tracking_kargo.css?v=1">
+			</head>
+			<body>
+				
+					<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+					<div class="container">
+						<div class="k-logo">
+							<img src="/intranet/i/birgundekargo-logo.png" style="cursor: pointer;" onclick="location.href='https://www.birgundekargo.com/'"/>
+						</div>
+						<!--<h4 class="k-title">Kargo Takip</h4>-->
+						<div class="k-durum">
+							<div class="k-durum-box ">
+								<div class="k-icon" >
+									<img src="/intranet/Admin/images/hazirlaniyor.png" />
+								</div>
+								<div class="k-number" >
+									<span>1</span>
+								</div>
+								<span class="k-durum-title">Hazırlanıyor  </span>
+							</div>
+							<div class="k-durum-box ">
+								<div class="k-icon" >
+									<img src="/intranet/Admin/images/yolda.png" />
+								</div>
+								<div class="k-number" >
+									<span>2</span>
+								</div>
+								<span class="k-durum-title amerkezinde">Aktarma Merkezinde</span>
+							</div>
+							<div class="k-durum-box ">
+								<div class="k-icon" >
+									<img src="/intranet/Admin/images/sube.png" />
+								</div>
+								<div class="k-number" >
+									<span>3</span>
+								</div>
+								<span class="k-durum-title tsubesinde">Teslimat Şubesinde</span>
+							</div>
+							<div class="k-durum-box active ">
+								<div class="k-icon" >
+									<img src="/intranet/Admin/images/dagitim.png" />
+								</div>
+								<div class="k-number" >
+									<span>4</span>
+								</div>
+								<span class="k-durum-title">Dağıtımda</span>
+							</div>
+							
+							<div class="k-durum-box ">
+								<div class="k-icon"  style="background-color:gray!important;" >
+									<img src="/intranet/Admin/images/teslim.png" />
+								</div>
+								<div class="k-number"  style="background-color:gray!important;" >
+									<span>5</span>
+								</div>
+								<span class="k-durum-title tedildi">Teslim Edildi</span>
+							</div>
+							
+						</div>
+						<div class="k-form">
+							<div class="k-form-box">
+								<p>Gönderi Durumu: <br id="gdurummobile"><span>Dağıtıma Çıkarıldı</span></p>
+								<p class="ttt">Tahmini Teslimat Tarihi: <br id="gdurummobile"><span>20.11.2026</span></p>
+							</div>
+							<div class="k-form-box">
+								<div class="box-col">
+									<p>Gönderen</p>
+									<h6>A101</h6>
+								</div>
+								<div class="box-col sagy">
+									<p>Siparis No</p>
+									<h6>5355103875</h6>
+								</div>
+								<div class="box-col">
+									<p>Ad Soyad</p>
+									<h6>Xx * * Yy * * </h6>
+								</div>
+								<div class="box-col sagy">
+									<p>Adres</p>
+									<h6>(Xxx * * * </h6>
+								</div>
+								<div class="box-col">
+									<p>Gsm</p>
+									<h6>500000 * * * * </h6>
+								</div>
+								<div class="box-col sagy">
+									<p>Tarih</p>
+									<h6>17.11.2026</h6> 
+								</div>
+							</div>
+								<div class="row button-group">
+									
+								</div>
+								
+									<div class="row button-group p-0 d-flex flex-wrap">
+										<div class="col-12 order-1 order-md-2 kurye-group">
+											<div class="col-12 ddiv">
+												<img style="float: left;border-radius: 50%;width: 120px;height: 120px;object-fit: cover;margin-top: 10px;" src="/intranet/i/kurye.jpg"> 
+												
+												<div style="margin-left: 130px; margin-top: 10px;">
+													<span>Kurye </span>
+													<span style="margin-left: 73px;">: KURYE ADI</span>
+													<div style="height: 5px;"></div>
+													<span>Araç Plakası</span>
+													<span style="margin-left: 15px;">: 00 XX 000</span>
+													<div style="height: 5px;"></div>
+													<span>Şube Adı</span><span style="margin-left: 49px;">: Konak</span><br>
+													<div style="height: 5px;"></div>
+													<span>Şube Adresi</span><span style="margin-left: 21px;">: Örnek Mh. 0000 Sok. N:0 Buca/İzmir </span><br>
+													<div style="height: 5px;"></div>
+													<span><a href="#" style="color:#1414b8;" onclick="openMap()">Haritada Göster</a></span>
+													<div style="height: 5px;"></div>
+													<span>Şube Yetkilisi</span><span style="margin-left: 9px;">: YETKİLİ ADI</span><br>
+												</div>
+											</div>
+											<div class="col-12 mdiv">
+												<center>
+													<img style="border-radius: 50%;width: 120px;height: 120px;object-fit: cover;" src="/intranet/i/kurye.jpg"><br>
+												</center>
+												<div style="height: 10px;"></div>
+												<span>Kurye </span>
+												<span style="margin-left: 73px;">: KURYE ADI</span>
+												<div style="height: 5px;"></div>
+												<span>Araç Plakası</span>
+												<span style="margin-left: 15px;">: 00 XX 000</span>
+												<div style="height: 5px;"></div>
+												<span>Şube Adı</span><span style="margin-left: 49px;">: Konak</span><br>
+												<div style="height: 5px;"></div>
+												<span>Şube Adresi</span><span style="margin-left: 21px;">: Örnek Mh. 0000 Sok. N:0 Buca/İzmir </span><br>
+												<div style="height: 5px;"></div>
+												<span><a href="#" style="color:#1414b8;" onclick="openMap()">Haritada Göster</a></span>
+												<div style="height: 5px;"></div>
+												<span>Şube Yetkilisi</span><span style="margin-left: 9px;">: YETKİLİ ADI</span><br>
+												<div style="height: 15px;"></div>
+												<button class="col-12" style="float: right; 
+    "
+    
+    
+        onclick="swal.fire({
+            html: gericekme,
+            showConfirmButton: false
+        });"
+    
+>Kuryeyi Ara</button>
+
+<a href="tel:08504800448" class="call" id="dmrCall"></a>
+
+    <script>
+        // Boş script alanı, içerik eklenmemiş
+    </script>
+    <button class="col-12" style="float: right;"
+        
+            onclick="swal.fire({
+                html: gericekme2,
+                showConfirmButton: false
+            });"
+        
+    >Şubeyi Ara</button>
+	
+
+												<center>
+													<div style="height: 15px;"></div>
+												</center>
+											</div>
+										</div>
+									</div>
+								
+							</div>
+	
+							<div class="accordion k-accordion" id="kuryeHareket">
+								<div class="card">
+								<div class="card-header" id="headingOne">
+									<h2 class="mb-0">
+									<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+										Kargo Hareketleri
+									</button>
+									</h2>
+								</div>
+	
+								<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#kuryeHareket">
+									<div class="card-body">
+										<table class="d-none d-md-table">
+											<thead>
+												<tr>
+													<th class="col-md-4">Tarih</th>
+													<th class="col-md-4">Kargo Durumu</th>
+												</tr>
+											</thead>
+											<tbody>
+												
+													<tr>
+														<td>16-11-2026 18.37</td>
+														<td>Hazırlanıyor</td>
+													</tr>
+												
+													<tr>
+														<td>17-11-2026 16.11</td>
+														<td>Kargoya Verildi</td>
+													</tr>
+												
+													<tr>
+														<td>17-11-2026 21.52</td>
+														<td>Aktarım Merkezine Geldi</td>
+													</tr>
+												
+													<tr>
+														<td>18-11-2026 09.36</td>
+														<td>Kargo Şubesine Geldi</td>
+													</tr>
+												
+													<tr>
+														<td>18-11-2026 10.10</td>
+														<td>Dağıtıma Çıkarıldı</td>
+													</tr>
+												
+													<tr>
+														<td>18-11-2026 12.18</td>
+														<td>Devir - Tekrar Dağıtıma Çıkacak</td>
+													</tr>
+												
+													<tr>
+														<td>20-11-2026 08.56</td>
+														<td>Dağıtıma Çıkarıldı</td>
+													</tr>
+												
+											</tbody>
+										</table>
+										<table class="d-table d-md-none">
+											<thead>
+											<tr>
+												<th class="col-md-4">Tarih</th>
+												<th class="col-md-4">Kargo Durumu</th>
+											</tr>
+											</thead>
+											<tbody>
+												
+													<tr>
+														<td>16-11-2026 18.37</td>
+														<td>Hazırlanıyor</td>
+													</tr>
+												
+													<tr>
+														<td>17-11-2026 16.11</td>
+														<td>Kargoya Verildi</td>
+													</tr>
+												
+													<tr>
+														<td>17-11-2026 21.52</td>
+														<td>Aktarım Merkezine Geldi</td>
+													</tr>
+												
+													<tr>
+														<td>18-11-2026 09.36</td>
+														<td>Kargo Şubesine Geldi</td>
+													</tr>
+												
+													<tr>
+														<td>18-11-2026 10.10</td>
+														<td>Dağıtıma Çıkarıldı</td>
+													</tr>
+												
+													<tr>
+														<td>18-11-2026 12.18</td>
+														<td>Devir - Tekrar Dağıtıma Çıkacak</td>
+													</tr>
+												
+													<tr>
+														<td>20-11-2026 08.56</td>
+														<td>Dağıtıma Çıkarıldı</td>
+													</tr>
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+								</div>
+							</div>
+							
+								<!--Harita Buradan Açılıyor-->
+								<div class="accordion k-accordion" id="kargomNerede">
+									<div class="card">
+										<div class="card-header" id="headingTwo">
+											<h2 class="mb-0">
+											<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+												Kargom Nerede
+											</button>
+											</h2>
+										</div>
+										<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#kargomNerede">
+											<div class="card-body">
+												<iframe src="/intranet/kargom_nerede_yeni21.asp?barkod=B101873107" style="width:100%;height:450px;border:none;"></iframe>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+						</div>
+						<div class="d-flex justify-content-center k-foot"></div>
+					</div>
+					
+	<script type="text/javascript">
+		const mesajgecmisi = document.createElement('div');
+		const gericekme = document.createElement('div');
+		const gericekme2 = document.createElement('div');
+		const krymsg = document.createElement('div');
+		const subemsg = document.createElement('div');
+		const kuryeye_mesaj = document.createElement('div');
+		const srcmsg1 = document.createElement('div');
+		
+		
+	
+		gericekme.innerHTML = `
+			<div>
+				<div class="container">
+					<form>
+						<div class="form-group">
+							<b>
+								Görüşmelerimiz hizmet kalitesinin takibi ve işlem güvenliğiniz için kayıt altına alınacaktır.</br>
+								Kurye ile görüşmeyi başlatmak için lütfen devam tuşuna basınız.
+							</b></br></br>
+							<label for="pwd">
+								<input type="button" onclick="rapor();" class="btn btn-danger" style="margin-left:5px;" value="Devam"/>
+								<input type="button" onclick="swal.close();" class="btn btn-primary" style="margin-left:5px;" value="Kapat"/>
+							</label>
+						</div>
+					</form>
+				</div>
+			</div>
+		`;
+		
+		function rapor() {
+			const url = `/intranet/api_arama_eslestir.asp?guid=&barkod=B101873107&dahili=kurye`;
+			
+			fetch(url, {
+			    method: 'GET'
+			})
+			.then(response => {
+			    if (!response.ok) throw new Error('Network response was not ok');
+			    return response.text(); // JSON değil, çünkü orijinal kodda dönüşe göre işlem yapılmamış
+			})
+			.then(() => {
+			    swal.close();
+			    const callLink = document.getElementById('dmrCall');
+			    callLink.setAttribute('href', 'tel:08504800448');
+			    callLink.click();
+			})
+			.catch(error => {
+			    console.error('Kurye arama eşleştirme hatası:', error);
+			    gosterBildirim('Hata', 'Kurye arama işlemi başarısız oldu.', 'error', true);
+			});
+		}
+	
+		gericekme2.innerHTML = `
+			<div>
+				<div class="container">
+					<form>
+						<div class="form-group">
+							<b>
+								Görüşmelerimiz hizmet kalitesinin takibi ve işlem güvenliğiniz için kayıt altına alınacaktır.<br>
+								Lütfen yönlendirildiğiniz numarayı silmeden direkt olarak aramayı başlatın. <br>
+								Şube ile görüşmeyi başlatmak için lütfen devam tuşuna basınız.
+							</b></br></br>
+							<label for="pwd">
+								<input type="button" onclick="rapor_sube();" class="btn btn-danger" style="margin-left:5px;" value="Devam"/>
+								<input type="button" onclick="swal.close();" class="btn btn-primary" style="margin-left:5px;" value="Kapat"/>
+							</label>
+						</div>
+					</form>
+				</div>
+			</div>
+		`;
+		
+		function rapor_sube() {
+			const url = `/intranet/api_arama_eslestir.asp?guid=&barkod=B101873107&dahili=sube`;
+			
+			fetch(url, {
+			    method: 'GET'
+			})
+			.then(response => {
+			    if (!response.ok) throw new Error('Network response was not ok');
+			    return response.text(); 
+			})
+			.then(() => {
+			    swal.close();
+			    const callLink = document.getElementById('dmrCall');
+			    callLink.setAttribute('href', 'tel:08500000000');
+			    callLink.click();
+			})
+			.catch(error => {
+			    console.error('Kurye arama eşleştirme hatası:', error);
+			    gosterBildirim('Hata', 'Şube arama işlemi başarısız oldu.', 'error', true);
+			});
+		}
+		
+		function openMap() {
+			var latitude = "0";  // Enlem (x)
+			var longitude = "0"; // Boylam (y)
+			
+			var url = `https://www.google.com/maps?q=${latitude},${longitude}&z=19`;
+			
+			window.open(url, '_blank');
+		}
+		
+		
+		setTimeout(function() {
+			const url = new URL(window.location.href);
+			const params = url.searchParams;
+			const paramName = "EXAMPLECOOKIE";
+		
+			if (!params.has(paramName)) {
+				params.set(paramName, "1");
+				url.search = params.toString();
+				window.location.href = url.toString();
+			} else {
+				window.location.reload(); 
+			}
+		}, 60 * 5 * 1000);
+
+		
+		function gosterBildirim(baslik, mesaj, icon, sayfaYenile) {
+			Swal.fire({
+				title: baslik,
+				html: mesaj,
+				icon: icon,
+				confirmButtonText: 'Tamam',
+				confirmButtonColor: '#FEB13F',
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				timer: 3000,
+				timerProgressBar: true,
+			}).then((result) => {
+				if ((result.isConfirmed || result.dismiss === Swal.DismissReason.timer) && sayfaYenile) {
+					window.location.reload();
+				}
+			});
+		}
+
+		const timeout = setTimeout(() => {
+		Swal.fire({
+			title: 'Zaman Aşımı!',
+			text: 'Sayfa Yüklenemedi! İnternet hızınızı kontrol edip tekrar deneyin.',
+			icon: 'warning',
+			confirmButtonText: 'Tamam',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = "https://birgundekargo.com/";
+			}
+		});
+		}, 30000);
+		
+		window.onload = () => {
+			clearTimeout(timeout);
+		};
+	</script>
+
+			</body>
+		</html>
+	

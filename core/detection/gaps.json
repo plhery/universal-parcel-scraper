@@ -4700,5 +4700,17 @@
     "pattern": "^\\d{13}$",
     "kind": "by_design",
     "reason": "Jetizz's tracker also takes the thirteen-digit number of partner Aras Kargo for a parcel Aras delivers. The number is Aras's, so detection offers Aras rather than Jetizz."
+  },
+  {
+    "carrier": "bir-gunde-kargo",
+    "pattern": "^(?:B[0-9]{9}|BGK[0-9]{8}|3126[0-9]{12})$",
+    "kind": "open",
+    "reason": "Published delivery complaints identify these codes as Bir Günde Kargo parcel references. Detection does not offer the carrier for these examples."
+  },
+  {
+    "carrier": "bir-gunde-kargo",
+    "pattern": "^[0-9]{12}$",
+    "kind": "by_design",
+    "reason": "Bir Günde Kargo also tracks a parcel by the sending shop's order number, whose shape differs from shop to shop, so detection cannot name the carrier from it."
   }
 ]

@@ -11532,11 +11532,24 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Istanbul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "bir-gunde-kargo",
+      "localClocks": true
     },
     "canaryUrl": "https://www.birgundekargo.com/",
+    "trackingUrlTemplate": "https://takip.birgundekargo.com/intranet/Tracking_kargo.asp?bgk_barkod={trackingNumber}",
     "trackingSearchUrl": "https://www.birgundekargo.com/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "takip.birgundekargo.com"
+        ],
+        "pathPattern": "^/intranet/Tracking_kargo\\.asp$",
+        "params": [
+          "bgk_barkod",
+          "alici_musteri_kodu"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "biz-courier": {

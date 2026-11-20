@@ -72,6 +72,7 @@ import { adapter as betterTrucks } from '../carriers/better-trucks/adapter.js';
 import { adapter as bexExpress } from '../carriers/bex-express/adapter.js';
 import { adapter as bhPosta } from '../carriers/bh-posta/adapter.js';
 import { adapter as bigfootExpress } from '../carriers/bigfoot-express/adapter.js';
+import { adapter as birGundeKargo } from '../carriers/bir-gunde-kargo/adapter.js';
 import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapter.js';
 import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
 import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
@@ -909,6 +910,7 @@ export const REGISTRY: RegistryDefinition = {
     "bex-express": bexExpress,
     "bh-posta": bhPosta,
     "bigfoot-express": bigfootExpress,
+    "bir-gunde-kargo": birGundeKargo,
     "bjs-home-delivery": bjsHomeDelivery,
     "blue-dart": blueDart,
     "blue-express": blueExpress,
@@ -1856,7 +1858,7 @@ export const REGISTRY: RegistryDefinition = {
     "big-smart": "universal",
     "bigfoot-express": "bigfoot-express",
     "bigpost": "universal",
-    "bir-gunde-kargo": "universal",
+    "bir-gunde-kargo": "bir-gunde-kargo",
     "biz-courier": "universal",
     "bjs-home-delivery": "bjs-home-delivery",
     "bla-kurer": "universal",
