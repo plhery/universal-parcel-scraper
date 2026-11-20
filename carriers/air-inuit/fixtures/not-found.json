@@ -1,0 +1,25 @@
+{
+  "status": "",
+  "data": {
+    "ReceivingId": 0,
+    "FormNumber": "",
+    "AwbPrefix": "",
+    "DateOfReceiving": "",
+    "OriginalPieces": 0,
+    "OriginalWeightKgs": 0,
+    "UltimateOrigin": " ()",
+    "UltimateDestination": " ()",
+    "nTotalPieceMvment": 0,
+    "nTotalPieceRamasse": 0,
+    "nTotalPieceRecu": 0,
+    "nTotalOrigin": 0,
+    "rPoidsMvmt": 0,
+    "rPoidsRamasse": 0,
+    "rPoidsRecu": 0,
+    "rPoidsOrigin": 0,
+    "DateLastPickedUp": "",
+    "DateLastReceived": "",
+    "DateLasteOrigin": "",
+    "CommoditiesByNatureOfGoods": []
+  }
+}

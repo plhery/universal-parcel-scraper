@@ -1,0 +1,103 @@
+{
+  "status": "ok",
+  "data": {
+    "ReceivingId": 1588966,
+    "FormNumber": "13472675",
+    "AwbPrefix": "466-YKL-",
+    "DateOfReceiving": "2017-05-25T12:51:05.727",
+    "OriginalPieces": 2,
+    "OriginalWeightKgs": 40,
+    "UltimateOrigin": "Schefferville (YKL)",
+    "UltimateDestination": "Montréal Dorval (YUL)",
+    "nTotalPieceMvment": 0,
+    "nTotalPieceRamasse": 0,
+    "nTotalPieceRecu": 0,
+    "nTotalOrigin": 0,
+    "rPoidsMvmt": 0,
+    "rPoidsRamasse": 0,
+    "rPoidsRecu": 0,
+    "rPoidsOrigin": 0,
+    "DateLastPickedUp": "2017-05-29t08:12:00.307",
+    "DateLastReceived": "2017-05-26t06:49:54.107",
+    "DateLasteOrigin": "2017-05-25T12:51:05.727",
+    "CommoditiesByNatureOfGoods": [
+      {
+        "m_sMarchandiseInterne": "Dry food",
+        "m_nTotalPiece": 2,
+        "m_nTotalKgs": 40,
+        "nTotalOrigin": 0,
+        "nTotalPieceEnTransit": 0,
+        "nTotalPieceRamasse": 0,
+        "nTotalPieceRecu": 0,
+        "rPoidsOring": 0,
+        "rPoidsRecu": 0,
+        "rPoidsEnTransit": 0,
+        "rPoidsRamasse": 0,
+        "ShipmentRegroupe": [],
+        "ContainerRegroup": [],
+        "HistoriqueNew": [
+          {
+            "oSentence": {
+              "m_Sentence": "Picked up."
+            },
+            "m_nPiece": 2,
+            "m_rKg": 40,
+            "m_sDateHistory": "2017-05-29",
+            "m_sHeureHistory": "08:12:00.307",
+            "m_sLegFROM": "",
+            "m_sLegTo": "",
+            "statuID": 4
+          },
+          {
+            "oSentence": {
+              "m_Sentence": "Received in Montréal Dorval (YUL)."
+            },
+            "m_nPiece": 2,
+            "m_rKg": 40,
+            "m_sDateHistory": "2017-05-26",
+            "m_sHeureHistory": "06:49:54.107",
+            "m_sLegFROM": "",
+            "m_sLegTo": "",
+            "statuID": 1
+          },
+          {
+            "oSentence": {
+              "m_Sentence": "Shipped on flight 3H833."
+            },
+            "m_nPiece": 2,
+            "m_rKg": 40,
+            "m_sDateHistory": "2017-05-25",
+            "m_sHeureHistory": "14:20:00",
+            "m_sLegFROM": "Schefferville (YKL)",
+            "m_sLegTo": "Montréal Dorval (YUL)",
+            "statuID": 3
+          },
+          {
+            "oSentence": {
+              "m_Sentence": "Manifested on flight 3H833 <br> for May 25, 2017 at 14:20."
+            },
+            "m_nPiece": 2,
+            "m_rKg": 40,
+            "m_sDateHistory": "2017-05-25",
+            "m_sHeureHistory": "14:01:09.913",
+            "m_sLegFROM": "Schefferville (YKL)",
+            "m_sLegTo": "Montréal Dorval (YUL)",
+            "statuID": 2
+          },
+          {
+            "oSentence": {
+              "m_Sentence": "Accepted by Air Inuit Cargo in Schefferville (YKL)."
+            },
+            "m_nPiece": 2,
+            "m_rKg": 40,
+            "m_sDateHistory": "2017-05-25",
+            "m_sHeureHistory": "12:51:05.727",
+            "m_sLegFROM": "",
+            "m_sLegTo": "",
+            "statuID": 9
+          }
+        ]
+      }
+    ]
+  }
+}

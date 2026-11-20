@@ -1,0 +1,26 @@
+{
+  "carrier": "air-inuit",
+  "records": [
+    {
+      "number": "466-YKL-13472675",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publications.gc.ca/collections/collection_2018/cnrc-nrc/NR16-153-2017-eng.pdf",
+        "date": "2017-07-20",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Air cargo",
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The National Research Council's report on a site at Schefferville shows the Air Inuit air waybill its water samples flew on to Montréal in its fourth appendix. Air Inuit's tracker returns the waybill's five lines, accepted at Schefferville and picked up at Dorval."
+    }
+  ]
+}

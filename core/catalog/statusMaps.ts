@@ -71,6 +71,7 @@ import { statusMap as memphisCourier } from '../../carriers/memphis-courier/stat
 import { statusMap as lion360 } from '../../carriers/360lion/status.js';
 import { statusMap as xpressLogisticsLu } from '../../carriers/xpress-logistics-lu/status.js';
 import { statusMap as aeropost } from '../../carriers/aeropost/status.js';
+import { statusMap as airInuit } from '../../carriers/air-inuit/status.js';
 import { statusMap as westernBid } from '../../carriers/western-bid/status.js';
 import { statusMap as libanpost } from '../../carriers/libanpost/status.js';
 import { statusMap as omLogistics } from '../../carriers/om-logistics/status.js';
@@ -973,6 +974,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'tej-couriers': tejCouriers,
   'correos-costa-rica': costaRica,
   aeropost,
+  'air-inuit': airInuit,
   'western-bid': westernBid,
   libanpost,
   'om-logistics': omLogistics,

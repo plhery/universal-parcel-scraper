@@ -6112,5 +6112,11 @@
     "pattern": "^(?:PLLU)?[A-Z]{2}\\d{8}$",
     "kind": "open",
     "reason": "Swire Shipping's bills are two letters for the country of their port of loading and eight digits, after PLLU in US import records; detection has no rule for them yet."
+  },
+  {
+    "carrier": "air-inuit",
+    "pattern": "^466[A-Z]{3}\\d{8}$",
+    "kind": "open",
+    "reason": "Air Inuit's waybills are its 466 prefix, the issuing station and an eight-digit serial; detection has no rule for them yet."
   }
 ]
