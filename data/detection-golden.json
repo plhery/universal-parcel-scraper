@@ -3040,6 +3040,14 @@
     ]
   },
   {
+    "input": "00559007738294153046",
+    "carrier": "poczta-polska",
+    "confidence": "high",
+    "candidates": [
+      "poczta-polska"
+    ]
+  },
+  {
     "input": "00561840300427",
     "carrier": "unknown",
     "confidence": "low",
@@ -101869,6 +101877,17 @@
     "confidence": "high",
     "candidates": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "Po13200911953",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste"
+    ],
+    "asked": [
+      "la-poste"
     ]
   },
   {
