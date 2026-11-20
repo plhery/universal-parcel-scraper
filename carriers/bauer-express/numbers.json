@@ -1,5 +1,27 @@
 {
   "carrier": "bauer-express",
-  "gap": "No public page shows a Bauer Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "000.004.870",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://patrimonial.cincatarina.sc.gov.br/UploadedFiles/NF/NF_3468_4.pdf",
+        "date": "2024-05-23",
+        "dateKind": "invoice issue date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Brazil public procurement freight",
+        "reportedRole": "NF-e invoice number",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The procurement invoice names Bauer Express in its transport section. The printed invoice number alone has not been established as a carrier shipment identifier."
+    }
+  ]
 }
