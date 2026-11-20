@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
-import { adapter, DECLINE_HOLD_MS, JdLogisticsTracker, MAX_DECLINE_HOLD_MS } from './adapter.js';
+import { adapter, JdLogisticsTracker } from './adapter.js';
 import { jdDomesticBrowser, jdDomesticWording, jdRoute, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, parseJdDomestic } from './domestic.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -225,41 +225,15 @@ describe('JD domestic recovery boundaries', () => {
     expect(fetcher).not.toHaveBeenCalled(); expect(scrape).toHaveBeenCalledTimes(1);
   });
 
-  it('leaves a waybill whose verification keeps declining to the providers for longer each time', async () => {
-    const held = 'JDJ368405197284';
-    let now = Date.parse('2026-04-03T08:00:00Z');
-    vi.spyOn(Date, 'now').mockImplementation(() => now);
-    try {
-      const { trawl, scrape } = client();
-      const decline = { tier: 3, statusCode: 200, capturedResponses: [{ url: 'https://www.jdl.com/orderSearch/', status: 200,
-        body: null, headers: {}, truncated: false, base64Encoded: false, error: 'jd-domestic-unreadable' }] } as never;
-      scrape.mockResolvedValue(decline);
-      const tracker = new JdLogisticsTracker({ trawl, fetcher: async () => empty() });
-      const declines = async (opened: number) => {
-        await expect(tracker.fetch(held)).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unreadable' });
-        expect(scrape).toHaveBeenCalledTimes(opened);
-      };
-      await declines(1);
-      now += DECLINE_HOLD_MS - 1;
-      await declines(1);
-      now += 1;
-      await declines(2);
-      now += 2 * DECLINE_HOLD_MS - 1;
-      await declines(2);
-      now += 1;
-      await declines(3);
-      now += MAX_DECLINE_HOLD_MS;
-      await declines(4);
-      now += MAX_DECLINE_HOLD_MS;
-      scrape.mockResolvedValue({ tier: 3, statusCode: 200, capturedResponses: [{ url: JD_DOMESTIC_TRACK, status: 200,
-        body: JSON.stringify({ code: 1, obj: [{ rawWaybillCode: held, exists: false }] }), headers: {}, truncated: false,
-        base64Encoded: false, error: null, trackingNumberSubmitted: held }] } as never);
-      await expect(tracker.fetch(held)).rejects.toMatchObject({ kind: 'not_found' });
-      scrape.mockResolvedValue(decline);
-      await declines(6);
-      now += DECLINE_HOLD_MS;
-      await declines(7);
-    } finally { vi.restoreAllMocks(); }
+  it('opens the page again on the next lookup after a declined verification', async () => {
+    const { trawl, scrape } = client();
+    scrape.mockResolvedValue({ tier: 3, statusCode: 200, capturedResponses: [{ url: 'https://www.jdl.com/orderSearch/', status: 200,
+      body: null, headers: {}, truncated: false, base64Encoded: false, error: 'jd-domestic-unreadable' }] } as never);
+    const tracker = new JdLogisticsTracker({ trawl, fetcher: async () => empty() });
+    for (const opened of [1, 2]) {
+      await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unreadable' });
+      expect(scrape).toHaveBeenCalledTimes(opened);
+    }
   });
 
   it('an older browser service or failed page setup stays a transport failure, not a false site challenge', async () => {

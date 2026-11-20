@@ -24,10 +24,8 @@ when the service itself selects the branch without verification.
 When a prompt mask falls outside the accepted foreground size, verification diagnostics
 keep only its pixel count; puzzle images and mask data are not logged.
 
-After the bounded attempt declines a waybill, the page is not opened for that
-waybill for 6 hours, then twice as long after each next decline in a row, up to a day. Those
-lookups fail as the same declined verification, so enabled providers answer them. A bound
-answer clears the wait; a restart forgets it.
+A declined verification is not remembered: the matcher declines puzzles, not waybills, so the
+next lookup opens a fresh session.
 
 Domestic replies require exactly one matching `rawWaybillCode` and an explicit `exists`.
 Only a bound `exists:false` is not found. Empty or refused replies stay inconclusive, and
