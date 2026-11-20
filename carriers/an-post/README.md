@@ -22,7 +22,9 @@ Ireland as the destination of an S10 item.
      the item it opens, which repeats the reference as `senderNo`. An empty list is not found.
    - `GetEvents` with `{"getEvents":{"barcodeItem":"<anPostNo>"}}` answers the history,
      newest first: activity wording, an offset-less clock, a location and a numeric
-     `traceCode`. An empty history beside a bound summary is inconclusive: the summary
+     `traceCode`. A sorting office's wording ends with an "in" before its place; a scan
+     without a location, and a summary ahead of the history, read without that "in", and the [identity policy](identity.ts) lets such a scan take over
+     the row stored with it. An empty history beside a bound summary is inconclusive: the summary
      repeats the newest scan, and a request An Post does not understand gets the same
      empty list, so the lookup fails as indeterminate and other sources may answer.
 

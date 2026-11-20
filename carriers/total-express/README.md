@@ -30,7 +30,8 @@ itself, or hands some to Correios. Tracked through the API its tracking page rea
   Consumers read them in the catalog's zone, São Paulo's.
 - A scan's description is its own Portuguese wording, `statusDescricao`, such as
   `TRANSFERENCIA PARA: SGE`, without the empty separators the tracker leaves around a base's
-  code. Those three-letter codes name Total Express's bases rather than places, so scans have no
+  code. A wording that ends where a base's code goes, `… NO CD DE` with no code, drops that
+  `DE`, and its [identity policy](identity.ts) lets it take over the row stored with it. Those three-letter codes name Total Express's bases rather than places, so scans have no
   location. The page shows a friendlier message per milestone instead; the adapter keeps neither
   those messages nor the milestone names.
 - The status id, `statid`, stages a scan. The ids and their labels come from the list the page

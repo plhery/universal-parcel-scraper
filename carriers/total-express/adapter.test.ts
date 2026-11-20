@@ -73,7 +73,7 @@ describe('Total Express HTTP adapter', () => {
       ['2026-03-02T18:03:23', '101', 'in_transit', 'RECEBIDA E PROCESSADA NO CD - XAA'],
       // Waiting at the distribution centre to be measured.
       ['2026-03-02T18:03:23', '98', 'in_transit', 'AGUARDANDO CUBAGEM'],
-      ['2026-03-02T18:03:22', '69', 'in_transit', 'COLETA RECEBIDA COM NC NO CD DE'],
+      ['2026-03-02T18:03:22', '69', 'in_transit', 'COLETA RECEBIDA COM NC NO CD'],
       ['2026-03-02T18:03:22', '84', 'accepted', 'COLETA REALIZADA C/ NÃO CONFORMIDADE'],
     ]);
     expect(result.events!.every((event) => event.time === undefined && event.location === undefined)).toBe(true);
@@ -136,6 +136,8 @@ describe('Total Express HTTP adapter', () => {
     expect(totalExpressWording('RECEBIDO CD DE: - : HUB/MATRIZ')).toBe('RECEBIDO CD DE: HUB/MATRIZ');
     expect(totalExpressWording('RECEBIDO CD DE: - - SGE')).toBe('RECEBIDO CD DE: SGE');
     expect(totalExpressWording('EMBARQUE RECEBIDO NO CD:  - ')).toBe('EMBARQUE RECEBIDO NO CD');
+    expect(totalExpressWording('COLETA RECEBIDA COM NC NO CD DE: - ')).toBe('COLETA RECEBIDA COM NC NO CD');
+    expect(totalExpressWording('COLETA RECEBIDA COM NC NO CD DE')).toBe('COLETA RECEBIDA COM NC NO CD');
     expect(totalExpressWording('Embarque em ponto de passagem - VDQ')).toBe('Embarque em ponto de passagem - VDQ');
   });
 

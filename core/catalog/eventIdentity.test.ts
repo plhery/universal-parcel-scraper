@@ -1119,6 +1119,22 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...incoming, description: '' }, { ...stored, description: '' })).toBe(false);
   });
 
+  it('lets a Total Express scan, and an An Post scan without a place, lose the word left where the place went', () => {
+    const express = sameInstantIdentityPolicy('total-express', { supportsScanMatching: true });
+    expect(express).toMatchObject({ storedSources: ['total-express'], matchEachScan: true, matchWallClock: true });
+    const pickup = { stage: 'in_transit', description: 'COLETA RECEBIDA COM NC NO CD', location: '', providerCode: '69' };
+    expect(express?.matches?.(pickup, { ...pickup, description: 'COLETA RECEBIDA COM NC NO CD DE' })).toBe(true);
+    expect(express?.matches?.(pickup, pickup)).toBe(true);
+    expect(express?.matches?.(pickup, { ...pickup, description: 'COLETA RECEBIDA COM NC NO CD DE', providerCode: '79' })).toBe(false);
+    expect(express?.matches?.(pickup, { ...pickup, description: 'RECEBIDO CD DE: SGE' })).toBe(false);
+    const anPost = sameInstantIdentityPolicy('an-post', { supportsScanMatching: true });
+    expect(anPost).toMatchObject({ storedSources: ['an-post'], matchEachScan: true, matchWallClock: true });
+    const leaving = { stage: 'in_transit', description: 'Your item is leaving a sorting office for delivery', location: '', providerCode: '50' };
+    expect(anPost?.matches?.(leaving, { ...leaving, description: `${leaving.description} in` })).toBe(true);
+    expect(anPost?.matches?.(leaving, { ...leaving, description: `${leaving.description} in`, location: 'Example' })).toBe(false);
+    expect(anPost?.matches?.(leaving, { ...leaving, description: `${leaving.description} in`, providerCode: '49' })).toBe(false);
+  });
+
   it('lets an MRW hub scan gain its bracketed label', () => {
     expect(sameInstantIdentityPolicy('mrw')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('mrw', { supportsScanMatching: true });

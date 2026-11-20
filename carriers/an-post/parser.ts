@@ -157,6 +157,9 @@ interface Scan extends Current {
   activity: string;
 }
 
+/** A wording that ends where the website puts the place, "…for delivery in", read without it when no place follows. */
+const placeless = (wording: string) => wording.replace(/\s+in$/, '');
+
 /**
  * The service lists scans newest first and the summary repeats the newest
  * scan's wording and clock, but the two come from separate requests, so either
@@ -175,7 +178,7 @@ function currentState(scans: readonly Scan[], summary: AnPostSummary): Current {
     || same(text, summary.reported)) ?? atClock[0];
   if (named) return date > first.local ? named : first;
   if (summary.status && date > first.local) {
-    return { stage: anPostSummaryStage(summary.status), text: summary.status, local: date, office: anPostPostOffice(52, summary.status) };
+    return { stage: anPostSummaryStage(summary.status), text: placeless(summary.status), local: date, office: anPostPostOffice(52, summary.status) };
   }
   return first;
 }
@@ -206,12 +209,13 @@ export function parseAnPostEvents(payload: unknown, summary: AnPostSummary): Car
     if (code < 0 || code > 9999) invalid();
     const activity = text(row.activity, 300);
     // The website words a delivery attempt from its reason alone, whatever its activity.
-    const description = (code === 16 ? attemptOutcome(text(row.reason, 300)) : null) ?? activity;
-    if (!description) invalid('An Post returned an empty scan');
+    const worded = (code === 16 ? attemptOutcome(text(row.reason, 300)) : null) ?? activity;
+    if (!worded) invalid('An Post returned an empty scan');
     const local = wallClock(row.date);
-    const office = anPostPostOffice(code, description);
+    const office = anPostPostOffice(code, worded);
     const location = text(row.location, 200) || office;
-    const stage = anPostScanStage(code, description);
+    const description = location ? worded : placeless(worded);
+    const stage = anPostScanStage(code, worded);
     const event: CarrierEvent = { description, local_time: local,
       ...(location ? { location } : {}), provider_code: String(code),
       ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) };
