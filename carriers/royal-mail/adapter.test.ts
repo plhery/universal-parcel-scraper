@@ -313,6 +313,26 @@ describe('Royal Mail structured response', () => {
     expect(result.delivered_at).toBe('2026-01-20T06:43:15Z');
   });
 
+  it('lists the summary’s newest scan when the history does not list it yet, in the history’s form', () => {
+    const history = [
+      { eventCode: 'EVGPD', eventName: '**Due to be delivered today**', eventDateTime: '2026-01-20T08:07:25+00:00', locationName: 'Example Depot' },
+      { eventCode: 'EVIAV', eventName: '**Item Received**', eventDateTime: '2026-01-20T03:07:09+00:00', locationName: 'Example Hub' },
+    ];
+    const summary = { statusCategory: 'Delivered', statusDescription: 'Delivered', lastEventCode: 'EVKOP', lastEventName: '**Delivered**',
+      lastEventDateTime: '2026-01-20T09:38:19+00:00', lastEventLocationName: 'Example Depot' };
+    const parse = (events: unknown[]) => parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: DELIVERED_NUMBER, summary, events } }, DELIVERED_NUMBER);
+    const lagging = parse(history);
+    expect(lagging).toMatchObject({ current_stage: 'delivered', delivered_at: '2026-01-20T09:38:19Z' });
+    expect(lagging.events?.map(event => [event.provider_code, event.time, event.stage])).toEqual([
+      ['EVKOP', '2026-01-20T09:38:19Z', 'delivered'], ['EVGPD', '2026-01-20T08:07:25Z', 'out_for_delivery'], ['EVIAV', '2026-01-20T03:07:09Z', 'in_transit'],
+    ]);
+    // Once the history lists it, the reply reads the same.
+    const listed = parse([{ eventCode: 'EVKOP', eventName: '**Delivered**', eventDateTime: '2026-01-20T09:38:19+00:00', locationName: 'Example Depot' }, ...history]);
+    expect(listed.events).toEqual(lagging.events);
+    // A summary scan the history already passed adds nothing.
+    expect(parse(history.slice(0, 1).map(event => ({ ...event, eventDateTime: '2026-01-20T09:40:00+00:00' }))).events).toHaveLength(1);
+  });
+
   it('dates the recipient\'s collection from the Customer Service Point as the delivery', () => {
     const result = parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: DELIVERED_NUMBER,

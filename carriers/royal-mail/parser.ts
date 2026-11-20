@@ -200,7 +200,15 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   if (mailpiece.events !== undefined && !Array.isArray(mailpiece.events)) {
     throw new SchemaError('Royal Mail', 'Royal Mail returned invalid tracking events');
   }
-  const scans = Array.isArray(mailpiece.events) ? mailpiece.events : [];
+  const listed: unknown[] = Array.isArray(mailpiece.events) ? mailpiece.events : [];
+  // The summary repeats the newest scan's code, wording, clock and place as the history lists them. The
+  // history can lag it by minutes, a delivery missing from it: a summary scan newer than every listed one
+  // is that scan, and keeps the history's form for when the history lists it.
+  const lastScan = { eventCode: summary.lastEventCode, eventName: summary.lastEventName,
+    eventDateTime: summary.lastEventDateTime, locationName: summary.lastEventLocationName };
+  const lastAt = Date.parse(eventTime(lastScan.eventDateTime) ?? '');
+  const scans = listed.length && cleanScalar(lastScan.eventName) && cleanScalar(lastScan.eventCode, 64) && Number.isFinite(lastAt)
+    && listed.every(raw => isRecord(raw) && Date.parse(eventTime(raw.eventDateTime) ?? '') < lastAt) ? [lastScan, ...listed] : listed;
   // Only the full-history reply names the destination, and not always.
   const destination = cleanScalar(summary.destinationCountryCode, 8);
   const destinationCountry = /^[A-Z]{2}$/.test(destination) ? destination : null;

@@ -55,6 +55,9 @@ answers are not retried. An unavailable browser fails fast.
   the acceptance itself, stay under "We've got it". "Delivery attempted"
   repeating a scan that keeps the item for collection or redelivery reads
   as ready for pickup.
+- The summary names the newest scan's code, wording, clock and place as the history does. The
+  history can lag it by minutes, a delivery missing from it, so a summary scan newer than every
+  listed scan is added as that scan.
 - An item sent to a Post Office for collection gets the delivery office's delivery scan, then
   "Delivered to your collection point" (`EVKLC`), then the branch's "Available for collection".
   The first two are the way to the branch and read as transit.
