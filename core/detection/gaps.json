@@ -5809,5 +5809,10 @@
     "carrier": "pinoy-pride-worldwide",
     "kind": "open",
     "reason": "One Washington Returning Resident example is confirmed. Other states, other services and collisions need separate review."
+  },
+  {
+    "carrier": "esm-logistica",
+    "kind": "open",
+    "reason": "The confirmed domestic guides are numeric and come from several series. A larger sample and a collision review are needed before detection."
   }
 ]

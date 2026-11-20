@@ -264,6 +264,7 @@ import { adapter as eparcelKr } from '../carriers/eparcel-kr/adapter.js';
 import { adapter as epexColombia } from '../carriers/epex-colombia/adapter.js';
 import { adapter as epostGlobal } from '../carriers/epost-global/adapter.js';
 import { adapter as equick } from '../carriers/equick/adapter.js';
+import { adapter as esmLogistica } from '../carriers/esm-logistica/adapter.js';
 import { adapter as estafeta } from '../carriers/estafeta/adapter.js';
 import { adapter as estes } from '../carriers/estes/adapter.js';
 import { adapter as estesForwarding } from '../carriers/estes-forwarding/adapter.js';
@@ -1218,6 +1219,7 @@ export const REGISTRY: RegistryDefinition = {
     "epex-colombia": epexColombia,
     "epost-global": epostGlobal,
     "equick": equick,
+    "esm-logistica": esmLogistica,
     "estafeta": estafeta,
     "estes": estes,
     "estes-forwarding": estesForwarding,
@@ -2462,6 +2464,7 @@ export const REGISTRY: RegistryDefinition = {
     "epost-global": "epost-global",
     "equick": "equick",
     "esbjerg-gods": "universal",
+    "esm-logistica": "esm-logistica",
     "espeedpost": "universal",
     "espoirer": "universal",
     "estafeta": "estafeta",

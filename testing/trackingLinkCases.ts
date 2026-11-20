@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'esm-logistica', number: '2150000003083433',
+    route: /^https:\/\/clientes\.esmlogistica\.com\/seguimiento\?guia=2150000003083433$/,
+    marker: /Guía # 2150000003083433/i },
   { carrier: 'k-line-roro', number: 'KKLUZZZ000000',
     route: /^https:\/\/apps\.klineglobalroro\.com\/tracking\/search\/?\?q=KKLUZZZ000000$/,
     marker: /No Booking or B\/L found|Global RoRo Cargo Tracking/i },

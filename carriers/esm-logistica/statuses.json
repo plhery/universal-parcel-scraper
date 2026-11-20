@@ -1,0 +1,33 @@
+{
+  "carrier": "esm-logistica",
+  "entries": [
+    {
+      "wording": "Recibida en base de datos",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The database records the guide."
+    },
+    {
+      "wording": "EN ALISTAMIENTO EN OFICINA DE ORIGEN",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The origin office is preparing the admitted shipment. No departure is stated."
+    },
+    {
+      "wording": "ENTREGADO",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The guest timeline includes a separate dated delivery movement."
+    },
+    {
+      "wording": "NO ENTREGADO",
+      "language": "es",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "The summary explicitly reports undelivered. The timeline alone gives no reason or attempt time."
+    }
+  ]
+}

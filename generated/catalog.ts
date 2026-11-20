@@ -23508,6 +23508,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "esm-logistica": {
+    "displayName": "ESM Logística",
+    "color": "#1a2e5a",
+    "aliases": [
+      "ESM Logistica",
+      "E.S.M. Logística",
+      "ESM Logística S.A.S."
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "esm-logistica",
+      "localClocks": true
+    },
+    "canaryUrl": "https://clientes.esmlogistica.com/seguimiento",
+    "trackingUrlTemplate": "https://clientes.esmlogistica.com/seguimiento?guia={trackingNumber}",
+    "trackingSearchUrl": "https://clientes.esmlogistica.com/seguimiento",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "espeedpost": {
     "displayName": "Espeedpost",
     "color": "#ff0000",
@@ -67455,6 +67479,7 @@ export const CARRIER_IDS = [
   "epost-global",
   "equick",
   "esbjerg-gods",
+  "esm-logistica",
   "espeedpost",
   "espoirer",
   "estes",
@@ -69381,6 +69406,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "epost-global": ["epost-global-1"],
   "equick": ["equick-eqk"],
   "esbjerg-gods": [],
+  "esm-logistica": [],
   "espeedpost": [],
   "espoirer": [],
   "estes": [],

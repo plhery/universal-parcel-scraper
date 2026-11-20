@@ -27505,6 +27505,21 @@
     ]
   },
   {
+    "input": "200000005174948",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "brt",
+      "yunda",
+      "j-and-t-cargo",
+      "ozon-logistics"
+    ],
+    "asked": [
+      "j-and-t-cargo",
+      "brt"
+    ]
+  },
+  {
     "input": "200000033661600038871668",
     "carrier": "unknown",
     "confidence": "low",
@@ -31101,6 +31116,32 @@
       "gls-ch",
       "postlogistics",
       "ppl"
+    ]
+  },
+  {
+    "input": "2150000003083433",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "2150000003090925",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
     ]
   },
   {
