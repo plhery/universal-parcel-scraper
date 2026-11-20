@@ -1192,6 +1192,32 @@ describe('17TRACK result parsing', () => {
     expect(times('ZZ123456785AR')).toEqual(['2026-11-07T18:40:00.000Z', '2026-11-05T16:35:00.000Z', '2026-11-05T09:12:00.000Z']);
   });
 
+  it("reads Mexico Post's rows at the digits Correos de México's tracker shows, which 17TRACK read as UTC", () => {
+    // The tracker's digits, which 17TRACK keeps in time_utc and shows six hours earlier under -06:00.
+    const row = (shown: string, description: string, location: string, timezone: string | null = null) => {
+      const raw = new Date(Date.parse(`${shown}Z`) - 6 * 3_600_000).toISOString().slice(0, 19);
+      return { time_iso: `${raw}-06:00`, time_utc: `${shown}Z`, time_raw: { date: raw.slice(0, 10), time: raw.slice(11), timezone },
+        description, location, stage: null, sub_status: 'InTransit_Other' };
+    };
+    const events = (rows: unknown[]) => parse17TrackResponse({ meta: { code: 200 }, shipments: [{ number: 'ZZ123456785MX', code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key: 13141, name: 'Mexico Post', country: 'MX' },
+        events: rows }] } } }] }, 'ZZ123456785MX').events?.map(e => [e.time ?? e.local_time, e.time_zone]);
+    expect(events([
+      row('2026-11-13T14:10:00', 'Llegada a Zona de Aduanas', 'COLOMBIA'),
+      row('2026-10-23T08:36:00', 'Pieza depositada en valija y enviada a oficina del País destino', 'Oficina Sintética, Son.'),
+      row('2026-10-19T14:19:00', 'En tránsito hacia destino', 'Centro de Distribución Sintético, Yuc.'),
+    ])).toEqual([
+      // 4-72's wall clock, which the tracker shows on Mexico City's clock, as Correos de México's adapter reads it.
+      ['2026-11-14T01:10:00.000Z', 'America/Bogota'],
+      // An office off central time keeps the tracker's digits as its wall clock.
+      ['2026-10-23T08:36:00', undefined],
+      ['2026-10-19T20:19:00.000Z', 'America/Mexico_City'],
+    ]);
+    // A clock the carrier gave its own offset keeps 17TRACK's reading.
+    expect(events([row('2026-10-19T14:19:00', 'En tránsito hacia destino', 'Centro de Distribución Sintético, Yuc.', '-06:00')]))
+      .toEqual([['2026-10-19T14:19:00.000Z', undefined]]);
+  });
+
   it('reads Correos de El Salvador\'s scans in UTC, its copies of the origin post\'s and Swiss Post\'s relays on their offices\' clocks', () => {
     const row = (date: string, time: string, offset: string | null, description: string, location: string | null = null) => ({
       time_iso: `${date}T${time}${offset ?? '-05:00'}`, time_utc: null, time_raw: { date, time, timezone: offset },

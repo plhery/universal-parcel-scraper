@@ -8,7 +8,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { paddedDate } from '../../core/time/fields.js';
 import { calendarDay, countryCode, zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
-import { CORREOS_DE_MEXICO_ZONE as ZONE, correosDeMexicoForeignClock } from './clock.js';
+import { correosDeMexicoClock } from './clock.js';
 import { correosDeMexicoStage } from './status.js';
 
 export const PROVIDER = 'Correos de México';
@@ -37,15 +37,6 @@ const NO_INFORMATION = /^No se encontró información relacionada con\s?la guía
 const MAINTENANCE = /Sitio temporalmente en Mantenimiento/i;
 // A firewall or bot check's page, which can come back with HTTP 200.
 const BLOCKED = /<title>\s*(?:Request Rejected|Access Denied|Web Page Blocked|Attention Required|Just a moment)|requested URL was rejected|_cf_chl_opt|cf-turnstile|FortiGuard|FortiWeb|incapsula|Incident ID/i;
-// States wholly on central time, UTC−6 all year since Mexico dropped summer
-// time in 2022, by the abbreviation the tracker prints after an office, with
-// its accents, dots and spaces removed. Offices elsewhere, in states with
-// several zones, and abroad keep their wall clocks, but for a post whose
-// clock the tracker shifts (`correosDeMexicoForeignClock`).
-const CENTRAL_STATES = new Set(['ags', 'camp', 'chis', 'cdmx', 'df', 'col', 'dgo', 'gto', 'gro', 'hgo', 'jal', 'mex', 'edomex',
-  'mich', 'mor', 'oax', 'pue', 'qro', 'slp', 'tab', 'tlax', 'ver', 'yuc', 'zac']);
-// Mexico City's own names, which the tracker can print without a comma before them.
-const CAPITAL = new Set(['cdmx', 'df']);
 
 /** Correos de México's tracker follows S10 item codes: its own, ending MX, and those other posts send to Mexico. */
 export function normalizeCorreosDeMexicoNumber(raw: string): string {
@@ -202,29 +193,11 @@ export function firstSequence(scans: readonly CorreosDeMexicoScan[]): number {
   return Math.min(...scans.map(scan => scan.sequence));
 }
 
-/** Whether an office's scans are on central time: its state, after the last comma, is wholly on it. */
-function onCentralTime(location: string): boolean {
-  const comma = location.lastIndexOf(',');
-  const tail = comma >= 0 ? location.slice(comma + 1) : location.split(' ').at(-1) ?? '';
-  const state = tail.normalize('NFD').replace(/[\u0300-\u036f.\s]/g, '').toLowerCase();
-  return CENTRAL_STATES.has(state) && (comma >= 0 || CAPITAL.has(state));
-}
-
-/**
- * When the scan happened: on Mexico City's clock for an office on central time, on a foreign post's
- * own for one the tracker shows shifted, else as a local wall clock.
- */
+/** When the scan happened: on the clock `correosDeMexicoClock` chooses, else as a local wall clock. */
 function clockOf(scan: CorreosDeMexicoScan, colombianRoute: boolean): Pick<CarrierEvent, 'time'> & { local_time?: string } {
-  const foreign = correosDeMexicoForeignClock(scan.location, scan.wall, colombianRoute);
-  if (foreign) {
-    const placed = zonedTime(foreign.wall, "yyyy-MM-dd'T'HH:mm:ss", foreign.zone);
-    if (placed?.iso.startsWith(foreign.wall)) return { time: placed.iso };
-  }
-  if (onCentralTime(scan.location)) {
-    const placed = zonedTime(scan.wall, "yyyy-MM-dd'T'HH:mm:ss", ZONE);
-    if (placed?.iso.startsWith(scan.wall)) return { time: placed.iso };
-  }
-  return { local_time: scan.wall };
+  const clock = correosDeMexicoClock(scan.location, scan.wall, colombianRoute);
+  const placed = clock ? zonedTime(clock.wall, "yyyy-MM-dd'T'HH:mm:ss", clock.zone) : null;
+  return clock && placed?.iso.startsWith(clock.wall) ? { time: placed.iso } : { local_time: scan.wall };
 }
 
 /**

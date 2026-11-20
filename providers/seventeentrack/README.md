@@ -162,6 +162,12 @@ carrier.
   clock. A row is read on the clock of the place it names (`Town / UF`), or its state's when the
   town is not found; one with no place keeps its wall clock in `local_time`, as the
   [Anjun adapter](../../carriers/anjun/README.md) gives every scan.
+- Mexico Post's leg (carrier key 13141) reads the digits Correos de México's tracker shows as
+  UTC: `time_utc` keeps them, and `time_raw` and `time_iso` show them six hours earlier under
+  `-06:00`, the tracker's own rows six hours later. A row is read from `time_utc`'s digits as the
+  [Correos de México adapter](../../carriers/correos-de-mexico/README.md) reads its tracker: an
+  office on central time on Mexico City's clock, 4-72's offices on Colombia's, any other keeping
+  them in `local_time`.
 - Correios Brazil's leg (carrier key 2151) places the sending post's posting and its office of
   exchange in that post's country, as `CN`, and labels that post's wall clock with Brasília's
   `-03:00`: so read, the posting came eleven hours after China Post's own acceptance. A row placed
