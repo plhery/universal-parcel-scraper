@@ -5012,5 +5012,11 @@
     "pattern": "^(?:S[0-9]{9}|(?:SHA|ANR)[0-9]{8,9})$",
     "kind": "open",
     "reason": "MyJAS recognizes these Blue World Line house bills and displays native JAS shipment IDs. Detection does not offer JAS Worldwide."
+  },
+  {
+    "carrier": "itc-delivery",
+    "pattern": "^D[0-9]{7}$",
+    "kind": "open",
+    "reason": "Legacy ITC Delivery tracking pages print these D-prefixed invoice references. Detection does not offer ITC Delivery."
   }
 ]

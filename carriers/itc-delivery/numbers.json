@@ -1,5 +1,61 @@
 {
   "carrier": "itc-delivery",
-  "gap": "No public page shows a whole ITC Delivery number.",
-  "records": []
+  "records": [
+    {
+      "number": "D1296248",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231201215433id_/https://itcdelivery.com/tracking-details-d1296248/",
+        "date": "2023-12-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "ITC Delivery appliance delivery",
+        "reportedRole": "invoice number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The carrier's archived tracking page displays the exact uppercase invoice number. The current widget requires the delivery ZIP and verification, so no live lookup was submitted."
+    },
+    {
+      "number": "D1805636",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240718134946id_/https://www.itcdelivery.com/tracking-details-d1805636/",
+        "date": "2024-07-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "ITC Delivery appliance delivery",
+        "reportedRole": "invoice number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The carrier's archived tracking page displays the exact uppercase invoice number. The current widget requires the delivery ZIP and verification, so no live lookup was submitted."
+    }
+  ]
 }
