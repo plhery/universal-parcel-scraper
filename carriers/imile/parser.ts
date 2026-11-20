@@ -162,6 +162,23 @@ function readFirstReceipt(events: readonly CarrierEvent[]): void {
   if (first?.provider_code === RECEIPT && first.stage === 'in_transit') first.stage = 'accepted';
 }
 
+// The end of an attempt: "Delivery attempt finished,return to Local logistics company warehouse.".
+const ATTEMPT_END = /^delivery attempt finished\b/i;
+
+/**
+ * Reads the end of an attempt after the driver's reason for it, a history newest first, as the
+ * same attempt: it keeps the failed attempt's stage rather than count as another.
+ */
+function readAttemptEnds(events: readonly CarrierEvent[]): void {
+  let previous: CarrierEvent | undefined;
+  for (const event of [...events].reverse()) {
+    if (ATTEMPT_END.test(event.description ?? '') && event.stage === 'failed_attempt' && previous?.stage === 'failed_attempt') {
+      event.stage_source = 'none';
+    }
+    if (event.stage) previous = event;
+  }
+}
+
 // Scans that take the parcel out to the recipient again, which end a return.
 const DELIVERY_RUN: ReadonlySet<string> = new Set(['out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'delivered']);
 
@@ -221,6 +238,7 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
   const newestFirst = (events[0]!.local_time as string) < (events.at(-1)!.local_time as string) ? events.reverse() : events;
   markReturnLeg(newestFirst, returnStarts);
   readFirstReceipt(newestFirst);
+  readAttemptEnds(newestFirst);
 
   const code = text(shipment, 'country', 8).toUpperCase();
   const country = Object.hasOwn(COUNTRIES, code) ? COUNTRIES[code] : undefined;

@@ -171,6 +171,18 @@ describe('iMile HTTP adapter', () => {
     expect(upTo('Delivery attempt finished').expected_delivery).toBeNull();
   });
 
+  it('reads the end of an attempt after the driver’s reason as that attempt, and alone as one', () => {
+    const upTo = (content: string, change: (rows: Row[]) => void = () => {}) => parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos = shipment.trackInfos.slice(shipment.trackInfos.findIndex((row) => String(row.content).startsWith(content)));
+      change(shipment.trackInfos);
+    }), DELIVERED);
+    const after = upTo('Delivery attempt finished');
+    expect(after).toMatchObject({ current_stage: 'failed_attempt', last_status_text: 'Delivery attempt finished,return to Local logistics company warehouse.' });
+    expect(after.events!.slice(0, 2).map((event) => event.stage_source)).toEqual(['none', 'carrier_map']);
+    const alone = upTo('Delivery attempt finished', (rows) => rows.splice(1, 1));
+    expect(alone.events![0]).toMatchObject({ stage: 'failed_attempt', stage_source: 'carrier_map' });
+  });
+
   it('keeps the delivery and who took it, without the driver’s phone, its proof or the repeated scan', () => {
     const result = parseImile(fixture('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
@@ -182,6 +194,7 @@ describe('iMile HTTP adapter', () => {
       ['1003', 'out_for_delivery', 'Our delivery associate is out for delivery.'],
       // A delivery day booked moves nothing.
       ['1003', null, 'Shipment is scheduled to [2026-05-20].'],
+      // The attempt's end after the driver's reason is the same attempt.
       ['1003', 'failed_attempt', 'Delivery attempt finished,return to Local logistics company warehouse.'],
       ['1003', 'failed_attempt', 'User not at home'],
       ['1003', 'out_for_delivery', 'Our delivery associate is out for delivery.'],

@@ -93,7 +93,9 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   delivered. A flight booked for the parcel, with its planned clocks, is still to come: a row that
   only books one is left out, and a scan it follows keeps its own words. Some scans come without a
   code. "Traffic, Strike, Bad weather" is a failed attempt on a delivery run and a delay under In
-  Transit, before the parcel reaches its delivery office.
+  Transit, before the parcel reaches its delivery office. The end of an attempt ("Delivery attempt
+  finished") after the driver's reason is that attempt, not another, and keeps its stage; alone
+  it is the failed attempt.
 - Delivery runs lose the driver's phone, and Brazilian deliveries and returns lose iMile's
   support contacts. A delivery keeps who took the parcel in its wording, and the delivery scan's
   receiver ("Self", "Family", a name) is the signatory. A receiver type naming where the parcel
