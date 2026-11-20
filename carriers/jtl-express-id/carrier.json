@@ -1,0 +1,57 @@
+{
+  "id": "jtl-express-id",
+  "displayName": "JTL Express",
+  "aliases": [
+    "PT Jagad Total Logistic Express"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#FF0000"
+  },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "jtl-express-id",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://www.jtlexpress.co.id/Tracking",
+    "searchUrl": "https://www.jtlexpress.co.id/Tracking",
+    "canaryUrl": "https://www.jtlexpress.co.id/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "destination",
+      "service_name",
+      "eta",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "service_name"
+    ],
+    "discarded": [
+      "destination",
+      "eta",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

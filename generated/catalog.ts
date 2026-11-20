@@ -35883,6 +35883,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "jtl-express-id": {
+    "displayName": "JTL Express",
+    "color": "#FF0000",
+    "aliases": [
+      "PT Jagad Total Logistic Express"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jtl-express-id",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jtlexpress.co.id/Tracking",
+    "trackingUrlTemplate": "https://www.jtlexpress.co.id/Tracking",
+    "trackingSearchUrl": "https://www.jtlexpress.co.id/Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jumppoint": {
     "displayName": "Jumppoint",
     "color": "#0f4ae1",
@@ -69073,6 +69095,7 @@ export const CARRIER_IDS = [
   "jrs-express",
   "jrt",
   "js-express",
+  "jtl-express-id",
   "jumppoint",
   "jumppoint-international",
   "junfeng-international",
@@ -71046,6 +71069,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
   "js-express": ["js-express-1","js-express-jch"],
+  "jtl-express-id": [],
   "jumppoint": ["jumppoint-1"],
   "jumppoint-international": ["jumppoint-international-1"],
   "junfeng-international": [],

@@ -6124,5 +6124,11 @@
     "pattern": "^\\d{10}$",
     "kind": "collision",
     "reason": "Ten-digit ACPL Cargo GC numbers share their shape with many carriers' numeric waybills, so the shape cannot name ACPL Cargo."
+  },
+  {
+    "carrier": "jtl-express-id",
+    "pattern": "^[A-Z0-9]{2,12}\\d{9}$",
+    "kind": "open",
+    "reason": "JTL Express resis, a branch code, a month and a serial, have no detection rule yet."
   }
 ]

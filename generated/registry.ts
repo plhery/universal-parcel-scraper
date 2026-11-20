@@ -485,6 +485,7 @@ import { adapter as jne } from '../carriers/jne/adapter.js';
 import { adapter as jordanPost } from '../carriers/jordan-post/adapter.js';
 import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
+import { adapter as jtlExpressId } from '../carriers/jtl-express-id/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
 import { adapter as jumppointInternational } from '../carriers/jumppoint-international/adapter.js';
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
@@ -1502,6 +1503,7 @@ export const REGISTRY: RegistryDefinition = {
     "jordan-post": jordanPost,
     "jrt": jrt,
     "js-express": jsExpress,
+    "jtl-express-id": jtlExpressId,
     "jumppoint": jumppoint,
     "jumppoint-international": jumppointInternational,
     "junfeng-international": junfengInternational,
@@ -2978,6 +2980,7 @@ export const REGISTRY: RegistryDefinition = {
     "jrs-express": "universal",
     "jrt": "jrt",
     "js-express": "js-express",
+    "jtl-express-id": "jtl-express-id",
     "jumppoint": "jumppoint",
     "jumppoint-international": "jumppoint-international",
     "junfeng-international": "junfeng-international",
