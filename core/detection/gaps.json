@@ -5864,5 +5864,10 @@
     "carrier": "exfreight",
     "kind": "open",
     "reason": "Exfresso’s public shipment references use ten generic digits. Select ExFreight explicitly."
+  },
+  {
+    "carrier": "sun-logistics",
+    "kind": "open",
+    "reason": "The observed Sun Logistics PRO consists of eight generic digits. Select Sun Logistics explicitly."
   }
 ]

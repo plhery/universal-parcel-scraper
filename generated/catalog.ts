@@ -56743,6 +56743,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "sun-logistics": {
+    "displayName": "Sun Logistics",
+    "color": "#ED652B",
+    "aliases": [
+      "Sun Logistics Express",
+      "Sun Logistics NYC"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sun-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://sunlogistics.com/",
+    "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/snle.pol/facts.htm?startpage=protrace&pronum={trackingNumber}",
+    "trackingSearchUrl": "https://sunlogistics.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sundarban-courier": {
     "displayName": "Sundarban Courier Service",
     "color": "#0b4c9f",
@@ -68720,6 +68743,7 @@ export const CARRIER_IDS = [
   "straightship",
   "suhu",
   "sumxpress",
+  "sun-logistics",
   "sundarban-courier",
   "suning-logistics",
   "super-parcel-track",
@@ -70658,6 +70682,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "straightship": ["straightship-1","straightship-2"],
   "suhu": [],
   "sumxpress": [],
+  "sun-logistics": [],
   "sundarban-courier": [],
   "suning-logistics": [],
   "super-parcel-track": [],
