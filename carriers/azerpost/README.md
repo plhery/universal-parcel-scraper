@@ -20,7 +20,9 @@ error.
 
 The tracking page's script asks reCAPTCHA v3 for a token, takes a CSRF token from `/api/get-csrf`,
 and posts the number with both to `/api/get-package/{language}`, which answers the item's events
-as JSON. A lookup without a browser's reCAPTCHA token is not possible.
+as JSON. It gave the same "Tracking number not found" reply without a token, with a made-up one
+and with a browser's real one for every public number tried, the page's own example included. No
+current public Azerpost number is known to show what a found item needs.
 
 ## Testing
 
