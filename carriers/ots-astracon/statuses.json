@@ -1,0 +1,13 @@
+{
+  "carrier": "ots-astracon",
+  "entries": [
+    { "wording": "Received the Order", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "wording": "Booking Confirmed", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The booking document was delivered before physical collection." },
+    { "wording": "Cargo Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "wording": "FCL arrived at Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A full container passed the terminal gate before departure." },
+    { "wording": "LCL arrived at CFS", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The consolidation depot issued an interim receipt." },
+    { "wording": "Shipped On Board", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Cargo Customs Cleared", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Import clearance was complete and the shipment continued toward delivery." },
+    { "wording": "Delivery Complete", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

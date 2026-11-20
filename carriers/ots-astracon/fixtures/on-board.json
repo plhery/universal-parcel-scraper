@@ -1,0 +1,36 @@
+[
+  {
+    "entityType": "IJobShipment",
+    "data": {
+      "HOUSEBILLNUMBER": "SE260401571",
+      "SHIPMENTID": "SE260401571BRE"
+    },
+    "events": [
+      {
+        "eventTimeUtc": "2026-10-11T17:28:48.383Z",
+        "isEstimate": false,
+        "eventDescription": "Shipped On Board"
+      },
+      {
+        "eventTimeUtc": "2026-10-07T05:17:00Z",
+        "isEstimate": false,
+        "eventDescription": "FCL arrived at Port"
+      },
+      {
+        "eventTimeUtc": "2026-09-30T06:00:00Z",
+        "isEstimate": false,
+        "eventDescription": "Cargo Picked up"
+      },
+      {
+        "eventTimeUtc": "2026-09-15T08:47:25.823Z",
+        "isEstimate": false,
+        "eventDescription": "Booking Confirmed"
+      },
+      {
+        "eventTimeUtc": "2026-09-08T11:05:38.757Z",
+        "isEstimate": false,
+        "eventDescription": "Received the Order"
+      }
+    ]
+  }
+]

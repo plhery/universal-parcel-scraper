@@ -43552,6 +43552,28 @@
       }
     ]
   },
+  "ots-astracon": {
+    "displayName": "O.T.S. ASTRACON",
+    "color": "#00427a",
+    "aliases": [
+      "OTS Astracon",
+      "O.T.S. Astracon International Air + Sea Forwarder",
+      "ASQR"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ots-astracon"
+    },
+    "canaryUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "trackingSearchUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ots-chile": {
     "displayName": "OTS Chile",
     "color": "#ffc100",
