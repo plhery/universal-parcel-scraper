@@ -34261,6 +34261,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "joma-logistics": {
+    "displayName": "JOMA Logistics NYC",
+    "color": "#07364a",
+    "aliases": [
+      "JOMA Logistics"
+    ],
+    "countries": [
+      "TJ",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "joma-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://jomalogisticsnyc.com/track",
+    "trackingUrlTemplate": "https://jomalogisticsnyc.com/track",
+    "trackingSearchUrl": "https://jomalogisticsnyc.com/track",
+    "helpUrl": "https://jomalogisticsnyc.com/rules",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "joom-logistics": {
     "displayName": "Joom Logistics",
     "color": "#2d2f43",
@@ -66328,6 +66352,7 @@ export const CARRIER_IDS = [
   "jiufang",
   "jlog",
   "jne",
+  "joma-logistics",
   "joom-logistics",
   "jordan-post",
   "jp-home",
@@ -68196,6 +68221,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jiufang": [],
   "jlog": [],
   "jne": ["jne-1"],
+  "joma-logistics": [],
   "joom-logistics": [],
   "jordan-post": ["jordan-post-s10"],
   "jp-home": [],

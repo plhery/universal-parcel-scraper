@@ -423,6 +423,7 @@ import { adapter as jiayang } from '../carriers/jiayang/adapter.js';
 import { adapter as jifan } from '../carriers/jifan/adapter.js';
 import { adapter as jitsu } from '../carriers/jitsu/adapter.js';
 import { adapter as jne } from '../carriers/jne/adapter.js';
+import { adapter as jomaLogistics } from '../carriers/joma-logistics/adapter.js';
 import { adapter as jordanPost } from '../carriers/jordan-post/adapter.js';
 import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
@@ -1318,6 +1319,7 @@ export const REGISTRY: RegistryDefinition = {
     "jifan": jifan,
     "jitsu": jitsu,
     "jne": jne,
+    "joma-logistics": jomaLogistics,
     "jordan-post": jordanPost,
     "jrt": jrt,
     "js-express": jsExpress,
@@ -2675,6 +2677,7 @@ export const REGISTRY: RegistryDefinition = {
     "jiufang": "universal",
     "jlog": "universal",
     "jne": "jne",
+    "joma-logistics": "joma-logistics",
     "joom-logistics": "universal",
     "jordan-post": "jordan-post",
     "jp-home": "universal",

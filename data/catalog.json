@@ -34257,6 +34257,30 @@
       }
     ]
   },
+  "joma-logistics": {
+    "displayName": "JOMA Logistics NYC",
+    "color": "#07364a",
+    "aliases": [
+      "JOMA Logistics"
+    ],
+    "countries": [
+      "TJ",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "joma-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://jomalogisticsnyc.com/track",
+    "trackingUrlTemplate": "https://jomalogisticsnyc.com/track",
+    "trackingSearchUrl": "https://jomalogisticsnyc.com/track",
+    "helpUrl": "https://jomalogisticsnyc.com/rules",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "joom-logistics": {
     "displayName": "Joom Logistics",
     "color": "#2d2f43",

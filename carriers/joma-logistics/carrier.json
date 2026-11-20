@@ -1,0 +1,55 @@
+{
+  "id": "joma-logistics",
+  "displayName": "JOMA Logistics NYC",
+  "aliases": [
+    "JOMA Logistics"
+  ],
+  "region": {
+    "countries": [
+      "TJ",
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#07364a"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "joma-logistics",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://jomalogisticsnyc.com/track",
+    "searchUrl": "https://jomalogisticsnyc.com/track",
+    "canaryUrl": "https://jomalogisticsnyc.com/track",
+    "shows": [
+      "status",
+      "history",
+      "scheduled_departure_date"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "scheduled_departure_date"
+    ],
+    "unavailable": [
+      "scan_clock_times",
+      "individual_parcel_delivery"
+    ],
+    "helpUrl": "https://jomalogisticsnyc.com/rules"
+  },
+  "links": [],
+  "detection": []
+}

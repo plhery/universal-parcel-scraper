@@ -5515,5 +5515,11 @@
     "pattern": "^ASR[0-9]{5}$",
     "kind": "open",
     "reason": "Pochtai Asr's public tracking example returns its own history. Detection currently offers other carriers for the normalized number."
+  },
+  {
+    "carrier": "joma-logistics",
+    "pattern": "^JL[0-9]{13}$",
+    "kind": "open",
+    "reason": "The carrier's public invoice example returns a dated departure history. Detection does not offer JOMA for the normalized departure reference."
   }
 ]

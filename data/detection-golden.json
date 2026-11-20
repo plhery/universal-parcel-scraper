@@ -95424,6 +95424,12 @@
     "candidates": []
   },
   {
+    "input": "JL-10232026-00017",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "JL056759260IN",
     "carrier": "india-post",
     "confidence": "high",
