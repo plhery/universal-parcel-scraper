@@ -1,0 +1,89 @@
+{
+  "carrier": "hmm",
+  "records": [
+    {
+      "number": "HDMUTSNM63064100",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/hmm-nuri/9869162",
+        "date": "2026-10-21",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of HMM NURI's call at Oakland gives this HMM bill under its HDMU carrier code. HMM's tracker returns its one container from Xingang through Busan to Oakland, returned empty."
+    },
+    {
+      "number": "HDMUSHAZ3PM78800",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/hmm-victory/9637258",
+        "date": "2026-10-04",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of HMM VICTORY's call at Newark gives this HMM bill under its HDMU carrier code. HMM's tracker returns its two containers from Shanghai through Manzanillo, Panama, to New York, both returned empty."
+    },
+    {
+      "number": "HDMUNBOM63007200",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/hmm-daon/9869227",
+        "date": "2026-11-11",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of HMM DAON's call at Oakland gives this HMM bill under its HDMU carrier code. HMM's tracker returns its container from Ningbo, berthed at Oakland."
+    },
+    {
+      "number": "HDMUTAOM77162500",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/hmm-topaz/9955284",
+        "date": "2026-11-10",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of HMM TOPAZ's call at Los Angeles gives this HMM bill under its HDMU carrier code. HMM's tracker returns its container from Qingdao, departed Busan for Los Angeles."
+    }
+  ]
+}

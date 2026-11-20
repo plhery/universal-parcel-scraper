@@ -30083,6 +30083,26 @@
       }
     ]
   },
+  "hmm": {
+    "displayName": "HMM",
+    "color": "#f26522",
+    "aliases": [
+      "Hyundai Merchant Marine",
+      "HMM Co., Ltd."
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hmm",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
+    "trackingSearchUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "holisol": {
     "displayName": "Holisol",
     "color": "#13467b",
