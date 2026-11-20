@@ -1,0 +1,31 @@
+{
+  "carrier": "don-mariano-express",
+  "entries": [
+    {
+      "wording": "CONFIRMADO",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The overall guide was confirmed. This is not a proof of delivery."
+    },
+    {
+      "wording": "✓ Confirmado",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "This badge marks an actual origin or destination depot scan."
+    },
+    {
+      "wording": "● Origen",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Stage applies when the depot scan is marked Confirmado."
+    },
+    {
+      "wording": "● Destino",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A confirmed depot scan can be an intermediate stop."
+    }
+  ]
+}

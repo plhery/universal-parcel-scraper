@@ -5844,5 +5844,10 @@
     "carrier": "pasha-hawaii",
     "kind": "open",
     "reason": "Equipment can change operators and the confirmed bare bill collides with other carriers. The guest tracker supports both with explicit selection."
+  },
+  {
+    "carrier": "don-mariano-express",
+    "kind": "open",
+    "reason": "The numeric guide offers no distinctive routing evidence. More confirmed tracking-code series are needed to evaluate the FLET format."
   }
 ]

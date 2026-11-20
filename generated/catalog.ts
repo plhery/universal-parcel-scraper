@@ -20254,6 +20254,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "don-mariano-express": {
+    "displayName": "Don Mariano Express",
+    "color": "#17654A",
+    "aliases": [
+      "Don Mariano Express S.R.L.",
+      "Rutas Misioneras"
+    ],
+    "countries": [
+      "AR"
+    ],
+    "selectable": true,
+    "timezone": "America/Argentina/Buenos_Aires",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "don-mariano-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.don-mariano.com/",
+    "trackingUrlTemplate": "https://www.don-mariano.com/#tracking",
+    "trackingSearchUrl": "https://www.don-mariano.com/#tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dongdu": {
     "displayName": "Dongdu Logistics",
     "color": "#5b9a68",
@@ -67552,6 +67575,7 @@ export const CARRIER_IDS = [
   "domex",
   "domex-do",
   "domina",
+  "don-mariano-express",
   "dongdu",
   "dongjin-shipping",
   "doobalhero",
@@ -69486,6 +69510,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "domex": [],
   "domex-do": [],
   "domina": [],
+  "don-mariano-express": [],
   "dongdu": ["dongdu-1"],
   "dongjin-shipping": [],
   "doobalhero": [],

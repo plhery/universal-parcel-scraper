@@ -28869,6 +28869,12 @@
     ]
   },
   {
+    "input": "201780",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "2018041910099660000599",
     "carrier": "unknown",
     "confidence": "low",
@@ -28885,6 +28891,12 @@
       "apc-overnight",
       "austrian-post"
     ]
+  },
+  {
+    "input": "201808",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "201839638567",
@@ -91996,6 +92008,12 @@
     "candidates": [
       "cycloon"
     ]
+  },
+  {
+    "input": "FLET-0040992405-W015",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "FLOP8885131523",
