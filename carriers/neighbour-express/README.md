@@ -1,25 +1,24 @@
 # Neighbour Express
 
-Neighbour Express parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads Neighbour Express's return-label history through its public guest page.
+The page obtains its own reCAPTCHA v3 token and posts the whole reference. A compatible
+TRAWL capture helper reads the browser's decoded JSON and returns selected tracking fields.
+The response must identify exactly one matching return label. Scan clocks keep each event's
+stated offset, including when it differs from the destination's seasonal clock.
 
-Neighbour Express is a Canadian last-mile courier with its own drop-off stores. Shoppers
-returning AliExpress and SHEIN orders print its return labels and drop the parcels at one of
-those stores.
+Return references beginning with NR, or N with R as the sixth character, use this
+postcode-free route. Other shipment branches require the recipient's postcode and remain
+with enabled providers. No number rule or HTTP recognizer claims these overlapping shapes.
+Public samples and their sources are in [numbers.json](numbers.json).
 
-## Numbers
-
-Its return label numbers start with NR; the AliExpress return page shows them masked, ending
-in AE. The tracker sends numbers that start with N and have R as their sixth character to one
-lookup and every other number to a second lookup that also takes the recipient's postal code.
-No public source shows a whole number, so the corpus is empty and no rule claims a shape.
-
-## Links
-
-`neighbourexpress.com/track` and `neighbourexpress.ca/track` with `trackingNumber` or `no`
-open one parcel. Numbers on the second lookup also need the postal code, which no link
-carries.
+A rejected v3 score asks the native page for an AJ image challenge. The adapter can try one
+fresh guest context while its budget holds another read; an unfinished check remains a
+challenge. The AJ slider is not solved by this adapter. Empty or unconfirmed histories do
+not establish that a parcel is missing. Malformed replies, transport failures and rate limits
+stay distinct. Contacts, free-form notes, signatures, cookies and verification state are omitted.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`npm run test:carriers:live -- carriers/neighbour-express`, with
+`NEIGHBOUR_TRACKING_NUMBER` and optionally `NEIGHBOUR_UNKNOWN_NUMBER` supplied outside Git.
+Use TRAWL with the Neighbour Express decoded capture helper.

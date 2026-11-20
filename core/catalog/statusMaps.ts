@@ -14,6 +14,7 @@ import { statusMap as flechacarga } from '../../carriers/flechacarga/status.js';
  * universal providers, whose map is the reading they give a scan
  * (`providers/status.ts`).
  */
+import { statusMap as neighbourExpress } from '../../carriers/neighbour-express/status.js';
 import { statusMap as theDeliveryGroup } from '../../carriers/the-delivery-group/status.js';
 import { statusMap as thabitLogistics } from '../../carriers/thabit-logistics/status.js';
 import { statusMap as tramaco } from '../../carriers/tramaco/status.js';
@@ -858,6 +859,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bh-posta': bhPosta,
   'hellmann': hellmannStatus,
   'honducor': honducorStatus,
+  'neighbour-express': neighbourExpress,
   'xls-futar': xlsFutarStatus,
   'the-delivery-group': theDeliveryGroup,
   'thabit-logistics': thabitLogistics,

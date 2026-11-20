@@ -16,18 +16,36 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "neighbour-express",
+    "steps": [
+      "trawl"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
-    "url": "https://www.neighbourexpress.com/track?trackingNumber={trackingNumber}",
-    "searchUrl": "https://www.neighbourexpress.com/track",
-    "canaryUrl": "https://www.neighbourexpress.com/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "url": "https://neighbourexpress.com/track?no={trackingNumber}",
+    "searchUrl": "https://neighbourexpress.com/track",
+    "canaryUrl": "https://neighbourexpress.com/track",
+    "shows": [
+      "Return tracking reference",
+      "Shipment milestones",
+      "Scan clocks and offsets"
+    ],
+    "scraped": [
+      "Return tracking reference",
+      "Shipment milestones",
+      "Scan clocks and offsets"
+    ],
+    "discarded": [
+      "Recipient details",
+      "Free-form notes",
+      "Verification state"
+    ],
+    "unavailable": [
+      "Expected delivery"
+    ]
   },
   "links": [
     {

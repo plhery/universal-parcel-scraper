@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex and Magic Trans. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -41,6 +41,12 @@ number with the token back to the same address. The helper aborts other lookups 
 maps and analytics, captures that lookup alone, and passes on the status, the dated rows, the
 transport and delivery kinds and the terminals' cities from the answered page, without weights,
 cargo names, payment, addresses or phones.
+
+Neighbour Express opens the return-label guest page in a fresh context and lets its native
+reCAPTCHA v3 callback submit the whole reference. The helper captures that single POST and
+reads the browser's decoded response, preserving its native verification refusal or selected
+identity, milestones and stated offsets. Contacts, notes, verification tokens, cookies and page
+HTML remain in the context. It does not solve the separate AJ image challenge.
 
 Viettel Post opens its public guest form, completes its native reCAPTCHA and lets the page
 sign the request with its fresh browser key. The capture binds the whole waybill and retains

@@ -41339,11 +41339,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "neighbour-express"
     },
-    "canaryUrl": "https://www.neighbourexpress.com/track",
-    "trackingUrlTemplate": "https://www.neighbourexpress.com/track?trackingNumber={trackingNumber}",
-    "trackingSearchUrl": "https://www.neighbourexpress.com/track",
+    "canaryUrl": "https://neighbourexpress.com/track",
+    "trackingUrlTemplate": "https://neighbourexpress.com/track?no={trackingNumber}",
+    "trackingSearchUrl": "https://neighbourexpress.com/track",
     "linkRules": [
       {
         "domains": [

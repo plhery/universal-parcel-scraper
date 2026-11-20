@@ -25,7 +25,7 @@
           "aramex-nz"
         ]
       },
-      "note": "The customer names Neighbour Express and reproduces this exact return tracking reference in their BBB complaint. The current lookup route for this form of reference requires a postcode, which the report does not give."
+      "note": "The customer names Neighbour Express and publishes the whole return tracking reference. Its return-label guest route requires browser verification but no recipient postcode."
     }
   ]
 }

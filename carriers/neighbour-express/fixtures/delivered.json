@@ -1,0 +1,56 @@
+{
+  "code": "0",
+  "msg": "SYNTHETIC PRIVATE NOTICE",
+  "data": {
+    "contact": "SYNTHETIC PRIVATE CONTACT",
+    "results": [
+      {
+        "trackno": "NR746193820571",
+        "status": "success",
+        "recipient": "SYNTHETIC PRIVATE RECIPIENT",
+        "data": [
+          {
+            "status": 1,
+            "statusText": "Label Created",
+            "time": "2026-01-10 10:19:10",
+            "timezone": "UTC-05:00",
+            "remark": "SYNTHETIC PRIVATE NOTE",
+            "signature": "SYNTHETIC PRIVATE SIGNATURE"
+          },
+          {
+            "status": 2,
+            "statusText": "Shipment received by NB Store",
+            "time": "2026-01-11 10:19:11",
+            "timezone": "UTC-05:00",
+            "remark": "SYNTHETIC PRIVATE NOTE",
+            "signature": "SYNTHETIC PRIVATE SIGNATURE"
+          },
+          {
+            "status": 3,
+            "statusText": "In Transit",
+            "time": "2026-01-12 10:19:12",
+            "timezone": "UTC-05:00",
+            "remark": "SYNTHETIC PRIVATE NOTE",
+            "signature": "SYNTHETIC PRIVATE SIGNATURE"
+          },
+          {
+            "status": 4,
+            "statusText": "Arrive warehouse",
+            "time": "2026-01-13 10:19:13",
+            "timezone": "UTC-05:00",
+            "remark": "SYNTHETIC PRIVATE NOTE",
+            "signature": "SYNTHETIC PRIVATE SIGNATURE"
+          },
+          {
+            "status": 10,
+            "statusText": "Delivered",
+            "time": "2026-01-14 10:19:14",
+            "timezone": "UTC-05:00",
+            "remark": "SYNTHETIC PRIVATE NOTE",
+            "signature": "SYNTHETIC PRIVATE SIGNATURE"
+          }
+        ]
+      }
+    ]
+  }
+}
