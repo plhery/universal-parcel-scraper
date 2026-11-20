@@ -43046,6 +43046,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "oocl": {
+    "displayName": "OOCL",
+    "color": "#00205b",
+    "aliases": [
+      "Orient Overseas Container Line"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "oocl",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx",
+    "trackingSearchUrl": "https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "oohpod": {
     "displayName": "OOHPod",
     "color": "#564b51",
@@ -66327,6 +66346,7 @@ export const CARRIER_IDS = [
   "onlog-express",
   "ontask-express",
   "onway-ge",
+  "oocl",
   "oohpod",
   "opt-nc",
   "optima-overnight",
@@ -68190,6 +68210,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "onlog-express": ["onlog-express-aa"],
   "ontask-express": [],
   "onway-ge": [],
+  "oocl": [],
   "oohpod": [],
   "opt-nc": [],
   "optima-overnight": ["optima-overnight-1"],

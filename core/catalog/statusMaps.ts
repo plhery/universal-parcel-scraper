@@ -540,6 +540,7 @@ import { statusMap as omniva } from '../../carriers/omniva/status.js';
 import { statusMap as oneWorldExpress } from '../../carriers/one-world-express/status.js';
 import { statusMap as onex } from '../../carriers/onex/status.js';
 import { statusMap as ontrac } from '../../carriers/ontrac/status.js';
+import { statusMap as oocl } from '../../carriers/oocl/status.js';
 import { statusMap as optimaOvernight } from '../../carriers/optima-overnight/status.js';
 import { statusMap as orlenPaczka } from '../../carriers/orlen-paczka/status.js';
 import { statusMap as osmWorldwide } from '../../carriers/osm-worldwide/status.js';
@@ -947,7 +948,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'next-level-delivery': nextLevelDelivery, 'nhat-tin': nhatTin, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, 'no-limit': noLimit, noest, 'norsk-global': norskGlobal,
   northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocs-ana': ocsAna,
   'old-dominion': oldDominion, 'olva-courier': olvaCourier, omgo, omniva,
-  'one-world-express': oneWorldExpress, onex, ontrac, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic,
+  'one-world-express': oneWorldExpress, onex, ontrac, oocl, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress, peddler,
   'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,

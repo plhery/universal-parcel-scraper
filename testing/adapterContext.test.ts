@@ -93,6 +93,7 @@ const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   loggi: ['service'], 'azul-cargo': ['service'], 'posta-moldovei': ['service'], 'sf-express': ['service'], swiftx: ['service'], usps: ['service'], 'emirates-post': ['service'], '17TRACK': ['service'],
   'trendyol-express': ['service'],
   'tusk-logistics': ['chromium'],
+  oocl: ['chromium'],
   veho: ['service'],
   mandae: ['service'],
   yunexpress: ['service', 'chromium'], 'Postal Ninja': ['service', 'chromium'],

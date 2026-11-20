@@ -2592,6 +2592,12 @@
     "reason": "Shipper references that OnTrac's tracker resolves to the parcel's own number. They are not tracking numbers, so no rule points them to OnTrac; the adapter takes them when the user picks OnTrac or opens an OnTrac link."
   },
   {
+    "carrier": "oocl",
+    "pattern": "^OOLU\\d{10}$",
+    "kind": "open",
+    "reason": "Import records list OOCL master bills as OOLU, its carrier code, and the booking's ten digits; OOCL's tracker returns each sample. Detection does not offer OOCL."
+  },
+  {
     "carrier": "opt-nc",
     "pattern": "^\\d[A-Z]\\d{11}$",
     "kind": "by_design",
