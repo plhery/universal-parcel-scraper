@@ -1926,6 +1926,27 @@
     ]
   },
   {
+    "input": "00370730259112316891",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bring-posten",
+      "swiss-post-cargo",
+      "postnord",
+      "usps",
+      "nz-post"
+    ],
+    "preferred": [
+      "bring-posten"
+    ],
+    "asked": [
+      "bring-posten",
+      "swiss-post-cargo",
+      "postnord",
+      "nz-post"
+    ]
+  },
+  {
     "input": "00373325384170139755",
     "carrier": "unknown",
     "confidence": "low",
