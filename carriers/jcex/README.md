@@ -37,7 +37,8 @@ Tracked through the lookup its tracking page makes.
   handover rows seen are transit. So are the delivering partner's collection and its receipt at
   each transit point, which it files as a pick-up although JCEX took the parcel in long before. A
   pick-up on the first scan, before anything moved the parcel, is its receipt in China and reads as
-  the acceptance. Rows seen under a code too broad for them, such as
+  the acceptance; any receipt read as an acceptance after the first scan that moved the parcel is
+  a hub's, in transit. Rows seen under a code too broad for them, such as
   Colissimo's failed visit under `Exception_Other`, are mapped one by one.
 - Rows come newest first, but JCEX puts its own milestone, such as that handover, on top. The
   rows are ordered by their clocks, and rows at one time keep the reply's order.

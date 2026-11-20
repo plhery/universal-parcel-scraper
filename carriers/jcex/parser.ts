@@ -277,6 +277,9 @@ function shipmentFor(data: unknown, number: string): Record<string, unknown> {
  * city and postcode, the postcodes in the scans' places, the shipment's
  * reference and its other numbers are not read.
  */
+/** The stages that show the parcel has moved. */
+const MOVED = new Set<Stage>(['accepted', 'in_transit', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'delivered', 'returned']);
+
 export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): CarrierResult {
   const number = normalizeJcexNumber(raw);
   if (!isRecord(payload)) throw new SchemaError(PROVIDER, 'JCEX returned an invalid envelope');
@@ -311,8 +314,8 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
   // clocks, and rows at one time keep the reply's order. A delivering partner's scan can come
   // twice, in its short words and again with its sentence after " -> ": the fuller line stays,
   // whatever code JCEX gave each line's words.
-  const events = withoutShortenedScans(projected.filter((scan) => !ahead.includes(scan))
-    .sort((a, b) => b.order - a.order || a.index - b.index).map(({ event }) => event), ' -> ', { anyCode: true });
+  const sorted = projected.filter((scan) => !ahead.includes(scan)).sort((a, b) => b.order - a.order || a.index - b.index);
+  const events = withoutShortenedScans(sorted.map(({ event }) => event), ' -> ', { anyCode: true });
   // The rows written ahead are named, so that a provider's copies of them are not taken for scans.
   if (!events.length) {
     throw new NoHistoryError(PROVIDER, 'JCEX has no scans for the waybill yet', ahead.length
@@ -324,6 +327,11 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
   // code reads as transit; on the first scan, before anything moved the parcel, it is the receipt in China: the acceptance.
   const first = [...events].reverse().find((event) => event.stage && event.stage !== 'registered' && event.stage !== 'pending');
   if (first?.provider_code === 'InTransit_PickedUp' && first.stage === 'in_transit') first.stage = 'accepted';
+  // A receipt read as an acceptance after the first scan that moved the parcel, such as a hub's
+  // under the pickup code a day after the warehouse sent it out, is that hub's: in transit.
+  const orderOf = new Map(sorted.map(({ event, order }) => [event, order]));
+  const moved = Math.min(...events.filter((event) => event.stage && MOVED.has(event.stage as Stage)).map((event) => orderOf.get(event)!));
+  for (const event of events) if (event.stage === 'accepted' && orderOf.get(event)! > moved) event.stage = 'in_transit';
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

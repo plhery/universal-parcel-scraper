@@ -267,6 +267,21 @@ describe('JCEX HTTP adapter', () => {
     expect(result.events!.find((event) => event.description === 'Carrier received the shipment')?.stage).toBe('in_transit');
   });
 
+  it('reads a receipt under the pickup code a day after the warehouse sent the parcel out as transit', () => {
+    const result = parseJcex(changed('relayed', (content) => {
+      const departure = content.trackDetails.find((row) => row.eventDetailEn === 'Port of departure - Departure')!;
+      const row = (eventTime: string, platformEventCode: string, eventDetailEn: string) => ({
+        ...departure, eventTime, platformEventCode, eventDetailEn, eventDetailCn: eventDetailEn, location: 'shenzhen' });
+      content.trackDetails.push(
+        row('2026-09-16 07:58:34', 'InTransit_PickedUp', 'Has entered the warehouse'),
+        row('2026-09-16 07:58:34', 'InTransit_Other', 'Out warehouse'),
+        row('2026-09-17 11:21:09', 'InTransit_PickedUp', 'Arrive at the processing center'));
+    }), RELAYED, Date.parse('2026-10-01T00:00:00Z'));
+    const stage = (description: string) => result.events!.find((event) => event.description === description)?.stage;
+    expect([stage('Has entered the warehouse'), stage('Out warehouse'), stage('Arrive at the processing center')])
+      .toEqual(['accepted', 'in_transit', 'in_transit']);
+  });
+
   it("keeps the delivering partner's scan in its fuller words when JCEX lists it twice at one clock and place", () => {
     const result = parseJcex(changed('relayed', (content) => {
       const delivered = content.trackDetails.find((row) => row.eventDetailEn === 'Delivered')!;
