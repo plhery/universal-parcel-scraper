@@ -29,6 +29,10 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'airways-courier-in', number: '999999993',
+    route: /^https:\/\/airwayscourier\.co\.in\/Tracking_new\.aspx\?awb_no=999999993&type=w$/,
+    marker: /Incorrect Waybill\/Reference Number/,
+    forwarding: { notFound: /Incorrect Waybill\/Reference Number/ } },
   { carrier: 'intras-jp', number: '509699999999',
     route: /^https:\/\/intras\.co\.jp\/delivery\/tracking\?number=509699999999$/,
     marker: /에 대한 데이타가 없습니다/,

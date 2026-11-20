@@ -16,17 +16,36 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "airways-courier-in",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://airwayscourier.co.in/Tracking_new.aspx?awb_no={trackingNumber}&type=w",
     "searchUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
     "canaryUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "sender",
+      "recipient",
+      "phone",
+      "proof_of_delivery"
+    ],
     "unavailable": []
   },
   "links": [
