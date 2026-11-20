@@ -101424,6 +101424,17 @@
     ]
   },
   {
+    "input": "PNA5937988669",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "magyar-posta"
+    ],
+    "preferred": [
+      "magyar-posta"
+    ]
+  },
+  {
     "input": "PNAAA500000340017101000000",
     "carrier": "unknown",
     "confidence": "low",
@@ -101526,6 +101537,12 @@
     "asked": [
       "rl-carriers"
     ]
+  },
+  {
+    "input": "PPA78181363215",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "PQ0DK20000034530151002K",
