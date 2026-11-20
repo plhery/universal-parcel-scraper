@@ -7319,6 +7319,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "air-europa-cargo": {
+    "displayName": "Air Europa Cargo",
+    "color": "#005699",
+    "aliases": [
+      "Air Europa Air Cargo",
+      "Air Europa Líneas Aéreas Cargo",
+      "UX Cargo"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-europa-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.uxtracking.com/tracking.asp",
+    "trackingSearchUrl": "https://www.uxtracking.com/tracking.asp",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-star-xpress": {
     "displayName": "Air Star Xpress",
     "color": "#227337",
@@ -65562,6 +65585,7 @@ export const CARRIER_IDS = [
   "ahl-courier",
   "aics",
   "aiolos-courier",
+  "air-europa-cargo",
   "air-star-xpress",
   "airmee",
   "airpak-express",
@@ -67430,6 +67454,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ahl-courier": [],
   "aics": [],
   "aiolos-courier": [],
+  "air-europa-cargo": [],
   "air-star-xpress": [],
   "airmee": [],
   "airpak-express": [],

@@ -1,0 +1,53 @@
+{
+  "carrier": "air-europa-cargo",
+  "records": [
+    {
+      "number": "996 / 1314 6151",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.aics.gov.it/wp-content/uploads/2023/12/Relazione-Finale-Echo-2024.pdf",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "Air Europa master air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The air waybill in the report is confirmed by the carrier's Milan–Madrid–Havana tracking history."
+    },
+    {
+      "number": "996-12345675",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.uxtracking.com/tracking.asp",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Air Europa Cargo tracking form example",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "Submitting the carrier's preprinted examples for prefix and serial returned an Ibiza–Palma history."
+    }
+  ]
+}

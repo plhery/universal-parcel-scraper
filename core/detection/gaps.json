@@ -5522,5 +5522,11 @@
     "pattern": "^[A-Z0-9]{12}$",
     "kind": "open",
     "reason": "Navlungo’s domestic tracker confirms both 12-character delivery numbers. Select Navlungo explicitly for this shared shape."
+  },
+  {
+    "carrier": "air-europa-cargo",
+    "pattern": "^996/?\\d{8}$",
+    "kind": "open",
+    "reason": "Air Europa Cargo confirms 996 master air waybills with eight serial digits. Tracking is available by explicit selection."
   }
 ]

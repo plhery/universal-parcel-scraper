@@ -1,0 +1,20 @@
+{
+  "carrier": "air-europa-cargo",
+  "entries": [
+    { "wording": "Ready for Carriage", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Cargo prepared for carriage. At an identified transfer station, this is an in-transit event." },
+    { "wording": "Freight on Hands IBZ", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "wording": "Departed MXP", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Departed MAD", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Received MAD GHA", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "ARR", "wording": "ARR", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Flight arrival at the station." },
+    { "code": "FIW", "wording": "FIW", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Freight into warehouse control." },
+    { "code": "FOW", "wording": "FOW", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Freight out of warehouse control." },
+    { "code": "DIS", "wording": "DIS", "stage": "exception", "language": "en", "confirmedBy": "live", "note": "An operational or documentary discrepancy, as defined in the IATA ONE Record XFSU mapping." },
+    { "code": "AWD", "wording": "AWD", "stage": null, "language": "en", "confirmedBy": "live", "note": "The air waybill was delivered. The code describes the document." },
+    { "code": "AWR", "wording": "AWR", "stage": null, "language": "en", "confirmedBy": "live", "note": "The air waybill was received." },
+    { "code": "NFD", "wording": "NFD", "stage": null, "language": "en", "confirmedBy": "live", "note": "A notification can occur at a transfer airport, before arrival at the final destination." },
+    { "wording": "Pre-manifested UX051", "stage": null, "language": "en", "confirmedBy": "live", "note": "Pre-manifest preparation precedes physical departure." },
+    { "wording": "Manifested UX1703", "stage": null, "language": "en", "confirmedBy": "live", "note": "The flight manifest precedes physical departure." },
+    { "wording": "Delivery", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}
