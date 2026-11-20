@@ -413,6 +413,61 @@
       "language": "en",
       "stage": "exception",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "In transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). Canada Post has the package and it is on its way to its destination."
+    },
+    {
+      "wording": "Notice left",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). The package could not be delivered as expected and was sent to a post office for pickup."
+    },
+    {
+      "wording": "Delivery Attempt Made / Rescheduled for delivery next business day",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). An attempt that did not succeed: the package went back to the depot, cannot be collected from a post office yet, and the next attempt is normally the next business day."
+    },
+    {
+      "wording": "Verifying recipient's address; Possible delay",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). An addressing error the delivery agent is checking, before or after a delivery attempt."
+    },
+    {
+      "wording": "Check delivery progress",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). The progress bar's label when the delivery was interrupted: it names no step, so the package status and the scans below it give the stage."
+    },
+    {
+      "wording": "Item held by customs",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). The package is being reviewed by customs."
+    },
+    {
+      "wording": "Delivered as a safe drop",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). The recipient was not available, so the package was left in a safe place."
+    },
+    {
+      "wording": "Available for pickup",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "official-doc",
+      "note": "Listed on Canada Post's tracking statuses page (https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page). The package arrived at a post office and is ready to be picked up."
     }
   ]
 }
