@@ -1,4 +1,41 @@
 {
   "carrier": "delibox",
-  "entries": []
+  "entries": [
+    {
+      "wording": "주문",
+      "stage": "registered",
+      "language": "ko",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "집하",
+      "stage": "accepted",
+      "language": "ko",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "HUB 입고",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "TC 입고",
+      "stage": "in_transit",
+      "language": "ko",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "배송출발",
+      "stage": "out_for_delivery",
+      "language": "ko",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "배송완료",
+      "stage": "delivered",
+      "language": "ko",
+      "confirmedBy": "portal"
+    }
+  ]
 }
