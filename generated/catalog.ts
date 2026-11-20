@@ -49068,7 +49068,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "relay-express",
+      "localClocks": true
     },
     "canaryUrl": "https://scm.relayexpress.in/DocketTrack",
     "trackingSearchUrl": "https://scm.relayexpress.in/DocketTrack",
