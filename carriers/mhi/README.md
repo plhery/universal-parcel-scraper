@@ -26,6 +26,9 @@ through its tracking page.
   the page files a delivery attempt under Delivery and a pick-up point under Out for delivery.
 - Event clocks are wall clocks to the minute with no zone, so they stay `local_time`. MHI's own
   scan is on British time and the courier's scans on the courier's.
+- The page can list a courier's scan twice, the second copy an hour after the first, in the same
+  text and category, at the same place or none. The first copy agrees to the minute with MHI's
+  own export scan, so the late one is left out.
 - The courier the tracking link's address names becomes the delivery carrier, with the number
   beside the link. The link is not kept; the recipient's postcode it carries is read as their
   address.

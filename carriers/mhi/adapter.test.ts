@@ -49,6 +49,24 @@ describe('MHI HTTP adapter', () => {
     expect(mhiTrackingUrl('MHI999000000000017')).toBe(`${MHI_TRACKER}?Tracking=MHI999000000000017&command=Track`);
   });
 
+  it('leaves out the copy of a scan the page lists an hour late, in its words and category, at its place or none', () => {
+    const copied = (change: (row: string) => string) => parseMhi(newest((row) => change(row) + row), PARCEL).events!;
+    const late = (row: string) => row.replace('08:36', '09:36');
+    const unplaced = (row: string) => row.replace(/(<div class="itemlocationinfo">)[^<]*/, '$1');
+    for (const copy of [late, (row: string) => unplaced(late(row))]) {
+      const events = copied(copy);
+      expect(events).toHaveLength(18);
+      expect(events[0]).toMatchObject({ local_time: '2026-04-07T08:36:00', description: 'Successfully delivered', location: 'Sampletown, Samplecounty, MP, Poland' });
+    }
+    // Another minute, place, text or category, or a place only the later row names, is another scan.
+    for (const other of [(row: string) => row.replace('08:36', '09:37'), (row: string) => late(row).replace('Sampletown', 'Othertown'),
+      (row: string) => late(row).replace('Successfully delivered', 'Delivered to neighbour'),
+      (row: string) => late(row).replace('<div class="itemdetail">Delivery</div>', '<div class="itemdetail">Others</div>')]) {
+      expect(copied(other)).toHaveLength(19);
+    }
+    expect(parseMhi(newest((row) => late(row) + unplaced(row)), PARCEL).events).toHaveLength(19);
+  });
+
   it('keeps the events as wall clocks with their places, newest first, without the courier’s link', () => {
     const result = parseMhi(text('delivered.html'), PARCEL);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',

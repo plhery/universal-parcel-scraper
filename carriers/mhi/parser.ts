@@ -25,6 +25,7 @@ const MINUTE = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
 // Firewall and bot-check pages that could stand in for the tracker's own.
 const BLOCK = /<title>\s*(?:Just a moment|Attention Required|Access Denied)|_cf_chl_opt|cf-turnstile|challenge-platform|captcha/i;
 const MAX_EVENTS = 500;
+const HOUR_MS = 3_600_000;
 
 /** An MHI tracking number, as stored: without the dashes its older labels print. */
 export function normalizeMhiNumber(raw: string): string {
@@ -132,18 +133,27 @@ export function parseMhi(html: string, raw: string): CarrierResult {
     if (!description) throw new SchemaError(PROVIDER, 'MHI returned an event without a text');
     if (UNKNOWN.test(description)) throw new SchemaError(PROVIDER, 'MHI returned an unexpected page');
     const location = cell('.itemlocationinfo');
-    const staged = mhiStage(description, cell('.itemstatusinfo .itemdetail'));
+    const category = cell('.itemstatusinfo .itemdetail');
+    const staged = mhiStage(description, category);
     const event: CarrierEvent = {
       local_time: local,
       description,
       ...(location ? { location } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     };
-    return { local, index, event };
+    return { local, index, event, category };
   });
+  // The page can list a courier's scan twice, the second copy an hour after the first, in its words and
+  // category, at its place or none. The first agrees to the minute with MHI's own export scan; the late
+  // copy is left out.
+  const at = (local: string) => Date.parse(`${local}Z`);
+  const late = new Set(statuses.filter((copy) => statuses.some((first) => at(copy.local) - at(first.local) === HOUR_MS
+    && first.event.description === copy.event.description && first.category === copy.category
+    && (!copy.event.location || copy.event.location === first.event.location))));
+  const kept = statuses.filter((status) => !late.has(status));
   // Newest first; of equal clocks, the row higher on the page is the newer.
-  statuses.sort((left, right) => right.local.localeCompare(left.local) || left.index - right.index);
-  const events = statuses.map(({ event }) => event);
+  kept.sort((left, right) => right.local.localeCompare(left.local) || left.index - right.index);
+  const events = kept.map(({ event }) => event);
 
   const newest = events[0]!;
   const latest = events.find((event) => event.stage);
