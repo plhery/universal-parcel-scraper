@@ -68,7 +68,8 @@ Correos de Chile (`correos-chile`) are separate carriers.
   The collection from a pickup request's address, `HI10002V`, has no English summary, so the
   adapter gives it one worded from the Spanish, in any reply that leaves it without one.
 - `A090000V` ("Pre-registered") is the sender's pre-registration and stays `registered`;
-  `A010000V` ("Accepted") is Correos taking the parcel in, `accepted`.
+  `A010000V` ("Accepted") is Correos taking the parcel in, `accepted`; listed after a scan that
+  moved the parcel, as an import's minutes after Correos sorted it, it is in transit.
 - `L010000V`, `I010000V`, `X120000V` and `EOL.9001` come from a community integration and
   were never re-observed (`EOL.9001` does not even match the Correos code shape). They are
   kept because they cost nothing: any other unmapped code still reports `unknown` and the

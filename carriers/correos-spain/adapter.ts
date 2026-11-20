@@ -194,6 +194,17 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
   // The localizador lists oldest first; the parcel state is the latest entry.
   if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
   parsed.sort((left, right) => right.timestamp - left.timestamp);
+  // An admission listed after a scan that moved the parcel, as an import's minutes after Correos sorted it, is Correos
+  // taking it over on the way, not its acceptance: no step back.
+  let moved = false;
+  for (const entry of [...parsed].reverse()) {
+    const stage = entry.event.stage;
+    if (stage === 'accepted' && moved) {
+      entry.event = { ...entry.event, stage: 'in_transit' };
+      entry.classified = { status: 'in_transit', stage: 'in_transit' };
+    }
+    if (stage && !['registered', 'accepted', 'customs', 'exception'].includes(stage)) moved = true;
+  }
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   const latest = parsed[0];
   // Office name (nom_codired), weight (peso grams) and dimensions travel on

@@ -154,6 +154,25 @@ describe('Correos Spain response parsing', () => {
     expect(statusMap.stage('H020000V', 'In delivery')).toBe('out_for_delivery');
   });
 
+  it('reads an admission after Correos sorted the parcel as its take-over on the way, not its acceptance', () => {
+    const result = parseCorreosSpainTrackingResponse([envelope({
+      eventos: [
+        event('A090000V', '09/11/2026', '13:26:15', 'Prerregistrado'),
+        event('P040000V', '12/11/2026', '20:44:39', 'Clasificado'),
+        event('A010000V', '12/11/2026', '20:46:12', 'Admitido'),
+      ],
+    })], TRACKING_NUMBER);
+    expect(result.events?.map((item) => [item.provider_code, item.stage])).toEqual([
+      ['A010000V', 'in_transit'], ['P040000V', 'in_transit'], ['A090000V', 'registered'],
+    ]);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    // Admitted first, it is the acceptance.
+    const domestic = parseCorreosSpainTrackingResponse([envelope({
+      eventos: [event('A010000V', '27/04/2026', '23:03:58', 'Admitido'), event('P040000V', '28/04/2026', '15:52:17', 'Clasificado')],
+    })], TRACKING_NUMBER);
+    expect(domestic.events?.map((item) => item.stage)).toEqual(['in_transit', 'accepted']);
+  });
+
   it('keeps scans of one instant in the localizador’s order', () => {
     const result = parseCorreosSpainTrackingResponse([envelope({
       eventos: [
