@@ -1,0 +1,20 @@
+{
+  "success": null,
+  "message": null,
+  "searchList": [
+    {
+      "containerNo": "PCIU2826352",
+      "noOfCon": 1,
+      "containerStatusCode": "RVC",
+      "containerStatusDescription": "Delivered"
+    }
+  ],
+  "conlist": [
+    {
+      "dhfDate": "12/07/2026 01:07",
+      "stcDate": "15/07/2026 04:00",
+      "rvcDate": "19/07/2026 09:07",
+      "containerNo": "PCIU2826352"
+    }
+  ]
+}

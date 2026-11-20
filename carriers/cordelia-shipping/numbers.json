@@ -1,0 +1,44 @@
+{
+  "carrier": "cordelia-shipping",
+  "records": [
+    {
+      "number": "CSX26NSADPW030890",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/cordelia/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Cordelia tracking directory. The carrier’s guest tracker confirmed the exact reference and returned actual movements."
+    },
+    {
+      "number": "PCIU2826352",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/cordelia/PCIU",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Cordelia tracking directory. The carrier’s guest tracker confirmed the exact reference and returned actual movements."
+    }
+  ]
+}

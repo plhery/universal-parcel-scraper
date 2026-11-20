@@ -16118,6 +16118,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "cordelia-shipping": {
+    "displayName": "Cordelia Container Shipping Line",
+    "color": "#003e80",
+    "aliases": [
+      "Cordelia Shipping",
+      "Cordelia Line",
+      "CCSL"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cordelia-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cordelialine.com/",
+    "trackingUrlTemplate": "https://cordelialine.com/",
+    "trackingSearchUrl": "https://cordelialine.com/",
+    "trackingSiteName": "Cordelia Track Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "corlan-post-express": {
     "displayName": "Corlan Post Express",
     "color": "#2b52b6",
@@ -66211,6 +66236,7 @@ export const CARRIER_IDS = [
   "coordinadora",
   "copa-courier",
   "cope-sensitive-freight",
+  "cordelia-shipping",
   "corlan-post-express",
   "corporate-couriers",
   "corre",
@@ -68095,6 +68121,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "coordinadora": ["coordinadora-1"],
   "copa-courier": ["copa-courier-1"],
   "cope-sensitive-freight": [],
+  "cordelia-shipping": [],
   "corlan-post-express": [],
   "corporate-couriers": [],
   "corre": ["corre-s10"],

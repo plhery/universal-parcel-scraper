@@ -16114,6 +16114,31 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "cordelia-shipping": {
+    "displayName": "Cordelia Container Shipping Line",
+    "color": "#003e80",
+    "aliases": [
+      "Cordelia Shipping",
+      "Cordelia Line",
+      "CCSL"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cordelia-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cordelialine.com/",
+    "trackingUrlTemplate": "https://cordelialine.com/",
+    "trackingSearchUrl": "https://cordelialine.com/",
+    "trackingSiteName": "Cordelia Track Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "corlan-post-express": {
     "displayName": "Corlan Post Express",
     "color": "#2b52b6",

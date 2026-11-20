@@ -1,0 +1,29 @@
+{
+  "carrier": "cordelia-shipping",
+  "entries": [
+    {
+      "code": "DHF",
+      "wording": "Discharged Laden",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "documentation",
+      "note": "Cordelia’s CORDIS Exports & Operations Manual identifies the DHF scan. The guest equipment detail supplies its posted date."
+    },
+    {
+      "code": "STC",
+      "wording": "Sent to Consignee",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "documentation",
+      "note": "The CORDIS manual describes STC as the loaded container sent to the consignee."
+    },
+    {
+      "code": "RVC",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "The guest summary displays Delivered. The CORDIS movement table describes RVC as empty equipment received from the consignee."
+    }
+  ]
+}

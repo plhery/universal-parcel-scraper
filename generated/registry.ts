@@ -149,6 +149,7 @@ import { adapter as connectCouriers } from '../carriers/connect-couriers/adapter
 import { adapter as consegnia } from '../carriers/consegnia/adapter.js';
 import { adapter as coordinadora } from '../carriers/coordinadora/adapter.js';
 import { adapter as copaCourier } from '../carriers/copa-courier/adapter.js';
+import { adapter as cordeliaShipping } from '../carriers/cordelia-shipping/adapter.js';
 import { adapter as corre } from '../carriers/corre/adapter.js';
 import { adapter as correiosBr } from '../carriers/correios-br/adapter.js';
 import { adapter as correoArgentino } from '../carriers/correo-argentino/adapter.js';
@@ -1061,6 +1062,7 @@ export const REGISTRY: RegistryDefinition = {
     "consegnia": consegnia,
     "coordinadora": coordinadora,
     "copa-courier": copaCourier,
+    "cordelia-shipping": cordeliaShipping,
     "corre": corre,
     "correios-br": correiosBr,
     "correo-argentino": correoArgentino,
@@ -2151,6 +2153,7 @@ export const REGISTRY: RegistryDefinition = {
     "coordinadora": "coordinadora",
     "copa-courier": "copa-courier",
     "cope-sensitive-freight": "universal",
+    "cordelia-shipping": "cordelia-shipping",
     "corlan-post-express": "universal",
     "corporate-couriers": "universal",
     "corre": "corre",
