@@ -92409,6 +92409,14 @@
     ]
   },
   {
+    "input": "IS300078175BR",
+    "carrier": "correios-br",
+    "confidence": "high",
+    "candidates": [
+      "correios-br"
+    ]
+  },
+  {
     "input": "ISCO00025",
     "carrier": "unknown",
     "confidence": "none",
