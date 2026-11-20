@@ -103,6 +103,9 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   if (/will be delivered|sera livr[ée]|wird\s+(?!zugestellt\b).+zugestellt|sar[àa] consegnat|\bready for (?:pick-?up|collection) (?:on )?(?:the )?next (?:business|working) day\b/.test(value)) return fallback;
   // Still at the delivery base, "processed in the delivery base" in English: not yet on the vehicle.
   if (/für die verladung ins zustellfahrzeug vorbereitet/.test(value)) return 'in_transit';
+  // On the way to the outlet after "Weiterleitung an Filiale", not there yet: "In Kürze in Filiale abholbereit" and its
+  // English "Available for pickup shortly". The outlet's own scan says when it is ready.
+  if (/\bin kürze\b[^.]*\babholbereit\b|\bavailable for (?:pick-?up|collection) shortly\b/.test(value)) return 'in_transit';
   const translated = trackingLanguageStage(text);
   if (translated) return translated;
   if (/ready for (?:pickup|collection)|ready to (?:collect|pick up)|awaiting collection|abholbereit|zur abholung bereit|liegt zur abholung\b[^.]*\bbereit/.test(value)) return 'ready_for_pickup';

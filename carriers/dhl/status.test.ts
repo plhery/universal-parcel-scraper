@@ -15,3 +15,9 @@ it('reads a pickup forecast for the next business day as a forecast, and the out
   expect(stageForText('The shipment is available for pick-up from the retail outlet as of now.')).toBe('ready_for_pickup');
   expect(stageForText('Ready for pickup')).toBe('ready_for_pickup');
 });
+
+it('reads a parcel soon ready at the outlet as on its way there, not ready for pickup', () => {
+  expect(stageForText('In Kürze in Filiale abholbereit')).toBe('in_transit');
+  expect(stageForText('Available for pickup shortly')).toBe('in_transit');
+  expect(stageForText('Sendung liegt in der Filiale zur Abholung bereit')).toBe('ready_for_pickup');
+});
