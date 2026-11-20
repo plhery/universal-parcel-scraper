@@ -154,6 +154,8 @@ how a consumer learns that DHL holds one behind a postcode.
 - A round that did not reach the parcel for DHL's own reasons ("wegen unerwarteter
   Umstände", "due to unexpected circumstances") is a delay in transit, not a failed
   attempt: nobody came to the door, and a new round follows the next working day.
+  DHL's summary over it, "Zustellversuch am nächsten Werktag", announces that round and
+  heads a failed attempt at the door as well, so it takes the stage of the newest scan.
 - A return started or under way is returned, as is a return delivered to the sender. DHL then
   keeps scanning the parcel on its way back, in its parcel centres: the moves after the latest
   return start are returned too, and the parcel gets no delivery date. A round, a failed

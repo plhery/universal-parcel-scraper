@@ -44,6 +44,14 @@ export function keepsStage(text: string): boolean {
 }
 
 /**
+ * DHL's summary of the next round, "Zustellversuch am nächsten Werktag": it follows a failed attempt at the
+ * door and a round DHL did not complete for its own reasons alike, so the newest scan says which.
+ */
+export function announcesRound(text: string): boolean {
+  return /^zustellversuch am\b/i.test(text.trim()) && !/\b(?:nicht|erfolglos|gescheitert)\b/i.test(text);
+}
+
+/**
  * DHL's pre-advice: the sender's electronic data ("Die Sendung wurde elektronisch angekündigt.",
  * "The instruction data … provided … electronically"). Listed after a scan that moved the parcel,
  * it is a notice, not movement, and the parser leaves it out.

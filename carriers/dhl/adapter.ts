@@ -43,7 +43,7 @@ import {
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { withoutPartnerLink } from './identity.js';
-import { BOOKED_OPTION, keepsStage, movedParcel, preAdvice, returnTrip, stageForText, statusForStage } from './status.js';
+import { announcesRound, BOOKED_OPTION, keepsStage, movedParcel, preAdvice, returnTrip, stageForText, statusForStage } from './status.js';
 
 const PROVIDER = 'DHL';
 const TIMEZONE = 'Europe/Berlin';
@@ -300,7 +300,7 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   const fallback = Number(timeline.fortschritt) <= 1 ? 'registered' : String(events[0]?.stage || 'in_transit');
   const reported = details.istZugestellt === true
     ? details.ruecksendung === true ? 'returned' : 'delivered'
-    : keepsStage(currentText) ? fallback : stageForText(currentText, fallback);
+    : keepsStage(currentText) || announcesRound(currentText) ? fallback : stageForText(currentText, fallback);
   // DHL heads a round that ends in the return with "Delivery not possible": the newest scan says the parcel goes back.
   // A move on the way back, which DHL sums up as the move itself, keeps the return, without a delivery date.
   const latest = events[0]?.stage;

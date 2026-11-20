@@ -385,6 +385,19 @@ describe('DHL public tracking normalization', () => {
     expect(result.events?.[0]?.stage).toBe(stage);
   });
 
+  it('reads the summary of the next round at the stage of the scan before it', () => {
+    const delay = 'Ihre Sendung konnte heute leider wegen unerwarteter Umstände wie z.B. Krankheit, Unfall, Arbeitszeitüberschreitung nicht zugestellt werden. Ein neuer Zustellversuch erfolgt am nächsten Werktag.';
+    const read = (scan: string, status = 'Zustellversuch am nächsten Werktag') => parseDHLTrackingResponse(shipment({
+      sendungsverlauf: { status, fortschritt: 4, events: [{ status: scan, datum: '2026-08-10T10:00:00Z' }] },
+    }), NUMBER);
+    // A round DHL did not complete for its own reasons is a delay.
+    expect(read(delay)).toMatchObject({ current_stage: 'in_transit', status: 'in_transit', last_status_text: 'Zustellversuch am nächsten Werktag' });
+    // After an attempt at the door, a failed attempt.
+    expect(read('Die Sendung konnte nicht zugestellt werden.')).toMatchObject({ current_stage: 'failed_attempt', status: 'exception' });
+    // A summary that says an attempt failed is that failure.
+    expect(read(delay, 'Zustellversuch am 10.08. nicht erfolgreich').current_stage).toBe('failed_attempt');
+  });
+
   it.each([
     ['Germany', { destination_country: 'DE' }],
     ['United Kingdom', { destination_country: 'GB' }],
