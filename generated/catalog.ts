@@ -56441,7 +56441,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tej-couriers",
+      "localClocks": true
     },
     "canaryUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "trackingSearchUrl": "https://www.tejcouriers.com/shipment-tracking.php",

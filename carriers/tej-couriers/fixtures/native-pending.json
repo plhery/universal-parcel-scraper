@@ -1,0 +1,8 @@
+[
+  {
+    "statusCode": 200,
+    "status": "Success",
+    "errorMessage": "",
+    "PayLoad": "{\"payload\":{\"individualTrackingList\":[{\"cnote\":\"30000031\",\"DlvDate\":\"\",\"transitHistory\":[{\"Activety\":\"Booking Inward Done\",\"dateAndTime\":\"10/01/2026 20:17:00\",\"transitLocation\":\"VADPE\"},{\"Activety\":\"OutScan\",\"dateAndTime\":\"10/01/2026 22:03:00\",\"transitLocation\":\"VADPE\"},{\"Activety\":\"InScan\",\"dateAndTime\":\"13/01/2026 21:29:00\",\"transitLocation\":\"NASHIK\"},{\"Activety\":\"RunSheet\",\"dateAndTime\":\"13/01/2026 21:29:00\",\"transitLocation\":\"NASHIK\"},{\"Activety\":\"Pending\",\"dateAndTime\":\"13/01/2026 21:33:00\",\"transitLocation\":\"NASHIK\"},{\"Activety\":\"RunSheet\",\"dateAndTime\":\"13/01/2026 21:33:00\",\"transitLocation\":\"NASHIK\"},{\"Activety\":\"\",\"dateAndTime\":\"13/01/2026 21:34:00\",\"transitLocation\":\"NASHIK\"}]}]}}"
+  }
+]

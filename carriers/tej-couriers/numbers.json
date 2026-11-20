@@ -289,6 +289,30 @@
         ]
       },
       "note": "A complaint about Tej Couriers gives this tracking ID for a parcel sent from Pune."
+    },
+    {
+      "number": "37161304",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.justdial.com/Pune/Tej-Couriers-Customer-Care-Pune-City/020PXX20-XX20-180505145550-K3U6_BZDET",
+        "date": "2026-01-22",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "A publicly indexed Justdial review quotes this consignment as out for delivery; the native guest API independently returns the same whole consignment and dated history."
     }
   ]
 }

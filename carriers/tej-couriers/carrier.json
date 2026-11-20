@@ -18,16 +18,39 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "tej-couriers",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "expected_delivery"
+  ],
   "portal": {
     "searchUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "canaryUrl": "https://www.tejcouriers.com/shipment-tracking.php",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "expected_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "expected_delivery"
+    ],
+    "discarded": [
+      "recipient",
+      "sender",
+      "phone",
+      "proof_of_delivery"
+    ],
     "unavailable": []
   },
   "links": [],

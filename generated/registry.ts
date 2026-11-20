@@ -717,6 +717,7 @@ import { adapter as teamExpressAe } from '../carriers/team-express-ae/adapter.js
 import { adapter as teamGlobalExpress } from '../carriers/team-global-express/adapter.js';
 import { adapter as teamWorldwide } from '../carriers/team-worldwide/adapter.js';
 import { adapter as techlink } from '../carriers/techlink/adapter.js';
+import { adapter as tejCouriers } from '../carriers/tej-couriers/adapter.js';
 import { adapter as teleship } from '../carriers/teleship/adapter.js';
 import { adapter as tfmExpress } from '../carriers/tfm-express/adapter.js';
 import { adapter as tforceFreight } from '../carriers/tforce-freight/adapter.js';
@@ -1547,6 +1548,7 @@ export const REGISTRY: RegistryDefinition = {
     "team-global-express": teamGlobalExpress,
     "team-worldwide": teamWorldwide,
     "techlink": techlink,
+    "tej-couriers": tejCouriers,
     "teleship": teleship,
     "tfm-express": tfmExpress,
     "tforce-freight": tforceFreight,
@@ -3236,7 +3238,7 @@ export const REGISTRY: RegistryDefinition = {
     "team-worldwide": "team-worldwide",
     "techlink": "techlink",
     "tecmar": "universal",
-    "tej-couriers": "universal",
+    "tej-couriers": "tej-couriers",
     "teleport": "universal",
     "teleship": "teleship",
     "tfm-express": "tfm-express",

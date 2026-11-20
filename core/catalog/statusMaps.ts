@@ -10,6 +10,7 @@
  * universal providers, whose map is the reading they give a scan
  * (`providers/status.ts`).
  */
+import { statusMap as tejCouriers } from '../../carriers/tej-couriers/status.js';
 import { statusMap as bhPosta } from '../../carriers/bh-posta/status.js';
 import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
 import { statusMap as carrybee } from '../../carriers/carrybee/status.js';
@@ -830,6 +831,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bh-posta': bhPosta,
+  'tej-couriers': tejCouriers,
   'correos-costa-rica': costaRica,
   aeropost,
   'western-bid': westernBid,
