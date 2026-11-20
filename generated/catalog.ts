@@ -18393,7 +18393,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Kyiv",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "delivery-auto",
+      "localClocks": true
     },
     "canaryUrl": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt",
     "trackingUrlTemplate": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt?number={trackingNumber}",

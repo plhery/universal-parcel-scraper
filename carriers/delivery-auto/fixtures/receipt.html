@@ -1,0 +1,433 @@
+<link href="/Content/third_decade/receipt/n-tracking-no-log.css?ver=26" rel="stylesheet" type="text/css" />
+
+
+<div class="tracking__container">
+    <div class="tracking__header">
+        <p class="tracking__block-title">
+            <span>Квитанція про прийом вантажу</span> <span>0580422728</span>
+        </p>
+        <div class="tracking__block-logo">
+            <img src="../../../Images/third_decade/system/delivery-group__logos/delGroup_logo.png" alt="Delivery Group Logo">
+        </div>
+    </div>
+
+    <div class="tracking__inner">
+        <div class="short-ticket">
+            <div class="ticket-come-back">
+                <a href="/uk-UA" class="ticket-come-back__inner">
+                    <div class="ticket-come-back__icon">
+                        <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 15.75C11 16.175 10.9389 16.5312 10.8167 16.8188C10.6944 17.1063 10.5111 17.325 10.2667 17.475C10.0222 17.6375 9.79611 17.7625 9.58833 17.85C9.38056 17.9375 9.19111 17.9875 9.02 18H8.8L0 9L8.8 1.96701e-08L9.02 0C9.43555 0.0374999 9.78389 0.15625 10.065 0.35625C10.3583 0.55625 10.5844 0.825 10.7433 1.1625C10.8289 1.3125 10.8961 1.48125 10.945 1.66875C10.9817 1.84375 11 2.0375 11 2.25L4.4 9L11 15.75Z" fill="#333333" />
+                        </svg>
+                    </div>
+                    <p>Трекінг квитанції</p>
+                </a>
+            </div>
+
+            <div class="ticket-header">
+                <h3 class="ticket-header__mobile-title">Квитанція про прийом вантажу</h3>
+                <div class="ticket-header__inner">
+                    <p class="ticket-header__number">
+                        №
+                        <span id="SerialNumberItem">0580422728</span>
+                    </p>
+                    <div class="tiket-header__btn-group">
+                        <div class="ticket-header__btn-icon ticket-header__btn-icon--copy" id="SerialNumberCopyButton">
+                            <img src="../../../Images/third_decade/receipt/copy-icon.svg" alt="Скопировать">
+                            <p class="ticket-header__tooltip--copy">Ви успішно скопіювали номер квитанції!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="short-ticket__container">
+                <div class="ticket-status">
+                    <div class="ticket-status__main-status">
+                        <div class="main-status__icon">
+                            <img src="../../../Images/third_decade/receipt/bublik_4.svg" alt="icon status">
+                        </div>
+                        <div class="main-status__inner">
+                            <div class="main-status__info">
+                                <p class="main-status__title" style="display: none;">Доставляється кур’єром</p>
+                                <p class="main-status__title">ВИДАНА</p>
+
+                                    <div class="main-status__last-time">
+                                        <time>26.08.2026</time> <span> | </span> <time>17:55</time>
+                                    </div>
+                            </div>
+
+                            <div class="main-status__block-drop" style="display: none;">
+                                <p class="block-drop__title">Заборона видачі</p>
+                                <img class="block-drop__icon" src="../../../Images/third_decade/receipt/ticket__block-drop.svg" alt="icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="ticket-status__date-status">
+                        <li class="date-status__item">
+                            <time class="date-status__time">13.08.2026</time>
+                            <p class="date-status__description">Дата відправлення</p>
+                        </li>
+                        <li class="date-status__item">
+                            <time class="date-status__time">17.08.2026</time>
+                            <p class="date-status__description">Орієнтовна дата прибуття</p>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <details class="ticket-route " onclick="rfr()">
+                    <summary>
+                        <div class="ticket-route__inner">
+                            <span class="ticket-route__progress-bar"></span>
+                            <div class="ticket-route__route-header">
+                                <!-- Желтая иконка Поинта привязана к классу  "route-header__item--point-icon" -->
+                                <!-- Она отображается когда посылка уже доставлена -->
+                                <div class="route-header__item route-header__item--send-from route-header__item--car-icon" onclick="show_warehouse_blck(1)">
+                                    <p class="route-header__office-name">Запоріжжя</p>
+                                    <p class="route-header__office-address">вул. Новомиколаївська, 154</p>
+                                </div>
+
+                                <!-- Иконка машины привязана к классу "route-header__item--car-icon" -->
+                                <!-- Она отображается когда посылка ещё в пути -->
+                                <div class="route-header__item route-header__item--road-to route-header__item--point-icon" onclick="show_warehouse_blck(2)">
+                                    <p class="route-header__office-name">ЧЕРНІВЦІ-1 (відділення) </p>
+                                    <p class="route-header__office-address">вул. Коломийська, 13 Б</p>
+                                </div>
+                            </div>
+                        </div>
+                    </summary>
+
+                    <div class="road-to">
+                        <div id="road-to__map" class="road-to__map">
+                        </div>
+                        <ul class="road-to__office-info">
+                            <li class="office-info__item">
+                                <p class="office-info__title">Адреса:</p>
+                                <p class="office-info__desc">
+                                    <a target="_blank" href="/uk-UA/Representatives/Details/f93b6d45-b249-e211-ab75-00155d012d0d">вул. Коломийська, 13 Б</a>
+                                </p>
+                            </li>
+
+                            <li class="office-info__item">
+                                <p class="office-info__title">Телефон:</p>
+                                <p class="office-info__desc"><a href="tel:0676207476" id="tl">0676205425</a></p>
+                            </li>
+
+                            <li class="office-info__item">
+                                <p class="office-info__title">Графік роботи:</p>
+                                <p class="office-info__desc" id="grph">ПН-ПТ: 9:00-18:00, СБ: 9:00-15:00</p>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="l-login-block">
+            <div class="login-block__mob-inner hide-on-mob">
+                <div class="login-block__main-img">
+                    <img src="../../../Images/third_decade/receipt/login-img-header.png" alt="img">
+                </div>
+
+                <h3 class="login-block__title">
+                    Більше інформації в додатку,
+                    або увійдіть в особистий кабінет
+                </h3>
+
+                <div class="tracking-login">
+                    <input type="text" id="eml_auth" style="display: none;" placeholder="Електронна пошта або телефон">
+                    <button class="main-btn tracking-login__btn" onclick="go_to_login()">Увійти</button>
+                </div>
+
+                <div class="login-block__reg-text">
+                    <p class="reg-text__item">Не маєте облікового запису? <a href="https://www.delivery-auto.com/uk/Account/Register" target="_blank">Зареєструйтеся! →</a></p>
+                </div>
+            </div>
+
+
+            <div class="banner-block hide-on-desc">
+                <div class="banner-block__heading hide-on-desc--flex">
+                    <h4 class="banner-block__title">Ще більше
+                            інформації
+                            в мобільному
+                            додатку!</h4>
+
+                    <img class="banner-block__phone-img" src="/Images/third_decade/system/mobile_app/tracking_phone.png" alt="phone image" />
+                </div>
+
+                <div class="mob-app-enter__store banner-block__store hide-on-desc--flex">
+                    <a href="https://apps.apple.com/us/app/delivery-auto/id908557251?l=ru&ls=1" class="mob-app-enter__store-item banner-block__store-item" target="_blank" rel="nofollow">
+                        <img src="../../../Images/third_decade/system/mobile_app/icon__app-store.png" alt="app store">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.delivery.deliverymobile&hl=ru" class="mob-app-enter__store-item" target="_blank" rel="nofollow">
+                        <img src="../../../Images/third_decade/system/mobile_app/icon__google-play.png" alt="google play store">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Стили для заглушки Трекинга -->
+            <style>
+                .ticket-come-back {
+                    display: none;
+                    background-color: #F8F8F8;
+                    height: 63px;
+                    padding: 5px 17px;
+                }
+
+                .ticket-come-back__inner {
+                    display: flex;
+                    align-items: center;
+                    width: fit-content;
+                    height: 100%;
+                }
+
+                .ticket-come-back__icon {
+                    padding-top: 6px;
+                    margin-right: 50px;
+                }
+
+                .ticket-come-back p {
+                    font-weight: bold;
+                    font-size: 16px;
+                    line-height: 24px;
+                    text-align: center;
+                    color: #333333;
+                }
+
+                .hide-on-desc {
+                    display: none;
+                }
+
+                .banner-block {
+                    width: 100%;
+                    margin-bottom: 18px;
+                    padding: 20px 0 0 0;
+                }
+
+                .banner-block__heading {
+                    align-items: center;
+                    min-height: 144px;
+                    padding: 10px 15px;
+                    background: linear-gradient(180deg, #FFDD33 0%, #FFCE1E 100%);
+                    position: relative;
+                }
+
+                .banner-block__phone-img {
+                    position: absolute;
+                    top: 15px;
+                    left: 72%;
+                    width: 164px;
+                    height: 249px;
+                }
+
+                .banner-block__title {
+                    max-width: 50%;
+                    font-family: Roboto;
+                    font-weight: 300;
+                    font-size: 24px;
+                    line-height: 28px;
+                    color: #333333;
+                }
+
+                @media (max-width: 1060px) {
+                    .ticket-come-back {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .ui-dialog .ui-dialog-titlebar-close {
+                        top: 20px !important;
+                        right: 33px !important;
+                    }
+
+                    .ticket-header {
+                        padding: 8px 10px 17px 15px;
+                    }
+
+                    .login-block__legal-alert,
+                    .login-block__mob-app-enter,
+                    .hide-on-mob {
+                        display: none;
+                    }
+
+                    .hide-on-desc {
+                        display: block;
+                    }
+
+                    .hide-on-desc--flex {
+                        display: flex;
+                    }
+
+                    .banner-block__store {
+                        max-width: 340px;
+                        margin-top: 15px;
+                        padding: 0 15px;
+                    }
+
+                    .banner-block__store-item {
+                        margin-right: 10px;
+                    }
+                }
+
+                @media (max-width: 700px) {
+                    .banner-block__phone-img {
+                        left: 65%;
+                    }
+                }
+
+                @media (max-width: 550px) {
+                    .banner-block__phone-img {
+                        left: 60%;
+                    }
+
+                    .banner-block__store {
+                        flex-direction: column;
+                    }
+                }
+
+                @media (max-width: 470px) {
+                    .banner-block__phone-img {
+                        left: 55%;
+                    }
+                }
+
+                @media (max-width: 370px) {
+                    .banner-block__phone-img {
+                        left: 54%;
+                    }
+
+                    .banner-block__title {
+                        max-width: 55%;
+                    }
+
+                    .banner-block {
+                        overflow: hidden;
+                    }
+                }
+            </style>
+
+            <div class="login-block__mob-app-enter">
+                <div class="mob-app-enter__store hide-on-mob">
+                    <a href="https://apps.apple.com/us/app/delivery-auto/id908557251?l=ru&ls=1" class="mob-app-enter__store-item" target="_blank">
+                        <img src="../../../Images/third_decade/system/mobile_app/icon__app-store.png" alt="app store">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.delivery.deliverymobile&hl=ru" class="mob-app-enter__store-item" target="_blank">
+                        <img src="../../../Images/third_decade/system/mobile_app/icon__google-play.png" alt="google play store">
+                    </a>
+                </div>
+                <div class="mob-app-enter__qr-code">
+                    <p class="qr-code__guide">Відскануйте, <br> щоб завантажити!</p>
+                    <div class="qr-code">
+                        <img src="../../../Images/third_decade/receipt/qr-code-for-mob-app.png" alt="qr-code">
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-block__legal-alert">
+                <p class="legal-alert__text">
+                    З метою збереження та захисту персональних даних клієнтів, компанія &#171;Delivery&#187; не розголошує конфіденційну інформацію незареєстрованим користувачам.
+                </p>
+                <p class="legal-alert__text">Для перегляду інформації за квитанцією вам необхідно авторизовуватись через особистий кабінет чи мобільний додаток.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="/Scripts/leaflet/leaflet.css" rel="stylesheet" />
+
+<script src="/Scripts/custom_delivery_dialog.js"></script>
+<script src="/Scripts/leaflet/leaflet-src.js"></script>
+<script src="/Scripts/leaflet/leaflet.polylineDecorator.js"></script>
+
+<script>
+    $(function () {
+        initMapShort();
+    });
+
+    var button = document.getElementById('SerialNumberCopyButton');
+    button.addEventListener('click', function () {
+        var ta = document.getElementById('SerialNumberItem');
+        var range = document.createRange();
+        range.selectNode(ta);
+        window.getSelection().addRange(range);
+        try {
+            document.execCommand('copy');
+            document.querySelector('.ticket-header__tooltip--copy').classList.add('ticket-header__tooltip--copy-active');
+
+            clearTimeout(timer);
+            var timer = setTimeout(function () {
+                document.querySelector('.ticket-header__tooltip--copy-active').classList.remove('ticket-header__tooltip--copy-active');
+            }, 7000);
+
+        } catch (err) {
+            console.log('Can`t copy, boss');
+        }
+        window.getSelection().removeAllRanges();
+    });
+
+    function show_warehouse_blck(id) {
+        debugger;
+        var frm = id == 1 ? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2596.363976225182!2d35,2361740000!3d47,8345510000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d14bdc4f3dd65f%3A0x1fae826854a555f2!2z0YPQuy4g0J3QtdGH0YPRjy3Qm9C10LLQuNGG0LrQvtCz0L4sIDM0LCDQp9C10YDQutCw0YHRgdGLLCDQp9C10YDQutCw0YHRgdC60LDRjyDQvtCx0LvQsNGB0YLRjCwgMTgwMDA!5e0!3m2!1sru!2sua!4v1617815886374!5m2!1sru!2sua' : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2596.363976225182!2d25,9077880000!3d48,3288310000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d14bdc4f3dd65f%3A0x1fae826854a555f2!2z0YPQuy4g0J3QtdGH0YPRjy3Qm9C10LLQuNGG0LrQvtCz0L4sIDM0LCDQp9C10YDQutCw0YHRgdGLLCDQp9C10YDQutCw0YHRgdC60LDRjyDQvtCx0LvQsNGB0YLRjCwgMTgwMDA!5e0!3m2!1sru!2sua!4v1617815886374!5m2!1sru!2sua';
+        var hrf = id == 1 ? 'вул. Карпенка-Карого, 47 (Склади &quot;ТАКО&quot;)' : 'вул. Коломийська, 13 Б';
+        var tl = id == 1 ? '0676234133' : '0676205425';
+        var grph = id == 1 ? 'ПН-ПТ: 9:00-18:00, СБ: 9:00-15:00' : 'ПН-ПТ: 9:00-18:00, СБ: 9:00-15:00';
+
+        $('#frm').attr('src', frm);
+        $('#hrf').attr('href', frm);
+        $('#hrf').text(hrf);
+        $('#tl').text(tl);
+        $('#tl').attr('href', 'tel:' + tl);
+        $('#grph').text(grph);
+    }
+
+    function buildWarehouseBaloon() {
+        var header = "";
+        header = $('<div>').append($('<span>').html('ЗАПОРІЖЖЯ-1 Центр З/Д'));
+        return $('<div>').append($('<div>').attr('id', 'baloon-container').append(header));
+    };
+
+    var mapShort = null;
+
+    function initMapShort() {
+        var location = new L.LatLng('48.3288310000', '25.9077880000');
+        mapShort = L.map('road-to__map').setView(location, 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'/*'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'*/, {
+            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'/*'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'*/,
+            maxZoom: 16,
+            id: 'mapbox.streets'
+        }).addTo(mapShort);
+        //mapFull.options.maxZoom = 10;
+
+        var LeafIcon = L.Icon.extend({
+            options: {
+                iconSize: [67, 63],
+                iconAnchor: [22, 64],
+                popupAnchor: [3, -66]
+            }
+        });
+
+        L.icon = function (options) {
+            return new L.Icon(options);
+        };
+
+        var storeIcon = new LeafIcon({ iconUrl: "../../../Images/third_decade/receipt/d_branch_pin.svg" });
+        var markerArray = [];
+        var point = new L.LatLng('48.3288310000', '25.9077880000')
+        var marker = L.marker(point, { icon: storeIcon }).addTo(mapShort);
+
+        ajaxLoaderEnd();
+    }
+
+    function rfr() {
+        mapShort._onResize();
+    }
+
+    function go_to_login() {
+        debugger;
+        var eml_auth = $('#eml_auth').val();
+        var lnk = 'https://www.delivery-auto.com/uk-UA/Account/Register?return_url=https://www.delivery-auto.com/ru-RU/UserReceipts/Index';
+        window.location = lnk
+    }
+</script>

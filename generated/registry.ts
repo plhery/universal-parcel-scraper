@@ -164,6 +164,7 @@ import { adapter as dayone } from '../carriers/dayone/adapter.js';
 import { adapter as daytonFreight } from '../carriers/dayton-freight/adapter.js';
 import { adapter as dealersend } from '../carriers/dealersend/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
+import { adapter as deliveryAuto } from '../carriers/delivery-auto/adapter.js';
 import { adapter as dellin } from '../carriers/dellin/adapter.js';
 import { adapter as delnext } from '../carriers/delnext/adapter.js';
 import { adapter as deppon } from '../carriers/deppon/adapter.js';
@@ -994,6 +995,7 @@ export const REGISTRY: RegistryDefinition = {
     "dayton-freight": daytonFreight,
     "dealersend": dealersend,
     "delhivery": delhivery,
+    "delivery-auto": deliveryAuto,
     "dellin": dellin,
     "delnext": delnext,
     "deppon": deppon,
@@ -2065,7 +2067,7 @@ export const REGISTRY: RegistryDefinition = {
     "delivengo": "la-poste",
     "deliverdirect": "universal",
     "deliveright": "universal",
-    "delivery-auto": "universal",
+    "delivery-auto": "delivery-auto",
     "delivro": "universal",
     "dellin": "dellin",
     "delnext": "delnext",
