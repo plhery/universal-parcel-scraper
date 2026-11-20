@@ -636,6 +636,22 @@
       "note": "Relayed from DPD Switzerland after the flight and the import, at the second of DPD's own PARCEL_HANDED row: DPD's first scan of the parcel YunExpress handed to it, a hand-over like Item accepted, not the parcel's acceptance."
     },
     {
+      "wording": "At delivery centre Inbound = in Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Relayed from DPD Switzerland at the second of DPD's own AT_DELIVERY_CENTER row, after its first scan: the parcel at its delivery depot, in transit."
+    },
+    {
+      "wording": "Out of delivery Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Relayed from DPD Switzerland at the second of DPD's own PARCEL_OUT_FOR_DELIVERY row, the morning after its arrival at the delivery depot."
+    },
+    {
       "wording": "Item is out for delivery",
       "stage": "out_for_delivery",
       "language": "en",
