@@ -33,6 +33,8 @@ const DEFAULT_TIMEOUT_MS = 15_000;
 const TRANSIENT_RETRY_DELAY_MS = 1_000;
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_EVENTS_TO_RETURN = 20;
+// Accepted at the Logistics Centre.
+const FIRST_RECEIPT = 'MMD.1001';
 
 function statusCode(value: unknown): string {
   return clean(value, 32).toLocaleUpperCase('en-US');
@@ -125,8 +127,17 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
     }
     before = entry.classified ?? before;
   }
+  // The logistics centre's receipt is the acceptance when only the parcel's creation comes before it: a sender
+  // delivering to the centre itself has no posting or collection scan.
+  const oldestFirst = [...parsed].reverse();
+  const moved = oldestFirst.findIndex((entry) => entry.classified && entry.classified.stage !== 'registered');
+  const firstMove = moved > 0 && oldestFirst.slice(0, moved).some((entry) => entry.classified?.stage === 'registered') ? oldestFirst[moved] : undefined;
+  if (firstMove?.code === FIRST_RECEIPT) {
+    firstMove.classified = { status: 'in_transit', stage: 'accepted' };
+    firstMove.event.stage = 'accepted';
+  }
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
-  const current = classified
+  const current = (code === FIRST_RECEIPT && firstMove && parsed[0] === firstMove ? firstMove.classified : classified)
     ?? (keepsInpostStage(code) ? parsed.find((entry) => entry.classified)?.classified : undefined);
   // Of the destination only the country code is sent; the origin country feeds no field.
   const country = isRecord(payload.destination) ? payload.destination.countryCode : undefined;

@@ -28,7 +28,9 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
 - A drop-off at a locker or a courier collection reads as accepted, a parcel handed to the
   courier for delivery as out for delivery, and a refusal as a failed attempt. A collection
   booked from the sender comes under the drop-off's code with its own wording and reads as
-  registered until the courier collects the parcel.
+  registered until the courier collects the parcel. A sender delivering to a logistics centre
+  itself has no posting or collection scan: the centre's receipt right after the parcel's creation
+  is then the acceptance.
 - A parcel stored in a nearby locker while its own is full is ready for pickup there, since
   the same code opens it. When that storage expires it is in transit again, on its way to
   the chosen locker.

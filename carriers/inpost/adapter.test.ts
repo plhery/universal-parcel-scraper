@@ -84,7 +84,8 @@ describe('InPost response parsing', () => {
     expect(result.events?.map((event) => [event.description, event.stage, event.time])).toEqual([
       ['Delivered', 'delivered', '2026-05-04T10:00:00+02:00'],
       ['Ready for pickup', 'ready_for_pickup', '2026-05-03T09:00:00+02:00'],
-      ['Moving', 'in_transit', '2026-05-02T12:00:00+02:00'],
+      // The logistics centre's receipt, with nothing before it that moved the parcel, is the acceptance.
+      ['Moving', 'accepted', '2026-05-02T12:00:00+02:00'],
       ['Registered', 'registered', '2026-05-01T08:00:00+02:00'],
     ]);
     expect(result.events?.map((event) => event.location)).toEqual(['Exampletown (DE)', 'Exampletown (DE)', 'EXAMPLE HUB (PL)', '']);
@@ -205,6 +206,22 @@ describe('InPost response parsing', () => {
     const alone = parseInpostTrackingResponse(parcel({ status: 'LMD.3013', trackingDetails: [redirect] }), TRACKING_NUMBER);
     expect(alone).toMatchObject({ status: 'unknown' });
     expect(alone.events?.[0]?.stage).toBeUndefined();
+  });
+
+  it("reads the logistics centre's receipt as the acceptance when nothing before it moved the parcel", () => {
+    const created = { status: 'CRE.1001', statusTitle: 'Przesyłka utworzona', datetime: '2026-05-04T07:27:00+02:00' };
+    const received = { status: 'MMD.1001', statusTitle: 'Przyjęta w Centrum Logistycznym', datetime: '2026-05-04T10:54:00+02:00' };
+    const next = { ...received, datetime: '2026-05-04T23:11:00+02:00' };
+    const first = parseInpostTrackingResponse(parcel({ status: 'MMD.1001', trackingDetails: [received, created] }), TRACKING_NUMBER);
+    expect(first).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(first.events?.map((event) => event.stage)).toEqual(['accepted', 'registered']);
+    const second = parseInpostTrackingResponse(parcel({ status: 'MMD.1001', trackingDetails: [next, received, created] }), TRACKING_NUMBER);
+    expect(second).toMatchObject({ current_stage: 'in_transit' });
+    expect(second.events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+    // After a collection, the receipt is a step on the way.
+    const collected = { status: 'FMD.1002', statusTitle: 'Odebrana od Nadawcy', datetime: '2026-05-04T09:00:00+02:00' };
+    expect(parseInpostTrackingResponse(parcel({ status: 'MMD.1001', trackingDetails: [received, collected, created] }), TRACKING_NUMBER)
+      .events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
   });
 
   it('keeps the stage a parcel had through a delay notice', () => {
