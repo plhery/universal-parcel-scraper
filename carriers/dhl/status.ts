@@ -75,10 +75,10 @@ export function movedParcel(text: string): boolean {
 /**
  * The return starting or under way: "The shipment is returned to the sender" after a failed round,
  * the English of "wird … an den Absender zurückgesandt", "is returning to sender" and "auf dem Weg
- * zurück zum Absender". The parcel goes back from here, so it is returned, as the scans after it
- * that carry it back are (`returnTrip`).
+ * zurück zum Absender", or "auf dem Weg zum Absender" after DHL repacked a damaged parcel. The parcel
+ * goes back from here, so it is returned, as the scans after it that carry it back are (`returnTrip`).
  */
-const RETURN_UNDER_WAY = /\bis (?:being )?returned to (?:the )?sender\b|\bis returning to (?:the )?sender\b|\bauf dem weg zurück zum absender\b|\bwird\b[^.]*\bzurück(?:gesandt|geschickt)\b/;
+const RETURN_UNDER_WAY = /\bis (?:being )?returned to (?:the )?sender\b|\bis returning to (?:the )?sender\b|\bis now on (?:its|the) way to (?:the )?sender\b|\bauf dem weg (?:zurück )?zum absender\b|\bwird\b[^.]*\bzurück(?:gesandt|geschickt)\b/;
 
 export function stageForText(text: string, fallback = 'in_transit'): string {
   const value = text.toLowerCase().replace(/\b(\d{1,2})\.(?=\s*(?:januar|februar|märz|april|mai|juni|juli|august|september|oktober|november|dezember)\b)/g, '$1');

@@ -365,6 +365,8 @@ describe('DHL public tracking normalization', () => {
     ['Der Empfänger hat die Sendung innerhalb der siebentägigen Lagerfrist nicht in der Filiale abgeholt.', 'exception', 'exception'],
     ['Die Sendung wurde nicht abgeholt und wird zurückgesandt.', 'returned', 'exception'],
     ['Die Sendung befindet sich auf dem Weg zurück zum Absender.', 'returned', 'exception'],
+    // Repacked after damage to its outer packaging and sent back: the return under way, not a problem.
+    ['Aufgrund einer Beschädigung der Umverpackung wurde die Sendung von DHL nachverpackt und befindet sich jetzt auf dem Weg zum Absender.', 'returned', 'exception'],
     ['The shipment will be returned.', 'exception', 'exception'],
     ['The shipment has been returned to the sender', 'returned', 'exception'],
     // The English of "wird an den Absender zurückgesandt", after a failed round: the return starts.
