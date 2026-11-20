@@ -94,7 +94,9 @@ to the destination's last-mile carrier, so it stays in transit, as does a
 courier partner's acceptance; only the latest event's delivered code marks a
 delivery. A relayed notice, such as a reminder that failed to send, gets no
 stage, and the scan before it gives the status. "Handed over to the courier"
-follows DHL Parcel Netherlands, which files it as out for delivery.
+follows DHL Parcel Netherlands, which files it as out for delivery. A parcel its sender
+brings to the origin facility has no pick-up scan, so that facility's arrival, when no
+scan moved the parcel before it, is the acceptance.
 
 After YunExpress hands a parcel to China Post, the feed relays China Post's
 scans in Chinese. An arrival or a departure names its office in 【】 right

@@ -196,6 +196,16 @@ describe('YunExpress captured response projection', () => {
     expect(result.events?.some((event) => !event.description)).toBe(false);
   });
 
+  it("reads the origin facility's arrival as the acceptance when no pick-up came before it", () => {
+    const arrival = (payload: ReturnType<typeof fixture>) => parse(payload, NUMBER).events?.find((event) => event.description === 'Arrived at origin facility');
+    expect(arrival(fixture())).toMatchObject({ stage: 'in_transit' });
+    const payload = fixture();
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    const pickup = rows.find((row: { ProcessContent: string }) => row.ProcessContent.startsWith('Shipment picked up'))!;
+    pickup.ProcessContent = 'Order submitted----Example facility';
+    expect(arrival(payload)).toMatchObject({ stage: 'accepted' });
+  });
+
   it("stages China Post's relayed scans, moves the office of an arrival or departure into its place and shows them in English", () => {
     const payload = fixture();
     const item = payload.ResultList[0];

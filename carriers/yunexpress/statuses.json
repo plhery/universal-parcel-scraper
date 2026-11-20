@@ -100,7 +100,8 @@
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-09-28"
+      "firstSeen": "2026-09-28",
+      "note": "With no pick-up scan before it, the parcel's sender brought it in: the adapter reads it as the acceptance."
     },
     {
       "wording": "Shipment picked up",

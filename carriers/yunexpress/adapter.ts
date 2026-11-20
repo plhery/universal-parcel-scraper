@@ -299,6 +299,13 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   if (!events.length) throw new IndeterminateError('YunExpress');
   keepBrokerAfterClearance(events);
+  // A parcel its sender brings to the origin facility has no pick-up: that facility's arrival, the first scan to move
+  // it, is YunExpress taking it in.
+  const first = [...events].reverse().find((event) => event.stage && event.stage !== 'registered' && event.stage !== 'pending');
+  if (first?.stage === 'in_transit' && /^arrived at origin facility$/i.test(first.description ?? '')) {
+    first.stage = 'accepted';
+    if (first === decider) current = { status: 'in_transit', stage: 'accepted' };
+  }
   if (decider?.stage_source === 'none' && current) current = { status: current.status, stage: decider.stage as ClassifiedStatus['stage'] };
   if (Array.isArray(info.TrackEventDetails) && info.TrackEventDetails.length > scans) {
     throw new IndeterminateError('YunExpress', 'YunExpress returned incomplete parcel history');
