@@ -63925,6 +63925,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "volaris-cargo": {
+    "displayName": "Volaris Cargo",
+    "color": "#A12885",
+    "aliases": [
+      "Volaris Air Cargo",
+      "Volaris Carga"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "volaris-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "vozovoz": {
     "displayName": "Vozovoz",
     "color": "#ec1b22",
@@ -69467,6 +69490,7 @@ export const CARRIER_IDS = [
   "vitran-express",
   "vnlin",
   "vnpost",
+  "volaris-cargo",
   "vozovoz",
   "vrl-logistics",
   "vt-freight-express",
@@ -71427,6 +71451,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "vitran-express": [],
   "vnlin": [],
   "vnpost": [],
+  "volaris-cargo": [],
   "vozovoz": [],
   "vrl-logistics": [],
   "vt-freight-express": [],

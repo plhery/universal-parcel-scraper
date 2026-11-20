@@ -1,0 +1,60 @@
+{
+  "id": "volaris-cargo",
+  "displayName": "Volaris Cargo",
+  "aliases": [
+    "Volaris Air Cargo",
+    "Volaris Carga"
+  ],
+  "region": {
+    "countries": [
+      "MX"
+    ]
+  },
+  "brand": {
+    "color": "#A12885"
+  },
+  "selectable": true,
+  "timezone": "America/Mexico_City",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "volaris-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "searchUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "canaryUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "weight",
+      "flight",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "weight",
+      "flight",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

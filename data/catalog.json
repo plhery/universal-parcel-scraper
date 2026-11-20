@@ -63921,6 +63921,29 @@
     ],
     "detectionRules": []
   },
+  "volaris-cargo": {
+    "displayName": "Volaris Cargo",
+    "color": "#A12885",
+    "aliases": [
+      "Volaris Air Cargo",
+      "Volaris Carga"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "volaris-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "vozovoz": {
     "displayName": "Vozovoz",
     "color": "#ec1b22",

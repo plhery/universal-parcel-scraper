@@ -5974,5 +5974,10 @@
     "carrier": "aeromexico-cargo",
     "kind": "open",
     "reason": "The carrier-issued AWB starts with 139. Numeric shapes overlap other carriers, so select Aeroméxico Cargo explicitly."
+  },
+  {
+    "carrier": "volaris-cargo",
+    "kind": "open",
+    "reason": "The published Volaris air waybill starts with 036, which overlaps generic numeric recognition shapes. Select Volaris Cargo explicitly."
   }
 ]
