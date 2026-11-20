@@ -1,0 +1,7 @@
+{
+  "carrier": "lerdex",
+  "entries": [
+    {"wording": "received Shipment.", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The warehouse in China took the parcel in."},
+    {"wording": "item Despatched To Transshipment Hub.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Sent on from the warehouse to the line's hub."}
+  ]
+}

@@ -36714,6 +36714,28 @@
     ],
     "detectionRules": []
   },
+  "lerdex": {
+    "displayName": "Lerdex",
+    "color": "#8e8e93",
+    "aliases": [
+      "LERDEX",
+      "乐易汇"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lerdex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://website.bestdealer.com/tracking.html",
+    "trackingSearchUrl": "https://website.bestdealer.com/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "letter-track": {
     "displayName": "LetterTrack",
     "color": "#6c9dce",

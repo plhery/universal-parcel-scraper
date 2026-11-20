@@ -5503,5 +5503,10 @@
     "carrier": "whwdt",
     "kind": "open",
     "reason": "One confirmed waybill, a letter, twelve digits and a letter, is too few to tell its series from other carriers' numbers. The ITDIDA lookup supports explicit selection."
+  },
+  {
+    "carrier": "lerdex",
+    "kind": "open",
+    "reason": "One confirmed number, letters, digits and YQ, is too few to tell its series from other forwarders' numbers. The tracking page's lookup supports explicit selection."
   }
 ]

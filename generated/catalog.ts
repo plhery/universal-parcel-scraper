@@ -36718,6 +36718,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "lerdex": {
+    "displayName": "Lerdex",
+    "color": "#8e8e93",
+    "aliases": [
+      "LERDEX",
+      "乐易汇"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lerdex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://website.bestdealer.com/tracking.html",
+    "trackingSearchUrl": "https://website.bestdealer.com/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "letter-track": {
     "displayName": "LetterTrack",
     "color": "#6c9dce",
@@ -66344,6 +66366,7 @@ export const CARRIER_IDS = [
   "lbtx",
   "leman",
   "leopards-courier",
+  "lerdex",
   "letter-track",
   "lex-id",
   "lex-my",
@@ -68210,6 +68233,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lbtx": [],
   "leman": [],
   "leopards-courier": [],
+  "lerdex": [],
   "letter-track": [],
   "lex-id": ["lex-id-1"],
   "lex-my": ["lex-my-1"],
