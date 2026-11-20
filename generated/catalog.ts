@@ -20953,6 +20953,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dps-cargo": {
+    "displayName": "DPS Cargo",
+    "color": "#0054aa",
+    "aliases": [
+      "DPS Cargo Indonesia",
+      "PT Tadulako Awal Kreasi"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Makassar",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dps-cargo"
+    },
+    "canaryUrl": "https://dpscargo.co.id/lacak",
+    "trackingUrlTemplate": "https://dpscargo.co.id/lacak",
+    "trackingSearchUrl": "https://dpscargo.co.id/lacak",
+    "trackingSiteName": "DPS Cargo Lacak Kiriman",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dpx-logistics": {
     "displayName": "DPX Logistics",
     "color": "#003b66",
@@ -66541,6 +66564,7 @@ export const CARRIER_IDS = [
   "dpdex",
   "dpe-express",
   "dpex",
+  "dps-cargo",
   "dpx-logistics",
   "dragon-star-curier",
   "drop2shop",
@@ -68433,6 +68457,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpdex": ["dpdex-1"],
   "dpe-express": [],
   "dpex": [],
+  "dps-cargo": [],
   "dpx-logistics": [],
   "dragon-star-curier": [],
   "drop2shop": ["drop2shop-1"],

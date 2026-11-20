@@ -5639,5 +5639,10 @@
     "carrier": "litegua-cargo",
     "kind": "open",
     "reason": "An eleven-digit numeric guide shares its shape with other carriers. Litegua Express prints the full guide number in its electronic lookup."
+  },
+  {
+    "carrier": "dps-cargo",
+    "kind": "open",
+    "reason": "The public portal confirms the full DPS shipment number. The adapter accepts it through explicit carrier selection."
   }
 ]

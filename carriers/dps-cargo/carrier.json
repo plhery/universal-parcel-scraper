@@ -1,0 +1,56 @@
+{
+  "id": "dps-cargo",
+  "displayName": "DPS Cargo",
+  "aliases": [
+    "DPS Cargo Indonesia",
+    "PT Tadulako Awal Kreasi"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#0054aa"
+  },
+  "selectable": true,
+  "timezone": "Asia/Makassar",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dps-cargo",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://dpscargo.co.id/lacak",
+    "searchUrl": "https://dpscargo.co.id/lacak",
+    "canaryUrl": "https://dpscargo.co.id/lacak",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "weight",
+      "pieces"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "eta",
+      "weight",
+      "pieces"
+    ],
+    "unavailable": [],
+    "siteName": "DPS Cargo Lacak Kiriman"
+  },
+  "links": [],
+  "detection": []
+}
