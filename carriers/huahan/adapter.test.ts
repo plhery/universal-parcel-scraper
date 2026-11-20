@@ -181,7 +181,10 @@ describe('HuaHan guest tracking', () => {
     };
     const handed = transfer({ Local_Carrier: '', Local_Number: 'HZZX000000001' });
     expect(handed).toMatchObject({ delivery_carrier: 'ups', delivery_tracking_number: '1Z999AA10123456784' });
-    expect(handed.events?.find((event) => event.description?.startsWith('转单'))).toMatchObject({ stage: 'in_transit' });
+    // The row moves nothing: it keeps the stage of the scan before it.
+    const row = handed.events!.findIndex((event) => event.description?.startsWith('转单'));
+    expect(handed.events![row]).toMatchObject({ stage: handed.events![row + 1]!.stage, stage_source: 'none' });
+    expect(handed.events![row]!.stage).toBeTruthy();
     // A carrier the partner fields name keeps its number; a number no carrier's rules claim at high confidence names none.
     expect(transfer({ Local_Carrier: 'USPS', Local_Number: '9400100000000000000000' }).delivery_carrier).toBe('usps');
     expect(transfer({ Local_Carrier: '', Local_Number: 'HZZX000000001' }, '转单:1Z999AA10123456785')).toMatchObject({

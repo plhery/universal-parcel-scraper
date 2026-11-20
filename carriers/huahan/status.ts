@@ -101,9 +101,8 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^快件抵达机场，预计\d{1,2}号航班飞/, 'in_transit'],
   [/^航班延误，重新配载至\d{1,2}号航班飞/, 'in_transit'],
   [/^目的国清关完成/, 'in_transit'],
-  // The pallet broken down after the flight's arrival, and the number the parcel was transferred under.
+  // The pallet broken down after the flight's arrival.
   [/^拆板中/, 'in_transit'],
-  [/^转单[:：]/, 'in_transit'],
   [/^departed shipping partner facility\b/, 'in_transit'],
   // USPS's facility scans, the facility after a comma: USPS takes the parcel over from HuaHan,
   // which accepted it in China, and moves it on. Its pre-advice comes while HuaHan still has it.
@@ -124,9 +123,15 @@ const GAPS = [{
   note: "Landmark Global's processing of the sender's data at the minute of its upload, relayed without a code before HuaHan's receipt in China: it moves nothing, so it keeps the stage of the scan before it and names no place.",
 }];
 const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
+// The number the parcel was transferred under, given alone: it moves nothing.
+const TRANSFER = /^转单[:：]/;
+const TRANSFER_NOTE = 'The number the parcel was transferred under, given alone without a code: it moves nothing, so it keeps the stage of the scan before it.';
 
 /** Whether a scan is a notice relayed without a code: it keeps the stage of the scan before it. */
-export const huahanNotice = (code: string, wording: string): boolean => !code && GAP_WORDINGS.has(normalizeStatusWording(wording));
+export const huahanNotice = (code: string, wording: string): boolean => {
+  const key = normalizeStatusWording(wording);
+  return !code && (GAP_WORDINGS.has(key) || TRANSFER.test(key));
+};
 
 // HuaHan's own codes are two capitals; a provider relaying its scans puts its own code on them.
 const OWN_CODE = /^[A-Z]{2}$/;
@@ -153,7 +158,7 @@ function mappedStage(code: string, wording: string): Stage | undefined {
 /** A scan's stage: its code or wording in the map, else the shared rules, else nothing. A recorded gap has none. */
 export function huahanStage(code: string, wording: string): ClassifiedWording | null {
   const key = normalizeStatusWording(wording);
-  if (!code && GAP_WORDINGS.has(key)) return null;
+  if (huahanNotice(code, wording)) return null;
   const stage = mappedStage(code, key);
   if (stage) return { stage, source: 'carrier_map' };
   const classified = classifyWording(wording, 'pending');
@@ -163,4 +168,5 @@ export function huahanStage(code: string, wording: string): ClassifiedWording | 
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => mappedStage(code ?? '', wording),
   gaps: GAPS,
+  gapNote: (code, wording) => (!code && TRANSFER.test(wording) ? TRANSFER_NOTE : undefined),
 };
