@@ -214,6 +214,10 @@ capture failure.
   403.
 - Signed full-mode `fetch` inside the verified browser: works, but the results page
   already makes that request.
+- The same flow without the pages (a Turnstile token for the widget's site key on a blank
+  document, then signed check and get calls sent from it): no faster. Turnstile takes
+  longer to give its token there than in the widget, more than the two page loads save,
+  and the helper would hold the signing constant.
 - The RapidAPI integration (`IrisKoBar/app_delivery_tracking`): a separate paid service.
 
 ## Testing

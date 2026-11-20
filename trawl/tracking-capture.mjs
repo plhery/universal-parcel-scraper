@@ -17,6 +17,31 @@ export function reserveDeadline(capture, reserveMs) {
     settle: budgetMs => capture.settle(early(budgetMs)) };
 }
 
+// TRAWL waits for a page's load event and a quiet network before it asks the
+// capture anything, and a provider's page keeps loading long after its tracker
+// works. A capture that knows when its page can be used ends those waits there.
+const readyPages = new WeakMap();
+export async function untilPageReady(wait, page) {
+  const ready = page ? readyPages.get(page)?.() : undefined;
+  if (!ready) return wait;
+  wait.catch(() => {});
+  await Promise.race([wait, ready]);
+}
+
+// Pictures, fonts, advertising and measurement on a provider's page, which no
+// lookup reads. Navigations and Cloudflare's checks are never among them.
+const UNREAD_TYPES = new Set(['image', 'font', 'media']);
+const UNREAD_HOSTS = ['doubleclick.net', 'googlesyndication.com', 'googletagmanager.com', 'google-analytics.com',
+  'fundingchoicesmessages.google.com', 'adtrafficquality.google', 'mc.yandex.ru'];
+export function unreadByLookup(request) {
+  let url;
+  try { url = new URL(request.url()); } catch { return false; }
+  if (!/^https?:$/.test(url.protocol) || request.isNavigationRequest()
+    || url.hostname === 'challenges.cloudflare.com' || url.pathname.startsWith('/cdn-cgi/')) return false;
+  return UNREAD_TYPES.has(request.resourceType())
+    || UNREAD_HOSTS.some(host => url.hostname === host || url.hostname.endsWith(`.${host}`));
+}
+
 /** Australia Post's application module, whose public client configuration names the tracking API's key. */
 const AUSTRALIA_POST_MODULE = /^\/mypost\/track\/assets\/index-[\w-]+\.js$/;
 /** DataDome's tag reports the browser here; the answer carries the cookie the tracking request needs. */
@@ -342,6 +367,12 @@ const SITES = [
   {
     api: 'https://postal.ninja/track/get',
     checkApi: 'https://postal.ninja/track/check',
+    lean: true,
+    // The widget mounts its form together with its handlers.
+    ready(page) {
+      return page.frameLocator('iframe[title="Package tracking widget"]').locator('form.tracker button[type="submit"]')
+        .waitFor({ state: 'visible', timeout: 15_000 });
+    },
     number(page) {
       if (page.origin !== 'https://postal.ninja' || page.pathname !== '/en/tools' || page.search) return null;
       // Private integration marker, not an upstream tracking deep link.
@@ -387,6 +418,9 @@ const SITES = [
     api: 'https://t.17track.net/track/restapi',
     provider: '17TRACK',
     requestMethod: 'POST',
+    lean: true,
+    // The page asks for the number by itself once its application runs.
+    readyOnRequest: true,
     number(page) {
       if (page.origin !== 'https://t.17track.net' || page.pathname !== '/en') return null;
       const number = new URLSearchParams(page.hash.slice(1)).get('nums');
@@ -535,6 +569,8 @@ export async function attachTrackingCapture(page, url, options) {
   const number = site.number(target);
   const state = {};
   if (site.setup && (!site.prepareFor || site.prepareFor(target))) await site.setup(page, number, state, options, target);
+  // TRAWL's outbound policy is already routed on this page and still sees what passes here.
+  if (site.lean) await page.route('**/*', route => unreadByLookup(route.request()) ? route.abort('blockedbyclient') : route.fallback());
   const api = site.apiForNumber ? site.apiForNumber(number)
     : site.api + (site.queryNumber ? `?trackingIds=${number}` : site.perNumber ? number : '');
   if (site.perNumber) {
@@ -568,7 +604,9 @@ export async function attachTrackingCapture(page, url, options) {
   const matchesRequest = request => accepting && request.url() === api
     && request.method() === (site.requestMethod ?? 'GET')
     && (!site.requestMatches || site.requestMatches(request, number, target));
-  const onRequest = request => { if (matchesRequest(request)) trackingRequested = true; };
+  let begin;
+  const begun = new Promise(resolve => { begin = resolve; });
+  const onRequest = request => { if (matchesRequest(request)) { trackingRequested = true; begin(); } };
   const onRequestFailed = request => {
     if (!matchesRequest(request)) return;
     const code = request.failure()?.errorText;
@@ -635,6 +673,12 @@ export async function attachTrackingCapture(page, url, options) {
   if (observesRequests) {
     page.on('request', onRequest);
     page.on('requestfailed', onRequestFailed);
+  }
+  if (site.ready || site.readyOnRequest) {
+    let pageReady;
+    // A page that never becomes usable leaves TRAWL's own waits in charge.
+    readyPages.set(page, () => pageReady ??= site.ready
+      ? site.ready(page).then(() => {}, () => new Promise(() => {})) : Promise.race([begun, ready]));
   }
   return {
     // Called by both TRAWL browser tiers after navigation and before solving.
@@ -734,6 +778,7 @@ export async function attachTrackingCapture(page, url, options) {
     async drain() {
       site.cleanup?.(state);
       accepting = false;
+      readyPages.delete(page);
       page.off('response', onResponse);
       if (observesRequests) {
         page.off('request', onRequest);

@@ -250,6 +250,11 @@ DHL Express waits for the public
 page to complete verification and repeat tracking after an intermediate HTTP 428.
 17TRACK submits a supplied postcode through the site's form and binds the capture to
 the number and postcode in its outgoing request.
+TRAWL waits for a page's load event and a quiet network before it asks a capture anything. 17TRACK's
+capture ends those waits once the page asks for the number, and Postal Ninja's once its widget shows
+the form: both pages keep loading long after their tracker works. Their pages also drop pictures,
+fonts, media and the advertising and measurement hosts they load, which no lookup reads; navigations
+and Cloudflare's checks always pass, and a Cloudflare wall keeps TRAWL's waits.
 UPS binds the browser POST to one tracking ID and retains the latest bounded
 response sequence, including refusals after the body extraction budget is spent.
 SwiftX's page clears Cloudflare's managed challenge and offers a slider when Turnstile
