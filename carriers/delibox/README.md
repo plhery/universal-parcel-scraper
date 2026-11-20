@@ -1,26 +1,20 @@
 # Delibox
 
-Delibox parcels use enabled universal providers. There is no dedicated adapter.
+Delibox delivers parcels in South Korea. Select Delibox explicitly and enter the
+waybill number from the shop's shipment notice.
 
-Delibox (딜리박스) is the last-mile delivery brand of the Korean newspaper JoongAng Ilbo, which wholly
-owns its operator, 딜리박스중앙. It delivers for online shops, retailers and other carriers from the
-newspaper's city distribution hubs, by motorbike and van, and also runs mid-mile transport. Its site
-is dbox.co.kr.
+## Retrieval
 
-## Numbers
+The [public tracking popup](https://www.dbox.co.kr/delivery.php) reads a waybill from
+`laasInvcNo` and renders a dated scan table. The waybill must match the number in the
+result's shipment details. The popup uses the same alert for an invalid waybill and a
+lookup error, so the adapter reports that reply as inconclusive.
 
-Its tracker takes a waybill number. No public page shows one, so there is no rule.
-
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Links
-
-The tracking box opens `www.dbox.co.kr/delivery.php?laasInvcNo=<number>` in a pop-up, and the
-library reads the number from `laasInvcNo`.
+The adapter orders the scan table by its Korean local times. It reads locations shown
+in brackets before scan notes. The progress graphic also shows milestones the parcel
+has yet to reach. The adapter uses the dated scan rows for status and leaves worker
+contacts and the delivery photo out of tracking.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`DELIBOX_TRACKING_NUMBER=… DELIBOX_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/delibox`

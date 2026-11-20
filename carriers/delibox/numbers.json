@@ -34,6 +34,35 @@
         ]
       },
       "note": "The archived popup from Delibox's own tracker displays the waybill number, the delivery-complete status and a dated scan history."
+    },
+    {
+      "number": "2721200063814",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.birthday0820.co.kr/2025/11/blog-post_18.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Musinsa shipment",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The Delibox popup displays this published Musinsa reference and its dated delivery history. The source does not identify who issued the thirteen-digit reference."
     }
   ]
 }
