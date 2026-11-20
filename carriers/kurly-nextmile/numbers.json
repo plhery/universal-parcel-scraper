@@ -1,5 +1,47 @@
 {
   "carrier": "kurly-nextmile",
-  "gap": "No public page shows a Kurly Next Mile number.",
-  "records": []
+  "records": [
+    {
+      "number": "210-S0-JA9R1K0011126-0001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260704053349id_/https://www.kurlynextmile.com/information/invoice?invoice_no=210-S0-JA9R1K0011126-0001",
+        "date": "2026-07-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "South Korea last-mile delivery",
+        "reportedRole": "invoice waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archived official invoice-tracking link carries the exact identifier. The archived and live HTML return the tracking form and its generic example events without a result tied to this invoice."
+    },
+    {
+      "number": "235-S0-JA9OFK0067672-0001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260622100230id_/https://www.kurlynextmile.com/information/invoice?invoice_no=235-S0-JA9OFK0067672-0001",
+        "date": "2026-06-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "South Korea last-mile delivery",
+        "reportedRole": "invoice waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archived official invoice-tracking link carries the exact identifier. The archived and live HTML return the tracking form and its generic example events without a result tied to this invoice."
+    }
+  ]
 }
