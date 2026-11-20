@@ -11,7 +11,7 @@ function comparable(wording: string): string {
  * another falls to the shared wording rules.
  */
 const WORDINGS: ReadonlyMap<string, Stage> = new Map([
-  ['MERCANCIA RECOGIDA', 'accepted'], // Collected from the sender.
+  ['MERCANCIA RECOGIDA', 'accepted'], // Collected from the sender; after a scan in transit the parser reads a branch receiving it.
   ['EN TRANSITO INTERNACIONAL / IN INTERNATIONAL TRANSIT', 'in_transit'],
   ['SALIDA EN RUTA NACIONAL', 'in_transit'], // Left on the line haul to the delivering branch.
   ['EL ENVIO HA LLEGADO A TU DELEGACION MAS CERCANA', 'in_transit'], // At the delivering branch.

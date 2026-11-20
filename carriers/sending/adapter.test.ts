@@ -85,6 +85,20 @@ describe('Sending tracking adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/REF0000001|Vecino|Corregir|Caserio|00001/);
   });
 
+  it('reads a collection after the parcel moved on, from abroad for instance, as a step in transit', () => {
+    const received = edit($ => {
+      $('#tracking tr').slice(0, 7).remove();
+      $('#tracking td.info h1').first().text('Mercancia recogida');
+    }, page('in-transit'));
+    const result = parseSending(received, IN_TRANSIT);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
+      last_status_text: 'Mercancia recogida', last_update_local: '2026-10-14T01:05:00' });
+    expect(result.events?.map(event => [event.description, event.stage])).toEqual([
+      ['Mercancia recogida', 'in_transit'], ['En transito internacional / in international transit', 'in_transit'],
+      ['Mercancia recogida', 'accepted'],
+    ]);
+  });
+
   it('takes the rail\'s end phase over the last scan: a parcel written off as missing, or delivered without its scan', () => {
     const missing = parseSending(page('missing'), MISSING);
     expect(missing).toMatchObject({ status: 'exception', current_stage: 'exception', current_stage_source: 'carrier_map',

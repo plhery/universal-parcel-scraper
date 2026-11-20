@@ -4,7 +4,7 @@
     {"wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "source", "note": "Quoted from Sending's tracking in an OCU complaint."},
     {"wording": "Ausente", "stage": "failed_attempt", "language": "es", "confirmedBy": "source", "note": "Quoted from Sending's tracking in an OCU complaint: recipient absent at the delivery attempt."},
     {"wording": "en reparto", "stage": "out_for_delivery", "language": "es", "confirmedBy": "source", "note": "Quoted from Sending's tracking in an OCU complaint."},
-    {"wording": "Mercancia recogida", "stage": "accepted", "language": "es", "confirmedBy": "portal", "note": "Collected from the sender."},
+    {"wording": "Mercancia recogida", "stage": "accepted", "language": "es", "confirmedBy": "portal", "note": "Collected from the sender. After a scan in transit, an international parcel's arrival for instance, it is a branch receiving the parcel, read as a step in transit."},
     {"wording": "En transito internacional / in international transit", "stage": "in_transit", "language": "es", "confirmedBy": "portal"},
     {"wording": "Salida en ruta nacional", "stage": "in_transit", "language": "es", "confirmedBy": "portal", "note": "Left on the line haul to the delivering branch."},
     {"wording": "Reception in the delegation", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "ParcelsApp's English for \"Mercancia recogida\", at the same minute as the tracker's scan; stored as that wording."},

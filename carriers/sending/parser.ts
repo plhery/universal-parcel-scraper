@@ -22,6 +22,8 @@ const CLOCK = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
 const PHASE = /\bvar estado = "([A-Z]{2,8})";/g;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
+/** Stages a parcel has before it moves; a collection after any other stage is a branch receiving it. */
+const EARLY: ReadonlySet<Stage> = new Set(['registered', 'accepted']);
 
 /** A Sending shipment number: twelve digits, leading zeros included. */
 export function normalizeSendingNumber(raw: string): string {
@@ -120,8 +122,10 @@ export function parseSending(html: string, raw: string): CarrierResult {
     }
     const staged = sendingStage(event.description!);
     if (!staged) continue;
-    Object.assign(event, { stage: staged.stage, stage_source: staged.source });
-    previous = staged.stage;
+    // A collection after the parcel moved on, from abroad for instance, is a branch receiving it: a step in transit.
+    const stage = staged.stage === 'accepted' && previous && !EARLY.has(previous) ? 'in_transit' : staged.stage;
+    Object.assign(event, { stage, stage_source: staged.source });
+    previous = stage;
   }
 
   const decider = events.find(event => event.stage && event.stage_source !== 'none');
