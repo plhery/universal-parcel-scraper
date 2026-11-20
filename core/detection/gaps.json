@@ -5132,5 +5132,11 @@
     "pattern": "^(?:B[0-9]{9}|BGK[0-9]{8}|3126[0-9]{12})$",
     "kind": "open",
     "reason": "Published delivery complaints identify these codes as Bir Günde Kargo parcel references. Detection does not offer the carrier for these examples."
+  },
+  {
+    "carrier": "baikal-service",
+    "pattern": "^[А-ЯЁ]{3}[0-9]{6}$",
+    "kind": "open",
+    "reason": "A Russian arbitration decision quotes Baikal Service tracking under this Cyrillic waybill shape. Detection does not offer Baikal Service."
   }
 ]
