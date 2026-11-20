@@ -3142,6 +3142,18 @@
     "reason": "REX Indonesia's older twelve-digit waybills share their shape with many carriers' numeric waybills."
   },
   {
+    "carrier": "rhenus-it",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "A confirmed Rhenus Italia home delivery number has nine digits followed by a hyphen and two digits. Detection does not offer Rhenus Italia."
+  },
+  {
+    "carrier": "rhenus-it",
+    "pattern": "^OU\\d{10}$",
+    "kind": "open",
+    "reason": "A confirmed Rhenus Italia home delivery number starts with OU and has ten digits after the prefix. Detection does not offer Rhenus Italia."
+  },
+  {
     "carrier": "rivigo",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
