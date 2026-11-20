@@ -4688,5 +4688,11 @@
     "pattern": "^TSPX\\d{11}$",
     "kind": "by_design",
     "reason": "Paxel’s guest form confirms a merchant TSPX reference, but no issuer specification establishes ownership of the wider prefix. It is accepted only for a parcel filed to Paxel."
+  },
+  {
+    "carrier": "jetizz",
+    "pattern": "^26[0-9]{8}$",
+    "kind": "open",
+    "reason": "Jetizz customers report this family of ten-digit waybills. Other carriers share the numeric length and detection does not offer Jetizz."
   }
 ]

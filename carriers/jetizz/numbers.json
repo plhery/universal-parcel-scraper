@@ -1,5 +1,98 @@
 {
   "carrier": "jetizz",
-  "gap": "Its tracker asks for a CAPTCHA, so no public number can be checked.",
-  "records": []
+  "records": [
+    {
+      "number": "2601794363",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/jetizz/jetizz-kargosunun-3-gun-subede-kalmasi-ve-bilgilendirme-yoklugu",
+        "date": "2026-11-13",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkey domestic parcels",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The recipient explicitly names Jetizz, quotes the complete number and reports tracking history. The official form has documented image verification and returned a redirect loop during the public visit, so no number was submitted."
+    },
+    {
+      "number": "2600370624",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/jetizz/jetizz-teslim-edilmeyen-kargo-ve-yaniltici-iade-sureci",
+        "date": "2026-06-08",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkey domestic parcels",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The recipient names Jetizz as the carrier and quotes the exact tracking number for an Incehesap order. The official form has documented image verification and returned a redirect loop during the public visit, so no number was submitted."
+    },
+    {
+      "number": "6509954188019",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/jetizz/jetizz-kargosunun-teslimat-gecikmesi-ve-musteri-hizmetleri-sorunu",
+        "date": "2026-10-15",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkey domestic parcels",
+        "reportedRole": "tracking number",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The recipient reports a Jetizz delivery and quotes a tracking history. It is unclear whether Jetizz or partner Aras Kargo issued this thirteen-digit family. The official Jetizz form has documented image verification and returned a redirect loop during the public visit, so no number was submitted."
+    }
+  ]
 }
