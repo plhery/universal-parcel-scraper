@@ -12,7 +12,9 @@ rule.
 
 ## Why there is no adapter
 
-Its tracker needs a slider CAPTCHA before each lookup.
+The tracker's slider CAPTCHA is checked only in the page: `set_code.asp` keeps the page's random key in a
+cookie, and `track.asp` then answers the numbers posted with that key, as an HTML fragment after `0|`. No
+public number has shown a known parcel's reply, so a found reply has not been seen.
 
 ## Links
 
