@@ -1,5 +1,26 @@
 {
   "carrier": "chronopost-ma",
-  "gap": "No public page shows a Chronopost Maroc number.",
-  "records": []
+  "records": [
+    {
+      "number": "BY000870933JB",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210411173718/https://chronopost.ma/suivez-votre-envoi?SendingNumber=BY000870933JB",
+        "date": "2021-04-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "reportedRole": "tracking form query",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "The archived Chronopost Maroc link carries this identifier and the response shows an empty tracking form. Network attribution is unresolved. Lookup blocked by verification. The current tracking form requires reCAPTCHA."
+    }
+  ]
 }
