@@ -51717,6 +51717,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "saco-shipping-line": {
+    "displayName": "SACO Shipping Line",
+    "color": "#043C70",
+    "aliases": [
+      "SACO Shipping GmbH",
+      "SACO Shipping Line Limited",
+      "SSLL"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "saco-shipping-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://sacoshipping.com/track/",
+    "trackingUrlTemplate": "https://sacoshipping.com/track/",
+    "trackingSearchUrl": "https://sacoshipping.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "saee": {
     "displayName": "Saee",
     "color": "#ff6b00",
@@ -68829,6 +68853,7 @@ export const CARRIER_IDS = [
   "russian-post",
   "rxo",
   "ryder-last-mile",
+  "saco-shipping-line",
   "saee",
   "safeway-express-cargo",
   "safexpress",
@@ -70778,6 +70803,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "russian-post": ["russian-post-1","russian-post-own","russian-post-s10"],
   "rxo": [],
   "ryder-last-mile": [],
+  "saco-shipping-line": [],
   "saee": ["saee-1"],
   "safeway-express-cargo": ["safeway-express-cargo-1"],
   "safexpress": [],

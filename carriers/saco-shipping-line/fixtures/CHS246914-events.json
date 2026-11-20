@@ -1,0 +1,169 @@
+{
+  "success": true,
+  "data": [
+    {
+      "status_code": 71,
+      "status_name": "Delivery/Release Order Issued",
+      "un_code": "USCHS",
+      "date_time": "2026-10-07 13:58:00"
+    },
+    {
+      "status_code": 70,
+      "status_name": "Freight Available",
+      "un_code": "USCLT",
+      "date_time": "2026-10-07 11:45:00"
+    },
+    {
+      "status_code": 68,
+      "status_name": "Arrived at Destination CFS",
+      "un_code": "USCLT",
+      "date_time": "2026-10-07 11:45:00"
+    },
+    {
+      "status_code": 101,
+      "status_name": "In Transit to Inland CFS",
+      "un_code": "USCHS",
+      "date_time": "2026-10-05 13:00:00"
+    },
+    {
+      "status_code": 843,
+      "status_name": "Estimated Time of Cargo Delivery",
+      "un_code": "USCHS",
+      "date_time": "2026-10-03 04:55:00"
+    },
+    {
+      "status_code": 62,
+      "status_name": "Container Devanned at deconsolidation CFS",
+      "un_code": "USCHS",
+      "date_time": "2026-09-29 18:30:00"
+    },
+    {
+      "status_code": 813,
+      "status_name": "Full OutGate from Ocean Terminal at Port of Discharge",
+      "un_code": "USCHS",
+      "date_time": "2026-09-29 14:44:00"
+    },
+    {
+      "status_code": 878,
+      "status_name": "Demurrage Freetime Start",
+      "un_code": "USCHS",
+      "date_time": "2026-09-29 04:56:00"
+    },
+    {
+      "status_code": 61,
+      "status_name": "Arrived at deconsolidation CFS",
+      "un_code": "USCHS",
+      "date_time": "2026-09-28 19:41:00"
+    },
+    {
+      "status_code": 811,
+      "status_name": "Full container unloaded from vessel at port of discharge",
+      "un_code": "USCHS",
+      "date_time": "2026-09-28 12:10:00"
+    },
+    {
+      "status_code": 829,
+      "status_name": "Vessel arrived at port of discharge",
+      "un_code": "USCHS",
+      "date_time": "2026-09-27 13:31:00"
+    },
+    {
+      "status_code": 836,
+      "status_name": "Vessel estimated time of arrival port of discharge",
+      "un_code": "USCHS",
+      "date_time": "2026-09-27 11:26:00"
+    },
+    {
+      "status_code": 60,
+      "status_name": "Arrival Notice Issued",
+      "un_code": "USCHS",
+      "date_time": "2026-09-22 18:35:00"
+    },
+    {
+      "status_code": 822,
+      "status_name": "Carrier released",
+      "un_code": "USCHS",
+      "date_time": "2026-09-21 16:58:00"
+    },
+    {
+      "status_code": 50,
+      "status_name": "Bill of Lading Printed",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-17 07:24:39"
+    },
+    {
+      "status_code": 843,
+      "status_name": "Estimated Time of Cargo Delivery",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-15 16:16:00"
+    },
+    {
+      "status_code": 823,
+      "status_name": "Vessel departed from port of loading",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-15 16:16:00"
+    },
+    {
+      "status_code": 30,
+      "status_name": "Container Loaded And Sealed",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-15 04:00:00"
+    },
+    {
+      "status_code": 40,
+      "status_name": "Confirmed On Board",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-15 04:00:00"
+    },
+    {
+      "status_code": 810,
+      "status_name": "Loaded on vessel port of loading",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-14 20:53:00"
+    },
+    {
+      "status_code": 878,
+      "status_name": "Demurrage Freetime Start",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-11 23:07:00"
+    },
+    {
+      "status_code": 807,
+      "status_name": "Full ingate at place of receipt",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-11 08:47:00"
+    },
+    {
+      "status_code": 805,
+      "status_name": "Full ingate at ocean terminal port of loading",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-11 08:47:00"
+    },
+    {
+      "status_code": 850,
+      "status_name": "Empty Container Picked Up",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-07 12:39:00"
+    },
+    {
+      "status_code": 49,
+      "status_name": "Preliminary Bill Of Lading Printed",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-07 08:27:45"
+    },
+    {
+      "status_code": 20,
+      "status_name": "Received In Warehouse",
+      "un_code": "DEHAM",
+      "date_time": "2026-09-04 09:20:49"
+    },
+    {
+      "status_code": 10,
+      "status_name": "Booking Confirmed",
+      "un_code": "DEHAM",
+      "date_time": "2026-08-31 12:40:12"
+    }
+  ],
+  "count": 27,
+  "shipment_id": "1"
+}

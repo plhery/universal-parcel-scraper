@@ -723,6 +723,7 @@ import { adapter as royaleInternational } from '../carriers/royale-international
 import { adapter as rozetkaDelivery } from '../carriers/rozetka-delivery/adapter.js';
 import { adapter as rpxIndonesia } from '../carriers/rpx-indonesia/adapter.js';
 import { adapter as russianPost } from '../carriers/russian-post/adapter.js';
+import { adapter as sacoShippingLine } from '../carriers/saco-shipping-line/adapter.js';
 import { adapter as safewayExpressCargo } from '../carriers/safeway-express-cargo/adapter.js';
 import { adapter as safexpress } from '../carriers/safexpress/adapter.js';
 import { adapter as sagawa } from '../carriers/sagawa/adapter.js';
@@ -1700,6 +1701,7 @@ export const REGISTRY: RegistryDefinition = {
     "rozetka-delivery": rozetkaDelivery,
     "rpx-indonesia": rpxIndonesia,
     "russian-post": russianPost,
+    "saco-shipping-line": sacoShippingLine,
     "safeway-express-cargo": safewayExpressCargo,
     "safexpress": safexpress,
     "sagawa": sagawa,
@@ -3399,6 +3401,7 @@ export const REGISTRY: RegistryDefinition = {
     "russian-post": "russian-post",
     "rxo": "universal",
     "ryder-last-mile": "universal",
+    "saco-shipping-line": "saco-shipping-line",
     "saee": "universal",
     "safeway-express-cargo": "safeway-express-cargo",
     "safexpress": "safexpress",

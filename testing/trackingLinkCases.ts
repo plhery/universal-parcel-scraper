@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'saco-shipping-line', number: 'SSLL202613474401',
+    route: /^https:\/\/sacoshipping\.com\/track\/?$/,
+    marker: /Enter your tracking reference number|Select tracking type/i, forwarding: 'none' },
   { carrier: 'procon-express-lines', number: 'PCXS3XX16020022',
     route: /^https:\/\/cmsfreight\.com\/tracking\/public-tracking\/?$/,
     marker: /Track my shipment|Enter cosignment number/i, forwarding: 'none' },

@@ -1,0 +1,173 @@
+{
+  "carrier": "saco-shipping-line",
+  "entries": [
+    {
+      "code": "10",
+      "wording": "Booking Confirmed",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "20",
+      "wording": "Received In Warehouse",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "30",
+      "wording": "Container Loaded And Sealed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "40",
+      "wording": "Confirmed On Board",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "61",
+      "wording": "Arrived at deconsolidation CFS",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "62",
+      "wording": "Container Devanned at deconsolidation CFS",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "64",
+      "wording": "Arrived at Inland CFS",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "68",
+      "wording": "Arrived at Destination CFS",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "70",
+      "wording": "Freight Available",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "81",
+      "wording": "Freight Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "83",
+      "wording": "CFS Pick-Up By Customer",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "101",
+      "wording": "In Transit to Inland CFS",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "805",
+      "wording": "Full ingate at ocean terminal port of loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "807",
+      "wording": "Full ingate at place of receipt",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "810",
+      "wording": "Loaded on vessel port of loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "811",
+      "wording": "Full container unloaded from vessel at port of discharge",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "813",
+      "wording": "Full OutGate from Ocean Terminal at Port of Discharge",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "820",
+      "wording": "Customs hold at port of discharge",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "821",
+      "wording": "Customs released",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "822",
+      "wording": "Carrier released",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "823",
+      "wording": "Vessel departed from port of loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "828",
+      "wording": "Available for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "829",
+      "wording": "Vessel arrived at port of discharge",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "874",
+      "wording": "Picked up at Final Destination for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    }
+  ]
+}

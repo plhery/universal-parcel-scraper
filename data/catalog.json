@@ -51713,6 +51713,30 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "saco-shipping-line": {
+    "displayName": "SACO Shipping Line",
+    "color": "#043C70",
+    "aliases": [
+      "SACO Shipping GmbH",
+      "SACO Shipping Line Limited",
+      "SSLL"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "saco-shipping-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://sacoshipping.com/track/",
+    "trackingUrlTemplate": "https://sacoshipping.com/track/",
+    "trackingSearchUrl": "https://sacoshipping.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "saee": {
     "displayName": "Saee",
     "color": "#ff6b00",

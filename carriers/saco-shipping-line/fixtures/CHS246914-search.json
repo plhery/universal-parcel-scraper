@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "count": 1,
+  "search_params": {
+    "reference": "CHS246914",
+    "type": "BillofLadingNumber"
+  },
+  "data": [
+    {
+      "shipment_id": 1,
+      "bl_number": "CHS246914",
+      "status_code": "843",
+      "formatted_status": {
+        "status_text": "Estimated Time of Cargo Delivery"
+      }
+    }
+  ]
+}

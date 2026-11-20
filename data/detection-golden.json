@@ -24490,6 +24490,16 @@
     ]
   },
   {
+    "input": "17441392",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
     "input": "174570000102955436",
     "carrier": "ecoscooting",
     "confidence": "high",
@@ -100780,6 +100790,12 @@
     ]
   },
   {
+    "input": "MIN203130",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "MKRI260070952",
     "carrier": "unknown",
     "confidence": "none",
@@ -111016,6 +111032,39 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "SSLLCHS246914",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
+    ]
+  },
+  {
+    "input": "SSLLCLE207043",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
+    ]
+  },
+  {
+    "input": "SSLLNYC296044",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
     ]
   },
   {

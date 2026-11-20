@@ -5919,5 +5919,10 @@
     "carrier": "procon-express-lines",
     "kind": "open",
     "reason": "Published house bills include the PCXS carrier code, but the official portal also uses unprefixed consignment references. Select Procon Express Lines explicitly."
+  },
+  {
+    "carrier": "saco-shipping-line",
+    "kind": "open",
+    "reason": "Published SACO house bills include multiple layouts and can carry the SSLL carrier code. Select SACO Shipping Line explicitly."
   }
 ]

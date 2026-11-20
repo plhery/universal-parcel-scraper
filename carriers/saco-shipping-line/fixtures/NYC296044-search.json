@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "count": 1,
+  "search_params": {
+    "reference": "NYC296044",
+    "type": "BillofLadingNumber"
+  },
+  "data": [
+    {
+      "shipment_id": 1,
+      "bl_number": "NYC296044",
+      "status_code": "828",
+      "formatted_status": {
+        "status_text": "Available for delivery"
+      }
+    }
+  ]
+}
