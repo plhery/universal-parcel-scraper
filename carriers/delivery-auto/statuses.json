@@ -1,4 +1,19 @@
 {
   "carrier": "delivery-auto",
-  "entries": []
+  "entries": [
+    {
+      "wording": "ВИДАНА",
+      "stage": "delivered",
+      "language": "uk",
+      "confirmedBy": "live",
+      "note": "The receipt has been handed over."
+    },
+    {
+      "wording": "Доставляється кур’єром",
+      "stage": "out_for_delivery",
+      "language": "uk",
+      "confirmedBy": "portal",
+      "note": "The guest receipt template names the courier delivery in progress."
+    }
+  ]
 }

@@ -18,18 +18,27 @@
   "timezone": "Europe/Kyiv",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "delivery-auto",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
   "capabilities": [],
   "portal": {
     "url": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt?number={trackingNumber}",
     "searchUrl": "https://www.delivery-auto.com/",
     "canaryUrl": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status"
+    ],
+    "scraped": [
+      "status"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "history"
+    ]
   },
   "links": [
     {

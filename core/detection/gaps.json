@@ -1584,6 +1584,12 @@
     "reason": "Detection does not offer GLS Canada for the W-prefixed tracking numbers shown on created shipments in its Shopify manual."
   },
   {
+    "carrier": "gls-ca",
+    "pattern": "^P66776054$",
+    "kind": "open",
+    "reason": "Detection offers DTDC for this published shipment, which GLS Canada confirms in its own tracker."
+  },
+  {
     "carrier": "gls-hu",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -2230,6 +2236,12 @@
     "pattern": "^LEXDO\\d{10}$",
     "kind": "open",
     "reason": "Detection does not offer LEX Thailand for the LEXDO-prefixed parcel number reported by a Lazada Thailand buyer."
+  },
+  {
+    "carrier": "lex-th",
+    "pattern": "^LEXPU0718466614$",
+    "kind": "open",
+    "reason": "The Thai guest tracker confirms this published parcel while detection offers no carrier."
   },
   {
     "carrier": "libanpost",

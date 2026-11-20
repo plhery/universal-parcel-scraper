@@ -17,17 +17,36 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "gls-ca",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/?match={trackingNumber}",
     "searchUrl": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/",
     "canaryUrl": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "weight_kg"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name"
+    ],
+    "discarded": [
+      "weight_kg"
+    ],
     "unavailable": []
   },
   "links": [

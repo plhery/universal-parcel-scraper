@@ -1,4 +1,40 @@
 {
   "carrier": "gls-ca",
-  "entries": []
+  "entries": [
+    {
+      "code": "69D",
+      "wording": "Your shipment was delivered at the front door.",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "68",
+      "wording": "Good news! Your shipment is out for delivery and is scheduled to arrive by the end of the day.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "34",
+      "wording": "Your shipment has arrived at our terminal.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "33",
+      "wording": "Your shipment has left our terminal.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "NU",
+      "wording": "Shipment Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

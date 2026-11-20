@@ -43,6 +43,27 @@
         "confidence": "none"
       },
       "note": "The buyer's tracking history names Cainiao in China and a planned handoff to LEX Thailand. It leaves open whether LEX accepted the parcel under this number."
+    },
+    {
+      "number": "LEXPU0718466614",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pantip.com/topic/44267807",
+        "date": "2026-10-25",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Lazada Thailand standard delivery by LEX",
+        "reportedRole": "parcel number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The buyer’s Lazada tracking screenshot names LEX TH and displays the whole number. Its guest search confirms that number and names LEX TH for both legs."
     }
   ]
 }

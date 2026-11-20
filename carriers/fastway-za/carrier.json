@@ -17,17 +17,34 @@
   "timezone": "Africa/Johannesburg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fastway-za",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://www.fastway.co.za/our-services/track-your-parcel/?l={trackingNumber}",
     "searchUrl": "https://www.fastway.co.za/our-services/track-your-parcel/",
     "canaryUrl": "https://www.fastway.co.za/our-services/track-your-parcel/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "signed_by"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "signed_by"
+    ],
     "unavailable": []
   },
   "links": [

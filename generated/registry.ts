@@ -170,6 +170,7 @@ import { adapter as dayone } from '../carriers/dayone/adapter.js';
 import { adapter as daytonFreight } from '../carriers/dayton-freight/adapter.js';
 import { adapter as dealersend } from '../carriers/dealersend/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
+import { adapter as deliveryAuto } from '../carriers/delivery-auto/adapter.js';
 import { adapter as dellin } from '../carriers/dellin/adapter.js';
 import { adapter as delnext } from '../carriers/delnext/adapter.js';
 import { adapter as deppon } from '../carriers/deppon/adapter.js';
@@ -261,6 +262,7 @@ import { adapter as fastbox } from '../carriers/fastbox/adapter.js';
 import { adapter as fastdrop } from '../carriers/fastdrop/adapter.js';
 import { adapter as fasterShipe } from '../carriers/faster-shipe/adapter.js';
 import { adapter as fastfrate } from '../carriers/fastfrate/adapter.js';
+import { adapter as fastwayZa } from '../carriers/fastway-za/adapter.js';
 import { adapter as fedex } from '../carriers/fedex/adapter.js';
 import { adapter as fedexFreight } from '../carriers/fedex-freight/adapter.js';
 import { adapter as fedexInternationalConnect } from '../carriers/fedex-international-connect/adapter.js';
@@ -304,6 +306,7 @@ import { adapter as geodisPl } from '../carriers/geodis-pl/adapter.js';
 import { adapter as gigLogistics } from '../carriers/gig-logistics/adapter.js';
 import { adapter as globalDeliveryNetwork } from '../carriers/global-delivery-network/adapter.js';
 import { adapter as globalpost } from '../carriers/globalpost/adapter.js';
+import { adapter as glsCa } from '../carriers/gls-ca/adapter.js';
 import { adapter as glsCh } from '../carriers/gls-ch/adapter.js';
 import { adapter as glsDe } from '../carriers/gls-de/adapter.js';
 import { adapter as glsEs } from '../carriers/gls-es/adapter.js';
@@ -324,6 +327,7 @@ import { adapter as gofoFr } from '../carriers/gofo-fr/adapter.js';
 import { adapter as gofoIt } from '../carriers/gofo-it/adapter.js';
 import { adapter as gofoNl } from '../carriers/gofo-nl/adapter.js';
 import { adapter as gogoXpress } from '../carriers/gogo-xpress/adapter.js';
+import { adapter as gollog } from '../carriers/gollog/adapter.js';
 import { adapter as grandSlamExpress } from '../carriers/grand-slam-express/adapter.js';
 import { adapter as gruberLogistics } from '../carriers/gruber-logistics/adapter.js';
 import { adapter as gsPostbox } from '../carriers/gs-postbox/adapter.js';
@@ -438,6 +442,7 @@ import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
 import { adapter as leopardsCourier } from '../carriers/leopards-courier/adapter.js';
 import { adapter as lexId } from '../carriers/lex-id/adapter.js';
 import { adapter as lexMy } from '../carriers/lex-my/adapter.js';
+import { adapter as lexTh } from '../carriers/lex-th/adapter.js';
 import { adapter as lhtex } from '../carriers/lhtex/adapter.js';
 import { adapter as libanpost } from '../carriers/libanpost/adapter.js';
 import { adapter as liccardi } from '../carriers/liccardi/adapter.js';
@@ -647,6 +652,7 @@ import { adapter as sendex } from '../carriers/sendex/adapter.js';
 import { adapter as sending } from '../carriers/sending/adapter.js';
 import { adapter as sendle } from '../carriers/sendle/adapter.js';
 import { adapter as sengiExpress } from '../carriers/sengi-express/adapter.js';
+import { adapter as sentralCargo } from '../carriers/sentral-cargo/adapter.js';
 import { adapter as serpost } from '../carriers/serpost/adapter.js';
 import { adapter as servientrega } from '../carriers/servientrega/adapter.js';
 import { adapter as seur } from '../carriers/seur/adapter.js';
@@ -1020,6 +1026,7 @@ export const REGISTRY: RegistryDefinition = {
     "dayton-freight": daytonFreight,
     "dealersend": dealersend,
     "delhivery": delhivery,
+    "delivery-auto": deliveryAuto,
     "dellin": dellin,
     "delnext": delnext,
     "deppon": deppon,
@@ -1111,6 +1118,7 @@ export const REGISTRY: RegistryDefinition = {
     "fastdrop": fastdrop,
     "faster-shipe": fasterShipe,
     "fastfrate": fastfrate,
+    "fastway-za": fastwayZa,
     "fedex": fedex,
     "fedex-freight": fedexFreight,
     "fedex-international-connect": fedexInternationalConnect,
@@ -1154,6 +1162,7 @@ export const REGISTRY: RegistryDefinition = {
     "gig-logistics": gigLogistics,
     "global-delivery-network": globalDeliveryNetwork,
     "globalpost": globalpost,
+    "gls-ca": glsCa,
     "gls-ch": glsCh,
     "gls-de": glsDe,
     "gls-es": glsEs,
@@ -1174,6 +1183,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-it": gofoIt,
     "gofo-nl": gofoNl,
     "gogo-xpress": gogoXpress,
+    "gollog": gollog,
     "grand-slam-express": grandSlamExpress,
     "gruber-logistics": gruberLogistics,
     "gs-postbox": gsPostbox,
@@ -1288,6 +1298,7 @@ export const REGISTRY: RegistryDefinition = {
     "leopards-courier": leopardsCourier,
     "lex-id": lexId,
     "lex-my": lexMy,
+    "lex-th": lexTh,
     "lhtex": lhtex,
     "libanpost": libanpost,
     "liccardi": liccardi,
@@ -1497,6 +1508,7 @@ export const REGISTRY: RegistryDefinition = {
     "sending": sending,
     "sendle": sendle,
     "sengi-express": sengiExpress,
+    "sentral-cargo": sentralCargo,
     "serpost": serpost,
     "servientrega": servientrega,
     "seur": seur,
@@ -2105,7 +2117,7 @@ export const REGISTRY: RegistryDefinition = {
     "delivengo": "la-poste",
     "deliverdirect": "universal",
     "deliveright": "universal",
-    "delivery-auto": "universal",
+    "delivery-auto": "delivery-auto",
     "delivro": "universal",
     "dellin": "dellin",
     "delnext": "delnext",
@@ -2289,7 +2301,7 @@ export const REGISTRY: RegistryDefinition = {
     "fastgo": "universal",
     "fastship-th": "universal",
     "fasttrack-ar": "universal",
-    "fastway-za": "universal",
+    "fastway-za": "fastway-za",
     "fastwl": "universal",
     "favorita-transportes": "universal",
     "fedex": "fedex",
@@ -2384,7 +2396,7 @@ export const REGISTRY: RegistryDefinition = {
     "globalpost": "globalpost",
     "globex-post": "universal",
     "gls-at": "gls-de",
-    "gls-ca": "universal",
+    "gls-ca": "gls-ca",
     "gls-ch": "gls-ch",
     "gls-de": "gls-de",
     "gls-es": "gls-es",
@@ -2410,7 +2422,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-nl": "gofo-nl",
     "gogo-xpress": "gogo-xpress",
     "golilla": "universal",
-    "gollog": "universal",
+    "gollog": "gollog",
     "golucky": "universal",
     "goodluck-courier": "universal",
     "goodmaji": "universal",
@@ -2665,7 +2677,7 @@ export const REGISTRY: RegistryDefinition = {
     "letter-track": "universal",
     "lex-id": "lex-id",
     "lex-my": "lex-my",
-    "lex-th": "universal",
+    "lex-th": "lex-th",
     "lex-vn": "universal",
     "lexship": "universal",
     "lhtex": "lhtex",
@@ -3119,7 +3131,7 @@ export const REGISTRY: RegistryDefinition = {
     "sendle": "sendle",
     "sendo-kg": "universal",
     "sengi-express": "sengi-express",
-    "sentral-cargo": "universal",
+    "sentral-cargo": "sentral-cargo",
     "senyu": "universal",
     "serpost": "serpost",
     "servex": "universal",

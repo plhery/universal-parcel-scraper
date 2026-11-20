@@ -1,4 +1,13 @@
 {
   "carrier": "lex-th",
-  "entries": []
+  "entries": [
+    {
+      "code": "domestic_delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The Thai guest reply uses the shared LEX status key, whose English title comes from the platform map."
+    }
+  ]
 }

@@ -8,7 +8,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { languageStageStatus } from '../../core/status/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { isRecord } from '../../core/types.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
 import { lexStatus } from './status.js';
 
 /** A LEX site on Lazada's logistics platform: its host, its numbers and how the search finds one. */
@@ -20,6 +20,8 @@ export interface LexTenant {
   /** The number, in detection's form, as the tracker files it, or null when it is not one of the tenant's. */
   readonly asked: (number: string) => string | null;
   readonly shape: string;
+  /** Optional network check for tenants whose search also returns partner parcels. */
+  readonly matchesPackage?: (item: JsonObject) => boolean;
 }
 
 // A reply lists a few packages; an empty one is a few dozen bytes.
@@ -57,7 +59,8 @@ export function parseLexSearch(payload: unknown, number: string, tenant: LexTena
   if (!payload.data.length) throw new NotFoundError(tenant.provider, `${tenant.provider} holds no package for this number`);
   const asked = normalizeTrackingNumber(number);
   const own = payload.data.filter(isRecord).find((item) => [item.trackingNumber, item.originalTrackingNumber]
-    .some((value) => text(value) && normalizeTrackingNumber(text(value)) === asked));
+    .some((value) => text(value) && normalizeTrackingNumber(text(value)) === asked)
+    && (tenant.matchesPackage?.(item) ?? true));
   if (!own) throw new IndeterminateError(tenant.provider, `${tenant.provider} answered for another number`);
   const key = text(own.packageStatus);
   if (!/^[a-z][a-z0-9_]{1,63}$/.test(key)) throw new SchemaError(tenant.provider, `${tenant.provider} returned an invalid package status`);

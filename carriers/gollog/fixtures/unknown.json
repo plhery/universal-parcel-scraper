@@ -1,0 +1,52 @@
+{
+  "result": [
+    {
+      "found": false,
+      "showEvents": false,
+      "header": {
+        "code": "12799000007",
+        "nf": null,
+        "reference": null,
+        "service": null,
+        "serviceName": null,
+        "pieces": 0.0,
+        "weight": 0.0
+      },
+      "routing": {
+        "origin": null,
+        "destination": null
+      },
+      "events": [],
+      "originAdvancedPost": null,
+      "destinationAdvancedPost": null,
+      "nfeCode": null,
+      "isHomeDelivery": false,
+      "deliveryPlace": null,
+      "isCancelled": false,
+      "cancellationDateTime": null,
+      "expectedDeliveryDate": "01/01",
+      "deliveryDeadline": "01/01",
+      "lastStatus": {
+        "code": null,
+        "description": null,
+        "supportedCodes": []
+      },
+      "rcs": false,
+      "dep": false,
+      "dlv": false,
+      "ond": false,
+      "gre": false,
+      "crc": false,
+      "crcOccurredAtDestiny": false,
+      "ccd": false,
+      "ccdOccurredAtDestiny": false,
+      "rcf": false,
+      "deliveryAddress": null
+    }
+  ],
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__eaf": true
+}

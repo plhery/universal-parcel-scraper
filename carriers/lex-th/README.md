@@ -1,27 +1,17 @@
 # LEX Thailand
 
-LEX Thailand parcels use enabled universal providers. There is no dedicated adapter.
+The adapter covers Lazada's Thai delivery network when LEX Thailand is selected.
 
-LEX is the Lazada marketplace's delivery network. In Thailand its site is lex.th; LEX Malaysia,
-LEX Indonesia and LEX Vietnam are separate entries.
+## Retrieval
 
-## Numbers
+The public page posts one parcel number in `trackingNumbers` to `lex.th/api/search_packages`.
+The adapter shares the LEX Indonesia client and status map. It checks the whole number in the
+reply and requires at least one leg to name LEX TH. An empty package list means no record. The
+client retries once after a network failure within the same lookup budget.
 
-Its tracking page takes up to ten numbers. No public page shows one, so there is no rule.
-
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against. The tracking page is the
-Lazada app LEX Malaysia's site runs: it posts the numbers as a `trackingNumbers` list to
-`lex.th/api/search_packages`. LEX Indonesia's and LEX Malaysia's adapters share a client
-([lex.ts](../lex-id/lex.ts)) that this site can join once a found reply is seen. The page loads
-Lazada's LWSC security script, which can answer with a slider CAPTCHA.
-
-## Links
-
-The tracking page opens numbers from its `references` parameter, a comma-separated list.
+The guest endpoint gives the current status alone. The detailed history asks for the recipient's
+phone digits. The site can return a slider check, which the client reports as a challenge.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`LEX_TH_TRACKING_NUMBER=… LEX_TH_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/lex-th`

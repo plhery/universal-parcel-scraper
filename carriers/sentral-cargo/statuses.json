@@ -1,4 +1,52 @@
 {
   "carrier": "sentral-cargo",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The completed-delivery badge."
+    },
+    {
+      "wording": "On Process",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The generic progress badge. Scan wording can identify the pickup or delivery round."
+    },
+    {
+      "wording": "Paket dipickup oleh kantor …",
+      "stage": "accepted",
+      "language": "id",
+      "confirmedBy": "live",
+      "note": "The sending office collected the parcel."
+    },
+    {
+      "wording": "Paket sedang dikirimkan ke …",
+      "stage": "out_for_delivery",
+      "language": "id",
+      "confirmedBy": "live",
+      "note": "The parcel is on a delivery round."
+    },
+    {
+      "wording": "Paket sudah diterima oleh kantor …",
+      "stage": "in_transit",
+      "language": "id",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Paket dikirim dari … ke …",
+      "stage": "in_transit",
+      "language": "id",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Antar sebagian oleh …",
+      "stage": "in_transit",
+      "language": "id",
+      "confirmedBy": "live",
+      "note": "Only part of this shipment was delivered."
+    }
+  ]
 }

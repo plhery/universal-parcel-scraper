@@ -14,7 +14,7 @@
       "context": {
         "service": "Delivery domestic parcel",
         "reportedRole": "parcel number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -29,7 +29,7 @@
           "dhl-freight"
         ]
       },
-      "note": "The reviewer posts the parcel number for a Delivery shipment from Zaporizhzhia to Chernivtsi."
+      "note": "The reviewer posts the parcel number for a Delivery shipment from Zaporizhzhia to Chernivtsi. The carrier’s guest lookup names the same receipt and shows its dated collection status."
     },
     {
       "number": "235031 4453",

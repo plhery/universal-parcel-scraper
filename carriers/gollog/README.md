@@ -1,26 +1,19 @@
 # GOLLOG
 
-GOLLOG parcels use enabled universal providers. There is no dedicated adapter.
+The adapter tracks GOLLOG's air waybills when the caller selects GOLLOG. The separate invoice
+lookup also needs the sender or recipient's tax identifier.
 
-GOLLOG is the cargo and parcel service of GOL Linhas Aéreas, carried on GOL's flights and by road,
-with drop-off stores across Brazil.
+## Retrieval
 
-## Numbers
+The public page sends the waybill to `/api/services/app/Tracking/GetAllByCodes`. The response
+must name the complete waybill. A reply with `found: false` and no scans means it was not found.
+A listed waybill without any status yet has no history.
 
-GOLLOG's help text says its tracking code is an eleven-digit number, also called the operational
-number or AWB. Other airlines' air waybills share that shape and no public page shows a GOLLOG
-number, so there is no rule. The tracker also takes an invoice with the CPF or CNPJ.
-
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Links
-
-`/app/site/tracking?code=<number>` fills the form and looks the number up, and the library reads the
-number from that address.
+The adapter reads the scan's location and time with its supplied offset. Manifest entries are
+omitted, as they are in the public timeline. The release milestone means ready for pickup on a
+store-collection shipment and out for delivery on a home-delivery shipment. The estimate is
+left out because the tracker gives only the day and month.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`GOLLOG_TRACKING_NUMBER=… GOLLOG_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/gollog`

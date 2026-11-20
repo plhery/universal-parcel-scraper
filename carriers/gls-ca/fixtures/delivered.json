@@ -1,0 +1,123 @@
+{
+  "shipments": [
+    {
+      "trackingNumber": "P66776054",
+      "sender": {
+        "city": "Guelph",
+        "provinceCode": "ON",
+        "countryCode": "CA"
+      },
+      "consignee": {
+        "city": "Aurora",
+        "provinceCode": "ON",
+        "countryCode": "CA"
+      },
+      "currentStatus": {
+        "name": "Delivered",
+        "date": "2026-10-13 15:21:01"
+      },
+      "imageStatus": [
+        {
+          "name": "information",
+          "description": "information received",
+          "status": "complete"
+        },
+        {
+          "name": "pickup",
+          "description": "picked up",
+          "status": "complete"
+        },
+        {
+          "name": "inTransit",
+          "description": "in transit",
+          "status": "complete"
+        },
+        {
+          "name": "outForDelivery",
+          "description": "out for delivery",
+          "status": "complete"
+        },
+        {
+          "name": "delivery",
+          "description": "delivered",
+          "status": "current"
+        }
+      ],
+      "deliveryType": "Ground",
+      "paymentType": "Prepaid",
+      "unitOfMeasurement": "lb | inch",
+      "parcels": [
+        {
+          "parcelId": 1,
+          "parcelType": "Box",
+          "quantity": 1,
+          "height": 5,
+          "weight": 1.8,
+          "width": 7,
+          "length": 51,
+          "activities": [
+            {
+              "parcelId": 1,
+              "activityDate": "2026-10-13 15:21:01",
+              "status": "Delivered",
+              "statusDetail": "Your shipment was delivered at the front door.",
+              "code": "DL",
+              "codeDetail": "69D",
+              "terminal": "Toronto",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            },
+            {
+              "parcelId": 1,
+              "activityDate": "2026-10-13 07:20:06",
+              "status": "On Delivery",
+              "statusDetail": "Good news! Your shipment is out for delivery and is scheduled to arrive by the end of the day.",
+              "code": "LD",
+              "codeDetail": "68",
+              "terminal": "Toronto",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            },
+            {
+              "parcelId": 1,
+              "activityDate": "2026-10-13 06:02:18",
+              "status": "In Transit",
+              "statusDetail": "Your shipment has arrived at our terminal. ",
+              "code": "IT",
+              "codeDetail": "34",
+              "terminal": "Toronto",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            },
+            {
+              "parcelId": 1,
+              "activityDate": "2026-10-09 17:09:09",
+              "status": "In Transit",
+              "statusDetail": "Your shipment has left our terminal.",
+              "code": "IT",
+              "codeDetail": "33",
+              "terminal": "Cambridge",
+              "length": 7,
+              "width": 51,
+              "height": 5
+            },
+            {
+              "parcelId": 1,
+              "activityDate": "2026-10-09 12:06:13",
+              "status": "Shipment Created",
+              "code": "CR",
+              "codeDetail": "NU",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            }
+          ]
+        }
+      ],
+      "totalWeight": 1.8
+    }
+  ]
+}

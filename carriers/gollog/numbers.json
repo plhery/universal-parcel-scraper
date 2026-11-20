@@ -30,6 +30,38 @@
         ]
       },
       "note": "The indexed text of the Brazilian electoral court filing identifies the GOLLOG waybill and prints this full AWB in its control-number field."
+    },
+    {
+      "number": "127-6302 7370",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/gollog-servicos-de-cargas-aereas/nao-recebi-minha-encomenda-urgente-e-o-sac-nao-resolveu_nz6X7fRdbW0Xrh4y/",
+        "date": "2026-10-17",
+        "dateKind": "complaint publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GOLLOG Urgente",
+        "reportedRole": "tracking code",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The customer posts the complete waybill for an Urgente shipment. The carrier’s guest tracker confirms the number and displays its dated transfer and collection scans."
     }
   ]
 }

@@ -18412,7 +18412,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Kyiv",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "delivery-auto",
+      "localClocks": true
     },
     "canaryUrl": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt",
     "trackingUrlTemplate": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt?number={trackingNumber}",
@@ -24790,7 +24791,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fastway-za",
+      "localClocks": true
     },
     "canaryUrl": "https://www.fastway.co.za/our-services/track-your-parcel/",
     "trackingUrlTemplate": "https://www.fastway.co.za/our-services/track-your-parcel/?l={trackingNumber}",
@@ -27813,7 +27815,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gls-ca",
+      "localClocks": true
     },
     "canaryUrl": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/",
     "trackingUrlTemplate": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/?match={trackingNumber}",
@@ -28736,7 +28739,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gollog"
     },
     "canaryUrl": "https://servicos.gollog.com.br/app/site/tracking",
     "trackingUrlTemplate": "https://servicos.gollog.com.br/app/site/tracking?code={trackingNumber}",
@@ -36740,7 +36743,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Bangkok",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lex-th"
     },
     "canaryUrl": "https://lex.th/tracking",
     "trackingUrlTemplate": "https://lex.th/tracking?references={trackingNumber}",
@@ -51373,7 +51376,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Jakarta",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sentral-cargo"
     },
     "canaryUrl": "https://sentralcargo.co.id/",
     "trackingUrlTemplate": "https://sentralcargo.co.id/cekresi?resi={trackingNumber}",
