@@ -5132,5 +5132,11 @@
     "pattern": "^[А-ЯЁ]{3}[0-9]{6}$",
     "kind": "open",
     "reason": "A Russian arbitration decision quotes Baikal Service tracking under this Cyrillic waybill shape. Detection does not offer Baikal Service."
+  },
+  {
+    "carrier": "altex-curier",
+    "pattern": "^2000[0-9]{8}$",
+    "kind": "open",
+    "reason": "An indexed Altex Curier tracking result identifies this numeric AWB. Detection does not offer Altex Curier."
   }
 ]
