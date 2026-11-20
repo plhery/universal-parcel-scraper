@@ -5108,5 +5108,11 @@
     "pattern": "^FAN[0-9]{7}$",
     "kind": "open",
     "reason": "An archived link to the Moldovan carrier's tracking tenant includes this AWB. Detection does not offer FAN Courier Moldova."
+  },
+  {
+    "carrier": "espeedpost",
+    "pattern": "^E[0-9]{10}[A-Z]{2}$",
+    "kind": "open",
+    "reason": "Archived EspeedPost tracking links prefill these E-prefixed consignment references. Detection does not offer EspeedPost."
   }
 ]
