@@ -1,5 +1,30 @@
 {
   "carrier": "tuffnells",
-  "gap": "No public page shows a Tuffnells number.",
-  "records": []
+  "records": [
+    {
+      "number": "4441010819501399",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230111132751/https://www.tuffnells.co.uk/track-and-trace?r_urn=4441010819501399&r_postcode=CT93RA",
+        "date": "2023-01-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Tuffnells track and trace",
+        "reportedRole": "shipment URN",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "The carrier's archived result binds this URN to the postcode published beside it and marks the consignment as arrived at the delivery depot."
+    }
+  ]
 }

@@ -3824,6 +3824,12 @@
     "reason": "TufesaPack's shipment numbers are a plain sequence of digits, without a prefix or check, in a length many carriers print."
   },
   {
+    "carrier": "tuffnells",
+    "pattern": "^\\d{16}$",
+    "kind": "open",
+    "reason": "Detection does not offer Tuffnells for the sixteen-digit URN returned by its archived tracking page."
+  },
+  {
     "carrier": "tws-express",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
