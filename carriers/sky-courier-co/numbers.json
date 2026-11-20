@@ -1,0 +1,28 @@
+{
+  "carrier": "sky-courier-co",
+  "records": [
+    {
+      "number": "SKY-2026-00010",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://casillero.skycourier.com.co/track",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "carrier courier guide number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "The carrier's embedded guest form publishes this guide in its input. Its native lookup returned the exact Sky Courier guide and confirmed delivery status."
+    }
+  ]
+}

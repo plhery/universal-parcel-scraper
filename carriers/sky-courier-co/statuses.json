@@ -1,0 +1,20 @@
+{
+  "carrier": "sky-courier-co",
+  "entries": [
+    {
+      "code": "ENTREGADO",
+      "wording": "Entregado",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ENTREGADO_ADUANA",
+      "wording": "Entregado desde Aduana",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "Release from customs precedes final delivery."
+    }
+  ]
+}

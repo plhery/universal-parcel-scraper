@@ -109181,6 +109181,21 @@
     ]
   },
   {
+    "input": "SKY-2026-00010",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "purolator",
+      "tnt-au"
+    ],
+    "asked": [
+      "colis-prive",
+      "tnt-au",
+      "purolator"
+    ]
+  },
+  {
     "input": "SL0000305042",
     "carrier": "unknown",
     "confidence": "low",

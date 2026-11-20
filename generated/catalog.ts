@@ -53645,6 +53645,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "sky-courier-co": {
+    "displayName": "Sky Courier Colombia",
+    "color": "#dc2626",
+    "aliases": [
+      "Sky Courier Broker",
+      "Sky Courier Broker SAS",
+      "Sky Courier CO"
+    ],
+    "countries": [
+      "CO",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sky-courier-co"
+    },
+    "canaryUrl": "https://skycourier.com.co/rastrear/",
+    "trackingUrlTemplate": "https://casillero.skycourier.com.co/track",
+    "trackingSearchUrl": "https://casillero.skycourier.com.co/track",
+    "trackingSiteName": "Sky Courier Casillero",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "skybox": {
     "displayName": "SkyBox",
     "color": "#3c59a8",
@@ -67617,6 +67642,7 @@ export const CARRIER_IDS = [
   "skif-cargo",
   "skladusa",
   "skroutz-last-mile",
+  "sky-courier-co",
   "skybox",
   "skyex-ae",
   "skyex-gr",
@@ -69513,6 +69539,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "skif-cargo": [],
   "skladusa": ["skladusa-1"],
   "skroutz-last-mile": [],
+  "sky-courier-co": [],
   "skybox": [],
   "skyex-ae": [],
   "skyex-gr": [],

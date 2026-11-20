@@ -5659,5 +5659,10 @@
     "carrier": "sinotrans-container-lines",
     "kind": "open",
     "reason": "Container ownership does not identify the line operating the shipment. The guest tracker verifies the complete equipment number."
+  },
+  {
+    "carrier": "sky-courier-co",
+    "kind": "open",
+    "reason": "The guest form confirms a public SKY guide with a year and serial. Explicit selection binds the full guide while the scope of any detection rule is open."
   }
 ]

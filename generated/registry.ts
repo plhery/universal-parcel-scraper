@@ -731,6 +731,7 @@ import { adapter as sinotransContainerLines } from '../carriers/sinotrans-contai
 import { adapter as sitcContainerLines } from '../carriers/sitc-container-lines/adapter.js';
 import { adapter as skladusa } from '../carriers/skladusa/adapter.js';
 import { adapter as skroutzLastMile } from '../carriers/skroutz-last-mile/adapter.js';
+import { adapter as skyCourierCo } from '../carriers/sky-courier-co/adapter.js';
 import { adapter as skybox } from '../carriers/skybox/adapter.js';
 import { adapter as skyking } from '../carriers/skyking/adapter.js';
 import { adapter as skynetSa } from '../carriers/skynet-sa/adapter.js';
@@ -1655,6 +1656,7 @@ export const REGISTRY: RegistryDefinition = {
     "sitc-container-lines": sitcContainerLines,
     "skladusa": skladusa,
     "skroutz-last-mile": skroutzLastMile,
+    "sky-courier-co": skyCourierCo,
     "skybox": skybox,
     "skyking": skyking,
     "skynet-sa": skynetSa,
@@ -3345,6 +3347,7 @@ export const REGISTRY: RegistryDefinition = {
     "skif-cargo": "universal",
     "skladusa": "skladusa",
     "skroutz-last-mile": "skroutz-last-mile",
+    "sky-courier-co": "sky-courier-co",
     "skybox": "skybox",
     "skyex-ae": "universal",
     "skyex-gr": "universal",

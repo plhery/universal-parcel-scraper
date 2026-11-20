@@ -53641,6 +53641,31 @@
     ],
     "detectionRules": []
   },
+  "sky-courier-co": {
+    "displayName": "Sky Courier Colombia",
+    "color": "#dc2626",
+    "aliases": [
+      "Sky Courier Broker",
+      "Sky Courier Broker SAS",
+      "Sky Courier CO"
+    ],
+    "countries": [
+      "CO",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sky-courier-co"
+    },
+    "canaryUrl": "https://skycourier.com.co/rastrear/",
+    "trackingUrlTemplate": "https://casillero.skycourier.com.co/track",
+    "trackingSearchUrl": "https://casillero.skycourier.com.co/track",
+    "trackingSiteName": "Sky Courier Casillero",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "skybox": {
     "displayName": "SkyBox",
     "color": "#3c59a8",
