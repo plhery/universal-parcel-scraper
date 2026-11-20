@@ -44,4 +44,4 @@ canary checks 17TRACK.
 
 ## Testing
 
-`RM_LOGISTICS_TRACKING_NUMBER=FK0000000668246TM RM_LOGISTICS_UNKNOWN_NUMBER=FK0000000000000TM npm run test:carriers:live -- carriers/rm-logistics`
+`RM_LOGISTICS_TRACKING_NUMBER=… RM_LOGISTICS_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/rm-logistics`

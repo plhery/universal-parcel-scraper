@@ -49,4 +49,4 @@ claims it and the adapter answers explicit selection. The sample and its source 
 
 ## Testing
 
-`WHWDT_TRACKING_NUMBER=R230199787761A WHWDT_UNKNOWN_NUMBER=R000000000000A npm run test:carriers:live -- carriers/whwdt`
+`WHWDT_TRACKING_NUMBER=… WHWDT_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/whwdt`

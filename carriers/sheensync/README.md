@@ -44,4 +44,4 @@ the adapter answers explicit selection. The sample and its source are in
 
 ## Testing
 
-`SHEENSYNC_TRACKING_NUMBER=SS202600000371 SHEENSYNC_UNKNOWN_NUMBER=SS000000000000 npm run test:carriers:live -- carriers/sheensync`
+`SHEENSYNC_TRACKING_NUMBER=… SHEENSYNC_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/sheensync`

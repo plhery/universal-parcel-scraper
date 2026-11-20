@@ -44,4 +44,4 @@ selection. The sample and its source are in [`numbers.json`](numbers.json).
 
 ## Testing
 
-`LERDEX_TRACKING_NUMBER=TDOXP3121520012YQ LERDEX_UNKNOWN_NUMBER=TDOXP0000000000YQ npm run test:carriers:live -- carriers/lerdex`
+`LERDEX_TRACKING_NUMBER=… LERDEX_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/lerdex`

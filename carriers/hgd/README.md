@@ -24,8 +24,7 @@ its own tracking server, a Neoman GInfo system, whose waybills on its dedicated 
 
 - Rows state no zone. They keep their wall clocks, and a row dated after the lookup on Shenzhen's
   clock is left out.
-- On both samples the rows after the warehouse exit come at the same offsets from it, so they may
-  be the line's schedule rather than scans.
+- On both samples the rows after the warehouse exit come at the same offsets from it.
 - The two Chinese warehouse wordings are in [`statuses.json`](statuses.json); the English rows go
   through the shared wording rules.
 - The destination is named in Chinese, as `英国`, and read as an ISO code; the weight is kept.
@@ -43,4 +42,4 @@ explicit selection. The samples and their source are in [`numbers.json`](numbers
 
 ## Testing
 
-`HGD_TRACKING_NUMBER=HGDGY1910856105YQ HGD_UNKNOWN_NUMBER=HGDZZ0000000000YQ npm run test:carriers:live -- carriers/hgd`
+`HGD_TRACKING_NUMBER=… HGD_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/hgd`

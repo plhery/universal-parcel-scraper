@@ -48,4 +48,4 @@ number, the rule offering DpdEx for it stays low confidence. The samples and the
 
 ## Testing
 
-`DPDEX_TRACKING_NUMBER=DPE00019908940 DPDEX_UNKNOWN_NUMBER=DPE99999999999 npm run test:carriers:live -- carriers/dpdex`
+`DPDEX_TRACKING_NUMBER=… DPDEX_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/dpdex`

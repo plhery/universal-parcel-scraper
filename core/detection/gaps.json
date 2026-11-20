@@ -5588,21 +5588,21 @@
   {
     "carrier": "hgd",
     "kind": "open",
-    "reason": "Two public waybills, HGD, two letters, ten digits and YQ: too few to tell the series from the Hualei forwarders' numbers of the same layout"
+    "reason": "Two public waybills, HGD, two letters, ten digits and YQ: too few to tell the series from the Hualei forwarders' numbers of the same layout."
   },
   {
     "carrier": "ywd",
     "kind": "open",
-    "reason": "One public waybill, YT, fourteen digits and YT: too few to tell the series from other carriers' numbers"
+    "reason": "One public waybill, YT, fourteen digits and YT: too few to tell the series from other carriers' numbers."
   },
   {
     "carrier": "xingyou",
     "kind": "open",
-    "reason": "One public waybill, XY, ten digits and PQ: too few to tell the series from other carriers' numbers"
+    "reason": "One public waybill, XY, ten digits and PQ: too few to tell the series from other carriers' numbers."
   },
   {
     "carrier": "yitu",
     "kind": "open",
-    "reason": "One public waybill, Y, twelve digits and T: too few to tell the series from other carriers' numbers"
+    "reason": "One public waybill, Y, twelve digits and T: too few to tell the series from other carriers' numbers."
   }
 ]

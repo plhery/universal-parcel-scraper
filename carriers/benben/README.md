@@ -46,4 +46,4 @@ canary checks 17TRACK.
 
 ## Testing
 
-`BENBEN_TRACKING_NUMBER=BEN25250914BEN BENBEN_UNKNOWN_NUMBER=BEN00000000BEN npm run test:carriers:live -- carriers/benben`
+`BENBEN_TRACKING_NUMBER=… BENBEN_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/benben`

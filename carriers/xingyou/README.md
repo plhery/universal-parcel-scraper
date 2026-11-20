@@ -43,4 +43,4 @@ sample and its source are in [`numbers.json`](numbers.json).
 
 ## Testing
 
-`XINGYOU_TRACKING_NUMBER=XY2422647257PQ XINGYOU_UNKNOWN_NUMBER=XY0000000000PQ npm run test:carriers:live -- carriers/xingyou`
+`XINGYOU_TRACKING_NUMBER=… XINGYOU_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/xingyou`

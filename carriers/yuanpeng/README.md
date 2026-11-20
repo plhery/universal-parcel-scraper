@@ -47,4 +47,4 @@ The tracking page is plain HTTP, so no portal link is published, and the canary 
 
 ## Testing
 
-`YUANPENG_TRACKING_NUMBER=YP0168865416KD YUANPENG_UNKNOWN_NUMBER=YP0000000000KD npm run test:carriers:live -- carriers/yuanpeng`
+`YUANPENG_TRACKING_NUMBER=… YUANPENG_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/yuanpeng`

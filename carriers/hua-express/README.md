@@ -47,4 +47,4 @@ canary checks 17TRACK.
 
 ## Testing
 
-`HUA_EXPRESS_TRACKING_NUMBER=HUA005816254YQ HUA_EXPRESS_UNKNOWN_NUMBER=HUA000000000YQ npm run test:carriers:live -- carriers/hua-express`
+`HUA_EXPRESS_TRACKING_NUMBER=… HUA_EXPRESS_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/hua-express`

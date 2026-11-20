@@ -41,4 +41,4 @@ The sample and its source are in [`numbers.json`](numbers.json).
 
 ## Testing
 
-`YWD_TRACKING_NUMBER=YT20260000014144YT YWD_UNKNOWN_NUMBER=YT00000000000000YT npm run test:carriers:live -- carriers/ywd`
+`YWD_TRACKING_NUMBER=… YWD_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/ywd`

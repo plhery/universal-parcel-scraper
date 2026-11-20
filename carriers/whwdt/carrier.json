@@ -28,7 +28,9 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "destination_country",
+    "delivery_tracking_number"
   ],
   "portal": {
     "searchUrl": "https://hyd.itdida.com/itdida-flash/website/landing",

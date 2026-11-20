@@ -42,4 +42,4 @@ sample and its source are in [`numbers.json`](numbers.json).
 
 ## Testing
 
-`SFYD_EXPRESS_TRACKING_NUMBER=SFYD26099215028 SFYD_EXPRESS_UNKNOWN_NUMBER=SFYD00000000000 npm run test:carriers:live -- carriers/sfyd-express`
+`SFYD_EXPRESS_TRACKING_NUMBER=… SFYD_EXPRESS_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/sfyd-express`

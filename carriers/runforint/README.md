@@ -42,4 +42,4 @@ selection. The samples and their source are in [`numbers.json`](numbers.json).
 
 ## Testing
 
-`RUNFORINT_TRACKING_NUMBER=RF100500604428 RUNFORINT_UNKNOWN_NUMBER=RF999999999999 npm run test:carriers:live -- carriers/runforint`
+`RUNFORINT_TRACKING_NUMBER=… RUNFORINT_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/runforint`

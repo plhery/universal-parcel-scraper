@@ -43,4 +43,4 @@ sample and its source are in [`numbers.json`](numbers.json).
 
 ## Testing
 
-`YITU_TRACKING_NUMBER=Y890911042243T YITU_UNKNOWN_NUMBER=Y000000000000T npm run test:carriers:live -- carriers/yitu`
+`YITU_TRACKING_NUMBER=… YITU_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/yitu`

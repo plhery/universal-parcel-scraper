@@ -47,4 +47,4 @@ canary checks 17TRACK.
 
 ## Testing
 
-`TUOMEIDA_TRACKING_NUMBER=TM0000003945802 TUOMEIDA_UNKNOWN_NUMBER=TM0000000000000 npm run test:carriers:live -- carriers/tuomeida`
+`TUOMEIDA_TRACKING_NUMBER=… TUOMEIDA_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/tuomeida`
