@@ -36,6 +36,7 @@ import {
   CAINIAO_ACTION_STATUS,
   CAINIAO_NOTICE_ACTIONS,
   CAINIAO_NOTICE_WORDINGS,
+  CAINIAO_TEMPLATE_WORDINGS,
   CAINIAO_STATUS,
   cainiaoActionCode,
   cainiaoActionStage,
@@ -168,12 +169,18 @@ function scanWording(scan: JsonObject): string {
 
 /**
  * A scan's wording as shown: a notice Cainiao words only by the placeholder takes the
- * wording Cainiao gives the same notice elsewhere ("Last-mile delivery forecast").
+ * wording Cainiao gives the same notice elsewhere ("Last-mile delivery forecast"), and a step
+ * the reply words by an unfilled template key and a value takes Cainiao's wording for that step.
  */
 function shownWording(scan: JsonObject): string {
   const wording = scanWording(scan);
-  return (/^carrier update$/i.test(wording) && CAINIAO_NOTICE_WORDINGS.get(cainiaoActionCode(scan.actionCode))) || wording;
+  const code = cainiaoActionCode(scan.actionCode);
+  if (TEMPLATE_KEY.test(wording)) return CAINIAO_TEMPLATE_WORDINGS.get(code) ?? wording;
+  return (/^carrier update$/i.test(wording) && CAINIAO_NOTICE_WORDINGS.get(code)) || wording;
 }
+
+// A camel-case template key the reply left unfilled, then its value: "trackingDescriptionMailno:…".
+const TEMPLATE_KEY = /^[a-z]+(?:[A-Z][a-z0-9]*)+:/;
 
 const BEIJING_OFFSET_MS = 8 * 3_600_000;
 

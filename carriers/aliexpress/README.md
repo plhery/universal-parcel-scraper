@@ -153,6 +153,8 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
 - Some steps, the transit sorting centers' scans and the last-mile notice among them, have the
   placeholder "Carrier update" as their standard wording. Their own wording (`desc`) is shown
   instead when they have one.
+- The return leaving the consolidation warehouse comes worded as an unfilled template key and
+  the return's number. It is shown in Cainiao's wording for the same return leaving the warehouse.
 - The app scan-identity policy reconciles extracted towns, a placeholder's replacement and
   corrected milestones at the same instant. A replacement requires the same action code and place,
   whatever the stage, and stage corrections a matching action code, wording and place. The

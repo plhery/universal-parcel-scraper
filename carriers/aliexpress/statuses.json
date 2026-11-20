@@ -680,7 +680,7 @@
       "stage": "exception",
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
-      "note": "The return leaving the consolidation warehouse; the reply gives an unfilled template with the return's number as its wording."
+      "note": "The return leaving the consolidation warehouse; the reply gives an unfilled template with the return's number as its wording, shown as Cainiao words the same return leaving the warehouse (RT_WH_HO_OUT)."
     },
     {
       "code": "RT_EX_PICKUP",

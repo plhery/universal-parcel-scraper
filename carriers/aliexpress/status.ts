@@ -217,6 +217,13 @@ export const CAINIAO_NOTICE_ACTIONS: ReadonlySet<string> = new Set(NOTICES.map((
 /** Cainiao's own wording for a notice it also sends with the placeholder "Carrier update" alone. */
 export const CAINIAO_NOTICE_WORDINGS: ReadonlyMap<string, string> = new Map([['LAST_MILE_ASN_NOTIFY', 'Last-mile delivery forecast']]);
 
+/**
+ * Cainiao's wording for a step whose reply gives an unfilled template key and a value instead
+ * ("trackingDescriptionMailno:<return number>"): the return leaving the consolidation warehouse
+ * is worded as the same return leaving the warehouse (`RT_WH_HO_OUT`).
+ */
+export const CAINIAO_TEMPLATE_WORDINGS: ReadonlyMap<string, string> = new Map([['RT_CW_OUTBOUND', 'Package returning. Departed from warehouse.']]);
+
 const CARRIER_NOTE = /^(.*?\S)\s*[,，]\s*Carrier note\s*[:：]\s*(.*)$/is;
 
 /**

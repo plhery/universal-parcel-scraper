@@ -792,6 +792,15 @@ describe('Cainiao projection', () => {
     expect(turned.events?.map((event) => event.stage)).toEqual(['exception', 'exception', 'exception', 'in_transit', 'in_transit', 'accepted']);
   });
 
+  it("words a step the reply leaves as an unfilled template key as Cainiao words that step", () => {
+    const result = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000005', detailList: [
+      { actionCode: 'RT_CW_OUTBOUND', standerdDesc: 'trackingDescriptionMailno:RT0000000000000' },
+      { actionCode: 'CW_INBOUND_FAILURE', standerdDesc: 'Failed delivery at consolidation warehouse' },
+    ] }] }, 'LP00000000000005');
+    expect(result.events?.[0]).toMatchObject({ description: 'Package returning. Departed from warehouse.', provider_code: 'RT_CW_OUTBOUND', stage: 'exception' });
+    expect(JSON.stringify(result)).not.toContain('trackingDescription');
+  });
+
   it('reads a pickup order the seller closed as a cancellation', () => {
     expect(journey(['PICKUP_ORDER_CLOSED_NOTIFY'])).toMatchObject({ status: 'exception', current_stage: 'exception' });
   });
