@@ -80931,6 +80931,14 @@
     ]
   },
   {
+    "input": "BY000870933JB",
+    "carrier": "chronopost",
+    "confidence": "high",
+    "candidates": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "BY080004154557",
     "carrier": "europochta",
     "confidence": "high",
@@ -88305,6 +88313,14 @@
     "confidence": "high",
     "candidates": [
       "pos-malaysia"
+    ]
+  },
+  {
+    "input": "EW178243201FR",
+    "carrier": "la-poste",
+    "confidence": "high",
+    "candidates": [
+      "la-poste"
     ]
   },
   {

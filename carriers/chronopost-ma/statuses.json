@@ -1,4 +1,11 @@
 {
   "carrier": "chronopost-ma",
-  "entries": []
+  "entries": [
+    { "wording": "Livré", "stage": "delivered", "language": "fr", "confirmedBy": "live" },
+    { "wording": "En cours de livraison", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live" },
+    { "wording": "Entrée dans l'agence d'arrivée", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "The parcel reached the agency that delivers it." },
+    { "wording": "Sorti du centre import", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "The parcel left the import centre for its delivery agency." },
+    { "wording": "Arrivé au centre Import", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "A parcel from abroad reached Chronopost Maroc's import centre." },
+    { "wording": "Envoi sorti de l'agence import", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "The parcel left the import agency; its reason said customs had cleared it." }
+  ]
 }

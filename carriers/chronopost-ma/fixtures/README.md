@@ -1,0 +1,1 @@
+`delivered.json` is the tracker's answer for a public sample in `numbers.json`. `unknown.html` is the start of the site's error page for an impossible number, which relays its tracking service's 404; the stack trace that follows is left out.

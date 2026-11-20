@@ -521,6 +521,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'chronopost', number: 'XY000000005FR',
     route: /^https:\/\/www\.chronopost\.fr\/tracking-no-cms\/suivi-page\?/,
     marker: /Suivez votre colis|Informations concernant votre envoi/i },
+  { carrier: 'chronopost-ma', number: 'ZZ000000000ZZ',
+    route: /^https:\/\/chronopost\.ma\/suivez-votre-envoi\?SendingNumber=ZZ000000000ZZ$/,
+    marker: /Suivez votre envoi/ },
   // The UK site's tracker opens in every country; happy-post.com sends visitors abroad to UK addresses that lose the parcel.
   { carrier: 'happy-post', number: '99999990',
     route: /^https:\/\/uk\.happy-post\.com\/track\/\?id=99999990$/,

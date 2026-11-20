@@ -1,5 +1,47 @@
 {
   "carrier": "chronopost-ma",
-  "gap": "No public page shows a Chronopost Maroc number.",
-  "records": []
+  "records": [
+    {
+      "number": "EW178243201FR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chronopost.ma/suivez-votre-envoi?SendingNumber=EW178243201FR",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "EMS item from France delivered by Chronopost Maroc",
+        "reportedRole": "tracking form query",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "la-poste",
+        "confidence": "high"
+      },
+      "note": "A search engine indexed Chronopost Maroc's own tracker link for this EMS item from France. The tracker shows it cleared at its import centre and delivered by its Rabat agency."
+    },
+    {
+      "number": "BY000870933JB",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210411173718/https://chronopost.ma/suivez-votre-envoi?SendingNumber=BY000870933JB",
+        "date": "2021-04-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "reportedRole": "tracking form query",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "chronopost",
+        "confidence": "high"
+      },
+      "note": "An archived link to Chronopost Maroc's tracker carries this identifier, but its JB suffix is one of Chronopost's own skybill codes: Chronopost's French network issued it, and Chronopost Maroc could at most have delivered it. The archived page shows an empty form, and the tracker no longer knows the number."
+    }
+  ]
 }

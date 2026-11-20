@@ -14713,7 +14713,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Casablanca",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "chronopost-ma",
+      "localClocks": true
     },
     "canaryUrl": "https://chronopost.ma/suivez-votre-envoi",
     "trackingUrlTemplate": "https://chronopost.ma/suivez-votre-envoi?SendingNumber={trackingNumber}",

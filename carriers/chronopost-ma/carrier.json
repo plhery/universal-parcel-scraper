@@ -17,18 +17,48 @@
   "timezone": "Africa/Casablanca",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "chronopost-ma",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://chronopost.ma/suivez-votre-envoi?SendingNumber={trackingNumber}",
     "searchUrl": "https://chronopost.ma/suivez-votre-envoi",
     "canaryUrl": "https://chronopost.ma/suivez-votre-envoi",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "canonical_tracking_number",
+      "parcel_count"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "canonical_tracking_number",
+      "parcel_count"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

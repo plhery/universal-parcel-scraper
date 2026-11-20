@@ -1,18 +1,39 @@
 # Chronopost Maroc
 
-Chronopost Maroc parcels use enabled universal providers. There is no dedicated adapter.
+Tracks Chronopost Maroc parcels and the EMS items from abroad it delivers in Morocco.
 
 Chronopost Maroc, Chronopost International Maroc, is the express parcel company of Poste Maroc and
 Geopost in Morocco. It is separate from [Chronopost](../chronopost/README.md) in France.
 
+## How it works
+
+`direct` posts the number to the lookup the tracking page's script makes,
+`/umbraco/Surface/TrackingSurface/GetTrackingEvents` on chronopost.ma, as
+`{"SendingNumber": <number>, "Mode": 2}`: no session, token or browser. The page loads Google's
+reCAPTCHA script, but the lookup sends no token. `Mode` 2 is the page's own choice, its web
+service; `Mode` 1, its database, answers every number with an empty history.
+
+The reply lists the events newest first, each with a wording, a place and sometimes a reason,
+which is added to the wording. The events must name the whole requested number, as the parcel's
+number or its associated one. The page calls the newest the last event.
+
+An event's clock is a wall clock without a zone: the reply writes it as a UTC instant and repeats
+the time of day apart, and the page shows it as written. The adapter keeps it in `local_time`
+and rejects a reply whose two copies disagree.
+
+The origin, destination, piece count and associated number are left out.
+
 ## Numbers
 
-Its tracker takes a parcel, collection or missed-delivery notice number, and its example is fourteen
-digits and a letter. No public page shows a Chronopost Maroc number, so there is no rule.
+The tracker takes a parcel, collection or missed-delivery notice number. It matches numbers in
+capitals only, so the adapter sends them that way, without spaces. Its parcels include EMS items
+from other posts, which keep their senders' numbers, so there is no rule: Chronopost Maroc is
+asked when it is selected.
 
-## Why there is no adapter
+## Limitations
 
-No public number is known to check its tracker's replies against.
+A number the tracking service does not know gets the site's HTTP 500 error page, relaying the
+service's 404; that is not found. Any other failure it relays is inconclusive.
 
 ## Links
 
@@ -21,5 +42,4 @@ the number from that address.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`npm run test:carriers:live -- carriers/chronopost-ma`
