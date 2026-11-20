@@ -40520,6 +40520,18 @@
     ]
   },
   {
+    "input": "31CA66270",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "31CA69835",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "32-053 040 3000-10F 7FD 4BC",
     "carrier": "unknown",
     "confidence": "low",

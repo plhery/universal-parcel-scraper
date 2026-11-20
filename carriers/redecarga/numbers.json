@@ -1,0 +1,29 @@
+{
+  "carrier": "redecarga",
+  "records": [
+    {
+      "number": "31CA66270",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://operaciones.colombiacompra.gov.co/sites/cce_public/files/documentos_adicionales_oc/cuenta_no.1_6.pdf",
+        "access": "full_page"
+      },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The procurement record names Redecarga and associates this guide with its May delivery."
+    },
+    {
+      "number": "31CA69835",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://operaciones.colombiacompra.gov.co/sites/cce_public/files/documentos_adicionales_oc/cuenta_no.1_6.pdf",
+        "access": "full_page"
+      },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The same procurement record names a second Redecarga guide with a June delivery."
+    }
+  ]
+}

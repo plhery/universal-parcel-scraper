@@ -1,3 +1,4 @@
+import { statusMap as redecarga } from '../../carriers/redecarga/status.js';
 import { statusMap as logeximExpress } from '../../carriers/logexim-express/status.js';
 import { statusMap as paquetEx } from '../../carriers/paquetex/status.js';
 import { statusMap as jomaLogistics } from '../../carriers/joma-logistics/status.js';
@@ -904,6 +905,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  redecarga,
   'logexim-express': logeximExpress,
   paquetex: paquetEx,
   'joma-logistics': jomaLogistics,

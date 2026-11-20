@@ -49212,6 +49212,28 @@
     ],
     "detectionRules": []
   },
+  "redecarga": {
+    "displayName": "Redecarga",
+    "color": "#16446d",
+    "aliases": [
+      "Redecarga S.A.S."
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "redecarga",
+      "localClocks": true
+    },
+    "canaryUrl": "https://redecarga.gelotra.com/rastrearguia",
+    "trackingUrlTemplate": "https://redecarga.gelotra.com/rastrearguia?guia={trackingNumber}",
+    "trackingSearchUrl": "https://redecarga.gelotra.com/rastrearguia",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "redpack": {
     "displayName": "Redpack",
     "color": "#e2211c",

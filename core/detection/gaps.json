@@ -5506,6 +5506,18 @@
     "reason": "Swift Drop publishes a demo order. It confirms the tracking route and does not establish an issued number range."
   },
   {
+    "carrier": "redecarga",
+    "number": "31CA66270",
+    "kind": "open",
+    "reason": "Redecarga has an explicit adapter. Review the published 31CA guides before adding automatic recognition."
+  },
+  {
+    "carrier": "redecarga",
+    "number": "31CA69835",
+    "kind": "open",
+    "reason": "Redecarga has an explicit adapter. Review the published 31CA guides before adding automatic recognition."
+  },
+  {
     "carrier": "logexim-express",
     "number": "903088",
     "kind": "by_design",

@@ -49216,6 +49216,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "redecarga": {
+    "displayName": "Redecarga",
+    "color": "#16446d",
+    "aliases": [
+      "Redecarga S.A.S."
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "redecarga",
+      "localClocks": true
+    },
+    "canaryUrl": "https://redecarga.gelotra.com/rastrearguia",
+    "trackingUrlTemplate": "https://redecarga.gelotra.com/rastrearguia?guia={trackingNumber}",
+    "trackingSearchUrl": "https://redecarga.gelotra.com/rastrearguia",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "redpack": {
     "displayName": "Redpack",
     "color": "#e2211c",
@@ -66845,6 +66867,7 @@ export const CARRIER_IDS = [
   "red-express",
   "red-star-express",
   "redbox-mv",
+  "redecarga",
   "redpack",
   "redur",
   "redx",
@@ -68716,6 +68739,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "red-express": [],
   "red-star-express": [],
   "redbox-mv": [],
+  "redecarga": [],
   "redpack": [],
   "redur": [],
   "redx": ["redx-1"],

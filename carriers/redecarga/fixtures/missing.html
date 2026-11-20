@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="es"><head>
+
+
+
+
+    <title>Rastreo de encomiendas</title>
+
+
+
+
+</head>
+<body class="gel-shell gel-rastreo">
+<main class="gel-rastreo-page">
+            <div class="gel-rastreo-brand">
+            <img src="https://redecarga.gelotra.com/images/logo_redecarga.png" alt="REDECARGA S.A.S.">        </div>
+
+
+<div class="container">
+  <form action="/rastrearguia" method="get" autocomplete="off">
+    <section class="gel-card gel-rastreo-search">
+    <div class="gel-rastreo-heading">
+        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+        <h1>Rastrea tu envío</h1>
+        <p>Consulta el recorrido y los detalles de entrega de tu encomienda.</p>
+    </div>
+    <div class="gel-card-body">
+        <div class="gel-rastreo-search-fields">
+            <div>
+                <label for="guia">Número de guía</label>                <input type="text" id="guia" class="form-control" name="guia" value="ZZZZZZZZ000000000000000" placeholder="Ej. C2A-12345" aria-describedby="guia-ayuda">            </div>
+            <button type="submit" class="btn gel-rastreo-button">Consultar envío</button>
+        </div>
+        <p id="guia-ayuda" class="gel-rastreo-help">Incluye el prefijo y el número de guía suministrados en tu factura.</p>
+    </div>
+</section>
+      </form>
+    <section class="gel-card gel-rastreo-results">
+            <div class="row"><div class="col-md-12 col-xs-12 col-lg-12 form-group"><p class="gel-rastreo-empty" role="status">No se encontraron resultados. Verifica el número de guía e inténtalo de nuevo.</p></div></div>  </section>
+  </div>
+
+<!-- The Modal -->
+
+
+
+    </main>
+
+
+
+
+
+
+</body></html>
