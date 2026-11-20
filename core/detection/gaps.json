@@ -5674,5 +5674,10 @@
     "carrier": "hede-shipping",
     "kind": "open",
     "reason": "Container numbers identify equipment and may be shared across ocean lines. Hede’s native lookup confirms the whole equipment number."
+  },
+  {
+    "carrier": "calidex-courier",
+    "kind": "open",
+    "reason": "The two published Calidex guides use location prefixes in a shared format. The guest lookup confirms the complete guide on explicit selection."
   }
 ]

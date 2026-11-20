@@ -1,0 +1,113 @@
+{
+  "carrier": "calidex-courier",
+  "entries": [
+    {
+      "wording": "Actuación de funcionario asignado",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Carga Liberada",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Consolidación Nacional",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Creación Confirmada",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Creación de Guia Confirmada",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Creado",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Disponible para retiro en Oficina",
+      "language": "es",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Disponible para retiro en Sede Engativa",
+      "language": "es",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "En tránsito",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Finalizado",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Información importante para su carga",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Inspección Aduanera de Rutina",
+      "language": "es",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Proceso Aduanero",
+      "language": "es",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Recepción en Bodega",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Recibido en Bodega de Tránsito Internacional",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Salida de Origen",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tránsito Nacional Venezuela",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tránsito Nacional e Internacional",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
+}

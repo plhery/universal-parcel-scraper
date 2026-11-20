@@ -13257,6 +13257,32 @@
     ],
     "detectionRules": []
   },
+  "calidex-courier": {
+    "displayName": "Calidex Courier",
+    "color": "#15235a",
+    "aliases": [
+      "Calidex",
+      "Calidex Trading Co",
+      "Calidexco"
+    ],
+    "countries": [
+      "CO",
+      "VE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "calidex-courier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "trackingUrlTemplate": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "trackingSearchUrl": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "trackingSiteName": "Calidex TrackingPremium",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "campos-cadilhe": {
     "displayName": "Campos&Cadilhe",
     "color": "#536b8f",

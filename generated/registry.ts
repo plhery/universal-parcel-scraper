@@ -105,6 +105,7 @@ import { adapter as byt } from '../carriers/byt/adapter.js';
 import { adapter as cChezVous } from '../carriers/c-chez-vous/adapter.js';
 import { adapter as c3x } from '../carriers/c3x/adapter.js';
 import { adapter as cacesa } from '../carriers/cacesa/adapter.js';
+import { adapter as calidexCourier } from '../carriers/calidex-courier/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
 import { adapter as cargox } from '../carriers/cargox/adapter.js';
@@ -1032,6 +1033,7 @@ export const REGISTRY: RegistryDefinition = {
     "c-chez-vous": cChezVous,
     "c3x": c3x,
     "cacesa": cacesa,
+    "calidex-courier": calidexCourier,
     "canada-post": canadaPost,
     "canpar": canpar,
     "cargox": cargox,
@@ -2092,6 +2094,7 @@ export const REGISTRY: RegistryDefinition = {
     "c3x": "c3x",
     "c807-xpress": "universal",
     "cacesa": "cacesa",
+    "calidex-courier": "calidex-courier",
     "campos-cadilhe": "universal",
     "campost": "universal",
     "canada-air-express": "universal",

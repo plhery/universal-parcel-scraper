@@ -13261,6 +13261,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "calidex-courier": {
+    "displayName": "Calidex Courier",
+    "color": "#15235a",
+    "aliases": [
+      "Calidex",
+      "Calidex Trading Co",
+      "Calidexco"
+    ],
+    "countries": [
+      "CO",
+      "VE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "calidex-courier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "trackingUrlTemplate": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "trackingSearchUrl": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "trackingSiteName": "Calidex TrackingPremium",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "campos-cadilhe": {
     "displayName": "Campos&Cadilhe",
     "color": "#536b8f",
@@ -66507,6 +66533,7 @@ export const CARRIER_IDS = [
   "c3x",
   "c807-xpress",
   "cacesa",
+  "calidex-courier",
   "campos-cadilhe",
   "campost",
   "canada-air-express",
@@ -68406,6 +68433,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c3x": [],
   "c807-xpress": [],
   "cacesa": [],
+  "calidex-courier": [],
   "campos-cadilhe": [],
   "campost": [],
   "canada-air-express": [],
