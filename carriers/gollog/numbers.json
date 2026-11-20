@@ -1,5 +1,35 @@
 {
   "carrier": "gollog",
-  "gap": "No public page shows a GOLLOG number.",
-  "records": []
+  "records": [
+    {
+      "number": "127-35920231",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.tse.jus.br/internet/prestacao_contas/partidos/2011/pp/PC-267-46/anexo-19.pdf",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "GOLLOG air cargo",
+        "reportedRole": "air waybill control number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The indexed text of the Brazilian electoral court filing identifies the GOLLOG waybill and prints this full AWB in its control-number field."
+    }
+  ]
 }

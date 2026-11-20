@@ -1644,6 +1644,12 @@
     "reason": "YunExpress numbers that GOFO delivers in the US under the same number. GOFO's tracker answers for them, but they are YunExpress's own, so detection reads them as YunExpress; the GOFO adapter takes them when the user picks GOFO or opens a GOFO link."
   },
   {
+    "carrier": "gollog",
+    "pattern": "^127\\d{8}$",
+    "kind": "open",
+    "reason": "Detection does not offer GOLLOG for the airline's 127-prefixed air waybill published in a public filing."
+  },
+  {
     "carrier": "goodluck-courier",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
