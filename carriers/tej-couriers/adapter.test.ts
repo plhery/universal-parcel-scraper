@@ -53,6 +53,20 @@ describe('Tej Couriers HTTP adapter', () => {
     expect(() => parseTej(scans(['12-02-2026 11:00:00', '']), IN_TRANSIT)).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
   });
 
+  it('lets the public tracker combine repeated run-sheet scans without retaining the empty activity', async () => {
+    const fetcher = site(() => json(fixture('native-pending')));
+    const answer = await createTracker({ fetcher, providers: [], env: {} })
+      .track({ number: '30000031', carrier: 'tej-couriers' }, { budgetMs: 3000 });
+    expect(answer).toMatchObject({ source: 'tej-couriers', carrier: 'tej-couriers', result: {
+      current_stage: 'out_for_delivery', last_status_text: 'RunSheet', last_update_local: '2026-01-13T21:33:00',
+    } });
+    expect(answer.result.events).toHaveLength(5);
+    expect(answer.result.events.map(event => event.description)).toEqual(['Pending', 'RunSheet', 'InScan', 'OutScan', 'Booking Inward Done']);
+    expect(answer.result.events.filter(event => event.description === 'RunSheet')).toHaveLength(1);
+    expect(answer.result.events.every(event => event.local_time && event.description)).toBe(true);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it('rejects multiple identities and error envelopes rather than using the first item', () => {
     const first = shipmentOf('in-transit');
     const other = { ...first, cnote: '30000031' };
