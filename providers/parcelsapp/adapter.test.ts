@@ -464,10 +464,8 @@ describe('ParcelsApp result parsing', () => {
       const parsed = parseParcelsAppResponse({ ...undatedLeg, states }, number, identity());
       expect(parsed).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Dispatched by Asendia',
         last_update: '2026-03-10T18:10:00.000Z', undated_event_count: 1 });
-      // WNDirect, outside the catalog, has no location and no parcel carrier's zone: its wall clock.
-      expect(parsed.events?.map((scan) => scan.time ?? scan.local_time)).toEqual(dated.map((state) => state.carrier === 0
-        ? DateTime.fromISO(String(state.date), { zone: 'UTC' }).toISO({ includeOffset: false })
-        : DateTime.fromISO(String(state.date)).toUTC().toISO()));
+      // WNDirect, Asendia UK's former name, gives no location: its scan takes London's clock, UTC in March.
+      expect(parsed.events?.map((scan) => scan.time ?? scan.local_time)).toEqual(dated.map((state) => DateTime.fromISO(String(state.date)).toUTC().toISO()));
     }
     expect(() => parseParcelsAppResponse({ ...undatedLeg, states: [undated] }, number, identity())).toThrow('No usable tracking events');
   });
