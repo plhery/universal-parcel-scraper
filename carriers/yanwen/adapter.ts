@@ -11,7 +11,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { classifyWording } from '../../core/status/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isYanwenPlaceholder } from './app.js';
-import { yanwenCategory, yanwenNotice, yanwenStatus, yanwenWording } from './status.js';
+import { yanwenCategory, yanwenCodeOnly, yanwenNotice, yanwenStatus, yanwenWording } from './status.js';
 
 // This constant is shipped in the public browser script; it is part of the
 // anonymous form protocol, not a customer or account credential.
@@ -132,6 +132,11 @@ function withNotices(events: CarrierEvent[]): CarrierEvent[] {
   for (let index = read.length - 1; index >= 0; index--) {
     const event = read[index]!;
     const announcing = !taken && reading(event) === 'in_transit' && event.time !== undefined && announced.has(Date.parse(event.time));
+    // A scan of its country's code alone keeps its place, and the stage of the scan before it.
+    if (yanwenCodeOnly(event.description ?? '')) {
+      read[index] = { ...event, stage: read.slice(index + 1).find((older) => older.stage)?.stage ?? 'registered', stage_source: 'none' };
+      continue;
+    }
     if (!announcing && !yanwenNotice(event.description ?? '')) {
       taken ||= !['registered', 'pending'].includes(reading(event));
       continue;
@@ -200,7 +205,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     const events = withNotices((country === 'FR' && local.length === scanned.length ? local.map(onFrenchUtcClock) : local).map(onDayAlone));
     const latest = events[0]!;
     // A notice moves nothing: the newest scan before it gives the parcel's status.
-    const heading = events.find((event) => !yanwenNotice(event.description ?? '')) ?? latest;
+    const heading = events.find((event) => !yanwenNotice(event.description ?? '') && !yanwenCodeOnly(event.description ?? '')) ?? latest;
     const scan = yanwenStatus(heading.description!, heading.provider_code);
     // The category gives the status when the newest scan's wording is new. A
     // delivery still needs a delivered scan; the category alone never makes one.
@@ -215,7 +220,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     const notes = block.find('.addNotes p').toArray().map((line) => clean($(line).text(), 300));
     const partner = handoff ? distributor(notes, handoff) : undefined;
     results.push({ status, ...(stage ? { current_stage: stage } : {}),
-      last_status_text: latest.description, last_update: latest.time ?? null,
+      last_status_text: (yanwenCodeOnly(latest.description ?? '') ? heading : latest).description, last_update: latest.time ?? null,
       ...(typeof latest.local_time === 'string' ? { last_update_local: latest.local_time } : {}),
       ...(delivery ? { delivered_at: delivery.time } : {}), ...(parcel !== number ? { canonical_tracking_number: parcel } : {}),
       ...(handoff ? { delivery_tracking_number: handoff, ...(partner ? { delivery_carrier: partner } : {}) } : {}),

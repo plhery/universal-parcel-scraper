@@ -249,6 +249,9 @@ const NOTICES = new Map([
   ['Initial item information received', "A delivering post's record of the item's data reaching it, relayed between Yanwen's export scans with \"In Transit\" as its place: not a scan, so it keeps the stage the parcel already had."],
 ].map(([wording, note]) => [normalizeStatusWording(wording!), note!]));
 
+/** Whether a scan is its country's code alone ("UA."), without words: it names no stage. */
+export const yanwenCodeOnly = (description: string): boolean => /^[a-z]{2}\.$/i.test(description.trim());
+
 /** Whether a scan is a notice: it keeps the stage of the scan before it and names no place. */
 export const yanwenNotice = (description: string): boolean => NOTICES.has(normalizeStatusWording(withoutPrefix(description)));
 
