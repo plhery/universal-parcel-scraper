@@ -5649,5 +5649,10 @@
     "carrier": "jpi-jakarta-cargo",
     "kind": "open",
     "reason": "A public form example confirms a JPI shipment beginning with KJ, and the carrier lookup binds its full number. The prefix scope remains open."
+  },
+  {
+    "carrier": "karya-pratama-cargo",
+    "kind": "open",
+    "reason": "A short numeric shipment number does not identify its issuer. Karya Pratama Cargo confirms the full number in its public lookup."
   }
 ]

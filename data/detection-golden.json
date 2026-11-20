@@ -18388,6 +18388,12 @@
     ]
   },
   {
+    "input": "121212",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "12123456780101006623123455",
     "carrier": "unknown",
     "confidence": "none",

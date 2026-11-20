@@ -35311,6 +35311,30 @@
     ],
     "detectionRules": []
   },
+  "karya-pratama-cargo": {
+    "displayName": "Karya Pratama Cargo",
+    "color": "#164c80",
+    "aliases": [
+      "KP Cargo",
+      "Karya Pratama Kargo"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "karya-pratama-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://karyapratamacargo.co.id/cek-resi/",
+    "trackingUrlTemplate": "https://karyapratamacargo.co.id/cek-resi/",
+    "trackingSearchUrl": "https://karyapratamacargo.co.id/cek-resi/",
+    "trackingSiteName": "Karya Pratama Cargo Cek Resi",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kaukokiito": {
     "displayName": "Kaukokiito",
     "color": "#002c77",

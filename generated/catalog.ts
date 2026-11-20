@@ -35315,6 +35315,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "karya-pratama-cargo": {
+    "displayName": "Karya Pratama Cargo",
+    "color": "#164c80",
+    "aliases": [
+      "KP Cargo",
+      "Karya Pratama Kargo"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "karya-pratama-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://karyapratamacargo.co.id/cek-resi/",
+    "trackingUrlTemplate": "https://karyapratamacargo.co.id/cek-resi/",
+    "trackingSearchUrl": "https://karyapratamacargo.co.id/cek-resi/",
+    "trackingSiteName": "Karya Pratama Cargo Cek Resi",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kaukokiito": {
     "displayName": "Kaukokiito",
     "color": "#002c77",
@@ -67019,6 +67043,7 @@ export const CARRIER_IDS = [
   "kargoist",
   "kargoturk",
   "kart2door",
+  "karya-pratama-cargo",
   "kaukokiito",
   "kazpost",
   "kdz-express",
@@ -68913,6 +68938,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kargoist": ["kargoist-1"],
   "kargoturk": [],
   "kart2door": [],
+  "karya-pratama-cargo": [],
   "kaukokiito": [],
   "kazpost": ["kazpost-s10"],
   "kdz-express": [],

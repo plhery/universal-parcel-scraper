@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "data": {
+    "info": {
+      "no_resi": "121212"
+    },
+    "history": [
+      {
+        "status": "Tiba di Pelabuhan Kota/Kab Tujuan",
+        "lokasi": "Makassar",
+        "timestamp_update": "2026-08-24 16:06:11"
+      },
+      {
+        "status": "Tercatat di Gudang Asal",
+        "lokasi": "Gudang KP Cargo Jakarta",
+        "timestamp_update": "2026-06-28 02:30:25"
+      }
+    ]
+  }
+}
