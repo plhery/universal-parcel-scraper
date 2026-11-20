@@ -41010,11 +41010,18 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "muser",
+      "recognitionRank": 21,
+      "localClocks": true
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^MS\\d{14}YD$",
+        "confidence": "low"
+      }
+    ]
   },
   "mvp-courier": {
     "displayName": "MVP Courier",

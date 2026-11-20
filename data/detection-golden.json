@@ -100088,6 +100088,17 @@
     "candidates": []
   },
   {
+    "input": "MS73914286051937YD",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "muser"
+    ],
+    "asked": [
+      "muser"
+    ]
+  },
+  {
     "input": "MTDE-664743441",
     "carrier": "unknown",
     "confidence": "none",

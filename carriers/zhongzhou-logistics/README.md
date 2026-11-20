@@ -13,9 +13,9 @@ through a universal provider's carrier name.
 
 ## Why there is no adapter
 
-The site's tracking link opens its tenant of the rtb56 platform,
-`http://msgyl.rtb56.com/track_query.aspx`, which [YWBZ](../ywbz/README.md) and
-[YDH](../ydh/README.md) also use. An adapter needs a public number that tracker answers.
+The site's tracking link opens `http://msgyl.rtb56.com/track_query.aspx`, the tenant of the rtb56
+platform that [Muser's](../muser/README.md) adapter reads for Muser's own numbers. An adapter needs
+a public number of Zhongzhou's that tracker answers.
 
 ## Testing
 

@@ -520,6 +520,7 @@ import { adapter as mrlGlobal } from '../carriers/mrl-global/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
 import { adapter as mteXpress } from '../carriers/mte-xpress/adapter.js';
 import { adapter as mtscn } from '../carriers/mtscn/adapter.js';
+import { adapter as muser } from '../carriers/muser/adapter.js';
 import { adapter as mylerz } from '../carriers/mylerz/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
 import { adapter as naqel } from '../carriers/naqel/adapter.js';
@@ -1411,6 +1412,7 @@ export const REGISTRY: RegistryDefinition = {
     "mrw": mrw,
     "mte-xpress": mteXpress,
     "mtscn": mtscn,
+    "muser": muser,
     "mylerz": mylerz,
     "nacex": nacex,
     "naqel": naqel,
@@ -2881,7 +2883,7 @@ export const REGISTRY: RegistryDefinition = {
     "multidrop": "universal",
     "multientrega": "universal",
     "mundi-express": "universal",
-    "muser": "universal",
+    "muser": "muser",
     "mvp-courier": "universal",
     "myanmar-post": "universal",
     "mylerz": "mylerz",

@@ -1,4 +1,18 @@
 {
   "carrier": "muser",
-  "entries": []
+  "entries": [
+    {"wording": "Package received and scanned at warehouse", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Muser's warehouse in Hong Kong takes the parcel in."},
+    {"wording": "Shipment departed from facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The Chinese wording says the warehouse finished with the parcel."},
+    {"wording": "Express delivery arrives at the processing center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "The shipment leaves the processing center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Handed over to the carrier for transportation", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Airline received", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departure [HK International Airport]", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The brackets name the airport; a departure naming another reads the same."},
+    {"wording": "Arrive at Airport", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Customs clearanceisin progress", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Import clearance at the destination, spelt so."},
+    {"wording": "The import customs keep it for inspection", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Customs at the destination hold the parcel to inspect it; clearance followed."},
+    {"wording": "Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrival Mail Processing Center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering network's scan, followed by its town and ZIP Code."},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The delivering network's scan, followed by its town and ZIP Code."}
+  ]
 }

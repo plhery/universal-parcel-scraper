@@ -1,5 +1,20 @@
 {
   "carrier": "muser",
-  "gap": "no public sample found yet",
-  "records": []
+  "records": [
+    {
+      "number": "MS73914286051937YD",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "muser"
+        ]
+      },
+      "note": "Made-up number in the shape of a parcel the app tracked, which a universal provider filed under Muser and Muser's tracker answered."
+    }
+  ]
 }

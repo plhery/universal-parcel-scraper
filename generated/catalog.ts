@@ -41014,11 +41014,18 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "muser",
+      "recognitionRank": 21,
+      "localClocks": true
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^MS\\d{14}YD$",
+        "confidence": "low"
+      }
+    ]
   },
   "mvp-courier": {
     "displayName": "MVP Courier",
@@ -68313,7 +68320,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "multidrop": [],
   "multientrega": [],
   "mundi-express": [],
-  "muser": [],
+  "muser": ["muser-1"],
   "mvp-courier": [],
   "myanmar-post": [],
   "mylerz": ["mylerz-1"],

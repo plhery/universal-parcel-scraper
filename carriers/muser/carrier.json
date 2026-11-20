@@ -17,17 +17,64 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "muser",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 21
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
   "portal": {
     "canaryUrl": "https://t.17track.net/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "offset_timestamps",
+      "customer_reference",
+      "postcodes",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "provider_code",
+      "offset_timestamps",
+      "customer_reference",
+      "postcodes",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "pickup_point",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "muser-1",
+      "pattern": "^MS\\d{14}YD$",
+      "confidence": "low"
+    }
+  ]
 }
