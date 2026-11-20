@@ -5533,5 +5533,10 @@
     "carrier": "rm-logistics",
     "kind": "open",
     "reason": "RM Logistics numbers seen carry a customer's prefix, thirteen digits and TM; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "benben",
+    "kind": "open",
+    "reason": "Benben numbers are BEN, eight digits and BEN; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   }
 ]

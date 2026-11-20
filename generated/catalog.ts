@@ -10903,6 +10903,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "benben": {
+    "displayName": "Benben International",
+    "color": "#8e8e93",
+    "aliases": [
+      "犇犇",
+      "犇犇国际",
+      "犇犇国际物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "benben",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bergen-transport-sentral": {
     "displayName": "Bergen Transport Sentral",
     "color": "#ff230f",
@@ -65738,6 +65760,7 @@ export const CARRIER_IDS = [
   "begad",
   "bel",
   "belpost",
+  "benben",
   "bergen-transport-sentral",
   "best-courier-ro",
   "best-express-kh",
@@ -67610,6 +67633,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "begad": [],
   "bel": [],
   "belpost": ["belpost-s10"],
+  "benben": [],
   "bergen-transport-sentral": [],
   "best-courier-ro": [],
   "best-express-kh": [],
