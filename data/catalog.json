@@ -14292,6 +14292,30 @@
     ],
     "detectionRules": []
   },
+  "cesco-logistics": {
+    "displayName": "CESCO Logistics",
+    "color": "#1463a2",
+    "aliases": [
+      "CESCO",
+      "CESCO Logistik Indonesia",
+      "PT CESCO Logistik Indonesia"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cesco-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cesco-logistics.com/tracking.php",
+    "trackingUrlTemplate": "https://cesco-logistics.com/tracking.php",
+    "trackingSearchUrl": "https://cesco-logistics.com/tracking.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ceska-posta": {
     "displayName": "Česká pošta",
     "color": "#002776",

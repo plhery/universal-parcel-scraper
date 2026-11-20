@@ -14296,6 +14296,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cesco-logistics": {
+    "displayName": "CESCO Logistics",
+    "color": "#1463a2",
+    "aliases": [
+      "CESCO",
+      "CESCO Logistik Indonesia",
+      "PT CESCO Logistik Indonesia"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cesco-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cesco-logistics.com/tracking.php",
+    "trackingUrlTemplate": "https://cesco-logistics.com/tracking.php",
+    "trackingSearchUrl": "https://cesco-logistics.com/tracking.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ceska-posta": {
     "displayName": "Česká pošta",
     "color": "#002776",
@@ -66177,6 +66201,7 @@ export const CARRIER_IDS = [
   "celero",
   "central-transport",
   "centurion-transport",
+  "cesco-logistics",
   "ceska-posta",
   "ceva-logistics",
   "changjiang-express",
@@ -68063,6 +68088,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "celero": [],
   "central-transport": [],
   "centurion-transport": [],
+  "cesco-logistics": [],
   "ceska-posta": ["ceska-posta-1","ceska-posta-s10"],
   "ceva-logistics": [],
   "changjiang-express": [],

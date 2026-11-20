@@ -5617,5 +5617,10 @@
     "kind": "open",
     "carrier": "rosalia-express",
     "reason": "The native tracker confirms a public twelve-digit receipt with its leading zero. Explicit selection is available while numeric overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "cesco-logistics",
+    "reason": "The public tracker confirms two CESCO waybills with the same numeric prefix. Explicit selection is available while prefix ownership and numeric overlaps remain open."
   }
 ]

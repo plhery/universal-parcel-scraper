@@ -1,0 +1,62 @@
+{
+  "carrier": "cesco-logistics",
+  "records": [
+    {
+      "number": "001-00382127",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/1023013648/001-00382127",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "Public April 2026 CESCO waybill. The guest tracker returns five dated milestones ending in delivery."
+    },
+    {
+      "number": "001-00234567",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://cesco-logistics.com/tracking.php?lg=id",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "Full example printed in the carrier's tracking field. The guest tracker still returns five dated December 2019 milestones."
+    }
+  ]
+}

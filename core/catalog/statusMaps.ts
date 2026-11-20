@@ -1,3 +1,4 @@
+import { statusMap as cescoLogistics } from '../../carriers/cesco-logistics/status.js';
 import { statusMap as rosaliaExpress } from '../../carriers/rosalia-express/status.js';
 import { statusMap as bssExpressDirect } from '../../carriers/bss-express-direct/status.js';
 import { statusMap as dJesuComer } from '../../carriers/d-jesu-comer/status.js';
@@ -919,6 +920,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'cesco-logistics': cescoLogistics,
   'rosalia-express': rosaliaExpress,
   'bss-express-direct': bssExpressDirect,
   'd-jesu-comer': dJesuComer,

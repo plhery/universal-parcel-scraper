@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'cesco-logistics', number: '99900000000',
+    route: /^https:\/\/cesco-logistics\.com\/tracking\.php$/,
+    marker: /Enter Airwaybill \(With DASH|Get latest airwaybill information/i, forwarding: 'none' },
   { carrier: 'rosalia-express', number: '999000000000000',
     route: /^https:\/\/www\.rosalia-express\.com\/cek-paket$/,
     marker: /Masukkan No\. Surat Pengiriman/, forwarding: 'none' },
