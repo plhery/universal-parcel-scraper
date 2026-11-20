@@ -14,6 +14,19 @@ export function normalizeEkartNumber(raw: string): string {
   return number;
 }
 
+// One round's outcome is told twice, "Undelivered. (Rescheduled to: …)" then its reason, an hour or two apart.
+const SAME_ROUND_MS = 12 * 3600_000;
+
+/** A failed attempt right after another, with no round between, is that attempt told again: a notice on its stage. */
+function readRoundOutcomes(events: readonly CarrierEvent[]): void {
+  let previous: CarrierEvent | undefined;
+  for (const event of [...events].reverse()) {
+    const gap = event.time && previous?.time ? Date.parse(event.time) - Date.parse(previous.time) : 0;
+    if (event.stage === 'failed_attempt' && previous?.stage === 'failed_attempt' && gap <= SAME_ROUND_MS) event.stage_source = 'none';
+    if (event.stage) previous = event;
+  }
+}
+
 export function parseEkart(payload: unknown, raw: string): CarrierResult {
   const number = normalizeEkartNumber(raw);
   if (!isRecord(payload)) throw new SchemaError(PROVIDER);
@@ -49,6 +62,7 @@ export function parseEkart(payload: unknown, raw: string): CarrierResult {
       ...(scan.code ? { provider_code: scan.code } : {}), ...(returning ? { provider_leg: 'return' } : {}) };
   }).reverse();
   const unique = events.filter((row, index) => events.findIndex(other => JSON.stringify(other) === JSON.stringify(row)) === index);
+  readRoundOutcomes(unique);
   const latest = unique[0]!;
   const status: CarrierStatus = latest.stage === 'delivered' ? 'delivered' : latest.stage === 'out_for_delivery' ? 'out_for_delivery'
     : ['returned', 'exception', 'failed_attempt'].includes(latest.stage ?? '') ? 'exception'
@@ -59,7 +73,8 @@ export function parseEkart(payload: unknown, raw: string): CarrierResult {
   const eta = active && typeof shipment.expectedDeliveryDate === 'number' && shipment.expectedDeliveryDate >= 1_000_000_000_000
     ? epochMillisTime(shipment.expectedDeliveryDate)?.iso : undefined;
   return { status, last_status_text: latest.description, last_update: latest.time ?? null, timezone: 'Asia/Kolkata',
-    ...(latest.stage ? { current_stage: latest.stage, current_stage_source: latest.stage_source } : {}),
+    // A round's outcome told again keeps the stage the round's first report gave, and its source.
+    ...(latest.stage ? { current_stage: latest.stage, current_stage_source: unique.find(row => row.stage_source !== 'none')?.stage_source } : {}),
     ...(status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(eta ? { expected_delivery: eta } : {}), events: unique.slice(0, 100) };
 }

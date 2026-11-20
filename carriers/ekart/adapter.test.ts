@@ -26,7 +26,8 @@ describe('Ekart parser', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'InscannedAtDH - OriginHub_AAA' });
     expect(result.expected_delivery).toBeUndefined();
     const history = [...result.events!].reverse();
-    expect(history.every(event => event.stage_source === 'carrier_map')).toBe(true);
+    // The round's second outcome, an hour after the first, is the same attempt.
+    expect(history.map(event => event.stage_source)).toEqual([...Array(13).fill('carrier_map'), 'none', ...Array(4).fill('carrier_map')]);
     expect(history.map(event => event.stage)).toEqual([
       'registered', 'registered', 'registered', 'accepted', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
       'out_for_delivery', 'failed_attempt', 'failed_attempt', 'exception', 'in_transit', 'in_transit', 'in_transit']);
@@ -62,9 +63,20 @@ describe('Ekart parser', () => {
       { date: 1767434400000, city: 'Example hub', statusDetails: 'undelivered_update - ExampleHub_AAA' });
     const result = parseEkart(value, NUMBER);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'carrier_map' });
-    expect(result.events!.slice(0, 2).map(({ provider_code, stage }) => [provider_code, stage]))
-      .toEqual([['undelivered_update', 'failed_attempt'], ['ShipmentUndeliveredAttempted', 'failed_attempt']]);
+    // The update is the same attempt told again.
+    expect(result.events!.slice(0, 2).map(({ provider_code, stage, stage_source }) => [provider_code, stage, stage_source]))
+      .toEqual([['undelivered_update', 'failed_attempt', 'none'], ['ShipmentUndeliveredAttempted', 'failed_attempt', 'carrier_map']]);
     expect(result.delivered_at).toBeUndefined();
+  });
+  it('reads a round\'s outcome and its reason, told an hour or two apart, as one failed attempt', () => {
+    const value = fixture();
+    value[NUMBER].shipmentTrackingDetails.splice(2, 1,
+      { date: 1767434400000, city: 'Example hub', statusDetails: 'Unsuccessful Undelivered. (Rescheduled to: 2026-01-04)' },
+      { date: 1767440400000, city: 'Example hub', statusDetails: 'Unsuccessful Delivery attempt failed(No response from customer)' });
+    const result = parseEkart(value, NUMBER);
+    expect(result).toMatchObject({ current_stage: 'failed_attempt', current_stage_source: 'carrier_map' });
+    expect(result.events!.slice(0, 2).map(({ stage, stage_source }) => [stage, stage_source]))
+      .toEqual([['failed_attempt', 'none'], ['failed_attempt', 'carrier_map']]);
   });
   it('reads a round\'s "Unsuccessful" outcome in prose as a failed attempt, and a pickup run\'s as the parcel still with the seller', () => {
     expect(statusMap.stage(null, 'Unsuccessful Unable to attempt delivery due to operational issues')).toBe('failed_attempt');
