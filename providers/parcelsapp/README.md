@@ -605,7 +605,8 @@ step exists for future protocol changes.
   a checkpoint" falls at the same instant on Brussels time, as bpost's copies with no place
   do (step 3).
 - Correos's copies ("Spain Post") of an origin post's scans on an item from abroad, "En
-  oficina de cambio" and "En aduana de origen", are at that post's clock, as on Correos's
+  oficina de cambio", "En aduana de origen" and the release from that customs, are at that
+  post's clock, as on Correos's
   own tracker ([Correos](../../carriers/correos-spain/README.md)). They are read on the
   clock of the country an S10 number ends with, or stay wall times when it has several.
 - Correo Uruguayo's and Slovak Post's copies of a sending post's scans name that post's

@@ -247,6 +247,10 @@ describe('Correos Spain response parsing', () => {
     expect(zone('In the exchange office')).toBe('Asia/Kolkata');
     expect(zone('Admisión, En aduana de origen, El envío está en la aduana del país de origen')).toBe('Asia/Kolkata');
     expect(zone('En aduana de origen', 'RR123456785US')).toBeNull();
+    // The origin customs' release shares its summary with Correos's own customs: its details tell it.
+    expect(zone('EN CAMINO, Finalizada tramitación aduanera, El envío ha finalizado el proceso aduanero de exportación en origen')).toBe('Asia/Kolkata');
+    expect(zone('Customs processing completed. The shipment has completed the customs export process at origin')).toBe('Asia/Kolkata');
+    expect(zone('Finalizada tramitación aduanera')).toBeUndefined();
     // Correos's own scans at its office of exchange, a Spanish item and a non-S10 code stay on Madrid's clock.
     expect(zone('Salida de oficina de cambio')).toBeUndefined();
     expect(zone('Llegada a oficina de cambio')).toBeUndefined();

@@ -15,9 +15,11 @@ const ORIGIN_CODE = /^B\d/;
 
 /**
  * Correos's summaries of those scans, for relays that give no code: alone, or
- * as one part of 17TRACK's "PHASE, summary, details".
+ * as one part of 17TRACK's "PHASE, summary, details". The release from the
+ * origin's customs (B180000V) shares its summary with Correos's own customs,
+ * so only its details, which name the export at origin, tell it.
  */
-const ORIGIN_WORDING = /(?:^|,)\s*(?:en oficina de cambio|en aduana de origen|in the exchange office)\s*(?:,|$)/i;
+const ORIGIN_WORDING = /(?:^|,)\s*(?:en oficina de cambio|en aduana de origen|in the exchange office)\s*(?:,|$)|\bproceso aduanero de exportación en origen\b|\bcustoms export process at origin\b/i;
 
 /**
  * The country of the post that sent an item from abroad, which its S10 code's

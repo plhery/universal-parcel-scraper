@@ -85,7 +85,7 @@ Correos de Chile (`correos-chile`) are separate carriers.
   España") relay the same wall clocks without a real offset, so they are read on that clock and
   land on the instants the adapter gives, except an origin post's scans (below).
 - On an item from abroad, the origin post's scans, at its outward office of exchange
-  (`B030000V`) and in its customs (`B170000V`), carry that post's wall clock: India Post's own
+  (`B030000V`) and in its customs (`B170000V`, released `B180000V`), carry that post's wall clock: India Post's own
   scans have the same minutes on Kolkata time, and Japan Post's on Tokyo time, where Madrid's
   put them hours late. The country the S10 code's suffix names gives their zone, or they keep
   `local_time` when it has several. The identity policy in [identity.ts](identity.ts)
@@ -95,7 +95,8 @@ Correos de Chile (`correos-chile`) are separate carriers.
   arrival in Spain.
 - 17TRACK, ParcelsApp and Ship24 give no event code, so their copies of those scans are told
   by Correos's summaries, "En oficina de cambio", "En aduana de origen" or "In the exchange
-  office", and read the same way ([clock.ts](clock.ts)). Postal Ninja translates the
+  office", and read the same way ([clock.ts](clock.ts)). The customs release's summary is also
+  Correos's own, so its details, which name the export at origin, tell it. Postal Ninja translates the
   wording, so its copies stay on its usual reading.
 - The office (`nom_codired`) becomes `pickup_point` only while the parcel awaits collection.
   On a delivered parcel it is where the parcel *was* held and would read as a false pickup

@@ -1231,14 +1231,15 @@ describe('17TRACK result parsing', () => {
       shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key: 19181, name: 'Correos Spain', country: 'ES' },
         events: [
           row('2026-10-05T09:11:05', '2026-10-05T07:11:05Z', 'EN CAMINO, Llegada a oficina de cambio, El envío ha llegado a la oficina de cambio'),
+          row('2026-09-30T09:00:00', '2026-09-30T07:00:00Z', 'EN CAMINO, Finalizada tramitación aduanera, El envío ha finalizado el proceso aduanero de exportación en origen'),
           row('2026-09-29T17:01:00', '2026-09-29T15:01:00Z', 'EN CAMINO, En aduana de origen, El envío está en la aduana de origen'),
           row('2026-09-29T16:56:00', '2026-09-29T14:56:00Z', 'EN CAMINO, En oficina de cambio, El envío está en la oficina de cambio'),
         ] }] } } }] });
     const times = (requested: string) => parse17TrackResponse(reply(requested), requested).events?.map((e) => e.time ?? `local ${e.local_time}`);
-    expect(times('RR123456785IN')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-29T11:31:00.000Z', '2026-09-29T11:26:00.000Z']);
+    expect(times('RR123456785IN')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-30T03:30:00.000Z', '2026-09-29T11:31:00.000Z', '2026-09-29T11:26:00.000Z']);
     // An origin on several clocks leaves the wall clock, and Spain's own items keep Madrid's.
-    expect(times('RR123456785US')).toEqual(['2026-10-05T07:11:05.000Z', 'local 2026-09-29T17:01:00', 'local 2026-09-29T16:56:00']);
-    expect(times('RR123456785ES')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-29T15:01:00.000Z', '2026-09-29T14:56:00.000Z']);
+    expect(times('RR123456785US')).toEqual(['2026-10-05T07:11:05.000Z', 'local 2026-09-30T09:00:00', 'local 2026-09-29T17:01:00', 'local 2026-09-29T16:56:00']);
+    expect(times('RR123456785ES')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-30T07:00:00.000Z', '2026-09-29T15:01:00.000Z', '2026-09-29T14:56:00.000Z']);
   });
 
   it("reads La Poste's copy of a partner post's scan abroad on a tracked letter on that office's clock", () => {

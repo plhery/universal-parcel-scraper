@@ -128,7 +128,8 @@ No account, cookie, fingerprint or issued token is used.
   is read on the zone of the postal union's copy listed at the same minute (`upu-tracking`), when
   that zone lies outside Australia and both rows describe the same milestone at compatible places.
 - Correos's copies ("Correos de España") of an origin post's scans on an item from abroad,
-  "En oficina de cambio" and "En aduana de origen", are at that post's clock, as on
+  "En oficina de cambio", "En aduana de origen" and the release from that customs, are at
+  that post's clock, as on
   Correos's own tracker ([Correos](../../carriers/correos-spain/README.md)). They skip the
   steps below: they are read on the clock of the country an S10 number ends with, or stay
   wall times when it has several.

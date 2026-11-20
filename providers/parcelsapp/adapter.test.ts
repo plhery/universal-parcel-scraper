@@ -852,15 +852,16 @@ describe('ParcelsApp result parsing', () => {
       carriers: ['Spain Post'],
       states: [
         { date: '2026-10-05T09:11:05Z', status: 'Llegada a oficina de cambio', carrier: 0 },
+        { date: '2026-09-30T09:00:00Z', status: 'Customs processing completed. The shipment has completed the customs export process at origin', carrier: 0 },
         { date: '2026-09-29T17:01:00Z', status: 'En aduana de origen', carrier: 0 },
         { date: '2026-09-29T16:56:00Z', status: 'En oficina de cambio', carrier: 0 },
       ],
     }, item, identity(item)).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
     // The S10 code's suffix names the origin; Correos's own scans stay on Madrid's clock.
-    expect(times('RR123456785IN')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-29T11:31:00.000Z', '2026-09-29T11:26:00.000Z']);
+    expect(times('RR123456785IN')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-30T03:30:00.000Z', '2026-09-29T11:31:00.000Z', '2026-09-29T11:26:00.000Z']);
     // An origin on several clocks leaves the wall clock, and Spain's own items keep Madrid's.
-    expect(times('RR123456785US')).toEqual(['2026-10-05T07:11:05.000Z', 'local 2026-09-29T17:01:00.000', 'local 2026-09-29T16:56:00.000']);
-    expect(times('RR123456785ES')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-29T15:01:00.000Z', '2026-09-29T14:56:00.000Z']);
+    expect(times('RR123456785US')).toEqual(['2026-10-05T07:11:05.000Z', 'local 2026-09-30T09:00:00.000', 'local 2026-09-29T17:01:00.000', 'local 2026-09-29T16:56:00.000']);
+    expect(times('RR123456785ES')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-30T07:00:00.000Z', '2026-09-29T15:01:00.000Z', '2026-09-29T14:56:00.000Z']);
     // The rendered page gives the same instants.
     const page = identity('RR123456785IN').replace('</table>', `</table><ul class="events">${
       carrierRow('29 Sep 2026', '17:01', 'En aduana de origen', 'Spain Post')}${carrierRow('29 Sep 2026', '16:56', 'En oficina de cambio', 'Spain Post')}</ul>`);

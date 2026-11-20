@@ -267,8 +267,8 @@ carrier.
   stays, the last guess.
 - Correos Spain's leg (carrier key 19181) shows Correos's wall clocks, worded "PHASE,
   summary, details", with Madrid's offset. Its copies of an origin post's scans, told by
-  Correos's summaries "En oficina de cambio" and "En aduana de origen", are at that post's
-  clock, as on Correos's own tracker ([Correos](../../carriers/correos-spain/README.md)):
+  Correos's summaries "En oficina de cambio" and "En aduana de origen", or by the release's
+  details, which name the export at origin, are at that post's clock, as on Correos's own tracker ([Correos](../../carriers/correos-spain/README.md)):
   they are read on the clock of the country an S10 number ends with, or stay wall times
   when it has several.
 - Swiss Post's leg (carrier key 19251) relays the destination post's arrival, customs,
