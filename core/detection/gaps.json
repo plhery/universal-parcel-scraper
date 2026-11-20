@@ -1962,6 +1962,12 @@
     "reason": "Intereuropa's tracker finds a piece by its SSCC, but an SSCC carries the GS1 company prefix of whoever issued it, usually the sender, so no rule can name Intereuropa from it."
   },
   {
+    "carrier": "interlogistica",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "Two confirmed Interlogistica waybills have seven digits. Detection offers SEUR without Interlogistica."
+  },
+  {
     "carrier": "internet-express",
     "pattern": "^[A-Z0-9]{9}$",
     "kind": "by_design",

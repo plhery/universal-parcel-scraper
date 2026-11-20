@@ -1,5 +1,51 @@
 {
   "carrier": "interlogistica",
-  "gap": "No public page shows an Interlogistica shipment number; GLS parcels it delivers in Bulgaria keep their GLS number.",
-  "records": []
+  "records": [
+    {
+      "number": "2375184",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://dela.bg/Acts/c2ff6046-e101-4d11-8048-270e93f19144",
+        "date": "2023-03-14",
+        "dateKind": "judgment",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "waybill number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The Bulgarian court quotes this waybill in Interlogistica's response. The public tracker still returns dated scans for the same number."
+    },
+    {
+      "number": "2370669",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://dela.bg/Acts/c2ff6046-e101-4d11-8048-270e93f19144",
+        "date": "2023-03-14",
+        "dateKind": "judgment",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "waybill number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The Bulgarian court quotes this waybill in Interlogistica's shipment records. The public tracker still returns dated scans for the same number."
+    }
+  ]
 }
