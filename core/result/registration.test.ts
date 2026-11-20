@@ -18,27 +18,28 @@ describe('late registrations', () => {
     { carrier: 'DHL instruction data', events: [
       scan('2030-01-11T09:12:00+01:00', 'The instruction data for this shipment have been provided by the sender to DHL electronically', 'registered'),
       scan('2030-01-10T21:40:00+01:00', 'The shipment has been processed in the parcel center of origin', 'in_transit'),
-      scan('2030-01-10T17:05:00+01:00', 'The shipment has been picked up', 'accepted')], late: 'in_transit' },
+      scan('2030-01-10T17:05:00+01:00', 'The shipment has been picked up', 'accepted')], late: 'in_transit', source: 'carrier_map' },
     { carrier: 'iMile', events: [
       scan('2030-01-11T10:00:00+04:00', 'Order submitted, pending to receive.', 'registered'),
       scan('2030-01-11T08:30:00+04:00', 'Picked up by courier', 'accepted'),
-      scan('2030-01-10T12:00:00+04:00', 'Order submitted, pending to receive.', 'registered')], late: 'in_transit' },
+      scan('2030-01-10T12:00:00+04:00', 'Order submitted, pending to receive.', 'registered')], late: 'accepted', source: 'none' },
     { carrier: '4PX', events: [
       scan('2030-01-12T03:00:00+08:00', 'Order data transmitted', 'registered'),
       scan('2030-01-11T20:00:00+08:00', 'Departed from facility', 'in_transit'),
-      scan('2030-01-11T09:00:00+08:00', 'Label creation', 'registered')], late: 'in_transit' },
+      scan('2030-01-11T09:00:00+08:00', 'Label creation', 'registered')], late: 'in_transit', source: 'carrier_map' },
     { carrier: 'La Poste', events: [
       scan('2030-01-12T11:30:00+01:00', 'Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez l\'expéditeur.', 'registered'),
       scan('2030-01-12T11:05:00+01:00', 'Votre colis est livré.', 'delivered'),
       scan('2030-01-10T08:00:00+01:00', 'Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez l\'expéditeur.', 'registered')],
-    late: 'in_transit' },
+    late: 'delivered', source: 'none' },
     { carrier: 'Spring GDS on Swiss Post', events: [
       scan('2030-01-11T16:00:00+01:00', 'Consignment recorded by the foreign sender (data delivered)', 'registered'),
       scan('2030-01-11T12:00:00+01:00', 'Item received by the foreign post', 'accepted'),
-      scan('2030-01-10T12:00:00+01:00', 'Consignment recorded by the foreign sender (data delivered)', 'registered')], late: 'in_transit' },
-  ])('reads $carrier registration after the first movement as $late and keeps the first one', ({ events, late }) => {
+      scan('2030-01-10T12:00:00+01:00', 'Consignment recorded by the foreign sender (data delivered)', 'registered')], late: 'accepted', source: 'none' },
+  ])('reads $carrier registration after the first movement as $late ($source) and keeps the first one', ({ events, late, source }) => {
+    // A registration told again word for word is a notice on the stage the parcel had; a new one is in transit.
     const answer = readLateRegistrations(result(events));
-    expect(stages(answer)[0]).toEqual([events[0]!.description, late, 'carrier_map']);
+    expect(stages(answer)[0]).toEqual([events[0]!.description, late, source]);
     expect(answer.events!.slice(1)).toEqual(events.slice(1));
   });
 

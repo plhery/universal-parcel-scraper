@@ -482,6 +482,8 @@ parcel is on its way. Every adapter's and provider's result reads it as in trans
 after an acceptance, since a label is not one, with the source `carrier_map`. One dated first,
 or within a minute after the first movement, stays registered: a provider's copy dated seconds
 after the scan it came with is that scan's record ([registration.ts](core/result/registration.ts)).
+One that repeats a registration from before the movement word for word, under the same code, is
+that registration told again: a notice on the stage the parcel had, with the source `none`.
 Scans are compared by their instants, or by wall clocks in a history with no instant. A customs
 filing, a problem or a scan no rule read is not a movement. A result whose current stage is
 registered for its newest scan, a registration after a movement, is in transit, or accepted when

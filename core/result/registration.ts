@@ -49,7 +49,9 @@ export function clocks(events: readonly unknown[]): (number | null)[] {
  * whose current stage is registered for its newest scan, a registration after a movement, is
  * at the newest stage before it: the latest physical stage, or a customs step or a problem after
  * it, such as a delivery the carrier withdrew. An acceptance advances to transit for a later
- * partner registration once the first movement's minute has passed.
+ * partner registration once the first movement's minute has passed. A late registration that repeats one from
+ * before the movement word for word, under the same code, is that registration told again: a notice on the stage
+ * the parcel had, with no source of its own.
  */
 export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const events: unknown[] = Array.isArray(result.events) ? result.events : [];
@@ -59,6 +61,11 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const order = events.flatMap((_, index) => at[index] === null ? [] : [index]).sort((left, right) => at[left]! - at[right]!);
   const late = new Set<number>();
   const settled = new Set<number>();
+  // The registrations before the movement, by code and wording, and the late ones that repeat them with the stage then.
+  const key = (event: unknown) => isRecord(event) ? JSON.stringify([event.provider_code ?? null, typeof event.description === 'string'
+    ? event.description.replace(/\s+/g, ' ').trim().toLowerCase() : '']) : '';
+  const registered = new Set<string>();
+  const echoes = new Map<number, Stage>();
   let movedAt: number | null = null;
   // The newest state once the parcel moved: a movement's, or a customs step's or a problem's after it.
   let state: Stage = 'accepted';
@@ -67,9 +74,15 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
     while (end < order.length && at[order[end]!] === at[order[start]!]) end++;
     const together = order.slice(start, end);
     for (const index of together) {
-      if (movedAt === null || read[index] !== 'registered') continue;
+      if (read[index] !== 'registered') continue;
+      if (movedAt === null) {
+        registered.add(key(events[index]));
+        continue;
+      }
       late.add(index);
-      if (at[index]! - movedAt > SAME_MOMENT_MS) settled.add(index);
+      if (at[index]! - movedAt <= SAME_MOMENT_MS) continue;
+      if (registered.has(key(events[index]))) echoes.set(index, state);
+      else settled.add(index);
     }
     const movement = together.find(index => MOVED.has(read[index] as Stage));
     if (movement !== undefined) movedAt ??= at[movement]!;
@@ -82,10 +95,12 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const headline = result.current_stage === 'registered' && newest.some(index => late.has(index))
     && newest.every(index => read[index] !== 'registered' || late.has(index));
   const stage = state === 'accepted' && newest.some(index => settled.has(index)) ? 'in_transit' : state;
+  const echo = (index: number) => echoes.has(index) ? { stage: echoes.get(index)!, stage_source: 'none' } : undefined;
   return {
     ...result,
     ...(headline ? { current_stage: stage, current_stage_source: 'carrier_map', status: languageStageStatus(stage) } : {}),
     events: events.map((event, index) => settled.has(index)
-      ? { ...event as CarrierEvent, stage: 'in_transit', stage_source: 'carrier_map' } : event) as CarrierEvent[],
+      ? { ...event as CarrierEvent, stage: 'in_transit', stage_source: 'carrier_map' }
+      : echoes.has(index) ? { ...event as CarrierEvent, ...echo(index) } : event) as CarrierEvent[],
   };
 }

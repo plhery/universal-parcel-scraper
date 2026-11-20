@@ -130,7 +130,8 @@ describe('DHLink HTTP adapter', () => {
     const { result } = await createTracker({ fetcher, providers: [], env: {} }).track({ number: WAREHOUSE, carrier: 'dhlink' }, { budgetMs: 3000 });
     expect(result.events.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
       ['Customs export clearance completed', 'in_transit', 'carrier_map'],
-      ['货物电子信息已经收到', 'in_transit', 'carrier_map'],
+      // The electronic data told again word for word is a notice on the stage the parcel had.
+      ['货物电子信息已经收到', 'in_transit', 'none'],
       ['Package departed from the warehouse', 'in_transit', 'carrier_map'],
       ['Shipping Label Created', 'in_transit', 'carrier_map'],
       ['Package received & scanned at warehouse', 'accepted', 'carrier_map'],
