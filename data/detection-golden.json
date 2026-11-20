@@ -16618,6 +16618,20 @@
     ]
   },
   {
+    "input": "111102405",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt"
+    ],
+    "preferred": [
+      "tnt"
+    ],
+    "asked": [
+      "tnt"
+    ]
+  },
+  {
     "input": "1112503377517",
     "carrier": "unknown",
     "confidence": "low",
