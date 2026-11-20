@@ -44492,6 +44492,19 @@
     ]
   },
   {
+    "input": "399999930408185",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "brt",
+      "yunda",
+      "ozon-logistics"
+    ],
+    "asked": [
+      "brt"
+    ]
+  },
+  {
     "input": "399999999980",
     "carrier": "unknown",
     "confidence": "low",
