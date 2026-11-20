@@ -63,6 +63,8 @@ sent within Brazil. Tracked through the lookups its two tracking pages make.
 - A failed delivery whose reason is "Pacote não pertence à Base" is in transit, not a failed
   attempt: the parcel reached a delivery base that does not serve its address, and the next scan
   is the parcel back at a transit centre. Nobody tried the door.
+- `delivering` mostly files moves between transit centres; when its wording says "saiu para entrega",
+  it is the courier's round to the recipient, out for delivery.
 - The reply names no destination carrier's number, so there is no hand-off.
 
 ## Limitations

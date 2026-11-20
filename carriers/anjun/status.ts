@@ -28,7 +28,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['transit_warehouse_arrived', 'in_transit'],
   ['transit_warehouse_is_packed', 'in_transit'],
   ['transit_warehouse_sent', 'in_transit'],
-  ['delivering', 'in_transit'], // On the way to, or between, sorting centres.
+  ['delivering', 'in_transit'], // On the way to, or between, sorting centres; see ROUND.
   ['delivery_point_reception', 'in_transit'], // At the delivery station the courier leaves from.
   ['to_be_delivered', 'out_for_delivery'],
   ['delivery_failed', 'failed_attempt'],
@@ -73,8 +73,18 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
  */
 const MISROUTED = /:\s*pacote n[aã]o pertence [aà] base\b/i;
 
-function misrouted(code: string, wording: string): boolean {
-  return anjunCodeKey(code) === 'delivery_failed' && MISROUTED.test(wording);
+/**
+ * `delivering` mostly files moves between transit centres, but Anjun Express also files the courier's round to the
+ * recipient under it ("Objeto saiu para entrega ao destinatário"), after the delivery station's receipt.
+ */
+const ROUND = /\bsaiu para entrega\b/i;
+
+/** The stage a scan's wording gives over its code's. */
+function wordingStage(code: string, wording: string): Stage | undefined {
+  const key = anjunCodeKey(code);
+  if (key === 'delivery_failed' && MISROUTED.test(wording)) return 'in_transit';
+  if (key === 'delivering' && ROUND.test(wording)) return 'out_for_delivery';
+  return undefined;
 }
 
 /** A code as the map reads it: lower case, without spaces. */
@@ -89,7 +99,7 @@ export function anjunMappedStage(code: string): Stage | undefined {
 
 /** A scan's stage: its code, else the shared wording rules, else nothing. */
 export function anjunStage(code: string, wording: string): ClassifiedWording | null {
-  const mapped = misrouted(code, wording) ? 'in_transit' : anjunMappedStage(code);
+  const mapped = wordingStage(code, wording) ?? anjunMappedStage(code);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
@@ -97,6 +107,6 @@ export function anjunStage(code: string, wording: string): ClassifiedWording | n
 
 export const statusMap: CarrierStatusMap = {
   codeKey: anjunCodeKey,
-  stage: (code, wording) => (code ? (misrouted(code, wording) ? 'in_transit' : anjunMappedStage(code)) : undefined),
+  stage: (code, wording) => (code ? wordingStage(code, wording) ?? anjunMappedStage(code) : undefined),
   gaps: [],
 };

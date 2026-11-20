@@ -41,6 +41,7 @@
     {"code": "TRANSIT_WAREHOUSE_SENT", "wording": "O pacote saiu do centro de trânsito", "stage": "in_transit", "language": "pt", "confirmedBy": "live"},
     {"code": "delivering", "wording": "O pacote está a caminho do centro de trânsito", "stage": "in_transit", "language": "pt", "confirmedBy": "live"},
     {"code": "delivering", "wording": "Objeto em transferência - por favor aguarde", "stage": "in_transit", "language": "pt", "confirmedBy": "live"},
+    {"code": "delivering", "wording": "Objeto saiu para entrega ao destinatário", "stage": "out_for_delivery", "language": "pt", "confirmedBy": "live", "note": "The courier's round, after the delivery station's receipt."},
     {"code": "Delivery_point_reception", "wording": "Objeto chegou ao ponto de entrega", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "At the delivery station the courier leaves from."},
     {"code": "to_be_delivered", "wording": "Objeto saiu para entrega ao destinatário", "stage": "out_for_delivery", "language": "pt", "confirmedBy": "live"},
     {"code": "delivery_failed", "wording": "A entrega falhou", "stage": "failed_attempt", "language": "pt", "confirmedBy": "live", "note": "The reply gives the reason apart, as Cliente ausente or Endereço fora da rota."},

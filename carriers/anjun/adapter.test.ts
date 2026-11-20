@@ -393,5 +393,8 @@ describe('Anjun status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'anjun', providerCode: 'delivery_failed', description: 'A entrega falhou: Cliente ausente' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(anjunStage('synthetic_code', 'Synthetic note')).toBeNull();
+    // `delivering` files the courier's round to the recipient too.
+    expect(anjunStage('delivering', 'Objeto saiu para entrega ao destinatário')).toEqual({ stage: 'out_for_delivery', source: 'carrier_map' });
+    expect(anjunStage('delivering', 'O pacote está a caminho do centro de trânsito')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 });
