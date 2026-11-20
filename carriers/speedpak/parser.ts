@@ -3,7 +3,7 @@ import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detectio
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { countryCode, epochMillisTime } from '../../core/time/index.js';
+import { countryCode, countryTimeZone, epochMillisTime, zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { brandCarrierForNumber } from '../../providers/shared/hints.js';
@@ -13,6 +13,23 @@ import { speedpakPlace, withoutRoutingPrefix } from './wording.js';
 const PROVIDER = 'SpeedPAK';
 // A partner's departure for the destination country, which a scan with no city of its own places in that country.
 const DEPARTURE_TO_DESTINATION = /^departure to (?:the )?country of destination\b/i;
+
+/**
+ * When a scan happened: the instant SpeedPAK gives (`oprTimestamp`), which is the clock it shows (`oprTime`)
+ * under the offset it states (`oprTimeZone`, in hours). A partner's scan it relays under "0" keeps the
+ * partner's wall clock: PostNL's collection at the airport came at 10:39 "0" where PostNL's own feed, through
+ * Spring GDS, has 10:39 +01:00, and the Czech post's scans agreed with Spring GDS's at their digits on Prague's
+ * clock. Such a scan at a place in a country that keeps one clock is read on that clock.
+ */
+function scanTime(row: Record<string, unknown>, location: string): Pick<CarrierEvent, 'time' | 'time_zone' | 'time_zone_basis'> | null {
+  const stated = epochMillisTime(row.oprTimestamp);
+  const shown = clean(row.oprTime);
+  const relayed = (row.oprTimeZone === 0 || clean(row.oprTimeZone) === '0') && !!shown && !!stated?.iso.startsWith(shown.replace(' ', 'T'));
+  const zone = relayed ? countryTimeZone(countryCode(location.split(',').at(-1)?.trim())) : null;
+  const local = zone ? zonedTime(shown, 'yyyy-MM-dd HH:mm:ss', zone) : null;
+  if (zone && local) return { time: local.iso, time_zone: zone, time_zone_basis: 'place' };
+  return stated ? { time: stated.iso } : null;
+}
 
 export function normalizeSpeedpakNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -43,16 +60,16 @@ export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResul
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'SpeedPAK returned an invalid history row');
     const description = withoutRoutingPrefix(clean(row.eventDesc));
     if (!description) throw new SchemaError(PROVIDER, 'SpeedPAK returned an empty scan description');
-    const time = epochMillisTime(row.oprTimestamp);
     const mapped = speedpakScanStatus(description, clean(row.eventDescCn));
     const place = speedpakPlace(clean(row.oprCity), clean(row.oprCountry));
     // That country is where the parcel goes, not where it was.
     const location = DEPARTURE_TO_DESTINATION.test(description) && place === clean(row.oprCountry) ? '' : place;
+    const time = scanTime(row, location);
     for (const text of [description, withoutRoutingPrefix(clean(row.eventDescCn))]) {
       const handoff = HANDOFF.exec(text);
       if (handoff) handoffs.set(handoff[2]!, handoff[1]!.trim());
     }
-    const event: CarrierEvent = { description: speedpakEnglish(description) ?? withoutHandoffReference(description), ...(time ? { time: time.iso } : { provider_time_text: clean(row.oprTime) || undefined }),
+    const event: CarrierEvent = { description: speedpakEnglish(description) ?? withoutHandoffReference(description), ...(time ?? { provider_time_text: clean(row.oprTime) || undefined }),
       ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
     if (!events.some(previous => JSON.stringify(previous) === JSON.stringify(event))) events.push(event);
   }

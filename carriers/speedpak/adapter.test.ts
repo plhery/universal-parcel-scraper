@@ -115,6 +115,29 @@ describe('SpeedPAK response projection', () => {
     }
   });
 
+  it("reads a partner's scan SpeedPAK relays under a zero offset on its country's clock, and stated offsets as given", () => {
+    const payload = fixture();
+    const trace = (oprTime: string, oprTimeZone: string, oprTimestamp: number, eventDesc: string, oprCity: string, oprCountry: string) =>
+      ({ eventDesc, oprCity, oprCountry, oprTime, oprTimeZone, oprTimestamp });
+    payload.result.waybills[0].traces = [
+      trace('2026-11-10 15:40:00', '0', Date.UTC(2026, 10, 10, 15, 40), 'Arrival at Destination Countries', 'Example City', 'CZ'),
+      trace('2026-11-06 13:05:00', '1', Date.UTC(2026, 10, 6, 12, 5), 'The item is received by PostNL', 'Example City', 'NL'),
+      trace('2026-11-04 14:25:00', '0', Date.UTC(2026, 10, 4, 14, 25), 'The freight handler collected the shipment at the airport', 'Example City', 'NL'),
+      trace('2026-11-03 16:20:00', '0', Date.UTC(2026, 10, 3, 16, 20), 'Arrived at Destination Hub', 'Example City', 'US'),
+      trace('2026-11-02 19:50:00', '8', Date.UTC(2026, 10, 2, 11, 50), 'Departed from Origin Country', '', 'HK'),
+    ];
+    payload.result.waybills[0].lastStatus = 'Arrival at Destination Countries';
+    expect(parseSpeedpak(payload, NUMBER).events?.map(({ time, time_zone, time_zone_basis }) => [time, time_zone, time_zone_basis])).toEqual([
+      ['2026-11-10T15:40:00+01:00', 'Europe/Prague', 'place'],
+      ['2026-11-06T12:05:00Z', undefined, undefined],
+      ['2026-11-04T14:25:00+01:00', 'Europe/Amsterdam', 'place'],
+      // A country of several clocks keeps the instant SpeedPAK gives.
+      ['2026-11-03T16:20:00Z', undefined, undefined],
+      ['2026-11-02T11:50:00Z', undefined, undefined],
+    ]);
+    expect(sameInstantIdentityPolicy('speedpak', { supportsScanMatching: true })).toMatchObject({ relabelledFrom: 'UTC' });
+  });
+
   it('keeps a destination hand-off\'s departures and arrivals moving by their labels', () => {
     const payload = fixture();
     const traces = payload.result.waybills[0].traces;

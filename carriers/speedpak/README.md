@@ -6,7 +6,7 @@ Tracks Orange Connex SpeedPAK cross-border shipments through the public website'
 
 1. `direct`: POST one number and the English locale to the website's tracking service. The returned waybill must match the requested number before any history is retained.
 
-The carrier provides epoch timestamps for scans, so cross-border events keep their instants without imposing a China timezone.
+The carrier provides epoch timestamps for scans, so cross-border events keep their instants without imposing a China timezone. A partner's scan it relays under a zero offset keeps the partner's wall clock: PostNL's collection at the airport came an hour after PostNL's own feed puts it. Such a scan at a place in a country of one clock is read on that clock, and a row stored at the UTC reading takes the new instant.
 
 Each scan is classified by its English wording, else by SpeedPAK's own Chinese label (`eventDescCn`). The label stays in SpeedPAK's vocabulary when the English text is the last-mile carrier's own wording, such as USPS's upper-case scans. The line naming the last-mile carrier and its reference is a notice by its own wording: SpeedPAK files it under 同步尾程供应商, its record of the carrier chosen, made at the second of a scan in the origin country days before the hand-over, and does not always send that label with it. It keeps the stage of the scan before it. The line shows the carrier alone, since the result gives the reference as the hand-off.
 

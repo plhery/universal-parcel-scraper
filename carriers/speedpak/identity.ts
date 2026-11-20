@@ -35,7 +35,8 @@ const translated = translatedScanPolicy('speedpak', speedpakEnglish);
 
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'speedpak', storedSources: ['speedpak'], requireProviderCode: false,
-  matchEachScan: true,
+  // A partner's scan once read at its wall clock as UTC takes over its row on its country's clock.
+  matchEachScan: true, relabelledFrom: 'UTC',
   matches: (incoming, stored) => trimmedRouting(incoming, stored) || withoutReference(incoming, stored)
     || matchesRereadLocation(incoming, stored, reread)
     || translated.matches!(incoming, stored),
