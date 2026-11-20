@@ -611,6 +611,8 @@ describe('JRT tracking adapter', () => {
     expect(answer('货物已清关完成，Import customs clearance complete')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('包裹交接给本地物流商处理，Received by local delivery company')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('包裹交接给本地物流商处理/Received by local delivery company')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // The label's data passed to FedEx, in Chinese beside its English row.
+    expect(answer('货件信息已发送给 FedEx')).toEqual({ kind: 'mapped', stage: 'registered' });
     expect(answer('Parcel handed to DPD')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // The delivering company's depot, then its round, worded "out of delivery".
     expect(answer('At delivery centre')).toEqual({ kind: 'mapped', stage: 'in_transit' });

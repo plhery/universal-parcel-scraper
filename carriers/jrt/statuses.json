@@ -32,6 +32,14 @@
       "note": "The label's data passed to FedEx, which delivers the last leg, before JRT's first scan."
     },
     {
+      "wording": "货件信息已发送给 FedEx",
+      "language": "zh",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The Chinese row of \"Shipment information sent to FedEx\", at the same clock beside it."
+    },
+    {
       "wording": "The cargo has been picked up and arrived at the warehouse，awaiting outbound shipment",
       "language": "en",
       "stage": "in_transit",
