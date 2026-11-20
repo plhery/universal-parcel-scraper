@@ -4856,5 +4856,11 @@
     "pattern": "^9999\\d{8}$",
     "kind": "open",
     "reason": "A Portuguese consumer report quotes a dispatch email naming Santos e Vale and providing a twelve-digit reference. Detection offers other carriers."
+  },
+  {
+    "carrier": "rohlig-suus",
+    "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
+    "kind": "open",
+    "reason": "Polish customers report these three Rohlig SUUS prefixes on parcel numbers with nine digits. Detection does not offer Rohlig SUUS."
   }
 ]
