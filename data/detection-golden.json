@@ -4950,6 +4950,29 @@
     ]
   },
   {
+    "input": "0100380690717150",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "pin-ag",
+      "dhl-ecommerce",
+      "correos-express",
+      "canada-post",
+      "tnt",
+      "evri-uk"
+    ],
+    "preferred": [
+      "pin-ag"
+    ],
+    "asked": [
+      "correos-express",
+      "evri-uk",
+      "canada-post",
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "010050000023791274",
     "carrier": "ecoscooting",
     "confidence": "high",
