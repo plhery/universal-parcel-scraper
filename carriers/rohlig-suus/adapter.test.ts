@@ -76,10 +76,12 @@ describe('Rohlig SUUS Logistics guest tracker', () => {
     await expect(h.tracker.fetch(NUMBER, { budgetMs: 1000 })).rejects.toMatchObject({ kind: 'budget' });
   });
 
-  it('reads an empty 204 as not found, an empty 500 as a refused token, and other answers as what they are', async () => {
+  it('reads an empty 204 as not found, an empty 500 or a refused score as a refused token, and other answers as what they are', async () => {
     await expect(harness([capture(null, { status: 204, body: '' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
     await expect(harness([capture(null, { status: 500, body: '' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(harness([capture(null, { status: 400, body: '' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status: 400 });
+    await expect(harness([capture(null, { status: 400, body: '', error: 'recaptcha-refused' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(harness([capture(null, { status: 400, body: '', error: 'recaptcha-refused' }), capture(delivered)]).tracker.fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'delivered' });
     await expect(harness([capture(null, { status: 429, body: '', headers: { 'retry-after': '60' } })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 60000 });
     await expect(harness([capture(null, { status: 403, body: '' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(harness([capture(delivered, { trackingNumberSubmitted: 'ZZZZ000000001' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });

@@ -5,6 +5,8 @@ const ORDERS = '/api/parcel/guest/tracking/orders';
 const CHALLENGE = /_cf_chl_opt|cf-chl-|<title>\s*(?:Just a moment|Access Denied|Attention Required)/i;
 // The one event whose note the page shows as tracking: the planned delivery day.
 const NOTED = new Set([327]);
+// The tracker's answer when reCAPTCHA scores the page's token too low.
+const REFUSED = 'alert_recaptcha_error';
 
 export const rohligSuusPageUrl = number => `${ROHLIG_SUUS_ORIGIN}/order-details/${number}`;
 export const rohligSuusOrdersUrl = number => `${ROHLIG_SUUS_ORIGIN}${ORDERS}?${new URLSearchParams({ parcelNumber: number, locale: 'en' })}`;
@@ -70,7 +72,7 @@ export async function runRohligSuusBrowser({ url, capture, handle, tier, maxTime
     if (expired) { await close(created); throw new Error('Rohlig SUUS context arrived late'); }
     context = created; page = await context.newPage(); left();
     await installPolicy?.(page); left();
-    const terminal = new Promise(resolve => { finish = resolve; });
+    let terminal = new Promise(resolve => { finish = resolve; });
     // Only this number's lookup goes out; the order's contact box and other numbers do not.
     await page.route(/^https:\/\/portal\.suus\.com\/api\/parcel\/guest\/tracking\/orders(?:[/?]|$)/, async route => {
       const request = route.request();
@@ -84,7 +86,16 @@ export async function runRohligSuusBrowser({ url, capture, handle, tier, maxTime
         headers: Object.fromEntries(['content-type', 'retry-after'].filter(k => headers[k]).map(k => [k, headers[k].slice(0, 100)])),
         body: null, error: null, truncated: false, base64Encoded: false };
       rows.push(row);
-      // A known number answers 200 with its order; one the tracker does not know answers 204, a refused token 500, both empty.
+      // A known number answers 200 with its order; one the tracker does not know answers 204, a missing token 500,
+      // all three empty; a token reCAPTCHA scores too low answers 400 with a message.
+      if (row.status === 400) {
+        const task = (async () => {
+          const bytes = await response.body(); if (!accepting) return;
+          let payload; try { payload = JSON.parse(bytes.subarray(0, 2000).toString('utf8')); } catch { /* not the tracker's message */ }
+          if (payload?.message === REFUSED) row.error = 'recaptcha-refused';
+        })().catch(() => {}).finally(() => { row.body = ''; pending.delete(task); finish(); });
+        pending.add(task); return;
+      }
       if (row.status !== 200) { row.body = ''; finish(); return; }
       const length = Number(headers['content-length'] ?? 0);
       if (!Number.isSafeInteger(length) || length < 0 || length > ROHLIG_SUUS_CAPTURE_BYTES) { row.truncated = true; finish(); return; }
@@ -106,6 +117,13 @@ export async function runRohligSuusBrowser({ url, capture, handle, tier, maxTime
     // The page asks for its token, then for the order, a few seconds after it loads.
     await terminal;
     if (pending.size) await Promise.all([...pending]);
+    // A refused token is the score of that one token: the reloaded page asks for a new one, once.
+    if (rows.at(-1)?.error === 'recaptcha-refused' && lookups < 2 && deadline - Date.now() > 10000) {
+      terminal = new Promise(resolve => { finish = resolve; });
+      await page.reload({ waitUntil: 'domcontentloaded', timeout: left(25000) }); left();
+      await terminal;
+      if (pending.size) await Promise.all([...pending]);
+    }
     return result();
   };
   try {

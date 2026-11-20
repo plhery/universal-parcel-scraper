@@ -45,8 +45,9 @@ export class RohligSuusTracker {
       if (replies.some(row => row.trackingNumberSubmitted !== number)) throw new SchemaError(PROVIDER, 'Rohlig SUUS Logistics did not bind the whole tracking request');
       const row = replies.at(-1);
       if (row) {
-        // The tracker answers a refused or missing token with an empty 500.
-        if ([401, 403, 428].includes(row.status) || row.error === 'challenge-html' || (row.status === 500 && !row.body)) {
+        // The tracker answers a missing token with an empty 500, and one reCAPTCHA scores too low with a 400 the helper marks.
+        if ([401, 403, 428].includes(row.status) || row.error === 'challenge-html' || row.error === 'recaptcha-refused'
+          || (row.status === 500 && !row.body)) {
           throw new ChallengeError(PROVIDER, 'Rohlig SUUS Logistics refused guest verification', { status: row.status });
         }
         const retry = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];

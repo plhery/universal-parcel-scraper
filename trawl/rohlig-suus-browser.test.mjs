@@ -16,25 +16,28 @@ const payload = { id: 1, parcelNumber: number, referenceNumber: 'PRIVATE', statu
   ], trackingInstructions: [{ id: 1, speedCode: 'PRIVATE' }], attachedDocuments: ['PRIVATE'] };
 const lookup = (extra = {}) => ({ method: () => 'GET', url: () => orders, frame: () => frame, ...extra });
 
-function fixture({ body = JSON.stringify(payload), status = 200, timeout = 1000, respond: answer = true } = {}) {
-  const handlers = {}, state = { closed: 0, policy: 0, aborted: 0, fallback: 0 };
+function fixture({ body = JSON.stringify(payload), status = 200, timeout = 1000, respond: answer = true, answers = [{ status, body }] } = {}) {
+  const handlers = {}, state = { closed: 0, policy: 0, aborted: 0, fallback: 0, loads: 0 };
   let route;
   const respond = (request, s, headers, text = '') => handlers.response?.({ request: () => request, status: () => s, headers: () => headers,
     body: async () => Buffer.from(text) });
+  // Each load of the page asks for the order once, with the next answer.
+  const load = () => {
+    const n = state.loads++, next = answers[n];
+    if (answer && next) setTimeout(async () => {
+      const other = lookup({ url: () => rohligSuusOrdersUrl('ZZZZ000000002') });
+      if (!n) await route({ request: () => other, fallback: async () => { state.fallback++; }, abort: async () => { state.aborted++; } });
+      const get = lookup();
+      await route({ request: () => get, fallback: async () => { state.fallback++; }, abort: async () => { state.aborted++; } });
+      if (!n) respond(other, 200, { 'content-type': 'application/json' }, '{"parcelNumber":"ZZZZ000000002"}');
+      respond(get, next.status, { 'content-type': 'application/json', 'set-cookie': 'PRIVATE' }, next.body);
+    }, 2);
+    return { status: () => 200 };
+  };
   const page = { mainFrame: () => frame, on: (e, f) => { handlers[e] = f; }, off: e => { delete handlers[e]; },
     route: async (re, f) => { assert.ok(re.test(orders)); assert.ok(re.test(`${ROHLIG_SUUS_ORIGIN}/api/parcel/guest/tracking/orders/contact-matrix-box`));
       assert.equal(re.test(`${ROHLIG_SUUS_ORIGIN}/api/parcel/tracking/dictionaries/locations?locale=en`), false); route = f; },
-    goto: async () => {
-      if (answer) setTimeout(async () => {
-        const other = lookup({ url: () => rohligSuusOrdersUrl('ZZZZ000000002') });
-        await route({ request: () => other, fallback: async () => { state.fallback++; }, abort: async () => { state.aborted++; } });
-        const get = lookup();
-        await route({ request: () => get, fallback: async () => { state.fallback++; }, abort: async () => { state.aborted++; } });
-        respond(other, 200, { 'content-type': 'application/json' }, '{"parcelNumber":"ZZZZ000000002"}');
-        respond(get, status, { 'content-type': 'application/json', 'set-cookie': 'PRIVATE' }, body);
-      }, 2);
-      return { status: () => 200 };
-    },
+    goto: async () => load(), reload: async () => load(),
     url: () => url, bringToFront: async () => {},
   };
   const context = { newPage: async () => page, close: async () => { state.closed++; } };
@@ -82,11 +85,28 @@ test('captures the page’s own lookup and stops other numbers', async () => {
   assert.equal(f.state.closed, 1); assert.deepEqual(f.handlers, {});
 });
 
-test('keeps the empty answers for an unknown number and a refused token', async () => {
+test('keeps the empty answers for an unknown number and a missing token', async () => {
   for (const status of [204, 500]) {
     const r = await runRohligSuusBrowser(fixture({ status, body: '' }).options);
     assert.equal(r.reason, 'rohlig-suus-reply'); assert.equal(r.capturedResponses[0].status, status); assert.equal(r.capturedResponses[0].body, '');
   }
+});
+
+test('reloads the page once for a new token when reCAPTCHA refuses the first', async () => {
+  const refused = { status: 400, body: '{"message":"alert_recaptcha_error"}' };
+  const once = fixture({ timeout: 20000, answers: [refused, { status: 200, body: JSON.stringify(payload) }] });
+  const r = await runRohligSuusBrowser(once.options);
+  assert.equal(once.state.loads, 2); assert.equal(r.capturedResponses.length, 2);
+  assert.equal(r.capturedResponses[0].error, 'recaptcha-refused'); assert.equal(r.capturedResponses[0].body, '');
+  assert.equal(r.capturedResponses[1].status, 200); assert.equal(JSON.parse(r.capturedResponses[1].body).statusId, 39);
+  const twice = fixture({ timeout: 20000, answers: [refused, refused, refused] });
+  const t = await runRohligSuusBrowser(twice.options);
+  assert.equal(twice.state.loads, 2); assert.deepEqual(t.capturedResponses.map(x => x.error), ['recaptcha-refused', 'recaptcha-refused']);
+  const other = fixture({ timeout: 20000, answers: [{ status: 400, body: '{"message":"PRIVATE"}' }] });
+  const o = await runRohligSuusBrowser(other.options);
+  assert.equal(other.state.loads, 1); assert.equal(o.capturedResponses[0].error, null); assert.equal(JSON.stringify(o).includes('PRIVATE'), false);
+  const late = fixture({ answers: [refused, refused] });
+  assert.equal((await runRohligSuusBrowser(late.options)).capturedResponses.length, 1); assert.equal(late.state.loads, 1);
 });
 
 test('reports a lookup that never came', async () => {

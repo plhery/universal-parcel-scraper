@@ -16,8 +16,9 @@ and numbers.
 
 - The tracker takes the number without spaces; a space makes it refuse the request.
 - A known number answers with its order. One the tracker does not know answers HTTP 204 with
-  nothing, which is not found. A missing or refused token answers HTTP 500 with nothing, which is
-  a challenge.
+  nothing, which is not found. A missing token answers HTTP 500 with nothing, and one reCAPTCHA
+  scores too low answers HTTP 400 with `alert_recaptcha_error`. The helper then reloads the page
+  once for a new token; a second refusal is a challenge.
 - The reply must name the number asked.
 
 ## Notes

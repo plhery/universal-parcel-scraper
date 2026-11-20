@@ -26,8 +26,9 @@ the events without courier names, their positions or the delivery address.
 
 Rohlig SUUS Logistics opens the guest order page for the number, which gets its own invisible
 reCAPTCHA Enterprise token and asks for the order. The helper captures that lookup alone, an empty
-204 for a number the tracker does not know and an empty 500 for a refused token, and passes on the
-events and countries without addresses, names, references or documents.
+204 for a number the tracker does not know and an empty 500 for a missing token, and passes on the
+events and countries without addresses, names, references or documents. When reCAPTCHA scores the
+token too low, the tracker answers 400 and the helper reloads the page once for a new token.
 
 Onex opens its English tracker for the number once Cloudflare lets the page load, and the page
 submits the number from its address. The helper captures that lookup alone and passes on the
