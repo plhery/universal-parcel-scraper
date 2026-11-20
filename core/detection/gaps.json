@@ -4952,5 +4952,11 @@
     "pattern": "^RR0030\\d{5}MN$",
     "kind": "open",
     "reason": "A postmarked Mongol Post cover shows an RR-prefixed label that fails the current S10 check. Detection does not offer Mongol Post for the printed input."
+  },
+  {
+    "carrier": "mobel-services",
+    "pattern": "^5241\\d{14}$",
+    "kind": "open",
+    "reason": "A Spanish consumer report identifies an eighteen-digit Möbel order tracking reference. Detection suggests other carriers."
   }
 ]
