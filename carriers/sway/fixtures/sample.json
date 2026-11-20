@@ -1,0 +1,36 @@
+{
+  "trackingNumber": "cnwx77m23amg008jsc50",
+  "destinationCountry": "US",
+  "trackingHistory": [
+    {
+      "details": "Swyft has created label for 1661 Inc",
+      "id": "7vN4I9krTn8nY86Uj7sf",
+      "state": "PENDING",
+      "timestamp": "2023-12-13T15:54:06Z"
+    },
+    {
+      "details": "Swyft has received the package from 1661 Inc",
+      "id": "PJWCc5ABiw3maqReeLcF",
+      "state": "RECEIVED",
+      "timestamp": "2023-12-15T15:03:11Z"
+    },
+    {
+      "details": "Your package is next for delivery",
+      "id": "pk6wkDzh8l2Y2QsEifM5",
+      "state": "IN_TRANSIT",
+      "timestamp": "2023-12-15T18:06:30Z"
+    },
+    {
+      "details": "Your package has been delivered",
+      "id": "36oV4VJVYuCh9AHKqJ5q",
+      "state": "DELIVERED",
+      "timestamp": "2023-12-15T22:24:18Z"
+    }
+  ],
+  "currentStatus": {
+    "details": "Your package has been delivered",
+    "id": "36oV4VJVYuCh9AHKqJ5q",
+    "state": "DELIVERED",
+    "timestamp": "2023-12-15T22:24:18Z"
+  }
+}

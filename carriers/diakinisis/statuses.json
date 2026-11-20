@@ -1,4 +1,41 @@
 {
   "carrier": "diakinisis",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Καταχωρήθηκε η εντολή σας και περιμένουμε τον αποστολέα να ετοιμάσει την αποστολή σας.",
+      "stage": "registered",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Παραλάβαμε την παραγγελία σας.",
+      "stage": "accepted",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Η παραγγελία σας βρίσκεται στο κέντρο διανομής μας.",
+      "stage": "in_transit",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "H παραγγελία σας έχει προγραμματιστεί για δρομολόγηση.",
+      "stage": "in_transit",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Η παραγγελία φορτώθηκε για να σας παραδοθεί.",
+      "stage": "out_for_delivery",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Παραδόθηκε η παραγγελία σας.",
+      "stage": "delivered",
+      "language": "el",
+      "confirmedBy": "live"
+    }
+  ]
 }

@@ -22,16 +22,27 @@
   "timezone": "Europe/Warsaw",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ambro-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://ambroexpress.pl/sledzenie-przesylek#{trackingNumber}",
     "searchUrl": "https://ambroexpress.pl/sledzenie-przesylek",
     "canaryUrl": "https://ambroexpress.pl/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
     "unavailable": []
   },

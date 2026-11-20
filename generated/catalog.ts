@@ -7732,7 +7732,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Nicosia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "akis-express",
+      "localClocks": true
     },
     "canaryUrl": "https://gapakisexpress.com/track-your-packages/",
     "trackingUrlTemplate": "https://gapakisexpress.com/track-your-packages/?tracking_num={trackingNumber}",
@@ -8465,7 +8466,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Warsaw",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ambro-express",
+      "localClocks": true
     },
     "canaryUrl": "https://ambroexpress.pl/",
     "trackingUrlTemplate": "https://ambroexpress.pl/sledzenie-przesylek#{trackingNumber}",
@@ -17461,7 +17463,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Sofia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cvc",
+      "localClocks": true
     },
     "canaryUrl": "https://my.e-cvc.bg/track",
     "trackingUrlTemplate": "https://my.e-cvc.bg/track?wb={trackingNumber}&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8",
@@ -19284,7 +19287,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Athens",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "diakinisis",
+      "localClocks": true
     },
     "canaryUrl": "https://pod.diakinisis.gr/tnt.php",
     "trackingSearchUrl": "https://pod.diakinisis.gr/tnt.php",
@@ -25298,7 +25302,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Dubai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "first-flight-me",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://firstflightme.com/",
     "trackingUrlTemplate": "https://firstflightme.com/tracking/awb/{trackingNumber}",
@@ -31929,7 +31935,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Sofia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "interlogistica",
+      "localClocks": true
     },
     "canaryUrl": "https://www.interlogistica.bg/bg/",
     "trackingSearchUrl": "https://tracking.interlogistica.bg/",
@@ -49266,7 +49273,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Rome",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rhenus-it",
+      "localClocks": true
     },
     "canaryUrl": "https://www.rhenus.group/it/it/",
     "trackingUrlTemplate": "https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s={trackingNumber}",
@@ -55375,7 +55383,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sway"
     },
     "canaryUrl": "https://www.shipsway.com/",
     "trackingUrlTemplate": "https://track.shipsway.com/{trackingNumber}",

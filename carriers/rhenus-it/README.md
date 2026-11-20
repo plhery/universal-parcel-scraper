@@ -1,25 +1,27 @@
 # Rhenus Italia
 
-Rhenus Italia parcels use enabled universal providers. There is no dedicated adapter.
+Tracks Rhenus Italia home deliveries, including deliveries to the floor.
 
-Rhenus Italia is the Rhenus group's Italian logistics company. Its tracker covers its home deliveries,
-including deliveries to the floor.
+## Retrieval
+
+The public tracking page takes the shipment number in `s`. Its result must
+display the same shipment number beside the timeline. Home delivery numbers
+with a nine-digit body and two-digit suffix need the printed hyphen between
+them. The adapter restores it if the input has been compacted.
+
+The adapter reads the Italian scan text and local clock times from the
+timeline. An appointment booking keeps the stage of the preceding movement.
+The service-unavailable page also appears for an unknown number, so it is
+reported as inconclusive.
+
+The default Node transport omits finite-field DH suites for this host because
+the server offers undersized DH parameters. TLS certificate verification stays
+enabled.
 
 ## Numbers
 
-Its tracker's placeholder shows `I` and nine digits, the shape of another carrier's rule, and no public page
-shows a real number, so there is no rule.
-
-## Why there is no adapter
-
-Its tracker answered every number, including its own placeholder, with a service-unavailable page, so a
-found reply has not been seen.
-
-## Links
-
-The tracker opens numbers from its `s` parameter.
+Select Rhenus Italia explicitly or open its home-delivery tracking link.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`RHENUS_IT_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/rhenus-it`

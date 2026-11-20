@@ -1,4 +1,35 @@
 {
   "carrier": "interlogistica",
-  "entries": []
+  "entries": [
+    {
+      "wording": "ПРЕДАДЕНА НА КУРИЕР ЗА ДОСТАВКА",
+      "stage": "out_for_delivery",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ПОСТЪПИЛА В ОФИС",
+      "stage": "in_transit",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ВЪРНАТА НА ИЗПРАЩАЧА",
+      "stage": "returned",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ВЪРНАТА НА ИЗПРАЩАЧА - ВЪРНАТА НА : ГАЧЕВА",
+      "stage": "returned",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "НЕВЪВЕДЕН",
+      "language": "bg",
+      "confirmedBy": "live",
+      "note": "An operation the carrier labels as not entered. The scan describes no movement."
+    }
+  ]
 }

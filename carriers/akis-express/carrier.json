@@ -18,17 +18,34 @@
   "timezone": "Asia/Nicosia",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "akis-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://gapakisexpress.com/track-your-packages/?tracking_num={trackingNumber}",
     "searchUrl": "https://gapakisexpress.com/track-your-packages/",
     "canaryUrl": "https://gapakisexpress.com/track-your-packages/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "remarks"
+    ],
     "unavailable": []
   },
   "links": [

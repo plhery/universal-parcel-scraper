@@ -17,17 +17,39 @@
   "timezone": "Europe/Rome",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "rhenus-it",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s={trackingNumber}",
     "searchUrl": "https://tracking.rhenusitalia.it/rhenus/track.jsf",
     "canaryUrl": "https://www.rhenus.group/it/it/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "customer_reference",
+      "sender_name",
+      "recipient_address",
+      "remarks",
+      "eta_window"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "customer_reference",
+      "sender_name",
+      "recipient_address",
+      "remarks",
+      "eta_window"
+    ],
     "unavailable": []
   },
   "links": [

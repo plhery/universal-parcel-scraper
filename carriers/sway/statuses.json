@@ -1,4 +1,33 @@
 {
   "carrier": "sway",
-  "entries": []
+  "entries": [
+    {
+      "code": "PENDING",
+      "wording": "Swyft has created label for 1661 Inc",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RECEIVED",
+      "wording": "Swyft has received the package from 1661 Inc",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "IN_TRANSIT",
+      "wording": "Your package is next for delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DELIVERED",
+      "wording": "Your package has been delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

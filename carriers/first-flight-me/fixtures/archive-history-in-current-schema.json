@@ -1,0 +1,54 @@
+{
+  "Code": 1,
+  "Description": "Success",
+  "AirwayBillTrackList": [
+    {
+      "AirWayBillNo": "CNB5031548",
+      "TrackingLogDetails": [
+        {
+          "ActivityDate": "Thursday, January 11, 2018",
+          "Remarks": "Delivered To ALHADI",
+          "Location": "Riyadh",
+          "ActivityTime": "15:48",
+          "Status": "POD"
+        },
+        {
+          "ActivityDate": "Wednesday, January 10, 2018",
+          "Remarks": "Arrived Delivery Facility",
+          "Location": "Riyadh",
+          "ActivityTime": "18:15"
+        },
+        {
+          "ActivityDate": "Tuesday, January 09, 2018",
+          "Remarks": "Arrived Hub Facility",
+          "Location": "Riyadh",
+          "ActivityTime": "10:51"
+        },
+        {
+          "ActivityDate": "Tuesday, January 09, 2018",
+          "Remarks": "Customs Released",
+          "Location": "Riyadh",
+          "ActivityTime": "07:17"
+        },
+        {
+          "ActivityDate": "Tuesday, January 09, 2018",
+          "Remarks": "In Clearance Processing",
+          "Location": "Riyadh",
+          "ActivityTime": "07:16"
+        },
+        {
+          "ActivityDate": "Saturday, January 06, 2018",
+          "Remarks": "Sent To Riyadh",
+          "Location": "DUBAI",
+          "ActivityTime": "19:16"
+        },
+        {
+          "ActivityDate": "Tuesday, January 02, 2018",
+          "Remarks": "Arrived Facility",
+          "Location": "DUBAI",
+          "ActivityTime": "22:20"
+        }
+      ]
+    }
+  ]
+}

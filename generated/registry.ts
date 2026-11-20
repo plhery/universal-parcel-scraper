@@ -23,6 +23,7 @@ import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as airwaysCourierIn } from '../carriers/airways-courier-in/adapter.js';
 import { adapter as aitWorldwide } from '../carriers/ait-worldwide/adapter.js';
 import { adapter as ajex } from '../carriers/ajex/adapter.js';
+import { adapter as akisExpress } from '../carriers/akis-express/adapter.js';
 import { adapter as algeriePoste } from '../carriers/algerie-poste/adapter.js';
 import { adapter as aliexpress } from '../carriers/aliexpress/adapter.js';
 import { adapter as allegroOne } from '../carriers/allegro-one/adapter.js';
@@ -31,6 +32,7 @@ import { adapter as altexCurier } from '../carriers/altex-curier/adapter.js';
 import { adapter as amHomeDelivery } from '../carriers/am-home-delivery/adapter.js';
 import { adapter as amazonOrder } from '../carriers/amazon-order/adapter.js';
 import { adapter as amazonShipping } from '../carriers/amazon-shipping/adapter.js';
+import { adapter as ambroExpress } from '../carriers/ambro-express/adapter.js';
 import { adapter as americanWestExpress } from '../carriers/american-west-express/adapter.js';
 import { adapter as amerijet } from '../carriers/amerijet/adapter.js';
 import { adapter as ampm } from '../carriers/ampm/adapter.js';
@@ -163,6 +165,7 @@ import { adapter as ctt } from '../carriers/ctt/adapter.js';
 import { adapter as cttExpress } from '../carriers/ctt-express/adapter.js';
 import { adapter as cttyex } from '../carriers/cttyex/adapter.js';
 import { adapter as customCompanies } from '../carriers/custom-companies/adapter.js';
+import { adapter as cvc } from '../carriers/cvc/adapter.js';
 import { adapter as cyprusPost } from '../carriers/cyprus-post/adapter.js';
 import { adapter as dExpress } from '../carriers/d-express/adapter.js';
 import { adapter as dachser } from '../carriers/dachser/adapter.js';
@@ -189,6 +192,7 @@ import { adapter as dhlEcommerceUk } from '../carriers/dhl-ecommerce-uk/adapter.
 import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dhlFreight } from '../carriers/dhl-freight/adapter.js';
 import { adapter as dhlink } from '../carriers/dhlink/adapter.js';
+import { adapter as diakinisis } from '../carriers/diakinisis/adapter.js';
 import { adapter as directFreightExpress } from '../carriers/direct-freight-express/adapter.js';
 import { adapter as direx } from '../carriers/direx/adapter.js';
 import { adapter as dobropost } from '../carriers/dobropost/adapter.js';
@@ -275,6 +279,7 @@ import { adapter as fedexPl } from '../carriers/fedex-pl/adapter.js';
 import { adapter as fermopoint } from '../carriers/fermopoint/adapter.js';
 import { adapter as fezDelivery } from '../carriers/fez-delivery/adapter.js';
 import { adapter as fgDelivery } from '../carriers/fg-delivery/adapter.js';
+import { adapter as firstFlightMe } from '../carriers/first-flight-me/adapter.js';
 import { adapter as firstLine } from '../carriers/first-line/adapter.js';
 import { adapter as flashCourier } from '../carriers/flash-courier/adapter.js';
 import { adapter as flashExpress } from '../carriers/flash-express/adapter.js';
@@ -384,6 +389,7 @@ import { adapter as instabox } from '../carriers/instabox/adapter.js';
 import { adapter as integralPack } from '../carriers/integral-pack/adapter.js';
 import { adapter as intelValley } from '../carriers/intel-valley/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
+import { adapter as interlogistica } from '../carriers/interlogistica/adapter.js';
 import { adapter as internetExpress } from '../carriers/internet-express/adapter.js';
 import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.js';
 import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
@@ -638,6 +644,7 @@ import { adapter as relaisColis } from '../carriers/relais-colis/adapter.js';
 import { adapter as relayExpress } from '../carriers/relay-express/adapter.js';
 import { adapter as relaytech } from '../carriers/relaytech/adapter.js';
 import { adapter as rexIndonesia } from '../carriers/rex-indonesia/adapter.js';
+import { adapter as rhenusIt } from '../carriers/rhenus-it/adapter.js';
 import { adapter as rincos } from '../carriers/rincos/adapter.js';
 import { adapter as rivigo } from '../carriers/rivigo/adapter.js';
 import { adapter as rlCarriers } from '../carriers/rl-carriers/adapter.js';
@@ -732,6 +739,7 @@ import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
+import { adapter as sway } from '../carriers/sway/adapter.js';
 import { adapter as swiftx } from '../carriers/swiftx/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
@@ -898,6 +906,7 @@ export const REGISTRY: RegistryDefinition = {
     "airways-courier-in": airwaysCourierIn,
     "ait-worldwide": aitWorldwide,
     "ajex": ajex,
+    "akis-express": akisExpress,
     "algerie-poste": algeriePoste,
     "aliexpress": aliexpress,
     "allegro-one": allegroOne,
@@ -906,6 +915,7 @@ export const REGISTRY: RegistryDefinition = {
     "am-home-delivery": amHomeDelivery,
     "amazon-order": amazonOrder,
     "amazon-shipping": amazonShipping,
+    "ambro-express": ambroExpress,
     "american-west-express": americanWestExpress,
     "amerijet": amerijet,
     "ampm": ampm,
@@ -1038,6 +1048,7 @@ export const REGISTRY: RegistryDefinition = {
     "ctt-express": cttExpress,
     "cttyex": cttyex,
     "custom-companies": customCompanies,
+    "cvc": cvc,
     "cyprus-post": cyprusPost,
     "d-express": dExpress,
     "dachser": dachser,
@@ -1064,6 +1075,7 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-express": dhlExpress,
     "dhl-freight": dhlFreight,
     "dhlink": dhlink,
+    "diakinisis": diakinisis,
     "direct-freight-express": directFreightExpress,
     "direx": direx,
     "dobropost": dobropost,
@@ -1150,6 +1162,7 @@ export const REGISTRY: RegistryDefinition = {
     "fermopoint": fermopoint,
     "fez-delivery": fezDelivery,
     "fg-delivery": fgDelivery,
+    "first-flight-me": firstFlightMe,
     "first-line": firstLine,
     "flash-courier": flashCourier,
     "flash-express": flashExpress,
@@ -1259,6 +1272,7 @@ export const REGISTRY: RegistryDefinition = {
     "integral-pack": integralPack,
     "intel-valley": intelValley,
     "intelcom": intelcom,
+    "interlogistica": interlogistica,
     "internet-express": internetExpress,
     "interrapidisimo": interrapidisimo,
     "intertown-transport": intertownTransport,
@@ -1513,6 +1527,7 @@ export const REGISTRY: RegistryDefinition = {
     "relay-express": relayExpress,
     "relaytech": relaytech,
     "rex-indonesia": rexIndonesia,
+    "rhenus-it": rhenusIt,
     "rincos": rincos,
     "rivigo": rivigo,
     "rl-carriers": rlCarriers,
@@ -1607,6 +1622,7 @@ export const REGISTRY: RegistryDefinition = {
     "sundarban-courier": sundarbanCourier,
     "sunyou": sunyou,
     "surat-kargo": suratKargo,
+    "sway": sway,
     "swiftx": swiftx,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
@@ -1811,7 +1827,7 @@ export const REGISTRY: RegistryDefinition = {
     "ait-worldwide": "ait-worldwide",
     "ajex": "ajex",
     "akash-ganga": "universal",
-    "akis-express": "universal",
+    "akis-express": "akis-express",
     "akropost": "universal",
     "aks-express": "universal",
     "aland-post": "universal",
@@ -1837,7 +1853,7 @@ export const REGISTRY: RegistryDefinition = {
     "amazon-logistics": null,
     "amazon-order": "amazon-order",
     "amazon-shipping": "amazon-shipping",
-    "ambro-express": "universal",
+    "ambro-express": "ambro-express",
     "ameex": "universal",
     "american-west-express": "american-west-express",
     "amerijet": "amerijet",
@@ -2125,7 +2141,7 @@ export const REGISTRY: RegistryDefinition = {
     "cupost": "universal",
     "curiera": "universal",
     "custom-companies": "custom-companies",
-    "cvc": "universal",
+    "cvc": "cvc",
     "cycloon": "universal",
     "cyprus-post": "cyprus-post",
     "czl-express": "universal",
@@ -2178,7 +2194,7 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-freight": "dhl-freight",
     "dhlink": "dhlink",
     "dhx": "universal",
-    "diakinisis": "universal",
+    "diakinisis": "diakinisis",
     "dialogo-logistica": "universal",
     "dida-international": "universal",
     "diera": "universal",
@@ -2355,7 +2371,7 @@ export const REGISTRY: RegistryDefinition = {
     "fillo": "universal",
     "fimile": "universal",
     "first-delivery-tn": "universal",
-    "first-flight-me": "universal",
+    "first-flight-me": "first-flight-me",
     "first-fly-express": "universal",
     "first-line": "first-line",
     "first-logistics": "universal",
@@ -2564,7 +2580,7 @@ export const REGISTRY: RegistryDefinition = {
     "inter-global-kargo": "universal",
     "intereuropa": "universal",
     "interfjord": "universal",
-    "interlogistica": "universal",
+    "interlogistica": "interlogistica",
     "international-bridge": "universal",
     "internet-express": "internet-express",
     "interrapidisimo": "interrapidisimo",
@@ -3106,7 +3122,7 @@ export const REGISTRY: RegistryDefinition = {
     "rex-indonesia": "rex-indonesia",
     "rgw-express": "universal",
     "rhenus-de": "universal",
-    "rhenus-it": "universal",
+    "rhenus-it": "rhenus-it",
     "riders-express": "universal",
     "rika-express": "universal",
     "rincos": "rincos",
@@ -3290,7 +3306,7 @@ export const REGISTRY: RegistryDefinition = {
     "suto-logistics": "universal",
     "svenns-transport": "universal",
     "svuum": "universal",
-    "sway": "universal",
+    "sway": "sway",
     "swftbox": "universal",
     "swiftx": "swiftx",
     "swiss-post": "swiss-post",

@@ -1,4 +1,59 @@
 {
   "carrier": "cvc",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Приета за събиране",
+      "stage": "registered",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Отложено събиране за 2026-10-21 (дост:2026-10-22): Закъснение",
+      "stage": "registered",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Взета от куриер Красимир Милчев (1916)",
+      "stage": "accepted",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Приета в Хъб \"Враца\"",
+      "stage": "in_transit",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Транспорт към Хъб \"Русе\"",
+      "stage": "in_transit",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Приета в Хъб \"София\"",
+      "stage": "in_transit",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Приета в Хъб \"Русе\"",
+      "stage": "in_transit",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Приета за разнос",
+      "stage": "out_for_delivery",
+      "language": "bg",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Доставена на Богданов",
+      "stage": "delivered",
+      "language": "bg",
+      "confirmedBy": "live"
+    }
+  ]
 }

@@ -1,26 +1,20 @@
 # CVC
 
-CVC parcels use enabled universal providers. There is no dedicated adapter.
+Tracks parcels and pallets carried by CVC in Bulgaria.
 
-CVC, Си Ви Си ЕООД of Sofia, is a Bulgarian courier for parcels up to 31.5 kg and pallets, delivered
-to addresses and through its own and partner offices across the country.
+## Retrieval
+
+The public e-CVC tracking page takes a waybill in `wb` and the form's
+`checkit` button value. The result must name the same waybill. The explicit
+`Пратката не е открита!` form message means that CVC could not find it.
+
+The adapter reads the dated Bulgarian scan text and keeps the local clocks
+as shown. The tracker does not supply offsets or a separate scan location.
 
 ## Numbers
 
-Its tracking page takes waybill numbers of digits, up to 20 of them. No public page shows a whole
-number or its length, so there is no rule.
-
-## Why there is no adapter
-
-Its tracking page, on the e-CVC client site, finds a shipment by its waybill number. With no public
-number to check its replies against, there is no adapter.
-
-## Links
-
-The tracking page's form sends the number as `wb`, with the `checkit` button value, so the portal
-link carries both. A pasted `my.e-cvc.bg/track` link with a `wb` number names CVC.
+Select CVC explicitly or open an e-CVC tracking link that contains the waybill.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`CVC_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/cvc`
