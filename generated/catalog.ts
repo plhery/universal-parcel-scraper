@@ -14267,31 +14267,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "cdp-courier": {
-    "displayName": "CDP Courier",
-    "color": "#004778",
-    "aliases": [
-      "CDP Courier Services",
-      "CDP Services Pte Ltd",
-      "Courier Documents Parcels Services"
-    ],
-    "countries": [
-      "FJ"
-    ],
-    "selectable": true,
-    "timezone": "Pacific/Fiji",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "cdp-courier",
-      "localClocks": true
-    },
-    "canaryUrl": "https://cdpcourier.com/",
-    "trackingUrlTemplate": "https://cdpcourier.com/",
-    "trackingSearchUrl": "https://cdpcourier.com/",
-    "trackingSiteName": "CDP Courier Track Shipment",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "cel-changda": {
     "displayName": "CEL Changda",
     "color": "#4c9529",
@@ -14812,32 +14787,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.95572.com/",
     "trackingSearchUrl": "https://www.95572.com/",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "china-united-lines": {
-    "displayName": "China United Lines",
-    "color": "#003e80",
-    "aliases": [
-      "CU Lines",
-      "CULines",
-      "China United Lines Ltd",
-      "中联航运"
-    ],
-    "countries": [
-      "CN"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "china-united-lines",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.culines.com/en/site/bill",
-    "trackingUrlTemplate": "https://www.culines.com/en/site/bill",
-    "trackingSearchUrl": "https://www.culines.com/en/site/bill",
-    "trackingSiteName": "CU Lines Cargo Tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54138,32 +54087,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "sitc-container-lines": {
-    "displayName": "SITC Container Lines",
-    "color": "#1490c7",
-    "aliases": [
-      "SITC",
-      "SITC Shipping Lines",
-      "海丰集运"
-    ],
-    "countries": [
-      "HK",
-      "CN"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sitc-container-lines",
-      "localClocks": true
-    },
-    "canaryUrl": "https://ebusiness.sitcline.com/",
-    "trackingUrlTemplate": "https://ebusiness.sitcline.com/",
-    "trackingSearchUrl": "https://ebusiness.sitcline.com/",
-    "trackingSiteName": "SITC E-Business",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "sitra-es": {
     "displayName": "SITRA",
     "color": "#009cf8",
@@ -67327,7 +67250,6 @@ export const CARRIER_IDS = [
   "ccfs",
   "cdek",
   "cdl",
-  "cdp-courier",
   "cel-changda",
   "celeritas",
   "celero",
@@ -67345,7 +67267,6 @@ export const CARRIER_IDS = [
   "chic-express",
   "chilexpress",
   "china-railway-express",
-  "china-united-lines",
   "chinz-logistics",
   "chit-chats",
   "choir-express",
@@ -68504,7 +68425,6 @@ export const CARRIER_IDS = [
   "silpo-pack",
   "sinapseria",
   "sinokor-merchant-marine",
-  "sitc-container-lines",
   "sitra-es",
   "siuntos-autobusais",
   "sjl-express",
@@ -69257,7 +69177,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ccfs": [],
   "cdek": ["cdek-1"],
   "cdl": ["cdl-1","cdl-2"],
-  "cdp-courier": [],
   "cel-changda": [],
   "celeritas": [],
   "celero": [],
@@ -69275,7 +69194,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chic-express": [],
   "chilexpress": [],
   "china-railway-express": [],
-  "china-united-lines": [],
   "chinz-logistics": [],
   "chit-chats": ["chit-chats-1"],
   "choir-express": [],
@@ -70434,7 +70352,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "silpo-pack": [],
   "sinapseria": [],
   "sinokor-merchant-marine": [],
-  "sitc-container-lines": [],
   "sitra-es": [],
   "siuntos-autobusais": [],
   "sjl-express": [],

@@ -46,7 +46,7 @@ export function parseTracking(body: string, bill: string, httpStatus: number): C
         ...(stage && { stage, stage_source: 'carrier_map' }),
       }];
     });
-  }).sort((left, right) => right.local_time.localeCompare(left.local_time));
+  }).reverse().sort((left, right) => right.local_time.localeCompare(left.local_time));
   const latest = events[0];
   if (!latest) throw new IndeterminateError(provider, 'G2 Ocean listed the bill without actual port calls', { reason: 'listed' });
   const stage = events.find(event => event.stage)?.stage;

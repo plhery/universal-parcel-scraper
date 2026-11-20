@@ -58,7 +58,7 @@ export function parseTracking(body: string, copNo: string): CarrierResult {
       local_time: eventDt.replace(' ', 'T'), description: statusNm.trim(), provider_code: statusCd,
       ...(location && { location }), ...(stage && { stage, stage_source: 'carrier_map' }),
     }];
-  }).sort((left, right) => right.local_time.localeCompare(left.local_time));
+  }).reverse().sort((left, right) => right.local_time.localeCompare(left.local_time));
   const latest = events[0];
   if (!latest) throw new IndeterminateError(provider, 'Dongjin listed the container without actual movements', { reason: 'listed' });
   const stage = events.find(event => event.stage)?.stage;

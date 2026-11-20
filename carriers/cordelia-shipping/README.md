@@ -10,4 +10,4 @@ The [CORDIS operations manual](https://www.scribd.com/document/853399185/CORDIS-
 
 ## Testing
 
-`CORDELIA_SHIPPING_BILL_NUMBER=… CORDELIA_SHIPPING_CONTAINER_NUMBER=… CORDELIA_SHIPPING_UNKNOWN_BILL=… npm run test:carriers:live -- carriers/cordelia-shipping`
+`CORDELIA_SHIPPING_TRACKING_NUMBER=… CORDELIA_SHIPPING_CONTAINER_NUMBER=… CORDELIA_SHIPPING_UNKNOWN_BILL=… npm run test:carriers:live -- carriers/cordelia-shipping`

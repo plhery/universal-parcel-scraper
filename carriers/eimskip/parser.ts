@@ -38,7 +38,7 @@ export function parseTracking(body: string, number: string): CarrierResult {
     }
     const stage = scanStage(description);
     return {
-      local_time: date.toFormat("yyyy-MM-dd'T'HH:mm"), description,
+      local_time: clock.endsWith(' 00:00') ? date.toFormat('yyyy-MM-dd') : date.toFormat("yyyy-MM-dd'T'HH:mm"), description,
       ...(stage && { stage, stage_source: 'carrier_map' }),
     };
   }).reverse().sort((left, right) => right.local_time.localeCompare(left.local_time));

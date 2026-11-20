@@ -123,7 +123,6 @@ import { adapter as cblLogistica } from '../carriers/cbl-logistica/adapter.js';
 import { adapter as ccfs } from '../carriers/ccfs/adapter.js';
 import { adapter as cdek } from '../carriers/cdek/adapter.js';
 import { adapter as cdl } from '../carriers/cdl/adapter.js';
-import { adapter as cdpCourier } from '../carriers/cdp-courier/adapter.js';
 import { adapter as celeritas } from '../carriers/celeritas/adapter.js';
 import { adapter as celero } from '../carriers/celero/adapter.js';
 import { adapter as centralTransport } from '../carriers/central-transport/adapter.js';
@@ -133,7 +132,6 @@ import { adapter as cevaLogistics } from '../carriers/ceva-logistics/adapter.js'
 import { adapter as chazki } from '../carriers/chazki/adapter.js';
 import { adapter as chilexpress } from '../carriers/chilexpress/adapter.js';
 import { adapter as chinaPost } from '../carriers/china-post/adapter.js';
-import { adapter as chinaUnitedLines } from '../carriers/china-united-lines/adapter.js';
 import { adapter as chitChats } from '../carriers/chit-chats/adapter.js';
 import { adapter as chronodiali } from '../carriers/chronodiali/adapter.js';
 import { adapter as chronopost } from '../carriers/chronopost/adapter.js';
@@ -756,7 +754,6 @@ import { adapter as shreeMaruti } from '../carriers/shree-maruti/adapter.js';
 import { adapter as sicepat } from '../carriers/sicepat/adapter.js';
 import { adapter as singaporePost } from '../carriers/singapore-post/adapter.js';
 import { adapter as sinokorMerchantMarine } from '../carriers/sinokor-merchant-marine/adapter.js';
-import { adapter as sitcContainerLines } from '../carriers/sitc-container-lines/adapter.js';
 import { adapter as skladusa } from '../carriers/skladusa/adapter.js';
 import { adapter as skroutzLastMile } from '../carriers/skroutz-last-mile/adapter.js';
 import { adapter as skybox } from '../carriers/skybox/adapter.js';
@@ -1083,7 +1080,6 @@ export const REGISTRY: RegistryDefinition = {
     "ccfs": ccfs,
     "cdek": cdek,
     "cdl": cdl,
-    "cdp-courier": cdpCourier,
     "celeritas": celeritas,
     "celero": celero,
     "central-transport": centralTransport,
@@ -1093,7 +1089,6 @@ export const REGISTRY: RegistryDefinition = {
     "chazki": chazki,
     "chilexpress": chilexpress,
     "china-post": chinaPost,
-    "china-united-lines": chinaUnitedLines,
     "chit-chats": chitChats,
     "chronodiali": chronodiali,
     "chronopost": chronopost,
@@ -1716,7 +1711,6 @@ export const REGISTRY: RegistryDefinition = {
     "sicepat": sicepat,
     "singapore-post": singaporePost,
     "sinokor-merchant-marine": sinokorMerchantMarine,
-    "sitc-container-lines": sitcContainerLines,
     "skladusa": skladusa,
     "skroutz-last-mile": skroutzLastMile,
     "skybox": skybox,
@@ -2191,7 +2185,6 @@ export const REGISTRY: RegistryDefinition = {
     "ccfs": "ccfs",
     "cdek": "cdek",
     "cdl": "cdl",
-    "cdp-courier": "cdp-courier",
     "cel-changda": "universal",
     "celeritas": "celeritas",
     "celero": "celero",
@@ -2210,7 +2203,6 @@ export const REGISTRY: RegistryDefinition = {
     "chilexpress": "chilexpress",
     "china-post": "china-post",
     "china-railway-express": "universal",
-    "china-united-lines": "china-united-lines",
     "chinz-logistics": "universal",
     "chit-chats": "chit-chats",
     "choir-express": "universal",
@@ -3436,7 +3428,6 @@ export const REGISTRY: RegistryDefinition = {
     "sinapseria": "universal",
     "singapore-post": "singapore-post",
     "sinokor-merchant-marine": "sinokor-merchant-marine",
-    "sitc-container-lines": "sitc-container-lines",
     "sitra-es": "universal",
     "siuntos-autobusais": "universal",
     "sjl-express": "universal",

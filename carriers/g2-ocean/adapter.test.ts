@@ -16,7 +16,7 @@ it('opens the public bill search and preserves actual port calls for the matchin
 
   const result = await tracker.track({ number });
   expect(fetcher).toHaveBeenCalledExactlyOnceWith(
-    `https://api.myg2.g2ocean.com/api/public-bol-shipment?bol_name=${number}`, expect.any(Object));
+    `https://api.myg2.g2ocean.com/api/public-bol-shipment?bol_name=${bill}`, expect.any(Object));
   expect(result).toMatchObject({
     status: 'in_transit', last_status_text: 'Berthed', last_update_local: '2026-10-25T01:30',
   });

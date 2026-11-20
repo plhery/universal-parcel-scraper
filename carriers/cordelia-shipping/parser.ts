@@ -47,7 +47,7 @@ export function parseTracking(body: string, number: string, container: boolean):
       provider_code: movement.code,
       ...(movement.stage && { stage: movement.stage, stage_source: 'carrier_map' }),
     }];
-  }).sort((left, right) => right.local_time.localeCompare(left.local_time)) : [];
+  }).reverse().sort((left, right) => right.local_time.localeCompare(left.local_time)) : [];
 
   const latest = events[0];
   const code = typeof summary.containerStatusCode === 'string' ? summary.containerStatusCode.trim() : '';

@@ -4,7 +4,7 @@ import { adapter } from './adapter.js';
 
 const tracker = adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 const {
-  CORDELIA_SHIPPING_BILL_NUMBER: bill,
+  CORDELIA_SHIPPING_TRACKING_NUMBER: bill,
   CORDELIA_SHIPPING_CONTAINER_NUMBER: container,
   CORDELIA_SHIPPING_UNKNOWN_BILL: unknown,
 } = process.env;

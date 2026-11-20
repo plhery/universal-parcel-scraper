@@ -611,11 +611,6 @@
     "reason": "CDEK's older ten-digit numbers share their shape with DHL and several other carriers, and nothing in the number points to CDEK."
   },
   {
-    "carrier": "cdp-courier",
-    "kind": "open",
-    "reason": "CDP search accepts numeric references and uses explicit carrier selection."
-  },
-  {
     "carrier": "celeritas",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
@@ -691,11 +686,6 @@
     "pattern": "^\\d{12}$",
     "kind": "by_design",
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to Chilexpress."
-  },
-  {
-    "carrier": "china-united-lines",
-    "kind": "open",
-    "reason": "CU Lines uses equipment identifiers shared across lines and sailings."
   },
   {
     "carrier": "chit-chats",
@@ -3647,11 +3637,6 @@
     "carrier": "sinokor-merchant-marine",
     "kind": "open",
     "reason": "The guest site confirms the full Sinokor bill of lading. The adapter is selected explicitly."
-  },
-  {
-    "carrier": "sitc-container-lines",
-    "kind": "open",
-    "reason": "SITC tracks equipment identifiers that can be reused across carriers and voyages."
   },
   {
     "carrier": "skroutz-last-mile",

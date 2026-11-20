@@ -1,6 +1,6 @@
 # Honour Lane Shipping
 
-Honour Lane Shipping publishes [container details](https://tracking.cargolane.net/tracking/ShipmentInfo?paramType=ctn_no&paramNo=CAJU5765298) through CargoLane. Select the carrier explicitly and enter the container number. Containers can be reused across sailings. The adapter returns the history for that container from the lookup currently served by Honour Lane.
+Honour Lane Shipping publishes [container details](https://tracking.cargolane.net/tracking/ShipmentInfo) through CargoLane. Select the carrier explicitly and enter the container number. Containers can be reused across sailings. The adapter returns the history for that container from the lookup currently served by Honour Lane.
 
 ## Retrieval
 

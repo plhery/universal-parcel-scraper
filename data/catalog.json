@@ -14263,31 +14263,6 @@
       }
     ]
   },
-  "cdp-courier": {
-    "displayName": "CDP Courier",
-    "color": "#004778",
-    "aliases": [
-      "CDP Courier Services",
-      "CDP Services Pte Ltd",
-      "Courier Documents Parcels Services"
-    ],
-    "countries": [
-      "FJ"
-    ],
-    "selectable": true,
-    "timezone": "Pacific/Fiji",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "cdp-courier",
-      "localClocks": true
-    },
-    "canaryUrl": "https://cdpcourier.com/",
-    "trackingUrlTemplate": "https://cdpcourier.com/",
-    "trackingSearchUrl": "https://cdpcourier.com/",
-    "trackingSiteName": "CDP Courier Track Shipment",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "cel-changda": {
     "displayName": "CEL Changda",
     "color": "#4c9529",
@@ -14808,32 +14783,6 @@
     },
     "canaryUrl": "https://www.95572.com/",
     "trackingSearchUrl": "https://www.95572.com/",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "china-united-lines": {
-    "displayName": "China United Lines",
-    "color": "#003e80",
-    "aliases": [
-      "CU Lines",
-      "CULines",
-      "China United Lines Ltd",
-      "中联航运"
-    ],
-    "countries": [
-      "CN"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "china-united-lines",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.culines.com/en/site/bill",
-    "trackingUrlTemplate": "https://www.culines.com/en/site/bill",
-    "trackingSearchUrl": "https://www.culines.com/en/site/bill",
-    "trackingSiteName": "CU Lines Cargo Tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54131,32 +54080,6 @@
     "trackingUrlTemplate": "https://ebiz.sinokor.co.kr/Tracking",
     "trackingSearchUrl": "https://ebiz.sinokor.co.kr/Tracking",
     "trackingSiteName": "Sinokor E-Biz Tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "sitc-container-lines": {
-    "displayName": "SITC Container Lines",
-    "color": "#1490c7",
-    "aliases": [
-      "SITC",
-      "SITC Shipping Lines",
-      "海丰集运"
-    ],
-    "countries": [
-      "HK",
-      "CN"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sitc-container-lines",
-      "localClocks": true
-    },
-    "canaryUrl": "https://ebusiness.sitcline.com/",
-    "trackingUrlTemplate": "https://ebusiness.sitcline.com/",
-    "trackingSearchUrl": "https://ebusiness.sitcline.com/",
-    "trackingSiteName": "SITC E-Business",
     "linkRules": [],
     "detectionRules": []
   },

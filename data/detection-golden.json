@@ -53227,17 +53227,6 @@
     "candidates": []
   },
   {
-    "input": "51776911",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "mondial-relay",
-      "colisweb",
-      "heppner",
-      "tforce-freight"
-    ]
-  },
-  {
     "input": "517982200083",
     "carrier": "unknown",
     "confidence": "low",
@@ -87351,12 +87340,6 @@
     ]
   },
   {
-    "input": "CULU6104020",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
     "input": "CV000562646ES",
     "carrier": "unknown",
     "confidence": "none",
@@ -109749,12 +109732,6 @@
     ]
   },
   {
-    "input": "SITU9145532",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
     "input": "SK0SCZD9999999980N",
     "carrier": "unknown",
     "confidence": "low",
@@ -112925,12 +112902,6 @@
     "candidates": [
       "ues-uy"
     ]
-  },
-  {
-    "input": "UETU5717763",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
   },
   {
     "input": "UF164782444SE",

@@ -63,7 +63,7 @@ export function parseTrackingPage(html: string, number: string): CarrierResult {
     const location = typeof place === 'string' ? place.trim() : '';
     const stage = scanStage(code, description);
     ordered.push({ clock, ordering, event: {
-      local_time: localTime, description, provider_code: code,
+      local_time: clock, description, provider_code: code,
       ...(location && { location }), ...(stage && { stage, stage_source: 'carrier_map' }),
     } });
   }

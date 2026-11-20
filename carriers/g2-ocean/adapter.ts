@@ -16,7 +16,7 @@ export const adapter: AdapterFactory = environment => ({
     if (!/^(?:GSSW)?[A-Z]{3}\d{5}[A-Z]$/.test(number)) throw new InvalidInputError(provider, 'Enter a G2 Ocean bill of lading');
     const bill = number.replace(/^GSSW/, '');
     const url = new URL(endpoint);
-    url.searchParams.set('bol_name', number);
+    url.searchParams.set('bol_name', bill);
     return runSteps({
       carrier: provider, recorder: environment.recorder, signal: context.signal, budgetMs: context.budgetMs ?? 15_000,
     }, [{

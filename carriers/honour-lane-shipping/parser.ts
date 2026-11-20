@@ -44,7 +44,7 @@ export function parseTracking(body: string, container: string): CarrierResult {
     const location = typeof locationName === 'string' ? locationName.trim() : '';
     const stage = scanStage(statusCode);
     return [{
-      local_time: statusTime.replace(' ', 'T'), description, provider_code: statusCode,
+      local_time: statusTime.endsWith(' 00:00:00') ? statusTime.slice(0, 10) : statusTime.replace(' ', 'T'), description, provider_code: statusCode,
       ...(location && { location }), ...(stage && { stage, stage_source: 'carrier_map' }),
     }];
   }).sort((left, right) => right.local_time.localeCompare(left.local_time));

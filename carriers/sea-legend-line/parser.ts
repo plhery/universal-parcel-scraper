@@ -51,7 +51,7 @@ export function parseTracking(body: string, number: string): CarrierResult {
     const rawName = typeof row.movementName === 'string' ? row.movementName.trim() : '';
     const description = movement?.description ?? (rawName || code);
     return [{
-      local_time: date.replace(' ', 'T'), description, provider_code: code,
+      local_time: / 00:00(?::00)?$/.test(date) ? date.slice(0, 10) : date.replace(' ', 'T'), description, provider_code: code,
       ...(location && { location }),
       ...(movement?.stage && { stage: movement.stage, stage_source: 'carrier_map' }),
     }];
