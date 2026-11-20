@@ -236,6 +236,17 @@ describe('Shouwu International HTTP adapter', () => {
     }
   });
 
+  it('reads the flight booked before it flies as a notice on the stage of the scan before it', () => {
+    const read = parseShouwu(changed((rows, order) => {
+      order.traceStatus = 'TRACE_STATUS_ON_THE_WAY';
+      rows.splice(0, rows.length, trace(1777540000, 'Estimated time of take-off'), trace(1777450000, 'The shipment begins at the point of origin.'),
+        trace(1777370000, 'The warehouse is currently processing the goods.'));
+    }), DELIVERED);
+    expect(read.events!.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['in_transit', 'none'], ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map']]);
+    expect(read).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'Estimated time of take-off' });
+  });
+
   it('reads a status without scans as a summary, and a parcel with neither as no history', () => {
     expect(parseShouwu(changed((traces, order) => { order.traceStatus = 'TRACE_STATUS_READY'; traces.splice(0); }), DELIVERED)).toEqual({
       status: 'pending', current_stage: 'registered', current_stage_source: 'carrier_map', provider_code: 'TRACE_STATUS_READY',
@@ -606,7 +617,14 @@ describe('Shouwu International status vocabulary', () => {
   });
 
   it('maps every status it recorded to the stage recorded for it, and keeps the page’s labels off scan wording', () => {
-    for (const entry of statuses.entries as { code?: string; wording: string; stage: string }[]) {
+    for (const entry of statuses.entries as { code?: string; wording: string; stage: string | null }[]) {
+      if (!entry.code && entry.stage === null) {
+        // The flight booked, a forecast: a notice on the stage of the scan before it.
+        expect(shouwuStage(entry.wording), entry.wording).toBeNull();
+        expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: entry.wording }), entry.wording)
+          .toMatchObject({ kind: 'intentional_gap' });
+        continue;
+      }
       if (!entry.code) {
         // Scan wording recorded without a code.
         expect(shouwuStage(entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
@@ -620,8 +638,11 @@ describe('Shouwu International status vocabulary', () => {
       expect(statusMapAnswer({ carrier: 'shouwu', providerCode: entry.code, description: entry.wording }), entry.code)
         .toEqual({ kind: 'mapped', stage: entry.stage });
     }
-    // Shouwu's rows on a batch or a flight's day read alike whatever the batch or the day.
-    for (const wording of ['0927A，申报过港中', '1101B,申报过港中', '预计3号的航班', '二程预计27号的航班',
+    // Shouwu's rows on a batch read alike whatever the batch, and its booked flight whatever the day.
+    for (const wording of ['预计3号的航班', '二程预计27号的航班']) {
+      expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
+    }
+    for (const wording of ['0927A，申报过港中', '1101B,申报过港中',
       // And the partner's sort and departure in China, whatever the facility's town.
       'Arrived at Sort Facility GUANGZHOU', 'Departed Facility in HONG KONG']) {
       expect(shouwuStage(wording), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });

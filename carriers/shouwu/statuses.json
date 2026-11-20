@@ -700,10 +700,10 @@
     },
     {
       "wording": "预计23号的航班",
-      "stage": "in_transit",
+      "stage": null,
       "language": "zh",
       "confirmedBy": "live",
-      "note": "The flight booked for a day of the month, here the 23rd. Its pattern covers any day and the second leg's (二程) row."
+      "note": "The flight booked for a day of the month, here the 23rd, before it flies: a forecast, so the parcel keeps the stage of the scan before it. Its pattern covers any day and the second leg's (二程) row."
     },
     {
       "wording": "航班已飞",
@@ -876,11 +876,11 @@
     },
     {
       "wording": "Estimated time of take-off",
-      "stage": "in_transit",
+      "stage": null,
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-07",
-      "note": "The flight booked, before the export clearance."
+      "note": "The flight booked, before the export clearance: a forecast, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "因中港查验延误，需安排新航班。",

@@ -8,7 +8,7 @@ import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { countryZones } from '../../places/zones.js';
-import { shouwuSendsBack, shouwuStage, shouwuStatusLabel, shouwuStatusStage } from './status.js';
+import { isShouwuFlightBooked, shouwuSendsBack, shouwuStage, shouwuStatusLabel, shouwuStatusStage } from './status.js';
 import { withoutCountryCode, withoutRelayedPlace } from './place.js';
 
 export const PROVIDER = 'Shouwu International';
@@ -214,6 +214,13 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
   const moved = oldestFirst.findIndex((event) => event.stage && event.stage !== 'registered');
   const first = moved > 0 && oldestFirst.slice(0, moved).some((event) => event.stage === 'registered') ? oldestFirst[moved] : undefined;
   if (first?.description === FIRST_FACILITY && first.stage === 'in_transit') Object.assign(first, { stage: 'accepted', stage_source: 'carrier_map' });
+  // The flight booked is a forecast, a notice on the stage of the staged scan before it.
+  let before: string | undefined;
+  for (const event of oldestFirst) {
+    if (isShouwuFlightBooked(event.description!)) {
+      if (before) Object.assign(event, { stage: before, stage_source: 'none' });
+    } else if (event.stage) before = event.stage;
+  }
   // A wall clock that would land after a newer row read at its epoch, wherever in its country, is read at its
   // epoch too: customs written days late must not come after the round out for delivery.
   let bound = Infinity;
@@ -285,7 +292,8 @@ export function parseShouwu(payload: unknown, raw: string): CarrierResult {
   const { status: code, country, events } = found;
   const summary = code ? shouwuStatusStage(code) : undefined;
   // A record of the booking logged after the parcel moved is no step back.
-  const scanned = events.find((event) => event.stage && event.stage !== 'registered') ?? events.find((event) => event.stage);
+  const scanned = events.find((event) => event.stage && event.stage_source !== 'none' && event.stage !== 'registered')
+    ?? events.find((event) => event.stage && event.stage_source !== 'none');
   // The tracker's status decides, as on the page; a scan refines it within what the status covers, and
   // a status the map does not know leaves the newest staged scan.
   // In Transit on the order data alone rests on the row Shouwu writes two hours after it, before

@@ -4,7 +4,7 @@ import { SUB_STAGES } from '../../providers/seventeentrack/status.js';
 import { imileRelayedStage } from '../imile/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
-interface Entry { readonly code?: string; readonly wording?: string; readonly stage?: string }
+interface Entry { readonly code?: string; readonly wording?: string; readonly stage?: string | null }
 const ENTRIES: readonly Entry[] = statuses.entries;
 
 /**
@@ -22,14 +22,21 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => !
   .map((entry) => [normalizeStatusWording(entry.wording!), entry.stage as Stage]));
 
 /**
- * Rows whose wording carries a variable part: Shouwu's own that name a batch or a flight's day,
- * "1013C，申报过港中" for a batch declared for the road to Hong Kong, and "预计23号的航班", or
- * "二程预计27号的航班" for the second leg, for the flight booked; and the last mile's return with
- * its reason.
+ * The flight booked for the parcel, before it flies: "Estimated time of take-off", or Shouwu's own
+ * "预计23号的航班", and "二程预计27号的航班" for the second leg, naming the flight's day. A forecast,
+ * not a movement, so it keeps the stage of the scan before it.
+ */
+const FLIGHT_BOOKED = /^estimated time of take-off$|^(?:二程)?预计\d{1,2}号的航班$/;
+
+/** Whether a scan is the flight booked for the parcel, a notice on the stage of the scan before it. */
+export const isShouwuFlightBooked = (wording: string): boolean => FLIGHT_BOOKED.test(normalizeStatusWording(wording));
+
+/**
+ * Rows whose wording carries a variable part: Shouwu's own that name a batch, "1013C，申报过港中"
+ * for a batch declared for the road to Hong Kong, and the last mile's return with its reason.
  */
 const PATTERNS: readonly [RegExp, Stage][] = [
   [/^[a-z0-9]{1,12}[，,] ?申报过港中$/, 'in_transit'],
-  [/^(?:二程)?预计\d{1,2}号的航班$/, 'in_transit'],
   // The line repeats the milestone before a pipe and appends information about the same scan.
   [/^goods leaving the operation center \| (?:the outbound scan at the operation center is complete|the shipment has been loaded onto the transport vehicle)\.?$/, 'in_transit'],
   [/^shipment started the customs clearance process at origin \| export declaration data has been prepared\.?$/, 'in_transit'],
@@ -95,8 +102,9 @@ export function shouwuStatusLabel(code: string): string | undefined {
   return LABELS.get(code);
 }
 
-/** A scan's stage: the map, else the shared wording rules, else nothing. */
+/** A scan's stage: the map, else the shared wording rules, else nothing; none for the flight booked. */
 export function shouwuStage(wording: string): ClassifiedWording | null {
+  if (isShouwuFlightBooked(wording)) return null;
   const mapped = mappedStage(normalizeStatusWording(wording));
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
@@ -105,8 +113,11 @@ export function shouwuStage(wording: string): ClassifiedWording | null {
 
 /** What the map says about a parcel's status, by its code, or about a scan, by its wording. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code ? CODES.get(code) : mappedStage(wording)),
+  stage: (code, wording) => (code ? CODES.get(code) : FLIGHT_BOOKED.test(wording) ? undefined : mappedStage(wording)),
   // The last mile's rows after its failed delivery, minutes apart, while its station keeps the parcel.
   gaps: ['stationed shipment', 'stationed located'].map((wording) => ({ wording,
     note: "The last mile's station keeping the parcel after a failed delivery: it says neither that the parcel waits for the recipient to collect nor that another round follows, so it names no stage." })),
+  gapNote: (_code, wording) => (FLIGHT_BOOKED.test(wording)
+    ? 'The flight booked for the parcel, before it flies: a forecast, so the parcel keeps the stage of the scan before it.'
+    : undefined),
 };
