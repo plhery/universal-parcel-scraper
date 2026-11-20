@@ -352,6 +352,7 @@ import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
 import { adapter as g2Ocean } from '../carriers/g2-ocean/adapter.js';
 import { adapter as gaash } from '../carriers/gaash/adapter.js';
+import { adapter as gaintLogistic } from '../carriers/gaint-logistic/adapter.js';
 import { adapter as garudaIndonesiaCargo } from '../carriers/garuda-indonesia-cargo/adapter.js';
 import { adapter as garudavega } from '../carriers/garudavega/adapter.js';
 import { adapter as gati } from '../carriers/gati/adapter.js';
@@ -1378,6 +1379,7 @@ export const REGISTRY: RegistryDefinition = {
     "fxdc-post": fxdcPost,
     "g2-ocean": g2Ocean,
     "gaash": gaash,
+    "gaint-logistic": gaintLogistic,
     "garuda-indonesia-cargo": garudaIndonesiaCargo,
     "garudavega": garudavega,
     "gati": gati,
@@ -2746,6 +2748,7 @@ export const REGISTRY: RegistryDefinition = {
     "g4s-kenya": "universal",
     "gaash": "gaash",
     "gaaubesi": "universal",
+    "gaint-logistic": "gaint-logistic",
     "garantpost": "universal",
     "garuda-indonesia-cargo": "garuda-indonesia-cargo",
     "garudavega": "garudavega",

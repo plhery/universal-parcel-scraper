@@ -1,0 +1,62 @@
+{
+  "id": "gaint-logistic",
+  "displayName": "Gaint Logistic",
+  "aliases": [
+    "Gaint Logistic Private Limited",
+    "Gaint Logistic Pvt Ltd"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#4f46e5"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gaint-logistic",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivered_at",
+    "service_name"
+  ],
+  "portal": {
+    "searchUrl": "https://gaintlogistic.com/track",
+    "helpUrl": "https://gaintlogistic.com/contact",
+    "canaryUrl": "https://gaintlogistic.com/track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "service_name"
+    ],
+    "discarded": [
+      "destination_city",
+      "order_id"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "proof_of_delivery",
+      "provider_code"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

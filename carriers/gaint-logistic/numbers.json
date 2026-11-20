@@ -1,0 +1,28 @@
+{
+  "carrier": "gaint-logistic",
+  "records": [
+    {
+      "number": "600011852",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://gaintlogistic.com/",
+        "date": "2026-11-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "LR number"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "The LR number Gaint's home page shows on its own-fleet shipment walkthrough. The tracker returns a booked order on Gaint's own fleet, under this LR and its AWB."
+    }
+  ]
+}

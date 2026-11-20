@@ -1,0 +1,23 @@
+{
+  "order": {
+    "awbNo": "GNTB2B165397",
+    "lrNo": "600011852",
+    "orderId": "B2B-1791625016547-4262",
+    "status": "Booking Received",
+    "isDelivered": false,
+    "isRto": false,
+    "customerCity": "Sonepat"
+  },
+  "courier": {
+    "name": "Gaint 10Kg Courier",
+    "brand": "Gaint"
+  },
+  "events": [
+    {
+      "id": "6257584",
+      "eventDate": "2026-10-10T09:36:56.625Z",
+      "statusName": "Booking Received",
+      "location": ""
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "carrier": "gaint-logistic",
+  "entries": [
+    {"wording": "Booking Received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order booked on Gaint's platform, before a pick-up. The order's status says the same."}
+  ]
+}
