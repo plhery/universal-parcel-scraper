@@ -118,6 +118,31 @@ describe('tracking HTTP API', () => {
     expect(track.mock.calls[1]![0]).toMatchObject({ number: '12345678001', carrier: undefined });
   });
 
+  it('keeps apart the spellings a carrier asks apart, the dash before a piece or rebooking suffix', async () => {
+    const track = vi.fn().mockResolvedValue({ ...answer, carrier: 'tforce-logistics', source: 'tforce-logistics' });
+    const url = await started({ tracker: tracker(track) });
+    // Synthetic numbers: TForce Logistics is asked for the piece with its dash, and for the compact number without.
+    for (const parcel of [{ number: 'CD1234567-1' }, { number: 'cd1234567-1 ' }]) {
+      expect((await post(url, { ...parcel, carrier: 'tforce-logistics' })).status).toBe(200);
+    }
+    expect(track).toHaveBeenCalledTimes(1);
+    expect((await post(url, { number: 'CD12345671', carrier: 'tforce-logistics' })).status).toBe(200);
+    expect(track).toHaveBeenCalledTimes(2);
+    // Overlapping, in either order, each spelling runs its own lookup: time:matters needs a rebooked order's dash.
+    const overlapping = held();
+    const later = await started({ tracker: tracker(overlapping.track) });
+    for (const numbers of [['12345678-1', '123456781'], ['87654321', '8765432-1']]) {
+      const before = overlapping.track.mock.calls.length;
+      const controller = new AbortController();
+      const requests = numbers.map(number => post(later, { number, carrier: 'time-matters' }, undefined, controller.signal).catch(() => undefined));
+      await vi.waitFor(() => expect(overlapping.track.mock.calls.length - before).toBe(2));
+      controller.abort();
+      await Promise.all(requests);
+    }
+    expect(overlapping.track.mock.calls.map(([parcel]) => (parcel as ParcelInput).number).sort())
+      .toEqual(['12345678-1', '123456781', '8765432-1', '87654321']);
+  });
+
   it('confirms the carrier of a generic postal number as the SDK does, and keeps a chosen carrier a lookup of its own', async () => {
     const lookup = vi.fn<CarrierAdapter['track']>().mockResolvedValue({ status: 'delivered', events: [
       { time: new Date().toISOString(), description: 'Delivered', stage: 'delivered' },

@@ -2,6 +2,7 @@ import { createHash, timingSafeEqual } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { isIP } from 'node:net';
+import { directTrackingNumber } from '../core/adapter/track.js';
 import { CARRIER_DEFINITIONS, carrierDefinition } from '../core/catalog/index.js';
 import { detectCarrierMatch, normalizeTrackingNumber, validTrackingNumber } from '../core/detection/index.js';
 import { InputRequiredError } from '../core/errors/index.js';
@@ -219,11 +220,15 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     // chose is a lookup of its own, even when detection names the same one.
     const detected = detectCarrierMatch(input.number);
     const route = input.carrier ?? { carrier: detected.carrier, candidates: detected.candidates };
+    // The number each carrier the lookup may ask is sent, where it differs from the normalized one:
+    // TForce Logistics and time:matters keep the dash before a piece or rebooking suffix.
+    const asked = typeof route === 'string' ? [route] : [route.carrier, ...route.candidates];
+    const sent = [...new Set(asked.map(carrier => directTrackingNumber(carrier, input.number)))].filter(spelled => spelled !== number);
     // The other fields as the tracker reads them: absent, null and blank alike, trimmed, and the
     // postcode's country upper-cased and read only beside a postcode. The country hint changes nothing.
     const text = (value: string | null | undefined) => value?.trim() ?? '';
     const postcode = text(input.postcode);
-    const key = createHash('sha256').update(JSON.stringify([number, route, postcode, postcode ? text(input.postcodeCountry).toUpperCase() : '',
+    const key = createHash('sha256').update(JSON.stringify([number, sent, route, postcode, postcode ? text(input.postcodeCountry).toUpperCase() : '',
       text(input.trackingUrl), text(input.phoneDigits), input.language || ''])).digest('hex');
     const previous = cache.get(key);
     if (previous && previous.until > now()) {
