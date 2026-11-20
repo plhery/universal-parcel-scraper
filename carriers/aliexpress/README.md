@@ -106,6 +106,11 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
 - Scan time is `timeStr` (local wall clock) plus `timeZone` (`GMT+2`, `GMT+8`…). `timeStr` alone
   would be read as UTC, the catalog timezone. The epoch `time` field is not the instant: it treats
   `timeStr` as Beijing time even for European scans.
+- The delivering carrier's scans (`GTMS_…`) are on the destination's wall clock, and Cainiao can
+  label them `GMT+0` whatever that clock keeps: so read, some came after the read that returned
+  them. Such a scan is read on the destination country's clock when it keeps one, with
+  `time_zone_basis: destination`. Customs scans labelled `GMT+0` keep the label: they come minutes
+  before a clearance labelled with the country's offset.
 - Cainiao's own notices (`LAST_MILE_ASN_NOTIFY`) carry no `timeZone`. Their epoch
   keeps milliseconds that `timeStr` cannot hold, so the epoch is the recorded instant and `timeStr`
   its Beijing rendering: such a scan is read at `+08:00`. Any other scan without `timeZone` keeps its

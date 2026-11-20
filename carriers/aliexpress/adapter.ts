@@ -28,7 +28,7 @@ import { validTrackingNumber } from '../../core/detection/valid.js';
 import { ChallengeError, IndeterminateError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { paused } from '../../core/runner/pause.js';
-import { explicitOffsetTime } from '../../core/time/index.js';
+import { countryCode, countryTimeZone, explicitOffsetTime, zonedTime } from '../../core/time/index.js';
 import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { transportOf } from '../../core/transport/transportOf.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
@@ -137,16 +137,33 @@ function scanTime(scan: JsonObject): string {
 /** The flight out of the departure country, which Cainiao can date by its day alone. */
 const FLIGHT_CODES = new Set(['LH_HO_AIRLINE', 'LH_DEPART']);
 
+// A label of UTC's own offset.
+const UTC_LABEL = /^(?:GMT|UTC)\s*(?:[+-]?0{1,2}(?::?00)?)?$/i;
+
+/**
+ * The delivering carrier's scan (`GTMS_…`) on the destination's clock, which Cainiao can label
+ * "GMT+0" whatever that clock keeps: so read, a Spanish and an Italian carrier's acceptance and a
+ * Spanish round came after the read that returned them, and another Spanish acceptance two hours
+ * after the customs clearance whose second it shared, in summer time. Its customs scans keep such
+ * a label, minutes before a clearance labelled with the country's offset. Null for any other scan,
+ * or a destination of several clocks.
+ */
+function destinationClock(scan: JsonObject, zone: string | null): { time: string; time_zone: string; time_zone_basis: 'destination' } | null {
+  if (!zone || !cainiaoActionCode(scan.actionCode).startsWith('GTMS_') || !UTC_LABEL.test(text(scan.timeZone).trim())) return null;
+  const placed = zonedTime(text(scan.timeStr).trim(), 'yyyy-MM-dd HH:mm:ss', zone);
+  return placed ? { time: placed.iso, time_zone: zone, time_zone_basis: 'destination' } : null;
+}
+
 /**
  * A scan's clock, or its day alone. Cainiao can put the flight out
  * ("Leaving from departure country/region", "Departed from departure
  * country/region") at midnight on its day, sometimes before export customs
  * has cleared: a planned day, not a scan time.
  */
-function scanClock(scan: JsonObject): { time: string } | { local_time: string } {
+function scanClock(scan: JsonObject, destinationZone: string | null = null): { time: string } | { local_time: string } {
   const day = FLIGHT_CODES.has(cainiaoActionCode(scan.actionCode))
     ? /^(\d{4}-\d{2}-\d{2}) 00:00:00$/.exec(text(scan.timeStr).trim())?.[1] : undefined;
-  return day ? { local_time: day } : { time: scanTime(scan) };
+  return day ? { local_time: day } : destinationClock(scan, destinationZone) ?? { time: scanTime(scan) };
 }
 
 /** The carriers a module names, which a bracket can name too without being a place. */
@@ -298,12 +315,15 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
       ?? (rawStatus ? (scanned ? 'in_transit' : 'unknown') : details.length === 0 ? 'pending' : 'unknown'));
   const currentStage = cainiaoActionStage(standingAction) ?? cainiaoStageByStatus()[status];
   const carriers = carrierNames(trackingModule, details);
+  // Cainiao can follow the country with the recipient's town, "France,Town": only the country is read.
+  const destination = text(trackingModule.destCountry).split(',')[0]!.trim().slice(0, 80);
+  const destinationZone = destination ? countryTimeZone(countryCode(destination)) : null;
   const events = details.slice(0, MAX_EVENTS_TO_RETURN).map((event): CarrierEvent => {
     const code = cainiaoActionCode(event.actionCode);
     const stage = cainiaoActionStage(code);
     const placed = placedWording(shownWording(event), carriers);
     return {
-      ...scanClock(event),
+      ...scanClock(event, destinationZone),
       // Cainiao Express's tracker states a town or a country code in `location`.
       location: placed.location || placeName(text(event.location), carriers),
       description: placed.description,
@@ -324,10 +344,9 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   const expectedFrom = etaDay(eta.deliveryMinTime);
   const expected = etaDay(eta.deliveryMaxTime) ?? expectedFrom;
   const handoff = cainiaoHandoffNumber(trackingModule);
-  // Cainiao can follow the country with the recipient's town, "France,Town": only the country is read.
-  const destination = text(trackingModule.destCountry).split(',')[0]!.trim().slice(0, 80);
-  const deliveredAt = status === 'delivered' ? scanTime(standing) || null : null;
-  const latestClock = scanClock(latest);
+  const standingClock = scanClock(standing, destinationZone);
+  const deliveredAt = status === 'delivered' ? ('time' in standingClock ? standingClock.time : scanTime(standing)) || null : null;
+  const latestClock = scanClock(latest, destinationZone);
   return {
     status,
     ...(currentStage ? { current_stage: currentStage } : {}),

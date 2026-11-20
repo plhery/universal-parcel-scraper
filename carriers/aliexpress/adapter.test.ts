@@ -446,6 +446,28 @@ describe('Cainiao projection', () => {
     expect(scan(undefined)).toBe('2026-06-10 07:40:00');
   });
 
+  it("reads the delivering carrier's scans labelled GMT+0 on the destination's clock, its customs scans as labelled", () => {
+    const scan = (actionCode: string, timeStr: string, timeZone: string) => ({ actionCode, timeStr, timeZone, desc: '', standerdDesc: 'Carrier update' });
+    const read = (destCountry: string) => parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001', destCountry,
+      latestTrace: scan('GTMS_DO_DEPART', '2026-11-20 10:19:00', 'GMT+0'),
+      detailList: [
+        scan('GTMS_DO_DEPART', '2026-11-20 10:19:00', 'GMT+0'),
+        scan('GTMS_ACCEPT', '2026-07-19 22:11:00', 'GMT+0'),
+        scan('CC_IM_SUCCESS', '2026-07-16 14:24:24', 'GMT+2'),
+        scan('CC_IM_START', '2026-07-16 12:19:41', 'GMT+0'),
+      ] }] }, 'LP00000000000001');
+    const spain = read('Spain,Sampletown');
+    expect(spain.events?.map((event) => [event.time, event.time_zone, event.time_zone_basis])).toEqual([
+      ['2026-11-20T10:19:00+01:00', 'Europe/Madrid', 'destination'],
+      ['2026-07-19T22:11:00+02:00', 'Europe/Madrid', 'destination'],
+      ['2026-07-16T14:24:24+02:00', undefined, undefined],
+      ['2026-07-16T12:19:41Z', undefined, undefined],
+    ]);
+    expect(spain.last_update).toBe('2026-11-20T10:19:00+01:00');
+    // A destination of several clocks keeps the label.
+    expect(read('USA').events?.[0]?.time).toBe('2026-11-20T10:19:00Z');
+  });
+
   it('reads a zone-less notice that Cainiao recorded itself on the Beijing clock', () => {
     const scan = (timeStr: string, time: unknown, timeZone?: string) => ({ actionCode: 'LAST_MILE_ASN_NOTIFY', timeStr, time, timeZone });
     const departed = { actionCode: 'SC_OUTBOUND_SUCCESS', timeStr: '2026-06-10 07:39:39', timeZone: 'GMT+8', time: 1781048379000 };
