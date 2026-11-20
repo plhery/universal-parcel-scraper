@@ -1,5 +1,29 @@
 {
   "carrier": "fan-courier-md",
-  "gap": "No public page shows a FAN Courier Moldova number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "FAN1204215",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250909194411id_/https://app.fancourier.md/fan/Main?tracking=true&awbno=FAN1204215",
+        "date": "2025-09-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "FAN Courier Moldova parcel delivery",
+        "reportedRole": "AWB query reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The archived URL from the Moldovan carrier's own tracking tenant supplies the exact AWB. The archived and live pages return the tracking application shell without a shipment history."
+    }
+  ]
 }
