@@ -40,6 +40,11 @@ planned day. History rows retain facility-local clocks without an invented
 offset, including international scans. Unknown history wording remains
 unclassified.
 
+The API's status takes the stage of its code, else of its timeline step. A
+parcel a DHL BOX locker or DHL POP point holds stays on the step "For
+delivery"; its Polish sentence, "Przesyłka czeka na odbiór", reads as waiting
+for pickup.
+
 A return DHL announces after a wrong address abroad is not always the end:
 DHL can withdraw it, and the API's status then goes back to `Route`, with the
 parcel on its way to the recipient.

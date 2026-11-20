@@ -38,11 +38,14 @@ const STATUSES: Record<Stage, CarrierStatus> = {
 
 export interface DhlEcommercePlStatus { description: string; stage?: Stage }
 
+// The sentence for a parcel a DHL BOX locker or DHL POP point holds, which stays on the timeline's "For delivery".
+const WAITING = /^Przesyłka czeka na odbiór\.?$/i;
+
 /** `text` is the sentence the answer carries for the status, when it has one. */
 export function dhlEcommercePlStatus(code: string, timelineStep: unknown, text = ''): DhlEcommercePlStatus {
   const known = CODES.get(code);
   const step = typeof timelineStep === 'string' && Object.hasOwn(TIMELINE, timelineStep) ? TIMELINE[timelineStep] : undefined;
-  const stage = known?.stage ?? step?.stage;
+  const stage = known?.stage ?? (WAITING.test(text) ? 'ready_for_pickup' : step?.stage);
   const words = code.replaceAll('_', ' ').toLowerCase();
   return { description: text || known?.wording || step?.wording || words.charAt(0).toUpperCase() + words.slice(1), ...(stage ? { stage } : {}) };
 }
@@ -81,6 +84,7 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^Delivery in the way to the DHL Point\.?$/i, 'in_transit'],
   // The DHL BOX locker or DHL POP point holding the parcel for its recipient, with its address and hours.
   [/^Shipment is waiting in .{1,300}$/i, 'ready_for_pickup'],
+  [WAITING, 'ready_for_pickup'],
   // Its recipient collected the parcel from that locker or point.
   [/^Shipment collected from DHL (?:Parcelstation|POP|Point|BOX)\b.{0,120}$/i, 'delivered'],
 ];

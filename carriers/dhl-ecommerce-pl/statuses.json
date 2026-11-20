@@ -14,6 +14,7 @@
     {"wording": "The recipient was informed about the date of delivery.", "language": "en", "stage": "pending", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "A notice to the recipient on the history page before the delivery run; it moves nothing."},
     {"wording": "Delivery in the way to the DHL Point", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A scan on the history page between the delivery depot and the DHL BOX locker or DHL POP point that then holds the parcel."},
     {"wording": "Shipment is waiting in …", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "A scan on the history page naming the DHL BOX locker or DHL POP point that holds the parcel for its recipient, with its address and opening hours: \"Shipment is waiting in Automat DHL BOX 24/7: <address> Opening hours: …\"."},
+    {"wording": "Przesyłka czeka na odbiór", "language": "pl", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The status sentence the portal gives a parcel a DHL BOX locker or DHL POP point holds, while its timeline step is still For delivery: waiting for its recipient."},
     {"wording": "Shipment collected from DHL Parcelstation. . Thank you!", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "A scan on the history page after the parcel waited in a DHL BOX locker: its recipient collected it."}
   ]
 }

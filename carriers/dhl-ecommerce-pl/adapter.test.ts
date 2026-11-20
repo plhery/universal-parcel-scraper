@@ -75,6 +75,9 @@ describe('DHL eCommerce Poland parser', () => {
     expect(dhlEcommercePlStatus('TT_NEW_CODE', 'Route')).toEqual({ description: 'On its way', stage: 'in_transit' });
     expect(dhlEcommercePlStatus('TT_NEW_CODE', 'Somewhere')).toEqual({ description: 'Tt new code' });
     expect(dhlEcommercePlStatus('TT_NEW_CODE', 'None')).toEqual({ description: 'Shipment preparation' });
+    // A locker or point holding the parcel keeps the timeline on For delivery; the sentence says it waits there.
+    expect(dhlEcommercePlStatus('TT_NEW_CODE', 'Delivery', 'Przesyłka czeka na odbiór'))
+      .toEqual({ description: 'Przesyłka czeka na odbiór', stage: 'ready_for_pickup' });
   });
 
   it('plans the delivery by the portal’s hours on the Polish clock, else by its day', () => {
