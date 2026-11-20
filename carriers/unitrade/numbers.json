@@ -1,5 +1,44 @@
 {
   "carrier": "unitrade",
-  "gap": "No public page shows a Unitrade number.",
-  "records": []
+  "records": [
+    {
+      "number": "99990000315846",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.gdeposylka.ru/viewtopic.php?p=13349#p13349",
+        "date": "2020-03-17",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "AliExpress Standard Shipping customs clearance",
+        "reportedRole": "marketplace tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog",
+          "xpressbees"
+        ]
+      },
+      "note": "A customer posted the shipment number, another user reported seeing it on Unitrade's tracker, and the customer later reported that Unitrade found the parcel. The current lookup returned HTTP 400, so it did not verify the historical report."
+    }
+  ]
 }

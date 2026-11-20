@@ -3950,6 +3950,12 @@
     "reason": "Seven digits are a bare counter that SEUR and other carriers also print, and nothing in the number points to United."
   },
   {
+    "carrier": "unitrade",
+    "pattern": "^9999\\d{10}$",
+    "kind": "open",
+    "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
     "carrier": "uniuni",
     "pattern": "^(?:BAUNI\\d{15}|UD\\d{14}|UR\\d{17})$",
     "kind": "open",
