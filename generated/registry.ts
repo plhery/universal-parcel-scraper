@@ -387,6 +387,7 @@ import { adapter as ilyangLogis } from '../carriers/ilyang-logis/adapter.js';
 import { adapter as imile } from '../carriers/imile/adapter.js';
 import { adapter as indahLogistik } from '../carriers/indah-logistik/adapter.js';
 import { adapter as indiaPost } from '../carriers/india-post/adapter.js';
+import { adapter as indigoCargo } from '../carriers/indigo-cargo/adapter.js';
 import { adapter as inpost } from '../carriers/inpost/adapter.js';
 import { adapter as instabox } from '../carriers/instabox/adapter.js';
 import { adapter as integralPack } from '../carriers/integral-pack/adapter.js';
@@ -1282,6 +1283,7 @@ export const REGISTRY: RegistryDefinition = {
     "imile": imile,
     "indah-logistik": indahLogistik,
     "india-post": indiaPost,
+    "indigo-cargo": indigoCargo,
     "inpost": inpost,
     "instabox": instabox,
     "integral-pack": integralPack,
@@ -2589,6 +2591,7 @@ export const REGISTRY: RegistryDefinition = {
     "imile": "imile",
     "indah-logistik": "indah-logistik",
     "india-post": "india-post",
+    "indigo-cargo": "indigo-cargo",
     "indopaket": "universal",
     "inntralog": "universal",
     "inposdom": "universal",

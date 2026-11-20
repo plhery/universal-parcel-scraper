@@ -31532,6 +31532,29 @@
       }
     ]
   },
+  "indigo-cargo": {
+    "displayName": "IndiGo CarGo",
+    "color": "#242785",
+    "aliases": [
+      "IndiGo Cargo",
+      "6E Cargo"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "indigo-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "indopaket": {
     "displayName": "Indopaket",
     "color": "#1b75bb",

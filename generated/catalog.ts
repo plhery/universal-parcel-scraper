@@ -31536,6 +31536,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "indigo-cargo": {
+    "displayName": "IndiGo CarGo",
+    "color": "#242785",
+    "aliases": [
+      "IndiGo Cargo",
+      "6E Cargo"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "indigo-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "indopaket": {
     "displayName": "Indopaket",
     "color": "#1b75bb",
@@ -66221,6 +66244,7 @@ export const CARRIER_IDS = [
   "ilyang-logis",
   "imile",
   "indah-logistik",
+  "indigo-cargo",
   "indopaket",
   "inntralog",
   "inposdom",
@@ -68088,6 +68112,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ilyang-logis": [],
   "imile": ["imile-3","imile-1","imile-4","imile-5","imile-2"],
   "indah-logistik": ["indah-logistik-1"],
+  "indigo-cargo": [],
   "indopaket": [],
   "inntralog": [],
   "inposdom": [],

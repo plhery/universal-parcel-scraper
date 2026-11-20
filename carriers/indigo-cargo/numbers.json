@@ -1,0 +1,65 @@
+{
+  "carrier": "indigo-cargo",
+  "records": [
+    {
+      "number": "31296403812",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mumbaicustomszone3.gov.in/Content/writereaddata/Portal/Document/1097_1_1_document-2026-04-01T121749-952.pdf",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "IndiGo master air waybill listed in Mumbai Customs' Annexure A",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "31296361646",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mumbaicustomszone3.gov.in/Content/writereaddata/Portal/Document/1083_1_1_merged-PN-and-annexures.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "IndiGo master air waybill listed in Mumbai Customs' Annexure A",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}
