@@ -5514,5 +5514,10 @@
     "carrier": "sm-line",
     "kind": "open",
     "reason": "The bare bill format is shared. SM Line confirms ownership through its guest bill search."
+  },
+  {
+    "carrier": "hecny-shipping",
+    "kind": "open",
+    "reason": "Hecny confirms a whole house bill through its guest search. The bare format is shared."
   }
 ]

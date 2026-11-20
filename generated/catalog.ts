@@ -29727,6 +29727,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hecny-shipping": {
+    "displayName": "Hecny Shipping",
+    "color": "#005398",
+    "aliases": [
+      "Hecny Group",
+      "Hecny Transportation",
+      "HYSL"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hecny-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hecny.com/en/track-and-trace",
+    "trackingUrlTemplate": "https://www.hecny.com/en/track-and-trace",
+    "trackingSearchUrl": "https://www.hecny.com/en/track-and-trace",
+    "trackingSiteName": "Hecny Track and Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hellmann": {
     "displayName": "Hellmann Worldwide Logistics",
     "color": "#004c99",
@@ -66167,6 +66192,7 @@ export const CARRIER_IDS = [
   "haypost",
   "hct-logistics",
   "hecny-ecom",
+  "hecny-shipping",
   "hellmann",
   "helthjem",
   "hepsijet",
@@ -68034,6 +68060,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "haypost": ["haypost-s10"],
   "hct-logistics": [],
   "hecny-ecom": [],
+  "hecny-shipping": [],
   "hellmann": [],
   "helthjem": ["helthjem-1","helthjem-2"],
   "hepsijet": [],

@@ -29723,6 +29723,31 @@
     ],
     "detectionRules": []
   },
+  "hecny-shipping": {
+    "displayName": "Hecny Shipping",
+    "color": "#005398",
+    "aliases": [
+      "Hecny Group",
+      "Hecny Transportation",
+      "HYSL"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hecny-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hecny.com/en/track-and-trace",
+    "trackingUrlTemplate": "https://www.hecny.com/en/track-and-trace",
+    "trackingSearchUrl": "https://www.hecny.com/en/track-and-trace",
+    "trackingSiteName": "Hecny Track and Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hellmann": {
     "displayName": "Hellmann Worldwide Logistics",
     "color": "#004c99",

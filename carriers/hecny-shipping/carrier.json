@@ -1,0 +1,54 @@
+{
+  "id": "hecny-shipping",
+  "displayName": "Hecny Shipping",
+  "aliases": [
+    "Hecny Group",
+    "Hecny Transportation",
+    "HYSL"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#005398"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hecny-shipping",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.hecny.com/en/track-and-trace",
+    "searchUrl": "https://www.hecny.com/en/track-and-trace",
+    "canaryUrl": "https://www.hecny.com/en/track-and-trace",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "Hecny Track and Trace"
+  },
+  "links": [],
+  "detection": []
+}

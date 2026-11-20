@@ -354,6 +354,7 @@ import { adapter as hanjin } from '../carriers/hanjin/adapter.js';
 import { adapter as happyPost } from '../carriers/happy-post/adapter.js';
 import { adapter as haypost } from '../carriers/haypost/adapter.js';
 import { adapter as hctLogistics } from '../carriers/hct-logistics/adapter.js';
+import { adapter as hecnyShipping } from '../carriers/hecny-shipping/adapter.js';
 import { adapter as hellmann } from '../carriers/hellmann/adapter.js';
 import { adapter as helthjem } from '../carriers/helthjem/adapter.js';
 import { adapter as heppner } from '../carriers/heppner/adapter.js';
@@ -1249,6 +1250,7 @@ export const REGISTRY: RegistryDefinition = {
     "happy-post": happyPost,
     "haypost": haypost,
     "hct-logistics": hctLogistics,
+    "hecny-shipping": hecnyShipping,
     "hellmann": hellmann,
     "helthjem": helthjem,
     "heppner": heppner,
@@ -2530,6 +2532,7 @@ export const REGISTRY: RegistryDefinition = {
     "haypost": "haypost",
     "hct-logistics": "hct-logistics",
     "hecny-ecom": "universal",
+    "hecny-shipping": "hecny-shipping",
     "hellmann": "hellmann",
     "helthjem": "helthjem",
     "heppner": "heppner",

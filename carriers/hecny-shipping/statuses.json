@@ -1,0 +1,50 @@
+{
+  "carrier": "hecny-shipping",
+  "entries": [
+    {
+      "wording": "CONTAINER LOAD ON VESSEL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EMPTY CONTAINER PICKUP",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Equipment pickup before cargo tender."
+    },
+    {
+      "wording": "IN GATE",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The same gate-in appears at origin and at transfer terminals."
+    },
+    {
+      "wording": "OUT GATE",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The same gate-out appears during transfers and after unloading at destination."
+    },
+    {
+      "wording": "CONTAINER UNLOAD FROM VESSEL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "VESSEL/FLIGHT ARRIVAL (ATA)",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "VESSEL/FLIGHT DEPARTURE (ATD)",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
+}
