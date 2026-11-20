@@ -38,7 +38,16 @@ const FIXED_CLOCKS: ReadonlyMap<string, string> = new Map([
   ['Australia Post', 'Australia/Sydney'],
   ['Singapore Post', 'Asia/Singapore'],
   ['Swiss Post', 'Europe/Zurich'],
+  // A Chinese forwarder relaying in Chinese and English: its copy of GOFO France's "being
+  // prepared by the sender" is GOFO's own instant at Beijing's wall clock, to the second.
+  ['Zhongzhou Logistics', 'Asia/Shanghai'],
 ]);
+
+/**
+ * Services on Beijing's clock in a history another service names: DHLink records
+ * every scan of a parcel GOFO delivers on Beijing time, as its own tracker does.
+ */
+const BEIJING_BESIDE: ReadonlyMap<string, string> = new Map([['DHLink', 'GOFO Express']]);
 
 /**
  * Posts that date their own scans in UTC and keep the origin post's, which
@@ -225,6 +234,8 @@ export interface Journey {
   alone: boolean;
   /** The zone routing passes for the parcel's carrier, else `carrierHomeZone`'s. */
   fallback: string | null;
+  /** The services that reported the reply's scans. */
+  services?: ReadonlySet<string>;
 }
 
 /**
@@ -296,7 +307,7 @@ export function lendsZone({ service, description }: Pick<Scan, 'service' | 'desc
  * it: the destination post's clock for a scan Swiss Post relays from it, the
  * office's for DHL Germany's copies at a European one, a UTC
  * post's or the origin's that an S10 suffix names for its copies, its fixed
- * or network clock in any history, China's for Cainiao's steps in China, the
+ * or network clock in any history (Beijing's for DHLink's beside GOFO's), China's for Cainiao's steps in China, the
  * facility's for USPS's scans that name its state, else
  * in a history it reports alone its location's clock, or a local clock's
  * country: the destination's, else the service's (`courierZone`) or the
@@ -316,7 +327,9 @@ export function serviceZone(scan: Scan, journey: Journey): Zoned | null | false 
     if (!originLeg(scan)) return at('UTC', 'carrier');
     return isValidS10TrackingNumber(journey.number) ? at(countryTimeZone(journey.number.slice(-2)), 'carrier') : null;
   }
+  const beside = BEIJING_BESIDE.get(service);
   const fixed = at(FIXED_CLOCKS.get(service), 'carrier')
+    ?? at(beside && journey.services?.has(beside) ? 'Asia/Shanghai' : undefined, 'carrier')
     ?? at(journey.destination ? NETWORK_CLOCKS.get(service)?.get(journey.destination) : undefined, 'destination');
   if (fixed) return fixed;
   if (MIDNIGHT.test(wall) || (TWELVE_HOUR_CLOCKS.has(service) && wall.slice(11, 13) === '12' && !delivered)) return false;

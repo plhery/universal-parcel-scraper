@@ -131,6 +131,18 @@ describe('Postal Ninja result parsing', () => {
     expect(parsePostalNinjaResponse(gofo('US'), number).last_update).toBe('2026-08-17T18:17:00.000Z');
     expect(parsePostalNinjaResponse(gofo('FR'), number).last_update).toBe('2026-08-17T09:17:00.000Z');
     expect(parsePostalNinjaResponse(gofo(), number).last_update).toBeNull();
+    // The Chinese forwarders before GOFO France write Beijing's wall clock, not the parcel's carrier's.
+    const forwarded = postal(number, 'FR', [
+      { ds: 'Zhongzhou Logistics', dt: '2026-11-02T17:10:04', dsc: '货物离开操作中心' },
+      { ds: 'DHLink', dt: '2026-11-02T17:10:04', dsc: 'Goods leave the operations center' },
+      { ds: 'GOFO Express', dt: '2026-11-02T11:01:35', dsc: 'Your package is being prepared by the sender.' },
+    ]);
+    expect(times(parsePostalNinjaResponse(forwarded, number, 'Europe/Paris')))
+      .toEqual(['2026-11-02T10:01:35.000Z', '2026-11-02T09:10:04.000Z', '2026-11-02T09:10:04.000Z']);
+    // Without GOFO, DHLink's clock is not known here and borrows the carrier's.
+    const alone = postal(number, 'FR', [{ ds: 'DHLink', dt: '2026-11-02T17:10:04', dsc: 'Goods leave the operations center' },
+      { ds: 'Royal Mail', dt: '2026-11-03T10:00:00', dsc: 'Delivered' }]);
+    expect(times(parsePostalNinjaResponse(alone, number, 'Europe/Paris'))?.[1]).toBe('2026-11-02T16:10:04.000Z');
   });
 
   it('reads the UTC suffix Postal Ninja writes on Russian Post\'s scans as no zone', () => {

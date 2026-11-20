@@ -114,7 +114,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     const carrier = carrierIdFromName(service);
     return carrier ? relayedWordingStage(carrier, description) : undefined;
   };
-  const journey = { number, destination, fallback: timezone ?? carrierHomeZone(carrier),
+  const journey = { number, destination, fallback: timezone ?? carrierHomeZone(carrier), services,
     alone: payload.track.events !== undefined && services.size === 1
       && (!isValidS10TrackingNumber(number) || number.slice(-2) === destination) };
   const scans: { wall: string | null; service: string; origin: boolean; lends: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
