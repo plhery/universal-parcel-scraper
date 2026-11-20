@@ -1,25 +1,11 @@
 # Herona Express
 
-Herona Express parcels use enabled universal providers. There is no dedicated adapter.
+Select Herona Express to track an Indonesian rail or road shipment. The public tracking form
+issues a guest session and a form token. The adapter uses them for one lookup of the whole
+shipment number. The reply contains that lookup's scans without repeating the number.
 
-PT Herona Express, founded in 1972, carries goods by rail and box truck to more than fifty
-Indonesian cities. Its site is heronaexpress.co.id.
+Scan clocks are kept as local time. The adapter uses the scan codes it has seen and leaves
+sender and recipient details outside the result.
 
-## Numbers
-
-Its numbers are a branch code and letter, the year's two digits and a serial: four letters and eight
-digits. Other networks print that shape and only the tracker's example is known, so there is no rule.
-
-## Why there is no adapter
-
-The tracker posts the number with a token from its page, without a login or CAPTCHA, and answers the
-example with its scans. An adapter can follow.
-
-## Links
-
-The tracker has no per-shipment address, so there are no tracking links.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `HERONA_EXPRESS_TRACKING_NUMBER` and run
+`npm run test:carriers:live -- carriers/herona-express`.
