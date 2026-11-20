@@ -41,8 +41,7 @@ export class DhlEcommercePlTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
 
   /**
-   * `language` words the portal's status: Polish, or English for every other reader. The history page stays in
-   * English: its Polish scans wait on a live sample for the map.
+   * `language` words the portal's status and the history page's scans: Polish, or English for every other reader.
    */
   fetch(raw: string, context: TrackingContext = {}, language: DhlPolandLanguage = 'en') {
     const number = normalizeDhlEcommercePlNumber(raw);
@@ -107,7 +106,7 @@ export class DhlEcommercePlTracker {
         const started = performance.now();
         const summary = await read(signal, Math.min(15_000, firstAttemptMs(remainingMs)));
         if (!waybill) throw new IndeterminateError(PROVIDER, 'DHL Poland returned no waybill for its history page');
-        const history = await dhlPolandBrowser(this.options.trawl!, waybill, signal, remainingMs - (performance.now() - started) - 500, 'en');
+        const history = await dhlPolandBrowser(this.options.trawl!, waybill, signal, remainingMs - (performance.now() - started) - 500, language);
         return { ...summary, ...history };
       } },
       { id: 'direct', recovers: error => confirmed !== undefined || recoverableByDefault(error),

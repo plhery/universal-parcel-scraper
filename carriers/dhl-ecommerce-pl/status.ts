@@ -62,28 +62,40 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^(?:The shipment has arrives at sorting center\.|Przesyłka została przyjęta w centrum sortowania\.)$/i, 'in_transit'],
   [/^(?:The shipment is processed at depot of origin country\.|Przesyłka jest obsługiwana w oddziale nadającym\.)$/i, 'in_transit'],
   [/^(?:The shipment has been dropped off at depot by the sender\.|Przesyłka została nadana przez nadawcę w oddziale DHL\.)$/i, 'accepted'],
-  [/^(?:The shipment is handled in Sorting Center|Przesyłka jest obsługiwana w Centrum Sortowania)\.?$/i, 'in_transit'],
+  // Sorting on the way, at a hub and again at the delivery depot, which the page words two ways in English.
+  [/^(?:The shipment is handled in Sorting Center|The shipment is processed at sorting center|Przesyłka jest obsługiwana w Centrum Sortowania)\.?$/i, 'in_transit'],
   [/^(?:The shipment has reached DHL terminal\.|Przesyłka dotarła do oddziału nadawczego DHL Parcel\.)$/i, 'accepted'],
   // A terminal that gives the planned delivery day is reached on the way, with the sorting centre's scan.
-  [/^The shipment has reached DHL terminal(?: in [^.]{0,80})?\. Planned date of delivery to: \d{1,2}-\d{1,2}-\d{4}\.$/i, 'in_transit'],
+  [/^(?:The shipment has reached DHL terminal(?: in [^.]{0,80})?\. Planned date of delivery to|Przesyłka dotarła do oddziału nadawczego DHL Parcel(?: [^.]{1,80})?\. Przewidywana data doręczenia do): \d{1,2}-\d{1,2}-\d{4}\.$/i, 'in_transit'],
+  // A terminal named on the way, after the first one.
+  [/^(?:The shipment has reached DHL Terminal (?!in )[^.]{1,80}|Przesyłka dotarła do oddziału DHL eCommerce [^.]{1,80})\.?$/i, 'in_transit'],
+  // The delivery depot, with the day the courier will take the parcel and, for today, the hours.
+  [/^(?:The shipment has reached DHL Terminal(?: [^.]{1,80})?\. Delivery to the Recipient is expected (?:today|on the next working day)\.(?: Delivery hours: from \d{1,2}:\d{2} to \d{1,2}:\d{2}\.)?|Przesyłka dotarła do (?:oddziału DHL eCommerce|Terminala DHL Parcel)(?: [^.]{1,80})?\. (?:Doręczenie do Odbiorcy planowane jest w kolejnym dniu roboczym|W dniu dzisiejszym zostanie przekazana Kurierowi DHL Parcel do doręczenia)\.(?: Planowane godziny doręczenia: od \d{1,2}:\d{2} do \d{1,2}:\d{2}\.)?)$/i, 'in_transit'],
   // A parcel sent abroad: its first terminal, named without a delivery day, then the way out.
   [/^The shipment has reached DHL terminal in [^.]{0,80}\.$/i, 'accepted'],
   [/^The shipment left the origin country\.?$/i, 'in_transit'],
   // A parcel leaving the gateway, on its way out or coming back after a failed delivery abroad.
   [/^The shipment has left the gateway in origin country\.$/i, 'in_transit'],
   [/^The shipment has arrived at gateway in destination country\.$/i, 'in_transit'],
-  [/^The shipment has arrived at delivery depot\.$/i, 'in_transit'],
-  // Sorting on the way, at a hub and again at the delivery depot.
-  [/^The shipment is processed at sorting center\.$/i, 'in_transit'],
+  [/^(?:The shipment has arrived at delivery depot|Przesyłka przyjęta w oddziale doręczającym)\.$/i, 'in_transit'],
   // A notice of the delivery day to the recipient, which moves nothing.
   [/^The recipient was informed about the date of delivery\.$/i, 'pending'],
-  [/^The shipment (?:has been|was) delivered to the recipient\.$/i, 'delivered'],
+  // The recipient's instruction to leave the parcel in a safe place, which moves nothing either.
+  [/^(?:According to consignee request the parcel will be delivered to the safe place|Odbiorca złożył dyspozycję dot\. doręczenia przesyłki do bezpiecznego miejsca doręczenia)\.$/i, 'pending'],
+  [/^(?:The shipment (?:has been|was) delivered to the recipient|Przesyłka została doręczona do odbiorcy)\.$/i, 'delivered'],
+  // The courier found nobody: a DHL POP point or locker nearby will hold the parcel.
+  [/^(?:DHL Courier did not reach the Recipient at the indicated delivery address\. The shipment will be waiting for collection in DHL POP in the nearest area|Kurier DHL nie zastał Odbiorcy pod wskazanym adresem doręczenia\. Przesyłka będzie oczekiwać na odbiór w Punkcie DHL POP \/ Automacie DHL POP BOX w najbliższej okolicy)\.$/i, 'failed_attempt'],
+  // The recipient refused the parcel, or left it uncollected, and it goes back: a return under way, then its end.
+  [/^(?:The Recipient has refused to accept the shipment and it will be returned to the Sender|Odbiorca odmówił przyjęcia przesyłki i zostanie ona zwrócona do Nadawcy)\.?$/i, 'exception'],
+  [/^(?:Shipment returned do sender\. Time for receipt has passed|Zwrot przesyłki do nadawcy - minął termin odbioru)\.?$/i, 'exception'],
+  [/^(?:Delivery in the way to the Sender|Przesyłka w trakcie zwrotu do Nadawcy)\.?$/i, 'exception'],
+  [/^(?:The shipment was returned to the Sender|Przesyłka została zwrócona do nadawcy)\.$/i, 'returned'],
   // The destination's notice that a wrong address stopped the delivery: the parcel goes back to its sender.
   [/^The shipment couldn['’]t be delivered because of bad\/incorrect address and will be returned to the sender\.$/i, 'exception'],
   // On the way from the delivery depot to the DHL BOX locker or DHL POP point that will hold the parcel.
   [/^Delivery in the way to the DHL Point\.?$/i, 'in_transit'],
   // The DHL BOX locker or DHL POP point holding the parcel for its recipient, with its address and hours.
-  [/^Shipment is waiting in .{1,300}$/i, 'ready_for_pickup'],
+  [/^(?:Shipment is waiting in|Przesyłka oczekuje na odbiór w) .{1,300}$/i, 'ready_for_pickup'],
   [WAITING, 'ready_for_pickup'],
   // Its recipient collected the parcel from that locker or point.
   [/^Shipment collected from DHL (?:Parcelstation|POP|Point|BOX)\b.{0,120}$/i, 'delivered'],

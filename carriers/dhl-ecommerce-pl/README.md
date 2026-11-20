@@ -22,8 +22,8 @@ The API and the history page answer in English or Polish. The API is asked in
 Polish (`Accept-Language: pl`) for a Polish reader (`language` `pl`) and in
 English for every other. The page words its scans as the `lang` it is opened
 with (`en-gb` or `pl-pl`) says, and keeps that language in a cookie for the
-form; the browser service opens either. The adapter opens it in English for
-every reader until the map has the page's Polish scans from a live answer.
+form; the browser service opens either. The adapter opens it in the reader's
+language too.
 
 The browser step includes the API confirmation. If history retrieval fails,
 `direct` returns the confirmed summary with the browser failure recorded.
@@ -54,7 +54,8 @@ delivery day. History scans carry no code, so the identity policy in
 [identity.ts](identity.ts) lets a scan at the same instant and named place take
 over its stored row, when the match is unique both ways. A scan without a place
 takes it over when the map reads both wordings as one scan, as it reads a scan in
-either language.
+either language. The page translates some places too, so a scan at another place
+takes the row over only on that same condition.
 
 The DHL-specific helper uses TRAWL's native checkbox and audio solver.
 A carrier-scoped copy retains the upstream algorithm and replaces its raw debug
