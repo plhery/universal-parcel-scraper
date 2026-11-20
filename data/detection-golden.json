@@ -109375,6 +109375,12 @@
     "candidates": []
   },
   {
+    "input": "SNBU2185474",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SNGXP199999980MT",
     "carrier": "unknown",
     "confidence": "low",

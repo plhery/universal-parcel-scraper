@@ -53432,6 +53432,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sinotrans-container-lines": {
+    "displayName": "Sinotrans Container Lines",
+    "color": "#00548d",
+    "aliases": [
+      "Sinolines",
+      "SNL Sinotrans Container Lines",
+      "中外运集装箱运输有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sinotrans-container-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebusiness.sinolines.com.cn",
+    "trackingUrlTemplate": "https://ebusiness.sinolines.com.cn/Ebusiness/EQUERY/TrackingCargoE.aspx?subject=BLNO",
+    "trackingSearchUrl": "https://ebusiness.sinolines.com.cn/Ebusiness/EQUERY/TrackingCargoE.aspx?subject=BLNO",
+    "trackingSiteName": "Sinolines E-Business",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sitc-container-lines": {
     "displayName": "SITC Container Lines",
     "color": "#1490c7",
@@ -67584,6 +67609,7 @@ export const CARRIER_IDS = [
   "silpo-pack",
   "sinapseria",
   "sinokor-merchant-marine",
+  "sinotrans-container-lines",
   "sitc-container-lines",
   "sitra-es",
   "siuntos-autobusais",
@@ -69479,6 +69505,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "silpo-pack": [],
   "sinapseria": [],
   "sinokor-merchant-marine": [],
+  "sinotrans-container-lines": [],
   "sitc-container-lines": [],
   "sitra-es": [],
   "siuntos-autobusais": [],
