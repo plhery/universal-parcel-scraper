@@ -18,6 +18,8 @@ the worker is sure of it, tries at most two pictures, and returns the tracking r
 shipper's reference or names. While HuaHan shows the picture the direct step rests, as
 each of its tries opens a session. HuaHan caps the verification sessions one address opens in
 an hour; that refusal is a rate limit and ends the lookup.
+Verification diagnostics distinguish missing reader points, the wrong point count, low confidence
+and coordinates outside the picture without retaining the image, characters or click positions.
 
 The reply must repeat the requested waybill and confirm success. An explicit absence is
 not found; verification failures, changed replies and an empty history remain distinct.

@@ -85,7 +85,8 @@ export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, 
   const number = huahanVerifyNumber(url, capture);
   if (!number) return undefined;
   const start = Date.now(), entries = [], cookies = new Map();
-  const tally = { pictures: 0, unsure: 0, checks: 0, refused: 0, outcome: 'unpassed' };
+  const tally = { pictures: 0, unsure: 0, checks: 0, refused: 0, outcome: 'unpassed',
+    abstentions: { missingPoints: 0, pointCount: 0, confidence: 0, coordinates: 0 } };
   const ending = new AbortController();
   const combined = signal ? AbortSignal.any([signal, ending.signal]) : ending.signal;
   let timer;
@@ -157,6 +158,10 @@ export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, 
         if (points.length !== read.targets.length || !(solved.confidence >= MIN_CONFIDENCE)
           || points.some(point => !(point?.x >= 0 && point.x < REGION.width && point?.y >= 0 && point.y < REGION.height))) {
           tally.unsure++;
+          const reason = !Array.isArray(solved?.points) ? 'missingPoints'
+            : points.length !== read.targets.length ? 'pointCount'
+              : !(solved.confidence >= MIN_CONFIDENCE) ? 'confidence' : 'coordinates';
+          tally.abstentions[reason]++;
           continue;
         }
         proof = { clicks: points.map(point => `${Math.round(point.x)},${Math.round(point.y)}`).join(';') };
@@ -192,7 +197,7 @@ export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, 
   } finally {
     clearTimeout(timer);
     ending.abort();
-    onReport({ ...tally, durationMs: Date.now() - start });
+    onReport({ ...tally, abstentions: { ...tally.abstentions }, durationMs: Date.now() - start });
   }
   // TRAWL forwards captures from a successful tier; an empty list is the unpassed picture.
   return { tier, status: 'success', durationMs: Date.now() - start, effectiveUrl: url, html: '', body: new Uint8Array(),

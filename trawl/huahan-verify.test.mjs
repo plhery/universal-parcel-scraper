@@ -98,6 +98,30 @@ test('HuaHan returns the hourly cap as the widget gives it, without another sess
   assert.deepEqual(JSON.parse(result.capturedResponses[0].body), { ask: 0, msg: '请求次数已达每小时上限' });
 });
 
+test('HuaHan reports why a reading was withheld without submitting it or retaining its contents', async () => {
+  const valid = await sure();
+  const cases = [
+    ['missingPoints', null],
+    ['missingPoints', { failure: 'PRIVATE', image: 'PRIVATE', token: 'PRIVATE' }],
+    ['pointCount', { ...valid, points: valid.points.slice(0, 1) }],
+    ['confidence', { ...valid, confidence: 0.12 }],
+    ['coordinates', { ...valid, points: [{ x: 240, y: 1 }, valid.points[1]] }],
+  ];
+  for (const [reason, reading] of cases) {
+    const { asked, fetcher } = huahan(opened);
+    const reports = [];
+    const result = await run(fetcher, { solve: async () => reading, onReport: value => reports.push(value) });
+    assert.deepEqual(asked.map(row => row.path), ['init.php', 'tncode.php', 'init.php', 'tncode.php']);
+    assert.deepEqual(result.capturedResponses, []);
+    assert.equal(reports.length, 1);
+    assert.equal(reports[0].unsure, 2);
+    assert.deepEqual(reports[0].abstentions, Object.fromEntries(
+      ['missingPoints', 'pointCount', 'confidence', 'coordinates'].map(key => [key, key === reason ? 2 : 0])));
+    assert.ok(!JSON.stringify(reports).includes('PRIVATE'));
+    assert.ok(!JSON.stringify(reports).includes(number));
+  }
+});
+
 test('HuaHan answers the arithmetic question without the reader', async () => {
   const { asked, fetcher } = huahan({ 'init.php': () => ({ ask: 1, token: 'token-text-1' }),
     'tncode.php': () => ({ ask: 1, type: 'text', question: '3 + 5 = ?' }), 'check.php': () => 'ok', 'CargoTrackActionPlus.php': () => reply });
