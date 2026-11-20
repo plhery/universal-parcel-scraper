@@ -57,6 +57,8 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     solveNativeCaptcha: (page, timeout, report) => solveDhlPolandNative(page, timeout, budget.signal, report) })
   if (carrierPage && pasarexBrowserNumber(url, capture)) return await runPasarexBrowser({ ...carrierRun, signal: budget.signal,
     solveNativeCaptcha: (page, timeout, report) => solveDhlPolandNative(page, timeout, budget.signal, report) })
+  if (carrierPage && freightAeroBrowserNumber(url, capture)) return await runFreightAeroBrowser({ ...carrierRun, signal: budget.signal,
+    solveNativeCaptcha: (page, timeout, report) => solveDhlPolandNative(page, timeout, budget.signal, report) })
   if (carrierPage && correiosBrowserNumber(url, capture)) return await runCorreiosBrowser(carrierRun)
   if (carrierPage && daoBrowserNumber(url, capture)) return await runDaoBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && peddlerBrowserNumber(url, capture)) return await runPeddlerBrowser({ ...carrierRun, signal: budget.signal })
@@ -147,6 +149,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { asendiaBrowserNumber, runAsendiaBrowser } from "../utils/asendia-browser.mjs"\n'
     + 'import { costaRicaBrowserNumber, runCostaRicaBrowser } from "../utils/correos-costa-rica-browser.mjs"\n'
     + 'import { pasarexBrowserNumber, runPasarexBrowser } from "../utils/pasarex-browser.mjs"\n'
+    + 'import { freightAeroBrowserNumber, runFreightAeroBrowser } from "../utils/freight-aero-browser.mjs"\n'
     + 'import { correiosBrowserNumber, runCorreiosBrowser } from "../utils/correios-browser.mjs"\n'
     + 'import { daoBrowserNumber, runDaoBrowser } from "../utils/dao-browser.mjs"\n'
     + 'import { peddlerBrowserNumber, runPeddlerBrowser } from "../utils/peddler-browser.mjs"\n'

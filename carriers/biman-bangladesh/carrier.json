@@ -1,0 +1,65 @@
+{
+  "id": "biman-bangladesh",
+  "displayName": "Biman Bangladesh Airlines",
+  "aliases": [
+    "Biman",
+    "Biman Cargo",
+    "Biman Bangladesh Cargo"
+  ],
+  "region": {
+    "countries": [
+      "BD"
+    ]
+  },
+  "brand": {
+    "color": "#E31E24"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dhaka",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "biman-bangladesh",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.freight.aero/tracking.asp",
+    "canaryUrl": "https://www.freight.aero/tracking.asp",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "weight"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

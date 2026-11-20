@@ -1,0 +1,36 @@
+{
+  "carrier": "biman-bangladesh",
+  "records": [
+    {
+      "number": "997-67220602",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/1023437227/997-6722-0602",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Air cargo",
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "An uploaded Biman air waybill for a consolidated garment shipment from Dhaka to Canada. The tracker returns the same route, pieces and weight, delivered in three parts at Toronto."
+    }
+  ]
+}

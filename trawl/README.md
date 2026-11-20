@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Biman. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -419,3 +419,10 @@ PasarEX ticks its tracking form's reCAPTCHA checkbox in a fresh context, or solv
 audio outside the audio pause, and sends the form's own GET. The helper binds that one
 main-frame request to the whole number and returns the order's number and its status groups
 of rows. The token, cookies and page HTML stay in the context.
+
+Biman's waybills go through CHAMP's freight.aero tracker. The helper picks the airline its
+prefix names in the page's own list, enters the serial and asks; the page then shows its
+reCAPTCHA checkbox, which the helper ticks or, outside the audio pause, solves by audio. Once it
+calls back, the page posts the lookup, and only that main-frame POST for the one whole waybill and
+airline goes out, once. The helper returns each waybill's route, status and dated events,
+without weights; the token, cookies and page HTML stay in the context.

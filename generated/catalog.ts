@@ -11683,6 +11683,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "biman-bangladesh": {
+    "displayName": "Biman Bangladesh Airlines",
+    "color": "#E31E24",
+    "aliases": [
+      "Biman",
+      "Biman Cargo",
+      "Biman Bangladesh Cargo"
+    ],
+    "countries": [
+      "BD"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dhaka",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "biman-bangladesh",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.freight.aero/tracking.asp",
+    "trackingSearchUrl": "https://www.freight.aero/tracking.asp",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bir-gunde-kargo": {
     "displayName": "Bir Günde Kargo",
     "color": "#e79e23",
@@ -66747,6 +66771,7 @@ export const CARRIER_IDS = [
   "big-smart",
   "bigfoot-express",
   "bigpost",
+  "biman-bangladesh",
   "bir-gunde-kargo",
   "biz-courier",
   "bjs-home-delivery",
@@ -68657,6 +68682,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "big-smart": [],
   "bigfoot-express": [],
   "bigpost": [],
+  "biman-bangladesh": [],
   "bir-gunde-kargo": [],
   "biz-courier": ["biz-courier-1"],
   "bjs-home-delivery": ["bjs-home-delivery-1"],

@@ -1,0 +1,12 @@
+[
+  {
+    "responseCode": "NOT_FOUND",
+    "awbNumber": "997-00000001",
+    "carrier": "BG",
+    "origin": null,
+    "destination": null,
+    "totalPieces": 0,
+    "status": null,
+    "events": null
+  }
+]

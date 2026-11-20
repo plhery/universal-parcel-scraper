@@ -84,6 +84,7 @@ const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   'neighbour-express': ['service'],
   onex: ['service'],
   'magic-trans': ['service'],
+  'biman-bangladesh': ['service'],
   'onlog-express': ['service'],
   'jumppoint-international': ['service'],
   'flash-courier': ['service'],

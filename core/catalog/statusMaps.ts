@@ -39,6 +39,7 @@ import { statusMap as theDeliveryGroup } from '../../carriers/the-delivery-group
 import { statusMap as thabitLogistics } from '../../carriers/thabit-logistics/status.js';
 import { statusMap as tramaco } from '../../carriers/tramaco/status.js';
 import { statusMap as tejCouriers } from '../../carriers/tej-couriers/status.js';
+import { statusMap as bimanBangladesh } from '../../carriers/biman-bangladesh/status.js';
 import { statusMap as bhPosta } from '../../carriers/bh-posta/status.js';
 import { statusMap as hellmannStatus } from '../../carriers/hellmann/status.js';
 import { statusMap as honducorStatus } from '../../carriers/honducor/status.js';
@@ -939,6 +940,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bm-cargo': bmCargo,
   'cargox': cargoX,
   'bh-posta': bhPosta,
+  'biman-bangladesh': bimanBangladesh,
   'hellmann': hellmannStatus,
   'honducor': honducorStatus,
   'neighbour-express': neighbourExpress,
