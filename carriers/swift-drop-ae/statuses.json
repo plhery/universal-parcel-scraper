@@ -1,0 +1,13 @@
+{
+  "carrier": "swift-drop-ae",
+  "entries": [
+    { "wording": "Requested", "stage": "registered", "language": "en", "confirmedBy": "documentation" },
+    { "wording": "Payment confirmed", "stage": "registered", "language": "en", "confirmedBy": "documentation" },
+    { "wording": "Driver assigned", "stage": "registered", "language": "en", "confirmedBy": "documentation" },
+    { "wording": "Collecting", "stage": "registered", "language": "en", "confirmedBy": "documentation", "note": "The driver is at pickup. Collected is a separate step." },
+    { "wording": "Collected", "stage": "accepted", "language": "en", "confirmedBy": "documentation" },
+    { "wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Almost there", "stage": "out_for_delivery", "language": "en", "confirmedBy": "documentation", "note": "The driver is approaching the drop-off address." },
+    { "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "documentation" }
+  ]
+}

@@ -5498,5 +5498,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "swift-drop-ae",
+    "pattern": "^SDDEMO$",
+    "kind": "by_design",
+    "reason": "Swift Drop publishes a demo order. It confirms the tracking route and does not establish an issued number range."
   }
 ]

@@ -55527,6 +55527,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "swift-drop-ae": {
+    "displayName": "Swift Drop",
+    "color": "#0a0a0a",
+    "aliases": [
+      "SwiftDrop",
+      "Swift Drop Express Delivery"
+    ],
+    "countries": [
+      "AE"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "swift-drop-ae"
+    },
+    "canaryUrl": "https://swiftdrop.ae/track",
+    "trackingUrlTemplate": "https://swiftdrop.ae/track",
+    "trackingSearchUrl": "https://swiftdrop.ae/track",
+    "helpUrl": "https://swiftdrop.ae/contact",
+    "linkRules": [
+      {
+        "domains": [
+          "swiftdrop.ae"
+        ],
+        "path": "^/track/(SD-[A-Z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "swiftx": {
     "displayName": "SwiftX",
     "color": "#5e51d3",
@@ -66871,6 +66901,7 @@ export const CARRIER_IDS = [
   "svuum",
   "sway",
   "swftbox",
+  "swift-drop-ae",
   "swiftx",
   "swissconnect",
   "sxjd-freight",
@@ -68736,6 +68767,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "svuum": [],
   "sway": [],
   "swftbox": [],
+  "swift-drop-ae": [],
   "swiftx": ["swiftx-1"],
   "swissconnect": [],
   "sxjd-freight": [],

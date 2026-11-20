@@ -747,6 +747,7 @@ import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapt
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
 import { adapter as sway } from '../carriers/sway/adapter.js';
+import { adapter as swiftDropAe } from '../carriers/swift-drop-ae/adapter.js';
 import { adapter as swiftx } from '../carriers/swiftx/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
@@ -1639,6 +1640,7 @@ export const REGISTRY: RegistryDefinition = {
     "sunyou": sunyou,
     "surat-kargo": suratKargo,
     "sway": sway,
+    "swift-drop-ae": swiftDropAe,
     "swiftx": swiftx,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
@@ -3327,6 +3329,7 @@ export const REGISTRY: RegistryDefinition = {
     "svuum": "universal",
     "sway": "sway",
     "swftbox": "universal",
+    "swift-drop-ae": "swift-drop-ae",
     "swiftx": "swiftx",
     "swiss-post": "swiss-post",
     "swiss-post-cargo": "swiss-post-cargo",

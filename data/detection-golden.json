@@ -108010,6 +108010,19 @@
     "candidates": []
   },
   {
+    "input": "SD-DEMO",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-de"
+    ],
+    "asked": [
+      "gls-de",
+      "gls-ch"
+    ]
+  },
+  {
     "input": "SD020471534",
     "carrier": "shipa",
     "confidence": "high",

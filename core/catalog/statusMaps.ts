@@ -1,3 +1,4 @@
+import { statusMap as swiftDropAe } from '../../carriers/swift-drop-ae/status.js';
 import { statusMap as altexCurier } from '../../carriers/altex-curier/status.js';
 import { statusMap as bmCargo } from '../../carriers/bm-cargo/status.js';
 import { statusMap as cargoX } from '../../carriers/cargox/status.js';
@@ -898,6 +899,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'swift-drop-ae': swiftDropAe,
   'altex-curier': altexCurier,
   'bm-cargo': bmCargo,
   'cargox': cargoX,

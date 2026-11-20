@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'swift-drop-ae', number: 'SDTHISISATEST0',
+    route: /^https:\/\/swiftdrop\.ae\/track$/,
+    marker: /Enter the order number from your confirmation email or SMS/, forwarding: 'none' },
   { carrier: 'uof-express', number: 'ZZUOF0000199',
     route: /^https:\/\/www\.uofexp\.com\/search_order\.aspx\?trackNumber=ZZUOF0000199$/,
     marker: /如果查询多个单号/ },
