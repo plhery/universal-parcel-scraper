@@ -1,5 +1,61 @@
 {
   "carrier": "marvisur",
-  "gap": "No public page shows a Marvisur number.",
-  "records": []
+  "records": [
+    {
+      "number": "V080-0660391",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/1055814167/20498189637-V080-0660391",
+        "date": "2026-06-25",
+        "dateKind": "carrier guide issue date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Peru domestic road freight",
+        "reportedRole": "Guía de Remisión Electrónica Transportista",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc",
+          "gls-it"
+        ]
+      },
+      "note": "The public electronic guide identifies Marvisur and prints its complete series and serial number. The public tracking form requires the sender’s ID document."
+    },
+    {
+      "number": "0070-300729",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/478615168/Sesion-de-Requerimiento-de-Prision-Preventiva-docx",
+        "date": "2020-09-05",
+        "dateKind": "shipment date reported in court",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Historical Peru road freight",
+        "reportedRole": "Guía de transportista",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "A public court transcript names Marvisur and gives the original guide with its numeric series and leading zeroes. The paper guide’s scope on the current electronic-guide tracker remains unverified."
+    }
+  ]
 }

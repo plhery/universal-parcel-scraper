@@ -4946,5 +4946,11 @@
     "pattern": "^5241\\d{14}$",
     "kind": "open",
     "reason": "A Spanish consumer report identifies an eighteen-digit Möbel order tracking reference. Detection suggests other carriers."
+  },
+  {
+    "carrier": "marvisur",
+    "pattern": "^V\\d{10}$",
+    "kind": "open",
+    "reason": "A public Marvisur electronic carrier guide uses V followed by ten digits after normalization. Detection offers other carriers."
   }
 ]
