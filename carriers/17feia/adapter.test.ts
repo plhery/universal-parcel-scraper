@@ -80,6 +80,7 @@ describe('17FEIA HTTP adapter', () => {
     const result = parseSeventeenFeia(changed('dpd-at-warehouse', (order) => {
       order.currentOrderTrackInfos.unshift(
         row('2026-02-16 23:23:00', '卡车抵达清关地', 'Arrived at customs clearance. 2026-02-16 23:23:00'),
+        row('2026-02-16 08:11:00', '进入英国境内', 'Entry into the United Kingdom.'),
         row('2026-02-15 01:02:00', '卡车到达波兰', 'Arrived in Poland'),
         row('2026-02-14 17:59:00', '卡车进入欧盟境内', 'Entered the EU.'),
         row('2026-02-13 23:35:00', '卡车到达白俄', 'Arrived in Belarus'),
@@ -91,8 +92,9 @@ describe('17FEIA HTTP adapter', () => {
         row('2026-02-05 19:05:33', '国内运输中，预计到达出境口岸时间', 'Domestic transit in progress; estimated arrival at exit port on: 2026-02-07 18:00:00'));
     }), WAREHOUSE, LATER);
     expect(result).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'Arrived at customs clearance. 2026-02-16 23:23:00' });
-    expect(result.events!.slice(0, 10).map((event) => [event.time ?? event.local_time, event.stage, event.stage_source])).toEqual([
-      ['2026-02-16T23:23:00', 'in_transit', 'carrier_map'], ['2026-02-15T01:02:00', 'in_transit', 'carrier_map'],
+    expect(result.events!.slice(0, 11).map((event) => [event.time ?? event.local_time, event.stage, event.stage_source])).toEqual([
+      ['2026-02-16T23:23:00', 'in_transit', 'carrier_map'], ['2026-02-16T08:11:00', 'in_transit', 'carrier_map'],
+      ['2026-02-15T01:02:00', 'in_transit', 'carrier_map'],
       ['2026-02-14T17:59:00', 'in_transit', 'carrier_map'], ['2026-02-13T23:35:00', 'in_transit', 'carrier_map'],
       ['2026-02-11T09:48:00', 'in_transit', 'carrier_map'], ['2026-02-08T20:00:00', 'in_transit', 'carrier_map'],
       ['2026-02-08T17:18:00', 'in_transit', 'carrier_map'], ['2026-02-08T14:34:00', 'in_transit', 'carrier_map'],
