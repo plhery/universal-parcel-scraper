@@ -5506,6 +5506,12 @@
     "reason": "Swift Drop publishes a demo order. It confirms the tracking route and does not establish an issued number range."
   },
   {
+    "carrier": "logexim-express",
+    "number": "903088",
+    "kind": "by_design",
+    "reason": "A numeric freight waybill does not establish ownership. Use explicit selection."
+  },
+  {
     "carrier": "paquetex",
     "number": "46086",
     "kind": "by_design",

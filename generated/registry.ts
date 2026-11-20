@@ -476,6 +476,7 @@ import { adapter as lionParcel } from '../carriers/lion-parcel/adapter.js';
 import { adapter as liuchen } from '../carriers/liuchen/adapter.js';
 import { adapter as lmParcel } from '../carriers/lm-parcel/adapter.js';
 import { adapter as logen } from '../carriers/logen/adapter.js';
+import { adapter as logeximExpress } from '../carriers/logexim-express/adapter.js';
 import { adapter as loggi } from '../carriers/loggi/adapter.js';
 import { adapter as logisimple } from '../carriers/logisimple/adapter.js';
 import { adapter as logisticsSolution } from '../carriers/logistics-solution/adapter.js';
@@ -1373,6 +1374,7 @@ export const REGISTRY: RegistryDefinition = {
     "liuchen": liuchen,
     "lm-parcel": lmParcel,
     "logen": logen,
+    "logexim-express": logeximExpress,
     "loggi": loggi,
     "logisimple": logisimple,
     "logistics-solution": logisticsSolution,
@@ -2786,6 +2788,7 @@ export const REGISTRY: RegistryDefinition = {
     "lm-parcel": "lm-parcel",
     "loadmaster-no": "universal",
     "logen": "logen",
+    "logexim-express": "logexim-express",
     "loggi": "loggi",
     "logisimple": "logisimple",
     "logista-parcel": "universal",

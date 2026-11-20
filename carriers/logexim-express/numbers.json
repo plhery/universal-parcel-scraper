@@ -1,0 +1,22 @@
+{
+  "carrier": "logexim-express",
+  "records": [
+    {
+      "number": "903088",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.logeximexpress.kz/nayti-posylku",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier publishes this placeholder on its guest form. Its native response repeats the exact waybill and gives an actual delivery date."
+    }
+  ]
+}

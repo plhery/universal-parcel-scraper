@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'logexim-express', number: '0000000000',
+    route: /^https:\/\/www\.logeximexpress\.kz\/nayti-posylku$/,
+    marker: /Введите номер накладной/, forwarding: 'none' },
   { carrier: 'paquetex', number: 'HON000000',
     route: /^https:\/\/paquetex\.net\/tracking\?q=HON000000$/,
     marker: /Aceptamos el número de caja/ },

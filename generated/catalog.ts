@@ -37751,6 +37751,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "logexim-express": {
+    "displayName": "Logexim Express",
+    "color": "#d0171c",
+    "aliases": [
+      "LogExim Express Kazakhstan"
+    ],
+    "countries": [
+      "KZ"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Almaty",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "logexim-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.logeximexpress.kz/nayti-posylku",
+    "trackingUrlTemplate": "https://www.logeximexpress.kz/nayti-posylku",
+    "trackingSearchUrl": "https://www.logeximexpress.kz/nayti-posylku",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "loggi": {
     "displayName": "Loggi",
     "color": "#00baff",
@@ -66482,6 +66504,7 @@ export const CARRIER_IDS = [
   "lm-parcel",
   "loadmaster-no",
   "logen",
+  "logexim-express",
   "loggi",
   "logisimple",
   "logista-parcel",
@@ -68352,6 +68375,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lm-parcel": ["lm-parcel-1"],
   "loadmaster-no": [],
   "logen": [],
+  "logexim-express": [],
   "loggi": ["loggi-1"],
   "logisimple": [],
   "logista-parcel": [],

@@ -37747,6 +37747,28 @@
     ],
     "detectionRules": []
   },
+  "logexim-express": {
+    "displayName": "Logexim Express",
+    "color": "#d0171c",
+    "aliases": [
+      "LogExim Express Kazakhstan"
+    ],
+    "countries": [
+      "KZ"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Almaty",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "logexim-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.logeximexpress.kz/nayti-posylku",
+    "trackingUrlTemplate": "https://www.logeximexpress.kz/nayti-posylku",
+    "trackingSearchUrl": "https://www.logeximexpress.kz/nayti-posylku",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "loggi": {
     "displayName": "Loggi",
     "color": "#00baff",
