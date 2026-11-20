@@ -817,6 +817,7 @@ import { adapter as swissconnect } from '../carriers/swissconnect/adapter.js';
 import { adapter as sxwExpress } from '../carriers/sxw-express/adapter.js';
 import { adapter as tCat } from '../carriers/t-cat/adapter.js';
 import { adapter as tGroup } from '../carriers/t-group/adapter.js';
+import { adapter as tailwindShippingLines } from '../carriers/tailwind-shipping-lines/adapter.js';
 import { adapter as takesend } from '../carriers/takesend/adapter.js';
 import { adapter as tamex } from '../carriers/tamex/adapter.js';
 import { adapter as tantoIntimLine } from '../carriers/tanto-intim-line/adapter.js';
@@ -1781,6 +1782,7 @@ export const REGISTRY: RegistryDefinition = {
     "sxw-express": sxwExpress,
     "t-cat": tCat,
     "t-group": tGroup,
+    "tailwind-shipping-lines": tailwindShippingLines,
     "takesend": takesend,
     "tamex": tamex,
     "tanto-intim-line": tantoIntimLine,
@@ -3544,6 +3546,7 @@ export const REGISTRY: RegistryDefinition = {
     "szendex": "universal",
     "t-cat": "t-cat",
     "t-group": "t-group",
+    "tailwind-shipping-lines": "tailwind-shipping-lines",
     "takesend": "takesend",
     "tamdis": "universal",
     "tamex": "tamex",

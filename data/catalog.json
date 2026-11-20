@@ -57328,6 +57328,28 @@
       }
     ]
   },
+  "tailwind-shipping-lines": {
+    "displayName": "Tailwind Shipping Lines",
+    "color": "#135487",
+    "aliases": [
+      "Tailwind Shipping Lines GmbH & Co. KG",
+      "Tailwind Shipping"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tailwind-shipping-lines"
+    },
+    "canaryUrl": "https://ecom.tailwind-ahead.com/tracking",
+    "trackingUrlTemplate": "https://ecom.tailwind-ahead.com/tracking",
+    "trackingSearchUrl": "https://ecom.tailwind-ahead.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "takesend": {
     "displayName": "Take Send",
     "color": "#6638b6",

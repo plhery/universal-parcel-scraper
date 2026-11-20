@@ -84162,6 +84162,12 @@
     "candidates": []
   },
   {
+    "input": "CAIU9779439",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "CAJU5765298",
     "carrier": "unknown",
     "confidence": "none",
@@ -112436,6 +112442,24 @@
     "asked": [
       "teleship"
     ]
+  },
+  {
+    "input": "TSHGGRZ26000158",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "TSHGNGB26046910",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "TSHGTAO26015581A",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "TSJY999999980CN",

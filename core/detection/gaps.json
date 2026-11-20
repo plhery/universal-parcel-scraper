@@ -5854,5 +5854,10 @@
     "carrier": "tpl-korea",
     "kind": "open",
     "reason": "The confirmed waybill is numeric and shares its length with other carriers. The official TBorder lookup supports explicit selection."
+  },
+  {
+    "carrier": "tailwind-shipping-lines",
+    "kind": "open",
+    "reason": "The verified bills use a TSHG prefix with destination-dependent sequences. The carrier also accepts equipment owned by Tailwind or lessors. The format needs collision review."
   }
 ]

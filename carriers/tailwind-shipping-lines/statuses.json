@@ -1,0 +1,40 @@
+{
+  "carrier": "tailwind-shipping-lines",
+  "entries": [
+    {
+      "wording": "SentToShipper",
+      "language": "en",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "note": "Empty equipment sent to the shipper before Tailwind received the freight."
+    },
+    {
+      "wording": "ReceivedFromShipper",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Freight received from the shipper."
+    },
+    {
+      "wording": "LoadFull",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Loaded on vessel."
+    },
+    {
+      "wording": "DischargeTranshipmentFull",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Discharged full at the transshipment port."
+    },
+    {
+      "wording": "LoadTranshipmentFull",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Loaded on vessel at the transshipment port."
+    }
+  ]
+}

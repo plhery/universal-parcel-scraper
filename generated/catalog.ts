@@ -57332,6 +57332,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "tailwind-shipping-lines": {
+    "displayName": "Tailwind Shipping Lines",
+    "color": "#135487",
+    "aliases": [
+      "Tailwind Shipping Lines GmbH & Co. KG",
+      "Tailwind Shipping"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tailwind-shipping-lines"
+    },
+    "canaryUrl": "https://ecom.tailwind-ahead.com/tracking",
+    "trackingUrlTemplate": "https://ecom.tailwind-ahead.com/tracking",
+    "trackingSearchUrl": "https://ecom.tailwind-ahead.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "takesend": {
     "displayName": "Take Send",
     "color": "#6638b6",
@@ -68692,6 +68714,7 @@ export const CARRIER_IDS = [
   "szendex",
   "t-cat",
   "t-group",
+  "tailwind-shipping-lines",
   "takesend",
   "tamdis",
   "tamex",
@@ -70628,6 +70651,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "szendex": [],
   "t-cat": [],
   "t-group": ["t-group-1"],
+  "tailwind-shipping-lines": [],
   "takesend": ["takesend-1"],
   "tamdis": [],
   "tamex": [],

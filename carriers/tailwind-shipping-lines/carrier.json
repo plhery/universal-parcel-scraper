@@ -1,0 +1,57 @@
+{
+  "id": "tailwind-shipping-lines",
+  "displayName": "Tailwind Shipping Lines",
+  "aliases": [
+    "Tailwind Shipping Lines GmbH & Co. KG",
+    "Tailwind Shipping"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#135487"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "tailwind-shipping-lines",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://ecom.tailwind-ahead.com/tracking",
+    "searchUrl": "https://ecom.tailwind-ahead.com/tracking",
+    "canaryUrl": "https://ecom.tailwind-ahead.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta",
+      "service"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta",
+      "service"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

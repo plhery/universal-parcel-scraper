@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'tailwind-shipping-lines', number: 'TSHGNGB26046910',
+    route: /^https:\/\/ecom\.tailwind-ahead\.com\/tracking\/?$/,
+    marker: /Booking No|Tracking/i, forwarding: 'none' },
   { carrier: 'tpl-korea', number: '6076825053198',
     route: /^https:\/\/www\.tborder\.com\/freight\/hawb_tracking\/6076825053198\/?$/,
     marker: /화물 상태 조회|송장번호/u },
