@@ -1,0 +1,74 @@
+{
+  "result": true,
+  "data": [
+    {
+      "Nivel": "1",
+      "Fecha": "2022-05-13 16:22:49"
+    },
+    {
+      "Nivel": "2",
+      "Fecha": "2022-05-13 18:41:04"
+    },
+    {
+      "Nivel": "3",
+      "Fecha": "2022-05-17 14:21:07"
+    },
+    {
+      "Nivel": "4",
+      "Fecha": "2022-05-24 17:07:56"
+    },
+    {
+      "Nivel": "5",
+      "Fecha": "2022-05-25 12:20:44"
+    },
+    {
+      "Nivel": "6",
+      "Fecha": "2022-05-26 17:09:03"
+    },
+    {
+      "Nivel": "7",
+      "Fecha": "2022-05-30 20:43:15"
+    },
+    {
+      "Nivel": "8",
+      "Fecha": "2022-06-01 17:29:53"
+    }
+  ],
+  "dataEnvio": {
+    "Guia": "USA90007485"
+  },
+  "EstatusDisponible": [
+    {
+      "ENRUES_NIVEL": "1",
+      "ENRUES_NOMBRE": "GENERADO"
+    },
+    {
+      "ENRUES_NIVEL": "2",
+      "ENRUES_NOMBRE": "ADUANA USA"
+    },
+    {
+      "ENRUES_NIVEL": "3",
+      "ENRUES_NOMBRE": "TRANSITO INTERNACIONAL"
+    },
+    {
+      "ENRUES_NIVEL": "4",
+      "ENRUES_NOMBRE": "ADUANA VENEZUELA"
+    },
+    {
+      "ENRUES_NIVEL": "5",
+      "ENRUES_NOMBRE": "CENTRAL CARACAS"
+    },
+    {
+      "ENRUES_NIVEL": "6",
+      "ENRUES_NOMBRE": "TRANSITO NACIONAL"
+    },
+    {
+      "ENRUES_NIVEL": "7",
+      "ENRUES_NOMBRE": "DISPONIBLE PARA ENTREGAR"
+    },
+    {
+      "ENRUES_NIVEL": "8",
+      "ENRUES_NOMBRE": "ENTREGADO"
+    }
+  ]
+}

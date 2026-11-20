@@ -52816,6 +52816,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "servicios-expresos": {
+    "displayName": "Servicios Expresos",
+    "color": "#c92533",
+    "aliases": [
+      "Servicios Expresos USA",
+      "Servicios Expresos Internacionales",
+      "Servicios Expresos Internacionales de Oriente"
+    ],
+    "countries": [
+      "US",
+      "VE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "servicios-expresos",
+      "localClocks": true
+    },
+    "canaryUrl": "https://usa.serviciosexpresos.com/",
+    "trackingUrlTemplate": "https://usa.serviciosexpresos.com/",
+    "trackingSearchUrl": "https://usa.serviciosexpresos.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "servientrega": {
     "displayName": "Servientrega",
     "color": "#009a44",
@@ -68355,6 +68380,7 @@ export const CARRIER_IDS = [
   "senyu",
   "serpost",
   "servex",
+  "servicios-expresos",
   "servientrega",
   "servipost",
   "seven-eleven-tw",
@@ -70282,6 +70308,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "senyu": [],
   "serpost": ["serpost-s10"],
   "servex": [],
+  "servicios-expresos": [],
   "servientrega": [],
   "servipost": [],
   "seven-eleven-tw": [],

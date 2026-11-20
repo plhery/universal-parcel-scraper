@@ -5814,5 +5814,10 @@
     "carrier": "esm-logistica",
     "kind": "open",
     "reason": "The confirmed domestic guides are numeric and come from several series. A larger sample and a collision review are needed before detection."
+  },
+  {
+    "carrier": "servicios-expresos",
+    "kind": "open",
+    "reason": "The live guide shares a USA prefix with the carrier’s example. Other country guide series and collisions need review."
   }
 ]

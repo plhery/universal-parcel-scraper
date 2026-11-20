@@ -1,0 +1,61 @@
+{
+  "id": "servicios-expresos",
+  "displayName": "Servicios Expresos",
+  "aliases": [
+    "Servicios Expresos USA",
+    "Servicios Expresos Internacionales",
+    "Servicios Expresos Internacionales de Oriente"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "VE"
+    ]
+  },
+  "brand": {
+    "color": "#c92533"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "servicios-expresos",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://usa.serviciosexpresos.com/",
+    "searchUrl": "https://usa.serviciosexpresos.com/",
+    "canaryUrl": "https://usa.serviciosexpresos.com/",
+    "shows": [
+      "status",
+      "history",
+      "delivery_date",
+      "sender_name",
+      "recipient_name",
+      "origin",
+      "destination",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_date"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "origin",
+      "destination",
+      "remarks"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
