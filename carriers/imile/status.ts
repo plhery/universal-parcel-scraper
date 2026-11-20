@@ -227,8 +227,9 @@ export const statusMap: CarrierStatusMap = {
     ...cainiaoStatusMap.gaps,
   ],
   gapNote: (code, wording) => {
-    if ((code ?? DELIVERY) === DELIVERY && SCHEDULED.test(normalizeStatusWording(wording))) {
-      return 'A delivery day booked, after a failed attempt the new round: the adapter reads it as the expected delivery, and the parcel keeps the stage it had.';
+    // Booked as the parcel reaches the delivery country, under the transit code, or after a failed attempt.
+    if (['1002', DELIVERY].includes(code ?? DELIVERY) && SCHEDULED.test(normalizeStatusWording(wording))) {
+      return 'A delivery day booked, as the parcel reaches the delivery country or after a failed attempt for the new round: the adapter reads it as the expected delivery, and the parcel keeps the stage it had.';
     }
     // The station's name in 【】 and the flight's airports and clocks vary.
     const phrase = imilePhrase(wording);

@@ -859,7 +859,7 @@ describe('iMile status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Change of delivery time' }))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
     // The booked day moves nothing; the review learns why.
-    for (const providerCode of ['1003', null]) {
+    for (const providerCode of ['1003', '1002', null]) {
       expect(statusMapAnswer({ carrier: 'imile', providerCode, description: 'Shipment is scheduled to [2026-05-20].' }))
         .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
     }
