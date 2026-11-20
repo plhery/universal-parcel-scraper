@@ -4391,6 +4391,12 @@
     "reason": "Sixteen-digit Tuffnells numbers share their shape with other carriers' numeric numbers, so the shape cannot name Tuffnells."
   },
   {
+    "carrier": "turkon-line",
+    "pattern": "^TRKU\\d{8}$",
+    "kind": "open",
+    "reason": "An import manifest lists a Turkon master bill as TRKU, its carrier code, and the booking's eight digits, and Turkon's tracker returns the booking. Detection does not offer Turkon."
+  },
+  {
     "carrier": "tws-express",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

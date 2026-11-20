@@ -62517,6 +62517,29 @@
     ],
     "detectionRules": []
   },
+  "turkon-line": {
+    "displayName": "Turkon Line",
+    "color": "#264493",
+    "aliases": [
+      "Turkon"
+    ],
+    "countries": [
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Istanbul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "turkon-line",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://myturkonline.turkon.com/tracking",
+    "trackingUrlTemplate": "https://myturkonline.turkon.com/tracking",
+    "trackingSearchUrl": "https://myturkonline.turkon.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tusass": {
     "displayName": "Tusass",
     "color": "#26a8b2",

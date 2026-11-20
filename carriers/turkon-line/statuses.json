@@ -1,0 +1,11 @@
+{
+  "carrier": "turkon-line",
+  "entries": [
+    {"code": "GOE", "wording": "GATE OUT EMPTY", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container from a depot to load it; the cargo is not with Turkon yet."},
+    {"code": "GIF", "wording": "GATE IN FULL", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the port of loading. After the container has been on a vessel it reads as transit."},
+    {"code": "LDF", "wording": "FULL LOAD", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on the vessel, which then sails."},
+    {"code": "DCF", "wording": "FULL DISCHARGE", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged from the vessel at the port of discharge."},
+    {"code": "GOF", "wording": "GATE OUT FULL", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker takes the loaded container out of the port of discharge."},
+    {"code": "GIE", "wording": "GATE IN EMPTY", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee unloaded the container and returned it empty. Before the container has been on a vessel it is an unused one and has no stage."}
+  ]
+}

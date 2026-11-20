@@ -62521,6 +62521,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "turkon-line": {
+    "displayName": "Turkon Line",
+    "color": "#264493",
+    "aliases": [
+      "Turkon"
+    ],
+    "countries": [
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Istanbul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "turkon-line",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://myturkonline.turkon.com/tracking",
+    "trackingUrlTemplate": "https://myturkonline.turkon.com/tracking",
+    "trackingSearchUrl": "https://myturkonline.turkon.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tusass": {
     "displayName": "Tusass",
     "color": "#26a8b2",
@@ -70372,6 +70395,7 @@ export const CARRIER_IDS = [
   "tupaq",
   "turbo-eg",
   "turkmenpost",
+  "turkon-line",
   "tusass",
   "tusk-logistics",
   "tusou",
@@ -72364,6 +72388,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tupaq": [],
   "turbo-eg": [],
   "turkmenpost": [],
+  "turkon-line": [],
   "tusass": [],
   "tusk-logistics": ["tusk-logistics-1"],
   "tusou": [],

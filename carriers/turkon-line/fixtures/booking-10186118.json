@@ -1,0 +1,74 @@
+{
+ "hasError": false,
+ "httpStatus": "OK",
+ "errorMessages": null,
+ "payload": [
+  {
+   "bookingNo": "00000000000010186118",
+   "containerNo": "TRKU4450480",
+   "pol": "KUMPORT AMBARLI",
+   "pod": "NEWYORK APM TERMINAL ELIZABETH",
+   "polDepartureDate": "11.04.2025",
+   "podArrivalDate": "02.05.2025",
+   "podEstDate": "30.04.2025",
+   "lastEvent": "GIE",
+   "lastEventName": "GATE IN EMPTY",
+   "events": [
+    {
+     "containerNo": "TRKU4450480",
+     "eventCode": "GOE",
+     "eventName": "GATE OUT EMPTY",
+     "eventTarih": "08.04.2025",
+     "eventSaat": "17:59:34",
+     "eventLokasyon": "OZMARMARA, ISTANBUL-TR",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "TRKU4450480",
+     "eventCode": "GIF",
+     "eventName": "GATE IN FULL",
+     "eventTarih": "08.04.2025",
+     "eventSaat": "18:00:02",
+     "eventLokasyon": "KUMPORT AMBARLI",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "TRKU4450480",
+     "eventCode": "LDF",
+     "eventName": "FULL LOAD",
+     "eventTarih": "11.04.2025",
+     "eventSaat": "09:48:43",
+     "eventLokasyon": "KUMPORT AMBARLI",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "TRKU4450480",
+     "eventCode": "DCF",
+     "eventName": "FULL DISCHARGE",
+     "eventTarih": "02.05.2025",
+     "eventSaat": "09:30:00",
+     "eventLokasyon": "NEWYORK APM TERMINAL ELIZABETH",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "TRKU4450480",
+     "eventCode": "GOF",
+     "eventName": "GATE OUT FULL",
+     "eventTarih": "05.05.2025",
+     "eventSaat": "17:17:00",
+     "eventLokasyon": "NEWYORK APM TERMINAL ELIZABETH",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "TRKU4450480",
+     "eventCode": "GIE",
+     "eventName": "GATE IN EMPTY",
+     "eventTarih": "06.05.2025",
+     "eventSaat": "14:05:00",
+     "eventLokasyon": "NEWYORK APM TERMINAL ELIZABETH",
+     "ekVeri3": "2"
+    }
+   ]
+  }
+ ]
+}

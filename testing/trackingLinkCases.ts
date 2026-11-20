@@ -2831,6 +2831,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   usps: 'tools.usps.com answers automated Chrome with an anti-bot script instead of the page',
   'xpo-ltl': 'the shipment page asks for a reCAPTCHA checkbox before it shows a result, so number forwarding cannot be verified',
   'yol-kargo': 'yolkargo.com.tr sends a number it does not know to Ful Kargo\'s tracker, another network\'s page, and its shipment numbers run in sequence, so only a known shipment reaches Yol Kargo\'s own page',
+  'turkon-line': 'the tracking page takes a number only from its search box, behind a Cloudflare check, so the link opens the page alone',
   'quick-fort': 'An unknown number gets a notice that sends the browser back to the home page after three seconds, and no public number opens an order page.',
   pigeonship: 'An unknown number gets the site\'s general "Page not found" page, and no public number opens an order page.',
   danx: 'the portal takes the number only in its form, and the tracker page the form opens names it in base64, so the link opens the portal alone; native retrieval asks the service behind the tracker page',
