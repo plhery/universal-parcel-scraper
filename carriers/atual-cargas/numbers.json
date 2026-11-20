@@ -1,5 +1,27 @@
 {
   "carrier": "atual-cargas",
-  "gap": "No public page shows an Atual Cargas number.",
-  "records": []
+  "records": [
+    {
+      "number": "003527",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sipac.ufpi.br/public/downloadArquivo?idArquivo=6298712&key=f82b6d3f1c2a243b897eb94c910d35ab",
+        "date": "2024-11-11",
+        "dateKind": "invoice issue date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Brazil university procurement freight",
+        "reportedRole": "NF-e invoice number",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public university procurement invoice names Atual Cargas in its transport section. Its tracker uses invoice details alongside a party's tax ID, so this standalone serial remains a scope review."
+    }
+  ]
 }
