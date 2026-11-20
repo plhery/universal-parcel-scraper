@@ -4748,5 +4748,11 @@
     "pattern": "^XD\\d{8}AU$",
     "kind": "open",
     "reason": "A published shipment history identifies an XD Express waybill with an XD prefix and AU suffix. Detection offers Colis Privé for this input."
+  },
+  {
+    "carrier": "wmg-group",
+    "pattern": "^C\\d{21}$",
+    "kind": "open",
+    "reason": "WMG Postal publishes a C-prefixed consignment example with 21 digits. Detection currently assigns this input to Canpar."
   }
 ]
