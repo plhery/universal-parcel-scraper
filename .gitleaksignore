@@ -25,3 +25,5 @@ edf2b0669a5f920131daa43f8d8b2a72f75df17a:carriers/amazon-order/numbers.json:gene
 edf2b0669a5f920131daa43f8d8b2a72f75df17a:carriers/amazon-order/numbers.json:generic-api-key:26
 edf2b0669a5f920131daa43f8d8b2a72f75df17a:carriers/amazon-order/numbers.json:generic-api-key:45
 edf2b0669a5f920131daa43f8d8b2a72f75df17a:carriers/amazon-order/numbers.json:generic-api-key:64
+# The document key in the public procurement download link of an Atual Cargas sample.
+3486b6d97387a56613cc01b45d1ca25bfc55ce07:carriers/atual-cargas/numbers.json:generic-api-key:9
