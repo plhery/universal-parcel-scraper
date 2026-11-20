@@ -14102,6 +14102,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "cdp-courier": {
+    "displayName": "CDP Courier",
+    "color": "#004778",
+    "aliases": [
+      "CDP Courier Services",
+      "CDP Services Pte Ltd",
+      "Courier Documents Parcels Services"
+    ],
+    "countries": [
+      "FJ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Fiji",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cdp-courier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cdpcourier.com/",
+    "trackingUrlTemplate": "https://cdpcourier.com/",
+    "trackingSearchUrl": "https://cdpcourier.com/",
+    "trackingSiteName": "CDP Courier Track Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cel-changda": {
     "displayName": "CEL Changda",
     "color": "#4c9529",
@@ -65950,6 +65975,7 @@ export const CARRIER_IDS = [
   "ccfs",
   "cdek",
   "cdl",
+  "cdp-courier",
   "cel-changda",
   "celeritas",
   "celero",
@@ -67826,6 +67852,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ccfs": [],
   "cdek": ["cdek-1"],
   "cdl": ["cdl-1","cdl-2"],
+  "cdp-courier": [],
   "cel-changda": [],
   "celeritas": [],
   "celero": [],

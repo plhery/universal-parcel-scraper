@@ -5559,5 +5559,10 @@
     "carrier": "sinokor-merchant-marine",
     "kind": "open",
     "reason": "The guest site confirms the full Sinokor bill of lading. The adapter is selected explicitly."
+  },
+  {
+    "carrier": "cdp-courier",
+    "kind": "open",
+    "reason": "CDP search accepts numeric references and uses explicit carrier selection."
   }
 ]

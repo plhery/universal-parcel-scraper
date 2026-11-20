@@ -1,0 +1,51 @@
+{
+  "id": "cdp-courier",
+  "displayName": "CDP Courier",
+  "aliases": [
+    "CDP Courier Services",
+    "CDP Services Pte Ltd",
+    "Courier Documents Parcels Services"
+  ],
+  "region": {
+    "countries": [
+      "FJ"
+    ]
+  },
+  "brand": {
+    "color": "#004778"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Fiji",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cdp-courier",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://cdpcourier.com/",
+    "searchUrl": "https://cdpcourier.com/",
+    "canaryUrl": "https://cdpcourier.com/",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [],
+    "unavailable": [],
+    "siteName": "CDP Courier Track Shipment"
+  },
+  "links": [],
+  "detection": []
+}

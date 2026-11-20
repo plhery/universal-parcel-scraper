@@ -116,6 +116,7 @@ import { adapter as cblLogistica } from '../carriers/cbl-logistica/adapter.js';
 import { adapter as ccfs } from '../carriers/ccfs/adapter.js';
 import { adapter as cdek } from '../carriers/cdek/adapter.js';
 import { adapter as cdl } from '../carriers/cdl/adapter.js';
+import { adapter as cdpCourier } from '../carriers/cdp-courier/adapter.js';
 import { adapter as celeritas } from '../carriers/celeritas/adapter.js';
 import { adapter as celero } from '../carriers/celero/adapter.js';
 import { adapter as centralTransport } from '../carriers/central-transport/adapter.js';
@@ -1020,6 +1021,7 @@ export const REGISTRY: RegistryDefinition = {
     "ccfs": ccfs,
     "cdek": cdek,
     "cdl": cdl,
+    "cdp-courier": cdpCourier,
     "celeritas": celeritas,
     "celero": celero,
     "central-transport": centralTransport,
@@ -2072,6 +2074,7 @@ export const REGISTRY: RegistryDefinition = {
     "ccfs": "ccfs",
     "cdek": "cdek",
     "cdl": "cdl",
+    "cdp-courier": "cdp-courier",
     "cel-changda": "universal",
     "celeritas": "celeritas",
     "celero": "celero",

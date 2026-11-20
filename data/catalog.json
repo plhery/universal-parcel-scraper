@@ -14098,6 +14098,31 @@
       }
     ]
   },
+  "cdp-courier": {
+    "displayName": "CDP Courier",
+    "color": "#004778",
+    "aliases": [
+      "CDP Courier Services",
+      "CDP Services Pte Ltd",
+      "Courier Documents Parcels Services"
+    ],
+    "countries": [
+      "FJ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Fiji",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cdp-courier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cdpcourier.com/",
+    "trackingUrlTemplate": "https://cdpcourier.com/",
+    "trackingSearchUrl": "https://cdpcourier.com/",
+    "trackingSiteName": "CDP Courier Track Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cel-changda": {
     "displayName": "CEL Changda",
     "color": "#4c9529",
