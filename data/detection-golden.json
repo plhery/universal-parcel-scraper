@@ -83193,6 +83193,17 @@
     "candidates": []
   },
   {
+    "input": "CNB5031548",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "CNBR00073258992",
     "carrier": "unknown",
     "confidence": "low",
@@ -85819,6 +85830,12 @@
     "asked": [
       "la-poste"
     ]
+  },
+  {
+    "input": "DUC616804",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "DX0000408676",
