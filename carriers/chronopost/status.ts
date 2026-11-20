@@ -80,6 +80,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
   // A damaged parcel or one packed too poorly to travel is held until Chronopost deals with it.
   ['S', 'Colis bloqué : colis endommagé ou emballage insuffisant', 'exception'],
+  // The parcel missed its connection at a hub and goes on with a later transport.
+  ['S', 'Colis non connecté', 'in_transit'],
   // The parcel starts back to the sender. Like other returns under way it stays nonterminal:
   // the return's own scans follow, and its delivery is the return's (see the parser).
   [RETURN_CODE, RETURN_LABEL, 'exception'],

@@ -349,6 +349,15 @@
       "language": "fr"
     },
     {
+      "code": "S",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The parcel missed its connection at a hub and goes on with a later transport, as the next transit scan shows.",
+      "wording": "Colis non connecté",
+      "language": "fr"
+    },
+    {
       "code": "R",
       "stage": "exception",
       "confirmedBy": "live",
