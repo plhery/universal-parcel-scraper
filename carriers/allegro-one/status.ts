@@ -31,6 +31,9 @@ export const ALLEGRO_ONE_SCANS: Readonly<Record<string, Stage>> = {
   'Parcel may be delivered with delay': 'in_transit',
   'Parcel delivery time has been arranged with the recipient': 'in_transit',
   'Parcel has been released for delivery': 'out_for_delivery',
+  // The day's round ended without delivering the parcel, which goes out again. It names no
+  // attempt at the door: a notice does.
+  'Unable to deliver today': 'in_transit',
   // The courier found the locker full and keeps the parcel.
   'No space in the parcel locker': 'failed_attempt',
   // The courier could not leave the parcel at the chosen point and takes it back.
@@ -76,6 +79,7 @@ export const ALLEGRO_ONE_POLISH: Readonly<Record<string, string>> = {
   'Przesyłka może zostać doręczona z opóźnieniem': 'Parcel may be delivered with delay',
   'Termin doręczenia przesyłki został ustalony z odbiorcą': 'Parcel delivery time has been arranged with the recipient',
   'Przesyłka została wydana do doręczenia': 'Parcel has been released for delivery',
+  'Brak możliwości doręczenia w dniu dzisiejszym': 'Unable to deliver today',
   'Brak miejsca w maszynie': 'No space in the parcel locker',
   'Wybrany punkt docelowy jest niedostępny': 'Destination pick-up point is not available',
   Awizo: 'Notice',
