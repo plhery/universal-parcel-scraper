@@ -10,6 +10,8 @@ const statuses: Record<string, ClassifiedStatus> = {
   // The scan of the out-for-delivery milestone.
   DISPATCHED: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'PICKED UP': { status: 'in_transit', stage: 'accepted' },
+  // A replacement's reverse pickup done: the courier collected the product being replaced ("Pickup completed").
+  'PROD REPLACED': { status: 'in_transit', stage: 'accepted' },
   // The freight milestone after the pickup once the shipment goes back to the seller: Delhivery relabels
   // its "On the Way" so, keeping that milestone's date, and dates no attempt.
   UNDELIVERED: { status: 'exception', stage: 'exception' },

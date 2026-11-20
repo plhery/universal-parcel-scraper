@@ -278,6 +278,16 @@ describe('Delhivery direct tracking', () => {
     }
     for (const entry of statuses.entries) expect(classifyDelhiveryStatus(entry.wording)?.stage, entry.wording).toBe(entry.stage);
   });
+  it('reads a replacement\'s completed reverse pickup as the parcel collected', () => {
+    const value = payload();
+    value.data[0].currentFlow = 'Reverse';
+    value.data[0].hqStatus = 'In Transit';
+    value.data[0].status = { status: 'PROD_REPLACED', statusType: 'PU', instructions: 'Pickup completed', statusDateTime: '2026-01-03T14:00:00' };
+    value.data[0].trackingStates = [{ label: 'On the Way - Return', scans: [{ scan: 'In Transit', scanType: 'PU', scanDateTime: '', cityLocation: 'Example City' }] }];
+    const result = parseDelhivery(value, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(result.events?.[0]).toMatchObject({ description: 'PROD_REPLACED', time: '2026-01-03T14:00:00+05:30', stage: 'accepted', provider_leg: 'return' });
+  });
   it('passes the website headers and bounded cancellation into the public read', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
     await new DelhiveryTracker({ fetcher }).fetch(NUMBER, { budgetMs: 1000 });

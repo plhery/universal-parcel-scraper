@@ -32,6 +32,14 @@
       "note": "The status of a returning shipment that reached the seller's city."
     },
     {
+      "wording": "PROD_REPLACED",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The status of a replacement's reverse pickup once the courier collected the product being replaced, as a token, under the pickup status type."
+    },
+    {
       "wording": "WAITING_PICKUP",
       "stage": "registered",
       "language": "en",
