@@ -40987,7 +40987,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "muser": {
     "displayName": "Muser International Logistics",
-    "color": "#8e8e93",
+    "color": "#04a9d2",
     "aliases": [
       "Muser",
       "Shenzhen Muser International Logistics"
@@ -64903,7 +64903,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "zhongzhou-logistics": {
     "displayName": "Zhongzhou Logistics",
-    "color": "#8e8e93",
+    "color": "#0074d9",
     "aliases": [
       "ZZWL",
       "中洲物流",
