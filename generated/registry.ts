@@ -383,6 +383,7 @@ import { adapter as jAndTUk } from '../carriers/j-and-t-uk/adapter.js';
 import { adapter as jadlog } from '../carriers/jadlog/adapter.js';
 import { adapter as janio } from '../carriers/janio/adapter.js';
 import { adapter as japanPost } from '../carriers/japan-post/adapter.js';
+import { adapter as jasWorldwide } from '../carriers/jas-worldwide/adapter.js';
 import { adapter as jcex } from '../carriers/jcex/adapter.js';
 import { adapter as jch } from '../carriers/jch/adapter.js';
 import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
@@ -1219,6 +1220,7 @@ export const REGISTRY: RegistryDefinition = {
     "jadlog": jadlog,
     "janio": janio,
     "japan-post": japanPost,
+    "jas-worldwide": jasWorldwide,
     "jcex": jcex,
     "jch": jch,
     "jd-logistics": jdLogistics,
@@ -2527,7 +2529,7 @@ export const REGISTRY: RegistryDefinition = {
     "janco-express": "universal",
     "janio": "janio",
     "japan-post": "japan-post",
-    "jas-worldwide": "universal",
+    "jas-worldwide": "jas-worldwide",
     "jaskipin": "universal",
     "jb-hunt": "universal",
     "jcex": "jcex",

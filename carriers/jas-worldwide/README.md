@@ -1,27 +1,14 @@
 # JAS Worldwide
 
-JAS Worldwide parcels use enabled universal providers. There is no dedicated adapter.
+Select JAS Worldwide to track air and ocean freight by MyJAS shipment number or house bill.
+The public shipment grid resolves the reference, and the grid's read action returns the
+milestones. The adapter verifies the house bill and shipment number against the grid before
+using the details.
 
-JAS Worldwide is a freight forwarder based in Atlanta, Georgia, moving air and ocean freight with
-customs brokerage and contract logistics. Its site is jas.com.
+Completed milestones retain the carrier's wall clocks where it gives no offset. A container's
+delivery advances the history, while the shipment's own delivery sets the delivered stage.
+The detail action is identified by the public grid's build and may need updating when MyJAS
+changes it.
 
-## Numbers
-
-No public page shows one of its shipment numbers, so there is no rule.
-
-The short name "JAS" is not an alias, because other companies use it too.
-
-## Why there is no adapter
-
-Its tracker is the MyJAS single-page app, and no public shipment number has been found to check a
-found reply with.
-
-## Links
-
-The tracking box on its site opens MyJAS's public shipment page, which takes the number from its
-`shipmentNumber` parameter.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `JAS_WORLDWIDE_TRACKING_NUMBER` and run
+`npm run test:carriers:live -- carriers/jas-worldwide`.
