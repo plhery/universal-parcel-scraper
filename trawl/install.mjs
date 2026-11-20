@@ -112,7 +112,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
           requestReplacement: handle.requestBrowserReplacement, ignoreHttpsErrors: ${fresh ? 'ignoreCertificateErrors' : 'false'} })
       } } : {}) })
   }
-  if (carrierPage && track123Number(url, capture)) return await runTrack123Browser(carrierRun)
+  if (carrierPage && track123Number(url, capture)) return await runTrack123Browser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && fedexSessionNumber(url, capture)) return await fedexSessions.run(carrierRun)
   // Through a proxy WanbExpress's helper opens its context there and solves nothing.
   if (carrierRequest && wanbBrowserNumber(url, capture)) {
