@@ -120,6 +120,21 @@ describe('late registrations', () => {
     expect(readLateRegistrations(result(first, { status: 'pending', current_stage: 'registered' }))).toMatchObject({ current_stage: 'registered' });
   });
 
+  it('gives the result the newest state before a late label, a problem or customs step after the last movement too', () => {
+    // Synthetic history: a delivery the carrier then withdrew, saying the parcel is missing, and a partner's label after it.
+    const events = [scan('2030-01-12T10:00:00Z', 'Synthetic partner label created', 'registered'),
+      scan('2030-01-11T18:00:00Z', 'Delivery cancelled, the parcel is missing', 'exception'),
+      scan('2030-01-11T10:00:00Z', 'Delivered', 'delivered'), scan('2030-01-10T10:00:00Z', 'Picked up', 'accepted')];
+    expect(readLateRegistrations(result(events, { status: 'pending', current_stage: 'registered' })))
+      .toMatchObject({ current_stage: 'exception', current_stage_source: 'carrier_map' });
+    const held = [events[0]!, scan('2030-01-11T18:00:00Z', 'Held by customs', 'customs'), scan('2030-01-11T10:00:00Z', 'Arrived in the destination country', 'in_transit'),
+      events[3]!];
+    expect(readLateRegistrations(result(held, { status: 'pending', current_stage: 'registered' }))).toMatchObject({ current_stage: 'customs' });
+    // A problem before the parcel moved is no state after it.
+    const before = [events[0]!, scan('2030-01-10T11:00:00Z', 'Picked up', 'accepted'), scan('2030-01-10T10:00:00Z', 'Address problem', 'exception')];
+    expect(readLateRegistrations(result(before, { status: 'pending', current_stage: 'registered' }))).toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('reads a result the same a second time', () => {
     const events = [scan('2030-01-12T10:00:00Z', 'Shipping label created', 'registered'), scan('2030-01-11T10:00:00Z', 'Departed', 'in_transit'),
       scan('2030-01-11T09:00:00Z', 'Shipment information received', 'registered'), scan('2030-01-10T10:00:00Z', 'Picked up', 'accepted')];

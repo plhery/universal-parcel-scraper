@@ -47,8 +47,9 @@ export function clocks(events: readonly unknown[]): (number | null)[] {
  * provider dates seconds after the scan it came with is that scan's record. Its stage then
  * comes from this reading of the carrier's sequence, so its source is `carrier_map`. A result
  * whose current stage is registered for its newest scan, a registration after a movement, is
- * at the latest physical stage. An acceptance advances to transit for a later partner registration
- * once the first movement's minute has passed.
+ * at the newest stage before it: the latest physical stage, or a customs step or a problem after
+ * it, such as a delivery the carrier withdrew. An acceptance advances to transit for a later
+ * partner registration once the first movement's minute has passed.
  */
 export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const events: unknown[] = Array.isArray(result.events) ? result.events : [];
@@ -59,7 +60,8 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const late = new Set<number>();
   const settled = new Set<number>();
   let movedAt: number | null = null;
-  let physical: Stage = 'accepted';
+  // The newest state once the parcel moved: a movement's, or a customs step's or a problem's after it.
+  let state: Stage = 'accepted';
   for (let start = 0; start < order.length;) {
     let end = start;
     while (end < order.length && at[order[end]!] === at[order[start]!]) end++;
@@ -70,17 +72,16 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
       if (at[index]! - movedAt > SAME_MOMENT_MS) settled.add(index);
     }
     const movement = together.find(index => MOVED.has(read[index] as Stage));
-    if (movement !== undefined) {
-      movedAt ??= at[movement]!;
-      physical = read[movement]!;
-    }
+    if (movement !== undefined) movedAt ??= at[movement]!;
+    const current = movement ?? together.find(index => read[index] !== null && read[index] !== 'registered' && read[index] !== 'pending');
+    if (current !== undefined && movedAt !== null) state = read[current]!;
     start = end;
   }
   if (!late.size) return result;
   const newest = order.filter(index => at[index] === at[order.at(-1)!]);
   const headline = result.current_stage === 'registered' && newest.some(index => late.has(index))
     && newest.every(index => read[index] !== 'registered' || late.has(index));
-  const stage = physical === 'accepted' && newest.some(index => settled.has(index)) ? 'in_transit' : physical;
+  const stage = state === 'accepted' && newest.some(index => settled.has(index)) ? 'in_transit' : state;
   return {
     ...result,
     ...(headline ? { current_stage: stage, current_stage_source: 'carrier_map', status: languageStageStatus(stage) } : {}),
