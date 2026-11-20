@@ -56866,6 +56866,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "stoo": {
+    "displayName": "STOO",
+    "color": "#1A68D2",
+    "aliases": [
+      "STLine",
+      "Start Today",
+      "STL",
+      "에스티엘"
+    ],
+    "countries": [
+      "KR",
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "stoo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://stline.stload.com/tracking",
+    "trackingUrlTemplate": "https://stline.stload.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://stline.stload.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "stop-start": {
     "displayName": "Stop Start",
     "color": "#d85b2d",
@@ -69028,6 +69054,7 @@ export const CARRIER_IDS = [
   "steadfast",
   "stg-ltl",
   "stone3pl",
+  "stoo",
   "stop-start",
   "straightship",
   "suhu",
@@ -70979,6 +71006,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "steadfast": ["steadfast-1"],
   "stg-ltl": [],
   "stone3pl": ["stone3pl-s18"],
+  "stoo": [],
   "stop-start": [],
   "straightship": ["straightship-1","straightship-2"],
   "suhu": [],

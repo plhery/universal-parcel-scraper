@@ -816,6 +816,7 @@ import { adapter as starken } from '../carriers/starken/adapter.js';
 import { adapter as starlinksGlobal } from '../carriers/starlinks-global/adapter.js';
 import { adapter as sto } from '../carriers/sto/adapter.js';
 import { adapter as stone3pl } from '../carriers/stone3pl/adapter.js';
+import { adapter as stoo } from '../carriers/stoo/adapter.js';
 import { adapter as straightship } from '../carriers/straightship/adapter.js';
 import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sunLogistics } from '../carriers/sun-logistics/adapter.js';
@@ -1795,6 +1796,7 @@ export const REGISTRY: RegistryDefinition = {
     "starlinks-global": starlinksGlobal,
     "sto": sto,
     "stone3pl": stone3pl,
+    "stoo": stoo,
     "straightship": straightship,
     "suhu": suhu,
     "sun-logistics": sunLogistics,
@@ -3560,6 +3562,7 @@ export const REGISTRY: RegistryDefinition = {
     "stg-ltl": "universal",
     "sto": "sto",
     "stone3pl": "stone3pl",
+    "stoo": "stoo",
     "stop-start": "universal",
     "straightship": "straightship",
     "suhu": "suhu",

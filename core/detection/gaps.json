@@ -5929,5 +5929,10 @@
     "carrier": "leschaco",
     "kind": "open",
     "reason": "Published Leschaco house bills use the ALRB carrier code, while the public tracker also accepts the underlying shipment reference. Select Leschaco explicitly."
+  },
+  {
+    "carrier": "stoo",
+    "kind": "open",
+    "reason": "One published reception number does not establish a carrier-specific format. Select STOO explicitly."
   }
 ]
