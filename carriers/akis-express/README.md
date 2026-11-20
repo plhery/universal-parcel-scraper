@@ -1,25 +1,21 @@
 # AKIS Express
 
-AKIS Express parcels use enabled universal providers. There is no dedicated adapter.
+Tracks domestic shipments from the Cypriot courier G.A.P. Akis Express.
 
-AKIS Express (G.A.P Akis Express) is a Cypriot domestic courier with more than a hundred shops and
-stations, part of the G.A.P. Vassilopoulos group. Its site is gapakisexpress.com; akisexpress.com
-is not the carrier's.
+## Retrieval
+
+The tracking page posts the number to the site's WordPress AJAX action
+`tracking_show_table`. The reply contains an HTML table headed by the requested
+number. The same table with only its empty row means the number is unknown.
+
+The tracker shows each scan's local clock and station. Scan wording stays in Greek
+as supplied. The adapter reads the public history and leaves the remarks out.
 
 ## Numbers
 
-No public tracking number has been found, so there is no rule.
-
-## Why there is no adapter
-
-Its tracking page reads an open JSON lookup on the site, but no public number has been found to
-check a found reply with.
-
-## Links
-
-The tracking page opens a number from its `tracking_num` parameter.
+Select AKIS Express explicitly or open a carrier link with the `tracking_num`
+parameter.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`AKIS_EXPRESS_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/akis-express`

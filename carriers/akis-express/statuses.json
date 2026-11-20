@@ -1,4 +1,41 @@
 {
   "carrier": "akis-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Η ΑΠΟΣΤΟΛΗ ΠΑΡΑΔΟΘΗΚΕ. ΤΑ ΣΤΟΙΧΕΙΑ ΠΑΡΑΔΟΣΗΣ ΤΟΥ ΠΑΡΑΛΗΠΤΗ ΕΧΟΥΝ ΣΥΜΠΛΗΡΩΘΕΙ ΜΕ ΕΠΙΤΥΧΙΑ",
+      "stage": "delivered",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ΕΚΦΟΡΤΩΣΗ ΟΜΑΔΟΠΟΙΗΜΕΝΩΝ ΑΠΟΣΤΟΛΩΝ ΚΑΙ ΑΛΛΩΝ ΑΠΟ ΟΧΗΜΑ  ΜΕΤΑΦΟΡΑΣ",
+      "stage": "in_transit",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ΟΜΑΔΟΠΟΙΗΣΗ",
+      "stage": "in_transit",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ΠΑΡΑΛΑΒΗ ΑΠΟΣΤΟΛΗΣ ΑΠΟ ΤΟΝ ΣΤΑΘΜΟ/ΚΑΤΑΣΤΗΜΑ",
+      "stage": "accepted",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Η ΑΠΟΣΤΟΛΗ ΕΧΕΙ ΑΦΙΧΘΕΙ ΣΤΟ ΚΕΝΤΡΟ ΔΙΑΛΟΓΗΣ",
+      "stage": "in_transit",
+      "language": "el",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ΕΧΕΙ ΕΚΔΟΘΕΙ ΔΕΛΤΙΟ ΑΠΟΣΤΟΛΗΣ ΑΠΟ WEB - Η ΑΠΟΣΤΟΛΗ ΔΕΝ ΕΧΕΙ ΠΑΡΑΛΗΦΘΕΙ  ΑΚΟΜΑ ΑΠΟ ΤΗΝ GAP",
+      "stage": "registered",
+      "language": "el",
+      "confirmedBy": "live"
+    }
+  ]
 }

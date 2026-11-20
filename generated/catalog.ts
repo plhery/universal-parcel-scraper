@@ -7731,7 +7731,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Nicosia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "akis-express",
+      "localClocks": true
     },
     "canaryUrl": "https://gapakisexpress.com/track-your-packages/",
     "trackingUrlTemplate": "https://gapakisexpress.com/track-your-packages/?tracking_num={trackingNumber}",

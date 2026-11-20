@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'akis-express', number: 'OUTSIDE0S6TEST',
+    route: /^https:\/\/gapakisexpress\.com\/track-your-packages\/\?tracking_num=OUTSIDE0S6TEST$/,
+    marker: /Track\s+your\s+shipments/i },
   { carrier: 'faster-shipe', number: 'FS000000000',
     route: /^https:\/\/fastershipe\.com\/track\.html\?id=FS000000000$/,
     marker: /تتبع شحنتك/ },
