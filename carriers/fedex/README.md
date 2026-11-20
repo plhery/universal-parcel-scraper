@@ -42,7 +42,11 @@ fallback')`.
    - it opens the blank tracker and submits its normal form, every time, because the
      result-page form can ignore a submission or keep the previous route;
    - it keeps the page and context only after a reply that matches the requested number
-     (request and response) and has a status or scans;
+     (request and response) and has a status or scans, or an accepted reply in which FedEx
+     says it has no tracking for that number;
+   - a new context whose first read the edge refuses waits 10 s and submits the same request
+     once more in that context, when the budget allows, to measure whether a refused new
+     session can still be accepted;
    - the context stays on its pooled browser and closes after 30 min idle, 2 h total, any
      failed validation, or a browser restart. The browser outlasts the service's recycle
      count while the session works, within the limits the TRAWL README gives.

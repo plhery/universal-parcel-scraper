@@ -305,7 +305,6 @@ for (const spec of [
   { status: 429, headers: { 'retry-after': '120' } },
   { body: payload(OTHER) },
   { body: '{invalid' },
-  { body: JSON.stringify({ output: { packages: [] } }) },
   { headers: { 'content-length': '2000001' } },
 ]) test(`discards an unverified session and preserves its reply: ${JSON.stringify(spec)}`, async () => {
   const f = fixture([{}, spec, {}]);
@@ -442,15 +441,15 @@ test('pool affinity returns to a verified browser and releases rejected affinity
 test('session-end warnings identify an inconclusive read that discards verified clearance without exposing reply data', async t => {
   t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const reports = [];
-  const empty = JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER, keyStatus: 'PRIVATE placeholder',
-    recipient: 'PRIVATE recipient', errorList: [{ code: 'TRACKINGNUMBER.NOTFOUND' }] }] } });
+  const empty = JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER,
+    recipient: 'PRIVATE recipient', errorList: [{ code: 'PRIVATE.CODE' }] }] } });
   const f = fixture([{}, { body: empty }], { onSessionEnd: fields => reports.push(fields) });
   await f.run();
   t.mock.timers.tick(7);
   const result = await f.run();
   assert.equal(result.capturedResponses[0].body, empty);
   assert.equal(f.contexts[0].closed, true);
-  assert.deepEqual(reports, [{ host: 'api.fedex.com', browser: undefined, reason: 'no_tracking',
+  assert.deepEqual(reports, [{ host: 'api.fedex.com', browser: undefined, reason: 'missing_status',
     sessionAgeMs: 7, lookups: 2, digits: 12, hadVerifiedLookup: true, idleMs: 0, sinceVerifiedMs: 7 }]);
   assert.equal(JSON.stringify(reports).includes(NUMBER), false);
   assert.equal(JSON.stringify(reports).includes('PRIVATE'), false);
@@ -459,9 +458,7 @@ test('session-end warnings identify an inconclusive read that discards verified 
 });
 
 for (const [reason, spec] of [
-  ['no_tracking', { body: JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER, errorList: [{ code: 'TRACKINGNUMBER.INVALID' }] }] } }) }],
   ['identity', { body: JSON.stringify({ output: { packages: [{ trackingNbr: OTHER, keyStatus: 'PRIVATE' }] } }) }],
-  ['empty_result', { body: JSON.stringify({ output: { packages: [] } }) }],
   ['verification_required', { body: JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER, errorList: [{ code: 'AUTHORIZATION.REQUIRED' }] }] } }) }],
   ['missing_status', { body: JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER }] } }) }],
   ['unreadable', { body: '{PRIVATE' }],
@@ -476,6 +473,127 @@ for (const [reason, spec] of [
   assert.equal(reports[0].sinceVerifiedMs, null);
   assert.equal(f.contexts[0].closed, true);
   assert.equal((await f.run()).reason, 'fedex-session-new');
+  await f.close();
+});
+
+for (const [reason, body] of [
+  ['no_tracking', JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER, errorList: [{ code: 'TRACKINGNUMBER.INVALID' }] }] } })],
+  ['no_tracking', JSON.stringify({ output: { packages: [], errorList: [{ code: 'TRACKING.TRACKINGNUMBER.NOTFOUND' }] } })],
+  ['empty_result', JSON.stringify({ output: { packages: [] } })],
+]) test(`keeps a session after an accepted reply without tracking: ${reason}`, async () => {
+  const reports = [];
+  const sessions = new FedExSessions({ settleMs: 0, incompleteSettleMs: 0, onRefusal: () => {}, onSessionEnd: fields => reports.push(fields) });
+  const f = fixture([{ body }, { body }, {}], { sessions });
+  const entries = [{ browser: f.browser }, { browser: new EventEmitter() }];
+  const cold = await f.run();
+  assert.equal(cold.capturedResponses[0].body, body);
+  assert.equal(f.contexts[0].closed, false);
+  assert.equal(sessions.preferred(entries, 'www.fedex.com'), entries[0]);
+  const again = await f.run();
+  assert.equal(again.reason, 'fedex-session-reused');
+  assert.equal(again.capturedResponses[0].body, body);
+  assert.equal((await f.run(OTHER)).reason, 'fedex-session-reused');
+  // Every lookup still submits and captures its own request.
+  assert.deepEqual(f.requests, [NUMBER, NUMBER, OTHER]);
+  assert.equal(f.contexts.length, 1);
+  assert.equal(reports.length, 0);
+  await f.close();
+});
+
+const EDGE = { status: 403, headers: { 'content-type': 'text/html', server: 'AkamaiGHost' } };
+const secondTry = async (t, replies, { maxTimeout = 40_000, reports = [], settings = {} } = {}) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const f = fixture(replies, { onRefusal: fields => reports.push(fields), ...settings });
+  let done = false;
+  const pending = f.run(NUMBER, { maxTimeout }).then(result => { done = true; return result; });
+  for (let i = 0; i < 5; i++) await tick();
+  return { f, pending, done: () => done, reports };
+};
+
+test('a new session\'s first edge refusal is submitted once more in the same context after ten seconds', async t => {
+  const { f, pending, done, reports } = await secondTry(t, [EDGE, {}, {}]);
+  assert.deepEqual(f.requests, [NUMBER]);
+  t.mock.timers.tick(9_999);
+  await tick();
+  assert.deepEqual(f.requests, [NUMBER]);
+  assert.equal(done(), false);
+  t.mock.timers.tick(1);
+  const result = await pending;
+  assert.deepEqual(f.requests, [NUMBER, NUMBER]);
+  assert.deepEqual(result.capturedResponses.map(x => x.status), [403, 200]);
+  assert.equal(result.reason, 'fedex-session-new');
+  assert.equal(f.contexts.length, 1);
+  assert.equal(f.contexts[0].closed, false);
+  assert.equal(reports.length, 1);
+  assert.equal(reports[0].session, 'new');
+  assert.equal(reports[0].cause, 'edge');
+  assert.equal(reports[0].retry, 'same_session');
+  assert.equal(reports[0].responses, 2);
+  assert.equal(reports[0].recovered, true);
+  assert.ok(!JSON.stringify(reports).includes(NUMBER));
+  // Kept and verified as usual; its next lookup is not tried twice.
+  assert.equal((await f.run()).reason, 'fedex-session-reused');
+  await f.close();
+});
+
+test('a refused second try discards the session like a single refusal', async t => {
+  const ends = [];
+  const { f, pending, reports } = await secondTry(t, [EDGE, EDGE, {}], { settings: { onSessionEnd: fields => ends.push(fields) } });
+  t.mock.timers.tick(10_000);
+  const result = await pending;
+  assert.deepEqual(result.capturedResponses.map(x => x.status), [403, 403]);
+  assert.deepEqual(f.requests, [NUMBER, NUMBER]);
+  assert.equal(f.contexts[0].closed, true);
+  assert.deepEqual(ends.map(x => [x.reason, x.lookups]), [['api_denied', 1]]);
+  assert.equal(reports.length, 1);
+  assert.equal(reports[0].retry, 'same_session');
+  assert.equal(reports[0].responses, 2);
+  assert.equal(reports[0].recovered, false);
+  assert.equal((await f.run()).reason, 'fedex-session-new');
+  await f.close();
+});
+
+test('a second try that fails keeps the first refusal as the answer', async t => {
+  const { f, pending, reports } = await secondTry(t, [EDGE]);
+  f.contexts[0].close = async function close() { this.closed = true; };
+  const page = await f.contexts[0].newPage();
+  page.goto = async () => { throw new Error(`navigation for ${NUMBER} failed`); };
+  t.mock.timers.tick(10_000);
+  const result = await pending;
+  assert.equal(result.status, 'success');
+  assert.deepEqual(result.capturedResponses.map(x => x.status), [403]);
+  assert.equal(f.contexts[0].closed, true);
+  assert.equal(reports[0].retry, 'same_session_failed');
+  assert.equal(reports[0].responses, 1);
+  assert.equal(reports[0].recovered, false);
+  assert.ok(!JSON.stringify(reports).includes(NUMBER));
+});
+
+test('no second try when the budget does not fit the wait and a lookup', async t => {
+  const { f, pending, reports } = await secondTry(t, [EDGE, {}], { maxTimeout: 21_999 });
+  const result = await pending;
+  assert.deepEqual(f.requests, [NUMBER]);
+  assert.deepEqual(result.capturedResponses.map(x => x.status), [403]);
+  assert.equal(f.contexts[0].closed, true);
+  assert.equal(reports[0].retry, 'no_budget');
+  assert.equal(reports[0].responses, 1);
+  assert.equal(reports[0].recovered, false);
+  await f.close();
+});
+
+test('no second try for a reused session or a refusal that is not the edge\'s', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const reports = [];
+  const f = fixture([{}, EDGE, { status: 403 }], { onRefusal: fields => reports.push(fields) });
+  await f.run(NUMBER, { maxTimeout: 40_000 });
+  const reused = await f.run(NUMBER, { maxTimeout: 40_000 });
+  assert.equal(reused.reason, 'fedex-session-reused');
+  assert.deepEqual(reused.capturedResponses.map(x => x.status), [403]);
+  assert.equal(f.contexts[0].closed, true);
+  await f.run(NUMBER, { maxTimeout: 40_000 });
+  assert.deepEqual(f.requests, [NUMBER, NUMBER, NUMBER]);
+  assert.equal(f.contexts[1].closed, true);
+  assert.deepEqual(reports.map(x => [x.session, x.cause, x.retry]), [['reused', 'edge', undefined], ['new', 'api', undefined]]);
   await f.close();
 });
 

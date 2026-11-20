@@ -32,9 +32,16 @@ function memoryShare(memoryUsage) {
   return Number.isFinite(used) && used >= 0 && Number.isFinite(limit) && limit > 0 ? used / limit : null;
 }
 
+// The edge accepted the call for this number and FedEx answered that it holds no
+// tracking. The session is as cleared as after a tracked reply, so it is kept.
+const ACCEPTED_WITHOUT_TRACKING = new Set(['no_tracking', 'empty_result']);
+
+// Whether a lookup's final reply is Akamai's refusal.
+const edgeRefused = entries => entries.at(-1)?.status === 403 && entries.at(-1).error === 'fedex-edge-denial';
+
 const slot = id => Number.isSafeInteger(id) && id >= 0 && id < 1024 ? id : undefined;
 
-// Classify a discarded reply without retaining its content or identifying its parcel.
+// Classify an unverified reply without retaining its content or identifying its parcel.
 function discardedReply(entries, number) {
   const last = entries.at(-1);
   if (!last || last.status === 0) return 'request_failed';
@@ -83,7 +90,8 @@ export class FedExSessions {
   constructor({ idleMs = 30 * 60_000, maxAgeMs = 2 * 60 * 60_000, closeMs = 3_000,
     settleMs = 250, incompleteSettleMs = 1_000, onRefusal = reportRefusal, onSessionEnd = reportSessionEnd,
     holdMaxLookups = FEDEX_HOLD_MAX_LOOKUPS, holdMaxAgeMs = FEDEX_HOLD_MAX_AGE_MS,
-    holdMaxMemoryShare = FEDEX_HOLD_MAX_MEMORY_SHARE, onHold = reportHold } = {}) {
+    holdMaxMemoryShare = FEDEX_HOLD_MAX_MEMORY_SHARE, onHold = reportHold,
+    secondTryDelayMs = 10_000, secondTryMinMs = 12_000 } = {}) {
     this.idleMs = idleMs;
     this.maxAgeMs = maxAgeMs;
     this.closeMs = closeMs;
@@ -95,6 +103,10 @@ export class FedExSessions {
     this.holdMaxAgeMs = holdMaxAgeMs;
     this.holdMaxMemoryShare = holdMaxMemoryShare;
     this.onHold = onHold;
+    // A new session's first refused lookup is submitted once more in the same context
+    // after this delay, when the lookup still has this long left after it.
+    this.secondTryDelayMs = secondTryDelayMs;
+    this.secondTryMinMs = secondTryMinMs;
   }
 
   #working(session) {
@@ -227,6 +239,8 @@ export class FedExSessions {
         Date.now() - session.created >= this.maxAgeMs ? 'max_age' : 'page_closed');
       session = undefined;
     }
+    // `verified`: the edge accepted this session's last lookup with a readable reply
+    // for its number, with tracking or with FedEx's answer that it has none.
     const reused = Boolean(session?.verified);
     if (!session) {
       session = { created: Date.now(), busy: true, verified: false, disposed: false, lookups: 0,
@@ -242,9 +256,33 @@ export class FedExSessions {
     session.digits = number.length;
     const marks = {};
     try {
-      const result = await bounded(this.#lookup({ number, session, browser, started, maxTimeout, capture, installPolicy, marks,
-        replace: handle.requestBrowserReplacement, onCreated: handle.noteTemporaryContext }),
+      const lookup = lookupMarks => bounded(this.#lookup({ number, session, browser, started, maxTimeout, capture, installPolicy,
+        marks: lookupMarks, replace: handle.requestBrowserReplacement, onCreated: handle.noteTemporaryContext }),
         Math.max(0, maxTimeout - (Date.now() - started)), 'FedEx lookup budget exhausted');
+      let result = await lookup(marks), retry;
+      // Measures whether a refused new session can still be accepted: its first lookup,
+      // once, in the same context, only when the budget fits the wait and a lookup.
+      if (!reused && session.lookups === 1 && !session.secondTried && !session.verified && edgeRefused(result.capturedResponses)) {
+        session.secondTried = true;
+        if (maxTimeout - (Date.now() - started) < this.secondTryDelayMs + this.secondTryMinMs) retry = 'no_budget';
+        else {
+          await new Promise(resolve => setTimeout(resolve, this.secondTryDelayMs));
+          try {
+            const second = await lookup({});
+            result = { ...second, capturedResponses: [...result.capturedResponses, ...second.capturedResponses].slice(-MAX_REPLIES) };
+            retry = 'same_session';
+          } catch {
+            // The first refusal stays the answer; this session is discarded below.
+            session.verified = false;
+            retry = 'same_session_failed';
+          }
+        }
+      }
+      // Kept like a tracked reply: no stored reply is reused, and every lookup submits
+      // and captures its own request. Refusals, identity mismatches, unreadable replies
+      // and failures still end the session.
+      const ending = session.verified ? null : discardedReply(result.capturedResponses, number);
+      if (ACCEPTED_WITHOUT_TRACKING.has(ending)) session.verified = true;
       if (session.verified) session.lastVerifiedAt = activity.successAt = Date.now();
       const rejected = result.capturedResponses.find(entry => [401, 403].includes(entry.status));
       if (rejected) {
@@ -257,10 +295,11 @@ export class FedExSessions {
             sinceSuccessMs: activity.successAt === undefined ? null : Math.max(0, started - activity.successAt),
             consent: marks.consent ?? null, menu: marks.menu ?? null, pageMs: marks.pageMs ?? null, formMs: marks.formMs ?? null,
             submitMs: marks.submitMs ?? null, replyMs: marks.replyMs ?? null, durationMs: Math.max(0, Date.now() - started),
-            ...(result.capturedResponses.length > 1 ? { responses: result.capturedResponses.length, recovered: session.verified } : {}) });
+            ...(result.capturedResponses.length > 1 || retry ? { responses: result.capturedResponses.length, recovered: session.verified } : {}),
+            ...(retry ? { retry } : {}) });
         } catch { /* Diagnostics must not change tracking or cleanup. */ }
       }
-      if (!session.verified) await this.#discard(browser, session, handle.requestBrowserReplacement, discardedReply(result.capturedResponses, number));
+      if (!session.verified) await this.#discard(browser, session, handle.requestBrowserReplacement, ending);
       return { tier, status: 'success', statusCode: 200, durationMs: Date.now() - started,
         effectiveUrl: url, ...result, cookies: [], reason: reused ? 'fedex-session-reused' : 'fedex-session-new' };
     } catch {
