@@ -73186,6 +73186,14 @@
     ]
   },
   {
+    "input": "9274892700515800004962",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
     "input": "9279847391",
     "carrier": "unknown",
     "confidence": "low",
