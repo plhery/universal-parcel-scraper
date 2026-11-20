@@ -1,5 +1,28 @@
 {
   "carrier": "united-pallet-network",
-  "gap": "No public page shows a United Pallet Network number.",
-  "records": []
+  "records": [
+    {
+      "number": "000372801",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/review/upn.co.uk",
+        "date": "2026-06-20",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "The customer includes this complete UPN tracking number in the review title and describes the carrier’s delivery status. The carrier’s guest tracker requires the delivery postcode, which the review omits."
+    }
+  ]
 }
