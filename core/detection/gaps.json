@@ -5839,5 +5839,10 @@
     "carrier": "speedex-fast-cargo",
     "kind": "open",
     "reason": "One published numeric docket establishes explicit tracking. It does not establish a distinctive detection rule."
+  },
+  {
+    "carrier": "pasha-hawaii",
+    "kind": "open",
+    "reason": "Equipment can change operators and the confirmed bare bill collides with other carriers. The guest tracker supports both with explicit selection."
   }
 ]
