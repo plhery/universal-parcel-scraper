@@ -20,11 +20,13 @@
     "adapter": "air-greenland",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "weight"
   ],
   "portal": {
     "url": "https://airgreenland.com/cargo/tracking-awb/",

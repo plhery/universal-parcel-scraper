@@ -23,7 +23,7 @@ function parseEvent(value: unknown): CarrierEvent {
   return {
     description: wording,
     ...(code ? { provider_code: code } : {}),
-    ...(date.isValid ? { local_time: date.toFormat("yyyy-MM-dd'T'HH:mm:ss") } : rawClock ? { local_time: rawClock } : {}),
+    ...(date.isValid ? { local_time: date.toFormat("yyyy-MM-dd'T'HH:mm:ss") } : rawClock ? { provider_time_text: rawClock } : {}),
     ...(location ? { location } : {}),
     ...(stage ? { stage, stage_source: mapped ? 'carrier_map' : 'wording:language' } : {}),
   };

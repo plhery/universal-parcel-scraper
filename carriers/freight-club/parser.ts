@@ -53,7 +53,7 @@ export function parseTracking(body: unknown, reference: string): CarrierResult {
   const stage = summary?.stage ?? scans.find(scan => scan.stage)?.stage;
   if (!scans.length && !summary) throw new NoHistoryError(provider);
   const delivered = stage === 'delivered'
-    ? scans.find(scan => scan.stage === 'delivered')?.event.time ?? explicitOffsetTime(body.TrackingDeliveryDate)?.iso
+    ? scans.find(scan => scan.stage === 'delivered')?.event.time
     : undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

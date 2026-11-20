@@ -33,7 +33,9 @@ it('maps the movement wording from an upper-case Pilot Freight Services history'
 
 it('preserves the portal summary and keeps movement exceptions in the history', () => {
   const result = parseTracking(metropolitan, 'FCT903748028093956096');
-  expect(result).toMatchObject({ current_stage: 'delivered', delivered_at: '2021-11-22T06:27:00-08:00' });
+  expect(result).toMatchObject({ current_stage: 'delivered' });
+  // No delivered scan: the delivery-date field's offset can disagree with the scans', so it gives no instant.
+  expect(result).not.toHaveProperty('delivered_at');
   expect(result.events?.[0]).toMatchObject({ description: 'Shipment Damaged', stage: 'exception' });
   expect(result.events).toHaveLength(13);
 });

@@ -38,9 +38,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'courierit-nz', number: '000000000000',
     route: /^https:\/\/www\.courierit\.net\.nz\/Home\/Track\/?$/i,
     marker: /Label Nos\s*:/i, forwarding: 'none' },
-  { carrier: 'akr-express', number: 'Z9900000',
-    route: /^https:\/\/akrexpress\.com\/$/,
-    marker: /Track your LR/i, forwarding: 'none' },
   { carrier: 'lalji-mulji-transport', number: '00000000',
     route: /^https:\/\/lmtco\.com\/tracking-serices\.html$/,
     marker: /TRACK & TRACE/i, forwarding: 'none' },
@@ -53,9 +50,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'air-greenland', number: '63199000008',
     route: /^https:\/\/airgreenland\.com\/cargo\/tracking-awb\/$/,
     marker: /air consignment note number/i, forwarding: 'none' },
-  { carrier: 'move-cargo', number: 'ZZZ-MOVE-CARGO-INVALID',
-    route: /^https:\/\/movecargo\.ca\/track\?tracking_number=ZZZ-MOVE-CARGO-INVALID$/,
-    marker: /No shipment found for ZZZ-MOVE-CARGO-INVALID/i },
   { carrier: 'indigo-cargo', number: '31299000008',
     route: /^https:\/\/6ecargo\.goindigo\.in\/FrmAWBTracking\.aspx$/,
     marker: /Track Air Waybill/i, forwarding: 'none' },
@@ -2526,7 +2520,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   marken: 'The carrier accepts overlapping numeric shipment references. A published job verifies the rendered link separately.',
-  fraktjakt: 'The shipment link takes a carrier-issued opaque tracking code. The live adapter and browser checks use published codes, and the daily link check cannot safely manufacture one.',
   'neighbour-express': 'The return tracker needs a fresh guest reCAPTCHA token before its lookup; native retrieval captures that whole-reference request in a scoped browser helper.',
   'the-delivery-group': 'The known parcel can need its delivery postcode; a number-only empty reply is inconclusive, and no rendered-page control was completed for this link.',
   flechacarga: 'The receipt link needs separate letter, branch and serial parameters; the catalog opens the public search form without a single-reference link.',

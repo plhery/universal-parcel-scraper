@@ -160,11 +160,6 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to Akash Ganga Courier."
   },
   {
-    "carrier": "akr-express",
-    "kind": "by_design",
-    "reason": "AKR Express lorry receipts start with one letter followed by six or seven digits. Select the carrier explicitly."
-  },
-  {
     "carrier": "aks-express",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -1508,11 +1503,6 @@
     "reason": "An Emile number on a parcel 4PX handed over to Emile. The shape is Emile's; 4PX's feed also knows the parcels it hands over."
   },
   {
-    "carrier": "fraktjakt",
-    "kind": "by_design",
-    "reason": "Fraktjakt public tracking codes share an opaque hexadecimal shape. Select the carrier or use its shipment link."
-  },
-  {
     "carrier": "franch-express",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
@@ -2508,11 +2498,6 @@
     "pattern": "^HK\\d{9}PH\\d{2}$",
     "kind": "by_design",
     "reason": "One Morning Global waybill from the older tracker page has this layout, too little to tell how the carrier numbers parcels, so detection leaves it unclaimed."
-  },
-  {
-    "carrier": "move-cargo",
-    "kind": "by_design",
-    "reason": "Move Cargo publishes MC-prefixed demo references. Select the carrier explicitly until the issued number format is documented."
   },
   {
     "carrier": "mr-courier-al",

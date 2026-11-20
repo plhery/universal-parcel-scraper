@@ -13,4 +13,4 @@ receipts published in a consumer commission judgment. Their branch, booking date
 and weight agree with the published shipments. Branch addresses and contact
 information are omitted.
 
-`LALJI_MULJI_TRACKING_NUMBER=22175354 npm run test:carriers:live -- carriers/lalji-mulji-transport`
+`LALJI_MULJI_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/lalji-mulji-transport`

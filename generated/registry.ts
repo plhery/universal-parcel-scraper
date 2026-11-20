@@ -26,7 +26,6 @@ import { adapter as aitWorldwide } from '../carriers/ait-worldwide/adapter.js';
 import { adapter as ajex } from '../carriers/ajex/adapter.js';
 import { adapter as akasaAirCargo } from '../carriers/akasa-air-cargo/adapter.js';
 import { adapter as akisExpress } from '../carriers/akis-express/adapter.js';
-import { adapter as akrExpress } from '../carriers/akr-express/adapter.js';
 import { adapter as algeriePoste } from '../carriers/algerie-poste/adapter.js';
 import { adapter as aliexpress } from '../carriers/aliexpress/adapter.js';
 import { adapter as allegroOne } from '../carriers/allegro-one/adapter.js';
@@ -309,7 +308,6 @@ import { adapter as forwardAir } from '../carriers/forward-air/adapter.js';
 import { adapter as forzaDelivery } from '../carriers/forza-delivery/adapter.js';
 import { adapter as fourPx } from '../carriers/four-px/adapter.js';
 import { adapter as foxpost } from '../carriers/foxpost/adapter.js';
-import { adapter as fraktjakt } from '../carriers/fraktjakt/adapter.js';
 import { adapter as franchExpress } from '../carriers/franch-express/adapter.js';
 import { adapter as freightClub } from '../carriers/freight-club/adapter.js';
 import { adapter as freightwaysGlobal } from '../carriers/freightways-global/adapter.js';
@@ -535,7 +533,6 @@ import { adapter as mondialRelay } from '../carriers/mondial-relay/adapter.js';
 import { adapter as mongolInfinityPost } from '../carriers/mongol-infinity-post/adapter.js';
 import { adapter as moranTransportation } from '../carriers/moran-transportation/adapter.js';
 import { adapter as morningGlobal } from '../carriers/morning-global/adapter.js';
-import { adapter as moveCargo } from '../carriers/move-cargo/adapter.js';
 import { adapter as mrlGlobal } from '../carriers/mrl-global/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
 import { adapter as mteXpress } from '../carriers/mte-xpress/adapter.js';
@@ -952,7 +949,6 @@ export const REGISTRY: RegistryDefinition = {
     "ajex": ajex,
     "akasa-air-cargo": akasaAirCargo,
     "akis-express": akisExpress,
-    "akr-express": akrExpress,
     "algerie-poste": algeriePoste,
     "aliexpress": aliexpress,
     "allegro-one": allegroOne,
@@ -1235,7 +1231,6 @@ export const REGISTRY: RegistryDefinition = {
     "forza-delivery": forzaDelivery,
     "four-px": fourPx,
     "foxpost": foxpost,
-    "fraktjakt": fraktjakt,
     "franch-express": franchExpress,
     "freight-club": freightClub,
     "freightways-global": freightwaysGlobal,
@@ -1461,7 +1456,6 @@ export const REGISTRY: RegistryDefinition = {
     "mongol-infinity-post": mongolInfinityPost,
     "moran-transportation": moranTransportation,
     "morning-global": morningGlobal,
-    "move-cargo": moveCargo,
     "mrl-global": mrlGlobal,
     "mrw": mrw,
     "mte-xpress": mteXpress,
@@ -1916,7 +1910,6 @@ export const REGISTRY: RegistryDefinition = {
     "akasa-air-cargo": "akasa-air-cargo",
     "akash-ganga": "universal",
     "akis-express": "akis-express",
-    "akr-express": "akr-express",
     "akropost": "universal",
     "aks-express": "universal",
     "aland-post": "universal",
@@ -2499,7 +2492,6 @@ export const REGISTRY: RegistryDefinition = {
     "foxpost": "foxpost",
     "foz-post": "universal",
     "fragilepak": "universal",
-    "fraktjakt": "fraktjakt",
     "franch-express": "franch-express",
     "freight-club": "freight-club",
     "freightways-global": "freightways-global",
@@ -2956,7 +2948,6 @@ export const REGISTRY: RegistryDefinition = {
     "morning-global": "morning-global",
     "motorex": "universal",
     "mountain-movers": "universal",
-    "move-cargo": "move-cargo",
     "movicarga": "universal",
     "movin": "universal",
     "movvi": "universal",

@@ -19,4 +19,4 @@ Street addresses, map coordinates and partner contact details are omitted.
 The fixtures retain the parser fields from three indexed, carrier-hosted results
 listed in `numbers.json` and a missing-reference control.
 
-`FREIGHT_CLUB_TRACKING_NUMBER=FCT1331382558750932992 npm run test:carriers:live -- carriers/freight-club`
+`FREIGHT_CLUB_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/freight-club`

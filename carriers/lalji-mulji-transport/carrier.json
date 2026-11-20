@@ -21,8 +21,7 @@
     "adapter": "lalji-mulji-transport",
     "steps": [
       "direct"
-    ],
-    "localClocks": true
+    ]
   },
   "capabilities": [
     "history",

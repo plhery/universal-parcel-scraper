@@ -7329,7 +7329,8 @@
     "timezone": "America/Nuuk",
     "tracking": {
       "mode": "automatic",
-      "adapter": "air-greenland"
+      "adapter": "air-greenland",
+      "localClocks": true
     },
     "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
     "trackingUrlTemplate": "https://airgreenland.com/cargo/tracking-awb/",
@@ -7798,29 +7799,6 @@
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "akr-express": {
-    "displayName": "AKR Express",
-    "color": "#d5232e",
-    "aliases": [
-      "AKR Express Parcel Service",
-      "AKR Express Parcel Service Pvt. Ltd."
-    ],
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "akr-express",
-      "localClocks": true
-    },
-    "canaryUrl": "https://akrexpress.com/",
-    "trackingUrlTemplate": "https://akrexpress.com/",
-    "trackingSearchUrl": "https://akrexpress.com/",
-    "linkRules": [],
     "detectionRules": []
   },
   "akropost": {
@@ -26610,37 +26588,6 @@
       }
     ]
   },
-  "fraktjakt": {
-    "displayName": "Fraktjakt",
-    "color": "#50852d",
-    "aliases": [
-      "Fraktjakt AB"
-    ],
-    "countries": [
-      "SE"
-    ],
-    "selectable": true,
-    "timezone": "Europe/Stockholm",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "fraktjakt",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.fraktjakt.se/trace",
-    "trackingUrlTemplate": "https://www.fraktjakt.se/trace/shipment/{trackingNumber}?locale=en",
-    "trackingSearchUrl": "https://www.fraktjakt.se/trace?locale=en",
-    "linkRules": [
-      {
-        "domains": [
-          "fraktjakt.se",
-          "www.fraktjakt.se"
-        ],
-        "pathPattern": "^/trace(?:/shipment/[0-9a-f]{32})?/?$",
-        "path": "^/trace/shipment/([0-9a-f]{32})/?$"
-      }
-    ],
-    "detectionRules": []
-  },
   "franch-express": {
     "displayName": "Franch Express",
     "color": "#ec1b24",
@@ -36821,8 +36768,7 @@
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "lalji-mulji-transport",
-      "localClocks": true
+      "adapter": "lalji-mulji-transport"
     },
     "canaryUrl": "https://lmtco.com/tracking-serices.html",
     "trackingUrlTemplate": "https://lmtco.com/tracking-serices.html",
@@ -41165,37 +41111,6 @@
           "work.mymmtl.com"
         ],
         "path": "^/track/([^/?#,;|]+)/?$"
-      }
-    ],
-    "detectionRules": []
-  },
-  "move-cargo": {
-    "displayName": "Move Cargo",
-    "color": "#ff4d1c",
-    "aliases": [
-      "Move Cargo Inc"
-    ],
-    "countries": [
-      "CA"
-    ],
-    "selectable": true,
-    "timezone": "America/Edmonton",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "move-cargo"
-    },
-    "canaryUrl": "https://movecargo.ca/track",
-    "trackingUrlTemplate": "https://movecargo.ca/track?tracking_number={trackingNumber}",
-    "trackingSearchUrl": "https://movecargo.ca/track",
-    "linkRules": [
-      {
-        "domains": [
-          "movecargo.ca"
-        ],
-        "pathPattern": "^/track/?$",
-        "params": [
-          "tracking_number"
-        ]
       }
     ],
     "detectionRules": []

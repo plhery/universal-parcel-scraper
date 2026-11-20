@@ -1,6 +1,6 @@
 import { load, type CheerioAPI } from 'cheerio';
 import { DateTime } from 'luxon';
-import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/text.js';
@@ -98,7 +98,7 @@ export function parseSmartKargoTracking(html: string, number: string, portal: Sm
   const newest = events[0];
   const summary = clean($('#lblLatestActivity').text());
   const stage = stageForWording(summary) ?? (newest?.description && stageForWording(newest.description));
-  if (!summary && !newest) throw new IndeterminateError(provider, 'The tracker returned no tracking updates');
+  if (!summary && !newest) throw new NoHistoryError(provider);
   const weight = /^(\d+(?:\.\d+)?) Kgs?$/i.exec(clean($('#lblGrossWt').text()));
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

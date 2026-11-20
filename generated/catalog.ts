@@ -7333,7 +7333,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Nuuk",
     "tracking": {
       "mode": "automatic",
-      "adapter": "air-greenland"
+      "adapter": "air-greenland",
+      "localClocks": true
     },
     "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
     "trackingUrlTemplate": "https://airgreenland.com/cargo/tracking-awb/",
@@ -7802,29 +7803,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "akr-express": {
-    "displayName": "AKR Express",
-    "color": "#d5232e",
-    "aliases": [
-      "AKR Express Parcel Service",
-      "AKR Express Parcel Service Pvt. Ltd."
-    ],
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "akr-express",
-      "localClocks": true
-    },
-    "canaryUrl": "https://akrexpress.com/",
-    "trackingUrlTemplate": "https://akrexpress.com/",
-    "trackingSearchUrl": "https://akrexpress.com/",
-    "linkRules": [],
     "detectionRules": []
   },
   "akropost": {
@@ -26614,37 +26592,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "fraktjakt": {
-    "displayName": "Fraktjakt",
-    "color": "#50852d",
-    "aliases": [
-      "Fraktjakt AB"
-    ],
-    "countries": [
-      "SE"
-    ],
-    "selectable": true,
-    "timezone": "Europe/Stockholm",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "fraktjakt",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.fraktjakt.se/trace",
-    "trackingUrlTemplate": "https://www.fraktjakt.se/trace/shipment/{trackingNumber}?locale=en",
-    "trackingSearchUrl": "https://www.fraktjakt.se/trace?locale=en",
-    "linkRules": [
-      {
-        "domains": [
-          "fraktjakt.se",
-          "www.fraktjakt.se"
-        ],
-        "pathPattern": "^/trace(?:/shipment/[0-9a-f]{32})?/?$",
-        "path": "^/trace/shipment/([0-9a-f]{32})/?$"
-      }
-    ],
-    "detectionRules": []
-  },
   "franch-express": {
     "displayName": "Franch Express",
     "color": "#ec1b24",
@@ -36825,8 +36772,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "lalji-mulji-transport",
-      "localClocks": true
+      "adapter": "lalji-mulji-transport"
     },
     "canaryUrl": "https://lmtco.com/tracking-serices.html",
     "trackingUrlTemplate": "https://lmtco.com/tracking-serices.html",
@@ -41169,37 +41115,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "work.mymmtl.com"
         ],
         "path": "^/track/([^/?#,;|]+)/?$"
-      }
-    ],
-    "detectionRules": []
-  },
-  "move-cargo": {
-    "displayName": "Move Cargo",
-    "color": "#ff4d1c",
-    "aliases": [
-      "Move Cargo Inc"
-    ],
-    "countries": [
-      "CA"
-    ],
-    "selectable": true,
-    "timezone": "America/Edmonton",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "move-cargo"
-    },
-    "canaryUrl": "https://movecargo.ca/track",
-    "trackingUrlTemplate": "https://movecargo.ca/track?tracking_number={trackingNumber}",
-    "trackingSearchUrl": "https://movecargo.ca/track",
-    "linkRules": [
-      {
-        "domains": [
-          "movecargo.ca"
-        ],
-        "pathPattern": "^/track/?$",
-        "params": [
-          "tracking_number"
-        ]
       }
     ],
     "detectionRules": []
@@ -66294,7 +66209,6 @@ export const CARRIER_IDS = [
   "akasa-air-cargo",
   "akash-ganga",
   "akis-express",
-  "akr-express",
   "akropost",
   "aks-express",
   "aland-post",
@@ -66837,7 +66751,6 @@ export const CARRIER_IDS = [
   "foxpost",
   "foz-post",
   "fragilepak",
-  "fraktjakt",
   "franch-express",
   "freight-club",
   "freightways-global",
@@ -67275,7 +67188,6 @@ export const CARRIER_IDS = [
   "morning-global",
   "motorex",
   "mountain-movers",
-  "move-cargo",
   "movicarga",
   "movin",
   "movvi",
@@ -68190,7 +68102,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "akasa-air-cargo": [],
   "akash-ganga": [],
   "akis-express": [],
-  "akr-express": [],
   "akropost": [],
   "aks-express": [],
   "aland-post": [],
@@ -68733,7 +68644,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "foxpost": ["foxpost-1","foxpost-home-delivery"],
   "foz-post": [],
   "fragilepak": ["fragilepak-1"],
-  "fraktjakt": [],
   "franch-express": [],
   "freight-club": [],
   "freightways-global": [],
@@ -69171,7 +69081,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "morning-global": ["morning-global-1"],
   "motorex": [],
   "mountain-movers": [],
-  "move-cargo": [],
   "movicarga": [],
   "movin": [],
   "movvi": [],

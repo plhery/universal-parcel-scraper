@@ -15,4 +15,4 @@ The fixture comes from the live response for the waybill linked in
 `numbers.json`. The guest tracker also returned a bound absent response,
 included as a negative fixture.
 
-`WESTJET_CARGO_TRACKING_NUMBER=83811594284 npm run test:carriers:live -- carriers/westjet-cargo`
+`WESTJET_CARGO_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/westjet-cargo`

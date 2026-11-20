@@ -17,4 +17,4 @@ carrier's order.
 The fixtures come from the carrier's published tracking example and two
 University of Copenhagen EastGRIP reports linked in `numbers.json`.
 
-`AIR_GREENLAND_TRACKING_NUMBER=63127774563 npm run test:carriers:live -- carriers/air-greenland`
+`AIR_GREENLAND_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/air-greenland`
