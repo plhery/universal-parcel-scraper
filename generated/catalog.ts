@@ -8027,6 +8027,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "alhosary-shipping": {
+    "displayName": "Alhosary International Shipping",
+    "color": "#1a3668",
+    "aliases": [
+      "Alhosary Shipping",
+      "الحصري للشحن الدولي"
+    ],
+    "countries": [
+      "EG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Cairo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "alhosary-shipping"
+    },
+    "canaryUrl": "https://alhosaryshipping.com/tracking",
+    "trackingUrlTemplate": "https://alhosaryshipping.com/tracking",
+    "trackingSearchUrl": "https://alhosaryshipping.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "alil-post": {
     "displayName": "Alil Post",
     "color": "#f68c1e",
@@ -65804,6 +65826,7 @@ export const CARRIER_IDS = [
   "alfa-transportes",
   "alfta-frakt",
   "algerie-poste",
+  "alhosary-shipping",
   "alil-post",
   "allegro-one",
   "alliance-air-freight",
@@ -67682,6 +67705,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "alfa-transportes": [],
   "alfta-frakt": [],
   "algerie-poste": ["algerie-poste-1","algerie-poste-s10","algerie-poste-ey"],
+  "alhosary-shipping": [],
   "alil-post": [],
   "allegro-one": ["allegro-one-1","allegro-one-2"],
   "alliance-air-freight": [],

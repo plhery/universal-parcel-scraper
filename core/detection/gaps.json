@@ -5577,5 +5577,10 @@
     "kind": "open",
     "carrier": "fletes-del-sur",
     "reason": "Both published PFS guides share a seven-digit shape with other carriers. The native adapter is available by explicit selection."
+  },
+  {
+    "kind": "open",
+    "carrier": "alhosary-shipping",
+    "reason": "The two public AHS examples return freight histories. The carrier remains selectable while issued format and overlaps are unconfirmed."
   }
 ]

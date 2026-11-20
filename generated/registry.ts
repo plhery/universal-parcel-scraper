@@ -25,6 +25,7 @@ import { adapter as aitWorldwide } from '../carriers/ait-worldwide/adapter.js';
 import { adapter as ajex } from '../carriers/ajex/adapter.js';
 import { adapter as akisExpress } from '../carriers/akis-express/adapter.js';
 import { adapter as algeriePoste } from '../carriers/algerie-poste/adapter.js';
+import { adapter as alhosaryShipping } from '../carriers/alhosary-shipping/adapter.js';
 import { adapter as aliexpress } from '../carriers/aliexpress/adapter.js';
 import { adapter as allegroOne } from '../carriers/allegro-one/adapter.js';
 import { adapter as alphastline } from '../carriers/alphastline/adapter.js';
@@ -930,6 +931,7 @@ export const REGISTRY: RegistryDefinition = {
     "ajex": ajex,
     "akis-express": akisExpress,
     "algerie-poste": algeriePoste,
+    "alhosary-shipping": alhosaryShipping,
     "aliexpress": aliexpress,
     "allegro-one": allegroOne,
     "alphastline": alphastline,
@@ -1881,6 +1883,7 @@ export const REGISTRY: RegistryDefinition = {
     "alfa-transportes": "universal",
     "alfta-frakt": "universal",
     "algerie-poste": "algerie-poste",
+    "alhosary-shipping": "alhosary-shipping",
     "aliexpress": "aliexpress",
     "alil-post": "universal",
     "allegro-one": "allegro-one",

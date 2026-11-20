@@ -8023,6 +8023,28 @@
       }
     ]
   },
+  "alhosary-shipping": {
+    "displayName": "Alhosary International Shipping",
+    "color": "#1a3668",
+    "aliases": [
+      "Alhosary Shipping",
+      "الحصري للشحن الدولي"
+    ],
+    "countries": [
+      "EG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Cairo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "alhosary-shipping"
+    },
+    "canaryUrl": "https://alhosaryshipping.com/tracking",
+    "trackingUrlTemplate": "https://alhosaryshipping.com/tracking",
+    "trackingSearchUrl": "https://alhosaryshipping.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "alil-post": {
     "displayName": "Alil Post",
     "color": "#f68c1e",
