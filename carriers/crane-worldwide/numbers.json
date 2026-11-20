@@ -1,5 +1,26 @@
 {
   "carrier": "crane-worldwide",
-  "gap": "Crane Worldwide publishes no number format and no public page shows one of its tracking numbers.",
-  "records": []
+  "records": [
+    {
+      "number": "MLCWGEOH10000478",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/crane-worldwide-logistics-llc",
+        "date": "2026-10-26",
+        "dateKind": "manifest run",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "house bill of lading",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The U.S. import manifest lists this as the MLCW house bill and names Crane Worldwide Logistics. Crane's public shipment search returned an empty response."
+    }
+  ]
 }

@@ -782,6 +782,12 @@
     "reason": "Twelve characters are a shape several carriers print, and nothing in the number points to CouriersPlease."
   },
   {
+    "carrier": "crane-worldwide",
+    "pattern": "^MLCW[A-Z]{4}\\d{8}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for a Crane Worldwide house bill with the MLCW carrier code."
+  },
+  {
     "carrier": "credifin",
     "pattern": "^\\d{18}$",
     "kind": "collision",
