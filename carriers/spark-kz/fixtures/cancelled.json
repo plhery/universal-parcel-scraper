@@ -1,0 +1,74 @@
+{
+  "data": {
+    "invoiceNumber": "SP00078479",
+    "predictedDate": "21.05.2022",
+    "cashSum": 0,
+    "orderId": null,
+    "paymentStatus": {
+      "id": 1,
+      "name": "Awaiting payment"
+    },
+    "statusHistory": [
+      {
+        "statusName": "Order created",
+        "statusCode": 201,
+        "state": "completed",
+        "date": null,
+        "predictDate": "25.04.2022"
+      },
+      {
+        "statusName": "Pickup cancelled",
+        "statusCode": 204,
+        "state": "canceled",
+        "date": "16.07.2022",
+        "predictDate": null
+      },
+      {
+        "statusName": "Package picked up from sender",
+        "statusCode": 203,
+        "state": "waiting",
+        "date": null,
+        "predictDate": "12.05.2022"
+      },
+      {
+        "statusName": "Cargo processing at the warehouse",
+        "statusCode": 225,
+        "state": "waiting",
+        "date": null,
+        "predictDate": "15.05.2022"
+      },
+      {
+        "statusName": "Cargo in transit",
+        "statusCode": 206,
+        "state": "waiting",
+        "date": null,
+        "predictDate": "20.05.2022"
+      },
+      {
+        "statusName": "Arrived at destination city",
+        "statusCode": 208,
+        "state": "waiting",
+        "date": null,
+        "predictDate": "20.05.2022"
+      },
+      {
+        "statusName": "Courier is delivering",
+        "statusCode": 210,
+        "state": "waiting",
+        "date": null,
+        "predictDate": "21.05.2022"
+      },
+      {
+        "statusName": "Delivered",
+        "statusCode": 211,
+        "state": "waiting",
+        "date": null,
+        "predictDate": "21.05.2022"
+      }
+    ]
+  },
+  "code": 0,
+  "success": true,
+  "message": "",
+  "errors": []
+}

@@ -1,4 +1,14 @@
 {
   "carrier": "spark-kz",
-  "entries": []
+  "entries": [
+    { "code": "201", "wording": "Order created", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The sender booked the shipment; Spark does not have it yet." },
+    { "code": "203", "wording": "Package picked up from sender", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "code": "204", "wording": "Pickup cancelled", "stage": "exception", "language": "en", "confirmedBy": "live", "note": "The service marks the step cancelled; the steps after it stay planned." },
+    { "code": "205", "wording": "Processed and waiting for dispatch", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "206", "wording": "Cargo in transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "208", "wording": "Arrived at destination city", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "210", "wording": "Courier is delivering", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "code": "211", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" },
+    { "code": "225", "wording": "Cargo processing at the warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Seen as a planned step of a freight invoice's route." }
+  ]
 }

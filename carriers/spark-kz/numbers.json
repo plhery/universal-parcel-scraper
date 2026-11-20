@@ -2,6 +2,30 @@
   "carrier": "spark-kz",
   "records": [
     {
+      "number": "SP00324369",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://2gis.kz/almaty/firm/70000001067751874/tab/reviews",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Kazakhstan parcel delivery",
+        "reportedRole": "накладная",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt-it"
+        ]
+      },
+      "note": "Customer review on Spark's 2GIS page for its Almaty branch, giving it in lower case as the waybill of a delayed delivery. Spark's tracker shows it delivered."
+    },
+    {
       "number": "SP00078479",
       "role": "shipment",
       "evidence": "public_shipment_report",
@@ -14,7 +38,7 @@
       "context": {
         "service": "Kazakhstan LTL freight",
         "reportedRole": "Номер накладной",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -23,7 +47,7 @@
           "tnt-it"
         ]
       },
-      "note": "The indexed Spark-branded freight document labels this identifier as the waybill number. Its match on the current public tracking form remains unverified."
+      "note": "The indexed Spark-branded freight document labels this identifier as the waybill number. Spark's tracker lists it with a cancelled pickup."
     }
   ]
 }

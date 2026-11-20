@@ -53808,7 +53808,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Almaty",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "spark-kz",
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://spark.kz/",
     "trackingSearchUrl": "https://spark.kz/",

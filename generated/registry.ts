@@ -711,6 +711,7 @@ import { adapter as southAfricanPostOffice } from '../carriers/south-african-pos
 import { adapter as southPost } from '../carriers/south-post/adapter.js';
 import { adapter as southeasternFreightLines } from '../carriers/southeastern-freight-lines/adapter.js';
 import { adapter as spExpress } from '../carriers/sp-express/adapter.js';
+import { adapter as sparkKz } from '../carriers/spark-kz/adapter.js';
 import { adapter as speeDee } from '../carriers/spee-dee/adapter.js';
 import { adapter as speedAndSafe } from '../carriers/speed-and-safe/adapter.js';
 import { adapter as speedaf } from '../carriers/speedaf/adapter.js';
@@ -1597,6 +1598,7 @@ export const REGISTRY: RegistryDefinition = {
     "south-post": southPost,
     "southeastern-freight-lines": southeasternFreightLines,
     "sp-express": spExpress,
+    "spark-kz": sparkKz,
     "spee-dee": speeDee,
     "speed-and-safe": speedAndSafe,
     "speedaf": speedaf,
@@ -3265,7 +3267,7 @@ export const REGISTRY: RegistryDefinition = {
     "southeastern-freight-lines": "southeastern-freight-lines",
     "southwestern-motor-transport": "universal",
     "sp-express": "sp-express",
-    "spark-kz": "universal",
+    "spark-kz": "spark-kz",
     "sped-trans": "universal",
     "spee-dee": "spee-dee",
     "speed-and-safe": "speed-and-safe",

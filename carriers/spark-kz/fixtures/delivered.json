@@ -1,0 +1,67 @@
+{
+  "data": {
+    "invoiceNumber": "SP00324369",
+    "predictedDate": "13.11.2024",
+    "cashSum": 18850,
+    "orderId": 3665,
+    "paymentStatus": {
+      "id": 2,
+      "name": "Paid"
+    },
+    "statusHistory": [
+      {
+        "statusName": "Order created",
+        "statusCode": 201,
+        "state": "completed",
+        "date": "07.11.2024",
+        "predictDate": "07.11.2024"
+      },
+      {
+        "statusName": "Package picked up from sender",
+        "statusCode": 203,
+        "state": "completed",
+        "date": "07.11.2024",
+        "predictDate": "07.11.2024"
+      },
+      {
+        "statusName": "Processed and waiting for dispatch",
+        "statusCode": 205,
+        "state": "completed",
+        "date": "07.11.2024",
+        "predictDate": "08.11.2024"
+      },
+      {
+        "statusName": "Cargo in transit",
+        "statusCode": 206,
+        "state": "completed",
+        "date": "09.11.2024",
+        "predictDate": "12.11.2024"
+      },
+      {
+        "statusName": "Arrived at destination city",
+        "statusCode": 208,
+        "state": "completed",
+        "date": "11.11.2024",
+        "predictDate": "12.11.2024"
+      },
+      {
+        "statusName": "Courier is delivering",
+        "statusCode": 210,
+        "state": "completed",
+        "date": "11.11.2024",
+        "predictDate": "13.11.2024"
+      },
+      {
+        "statusName": "Delivered",
+        "statusCode": 211,
+        "state": "completed",
+        "date": "11.11.2024",
+        "predictDate": "13.11.2024"
+      }
+    ]
+  },
+  "code": 0,
+  "success": true,
+  "message": "",
+  "errors": []
+}

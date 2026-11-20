@@ -18,17 +18,46 @@
   "timezone": "Asia/Almaty",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "spark-kz",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "eta"
+  ],
   "portal": {
     "searchUrl": "https://spark.kz/",
     "canaryUrl": "https://spark.kz/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "cod_amount",
+      "payment_details",
+      "future_milestones"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta"
+    ],
+    "discarded": [
+      "cod_amount",
+      "payment_details",
+      "future_milestones"
+    ],
+    "unavailable": [
+      "location",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []
