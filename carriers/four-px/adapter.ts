@@ -54,6 +54,9 @@ function partnerOf(card: unknown): string | undefined {
 // zone: "Order information has been transmitted to dpd." reads three seconds
 // after the +08:00 measurement, labelled +02:00.
 const TRANSMITTED = /^order information has been transmitted to /i;
+// So is its wait at the origin facility for the line haul ("Waiting for pick up"): labelled with the
+// destination's zone, it came seconds after the facility's measurement on the facility's clock.
+const WAITING_AT_ORIGIN = 'FPX_O_NM';
 
 // 4PX's own record that a returned parcel is back from the destination
 // country, written at its origin facility. It comes without a zone; on the
@@ -156,7 +159,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     const description = clean(wording.replace(QUALIFIER, ''), 500);
     const location = clean(raw.tkLocation, 200);
     const code = clean(raw.tkCode, 64);
-    const facilityClock = TRANSMITTED.test(description) || (code === BACK_FROM_ABROAD && !clean(raw.tkTimezone, 64));
+    const facilityClock = TRANSMITTED.test(description) || code === WAITING_AT_ORIGIN || (code === BACK_FROM_ABROAD && !clean(raw.tkTimezone, 64));
     const time = eventTime(facility && facilityClock ? { ...raw, tkTimezone: facility }
       : laPosteTransitCopy(raw, description, country) || ASENDIA.test(location) ? { ...raw, tkTimezone: 'UTC' } : raw);
     const key = JSON.stringify([time, description, location, code]);

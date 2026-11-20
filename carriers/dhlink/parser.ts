@@ -6,6 +6,7 @@ import { uspsRoundDelivery } from '../../core/result/round.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, firstOccurrence, isoTime, usStateTimeZone } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/text.js';
+import { gofoScanZone } from '../gofo/clock.js';
 import { isRecord } from '../../core/types.js';
 import { countryZones } from '../../places/zones.js';
 import { DHLINK_RECORD_ZONE as RECORD_ZONE, usClockReadings } from './clock.js';
@@ -65,17 +66,23 @@ const CONTACT = /(?:投递员|快递员|派送员|联系电话|电话[:：]|手�
  * `beijingClock` marks a partner whose scans DHLink relays on its own
  * Beijing clock rather than the scan's, and `hubClockPickup` one whose pickup
  * DHLink's node copies from the partner's first scan, on its hub's clock.
+ * `scanZone` gives the clock of a partner's own scan DHLink copies, by its
+ * place and wording, which wins over Beijing's.
  */
 export const DHLINK_LAST_LEGS: readonly {
   readonly carrier: string; readonly number: RegExp; readonly beijingClock?: true; readonly hubClockPickup?: true;
+  readonly scanZone?: (place: string, description: string) => string | null;
 }[] = [
   // SwiftX's own numbers: SWX and eighteen digits, the layout `swiftx-1` claims. Its
   // relayed rounds and deliveries are recorded before a US reading of their clocks.
   { carrier: 'swiftx', number: /^SWX\d{18}$/, beijingClock: true },
-  // GOFO's US waybills: GFUS and fourteen digits, the layout `gofo-1` claims. Its relayed
-  // scans come twelve hours after GOFO's own on a US reading. DHLink's pickup node gives
-  // GOFO's arrival at its regional hub, the same clock and town as GOFO's own scan.
-  { carrier: 'gofo', number: /^GFUS\d{14}$/, beijingClock: true, hubClockPickup: true },
+  // GOFO's US waybills: GFUS and fourteen digits, the layout `gofo-1` claims. DHLink's own
+  // rows of the line are on Beijing time. Its copies of GOFO's scans at a station GOFO
+  // names, and of GOFO's label, keep GOFO's digits on GOFO's clock for them: read on Beijing
+  // time they came 13 and 14 hours before GOFO's own. DHLink's pickup node gives GOFO's
+  // arrival at its regional hub, the same clock and town as GOFO's own scan.
+  { carrier: 'gofo', number: /^GFUS\d{14}$/, beijingClock: true, hubClockPickup: true,
+    scanZone: (place, description) => gofoScanZone(place.split(',')[0] ?? '', description) },
   // DPD Switzerland's parcel numbers: fourteen digits from its depots 0600 to 0619.
   { carrier: 'dpd', number: /^06[01]\d{11}$/ },
 ];
@@ -159,14 +166,16 @@ const PACTIC_ZONE = 'Europe/Budapest';
  * post office's row, or that pickup, keeps its state's when the row was
  * recorded after that reading. A row recorded before its clock could have
  * struck at the destination, in any of its zones, keeps DHLink's own Beijing
- * time. Null when either clock could be the row's.
+ * time. Null when either clock could be the row's. A partner's own scan
+ * outside China keeps the partner's clock (`partner`) when it has struck.
  */
-function scanZone(scan: Scan, destination: string, beijingClock: boolean): string | null {
+function scanZone(scan: Scan, destination: string, beijingClock: boolean, partner: string | null): string | null {
   const fits = (zone: string) => {
     const time = isoTime(scan.stamp, zone);
     return time !== null && time.timestamp <= scan.recorded + CLOCK_SKEW_MS;
   };
   if (PACTIC_ROW.test(scan.event.description ?? '')) return fits(PACTIC_ZONE) ? PACTIC_ZONE : null;
+  if (!scan.china && partner && fits(partner)) return partner;
   if (scan.china || beijingClock) return fits(RECORD_ZONE) ? RECORD_ZONE : null;
   if (scan.state && fits(scan.state)) return scan.state;
   const away = scan.state ? [scan.state] : countryZones(destination);
@@ -350,9 +359,21 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
   // Newest first, as the tracking page lists them; the clocks sort as written.
   const dated = [...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
     .map((scan) => {
-      const zone = scanZone(scan, destination, last?.leg.beijingClock === true && !(scan.hub && last.leg.hubClockPickup));
-      return { scan, place: copyPlace(scan.event), zone, time: zone ? isoTime(scan.stamp, zone) : null };
+      const partner = last?.leg.scanZone?.(scan.event.location ?? '', scan.event.description ?? '') ?? null;
+      const zone = scanZone(scan, destination, last?.leg.beijingClock === true && !(scan.hub && last.leg.hubClockPickup), partner);
+      return { scan, place: copyPlace(scan.event), zone, time: zone ? isoTime(scan.stamp, zone) : null,
+        station: partner !== null && zone === partner && !!scan.event.location };
     });
+  // The partner's scans DHLink copies without a place ("Loaded on Vehicle"), after the first that
+  // names the partner's station, are on the clock of the station row nearest them.
+  const stations = dated.filter((entry) => entry.station);
+  for (const entry of stations.length ? dated : []) {
+    if (entry.station || entry.scan.event.location || entry.scan.china || entry.scan.stamp <= stations.at(-1)!.scan.stamp) continue;
+    const gap = (other: (typeof dated)[number]) => Math.abs(Date.parse(`${other.scan.stamp}Z`) - Date.parse(`${entry.scan.stamp}Z`));
+    const zone = stations.reduce((near, other) => (gap(other) < gap(near) ? other : near)).zone!;
+    const time = isoTime(entry.scan.stamp, zone);
+    if (time && time.timestamp <= entry.scan.recorded + CLOCK_SKEW_MS) Object.assign(entry, { zone, time });
+  }
   // A US partner's scan can come twice, as UniUni's do: on its hub's wall clock, often after the
   // hub's town, and on UTC. The UTC copy's clock is the other's on a US reading, to the second,
   // before DHLink recorded either: one scan, on that US clock.

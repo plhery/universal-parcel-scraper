@@ -81,6 +81,8 @@ describe('An Post guest history', () => {
     expect(result.events?.map(event => event.time)).toEqual([undefined, undefined, undefined, undefined, undefined,
       '2026-03-05T16:03:38+00:00', '2026-03-04T14:37:34+00:00', '2026-03-02T20:12:39+00:00']);
     expect(result.events?.filter(event => event.location)).toEqual([expect.objectContaining({ provider_code: '48', location: 'SYNTHETIC MAIL CENTRE' })]);
+    // The sorting office's wording leaves an "in" where its place goes; with no place it goes too.
+    expect(result.events?.find(event => event.provider_code === '49')?.description).toBe('Your item is going to a sorting office for delivery');
     expect(JSON.stringify(result)).not.toMatch(PRIVATE);
 
     expect(fetcher).toHaveBeenCalledTimes(2);
@@ -320,6 +322,9 @@ describe('An Post guest history', () => {
     expect(JSON.stringify(missed)).not.toMatch(/UNDELIVERED/);
     expect(ahead({ status: 'Synthetic status' })).toMatchObject({ status: 'unknown', last_status_text: 'Synthetic status' });
     expect(ahead({ status: 'Synthetic status' }).current_stage).toBeUndefined();
+    // A wording that ends where the place goes reads without it when there is none.
+    expect(ahead({ status: 'Your item is leaving a sorting office for delivery in' })).toMatchObject({ status: 'in_transit',
+      last_status_text: 'Your item is leaving a sorting office for delivery' });
   });
 
   it("dates An Post's own scans on Irish time and keeps the clocks of the partner's relayed scans", () => {

@@ -27,6 +27,7 @@ export const POSTA_MOLDOVEI_EVENTS: Readonly<Record<string, Stage>> = {
   'Parvenirea la biroul de schimb de destinatie': 'in_transit',
   // Presented to customs at the office of exchange, then back from it.
   'Trimitere prezentată organelor vamale de import': 'customs',
+  'Item presented to import customs': 'customs',
   'Prezentarea la vamă': 'customs',
   'Predarea trimiterii la vama': 'customs',
   'Record item customs information (Inb)': 'customs',

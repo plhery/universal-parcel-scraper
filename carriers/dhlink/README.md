@@ -72,11 +72,14 @@ page makes.
   such as China Post's once the warehouse sent it off, is transit.
 - Clocks have no offset. DHLink records each row on Beijing time (`createDate`), seconds after
   the clock of a row scanned in China. A scan with a place in China is read on Beijing time.
-  So is every scan of a parcel whose last-leg number is GOFO's or SwiftX's: DHLink relays
-  their scans on its own clock, however late it records them. GOFO's own feed gives the same
-  instants, and SwiftX's rounds and deliveries are recorded before a US reading of their
-  clocks. DHLink's own row of GOFO's pickup (`TQ001`) is the exception when it names GOFO's
-  hub: it is GOFO's arrival there, at the hub's wall clock. A partner's copy of a scan DHLink
+  So is every scan of a parcel whose last-leg number is SwiftX's: DHLink relays its scans on its
+  own clock, however late it records them, and its rounds and deliveries are recorded before a
+  US reading of their clocks. On a GOFO line DHLink's own rows are on Beijing time too, but its
+  copies of GOFO's scans keep GOFO's digits: a scan at a station GOFO names is on that station's
+  clock, as GOFO's adapter reads it, GOFO's label on Pacific time, and a scan without a place
+  after the first station row on the clock of the station row nearest it. Read on Beijing time,
+  they came 13 and 14 hours before GOFO's own rows of the same scans. DHLink's own row of GOFO's
+  pickup (`TQ001`) names GOFO's hub: it is GOFO's arrival there, at the hub's wall clock. A partner's copy of a scan DHLink
   records can come too, on the partner's US clock, as SwiftX's hub scans do; a scan whose US
   reading is the instant of another with the same wording, in no other state, is that copy and is
   dropped. With

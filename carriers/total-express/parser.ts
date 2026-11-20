@@ -40,10 +40,12 @@ function text(row: Record<string, unknown>, key: string, maxLength = 300): strin
 /**
  * A scan's wording without the empty separators the tracker leaves around a
  * base's code: `RECEBIDO CD DE: - - SGE` reads `RECEBIDO CD DE: SGE`, and
- * `TRANSFERENCIA PARA:` with no base reads `TRANSFERENCIA PARA`.
+ * `TRANSFERENCIA PARA:` with no base reads `TRANSFERENCIA PARA`. A wording
+ * that ends where the base goes, `COLETA RECEBIDA COM NC NO CD DE`, reads
+ * without its `DE` when no base follows.
  */
 export function totalExpressWording(value: string): string {
-  return clean(value).replace(/\s*:(?:\s*[-:])+\s*/g, ': ').replace(/[\s:-]+$/, '');
+  return clean(value).replace(/\s*:(?:\s*[-:])+\s*/g, ': ').replace(/[\s:-]+$/, '').replace(/\s+DE$/i, '');
 }
 
 /**

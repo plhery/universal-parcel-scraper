@@ -112619,6 +112619,14 @@
     ]
   },
   {
+    "input": "TEST9EXAMPLE9",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "loggi"
+    ]
+  },
+  {
     "input": "TEZ886137",
     "carrier": "unknown",
     "confidence": "none",

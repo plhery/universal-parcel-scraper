@@ -101,7 +101,10 @@ describe('Correios parser', () => {
     expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([
       ['PAR/15', 'in_transit'], ['RO/01', 'in_transit'], ['PAR/04', 'customs'], ['PO/01', 'accepted'],
     ]);
-    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Objeto recebido' });
+    // The receipt's wording ends where its unit goes; with no unit the "em" goes too.
+    expect(result.events?.[0]).toMatchObject({ description: 'Objeto recebido' });
+    expect(result.events?.[0]).not.toHaveProperty('location');
   });
 
   it('requires one exact response identity and structurally complete bounded scans', () => {

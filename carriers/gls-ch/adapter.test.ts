@@ -113,7 +113,7 @@ describe('GLS Switzerland response normalization', () => {
         status: 'delivered',
         canonical_tracking_number: OFFICIAL_TEST_PARCEL_NUMBER,
         current_stage: 'delivered',
-        last_status_text: 'The parcel has been delivered. For more information, please see the detailed shipment tracking below.',
+        last_status_text: 'The parcel has been delivered.',
         last_update: null,
         expected_delivery: null,
         timezone: 'Europe/Zurich',

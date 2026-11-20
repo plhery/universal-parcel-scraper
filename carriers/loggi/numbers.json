@@ -122,6 +122,21 @@
         ]
       },
       "note": "Looked up on Loggi's own tracker, as an archived address shows; the capture was not opened."
+    },
+    {
+      "number": "TEST9EXAMPLE9",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "loggi"
+        ]
+      },
+      "note": "Made-up code in the shape of a parcel the app tracked: four letters, a digit, seven letters and a digit, which Loggi's tracker answered as the parcel's own code with its scans. No public page shows a whole code in this shape."
     }
   ]
 }

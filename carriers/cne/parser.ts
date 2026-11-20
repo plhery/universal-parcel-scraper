@@ -6,8 +6,7 @@ import { classifyWording, languageStageStatus, type Stage } from '../../core/sta
 import { explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
-import cttExpressStatuses from '../ctt-express/statuses.json' with { type: 'json' };
-import { PORTUGAL_LEG } from '../ctt-express/status.js';
+import { cttExpressRelayZone } from '../ctt-express/clock.js';
 
 const PROVIDER = 'CNE Express';
 const WORDING: Readonly<Record<string, Stage>> = {
@@ -59,19 +58,8 @@ const PARTNERS: Readonly<Record<string, string>> = {
 // scans of the step. Its other rows abroad can keep the destination's clock.
 const BEIJING_LABELS: ReadonlySet<string> = new Set(['arrived at destination', 'handled by local carrier']);
 const BEIJING = 'Asia/Shanghai';
-// CTT Express's statuses in Spain, which CNE relays as "label,explanation" two hours after CTT Express's
-// instant, to the second, whatever Madrid's offset: CTT Portugal's copies of the same scans agree with
-// CTT Express's instants, not with CNE's clock read in Madrid.
-const CTT_EXPRESS_LABELS: ReadonlySet<string> = new Set([...cttExpressStatuses.entries.map(({ wording }) => wording), 'Entregado']
-  .map((wording) => wording.toLowerCase()));
-const CTT_EXPRESS_CLOCK = 'UTC+2';
-// On a parcel bound for Portugal, CTT Express gives CTT Portugal's steps Lisbon's wall clock under
-// Madrid's offset, and CNE's copies come two hours after that instant: an hour after the scan, all year.
-// Read so, they fall on CTT Portugal's own rows to the second.
-const CTT_PORTUGAL_LABELS: ReadonlySet<string> = new Set([...cttExpressStatuses.entries
-  .filter((entry) => 'code' in entry && PORTUGAL_LEG.has(String(entry.code))).map(({ wording }) => wording), 'Entregado']
-  .map((wording) => wording.toLowerCase()));
-const CTT_PORTUGAL_CLOCK = 'UTC+1';
+// CTT Express's statuses in Spain, which CNE relays as "label,explanation", keep CTT Express's relayed
+// clock (`cttExpressRelayZone`).
 
 export function normalizeCneNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -98,10 +86,8 @@ function scanClock(value: string, description: string, portugal: boolean): { tim
     const local = wall.toISO({ includeOffset: false, suppressMilliseconds: true });
     // China keeps one offset all year: every valid wall clock is an instant there.
     if (BEIJING_LABELS.has(labelOf(description).toLowerCase())) return { time: isoTime(local, BEIJING)!.iso };
-    const relayed = description.includes(',') ? commaLabelOf(description).toLowerCase() : '';
-    if (CTT_EXPRESS_LABELS.has(relayed)) {
-      return { time: isoTime(local, portugal && CTT_PORTUGAL_LABELS.has(relayed) ? CTT_PORTUGAL_CLOCK : CTT_EXPRESS_CLOCK)!.iso };
-    }
+    const relayed = description.includes(',') ? cttExpressRelayZone(commaLabelOf(description), portugal) : null;
+    if (relayed) return { time: isoTime(local, relayed)!.iso };
     return { local_time: local };
   }
   return value ? { provider_time_text: value } : {};

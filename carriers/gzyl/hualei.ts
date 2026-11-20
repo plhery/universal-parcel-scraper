@@ -59,7 +59,7 @@ export interface HualeiTenant {
    */
   readonly clock?: (row: HualeiRow, rows: readonly HualeiRow[]) => 'platform' | 'wall' | 'day';
   /**
-   * Whether a row's wording repeats another's, at the same clock, place and
+   * Whether a row's wording repeats another's, in the same minute, place and
    * kind, with more around it: the row then counts once, as the other. Two rows
    * that repeat each other are one row written twice: the one the reply lists
    * last, its first record, stays.
@@ -363,7 +363,8 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
     } });
   });
   const { repeats } = tenant;
-  const unrepeated = repeats ? kept.filter((entry) => !kept.some((other) => other !== entry && other.clock === entry.clock
+  // A repeat can come seconds apart: meso-global's DHL rows are to the minute, the destination post's to the second.
+  const unrepeated = repeats ? kept.filter((entry) => !kept.some((other) => other !== entry && other.clock.slice(0, 16) === entry.clock.slice(0, 16)
     && other.event.location === entry.event.location && other.event.provider_code === entry.event.provider_code
     && repeats(entry.event.description!, other.event.description!)
     && (other.index > entry.index || !repeats(other.event.description!, entry.event.description!)))) : kept;

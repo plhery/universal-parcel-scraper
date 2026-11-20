@@ -83,7 +83,9 @@ rendered status, after that wait.
   the full direct timeout and hits the same block.
 - Each scan's `actCode` is kept as `provider_code` and mapped to a stage
   ([statuses.json](statuses.json)). One wording can cover two codes: `OR` and `AR` both read
-  "Arrived at Facility". An unmapped code gets no stage; the sync classifies its wording.
+  "Arrived at Facility". One code can cover two steps: `DP` worded "Order Processed: In Transit to
+  UPS" is the parcel on its way to UPS before its first scans, read as accepted like `AG`, not a
+  departure. An unmapped code gets no stage; the sync classifies its wording.
   A scan UPS sends with an empty code, like the clearing agency's customs note, is read only
   by its whole wording as the map records it.
 - The newest scan's code sets the current stage and status. `progressBarType`, then the

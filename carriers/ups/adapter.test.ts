@@ -419,6 +419,16 @@ describe('UPS structured response', () => {
         ['OT', 'out_for_delivery'], ['AR', 'in_transit'], ['PU', 'accepted']]);
   });
 
+  it('reads the parcel on its way to UPS, under DP, as UPS having it, so its origin scans are no step back', () => {
+    const toUps = parseUPSTrackingResponse(withScans([
+      scan('OR', 'Arrived at Facility', '20261020 21:07:00'),
+      scan('AG', 'Package is in transit to a UPS facility', '20261016 09:57:00'),
+      scan('DP', 'Order Processed: In Transit to UPS', '20261016 02:01:00'),
+    ]), TRACKING_NUMBER, TODAY);
+    expect(toUps.events?.map((event) => [event.provider_code, event.stage])).toEqual([['OR', 'accepted'], ['AG', 'accepted'], ['DP', 'accepted']]);
+    expect(upsActivityStage('DP', 'Departed from Facility')).toBe('in_transit');
+  });
+
   it("writes a delivery's place in capitals and codes as the page writes its other scans'", () => {
     const places = (...locations: string[]) => parseUPSTrackingResponse(withScans(locations.map((location, index) =>
       scan(index ? 'AR' : 'KB', index ? 'Arrived at Facility' : 'Delivered', `2026080${6 - index} 15:50:00`, location))), TRACKING_NUMBER, TODAY)

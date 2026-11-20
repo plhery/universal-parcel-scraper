@@ -142,13 +142,15 @@ export function parseCorreios(payload: unknown, number: string, requestBound = f
     if (!/^[A-Z]{2,4}$/.test(code) || !/^\d{2}$/.test(subtype) || !description) throw new SchemaError('Correios', 'Correios returned an incomplete scan');
     const providerCode = `${code}/${subtype}`;
     const location = unitPlace(row);
+    // A wording that ends where the unit goes, "Objeto recebido em", reads without it when the reply names no unit.
+    const shown = location ? description : description.replace(/\s+em$/, '');
     const sent = !location && index > inBrazil && (ABROAD.test(providerCode) || TRANSFERS.has(providerCode));
     const clock = scanClock(row.dtHrCriado, sent ? originZone : undefined, originBasis);
-    const key = `${clock.time ?? clock.local_time ?? clock.provider_time_text ?? ''}\u0000${providerCode}\u0000${description}\u0000${location}`;
+    const key = `${clock.time ?? clock.local_time ?? clock.provider_time_text ?? ''}\u0000${providerCode}\u0000${shown}\u0000${location}`;
     if (seen.has(key)) continue;
     seen.add(key);
     const mapped = classifyCorreiosScan(providerCode, description);
-    events.push({ description, provider_code: providerCode, ...clock, ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) });
+    events.push({ description: shown, provider_code: providerCode, ...clock, ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) });
   }
   if (!events.length) throw new IndeterminateError('Correios', 'Correios returned no tracking scans');
   laterPostingsInTransit(events);

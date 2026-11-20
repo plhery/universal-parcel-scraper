@@ -46,7 +46,8 @@ inconclusive and carry the portal’s message in lookup diagnostics. The deliver
 shows it: for an object in transit that it does not mark as late. The service is the
 product category the portal names, such as SEDEX. A unit's place is its town and state
 followed by `BR`, since a state code alone reads as a country (PR as Puerto Rico, ES as
-Spain). Addresses, recipients, proof images and tokens are excluded.
+Spain). A receipt worded to end with its unit, "Objeto recebido em", reads "Objeto recebido"
+when the reply gives the unit no address. Addresses, recipients, proof images and tokens are excluded.
 
 Mail from abroad keeps the S10 number of the post that sent it. The portal lists that post's
 posting, office of exchange and dispatch (a transfer without a Brazilian unit, before the

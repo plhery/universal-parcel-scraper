@@ -158,10 +158,16 @@ export function isUpsReturnStart(code: string | undefined, description = ''): bo
   return (normalized === 'ZC' && RETURN_REQUESTED.test(description)) || (normalized === '49' && RETURN_STARTED.test(description));
 }
 
+// The parcel on its way to UPS, as UPS words it under DP before its "in transit to a UPS facility" (AG) and origin scans:
+// no departure from a UPS facility, so it reads as AG does.
+const TO_UPS = /^order processed: in transit to ups\b/i;
+
 /** The stage a scan's `actCode` stands for, or undefined when the code is not mapped. */
 export function upsActivityStage(code: string, description = ''): Stage | undefined {
   if (isUpsReturnStart(code, description)) return 'exception';
-  return ACTIVITY_STAGES.get(code.trim().toUpperCase());
+  const normalized = code.trim().toUpperCase();
+  if (normalized === 'DP' && TO_UPS.test(description.trim())) return 'accepted';
+  return ACTIVITY_STAGES.get(normalized);
 }
 
 /**

@@ -118,9 +118,19 @@ describe('Loggi routing and transport', () => {
     expect(validTrackingNumber('TESTCODE')).toBe(true);
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['loggi']) });
     expect(loggiTrackingUrl(NUMBER)).toBe(`https://app.loggi.com/rastreador/${NUMBER}`);
-    for (const number of ['TEST123', 'TEST12345', 'TEST/123', 'TEST1234'.repeat(20)]) {
+    for (const number of ['TEST123', 'TEST12345', 'TEST/123', 'TEST1234'.repeat(20), 'TEST9EXAMPL99', 'TES99EXAMPLE9', 'TEST9EXAMPLE']) {
       expect(() => normalizeLoggiNumber(number)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
+  });
+
+  it('accepts and binds the thirteen-character code of four letters, a digit, seven letters and a digit', () => {
+    const code = 'TEST9EXAMPLE9';
+    expect(normalizeLoggiNumber(' test9 example9 ')).toBe(code);
+    expect(loggiTrackingUrl(code)).toBe(`https://app.loggi.com/rastreador/${code}`);
+    expect(detectCarrierMatch(code)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['loggi'] });
+    const data = { ...shipment(), trackingCode: { loggi: code, correios: '$undefined' } };
+    expect(parseLoggi(html(data, { number: code }), code)).toMatchObject({ status: 'delivered' });
+    expect(() => parseLoggi(html(data, { number: code }), 'TEST9EXAMPLF9')).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
   it('uses the supplied browser transport, cancellation signal and remaining budget', async () => {

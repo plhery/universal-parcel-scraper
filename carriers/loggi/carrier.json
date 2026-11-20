@@ -35,10 +35,11 @@
       "domains": [
         "app.loggi.com"
       ],
-      "path": "^/rastreador/([A-Za-z0-9]{8})/?$"
+      "path": "^/rastreador/([A-Za-z0-9]{8}|[A-Za-z]{4}[0-9][A-Za-z]{7}[0-9])/?$"
     }
   ],
   "detection": [
-    { "id": "loggi-1", "pattern": "^(?=[A-Z0-9]*[A-Z])[A-Z0-9]{8}$", "confidence": "low" }
+    { "id": "loggi-1", "pattern": "^(?=[A-Z0-9]*[A-Z])[A-Z0-9]{8}$", "confidence": "low" },
+    { "id": "loggi-2", "pattern": "^[A-Z]{4}\\d[A-Z]{7}\\d$", "confidence": "low" }
   ]
 }

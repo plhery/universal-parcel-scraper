@@ -46,8 +46,12 @@ to the destination carrier's scans.
   processing is a notice on the stage of the record before it. HuaHan's own scans,
   in China and at the destination airport, stay local times. CTT Express's notice of the parcel coming (`Pendiente de recepción en CTT
   Express`), relayed before the hand-off, is on CTT Express's own clock, Madrid's, on parcels
-  bound for Portugal too: read so, it falls minutes after HuaHan's arrival scan in China, and
-  hours before it on China's clock or an hour after it on Lisbon's.
+  bound for Portugal too: read so, it falls minutes after HuaHan's arrival scan in China, in
+  winter too, and hours before it on China's clock or an hour after it on Lisbon's. The clock
+  CNE and JS Express relay CTT Express's statuses on, two hours after its instant all year, would
+  put it an hour before the arrival in winter. DHL Paket's rows relayed before the hand-off, which
+  name no place, are on Germany's clock: on the Chinese warehouse's they came seven hours before
+  DHL's own rows of the same steps.
 - The reply can list a destination carrier's scan twice at the same minute: in that carrier's
   words at its place, and in HuaHan's generic words without one. The placed line stays, with
   the generic line's code when it came without one, so it keeps the code's stage.

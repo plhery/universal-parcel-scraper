@@ -632,6 +632,16 @@ describe('JS Express tracking adapter', () => {
       '2026-11-13T10:27:40-06:00', '2026-11-07T08:20:54-06:00', '2026-11-07T08:20:54-06:00']);
   });
 
+  it("reads CTT Express's statuses two hours after their instant, whatever Madrid's offset or the row's", () => {
+    const result = parseJsExpress(waybill([
+      { ...row('2026-03-12 16:20:31', '', 'Entregado'), timeZone: '+01:00' },
+      row('2026-03-12 09:41:07', '', 'En reparto'),
+      row('2026-03-02 15:12:44', '', 'Pendiente de recepción en CTT Express'),
+    ], { country: 'Spain' }), DELIVERED);
+    expect(result.events?.map((event) => event.time ?? event.local_time)).toEqual([
+      '2026-03-12T16:20:31+02:00', '2026-03-12T09:41:07+02:00', '2026-03-02T15:12:44+02:00']);
+  });
+
   it("dates a row without a place on the destination's one clock when the offset it states is that clock's, and keeps its code", () => {
     const stated = (date: string, address: string, status: string, timeZone: string, code?: string): Row & { code?: string } =>
       ({ ...row(date, address, status), timeZone, ...(code ? { code } : {}) });

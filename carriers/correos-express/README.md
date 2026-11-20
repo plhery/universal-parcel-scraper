@@ -16,8 +16,8 @@ Alongside it, one GET reads the same history from the Correos group's keyless
 localizador (`localizador.correos.es/canonico/eventos_envio_servicio/{number}`),
 which correos.es's own tracker reads. It gives each scan its clock to the
 second and a situation code such as `X060000V`, but no locality. The form stays
-the primary source: the localizador adds seconds, codes and missing
-explanations to its rows. When the form fails, or answers for a shipment it has
+the primary source: the localizador adds codes and missing explanations to its
+rows. When the form fails, or answers for a shipment it has
 forgotten, the localizador's history answers alone, without localities or
 instants.
 
@@ -73,10 +73,10 @@ hub the parcel leaves for, so that minute is dated only when all its places
 keep one clock.
 Scans of the Canary Islands, whose clock no archived page settles, keep their
 wall clock, as do places both countries name, other towns and the localizador's
-scans without a locality. An instant is to the minute the form shows: the
-localizador's seconds come and go with its availability, and a scan must keep
-one instant from one check to the next. Scans that keep their wall clock take
-the localizador's seconds. The newest scan's instant is the last update, and
+scans without a locality. A form row keeps the minute the form shows, as an
+instant or as a wall clock: the localizador's seconds come and go with its
+availability, and a consumer dates a wall clock, so a scan must keep one clock
+from one check to the next. The newest scan's instant is the last update, and
 the delivery's when it is the newest scan.
 Calendar estimates retain date-only precision while the delivery is active;
 estimates older than the latest scan are omitted. A rescheduled round does not establish dispatch.

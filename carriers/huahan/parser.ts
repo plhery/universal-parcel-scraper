@@ -8,6 +8,7 @@ import { languageStageStatus, type ClassifiedWording, type Stage } from '../../c
 import { countryCode, countryTimeZone, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
+import { DHL_PAKET_ROW, DHL_PAKET_ZONE } from '../dhl/paket-rows.js';
 import { huahanNotice, huahanStage } from './status.js';
 
 export const PROVIDER = 'HuaHan Logistics';
@@ -106,12 +107,16 @@ function withoutGenericCopies(scans: Scan[]): Scan[] {
 }
 
 /**
- * CTT Express's notice of the parcel coming, relayed before the hand-off, keeps CTT Express's own
- * clock, Madrid's, on parcels bound for Portugal too: read so, each notice fell minutes after HuaHan's
- * arrival scan in China.
+ * A partner's row HuaHan relays at the partner's own clock before the hand-off, where the scans
+ * around it would lend it the Chinese warehouse's. CTT Express's notice of the parcel coming keeps
+ * Madrid's, on parcels bound for Portugal too: read so, each notice fell minutes after HuaHan's arrival
+ * scan in China, in winter too, where the clock CNE and JS Express relay CTT Express's statuses on
+ * (`cttExpressRelayZone`) put it an hour before. DHL Paket's rows keep Germany's: read on Beijing time,
+ * they came seven hours before DHL's own rows of the same steps.
  */
 const CTT_NOTICE = 'pendiente de recepción en ctt express';
-const CTT_ZONE = 'Europe/Madrid';
+const partnerZone = (description: string): string | null =>
+  description.toLowerCase() === CTT_NOTICE ? 'Europe/Madrid' : DHL_PAKET_ROW.test(description) ? DHL_PAKET_ZONE : null;
 
 /**
  * Landmark Global's page writes every scan's clock in US Central time, wherever the scan was, and
@@ -125,12 +130,6 @@ const LANDMARK_ZONE = 'America/Chicago';
 const LANDMARK_OWN = new Set(['shipment data uploaded', 'incoming scan at facility', 'outgoing scan at facility']);
 /** Its record of the sender's data and its processing, relayed without a code before the hand-off. */
 const LANDMARK_MANIFEST = new Set(['shipment data uploaded', 'processed']);
-
-function partnerClock(event: CarrierEvent): CarrierEvent {
-  if (!event.local_time || event.time || event.description?.toLowerCase() !== CTT_NOTICE) return event;
-  const time = isoTime(event.local_time, CTT_ZONE)?.iso;
-  return time ? { ...event, time, time_zone: CTT_ZONE, time_zone_basis: 'carrier' } : event;
-}
 
 /**
  * A reply with `ask: 0`, from the lookup or from the verification it opens. The hourly cap
@@ -213,11 +212,16 @@ export function parseHuahan(payload: unknown, raw: string): CarrierResult {
   const zone = landmark ? LANDMARK_ZONE : handedOver > 0 && country ? countryTimeZone(country) : null;
   const relayed = (event: CarrierEvent, index: number) => index < handedOver
     || (landmark && !event.provider_code && LANDMARK_MANIFEST.has(event.description!.toLowerCase()));
-  const placed = (zone ? events.map(({ local_time, ...event }, index): CarrierEvent => {
-    const time = relayed(event, index) ? isoTime(local_time, zone)?.iso : undefined;
+  const placed = events.map(({ local_time, ...event }, index): CarrierEvent => {
+    const partner = landmark || !local_time ? null : partnerZone(event.description!);
+    if (partner) {
+      const time = isoTime(local_time, partner)?.iso;
+      return time ? { local_time, time, ...event, time_zone: partner, time_zone_basis: 'carrier' } : { local_time, ...event };
+    }
+    const time = zone && relayed(event, index) ? isoTime(local_time, zone)?.iso : undefined;
     if (!time) return { local_time, ...event };
-    return landmark ? { local_time, time, ...event, time_zone: zone, time_zone_basis: 'carrier' } : { time, ...event };
-  }) : events).map(partnerClock);
+    return landmark ? { local_time, time, ...event, time_zone: zone!, time_zone_basis: 'carrier' } : { time, ...event };
+  });
   const latest = placed[0]!;
   return { status: current ? languageStageStatus(current.stage) : 'unknown',
     ...(current ? { current_stage: current.stage, current_stage_source: current.source } : {}),

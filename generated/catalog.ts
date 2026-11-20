@@ -39072,12 +39072,16 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "domains": [
           "app.loggi.com"
         ],
-        "path": "^/rastreador/([A-Za-z0-9]{8})/?$"
+        "path": "^/rastreador/([A-Za-z0-9]{8}|[A-Za-z]{4}[0-9][A-Za-z]{7}[0-9])/?$"
       }
     ],
     "detectionRules": [
       {
         "pattern": "^(?=[A-Z0-9]*[A-Z])[A-Z0-9]{8}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^[A-Z]{4}\\d[A-Z]{7}\\d$",
         "confidence": "low"
       }
     ]
@@ -48476,7 +48480,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Posta Moldovei",
       "Moldova Post",
-      "Post of Moldova"
+      "Post of Moldova",
+      "Moldavia Post"
     ],
     "countries": [
       "MD"
@@ -70741,7 +70746,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lm-parcel": ["lm-parcel-1"],
   "loadmaster-no": [],
   "logen": [],
-  "loggi": ["loggi-1"],
+  "loggi": ["loggi-1","loggi-2"],
   "logisimple": [],
   "logista-parcel": [],
   "logistica-alatec": [],

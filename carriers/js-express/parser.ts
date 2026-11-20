@@ -10,6 +10,8 @@ import { calendarDay, canadaProvinceTimeZone, countryCode, isoTime, usStateTimeZ
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { hasSeveralClocks, mainZone } from '../../places/zones.js';
+import { cttExpressRelayZone } from '../ctt-express/clock.js';
+import { DHL_PAKET_ROW } from '../dhl/paket-rows.js';
 import { jsExpressChinaClock } from './clock.js';
 import { imileReceiver } from '../imile/parser.js';
 import { IMILE_RECEIVER, LIST_PLACE, RECEIVER } from './identity.js';
@@ -36,10 +38,6 @@ const REFUSED = '非法请求';
 const REFUSAL = /^\s*\{\s*"code"\s*:\s*1\s*,\s*"message"\s*:\s*"非法请求"\s*\}(?=\s*\{)/;
 // The image captcha the Chinese page's lookup asks for, should this one ask it too.
 const CAPTCHA = /验证码/;
-// DHL Paket's rows in its English, as a German parcel's history relays them: its advice of the
-// parcel's data, its record of the parcel on its way to it, its first scan in Germany and its
-// transport to the delivery base.
-const DHL_PAKET_ROW = /^The (?:instruction data for this shipment have been provided by the sender to DHL electronically|shipment is in transit to DHL|shipment has been processed in the parcel center of origin|shipment arrived in the region of recipient and will be transported to the delivery base in the next step)\.?$/;
 // A firewall or bot check's page, which can come back with HTTP 200.
 const BLOCKED = /_cf_chl_opt|cf-turnstile|<title>\s*(?:Just a moment|Attention Required|Access denied)|g-recaptcha|geetest/i;
 // A run of nine or more digits, with the separators phone numbers are written with; a date stays.
@@ -155,7 +153,7 @@ function canadianTown(location: string, label: string): boolean {
  * without a state: the delivering office's arrival, the round, the delivery
  * and the rest that do not name USPS, and those that came on a whole minute.
  * In a history whose USPS scans to the second name their towns "Town,ST", USPS's
- * rows are on their place's clock instead, and only its labels on UTC.
+ * rows are on their place's clock instead, labels included.
  * Null otherwise: airports' codes, other rows without a place and other
  * couriers' rows.
  */
@@ -327,8 +325,10 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     : seconds.length ? 'utc' : null;
   const receivers = new Map<CarrierEvent, string>();
   const events = scans.map(({ local, label, description, whole, location, offset, code }): CarrierEvent => {
-    const stated = statedInstant(local, offset, description);
-    const zone = stated ? null : scanZone(local, description, location, label, straightship, uspsFeed);
+    // CTT Express's statuses come at the clock Chinese lines relay them on, whatever offset the row states.
+    const ctt = cttExpressRelayZone(description, country === 'PT');
+    const stated = ctt ? null : statedInstant(local, offset, description);
+    const zone = stated ? null : ctt ?? scanZone(local, description, location, label, straightship, uspsFeed);
     const time = stated ?? (zone ? isoTime(local, zone)?.iso : !location ? destinationInstant(local, offset, country) : undefined);
     const staged = jsExpressStage(description, code);
     const event: CarrierEvent = {
