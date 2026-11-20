@@ -13,13 +13,13 @@
       },
       "context": {
         "reportedRole": "shipment barcode",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "A Şikayetvar customer quotes a Yol Kargo dispatch text with the shipment barcode and the carrier’s tracking link. The carrier tracker’s TLS certificate could not be verified."
+      "note": "A Şikayetvar customer quotes a Yol Kargo dispatch text with the shipment barcode and the carrier’s tracking link. Yol Kargo’s lookup hands it to Aras Kargo, whose tracker returns the shipment."
     },
     {
       "number": "950443351",
@@ -33,7 +33,7 @@
       },
       "context": {
         "reportedRole": "shipment number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -44,7 +44,7 @@
           "xpo-ltl"
         ]
       },
-      "note": "A Şikayetvar customer names Yol Kargo and gives the shipment number when reporting a delay. The carrier tracker’s TLS certificate could not be verified."
+      "note": "A Şikayetvar customer names Yol Kargo and gives the shipment number when reporting a delay. Yol Kargo’s own shipment page returns its movements."
     }
   ]
 }

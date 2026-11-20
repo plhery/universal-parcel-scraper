@@ -1,4 +1,33 @@
 {
   "carrier": "yol-kargo",
-  "entries": []
+  "entries": [
+    {
+      "wording": "KARGO YOLA ÇIKTI",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "live",
+      "note": "The shipment left a branch or a transfer centre; it repeats at each leg."
+    },
+    {
+      "wording": "TESLİMAT ŞUBESİNDE",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "live",
+      "note": "At the branch that delivers the shipment."
+    },
+    {
+      "wording": "DAĞITIMA ÇIKTI",
+      "stage": "out_for_delivery",
+      "language": "tr",
+      "confirmedBy": "live",
+      "note": "Out for delivery."
+    },
+    {
+      "wording": "TESLİM GİRİŞİ",
+      "stage": "delivered",
+      "language": "tr",
+      "confirmedBy": "live",
+      "note": "The delivery entered at the branch, the last movement of a delivered shipment."
+    }
+  ]
 }

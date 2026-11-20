@@ -866,6 +866,7 @@ import { statusMap as yunexpress } from '../../carriers/yunexpress/status.js';
 import { statusMap as yusuda } from '../../carriers/yusuda/status.js';
 import { statusMap as yilongLogistics } from '../../carriers/yilong-logistics/status.js';
 import { statusMap as yurticiKargo } from '../../carriers/yurtici-kargo/status.js';
+import { statusMap as yolKargo } from '../../carriers/yol-kargo/status.js';
 import { statusMap as yypost } from '../../carriers/yypost/status.js';
 import { statusMap as zajil } from '../../carriers/zajil/status.js';
 import { statusMap as zeleris } from '../../carriers/zeleris/status.js';
@@ -1105,6 +1106,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bob-go': bobGo, dypaq, navex,
   'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ots-astracon': otsAstracon,
   'cesco-logistics': cescoLogistics, 'rosalia-express': rosaliaExpress, 'icasa-cargo': icasaCargo, 'flow-progressive-logistics': flowProgressiveLogistics, parcelninja, cootranstame, paqmex, 'astral-aviation': astralAviation, 'ibex-express-bo': ibexExpressBo, redecarga, 'paqueteria-vencedor': paqueteriaVencedor,
+  'yol-kargo': yolKargo, 'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
 };
 
 /** The carrier the app files the universal providers' scans under. */

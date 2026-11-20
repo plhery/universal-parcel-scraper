@@ -6016,5 +6016,11 @@
     "pattern": "^[1-9][0-9]{6,7}$",
     "kind": "by_design",
     "reason": "Golilla's shipment numbers are a counter of seven digits, a length many carriers share, so no rule claims them."
+  },
+  {
+    "carrier": "yol-kargo",
+    "pattern": "^950\\d{6}$",
+    "kind": "open",
+    "reason": "Two public shipment reports give nine-digit Yol Kargo numbers beginning with 950, and Yol Kargo's lookup returns both. Detection does not offer Yol Kargo for either number."
   }
 ]
