@@ -99828,6 +99828,12 @@
     "candidates": []
   },
   {
+    "input": "MEDU7654321",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "MES003170038166",
     "carrier": "unknown",
     "confidence": "none",
@@ -100427,6 +100433,12 @@
     "asked": [
       "muser"
     ]
+  },
+  {
+    "input": "MSCU1234567",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "MTDE-664743441",
@@ -111010,6 +111022,12 @@
     "asked": [
       "dhlink"
     ]
+  },
+  {
+    "input": "TDV-DEMO0001",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "TE1000000010936808NGUS",

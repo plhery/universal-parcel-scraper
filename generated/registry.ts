@@ -824,6 +824,7 @@ import { adapter as totalExpress } from '../carriers/total-express/adapter.js';
 import { adapter as toyou } from '../carriers/toyou/adapter.js';
 import { adapter as trackon } from '../carriers/trackon/adapter.js';
 import { adapter as tracxLogis } from '../carriers/tracx-logis/adapter.js';
+import { adapter as tradivaLogistics } from '../carriers/tradiva-logistics/adapter.js';
 import { adapter as tramaco } from '../carriers/tramaco/adapter.js';
 import { adapter as transaher } from '../carriers/transaher/adapter.js';
 import { adapter as transcorp } from '../carriers/transcorp/adapter.js';
@@ -1741,6 +1742,7 @@ export const REGISTRY: RegistryDefinition = {
     "toyou": toyou,
     "trackon": trackon,
     "tracx-logis": tracxLogis,
+    "tradiva-logistics": tradivaLogistics,
     "tramaco": tramaco,
     "transaher": transaher,
     "transcorp": transcorp,
@@ -3493,6 +3495,7 @@ export const REGISTRY: RegistryDefinition = {
     "trackon": "trackon",
     "tracopa": "universal",
     "tracx-logis": "tracx-logis",
+    "tradiva-logistics": "tradiva-logistics",
     "tramaco": "tramaco",
     "trans-express-lk": "universal",
     "trans-o-flex": "universal",

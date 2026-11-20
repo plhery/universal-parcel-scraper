@@ -58990,6 +58990,30 @@
       }
     ]
   },
+  "tradiva-logistics": {
+    "displayName": "Tradiva Logistics",
+    "color": "#183553",
+    "aliases": [
+      "Tradiva",
+      "تراديفا للخدمات اللوجستية",
+      "تراديفا"
+    ],
+    "countries": [
+      "EG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Cairo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tradiva-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tradivalogistics.com/tracking-1/",
+    "trackingUrlTemplate": "https://tradivalogistics.com/tracking-1/",
+    "trackingSearchUrl": "https://tradivalogistics.com/tracking-1/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tramaco": {
     "displayName": "Tramaco Express",
     "color": "#2a52f3",

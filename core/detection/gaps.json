@@ -5637,5 +5637,10 @@
     "kind": "open",
     "carrier": "cpx-guatemala",
     "reason": "CPX confirms its one published FGUA reference. Explicit selection is available while issuance, printed segments and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "tradiva-logistics",
+    "reason": "The public tracker confirms a labelled Tradiva demo under its own reference and container aliases. Explicit selection is available while issued number formats and overlaps remain open."
   }
 ]

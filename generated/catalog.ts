@@ -58994,6 +58994,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "tradiva-logistics": {
+    "displayName": "Tradiva Logistics",
+    "color": "#183553",
+    "aliases": [
+      "Tradiva",
+      "تراديفا للخدمات اللوجستية",
+      "تراديفا"
+    ],
+    "countries": [
+      "EG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Cairo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tradiva-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tradivalogistics.com/tracking-1/",
+    "trackingUrlTemplate": "https://tradivalogistics.com/tracking-1/",
+    "trackingSearchUrl": "https://tradivalogistics.com/tracking-1/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tramaco": {
     "displayName": "Tramaco Express",
     "color": "#2a52f3",
@@ -67582,6 +67606,7 @@ export const CARRIER_IDS = [
   "trackon",
   "tracopa",
   "tracx-logis",
+  "tradiva-logistics",
   "tramaco",
   "trans-express-lk",
   "trans-o-flex",
@@ -69472,6 +69497,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trackon": [],
   "tracopa": [],
   "tracx-logis": ["tracx-logis-1"],
+  "tradiva-logistics": [],
   "tramaco": [],
   "trans-express-lk": [],
   "trans-o-flex": [],
