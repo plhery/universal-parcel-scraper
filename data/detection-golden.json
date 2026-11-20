@@ -114433,6 +114433,30 @@
     ]
   },
   {
+    "input": "o1983692063",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fercam",
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
+    "input": "o2001531786",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fercam",
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "oto21591938440021471",
     "carrier": "unknown",
     "confidence": "none",
