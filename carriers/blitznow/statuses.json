@@ -1,4 +1,37 @@
 {
   "carrier": "blitznow",
-  "entries": []
+  "entries": [
+    {"wording": "Awb Generated", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "Status the tracker's script places on its first step, Order Placed."},
+    {"wording": "Shipment Created", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "Placed on the first step, Order Placed, by the tracker's script."},
+    {"wording": "Order Assigned", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "Placed on the first step, Order Placed, by the tracker's script."},
+    {"wording": "Out for Pickup", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "A rider is on the way to the seller; placed on the first step by the tracker's script."},
+    {"wording": "Pickup Failed", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "A failed collection from the seller, before Blitz has the parcel; placed on the first step by the tracker's script."},
+    {"wording": "To be Picked", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "Placed on the first step, Order Placed, by the tracker's script."},
+    {"wording": "Packed", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "Packed at the seller's store; placed on the first step by the tracker's script."},
+    {"wording": "Picked from Rack", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "Taken off the seller's rack; placed on the first step by the tracker's script."},
+    {"wording": "Picked-up", "stage": "accepted", "language": "en", "confirmedBy": "bundle", "note": "Collected from the seller; the tracker's Shipped step."},
+    {"wording": "Shipped", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A step label of the tracker's script."},
+    {"wording": "In-Transit", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"wording": "Reached Destination City", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"wording": "Reached Nearest Hub", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"wording": "Delivery Delay", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The tracker keeps the parcel on its In-Transit step and marks it late."},
+    {"wording": "Transit Damage", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "Damaged on the way; the tracker keeps it on its In-Transit step."},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle"},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Failed Delivered", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "The tracker shows Delivery Failed with the attempt's number."},
+    {"wording": "Failed & Action Required", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "A failed attempt for which the tracker asks the recipient to act."},
+    {"wording": "Failed Delivered Non-RTO", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "A failed attempt that does not send the parcel back."},
+    {"wording": "NDR Initiated", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "After a failed attempt; the tracker shows Re-attempt Scheduled."},
+    {"wording": "Cancelled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The tracker shows Order Cancelled, the parcel going back to the seller."},
+    {"wording": "RTO Initiated", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "Return to origin; the tracker shows Marked for Return."},
+    {"wording": "RTO Freeze", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "Return to origin; the tracker shows Marked for Return."},
+    {"wording": "RTO In-Transit", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "On its way back to the seller; the tracker shows Returned to Shipper."},
+    {"wording": "RTO Out for Delivery", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "Out for delivery back to the seller; the tracker shows Returned to Shipper."},
+    {"wording": "RTO Delivered", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "Back with the seller."},
+    {"wording": "RTO Not Delivered", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "The return to the seller failed; the tracker shows Returned to Shipper."},
+    {"wording": "RTO Delivery Delay", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "A late return to the seller; the tracker shows Returned to Shipper."},
+    {"wording": "Lost", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The tracker shows Pending with Shipper."},
+    {"wording": "Damaged", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The tracker shows Pending with Shipper."},
+    {"wording": "Status Not Defined", "language": "en", "confirmedBy": "bundle", "note": "The tracker's placeholder for a status without a name; it moves nothing."}
+  ]
 }

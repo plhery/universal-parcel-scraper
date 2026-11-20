@@ -406,6 +406,12 @@
     "reason": "An alternative tracking number that Big Smart's tracker accepts beside its own; its shape comes from one shipper's system, so no rule claims it."
   },
   {
+    "carrier": "blitznow",
+    "pattern": "^GS\\d{10}$",
+    "kind": "open",
+    "reason": "Blitz's own numbers; other carriers' rules take the same shape, and that Blitz alone issues it is not established."
+  },
+  {
     "carrier": "blue-express",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

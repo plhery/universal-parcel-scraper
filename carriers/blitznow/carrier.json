@@ -17,18 +17,47 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "blitznow",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "eta",
+    "delivered_at",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://track.blitznow.in/{trackingNumber}",
     "searchUrl": "https://track.blitznow.in/",
     "canaryUrl": "https://track.blitznow.in/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "eta",
+      "delivered_at",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_contact"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "progress_rail",
+      "sender_name",
+      "recipient_contact"
+    ],
+    "unavailable": [
+      "location",
+      "weight"
+    ]
   },
   "links": [
     {

@@ -11700,7 +11700,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "blitznow"
     },
     "canaryUrl": "https://track.blitznow.in/",
     "trackingUrlTemplate": "https://track.blitznow.in/{trackingNumber}",

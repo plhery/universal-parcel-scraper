@@ -80,6 +80,7 @@ import { adapter as bhPosta } from '../carriers/bh-posta/adapter.js';
 import { adapter as bigfootExpress } from '../carriers/bigfoot-express/adapter.js';
 import { adapter as bizCourier } from '../carriers/biz-courier/adapter.js';
 import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapter.js';
+import { adapter as blitznow } from '../carriers/blitznow/adapter.js';
 import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
 import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
 import { adapter as blueex } from '../carriers/blueex/adapter.js';
@@ -972,6 +973,7 @@ export const REGISTRY: RegistryDefinition = {
     "bigfoot-express": bigfootExpress,
     "biz-courier": bizCourier,
     "bjs-home-delivery": bjsHomeDelivery,
+    "blitznow": blitznow,
     "blue-dart": blueDart,
     "blue-express": blueExpress,
     "blueex": blueex,
@@ -1970,7 +1972,7 @@ export const REGISTRY: RegistryDefinition = {
     "biz-courier": "biz-courier",
     "bjs-home-delivery": "bjs-home-delivery",
     "bla-kurer": "universal",
-    "blitznow": "universal",
+    "blitznow": "blitznow",
     "blue-dart": "blue-dart",
     "blue-express": "blue-express",
     "blueex": "blueex",

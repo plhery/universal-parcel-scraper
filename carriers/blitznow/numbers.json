@@ -1,5 +1,149 @@
 {
   "carrier": "blitznow",
-  "gap": "No public page shows a Blitz number.",
-  "records": []
+  "records": [
+    {
+      "number": "GS8451715328",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260410135949/https://track.blitznow.in/GS8451715328",
+        "date": "2026-04-10",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived tracking link on Blitz's tracker; the archive kept only the page's script, and the tracker's lookup answers with the parcel's delivery."
+    },
+    {
+      "number": "GS1188935248",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260410081621/https://track.blitznow.in/GS1188935248",
+        "date": "2026-04-10",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived tracking link on Blitz's tracker; the archive kept only the page's script, and the tracker's lookup answers with the parcel's delivery."
+    },
+    {
+      "number": "GS5705339755",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250919141842/https://track.blitznow.in/GS5705339755",
+        "date": "2025-09-19",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived tracking link on Blitz's tracker; the archive kept only the page's script, and the tracker's lookup answers with the parcel's delivery."
+    },
+    {
+      "number": "GS4516007293",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250823101147/https://track.blitznow.in/GS4516007293",
+        "date": "2025-08-23",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived tracking link on Blitz's tracker; the archive kept only the page's script, and the tracker's lookup answers with the parcel's delivery."
+    },
+    {
+      "number": "GS4455213153",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250813204031/https://track.blitznow.in/GS4455213153",
+        "date": "2025-08-13",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived tracking link on Blitz's tracker; the archive kept only the page's script, and the tracker's lookup answers with the parcel's delivery."
+    },
+    {
+      "number": "GS1244677380",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250131161620/https://track.blitznow.in/GS1244677380",
+        "date": "2025-01-31",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived tracking link on Blitz's tracker; the archive kept only the page's script, and the tracker's lookup answers with the parcel's delivery."
+    }
+  ]
 }

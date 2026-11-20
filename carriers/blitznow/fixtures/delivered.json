@@ -1,0 +1,28 @@
+{
+  "inTime": "1795197542094",
+  "outTime": "1795197542328",
+  "result": {
+    "shipmentDetails": {
+      "deliveryAttempts": 1,
+      "delivered": true,
+      "cancelled": false,
+      "estimateddateofdelivery": "2026-04-13T00:00:00+05:30",
+      "buyerEDD": "2026-04-11T00:00:00+05:30",
+      "shipmentstatus": "Delivered",
+      "modifieddate": "2026-04-11T10:01:58.890035+05:30",
+      "createddate": "2026-04-10T15:56:12.725047+05:30",
+      "awbnumber": "GS8451715328"
+    },
+    "trackingDetails": [
+      {
+        "tracking": null,
+        "shippingPartner": "Blitz",
+        "awb": "GS8451715328",
+        "estimatedDeliveryDate": "2026-04-11T00:00:00.000",
+        "orderCreationDate": "2026-04-10T10:26:12.295182Z"
+      }
+    ]
+  },
+  "status": "Success",
+  "code": "200"
+}

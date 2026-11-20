@@ -1,0 +1,7 @@
+{
+  "inTime": "1795197642997",
+  "outTime": "1795197643013",
+  "result": null,
+  "status": "Internal Server Error : Failure due to bad request from logistic's Get Shipment Details API",
+  "code": "501"
+}

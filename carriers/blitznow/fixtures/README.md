@@ -1,0 +1,1 @@
+`delivered.json` and `delivered-2.json` are the lookup's answers for two public samples in `numbers.json`, with only the shipment's status fields: without the seller's order number, the parcel's size and weight, the order, the recipient's masked phone number and postcode, and the seller. `not-found.json` is its answer for an impossible number.
