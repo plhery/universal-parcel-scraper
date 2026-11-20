@@ -616,6 +616,7 @@ import { adapter as redpack } from '../carriers/redpack/adapter.js';
 import { adapter as redur } from '../carriers/redur/adapter.js';
 import { adapter as redx } from '../carriers/redx/adapter.js';
 import { adapter as relaisColis } from '../carriers/relais-colis/adapter.js';
+import { adapter as relayExpress } from '../carriers/relay-express/adapter.js';
 import { adapter as relaytech } from '../carriers/relaytech/adapter.js';
 import { adapter as rexIndonesia } from '../carriers/rex-indonesia/adapter.js';
 import { adapter as rincos } from '../carriers/rincos/adapter.js';
@@ -1461,6 +1462,7 @@ export const REGISTRY: RegistryDefinition = {
     "redur": redur,
     "redx": redx,
     "relais-colis": relaisColis,
+    "relay-express": relayExpress,
     "relaytech": relaytech,
     "rex-indonesia": rexIndonesia,
     "rincos": rincos,
@@ -3040,7 +3042,7 @@ export const REGISTRY: RegistryDefinition = {
     "redur": "redur",
     "redx": "redx",
     "relais-colis": "relais-colis",
-    "relay-express": "universal",
+    "relay-express": "relay-express",
     "relaytech": "relaytech",
     "reunidas-cargas": "universal",
     "rex-indonesia": "rex-indonesia",
