@@ -1,8 +1,9 @@
 import type { CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { dateHualeiGofoRows, isHualeiUsPartnerRow } from '../gzyl/gofo-rows.js';
 import { parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hualei.js';
-import { lingdongEnglish, lingdongStage } from './status.js';
+import { isLingdongFlightBooked, lingdongEnglish, lingdongStage } from './status.js';
 
 export const PROVIDER = 'Lingdong International';
 export const LINGDONG_ORIGIN = 'http://tms.lingdong56.com:8082';
@@ -24,10 +25,25 @@ export const LINGDONG: HualeiTenant = { carrier: 'lingdong', provider: PROVIDER,
   english: (_code, _wording, shown) => lingdongEnglish(shown), repeats: repeatsLingdongRow, ownNumber: /^SZLD\d{10}$/,
   clock: ({ content, location }) => (isHualeiUsPartnerRow(content, location) ? 'wall' : 'platform') };
 
+/**
+ * The flight booked for the parcel, before it flies ("Expected flight on Nov. 19th"), is a forecast, not a
+ * movement: a notice on the stage of the staged scan before it.
+ */
+function withBookedFlights(result: CarrierResult): CarrierResult {
+  const events = result.events ?? [];
+  let before: string | undefined;
+  for (const event of listsNewestFirst(events) === false ? events : [...events].reverse()) {
+    if (event.stage_source !== 'none' && isLingdongFlightBooked(event.description ?? '')) {
+      if (before) Object.assign(event, { stage: before, stage_source: 'none' });
+    } else if (event.stage && event.stage_source !== 'none') before = event.stage;
+  }
+  return result;
+}
+
 /** The track interface's reply, or null when it holds no row for the number. */
 export function parseLingdongTrack(payload: unknown, number: string, readAt?: number): CarrierResult | null {
   const result = parseHualeiTrack(payload, number, LINGDONG, readAt);
-  return result && dateHualeiGofoRows(result);
+  return result && withBookedFlights(dateHualeiGofoRows(result));
 }
 export const parseLingdongPage = (html: string, number: string, readAt?: number): CarrierResult =>
-  dateHualeiGofoRows(parseHualeiPage(html, number, LINGDONG, readAt));
+  withBookedFlights(dateHualeiGofoRows(parseHualeiPage(html, number, LINGDONG, readAt)));

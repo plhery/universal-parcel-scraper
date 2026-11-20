@@ -24,6 +24,15 @@ const FLIGHT_DATE = /^(预计)\d{1,2}(号航班【expect flight )\d{1,2}(?:st|nd
 const ENGLISH_FLIGHT_DAY = /^((?:flight scheduled for|scheduled flight on|expected flight on) )[a-z]+\.? \d{1,2}(?:st|nd|rd|th)$/;
 const ENGLISH_FLIGHT_DATE = /^(expect flight )\d{1,2}(?:st|nd|rd|th)(\.?)$/;
 
+const FLIGHT_BOOKED = [FLIGHT_DAY, FLIGHT_DATE, ENGLISH_FLIGHT_DAY, ENGLISH_FLIGHT_DATE];
+
+/** Whether a row, whole or by its English half, is the flight booked for the parcel before it flies: a forecast. */
+export function isLingdongFlightBooked(wording: string): boolean {
+  const english = lingdongEnglish(wording);
+  return [wording, ...(english === undefined ? [] : [english])]
+    .some((value) => FLIGHT_BOOKED.some((pattern) => pattern.test(normalizeStatusWording(value))));
+}
+
 function mapped(wording: string): Stage | undefined {
   return WORDINGS.get(wording.replace(FLIGHT_DAY, '$1…$2…').replace(FLIGHT_DATE, '$1…$2…$3')
     .replace(ENGLISH_FLIGHT_DAY, '$1…').replace(ENGLISH_FLIGHT_DATE, '$1…$2'));

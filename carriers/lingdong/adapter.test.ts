@@ -96,8 +96,10 @@ describe('Lingdong International tracking adapter', () => {
     const events = parseLingdongTrack(payload, NUMBER, Date.parse('2026-03-05T06:00:00Z'))!.events ?? [];
     expect(events.slice(0, 2).map(({ description, stage, stage_source }) => [description, stage, stage_source])).toEqual([
       ['Flight arrival', 'in_transit', 'carrier_map'],
-      ['Scheduled flight on November 9st', 'in_transit', 'carrier_map'],
+      // The flight booked before it flies is a forecast: a notice on the stage of the scan before it.
+      ['Scheduled flight on November 9st', 'in_transit', 'none'],
     ]);
+    expect(events.slice(2).find((event) => event.stage)?.stage).toBe('in_transit');
     // The app reads the English half shown alone by the same map.
     for (const description of ['Flight arrival', 'Scheduled flight on November 9st', 'Flight scheduled for October 28th', 'Expect flight 30th.',
       'Received by local delivery company']) {
