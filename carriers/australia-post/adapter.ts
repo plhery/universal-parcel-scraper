@@ -435,16 +435,30 @@ export class AustraliaPostTracker {
         : next === 'datacenter' ? this.datacenterProxies[Math.floor(Math.random() * this.datacenterProxies.length)]! : null;
       route = next; reads++; history = false;
       const apiUrl = australiaPostApiUrl(number);
+      // A capped read ends on our side at its cap and the reply's allowance, even when the service sends
+      // nothing back, so the next route keeps the time reserved for it.
+      const cap = capped ? new AbortController() : null;
+      const timer = cap ? setTimeout(() => cap.abort(new DOMException('The route read reached its cap', 'TimeoutError')),
+        timeoutMs + ROUTE_REPLY_MS) : undefined;
+      const stop = () => clearTimeout(timer);
+      signal.addEventListener('abort', stop, { once: true });
       const page = await trawl!.scrape({ url: australiaPostTrackingUrl(number), skipHttp: true, maxTier: 3,
         maxTimeout: timeoutMs, captureResponses: [apiUrl], ...(proxy ? { proxy } : {}), settleTimeout: Math.min(timeoutMs, 10_000),
-      }, { provider: 'TRAWL while fetching Australia Post', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false })
+      }, { provider: 'TRAWL while fetching Australia Post', timeoutMs, signal: cap ? AbortSignal.any([signal, cap.signal]) : signal,
+        maxBytes: 6_000_000, requireSolved: false })
         .catch((error: unknown) => {
+          if (cap?.signal.aborted && !signal.aborted) {
+            const failure = new BudgetExceededError(PROVIDER, budgetMs, { cause: error });
+            routeTimeouts.add(failure);
+            throw failure;
+          }
           if (error instanceof UpstreamHttpError && error.status >= 500 && !trawlOutOfTime(error)) serviceFailures.add(error);
           try { return budgetWhenOutOfTime(PROVIDER, budgetMs)(error); } catch (failure) {
             if (capped && failure instanceof BudgetExceededError) routeTimeouts.add(failure);
             throw failure;
           }
-        });
+        })
+        .finally(() => { stop(); signal.removeEventListener('abort', stop); });
       signal.throwIfAborted();
       if (![2, 3].includes(page.tier) || ![200, 304].includes(page.statusCode)) {
         throw new TransportError(PROVIDER, 'The browser service did not load Australia Post tracking');

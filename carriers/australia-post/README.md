@@ -39,7 +39,8 @@ captured browser challenge, cheapest first: the original route, then one of the 
 at random, then the residential proxy. Each read sends the whole browser context through its proxy.
 A read another route can follow gets at most 20 s of browser time while the next read still fits after
 it: answered reads take at most about 13 s, and a page that hangs on one route would otherwise hold the
-whole budget. A read cut short this way moves on like a challenge. A later read starts only when the
+whole budget. The cap holds on our side too, a second after the browser time, when the browser
+service sends nothing back. A read cut short this way moves on like a challenge. A later read starts only when the
 transport allowance and usable browser time remain. Missing parcels, inconclusive replies, rate limits and schema errors
 take no other route. A read a proxy fails to carry, or the browser service fails on with a server
 error, moves to the next route. Step telemetry names the route (`default`, `datacenter` or

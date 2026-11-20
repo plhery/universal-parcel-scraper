@@ -974,6 +974,30 @@ describe('Australia Post routes, cheapest first', () => {
     expect(later.browser.mock.calls.map(call => (JSON.parse(String(call[1]!.body)) as { maxTimeout: number }).maxTimeout)).toEqual([20_000, 10_000]);
   });
 
+  it('ends a capped read whose service call stalls at its cap, and moves on to the next route', async () => {
+    let elapsed = 0;
+    vi.spyOn(performance, 'now').mockImplementation(() => elapsed);
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      const { client, browser, recorder, proxies } = routes([], { timeoutMs: 45_000 });
+      // The browser service sends nothing back on the original route; the datacenter proxy answers.
+      browser.mockImplementationOnce((_input, init) => new Promise<Response>((_, reject) => init!.signal!.addEventListener('abort', () => {
+        elapsed += 21_000; reject(init!.signal!.reason);
+      }, { once: true })));
+      browser.mockImplementationOnce(async () => Response.json(service()));
+      const lookup = client.fetch(NUMBER);
+      await vi.advanceTimersByTimeAsync(20_999);
+      expect(browser).toHaveBeenCalledTimes(1);
+      await vi.advanceTimersByTimeAsync(1);
+      await expect(lookup).resolves.toMatchObject({ status: 'delivered' });
+      expect(proxies()).toEqual([null, expect.stringMatching(/^http:\/\/dc-user/)]);
+      const steps = recorder.step.mock.calls.map(([record]) => record).filter(record => record.step === 'trawl');
+      expect(steps.map(record => [record.networkRoute, record.outcome])).toEqual([['default', 'budget'], ['datacenter', 'ok']]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('keeps the whole remaining budget for the last route, and its running out as the budget', async () => {
     const { client, browser } = routes([], { fallbackProxyUrl: undefined, datacenterProxyUrls: [] });
     browser.mockImplementation(async () => new Response(JSON.stringify({ error: 'Scrape deadline exceeded', timings: [] }),
