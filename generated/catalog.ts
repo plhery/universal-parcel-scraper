@@ -44096,6 +44096,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ou-yi-hang": {
+    "displayName": "Ou Yi Hang International Logistics",
+    "color": "#1655ae",
+    "aliases": [
+      "Ou Yi Hang",
+      "Ouyihang International Logistics",
+      "OYH Logistics",
+      "欧易航国际物流"
+    ],
+    "countries": [
+      "CN",
+      "BE",
+      "GB",
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ou-yi-hang",
+      "localClocks": true
+    },
+    "canaryUrl": "https://oyh-exp.com/en/tracking",
+    "trackingUrlTemplate": "https://oyh-exp.com/en/tracking",
+    "trackingSearchUrl": "https://oyh-exp.com/en/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "overnite": {
     "displayName": "OVERNITE",
     "color": "#006f39",
@@ -67536,6 +67564,7 @@ export const CARRIER_IDS = [
   "orlen-paczka",
   "osm-worldwide",
   "ots-chile",
+  "ou-yi-hang",
   "overnite",
   "overseas-express",
   "oxperta-express",
@@ -69440,6 +69469,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "orlen-paczka": ["orlen-paczka-1"],
   "osm-worldwide": ["osm-worldwide-1","osm-worldwide-2"],
   "ots-chile": [],
+  "ou-yi-hang": [],
   "overnite": [],
   "overseas-express": [],
   "oxperta-express": [],

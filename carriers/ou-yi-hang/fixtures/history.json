@@ -1,0 +1,113 @@
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "trackingNo": "OYH1000194068",
+    "status": "ND",
+    "statusName": "运输中",
+    "details": [
+      {
+        "time": "2026-08-01 03:25:00",
+        "location": "Frankfurt,DE",
+        "description": "离开设施",
+        "gmtOffset": "+02:00"
+      },
+      {
+        "time": "2026-07-31 23:26:00",
+        "location": "Frankfurt,DE",
+        "description": "抵达设施",
+        "gmtOffset": "+02:00"
+      },
+      {
+        "time": "2026-07-31 20:36:00",
+        "location": "Nurnberg,DE",
+        "description": "离开设施",
+        "gmtOffset": "+02:00"
+      },
+      {
+        "time": "2026-07-31 19:35:50",
+        "location": "Nurnberg,DE",
+        "description": "抵达设施",
+        "gmtOffset": "+02:00"
+      },
+      {
+        "time": "2026-07-31 17:54:27",
+        "location": "ANR",
+        "description": "已提取-留意签收",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-30 16:53:53",
+        "location": "ANR",
+        "description": "已装车-预计7/31交付",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-28 13:53:14",
+        "location": "ANR",
+        "description": "清关完成,待预约卸货位",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-28 10:52:46",
+        "location": "ANR",
+        "description": "到仓,待清关",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-28 09:04:45",
+        "location": "ANR",
+        "description": "航司拆板理货中",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-28 09:02:13",
+        "location": "ANR",
+        "description": "航班落地",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-27 09:17:43",
+        "location": "CGO",
+        "description": "航班起飞",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-26 15:30:06",
+        "location": "CGO",
+        "description": "出口报关放行,等待航班起飞",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-25 18:33:27",
+        "location": "CGO",
+        "description": "等待出口报关,预计7月27日航班",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-25 18:24:38",
+        "location": "ZHENGZHOU",
+        "description": "快件操作完成",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-24 15:50:10",
+        "location": "QINGDAO",
+        "description": "快件到达作业中心",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-24 14:35:31",
+        "location": "",
+        "description": "快件电子信息已经收到",
+        "gmtOffset": "+08:00"
+      },
+      {
+        "time": "2026-07-24 11:44:52",
+        "location": "DE",
+        "description": "发件人已创建标签，但是 UPS 尚未收到包裹。",
+        "gmtOffset": "+02:00"
+      }
+    ]
+  }
+}
