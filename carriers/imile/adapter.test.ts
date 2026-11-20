@@ -245,6 +245,36 @@ describe('iMile HTTP adapter', () => {
     expect(signed).toMatchObject({ current_stage: 'returned' });
   });
 
+  it('reads the scans after a return starts under ordinary codes as the way back, until a delivery run', () => {
+    const row = (time: string, trackStage: number, content: string) => ({ content, trackStage, trackStageTx: null, time, operateStationName: 'Sample DS', proofs: null });
+    const back = [
+      row('2026-05-23 15:52:54', 1002, 'Your order has arrived at Sample RDC'),
+      row('2026-05-23 13:03:26', 1002, 'Your order has been shipped from Sample DS.'),
+      row('2026-05-20 15:18:07', 2004, 'Your order has been received.'),
+      row('2026-05-20 15:18:01', 2084, 'Start returning，reason:[Three delivery attempts failed]'),
+      row('2026-05-20 15:17:58', 2084, 'Three delivery attempts failed: need to return.'),
+    ];
+    const returning = parseImile(changed('delivered', (shipment) => { shipment.trackInfos.splice(0, 3, ...back); }), DELIVERED);
+    expect(returning).toMatchObject({ status: 'exception', current_stage: 'exception', current_stage_source: 'carrier_map',
+      last_status_text: 'Your order has arrived at Sample RDC', expected_delivery: null });
+    expect(returning.events!.slice(0, 5).map((event) => [event.stage, event.provider_leg])).toEqual([
+      ['exception', 'return'], ['exception', 'return'], ['exception', 'return'], ['exception', 'return'], ['exception', undefined]]);
+    // The way back under Return Handling Process keeps its own reading.
+    const handled = parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos.splice(0, 3, row('2026-05-21 10:00:00', 1008, '【Sample Hub】Shipment received.'),
+        row('2026-05-20 22:01:39', 1008, 'Order delivery failed, returning to sender.'));
+    }), DELIVERED);
+    expect(handled.events!.slice(0, 2).map((event) => [event.stage, event.provider_leg])).toEqual([['exception', 'return'], ['exception', 'return']]);
+    // A delivery run after the return started takes the parcel out to the recipient again.
+    const resumed = parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos.splice(0, 3, row('2026-05-21 12:00:00', 1002, 'Your order has arrived at Sample RDC'),
+        row('2026-05-21 09:05:33', 1003, 'Our delivery associate is out for delivery.'), ...back.slice(2));
+    }), DELIVERED);
+    expect(resumed.events!.slice(0, 4).map((event) => [event.stage, event.provider_leg])).toEqual([
+      ['in_transit', undefined], ['out_for_delivery', undefined], ['exception', 'return'], ['exception', 'return']]);
+    expect(resumed.current_stage).toBe('in_transit');
+  });
+
   it('reads a pickup point notice, its names in 【】 as the page writes them, as waiting there', () => {
     const waiting = parseImile(changed('delivered', (shipment) => {
       Object.assign(shipment.trackInfos[0]!, { trackStage: 1003,
@@ -748,6 +778,30 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     // iMile's flight may have left up to 14 hours before its wall clock: Cainiao's departure and handover may be later.
     expect(codes(merged).filter((code) => CAINIAO_CODE.test(String(code))).slice(0, 3)).toEqual(['CC_EX_SUCCESS', 'CC_EX_START', 'LH_HO_IN_SUCCESS']);
     expect(codes(merged).slice(0, 14)).toEqual(codes(own).slice(0, 14));
+  });
+
+  it('reads iMile’s receipt at a centre as the acceptance when only the order record comes before it', () => {
+    const row = (time: string, trackStage: number, content: string) => ({ content, trackStage, trackStageTx: null, time, operateStationName: 'Sample Center', proofs: null });
+    const order = row('2026-05-14 19:22:48', 1001, 'Order submitted, pending to receive.');
+    const receipt = row('2026-05-18 10:00:00', 2004, 'Your order has been received.');
+    const received = parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos = [row('2026-05-19 08:00:00', 1002, 'Your order has arrived at Sample DS'), receipt, order];
+    }), DELIVERED);
+    expect(received.events!.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+    // After a flight it is the first centre in the destination country.
+    const flown = parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos = [receipt, row('2026-05-17 06:40:00', 1002, '【HKG】The flight has taken off.'), order];
+    }), DELIVERED);
+    expect(flown).toMatchObject({ current_stage: 'in_transit' });
+    // Cainiao's leg shows the parcel moving before it: transit again.
+    const alone = parseImile(changed('delivered', (shipment) => { shipment.trackInfos = [receipt, order]; }), DELIVERED);
+    expect(alone).toMatchObject({ status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map' });
+    const merged = withCainiaoLeg(alone, cainiaoScans(cainiaoFixture(), DELIVERED));
+    expect(merged).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
+      last_status_text: 'Your order has been received.' });
+    expect(merged.events![0]).toMatchObject({ provider_code: '2004', stage: 'in_transit' });
+    expect(merged.events!.some((event) => CAINIAO_CODE.test(String(event.provider_code)))).toBe(true);
+    expect(alone.events![0]).toMatchObject({ stage: 'accepted' });
   });
 
   it('adds nothing to a history iMile cut short or to none', () => {

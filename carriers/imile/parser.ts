@@ -7,7 +7,7 @@ import { calendarDay, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { imileCountryClock } from './clock.js';
-import { imileStage } from './status.js';
+import { imileReturnStart, imileStage } from './status.js';
 import { imileDisplayWording } from './wording.js';
 
 export const PROVIDER = 'iMile';
@@ -125,7 +125,7 @@ function stageCode(row: Record<string, unknown>): string {
   return code;
 }
 
-function projectRow(row: Record<string, unknown>): { key: string; event: CarrierEvent; receiver: string } | null {
+function projectRow(row: Record<string, unknown>): { key: string; event: CarrierEvent; receiver: string; returnStart: boolean } | null {
   const code = stageCode(row);
   const written = imileWording(text(row, 'content', 2_000)) || text(row, 'trackStageTx', 120);
   if (!written) throw new SchemaError(PROVIDER, 'iMile returned a scan without wording');
@@ -143,7 +143,43 @@ function projectRow(row: Record<string, unknown>): { key: string; event: Carrier
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { key: JSON.stringify([local, code, description, location]), event, receiver: staged?.stage === 'delivered' ? imileReceiver(written) : '' };
+  return { key: JSON.stringify([local, code, description, location]), event, receiver: staged?.stage === 'delivered' ? imileReceiver(written) : '',
+    returnStart: imileReturnStart(code, stagingWording(written)) };
+}
+
+/** iMile's receipt at a centre (Inbound), the first scan in its hands when nothing before it moved the parcel. */
+export const RECEIPT = '2004';
+const UNMOVED: ReadonlySet<string> = new Set(['registered', 'pending']);
+/** Whether a scan moved the parcel: a stage past the order record that a map or rule gave it. */
+export const imileMoved = (event: CarrierEvent): boolean => Boolean(event.stage && !UNMOVED.has(event.stage) && event.stage_source !== 'none');
+
+/**
+ * Reads iMile's receipt at a centre as the acceptance when only the order record comes before
+ * it, a history newest first: the parcel reached iMile from a sender or carrier it does not show.
+ */
+function readFirstReceipt(events: readonly CarrierEvent[]): void {
+  const first = [...events].reverse().find(imileMoved);
+  if (first?.provider_code === RECEIPT && first.stage === 'in_transit') first.stage = 'accepted';
+}
+
+// Scans that take the parcel out to the recipient again, which end a return.
+const DELIVERY_RUN: ReadonlySet<string> = new Set(['out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'delivered']);
+
+/**
+ * Puts the scans from a return's start on the way back to the sender, a history newest first.
+ * iMile may move the parcel back under its ordinary codes, receipts and departures from its
+ * centres: they read as the problem the return is, as Return Handling Process (`1008`) does,
+ * until a delivery run takes it out to the recipient again.
+ */
+function markReturnLeg(events: CarrierEvent[], starts: ReadonlySet<CarrierEvent>): void {
+  let returning = false;
+  for (const event of [...events].reverse()) {
+    if (starts.has(event)) returning = true;
+    else if (event.stage && DELIVERY_RUN.has(event.stage)) returning = false;
+    if (!returning) continue;
+    event.provider_leg = 'return';
+    if (event.stage === 'in_transit' || event.stage === 'accepted') event.stage = 'exception';
+  }
 }
 
 /**
@@ -170,6 +206,7 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
   const seen = new Set<string>();
   const events: CarrierEvent[] = [];
   const receivers = new Map<CarrierEvent, string>();
+  const returnStarts = new Set<CarrierEvent>();
   for (const row of rows) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'iMile returned an invalid scan');
     const scan = projectRow(row);
@@ -177,10 +214,13 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
     seen.add(scan.key);
     events.push(scan.event);
     if (scan.receiver) receivers.set(scan.event, scan.receiver);
+    if (scan.returnStart) returnStarts.add(scan.event);
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
   // Newest first, as the page lists them; an oldest-first reply is turned round.
   const newestFirst = (events[0]!.local_time as string) < (events.at(-1)!.local_time as string) ? events.reverse() : events;
+  markReturnLeg(newestFirst, returnStarts);
+  readFirstReceipt(newestFirst);
 
   const code = text(shipment, 'country', 8).toUpperCase();
   const country = Object.hasOwn(COUNTRIES, code) ? COUNTRIES[code] : undefined;

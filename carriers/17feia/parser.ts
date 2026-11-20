@@ -8,7 +8,7 @@ import { countryTimeZone, firstOccurrence, usStateTimeZone, type ParsedTime } fr
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { SEVENTEENFEIA_HOME_ZONE } from './clock.js';
-import { DELAY_LABEL, ESTIMATE_LABEL, seventeenFeiaStage } from './status.js';
+import { BROKER_LABEL, CLEARED_LABEL, DELAY_LABEL, ESTIMATE_LABEL, seventeenFeiaStage } from './status.js';
 
 export const PROVIDER = '17FEIA';
 // A long history is a few dozen kilobytes.
@@ -173,9 +173,13 @@ export function parseSeventeenFeia(payload: unknown, raw: string, readAt = Date.
     events.push(scan.event);
   }
   if (!events.length) throw new IndeterminateError(PROVIDER, '17FEIA has no scans for the order yet');
-  // Oldest first: a delayed flight keeps the stage of the row before it.
+  // Oldest first: a delayed flight keeps the stage of the row before it, and the broker taking a
+  // shipment customs have released to its warehouse moves it on.
   let previous: string | undefined;
+  let cleared = false;
   for (const event of [...events].reverse()) {
+    if (event.provider_code === BROKER_LABEL && cleared) event.stage = 'in_transit';
+    cleared ||= event.provider_code === CLEARED_LABEL;
     if (event.provider_code !== DELAY_LABEL) previous = event.stage ?? previous;
     else if (previous) Object.assign(event, { stage: previous, stage_source: 'none' });
   }

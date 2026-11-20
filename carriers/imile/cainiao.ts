@@ -11,7 +11,7 @@ import { IndeterminateError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { cainiaoCarrierNames, parseCainiaoTrackingResponse } from '../aliexpress/adapter.js';
-import { imileSummary } from './parser.js';
+import { imileMoved, imileSummary, RECEIPT } from './parser.js';
 
 export const CAINIAO = 'Cainiao';
 /** How Cainiao names iMile as the parcel's destination carrier or a scan's carrier ("Imile"). */
@@ -109,7 +109,14 @@ export function withCainiaoLeg(imile: CarrierResult, cainiao: readonly CarrierEv
   if (!leg.length) return imile;
   if (handled.length) {
     const kept = handled.at(-1)! + 1;
-    return { ...imile, events: [...own.slice(0, kept), ...interleave(own.slice(kept), leg)] };
+    // A receipt read as iMile's acceptance is transit once Cainiao's leg shows the parcel moving before it.
+    const first = leg.some(imileMoved) ? [...own].reverse().find(imileMoved) : undefined;
+    const receipt = first?.provider_code === RECEIPT && first.stage === 'accepted' ? first : undefined;
+    const ownEvents = receipt ? own.map((event) => (event === receipt ? { ...event, stage: 'in_transit' } : event)) : own;
+    const events = [...ownEvents.slice(0, kept), ...interleave(ownEvents.slice(kept), leg)];
+    if (!receipt) return { ...imile, events };
+    const { status, current_stage, current_stage_source } = imileSummary(events);
+    return { ...imile, status, current_stage, current_stage_source, events };
   }
   const events = interleave(own, leg);
   // The merged history's summary replaces iMile's whole: no key of iMile's stays beside it.

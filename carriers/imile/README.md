@@ -76,19 +76,24 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   on China's clock it would come hours before that dispatch.
 - A scan's description is its own sentence without the brackets the page shows. A name in 【】
   opening a scan is its centre, which the location shows, or else heads the sentence ("BOG:
-  Clearance start."); the other names, and the reasons and dates in <>, keep their words.
-  The `trackStage` code stages it: Delivered (`2060`) and Returned to Client (`2065`) decide
-  whatever the sentence says. Return Handling Process (`1008`) is the way back, centres and
-  drivers' reasons included, so it reads as a problem until a sentence says the sender has the
-  parcel. The code after a third failed attempt (`2084`) gives that attempt, then the return
-  starting with its reason in brackets, which reads as a problem too. In Transit (`1002`) and
-  Delivery (`1003`) cover flights, clearance, centres, delivery runs and drivers' reasons, which
-  the sentence tells apart. A booked delivery day and a stock count move nothing, and so does the
-  recipient choosing to collect the parcel; a sentence asking them to collect it at a named point
-  with their pickup code means it waits there, not that it was delivered. A flight
-  booked for the parcel, with its planned clocks, is still to come: a row that only books one is
-  left out, and a scan it follows keeps its own words. Some scans come without a code. "Traffic, Strike, Bad weather" is a failed attempt on a
-  delivery run and a delay under In Transit, before the parcel reaches its delivery office.
+  Clearance start."); the other names, and the reasons and dates in <>, keep their words. The
+  `trackStage` code stages it: Delivered (`2060`) and Returned to Client (`2065`) decide whatever
+  the sentence says. Return Handling Process (`1008`) is the way back, centres and drivers'
+  reasons included, so it reads as a problem until a sentence says the sender has the parcel. The
+  code after a third failed attempt (`2084`) gives that attempt, then the return starting with its
+  reason in brackets, which reads as a problem too. Receipts and departures after either start,
+  under their ordinary codes, are the way back as well: they read as the problem and carry the
+  return leg, until a delivery run takes the parcel out again. In Transit (`1002`) and Delivery
+  (`1003`) cover flights, clearance, centres, delivery runs and drivers' reasons, which the
+  sentence tells apart. A receipt at a centre (`2004`) is the acceptance when only the order
+  record comes before it and Cainiao's leg shows no earlier movement; after a flight it is the
+  first centre in the destination country, in transit. A booked delivery day and a stock count
+  move nothing, and so does the recipient choosing to collect the parcel; a sentence asking them
+  to collect it at a named point with their pickup code means it waits there, not that it was
+  delivered. A flight booked for the parcel, with its planned clocks, is still to come: a row that
+  only books one is left out, and a scan it follows keeps its own words. Some scans come without a
+  code. "Traffic, Strike, Bad weather" is a failed attempt on a delivery run and a delay under In
+  Transit, before the parcel reaches its delivery office.
 - Delivery runs lose the driver's phone, and Brazilian deliveries and returns lose iMile's
   support contacts. A delivery keeps who took the parcel in its wording, and the delivery scan's
   receiver ("Self", "Family", a name) is the signatory. A receiver type naming where the parcel

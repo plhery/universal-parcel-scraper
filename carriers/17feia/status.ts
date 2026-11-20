@@ -8,6 +8,11 @@ import statuses from './statuses.json' with { type: 'json' };
  * a translation. The tracking page's progress rail names the older labels
  * (飞机起飞, 飞机落地, 成功签收).
  */
+/** The broker taking the shipment to its warehouse, which follows the clearance at some airports. */
+export const BROKER_LABEL = '清关行提货到仓';
+/** Customs releasing the shipment. */
+export const CLEARED_LABEL = '清关完成';
+
 const LABELS: ReadonlyMap<string, Stage> = new Map([
   // Written twelve hours after the order data: the parcel travels to 17FEIA's
   // warehouse, which does not have it yet.
@@ -40,11 +45,11 @@ const LABELS: ReadonlyMap<string, Stage> = new Map([
   ['飞机落地', 'in_transit'],
   // The broker takes the shipment to its warehouse for clearance; the shared
   // rules would read "delivered to warehouse" as a delivery.
-  ['清关行提货到仓', 'customs'],
+  [BROKER_LABEL, 'customs'],
   ['清关中', 'customs'],
   // Customs inspect the shipment and have not released it.
   ['海关查验，暂未放行', 'customs'],
-  ['清关完成', 'in_transit'],
+  [CLEARED_LABEL, 'in_transit'],
   // Handed in at the partner's depot, before the partner's own first scan.
   ['已交仓，等待上网', 'in_transit'],
   ['成功签收', 'delivered'],

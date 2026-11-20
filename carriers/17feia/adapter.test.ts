@@ -158,6 +158,16 @@ describe('17FEIA HTTP adapter', () => {
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
+  it('reads the broker taking a released shipment to its warehouse as transit, and one before the release as customs', () => {
+    const result = parseSeventeenFeia(changed('dhl-relayed', (order) => {
+      const milestones = order.currentOrderTrackInfos.filter((row) => row.status !== '运输途中');
+      const broker = milestones.find((row) => row.status === '清关行提货到仓')!;
+      order.currentOrderTrackInfos = [{ ...broker, id: 'broker-after-release', createTime: '2026-03-17 13:25:00' }, ...milestones];
+    }), RELAYED, LATER);
+    expect(result).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(result.events!.filter((event) => event.provider_code === '清关行提货到仓').map((event) => event.stage)).toEqual(['in_transit', 'customs']);
+  });
+
   it('keeps a wall clock whose offset its country does not have then', () => {
     const result = parseSeventeenFeia(changed('dhl-relayed', (order) => {
       order.currentOrderTrackInfos[0]!.timeZone = '+02:00';

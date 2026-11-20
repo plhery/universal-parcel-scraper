@@ -12,7 +12,7 @@
     {"wording": "【BOG】 Clearance start.", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Logged without a code."},
     {"wording": "Clearance Processing", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Logged without a code."},
     {"code": "1002", "wording": "【<RUH>】 AirPlane clearance finish,ready to ship to 【Riyadh Distribution Center】.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Customs released the parcel."},
-    {"code": "2004", "wording": "【Milan center】Your order has been received.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Received at iMile's first centre in the destination country, after any flight and clearance."},
+    {"code": "2004", "wording": "【Milan center】Your order has been received.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Received at iMile's first centre in the destination country, after any flight and clearance. With only the order record before it, and no movement in Cainiao's leg, the adapter reads it as the acceptance."},
     {"code": "2004", "wording": "【Maglod RDC】Received.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "【Riyadh Distribution Center】Your order has been received.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The same receipt logged without a code."},
     {"code": "1003", "wording": "【Sydney Center】Your order has been received.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
@@ -65,7 +65,7 @@
     {"code": "1008", "wording": "【Maglod RDC】Order Closed.", "stage": "exception", "language": "en", "confirmedBy": "live"},
     {"code": "2084", "wording": "Three delivery attempts failed: need to return.", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The third failed attempt ends the deliveries; the return to the sender starts."},
     {"code": "2084", "wording": "We failed to deliver your order.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The third failed attempt, at the minute the return starts."},
-    {"code": "2084", "wording": "Start returning，reason:[Three delivery attempts failed]", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The return starting, with its reason in brackets: under way until Returned to Client (2065)."},
+    {"code": "2084", "wording": "Start returning，reason:[Three delivery attempts failed]", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The return starting, with its reason in brackets: under way until Returned to Client (2065). The receipts (2004) and departures (1002) after it are the way back."},
     {"code": "2065", "wording": "【Maglod RDC】Return signature", "stage": "returned", "language": "en", "confirmedBy": "live", "note": "Returned to Client."},
     {"code": "2065", "wording": "【Milan Transit Center】Shipment returned to origin.", "stage": "returned", "language": "en", "confirmedBy": "live", "note": "Returned to Client."}
   ]
