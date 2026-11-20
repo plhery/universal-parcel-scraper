@@ -3,6 +3,7 @@ import { fetchPosteItalianeInBrowser } from './browser.js';
 
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isPosteItalianeLookup } from '../../core/detection/posteItaliane.js';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, ImportCharges } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
@@ -232,6 +233,8 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
     event: CarrierEvent; classified: ClassifiedStatus | undefined; returnTrip: boolean | undefined; timestamp: number; index: number;
   }> = [];
   const seen = new Set<string>();
+  // Mail from abroad was accepted by its sending post: Poste's intake is its receipt from that post, on the way.
+  const abroad = isValidS10TrackingNumber(requested) && !requested.endsWith('IT');
   // Movements come oldest first: whether the parcel already waited for its recipient at a pickup point.
   let waited = false;
   rawMovements.filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
@@ -241,7 +244,8 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
     const identity = `${time.iso}\u0000${wording}`;
     if (seen.has(identity)) return;
     seen.add(identity);
-    const classified = posteItalianeUncollected(wording, waited) ?? classifyPosteItalianeStatus(wording);
+    let classified = posteItalianeUncollected(wording, waited) ?? classifyPosteItalianeStatus(wording);
+    if (abroad && classified?.stage === 'accepted') classified = { status: 'in_transit', stage: 'in_transit' };
     if (classified?.stage === 'ready_for_pickup') waited = true;
     parsed.push({
       // A post-office scan names its office, which becomes the location; the

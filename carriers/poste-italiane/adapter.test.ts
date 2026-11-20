@@ -404,6 +404,16 @@ describe('Poste Italiane response parsing', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
+  it("reads Poste's intake of an item from abroad as its receipt from the sending post", () => {
+    const FROM_ABROAD = JSON.parse(readFileSync(new URL('./fixtures/from-abroad.json', import.meta.url), 'utf8')) as Record<string, unknown>;
+    const intake = { dataOra: 1767139200000, statoLavorazione: 'Presa in carico da un nostro operatore' };
+    const movements = [intake, ...(FROM_ABROAD.listaMovimenti as unknown[])];
+    expect(parsePosteItalianeTrackingResponse({ ...FROM_ABROAD, listaMovimenti: movements }, 'LX123456785JP').events?.at(-1))
+      .toMatchObject({ description: intake.statoLavorazione, stage: 'in_transit' });
+    expect(parsePosteItalianeTrackingResponse({ ...FROM_ABROAD, idTracciatura: 'RR123456785IT', listaMovimenti: movements }, 'RR123456785IT').events?.at(-1))
+      .toMatchObject({ description: intake.statoLavorazione, stage: 'accepted' });
+  });
+
   it('passes on the import charges an item from abroad owes, in euros', () => {
     const FROM_ABROAD = JSON.parse(readFileSync(new URL('./fixtures/from-abroad.json', import.meta.url), 'utf8')) as Record<string, unknown>;
     const oneri = { importoDirittiDoganali: '1234', importoDirittiPostali: '2100', importoDirittiPostaliSmart: '1800' };

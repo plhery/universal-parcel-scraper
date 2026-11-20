@@ -23,7 +23,8 @@ keep its reply for one from Japan. The tracker does not know every item by that 
 [barcode sheet](https://web.archive.org/web/20241105100904/https://business.poste.it/business/files/1476611371030/scheda-tecnica-prodotto-codice-a-barre-3-di-9.pdf)
 gives imported registered and insured letters new codes of its own, ending in `NN`. A
 hand-off that finds nothing leaves the item with the sending post. Detection never names Poste
-Italiane for a number issued abroad.
+Italiane for a number issued abroad. The sending post accepted such an item, so Poste's intake of
+it is its receipt from that post and reads as transit.
 
 ## How it works
 
