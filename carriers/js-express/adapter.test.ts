@@ -613,7 +613,7 @@ describe('JS Express tracking adapter', () => {
     expect(minute.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-12T11:10:00', '2026-11-03T17:56:00']);
   });
 
-  it("reads USPS's feed to the second that writes its towns \"Town,ST\" on its places' clocks, and its labels on UTC", () => {
+  it("reads USPS's feed to the second that writes its towns \"Town,ST\" on its places' clocks, its labels too", () => {
     const scan = (date: string, address: string, status: string, code = 'OIT'): Row & { code: string } =>
       ({ ...row(date, address, status), timeZone: '-06:00', code });
     const result = parseJsExpress(waybill([
@@ -623,13 +623,13 @@ describe('JS Express tracking adapter', () => {
       scan('2026-11-13 11:42:40', 'EXAMPLE TX DISTRIBUTION CENTER', 'Arrived at USPS Regional Facility'),
       // USPS's own tracker gives the acceptance at 10:27 on Central time.
       scan('2026-11-13 10:27:40', 'Example Town,TX', 'Accepted at USPS Origin Facility'),
-      // USPS's own tracker gives the label at 08:20 on UTC.
+      // USPS's own tracker gives the label at 08:20 on Central time.
       scan('2026-11-07 08:20:54', 'Example Town,TX', 'Shipping Label Created, USPS Awaiting Item'),
       scan('2026-11-07 08:20:54', 'Example Town,TX', 'Shipping Label Created'),
     ], { country: 'United States' }), DELIVERED);
     expect(result.events?.map((event) => event.time ?? event.local_time)).toEqual([
       '2026-11-14T10:58:30-06:00', '2026-11-14T07:35:26-06:00', '2026-11-14T04:47:42', '2026-11-13T11:42:40-06:00',
-      '2026-11-13T10:27:40-06:00', '2026-11-07T08:20:54Z', '2026-11-07T08:20:54Z']);
+      '2026-11-13T10:27:40-06:00', '2026-11-07T08:20:54-06:00', '2026-11-07T08:20:54-06:00']);
   });
 
   it("dates a row without a place on the destination's one clock when the offset it states is that clock's, and keeps its code", () => {

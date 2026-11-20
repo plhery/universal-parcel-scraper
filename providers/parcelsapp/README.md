@@ -331,10 +331,6 @@ step exists for future protocol changes.
   scans in a reply that places none of EMS's: a cancelled export in China, and US scans
   under a Chicago postcode in a reply that names neither the US nor a state.
 
-  A mailer's label filed under USPS is not a wall clock: "Shipping Label Created" alone, with
-  its place after it, or after "USPS Awaiting Item" with its place, keeps ParcelsApp's date as
-  its instant, as USPS's adapter reads the mailer's label on UTC. Read on its place's clock,
-  each copy came the place's offset after USPS's own row of the same minute.
 - Known clocks, from each carrier's own offsets. GOFO's feed dates its labels ("Shipping
   Label Created") on Pacific time wherever the parcel is injected (a Florida parcel's at
   -07:00), and GOFO Canada's on Toronto time, also for a parcel bound for British Columbia:
@@ -702,10 +698,9 @@ step exists for future protocol changes.
   Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label Created, USPS Awaiting
   Item" and keep its wall clock. Read on their place's clock, three such labels came eight hours
   after ParcelsApp first returned them, and Juxi Express's rows of that shape fall between
-  17TRACK's instants of the same warehouse's steps as labeled. So is a mailer's label as USPS
-  words it, "Shipping Label Created" with its place apart, which USPS's adapter reads on UTC:
-  read on its place's clock, the copy came a zone apart from USPS's own row. Only a label is
-  read so. A shipping partner's steps ("Arrived Shipping Partner Facility, EXAMPLE CITY, NV
+  17TRACK's instants of the same warehouse's steps as labeled. Only that label is read so: the
+  label as USPS words it, "Shipping Label Created" alone or after "USPS Awaiting Item", keeps
+  its place's clock, as USPS's adapter reads it. A shipping partner's steps ("Arrived Shipping Partner Facility, EXAMPLE CITY, NV
   12345") and USPS's own scans can repeat their place too; USPS's tracker dates them five or
   eight hours after ParcelsApp's digits, on their place's clock, which they keep. Read as an
   instant, a partner's departure came before its arrival at the same facility.

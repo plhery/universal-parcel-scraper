@@ -170,6 +170,21 @@ describe('Allegro One HTTP adapter', () => {
     ]);
   });
 
+  it('reads a round that ends with the day\'s delivery impossible as the parcel in transit, and a notice as the attempt', () => {
+    const round = (wording: string, notice: string) => parseAllegroOne({ status: [
+      { eventTimestamp: '2026-10-11T13:00:00Z', description: notice },
+      { eventTimestamp: '2026-10-10T19:30:00Z', description: wording },
+      { eventTimestamp: '2026-10-10T15:00:00Z', description: 'Parcel has been released for delivery' },
+    ] }, READY);
+    for (const [wording, notice] of [['Unable to deliver today', 'Notice'], ['Brak możliwości doręczenia w dniu dzisiejszym', 'Awizo']] as const) {
+      expect(round(wording, notice).events!.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
+        [notice, 'failed_attempt', 'carrier_map'], [wording, 'in_transit', 'carrier_map'],
+        ['Parcel has been released for delivery', 'out_for_delivery', 'carrier_map'],
+      ]);
+      expect(round(wording, 'Parcel has been accepted at the branch')).toMatchObject({ current_stage: 'in_transit' });
+    }
+  });
+
   it('reads a parcel taken back once its pick-up time expired as a return under way, unless it goes to a point again', () => {
     const payload = fixture('ready');
     payload.status.unshift(

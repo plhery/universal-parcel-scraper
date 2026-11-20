@@ -12,7 +12,7 @@ import { CAINIAO_CHINA_ZONE, cainiaoInChina } from '../../carriers/aliexpress/cl
 import { royalMailLabelsPartners, royalMailPartnerWall } from '../../carriers/royal-mail/clock.js';
 import { POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
-import { uspsMailerLabel, uspsScanZone } from '../../carriers/usps/clock.js';
+import { uspsScanZone } from '../../carriers/usps/clock.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
@@ -311,16 +311,6 @@ export function originLeg({ service, description }: Pick<Scan, 'service' | 'desc
 }
 
 /**
- * Whether a scan's established zone is its service's clock for the scans
- * around it. A USPS mailer's label is on UTC (`serviceZone`), not where USPS
- * scans: lent to an unplaced customs scan, it put that scan eight hours off
- * the Pacific clock of the facility scan after it.
- */
-export function lendsZone({ service, description }: Pick<Scan, 'service' | 'description'>): boolean {
-  return !(isUsps(service) && uspsMailerLabel(description));
-}
-
-/**
  * The established zone of a scan's wall time, from the service that reported
  * it: the destination post's clock for a scan Swiss Post relays from it, the
  * office's for DHL Germany's copies that name one, a UTC
@@ -353,8 +343,7 @@ export function serviceZone(scan: Scan, journey: Journey): Zoned | null | false 
   if (MIDNIGHT.test(wall) || (TWELVE_HOUR_CLOCKS.has(service) && wall.slice(11, 13) === '12' && !delivered)) return false;
   if (service === CAINIAO && originLeg(scan)) return at(CAINIAO_CHINA_ZONE, 'carrier');
   if (service === FOUR_PX && locationCountry(locationParts(location)) === 'CN') return at('UTC', 'carrier');
-  // A mailer writes its label on UTC, as USPS's adapter reads it (uspsRowZone).
-  if (isUsps(service)) return uspsMailerLabel(description) ? at('UTC', 'carrier') : at(uspsScanZone(location) ?? locationZone(location), 'place');
+  if (isUsps(service)) return at(uspsScanZone(location) ?? locationZone(location), 'place');
   if (!journey.alone) return null;
   if (LOCATED_CLOCKS.has(service)) return at(locationZone(location), 'place');
   if (!LOCAL_CLOCKS.has(service)) return null;
