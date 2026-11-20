@@ -638,6 +638,7 @@ import { adapter as sendex } from '../carriers/sendex/adapter.js';
 import { adapter as sending } from '../carriers/sending/adapter.js';
 import { adapter as sendle } from '../carriers/sendle/adapter.js';
 import { adapter as sengiExpress } from '../carriers/sengi-express/adapter.js';
+import { adapter as sentralCargo } from '../carriers/sentral-cargo/adapter.js';
 import { adapter as serpost } from '../carriers/serpost/adapter.js';
 import { adapter as servientrega } from '../carriers/servientrega/adapter.js';
 import { adapter as seur } from '../carriers/seur/adapter.js';
@@ -1473,6 +1474,7 @@ export const REGISTRY: RegistryDefinition = {
     "sending": sending,
     "sendle": sendle,
     "sengi-express": sengiExpress,
+    "sentral-cargo": sentralCargo,
     "serpost": serpost,
     "servientrega": servientrega,
     "seur": seur,
@@ -3089,7 +3091,7 @@ export const REGISTRY: RegistryDefinition = {
     "sendle": "sendle",
     "sendo-kg": "universal",
     "sengi-express": "sengi-express",
-    "sentral-cargo": "universal",
+    "sentral-cargo": "sentral-cargo",
     "senyu": "universal",
     "serpost": "serpost",
     "servex": "universal",

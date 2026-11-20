@@ -17,16 +17,29 @@
   "timezone": "Asia/Jakarta",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "sentral-cargo",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://sentralcargo.co.id/cekresi?resi={trackingNumber}",
     "searchUrl": "https://sentralcargo.co.id/",
     "canaryUrl": "https://sentralcargo.co.id/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
     "unavailable": []
   },

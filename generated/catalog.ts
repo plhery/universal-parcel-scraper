@@ -51336,7 +51336,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Jakarta",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sentral-cargo"
     },
     "canaryUrl": "https://sentralcargo.co.id/",
     "trackingUrlTemplate": "https://sentralcargo.co.id/cekresi?resi={trackingNumber}",

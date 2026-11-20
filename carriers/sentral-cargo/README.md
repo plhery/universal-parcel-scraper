@@ -1,23 +1,17 @@
 # Sentral Cargo
 
-Sentral Cargo parcels use enabled universal providers. There is no dedicated adapter yet.
+The adapter tracks Sentral Cargo's Indonesian freight receipts when Sentral Cargo is selected.
 
-Sentral Cargo, run by PT Aeronusa Inti Raya, forwards cargo by air, land and sea across
-Indonesia.
+## Retrieval
 
-## Numbers
+The public `/cekresi` page renders the shipment when given one `resi` value. The adapter checks
+the whole receipt in the result heading. The page's missing notice must also name the requested
+receipt.
 
-No public page shows a receipt number its tracker answers, so no rule names it.
-
-## Tracker
-
-Its tracking page renders a receipt number's result without a login or CAPTCHA.
-
-## Links
-
-The tracking pages read the number from their `resi` parameter.
+Scan timestamps keep the offset in the page's `datetime` values. The adapter separates depot
+movement, delivery rounds and partial deliveries despite their shared “On Process” label. It keeps
+a depot location only when the scan names an office. Proof-of-delivery images are left out.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`SENTRAL_CARGO_TRACKING_NUMBER=… SENTRAL_CARGO_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/sentral-cargo`
