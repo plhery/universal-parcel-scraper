@@ -1,5 +1,30 @@
 {
   "carrier": "cvc",
-  "gap": "No public page shows a CVC number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "91691785",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261023130921/https://my.e-cvc.bg/track?wb=91691785",
+        "date": "2026-10-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "An archived CVC result shows this shipment number and dated tracking events. The current CVC tracker still returns the history, including delivery."
+    }
+  ]
 }

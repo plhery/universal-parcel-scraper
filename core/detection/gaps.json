@@ -830,6 +830,12 @@
     "reason": "The Custom Companies' shipment numbers are bare eight-digit runs that other carriers' numbers and rules share."
   },
   {
+    "carrier": "cvc",
+    "pattern": "^\\d{8}$",
+    "kind": "open",
+    "reason": "A confirmed eight-digit CVC shipment number returns candidates without CVC."
+  },
+  {
     "carrier": "d-express",
     "pattern": "^[A-Z]{2}\\d{10}$",
     "kind": "by_design",
