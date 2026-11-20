@@ -5884,5 +5884,10 @@
     "carrier": "sri-courier",
     "kind": "open",
     "reason": "One SriCourier example does not establish whether the SC prefix is unique. Select SriCourier explicitly."
+  },
+  {
+    "carrier": "nacionales-delivery-services",
+    "kind": "open",
+    "reason": "One Nexgo reference does not establish the scope of the NX prefix. Select Nacionales Delivery Services explicitly."
   }
 ]

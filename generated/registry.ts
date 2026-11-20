@@ -569,6 +569,7 @@ import { adapter as mtscn } from '../carriers/mtscn/adapter.js';
 import { adapter as muser } from '../carriers/muser/adapter.js';
 import { adapter as mylerz } from '../carriers/mylerz/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
+import { adapter as nacionalesDeliveryServices } from '../carriers/nacionales-delivery-services/adapter.js';
 import { adapter as naqel } from '../carriers/naqel/adapter.js';
 import { adapter as nationex } from '../carriers/nationex/adapter.js';
 import { adapter as neighbourExpress } from '../carriers/neighbour-express/adapter.js';
@@ -1539,6 +1540,7 @@ export const REGISTRY: RegistryDefinition = {
     "muser": muser,
     "mylerz": mylerz,
     "nacex": nacex,
+    "nacionales-delivery-services": nacionalesDeliveryServices,
     "naqel": naqel,
     "nationex": nationex,
     "neighbour-express": neighbourExpress,
@@ -3090,6 +3092,7 @@ export const REGISTRY: RegistryDefinition = {
     "mylerz": "mylerz",
     "mzz-briefdienst": "universal",
     "nacex": "nacex",
+    "nacionales-delivery-services": "nacionales-delivery-services",
     "naqel": "naqel",
     "nas-express": "universal",
     "national-delivery-systems": "universal",

@@ -102580,6 +102580,17 @@
     ]
   },
   {
+    "input": "NX-2026-0700123",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "la-poste"
+    ],
+    "asked": [
+      "la-poste"
+    ]
+  },
+  {
     "input": "NZC008714112",
     "carrier": "dai-post",
     "confidence": "high",

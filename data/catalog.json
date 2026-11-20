@@ -42250,6 +42250,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "nacionales-delivery-services": {
+    "displayName": "Nacionales Delivery Services",
+    "color": "#165D39",
+    "aliases": [
+      "Nexgo",
+      "Nexgo Delivery",
+      "Nacionales Delivery Services Guatemala"
+    ],
+    "countries": [
+      "GT"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "nacionales-delivery-services"
+    },
+    "canaryUrl": "https://nacionalesdeliveryservices.com/rastreo",
+    "trackingUrlTemplate": "https://nacionalesdeliveryservices.com/rastreo",
+    "trackingSearchUrl": "https://nacionalesdeliveryservices.com/rastreo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "naqel": {
     "displayName": "Naqel Express",
     "color": "#06205c",

@@ -42254,6 +42254,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "nacionales-delivery-services": {
+    "displayName": "Nacionales Delivery Services",
+    "color": "#165D39",
+    "aliases": [
+      "Nexgo",
+      "Nexgo Delivery",
+      "Nacionales Delivery Services Guatemala"
+    ],
+    "countries": [
+      "GT"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "nacionales-delivery-services"
+    },
+    "canaryUrl": "https://nacionalesdeliveryservices.com/rastreo",
+    "trackingUrlTemplate": "https://nacionalesdeliveryservices.com/rastreo",
+    "trackingSearchUrl": "https://nacionalesdeliveryservices.com/rastreo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "naqel": {
     "displayName": "Naqel Express",
     "color": "#06205c",
@@ -68392,6 +68415,7 @@ export const CARRIER_IDS = [
   "myanmar-post",
   "mylerz",
   "mzz-briefdienst",
+  "nacionales-delivery-services",
   "naqel",
   "nas-express",
   "national-delivery-systems",
@@ -70334,6 +70358,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "myanmar-post": [],
   "mylerz": ["mylerz-1"],
   "mzz-briefdienst": [],
+  "nacionales-delivery-services": [],
   "naqel": [],
   "nas-express": [],
   "national-delivery-systems": [],
