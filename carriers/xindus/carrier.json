@@ -16,18 +16,56 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "xindus",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "delivered_at",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.xindus.net/tracking?awb={trackingNumber}",
     "searchUrl": "https://www.xindus.net/tracking",
     "canaryUrl": "https://www.xindus.net/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "origin",
+      "destination",
+      "parcel_count",
+      "progress_rail",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "eta",
+      "origin",
+      "destination",
+      "parcel_count",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "weight",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

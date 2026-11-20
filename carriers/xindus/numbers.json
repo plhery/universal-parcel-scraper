@@ -23,7 +23,7 @@
           "australia-post"
         ]
       },
-      "note": "The public shipment report lists this AWB, an Out for Pickup status and a matching Xindus tracking link. The current tracker returned its application shell without shipment history."
+      "note": "The public shipment report lists this AWB, an Out for Pickup status and a matching Xindus tracking link. Xindus's tracking lookup behind that link returns its history."
     },
     {
       "number": "X000571000",
@@ -47,7 +47,7 @@
           "australia-post"
         ]
       },
-      "note": "The public shipment report lists this AWB, an Out for Pickup status and a matching Xindus tracking link. The current tracker returned its application shell without shipment history."
+      "note": "The public shipment report lists this AWB, an Out for Pickup status and a matching Xindus tracking link. Xindus's tracking lookup behind that link returns its history."
     }
   ]
 }
