@@ -1,0 +1,110 @@
+{
+  "carrier": "cosco-shipping-lines",
+  "records": [
+    {
+      "number": "COSU6503593910",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/company/east-creek-import",
+        "date": "2026-07-27",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under COSCO's COSU carrier code. COSCO's tracker returns the bill from Shanghai to New York, its empty container returned."
+    },
+    {
+      "number": "COSU6505013130",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/company/east-creek-import",
+        "date": "2026-07-27",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under COSCO's COSU carrier code. COSCO's tracker returns the bill from Keelung through Kaohsiung to Long Beach, its empty container returned."
+    },
+    {
+      "number": "COSU6455175780",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/company/east-creek-import",
+        "date": "2026-07-23",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under COSCO's COSU carrier code. COSCO's tracker returns the bill from Tokyo to Los Angeles, with the empty container's return from inbound trucking."
+    },
+    {
+      "number": "COSU6505334960",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/company/east-creek-import",
+        "date": "2026-07-21",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under COSCO's COSU carrier code. COSCO's tracker returns the bill from Shanghai to Long Beach, its empty container returned."
+    },
+    {
+      "number": "COSU6452418336",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/location/supplier/china/8707854-paitou",
+        "date": "2026-05-27",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under COSCO's COSU carrier code. COSCO's tracker returns the bill from Shanghai through Long Beach by rail to Fort Worth, its empty container returned; its booking's number differs from the bill's in the last digit."
+    }
+  ]
+}

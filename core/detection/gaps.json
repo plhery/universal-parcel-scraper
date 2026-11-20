@@ -6040,5 +6040,11 @@
     "pattern": "^(?:ONEY[A-Z0-9]{12}|ONEU\\d{7})$",
     "kind": "open",
     "reason": "Import records list ONE master bills as ONEY, its carrier code, and the booking, and ONE containers under its ONEU owner code; ONE's tracker returns each sample. Detection does not offer ONE."
+  },
+  {
+    "carrier": "cosco-shipping-lines",
+    "pattern": "^COSU\\d{10}$",
+    "kind": "open",
+    "reason": "Import records list COSCO master bills as COSU, its carrier code, and the booking's ten digits; COSCO's tracker returns each sample. Detection does not offer COSCO."
   }
 ]
