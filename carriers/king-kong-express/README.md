@@ -1,24 +1,11 @@
 # King Kong Express
 
-King Kong Express parcels use enabled universal providers. There is no dedicated adapter.
+Select King Kong Express to track a ten-digit waybill through its public tracking form.
+The form posts one waybill to the carrier and returns that lookup's scan list without echoing
+the number. All-zero input is rejected because the upstream returns unrelated history for it.
 
-King Kong Express (京廣速遞) sends parcels from Hong Kong to mainland China, including duty-paid lines for milk
-powder and luxury goods. Its site is kke.com.hk.
+The adapter keeps the reported scan clocks as local time. It reads the station from the scan
+text and omits contact and transfer details.
 
-## Numbers
-
-No public page shows one of its numbers, so there is no rule.
-
-## Why there is no adapter
-
-Its tracking page posts the waybill number to `home/index/quecode` without a login or CAPTCHA and shows the
-reply in place. No public number is known to see a found reply.
-
-## Links
-
-Its tracking page looks numbers up in place, so no address names one.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `KING_KONG_EXPRESS_TRACKING_NUMBER` and run
+`npm run test:carriers:live -- carriers/king-kong-express`.

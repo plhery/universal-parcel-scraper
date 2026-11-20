@@ -410,6 +410,7 @@ import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
 import { adapter as kecEcommerce } from '../carriers/kec-ecommerce/adapter.js';
 import { adapter as kex } from '../carriers/kex/adapter.js';
 import { adapter as kexExpressHk } from '../carriers/kex-express-hk/adapter.js';
+import { adapter as kingKongExpress } from '../carriers/king-kong-express/adapter.js';
 import { adapter as kingSolutions } from '../carriers/king-solutions/adapter.js';
 import { adapter as kitTk } from '../carriers/kit-tk/adapter.js';
 import { adapter as kolayGelsin } from '../carriers/kolay-gelsin/adapter.js';
@@ -1250,6 +1251,7 @@ export const REGISTRY: RegistryDefinition = {
     "kec-ecommerce": kecEcommerce,
     "kex": kex,
     "kex-express-hk": kexExpressHk,
+    "king-kong-express": kingKongExpress,
     "king-solutions": kingSolutions,
     "kit-tk": kitTk,
     "kolay-gelsin": kolayGelsin,
@@ -2595,7 +2597,7 @@ export const REGISTRY: RegistryDefinition = {
     "khazenly": "universal",
     "khubani-air-pack": "universal",
     "kilbourne": "universal",
-    "king-kong-express": "universal",
+    "king-kong-express": "king-kong-express",
     "king-solutions": "king-solutions",
     "kit-tk": "kit-tk",
     "kiwi-express": "universal",
