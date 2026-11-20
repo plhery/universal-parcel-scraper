@@ -629,6 +629,20 @@
     ]
   },
   {
+    "input": "000372801",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt"
+    ],
+    "preferred": [
+      "tnt"
+    ],
+    "asked": [
+      "tnt"
+    ]
+  },
+  {
     "input": "00038300750000682101",
     "carrier": "unknown",
     "confidence": "low",
