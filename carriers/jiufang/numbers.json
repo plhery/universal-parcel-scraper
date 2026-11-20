@@ -1,5 +1,49 @@
 {
   "carrier": "jiufang",
-  "gap": "No public page shows a JiuFang Logistics number.",
-  "records": []
+  "records": [
+    {
+      "number": "SZJDFCL26091125H",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/dynasty-trading-inc",
+        "date": "2026-09-29",
+        "dateKind": "manifest listing date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "JiuFang ocean freight from China to the United States",
+        "reportedRole": "House Bill",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The customs manifest identifies this exact house bill under Shenzhen JiuFang E-Commerce Logistics carrier code SZJD. The official sea and air tracker returned no matching waybill, so coverage of this house-bill family remains unverified."
+    },
+    {
+      "number": "SZJDES26091146",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/dynasty-trading-inc",
+        "date": "2026-09-28",
+        "dateKind": "manifest listing date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "JiuFang ocean freight from China to the United States",
+        "reportedRole": "House Bill",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The customs manifest identifies this exact house bill under Shenzhen JiuFang E-Commerce Logistics carrier code SZJD. The official sea and air tracker returned no matching waybill, so coverage of this house-bill family remains unverified."
+    }
+  ]
 }
