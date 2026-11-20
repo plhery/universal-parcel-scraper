@@ -5824,5 +5824,10 @@
     "carrier": "hrl-cargo",
     "kind": "open",
     "reason": "The confirmed docket is numeric and shares its length with other carriers. The carrier also accepts manually assigned dockets."
+  },
+  {
+    "carrier": "flashpy",
+    "kind": "open",
+    "reason": "The live example is a marketplace number accepted by the forwarding tracker. It does not distinguish Flashpy ownership."
   }
 ]

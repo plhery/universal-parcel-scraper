@@ -26166,6 +26166,30 @@
     ],
     "detectionRules": []
   },
+  "flashpy": {
+    "displayName": "Flashpy",
+    "color": "#e4343a",
+    "aliases": [
+      "Flashpy Courier"
+    ],
+    "countries": [
+      "US",
+      "CO",
+      "VE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "flashpy",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.flashpy.com/co/tracking",
+    "trackingUrlTemplate": "https://www.flashpy.com/co/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://www.flashpy.com/co/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "flecha-amarilla": {
     "displayName": "Paquetería Flecha Amarilla",
     "color": "#fcca30",

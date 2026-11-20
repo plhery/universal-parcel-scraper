@@ -26170,6 +26170,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "flashpy": {
+    "displayName": "Flashpy",
+    "color": "#e4343a",
+    "aliases": [
+      "Flashpy Courier"
+    ],
+    "countries": [
+      "US",
+      "CO",
+      "VE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "flashpy",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.flashpy.com/co/tracking",
+    "trackingUrlTemplate": "https://www.flashpy.com/co/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://www.flashpy.com/co/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "flecha-amarilla": {
     "displayName": "Paquetería Flecha Amarilla",
     "color": "#fcca30",
@@ -67629,6 +67653,7 @@ export const CARRIER_IDS = [
   "flash-express-la",
   "flash-express-ph",
   "flashbird-ca",
+  "flashpy",
   "flecha-amarilla",
   "flechacarga",
   "fleetex",
@@ -69559,6 +69584,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "flash-express-la": [],
   "flash-express-ph": ["flash-express-ph-1"],
   "flashbird-ca": [],
+  "flashpy": [],
   "flecha-amarilla": ["flecha-amarilla-1"],
   "flechacarga": [],
   "fleetex": [],

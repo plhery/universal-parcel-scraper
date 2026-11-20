@@ -1,0 +1,19 @@
+{
+  "carrier": "flashpy",
+  "entries": [
+    {
+      "wording": "Nuevo",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The initial dated Flashpy status records the new consignment."
+    },
+    {
+      "wording": "Proceso Internacional",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The dated entry and current status place the consignment in Flashpy’s international process."
+    }
+  ]
+}

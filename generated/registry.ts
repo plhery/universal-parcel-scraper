@@ -309,6 +309,7 @@ import { adapter as flashCourier } from '../carriers/flash-courier/adapter.js';
 import { adapter as flashExpress } from '../carriers/flash-express/adapter.js';
 import { adapter as flashExpressPh } from '../carriers/flash-express-ph/adapter.js';
 import { adapter as flashbirdCa } from '../carriers/flashbird-ca/adapter.js';
+import { adapter as flashpy } from '../carriers/flashpy/adapter.js';
 import { adapter as flechaAmarilla } from '../carriers/flecha-amarilla/adapter.js';
 import { adapter as flechacarga } from '../carriers/flechacarga/adapter.js';
 import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
@@ -1267,6 +1268,7 @@ export const REGISTRY: RegistryDefinition = {
     "flash-express": flashExpress,
     "flash-express-ph": flashExpressPh,
     "flashbird-ca": flashbirdCa,
+    "flashpy": flashpy,
     "flecha-amarilla": flechaAmarilla,
     "flechacarga": flechacarga,
     "fleetex": fleetex,
@@ -2553,6 +2555,7 @@ export const REGISTRY: RegistryDefinition = {
     "flash-express-la": "universal",
     "flash-express-ph": "flash-express-ph",
     "flashbird-ca": "flashbird-ca",
+    "flashpy": "flashpy",
     "flecha-amarilla": "flecha-amarilla",
     "flechacarga": "flechacarga",
     "fleetex": "fleetex",

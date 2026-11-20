@@ -1,0 +1,71 @@
+<form id="trackForm" class="track-form p-5 grid gap-4 sm:grid-cols-[1fr_auto]" action="/co/tracking" method="get">
+    <div class="min-w-0">
+      <label class="text-sm opacity-80" for="code">Número de guía / tracking *</label>
+      <input id="code" name="code" required="" class="mt-1 input w-full" placeholder="Ej: FPY-123456 · 1Z..., 9400..., etc." value="TBA331695990904">
+    </div>
+    <div class="sm:self-end">
+      <button id="btnTrack" type="submit" class="w-full sm:w-auto shrink-0 rounded px-4 py-2 font-medium" style="background: var(--brand); color: var(--on-brand); border: 1px solid var(--brand);">
+        Consultar
+      </button>
+    </div>
+    <p class="text-xs opacity-70 sm:col-span-2">
+      Si no encuentras tu guía, verifica el número en tu correo de confirmación o contáctanos.
+    </p>
+  </form>
+<section id="resultWrap">
+<article class="lg:col-span-2 p-6 rounded-2xl shadow border" style="background: var(--card); border-color: var(--border); color: var(--on-card);">
+    <div class="flex items-center justify-between flex-wrap gap-3">
+      <div>
+        <div class="text-sm opacity-70">Guía</div>
+        <div id="r-id" class="text-lg font-semibold">TBA331695990904</div>
+      </div>
+      <div class="text-right">
+        <div class="text-sm opacity-70">Estado actual</div>
+        <div id="r-status" class="font-medium">Proceso Internacional</div>
+      </div>
+    </div>
+
+    <!-- Progreso -->
+    <div class="mt-5">
+      <div class="w-full rounded-full h-2" style="background: var(--border);">
+        <div id="r-progress" class="h-2 rounded-full" style="width:100%; background: var(--brand);"></div>
+      </div>
+      <div class="mt-2 text-xs opacity-70" id="r-progress-label">100% completado</div>
+    </div>
+
+    <!-- Timeline -->
+    <ul id="r-timeline" class="mt-6 space-y-4">
+
+        <li class="p-4 rounded-xl border" style="border-color: var(--border);">
+          <div class="font-medium">Nuevo</div>
+          <div class="text-xs opacity-70">2026-06-06 12:45</div>
+        </li>
+
+        <li class="p-4 rounded-xl border" style="border-color: var(--border);">
+          <div class="font-medium">Nuevo</div>
+          <div class="text-xs opacity-70">2026-06-09 09:22</div>
+        </li>
+
+        <li class="p-4 rounded-xl border" style="border-color: var(--border);">
+          <div class="font-medium">Nuevo</div>
+          <div class="text-xs opacity-70">2026-06-09 09:22</div>
+        </li>
+
+        <li class="p-4 rounded-xl border" style="border-color: var(--border);">
+          <div class="font-medium">Proceso Internacional</div>
+          <div class="text-xs opacity-70">2026-06-10 14:21</div>
+        </li>
+
+        <li class="p-4 rounded-xl border" style="border-color: var(--border);">
+          <div class="font-medium">Proceso Internacional</div>
+          <div class="text-xs opacity-70">2026-06-10 16:52</div>
+        </li>
+
+        <li class="p-4 rounded-xl border" style="border-color: var(--border);">
+          <div class="font-medium">Proceso Internacional</div>
+          <div class="text-xs opacity-70">2026-06-10 16:52</div>
+        </li>
+
+    </ul>
+  </article>
+</section>
