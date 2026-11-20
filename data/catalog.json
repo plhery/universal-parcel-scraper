@@ -56205,6 +56205,28 @@
       }
     ]
   },
+  "sri-courier": {
+    "displayName": "SriCourier",
+    "color": "#F97316",
+    "aliases": [
+      "Sri Courier",
+      "SriCourier Lanka"
+    ],
+    "countries": [
+      "LK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Colombo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sri-courier"
+    },
+    "canaryUrl": "https://sricourier.lk/track",
+    "trackingUrlTemplate": "https://sricourier.lk/track?tracking_no={trackingNumber}",
+    "trackingSearchUrl": "https://sricourier.lk/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sri-lanka-post": {
     "displayName": "Sri Lanka Post",
     "color": "#cf1839",

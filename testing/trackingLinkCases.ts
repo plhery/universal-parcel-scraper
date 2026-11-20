@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'sri-courier', number: 'SC-239485',
+    route: /^https:\/\/sricourier\.lk\/track\?tracking_no=SC-239485$/,
+    marker: /Track Your Parcel|Delivery Progress/i },
   { carrier: 'transportes-agael', number: 'BLM064954',
     route: /^https:\/\/agaelsac\.com\/seguimiento\/\?codigo=BLM064954$/,
     marker: /Consulta tu envío|Historial del envío/i },

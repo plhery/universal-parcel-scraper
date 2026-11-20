@@ -1,0 +1,40 @@
+{
+  "carrier": "sri-courier",
+  "entries": [
+    {
+      "wording": "Order Placed",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "portal",
+      "note": "The carrier’s progress list shows order creation."
+    },
+    {
+      "wording": "Picked Up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "portal",
+      "note": "The carrier’s progress list labels pickup."
+    },
+    {
+      "wording": "In Transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal",
+      "note": "The carrier’s progress list labels the transfer stage."
+    },
+    {
+      "wording": "Out for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The confirmed current status of the published reference."
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "portal",
+      "note": "The carrier’s progress list labels final delivery."
+    }
+  ]
+}

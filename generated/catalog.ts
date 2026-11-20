@@ -56209,6 +56209,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "sri-courier": {
+    "displayName": "SriCourier",
+    "color": "#F97316",
+    "aliases": [
+      "Sri Courier",
+      "SriCourier Lanka"
+    ],
+    "countries": [
+      "LK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Colombo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sri-courier"
+    },
+    "canaryUrl": "https://sricourier.lk/track",
+    "trackingUrlTemplate": "https://sricourier.lk/track?tracking_no={trackingNumber}",
+    "trackingSearchUrl": "https://sricourier.lk/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sri-lanka-post": {
     "displayName": "Sri Lanka Post",
     "color": "#cf1839",
@@ -68775,6 +68797,7 @@ export const CARRIER_IDS = [
   "spx-th",
   "spx-tw",
   "spx-vn",
+  "sri-courier",
   "sri-lanka-post",
   "st-courier",
   "stallion-express",
@@ -70716,6 +70739,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "spx-th": ["spx-th-1","spx-th-2"],
   "spx-tw": ["spx-tw-1"],
   "spx-vn": ["spx-vn-1","spx-vn-2"],
+  "sri-courier": [],
   "sri-lanka-post": [],
   "st-courier": [],
   "stallion-express": ["stallion-express-1","stallion-express-2"],

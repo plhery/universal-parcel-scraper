@@ -5879,5 +5879,10 @@
     "carrier": "transportes-agael",
     "kind": "open",
     "reason": "One verified AGAEL guide provides insufficient evidence for a carrier-specific prefix rule. Select Transportes AGAEL explicitly."
+  },
+  {
+    "carrier": "sri-courier",
+    "kind": "open",
+    "reason": "One SriCourier example does not establish whether the SC prefix is unique. Select SriCourier explicitly."
   }
 ]
