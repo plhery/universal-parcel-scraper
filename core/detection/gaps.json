@@ -6010,5 +6010,11 @@
     "pattern": "^[0-9]{12}$",
     "kind": "by_design",
     "reason": "Bir Günde Kargo also tracks a parcel by the sending shop's order number, whose shape differs from shop to shop, so detection cannot name the carrier from it."
+  },
+  {
+    "carrier": "golilla",
+    "pattern": "^[1-9][0-9]{6,7}$",
+    "kind": "by_design",
+    "reason": "Golilla's shipment numbers are a counter of seven digits, a length many carriers share, so no rule claims them."
   }
 ]

@@ -14,7 +14,7 @@
       "context": {
         "service": "Italy bulky home delivery",
         "reportedRole": "delivery number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -23,7 +23,7 @@
           "seur"
         ]
       },
-      "note": "The recipient reports this exact delivery number in a complaint to Golilla. The carrier’s public form returned HTTP 403. Lookup blocked by verification."
+      "note": "The recipient reports this exact delivery number in a complaint to Golilla. The carrier's tracker returns the shipment."
     },
     {
       "number": "4550534",
@@ -38,7 +38,7 @@
       "context": {
         "service": "Italy bulky home delivery",
         "reportedRole": "Golilla delivery code",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -47,7 +47,7 @@
           "seur"
         ]
       },
-      "note": "The recipient explicitly labels this exact identifier as Golilla’s delivery code. The carrier’s public form returned HTTP 403. Lookup blocked by verification."
+      "note": "The recipient explicitly labels this exact identifier as Golilla’s delivery code. The carrier's tracker returns the shipment."
     }
   ]
 }

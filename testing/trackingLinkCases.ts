@@ -2757,6 +2757,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'forward-air': 'Forward Air reuses its eight-digit waybill numbers, so a synthetic one can open other people\'s shipments; only a known waybill verifies the link',
   'forza-delivery': 'the tracker asks for a reCAPTCHA checkbox before it reads the guía in the address',
   gdex: 'gdexpress.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
+  golilla: 'my.golilla.it puts DataDome\'s check before its pages, and its shipment numbers run in sequence, so a synthetic one can open another person\'s shipment; only a known shipment verifies the link',
   hanjin: 'the result page answers an unknown number with an alert and sends the browser back to the empty search form, so only a real parcel verifies the link',
   'indah-logistik': 'the resi page answers an unknown number with a generic internal server error page without the number, so only a real resi verifies the link',
   'integral-pack': 'the page looks the guide in its address up with its parts padded and IPE- before them, and leaves its search form as it was, without the guide or a notice, for one it does not know, so only a real guide verifies the link',

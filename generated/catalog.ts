@@ -29797,11 +29797,22 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Rome",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "golilla"
     },
     "canaryUrl": "https://www.golilla.it/",
+    "trackingUrlTemplate": "https://my.golilla.it/segui?ldv={trackingNumber}",
     "trackingSearchUrl": "https://my.golilla.it/segui",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "my.golilla.it"
+        ],
+        "pathPattern": "^/segui/?$",
+        "params": [
+          "ldv"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "gollog": {
