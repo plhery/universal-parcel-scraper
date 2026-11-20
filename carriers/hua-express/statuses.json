@@ -1,0 +1,8 @@
+{
+  "carrier": "hua-express",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "Arrived at the receiving point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse's receipt."},
+    {"code": "SHIPMENT", "wording": "Goods leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Shenzhen warehouse's departure."},
+    {"wording": "Parcel received by NJC01.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The US sorting partner's facility, named by its code, took the parcel in. Any facility code reads the same."}
+  ]
+}

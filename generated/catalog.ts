@@ -30707,6 +30707,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hua-express": {
+    "displayName": "HUA Express",
+    "color": "#8e8e93",
+    "aliases": [
+      "HUAEXPRESS",
+      "华联万通",
+      "华联万通国际供应链(深圳)有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hua-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "huahan": {
     "displayName": "HuaHan Logistics",
     "color": "#0069e8",
@@ -66266,6 +66288,7 @@ export const CARRIER_IDS = [
   "hrx",
   "hss-transport",
   "htt-logistics",
+  "hua-express",
   "huahan",
   "huaya-express",
   "hub-delivery",
@@ -68136,6 +68159,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hrx": [],
   "hss-transport": [],
   "htt-logistics": [],
+  "hua-express": [],
   "huahan": ["huahan-1"],
   "huaya-express": ["huaya-express-1"],
   "hub-delivery": [],

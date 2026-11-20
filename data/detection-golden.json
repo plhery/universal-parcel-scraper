@@ -93846,6 +93846,12 @@
     ]
   },
   {
+    "input": "HUA005816254YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "HV520454959JF",
     "carrier": "chronopost",
     "confidence": "high",
