@@ -1,5 +1,49 @@
 {
   "carrier": "favorita-transportes",
-  "gap": "No public page shows a Favorita Transportes number.",
-  "records": []
+  "records": [
+    {
+      "number": "000.003.472",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.mpam.mp.br/images/Transpar%C3%AAncia_2023/Dezembro/NFs/Bens/NF_3472_2023_3s_53298.pdf",
+        "date": "2023-10-16",
+        "dateKind": "invoice issue date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Brazil government procurement freight",
+        "reportedRole": "NF-e invoice number",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published invoice names Favorita Transportes as carrier and prints this exact dotted number. Favorita’s public lookup starts from the recipient’s tax ID, so the use of the invoice number alone as a shipment identifier remains unclear."
+    },
+    {
+      "number": "000.003.596",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.mpam.mp.br/images/Transpar%C3%AAncia_2024/Fevereiro/Notas_Fiscais/Bens/NF_3596_2023_3S_50a88.pdf",
+        "date": "2023-12-06",
+        "dateKind": "invoice issue date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Brazil government procurement freight",
+        "reportedRole": "NF-e invoice number",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published invoice names Favorita Transportes as carrier and prints this exact dotted number. Favorita’s public lookup starts from the recipient’s tax ID, so the use of the invoice number alone as a shipment identifier remains unclear."
+    }
+  ]
 }
