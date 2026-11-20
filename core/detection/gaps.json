@@ -4796,5 +4796,11 @@
     "pattern": "^ETENE\\d{9}$",
     "kind": "open",
     "reason": "An archived DocketHub link in the TDG tracking interface uses an ETENE reference. Detection does not offer The Delivery Group."
+  },
+  {
+    "carrier": "thabit-logistics",
+    "pattern": "^99\\d{11}$",
+    "kind": "open",
+    "reason": "Publicly reported Thabit AWBs include thirteen digits starting with 99. Detection offers other carriers that share the length."
   }
 ]
