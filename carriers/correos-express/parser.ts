@@ -273,7 +273,9 @@ function grouped<T>(items: readonly T[], keyOf: (item: T) => string | undefined)
 }
 
 /**
- * The localizador gives the form's scans their seconds and situation codes. A
+ * The localizador gives the form's scans their situation codes and missing
+ * explanations. They keep the minute the form shows, dated or not: the
+ * localizador's seconds come and go with its availability. A
  * coded scan pairs with the form row of the same minute and situation; a scan
  * without a code pairs with the one row left in its minute. Only a pairing
  * that is the only one possible is made. The localizador has no admission
@@ -290,7 +292,6 @@ function enrich(scans: Scan[], feed: CorreosExpressFeed, language: CorreosExpres
       const [scan] = candidates, [match] = matches;
       paired.add(scan!);
       used.add(match!);
-      scan!.event.local_time = match!.local_time;
       if (coded) scan!.event.provider_code = match!.code!;
       scan!.explanation ||= match!.explanation;
     }
@@ -358,9 +359,8 @@ const admission = (scan: Scan) => correosExpressSituationKey(scan.label).startsW
  * admits the parcel, which neither its row, naming the sender's town, nor the
  * scan beside it, which can name the hub the parcel is sent to, need name; the
  * scans of its minute are dated only when all their places keep one clock.
- * Every other scan keeps its wall clock. An instant is to the minute the form
- * shows: the localizador's seconds come and go with its availability, and a
- * scan must keep one instant from one check to the next.
+ * Every other scan keeps its wall clock. A form row's instant is to the minute
+ * the form shows, so a scan keeps one instant from one check to the next.
  */
 function dated(scans: Scan[]): Scan[] {
   const central = (scan: Scan) => placeKey(scan.event.location ?? '') === HEAD_OFFICE;

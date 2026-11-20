@@ -419,7 +419,7 @@ describe('Correos Express scan clocks', () => {
 });
 
 describe('Correos Express history from the Correos localizador', () => {
-  it('gives the form scans situation codes, fixed explanations and, while they keep their wall clock, seconds', () => {
+  it('gives the form scans situation codes and fixed explanations, keeping the minute the form shows', () => {
     const result = normalizeCarrierResult(parseCorreosExpress(explained, NUMBER, feed));
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-01-05T18:27:00+01:00',
       last_status_text: 'NUEVO REPARTO. Concertación entrega flexible.', expected_delivery: '2026-01-06' });
@@ -436,11 +436,14 @@ describe('Correos Express history from the Correos localizador', () => {
       ['2025-12-30T13:15:00+01:00', 'X010000V', 'CENTRAL'],
     ]);
     expect(result.events?.filter(event => event.local_time).map(event => event.location)).toEqual([undefined]);
-    // Scans that keep their wall clock take the localizador's seconds.
+    // Form rows that keep their wall clock keep the form's minute too: a consumer dates it, and the
+    // localizador's seconds would move the scan whenever the localizador does not answer.
     const undated = parseCorreosExpress(edit($ => $('tbody tr').find('td:nth-child(2)').text('LOCALIDAD SINTETICA'), explained), NUMBER, feed);
-    expect(undated).toMatchObject({ last_update: null, last_update_local: '2026-01-05T18:27:05' });
-    expect(undated.events?.map(event => event.local_time)).toEqual(['2026-01-05T18:27:05', '2026-01-03T08:30:12', '2026-01-02T10:01:33',
-      '2026-01-02T09:00:18', '2026-01-01T12:00:51', '2026-01-01T06:03:27', '2025-12-31T13:15:00', '2025-12-30T13:15:42']);
+    expect(undated).toMatchObject({ last_update: null, last_update_local: '2026-01-05T18:27:00' });
+    expect(undated.events?.map(event => event.local_time)).toEqual(['2026-01-05T18:27:00', '2026-01-03T08:30:12', '2026-01-02T10:01:00',
+      '2026-01-02T09:00:00', '2026-01-01T12:00:00', '2026-01-01T06:03:00', '2025-12-31T13:15:00', '2025-12-30T13:15:00']);
+    const alone = parseCorreosExpress(edit($ => $('tbody tr').find('td:nth-child(2)').text('LOCALIDAD SINTETICA'), explained), NUMBER);
+    expect(alone.events?.map(event => event.local_time)).toEqual(undated.events?.filter(event => event.location).map(event => event.local_time));
     expect(undated.events?.every(event => !event.time)).toBe(true);
     expect(result.events?.map(event => event.description)).toEqual(['NUEVO REPARTO. Concertación entrega flexible.',
       `EN DESTINO. ${EXPLAINED.EN_DESTINO}`, `EN ALMACÉN. ${EXPLAINED.ADDRESS}`, `EN REPARTO. ${EXPLAINED.EN_REPARTO}`,
@@ -464,15 +467,15 @@ describe('Correos Express history from the Correos localizador', () => {
   });
 
   it('pairs an uncoded scan only with the one row left in its minute, and a coded one only with its situation', () => {
-    const uncoded = (time: string) => ({ local_time: time, explanation: '' });
-    // Rows that keep their wall clock show which localizador scan, if any, gave them its seconds.
+    const uncoded = (time: string) => ({ local_time: time, explanation: 'Explicación sintética.' });
+    // Rows show by their explanation which localizador scan, if any, they were paired with.
     const undated = edit($ => $('tbody tr').find('td:nth-child(2)').text('LOCALIDAD SINTETICA'));
     const scans = (list: CorreosExpressFeed['scans']) => parseCorreosExpress(undated, NUMBER, { shipment: NUMBER, scans: list }).events!;
-    expect(scans([uncoded('2026-01-01T12:00:40')])[3]).toMatchObject({ local_time: '2026-01-01T12:00:40', description: 'EN DESTINO' });
+    expect(scans([uncoded('2026-01-01T12:00:40')])[3]).toMatchObject({ local_time: '2026-01-01T12:00:00', description: 'EN DESTINO. Explicación sintética.' });
     expect(scans([uncoded('2026-01-01T12:00:40')])[3]!.provider_code).toBeUndefined();
-    // Two uncoded scans for one row, or a coded scan of another situation, leave the row to the minute.
-    expect(scans([uncoded('2026-01-01T12:00:40'), uncoded('2026-01-01T12:00:45')])[3]!.local_time).toBe('2026-01-01T12:00:00');
-    const other = scans([{ local_time: '2026-01-01T12:00:40', code: 'X080000V', explanation: '' }]);
+    // Two uncoded scans for one row, or a coded scan of another situation, leave the row unpaired.
+    expect(scans([uncoded('2026-01-01T12:00:40'), uncoded('2026-01-01T12:00:45')])[3]!.description).toBe('EN DESTINO');
+    const other = scans([{ local_time: '2026-01-01T12:00:40', code: 'X080000V', explanation: 'Explicación sintética.' }]);
     expect(other[3]).toMatchObject({ local_time: '2026-01-01T12:00:00', description: 'EN DESTINO' });
     expect(other).toHaveLength(7);
     // A failed round in the localizador is the form's label-free note.
