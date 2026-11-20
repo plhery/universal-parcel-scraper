@@ -743,6 +743,7 @@ import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
 import { adapter as sway } from '../carriers/sway/adapter.js';
 import { adapter as swiftx } from '../carriers/swiftx/adapter.js';
+import { adapter as swireShipping } from '../carriers/swire-shipping/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
 import { adapter as swissconnect } from '../carriers/swissconnect/adapter.js';
@@ -1630,6 +1631,7 @@ export const REGISTRY: RegistryDefinition = {
     "surat-kargo": suratKargo,
     "sway": sway,
     "swiftx": swiftx,
+    "swire-shipping": swireShipping,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
     "swissconnect": swissconnect,
@@ -3318,6 +3320,7 @@ export const REGISTRY: RegistryDefinition = {
     "sway": "sway",
     "swftbox": "universal",
     "swiftx": "swiftx",
+    "swire-shipping": "swire-shipping",
     "swiss-post": "swiss-post",
     "swiss-post-cargo": "swiss-post-cargo",
     "swissconnect": "swissconnect",

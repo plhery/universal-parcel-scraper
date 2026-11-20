@@ -1,0 +1,58 @@
+{
+  "id": "swire-shipping",
+  "displayName": "Swire Shipping",
+  "aliases": [
+    "Swire",
+    "The China Navigation Company"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#1e4f98"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "swire-shipping",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://online.swireshipping.com/tracking",
+    "canaryUrl": "https://online.swireshipping.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle"
+    ],
+    "unavailable": [
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

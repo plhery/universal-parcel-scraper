@@ -1,0 +1,14 @@
+{
+  "carrier": "swire-shipping",
+  "entries": [
+    {"wording": "Gate Out Empty", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not yet with Swire. After the container sailed, it is transit."},
+    {"wording": "Gate In Full", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading. After the container sailed, a further gate in is transit."},
+    {"wording": "Export Loaded on Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At a port of transshipment or of discharge."},
+    {"wording": "Transhipment Discharged from Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Transhipment Loaded on Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Import Discharged from Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the port of discharge; the page marks the bill DELIVERED from here."},
+    {"wording": "Gate Out Full", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee takes the loaded container from the terminal at the port of discharge. Before the container was discharged there, it is transit."}
+  ]
+}

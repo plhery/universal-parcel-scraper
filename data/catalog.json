@@ -55554,6 +55554,25 @@
       }
     ]
   },
+  "swire-shipping": {
+    "displayName": "Swire Shipping",
+    "color": "#1e4f98",
+    "aliases": [
+      "Swire",
+      "The China Navigation Company"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "swire-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://online.swireshipping.com/tracking",
+    "trackingSearchUrl": "https://online.swireshipping.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "swissconnect": {
     "displayName": "swissconnect",
     "color": "#ff7f00",

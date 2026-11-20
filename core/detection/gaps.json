@@ -5492,5 +5492,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "swire-shipping",
+    "pattern": "^(?:PLLU)?[A-Z]{2}\\d{8}$",
+    "kind": "open",
+    "reason": "Swire Shipping's bills are two letters for the country of their port of loading and eight digits, after PLLU in US import records; detection has no rule for them yet."
   }
 ]

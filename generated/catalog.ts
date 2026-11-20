@@ -55558,6 +55558,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "swire-shipping": {
+    "displayName": "Swire Shipping",
+    "color": "#1e4f98",
+    "aliases": [
+      "Swire",
+      "The China Navigation Company"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "swire-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://online.swireshipping.com/tracking",
+    "trackingSearchUrl": "https://online.swireshipping.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "swissconnect": {
     "displayName": "swissconnect",
     "color": "#ff7f00",
@@ -66849,6 +66868,7 @@ export const CARRIER_IDS = [
   "sway",
   "swftbox",
   "swiftx",
+  "swire-shipping",
   "swissconnect",
   "sxjd-freight",
   "sxw-express",
@@ -68714,6 +68734,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sway": [],
   "swftbox": [],
   "swiftx": ["swiftx-1"],
+  "swire-shipping": [],
   "swissconnect": [],
   "sxjd-freight": [],
   "sxw-express": ["sxw-express-1"],
