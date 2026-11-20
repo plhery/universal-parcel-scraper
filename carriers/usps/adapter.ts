@@ -4,14 +4,15 @@ import { load } from 'cheerio';
 import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { uspsPackageIdentifier } from '../../core/detection/usps.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { HoldKind, serviceTag } from '../../core/runner/holds.js';
-import { runSteps, type StepContext } from '../../core/runner/index.js';
+import { recoverableByDefault, runSteps, type StepContext } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecord, type StepRecorder } from '../../core/telemetry/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { clean, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
+import { readUspsPage, USPS_OUTAGE_URL } from './browser.js';
 import { STATE_PATTERN, uspsRowZone, uspsScanZone } from './clock.js';
 import { isUspsRedeliveryReminder, uspsStage, uspsStatus } from './status.js';
 
@@ -21,15 +22,18 @@ import { isUspsRedeliveryReminder, uspsStage, uspsStatus } from './status.js';
  * The `/tracking/{number}` page carries the verdict and collapsed history
  * in its HTML. The legacy query route can return only the global header,
  * so load the package path directly. The browser handles verification;
- * nothing is replayed over plain HTTP.
+ * nothing is replayed over plain HTTP. A private Chrome with a window reads
+ * first when one is configured, and the browser service after it.
  */
 const TRACKING_BASE = 'https://tools.usps.com/tracking/';
-const OUTAGE = 'https://www.usps.com/root/global/server_responses/anyapp_outage_apology.htm';
+const OUTAGE = USPS_OUTAGE_URL;
 const MAX_BYTES = 10_000_000;
 // The browser's time for every read; with the transport allowance a lookup ends within a
 // minute. Answers the page gives come well inside it.
 const DEFAULT_TIMEOUT_MS = 45_000;
 const MAX_EVENTS_TO_RETURN = 100;
+/** The private Chrome's share of a lookup that can still ask the browser service: a new session answers in five seconds. */
+const BROWSER_SHARE_MS = 20_000;
 /** Pages a second browser read within the same budget can complete. */
 const RECOVERABLE_PAGES = new Set(['incomplete_page', 'interstitial_page']);
 
@@ -418,6 +422,10 @@ export interface USPSTrackerOptions {
   trawl?: TrawlClient | null;
   /** An HTTP(S) proxy the browser service reads through while USPS sends its own reads to the outage page. */
   fallbackProxy?: string | null;
+  /** The WebSocket endpoint of a private Chrome with a window, read before the browser service. */
+  browserEndpoint?: string | null;
+  /** Replaced in tests. */
+  readBrowserPage?: typeof readUspsPage;
   fetcher?: typeof fetch;
   recorder?: StepRecorder;
 }
@@ -426,6 +434,8 @@ export class USPSTracker {
   readonly timeoutMs: number;
   readonly #trawl: TrawlClient | null;
   readonly #fallbackProxy: string | null;
+  readonly #browserEndpoint: string | null;
+  readonly #readBrowserPage: typeof readUspsPage;
   readonly #fetcher: typeof fetch | undefined;
   readonly #recorder: StepRecorder;
 
@@ -439,6 +449,8 @@ export class USPSTracker {
     // Checked here, so a mistyped proxy fails at setup with a message that leaves its value out.
     if (proxy) browserContextProxy(proxy);
     this.#fallbackProxy = proxy;
+    this.#browserEndpoint = options.browserEndpoint?.trim() || null;
+    this.#readBrowserPage = options.readBrowserPage ?? readUspsPage;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;
   }
@@ -446,9 +458,10 @@ export class USPSTracker {
   async fetch(trackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeUSPSNumber(trackingNumber);
     // Akamai refuses every non-browser client, so a direct attempt only burns
-    // time. There is one step, and it is the browser.
+    // time. Every step is a browser.
     const trawl = this.#trawl;
-    if (!trawl) {
+    const endpoint = this.#browserEndpoint;
+    if (!trawl && !endpoint) {
       throw new ChallengeError(
         'USPS',
         'USPS challenged direct tracking; configure FLARESOLVERR_URL for browser fallback',
@@ -461,26 +474,31 @@ export class USPSTracker {
         networkAttempt: read.reads > 1 ? 'retry' : 'initial', historyAvailable: read.history } : record),
       lookup: record => this.#recorder.lookup(record),
     };
-    const run = ({ remainingMs, signal }: StepContext) => this.#trawlResult(trawl, number,
+    const run = ({ remainingMs, signal }: StepContext) => this.#trawlResult(trawl!, number,
       Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))), signal, read);
+    // Only a read the browser service made is read there again.
+    const again = (error: unknown) => read.reads > 0 && this.#readsAgain(error, read, trawl!);
     const result = await runSteps<CarrierResult>({
       // Without a caller's budget the lookup leaves the service its own time and
       // the request the allowance to bring the answer back.
       carrier: 'usps', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
       recorder,
     }, [
-      { id: 'trawl', run },
+      { id: 'browser', enabled: !!endpoint, run: ({ remainingMs, signal }) => this.#browserResult(endpoint!, number,
+        Math.max(1, Math.floor(Math.min(trawl ? BROWSER_SHARE_MS : this.timeoutMs, remainingMs, 60_000))), signal) },
+      // The private Chrome's share running out leaves the browser service the rest of the lookup.
+      { id: 'trawl', enabled: !!trawl, recovers: error => recoverableByDefault(error) || error instanceof BudgetExceededError, run },
       // A read straight after a redirect loads tracking more often than not, and one after two still
       // about half the time, within seconds. So a redirect on the service's own route is read again
       // there, up to three reads, until three redirects in a row pause it; a redirect is never read
       // again through the proxy.
-      { id: 'trawl', recovers: error => (error instanceof ChallengeError && RECOVERABLE_PAGES.has(error.reason ?? ''))
-        || this.#readsAgain(error, read, trawl),
+      { id: 'trawl', enabled: !!trawl, recovers: error => read.reads > 0
+        && ((error instanceof ChallengeError && RECOVERABLE_PAGES.has(error.reason ?? '')) || again(error)),
         run },
       // A second read stays on the interstitial about as often as a first one, so
       // a third read passes as often as the second.
-      { id: 'trawl', recovers: error => (error instanceof ChallengeError && error.reason === 'interstitial_page')
-        || this.#readsAgain(error, read, trawl),
+      { id: 'trawl', enabled: !!trawl, recovers: error => read.reads > 1
+        && ((error instanceof ChallengeError && error.reason === 'interstitial_page') || again(error)),
         run },
     ]);
     // A typed routing barcode opens with the recipient's ZIP code. The package
@@ -496,6 +514,18 @@ export class USPSTracker {
   /** Whether a read the service's own route sent to the outage page is read again there. */
   #readsAgain(error: unknown, read: ReadRoute, trawl: TrawlClient): boolean {
     return outageRedirect(error) && read.route === 'default' && pausedMs(outageRun(trawl)) === 0;
+  }
+
+  /** Reads the page a private Chrome with a window rendered. */
+  async #browserResult(endpoint: string, number: string, timeoutMs: number, signal: AbortSignal): Promise<CarrierResult> {
+    const page = await this.#readBrowserPage({ endpoint, url: uspsTrackingUrl(number), timeoutMs, signal });
+    if (page.redirected) {
+      throw new IndeterminateError('USPS', 'USPS sent the lookup to its service outage page', { reason: 'maintenance_page' });
+    }
+    const result = parseUSPSTrackingHtml(page.html, number);
+    result.tracking_url = uspsTrackingUrl(number);
+    result.tracking_source = 'rendered-page';
+    return result;
   }
 
   /** Read the browser's rendered page without replaying its session. An
@@ -561,12 +591,13 @@ export const adapter: AdapterFactory = (environment) => {
     fetcher: environment.fetcher,
     trawl: environment.trawl,
     fallbackProxy: environment.env.USPS_FALLBACK_PROXY_URL,
+    browserEndpoint: environment.env.USPS_BROWSER_WS_ENDPOINT,
     recorder: environment.recorder,
   });
   return {
     id: 'usps', recordsSteps: true, plannedScans: true,
     // Akamai refuses every non-browser client, so there is no direct tier.
-    steps: ['trawl'],
+    steps: ['browser', 'trawl'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognizeWithBrowser: (number, context) => recognizeFromBrowserLookup(() => tracker.fetch(number, context)),
   };

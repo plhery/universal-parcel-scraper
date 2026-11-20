@@ -27,11 +27,24 @@ when its PIC would, unless a ZIP+4 add-on starting with 92 to 94 could also open
 26-digit PIC. Other matching IMpb rules prioritize USPS as a candidate. None of them
 establish shipment existence.
 Opt-in browser recognition reuses the lookup
-and requires dated activity. Anything else is rejected before a request. Without a browser service it
+and requires dated activity. Anything else is rejected before a request. With neither browser it
 fails at once with `ChallengeError('USPS challenged direct tracking; configure
 FLARESOLVERR_URL for browser fallback')`.
 
-1. `trawl`: the browser service loads
+1. `browser`, with `USPS_BROWSER_WS_ENDPOINT`: a private Google Chrome that has a window, on a
+   residential connection, loads the tracking page. USPS's verification accepts that browser
+   and leaves headless Chrome, Chromium and the browser service's Firefox on a blank wrapper,
+   from a residential address as from a server's. A new context's first navigation gets the
+   wrapper, whose script earns the session; the page is asked again two seconds later and loads
+   tracking. The accepted session's USPS cookies are kept in memory and given to the next
+   lookup's context, which then loads tracking at once: about five seconds for a new session,
+   under two after it. A kept session that gets the wrapper or the outage page is forgotten.
+   Pictures, fonts and video are not loaded, a third of the page's bytes; Akamai's own requests
+   are. The endpoint is a [private browser worker](../royal-mail/README.md) started with
+   `ROYAL_MAIL_BROWSER_HEADED=1`. With a browser service too, this step has twenty seconds, and
+   a wrapper, an outage redirect, an unavailable worker or that time running out hands the
+   lookup to `trawl`.
+2. `trawl`: the browser service loads
    `https://tools.usps.com/tracking/…`, runs the interstitial check, and
    waits for the visible tracking number before the rendered DOM is parsed. The verification
    page can finish loading before it reloads into tracking, so network idleness alone is

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { keepAdapterHolds, resetAdapterHolds, serviceTag, type AdapterHold } from '../../core/runner/holds.js';
+import { BudgetExceededError, TransportError } from '../../core/errors/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
@@ -621,6 +622,63 @@ describe('USPS lookup steps', () => {
     } finally {
       resetAdapterHolds();
     }
+  });
+
+  describe('private Chrome', () => {
+    const ENDPOINT = 'ws://browser.internal:3001/' + 's'.repeat(40);
+    const page = (html: string, redirected = false) => vi.fn(async () => ({ html, redirected }));
+
+    it('reads through the private Chrome first and asks the browser service nothing', async () => {
+      const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
+      const readBrowserPage = page(DELIVERED_PAGE);
+      const { recorder, records } = stepRecorder();
+      const result = await new USPSTracker({ trawl: ownTrawl(), browserEndpoint: ` ${ENDPOINT} `, readBrowserPage, recorder }).fetch(DELIVERED_NUMBER);
+      expect(result).toMatchObject({ status: 'delivered', tracking_source: 'rendered-page', tracking_url: uspsTrackingUrl(DELIVERED_NUMBER) });
+      expect(readBrowserPage).toHaveBeenCalledWith(expect.objectContaining({ endpoint: ENDPOINT, url: uspsTrackingUrl(DELIVERED_NUMBER), timeoutMs: 20_000 }));
+      expect(records).toEqual(['browser:ok', 'lookup:browser:ok']);
+      expect(fetcher).not.toHaveBeenCalled();
+    });
+
+    it('needs no browser service, and then has the whole lookup', async () => {
+      const readBrowserPage = page(DELIVERED_PAGE);
+      await expect(new USPSTracker({ trawl: null, browserEndpoint: ENDPOINT, readBrowserPage }).fetch(DELIVERED_NUMBER))
+        .resolves.toMatchObject({ status: 'delivered' });
+      expect(readBrowserPage).toHaveBeenCalledWith(expect.objectContaining({ timeoutMs: 45_000 }));
+    });
+
+    it('asks the browser service after a wrapper, an outage redirect, an unavailable Chrome or its share running out', async () => {
+      for (const readBrowserPage of [page(INTERSTITIAL_PAGE), page('', true),
+        vi.fn(async () => { throw new TransportError('USPS', 'USPS browser read failed'); }),
+        vi.fn(async () => { throw new BudgetExceededError('USPS', 20_000); })]) {
+        vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(trawlReply(DELIVERED_PAGE));
+        const { recorder, records } = stepRecorder();
+        await expect(new USPSTracker({ trawl: ownTrawl(), browserEndpoint: ENDPOINT, readBrowserPage, recorder }).fetch(DELIVERED_NUMBER))
+          .resolves.toMatchObject({ status: 'delivered' });
+        expect(records.slice(1)).toEqual(['trawl:ok', 'lookup:trawl:ok']);
+        vi.restoreAllMocks();
+      }
+    });
+
+    it('ends on a page of another parcel, which the browser service would not correct', async () => {
+      const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
+      await expect(new USPSTracker({ trawl: ownTrawl(), browserEndpoint: ENDPOINT, readBrowserPage: page(DELIVERED_PAGE) }).fetch(IN_TRANSIT_NUMBER))
+        .rejects.toMatchObject({ name: 'SchemaError' });
+      expect(fetcher).not.toHaveBeenCalled();
+    });
+
+    it('reads the browser service once after an outage redirect in the private Chrome when that read fails for good', async () => {
+      const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValue(trawlReply(DELIVERED_PAGE, IN_TRANSIT_NUMBER));
+      const { recorder, records } = stepRecorder();
+      await expect(new USPSTracker({ trawl: ownTrawl(), browserEndpoint: ENDPOINT, readBrowserPage: page('', true), recorder }).fetch(IN_TRANSIT_NUMBER))
+        .rejects.toMatchObject({ name: 'SchemaError' });
+      expect(records).toEqual(['browser:indeterminate', 'trawl:schema', 'lookup:trawl:schema']);
+      expect(fetcher).toHaveBeenCalledTimes(1);
+    });
+
+    it('takes the endpoint from USPS_BROWSER_WS_ENDPOINT', () => {
+      expect(adapter({ env: { USPS_BROWSER_WS_ENDPOINT: ENDPOINT }, fetcher: globalThis.fetch, trawl: null, recorder: NOOP_RECORDER } as never))
+        .toMatchObject({ steps: ['browser', 'trawl'] });
+    });
   });
 
   describe('fallback proxy', () => {

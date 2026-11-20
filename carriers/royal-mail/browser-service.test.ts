@@ -14,6 +14,16 @@ it('binds the worker to loopback and gives Chrome only its operating environment
     headless: true, port: 3001, wsPath, env: { PATH: '/test/bin', HOME: '/test/user', LANG: 'en_US.UTF-8' } }));
 });
 
+it('gives Chrome a window and the host\'s display when asked', async () => {
+  const server = { close: vi.fn() }; vi.mocked(chromium.launchServer).mockResolvedValue(server as never);
+  const env = { TRACKING_CHROMIUM_PATH: '/test/chrome', ROYAL_MAIL_BROWSER_WS_PATH: '/' + 's'.repeat(40), ROYAL_MAIL_BROWSER_HEADED: '1' };
+  await expect(startRoyalMailBrowserService(env)).rejects.toThrow('requires a display');
+  await startRoyalMailBrowserService({ ...env, DISPLAY: ':99', XAUTHORITY: '/test/xauth', PRIVATE_TOKEN: 'PRIVATE' });
+  expect(chromium.launchServer).toHaveBeenCalledTimes(1);
+  expect(chromium.launchServer).toHaveBeenCalledWith(expect.objectContaining({ headless: false,
+    env: { PATH: '', HOME: '/tmp', LANG: 'en_US.UTF-8', DISPLAY: ':99', XAUTHORITY: '/test/xauth' } }));
+});
+
 it('rejects missing browser, weak paths and invalid ports without exposing settings', async () => {
   for (const env of [{}, { TRACKING_CHROMIUM_PATH: '/test/chrome', ROYAL_MAIL_BROWSER_WS_PATH: '/PRIVATE' },
     { TRACKING_CHROMIUM_PATH: '/test/chrome', ROYAL_MAIL_BROWSER_WS_PATH: '/' + 's'.repeat(40), ROYAL_MAIL_BROWSER_PORT: '99999' }]) {

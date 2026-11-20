@@ -130,6 +130,9 @@ tunnel and configure the resulting endpoint on the caller. The client preserves 
 loopback Host header through the tunnel. Both ends need the same
 `playwright-core` version. Keep the path and endpoint outside source control and logs.
 
+`ROYAL_MAIL_BROWSER_HEADED=1` gives the worker's Chrome a window, for trackers that answer only
+such a browser. It needs a display, which can be a virtual one such as `xvfb-run`'s.
+
 The worker needs process supervision and an available host. If it is unavailable, tracking
 fails as transport and enabled providers follow their normal fallback route. The local browser
 remains available to installations without a dedicated endpoint.
