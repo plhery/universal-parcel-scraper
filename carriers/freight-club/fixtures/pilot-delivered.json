@@ -1,0 +1,75 @@
+{
+  "TrackingNumber": "387141723",
+  "TrackingFound": true,
+  "TrackingAttempted": true,
+  "LastStatusSimplified": "Delivered",
+  "TrackingDeliveryDate": "2025-01-31T14:26:00+00:00",
+  "Details": [
+    {
+      "Date": "2025-01-31T14:26:00-08:00",
+      "Activity": "DELIVERED",
+      "City": "BELLEROSE",
+      "ProvinceState": "NY"
+    },
+    {
+      "Date": "2025-01-31T12:05:47-08:00",
+      "Activity": "OUT FOR DELIVERY",
+      "City": "INWOOD",
+      "ProvinceState": "NY"
+    },
+    {
+      "Date": "2025-01-28T17:36:00-08:00",
+      "Activity": "ARRIVED AT DESTINATION TERMINAL",
+      "City": "",
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2025-01-27T12:50:39-08:00",
+      "Activity": "ARRIVED AT PILOT LOCATION",
+      "City": "INWOOD",
+      "ProvinceState": "NY"
+    },
+    {
+      "Date": "2025-01-26T19:43:52-08:00",
+      "Activity": "PICKED UP AND IN TRANSIT",
+      "City": "",
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2025-01-24T14:10:10-08:00",
+      "Activity": "PICKED UP AND IN TRANSIT",
+      "City": "",
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2025-01-23T23:02:00-08:00",
+      "Activity": "PICKED UP",
+      "City": "MEMPHIS",
+      "ProvinceState": "TN"
+    },
+    {
+      "Date": "2025-01-22T16:58:59-08:00",
+      "Activity": "PICKED UP",
+      "City": "MEMPHIS",
+      "ProvinceState": "TN"
+    },
+    {
+      "Date": "2025-01-22T16:25:13-08:00",
+      "Activity": "DRIVER DISPATCHED FOR PICKUP",
+      "City": "MEMPHIS",
+      "ProvinceState": "TN"
+    },
+    {
+      "Date": "2025-01-21T23:09:09-08:00",
+      "Activity": "WAITING FOR PICKUP",
+      "City": "MEMPHIS",
+      "ProvinceState": "TN"
+    },
+    {
+      "Date": "2025-01-21T13:58:58-08:00",
+      "Activity": "SHIPMENT REQUEST SENT TO CARRIER",
+      "City": "Memphis",
+      "ProvinceState": "TN"
+    }
+  ]
+}

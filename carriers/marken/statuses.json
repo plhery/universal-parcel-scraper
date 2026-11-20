@@ -1,0 +1,113 @@
+{
+  "carrier": "marken",
+  "entries": [
+    {
+      "code": "Booked date",
+      "wording": "Booked date",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Order Received",
+      "wording": "Order Received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Dispatch Courier to Pickup",
+      "wording": "Dispatch Courier to Pickup",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The courier is dispatched to collect the shipment."
+    },
+    {
+      "code": "Pickup Package",
+      "wording": "Pickup Package",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The listed clock matches scheduled collection in the numeric job example."
+    },
+    {
+      "code": "Collected on",
+      "wording": "Collected on",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Tendered on",
+      "wording": "Tendered on",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Transport arrived on",
+      "wording": "Transport arrived on",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Transport departed on",
+      "wording": "Transport departed on",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Dry ice replenished on",
+      "wording": "Dry ice replenished on",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Submitted to customs on",
+      "wording": "Submitted to customs on",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Cleared customs on",
+      "wording": "Cleared customs on",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Delayed on",
+      "wording": "Delayed on",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Delivered on",
+      "wording": "Delivered on",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Job Completed",
+      "wording": "Job Completed",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The numeric sample explicitly reports delivery in its current status panel."
+    }
+  ]
+}

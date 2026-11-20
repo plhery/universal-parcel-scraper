@@ -1,0 +1,35 @@
+{
+  "carrier": "westjet-cargo",
+  "records": [
+    {
+      "number": "83811594284",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/1055189926/MAWB-838-11594284",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Published WestJet Cargo master air waybill for a Vancouver to Toronto shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dpd-ro",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}

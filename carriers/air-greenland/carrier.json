@@ -1,0 +1,51 @@
+{
+  "id": "air-greenland",
+  "displayName": "Air Greenland Cargo",
+  "aliases": [
+    "Air Greenland",
+    "Grønlandsfly"
+  ],
+  "region": {
+    "countries": [
+      "GL"
+    ]
+  },
+  "brand": {
+    "color": "#c3122f"
+  },
+  "selectable": true,
+  "timezone": "America/Nuuk",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "air-greenland",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://airgreenland.com/cargo/tracking-awb/",
+    "searchUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "shows": [
+      "history",
+      "location",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

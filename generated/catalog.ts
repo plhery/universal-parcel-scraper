@@ -7319,6 +7319,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "air-greenland": {
+    "displayName": "Air Greenland Cargo",
+    "color": "#c3122f",
+    "aliases": [
+      "Air Greenland",
+      "Grønlandsfly"
+    ],
+    "countries": [
+      "GL"
+    ],
+    "selectable": true,
+    "timezone": "America/Nuuk",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-greenland"
+    },
+    "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "trackingUrlTemplate": "https://airgreenland.com/cargo/tracking-awb/",
+    "trackingSearchUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-star-xpress": {
     "displayName": "Air Star Xpress",
     "color": "#227337",
@@ -7681,6 +7703,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "akasa-air-cargo": {
+    "displayName": "Akasa Air Cargo",
+    "color": "#ff5b19",
+    "aliases": [
+      "Akasa Air",
+      "QP Cargo"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "akasa-air-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "akash-ganga": {
     "displayName": "Akash Ganga Courier",
     "color": "#024182",
@@ -7757,6 +7802,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "akr-express": {
+    "displayName": "AKR Express",
+    "color": "#d5232e",
+    "aliases": [
+      "AKR Express Parcel Service",
+      "AKR Express Parcel Service Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "akr-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://akrexpress.com/",
+    "trackingUrlTemplate": "https://akrexpress.com/",
+    "trackingSearchUrl": "https://akrexpress.com/",
+    "linkRules": [],
     "detectionRules": []
   },
   "akropost": {
@@ -16867,6 +16935,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "courierit-nz": {
+    "displayName": "Courierit New Zealand",
+    "color": "#166893",
+    "aliases": [
+      "Courierit NZ",
+      "Courierit Freight Gateway",
+      "Courierit Classic"
+    ],
+    "countries": [
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Auckland",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "courierit-nz",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.courierit.net.nz/Home/Track",
+    "trackingUrlTemplate": "https://www.courierit.net.nz/Home/Track",
+    "trackingSearchUrl": "https://www.courierit.net.nz/Home/Track",
+    "linkRules": [],
     "detectionRules": []
   },
   "couriersplease": {
@@ -26522,6 +26614,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "fraktjakt": {
+    "displayName": "Fraktjakt",
+    "color": "#50852d",
+    "aliases": [
+      "Fraktjakt AB"
+    ],
+    "countries": [
+      "SE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Stockholm",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fraktjakt",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.fraktjakt.se/trace",
+    "trackingUrlTemplate": "https://www.fraktjakt.se/trace/shipment/{trackingNumber}?locale=en",
+    "trackingSearchUrl": "https://www.fraktjakt.se/trace?locale=en",
+    "linkRules": [
+      {
+        "domains": [
+          "fraktjakt.se",
+          "www.fraktjakt.se"
+        ],
+        "pathPattern": "^/trace(?:/shipment/[0-9a-f]{32})?/?$",
+        "path": "^/trace/shipment/([0-9a-f]{32})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "franch-express": {
     "displayName": "Franch Express",
     "color": "#ec1b24",
@@ -26548,6 +26671,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "params": [
           "keyword"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "freight-club": {
+    "displayName": "Freight Club",
+    "color": "#005a80",
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "freight-club"
+    },
+    "canaryUrl": "https://app.freightclub.com/Tracking",
+    "trackingUrlTemplate": "https://app.freightclub.com/Tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://app.freightclub.com/Tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "app.freightclub.com"
+        ],
+        "pathPattern": "^/Tracking(?:/[A-Za-z0-9_-]{3,80})?/?$",
+        "path": "^/Tracking/([A-Za-z0-9_-]{3,80})/?$"
       }
     ],
     "detectionRules": []
@@ -27941,6 +28091,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://globexpost.com/",
     "trackingSearchUrl": "https://globexpost.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "globkurier": {
+    "displayName": "GlobKurier",
+    "color": "#e53930",
+    "aliases": [
+      "GlobKurier.pl"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "globkurier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.globkurier.pl/tracking",
+    "trackingUrlTemplate": "https://www.globkurier.pl/tracking",
+    "trackingSearchUrl": "https://www.globkurier.pl/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31713,6 +31885,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "indigo-cargo": {
+    "displayName": "IndiGo CarGo",
+    "color": "#242785",
+    "aliases": [
+      "IndiGo Cargo",
+      "6E Cargo"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "indigo-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
   },
   "indopaket": {
     "displayName": "Indopaket",
@@ -36615,6 +36810,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "lalji-mulji-transport": {
+    "displayName": "Lalji Mulji Transport",
+    "color": "#d2272d",
+    "aliases": [
+      "Lalji Mulji Transport Company",
+      "Lalji Mulji Transport Co.",
+      "LMTCO"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lalji-mulji-transport",
+      "localClocks": true
+    },
+    "canaryUrl": "https://lmtco.com/tracking-serices.html",
+    "trackingUrlTemplate": "https://lmtco.com/tracking-serices.html",
+    "trackingSearchUrl": "https://lmtco.com/tracking-serices.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "lao-post": {
     "displayName": "Lao Post",
     "color": "#f6871f",
@@ -39413,6 +39632,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "marken": {
+    "displayName": "Marken",
+    "color": "#0a2663",
+    "aliases": [
+      "Marken Logistics",
+      "Marken, UPS Healthcare"
+    ],
+    "countries": [
+      "US",
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "marken",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.marken.com/track-shipment",
+    "trackingUrlTemplate": "https://www.marken.com/track-shipment?jobNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.marken.com/track-shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "www.marken.com",
+          "marken.com",
+          "es.marken.com"
+        ],
+        "pathPattern": "^/track-shipment/?$",
+        "params": [
+          "jobNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "maruti-air": {
     "displayName": "Maruti Air Couriers & Cargo",
     "color": "#ed3237",
@@ -40914,6 +41169,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "work.mymmtl.com"
         ],
         "path": "^/track/([^/?#,;|]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "move-cargo": {
+    "displayName": "Move Cargo",
+    "color": "#ff4d1c",
+    "aliases": [
+      "Move Cargo Inc"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "move-cargo"
+    },
+    "canaryUrl": "https://movecargo.ca/track",
+    "trackingUrlTemplate": "https://movecargo.ca/track?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://movecargo.ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "movecargo.ca"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "tracking_number"
+        ]
       }
     ],
     "detectionRules": []
@@ -54198,6 +54484,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "spedition-moeller": {
+    "displayName": "Artur Möller",
+    "color": "#dd3a32",
+    "aliases": [
+      "Artur Möller GmbH & Co. KG",
+      "Spedition Artur Möller",
+      "Artur Moeller"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spedition-moeller"
+    },
+    "canaryUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "trackingUrlTemplate": "https://portal.spedition-moeller.com/tracking.html",
+    "trackingSearchUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "speed-and-safe": {
     "displayName": "Gokulam Speed & Safe",
     "color": "#2e3192",
@@ -58932,6 +59241,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "transdirect": {
+    "displayName": "Transdirect",
+    "color": "#73cf11",
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Brisbane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transdirect"
+    },
+    "canaryUrl": "https://www.transdirect.com.au/education/tracking/",
+    "trackingUrlTemplate": "https://www.transdirect.com.au/education/tracking/?reference={trackingNumber}",
+    "trackingSearchUrl": "https://www.transdirect.com.au/education/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "transdirect.com.au",
+          "www.transdirect.com.au"
+        ],
+        "pathPattern": "^/education/tracking/?$",
+        "params": [
+          "reference"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "transfera": {
     "displayName": "Transfera",
     "color": "#ed1c24",
@@ -62699,6 +63037,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "westjet-cargo": {
+    "displayName": "WestJet Cargo",
+    "color": "#017f7c",
+    "aliases": [
+      "WestJet Air Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "westjet-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "westweg": {
     "displayName": "Westweg",
     "color": "#281569",
@@ -65919,6 +66279,7 @@ export const CARRIER_IDS = [
   "ahl-courier",
   "aics",
   "aiolos-courier",
+  "air-greenland",
   "air-star-xpress",
   "airmee",
   "airpak-express",
@@ -65930,8 +66291,10 @@ export const CARRIER_IDS = [
   "ait-home-delivery",
   "ait-worldwide",
   "ajex",
+  "akasa-air-cargo",
   "akash-ganga",
   "akis-express",
+  "akr-express",
   "akropost",
   "aks-express",
   "aland-post",
@@ -66200,6 +66563,7 @@ export const CARRIER_IDS = [
   "courier-express-malta",
   "courier-it",
   "courier-plus-ng",
+  "courierit-nz",
   "couriersplease",
   "cps-lastmile",
   "cpszy",
@@ -66473,7 +66837,9 @@ export const CARRIER_IDS = [
   "foxpost",
   "foz-post",
   "fragilepak",
+  "fraktjakt",
   "franch-express",
+  "freight-club",
   "freightways-global",
   "freja",
   "frontdoor-collective",
@@ -66517,6 +66883,7 @@ export const CARRIER_IDS = [
   "global-parcel-service",
   "globalpost",
   "globex-post",
+  "globkurier",
   "gls-at",
   "gls-ca",
   "gls-es",
@@ -66625,6 +66992,7 @@ export const CARRIER_IDS = [
   "ilyang-logis",
   "imile",
   "indah-logistik",
+  "indigo-cargo",
   "indopaket",
   "inntralog",
   "inposdom",
@@ -66771,6 +67139,7 @@ export const CARRIER_IDS = [
   "laar-courier",
   "labaih",
   "lafasta",
+  "lalji-mulji-transport",
   "lao-post",
   "laser-logistics",
   "last-one-mile-coop",
@@ -66855,6 +67224,7 @@ export const CARRIER_IDS = [
   "maraton",
   "maritime-ontario",
   "mark-express",
+  "marken",
   "maruti-air",
   "marvisur",
   "matkahuolto",
@@ -66905,6 +67275,7 @@ export const CARRIER_IDS = [
   "morning-global",
   "motorex",
   "mountain-movers",
+  "move-cargo",
   "movicarga",
   "movin",
   "movvi",
@@ -67293,6 +67664,7 @@ export const CARRIER_IDS = [
   "sp-express",
   "spark-kz",
   "sped-trans",
+  "spedition-moeller",
   "speed-and-safe",
   "speedaf",
   "speedex",
@@ -67428,6 +67800,7 @@ export const CARRIER_IDS = [
   "trans-pack",
   "transaher",
   "transcorp",
+  "transdirect",
   "transfera",
   "transgo-mx",
   "transilvania-post",
@@ -67546,6 +67919,7 @@ export const CARRIER_IDS = [
   "west-postal",
   "western-bid",
   "western-post",
+  "westjet-cargo",
   "westweg",
   "whatsship",
   "whistl",
@@ -67801,6 +68175,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ahl-courier": [],
   "aics": [],
   "aiolos-courier": [],
+  "air-greenland": [],
   "air-star-xpress": [],
   "airmee": [],
   "airpak-express": [],
@@ -67812,8 +68187,10 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ait-home-delivery": [],
   "ait-worldwide": [],
   "ajex": ["ajex-1"],
+  "akasa-air-cargo": [],
   "akash-ganga": [],
   "akis-express": [],
+  "akr-express": [],
   "akropost": [],
   "aks-express": [],
   "aland-post": [],
@@ -68082,6 +68459,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "courier-express-malta": [],
   "courier-it": [],
   "courier-plus-ng": [],
+  "courierit-nz": [],
   "couriersplease": ["couriersplease-1"],
   "cps-lastmile": [],
   "cpszy": [],
@@ -68355,7 +68733,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "foxpost": ["foxpost-1","foxpost-home-delivery"],
   "foz-post": [],
   "fragilepak": ["fragilepak-1"],
+  "fraktjakt": [],
   "franch-express": [],
+  "freight-club": [],
   "freightways-global": [],
   "freja": [],
   "frontdoor-collective": [],
@@ -68399,6 +68779,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "global-parcel-service": [],
   "globalpost": ["globalpost-1"],
   "globex-post": [],
+  "globkurier": [],
   "gls-at": ["gls-at-1","gls-at-2"],
   "gls-ca": [],
   "gls-es": ["gls-es-1","gls-es-2"],
@@ -68507,6 +68888,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ilyang-logis": [],
   "imile": ["imile-3","imile-1","imile-4","imile-5","imile-2"],
   "indah-logistik": ["indah-logistik-1"],
+  "indigo-cargo": [],
   "indopaket": [],
   "inntralog": [],
   "inposdom": [],
@@ -68653,6 +69035,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "laar-courier": [],
   "labaih": [],
   "lafasta": [],
+  "lalji-mulji-transport": [],
   "lao-post": [],
   "laser-logistics": [],
   "last-one-mile-coop": [],
@@ -68737,6 +69120,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maraton": [],
   "maritime-ontario": [],
   "mark-express": [],
+  "marken": [],
   "maruti-air": [],
   "marvisur": [],
   "matkahuolto": ["matkahuolto-1","matkahuolto-2","matkahuolto-3","matkahuolto-4"],
@@ -68787,6 +69171,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "morning-global": ["morning-global-1"],
   "motorex": [],
   "mountain-movers": [],
+  "move-cargo": [],
   "movicarga": [],
   "movin": [],
   "movvi": [],
@@ -69175,6 +69560,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sp-express": ["sp-express-1"],
   "spark-kz": [],
   "sped-trans": [],
+  "spedition-moeller": [],
   "speed-and-safe": [],
   "speedaf": ["speedaf-12","speedaf-r"],
   "speedex": [],
@@ -69310,6 +69696,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trans-pack": [],
   "transaher": ["transaher-1"],
   "transcorp": [],
+  "transdirect": [],
   "transfera": [],
   "transgo-mx": [],
   "transilvania-post": [],
@@ -69428,6 +69815,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "west-postal": [],
   "western-bid": ["western-bid-1"],
   "western-post": [],
+  "westjet-cargo": [],
   "westweg": [],
   "whatsship": ["whatsship-1"],
   "whistl": ["whistl-1"],

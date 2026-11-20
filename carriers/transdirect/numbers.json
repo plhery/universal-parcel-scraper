@@ -1,0 +1,23 @@
+{
+  "carrier": "transdirect",
+  "records": [
+    {
+      "number": "IRE032323149",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://developer-center.transdirect.com.au/api-explorer/operations/apiv5bookingstrackstatusreference/",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "Consignment reference in the public tracking API documentation",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["colis-prive", "purolator", "tnt-au"]
+      }
+    }
+  ]
+}

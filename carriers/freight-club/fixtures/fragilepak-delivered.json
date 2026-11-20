@@ -1,0 +1,93 @@
+{
+  "TrackingNumber": "361U1132829",
+  "TrackingFound": true,
+  "TrackingAttempted": true,
+  "LastStatusSimplified": "Delivered",
+  "TrackingDeliveryDate": "2022-01-03T10:15:00+00:00",
+  "Details": [
+    {
+      "Date": "2022-01-05T14:17:06.25-08:00",
+      "Activity": "Pick-up Appointment Date and/or Time for 12/17/2021 6:19:56 AM",
+      "City": "HUMBLE",
+      "ProvinceState": "TX"
+    },
+    {
+      "Date": "2022-01-03T10:15:00-08:00",
+      "Activity": "Delivered",
+      "City": "DURHAM",
+      "ProvinceState": "NC"
+    },
+    {
+      "Date": "2022-01-03T04:00:00-08:00",
+      "Activity": "Out for Delivery",
+      "City": "DURHAM",
+      "ProvinceState": "NC"
+    },
+    {
+      "Date": "2022-01-02T14:15:35-08:00",
+      "Activity": "En Route to Delivery Location",
+      "City": "Raleigh",
+      "ProvinceState": "NC"
+    },
+    {
+      "Date": "2021-12-30T16:35:20-08:00",
+      "Activity": "Arrived at Final Mile Delivery Provider",
+      "City": "Raleigh",
+      "ProvinceState": "NC"
+    },
+    {
+      "Date": "2021-12-30T16:27:53-08:00",
+      "Activity": "Arrived at Cross Dock Facility",
+      "City": "Raleigh",
+      "ProvinceState": "NC"
+    },
+    {
+      "Date": "2021-12-27T08:50:43-08:00",
+      "Activity": "Departed Cross Dock Facility",
+      "City": "Atlanta",
+      "ProvinceState": "GA"
+    },
+    {
+      "Date": "2021-12-27T08:21:50-08:00",
+      "Activity": "Arrived at Cross Dock Facility",
+      "City": "Atlanta",
+      "ProvinceState": "GA"
+    },
+    {
+      "Date": "2021-12-22T12:41:17-08:00",
+      "Activity": "Departed Cross Dock Facility",
+      "City": "Richardson",
+      "ProvinceState": "TX"
+    },
+    {
+      "Date": "2021-12-20T11:36:34-08:00",
+      "Activity": "Arrived at Cross Dock Facility",
+      "City": "Richardson",
+      "ProvinceState": "TX"
+    },
+    {
+      "Date": "2021-12-17T10:10:22-08:00",
+      "Activity": "Departed Cross Dock Facility",
+      "City": "Houston",
+      "ProvinceState": "TX"
+    },
+    {
+      "Date": "2021-12-14T06:23:09-08:00",
+      "Activity": "Picked Up from Shipper",
+      "City": "HUMBLE",
+      "ProvinceState": "TX"
+    },
+    {
+      "Date": "2021-11-29T10:09:20-08:00",
+      "Activity": "Pending Pickup",
+      "City": "HUMBLE",
+      "ProvinceState": "TX"
+    },
+    {
+      "Date": "2021-11-29T08:18:29-08:00",
+      "Activity": "Order Acknowledged",
+      "City": "HUMBLE",
+      "ProvinceState": "TX"
+    }
+  ]
+}

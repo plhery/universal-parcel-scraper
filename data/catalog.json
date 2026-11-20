@@ -7315,6 +7315,28 @@
     ],
     "detectionRules": []
   },
+  "air-greenland": {
+    "displayName": "Air Greenland Cargo",
+    "color": "#c3122f",
+    "aliases": [
+      "Air Greenland",
+      "Grønlandsfly"
+    ],
+    "countries": [
+      "GL"
+    ],
+    "selectable": true,
+    "timezone": "America/Nuuk",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-greenland"
+    },
+    "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "trackingUrlTemplate": "https://airgreenland.com/cargo/tracking-awb/",
+    "trackingSearchUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-star-xpress": {
     "displayName": "Air Star Xpress",
     "color": "#227337",
@@ -7677,6 +7699,29 @@
       }
     ]
   },
+  "akasa-air-cargo": {
+    "displayName": "Akasa Air Cargo",
+    "color": "#ff5b19",
+    "aliases": [
+      "Akasa Air",
+      "QP Cargo"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "akasa-air-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "akash-ganga": {
     "displayName": "Akash Ganga Courier",
     "color": "#024182",
@@ -7753,6 +7798,29 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "akr-express": {
+    "displayName": "AKR Express",
+    "color": "#d5232e",
+    "aliases": [
+      "AKR Express Parcel Service",
+      "AKR Express Parcel Service Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "akr-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://akrexpress.com/",
+    "trackingUrlTemplate": "https://akrexpress.com/",
+    "trackingSearchUrl": "https://akrexpress.com/",
+    "linkRules": [],
     "detectionRules": []
   },
   "akropost": {
@@ -16863,6 +16931,30 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "courierit-nz": {
+    "displayName": "Courierit New Zealand",
+    "color": "#166893",
+    "aliases": [
+      "Courierit NZ",
+      "Courierit Freight Gateway",
+      "Courierit Classic"
+    ],
+    "countries": [
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Auckland",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "courierit-nz",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.courierit.net.nz/Home/Track",
+    "trackingUrlTemplate": "https://www.courierit.net.nz/Home/Track",
+    "trackingSearchUrl": "https://www.courierit.net.nz/Home/Track",
+    "linkRules": [],
     "detectionRules": []
   },
   "couriersplease": {
@@ -26518,6 +26610,37 @@
       }
     ]
   },
+  "fraktjakt": {
+    "displayName": "Fraktjakt",
+    "color": "#50852d",
+    "aliases": [
+      "Fraktjakt AB"
+    ],
+    "countries": [
+      "SE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Stockholm",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fraktjakt",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.fraktjakt.se/trace",
+    "trackingUrlTemplate": "https://www.fraktjakt.se/trace/shipment/{trackingNumber}?locale=en",
+    "trackingSearchUrl": "https://www.fraktjakt.se/trace?locale=en",
+    "linkRules": [
+      {
+        "domains": [
+          "fraktjakt.se",
+          "www.fraktjakt.se"
+        ],
+        "pathPattern": "^/trace(?:/shipment/[0-9a-f]{32})?/?$",
+        "path": "^/trace/shipment/([0-9a-f]{32})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "franch-express": {
     "displayName": "Franch Express",
     "color": "#ec1b24",
@@ -26544,6 +26667,33 @@
         "params": [
           "keyword"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "freight-club": {
+    "displayName": "Freight Club",
+    "color": "#005a80",
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "freight-club"
+    },
+    "canaryUrl": "https://app.freightclub.com/Tracking",
+    "trackingUrlTemplate": "https://app.freightclub.com/Tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://app.freightclub.com/Tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "app.freightclub.com"
+        ],
+        "pathPattern": "^/Tracking(?:/[A-Za-z0-9_-]{3,80})?/?$",
+        "path": "^/Tracking/([A-Za-z0-9_-]{3,80})/?$"
       }
     ],
     "detectionRules": []
@@ -27937,6 +28087,28 @@
     },
     "canaryUrl": "https://globexpost.com/",
     "trackingSearchUrl": "https://globexpost.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "globkurier": {
+    "displayName": "GlobKurier",
+    "color": "#e53930",
+    "aliases": [
+      "GlobKurier.pl"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "globkurier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.globkurier.pl/tracking",
+    "trackingUrlTemplate": "https://www.globkurier.pl/tracking",
+    "trackingSearchUrl": "https://www.globkurier.pl/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31709,6 +31881,29 @@
         "confidence": "high"
       }
     ]
+  },
+  "indigo-cargo": {
+    "displayName": "IndiGo CarGo",
+    "color": "#242785",
+    "aliases": [
+      "IndiGo Cargo",
+      "6E Cargo"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "indigo-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
   },
   "indopaket": {
     "displayName": "Indopaket",
@@ -36611,6 +36806,30 @@
     ],
     "detectionRules": []
   },
+  "lalji-mulji-transport": {
+    "displayName": "Lalji Mulji Transport",
+    "color": "#d2272d",
+    "aliases": [
+      "Lalji Mulji Transport Company",
+      "Lalji Mulji Transport Co.",
+      "LMTCO"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lalji-mulji-transport",
+      "localClocks": true
+    },
+    "canaryUrl": "https://lmtco.com/tracking-serices.html",
+    "trackingUrlTemplate": "https://lmtco.com/tracking-serices.html",
+    "trackingSearchUrl": "https://lmtco.com/tracking-serices.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "lao-post": {
     "displayName": "Lao Post",
     "color": "#f6871f",
@@ -39409,6 +39628,42 @@
     ],
     "detectionRules": []
   },
+  "marken": {
+    "displayName": "Marken",
+    "color": "#0a2663",
+    "aliases": [
+      "Marken Logistics",
+      "Marken, UPS Healthcare"
+    ],
+    "countries": [
+      "US",
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "marken",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.marken.com/track-shipment",
+    "trackingUrlTemplate": "https://www.marken.com/track-shipment?jobNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.marken.com/track-shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "www.marken.com",
+          "marken.com",
+          "es.marken.com"
+        ],
+        "pathPattern": "^/track-shipment/?$",
+        "params": [
+          "jobNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "maruti-air": {
     "displayName": "Maruti Air Couriers & Cargo",
     "color": "#ed3237",
@@ -40910,6 +41165,37 @@
           "work.mymmtl.com"
         ],
         "path": "^/track/([^/?#,;|]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "move-cargo": {
+    "displayName": "Move Cargo",
+    "color": "#ff4d1c",
+    "aliases": [
+      "Move Cargo Inc"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "move-cargo"
+    },
+    "canaryUrl": "https://movecargo.ca/track",
+    "trackingUrlTemplate": "https://movecargo.ca/track?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://movecargo.ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "movecargo.ca"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "tracking_number"
+        ]
       }
     ],
     "detectionRules": []
@@ -54194,6 +54480,29 @@
     ],
     "detectionRules": []
   },
+  "spedition-moeller": {
+    "displayName": "Artur Möller",
+    "color": "#dd3a32",
+    "aliases": [
+      "Artur Möller GmbH & Co. KG",
+      "Spedition Artur Möller",
+      "Artur Moeller"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spedition-moeller"
+    },
+    "canaryUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "trackingUrlTemplate": "https://portal.spedition-moeller.com/tracking.html",
+    "trackingSearchUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "speed-and-safe": {
     "displayName": "Gokulam Speed & Safe",
     "color": "#2e3192",
@@ -58928,6 +59237,35 @@
     ],
     "detectionRules": []
   },
+  "transdirect": {
+    "displayName": "Transdirect",
+    "color": "#73cf11",
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Brisbane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transdirect"
+    },
+    "canaryUrl": "https://www.transdirect.com.au/education/tracking/",
+    "trackingUrlTemplate": "https://www.transdirect.com.au/education/tracking/?reference={trackingNumber}",
+    "trackingSearchUrl": "https://www.transdirect.com.au/education/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "transdirect.com.au",
+          "www.transdirect.com.au"
+        ],
+        "pathPattern": "^/education/tracking/?$",
+        "params": [
+          "reference"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "transfera": {
     "displayName": "Transfera",
     "color": "#ed1c24",
@@ -62692,6 +63030,28 @@
     },
     "canaryUrl": "https://www.wpglb.com/",
     "trackingSearchUrl": "https://www.wpglb.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "westjet-cargo": {
+    "displayName": "WestJet Cargo",
+    "color": "#017f7c",
+    "aliases": [
+      "WestJet Air Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "westjet-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
     "linkRules": [],
     "detectionRules": []
   },

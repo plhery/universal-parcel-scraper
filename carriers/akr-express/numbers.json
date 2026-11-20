@@ -1,0 +1,25 @@
+{
+  "carrier": "akr-express",
+  "records": [
+    {
+      "number": "P125600",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://akrexpress.com/wp-content/uploads/2020/12/iPhone-mockup-for-Services-SMS-Alerts-scaled.jpg",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Lorry receipt visible in AKR Express’ official booking SMS example",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "flecha-amarilla"
+        ]
+      }
+    }
+  ]
+}

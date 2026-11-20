@@ -1,0 +1,55 @@
+{
+  "id": "globkurier",
+  "displayName": "GlobKurier",
+  "aliases": [
+    "GlobKurier.pl"
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#e53930"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "globkurier",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://www.globkurier.pl/tracking",
+    "searchUrl": "https://www.globkurier.pl/tracking",
+    "canaryUrl": "https://www.globkurier.pl/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "recipient_address"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

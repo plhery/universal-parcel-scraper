@@ -1,0 +1,10 @@
+{
+  "carrier": "transdirect",
+  "entries": [
+    { "code": "unknown", "wording": "Tracking not Available", "stage": null, "language": "en", "confirmedBy": "live", "note": "A tracking availability notice does not establish parcel movement." },
+    { "code": "picked_up", "wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "code": "in_transit", "wording": "In Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "out_for_delivery", "wording": "Onboard For Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "code": "delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

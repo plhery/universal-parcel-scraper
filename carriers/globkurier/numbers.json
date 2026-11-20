@@ -1,0 +1,22 @@
+{
+  "carrier": "globkurier",
+  "records": [
+    {
+      "number": "GK241014834170",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/faq/poznaj-opinie-naszych-klientow/page/3",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "GlobKurier tracking reference printed in the carrier’s public customer reviews",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      }
+    }
+  ]
+}

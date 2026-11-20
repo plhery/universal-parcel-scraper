@@ -1,0 +1,87 @@
+{
+  "TrackingNumber": "837942805509",
+  "TrackingFound": true,
+  "TrackingAttempted": true,
+  "LastStatusSimplified": "Delivered",
+  "TrackingDeliveryDate": "2021-11-22T06:27:00-08:00",
+  "Details": [
+    {
+      "Date": "2022-12-23T15:52:17-08:00",
+      "Activity": "Shipment Damaged",
+      "City": "Goleta",
+      "ProvinceState": "CA"
+    },
+    {
+      "Date": "2021-12-27T23:34:00-08:00",
+      "Activity": "Shipment Cancelled",
+      "City": null,
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2021-12-23T15:52:36-08:00",
+      "Activity": "Shipment Damaged",
+      "City": "Goleta",
+      "ProvinceState": "CA"
+    },
+    {
+      "Date": "2021-11-22T06:27:00-08:00",
+      "Activity": "Available for Delivery",
+      "City": null,
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2021-11-22T06:27:00-08:00",
+      "Activity": "Arrived at Terminal Location",
+      "City": "Ontario",
+      "ProvinceState": "CA"
+    },
+    {
+      "Date": "2021-11-10T03:43:00-08:00",
+      "Activity": "Available for Delivery",
+      "City": null,
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2021-11-10T03:43:00-08:00",
+      "Activity": "Arrived at Terminal Location",
+      "City": "Eastvale",
+      "ProvinceState": "CA"
+    },
+    {
+      "Date": "2021-11-05T07:20:00-07:00",
+      "Activity": "Arrived at Terminal Location",
+      "City": "Salt Lake City",
+      "ProvinceState": "UT"
+    },
+    {
+      "Date": "2021-11-04T21:00:00-07:00",
+      "Activity": "Estimated to Arrive at Carrier Terminal",
+      "City": null,
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2021-11-04T13:53:00-07:00",
+      "Activity": "Arrived at Pick-up Location",
+      "City": null,
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2021-11-04T01:29:00-07:00",
+      "Activity": "Carrier Departed Pick-up Location with Shipment",
+      "City": null,
+      "ProvinceState": ""
+    },
+    {
+      "Date": "2021-10-29T13:52:03-07:00",
+      "Activity": "Pending Pickup",
+      "City": "Salt Lake City",
+      "ProvinceState": "UT"
+    },
+    {
+      "Date": "2021-10-29T13:52:00-07:00",
+      "Activity": "Shipment Acknowledged",
+      "City": null,
+      "ProvinceState": ""
+    }
+  ]
+}

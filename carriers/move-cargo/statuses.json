@@ -1,0 +1,8 @@
+{
+  "carrier": "move-cargo",
+  "entries": [
+    { "code": "picked-up", "wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "code": "in-transit", "wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

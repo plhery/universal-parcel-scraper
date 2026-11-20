@@ -1,0 +1,37 @@
+{
+  "id": "fraktjakt",
+  "displayName": "Fraktjakt",
+  "aliases": ["Fraktjakt AB"],
+  "region": {
+    "countries": ["SE"]
+  },
+  "brand": {
+    "color": "#50852d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Stockholm",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "fraktjakt",
+    "steps": ["direct"],
+    "localClocks": true
+  },
+  "capabilities": ["history", "location", "provider_code"],
+  "portal": {
+    "url": "https://www.fraktjakt.se/trace/shipment/{trackingNumber}?locale=en",
+    "searchUrl": "https://www.fraktjakt.se/trace?locale=en",
+    "canaryUrl": "https://www.fraktjakt.se/trace",
+    "shows": ["status", "history", "location", "sender_name"],
+    "scraped": ["status", "history", "location", "provider_code"],
+    "discarded": ["sender_name"],
+    "unavailable": ["offset_timestamps"]
+  },
+  "links": [
+    {
+      "domains": ["fraktjakt.se", "www.fraktjakt.se"],
+      "pathPattern": "^/trace(?:/shipment/[0-9a-f]{32})?/?$",
+      "path": "^/trace/shipment/([0-9a-f]{32})/?$"
+    }
+  ],
+  "detection": []
+}

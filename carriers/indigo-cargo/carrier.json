@@ -1,0 +1,31 @@
+{
+  "id": "indigo-cargo",
+  "displayName": "IndiGo CarGo",
+  "aliases": ["IndiGo Cargo", "6E Cargo"],
+  "region": {
+    "countries": ["IN"]
+  },
+  "brand": {
+    "color": "#242785"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "indigo-cargo",
+    "steps": ["direct"],
+    "localClocks": true
+  },
+  "capabilities": ["history", "location", "weight"],
+  "portal": {
+    "url": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "searchUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "canaryUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "shows": ["status", "history", "location", "weight", "flight_and_routing", "goods_and_package_details"],
+    "scraped": ["status", "history", "location", "weight"],
+    "discarded": ["flight_and_routing", "goods_and_package_details"],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

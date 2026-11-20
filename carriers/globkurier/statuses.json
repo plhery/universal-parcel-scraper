@@ -1,0 +1,6 @@
+{
+  "carrier": "globkurier",
+  "entries": [
+    {"code": "REGISTERED_IN_SYSTEM", "wording": "Registered in the GlobKurier.pl system", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "GlobKurier booked the shipment."}
+  ]
+}

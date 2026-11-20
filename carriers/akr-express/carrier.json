@@ -1,0 +1,53 @@
+{
+  "id": "akr-express",
+  "displayName": "AKR Express",
+  "aliases": [
+    "AKR Express Parcel Service",
+    "AKR Express Parcel Service Pvt. Ltd."
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#d5232e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "akr-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://akrexpress.com/",
+    "canaryUrl": "https://akrexpress.com/",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "offset_timestamps"
+    ],
+    "searchUrl": "https://akrexpress.com/"
+  },
+  "links": [],
+  "detection": []
+}

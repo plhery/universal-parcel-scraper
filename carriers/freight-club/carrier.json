@@ -1,0 +1,69 @@
+{
+  "id": "freight-club",
+  "displayName": "Freight Club",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "CA",
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#005a80"
+  },
+  "selectable": true,
+  "timezone": "America/Vancouver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "freight-club",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "delivered_at",
+    "related_tracking_numbers"
+  ],
+  "portal": {
+    "url": "https://app.freightclub.com/Tracking/{trackingNumber}",
+    "searchUrl": "https://app.freightclub.com/Tracking",
+    "canaryUrl": "https://app.freightclub.com/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "delivered_at",
+      "related_tracking_numbers",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "delivered_at",
+      "related_tracking_numbers"
+    ],
+    "discarded": [
+      "eta",
+      "recipient_address"
+    ],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "app.freightclub.com"
+      ],
+      "pathPattern": "^/Tracking(?:/[A-Za-z0-9_-]{3,80})?/?$",
+      "path": "^/Tracking/([A-Za-z0-9_-]{3,80})/?$"
+    }
+  ],
+  "detection": []
+}

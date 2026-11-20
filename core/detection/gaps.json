@@ -102,6 +102,11 @@
     "reason": "AEX guías of the A series fall inside Allegro One's high-confidence A0 shape, and nothing else in the number names AEX."
   },
   {
+    "carrier": "air-greenland",
+    "kind": "by_design",
+    "reason": "Air Greenland cargo is selectable explicitly. The IATA airwaybill prefix and numeric format have not been assessed against existing carrier assignments."
+  },
+  {
     "carrier": "air-star-xpress",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -138,6 +143,11 @@
     "reason": "AJEX's eleven-character numbers share their shape with GLS Italy's depot numbers."
   },
   {
+    "carrier": "akasa-air-cargo",
+    "kind": "open",
+    "reason": "Select Akasa Air Cargo for its master air waybills. The two public air waybills have IATA prefix 516."
+  },
+  {
     "carrier": "akash-ganga",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -148,6 +158,11 @@
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "Nine digits are printed by many carriers and nothing in the number points to Akash Ganga Courier."
+  },
+  {
+    "carrier": "akr-express",
+    "kind": "by_design",
+    "reason": "AKR Express lorry receipts start with one letter followed by six or seven digits. Select the carrier explicitly."
   },
   {
     "carrier": "aks-express",
@@ -756,6 +771,11 @@
     "pattern": "^\\dN\\d{11}$",
     "kind": "by_design",
     "reason": "A digit, a letter and eleven digits is also La Poste's two-character layout, and nothing in the number points to CourierPlus."
+  },
+  {
+    "carrier": "courierit-nz",
+    "kind": "by_design",
+    "reason": "Courierit New Zealand publishes numeric consignment references without a carrier-specific prefix. Select it explicitly."
   },
   {
     "carrier": "couriersplease",
@@ -1488,10 +1508,20 @@
     "reason": "An Emile number on a parcel 4PX handed over to Emile. The shape is Emile's; 4PX's feed also knows the parcels it hands over."
   },
   {
+    "carrier": "fraktjakt",
+    "kind": "by_design",
+    "reason": "Fraktjakt public tracking codes share an opaque hexadecimal shape. Select the carrier or use its shipment link."
+  },
+  {
     "carrier": "franch-express",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
     "reason": "Franch Express's eleven-digit AWB numbers are a bare digit run many carriers share."
+  },
+  {
+    "carrier": "freight-club",
+    "kind": "by_design",
+    "reason": "Freight Club accepts its own booking references and delivery partners’ references. Select it explicitly."
   },
   {
     "carrier": "fukuyama",
@@ -1588,6 +1618,11 @@
     "pattern": "^SDC\\d{15}$",
     "kind": "by_design",
     "reason": "GlobalPost's older SDC numbers appear once in public sources, too few to claim the layout."
+  },
+  {
+    "carrier": "globkurier",
+    "kind": "by_design",
+    "reason": "The published GlobKurier GK tracking reference has no automatic rule. Select the carrier explicitly."
   },
   {
     "carrier": "gls-at",
@@ -1944,6 +1979,11 @@
     "reason": "Ilyang Logis waybills are bare digit runs with a mod-7 check digit, which other carriers' numbers of the same length also pass, so nothing in the number points to Ilyang Logis."
   },
   {
+    "carrier": "indigo-cargo",
+    "kind": "open",
+    "reason": "Select IndiGo CarGo for its master air waybills. The two public air waybills have IATA prefix 312."
+  },
+  {
     "carrier": "indopaket",
     "pattern": "^(?:IP|SP)\\d{13}$",
     "kind": "open",
@@ -2220,6 +2260,11 @@
     "reason": "LaBaih's fourteen-digit numbers share their shape with many carriers' numeric numbers."
   },
   {
+    "carrier": "lalji-mulji-transport",
+    "kind": "by_design",
+    "reason": "The two published Lalji Mulji lorry receipts are numeric. Select the carrier explicitly."
+  },
+  {
     "carrier": "landmark-global",
     "pattern": "^(?:PS\\d{6}[A-Z]\\d{10}|LDLBUS\\d{9})$",
     "kind": "by_design",
@@ -2400,6 +2445,11 @@
     "reason": "The freight bill shape has a single documentation example, too little to claim it."
   },
   {
+    "carrier": "marken",
+    "kind": "by_design",
+    "reason": "Marken lookup supports public job references without an automatic number rule. Select Marken or use its tracking link."
+  },
+  {
     "carrier": "maruti-air",
     "pattern": "^\\d{8,10}$",
     "kind": "by_design",
@@ -2458,6 +2508,11 @@
     "pattern": "^HK\\d{9}PH\\d{2}$",
     "kind": "by_design",
     "reason": "One Morning Global waybill from the older tracker page has this layout, too little to tell how the carrier numbers parcels, so detection leaves it unclaimed."
+  },
+  {
+    "carrier": "move-cargo",
+    "kind": "by_design",
+    "reason": "Move Cargo publishes MC-prefixed demo references. Select the carrier explicitly until the issued number format is documented."
   },
   {
     "carrier": "mr-courier-al",
@@ -3890,6 +3945,11 @@
     "reason": "Elite airwaybills are ten digits, a plain run many carriers share, so no rule claims them."
   },
   {
+    "carrier": "transdirect",
+    "kind": "by_design",
+    "reason": "Transdirect accepts its own booking IDs and references issued by several partner couriers. Select it explicitly."
+  },
+  {
     "carrier": "trendyol-express",
     "pattern": "^\\d{16}$",
     "kind": "by_design",
@@ -4098,6 +4158,11 @@
     "pattern": "^\\d{3}\\d{7}$",
     "kind": "by_design",
     "reason": "Three digits, a dash and seven digits are a shape Meest shares, and nothing in the number points to Ward."
+  },
+  {
+    "carrier": "westjet-cargo",
+    "kind": "by_design",
+    "reason": "WestJet Cargo is selectable explicitly. The air waybill prefix and check digit have not been assessed against other carriers."
   },
   {
     "carrier": "whistl",

@@ -1,0 +1,9 @@
+{
+  "message": {
+    "messageId": 21,
+    "description": "No records found !",
+    "type": 3,
+    "typeName": "info",
+    "typeSymble": "<i class='fa fa-info-circle'></i>"
+  }
+}

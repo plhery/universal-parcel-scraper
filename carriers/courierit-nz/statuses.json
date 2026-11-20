@@ -1,0 +1,8 @@
+{
+  "carrier": "courierit-nz",
+  "entries": [
+    {"code": "Scheduled for Pickup", "wording": "Scheduled for Pickup", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "A booking awaiting collection."},
+    {"code": "InTransit", "wording": "InTransit", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"}
+  ]
+}

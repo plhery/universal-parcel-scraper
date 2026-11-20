@@ -1,0 +1,96 @@
+{
+  "carrier": "air-greenland",
+  "records": [
+    {
+      "number": "63127774563",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://airgreenland.com/cargo/tracking-awb/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Air waybill example on Air Greenland’s tracking page",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "speedy",
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "63128346986",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://eastgrip.nbi.ku.dk/documentation/2024/2024-07-18_SITREP_12.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Air Greenland waybill published in EastGRIP situation report 12",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "speedy",
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "63128353732",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://eastgrip.nbi.ku.dk/documentation/2024/2024-05-12_SITREP_03.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Air Greenland waybill published in EastGRIP situation report 3",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "speedy",
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}

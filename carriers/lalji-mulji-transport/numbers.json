@@ -1,0 +1,49 @@
+{
+  "carrier": "lalji-mulji-transport",
+  "records": [
+    {
+      "number": "22175354",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.casemine.com/judgement/in/62b18fff714d58936e9266d1",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Lalji Mulji lorry receipt dated November 2014 in a published district consumer commission judgment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      }
+    },
+    {
+      "number": "22175325",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.casemine.com/judgement/in/62b18fff714d58936e9266d1",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Lalji Mulji lorry receipt dated November 2014 in a published district consumer commission judgment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      }
+    }
+  ]
+}
