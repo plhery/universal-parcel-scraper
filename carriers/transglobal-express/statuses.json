@@ -1,0 +1,15 @@
+{
+  "carrier": "transglobal-express",
+  "entries": [
+    {"wording": "Booking Made", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Transglobal's first row for an order; the location column says whether it awaits collection or drop-off, which the adapter leaves out."},
+    {"wording": "PARCEL CREATED", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The partner courier's first row, written with the booking."},
+    {"wording": "Collected by Marty (Transglobal)", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Transglobal's driver collected the parcel; the map reads any driver's name between \"Collected by\" and \"(Transglobal)\"."},
+    {"wording": "Processed at Origin Depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Transglobal's depot processed the parcel; the row names the depot, as \"Transglobal (Wirral)\"."},
+    {"wording": "We've received this parcel at the hub and will be sorted to the customers delivery depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from Evri: its hub took the parcel in."},
+    {"wording": "Parcel processed at the hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from Evri."},
+    {"wording": "Parcel processed at the depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from Evri."},
+    {"wording": "This parcel is on its way to the courier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from Evri: the parcel left the depot for the courier who delivers it."},
+    {"wording": "The item has been received by the courier and will be out for delivery soon.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from Evri: the delivering courier has the parcel; the round follows."},
+    {"wording": "We're unable to deliver this parcel today. We will now deliver the next working day", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from Evri, a minute after the courier's receipt in the morning: no round that day, not a missed delivery."}
+  ]
+}

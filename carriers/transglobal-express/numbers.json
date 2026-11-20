@@ -1,0 +1,45 @@
+{
+  "carrier": "transglobal-express",
+  "records": [
+    {
+      "number": "TP-10685786",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/review/www.transglobalexpress.co.uk?page=2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["tnt-it"]
+      },
+      "note": "A reviewer gives it as the reference of a parcel Evri delayed. Transglobal's tracker answers it with a collection by Transglobal and Evri's rows, the last two a day without a delivery."
+    },
+    {
+      "number": "TP-10681936",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/review/www.transglobalexpress.co.uk?page=2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["tnt-it"]
+      },
+      "note": "A reviewer gives it as the reference of a parcel for Canada. Transglobal's tracker answers it with a booking for drop-off and Spring as the partner."
+    }
+  ]
+}

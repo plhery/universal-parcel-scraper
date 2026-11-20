@@ -61433,6 +61433,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "transglobal-express": {
+    "displayName": "Transglobal Express",
+    "color": "#02548F",
+    "aliases": [
+      "Transglobal"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transglobal-express",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.transglobalexpress.co.uk/track-shipment/",
+    "trackingUrlTemplate": "https://www.transglobalexpress.co.uk/track-shipment/",
+    "trackingSearchUrl": "https://www.transglobalexpress.co.uk/track-shipment/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transgo-mx": {
     "displayName": "TransGo",
     "color": "#283068",
@@ -70312,6 +70335,7 @@ export const CARRIER_IDS = [
   "transcorp",
   "transdirect",
   "transfera",
+  "transglobal-express",
   "transgo-mx",
   "transilvania-post",
   "translink-shipping",
@@ -72303,6 +72327,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transcorp": [],
   "transdirect": [],
   "transfera": [],
+  "transglobal-express": [],
   "transgo-mx": [],
   "transilvania-post": [],
   "translink-shipping": [],

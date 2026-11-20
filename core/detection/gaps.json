@@ -6213,5 +6213,11 @@
     "pattern": "^\\d{10}$",
     "kind": "collision",
     "reason": "Ten-digit Gintracom guides share their shape with many carriers' numeric waybills, so the shape cannot name Gintracom."
+  },
+  {
+    "carrier": "transglobal-express",
+    "pattern": "^TP[1-9]\\d{5,8}$",
+    "kind": "by_design",
+    "reason": "A TP- reference is a Transglobal Express order number, TP and digits: a short generic shape other carriers' references share, so the shape cannot name Transglobal Express."
   }
 ]
