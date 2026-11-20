@@ -1,0 +1,66 @@
+{
+  "id": "garuda-indonesia-cargo",
+  "displayName": "Garuda Indonesia Cargo",
+  "aliases": [
+    "Garuda Cargo",
+    "Garuda Indonesia Air Cargo",
+    "Garuda Indonesia"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#006B8F"
+  },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "garuda-indonesia-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://cargo.garuda-indonesia.com/Search",
+    "searchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule",
+      "customer_reference"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

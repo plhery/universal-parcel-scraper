@@ -5989,5 +5989,10 @@
     "carrier": "thai-airways-cargo",
     "kind": "open",
     "reason": "The issued Thai Airways air waybills begin with 217 and overlap general numeric shapes. Select THAI Cargo explicitly."
+  },
+  {
+    "carrier": "garuda-indonesia-cargo",
+    "kind": "open",
+    "reason": "Issued Garuda Cargo waybills use prefix 126 and overlap generic numeric shapes. Select Garuda Indonesia Cargo explicitly."
   }
 ]

@@ -27668,6 +27668,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "garuda-indonesia-cargo": {
+    "displayName": "Garuda Indonesia Cargo",
+    "color": "#006B8F",
+    "aliases": [
+      "Garuda Cargo",
+      "Garuda Indonesia Air Cargo",
+      "Garuda Indonesia"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "garuda-indonesia-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
+    "trackingUrlTemplate": "https://cargo.garuda-indonesia.com/Search",
+    "trackingSearchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "garudavega": {
     "displayName": "Garudavega",
     "color": "#114172",
@@ -68449,6 +68473,7 @@ export const CARRIER_IDS = [
   "gaaubesi",
   "garantpost",
   "gardewine",
+  "garuda-indonesia-cargo",
   "garudavega",
   "gati",
   "gbs-broker",
@@ -70412,6 +70437,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gaaubesi": [],
   "garantpost": [],
   "gardewine": [],
+  "garuda-indonesia-cargo": [],
   "garudavega": [],
   "gati": [],
   "gbs-broker": ["gbs-broker-1"],
