@@ -15,6 +15,7 @@
     { "code": "OR", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: the origin scan, worded \"Arrived at Facility\" like AR. UPS files it under its \"We Have Your Package\" milestone." },
     { "code": "AR", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"Arrived at Facility\"." },
     { "code": "DP", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"Departed from Facility\"." },
+    { "code": "DP", "wording": "Order Processed: In Transit to UPS", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "actCode: the parcel on its way to UPS, seen as the first scan, hours before \"Package is in transit to a UPS facility\" (AG) and the origin scan. No departure from a UPS facility: read as AG is, so the scans after it are no step back." },
     { "code": "DS", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"Processing at UPS Facility\"." },
     { "code": "YP", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"Processing at UPS Facility\"." },
     { "code": "HL", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-16", "note": "actCode: \"Your package was processed at our facility.\"" },
