@@ -13,8 +13,11 @@ Its air waybills are twelve digits. Many carriers' numbers share that shape, so 
 
 ## Why there is no adapter
 
-Its tracking page posts the air waybill with a session token after a slider puzzle. Its JSON
-tracking API needs an access token SkyNet issues to account holders.
+Its tracking page draws a slider puzzle before it submits, but only in the page: the session's empty
+post to `/captcha/success` clears it, and the page then posts the air waybill with its session token
+over plain HTTP. No public air waybill is known that the tracker answers; the examples in its guide and
+API documentation render the empty form. Its JSON tracking API needs an access token SkyNet issues to
+account holders.
 
 ## Links
 
