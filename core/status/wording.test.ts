@@ -1084,6 +1084,8 @@ describe('classifyWording', () => {
       ['海关已放行，后被海关扣留', 'customs'], ['海关查验完成，后被海关扣留', 'customs'], ['被海关扣留，现已放行', 'in_transit'],
       ['海关扣留，待放行', 'customs'], ['海关查验完成，尚未放行', 'customs'],
       ['Shipment started the customs clearance process at destination', 'customs'],
+      // The destination airport's cargo terminal calling the agent to collect, as Ship24 relays Cainiao's notice.
+      ['The destination port cargo terminal notifies the delivery', 'in_transit'],
       ['LM Carrier: [DHL] , LM Tracking No.: [1234567890]', 'in_transit'],
       // Australia Post's scan by the post abroad, as Ship24 relays it without the code.
       ['Received by postal carrier for delivery', 'in_transit'], ['Item received by the destination postal carrier for delivery', 'in_transit'],

@@ -916,6 +916,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // The airline's notice of arrival (NOA) reaching the destination agent, after the landing and
   // before clearance, as Shouwu, JRT and the ground handlers word it.
   if (/^(?:the )?noa (?:has been |was )?received$|^noa-notification of arrival\b/.test(text)) return 'in_transit';
+  // The destination airport's cargo terminal calling the agent to collect the goods, Cainiao's 目的港货站通知提货, as Ship24
+  // relays it in English ("The destination port cargo terminal notifies the delivery"): the same notice, before clearance.
+  if (/^(?:the )?destination (?:air)?port cargo terminal (?:notifies|notified|has notified) (?:the )?(?:delivery|pick ?up|collection)$/.test(text)) return 'in_transit';
   // A linehaul is the trunk haul between hubs, whatever was handed over.
   // A parcel at a distribution centre, the whole scan, as Lietuvos paštas words it. Other scans naming
   // such a centre, a courier's origin scan or a retailer's order sent to its store, say less.
