@@ -24,6 +24,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['51005', ACCEPTED],
   // The parcel on its way from the shipper to SpeedX's origin facility, between the label and the arrival there.
   ['50002', IN_TRANSIT],
+  // After the pickup, the arrival at SpeedX's origin facility, minutes before its processing there.
+  ['52001', IN_TRANSIT],
   ['52002', IN_TRANSIT],
   ['57112', IN_TRANSIT],
   ['57101', IN_TRANSIT],

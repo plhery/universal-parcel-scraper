@@ -103,6 +103,9 @@ describe('SpeedX tracking page', () => {
     expect(speedxStatus('57204', 'LAST_MILE_DELIVERED')).toEqual({ status: 'out_for_delivery', stage: 'ready_for_pickup' });
     expect(statusMapAnswer({ carrier: 'speedx', providerCode: '57702', description: 'Self picked up from Parcelshop' }))
       .toEqual({ kind: 'mapped', stage: 'delivered' });
+    // The arrival at the origin facility after the pickup is a transit scan, as the processing there.
+    expect(statusMapAnswer({ carrier: 'speedx', providerCode: '52001', description: 'Arrived at Origin Facility' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
     const result = parse(withData((_data, events) => {
       Object.assign(events[0]!, { eventCode: '59999', category: 'CLEARANCE', eventDescription: 'Held for review', eventSupplementalInfo: null });
     }));
