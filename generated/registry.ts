@@ -611,6 +611,7 @@ import { adapter as quiqup } from '../carriers/quiqup/adapter.js';
 import { adapter as qwintry } from '../carriers/qwintry/adapter.js';
 import { adapter as raben } from '../carriers/raben/adapter.js';
 import { adapter as ramHandToHand } from '../carriers/ram-hand-to-hand/adapter.js';
+import { adapter as rayspeed } from '../carriers/rayspeed/adapter.js';
 import { adapter as redpack } from '../carriers/redpack/adapter.js';
 import { adapter as redur } from '../carriers/redur/adapter.js';
 import { adapter as redx } from '../carriers/redx/adapter.js';
@@ -1455,6 +1456,7 @@ export const REGISTRY: RegistryDefinition = {
     "qwintry": qwintry,
     "raben": raben,
     "ram-hand-to-hand": ramHandToHand,
+    "rayspeed": rayspeed,
     "redpack": redpack,
     "redur": redur,
     "redx": redx,
@@ -3028,7 +3030,7 @@ export const REGISTRY: RegistryDefinition = {
     "rapiboy": "universal",
     "rapid-courier-gr": "universal",
     "rapido-ochoa": "universal",
-    "rayspeed": "universal",
+    "rayspeed": "rayspeed",
     "recibelo": "universal",
     "red-courier-gr": "universal",
     "red-express": "universal",
