@@ -558,6 +558,7 @@ import { adapter as maritimeOntario } from '../carriers/maritime-ontario/adapter
 import { adapter as marken } from '../carriers/marken/adapter.js';
 import { adapter as marutiAir } from '../carriers/maruti-air/adapter.js';
 import { adapter as matkahuolto } from '../carriers/matkahuolto/adapter.js';
+import { adapter as matson } from '../carriers/matson/adapter.js';
 import { adapter as mauritiusPost } from '../carriers/mauritius-post/adapter.js';
 import { adapter as mayiyinfu } from '../carriers/mayiyinfu/adapter.js';
 import { adapter as mdsCollivery } from '../carriers/mds-collivery/adapter.js';
@@ -1558,6 +1559,7 @@ export const REGISTRY: RegistryDefinition = {
     "marken": marken,
     "maruti-air": marutiAir,
     "matkahuolto": matkahuolto,
+    "matson": matson,
     "mauritius-post": mauritiusPost,
     "mayiyinfu": mayiyinfu,
     "mds-collivery": mdsCollivery,
@@ -3093,7 +3095,7 @@ export const REGISTRY: RegistryDefinition = {
     "maruti-air": "maruti-air",
     "marvisur": "universal",
     "matkahuolto": "matkahuolto",
-    "matson": "universal",
+    "matson": "matson",
     "maty-express": "universal",
     "mauritius-post": "mauritius-post",
     "max-express-ae": "universal",

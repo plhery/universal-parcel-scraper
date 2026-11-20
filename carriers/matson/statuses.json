@@ -1,4 +1,17 @@
 {
   "carrier": "matson",
-  "entries": []
+  "entries": [
+    {"code": "INGATE", "wording": "INGATE", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The container enters a terminal or yard. A booking or bill lookup adds Full or Empty and who brought it; the stage holds whatever follows the name."},
+    {"code": "OUTGATE", "wording": "OUTGATE", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The container leaves a terminal or yard, to Matson's own yard or to the consignee's trucker. A booking or bill lookup adds who took it; the stage holds whatever follows the name."},
+    {"code": "LOAD TO VESSEL", "wording": "LOAD TO VESSEL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A booking or bill lookup adds the vessel and voyage; the stage holds whatever follows the name."},
+    {"code": "DISCHARGE FROM VESSEL", "wording": "DISCHARGE FROM VESSEL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A booking or bill lookup adds the vessel and voyage; the stage holds whatever follows the name."},
+    {"code": "AVAILABLE", "wording": "AVAILABLE", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The container is released and waits at Matson's yard, whose address is the event's location, for the consignee's trucker."},
+    {"code": "RETURNED FROM CONSIGNEE", "wording": "RETURNED FROM CONSIGNEE", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The container comes back empty after the consignee unloaded it: the cargo was delivered."},
+    {"code": "CONTAINER ON HOLD", "wording": "CONTAINER ON HOLD - Customs Clearance", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Placed at booking or before the vessel arrives, until customs releases the container."},
+    {"code": "CONTAINER ON HOLD", "wording": "CONTAINER ON HOLD - Radiation Monitoring Hold", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "The import radiation screening customs requires, placed with the customs hold."},
+    {"code": "HOLD RELEASED", "wording": "HOLD RELEASED - Customs Clearance", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Customs released the container, which moves on."},
+    {"code": "HOLD RELEASED", "wording": "HOLD RELEASED - Radiation Monitoring Hold", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The radiation screening cleared the container, which moves on."},
+    {"code": "CONTAINER ON HOLD", "wording": "CONTAINER ON HOLD", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "A hold Matson gives no reason for: the scan keeps the stage of the one before it."},
+    {"code": "HOLD RELEASED", "wording": "HOLD RELEASED", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "The release of a hold Matson gave no reason for: the scan keeps the stage of the one before it."}
+  ]
 }

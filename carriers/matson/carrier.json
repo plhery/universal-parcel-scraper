@@ -19,17 +19,55 @@
   "timezone": "Pacific/Honolulu",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "matson",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "sender_name",
+    "receiver_name"
+  ],
   "portal": {
     "searchUrl": "https://www.matson.com/shipment-tracking.html",
     "canaryUrl": "https://www.matson.com/shipment-tracking.html",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "origin",
+      "destination",
+      "vehicle",
+      "terminal_eta",
+      "weight",
+      "contents",
+      "customs_status"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "recipient_name"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "terminal_eta",
+      "weight",
+      "contents",
+      "customs_status"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
   },
   "links": [],
   "detection": []

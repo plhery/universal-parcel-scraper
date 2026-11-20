@@ -14,13 +14,13 @@
       "context": {
         "service": "Ocean freight",
         "reportedRole": "master bill of lading",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "The import manifest lists this master bill under Matson's MATS carrier code. Lookup blocked by verification (HTTP 403 from Matson's public tracking page)."
+      "note": "The import manifest lists this master bill under Matson's MATS carrier code. Matson's tracker returns its booking's one container from Shanghai to Long Beach."
     },
     {
       "number": "MATS5850828000",
@@ -35,13 +35,13 @@
       "context": {
         "service": "Ocean freight",
         "reportedRole": "master bill of lading",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "The import manifest lists this master bill under Matson's MATS carrier code for a Guam to Honolulu shipment. The public tracking page returned HTTP 403 before this sample could be submitted."
+      "note": "The import manifest lists this master bill under Matson's MATS carrier code for a Guam to Honolulu shipment. Matson's tracker returns its booking's one container from Palau through Guam and Long Beach to Honolulu, returned empty from the consignee."
     }
   ]
 }
