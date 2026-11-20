@@ -1,0 +1,129 @@
+{
+  "header": {
+    "type": "SUCCESS",
+    "message": "SUCCESS",
+    "action": "portal.process.TrackingPopup.retreiveTrackingListDtl",
+    "trackingInfo": "acc60a97-dfc0-4a70-895b-7466504d65eb"
+  },
+  "reqContent": "{\"hblNo\":\"PJP260065789\",\"mblNo\":\"88400026434\",\"locale\":\"en\",\"expsBizTypeCd\":\"PX\"}",
+  "body": [
+    {
+      "trkType": "E",
+      "evntCd": "DLI",
+      "evntCd2": "DTL",
+      "evntDt": "Apr 30, 2026 11:35",
+      "evntDt2": "2026.04.30 11:35",
+      "eventDt": "202604301135",
+      "evntLocNm": "KOREA, REPUBLIC OF",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Destination Delivery"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "FST",
+      "evntCd2": "DTL",
+      "evntDt": "Apr 29, 2026 16:11",
+      "evntDt2": "2026.04.29 16:11",
+      "eventDt": "202604291611",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Destination Out for delivery"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "DCCC",
+      "evntCd2": "DCCC",
+      "evntDt": "Apr 29, 2026 14:50",
+      "evntDt2": "2026.04.29 14:50",
+      "eventDt": "202604291450",
+      "evntLocNm": "KOREA, REPUBLIC OF",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Destination Customs Clearance"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "DWHO",
+      "evntCd2": "DWHO",
+      "evntDt": "Apr 29, 2026 14:50",
+      "evntDt2": "2026.04.29 14:50",
+      "eventDt": "202604291450",
+      "evntLocNm": "KOREA, REPUBLIC OF",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Destination Warehouse Out Complete"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "DWHI",
+      "evntCd2": "DWHI",
+      "evntDt": "Apr 29, 2026 14:50",
+      "evntDt2": "2026.04.29 14:50",
+      "eventDt": "202604291450",
+      "evntLocNm": "KOREA, REPUBLIC OF",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Destination Warehouse In Complete"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "ARR",
+      "evntCd2": "ARR",
+      "evntDt": "Apr 28, 2026 16:15",
+      "evntDt2": "2026.04.28 16:15",
+      "eventDt": "202604281615",
+      "evntLocNm": "KOREA, REPUBLIC OF",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Destination Arrival"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "DEP",
+      "evntCd2": "DEP",
+      "evntDt": "Apr 28, 2026 13:35",
+      "evntDt2": "2026.04.28 13:35",
+      "eventDt": "202604281335",
+      "evntLocNm": "JAPAN",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Origin Onboard"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "LWHO",
+      "evntCd2": "LWHO",
+      "evntDt": "Apr 27, 2026 15:39",
+      "evntDt2": "2026.04.27 15:39",
+      "eventDt": "202604271539",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Origin Distribution Center Out"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "LWHI",
+      "evntCd2": "LWHI",
+      "evntDt": "Apr 27, 2026 13:39",
+      "evntDt2": "2026.04.27 13:39",
+      "eventDt": "202604271339",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Origin Distribution Center In"
+    },
+    {
+      "trkType": "E",
+      "evntCd": "CRT",
+      "evntCd2": "CRT",
+      "evntDt": "Apr 27, 2026 13:22",
+      "evntDt2": "2026.04.27 13:22",
+      "eventDt": "202604271322",
+      "evntLocNm": "JAPAN",
+      "mblNo": "88400026434",
+      "hblNo": "PJP260065789",
+      "evntDesc": "Label Created"
+    }
+  ],
+  "trackingInfo": "acc60a97-dfc0-4a70-895b-7466504d65eb:null:19"
+}

@@ -1,0 +1,1 @@
+`list.json` and `detail.json` are the tracker's search and detail answers for the public sample in `numbers.json`. `not-found.json` is its search answer for an impossible number. The service's echo of the caller's address is left out.

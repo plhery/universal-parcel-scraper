@@ -1,0 +1,13 @@
+{
+  "header": {
+    "type": "SUCCESS",
+    "message": "SUCCESS",
+    "action": "portal.process.TrackingPopup.retreiveTrackingList",
+    "trackingInfo": "7f93634a-77d1-4f8f-9cd6-82efe2806b47"
+  },
+  "reqContent": "{\"quickNo\":\"ZZQ000000000\",\"locale\":\"en\"}",
+  "body": {
+    "list": []
+  },
+  "trackingInfo": "7f93634a-77d1-4f8f-9cd6-82efe2806b47:null:7"
+}

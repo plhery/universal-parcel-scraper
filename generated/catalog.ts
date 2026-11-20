@@ -38225,7 +38225,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Seoul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lx-pantos",
+      "localClocks": true
     },
     "canaryUrl": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do",
     "trackingUrlTemplate": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=en&quickNo={trackingNumber}",

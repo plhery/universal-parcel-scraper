@@ -2274,6 +2274,12 @@
     "reason": "Twelve digits with a mod-7 check digit are shared with Yamato, Sagawa, Japan Post and other Korean carriers, and nothing in the number points to Lotte."
   },
   {
+    "carrier": "lx-pantos",
+    "pattern": "^P[A-Z]{2}\\d{9}$",
+    "kind": "open",
+    "reason": "One archived express house bill reads P, the origin country and nine digits, and the tracker publishes no layout. Detection offers other carriers."
+  },
+  {
     "carrier": "m-and-p",
     "pattern": "^\\d{15}$",
     "kind": "by_design",

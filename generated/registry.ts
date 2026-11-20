@@ -481,6 +481,7 @@ import { adapter as logistiq } from '../carriers/logistiq/adapter.js';
 import { adapter as logoix } from '../carriers/logoix/adapter.js';
 import { adapter as loomisExpress } from '../carriers/loomis-express/adapter.js';
 import { adapter as lotteGlobal } from '../carriers/lotte-global/adapter.js';
+import { adapter as lxPantos } from '../carriers/lx-pantos/adapter.js';
 import { adapter as mAndP } from '../carriers/m-and-p/adapter.js';
 import { adapter as mOne } from '../carriers/m-one/adapter.js';
 import { adapter as m24Logistics } from '../carriers/m24-logistics/adapter.js';
@@ -1369,6 +1370,7 @@ export const REGISTRY: RegistryDefinition = {
     "logoix": logoix,
     "loomis-express": loomisExpress,
     "lotte-global": lotteGlobal,
+    "lx-pantos": lxPantos,
     "m-and-p": mAndP,
     "m-one": mOne,
     "m24-logistics": m24Logistics,
@@ -2782,7 +2784,7 @@ export const REGISTRY: RegistryDefinition = {
     "ltl-kr": "universal",
     "lucky-fast-express": "universal",
     "lvz-post": "universal",
-    "lx-pantos": "universal",
+    "lx-pantos": "lx-pantos",
     "m-and-p": "m-and-p",
     "m-one": "m-one",
     "m-xpress": "universal",

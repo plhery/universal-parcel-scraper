@@ -480,6 +480,7 @@ import { statusMap as logistiq } from '../../carriers/logistiq/status.js';
 import { statusMap as logoix } from '../../carriers/logoix/status.js';
 import { statusMap as loomisExpress } from '../../carriers/loomis-express/status.js';
 import { statusMap as lotteGlobal } from '../../carriers/lotte-global/status.js';
+import { statusMap as lxPantos } from '../../carriers/lx-pantos/status.js';
 import { statusMap as mAndP } from '../../carriers/m-and-p/status.js';
 import { statusMap as mOne } from '../../carriers/m-one/status.js';
 import { statusMap as madhurCourier } from '../../carriers/madhur-courier/status.js';
@@ -953,7 +954,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'landmark-global': landmarkGlobal, 'last-one-mile-coop': lastOneMileCoop, 'latvijas-pasts': latvijasPasts, 'lbc-express': lbcExpress, 'lex-id': lexId, 'lex-my': lexMy, 'leopards-courier': leopardsCourier, liccardi, 'linear-logistics': linearLogistics,
   'lietuvos-pastas': lietuvosPastas, 'lightning-express': lightningExpress,
   'line-clear': lineClear, lingdong, linhan, liuchen, 'lion-parcel': lionParcel, logen, loggi, logisimple, logistiq, logoix, 'loomis-express': loomisExpress,
-  'lotte-global': lotteGlobal, 'm-and-p': mAndP, 'm-one': mOne, 'madhur-courier': madhurCourier, 'magic-trans': magicTrans, 'magyar-posta': magyarPosta, mailamericas, 'mailplus-au': mailplusAu, mainfreight,
+  'lotte-global': lotteGlobal, 'lx-pantos': lxPantos, 'm-and-p': mAndP, 'm-one': mOne, 'madhur-courier': madhurCourier, 'magic-trans': magicTrans, 'magyar-posta': magyarPosta, mailamericas, 'mailplus-au': mailplusAu, mainfreight,
   'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, mandae, 'maritime-ontario': maritimeOntario, 'maruti-air': marutiAir, matkahuolto, 'mauritius-post': mauritiusPost, mayiyinfu,
   'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'meso-global': mesoGlobal, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, mhi, 'micro-express': microExpress,
   'midland-transport': midlandTransport, 'mng-kargo': mngKargo, 'mondial-relay': mondialRelay, 'mongol-infinity-post': mongolInfinityPost, 'morning-global': morningGlobal, 'mrl-global': mrlGlobal, mrw, mtscn, mylerz, nacex, naqel, nationex,

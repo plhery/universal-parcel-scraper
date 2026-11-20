@@ -2,6 +2,32 @@
   "carrier": "lx-pantos",
   "records": [
     {
+      "number": "PJP260065789",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260427051952/https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=ko&quickNo=PJP260065789",
+        "date": "2026-04-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "LX Pantos express parcel from Japan to Korea",
+        "reportedRole": "House bill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "The archived tracking link carries this exact number; the tracker lists it as an express shipment delivered in Korea by Korea Post."
+    },
+    {
       "number": "PSEAPNYC26083038",
       "role": "shipment",
       "evidence": "public_shipment_report",

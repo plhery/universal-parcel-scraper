@@ -1,4 +1,36 @@
 {
   "carrier": "lx-pantos",
-  "entries": []
+  "entries": [
+    { "code": "CRT", "wording": "Label Created", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": "PKU", "wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "bundle" },
+    { "code": "OWIW", "wording": "Origin W/H In Wait", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "OWIP", "wording": "Origin W/H In Process", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "OWIC", "wording": "Origin W/H In Complete", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "OWOW", "wording": "Origin W/H Out Wait", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "OWOP", "wording": "Origin W/H Out Process", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "OWOC", "wording": "Origin W/H Out Complete", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "LWHI", "wording": "Origin Distribution Center In", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The first scan of the parcel in the carrier’s hands at its export warehouse." },
+    { "code": "LWHO", "wording": "Origin Distribution Center Out", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "DEP", "wording": "Origin Onboard", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "TARR", "wording": "Triangle Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TWIW", "wording": "Triangle W/H In Wait", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TWIP", "wording": "Triangle W/H In Process", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TWIC", "wording": "Triangle W/H In Complete", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TWOW", "wording": "Triangle W/H Out Wait", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TWOP", "wording": "Triangle W/H Out Process", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TWOC", "wording": "Triangle W/H Out Complete", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TOFF", "wording": "Triangle Local Office", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "TDEP", "wording": "Triangle On board", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A stop in a third country on the way." },
+    { "code": "ARR", "wording": "Destination Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "DWIW", "wording": "Destination W/H In Wait", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "DWIP", "wording": "Destination W/H In Process", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "DWHI", "wording": "Destination Warehouse In Complete", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "DWOW", "wording": "Destination W/H Out Wait", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "DWOP", "wording": "Destination W/H Out Process", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "DWHO", "wording": "Destination Warehouse Out Complete", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "DOFF", "wording": "Destination Local Office", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "DCCC", "wording": "Destination Customs Clearance", "stage": "customs", "language": "en", "confirmedBy": "live" },
+    { "code": "FST", "wording": "Destination Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "code": "DLI", "wording": "Destination Delivery", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
 }

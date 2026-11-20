@@ -19,18 +19,59 @@
   "timezone": "Asia/Seoul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "lx-pantos",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "receiver_name",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=en&quickNo={trackingNumber}",
     "searchUrl": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=en",
     "canaryUrl": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "recipient_name",
+      "origin_country",
+      "destination_country",
+      "flight_number",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "driver_name",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "recipient_name",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin_country",
+      "flight_number",
+      "driver_name",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "weight"
+    ]
   },
   "links": [
     {

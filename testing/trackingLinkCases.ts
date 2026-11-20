@@ -1245,6 +1245,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'lotte-global', number: '314159265350',
     route: /^https:\/\/www\.lotteglogis\.com\/(?:home|mobile)\/reservation\/tracking\/linkView\?InvNo=314159265350$/,
     marker: /운송장 번호|택배조회/ },
+  // The page fills its field in from quickNo and searches on load.
+  { carrier: 'lx-pantos', number: 'PZZ999999999',
+    route: /^https:\/\/www\.epantos\.com\/ecp\/web\/pr\/dt\/popup\/dlvChaseInqPopup\.do\?locale=en&quickNo=PZZ999999999$/,
+    marker: /Enter up to 30 tracking numbers/ },
   // The page fills its field in and looks the number up alone; an unknown one gets the number-and-postcode notice.
   { carrier: 'dynalogic', number: '99999ZZ999999',
     route: /^https:\/\/track\.mydynalogic\.eu\/track\/(?:login\?ordernumber=99999ZZ999999$|order$)/,

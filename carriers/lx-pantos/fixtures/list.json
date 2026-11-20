@@ -1,0 +1,35 @@
+{
+  "header": {
+    "type": "SUCCESS",
+    "message": "SUCCESS",
+    "action": "portal.process.TrackingPopup.retreiveTrackingList",
+    "trackingInfo": "301b6f5c-ffba-49f1-a2e7-efe913e78e02"
+  },
+  "reqContent": "{\"quickNo\":\"PJP260065789\",\"locale\":\"en\"}",
+  "body": {
+    "list": [
+      {
+        "evntCd": "DLI",
+        "mblNo": "88400026434",
+        "hblNo": "PJP260065789",
+        "carrNm": "PARATA AIR",
+        "polNm": "JAPAN",
+        "fdestNm": "KOREA, REPUBLIC OF",
+        "currEvntDt": "Apr 30, 2026 11:35",
+        "engLocNm": "KOREA, REPUBLIC OF",
+        "currEvntCont1": "Delivered",
+        "soNo": "SJPE260400028484",
+        "expsBizTypeCd": "PX",
+        "carrCd": "2259707",
+        "cneeNm": "NAWONSEOK",
+        "fltVslNm": "WE502",
+        "podNatnCd": "KR",
+        "refBlNo": "6094373183564",
+        "trkrSvcCd": "E",
+        "refBlNoList": "6094373183564",
+        "refBlNoCnt": 1
+      }
+    ]
+  },
+  "trackingInfo": "301b6f5c-ffba-49f1-a2e7-efe913e78e02:null:31"
+}
