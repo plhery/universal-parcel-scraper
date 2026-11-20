@@ -1,0 +1,23 @@
+{
+  "carrier": "vidhi-transport",
+  "records": [
+    {
+      "number": "232323",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.vidhitransport.com/lr-track.html",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Vidhi lorry receipt number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier publishes this lorry receipt in its tracking field. Its guest service returned the exact receipt and a dated disposition."
+    }
+  ]
+}

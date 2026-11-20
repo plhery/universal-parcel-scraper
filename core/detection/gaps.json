@@ -5609,5 +5609,10 @@
     "carrier": "ethiopian-cargo",
     "kind": "open",
     "reason": "The guest form confirms the Ethiopian Cargo master airway bill serial. Select Ethiopian Cargo explicitly."
+  },
+  {
+    "carrier": "vidhi-transport",
+    "kind": "open",
+    "reason": "The guest form verifies an unprefixed lorry receipt number. Select Vidhi Transport explicitly."
   }
 ]

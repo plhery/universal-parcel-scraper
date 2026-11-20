@@ -855,6 +855,7 @@ import { adapter as velocityExpressIn } from '../carriers/velocity-express-in/ad
 import { adapter as venipak } from '../carriers/venipak/adapter.js';
 import { adapter as viaCargo } from '../carriers/via-cargo/adapter.js';
 import { adapter as viadireta } from '../carriers/viadireta/adapter.js';
+import { adapter as vidhiTransport } from '../carriers/vidhi-transport/adapter.js';
 import { adapter as viettelPost } from '../carriers/viettel-post/adapter.js';
 import { adapter as vimenpaq } from '../carriers/vimenpaq/adapter.js';
 import { adapter as vintedGo } from '../carriers/vinted-go/adapter.js';
@@ -1769,6 +1770,7 @@ export const REGISTRY: RegistryDefinition = {
     "venipak": venipak,
     "via-cargo": viaCargo,
     "viadireta": viadireta,
+    "vidhi-transport": vidhiTransport,
     "viettel-post": viettelPost,
     "vimenpaq": vimenpaq,
     "vinted-go": vintedGo,
@@ -3584,6 +3586,7 @@ export const REGISTRY: RegistryDefinition = {
     "viaxpress": "universal",
     "vichare": "universal",
     "victorian-freight-specialists": "universal",
+    "vidhi-transport": "vidhi-transport",
     "viet-an-express": "universal",
     "viettel-post": "viettel-post",
     "vimenpaq": "vimenpaq",

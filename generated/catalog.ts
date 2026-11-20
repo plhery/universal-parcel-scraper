@@ -61914,6 +61914,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "vidhi-transport": {
+    "displayName": "Vidhi Transport",
+    "color": "#003b70",
+    "aliases": [
+      "Vidhi Transport India",
+      "Vidhi Transport ERP"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "vidhi-transport",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.vidhitransport.com/lr-track.html",
+    "trackingUrlTemplate": "https://www.vidhitransport.com/lr-track.html",
+    "trackingSearchUrl": "https://www.vidhitransport.com/lr-track.html",
+    "trackingSiteName": "Vidhi Transport Track LR",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "viet-an-express": {
     "displayName": "Viet An Express",
     "color": "#89c53b",
@@ -67611,6 +67635,7 @@ export const CARRIER_IDS = [
   "viaxpress",
   "vichare",
   "victorian-freight-specialists",
+  "vidhi-transport",
   "viet-an-express",
   "viettel-post",
   "vimenpaq",
@@ -69497,6 +69522,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "viaxpress": [],
   "vichare": [],
   "victorian-freight-specialists": [],
+  "vidhi-transport": [],
   "viet-an-express": [],
   "viettel-post": ["viettel-post-1"],
   "vimenpaq": [],

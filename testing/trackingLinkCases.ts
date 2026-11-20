@@ -2463,6 +2463,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'vidhi-transport': 'The guest form opens the carrier’s lorry receipt search.',
   'ethiopian-cargo': 'The official guest form posts the air waybill and displays shipment history.',
   'cordelia-shipping': 'The official form accepts a bill or a container and opens its client-rendered tracking results.',
   'sea-legend-line': 'The cargo page opens the guest equipment form in its web app.',
