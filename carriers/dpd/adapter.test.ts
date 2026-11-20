@@ -362,6 +362,26 @@ describe('DPD verified guest payload', () => {
     ]);
   });
 
+  it('reads the parcel taken back to the depot after a missed round as that round, not another attempt', () => {
+    const scan = (time: string, eventType: string, translation: string) => ({
+      date: '2026-07-16', time, city: 'Example', country: 'CH', translation, eventType,
+    });
+    const result = parseDPDTrackingApi({
+      parcelNumber: TRACKING_NUMBER,
+      status: { description: 'DELIVERED' },
+      parcelHistory: [],
+      parcelEvents: [
+        scan('05:54:00', 'DLO', 'Your parcel is out for delivery'),
+        scan('10:45:00', 'DEX', "We couldn't deliver your parcel as you weren't there for delivery"),
+        scan('12:59:00', 'MII', 'Your parcel will be delivered to a safe place according to your instructions'),
+        scan('14:36:00', 'DLR', "We couldn't deliver your parcel and had to return it to the depot, you weren't there for delivery"),
+      ],
+    }, TRACKING_NUMBER, true);
+    expect(result.events?.map((event) => [event.provider_code, event.stage, event.stage_source ?? null])).toEqual([
+      ['DLR', 'failed_attempt', 'none'], ['MII', 'failed_attempt', 'none'], ['DEX', 'failed_attempt', null], ['DLO', 'out_for_delivery', null],
+    ]);
+  });
+
   it('keeps the stage of the scan before a notice that reads like a failed round, and never summarizes it', () => {
     const scan = (time: string, eventType: string, translation: string) => ({
       date: '2026-07-16', time, city: 'Example', country: 'DE', translation, eventType,

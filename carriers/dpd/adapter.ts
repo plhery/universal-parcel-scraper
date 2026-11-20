@@ -540,10 +540,12 @@ export function parseDPDTrackingApi(
   // that scan. It never becomes the summary. The origin depot's inbound scan, before anything
   // moved the parcel, is DPD taking it over; after a collection or an import it moves the parcel on.
   // So does the collection scan (PKY) after the sender's hand-in at a pickup point: it is the
-  // driver's collection from the point, beside DODEH.
+  // driver's collection from the point, beside DODEH. The parcel taken back to the depot (DLR) right
+  // after a missed round is that round's end, not another attempt.
   let previous: Stage = 'registered';
   for (const event of [...events].reverse()) {
     if (NOTICE_SCANS.has(event.provider_code ?? '')) Object.assign(event, { stage: previous, stage_source: 'none' });
+    else if (event.provider_code === 'DLR' && previous === 'failed_attempt') Object.assign(event, { stage: previous, stage_source: 'none' });
     else {
       if (event.provider_code === 'ORI' && !event.stage && previous === 'registered') event.stage = 'accepted';
       if (event.provider_code === 'PKY' && event.stage === 'accepted' && previous !== 'registered') event.stage = 'in_transit';

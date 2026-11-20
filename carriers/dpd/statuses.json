@@ -218,7 +218,7 @@
       "stage": "failed_attempt",
       "confirmedBy": "live",
       "firstSeen": "2026-10-13",
-      "note": "Scan code: a failed delivery round, back at the delivery depot."
+      "note": "Scan code: a failed delivery round, back at the delivery depot. Right after a missed round (DEX) it ends that round, a notice on its stage."
     },
     {
       "code": "DLW",

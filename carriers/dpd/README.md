@@ -78,6 +78,8 @@ signal.
 - `DLW` holds the parcel at the delivery depot, and its label gives the reason.
   Closed premises make it a failed round. Labelled like `DLQ`, the parcel waits
   for a round, with none tried before it, and reads as in transit.
+- `DLR`, the parcel taken back to the depot, is a failed round. Right after a missed round (`DEX`),
+  it ends that round and stays a notice on its stage rather than count as another attempt.
 - When DPD's unit in another country takes the parcel, the group's history
   dates `PARCEL_HANDED` anew, after the parcel's later milestones. Dated after
   one of them, it is that hand-off between units and reads as in transit.
