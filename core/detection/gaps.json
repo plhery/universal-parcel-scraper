@@ -424,6 +424,12 @@
     "reason": "An alternative tracking number that Big Smart's tracker accepts beside its own; its shape comes from one shipper's system, so no rule claims it."
   },
   {
+    "carrier": "bigpost",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "Big Post documents a seven-digit tracking ID and a recipient reported one. Detection only offers SEUR for this sample."
+  },
+  {
     "carrier": "blue-express",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
