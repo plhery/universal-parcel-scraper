@@ -1,0 +1,65 @@
+{
+  "id": "ocean-network-express",
+  "displayName": "Ocean Network Express",
+  "aliases": [
+    "ONE",
+    "ONE Line"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#e5007e"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ocean-network-express",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "searchUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
+    "canaryUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta",
+      "weight",
+      "customs_status"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "weight",
+      "customs_status"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

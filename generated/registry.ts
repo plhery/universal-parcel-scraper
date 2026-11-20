@@ -613,6 +613,7 @@ import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
 import { adapter as oakHarbor } from '../carriers/oak-harbor/adapter.js';
 import { adapter as oca } from '../carriers/oca/adapter.js';
 import { adapter as ocasa } from '../carriers/ocasa/adapter.js';
+import { adapter as oceanNetworkExpress } from '../carriers/ocean-network-express/adapter.js';
 import { adapter as ocsAna } from '../carriers/ocs-ana/adapter.js';
 import { adapter as oldDominion } from '../carriers/old-dominion/adapter.js';
 import { adapter as olvaCourier } from '../carriers/olva-courier/adapter.js';
@@ -1619,6 +1620,7 @@ export const REGISTRY: RegistryDefinition = {
     "oak-harbor": oakHarbor,
     "oca": oca,
     "ocasa": ocasa,
+    "ocean-network-express": oceanNetworkExpress,
     "ocs-ana": ocsAna,
     "old-dominion": oldDominion,
     "olva-courier": olvaCourier,
@@ -3216,6 +3218,7 @@ export const REGISTRY: RegistryDefinition = {
     "obibox": "universal",
     "oca": "oca",
     "ocasa": "ocasa",
+    "ocean-network-express": "ocean-network-express",
     "ock-cn": "universal",
     "ocolchonespack": "universal",
     "ocs-ana": "ocs-ana",
