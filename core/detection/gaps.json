@@ -5492,5 +5492,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "air-inuit",
+    "pattern": "^466[A-Z]{3}\\d{8}$",
+    "kind": "open",
+    "reason": "Air Inuit's waybills are its 466 prefix, the issuing station and an eight-digit serial; detection has no rule for them yet."
   }
 ]

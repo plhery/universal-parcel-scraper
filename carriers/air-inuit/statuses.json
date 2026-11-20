@@ -1,0 +1,10 @@
+{
+  "carrier": "air-inuit",
+  "entries": [
+    {"code": "9", "wording": "Accepted by Air Inuit Cargo in …", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The station that took the shipment follows, with its airport code."},
+    {"code": "2", "wording": "Manifested on flight … for …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The shipment is booked on a flight, named with its date and time."},
+    {"code": "3", "wording": "Shipped on flight …", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "1", "wording": "Received in …", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "Received at the destination's cargo office, where the consignee collects it. At another station it is transit."},
+    {"code": "4", "wording": "Picked up.", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee collected the shipment."}
+  ]
+}

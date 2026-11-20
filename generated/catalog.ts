@@ -7314,6 +7314,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "air-inuit": {
+    "displayName": "Air Inuit",
+    "color": "#d71920",
+    "aliases": [
+      "Air Inuit Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-inuit",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "trackingSearchUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-star-xpress": {
     "displayName": "Air Star Xpress",
     "color": "#227337",
@@ -65443,6 +65464,7 @@ export const CARRIER_IDS = [
   "ahl-courier",
   "aics",
   "aiolos-courier",
+  "air-inuit",
   "air-star-xpress",
   "airmee",
   "airpak-express",
@@ -67308,6 +67330,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ahl-courier": [],
   "aics": [],
   "aiolos-courier": [],
+  "air-inuit": [],
   "air-star-xpress": [],
   "airmee": [],
   "airpak-express": [],
