@@ -488,6 +488,23 @@ describe('Cainiao projection', () => {
     expect(own.events?.[1]).toMatchObject({ provider_code: 'CC_IM_START', stage: 'customs' });
   });
 
+  it('reads an import clearance start filed before the parcel left the departure hub as no step', () => {
+    const scan = (actionCode: string, timeStr: string, standerdDesc: string) => ({ actionCode, timeStr, timeZone: 'GMT+8', desc: '', standerdDesc });
+    const hub = scan('LH_HO_IN_SUCCESS', '2026-06-10 06:39:12', 'Arrived at departure transport hub');
+    const started = scan('CC_IM_START', '2026-06-10 18:46:51', 'Import customs clearance started');
+    const exported = scan('CC_EX_SUCCESS', '2026-06-11 01:29:12', 'Export customs clearance complete');
+    const departed = scan('LH_DEPART', '2026-06-11 06:03:00', 'Departed from departure country/region');
+    const parse = (detailList: readonly Record<string, unknown>[]) => parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
+      latestTrace: detailList[0], detailList }] }, 'LP00000000000001');
+    expect(parse([departed, exported, started, hub]).events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['LH_DEPART', 'in_transit'], ['CC_EX_SUCCESS', 'in_transit'], ['CC_IM_START', 'pending'], ['LH_HO_IN_SUCCESS', 'in_transit'],
+    ]);
+    // Newest, it leaves the parcel at the hub.
+    expect(parse([started, hub])).toMatchObject({ current_stage: 'in_transit' });
+    // After the flight left, the start is customs.
+    expect(parse([started, departed, exported, hub]).events?.[0]).toMatchObject({ provider_code: 'CC_IM_START', stage: 'customs' });
+  });
+
   it("gives Cainiao's notice to the last-mile courier no stage of its own, the parcel at its newest scan", () => {
     const scan = (actionCode: string, timeStr: string, desc = '', standerdDesc = 'Carrier update') => ({ actionCode, timeStr, timeZone: 'GMT+8', desc, standerdDesc });
     const departed = scan('SC_OUTBOUND_SUCCESS', '2026-06-10 07:39:39', '', 'Departed from sorting center');

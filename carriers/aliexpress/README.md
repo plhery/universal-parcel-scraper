@@ -132,6 +132,9 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   the same second: as the local carrier's acceptance and as an import clearance start, even when
   Correios cleared the parcel hours before. That start has no stage of its own either; the
   acceptance carries the step.
+- The destination can open its import clearance while the parcel still waits at the departure
+  hub, its entry filed before the export clearance or the flight. On a line with export scans, a
+  start before the departure, the arrival or customs taking the parcel in has no stage of its own.
 - The global feed has no place field. It writes a scan's town in brackets before the standard
   wording, `[Town] Out for delivery`, in every language. That town becomes the location and the
   wording keeps the rest, and the event's `original_description` the wording as it came. A

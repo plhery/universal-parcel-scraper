@@ -233,6 +233,10 @@ export function cainiaoCarrierNames(value: unknown, trackingNumber: string): Rea
   return carrierNames(trackingModule, recordArray(trackingModule.detailList));
 }
 
+// Scans at the departure hub, and those that show the parcel left it.
+const EXPORT_ACTIONS = new Set(['LH_HO_IN_SUCCESS', 'CC_EX_START', 'CC_EX_SUCCESS', 'LH_HO_AIRLINE']);
+const LEFT_ACTIONS = new Set(['LH_DEPART', 'LH_ARRIVE', 'CC_HO_IN_SUCCESS']);
+
 /** Projects one `detail.json` payload. Pure: the offline tests target this. */
 export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: string): CarrierResult {
   const trackingModule = trackingModuleOf(value, trackingNumber);
@@ -264,8 +268,15 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   // second, as the local carrier's acceptance and as an import clearance start, even when Correios cleared the
   // parcel hours before: that start is the receipt, not customs, and moves nothing of its own.
   const acceptedAt = new Set(details.filter((scan) => cainiaoActionCode(scan.actionCode) === 'GTMS_ACCEPT').map((scan) => text(scan.timeStr)));
+  // The destination can open its import clearance while the parcel still waits at the departure hub, its entry filed
+  // before the export clearance or the flight. On a line with export scans, a start before any departure moves nothing.
+  const codes = details.map((scan) => cainiaoActionCode(scan.actionCode));
+  const exportLine = codes.some((code) => EXPORT_ACTIONS.has(code));
+  const filedAt = new Set(details.filter((_scan, index) => exportLine && codes[index] === 'CC_IM_START'
+    && !codes.slice(index + 1).some((code) => LEFT_ACTIONS.has(code))).map((scan) => text(scan.timeStr)));
   const movesNothing = (scan: Record<string, unknown>): boolean => CAINIAO_NOTICE_ACTIONS.has(cainiaoActionCode(scan.actionCode))
-    || (cainiaoActionCode(scan.actionCode) === 'CC_IM_START' && Boolean(text(scan.timeStr)) && acceptedAt.has(text(scan.timeStr)));
+    || (cainiaoActionCode(scan.actionCode) === 'CC_IM_START' && Boolean(text(scan.timeStr))
+      && (acceptedAt.has(text(scan.timeStr)) || filedAt.has(text(scan.timeStr))));
   // A notice moves nothing: the parcel stands at its newest scan that has a stage,
   // while the notice stays the newest update.
   const standing = movesNothing(latest)

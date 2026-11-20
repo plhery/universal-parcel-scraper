@@ -342,7 +342,7 @@
       "stage": "customs",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "The destination's import clearance. Into the United States it can start a day before the export clearance, its entry filed before the flight leaves, on the destination's clock.",
+      "note": "The destination's import clearance. Into the United States or Israel it can start hours or a day before the export clearance, its entry filed before the flight leaves, on the destination's clock; that start, before any departure, moves nothing.",
       "wording": "Import customs clearance started",
       "language": "en"
     },
