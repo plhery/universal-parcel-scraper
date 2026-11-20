@@ -74,12 +74,13 @@ answers are not retried. An unavailable browser fails fast.
 - Scan places lose the postcode Royal Mail appends to a Post Office branch,
   and a place given only as a postcode is dropped.
 - A scan abroad names its country as, or after, the place. A European partner's
-  scans carry its Central European wall clock under the UK's offset, even where the
-  country keeps the UK's clock, as the destination post's own scans show, and so
-  does an unplaced scan "in the destination country" bound for Europe; they are
-  read on that clock, and the summary's copy of the newest scan follows. A
-  partner's facility can go by its bare name: it is abroad when the wording puts
-  it in the destination, when it comes after "Item Leaving the UK" on an item bound
+  scans carry a clock twice the UK's offset ahead of UTC under the UK's offset,
+  whatever the country's own clock: Central European time in summer and UTC in
+  winter, as the destination posts' own scans show. So does an unplaced scan "in
+  the destination country" bound for Europe; they are read on that clock, and
+  the summary's copy of the newest scan follows. A partner's facility can go by
+  its bare name: it is abroad when the wording puts it in the destination, when
+  it comes after "Item Leaving the UK" on an item bound
   for a European country (a Dutch delivery office's arrival came a minute after the
   partner's scans before it, on their clock), or when it comes before the scan that
   leaves a European country of origin ("Item Leaving overseas"). A bare name shaped like Royal

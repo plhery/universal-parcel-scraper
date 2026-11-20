@@ -51,7 +51,7 @@ import { imileCountryClock } from '../../carriers/imile/clock.js';
 import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
-import { destinationRelay, europeanAbroad, ROYAL_MAIL_RELAY_CLOCK } from '../../carriers/royal-mail/clock.js';
+import { destinationRelay, europeanAbroad, royalMailRelayClock } from '../../carriers/royal-mail/clock.js';
 import { USPS_FACILITY_KIND, uspsMailerLabel } from '../../carriers/usps/clock.js';
 import { yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
@@ -756,11 +756,14 @@ const HOME_COUNTRIES: Readonly<Record<string, string>> = {
   emiratespost: EMIRATES_POST_ZONE, emiratespostgroup: EMIRATES_POST_ZONE,
 };
 /**
- * Royal Mail relays its partners' scans abroad on Central European time,
- * whatever the country's own clock. On a parcel to France, its receipt and
- * departure at the French office of exchange had the digits of La Poste's own
- * scans, Paris time; on one to Portugal, its "Item Received" and customs scans
- * came an hour after CTT's own digits, Lisbon time, at the same minute. A scan
+ * Royal Mail relays its partners' scans abroad on a clock twice the UK's offset
+ * ahead of UTC, whatever the country's own clock (`royalMailRelayClock`): Central
+ * European time in summer, UTC in winter. On a parcel to France in summer, its
+ * receipt and departure at the French office of exchange had the digits of La
+ * Poste's own scans, Paris time; on one to Portugal, its "Item Received" and
+ * customs scans came an hour after CTT's own digits, Lisbon time, at the same
+ * minute. In winter, La Poste's, Poste Italiane's and Poczta Polska's own scans
+ * came an hour after Royal Mail's digits. A scan
  * located in another European country is such a relay, and so is one in Royal
  * Mail's words for the destination ("Your item is currently with Customs in the
  * destination country.") on a parcel bound there, with no place or a partner's
@@ -1454,7 +1457,7 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   }
   if (carrier === 'swiftx' && SWIFTX_LABEL.test(status.trim())) return SWIFTX_LABEL_CLOCK;
   if (carrier === 'swiftx' && swiftxSiteZone(payload, state, scanLocation(name, state.location))) return undefined;
-  if (ROYAL_MAIL_NAMES.has(key) && royalMailRelay(scanLocation(name, state.location), status, destination)) return ROYAL_MAIL_RELAY_CLOCK;
+  if (ROYAL_MAIL_NAMES.has(key) && royalMailRelay(scanLocation(name, state.location), status, destination)) return royalMailRelayClock(mislabeledWallTime(state.date) ?? '');
   if (key === '1st') {
     const location = scanLocation(name, state.location);
     return !location || firstLineInChina(location) ? FIRST_LINE_CHINA_ZONE : undefined;

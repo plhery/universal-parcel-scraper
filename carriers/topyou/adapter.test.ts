@@ -391,6 +391,8 @@ describe('TopYou status vocabulary', () => {
       expect(topyouStage('20', wording), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     }
     expect(topyouStage('20', 'Handed over to the customs')).toEqual({ stage: 'customs', source: 'carrier_map' });
+    // Cleared and released, not held.
+    expect(topyouStage('20', 'Import customs clearance and customs release')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 
   it('lets a delivered or returned code settle a scan, then the shared rules, then the code', () => {

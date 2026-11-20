@@ -1,13 +1,19 @@
-import { countryTimeZone } from '../../core/time/index.js';
+import { DateTime } from 'luxon';
+import { countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 
 import { locatePlace } from '../../places/index.js';
 
 /**
- * The clock of a European partner's scans abroad: they reach Royal Mail on
- * Central European time, whatever the country's own clock, and Royal Mail
- * labels that wall clock with the UK's offset.
+ * The clock of a European partner's scan abroad, whatever the country's own
+ * clock, which Royal Mail labels with the UK's offset. Its digits run twice the
+ * UK's offset ahead of UTC: on British Summer Time they are Central European
+ * time, as the destination posts' own scans show, and on Greenwich Mean Time they
+ * are UTC, as La Poste's, Poste Italiane's and Poczta Polska's own scans of the
+ * same items show to the minute.
  */
-export const ROYAL_MAIL_RELAY_CLOCK = 'Europe/Brussels';
+export function royalMailRelayClock(wall: string): string {
+  return firstOccurrence(DateTime.fromISO(wall, { zone: 'Europe/London' })).offset ? 'Europe/Brussels' : 'Europe/London';
+}
 
 /**
  * The offset Royal Mail labels an Australian office's wall clock with, central

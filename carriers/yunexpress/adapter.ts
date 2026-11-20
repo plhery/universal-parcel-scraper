@@ -148,23 +148,25 @@ function dateDestinationLeg(events: CarrierEvent[], offset: string | undefined, 
     : { ...event, time: eventClock(event.local_time, offset).time, time_zone: zone.name, time_zone_basis: 'neighbour' });
 }
 
-const SYDNEY = 'Australia/Sydney';
-
 /**
- * Dates J&T Express Australia's scans of a parcel bound for Australia, which
- * the feed relays with a depot's code as place and no offset, on Sydney's
- * clock whatever state the depot is in: the latest-scan record states
- * Sydney's summer offset for one at a Brisbane depot, which keeps an hour
- * less, and J&T's own instants for the scans Techlink relays are those wall
- * clocks at it. A history whose scans read only as other carriers' do too
- * ("Your parcel has been delivered.") is not J&T's.
+ * J&T Express Australia's scans of a parcel bound for Australia, which the
+ * feed relays with a depot's code as place, keep their wall clocks for the
+ * facade to date by the depot or the scans around it. The latest-scan record
+ * labels one with Sydney's summer offset at a Brisbane depot, and J&T's own
+ * instants are those wall clocks on Brisbane's clock, an hour later, as for the
+ * scans before it, so the record's offset is left out. A history whose scans
+ * read only as other carriers' do too ("Your parcel has been delivered.") is
+ * not J&T's.
  */
-function dateJAndTAuScans(events: CarrierEvent[], country: string): CarrierEvent[] {
+function unlabelJAndTAuScans(events: CarrierEvent[], country: string): CarrierEvent[] {
   if (country !== 'AU' || !relaysJAndTAu(events.map((event) => event.description ?? ''))) return events;
   return events.map((event) => {
-    if (event.time || !event.local_time || !jAndTAuRelayedStage(event.description ?? '')) return event;
-    const time = firstOccurrence(DateTime.fromISO(event.local_time, { zone: SYDNEY })).toISO({ suppressMilliseconds: true });
-    return time ? { ...event, time, time_zone: SYDNEY, time_zone_basis: 'carrier' } : event;
+    if (!event.time || event.local_time || event.time_zone || !jAndTAuRelayedStage(event.description ?? '')) return event;
+    const local = DateTime.fromISO(event.time, { setZone: true }).toISO({ includeOffset: false, suppressMilliseconds: true });
+    if (!local) return event;
+    const unlabelled: CarrierEvent = { ...event, local_time: local };
+    delete unlabelled.time;
+    return unlabelled;
   });
 }
 
@@ -314,7 +316,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const domestic = /^[A-Z]{2}$/.test(country) && clean(info.OriginCountryCode, 8).toUpperCase() === country;
   const landed = dateArrivalAirport(events, info.DestAirport, country);
-  const dated = dateJAndTAuScans(officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(landed), country), lastOffset, domestic)), country);
+  const dated = unlabelJAndTAuScans(officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(landed), country), lastOffset, domestic)), country);
   const latest = dated[0]!;
   const classified = current;
   // A partner's relayed row can link its contact page with its own reference,

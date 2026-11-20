@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { countryCode, explicitOffsetTime, isoTime } from '../../core/time/index.js';
-import { destinationRelay, europeanAbroad, partnerPlace, ROYAL_MAIL_AUSTRALIA_LABEL, ROYAL_MAIL_HOME, ROYAL_MAIL_RELAY_CLOCK } from './clock.js';
+import { destinationRelay, europeanAbroad, partnerPlace, ROYAL_MAIL_AUSTRALIA_LABEL, ROYAL_MAIL_HOME, royalMailRelayClock } from './clock.js';
 import { isRecord } from '../../core/types.js';
 import { isRoyalMailDomesticReference } from '../../core/detection/royalMail.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
@@ -67,10 +67,10 @@ const placeCountry = (location: string) => countryCode(/(?:^|,)\s*([^,]+)$/.exec
 
 /**
  * A scan abroad names its country as, or after, the place. A European partner's
- * scan, and an unplaced one in a European destination country, carries the
- * partner's Central European wall clock under the UK's offset, and is read on
- * that clock. A partner's facility can go by its bare name, without a country:
- * it is in the destination when the wording says so or when it comes after the
+ * scan, and an unplaced one in a European destination country, carries a
+ * clock twice the UK's offset ahead of UTC under the UK's offset, and is read on
+ * that clock (`royalMailRelayClock`). A partner's facility can go by its bare
+ * name, without a country: it is in the destination when the wording says so or when it comes after the
  * scan that leaves the UK on mail bound for a European country (`leftUk`), and in
  * the country of origin when it comes before the scan that leaves that country
  * (`departure`). A Dutch delivery office's arrival came a minute after the three
@@ -99,7 +99,7 @@ function abroadClock(raw: string, location: string, description: string, destina
   if (!relayed) return null;
   const wall = DateTime.fromISO(raw, { setZone: true }).toISO({ includeOffset: false, suppressMilliseconds: true });
   if (!wall) return null;
-  const placed = isoTime(wall, ROYAL_MAIL_RELAY_CLOCK);
+  const placed = isoTime(wall, royalMailRelayClock(wall));
   return placed ? { time: placed.iso } : { local_time: wall };
 }
 

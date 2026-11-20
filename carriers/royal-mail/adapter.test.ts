@@ -491,7 +491,7 @@ describe('Royal Mail structured response', () => {
     expect(result).toMatchObject({ last_status_text: 'In Transit', last_update: '2026-10-10T21:51:00+02:00', destination_country: 'FR' });
   });
 
-  it('reads a European partner\'s scans, placed or in the destination country, on Central European time', () => {
+  it('reads a European partner\'s scans, placed or in the destination country, on Central European time in summer', () => {
     const result = parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: IN_TRANSIT_NUMBER,
       summary: { statusCategory: 'In transit', statusDescription: '**With Customs**', lastEventCode: 'EVJDC',
@@ -525,6 +525,22 @@ describe('Royal Mail structured response', () => {
       events: [{ eventCode: 'EVJDC', eventName: 'Your item is currently with Customs in the destination country', eventDateTime: '2026-10-20T11:40:00+01:00' }],
     } }, IN_TRANSIT_NUMBER);
     expect(elsewhere.events?.[0]!.time).toBe('2026-10-20T11:40:00+01:00');
+  });
+
+  it('reads a European partner\'s scans on UTC in winter, when the UK keeps Greenwich Mean Time', () => {
+    // La Poste's own scans of the same items come an hour after Royal Mail's digits, on Paris time, as Poste Italiane's and Poczta Polska's do.
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit', lastEventCode: 'EVJOE',
+        lastEventDateTime: '2026-11-05T17:54:00+00:00', destinationCountryCode: 'FR' },
+      events: [
+        { eventCode: 'EVJOE', eventName: 'Item Received', eventDateTime: '2026-11-05T17:54:00+00:00', locationName: 'Example IPC, France' },
+        { eventCode: 'EVJDC', eventName: 'Your item is currently with Customs in the destination country', eventDateTime: '2026-10-26T11:40:00+00:00' },
+        { eventCode: 'EVHOE', eventName: 'Item Leaving the UK', eventDateTime: '2026-10-24T03:31:09+01:00', locationName: 'Example HWDC' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => event.time)).toEqual(['2026-11-05T17:54:00+00:00', '2026-10-26T11:40:00+00:00', '2026-10-24T03:31:09+01:00']);
+    expect(result.last_update).toBe('2026-11-05T17:54:00+00:00');
   });
 
   it('reads a European partner\'s facility named without its country on the partner\'s clock', () => {
@@ -562,7 +578,7 @@ describe('Royal Mail structured response', () => {
       ],
     } }, IN_TRANSIT_NUMBER);
     expect(delivery.events?.map(event => event.time)).toEqual([
-      '2026-11-12T17:23:00+01:00', '2026-11-12T17:21:00+01:00', '2026-11-10T20:13:35Z', '2026-11-10T01:16:31Z',
+      '2026-11-12T17:23:00+00:00', '2026-11-12T17:21:00+00:00', '2026-11-10T20:13:35Z', '2026-11-10T01:16:31Z',
     ]);
     // Beyond Europe, it keeps Royal Mail's label.
     const far = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER,

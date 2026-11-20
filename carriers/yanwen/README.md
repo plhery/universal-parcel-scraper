@@ -51,7 +51,8 @@ relays them at midnight, so one at 00:00:00 keeps its day as `local_time`.
 
 Partner scans can start with their country's code, as in "UA.In the New Post
 Office"; the map reads the words after it. A scan of the code alone names no
-stage. On Nova Poshta's leg, "Delivered to customs terminal" is customs holding
+stage: it keeps its place and the stage of the scan before it, and the parcel's
+status and status text come from that scan. On Nova Poshta's leg, "Delivered to customs terminal" is customs holding
 the parcel, and the branch's hold ending uncollected, through storage to the
 unclaimed cargo area, is an exception, its "Delivery is not possible" at the same
 second included: the parcel waited at the branch, and no door was tried.

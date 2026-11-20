@@ -122,6 +122,8 @@ describe('YunExpress captured response projection', () => {
     // The last-mile carrier's intake after that hand-over, and the flight out before it.
     expect(yunExpressStatus('Item accepted')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Parcel handed to DPD Pick-up (first scan)')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(yunExpressStatus('At delivery centre Inbound = in Transit')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(yunExpressStatus('Out of delivery Out for delivery')).toEqual({ status: 'out_for_delivery', stage: 'out_for_delivery' });
     // DHL's lines in Germany: its collection after the hand-over moves the parcel on, its data record registers it.
     expect(['Pick-up was successful.', 'Loaded to movement / tour vehicle', 'The shipment has been processed in the parcel center of origin',
       'The shipment has been processed in the destination parcel center', 'The instruction data for this shipment have been provided by the sender to DHL electronically']
@@ -397,26 +399,23 @@ describe('YunExpress captured response projection', () => {
       '2026-03-19T13:39:00-05:00', '2026-03-18T13:39:00-05:00', undefined, undefined]);
   });
 
-  it("dates J&T Express Australia's scans of a parcel bound for Australia on Sydney's clock, whatever state its depot is in", () => {
-    const payload = placing({ 1: 'BRISBANE-HUB' });
-    const row = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList)[1];
-    row.ProcessContent = 'The parcel arrives at the distribution center and is prepared for transport to the next destination.----BRISBANE-HUB';
-    payload.ResultList[0].TrackInfo.DestinationCountryCode = 'AU';
-    // Sydney's summer offset, an hour more than Brisbane keeps.
-    expect(parse(payload, NUMBER).events?.[1]).toMatchObject({ time: '2026-03-19T13:39:00+11:00', local_time: '2026-03-19T13:39:00',
-      time_zone: 'Australia/Sydney', time_zone_basis: 'carrier', location: 'BRISBANE-HUB' });
-    // So does its delivery, in a sentence other carriers write too.
-    row.ProcessContent = 'Your parcel has been delivered.----BRISBANE-HUB';
+  it("keeps J&T Express Australia's wall clocks on a parcel bound for Australia, without the Sydney offset the latest-scan record labels one with", () => {
+    const payload = placing({});
     const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
-    rows[2].ProcessContent = 'The parcel is dispatched from the transit center to the next destination----BRISBANE-HUB';
-    expect(parse(payload, NUMBER).events?.[1]).toMatchObject({ time: '2026-03-19T13:39:00+11:00', time_zone: 'Australia/Sydney' });
-    // Alone, that sentence is any carrier's, which keeps its wall clock.
-    rows[2].ProcessContent = 'Arrived at sort facility----BRISBANE-HUB';
-    expect(parse(payload, NUMBER).events?.[1]!.time).toBeUndefined();
-    // Bound elsewhere, J&T's words keep their wall clock for the facade.
-    row.ProcessContent = 'The parcel arrives at the distribution center and is prepared for transport to the next destination.----BRISBANE-HUB';
-    payload.ResultList[0].TrackInfo.DestinationCountryCode = 'GB';
-    expect(parse(payload, NUMBER).events?.[1]!.time).toBeUndefined();
+    rows[0].ProcessContent = 'Your parcel is out for delivery.----BRISBANE-HUB';
+    rows[1].ProcessContent = 'The parcel arrives at the distribution center and is prepared for transport to the next destination.----BRISBANE-HUB';
+    const info = payload.ResultList[0].TrackInfo;
+    info.DestinationCountryCode = 'AU';
+    Object.assign(info.LastTrackEvent, { ProcessContent: 'Your parcel is out for delivery.', ProcessLocation: 'BRISBANE-HUB', GmtProcessTimezone: 'GMT+11:00' });
+    // J&T's own instants are these wall clocks on Brisbane's, an hour after the record's Sydney summer offset.
+    const events = parse(payload, NUMBER).events;
+    expect(events?.slice(0, 2).map(({ time, local_time, location }) => ({ time, local_time, location }))).toEqual([
+      { time: undefined, local_time: '2026-03-20T13:39:00', location: 'BRISBANE-HUB' },
+      { time: undefined, local_time: '2026-03-19T13:39:00', location: 'BRISBANE-HUB' },
+    ]);
+    // Bound elsewhere, the record's offset stands.
+    info.DestinationCountryCode = 'GB';
+    expect(parse(payload, NUMBER).events?.[0]!.time).toBe('2026-03-20T13:39:00+11:00');
   });
 
   it("reads La Poste's platform scans in France on UTC, and its delivery office's on the office's clock", () => {
