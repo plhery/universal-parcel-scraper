@@ -299,6 +299,7 @@ import { adapter as geodisPl } from '../carriers/geodis-pl/adapter.js';
 import { adapter as gigLogistics } from '../carriers/gig-logistics/adapter.js';
 import { adapter as globalDeliveryNetwork } from '../carriers/global-delivery-network/adapter.js';
 import { adapter as globalpost } from '../carriers/globalpost/adapter.js';
+import { adapter as glsCa } from '../carriers/gls-ca/adapter.js';
 import { adapter as glsCh } from '../carriers/gls-ch/adapter.js';
 import { adapter as glsDe } from '../carriers/gls-de/adapter.js';
 import { adapter as glsEs } from '../carriers/gls-es/adapter.js';
@@ -1131,6 +1132,7 @@ export const REGISTRY: RegistryDefinition = {
     "gig-logistics": gigLogistics,
     "global-delivery-network": globalDeliveryNetwork,
     "globalpost": globalpost,
+    "gls-ca": glsCa,
     "gls-ch": glsCh,
     "gls-de": glsDe,
     "gls-es": glsEs,
@@ -2348,7 +2350,7 @@ export const REGISTRY: RegistryDefinition = {
     "globalpost": "globalpost",
     "globex-post": "universal",
     "gls-at": "gls-de",
-    "gls-ca": "universal",
+    "gls-ca": "gls-ca",
     "gls-ch": "gls-ch",
     "gls-de": "gls-de",
     "gls-es": "gls-es",

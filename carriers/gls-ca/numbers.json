@@ -42,6 +42,28 @@
         "confidence": "none"
       },
       "note": "The carrier's Shopify manual shows this number in the Tracking column of a second created shipment."
+    },
+    {
+      "number": "P66776054",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://docs.lastscanned.com/carriers/glscanada",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GLS Canada Ground",
+        "reportedRole": "tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc"
+        ]
+      },
+      "note": "Published as a GLS Canada example. The carrier’s Canadian guest endpoint confirms the whole number and returns dated scans."
     }
   ]
 }

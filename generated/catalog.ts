@@ -27790,7 +27790,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gls-ca",
+      "localClocks": true
     },
     "canaryUrl": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/",
     "trackingUrlTemplate": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/?match={trackingNumber}",

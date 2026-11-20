@@ -1572,6 +1572,12 @@
     "reason": "Detection does not offer GLS Canada for the W-prefixed tracking numbers shown on created shipments in its Shopify manual."
   },
   {
+    "carrier": "gls-ca",
+    "pattern": "^P66776054$",
+    "kind": "open",
+    "reason": "Detection offers DTDC for this published shipment, which GLS Canada confirms in its own tracker."
+  },
+  {
     "carrier": "gls-hu",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

@@ -1,0 +1,10 @@
+{
+  "shipments": [
+    {
+      "trackingNumber": "W99000007",
+      "currentStatus": {
+        "name": "NORECORD"
+      }
+    }
+  ]
+}
