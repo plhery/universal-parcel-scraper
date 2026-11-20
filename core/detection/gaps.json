@@ -6130,5 +6130,11 @@
     "pattern": "^[A-Z0-9]{2,12}\\d{9}$",
     "kind": "open",
     "reason": "JTL Express resis, a branch code, a month and a serial, have no detection rule yet."
+  },
+  {
+    "carrier": "21-express-id",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve-digit 21 Express waybills share their shape with many carriers' numeric waybills, so the shape cannot name 21 Express."
   }
 ]
