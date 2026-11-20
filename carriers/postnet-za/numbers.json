@@ -1,5 +1,50 @@
 {
   "carrier": "postnet-za",
-  "gap": "The public PostNet waybills are listed under Courier IT, which carried them.",
-  "records": []
+  "records": [
+    {
+      "number": "PNA5937988669",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.complaintsboard.com/postnet-b127817",
+        "date": "2023-05-11",
+        "dateKind": "customer complaint",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "South Africa overnight delivery",
+        "reportedRole": "reference number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "The customer publishes the PostNet reference for the overnight shipment. The carrier’s public tracking URL returned the form without a matching shipment history."
+    },
+    {
+      "number": "PPA78181363215",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.tracking-status.com/postnet-parcel-tracking/",
+        "date": "2022-03-18",
+        "dateKind": "carrier pickup notification quoted by customer",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "PostNet branch collection",
+        "reportedRole": "parcel number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A recipient reproduces a PostNet collection notification that prints this exact uppercase parcel number. Its current result remains unverified."
+    }
+  ]
 }
