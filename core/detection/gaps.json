@@ -4934,5 +4934,11 @@
     "pattern": "^[PWY]\\d{6}$",
     "kind": "open",
     "reason": "Three public Navata reports identify lorry receipts with a leading letter and six digits. The tracker recognizes two, and detection omits Navata."
+  },
+  {
+    "carrier": "mzz-briefdienst",
+    "pattern": "^010026\\d{10}$",
+    "kind": "open",
+    "reason": "A published biber post registered-mail label carries this sixteen-digit UPOC. Detection offers other carriers and omits MZZ-Briefdienst."
   }
 ]
