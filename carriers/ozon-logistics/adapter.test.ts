@@ -4,6 +4,7 @@ import { TrawlClient } from '../../core/transport/trawl.js';
 import { CARRIERS } from '../../core/catalog/index.js';
 import { adapter } from './adapter.js';
 import { normalizeOzonNumber, ozonApi, parseOzon } from './parser.js';
+import { statusMap } from './status.js';
 
 const number = '48271635-2048-1', digits = '4827163520481';
 const found = () => ({ deliveryType: 'PVZ', deliveryDateBegin: '2031-04-05T00:00:00Z', deliveryDateEnd: '2031-04-08T00:00:00Z',
@@ -51,6 +52,12 @@ describe('Ozon guest tracking', () => {
     }
     expect(() => parseOzon({ ...found(), items: [{ event: 'FantomDelivery', moment: null }] })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     for (const bad of [number + '0', 'PL-123456-shop', '48271635/2048/1']) expect(() => normalizeOzonNumber(bad)).toThrow();
+  });
+
+  it("reads import customs' release as transit resuming, its start and hold as customs", () => {
+    expect(statusMap.stage('CustomsClearanceCompleted', '')).toBe('in_transit');
+    expect(statusMap.stage('CustomsClearanceStarted', '')).toBe('customs');
+    expect(statusMap.stage('CustomsRefusedParcelRelease', '')).toBe('customs');
   });
 
   it('keeps HTTP recognition separate and reuses the verified browser history', async () => {
