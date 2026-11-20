@@ -1,0 +1,127 @@
+{
+  "code": 200,
+  "errorCode": 0,
+  "msg": "成功",
+  "success": true,
+  "result": {
+    "containerList": [
+      {
+        "ctnno": "TFLU4832614",
+        "nodeList": [
+          {
+            "movementCode": "VL",
+            "movementName": "",
+            "actualDate": "2026-08-24 10:36:00",
+            "estimateDate": "",
+            "eventPort": "CNNGB",
+            "portName": "NINGBO"
+          },
+          {
+            "movementCode": "IC",
+            "movementName": "",
+            "actualDate": "2026-09-08 10:55:00",
+            "estimateDate": "",
+            "eventPort": "INHZA",
+            "portName": "Hazira"
+          },
+          {
+            "movementCode": "KH",
+            "movementName": "开航",
+            "actualDate": "2026-08-24 21:09:00",
+            "estimateDate": "2026-08-24 12:00:00",
+            "eventPort": "CNNGB",
+            "portName": "NINGBO"
+          },
+          {
+            "movementCode": "DG",
+            "movementName": "到港",
+            "actualDate": "2026-09-08 03:00:00",
+            "estimateDate": "2026-09-08 10:00:00",
+            "eventPort": "INHZA",
+            "portName": "Hazira"
+          },
+          {
+            "movementCode": "KH",
+            "movementName": "开航",
+            "actualDate": "2026-08-24 21:09:00",
+            "estimateDate": "2026-08-24 12:00:00",
+            "eventPort": "CNNGB",
+            "portName": "NINGBO"
+          },
+          {
+            "movementCode": "DG",
+            "movementName": "到港",
+            "actualDate": "2026-09-08 03:00:00",
+            "estimateDate": "2026-09-08 10:00:00",
+            "eventPort": "INHZA",
+            "portName": "Hazira"
+          },
+          {
+            "movementCode": "KH",
+            "movementName": "开航",
+            "actualDate": "2026-10-03 06:00:00",
+            "estimateDate": "2026-10-02 13:00:00",
+            "eventPort": "INHZA",
+            "portName": "Hazira"
+          },
+          {
+            "movementCode": "DG",
+            "movementName": "到港",
+            "actualDate": "2026-10-10 08:36:00",
+            "estimateDate": "2026-10-10 21:00:00",
+            "eventPort": "YEADE",
+            "portName": "ADEN"
+          },
+          {
+            "movementCode": "VL",
+            "movementName": "",
+            "actualDate": "2026-08-24 10:36:00",
+            "estimateDate": "",
+            "eventPort": "CNNGB",
+            "portName": "NINGBO"
+          },
+          {
+            "movementCode": "IC",
+            "movementName": "",
+            "actualDate": "2026-09-08 10:55:00",
+            "estimateDate": "",
+            "eventPort": "INHZA",
+            "portName": "Hazira"
+          },
+          {
+            "movementCode": "VL",
+            "movementName": "",
+            "actualDate": "2026-10-02 19:28:00",
+            "estimateDate": "",
+            "eventPort": "INHZA",
+            "portName": "Hazira"
+          },
+          {
+            "movementCode": "IC",
+            "movementName": "",
+            "actualDate": "2026-10-10 00:00:00",
+            "estimateDate": "",
+            "eventPort": "YEADE",
+            "portName": "ADEN"
+          },
+          {
+            "movementCode": "ID",
+            "movementName": "",
+            "actualDate": "2026-10-13 00:00:00",
+            "estimateDate": "",
+            "eventPort": "YEADE",
+            "portName": "ADEN"
+          },
+          {
+            "movementCode": "MT",
+            "movementName": "",
+            "actualDate": "2026-10-18 12:00:00",
+            "estimateDate": "",
+            "eventPort": "YEADE",
+            "portName": "ADEN"
+          }
+        ]
+      }
+    ]
+  }
+}

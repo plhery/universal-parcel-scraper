@@ -1,0 +1,52 @@
+{
+  "carrier": "sea-legend-line",
+  "entries": [
+    {
+      "code": "VL",
+      "wording": "LOADED ON BOARD",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "KH",
+      "wording": "开航",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "english": "VESSEL DEPARTURE",
+      "note": "The English tracking page supplies this label for the movement code."
+    },
+    {
+      "code": "DG",
+      "wording": "到港",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "english": "VESSEL ARRIVAL",
+      "note": "The English tracking page supplies this label for the movement code."
+    },
+    {
+      "code": "IC",
+      "wording": "DISCHARGED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ID",
+      "wording": "LADEN GATE OUT TERMINAL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "MT",
+      "wording": "EMPTY RETURN",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "The English portal labels the movement as the return of empty equipment."
+    }
+  ]
+}

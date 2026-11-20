@@ -5594,5 +5594,10 @@
     "carrier": "dongjin-shipping",
     "kind": "open",
     "reason": "The guest search accepts shared container equipment identifiers. Select Dongjin Shipping explicitly."
+  },
+  {
+    "carrier": "sea-legend-line",
+    "kind": "open",
+    "reason": "The guest search confirms a shared equipment identifier. Select Sea Legend Line explicitly."
   }
 ]

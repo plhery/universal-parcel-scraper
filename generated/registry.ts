@@ -688,6 +688,7 @@ import { adapter as sameday } from '../carriers/sameday/adapter.js';
 import { adapter as sapxExpress } from '../carriers/sapx-express/adapter.js';
 import { adapter as satUkraine } from '../carriers/sat-ukraine/adapter.js';
 import { adapter as saudiPost } from '../carriers/saudi-post/adapter.js';
+import { adapter as seaLegendLine } from '../carriers/sea-legend-line/adapter.js';
 import { adapter as seino } from '../carriers/seino/adapter.js';
 import { adapter as seinoSuperExpress } from '../carriers/seino-super-express/adapter.js';
 import { adapter as seko } from '../carriers/seko/adapter.js';
@@ -1599,6 +1600,7 @@ export const REGISTRY: RegistryDefinition = {
     "sapx-express": sapxExpress,
     "sat-ukraine": satUkraine,
     "saudi-post": saudiPost,
+    "sea-legend-line": seaLegendLine,
     "seino": seino,
     "seino-super-express": seinoSuperExpress,
     "seko": seko,
@@ -3245,6 +3247,7 @@ export const REGISTRY: RegistryDefinition = {
     "scg-express": "universal",
     "schaeflein": "universal",
     "schneider": "universal",
+    "sea-legend-line": "sea-legend-line",
     "seabourne-logistics": "universal",
     "seino": "seino",
     "seino-super-express": "seino-super-express",

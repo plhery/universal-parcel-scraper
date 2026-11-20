@@ -51451,6 +51451,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sea-legend-line": {
+    "displayName": "Sea Legend Line",
+    "color": "#003e80",
+    "aliases": [
+      "Sea Legend Shipping",
+      "Sea Legend Line Limited",
+      "海杰航运"
+    ],
+    "countries": [
+      "SG",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sea-legend-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.slg-shipping.com/",
+    "trackingUrlTemplate": "https://www.slg-shipping.com/#/home/tracking",
+    "trackingSearchUrl": "https://www.slg-shipping.com/#/home/tracking",
+    "trackingSiteName": "Sea Legend Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "seabourne-logistics": {
     "displayName": "Seabourne Logistics",
     "color": "#e52628",
@@ -67222,6 +67248,7 @@ export const CARRIER_IDS = [
   "scg-express",
   "schaeflein",
   "schneider",
+  "sea-legend-line",
   "seabourne-logistics",
   "seino",
   "seino-super-express",
@@ -69105,6 +69132,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "scg-express": ["scg-express-1"],
   "schaeflein": [],
   "schneider": [],
+  "sea-legend-line": [],
   "seabourne-logistics": [],
   "seino": [],
   "seino-super-express": [],

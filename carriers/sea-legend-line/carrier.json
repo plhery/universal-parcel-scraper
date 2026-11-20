@@ -1,0 +1,57 @@
+{
+  "id": "sea-legend-line",
+  "displayName": "Sea Legend Line",
+  "aliases": [
+    "Sea Legend Shipping",
+    "Sea Legend Line Limited",
+    "海杰航运"
+  ],
+  "region": {
+    "countries": [
+      "SG",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#003e80"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sea-legend-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.slg-shipping.com/#/home/tracking",
+    "searchUrl": "https://www.slg-shipping.com/#/home/tracking",
+    "canaryUrl": "https://www.slg-shipping.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "Sea Legend Cargo Tracking"
+  },
+  "links": [],
+  "detection": []
+}

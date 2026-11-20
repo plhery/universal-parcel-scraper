@@ -1,0 +1,23 @@
+{
+  "carrier": "sea-legend-line",
+  "records": [
+    {
+      "number": "TFLU4832614",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/sea-legend-shipping/bl",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public Sea Legend tracking directory lists the full reference. The carrier’s guest search resolved it as a container and returned its exact equipment identifier."
+    }
+  ]
+}
