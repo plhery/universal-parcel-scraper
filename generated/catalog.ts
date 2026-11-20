@@ -59605,6 +59605,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "tuomeida": {
+    "displayName": "Tuomeida Logistics",
+    "color": "#8e8e93",
+    "aliases": [
+      "拓美达",
+      "拓美达国际物流",
+      "深圳市拓美达国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tuomeida",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tupaq": {
     "displayName": "Tupaq Courier",
     "color": "#00005b",
@@ -67098,6 +67120,7 @@ export const CARRIER_IDS = [
   "tufesa",
   "tuffnells",
   "tuodatong",
+  "tuomeida",
   "tupaq",
   "turbo-eg",
   "turkmenpost",
@@ -68967,6 +68990,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tufesa": [],
   "tuffnells": [],
   "tuodatong": ["tuodatong-1"],
+  "tuomeida": [],
   "tupaq": [],
   "turbo-eg": [],
   "turkmenpost": [],

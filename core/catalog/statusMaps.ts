@@ -58,6 +58,7 @@ import { statusMap as whwdt } from '../../carriers/whwdt/status.js';
 import { statusMap as lerdex } from '../../carriers/lerdex/status.js';
 import { statusMap as sheensync } from '../../carriers/sheensync/status.js';
 import { statusMap as yuanpeng } from '../../carriers/yuanpeng/status.js';
+import { statusMap as tuomeida } from '../../carriers/tuomeida/status.js';
 import { statusMap as sengiExpress } from '../../carriers/sengi-express/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
@@ -949,6 +950,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   lerdex,
   sheensync,
   yuanpeng,
+  tuomeida,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,
