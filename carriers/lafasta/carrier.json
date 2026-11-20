@@ -2,8 +2,8 @@
   "id": "lafasta",
   "displayName": "Lafasta",
   "aliases": [
-    "لافاستا",
-    "شركة لافاستا للشحن والتوصيل"
+    "\u0644\u0627\u0641\u0627\u0633\u062a\u0627",
+    "\u0634\u0631\u0643\u0629 \u0644\u0627\u0641\u0627\u0633\u062a\u0627 \u0644\u0644\u0634\u062d\u0646 \u0648\u0627\u0644\u062a\u0648\u0635\u064a\u0644"
   ],
   "region": {
     "countries": [
@@ -17,16 +17,30 @@
   "timezone": "Asia/Riyadh",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "lafasta",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://c.lafasta.sa.com/Track/{trackingNumber}",
     "searchUrl": "https://c.lafasta.sa.com/Track/",
     "canaryUrl": "https://c.lafasta.sa.com/Track/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
     "unavailable": []
   },
