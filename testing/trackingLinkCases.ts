@@ -2463,6 +2463,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'honour-lane-shipping': 'The guest detail is client-rendered. The adapter reads the number-bound result through its public endpoint.',
   'translink-shipping': 'The search form expects the house bill without its TLKP prefix.',
   'atlantic-container-line': 'ACL runs its shipment search in an embedded form. The link opens the official tracking page.',
   'hecny-shipping': 'The Hecny form expects the house bill without its HYSL prefix. The link opens the search form.',

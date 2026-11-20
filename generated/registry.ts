@@ -369,6 +369,7 @@ import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as homexpress } from '../carriers/homexpress/adapter.js';
 import { adapter as honducor } from '../carriers/honducor/adapter.js';
 import { adapter as hongkongPost } from '../carriers/hongkong-post/adapter.js';
+import { adapter as honourLaneShipping } from '../carriers/honour-lane-shipping/adapter.js';
 import { adapter as hopEnvios } from '../carriers/hop-envios/adapter.js';
 import { adapter as horoz } from '../carriers/horoz/adapter.js';
 import { adapter as houndExpress } from '../carriers/hound-express/adapter.js';
@@ -1267,6 +1268,7 @@ export const REGISTRY: RegistryDefinition = {
     "homexpress": homexpress,
     "honducor": honducor,
     "hongkong-post": hongkongPost,
+    "honour-lane-shipping": honourLaneShipping,
     "hop-envios": hopEnvios,
     "horoz": horoz,
     "hound-express": houndExpress,
@@ -2562,6 +2564,7 @@ export const REGISTRY: RegistryDefinition = {
     "honducor": "honducor",
     "hongkong-post": "hongkong-post",
     "hongsuda": "universal",
+    "honour-lane-shipping": "honour-lane-shipping",
     "hop-envios": "hop-envios",
     "hopexpress": "universal",
     "horoz": "horoz",

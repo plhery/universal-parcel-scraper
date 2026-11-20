@@ -30384,6 +30384,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "honour-lane-shipping": {
+    "displayName": "Honour Lane Shipping",
+    "color": "#17417c",
+    "aliases": [
+      "HLS Honour Lane",
+      "Honour Lane Shipping Ltd",
+      "HNLT"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "honour-lane-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tracking.cargolane.net/tracking/ShipmentInfo",
+    "trackingUrlTemplate": "https://tracking.cargolane.net/tracking/ShipmentInfo?paramType=ctn_no&paramNo={trackingNumber}",
+    "trackingSiteName": "HLS Online Service",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hop-envios": {
     "displayName": "HOP Envíos",
     "color": "#22cdc6",
@@ -66266,6 +66290,7 @@ export const CARRIER_IDS = [
   "homexpress",
   "honducor",
   "hongsuda",
+  "honour-lane-shipping",
   "hop-envios",
   "hopexpress",
   "horoz",
@@ -68136,6 +68161,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "homexpress": [],
   "honducor": [],
   "hongsuda": [],
+  "honour-lane-shipping": [],
   "hop-envios": [],
   "hopexpress": [],
   "horoz": [],

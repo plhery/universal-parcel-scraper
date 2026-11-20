@@ -5529,5 +5529,10 @@
     "carrier": "translink-shipping",
     "kind": "open",
     "reason": "The guest history confirms the whole house bill. The adapter is explicitly selected."
+  },
+  {
+    "carrier": "honour-lane-shipping",
+    "kind": "open",
+    "reason": "The guest lookup uses equipment identifiers shared across shipping lines and voyages."
   }
 ]
