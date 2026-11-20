@@ -1284,6 +1284,12 @@
     "reason": "Express One Bulgaria's package barcodes are twenty-four digits ending in the destination's postcode, as Express One Hungary's, bpost's, Ciblex's and InPost's are, so the shape cannot name it."
   },
   {
+    "carrier": "famiport",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer FamilyMart Taiwan for the eleven-digit store-to-store number shown in the SmilePay integration guide."
+  },
+  {
     "carrier": "fargo-uz",
     "pattern": "^(?:\\d{9}|\\d{14}|TEZ\\d{6})$",
     "kind": "by_design",
