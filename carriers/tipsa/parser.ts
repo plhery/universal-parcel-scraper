@@ -71,6 +71,16 @@ export function tipsaLookupNotFound(html: string): boolean {
  * included. Recipient, reference, agency and proof of delivery blocks are
  * never read.
  */
+// How soon after the counter's reads the delivery comes when the recipient collects the parcel at the agency.
+const COUNTER_MS = 10 * 60_000;
+
+/** Whether a delivery follows the row within the counter's minutes, with no other stage between. */
+function handedOut(events: readonly (CarrierEvent & { time: string })[], row: CarrierEvent & { time: string }): boolean {
+  const newer = events.slice(0, events.indexOf(row)).reverse();
+  const outcome = newer.find((event) => event.stage && comparable(event.description!) !== 'REPARTO' && !AGENCY_READ.test(comparable(event.description!)));
+  return outcome?.stage === 'delivered' && Date.parse(outcome.time) - Date.parse(row.time) <= COUNTER_MS;
+}
+
 export function parseTipsaDetail(html: string, raw: string): CarrierResult {
   const number = normalizeTipsaNumber(raw);
   if (/<title>\s*Just a moment|cf-chl-|challenge-platform|Attention Required! \| Cloudflare/i.test(html)) {
@@ -134,6 +144,17 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
       event.stage = 'out_for_delivery';
       loading.add(event);
     } else round = undefined;
+  }
+  // Collected at the agency: after the parcel waits there, the agency's read and a REPARTO minutes before ENTREGADO are
+  // the counter handing it out, not a round. They keep the wait's stage.
+  let waiting = false;
+  for (const older of [...events].reverse()) {
+    const key = comparable(older.description!);
+    if (older.stage === 'ready_for_pickup') waiting = true;
+    else if (waiting && (key === 'REPARTO' || AGENCY_READ.test(key)) && handedOut(events, older)) {
+      Object.assign(older, { stage: 'ready_for_pickup', stage_source: 'none' });
+      loading.delete(older);
+    } else if (older.stage) waiting = false;
   }
   const newest = events[0]!;
   const current = tipsaStatus(loading.has(newest) ? 'REPARTO' : newest.description!);

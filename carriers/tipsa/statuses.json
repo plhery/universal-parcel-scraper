@@ -12,7 +12,7 @@
     { "wording": "Cerrado", "language": "es", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "The address was found closed: noted on the round, after REPARTO." },
     { "wording": "Pendiente de llegada", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "Between hub scans." },
     { "wording": "DISPONIBLE", "language": "es", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "Held at the agency after a missed round." },
-    { "wording": "Pendiente de recoger en Tipsa", "language": "es", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "Held at the agency after a missed round." },
+    { "wording": "Pendiente de recoger en Tipsa", "language": "es", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "Held at the agency after a missed round. An agency read and a REPARTO minutes before ENTREGADO after it are the counter handing the parcel out, and keep this stage." },
     { "wording": "Devolver a Origen", "language": "es", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-10-22", "note": "Being returned to the sender, read by the shared Spanish return rule." },
     { "wording": "ENTREGADO", "language": "es", "stage": "delivered", "confirmedBy": "live" }
   ]

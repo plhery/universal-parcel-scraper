@@ -34,6 +34,9 @@ not ask.
   (`REPARTO`) minute, sometimes minutes or hours later. Agency reads that follow the round
   on its day, with no other activity between, belong to it and are out for delivery. After
   any other activity, an agency read means the parcel is in transit again.
+- A parcel waiting at the agency ("Pendiente de recoger en Tipsa") and collected there gets an
+  agency read and a `REPARTO` minutes before `ENTREGADO`: the counter handing it out, not a
+  round. Those rows keep the wait's stage; a round that delivers later is a round.
 - A row's place (`POBLACIÓN`) is the town of the agency that recorded it. Hub reads name
   their hub ("LECTURA EN HUB BAILEN"). TIPSA's central agency is at San Fernando de
   Henares, where the Madrid hub's reads are placed, and reads of other hubs, Bailén's and
