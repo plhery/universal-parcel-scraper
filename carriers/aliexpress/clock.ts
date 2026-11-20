@@ -8,6 +8,8 @@ export const CAINIAO_CHINA_ZONE = 'Asia/Shanghai';
  * on any clock west of UTC+7:36 it came after the check that first returned
  * it, on a parcel to Portugal. So is the closed pickup order, "Shipment
  * cancelled", whose epoch in Cainiao's own feed matches Beijing's digits.
+ * The warehouse's packing, "Product sorting is completed" in ParcelsApp's
+ * words, is AliExpress's "Warehouse packaging complete" at the same digits +08:00.
  * Its later steps are on their site's clock, which varies by parcel, so they
  * are not listed: "Arrived at linehaul office" came at China's digits on one
  * parcel and Europe's on another. The list holds Cainiao's English, as
@@ -17,7 +19,7 @@ export const CAINIAO_CHINA_ZONE = 'Asia/Shanghai';
 export const CAINIAO_CHINA_LEG: readonly string[] = [
   'pending shipping by the seller', 'order received successfully', 'order has been cancelled', 'shipment cancelled', 'package finished', 'leave the warehouse',
   'departed from warehouse', 'accepted by carrier', 'shipment information received by warehouse electronically',
-  'package ready for shipping from warehouse', 'package shipped out from warehouse',
+  'product sorting is completed', 'package ready for shipping from warehouse', 'package shipped out from warehouse',
   '(?:inbound|outbound) in sorting center', 'processing at sorting center', 'departed from sorting center',
   'package not accepted by sorting center', 'inbound failure in sorting center', 'package (?:received by|left) sorting center of transit',
   'last-mile delivery forecast',

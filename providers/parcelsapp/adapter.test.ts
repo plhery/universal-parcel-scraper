@@ -2040,6 +2040,7 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-10-16T09:15:19Z', status: 'Inbound failure in sorting center', carrier: 0, location: 'Example Town' },
       { date: '2026-10-16T08:01:25Z', status: 'Package shipped out from warehouse', carrier: 0 },
       { date: '2026-10-16T06:30:00Z', status: 'Package ready for shipping from warehouse', carrier: 0 },
+      { date: '2026-10-16T04:42:10Z', status: 'Product sorting is completed', carrier: 0 },
       { date: '2026-10-16T03:07:09Z', status: 'Shipment information received by warehouse electronically', carrier: 0 },
     ] }, number, identity());
     expect(result.events?.map((scan) => scan.time)).toEqual([
@@ -2048,6 +2049,7 @@ describe('ParcelsApp result parsing', () => {
       '2026-10-16T01:15:19.000Z',
       '2026-10-16T00:01:25.000Z',
       '2026-10-15T22:30:00.000Z',
+      '2026-10-15T20:42:10.000Z',
       '2026-10-15T19:07:09.000Z',
     ]);
     // The consolidation warehouse's own steps, which Cainiao's reply dates +08:00, whatever routing's zone.
