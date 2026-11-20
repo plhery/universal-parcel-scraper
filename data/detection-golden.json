@@ -79500,6 +79500,19 @@
     ]
   },
   {
+    "input": "B10010799111",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "bjs-home-delivery"
+    ],
+    "asked": [
+      "bjs-home-delivery",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "B1069028-3523",
     "carrier": "unknown",
     "confidence": "low",
@@ -84954,6 +84967,18 @@
     "confidence": "high",
     "candidates": [
       "canpar"
+    ]
+  },
+  {
+    "input": "D60012157810",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive",
+      "yto"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {

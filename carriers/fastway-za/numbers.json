@@ -1,5 +1,55 @@
 {
   "carrier": "fastway-za",
-  "gap": "No public page shows a Fastway South Africa number.",
-  "records": []
+  "records": [
+    {
+      "number": "B10010799111",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261002084905/https://www.fastway.co.za/our-services/track-your-parcel?l=B10010799111",
+        "date": "2026-10-02",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Fastway Couriers South Africa",
+        "reportedRole": "label number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "bjs-home-delivery"
+        ]
+      },
+      "note": "The archived carrier link identifies the label in its query. The same public tracker returned dated depot, attempted delivery and delivered scans for the full label number."
+    },
+    {
+      "number": "D60012157810",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261116075712/https://www.fastway.co.za/our-services/track-your-parcel?l=D60012157810",
+        "date": "2026-11-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Fastway Couriers South Africa",
+        "reportedRole": "label number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "yto"
+        ]
+      },
+      "note": "The archived carrier link identifies the label in its query. The same public tracker returned dated depot, Johannesburg sorting hub and delivered scans for the full label number."
+    }
+  ]
 }

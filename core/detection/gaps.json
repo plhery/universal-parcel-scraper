@@ -1296,6 +1296,12 @@
     "reason": "Fastfrate probill numbers are ten bare digits that many carriers share."
   },
   {
+    "carrier": "fastway-za",
+    "pattern": "^(?:B1|D6)\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer Fastway South Africa for the B1 and D6 labels its own tracker returned with dated shipment history."
+  },
+  {
     "carrier": "fedex-freight",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
