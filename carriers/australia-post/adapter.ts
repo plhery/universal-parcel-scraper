@@ -80,6 +80,18 @@ function abroadZone(location: string, abroad: string): string | null {
   return countryTimeZone(abroad);
 }
 
+/**
+ * The air carrier's arrival in the destination ("Landed in Germany", "Arrived at postal carrier's
+ * facility in Germany") carries that country's wall clock under Australia's offset: on parcels to
+ * Europe its digits came within the hour of the destination post's own arrival scan, which came
+ * ten hours after it as labelled.
+ */
+const DESTINATION_ARRIVALS = new Set(['INT-2164', 'INT-2165']);
+function arrivalZone(code: string, description: string, abroad: string | null): string | null {
+  if (!abroad || !DESTINATION_ARRIVALS.has(code)) return null;
+  return countryCode(/\bin\s+([^,]+)$/i.exec(description)?.[1]?.trim()) === abroad ? countryTimeZone(abroad) : null;
+}
+
 /** Scans that leave the parcel at an Australian post office or parcel locker for collection. */
 const COLLECTION_SCANS = new Set(['DD-ER4', 'NT-ER4']);
 /** Deliveries left in a safe place, at the door. */
@@ -240,9 +252,11 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
     const description = clean(raw.description);
     const location = clean(raw.location, 200);
     if (!description) throw new SchemaError(PROVIDER, 'Australia Post returned an empty event');
-    const zone = abroad && offset?.iso.endsWith('Z') ? abroadZone(location, abroad) : undefined;
+    const arrival = offset ? arrivalZone(code, description, abroad) : null;
+    const zone = arrival ?? (abroad && offset?.iso.endsWith('Z') ? abroadZone(location, abroad) : undefined);
     if (zone) zones.add(zone);
-    const at = zone ? mislabeledLocalTime(raw.localeDateTime, zone) : offset ?? epoch;
+    const at = arrival ? isoTime(String(raw.localeDateTime).replace(/(?:Z|[+-]\d{2}:?\d{2})$/, ''), arrival)
+      : zone ? mislabeledLocalTime(raw.localeDateTime, zone) : offset ?? epoch;
     // Without a zone the wall clock stays local; its label still orders it as the reply does.
     const wall = zone === null ? mislabeledWallTime(raw.localeDateTime)?.replace(/\.000$/, '') : undefined;
     if (!at) throw new SchemaError(PROVIDER, 'Australia Post returned an invalid event date');

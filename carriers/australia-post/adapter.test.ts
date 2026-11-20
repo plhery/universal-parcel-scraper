@@ -248,6 +248,22 @@ describe('Australia Post status codes and places', () => {
       scan('INT-0030', 'International arrival - awaiting clearance', 'NETHERLANDS', '2026-06-10T11:22:00Z'),
     ]);
     expect(twice.events?.map((event) => event.location)).toEqual(['EXAMPLE CITY, NETHERLANDS']);
+    // The air carrier's arrival in the destination carries that country's wall clock under Australia's offset.
+    const landed = journey('DE', [
+      scan('INT-0030', 'International arrival - awaiting clearance', 'GERMANY', '2026-11-03T09:52:00Z'),
+      scan('INT-2164', 'Landed in Germany', '', '2026-11-03T09:20:00+11:00'),
+      scan('INT-2165', "Arrived at postal carrier's facility in Germany", '', '2026-11-03T09:20:00+11:00'),
+      scan('INT-2177', 'Flight departed', '', '2026-11-01T18:30:00+11:00'),
+    ]);
+    expect(landed.events?.map((event) => [event.time, event.description])).toEqual([
+      ['2026-11-03T09:52:00+01:00', 'International arrival - awaiting clearance'],
+      ['2026-11-03T09:20:00+01:00', 'Landed in Germany'],
+      ['2026-11-03T09:20:00+01:00', "Arrived at postal carrier's facility in Germany"],
+      ['2026-11-01T18:30:00+11:00', 'Flight departed'],
+    ]);
+    // A landing in another country than the destination keeps its label.
+    expect(journey('DE', [scan('INT-2164', 'Landed in Qatar', '', '2026-11-02T09:20:00+11:00')]).events?.[0]?.time)
+      .toBe('2026-11-02T09:20:00+11:00');
     // A domestic reply has no post abroad, so a UTC label stands.
     expect(journey('AU', [scan('DD-ER13', 'Delivered', 'EXAMPLE VIC', '2026-06-12T01:22:00Z', 'Delivered')]).last_update)
       .toBe('2026-06-12T01:22:00Z');

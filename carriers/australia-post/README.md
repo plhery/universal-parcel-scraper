@@ -160,6 +160,12 @@ key alone does not clear a DataDome challenge; browser verification stays in its
   in `app.ts` (`relabelledFrom: 'UTC'`) lets such a scan take over the row stored under the label.
   The reply can list a scan abroad twice at one instant, by its town and country and by the country
   alone; the copy with the country alone is left out.
+- The air carrier's arrival in the destination (`INT-2164` "Landed in …", `INT-2165` "Arrived at
+  postal carrier's facility in …") carries that country's wall clock under Australia's offset: on
+  parcels to Europe its digits came within the hour of the destination post's own arrival scan, which
+  came ten hours after it as labelled. When the scan names the destination and that country keeps one
+  clock, its digits are read there; the stored row under Australia's offset gives way to it
+  (`matchWallClock`). Its flights and landings elsewhere keep their label.
 - A parcel awaiting collection at a post office or locker gets that place, as its awaiting-collection
   scan (`DD-ER4`, `NT-ER4`) names it, in `pickup_point`. It keeps it once collected: when only
   deliveries follow that scan and none was left in a safe place. A delivery after another round, or
