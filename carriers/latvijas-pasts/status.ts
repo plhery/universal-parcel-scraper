@@ -39,8 +39,9 @@ const EVENTS: Readonly<Record<string, Stage>> = {
   1127: 'in_transit',
   39: 'out_for_delivery',
   36: 'failed_attempt',
-  // The delivery office printed the invitation to collect the item there.
+  // The delivery office printed the invitation to collect the item there, or sent it by SMS.
   1134: 'ready_for_pickup',
+  1121: 'ready_for_pickup',
   // A foreign post's item waiting at its collection point, UPU's EDH.
   75: 'ready_for_pickup',
   37: 'delivered',

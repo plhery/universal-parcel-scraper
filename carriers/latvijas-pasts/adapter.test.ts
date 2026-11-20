@@ -270,6 +270,8 @@ describe('Latvijas Pasts status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode: '1134', description: 'Notification - pick-up invitation printed' }))
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode: '1121', description: 'Electronic notification (SMS) - pick-up invitation sent to recipient' }))
+      .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
     expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode: '75', description: 'Item arrived at pick-up point' }))
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
     // Temporary storage is customs' hold before the clearance, not an acceptance; a redirection keeps the item moving.

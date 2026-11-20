@@ -43,7 +43,7 @@ country of an event a foreign post relayed. Both share one code list, which the 
 codes it does not know go to the shared wording rules. "Item returned from Customs" is a customs
 release, not a return, and "Item accepted for temporary storage" is customs' hold on an item from
 abroad before its clearance, not an acceptance. The pickup point is the office that printed the invitation to collect the
-item, while it waits there or once it was collected there. A foreign post's arrival at its
+item or sent it by SMS, while it waits there or once it was collected there. A foreign post's arrival at its
 collection point names only the country, so the item waits for collection without a pickup point.
 
 Clocks carry no offset. A Latvian office's scan is on Riga's clock, and a foreign post's event on
