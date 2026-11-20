@@ -5509,5 +5509,11 @@
     "carrier": "paqueteria-vencedor",
     "kind": "open",
     "reason": "Vencedor's guest tracker confirms these ten-digit guides. Several other carriers share the shape, so Vencedor is offered through explicit selection."
+  },
+  {
+    "carrier": "pochtai-asr",
+    "pattern": "^ASR[0-9]{5}$",
+    "kind": "open",
+    "reason": "Pochtai Asr's public tracking example returns its own history. Detection currently offers other carriers for the normalized number."
   }
 ]

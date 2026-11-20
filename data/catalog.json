@@ -46316,6 +46316,35 @@
     ],
     "detectionRules": []
   },
+  "pochtai-asr": {
+    "displayName": "Pochtai Asr",
+    "color": "#a62445",
+    "aliases": [
+      "Почтаи Аср"
+    ],
+    "countries": [
+      "TJ"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dushanbe",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pochtai-asr"
+    },
+    "canaryUrl": "https://apost.tj/en/tracking",
+    "trackingUrlTemplate": "https://apost.tj/en/tracking",
+    "trackingSearchUrl": "https://apost.tj/en/tracking",
+    "helpUrl": "https://apost.tj/en/help",
+    "linkRules": [
+      {
+        "domains": [
+          "apost.tj"
+        ],
+        "path": "^/(?:en/|ru/|tj/)?tracking/(ASR-\\d{5,29})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "pointpack": {
     "displayName": "Pointpack",
     "color": "#fe5722",

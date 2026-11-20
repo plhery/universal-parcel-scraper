@@ -598,6 +598,7 @@ import { adapter as pinAg } from '../carriers/pin-ag/adapter.js';
 import { adapter as pitneyBowes } from '../carriers/pitney-bowes/adapter.js';
 import { adapter as pittOhio } from '../carriers/pitt-ohio/adapter.js';
 import { adapter as planzer } from '../carriers/planzer/adapter.js';
+import { adapter as pochtaiAsr } from '../carriers/pochtai-asr/adapter.js';
 import { adapter as pocztaPolska } from '../carriers/poczta-polska/adapter.js';
 import { adapter as polonez } from '../carriers/polonez/adapter.js';
 import { adapter as posIndonesia } from '../carriers/pos-indonesia/adapter.js';
@@ -1492,6 +1493,7 @@ export const REGISTRY: RegistryDefinition = {
     "pitney-bowes": pitneyBowes,
     "pitt-ohio": pittOhio,
     "planzer": planzer,
+    "pochtai-asr": pochtaiAsr,
     "poczta-polska": pocztaPolska,
     "polonez": polonez,
     "pos-indonesia": posIndonesia,
@@ -3046,6 +3048,7 @@ export const REGISTRY: RegistryDefinition = {
     "plycon": "universal",
     "pml-tw": "universal",
     "pmm": "universal",
+    "pochtai-asr": "pochtai-asr",
     "poczta-polska": "poczta-polska",
     "pointpack": "universal",
     "polaris-transport": "universal",

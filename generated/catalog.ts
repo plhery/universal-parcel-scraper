@@ -46320,6 +46320,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "pochtai-asr": {
+    "displayName": "Pochtai Asr",
+    "color": "#a62445",
+    "aliases": [
+      "Почтаи Аср"
+    ],
+    "countries": [
+      "TJ"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dushanbe",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pochtai-asr"
+    },
+    "canaryUrl": "https://apost.tj/en/tracking",
+    "trackingUrlTemplate": "https://apost.tj/en/tracking",
+    "trackingSearchUrl": "https://apost.tj/en/tracking",
+    "helpUrl": "https://apost.tj/en/help",
+    "linkRules": [
+      {
+        "domains": [
+          "apost.tj"
+        ],
+        "path": "^/(?:en/|ru/|tj/)?tracking/(ASR-\\d{5,29})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "pointpack": {
     "displayName": "Pointpack",
     "color": "#fe5722",
@@ -66658,6 +66687,7 @@ export const CARRIER_IDS = [
   "plycon",
   "pml-tw",
   "pmm",
+  "pochtai-asr",
   "pointpack",
   "polaris-transport",
   "polonez",
@@ -68525,6 +68555,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "plycon": [],
   "pml-tw": [],
   "pmm": [],
+  "pochtai-asr": [],
   "pointpack": [],
   "polaris-transport": ["polaris-transport-1"],
   "polonez": ["polonez-1"],
