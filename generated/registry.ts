@@ -436,6 +436,7 @@ import { adapter as kexExpressHk } from '../carriers/kex-express-hk/adapter.js';
 import { adapter as kingKongExpress } from '../carriers/king-kong-express/adapter.js';
 import { adapter as kingSolutions } from '../carriers/king-solutions/adapter.js';
 import { adapter as kitTk } from '../carriers/kit-tk/adapter.js';
+import { adapter as kmtc } from '../carriers/kmtc/adapter.js';
 import { adapter as kolayGelsin } from '../carriers/kolay-gelsin/adapter.js';
 import { adapter as komonExpress } from '../carriers/komon-express/adapter.js';
 import { adapter as koreaPost } from '../carriers/korea-post/adapter.js';
@@ -1322,6 +1323,7 @@ export const REGISTRY: RegistryDefinition = {
     "king-kong-express": kingKongExpress,
     "king-solutions": kingSolutions,
     "kit-tk": kitTk,
+    "kmtc": kmtc,
     "kolay-gelsin": kolayGelsin,
     "komon-express": komonExpress,
     "korea-post": koreaPost,
@@ -2692,6 +2694,7 @@ export const REGISTRY: RegistryDefinition = {
     "kit-tk": "kit-tk",
     "kiwi-express": "universal",
     "kleine-spedition": "universal",
+    "kmtc": "kmtc",
     "kolay-gelsin": "kolay-gelsin",
     "komon-express": "komon-express",
     "koombiyo": "universal",

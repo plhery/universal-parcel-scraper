@@ -1,0 +1,13 @@
+{
+  "carrier": "kmtc",
+  "entries": [
+    {"code": "GTOOBE", "wording": "Empty Container Pick Up", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not yet with KMTC. KMTC's reply gives the code; the wording is the name its tracking page gives the step."},
+    {"code": "GTIOBF", "wording": "Full Container Gate In", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading. After the container moved, a further gate in is transit."},
+    {"code": "GTOOBF", "wording": "Full Container Gate Out", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The loaded container leaves a terminal of the port of loading for another one before it is loaded."},
+    {"code": "LDGOBF", "wording": "On Board", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "DISIBF", "wording": "Discharging", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the port of discharge."},
+    {"code": "GTIIBF", "wording": "Full Container Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The loaded container reaches an inland depot or freight station after the port; named in the step list of KMTC's tracking page script."},
+    {"code": "GTOIBF", "wording": "Full Container Pick Up", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee takes the loaded container from the terminal."},
+    {"code": "GTIIBE", "wording": "Empty Container Return", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee returns the unloaded container. Before the container moved, it is an empty container returned unused."}
+  ]
+}

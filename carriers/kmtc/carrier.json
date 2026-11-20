@@ -1,0 +1,61 @@
+{
+  "id": "kmtc",
+  "displayName": "KMTC",
+  "aliases": [
+    "KMTC Line",
+    "Korea Marine Transport",
+    "Korea Marine Transport Co."
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#075bb9"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "kmtc",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.ekmtc.com/index.html#/cargo-tracking",
+    "canaryUrl": "https://www.ekmtc.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -35385,6 +35385,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "kmtc": {
+    "displayName": "KMTC",
+    "color": "#075bb9",
+    "aliases": [
+      "KMTC Line",
+      "Korea Marine Transport",
+      "Korea Marine Transport Co."
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "kmtc",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.ekmtc.com/",
+    "trackingSearchUrl": "https://www.ekmtc.com/index.html#/cargo-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kolay-gelsin": {
     "displayName": "Kolay Gelsin",
     "color": "#3aae2a",
@@ -66197,6 +66217,7 @@ export const CARRIER_IDS = [
   "kit-tk",
   "kiwi-express",
   "kleine-spedition",
+  "kmtc",
   "kolay-gelsin",
   "komon-express",
   "koombiyo",
@@ -68062,6 +68083,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kit-tk": [],
   "kiwi-express": [],
   "kleine-spedition": [],
+  "kmtc": [],
   "kolay-gelsin": [],
   "komon-express": ["komon-express-1"],
   "koombiyo": [],
