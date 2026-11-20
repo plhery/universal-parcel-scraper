@@ -4880,5 +4880,11 @@
     "pattern": "^RAY\\d{13}$",
     "kind": "open",
     "reason": "A customer and the carrier identify a RaySpeed waybill using RAY and thirteen digits. The tracker recognizes it, while detection omits RaySpeed."
+  },
+  {
+    "carrier": "pxc-pacific",
+    "pattern": "^888\\d{7}$",
+    "kind": "open",
+    "reason": "Two indexed PXC Pacific tracker links identify ten-digit AWBs with this prefix. Detection offers other carriers."
   }
 ]
