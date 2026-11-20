@@ -5784,5 +5784,10 @@
     "carrier": "crowley",
     "kind": "open",
     "reason": "SCAC-qualified bills match the carrier's native search. The manifest patterns need a collision review before automatic detection."
+  },
+  {
+    "carrier": "pronto-envios",
+    "kind": "open",
+    "reason": "The published guides are numeric and their observed length is shared by several carriers. Keep the native tracker explicitly selectable."
   }
 ]

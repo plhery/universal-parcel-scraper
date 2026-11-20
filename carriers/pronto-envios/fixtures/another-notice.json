@@ -1,0 +1,38 @@
+{
+  "success": true,
+  "data": {
+    "tagid": 659204500865
+  },
+  "data_track": [
+    {
+      "tagid": 659204500865,
+      "type_state_name": "Certificacion",
+      "dete_time": "2026-08-22 11:59:20",
+      "city_name": "PALMIRA"
+    },
+    {
+      "tagid": 659204500865,
+      "type_state_name": "DEVOLUCION - DIGITALIZADA",
+      "dete_time": "2026-08-12 17:12:33",
+      "city_name": "PALMIRA"
+    },
+    {
+      "tagid": 659204500865,
+      "type_state_name": "GESTIONADA",
+      "dete_time": "2026-08-12 17:08:22",
+      "city_name": "PALMIRA"
+    },
+    {
+      "tagid": 659204500865,
+      "type_state_name": "DISTRIBUCION",
+      "dete_time": "2026-07-22 15:01:35",
+      "city_name": "PALMIRA"
+    },
+    {
+      "tagid": 659204500865,
+      "type_state_name": "INGRESADA -VALIDADA",
+      "dete_time": "2026-07-21 10:03:56",
+      "city_name": "CALI"
+    }
+  ]
+}

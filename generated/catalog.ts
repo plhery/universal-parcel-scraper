@@ -48798,6 +48798,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pronto-envios": {
+    "displayName": "Pronto Envíos",
+    "color": "#e37724",
+    "aliases": [
+      "Pronto Envios",
+      "Pronto Envíos Logística",
+      "Pronto Envíos Logística S.A.S."
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pronto-envios",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.prontoenvios.com.co/consulta_fivepostal.php",
+    "trackingUrlTemplate": "https://prontoenvios.fivesoftcolombia.com/tag_detail_v1.html?d={trackingNumber}",
+    "trackingSearchUrl": "https://www.prontoenvios.com.co/consulta_fivepostal.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pronto-lanka": {
     "displayName": "Pronto Lanka",
     "color": "#ec1b24",
@@ -68085,6 +68109,7 @@ export const CARRIER_IDS = [
   "profit-fields",
   "promed-delivery",
   "prompt-xpress",
+  "pronto-envios",
   "pronto-lanka",
   "proships",
   "pts-worldwide-express",
@@ -70006,6 +70031,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "profit-fields": ["profit-fields-1","profit-fields-2"],
   "promed-delivery": [],
   "prompt-xpress": ["prompt-xpress-1"],
+  "pronto-envios": [],
   "pronto-lanka": [],
   "proships": [],
   "pts-worldwide-express": [],
