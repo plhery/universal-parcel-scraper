@@ -386,6 +386,13 @@ describe('TopYou status vocabulary', () => {
     for (const [wording, stage] of relayed) expect(topyouStage('20', wording), wording).toEqual({ stage, source: 'carrier_map' });
   });
 
+  it('reads the Russian delivering partner’s hand-overs after the customs as steps in transit, not an acceptance', () => {
+    for (const wording of ['Released by custom house and handed over to delivery', 'Handed over for delivery within Russia']) {
+      expect(topyouStage('20', wording), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    }
+    expect(topyouStage('20', 'Handed over to the customs')).toEqual({ stage: 'customs', source: 'carrier_map' });
+  });
+
   it('lets a delivered or returned code settle a scan, then the shared rules, then the code', () => {
     expect(topyouStage('30', 'Synthetic note')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(topyouStage('40', 'Out for delivery')).toEqual({ stage: 'returned', source: 'carrier_map' });
