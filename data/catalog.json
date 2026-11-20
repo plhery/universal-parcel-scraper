@@ -49603,6 +49603,28 @@
       }
     ]
   },
+  "rm-logistics": {
+    "displayName": "RM Logistics",
+    "color": "#8e8e93",
+    "aliases": [
+      "荣贸",
+      "荣贸供应链",
+      "金华市荣贸供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "rm-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "roadie": {
     "displayName": "Roadie",
     "color": "#76cccd",

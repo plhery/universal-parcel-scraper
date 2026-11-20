@@ -656,6 +656,7 @@ import { adapter as rhenusIt } from '../carriers/rhenus-it/adapter.js';
 import { adapter as rincos } from '../carriers/rincos/adapter.js';
 import { adapter as rivigo } from '../carriers/rivigo/adapter.js';
 import { adapter as rlCarriers } from '../carriers/rl-carriers/adapter.js';
+import { adapter as rmLogistics } from '../carriers/rm-logistics/adapter.js';
 import { adapter as roadie } from '../carriers/roadie/adapter.js';
 import { adapter as roadrunner } from '../carriers/roadrunner/adapter.js';
 import { adapter as rocketShipping } from '../carriers/rocket-shipping/adapter.js';
@@ -1554,6 +1555,7 @@ export const REGISTRY: RegistryDefinition = {
     "rincos": rincos,
     "rivigo": rivigo,
     "rl-carriers": rlCarriers,
+    "rm-logistics": rmLogistics,
     "roadie": roadie,
     "roadrunner": roadrunner,
     "rocket-shipping": rocketShipping,
@@ -3161,6 +3163,7 @@ export const REGISTRY: RegistryDefinition = {
     "rincos": "rincos",
     "rivigo": "rivigo",
     "rl-carriers": "rl-carriers",
+    "rm-logistics": "rm-logistics",
     "roadie": "roadie",
     "roadrunner": "roadrunner",
     "rocket-shipping": "rocket-shipping",

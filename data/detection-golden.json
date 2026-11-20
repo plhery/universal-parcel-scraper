@@ -91121,6 +91121,12 @@
     ]
   },
   {
+    "input": "FK0000000668246TM",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "FKS08VTSC6GOY",
     "carrier": "cycloon",
     "confidence": "high",

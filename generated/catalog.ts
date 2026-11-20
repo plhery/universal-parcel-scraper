@@ -49607,6 +49607,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "rm-logistics": {
+    "displayName": "RM Logistics",
+    "color": "#8e8e93",
+    "aliases": [
+      "荣贸",
+      "荣贸供应链",
+      "金华市荣贸供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "rm-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "roadie": {
     "displayName": "Roadie",
     "color": "#76cccd",
@@ -66849,6 +66871,7 @@ export const CARRIER_IDS = [
   "rincos",
   "rivigo",
   "rl-carriers",
+  "rm-logistics",
   "roadie",
   "roadrunner",
   "rocket-shipping",
@@ -68720,6 +68743,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rincos": [],
   "rivigo": [],
   "rl-carriers": ["rl-carriers-1","rl-carriers-2","rl-carriers-3"],
+  "rm-logistics": [],
   "roadie": ["roadie-1","roadie-2"],
   "roadrunner": [],
   "rocket-shipping": [],

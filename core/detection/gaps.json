@@ -5528,5 +5528,10 @@
     "carrier": "hua-express",
     "kind": "open",
     "reason": "HUA Express numbers are HUA, nine digits and two letters; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "rm-logistics",
+    "kind": "open",
+    "reason": "RM Logistics numbers seen carry a customer's prefix, thirteen digits and TM; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   }
 ]
