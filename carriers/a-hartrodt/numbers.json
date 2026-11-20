@@ -1,0 +1,22 @@
+{
+  "carrier": "a-hartrodt",
+  "records": [
+    {
+      "number": "SHPT2608285747",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/a-hartrodt-nederland-b-v",
+        "date": "2026-09-21",
+        "dateKind": "public import record run date",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "House bill for a. hartrodt Nederland's Rotterdam–Norfolk shipment",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["nova-poshta"] },
+      "note": "The carrier's guest search and detailed job page both echo this house bill, and the details include dated shipment history."
+    }
+  ]
+}

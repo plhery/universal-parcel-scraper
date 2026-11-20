@@ -1,0 +1,52 @@
+{
+  "id": "ncm-capar",
+  "displayName": "NCM Çapar",
+  "aliases": [
+    "NCM Capar",
+    "NCM Çapar Kuryer"
+  ],
+  "region": {
+    "countries": [
+      "AZ"
+    ]
+  },
+  "brand": {
+    "color": "#1663e0"
+  },
+  "selectable": true,
+  "timezone": "Asia/Baku",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ncm-capar",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "searchUrl": "https://ncmcapar.az/az/tracking",
+    "canaryUrl": "https://ncmcapar.az/az/tracking",
+    "shows": [
+      "status",
+      "history",
+      "route",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "route",
+      "recipient_name"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,147 @@
+{
+  "result": {
+    "order": {
+      "foundOrder": true,
+      "orderLineId": 118684634
+    },
+    "parcelCount": 1,
+    "parcels": {
+      "H00MTA0007127809": {
+        "delivered": true,
+        "events": [
+          {
+            "description": "Item delivered",
+            "detail": "Location: BRSI394",
+            "timestamp": "2023-11-22T10:08:21",
+            "stage": "Delivered",
+            "type": "Delivered",
+            "code": "97664C9B"
+          },
+          {
+            "description": "Your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days.",
+            "detail": "Location: BRSI394",
+            "timestamp": "2023-11-22T04:33:16",
+            "stage": "AtDepot",
+            "type": "At Depot",
+            "code": "F71F5093"
+          },
+          {
+            "description": "Item has been sorted",
+            "detail": "Location: BRSI215",
+            "timestamp": "2023-11-21T23:01:14",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "9E1D3F28"
+          },
+          {
+            "description": "Departure to distribution network",
+            "detail": "Location: Brazil",
+            "timestamp": "2023-11-21T07:00:08",
+            "stage": "AtDepot",
+            "type": "At Depot",
+            "code": "F71F5093"
+          },
+          {
+            "description": "Customs cleared : authorized",
+            "detail": "Location: Brazil",
+            "timestamp": "2023-11-21T06:59:12",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "58D03FEA"
+          },
+          {
+            "description": "Customs",
+            "detail": "Location: Brazil",
+            "timestamp": "2023-11-17T17:41:07",
+            "stage": "AtDepot",
+            "type": "At Depot",
+            "code": "F71F5093"
+          },
+          {
+            "description": "Item presented at the Customs",
+            "detail": "Location: Brazil",
+            "timestamp": "2023-10-23T07:14:11",
+            "stage": "AtDepot",
+            "type": "At Depot",
+            "code": "F71F5093"
+          },
+          {
+            "description": "Arrival from abroad",
+            "detail": "Location: Brazil",
+            "timestamp": "2023-10-23T07:13:05",
+            "stage": "AtDepot",
+            "type": "At Depot",
+            "code": "F71F5093"
+          },
+          {
+            "description": "Departure to country of destination",
+            "detail": "Location: Great Britain",
+            "timestamp": "2023-10-16T03:37:03",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "9E1D3F28"
+          },
+          {
+            "description": "Received at international processing center",
+            "detail": null,
+            "timestamp": "2023-10-14T08:46:26",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "EDBE6B15"
+          },
+          {
+            "description": "Crossing border and in transit to carrier hub",
+            "detail": "Location: Feltham, SRY",
+            "timestamp": "2023-10-14T08:46:18",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "57FB2B4A"
+          },
+          {
+            "description": "Transmitted customs information",
+            "detail": "Location: Feltham, SRY",
+            "timestamp": "2023-10-14T08:44:52",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "FA1F1BD7"
+          },
+          {
+            "description": "Customs cleared",
+            "detail": "Location: Feltham, SRY",
+            "timestamp": "2023-10-14T08:44:52",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "58D03FEA"
+          },
+          {
+            "description": "Grouped when pallet scanned to crossing (POSTAL #23)",
+            "detail": "Location: Feltham, SRY",
+            "timestamp": "2023-10-14T08:44:45",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "A9B636A0"
+          },
+          {
+            "description": "Scanned at Landmark crossdock facility",
+            "detail": "Location: Feltham, SRY",
+            "timestamp": "2023-10-14T07:58:29",
+            "stage": "InTransit",
+            "type": "Left Origin Country",
+            "code": "98DDAC48"
+          },
+          {
+            "description": "Processed",
+            "detail": "Location: Feltham, SRY",
+            "timestamp": "2023-10-14T07:57:01",
+            "stage": "InTransit",
+            "type": "In Transit",
+            "code": "14C2EE78"
+          }
+        ]
+      }
+    }
+  },
+  "success": true,
+  "error": null,
+  "validationErrors": {}
+}

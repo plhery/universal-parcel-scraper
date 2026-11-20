@@ -48,6 +48,12 @@
     "reason": "Nine digits are shared by several carriers and nothing in the number points to A. Duie Pyle."
   },
   {
+    "carrier": "a-hartrodt",
+    "pattern": "^SHPT\\d{10}$",
+    "kind": "open",
+    "reason": "The public a. hartrodt tracker confirms a house bill beginning with SHPT. The adapter tracks explicitly selected references."
+  },
+  {
     "carrier": "a-tu-hora-express",
     "pattern": "^00\\d{8}$",
     "kind": "by_design",
@@ -100,6 +106,12 @@
     "pattern": "^A\\d{9}$",
     "kind": "collision",
     "reason": "AEX guías of the A series fall inside Allegro One's high-confidence A0 shape, and nothing else in the number names AEX."
+  },
+  {
+    "carrier": "air-europa-cargo",
+    "pattern": "^996/?\\d{8}$",
+    "kind": "open",
+    "reason": "Air Europa Cargo confirms 996 master air waybills with eight serial digits. Tracking is available by explicit selection."
   },
   {
     "carrier": "air-greenland",
@@ -1586,6 +1598,12 @@
     "reason": "Ten bare digits are printed by many carriers, so GEL Sendungsnummern stay unclaimed."
   },
   {
+    "carrier": "genei",
+    "pattern": "^[A-Z0-9]{8}$",
+    "kind": "open",
+    "reason": "Genei’s guest API confirms two eight-character references. The shape is shared and Genei is available by explicit selection."
+  },
+  {
     "carrier": "ghn",
     "pattern": "^G[A-Z0-9]{7}$",
     "kind": "by_design",
@@ -2536,6 +2554,18 @@
     "reason": "Eleven digits are shared by several carriers and nothing in the number points to Nationex."
   },
   {
+    "carrier": "navlungo",
+    "pattern": "^[A-Z0-9]{12}$",
+    "kind": "open",
+    "reason": "Navlungo’s domestic tracker confirms both 12-character delivery numbers. Select Navlungo explicitly for this shared shape."
+  },
+  {
+    "carrier": "ncm-capar",
+    "pattern": "^NCM-?\\d{9}$",
+    "kind": "open",
+    "reason": "The carrier documents the NCM prefix and its public example resolves through explicit selection."
+  },
+  {
     "carrier": "ncs-courier",
     "pattern": "^\\d{12}$",
     "kind": "collision",
@@ -2770,6 +2800,12 @@
     "reason": "Only two numbers of this layout were seen, both in 2021, too few to show that OSM Worldwide alone prints it."
   },
   {
+    "carrier": "ots-astracon",
+    "pattern": "^(?:ASQR)?SE\\d{9}$",
+    "kind": "open",
+    "reason": "Public house bills resolve with explicit selection. ASQR is an external customs carrier code and the bare SE house shape has no demonstrated exclusive ownership."
+  },
+  {
     "carrier": "overseas-express",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -2809,6 +2845,12 @@
     "pattern": "^\\d{6}$",
     "kind": "by_design",
     "reason": "A Pannon XP manual waybill's six printed digits are a short digit run many carriers share."
+  },
+  {
+    "carrier": "parcel2go",
+    "pattern": "^P2G\\d{9}$",
+    "kind": "open",
+    "reason": "Parcel2Go’s guest tracking confirms a P2G reference with nine digits. The adapter is available by explicit selection."
   },
   {
     "carrier": "parcelforce",

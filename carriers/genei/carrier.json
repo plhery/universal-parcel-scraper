@@ -1,0 +1,61 @@
+{
+  "id": "genei",
+  "displayName": "Genei",
+  "aliases": [
+    "Genei.es",
+    "Genei Global Logistic"
+  ],
+  "region": {
+    "countries": [
+      "ES"
+    ]
+  },
+  "brand": {
+    "color": "#214fc6"
+  },
+  "selectable": true,
+  "timezone": "Europe/Madrid",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "genei",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://www.genei.es/seguimiento-envios/?tracking={trackingNumber}",
+    "searchUrl": "https://www.genei.es/seguimiento-envios/",
+    "canaryUrl": "https://www.genei.es/seguimiento-envios/",
+    "shows": [
+      "status",
+      "history",
+      "partner",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "partner"
+    ],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.genei.es",
+        "genei.es"
+      ],
+      "path": "^/seguimiento-envios/?$",
+      "query": "(?:^|&)tracking=([A-Z0-9]{8})(?:&|$)",
+      "detectFromNumber": false
+    }
+  ],
+  "detection": []
+}

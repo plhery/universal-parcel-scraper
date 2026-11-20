@@ -1,3 +1,10 @@
+import { statusMap as aHartrodt } from '../../carriers/a-hartrodt/status.js';
+import { statusMap as airEuropaCargo } from '../../carriers/air-europa-cargo/status.js';
+import { statusMap as navlungo } from '../../carriers/navlungo/status.js';
+import { statusMap as genei } from '../../carriers/genei/status.js';
+import { statusMap as ncmCapar } from '../../carriers/ncm-capar/status.js';
+import { statusMap as otsAstracon } from '../../carriers/ots-astracon/status.js';
+import { statusMap as parcel2go } from '../../carriers/parcel2go/status.js';
 import { statusMap as bobGo } from '../../carriers/bob-go/status.js';
 import { statusMap as dypaq } from '../../carriers/dypaq/status.js';
 import { statusMap as navex } from '../../carriers/navex/status.js';
@@ -1077,6 +1084,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
   'bob-go': bobGo, dypaq, navex,
+  'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ncm-capar': ncmCapar, 'ots-astracon': otsAstracon,
 };
 
 /** The carrier the app files the universal providers' scans under. */

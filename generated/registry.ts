@@ -9,6 +9,7 @@ import { adapter as carrier4sides } from '../carriers/4sides/adapter.js';
 import { adapter as carrier5post } from '../carriers/5post/adapter.js';
 import { adapter as carrier99minutos } from '../carriers/99minutos/adapter.js';
 import { adapter as aDuiePyle } from '../carriers/a-duie-pyle/adapter.js';
+import { adapter as aHartrodt } from '../carriers/a-hartrodt/adapter.js';
 import { adapter as aTuHoraExpress } from '../carriers/a-tu-hora-express/adapter.js';
 import { adapter as a1Post } from '../carriers/a1-post/adapter.js';
 import { adapter as aaaCooper } from '../carriers/aaa-cooper/adapter.js';
@@ -18,6 +19,7 @@ import { adapter as aciExpressKr } from '../carriers/aci-express-kr/adapter.js';
 import { adapter as acsCourier } from '../carriers/acs-courier/adapter.js';
 import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
 import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
+import { adapter as airEuropaCargo } from '../carriers/air-europa-cargo/adapter.js';
 import { adapter as airGreenland } from '../carriers/air-greenland/adapter.js';
 import { adapter as airpakExpress } from '../carriers/airpak-express/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
@@ -322,6 +324,7 @@ import { adapter as gbsBroker } from '../carriers/gbs-broker/adapter.js';
 import { adapter as gdex } from '../carriers/gdex/adapter.js';
 import { adapter as gebruederWeiss } from '../carriers/gebrueder-weiss/adapter.js';
 import { adapter as geis } from '../carriers/geis/adapter.js';
+import { adapter as genei } from '../carriers/genei/adapter.js';
 import { adapter as genikiTaxydromiki } from '../carriers/geniki-taxydromiki/adapter.js';
 import { adapter as geodis } from '../carriers/geodis/adapter.js';
 import { adapter as geodisPl } from '../carriers/geodis-pl/adapter.js';
@@ -543,6 +546,8 @@ import { adapter as nacex } from '../carriers/nacex/adapter.js';
 import { adapter as naqel } from '../carriers/naqel/adapter.js';
 import { adapter as nationex } from '../carriers/nationex/adapter.js';
 import { adapter as navex } from '../carriers/navex/adapter.js';
+import { adapter as navlungo } from '../carriers/navlungo/adapter.js';
+import { adapter as ncmCapar } from '../carriers/ncm-capar/adapter.js';
 import { adapter as neighbourExpress } from '../carriers/neighbour-express/adapter.js';
 import { adapter as nepalPost } from '../carriers/nepal-post/adapter.js';
 import { adapter as nextLevelDelivery } from '../carriers/next-level-delivery/adapter.js';
@@ -578,6 +583,7 @@ import { adapter as ontrac } from '../carriers/ontrac/adapter.js';
 import { adapter as optimaOvernight } from '../carriers/optima-overnight/adapter.js';
 import { adapter as orlenPaczka } from '../carriers/orlen-paczka/adapter.js';
 import { adapter as osmWorldwide } from '../carriers/osm-worldwide/adapter.js';
+import { adapter as otsAstracon } from '../carriers/ots-astracon/adapter.js';
 import { adapter as overseasExpress } from '../carriers/overseas-express/adapter.js';
 import { adapter as ozonLogistics } from '../carriers/ozon-logistics/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
@@ -591,6 +597,7 @@ import { adapter as palletways } from '../carriers/palletways/adapter.js';
 import { adapter as panduLogistics } from '../carriers/pandu-logistics/adapter.js';
 import { adapter as paperfly } from '../carriers/paperfly/adapter.js';
 import { adapter as paquetexpress } from '../carriers/paquetexpress/adapter.js';
+import { adapter as parcel2go } from '../carriers/parcel2go/adapter.js';
 import { adapter as parcelabc } from '../carriers/parcelabc/adapter.js';
 import { adapter as parcelpoint } from '../carriers/parcelpoint/adapter.js';
 import { adapter as pasarex } from '../carriers/pasarex/adapter.js';
@@ -932,6 +939,7 @@ export const REGISTRY: RegistryDefinition = {
     "5post": carrier5post,
     "99minutos": carrier99minutos,
     "a-duie-pyle": aDuiePyle,
+    "a-hartrodt": aHartrodt,
     "a-tu-hora-express": aTuHoraExpress,
     "a1-post": a1Post,
     "aaa-cooper": aaaCooper,
@@ -941,6 +949,7 @@ export const REGISTRY: RegistryDefinition = {
     "acs-courier": acsCourier,
     "aeropost": aeropost,
     "aex-paraguay": aexParaguay,
+    "air-europa-cargo": airEuropaCargo,
     "air-greenland": airGreenland,
     "airpak-express": airpakExpress,
     "airspeed": airspeed,
@@ -1245,6 +1254,7 @@ export const REGISTRY: RegistryDefinition = {
     "gdex": gdex,
     "gebrueder-weiss": gebruederWeiss,
     "geis": geis,
+    "genei": genei,
     "geniki-taxydromiki": genikiTaxydromiki,
     "geodis": geodis,
     "geodis-pl": geodisPl,
@@ -1466,6 +1476,8 @@ export const REGISTRY: RegistryDefinition = {
     "naqel": naqel,
     "nationex": nationex,
     "navex": navex,
+    "navlungo": navlungo,
+    "ncm-capar": ncmCapar,
     "neighbour-express": neighbourExpress,
     "nepal-post": nepalPost,
     "next-level-delivery": nextLevelDelivery,
@@ -1501,6 +1513,7 @@ export const REGISTRY: RegistryDefinition = {
     "optima-overnight": optimaOvernight,
     "orlen-paczka": orlenPaczka,
     "osm-worldwide": osmWorldwide,
+    "ots-astracon": otsAstracon,
     "overseas-express": overseasExpress,
     "ozon-logistics": ozonLogistics,
     "paack": paack,
@@ -1514,6 +1527,7 @@ export const REGISTRY: RegistryDefinition = {
     "pandu-logistics": panduLogistics,
     "paperfly": paperfly,
     "paquetexpress": paquetexpress,
+    "parcel2go": parcel2go,
     "parcelabc": parcelabc,
     "parcelpoint": parcelpoint,
     "pasarex": pasarex,
@@ -1863,6 +1877,7 @@ export const REGISTRY: RegistryDefinition = {
     "7hours-express": "universal",
     "99minutos": "99minutos",
     "a-duie-pyle": "a-duie-pyle",
+    "a-hartrodt": "a-hartrodt",
     "a-tu-hora-express": "a-tu-hora-express",
     "a1-post": "a1-post",
     "a2b-express": "universal",
@@ -1895,6 +1910,7 @@ export const REGISTRY: RegistryDefinition = {
     "ahl-courier": "universal",
     "aics": "universal",
     "aiolos-courier": "universal",
+    "air-europa-cargo": "air-europa-cargo",
     "air-greenland": "air-greenland",
     "air-star-xpress": "universal",
     "airmee": "universal",
@@ -2517,6 +2533,7 @@ export const REGISTRY: RegistryDefinition = {
     "gebrueder-weiss": "gebrueder-weiss",
     "geis": "geis",
     "gel-express": "universal",
+    "genei": "genei",
     "geniki-taxydromiki": "geniki-taxydromiki",
     "geodis": "geodis",
     "geodis-pl": "geodis-pl",
@@ -2973,6 +2990,8 @@ export const REGISTRY: RegistryDefinition = {
     "nationex": "nationex",
     "navata": "universal",
     "navex": "navex",
+    "navlungo": "navlungo",
+    "ncm-capar": "ncm-capar",
     "ncs-courier": "universal",
     "nege": "universal",
     "neighbour-express": "neighbour-express",
@@ -3036,6 +3055,7 @@ export const REGISTRY: RegistryDefinition = {
     "orian": "universal",
     "orlen-paczka": "orlen-paczka",
     "osm-worldwide": "osm-worldwide",
+    "ots-astracon": "ots-astracon",
     "ots-chile": "universal",
     "overnite": "universal",
     "overseas-express": "overseas-express",
@@ -3068,6 +3088,7 @@ export const REGISTRY: RegistryDefinition = {
     "paquetexpress": "paquetexpress",
     "paquexpress-urgente": "universal",
     "parcel-one": "universal",
+    "parcel2go": "parcel2go",
     "parcelabc": "parcelabc",
     "parcelforce": "royal-mail",
     "parceljet": "universal",

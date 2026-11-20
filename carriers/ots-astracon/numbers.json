@@ -1,0 +1,56 @@
+{
+  "carrier": "ots-astracon",
+  "records": [
+    {
+      "number": "SE260401571",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/o-t-s-astracon-internat-air-sea",
+        "date": "2026-11-05",
+        "dateKind": "public manifest arrival date",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "O.T.S. ASTRACON house bill, shown separately from its master bill and ASQR carrier code",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["gls-it"] },
+      "note": "The tracker echoed this number and returned dated Rotterdam export scans."
+    },
+    {
+      "number": "ASQRSE260402290",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/germany/north-rhine-westphalia/frechen",
+        "date": "2026-10-27",
+        "dateKind": "public import record run date",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "O.T.S. ASTRACON house bill with the customs carrier code ASQR attached",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The native tracker recognized SE260402290 without the ASQR prefix and reported delivery after the Charleston arrival."
+    },
+    {
+      "number": "ASQRSE260399713",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.zauba.com/elkamet-inc-report-gqqccd0wcp1a",
+        "date": "2026-09-22",
+        "dateKind": "public manifest arrival date",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "O.T.S. ASTRACON house bill with the customs carrier code ASQR attached",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The native tracker recognized SE260399713 without the ASQR prefix and returned depot, vessel, customs and delivery scans."
+    }
+  ]
+}

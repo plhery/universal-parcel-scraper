@@ -1,0 +1,76 @@
+{
+  "carrier": "navlungo",
+  "entries": [
+    {
+      "code": "1",
+      "wording": "Gönderi Oluşturuldu.(shopify)",
+      "stage": "registered",
+      "language": "tr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "1",
+      "wording": "Gönderi Oluşturuldu.(API)",
+      "stage": "registered",
+      "language": "tr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "16",
+      "wording": "Teslim Alındı",
+      "stage": "accepted",
+      "language": "tr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "17",
+      "wording": "Transfer Aşamasında",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "4",
+      "wording": "Dağıtıma Çıktı",
+      "stage": "out_for_delivery",
+      "language": "tr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "3",
+      "wording": "Teslimat Biriminde",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "21",
+      "wording": "Depoya İade Edildi",
+      "stage": "exception",
+      "language": "tr",
+      "confirmedBy": "live",
+      "note": "The parcel reached a warehouse on its return journey. This does not confirm receipt by the sender."
+    },
+    {
+      "code": "21",
+      "wording": "Returned to Warehouse",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "2",
+      "wording": "Teslim Edildi",
+      "stage": "delivered",
+      "language": "tr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "2",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}

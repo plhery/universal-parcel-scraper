@@ -6256,6 +6256,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "a-hartrodt": {
+    "displayName": "a. hartrodt",
+    "color": "#163d72",
+    "aliases": [
+      "A Hartrodt",
+      "a. hartrodt GmbH & Co. KG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "a-hartrodt"
+    },
+    "canaryUrl": "https://ttsecure.hartrodt.com/pserv/tt/open",
+    "trackingSearchUrl": "https://ttsecure.hartrodt.com/pserv/tt/open?sep=1",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "a-tu-hora-express": {
     "displayName": "A Tu Hora Express",
     "color": "#1d2a84",
@@ -7317,6 +7338,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "air-europa-cargo": {
+    "displayName": "Air Europa Cargo",
+    "color": "#005699",
+    "aliases": [
+      "Air Europa Air Cargo",
+      "Air Europa Líneas Aéreas Cargo",
+      "UX Cargo"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-europa-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.uxtracking.com/tracking.asp",
+    "trackingSearchUrl": "https://www.uxtracking.com/tracking.asp",
+    "linkRules": [],
     "detectionRules": []
   },
   "air-greenland": {
@@ -27433,6 +27477,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "genei": {
+    "displayName": "Genei",
+    "color": "#214fc6",
+    "aliases": [
+      "Genei.es",
+      "Genei Global Logistic"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "genei"
+    },
+    "canaryUrl": "https://www.genei.es/seguimiento-envios/",
+    "trackingUrlTemplate": "https://www.genei.es/seguimiento-envios/?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://www.genei.es/seguimiento-envios/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.genei.es",
+          "genei.es"
+        ],
+        "path": "^/seguimiento-envios/?$",
+        "query": "(?:^|&)tracking=([A-Z0-9]{8})(?:&|$)",
+        "detectFromNumber": false
+      }
+    ],
+    "detectionRules": []
+  },
   "geniki-taxydromiki": {
     "displayName": "Geniki Taxydromiki",
     "color": "#004fa0",
@@ -41736,6 +41812,59 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "navlungo": {
+    "displayName": "Navlungo",
+    "color": "#1925a8",
+    "aliases": [
+      "Navlungo Domestic",
+      "Navlungo Yurtiçi"
+    ],
+    "countries": [
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Istanbul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "navlungo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://domestic-track.navlungo.com/en/",
+    "trackingUrlTemplate": "https://domestic-track.navlungo.com/en/check/{trackingNumber}/",
+    "trackingSearchUrl": "https://domestic-track.navlungo.com/en/",
+    "linkRules": [
+      {
+        "domains": [
+          "domestic-track.navlungo.com"
+        ],
+        "path": "^/(?:en|tr)/check/([A-Z0-9]{12})/?$",
+        "detectFromNumber": false
+      }
+    ],
+    "detectionRules": []
+  },
+  "ncm-capar": {
+    "displayName": "NCM Çapar",
+    "color": "#1663e0",
+    "aliases": [
+      "NCM Capar",
+      "NCM Çapar Kuryer"
+    ],
+    "countries": [
+      "AZ"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Baku",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ncm-capar",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ncmcapar.az/az/tracking",
+    "trackingSearchUrl": "https://ncmcapar.az/az/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ncs-courier": {
     "displayName": "NCS Kurir",
     "color": "#243f80",
@@ -43905,6 +44034,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ots-astracon": {
+    "displayName": "O.T.S. ASTRACON",
+    "color": "#00427a",
+    "aliases": [
+      "OTS Astracon",
+      "O.T.S. Astracon International Air + Sea Forwarder",
+      "ASQR"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ots-astracon"
+    },
+    "canaryUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "trackingSearchUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ots-chile": {
     "displayName": "OTS Chile",
     "color": "#ffc100",
@@ -44884,6 +45035,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "params": [
           "trackno"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "parcel2go": {
+    "displayName": "Parcel2Go",
+    "color": "#015db9",
+    "aliases": [
+      "Parcel2Go.com"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "parcel2go",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.parcel2go.com/tracking",
+    "trackingUrlTemplate": "https://www.parcel2go.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.parcel2go.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.parcel2go.com",
+          "parcel2go.com"
+        ],
+        "path": "^/tracking/(P2G\\d{8,9})/?$"
       }
     ],
     "detectionRules": []
@@ -66162,6 +66343,7 @@ export const CARRIER_IDS = [
   "7hours-express",
   "99minutos",
   "a-duie-pyle",
+  "a-hartrodt",
   "a-tu-hora-express",
   "a1-post",
   "a2b-express",
@@ -66194,6 +66376,7 @@ export const CARRIER_IDS = [
   "ahl-courier",
   "aics",
   "aiolos-courier",
+  "air-europa-cargo",
   "air-greenland",
   "air-star-xpress",
   "airmee",
@@ -66776,6 +66959,7 @@ export const CARRIER_IDS = [
   "gebrueder-weiss",
   "geis",
   "gel-express",
+  "genei",
   "geniki-taxydromiki",
   "geodis-pl",
   "georgian-post",
@@ -67211,6 +67395,8 @@ export const CARRIER_IDS = [
   "nationex",
   "navata",
   "navex",
+  "navlungo",
+  "ncm-capar",
   "ncs-courier",
   "nege",
   "neighbour-express",
@@ -67270,6 +67456,7 @@ export const CARRIER_IDS = [
   "orian",
   "orlen-paczka",
   "osm-worldwide",
+  "ots-astracon",
   "ots-chile",
   "overnite",
   "overseas-express",
@@ -67300,6 +67487,7 @@ export const CARRIER_IDS = [
   "paquetexpress",
   "paquexpress-urgente",
   "parcel-one",
+  "parcel2go",
   "parcelabc",
   "parceljet",
   "parcelpoint",
@@ -68055,6 +68243,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "7hours-express": [],
   "99minutos": [],
   "a-duie-pyle": [],
+  "a-hartrodt": [],
   "a-tu-hora-express": ["a-tu-hora-express-1","a-tu-hora-express-2"],
   "a1-post": [],
   "a2b-express": [],
@@ -68087,6 +68276,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ahl-courier": [],
   "aics": [],
   "aiolos-courier": [],
+  "air-europa-cargo": [],
   "air-greenland": [],
   "air-star-xpress": [],
   "airmee": [],
@@ -68669,6 +68859,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gebrueder-weiss": [],
   "geis": [],
   "gel-express": [],
+  "genei": [],
   "geniki-taxydromiki": ["geniki-taxydromiki-1"],
   "geodis-pl": ["geodis-pl-1"],
   "georgian-post": [],
@@ -69104,6 +69295,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nationex": [],
   "navata": [],
   "navex": [],
+  "navlungo": [],
+  "ncm-capar": [],
   "ncs-courier": [],
   "nege": [],
   "neighbour-express": [],
@@ -69163,6 +69356,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "orian": [],
   "orlen-paczka": ["orlen-paczka-1"],
   "osm-worldwide": ["osm-worldwide-1","osm-worldwide-2"],
+  "ots-astracon": [],
   "ots-chile": [],
   "overnite": [],
   "overseas-express": [],
@@ -69193,6 +69387,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
   "paquexpress-urgente": [],
   "parcel-one": [],
+  "parcel2go": [],
   "parcelabc": [],
   "parceljet": [],
   "parcelpoint": [],
