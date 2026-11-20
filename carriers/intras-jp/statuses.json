@@ -88,12 +88,14 @@
     {
       "wording": "입항적재화물목록 심사완료",
       "language": "ko",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "note": "A completed manifest review does not establish shipment movement."
     },
     {
       "wording": "입항적재화물목록 제출",
       "language": "ko",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "note": "A manifest submission does not establish shipment movement."
     }
   ]
 }

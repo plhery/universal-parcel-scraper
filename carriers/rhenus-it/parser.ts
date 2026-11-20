@@ -7,7 +7,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { PROVIDER } from './number.js';
-import { scanStages } from './status.js';
+import { statusMap } from './status.js';
 
 export { normalizeNumber, PROVIDER } from './number.js';
 
@@ -34,12 +34,12 @@ export function parseTracking(body: string, number: string): CarrierResult {
     const description = clean(content.children('.trk-text-bold').text(), 400);
     const date = zonedTime(content.children('.trk-text').text(), 'dd/MM/yyyy HH:mm', 'UTC');
     if (!description || !date) throw new SchemaError(PROVIDER, 'Rhenus Italia returned an incomplete scan');
-    const stage = scanStages.stage(null, normalizeStatusWording(description));
+    const stage = statusMap.stage(null, normalizeStatusWording(description));
     return { local_time: date.iso.slice(0, 19), description, ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
   });
   const newest = events[0];
   if (!newest) throw new NoHistoryError(PROVIDER);
-  const leading = leadingScan(events, scanStages);
+  const leading = leadingScan(events, statusMap);
   const stage = leading?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

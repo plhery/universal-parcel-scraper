@@ -847,6 +847,47 @@ import { statusMap as fxdcPost } from '../../carriers/fxdc-post/status.js';
 import { statusMap as frontierCa } from '../../carriers/frontier-ca/status.js';
 import { statusMap as expedico } from '../../carriers/expedico/status.js';
 import { statusMap as pdu } from '../../carriers/pdu/status.js';
+import { statusMap as airwaysCourierIn } from '../../carriers/airways-courier-in/status.js';
+import { statusMap as akisExpress } from '../../carriers/akis-express/status.js';
+import { statusMap as ambroExpress } from '../../carriers/ambro-express/status.js';
+import { statusMap as apgEcommerce } from '../../carriers/apg-ecommerce/status.js';
+import { statusMap as bigfootExpress } from '../../carriers/bigfoot-express/status.js';
+import { statusMap as bizCourier } from '../../carriers/biz-courier/status.js';
+import { statusMap as cvc } from '../../carriers/cvc/status.js';
+import { statusMap as diakinisis } from '../../carriers/diakinisis/status.js';
+import { statusMap as fasterShipe } from '../../carriers/faster-shipe/status.js';
+import { statusMap as firstFlightMe } from '../../carriers/first-flight-me/status.js';
+import { statusMap as gbsBroker } from '../../carriers/gbs-broker/status.js';
+import { statusMap as heronaExpress } from '../../carriers/herona-express/status.js';
+import { statusMap as hopEnvios } from '../../carriers/hop-envios/status.js';
+import { statusMap as interlogistica } from '../../carriers/interlogistica/status.js';
+import { statusMap as intertownTransport } from '../../carriers/intertown-transport/status.js';
+import { statusMap as intrasJp } from '../../carriers/intras-jp/status.js';
+import { statusMap as jasWorldwide } from '../../carriers/jas-worldwide/status.js';
+import { statusMap as kingKongExpress } from '../../carriers/king-kong-express/status.js';
+import { statusMap as lafasta } from '../../carriers/lafasta/status.js';
+import { statusMap as m24Logistics } from '../../carriers/m24-logistics/status.js';
+import { statusMap as moranTransportation } from '../../carriers/moran-transportation/status.js';
+import { statusMap as paxel } from '../../carriers/paxel/status.js';
+import { statusMap as pxcPacific } from '../../carriers/pxc-pacific/status.js';
+import { statusMap as rayspeed } from '../../carriers/rayspeed/status.js';
+import { statusMap as relayExpress } from '../../carriers/relay-express/status.js';
+import { statusMap as rhenusIt } from '../../carriers/rhenus-it/status.js';
+import { statusMap as shipgce } from '../../carriers/shipgce/status.js';
+import { statusMap as sway } from '../../carriers/sway/status.js';
+import { statusMap as tamex } from '../../carriers/tamex/status.js';
+import { statusMap as tigFreight } from '../../carriers/tig-freight/status.js';
+import { statusMap as useaExpress } from '../../carriers/usea-express/status.js';
+import { statusMap as velocityExpressIn } from '../../carriers/velocity-express-in/status.js';
+import { statusMap as wangjing3cq } from '../../carriers/wangjing-3cq/status.js';
+import { statusMap as xindus } from '../../carriers/xindus/status.js';
+import { statusMap as uofExpress } from '../../carriers/uof-express/status.js';
+import { statusMap as deliveryAuto } from '../../carriers/delivery-auto/status.js';
+import { statusMap as fastwayZa } from '../../carriers/fastway-za/status.js';
+import { statusMap as glsCa } from '../../carriers/gls-ca/status.js';
+import { statusMap as gollog } from '../../carriers/gollog/status.js';
+import { statusMap as lexTh } from '../../carriers/lex-th/status.js';
+import { statusMap as sentralCargo } from '../../carriers/sentral-cargo/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -901,6 +942,12 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   zheldor,
   'costco-logistics': costcoLogistics,
   'ftd-nz': ftdNz, 'best-freight-cn': bestFreightCn, lhtex, polonez, 'v-xpress': vXpress, airspeed, topdelivery, kargoturk, expedico, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa, pdu,
+  'airways-courier-in': airwaysCourierIn, 'akis-express': akisExpress, 'ambro-express': ambroExpress, 'apg-ecommerce': apgEcommerce, 'bigfoot-express': bigfootExpress, 'biz-courier': bizCourier, cvc,
+  diakinisis, 'faster-shipe': fasterShipe, 'first-flight-me': firstFlightMe, 'gbs-broker': gbsBroker, 'herona-express': heronaExpress, 'hop-envios': hopEnvios, interlogistica,
+  'intertown-transport': intertownTransport, 'intras-jp': intrasJp, 'jas-worldwide': jasWorldwide, 'king-kong-express': kingKongExpress, lafasta, 'm24-logistics': m24Logistics,
+  'moran-transportation': moranTransportation, paxel, 'pxc-pacific': pxcPacific, rayspeed, 'relay-express': relayExpress, 'rhenus-it': rhenusIt, shipgce, sway, tamex, 'tig-freight': tigFreight,
+  'usea-express': useaExpress, 'velocity-express-in': velocityExpressIn, 'wangjing-3cq': wangjing3cq, xindus, 'uof-express': uofExpress, 'delivery-auto': deliveryAuto, 'fastway-za': fastwayZa,
+  'gls-ca': glsCa, gollog, 'lex-th': lexTh, 'sentral-cargo': sentralCargo,
   'fez-delivery': fezDelivery,
   'junfeng-international': junfengInternational,
   'shipglobal-us': shipglobalUs,

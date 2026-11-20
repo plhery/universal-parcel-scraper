@@ -4,11 +4,9 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import statuses from './statuses.json' with { type: 'json' };
+import { gollogStage } from './status.js';
 
 export const PROVIDER = 'GOLLOG';
-
-const STAGES = new Map(statuses.entries.map(entry => [entry.code, entry.stage as Stage]));
 
 type Scan = CarrierEvent & { time: string; description: string; provider_code: string; stage?: Stage };
 
@@ -29,10 +27,6 @@ function readJson(body: string): unknown {
   }
 }
 
-function stageOf(code: string, homeDelivery: unknown): Stage | undefined {
-  return code === 'OND' && homeDelivery === false ? 'ready_for_pickup' : STAGES.get(code);
-}
-
 function readScans(rows: unknown[], homeDelivery: unknown): Scan[] {
   const events: Scan[] = [];
   for (const row of rows) {
@@ -44,7 +38,7 @@ function readScans(rows: unknown[], homeDelivery: unknown): Scan[] {
     const clock = explicitOffsetTime(row.date);
     const location = clean(row.station, 100);
     if (!code || !description || !clock) throw new SchemaError(PROVIDER, 'GOLLOG returned an incomplete scan');
-    const stage = stageOf(code, homeDelivery);
+    const stage = gollogStage(code, homeDelivery);
     events.push({ time: clock.iso, description, provider_code: code,
       ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) });
   }
@@ -77,7 +71,7 @@ export function parseGollogReply(body: string, number: string): CarrierResult {
   const wording = clean(summary.description, 400);
   const cancelled = shipment.isCancelled === true;
   if (!newest && !wording) throw new NoHistoryError(PROVIDER, 'GOLLOG lists the waybill without scans', { reason: 'listed' });
-  const stage = cancelled ? 'exception' : newest?.stage ?? stageOf(code, shipment.isHomeDelivery);
+  const stage = cancelled ? 'exception' : newest?.stage ?? gollogStage(code, shipment.isHomeDelivery);
   const time = (cancelled ? explicitOffsetTime(shipment.cancellationDateTime)?.iso : undefined) ?? newest?.time ?? null;
   const service = clean(shipment.header.serviceName, 120);
   const weight = shipment.header.weight;

@@ -1,4 +1,5 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 import evidence from './statuses.json' with { type: 'json' };
 
 /** Xindus's status codes, which every shipment, box and scan carries. */
@@ -16,3 +17,9 @@ export function xindusStage(code: string, wording: string): ClassifiedWording | 
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
+
+/** The map reads a scan's status code. The shared wording rules are not the carrier's map. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code) => (code ? xindusMappedStage(code) : undefined),
+  gaps: [],
+};

@@ -4,16 +4,10 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { BADGES, sentralStage } from './status.js';
 
 export const PROVIDER = 'Sentral Cargo';
 
-const BADGES = new Map<string, Stage>([['delivered', 'delivered'], ['on process', 'in_transit']]);
-const STATUS_PREFIXES: ReadonlyArray<readonly [RegExp, Stage]> = [
-  [/^Paket dipickup oleh kantor\b/i, 'accepted'],
-  [/^Paket sedang dikirimkan ke\b/i, 'out_for_delivery'],
-  [/^Antar sebagian\b/i, 'in_transit'],
-  [/^Paket (?:sudah diterima oleh kantor|dikirim dari)\b/i, 'in_transit'],
-];
 const DEPOT = /^Paket (?:sudah diterima oleh kantor|dipickup oleh kantor|dikirim dari) \[([^\]]+)\]/i;
 
 type Scan = CarrierEvent & { time: string; description: string; stage?: Stage };
@@ -56,7 +50,7 @@ export function parseSentralTracking(html: string, number: string): CarrierResul
     if (details.length !== 2 || !description || !wording || !clock) {
       throw new SchemaError(PROVIDER, 'Sentral Cargo returned an incomplete scan');
     }
-    const stage = STATUS_PREFIXES.find(([pattern]) => pattern.test(description))?.[1] ?? BADGES.get(wording);
+    const stage = sentralStage(description) ?? BADGES.get(wording);
     const location = clean(DEPOT.exec(description)?.[1], 140);
     return { time: clock.iso, description, ...(location ? { location } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };

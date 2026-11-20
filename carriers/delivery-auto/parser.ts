@@ -2,14 +2,11 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { languageStageStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
-import statuses from './statuses.json' with { type: 'json' };
+import { deliveryStage } from './status.js';
 
 export const PROVIDER = 'Delivery';
-
-const STAGES = new Map(statuses.entries.map(entry => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
 
 export function deliveryReceiptNumber(raw: string): string {
   const number = raw.length <= 32 ? raw.trim().replace(/^№\s*/, '').replace(/\s+/g, '') : '';
@@ -52,7 +49,7 @@ export function parseDeliveryReceipt(html: string, number: string): CarrierResul
     local = parsed.toFormat("yyyy-MM-dd'T'HH:mm:ss");
   }
 
-  const stage = STAGES.get(normalizeStatusWording(wording));
+  const stage = deliveryStage(wording);
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),

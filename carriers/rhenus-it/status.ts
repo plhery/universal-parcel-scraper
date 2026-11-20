@@ -5,7 +5,7 @@ import statuses from './statuses.json' with { type: 'json' };
 const stages = new Map<string, Stage>(statuses.entries.map(entry => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
 
 // The adapter uses this map when it reads its own history.
-export const scanStages: CarrierStatusMap = {
+export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => stages.get(wording),
   gaps: [],
 };

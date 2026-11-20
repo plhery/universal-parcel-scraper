@@ -3,15 +3,12 @@ import { InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { plannedEvent, type PlannedEvent } from '../../core/result/planned.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { countryCode } from '../../core/time/index.js';
 import { rtb56Entry, rtb56Scans, rtb56Text } from '../yypost/rtb56.js';
-import statuses from './statuses.json' with { type: 'json' };
+import { uofStage } from './status.js';
 
 export const PROVIDER = 'UOF International';
 
-const wordings = new Map(statuses.entries.flatMap((entry) =>
-  'stage' in entry && entry.stage ? [[normalizeStatusWording(entry.wording), entry.stage as Stage] as const] : []));
 const clearanceAppointment = /^通関予定(?:\s|[0-9]|$)/;
 
 export function normalizeUofNumber(raw: string): string {
@@ -23,7 +20,7 @@ export function normalizeUofNumber(raw: string): string {
 export function parseUof(payload: unknown, number: string): CarrierResult {
   const { item, rows } = rtb56Entry(payload, number, PROVIDER);
   const scans = rtb56Scans(rows, PROVIDER, (wording) => {
-    const stage = wordings.get(normalizeStatusWording(wording));
+    const stage = uofStage(wording);
     return stage ? { stage, source: 'carrier_map' } : null;
   }, { offsets: true });
   const events: CarrierEvent[] = [];

@@ -1,5 +1,5 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 // The receiving terminal's name follows the wording, as in "Received At Moran Fort Wayne"; the stage does not depend on it.
@@ -23,3 +23,12 @@ export function scanStage(wording: string): ClassifiedWording | null {
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
+
+/**
+ * The map reads a scan's wording. The shared wording rules are not the carrier's map, and the
+ * parser reads a truck en route after the round has started as the round.
+ */
+export const statusMap: CarrierStatusMap = {
+  stage: (_code, wording) => stageOf(wording),
+  gaps: [],
+};

@@ -1,6 +1,6 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
-import { escapeRegExp } from '../../core/transport/index.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { escapeRegExp } from '../../core/transport/text.js';
 import evidence from './statuses.json' with { type: 'json' };
 
 interface Entry { readonly code?: string; readonly wording: string; readonly stage: string }
@@ -35,3 +35,12 @@ export function pxcStage(code: string, wording: string): ClassifiedWording | nul
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
+
+/** The map reads a scan's code and wording as `pxcStage` does, without the shared wording rules. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => {
+    const staged = pxcStage(code ?? '', wording);
+    return staged?.source === 'carrier_map' ? staged.stage : undefined;
+  },
+  gaps: [],
+};

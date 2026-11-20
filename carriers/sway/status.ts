@@ -1,4 +1,5 @@
 import type { Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const states = new Map<string, Stage>([
   ['PENDING', 'registered'],
@@ -16,3 +17,9 @@ const states = new Map<string, Stage>([
 export function stageForScan(code: string): Stage | undefined {
   return states.get(code);
 }
+
+/** The map reads a scan's state code. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code) => (code ? stageForScan(code) : undefined),
+  gaps: [],
+};

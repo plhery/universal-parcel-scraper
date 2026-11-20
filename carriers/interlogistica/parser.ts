@@ -5,7 +5,7 @@ import { leadingScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
-import { scanStages } from './status.js';
+import { statusMap } from './status.js';
 
 export const PROVIDER = 'Interlogistica';
 
@@ -38,13 +38,13 @@ export function parseTracking(body: string, number: string): CarrierResult {
     const description = clean(cells.eq(1).text(), 500);
     const location = clean(cells.eq(2).text(), 120);
     if (cells.length !== 3 || !date || !description) throw new SchemaError(PROVIDER, 'Interlogistica returned an incomplete scan');
-    const stage = scanStages.stage(null, description);
+    const stage = statusMap.stage(null, description);
     return { local_time: date.iso.slice(0, 19), description, ...(location ? { location } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
   });
   const newest = events[0];
   if (!newest) throw new NoHistoryError(PROVIDER);
-  const leading = leadingScan(events, scanStages);
+  const leading = leadingScan(events, statusMap);
   const stage = leading?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

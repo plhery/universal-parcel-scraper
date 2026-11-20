@@ -1,7 +1,7 @@
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 // The adapter uses this map when it reads its own history.
-export const scanStages: CarrierStatusMap = {
+export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => {
     const text = normalizeStatusWording(wording);
     if (/^върната на изпращача(?:$|\s*-)/.test(text)) return 'returned';
@@ -9,5 +9,5 @@ export const scanStages: CarrierStatusMap = {
     if (text === 'постъпила в офис') return 'in_transit';
     return undefined;
   },
-  gaps: [{ wording: 'невъведен', note: 'The tracker records no operation for this scan.' }],
+  gaps: [{ wording: 'невъведен', note: 'An operation the carrier labels as not entered. The scan describes no movement.' }],
 };

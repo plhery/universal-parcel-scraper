@@ -1,4 +1,5 @@
 import type { Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 interface PaxelScan {
   description: string;
@@ -31,3 +32,9 @@ export function paxelScan(wording: string): PaxelScan {
   }
   return { description: 'Tracking update' };
 }
+
+/** The map reads the wording the parser keeps for a scan. */
+export const statusMap: CarrierStatusMap = {
+  stage: (_code, wording) => paxelScan(wording).stage,
+  gaps: [],
+};

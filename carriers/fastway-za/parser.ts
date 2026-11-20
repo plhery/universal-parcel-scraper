@@ -5,15 +5,13 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import statuses from './statuses.json' with { type: 'json' };
+import { fastwayCodeStage, HANDOVER_WORDING } from './status.js';
 
 export const PROVIDER = 'Fastway South Africa';
 export const CALLBACK = 'parcelTracking';
 
 const MAX_ROWS = 500;
 const CLOCK = 'yyyy-MM-dd HH:mm:ss';
-const STAGES = new Map(statuses.entries.map(entry => [entry.code, entry.stage as Stage]));
-const HANDOVER_WORDING = statuses.entries.find(entry => entry.code === 'YES')!.wording;
 
 export function fastwayLabel(raw: string): string {
   const number = raw.length <= 64 ? raw.replace(/\s+/g, '').toUpperCase() : '';
@@ -78,7 +76,7 @@ export function parseFastwayReply(body: string, number: string): CarrierResult {
   let inNetwork = false;
   const events: Scan[] = [...scans.values()].sort((a, b) => a.local_time.localeCompare(b.local_time)).map(scan => {
     const code = scan.provider_code;
-    let stage = STAGES.get(code);
+    let stage = fastwayCodeStage(code);
     // A pickup can also be an internal handoff after the parcel reaches a depot.
     if (code === 'PPP' && inNetwork) stage = 'in_transit';
     // A regional "signature obtained" scan alone can be the on-forwarder's receipt.

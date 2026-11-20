@@ -1,4 +1,5 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 import evidence from './statuses.json' with { type: 'json' };
 
 /** M24's parcel status ids, which every scan carries. */
@@ -11,3 +12,12 @@ export function m24Stage(code: string, wording: string): ClassifiedWording | nul
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
+
+/** The map reads a scan's status id. The shared wording rules are not the carrier's map. */
+export const statusMap: CarrierStatusMap = {
+  stage: (code, wording) => {
+    const staged = code ? m24Stage(code, wording) : null;
+    return staged?.source === 'carrier_map' ? staged.stage : undefined;
+  },
+  gaps: [],
+};

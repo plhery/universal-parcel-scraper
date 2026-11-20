@@ -1,5 +1,5 @@
 import type { Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const stages = new Map<string, Stage>([
   ['delivered', 'delivered'],
@@ -16,3 +16,9 @@ const stages = new Map<string, Stage>([
 export function apgEcommerceStage(wording: string): Stage | undefined {
   return stages.get(normalizeStatusWording(wording));
 }
+
+/** The map reads a scan's wording, which comes without a code. */
+export const statusMap: CarrierStatusMap = {
+  stage: (_code, wording) => apgEcommerceStage(wording),
+  gaps: [],
+};

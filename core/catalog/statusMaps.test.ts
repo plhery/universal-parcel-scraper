@@ -1,4 +1,4 @@
-import { readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -2099,6 +2099,35 @@ describe('declared status maps', () => {
       expect(answer('unknown', null, wording), wording).toEqual(gap);
     }
     expect(answer('unknown', null, 'Package Research Case Closed, Example City, ZZ, Example')).toEqual(unknown);
+  });
+
+  it.each([
+    'airways-courier-in', 'akis-express', 'ambro-express', 'apg-ecommerce', 'bigfoot-express', 'biz-courier', 'cvc', 'diakinisis',
+    'delivery-auto', 'faster-shipe', 'fastway-za', 'first-flight-me', 'gbs-broker', 'gls-ca', 'gollog', 'herona-express', 'hop-envios',
+    'interlogistica', 'intertown-transport', 'intras-jp', 'jas-worldwide', 'king-kong-express', 'lafasta', 'lex-th', 'm24-logistics',
+    'moran-transportation', 'pxc-pacific', 'rayspeed', 'relay-express', 'rhenus-it', 'sentral-cargo', 'shipgce', 'sway', 'tamex',
+    'tig-freight', 'uof-express', 'usea-express', 'velocity-express-in', 'wangjing-3cq', 'xindus',
+  ])('answers %s by the code and wording its statuses.json records', (carrier) => {
+    // A key the adapter stages by more than the scan keeps: GOLLOG's OND by the waybill's delivery type, Sentral Cargo's badges.
+    const elsewhere = new Set(['gollog OND Saiu para entrega', 'sentral-cargo  Delivered', 'sentral-cargo  On Process']);
+    const { entries } = JSON.parse(readFileSync(path.join(carriers, carrier, 'statuses.json'), 'utf8')) as
+      { entries: { code?: string; wording: string; stage?: string }[] };
+    for (const { code, wording, stage } of entries) {
+      const expected = elsewhere.has(`${carrier} ${code ?? ''} ${wording}`) ? unknown : stage ? mapped(stage) : gap;
+      expect(answer(carrier, code ?? null, wording), `${code ?? ''} ${wording}`).toEqual(expected);
+    }
+  });
+
+  it("answers Paxel by the wording its parser keeps, not by its help page's stages", () => {
+    expect(answer('paxel', null, 'Paketmu telah berhasil diantar oleh Hero')).toEqual(mapped('delivered'));
+    expect(answer('paxel', null, 'Hero akan mengantar paketmu!')).toEqual(mapped('pending'));
+    expect(answer('paxel', null, 'Tracking update')).toEqual(unknown);
+    expect(answer('paxel', null, 'Berada di kota transit')).toEqual(unknown);
+  });
+
+  it("answers Fastway's signature as a delivery only with the delivered wording", () => {
+    expect(answer('fastway-za', 'YES', 'Your parcel has been delivered and signed for.')).toEqual(mapped('delivered'));
+    expect(answer('fastway-za', 'YES', 'Signature obtained')).toEqual(gap);
   });
 
   it('registers every carrier that declares one', async () => {

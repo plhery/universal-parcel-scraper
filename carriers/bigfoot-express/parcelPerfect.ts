@@ -4,28 +4,12 @@ import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, S
 import { runSteps } from '../../core/runner/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { classifyWording, languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { depotless, type StageOf } from './parcelPerfectStages.js';
 
 type Tenant = 'bigfoot-express' | 'intertown-transport';
 type Parser = (text: string, number: string, httpStatus: number) => CarrierResult;
-type StageOf = (wording: string) => ClassifiedWording | null;
-
-// ParcelPerfect writes the depot into some events, as "Checked in at Durban facility"; the stage does not depend on it.
-const DEPOT = /\b(at|to|from) \p{L}[\p{L} .'-]*? facility$/iu;
-const depotless = (wording: string) => normalizeStatusWording(wording.trim().replace(DEPOT, '$1 facility'));
-
-/** A tenant's stages by wording, whatever depot it names, else the shared wording rules, else nothing. */
-export function parcelPerfectStages(entries: readonly { wording: string; stage: string }[]): StageOf {
-  const stages = new Map(entries.map(entry => [depotless(entry.wording), entry.stage as Stage]));
-  return wording => {
-    const mapped = stages.get(depotless(wording));
-    if (mapped) return { stage: mapped, source: 'carrier_map' };
-    const worded = classifyWording(wording, 'in_transit');
-    return worded.source === 'none' ? null : worded;
-  };
-}
 
 export function parcelPerfect(id: Tenant, origin: string, format: RegExp, parse: Parser): AdapterFactory {
   return environment => ({

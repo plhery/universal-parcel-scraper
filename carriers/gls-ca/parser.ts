@@ -2,23 +2,13 @@ import { DateTime } from 'luxon';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import statuses from './statuses.json' with { type: 'json' };
+import { glsCanadaNameStage, glsCanadaStage } from './status.js';
 
 export const PROVIDER = 'GLS Canada';
 
 const CLOCK = 'yyyy-MM-dd HH:mm:ss';
-const STATUS_CODES = new Map(statuses.entries.map(entry => [entry.code, entry.stage as Stage]));
-const STATUS_NAMES = new Map<string, Stage>([
-  ['shipment created', 'registered'],
-  ['picked up', 'accepted'],
-  ['in transit', 'in_transit'],
-  ['on delivery', 'out_for_delivery'],
-  ['out for delivery', 'out_for_delivery'],
-  ['delivered', 'delivered'],
-]);
 
 export function glsCanadaNumber(raw: string): string {
   const number = raw.length <= 80 ? raw.trim().toUpperCase() : '';
@@ -59,7 +49,7 @@ function readScans(parcel: unknown): Scan[] {
     const code = clean(activity.codeDetail, 24) || clean(activity.code, 24);
     const location = clean(activity.terminal, 120);
     if (!local_time || !status || !description) throw new SchemaError(PROVIDER, 'GLS Canada returned an incomplete activity');
-    const stage = STATUS_CODES.get(code) ?? STATUS_NAMES.get(normalizeStatusWording(status));
+    const stage = glsCanadaStage(code, status);
     return { local_time, description, ...(code ? { provider_code: code } : {}), ...(location ? { location } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
   });
@@ -89,7 +79,7 @@ export function parseGlsCanada(body: string, number: string): CarrierResult {
   const events = parcels.length === 1 ? readScans(parcels[0]) : [];
   const newest = events[0];
   const summary = clean(current.name, 100);
-  const summaryStage = STATUS_NAMES.get(normalizeStatusWording(summary));
+  const summaryStage = glsCanadaNameStage(summary);
   const stage = summaryStage ?? newest?.stage;
   const sameStatus = !!newest && stage === newest.stage;
   const local = wallTime(current.date) ?? (sameStatus ? newest.local_time : undefined);
