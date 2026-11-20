@@ -23,6 +23,9 @@ export const SUB_STAGES: Record<string, Stage> = {
 const SCANNED = /^objeto (?:postado|recebido na unidade de exporta(?:ção|cao) no pa(?:í|i)s de origem)\.?$/i;
 // A shipping partner collecting and moving a USPS item before USPS has it, which 17TRACK files the same way.
 const PARTNER_SCANNED = /^(?:(?:arrived|departed) shipping partner facility|picked up by shipping partner)\b/i;
+// A customs step, which 17TRACK can file under the delivery round, as China Post's "Import allowed by destination
+// customs" a minute after the round started.
+const CUSTOMS = /\bcustoms\b|海关/i;
 
 /**
  * The stage a scan's `sub_status` gives it over the stage its wording got
@@ -31,7 +34,8 @@ const PARTNER_SCANNED = /^(?:(?:arrived|departed) shipping partner facility|pick
  * wording cannot provide; the shared delivered, negation and handoff
  * safeguards are kept: generic transit yields to any reading of the wording,
  * a delivery code to wording that does not read as delivered, and a
- * delivery-round code to wording that reads as delivered. Information
+ * delivery-round code to wording that reads as delivered or as a customs
+ * step or release. Information
  * received yields to a scan of the item that 17TRACK files under it.
  */
 export function subStatusStage(code: string, worded: Stage, description = ''): Stage | undefined {
@@ -39,5 +43,6 @@ export function subStatusStage(code: string, worded: Stage, description = ''): S
   if (!mapped || (code === 'InTransit_Other' && worded !== 'pending')) return undefined;
   if (code === 'InfoReceived' && [SCANNED, PARTNER_SCANNED].some((scan) => scan.test(description.trim()))) return undefined;
   if (mapped === 'out_for_delivery' && worded === 'delivered') return undefined;
+  if (mapped === 'out_for_delivery' && (worded === 'customs' || (worded === 'in_transit' && CUSTOMS.test(description)))) return undefined;
   return mapped !== 'delivered' || worded === 'delivered' ? mapped : undefined;
 }

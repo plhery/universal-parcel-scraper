@@ -93,6 +93,8 @@ carrier.
   `InfoReceived` yields to scans 17TRACK files under it: Correios Brazil's posting ("Objeto
   postado") and its export unit abroad receiving the item, and a USPS shipping partner picking
   the item up or arriving at or leaving its facility before USPS has it.
+  `OutForDelivery_Other` yields to a customs step or release in the wording, such as China
+  Post's "Import allowed by destination customs" filed under the round.
   Shipment-level `Expired` is never a scan and never means lost.
 - Times: `time_utc`, else `time_iso`, and both must carry an offset. When both parse but name
   different instants, `time_iso`, the clock and offset 17TRACK shows, wins: on India Post's legs

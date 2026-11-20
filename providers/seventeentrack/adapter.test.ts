@@ -99,6 +99,15 @@ describe('17TRACK result parsing', () => {
     expect(result.events?.[0]).toMatchObject({ description: 'Mail notification', stage: 'pending', stage_source: 'none' });
   });
 
+  it("reads China Post's customs step filed under the delivery round's code by its wording", () => {
+    for (const [description, stage] of [['Import allowed by destination customs', 'in_transit'], ['Held by import customs abroad for inspection', 'customs']] as const) {
+      expect(parse17TrackResponse(postalHistory([postalScan('OutForDelivery_Other', description)]), number).events?.[0], description)
+        .toMatchObject({ description, stage });
+    }
+    expect(parse17TrackResponse(postalHistory([postalScan('OutForDelivery_Other', 'Out for delivery')]), number).events?.[0])
+      .toMatchObject({ stage: 'out_for_delivery' });
+  });
+
   it("reads Deppon's handing to the courier who delivers today, filed under generic transit, as out for delivery", () => {
     const description = '快件交给示例（电话:***********），今日将为您派送，可联系快递员将包裹放置指定地点';
     expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other', description)]), number)).toMatchObject({
