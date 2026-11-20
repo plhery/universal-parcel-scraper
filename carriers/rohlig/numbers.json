@@ -1,5 +1,47 @@
 {
   "carrier": "rohlig",
-  "gap": "Röhlig Logistics publishes no number format and no public page shows one of its shipment numbers.",
-  "records": []
+  "records": [
+    {
+      "number": "RLUSS05065002",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/dolby-laboratories-inc",
+        "date": "2026-08-08",
+        "dateKind": "manifest run",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "house bill of lading",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The import manifest lists the full house bill under Röhlig's RLUS carrier code and names Röhlig Malaysia as the shipper."
+    },
+    {
+      "number": "S03991364",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/r-hlig-belgium-n-v",
+        "date": "2023-07-14",
+        "dateKind": "arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "house bill of lading",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A U.S. import manifest for Röhlig Belgium and Röhlig USA identifies the house bill separately from the RLUS carrier code."
+    }
+  ]
 }

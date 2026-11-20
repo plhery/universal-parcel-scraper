@@ -1,5 +1,48 @@
 {
   "carrier": "first-flight-me",
-  "gap": "The only public First Flight (Middle East) numbers are archived lookups from 2017 to 2024 that its tracker no longer knows, in short letter and digit layouts many carriers share.",
-  "records": []
+  "records": [
+    {
+      "number": "DUC616804",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170512040525/http://www.firstflightme.com:80/Track-Shipment?awb=DUC616804",
+        "date": "2017-05-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier's archived result shows this air waybill in transit with dated tracking events."
+    },
+    {
+      "number": "CNB5031548",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20180114091443/http://www.firstflightme.com:80/Track-Shipment?awb=CNB5031548",
+        "date": "2018-01-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The carrier's archived result shows this air waybill delivered with its tracking history."
+    }
+  ]
 }

@@ -1,5 +1,28 @@
 {
   "carrier": "bigpost",
-  "gap": "No public page shows a Big Post number.",
-  "records": []
+  "records": [
+    {
+      "number": "2764528",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.productreview.com.au/listings/big-post#review-f0c3558b-abaf-5b31-a83f-494d482dc388",
+        "date": "2026-09-10",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The customer posted the tracking number and described its progress through the Big Post depot. The public tracker requires a delivery postcode, which the review does not give."
+    }
+  ]
 }

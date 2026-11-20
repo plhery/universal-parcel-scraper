@@ -5402,5 +5402,131 @@
     "pattern": "^\\d{12}$",
     "kind": "open",
     "reason": "Delibox's archived tracker shows a twelve-digit shipment number. Detection offers other carriers for this input."
+  },
+  {
+    "carrier": "akis-express",
+    "pattern": "^S\\d{9}$",
+    "kind": "open",
+    "reason": "A confirmed AKIS Express waybill has S followed by nine digits. Detection only offers Australia Post for this sample."
+  },
+  {
+    "carrier": "ambro-express",
+    "pattern": "^2\\d{12}$",
+    "kind": "open",
+    "reason": "Confirmed Ambro Express waybills start with 2 and have thirteen digits. The current results offer several carriers without including Ambro Express."
+  },
+  {
+    "carrier": "bel",
+    "pattern": "^BEL\\d{9}$",
+    "kind": "open",
+    "reason": "A recipient posted a BEL tracking number with nine digits after the prefix. Detection offers other carriers for that number and does not offer BEL."
+  },
+  {
+    "carrier": "bigpost",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "Big Post documents a seven-digit tracking ID and a recipient reported one. Detection only offers SEUR for this sample."
+  },
+  {
+    "carrier": "cargobus",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "A Cargobus shipment code in a Lithuanian court record has nine digits. Detection only offers TNT for that sample."
+  },
+  {
+    "carrier": "cheetah-delivery",
+    "pattern": "^\\d{14}$",
+    "kind": "open",
+    "reason": "A historical Cheetah Delivery tracking number had fourteen digits. The current detector offers several carriers for the sample without including Cheetah Delivery."
+  },
+  {
+    "carrier": "crane-worldwide",
+    "pattern": "^MLCW[A-Z]{4}\\d{8}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for a Crane Worldwide house bill with the MLCW carrier code."
+  },
+  {
+    "carrier": "cvc",
+    "pattern": "^\\d{8}$",
+    "kind": "open",
+    "reason": "A confirmed eight-digit CVC shipment number returns candidates without CVC."
+  },
+  {
+    "carrier": "diakinisis",
+    "pattern": "^D\\d{14}$",
+    "kind": "open",
+    "reason": "A confirmed Diakinisis tracking ID has D followed by fourteen digits. Detection returns no carrier."
+  },
+  {
+    "carrier": "dpd-gr",
+    "pattern": "^\\d{14}$",
+    "kind": "open",
+    "reason": "An archived DPD Greece result binds a fourteen-digit parcel number, and detection offers other carriers without DPD Greece."
+  },
+  {
+    "carrier": "first-flight-me",
+    "pattern": "^[A-Z]{3}\\d{6,7}$",
+    "kind": "open",
+    "reason": "First Flight Middle East's archived waybills have three letters and six or seven digits. Detection does not offer First Flight Middle East."
+  },
+  {
+    "carrier": "hey-couriers",
+    "pattern": "^NEXAU\\d{10}YQ$",
+    "kind": "open",
+    "reason": "Two house air waybills in Hey Couriers' documentation only offer PFLogistics in the detector."
+  },
+  {
+    "carrier": "hfd",
+    "pattern": "^A\\d{14}$",
+    "kind": "open",
+    "reason": "A historical HFD tracking report shows A followed by fourteen digits. Detection returns no carrier."
+  },
+  {
+    "carrier": "interlogistica",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "Two confirmed Interlogistica waybills have seven digits. Detection offers SEUR without Interlogistica."
+  },
+  {
+    "carrier": "matson",
+    "pattern": "^MATS\\d{10}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for two public Matson ocean master bills that start with its MATS carrier code."
+  },
+  {
+    "carrier": "rhenus-it",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "A confirmed Rhenus Italia home delivery number has nine digits followed by a hyphen and two digits. Detection does not offer Rhenus Italia."
+  },
+  {
+    "carrier": "rhenus-it",
+    "pattern": "^OU\\d{10}$",
+    "kind": "open",
+    "reason": "A confirmed Rhenus Italia home delivery number starts with OU and has ten digits after the prefix. Detection does not offer Rhenus Italia."
+  },
+  {
+    "carrier": "rohlig",
+    "pattern": "^RLUSS\\d{8}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for a public Röhlig house bill with its RLUS carrier code."
+  },
+  {
+    "carrier": "rohlig",
+    "pattern": "^S\\d{8}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for a public Röhlig house bill printed separately from the RLUS carrier code."
+  },
+  {
+    "carrier": "sway",
+    "pattern": "^[0-9A-Z]{20}$",
+    "kind": "open",
+    "reason": "A confirmed shipment from Sway's Swyft tracking platform uses a twenty-character alphanumeric identifier. Detection returns no carrier for it."
+  },
+  {
+    "carrier": "unitrade",
+    "pattern": "^9999\\d{10}$",
+    "kind": "open",
+    "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
   }
 ]

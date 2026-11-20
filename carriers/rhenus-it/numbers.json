@@ -1,5 +1,65 @@
 {
   "carrier": "rhenus-it",
-  "gap": "No public page shows a Rhenus Italia number; its tracker's own placeholder is the only example.",
-  "records": []
+  "records": [
+    {
+      "number": "295983226-01",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://it.trustpilot.com/review/www.rhenus.com/it?page=10",
+        "date": "2026-01-20",
+        "dateKind": "review publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Italian home delivery",
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "A recipient posted the shipment number in a review of Rhenus Italia. The carrier's public tracker displayed the same number and a delivery scan."
+    },
+    {
+      "number": "OU0100000466",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://it.trustpilot.com/review/www.rhenus.com/it?page=2",
+        "date": "2026-09-22",
+        "dateKind": "review update",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Italian home delivery",
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "A recipient posted the shipment number in a review of Rhenus Italia. The carrier's public tracker displayed the same number and a delivery scan."
+    }
+  ]
 }

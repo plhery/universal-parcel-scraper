@@ -1,5 +1,25 @@
 {
   "carrier": "hfd",
-  "gap": "HFD's tracker takes an access code from a text message or a shipment number with a phone number; no public page shows a shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "A93041421044073",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.trackchecker.ru/viewtopic.php?f=34&t=6883",
+        "date": "2022-04-11",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A TrackChecker user posted this number and linked HFD's own tracker. Lookup blocked by verification (HTTP 403 from HFD's public tracking form)."
+    }
+  ]
 }
