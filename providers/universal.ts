@@ -25,6 +25,7 @@ import { BudgetExceededError, IndeterminateError, InvalidInputError, NoHistoryEr
 import type { CarrierResult } from '../core/result/index.js';
 import { namesOneOf, parcelOwners } from '../core/result/partial.js';
 import { readLateRegistrations } from '../core/result/registration.js';
+import { readLateAcceptances } from './shared/acceptance.js';
 import { withoutMinuteCopies, withoutRepeatedScans } from '../core/result/repeats.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
@@ -204,7 +205,7 @@ export class UniversalTracker {
       throw new NoHistoryError(source, `${source} names another carrier, or none, for a number this short`, { reason: 'unattributed_history' });
     }
     const history = withoutMinuteCopies(withoutScriptCopies(withScopedWording(result, source), source));
-    return readLateRegistrations(withoutRepeatedScans(history, { distinguishCodes: true }));
+    return readLateAcceptances(readLateRegistrations(withoutRepeatedScans(history, { distinguishCodes: true })));
   }
 
   /** One provider adapter, built from this tracker's environment. */

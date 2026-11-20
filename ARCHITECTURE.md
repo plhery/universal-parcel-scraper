@@ -486,6 +486,9 @@ Scans are compared by their instants, or by wall clocks in a history with no ins
 filing, a problem or a scan no rule read is not a movement. A result whose current stage is
 registered for its newest scan, a registration after a movement, is in transit, or accepted when
 that registration is the record of the acceptances that are the parcel's only movements.
+A provider's history joins several networks' legs, each wording its own receipt as an acceptance.
+Past the first movement's minute, an acceptance a provider's wording rules read is a hand-over on
+the way, in transit; one a carrier's map reads keeps its stage ([acceptance.ts](providers/shared/acceptance.ts)).
 
 A step a carrier records again within minutes is read once: every adapter's and provider's
 result leaves out a scan with an earlier scan's wording, place and stage at most ten minutes
