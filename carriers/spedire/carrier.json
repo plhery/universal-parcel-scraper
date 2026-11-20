@@ -1,0 +1,76 @@
+{
+  "id": "spedire",
+  "displayName": "Spedire",
+  "aliases": [
+    "spedire by alsendo",
+    "spedire pro",
+    "spedire pro by alsendo",
+    "Spedire.com"
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#0F3460"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "spedire",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.spedire.com/tracking/{trackingNumber}",
+    "searchUrl": "https://www.spedire.com/traccia-spedizione",
+    "canaryUrl": "https://www.spedire.com/traccia-spedizione",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin_country",
+      "destination_country",
+      "delivery_tracking_number",
+      "sender",
+      "receiver"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin_country",
+      "sender",
+      "receiver"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "spedire.com"
+      ],
+      "path": "^/tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

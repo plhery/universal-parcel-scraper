@@ -2706,6 +2706,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   delibox: 'the tracking popup shows a script alert and closes for an unknown waybill, so only a retained waybill verifies the link',
   'bm-cargo': 'iPlus returns an empty form for a missing warehouse receipt, without the number or a notice, so only a retained receipt verifies the link',
   pasarex: 'the tracker answers only after its reCAPTCHA checkbox, so the link opens the form with the number filled in; native retrieval ticks the checkbox in a scoped browser helper',
+  spedire: 'Cloudflare challenges the tracker page for automated browsers before it loads; the adapter reads the lookups the page calls, which it does not challenge',
   onex: 'Cloudflare challenges the tracker before it loads, which the daily link check does not wait for; native retrieval captures the page\'s own lookup in a scoped browser helper',
   'magic-trans': 'the tracker answers only with a token from Yandex\'s SmartCaptcha slider, so the link opens the form with the number filled in; native retrieval drags the slider in a scoped browser helper',
   'onlog-express': 'the guest page searches only after its Turnstile callback; the rendered-link canary does not submit verification, while native retrieval fills the whole reference in a scoped browser helper',

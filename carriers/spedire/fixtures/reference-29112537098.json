@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "core": true,
+  "shipment": {
+    "reference": "OE29112537098",
+    "tracker": "8UW058X000532",
+    "last_status": "S",
+    "exception_code": 0,
+    "courier": "SPEDIRE PRIORITY",
+    "main_alias": "spedire",
+    "courier_logo": "spedire.svg",
+    "sender": "Sender name",
+    "sender_city": "Sender city",
+    "sender_postcode": "00000",
+    "sender_country": "IT",
+    "sender_drop": false,
+    "is_pickup_required": true,
+    "receiver": "Receiver name",
+    "receiver_city": "Receiver city",
+    "receiver_postcode": "00000",
+    "receiver_country": "DE",
+    "pickups": [
+      {
+        "id": 1,
+        "shipment_id": 1,
+        "booking_number": "CP000000000",
+        "when": "2025-12-01",
+        "errors": "",
+        "status": 1,
+        "self_requested": 0,
+        "created_at": "2025-11-29T13:05:47.000000Z",
+        "updated_at": "2025-12-01T07:38:02.000000Z"
+      }
+    ],
+    "created_at": "2025-11-29 14:02:16"
+  },
+  "tracking": [
+    {
+      "data": "2025-11-29 14:02:16",
+      "place": "Spedire.com",
+      "status": "Spedizione creata"
+    }
+  ]
+}

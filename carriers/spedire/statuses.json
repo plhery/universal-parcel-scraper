@@ -1,0 +1,134 @@
+{
+  "carrier": "spedire",
+  "entries": [
+    {
+      "code": "N",
+      "wording": "Attendi - Stiamo validando i dati da inoltrare al corriere per generare l'etichetta di spedizione.",
+      "stage": "pending",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "Spedire is still checking the booking before it asks the courier for a label."
+    },
+    {
+      "code": "O",
+      "wording": "Attendi - Stiamo comunicando con il trasportatore per generare l'etichetta di spedizione.",
+      "stage": "pending",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "Spedire is asking the courier for the label."
+    },
+    {
+      "code": "B",
+      "wording": "La spedizione è stata creata con successo.",
+      "stage": "registered",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The booking has its label and waits for the courier."
+    },
+    {
+      "code": "E",
+      "wording": "Non è stato possibile generare l'etichetta della tua spedizione automaticamente. Un campo o più dell'indirizzo sono errati o non correttamente indicati, un nostro specialista delle spedizioni proverà a risolvere in autonomia il problema.  Attendi una email/notifica con la tua etichetta entro massimo 24ore lavorative.",
+      "stage": "exception",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The courier refused the address for a label, and Spedire's staff fix the booking by hand: the page shows it as a problem."
+    },
+    {
+      "code": "T",
+      "wording": "La spedizione risulta partita e in viaggio verso il destinatario.",
+      "stage": "in_transit",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The courier has the parcel and it has left; the page's second step."
+    },
+    {
+      "code": "S",
+      "wording": "La spedizione risulta in viaggio verso il destinatario.",
+      "stage": "in_transit",
+      "language": "it",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The parcel is on its way to the recipient."
+    },
+    {
+      "code": "G",
+      "wording": "Spedizione in lavorazione nella filiale del trasportatore.",
+      "stage": "in_transit",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The parcel is being handled at one of the courier's branches."
+    },
+    {
+      "code": "L",
+      "wording": "La spedizione sta subendo dei ritardi minimi nei tempi di consegna.",
+      "stage": "in_transit",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "A small delay while the parcel moves: the page shows it in orange, on the transit step."
+    },
+    {
+      "code": "Y",
+      "wording": "La spedizione risulta in consegna al destinatario.",
+      "stage": "out_for_delivery",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The courier is out to deliver the parcel."
+    },
+    {
+      "code": "X",
+      "wording": "La spedizione presenta una problematica nel transito e/o nella consegna che puoi individuare nel dettaglio del tracciamento qui di seguito. Attendiamo eventuali istruzioni dall'acquirente della spedizione tramite la sua area personale.",
+      "stage": "exception",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "A problem in transit or at delivery that waits for the booker's instructions, shown in red."
+    },
+    {
+      "code": "X",
+      "wording": "La consegna della spedizione non è andata a buon fine, verrà ritentata una consegna il giorno successivo in automatico.",
+      "stage": "failed_attempt",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The page's sentence for X when the shipment's exception code is 5: a missed delivery that the courier tries again the next working day, shown in orange."
+    },
+    {
+      "code": "P",
+      "wording": "La spedizione è stata consegnata presso un punto di ritiro.",
+      "stage": "ready_for_pickup",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The courier left the parcel at a pickup point for the recipient to collect."
+    },
+    {
+      "code": "D",
+      "wording": "La spedizione è stata consegnata al destinatario.",
+      "stage": "delivered",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "Delivered to the recipient."
+    },
+    {
+      "code": "K",
+      "wording": "La spedizione è stata consegnata al mittente.",
+      "stage": "returned",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The parcel went back to the sender."
+    },
+    {
+      "code": "R",
+      "wording": "La spedizione è stata rimborsata e annullata.",
+      "stage": "exception",
+      "language": "it",
+      "confirmedBy": "bundle",
+      "note": "The booking was cancelled and refunded: the parcel does not travel."
+    },
+    {
+      "wording": "Spedizione creata",
+      "stage": "registered",
+      "language": "it",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Spedire's own row for a new booking, placed at Spedire.com."
+    }
+  ]
+}

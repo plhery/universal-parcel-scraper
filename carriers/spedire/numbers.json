@@ -1,0 +1,27 @@
+{
+  "carrier": "spedire",
+  "records": [
+    {
+      "number": "OE29112537098",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://it.trustpilot.com/review/spedire.com?page=7",
+        "date": "2026-01-18",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "A customer review of Spedire quotes this shipment reference for a parcel it lost; Spedire's tracker answers it with the shipment and its courier's label number."
+    }
+  ]
+}
