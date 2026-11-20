@@ -25,9 +25,15 @@ operations use separate routes and are outside this adapter.
 
 ## Limitations
 
-The request builder accepts a whole waybill without establishing ownership from its shape.
-There is no number-only detection or cheap recognition, and no account is used. Changed
-puzzle geometry or weak texture can prevent a solve; enabled universal providers remain the fallback.
+`deppon-dpk` names Deppon for `DPK` and twelve digits, the express waybills a published
+enforcement notice and universal providers attribute to its network. Its other waybills are plain
+digits that this shape cannot tell apart, so the request builder accepts them without establishing
+ownership. There is no cheap recognition, and no account is used. Changed puzzle geometry or weak
+texture can prevent a solve; enabled universal providers remain the fallback.
+
+Deppon's Huawei cloud firewall answers HTTP 418 with a block page to addresses outside Greater
+China, browsers included, and the adapter reports it as a challenge. Hong Kong and mainland exits
+pass, so a consumer routes `www.deppon.com` through one.
 
 ## Testing
 

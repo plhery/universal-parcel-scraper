@@ -93,6 +93,8 @@ export class DepponTracker {
         return parseDeppon(await post(DEPPON_TRACKING_API, { sysCode: 'ONLINE', waybillNumber: number, slaveType: '', code, value: code, checkBatch: '' }), number);
       } catch (error) {
         // Request diagnostics would contain the single-use verification material and session cookies.
+        // Deppon's Huawei cloud firewall answers 418 with its block page to addresses outside Greater China.
+        if (error instanceof UpstreamHttpError && error.status === 418) throw new ChallengeError(PROVIDER, "Deppon's firewall refused the request");
         if (error instanceof UpstreamHttpError) throw new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);
         if (error instanceof UpstreamNetworkError) throw new UpstreamNetworkError(error.provider, error.cause);
         throw error;

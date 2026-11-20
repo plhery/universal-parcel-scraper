@@ -36,5 +36,11 @@
     "unavailable": ["eta", "weight", "dimensions", "service_name", "pickup_point"]
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "deppon-dpk",
+      "pattern": "^DPK\\d{12}$",
+      "confidence": "high"
+    }
+  ]
 }

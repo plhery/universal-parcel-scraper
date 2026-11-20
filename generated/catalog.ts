@@ -18598,7 +18598,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.deppon.com/orderTrack",
     "trackingSearchUrl": "https://www.deppon.com/orderTrack",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^DPK\\d{12}$",
+        "confidence": "high"
+      }
+    ]
   },
   "deprisa": {
     "displayName": "Deprisa",
@@ -67449,7 +67454,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dellin": [],
   "delnext": [],
   "depo": [],
-  "deppon": [],
+  "deppon": ["deppon-dpk"],
   "deprisa": [],
   "der-kurier": [],
   "der-kurier-sk": [],

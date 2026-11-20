@@ -1685,3 +1685,15 @@ describe('Ruiqi Logistics', () => {
     for (const name of ['Ruiqi', 'ruiqi', '锐骑物流']) expect(carrierIdFromName(name), name).toBe('ruiqi');
   });
 });
+
+describe('Deppon DPK waybills', () => {
+  it('names Deppon for DPK and twelve digits, and only that layout', () => {
+    for (const number of ['DPK123456789012', 'dpk 1234 5678 9012']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'deppon', confidence: 'high' });
+    }
+    for (const number of ['DPK12345678901', 'DPK1234567890123', 'DPX123456789012', 'DPKA23456789012', 'DP123456789012']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('deppon');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('deppon');
+    }
+  });
+});

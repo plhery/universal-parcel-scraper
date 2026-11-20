@@ -80,6 +80,9 @@ describe('Deppon verification exchange', () => {
     catch (error) { expect(error).toMatchObject({ kind: 'rate_limited', retryAfterMs: 60_000, diagnostics: undefined }); expect(JSON.stringify(error)).not.toContain('PRIVATE'); }
     fetcher.mockReset().mockResolvedValueOnce(new Response('<html>Blocked</html>'));
     await expect(new DepponTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    fetcher.mockReset().mockResolvedValueOnce(new Response('<html><title>访问被拦截！</title></html>', { status: 418 }));
+    await expect(new DepponTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', message: expect.stringContaining('firewall') });
+    expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
   it('keeps solving out of cheap recognition and validates before making a request', () => {
