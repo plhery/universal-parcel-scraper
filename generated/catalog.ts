@@ -67579,6 +67579,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "zim": {
+    "displayName": "ZIM",
+    "color": "#1a2b5f",
+    "aliases": [
+      "ZIM Integrated Shipping Services",
+      "Zim Lines"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zim",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.zim.com/tools/track-a-shipment",
+    "trackingSearchUrl": "https://www.zim.com/tools/track-a-shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "www.zim.com",
+          "zim.com"
+        ],
+        "pathPattern": "^/tools/track-a-shipment/?$",
+        "params": [
+          "consnumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "zimpost": {
     "displayName": "Zimpost",
     "color": "#ee1c25",
@@ -69876,6 +69907,7 @@ export const CARRIER_IDS = [
   "zheldor",
   "zhongzhou-logistics",
   "ziegler",
+  "zim",
   "zimpost",
   "zipasgo",
   "zippd",
@@ -71843,6 +71875,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "zheldor": [],
   "zhongzhou-logistics": [],
   "ziegler": [],
+  "zim": [],
   "zimpost": [],
   "zipasgo": [],
   "zippd": [],

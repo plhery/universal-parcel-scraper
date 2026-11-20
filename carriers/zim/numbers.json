@@ -1,0 +1,110 @@
+{
+  "carrier": "zim",
+  "records": [
+    {
+      "number": "ZIMUSEL71213411",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/zim-wilmington/9699115",
+        "date": "2026-07-20",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of ZIM WILMINGTON's call at Jacksonville gives this ZIM master bill. ZIM's tracker returns its one container from Busan to Jacksonville, returned empty."
+    },
+    {
+      "number": "ZIMUSHH32340236",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/zim-mount-everest/9931109",
+        "date": "2026-11-12",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of ZIM MOUNT EVEREST's call at Savannah gives this ZIM master bill. ZIM's tracker returns its one container from Yantian, taken out of the port for delivery."
+    },
+    {
+      "number": "ZIMUSHH32336300",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/zim-mount-everest/9931109",
+        "date": "2026-11-12",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of ZIM MOUNT EVEREST's call at Savannah gives this ZIM master bill. ZIM's tracker returns its one container from Yantian to Savannah, returned empty."
+    },
+    {
+      "number": "ZIMUSHH32333816",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/zim-mount-vinson/9932531",
+        "date": "2026-11-14",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of ZIM MOUNT VINSON's call at Charleston gives this ZIM master bill. ZIM's tracker returns its one container from Yantian to Charleston, returned empty."
+    },
+    {
+      "number": "ZIMUHCM80693336",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/zim-mount-vinson/9932531",
+        "date": "2026-11-14",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record of ZIM MOUNT VINSON's call at Charleston gives this ZIM master bill. ZIM's tracker returns its one container from an inland depot in Binh Duong through Cai Mep, taken out of the port for delivery."
+    }
+  ]
+}
