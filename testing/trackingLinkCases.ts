@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'rocket-shipping', number: '999999999',
+    route: /^https:\/\/tracking\.rocketshipping\.io\/track\/999999999$/,
+    marker: /Tracking Notes/ },
   { carrier: 'tig-freight', number: 'TIGZZZ0000',
     route: /^https:\/\/tracking\.open360\.com\/tracking\/TIGZZZ0000\/?$/,
     marker: /We can't find that tracking number|Tracking Details/ },

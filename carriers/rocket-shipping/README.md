@@ -1,28 +1,22 @@
 # Rocket Shipping
 
-Rocket Shipping parcels use enabled universal providers. There is no dedicated adapter.
+Rocket Shipping tracks US freight shipments, including large deliveries managed with partner carriers.
 
-Rocket Shipping is an American logistics company. It delivers big and bulky goods to homes with
-two-person crews and books less-than-truckload freight with partner carriers. It gives each load
-its own id and tracks it on its own page. Its site is rocketshipping.io.
+## Retrieval
 
-## Numbers
+The public tracker loads `/.netlify/functions/tracking?loadId=…` and returns the matching load
+number. The adapter reads the customer-facing event list first, then uses the tracker’s notes
+when the event list is empty. It uses the timestamps on those rows, since the summary text
+describes delivery in a clock with no offset.
 
-Its load ids are digit runs, eight or nine digits long in public examples. Digit runs of these
-lengths are other carriers' numbers too, and only an aggregator's examples show them, so there is
-no rule.
+The tracking endpoint can answer HTTP 400 with a generic notes error. The adapter preserves
+that as an upstream failure because the response does not establish that the load is missing.
 
-## Why there is no adapter
+## Limitations
 
-Its tracking page is a script app that asks `tracking.rocketshipping.io/.netlify/functions/tracking`
-for a load by its `loadId`. Its search also finds a load by purchase order, PRO or shipper
-reference. A brokered load moves with a partner carrier, which differs from load to load.
-
-## Links
-
-`tracking.rocketshipping.io/track/<number>` opens one load.
+Select Rocket Shipping or open a Rocket tracking link. The adapter looks up the Rocket load
+number. Partner PRO numbers, purchase orders and shipper references require the portal’s search.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`ROCKET_SHIPPING_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/rocket-shipping`

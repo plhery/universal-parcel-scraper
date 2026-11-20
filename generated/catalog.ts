@@ -49544,7 +49544,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Chicago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rocket-shipping"
     },
     "canaryUrl": "https://tracking.rocketshipping.io/",
     "trackingUrlTemplate": "https://tracking.rocketshipping.io/track/{trackingNumber}",
