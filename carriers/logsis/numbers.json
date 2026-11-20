@@ -1,5 +1,26 @@
 {
   "carrier": "logsis",
-  "gap": "No public page shows a Logsis number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "17800",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://kureroff.ru/kompanii/logsis/otzyvy/",
+        "date": "2024-11-10",
+        "dateKind": "customer review",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Russian local courier delivery",
+        "reportedRole": "Номер накладной",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public customer review identifies this number as the waybill in a Logsis delivery dispute. The public tracker requires the phone number attached to the order, which the review does not publish."
+    }
+  ]
 }
