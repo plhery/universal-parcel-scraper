@@ -1,0 +1,39 @@
+{
+  "carrier": "transportes-agael",
+  "entries": [
+    {
+      "wording": "Registrado",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Parcel registered at the origin branch."
+    },
+    {
+      "wording": "Despachado",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The observed scan means the parcel was added to a transport manifest."
+    },
+    {
+      "wording": "En ruta",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel entered the transport route."
+    },
+    {
+      "wording": "En destino",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel was unloaded at the destination branch."
+    },
+    {
+      "wording": "Entregado",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "portal",
+      "note": "The portal’s final completed-delivery stage."
+    }
+  ]
+}

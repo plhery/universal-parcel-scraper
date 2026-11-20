@@ -1,0 +1,73 @@
+{
+  "carrier": "esm-logistica",
+  "records": [
+    {
+      "number": "2150000003083433",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=01584e52-e378-9a1f-d96a-550b11fc354c",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ESM Logística physical-mail guide printed by the carrier or cited by the court.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "The carrier returned the exact guide and a timed delivery scan."
+    },
+    {
+      "number": "2150000003090925",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=a087a346-2008-8d8b-e184-7e6b231f0858",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ESM Logística physical-mail guide printed by the carrier or cited by the court.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "The carrier returned the exact guide, an origin-office preparation summary and a dated registration."
+    },
+    {
+      "number": "200000005174948",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.corpoboyaca.gov.co/cms/wp-content/uploads/2025/05/Avisos-de-notificacion-de-facturas-0481-0501.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ESM Logística physical-mail guide printed by the carrier or cited by the court.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "brt",
+          "yunda",
+          "j-and-t-cargo",
+          "ozon-logistics"
+        ]
+      },
+      "note": "The carrier returned the barcode printed on the guide, an undelivered summary and a dated registration."
+    }
+  ]
+}

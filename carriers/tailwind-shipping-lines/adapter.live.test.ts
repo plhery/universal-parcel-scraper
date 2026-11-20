@@ -1,0 +1,18 @@
+import { expect, it } from 'vitest';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter } from './adapter.js';
+
+const tracker = adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+const { TAILWIND_BILL_NUMBER: bill, TAILWIND_CONTAINER_NUMBER: equipment } = process.env;
+
+it.skipIf(!bill)('reads completed scans for the public bill', async () => {
+  const result = await tracker.track({ number: bill! });
+  expect(result.events?.length).toBeGreaterThan(0);
+  expect(result.events?.every(event => typeof event.time === 'string')).toBe(true);
+});
+
+it.skipIf(!equipment)('finds the publicly reported leased container', async () => {
+  const result = await tracker.track({ number: equipment! });
+  expect(result.events?.length).toBeGreaterThan(0);
+  expect(result.last_update).toBeTruthy();
+});

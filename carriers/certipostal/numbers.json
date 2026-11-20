@@ -1,0 +1,90 @@
+{
+  "carrier": "certipostal",
+  "records": [
+    {
+      "number": "3922901001775",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.carder.gov.co/download/oficio-de-comunicacion-ticket-15605-del-2026/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The Colombian regional authority identifies the guide for a physical notification refused on delivery.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "imile",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "Native tracking records distribution and a return."
+    },
+    {
+      "number": "4083638600015",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=5b61f904-5cd8-1829-fd7f-eed599d6e4d3",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The court identifies the physical notice sent under article 292 and its carrier certificate.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "Native tracking records delivery without an image, followed by certificate updates. The scan was recorded the day after the reported delivery."
+    },
+    {
+      "number": "3991934299999",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=652d52fe-fee9-5208-5cf1-1ade309f4116",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The court identifies the guide for a physical notice returned because the address was incorrect.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "imile",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "Native tracking records distribution and a return followed by certification."
+    }
+  ]
+}

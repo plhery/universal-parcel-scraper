@@ -1,0 +1,59 @@
+{
+  "carrier": "don-mariano-express",
+  "records": [
+    {
+      "number": "201808",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.don-mariano.com/#tracking",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The carrier publishes this guide number in its guest form.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The native guide page echoes the number and shows confirmed origin and destination movements."
+    },
+    {
+      "number": "FLET-0040992405-W015",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.don-mariano.com/#tracking",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The carrier publishes this example when the Seguimiento option is selected.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The guest result shows the tracking code verbatim and identifies guide 201780 with four confirmed scans."
+    },
+    {
+      "number": "201780",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.don-mariano.com/tracking?codSeguimiento=FLET-0040992405-W015",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The carrier’s public result for its published tracking-code example names this guide.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The independent numeric lookup returns the same guide and confirmed movements."
+    }
+  ]
+}

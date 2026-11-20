@@ -1,0 +1,23 @@
+{
+  "carrier": "transportes-agael",
+  "records": [
+    {
+      "number": "BLM064954",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://agaelsac.com/seguimiento/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The carrier publishes this guide as its input example. The numbered page confirms the exact identifier and four September 2026 scans.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The parcel was registered in Lima, manifested, sent in route, and unloaded at the Chiclayo destination branch."
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "esm-logistica",
+  "displayName": "ESM Logística",
+  "aliases": [
+    "ESM Logistica",
+    "E.S.M. Logística",
+    "ESM Logística S.A.S."
+  ],
+  "region": {
+    "countries": [
+      "CO"
+    ]
+  },
+  "brand": {
+    "color": "#1a2e5a"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "esm-logistica",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://clientes.esmlogistica.com/seguimiento?guia={trackingNumber}",
+    "searchUrl": "https://clientes.esmlogistica.com/seguimiento",
+    "canaryUrl": "https://clientes.esmlogistica.com/seguimiento",
+    "shows": [
+      "status",
+      "history",
+      "delivery_date",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_date"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

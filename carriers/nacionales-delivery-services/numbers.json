@@ -1,0 +1,26 @@
+{
+  "carrier": "nacionales-delivery-services",
+  "records": [
+    {
+      "number": "NX-2026-0700123",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://nacionalesdeliveryservices.com/rastreo",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The native tracking form shows this complete example. The guest request returns the exact identifier and four dated July 2026 milestones.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "The response records pending pickup, collection, transport and completed delivery."
+    }
+  ]
+}

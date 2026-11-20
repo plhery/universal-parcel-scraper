@@ -1,0 +1,62 @@
+{
+  "id": "don-mariano-express",
+  "displayName": "Don Mariano Express",
+  "aliases": [
+    "Don Mariano Express S.R.L.",
+    "Rutas Misioneras"
+  ],
+  "region": {
+    "countries": [
+      "AR"
+    ]
+  },
+  "brand": {
+    "color": "#17654A"
+  },
+  "selectable": true,
+  "timezone": "America/Argentina/Buenos_Aires",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "don-mariano-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.don-mariano.com/#tracking",
+    "searchUrl": "https://www.don-mariano.com/#tracking",
+    "canaryUrl": "https://www.don-mariano.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta",
+      "sender_name",
+      "recipient_name",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

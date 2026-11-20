@@ -1,0 +1,77 @@
+{
+  "carrier": "certipostal",
+  "entries": [
+    {
+      "wording": "INGRESADA EN POS",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The carrier recorded the guide at its point of service."
+    },
+    {
+      "wording": "INGRESADA -VALIDADA",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The guide was registered and validated."
+    },
+    {
+      "wording": "EN BODEGA ORIGEN",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The shipment entered the origin depot."
+    },
+    {
+      "wording": "DISTRIBUCION",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The shipment entered the distribution process."
+    },
+    {
+      "wording": "ENTREGA SIN IMAGEN",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The carrier recorded delivery without a photo."
+    },
+    {
+      "wording": "DEVOLUCION - DIGITALIZADA",
+      "language": "es",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "The carrier recorded an unsuccessful delivery and digitalized the return record."
+    },
+    {
+      "wording": "GESTIONADA",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The wording does not establish the outcome of the handling."
+    },
+    {
+      "wording": "Certificacion",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Administrative event excluded from the movement history."
+    },
+    {
+      "wording": "GUIA DIGITALIZADA",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Administrative event excluded from the movement history."
+    },
+    {
+      "wording": "PLANILLADA A CENTRO DE ACOPIO DESDE POS",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The scan records a manifest rather than a physical departure."
+    },
+    {
+      "wording": "Reimpresion Certificacion",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Administrative certificate reprint excluded from the movement history."
+    }
+  ]
+}

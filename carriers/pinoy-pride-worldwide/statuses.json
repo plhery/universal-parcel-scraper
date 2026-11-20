@@ -1,0 +1,53 @@
+{
+  "carrier": "pinoy-pride-worldwide",
+  "entries": [
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Carrier event code rr_delivered."
+    },
+    {
+      "wording": "Under Customs Clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Carrier event code rr_under_customs."
+    },
+    {
+      "wording": "Arrived at Port",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier event code rr_arrived_at_port."
+    },
+    {
+      "wording": "In Transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier event code rr_in_transit."
+    },
+    {
+      "wording": "Loaded to Container",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier event code rr_loaded_to_container."
+    },
+    {
+      "wording": "Documents Verified",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Administrative milestone excluded from movement history."
+    },
+    {
+      "wording": "Registered",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Carrier event code rr_registered."
+    }
+  ]
+}

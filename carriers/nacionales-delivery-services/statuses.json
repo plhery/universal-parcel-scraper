@@ -1,0 +1,33 @@
+{
+  "carrier": "nacionales-delivery-services",
+  "entries": [
+    {
+      "wording": "PENDIENTE",
+      "language": "es",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "note": "Shipment pending collection."
+    },
+    {
+      "wording": "RECOGIDO",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The carrier collected the parcel."
+    },
+    {
+      "wording": "EN_TRANSITO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel moved in the network."
+    },
+    {
+      "wording": "ENTREGADO",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The shipment has been delivered."
+    }
+  ]
+}

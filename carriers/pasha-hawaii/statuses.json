@@ -1,0 +1,71 @@
+{
+  "carrier": "pasha-hawaii",
+  "entries": [
+    {
+      "wording": "RECEIVED FULL EXPORT",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "LOADED FULL ON VESSEL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "LOADED EMPTY ON VESSEL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DISCHARGE FULL CONTAINER",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DISCHARGED EMPTY CONTAINER",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DISPATCHED EMPTY FOR EXPORT",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EMPTY POSITIONING BY TRUCK",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DELIVERED FULL IMPORT",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "RETURN MTY TO TERMINAL",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The empty container was returned to the terminal after use."
+    },
+    {
+      "wording": "UNIT OUT OF SERVICE FOR SALE",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The equipment was removed from service."
+    },
+    {
+      "wording": "SOLD",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The equipment was sold."
+    }
+  ]
+}

@@ -108,6 +108,11 @@
     "reason": "AEX guías of the A series fall inside Allegro One's high-confidence A0 shape, and nothing else in the number names AEX."
   },
   {
+    "carrier": "ag-cargo-india",
+    "kind": "open",
+    "reason": "The AG Cargo LR sample uses nine generic digits. Select AG Cargo explicitly."
+  },
+  {
     "carrier": "air-europa-cargo",
     "pattern": "^996/?\\d{8}$",
     "kind": "open",
@@ -650,6 +655,11 @@
     "reason": "Eleven digits are shared by several carriers, and the dashes Central Transport prints are dropped before detection."
   },
   {
+    "carrier": "certipostal",
+    "kind": "open",
+    "reason": "The physical guides use a numeric shape already shared by other carriers. The native tracker is explicitly selectable."
+  },
+  {
     "kind": "open",
     "carrier": "cesco-logistics",
     "reason": "The public tracker confirms two CESCO waybills with the same numeric prefix. Explicit selection is available while prefix ownership and numeric overlaps remain open."
@@ -1135,6 +1145,11 @@
     "reason": "Domex waybill numbers are bare runs of eight or nine digits, a shape many carriers share."
   },
   {
+    "carrier": "don-mariano-express",
+    "kind": "open",
+    "reason": "The numeric guide offers no distinctive routing evidence. More confirmed tracking-code series are needed to evaluate the FLET format."
+  },
+  {
     "carrier": "dongjin-shipping",
     "kind": "open",
     "reason": "The guest search accepts shared container equipment identifiers. Select Dongjin Shipping explicitly."
@@ -1351,6 +1366,11 @@
     "reason": "Nine digits are shared by several carriers and nothing in the number points to Equick."
   },
   {
+    "carrier": "esm-logistica",
+    "kind": "open",
+    "reason": "The confirmed domestic guides are numeric and come from several series. A larger sample and a collision review are needed before detection."
+  },
+  {
     "carrier": "estes",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -1433,6 +1453,11 @@
     "reason": "One number from EWE's older tracker has this layout; a single sample is too thin to claim it."
   },
   {
+    "carrier": "exfreight",
+    "kind": "open",
+    "reason": "Exfresso’s public shipment references use ten generic digits. Select ExFreight explicitly."
+  },
+  {
     "carrier": "exline-kz",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -1497,6 +1522,11 @@
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "Nine digits are printed by many carriers and nothing in the number points to First Fly Express."
+  },
+  {
+    "carrier": "flashpy",
+    "kind": "open",
+    "reason": "The live example is a marketplace number accepted by the forwarding tracker. It does not distinguish Flashpy ownership."
   },
   {
     "carrier": "flechacarga",
@@ -2064,6 +2094,16 @@
     "pattern": "^00\\d{18}$",
     "kind": "by_design",
     "reason": "Some senders' parcels carry a twenty-digit SSCC, which no carrier rule claims."
+  },
+  {
+    "carrier": "hrl-cargo",
+    "kind": "open",
+    "reason": "The confirmed docket is numeric and shares its length with other carriers. The carrier also accepts manually assigned dockets."
+  },
+  {
+    "carrier": "hulak-logistics",
+    "kind": "open",
+    "reason": "Two published Hulak references have different layouts. Select Hulak Logistics explicitly."
   },
   {
     "carrier": "hunter-express",
@@ -2677,6 +2717,11 @@
     "reason": "MRL Global consignment numbers fall inside C-chez-vous' high-confidence ten-character rule, and two samples cannot show a range narrow enough to claim."
   },
   {
+    "carrier": "nacionales-delivery-services",
+    "kind": "open",
+    "reason": "One Nexgo reference does not establish the scope of the NX prefix. Select Nacionales Delivery Services explicitly."
+  },
+  {
     "carrier": "naqel",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -3038,6 +3083,11 @@
     "reason": "Eleven-digit waybills from Pargo's earlier tracker share their shape with many carriers' numeric waybills."
   },
   {
+    "carrier": "pasha-hawaii",
+    "kind": "open",
+    "reason": "Equipment can change operators and the confirmed bare bill collides with other carriers. The guest tracker supports both with explicit selection."
+  },
+  {
     "carrier": "pavan-courier",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -3144,6 +3194,11 @@
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "Nine digits are shared by several carriers, and nothing in the number points to Pilot."
+  },
+  {
+    "carrier": "pinoy-pride-worldwide",
+    "kind": "open",
+    "reason": "One Washington Returning Resident example is confirmed. Other states, other services and collisions need separate review."
   },
   {
     "carrier": "pitt-ohio",
@@ -3431,6 +3486,11 @@
     "reason": "REX Indonesia's older twelve-digit waybills share their shape with many carriers' numeric waybills."
   },
   {
+    "carrier": "rist-transport",
+    "kind": "open",
+    "reason": "The verified RIST PRO numbers contain eight generic digits. Select RIST Transport explicitly."
+  },
+  {
     "carrier": "rivigo",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -3605,6 +3665,11 @@
     "pattern": "^\\d{11}$",
     "kind": "collision",
     "reason": "Eleven-digit Sentral Cargo numbers share their shape with other carriers' numeric numbers, so the shape cannot name Sentral Cargo."
+  },
+  {
+    "carrier": "servicios-expresos",
+    "kind": "open",
+    "reason": "The live guide shares a USA prefix with the carrier’s example. Other country guide series and collisions need review."
   },
   {
     "carrier": "servientrega",
@@ -3814,6 +3879,11 @@
     "reason": "Twelve digits are shared by several carriers, Courier Center among them, and nothing in the number points to Speedex."
   },
   {
+    "carrier": "speedex-fast-cargo",
+    "kind": "open",
+    "reason": "One published numeric docket establishes explicit tracking. It does not establish a distinctive detection rule."
+  },
+  {
     "carrier": "speedy",
     "pattern": "^[0-57-9]\\d{10}$",
     "kind": "by_design",
@@ -3824,6 +3894,11 @@
     "pattern": "^3S[A-Z]{3}\\d{8}$",
     "kind": "collision",
     "reason": "PostNL's barcode documentation shows a three-letter customer code at this length, the shape most DHL Parcel barcodes have, and a few archived PostNL barcodes carry one. DHL's rule takes it: nearly all PostNL barcodes carry four letters."
+  },
+  {
+    "carrier": "sri-courier",
+    "kind": "open",
+    "reason": "One SriCourier example does not establish whether the SC prefix is unique. Select SriCourier explicitly."
   },
   {
     "carrier": "st-courier",
@@ -3874,6 +3949,11 @@
     "reason": "Older Steadfast codes are eight to eleven hexadecimal characters, too generic to claim."
   },
   {
+    "carrier": "sun-logistics",
+    "kind": "open",
+    "reason": "The observed Sun Logistics PRO consists of eight generic digits. Select Sun Logistics explicitly."
+  },
+  {
     "carrier": "sundarban-courier",
     "pattern": "^\\d{14}$",
     "kind": "by_design",
@@ -3913,6 +3993,11 @@
     "pattern": "^\\d{12}$",
     "kind": "by_design",
     "reason": "Twelve digits without a known check digit are printed by many carriers, and nothing in the number points to T-CAT."
+  },
+  {
+    "carrier": "tailwind-shipping-lines",
+    "kind": "open",
+    "reason": "The verified bills use a TSHG prefix with destination-dependent sequences. The carrier also accepts equipment owned by Tailwind or lessors. The format needs collision review."
   },
   {
     "carrier": "tamdis",
@@ -4160,6 +4245,11 @@
     "reason": "Ten digits are shared by DHL and several other carriers, and nothing in the number points to Total Express."
   },
   {
+    "carrier": "tpl-korea",
+    "kind": "open",
+    "reason": "The confirmed waybill is numeric and shares its length with other carriers. The official TBorder lookup supports explicit selection."
+  },
+  {
     "carrier": "trackon",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
@@ -4198,6 +4288,11 @@
     "carrier": "translink-shipping",
     "kind": "open",
     "reason": "The guest history confirms the whole house bill. The adapter is explicitly selected."
+  },
+  {
+    "carrier": "transportes-agael",
+    "kind": "open",
+    "reason": "One verified AGAEL guide provides insufficient evidence for a carrier-specific prefix rule. Select Transportes AGAEL explicitly."
   },
   {
     "carrier": "transportes-chevalier",

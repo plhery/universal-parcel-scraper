@@ -1,0 +1,58 @@
+{
+  "id": "pasha-hawaii",
+  "displayName": "Pasha Hawaii",
+  "aliases": [
+    "Pasha Hawaii Transport Lines",
+    "Pasha Hawaii Shipping"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#183771"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Honolulu",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pasha-hawaii",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.pashahawaiishipping.com/public/track.htm",
+    "searchUrl": "https://www.pashahawaiishipping.com/public/track.htm",
+    "canaryUrl": "https://www.pashahawaiishipping.com/public/track.htm",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "weight",
+      "estimated_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "weight",
+      "estimated_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

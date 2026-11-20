@@ -1,0 +1,29 @@
+{
+  "carrier": "sun-logistics",
+  "records": [
+    {
+      "number": "33807093",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking.carrierlogistics.com/scripts/snle.pol/facts.htm?startpage=protrace&pronum=33807093",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The indexed public carrier result names the Sun Logistics PRO number.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "The unauthenticated PRO search confirms six local-timestamped updates through delivery in New York."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "carrier": "tailwind-shipping-lines",
+  "records": [
+    {
+      "number": "TSHGNGB26046910",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/tailwind-shipping/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public Tailwind directory lists this advertised bill of lading.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier confirms three containers and completed loading and transshipment movements."
+    },
+    {
+      "number": "TSHGTAO26015581A",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/tailwind-shipping/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public Tailwind directory lists this advertised bill of lading.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The bill includes four completed equipment releases. Later port movements are estimates."
+    },
+    {
+      "number": "TSHGGRZ26000158",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/tailwind-shipping/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public Tailwind directory lists this advertised bill of lading.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier confirms four containers and actual discharge at the transshipment port."
+    },
+    {
+      "number": "CAIU9779439",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/tailwind-shipping/CAIU",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public Tailwind directory lists this reported leased container.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier confirms this exact equipment number in its own bill and returns completed loading movements."
+    }
+  ]
+}

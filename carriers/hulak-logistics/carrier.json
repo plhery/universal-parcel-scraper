@@ -1,0 +1,59 @@
+{
+  "id": "hulak-logistics",
+  "displayName": "Hulak Logistics",
+  "aliases": [
+    "Hulak Logistics Nepal",
+    "Hulak Express"
+  ],
+  "region": {
+    "countries": [
+      "NP"
+    ]
+  },
+  "brand": {
+    "color": "#194C7B"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kathmandu",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hulak-logistics",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://logistics.hulakexpress.com/tracking/?tracking_number={trackingNumber}",
+    "searchUrl": "https://logistics.hulakexpress.com/tracking/",
+    "canaryUrl": "https://logistics.hulakexpress.com/tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "origin",
+      "destination",
+      "service"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "location",
+      "sender_name",
+      "recipient_name",
+      "origin",
+      "destination",
+      "service"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

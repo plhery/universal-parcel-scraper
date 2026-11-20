@@ -1,0 +1,57 @@
+{
+  "id": "speedex-fast-cargo",
+  "displayName": "Speedex Fast Cargo",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#12306a"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "speedex-fast-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://speedexfastcargo.com/track.php?awb={trackingNumber}",
+    "searchUrl": "https://speedexfastcargo.com/#smart-track",
+    "canaryUrl": "https://speedexfastcargo.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,74 @@
+{
+  "billOfLadings": [
+    {
+      "containers": [
+        {
+          "id": "CAIU9779439",
+          "milestones": [
+            {
+              "isEstimate": false,
+              "location": {
+                "code": "CNNGB",
+                "name": "NINGBO",
+                "type": "Port"
+              },
+              "timestamp": "2026-11-03T19:47:00+08:00",
+              "type": "SentToShipper"
+            },
+            {
+              "isEstimate": false,
+              "location": {
+                "code": "CNNGB",
+                "name": "NINGBO",
+                "type": "Port"
+              },
+              "timestamp": "2026-11-09T02:14:00+08:00",
+              "type": "ReceivedFromShipper"
+            },
+            {
+              "isEstimate": false,
+              "location": {
+                "code": "CNNGB",
+                "name": "NINGBO",
+                "type": "Port"
+              },
+              "timestamp": "2026-11-14T00:00:00+08:00",
+              "type": "LoadFull"
+            },
+            {
+              "isEstimate": true,
+              "location": {
+                "code": "MYPKG",
+                "name": "PORT KLANG",
+                "type": "Port"
+              },
+              "timestamp": "2026-11-20T18:00:00+08:00",
+              "type": "DischargeFull"
+            },
+            {
+              "isEstimate": true,
+              "location": {
+                "code": "MYPKG",
+                "name": "PORT KLANG",
+                "type": "Port"
+              },
+              "type": "SentToConsignee"
+            },
+            {
+              "isEstimate": true,
+              "location": {
+                "code": "MYPKG",
+                "name": "PORT KLANG",
+                "type": "Port"
+              },
+              "type": "ReceivedFromConsignee"
+            }
+          ]
+        }
+      ],
+      "id": "TSHGNGB26047286"
+    }
+  ],
+  "bookingNumber": "TSHGNGB26047286",
+  "eta": "2026-11-20T18:00:00+08:00"
+}

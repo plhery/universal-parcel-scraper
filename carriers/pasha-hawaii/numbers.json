@@ -1,0 +1,91 @@
+{
+  "carrier": "pasha-hawaii",
+  "records": [
+    {
+      "number": "PGHU5003080",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.matts-place.com/intermodal/part1/refrig40.htm",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public equipment photo identifies this Pasha Hawaii refrigerated container.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier’s guest lookup names this container and returns eight recent movements."
+    },
+    {
+      "number": "PGHU4018613",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.matts-place.com/intermodal/part1/40foothcdryvans_mz.htm",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public equipment photo identifies this Pasha Hawaii dry container.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier returns eight movements on a separate September and October 2026 trip."
+    },
+    {
+      "number": "PGHU4700412",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://matts-place.com/intermodal/part2/flatracks.htm",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public equipment photo identifies this Pasha flat rack.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The guest record shows historical repositioning and that the equipment was later sold."
+    },
+    {
+      "number": "573230110069",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.matts-place.com/intermodal/part1/refrig40.htm",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Pasha Hawaii’s public lookup for the photographed PGHU5003080 equipment includes this bill of lading.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The separate bill inquiry echoes this bill and identifies the same container and its latest recorded movement."
+    }
+  ]
+}
