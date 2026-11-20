@@ -264,6 +264,7 @@ import { adapter as evri } from '../carriers/evri/adapter.js';
 import { adapter as evriUk } from '../carriers/evri-uk/adapter.js';
 import { adapter as evropat } from '../carriers/evropat/adapter.js';
 import { adapter as ewe } from '../carriers/ewe/adapter.js';
+import { adapter as ewlCostaRica } from '../carriers/ewl-costa-rica/adapter.js';
 import { adapter as exelot } from '../carriers/exelot/adapter.js';
 import { adapter as exlineKz } from '../carriers/exline-kz/adapter.js';
 import { adapter as exmate } from '../carriers/exmate/adapter.js';
@@ -1179,6 +1180,7 @@ export const REGISTRY: RegistryDefinition = {
     "evri-uk": evriUk,
     "evropat": evropat,
     "ewe": ewe,
+    "ewl-costa-rica": ewlCostaRica,
     "exelot": exelot,
     "exline-kz": exlineKz,
     "exmate": exmate,
@@ -2392,6 +2394,7 @@ export const REGISTRY: RegistryDefinition = {
     "evri-uk": "evri-uk",
     "evropat": "evropat",
     "ewe": "ewe",
+    "ewl-costa-rica": "ewl-costa-rica",
     "exelot": "exelot",
     "exline-kz": "exline-kz",
     "exmate": "exmate",

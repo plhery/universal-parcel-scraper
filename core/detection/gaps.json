@@ -5627,5 +5627,10 @@
     "kind": "open",
     "carrier": "bja-logistic",
     "reason": "BJA publishes and confirms short numeric shipment references. Explicit selection is available while issuance and numeric overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "ewl-costa-rica",
+    "reason": "The guest tracker confirms its one public guide. Explicit selection is available while guide issuance and overlaps remain open."
   }
 ]

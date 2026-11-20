@@ -1,0 +1,13 @@
+{
+  "carrier": "ewl-costa-rica",
+  "entries": [
+    { "code": null, "wording": "POR RECOLECTAR", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "RECOLECTADO", "stage": "accepted", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "EN TRANSITO A BODEGA", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "EN BODEGA", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "EN TRANSITO A SEDE", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "RECIBIDO EN SEDE", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "EN RUTA DE ENTREGA", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "ENTREGADO", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
+}

@@ -23807,6 +23807,29 @@
     ],
     "detectionRules": []
   },
+  "ewl-costa-rica": {
+    "displayName": "EWL Costa Rica",
+    "color": "#1563c0",
+    "aliases": [
+      "EWL",
+      "EWL Ecommerce WareHouse Logistic"
+    ],
+    "countries": [
+      "CR"
+    ],
+    "selectable": true,
+    "timezone": "America/Costa_Rica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ewl-costa-rica",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ewl-cr.com/",
+    "trackingUrlTemplate": "https://ewl-cr.com/?guia={trackingNumber}",
+    "trackingSearchUrl": "https://ewl-cr.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "exelot": {
     "displayName": "Exelot",
     "color": "#2e00ab",

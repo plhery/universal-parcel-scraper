@@ -23811,6 +23811,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "ewl-costa-rica": {
+    "displayName": "EWL Costa Rica",
+    "color": "#1563c0",
+    "aliases": [
+      "EWL",
+      "EWL Ecommerce WareHouse Logistic"
+    ],
+    "countries": [
+      "CR"
+    ],
+    "selectable": true,
+    "timezone": "America/Costa_Rica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ewl-costa-rica",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ewl-cr.com/",
+    "trackingUrlTemplate": "https://ewl-cr.com/?guia={trackingNumber}",
+    "trackingSearchUrl": "https://ewl-cr.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "exelot": {
     "displayName": "Exelot",
     "color": "#2e00ab",
@@ -66491,6 +66514,7 @@ export const CARRIER_IDS = [
   "evri-uk",
   "evropat",
   "ewe",
+  "ewl-costa-rica",
   "exelot",
   "exline-kz",
   "exmate",
@@ -68379,6 +68403,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "evri-uk": ["evri-uk-domestic","evri-uk-1","evri-uk-2","evri-uk-3"],
   "evropat": [],
   "ewe": [],
+  "ewl-costa-rica": [],
   "exelot": ["exelot-1"],
   "exline-kz": [],
   "exmate": ["exmate-1"],
