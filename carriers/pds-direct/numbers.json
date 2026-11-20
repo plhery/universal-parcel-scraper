@@ -1,5 +1,68 @@
 {
   "carrier": "pds-direct",
-  "gap": "No public page shows a PDS Direct number.",
-  "records": []
+  "records": [
+    {
+      "number": "17B56B40-2234-426A-9B5A-4DC5BBA0B4E8",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251209073556id_/https://webportal.pdsdirect.co.uk/tracktrace?reference=17B56B40-2234-426A-9B5A-4DC5BBA0B4E8",
+        "date": "2025-12-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "PDS Direct delivery",
+        "reportedRole": "tracking reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archive preserves this exact reference in a direct URL to the carrier’s tracker. The archived and live pages returned the application shell without a shipment history."
+    },
+    {
+      "number": "5347F777-014C-4EE2-8BBB-6CC5924983B0",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260113093750id_/https://webportal.pdsdirect.co.uk/tracktrace?reference=5347F777-014C-4EE2-8BBB-6CC5924983B0",
+        "date": "2026-01-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "PDS Direct delivery",
+        "reportedRole": "tracking reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archive preserves this exact reference in a direct URL to the carrier’s tracker. The archived and live pages returned the application shell without a shipment history."
+    },
+    {
+      "number": "710F6C15-39A5-4414-A268-82A62BFB7042",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251209073552id_/https://webportal.pdsdirect.co.uk/tracktrace?reference=710F6C15-39A5-4414-A268-82A62BFB7042",
+        "date": "2025-12-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "PDS Direct delivery",
+        "reportedRole": "tracking reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archive preserves this exact reference in a direct URL to the carrier’s tracker. The archived and live pages returned the application shell without a shipment history."
+    }
+  ]
 }
