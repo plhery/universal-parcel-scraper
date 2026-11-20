@@ -1,5 +1,67 @@
 {
   "carrier": "herona-express",
-  "gap": "No public page shows a Herona Express number beyond its tracker example.",
-  "records": []
+  "records": [
+    {
+      "number": "TSMA23000750",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://tracking.heronaexpress.co.id/lacak.php",
+        "date": "2026-11-20",
+        "dateKind": "form observation",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Herona Express Indonesia",
+        "reportedRole": "carrier tracking form example",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Herona prints this exact example in its tracking form. Its public lookup returns a populated response for the example, consistent with the carrier's documented shipment scans."
+    },
+    {
+      "number": "01957",
+      "role": "shipment",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://abadilabel.com/resi-pengiriman/",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Indonesia domestic freight",
+        "reportedRole": "listed shipment receipt number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The merchant’s shipment list names Herona Express beside this exact number, including its leading zero. The current public tracker did not return a record for it."
+    },
+    {
+      "number": "02264",
+      "role": "shipment",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://abadilabel.com/resi-pengiriman/",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Indonesia domestic freight",
+        "reportedRole": "listed shipment receipt number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The merchant’s shipment list names Herona Express beside this exact number, including its leading zero. The current public tracker did not return a record for it."
+    }
+  ]
 }
