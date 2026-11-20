@@ -84,6 +84,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['At parcel delivery centre.', { status: 'in_transit', stage: 'in_transit' }],
   ['Out for delivery.', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Shipping Label Created', { status: 'pending', stage: 'registered' }],
+  // The same label in YunExpress's own words, before the carrier has the parcel.
+  ['Shipper created a label, Carrier\'s has not received the package yet.', { status: 'pending', stage: 'registered' }],
   // The US partner's collection of the parcel for the last-mile carrier, its first scan after the label, as GOFO's and 4PX's maps read it.
   ['Picked up by Shipping Partner, Carrier\'s Awaiting Item', { status: 'in_transit', stage: 'accepted' }],
   // Its regional hub after that collection, as GOFO's map reads the same wording with its own name.

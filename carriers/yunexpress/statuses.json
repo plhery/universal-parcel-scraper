@@ -437,6 +437,14 @@
       "note": "The first line of a parcel for the United States, placed at a US facility: a data record, not a scan."
     },
     {
+      "wording": "Shipper created a label, Carrier's has not received the package yet.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "A parcel's first line, the label before the carrier has the parcel: a data record, not a scan."
+    },
+    {
       "wording": "Picked up by Shipping Partner, Carrier's Awaiting Item",
       "stage": "accepted",
       "language": "en",
