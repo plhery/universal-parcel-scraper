@@ -25815,6 +25815,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "fletes-del-sur": {
+    "displayName": "Paquetería y Fletes del Sur",
+    "color": "#eb2539",
+    "aliases": [
+      "PFS",
+      "Paqueteria y Fletes del Sur",
+      "Paquetería y Fletes del Sur S.A. de C.V."
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fletes-del-sur",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.fletesdelsur.com/rastreo",
+    "trackingUrlTemplate": "https://www.fletesdelsur.com/rastreo/{trackingNumber}",
+    "trackingSearchUrl": "https://www.fletesdelsur.com/rastreo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "flickpost": {
     "displayName": "Flickpost",
     "color": "#19c2e8",
@@ -66291,6 +66315,7 @@ export const CARRIER_IDS = [
   "flechacarga",
   "fleetex",
   "fleetoptics",
+  "fletes-del-sur",
   "flickpost",
   "flight-logistics",
   "flippost",
@@ -68168,6 +68193,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "flechacarga": [],
   "fleetex": [],
   "fleetoptics": ["fleetoptics-1"],
+  "fletes-del-sur": [],
   "flickpost": [],
   "flight-logistics": [],
   "flippost": [],

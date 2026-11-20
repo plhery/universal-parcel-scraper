@@ -1,0 +1,23 @@
+{
+  "carrier": "fletes-del-sur",
+  "records": [
+    {
+      "number": "3334537",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://www.fletesdelsur.com/open-pay", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["seur"] },
+      "note": "The carrier's guide example resolves on its public tracking page to three dated scans from August 2024."
+    },
+    {
+      "number": "4013455",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://www.fletesdelsur.com/rastreo", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["seur"] },
+      "note": "The carrier's tracking page source publishes this direct-link example. It resolves to eight dated scans from August 2026."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "fletes-del-sur",
+  "displayName": "Paquetería y Fletes del Sur",
+  "aliases": [
+    "PFS",
+    "Paqueteria y Fletes del Sur",
+    "Paquetería y Fletes del Sur S.A. de C.V."
+  ],
+  "region": {
+    "countries": [
+      "MX"
+    ]
+  },
+  "brand": {
+    "color": "#eb2539"
+  },
+  "selectable": true,
+  "timezone": "America/Mexico_City",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "fletes-del-sur",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://www.fletesdelsur.com/rastreo/{trackingNumber}",
+    "searchUrl": "https://www.fletesdelsur.com/rastreo",
+    "canaryUrl": "https://www.fletesdelsur.com/rastreo",
+    "shows": [
+      "history",
+      "status",
+      "delivery_details",
+      "documents"
+    ],
+    "scraped": [
+      "history",
+      "status"
+    ],
+    "discarded": [
+      "delivery_details",
+      "documents"
+    ],
+    "unavailable": [
+      "scan_offsets"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

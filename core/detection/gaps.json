@@ -5572,5 +5572,10 @@
     "kind": "open",
     "carrier": "parcelninja",
     "reason": "The native tracker confirms the shipper's public PNJ waybill. Explicit selection is available while other issued formats remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "fletes-del-sur",
+    "reason": "Both published PFS guides share a seven-digit shape with other carriers. The native adapter is available by explicit selection."
   }
 ]

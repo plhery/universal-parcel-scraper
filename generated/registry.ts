@@ -292,6 +292,7 @@ import { adapter as flechaAmarilla } from '../carriers/flecha-amarilla/adapter.j
 import { adapter as flechacarga } from '../carriers/flechacarga/adapter.js';
 import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
 import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
+import { adapter as fletesDelSur } from '../carriers/fletes-del-sur/adapter.js';
 import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
 import { adapter as flippost } from '../carriers/flippost/adapter.js';
 import { adapter as fmTransportes } from '../carriers/fm-transportes/adapter.js';
@@ -1196,6 +1197,7 @@ export const REGISTRY: RegistryDefinition = {
     "flechacarga": flechacarga,
     "fleetex": fleetex,
     "fleetoptics": fleetoptics,
+    "fletes-del-sur": fletesDelSur,
     "flickpost": flickpost,
     "flippost": flippost,
     "fm-transportes": fmTransportes,
@@ -2429,6 +2431,7 @@ export const REGISTRY: RegistryDefinition = {
     "flechacarga": "flechacarga",
     "fleetex": "fleetex",
     "fleetoptics": "fleetoptics",
+    "fletes-del-sur": "fletes-del-sur",
     "flickpost": "flickpost",
     "flight-logistics": "universal",
     "flippost": "flippost",
