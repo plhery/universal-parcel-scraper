@@ -265,6 +265,15 @@ describe('Nova Global numbers', () => {
       expect(detectCarrierMatch(number).carrier, number).not.toBe('nova-global');
     }
   });
+  it('takes a waybill of TE, sixteen digits and NGUS', () => {
+    // Synthetic, in the layout of a waybill from China that Nova Global's tracker answers.
+    expect(normalizeNovaGlobalNumber('te 0000 0000 0000 0001 ngus')).toBe('TE0000000000000001NGUS');
+    expect(detectCarrierMatch('TE0000000000000001NGUS')).toMatchObject({ carrier: 'nova-global', confidence: 'high' });
+    for (const number of ['TE000000000000001NGUS', 'TE00000000000000001NGUS', 'TA0000000000000001NGUS', 'TE0000000000000001NGUA']) {
+      expect(() => normalizeNovaGlobalNumber(number), number).toThrow(InvalidInputError);
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('nova-global');
+    }
+  });
 });
 
 describe('Nova Global status vocabulary', () => {

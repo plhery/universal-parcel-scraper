@@ -4,6 +4,7 @@
   "aliases": [
     "Nova Poshta Global",
     "NP Global",
+    "NovaPosta Global",
     "Нова Пошта Глобал",
     "Nova Poshta International"
   ],
@@ -102,6 +103,11 @@
     {
       "id": "nova-global-2",
       "pattern": "^[A-Z]{5}\\d{10}NPG$",
+      "confidence": "high"
+    },
+    {
+      "id": "nova-global-3",
+      "pattern": "^TE\\d{16}NGUS$",
       "confidence": "high"
     }
   ]

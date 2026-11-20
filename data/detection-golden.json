@@ -107907,9 +107907,11 @@
   },
   {
     "input": "TE1000000010936808NGUS",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "nova-global",
+    "confidence": "high",
+    "candidates": [
+      "nova-global"
+    ]
   },
   {
     "input": "TELP1000004829",
@@ -111661,6 +111663,12 @@
   },
   {
     "input": "YGN9125345TKI/AAF362660",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "YHC251680103912CN",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []

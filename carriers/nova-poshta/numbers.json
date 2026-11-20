@@ -952,10 +952,10 @@
         "reportedRole": "international_reference"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "nova-global",
+        "confidence": "high"
       },
-      "note": "Nova Post Global reference published beside a Nova Poshta waybill; that portal is outside this adapter's scope."
+      "note": "Nova Post Global reference published beside a Nova Poshta waybill; that portal is outside this adapter's scope, and rule nova-global-3 sends it to Nova Global's tracker."
     },
     {
       "number": "SHUA5994810530",

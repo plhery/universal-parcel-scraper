@@ -13,9 +13,10 @@ import { novaGlobalStage } from './status.js';
 export const PROVIDER = 'Nova Global';
 // A long history is a few kilobytes.
 export const NOVA_GLOBAL_MAX_BYTES = 512 * 1024;
-// Two letters, nine to sixteen digits and NPG, as rule nova-global-1 claims; or a shop's order, five
-// letters, ten digits and NPG, which no rule claims.
-const NUMBER = /^(?:[A-Z]{2}\d{9,16}|[A-Z]{5}\d{10})NPG$/;
+// Two letters, nine to sixteen digits and NPG, as rule nova-global-1 claims; a shop's order, five
+// letters, ten digits and NPG, as rule nova-global-2 claims; or TE, sixteen digits and NGUS, as rule
+// nova-global-3 claims, a waybill from China the tracker answers.
+const NUMBER = /^(?:(?:[A-Z]{2}\d{9,16}|[A-Z]{5}\d{10})NPG|TE\d{16}NGUS)$/;
 const WALL_CLOCK = /^(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2})$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
@@ -25,7 +26,7 @@ const NOT_FOUND = 203;
 /** A Nova Global waybill, in capitals; anything else is not a number it issues. */
 export function normalizeNovaGlobalNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
-  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'Nova Global waybills are two letters, nine to sixteen digits and NPG, or five letters, ten digits and NPG');
+  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'Nova Global waybills are two letters, nine to sixteen digits and NPG, five letters, ten digits and NPG, or TE, sixteen digits and NGUS');
   return number;
 }
 

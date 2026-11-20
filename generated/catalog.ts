@@ -16182,6 +16182,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Correo Oficial de la República Argentina",
       "Argentina Post",
+      "Argentine Post",
       "Correo Argentino S.A."
     ],
     "countries": [
@@ -41913,6 +41914,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Nova Poshta Global",
       "NP Global",
+      "NovaPosta Global",
       "Нова Пошта Глобал",
       "Nova Poshta International"
     ],
@@ -41951,6 +41953,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^[A-Z]{5}\\d{10}NPG$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^TE\\d{16}NGUS$",
         "confidence": "high"
       }
     ]
@@ -68161,7 +68167,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nordbrief": [],
   "norsk-global": ["norsk-global-pkg"],
   "northline": [],
-  "nova-global": ["nova-global-1","nova-global-2"],
+  "nova-global": ["nova-global-1","nova-global-2","nova-global-3"],
   "nova-kargo": [],
   "nova-poshta": ["nova-poshta-export","nova-poshta-domestic","nova-poshta-international"],
   "now-couriers": [],

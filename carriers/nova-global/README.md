@@ -53,7 +53,10 @@ letters, nine to sixteen digits and NPG, with NP, WB, OG and YW in front. Rule n
 claims that shape with high confidence because no other carrier ends its numbers with NPG. A
 shop's orders it carries take five letters, ten digits and NPG: its tracker answers iHerb's with
 their history, naming the shop. `nova-global-2` claims them with high confidence on the same
-ground, from parcels the app tracked that Nova Global's tracker answered.
+ground, from parcels the app tracked that Nova Global's tracker answered. Waybills from China
+can take TE, sixteen digits and NGUS, which the tracker answers with the waybill's route and
+its Nova Poshta partner; `nova-global-3` claims that whole shape with high confidence, as no
+other catalog rule takes the NGUS ending.
 
 ## Links
 
