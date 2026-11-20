@@ -673,12 +673,27 @@ function requiresValue(pattern: unknown): boolean {
  * those carriers' history without a postcode when it has it.
  */
 function requestsPostcode(shipment: Record<string, unknown>): boolean {
-  const fields = Array.isArray(shipment.params_v2)
+  const fields = formFields(shipment);
+  return fields.some(field => field.postcode && requiresValue(field.pattern))
+    && !fields.some(field => !field.postcode && requiresValue(field.pattern));
+}
+
+function formFields(shipment: Record<string, unknown>): { postcode: boolean, pattern: unknown }[] {
+  return Array.isArray(shipment.params_v2)
     ? shipment.params_v2.filter(isRecord).map(p => ({ postcode: p.key === 'postal_code', pattern: p.regex }))
     : [shipment.param, ...Array.isArray(shipment.params) ? shipment.params as unknown[] : []].filter(isRecord)
       .map(p => ({ postcode: p.type === 'PostalCode', pattern: p.format }));
-  return fields.some(field => field.postcode && requiresValue(field.pattern))
-    && !fields.some(field => !field.postcode && requiresValue(field.pattern));
+}
+
+/**
+ * Whether the form 17TRACK lists for the matching shipment has a postcode
+ * field at all. When it has none, as when 17TRACK detects no carrier for the
+ * number, the page offers no way to submit one.
+ */
+function offersPostcode(payload: unknown, number: string): boolean {
+  if (!isRecord(payload) || !Array.isArray(payload.shipments)) return false;
+  const matches = payload.shipments.filter((s) => isRecord(s) && s.number === number);
+  return matches.length === 1 && isRecord(matches[0]) && formFields(matches[0]).some(field => field.postcode);
 }
 
 export function parse17TrackResponse(payload: unknown, trackingNumber: string, postcode: string | null = null): CarrierResult {
@@ -968,9 +983,10 @@ export class SeventeenTrackTracker {
       try {
         const payload: unknown = JSON.parse(body);
         // Old browser-service builds ignore the private input marker. Never
-        // report that a supplied postcode was tried without a bound request.
+        // report that a supplied postcode was tried without a bound request,
+        // unless the reply's form has no postcode field to take it.
         const submitted = page.capturedResponses.some(entry => entry.body === body && entry.postcodeSubmitted === true);
-        if (postcode && !submitted) {
+        if (postcode && !submitted && offersPostcode(payload, number)) {
           try { return parse17TrackResponse(payload, number); }
           catch (error) {
             if (error instanceof InputRequiredError || error instanceof SeventeenTrackNoHistoryError) {

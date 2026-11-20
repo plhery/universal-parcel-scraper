@@ -19,6 +19,8 @@ One step, `trawl`, with a 30 s budget:
    form. Its normal handler signs the request and retains the detected carriers.
    Captures mark whether that exact request included the postcode; an older browser
    service that ignores it returns a transport error instead of claiming a retry.
+   A reply whose form has no postcode field, as when 17TRACK detects no carrier for the
+   number, offered nothing to submit and stays no history.
 3. Bodies are parsed newest first. Shipment code 100 means 17TRACK is still polling, so
    the loop continues and remembers the last typed failure.
 4. A completed, identity-matched `NotFound` with no rows becomes `NotFoundError`.

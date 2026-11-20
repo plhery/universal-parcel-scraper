@@ -1530,8 +1530,15 @@ describe('17TRACK browser capture', () => {
   });
 
   it('does not silently claim a postcode retry when the browser service ignored it', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(captured(noHistory(), { url: `https://t.17track.net/en#nums=${number}&trawl-postcode=8000` }));
+    const url = `https://t.17track.net/en#nums=${number}&trawl-postcode=8000`;
+    const form = { meta: { code: 200 }, shipments: [{ number, code: 400, shipment: null, params_v2: [{ key: 'postal_code' }] }] };
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(captured(form, { url }));
     await expect(tracker(fetcher).fetch(number, undefined, undefined, '8000')).rejects.toMatchObject({ kind: 'transport', reason: 'postcode_not_submitted' });
+    // A reply whose form has no postcode field, as when 17TRACK detects no carrier, offered nothing to submit.
+    fetcher.mockResolvedValue(captured({ meta: { code: 200 }, shipments: [{ number, code: 400, carrier: 0, shipment: null, params_v2: null }] }, { url }));
+    await expect(tracker(fetcher).fetch(number, undefined, undefined, '8000')).rejects.toMatchObject({ name: 'SeventeenTrackNoHistoryError' });
+    fetcher.mockResolvedValue(captured(noHistory(), { url }));
+    await expect(tracker(fetcher).fetch(number, undefined, undefined, '8000')).rejects.toMatchObject({ name: 'SeventeenTrackNoHistoryError' });
     fetcher.mockClear();
     await expect(tracker(fetcher).fetch(number, undefined, undefined, '<script>8000')).rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
