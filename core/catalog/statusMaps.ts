@@ -1,4 +1,6 @@
 import { statusMap as altexCurier } from '../../carriers/altex-curier/status.js';
+import { statusMap as bmCargo } from '../../carriers/bm-cargo/status.js';
+import { statusMap as cargoX } from '../../carriers/cargox/status.js';
 import { statusMap as flechacarga } from '../../carriers/flechacarga/status.js';
 /**
  * The carriers' status maps, asked about one scan at a time.
@@ -850,6 +852,8 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'altex-curier': altexCurier,
+  'bm-cargo': bmCargo,
+  'cargox': cargoX,
   'bh-posta': bhPosta,
   'hellmann': hellmannStatus,
   'honducor': honducorStatus,
