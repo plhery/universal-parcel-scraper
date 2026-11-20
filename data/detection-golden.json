@@ -31237,6 +31237,12 @@
     ]
   },
   {
+    "input": "221842392",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "222010431454",
     "carrier": "unknown",
     "confidence": "low",
@@ -31552,6 +31558,24 @@
   },
   {
     "input": "222405116",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt",
+      "tforce-freight",
+      "xpo-ltl"
+    ],
+    "preferred": [
+      "tnt"
+    ],
+    "asked": [
+      "tnt",
+      "tforce-freight",
+      "xpo-ltl"
+    ]
+  },
+  {
+    "input": "222453221",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
