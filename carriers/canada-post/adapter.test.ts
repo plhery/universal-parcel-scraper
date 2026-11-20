@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { adapter, CanadaPostTracker, canadaPostTrackingUrl, parseCanadaPostTrackingResponse } from './adapter.js';
 import { canadaPostLookupKind, normalizeCanadaPostNumber, resolveCanadaPostPin } from './parser.js';
-import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, canadaPostStatus, isKnownCanadaPostScan } from './status.js';
+import { canadaPostPackageStage, canadaPostScanStage, canadaPostStage, canadaPostStatus, isKnownCanadaPostScan, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 import { wordingStage } from '../../core/status/index.js';
 import { BudgetExceededError, carrierErrorKind, IndeterminateError, SchemaError, InvalidInputError } from '../../core/errors/index.js';
@@ -494,6 +494,8 @@ describe('Canada Post scan vocabulary', () => {
       last_status_text: "Item on hold at recipient's request", expected_delivery: '2026-03-17' });
     expect(canadaPostScanStage('1410')).toBe('in_transit');
     expect(canadaPostScanStage('1410', "Item on hold at the post office at recipient's request")).toBe('ready_for_pickup');
+    // Canada Post's own delay to the next business day is no problem either.
+    expect(statusMap.stage('0621', 'delivery delayed to next business day')).toBe('in_transit');
   });
 
   it('reads a completed customs release as movement under any code', () => {

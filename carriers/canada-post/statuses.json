@@ -400,6 +400,15 @@
       "note": "Proof of delivery is available; it moves nothing and the photo is not read."
     },
     {
+      "code": "0621",
+      "wording": "Delivery delayed to next business day",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "Canada Post putting the delivery off before any round: its own delay, so the item stays in transit."
+    },
+    {
       "code": "1410",
       "wording": "Item on hold at recipient's request",
       "language": "en",

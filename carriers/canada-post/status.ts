@@ -29,6 +29,8 @@ const SCAN_STAGE: Readonly<Record<string, Stage>> = {
   '1479': 'failed_attempt', '1488': 'failed_attempt',
   // A hold the recipient asked for: the item waits for its new delivery.
   '1410': 'in_transit',
+  // Canada Post putting the delivery off to the next business day, before any round: its own delay, not a problem.
+  '0621': 'in_transit',
   '1434': 'delivered', '1441': 'delivered', '1442': 'delivered', '1462': 'delivered', '1496': 'delivered', '1498': 'delivered',
   '4700': 'in_transit',
   // International legs. A customs release moves the item on rather than holding it.
