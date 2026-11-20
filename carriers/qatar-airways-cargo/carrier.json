@@ -1,0 +1,57 @@
+{
+  "id": "qatar-airways-cargo",
+  "displayName": "Qatar Airways Cargo",
+  "aliases": [
+    "QR Cargo",
+    "Qatar Cargo"
+  ],
+  "region": {
+    "countries": [
+      "QA"
+    ]
+  },
+  "brand": {
+    "color": "#5c0632"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "qatar-airways-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.qrcargo.com/s/track-your-shipment",
+    "searchUrl": "https://www.qrcargo.com/s/track-your-shipment",
+    "canaryUrl": "https://www.qrcargo.com/s/track-your-shipment",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "flight",
+      "weight",
+      "pieces"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "flight",
+      "weight",
+      "pieces"
+    ],
+    "unavailable": [],
+    "siteName": "Qatar Airways Cargo Tracking"
+  },
+  "links": [],
+  "detection": []
+}

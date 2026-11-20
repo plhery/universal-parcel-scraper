@@ -650,6 +650,7 @@ import { adapter as puntopost } from '../carriers/puntopost/adapter.js';
 import { adapter as purolator } from '../carriers/purolator/adapter.js';
 import { adapter as pwb } from '../carriers/pwb/adapter.js';
 import { adapter as pxcPacific } from '../carriers/pxc-pacific/adapter.js';
+import { adapter as qatarAirwaysCargo } from '../carriers/qatar-airways-cargo/adapter.js';
 import { adapter as qatarPost } from '../carriers/qatar-post/adapter.js';
 import { adapter as qtExpress } from '../carriers/qt-express/adapter.js';
 import { adapter as quantiumSolutions } from '../carriers/quantium-solutions/adapter.js';
@@ -1568,6 +1569,7 @@ export const REGISTRY: RegistryDefinition = {
     "purolator": purolator,
     "pwb": pwb,
     "pxc-pacific": pxcPacific,
+    "qatar-airways-cargo": qatarAirwaysCargo,
     "qatar-post": qatarPost,
     "qt-express": qtExpress,
     "quantium-solutions": quantiumSolutions,
@@ -3169,6 +3171,7 @@ export const REGISTRY: RegistryDefinition = {
     "pushpak-courier": "universal",
     "pwb": "pwb",
     "pxc-pacific": "pxc-pacific",
+    "qatar-airways-cargo": "qatar-airways-cargo",
     "qatar-post": "qatar-post",
     "qiantong-hk": "universal",
     "qls-quince": "universal",

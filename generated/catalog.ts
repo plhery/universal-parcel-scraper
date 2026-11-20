@@ -48565,6 +48565,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "qatar-airways-cargo": {
+    "displayName": "Qatar Airways Cargo",
+    "color": "#5c0632",
+    "aliases": [
+      "QR Cargo",
+      "Qatar Cargo"
+    ],
+    "countries": [
+      "QA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "qatar-airways-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.qrcargo.com/s/track-your-shipment",
+    "trackingUrlTemplate": "https://www.qrcargo.com/s/track-your-shipment",
+    "trackingSearchUrl": "https://www.qrcargo.com/s/track-your-shipment",
+    "trackingSiteName": "Qatar Airways Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "qatar-post": {
     "displayName": "Qatar Post",
     "color": "#002e6d",
@@ -67308,6 +67332,7 @@ export const CARRIER_IDS = [
   "pushpak-courier",
   "pwb",
   "pxc-pacific",
+  "qatar-airways-cargo",
   "qatar-post",
   "qiantong-hk",
   "qls-quince",
@@ -69198,6 +69223,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pushpak-courier": [],
   "pwb": ["pwb-1"],
   "pxc-pacific": [],
+  "qatar-airways-cargo": [],
   "qatar-post": ["qatar-post-ems-s10"],
   "qiantong-hk": [],
   "qls-quince": [],

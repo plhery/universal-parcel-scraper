@@ -1,0 +1,36 @@
+{
+  "carrier": "qatar-airways-cargo",
+  "records": [
+    {
+      "number": "157-82434435",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://new.kenyalaw.org/akn/ke/officialGazette/2026-03-27/56/eng%402026-03-27/source",
+        "access": "full_page",
+        "date": "2026-03-27",
+        "dateKind": "publication"
+      },
+      "context": {
+        "reportedRole": "carrier master air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The Kenyan Gazette publishes this full air waybill. The Qatar Airways Cargo guest response confirms the prefix and serial and contains dated movement history."
+    }
+  ]
+}

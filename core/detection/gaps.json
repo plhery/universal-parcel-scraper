@@ -5629,5 +5629,10 @@
     "carrier": "kenya-airways-cargo",
     "kind": "open",
     "reason": "The guest search confirms the full Kenya Airways Cargo air waybill. Select Kenya Airways Cargo explicitly."
+  },
+  {
+    "carrier": "qatar-airways-cargo",
+    "kind": "open",
+    "reason": "The public guest portal confirms the master air waybill prefix and serial. The eleven-digit number shares a shape with other carriers."
   }
 ]

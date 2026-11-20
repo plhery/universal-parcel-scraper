@@ -1,0 +1,12 @@
+{
+  "actions": [
+    {
+      "state": "SUCCESS",
+      "returnValue": {
+        "returnValue": {
+          "cargoTrackingSOs": []
+        }
+      }
+    }
+  ]
+}
