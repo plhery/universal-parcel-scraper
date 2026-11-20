@@ -1,0 +1,149 @@
+{
+  "ok": true,
+  "tracking": {
+    "found": true,
+    "source": "local_portal",
+    "searched_value": "00340306576911969135",
+    "searched_barcode": "00340306576911969135",
+    "shipments": [
+      {
+        "packages": [
+          {
+            "barcode": "00340306576911969135"
+          }
+        ],
+        "current_status": {
+          "code": "CS_90_4",
+          "text": "Zustellung erfolgt (vollständig)",
+          "timestamp": "2026-06-11T09:01:00.000Z",
+          "city": null,
+          "country": null,
+          "source": "local_portal"
+        },
+        "timeline": [
+          {
+            "code": "CS_10",
+            "text": "elektronisch angekündigt",
+            "timestamp": "2026-06-05T08:55:33.846Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_11",
+            "text": "zur Verarbeitung angenommen",
+            "timestamp": "2026-06-05T09:03:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_12",
+            "text": "Abholung disponiert",
+            "timestamp": "2026-06-08T06:59:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_19",
+            "text": "Abholung Versender nicht erfolgt",
+            "timestamp": "2026-06-08T13:18:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_12",
+            "text": "Abholung disponiert",
+            "timestamp": "2026-06-09T06:44:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_14_2",
+            "text": "2. Abholung angewiesen",
+            "timestamp": "2026-06-09T11:49:14.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_20",
+            "text": "Abholung Versender erfolgt",
+            "timestamp": "2026-06-09T13:09:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_30",
+            "text": "Entladung VD erfolgt",
+            "timestamp": "2026-06-09T13:56:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_40",
+            "text": "Verladung VD erfolgt",
+            "timestamp": "2026-06-09T17:25:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_10",
+            "text": "elektronisch angekündigt",
+            "timestamp": "2026-06-09T20:01:21.813Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_55",
+            "text": "Lagerung HUB",
+            "timestamp": "2026-06-10T04:10:54.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_69_1",
+            "text": "Entladung ED nicht erfolgt",
+            "timestamp": "2026-06-10T07:06:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_70_1",
+            "text": "Entladung ED erfolgt",
+            "timestamp": "2026-06-11T04:55:02.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_80",
+            "text": "Verladung ED erfolgt",
+            "timestamp": "2026-06-11T07:51:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          },
+          {
+            "code": "CS_90_4",
+            "text": "Zustellung erfolgt (vollständig)",
+            "timestamp": "2026-06-11T09:01:00.000Z",
+            "city": null,
+            "country": null,
+            "source": "local_portal"
+          }
+        ],
+        "source": "local_portal"
+      }
+    ]
+  }
+}

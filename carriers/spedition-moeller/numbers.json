@@ -1,0 +1,19 @@
+{
+  "carrier": "spedition-moeller",
+  "records": [
+    {
+      "number": "00340306576911969135",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://portal.eichert.me/tracking.html",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "NVE/pack piece barcode published as the Artur Möller tracking form example",
+        "assessment": "confirmed"
+      },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["swiss-post-cargo", "usps", "nz-post"] }
+    }
+  ]
+}

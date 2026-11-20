@@ -1,0 +1,100 @@
+{
+  "carrier": "spedition-moeller",
+  "entries": [
+    {
+      "code": "CS_10",
+      "wording": "elektronisch angekündigt",
+      "stage": "registered",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_11",
+      "wording": "zur Verarbeitung angenommen",
+      "stage": "registered",
+      "language": "de",
+      "confirmedBy": "live",
+      "note": "The shipment data has been accepted for processing."
+    },
+    {
+      "code": "CS_12",
+      "wording": "Abholung disponiert",
+      "stage": "registered",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_19",
+      "wording": "Abholung Versender nicht erfolgt",
+      "stage": "exception",
+      "language": "de",
+      "confirmedBy": "live",
+      "note": "Pickup from the sender did not occur."
+    },
+    {
+      "code": "CS_14_2",
+      "wording": "2. Abholung angewiesen",
+      "stage": "registered",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_20",
+      "wording": "Abholung Versender erfolgt",
+      "stage": "accepted",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_30",
+      "wording": "Entladung VD erfolgt",
+      "stage": "in_transit",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_40",
+      "wording": "Verladung VD erfolgt",
+      "stage": "in_transit",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_55",
+      "wording": "Lagerung HUB",
+      "stage": "in_transit",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_69_1",
+      "wording": "Entladung ED nicht erfolgt",
+      "stage": "exception",
+      "language": "de",
+      "confirmedBy": "live",
+      "note": "The shipment was not unloaded at the receiving depot."
+    },
+    {
+      "code": "CS_70_1",
+      "wording": "Entladung ED erfolgt",
+      "stage": "in_transit",
+      "language": "de",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CS_80",
+      "wording": "Verladung ED erfolgt",
+      "stage": "in_transit",
+      "language": "de",
+      "confirmedBy": "live",
+      "note": "The receiving depot loaded the shipment. The code does not confirm a delivery attempt."
+    },
+    {
+      "code": "CS_90_4",
+      "wording": "Zustellung erfolgt (vollständig)",
+      "stage": "delivered",
+      "language": "de",
+      "confirmedBy": "live"
+    }
+  ]
+}

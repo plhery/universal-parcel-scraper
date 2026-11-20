@@ -1,0 +1,22 @@
+{
+  "id": "spedition-moeller",
+  "displayName": "Artur Möller",
+  "aliases": ["Artur Möller GmbH & Co. KG", "Spedition Artur Möller", "Artur Moeller"],
+  "region": { "countries": ["DE"] },
+  "brand": { "color": "#dd3a32" },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": { "mode": "automatic", "adapter": "spedition-moeller", "steps": ["direct"] },
+  "capabilities": ["history", "location", "provider_code", "offset_timestamps", "delivered_at"],
+  "portal": {
+    "url": "https://portal.spedition-moeller.com/tracking.html",
+    "searchUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "canaryUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "shows": ["status", "history"],
+    "scraped": ["status", "history", "location", "provider_code", "offset_timestamps", "delivered_at"],
+    "discarded": [],
+    "unavailable": ["recipient_address", "proof_of_delivery"]
+  },
+  "links": [],
+  "detection": []
+}

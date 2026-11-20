@@ -54135,6 +54135,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "spedition-moeller": {
+    "displayName": "Artur Möller",
+    "color": "#dd3a32",
+    "aliases": [
+      "Artur Möller GmbH & Co. KG",
+      "Spedition Artur Möller",
+      "Artur Moeller"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spedition-moeller"
+    },
+    "canaryUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "trackingUrlTemplate": "https://portal.spedition-moeller.com/tracking.html",
+    "trackingSearchUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "speed-and-safe": {
     "displayName": "Gokulam Speed & Safe",
     "color": "#2e3192",
@@ -67143,6 +67166,7 @@ export const CARRIER_IDS = [
   "sp-express",
   "spark-kz",
   "sped-trans",
+  "spedition-moeller",
   "speed-and-safe",
   "speedaf",
   "speedex",
@@ -69020,6 +69044,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sp-express": ["sp-express-1"],
   "spark-kz": [],
   "sped-trans": [],
+  "spedition-moeller": [],
   "speed-and-safe": [],
   "speedaf": ["speedaf-12","speedaf-r"],
   "speedex": [],
