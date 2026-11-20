@@ -1,5 +1,22 @@
 {
   "carrier": "tiptop",
-  "gap": "No public page shows a TipTop tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "YHC251680103912CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/tiptop/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example under the tracking box of a tracker's TipTop page, which links tiptop56.com. Not looked up: TipTop has no tracker of its own, and one sample does not make a number rule."
+    }
+  ]
 }

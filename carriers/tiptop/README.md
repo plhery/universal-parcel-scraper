@@ -7,13 +7,14 @@ small-parcel lines, overseas warehouses and freight forwarding. Its site is tipt
 
 ## Numbers
 
-TipTop publishes no number format and no public page shows one of its numbers, so there is no
-rule.
+TipTop publishes no number format. One tracker's TipTop page shows an example, kept in
+`numbers.json`; one sample does not make a rule, so detection offers no carrier for it.
 
 ## Why there is no adapter
 
-The tracking box on its site posts the number to ChinaParcels, a third-party tracker, rather than
-to a tracker of TipTop's own.
+Its site is built on ChinaParcels' site template, and the tracking box posts the number to
+`chinaparcels.com/track-trace`, ChinaParcels' universal tracker behind a Cloudflare check, rather
+than to a tracker of TipTop's own. No other public tracking surface names TipTop.
 
 ## Links
 
