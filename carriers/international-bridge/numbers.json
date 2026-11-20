@@ -1,5 +1,33 @@
 {
   "carrier": "international-bridge",
-  "gap": "An International Bridge tracking number has no published layout and no public page shows one.",
-  "records": []
+  "records": [
+    {
+      "number": "9261290131351113421128",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.tracking-status.com/parcelpool-package-delivery-tracking/",
+        "date": "2022-12-13",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "ParcelPool via Honolulu",
+        "reportedRole": "tracking number in a ParcelPool customer report",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "dhl-ecommerce",
+          "austrian-post",
+          "estafeta"
+        ]
+      },
+      "note": "The recipient posts this exact tracking number in a ParcelPool discussion. It fits a USPS tracking format and International Bridge’s public tracker returned no matching record. Its use as an International Bridge or USPS handoff identifier remains unclear."
+    }
+  ]
 }
