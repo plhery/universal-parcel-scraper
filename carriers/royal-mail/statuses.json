@@ -410,6 +410,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-26",
       "note": "The recipient's collection, worded as EVNCE is; the summary turns delivered with this scan as its last event."
+    },
+    {
+      "code": "EVPLC",
+      "wording": "Collected",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The recipient's collection from the branch or locker that kept the item, after its Available for collection at the same place; the summary turns delivered with this scan as its last event. The bare wording alone would read as an acceptance."
     }
   ]
 }

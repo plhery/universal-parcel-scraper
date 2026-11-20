@@ -65,6 +65,9 @@ const EVENT_STAGES = new Map<string, Stage>([
   // The recipient's own collection from the Customer Service Point, worded as EVNCE is: the
   // summary turns delivered with this scan as the last event.
   ['EVNOC', 'delivered'],
+  // The recipient's collection from the Post Office branch or locker that kept the item, "Collected" after its
+  // "Available for collection" at the same place: the summary turns delivered with this scan as the last event.
+  ['EVPLC', 'delivered'],
   ['EVCAD', 'accepted'],
   ['EVPPA', 'accepted'],
   ['LOPPA', 'accepted'],
