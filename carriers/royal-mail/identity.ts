@@ -2,7 +2,8 @@ import type { SameInstantIdentityPolicy } from '../../core/catalog/eventIdentity
 
 // Scans abroad kept the UK offset Royal Mail labels them with until October
 // 2026, then showed their country's. A European partner's scans now show
-// Central European time, and those beyond Europe the UK offset again.
+// Central European time in summer and UTC in winter, and those beyond Europe
+// the UK offset again.
 // One tracker answers for both brands, so a parcel's scans can be stored under
 // either: each policy reads the other's rows as the same scans.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {

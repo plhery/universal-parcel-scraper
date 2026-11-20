@@ -3088,8 +3088,9 @@ describe('ParcelsApp result parsing', () => {
     ])).toEqual(['2026-10-28T03:17:09.000Z', '2026-10-27T10:00:05.000Z']);
   });
 
-  it('reads Royal Mail\'s relays of its partners\' scans abroad on Central European time', () => {
-    // La Poste's own scans have the digits of Royal Mail's in France, and CTT's are an hour less in Portugal.
+  it('reads Royal Mail\'s relays of its partners\' scans abroad on Central European time in summer and UTC in winter', () => {
+    // In summer La Poste's own scans have the digits of Royal Mail's in France, and CTT's are an hour less in Portugal;
+    // in winter La Poste's come an hour after Royal Mail's.
     const times = (destinationCode: string, states: Record<string, unknown>[]) => parseParcelsAppResponse({
       carriers: ['Royal Mail'], originCode: 'GB', destinationCode, states,
     }, number, identity()).events?.map((scan) => scan.time);
@@ -3107,6 +3108,7 @@ describe('ParcelsApp result parsing', () => {
     }
     expect(times('FR', [scan('2026-07-21T19:30:00Z', 'Item has left the overseas International Processing Centre', 'EXAMPLE IPC, France')]))
       .toEqual(['2026-07-21T17:30:00.000Z']);
+    expect(times('FR', [scan('2026-11-05T17:54:00Z', 'Item Received', 'EXAMPLE IPC, France')])).toEqual(['2026-11-05T17:54:00.000Z']);
     expect(parseParcelsAppResponse({ carriers: ['Parcelforce'], originCode: 'GB', destinationCode: 'FR',
       states: [scan('2026-07-21T19:30:00Z', 'Item Received', 'EXAMPLE IPC, France')] }, number, identity()).events?.[0]?.time)
       .toBe('2026-07-21T17:30:00.000Z');
