@@ -44,8 +44,9 @@ local clocks. The single-object query treats an explicit object-not-found reply 
 bound to the requested object. Other portal errors, including period errors, stay
 inconclusive and carry the portal’s message in lookup diagnostics. The delivery forecast is a calendar day, kept only where the portal
 shows it: for an object in transit that it does not mark as late. The service is the
-product category the portal names, such as SEDEX. Addresses, recipients, proof images
-and tokens are excluded.
+product category the portal names, such as SEDEX. A unit's place is its town and state
+followed by `BR`, since a state code alone reads as a country (PR as Puerto Rico, ES as
+Spain). Addresses, recipients, proof images and tokens are excluded.
 
 Mail from abroad keeps the S10 number of the post that sent it. The portal lists that post's
 posting, office of exchange and dispatch (a transfer without a Brazilian unit, before the

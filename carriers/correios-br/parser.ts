@@ -60,10 +60,17 @@ const TRANSFERS = new Set(['RO/01', 'DO/01']);
 // at the unit it names, while the item may still be with the sending post, so these rows do not show the item reached Brazil.
 const DECLARATION_REVIEW = new Set(['FC/16', 'PAR/12', 'PAR/21', 'FC/40', 'PAR/07', 'PAR/17']);
 
-/** The Brazilian unit a row names, as "city, state", or empty. */
+// Brazil's states and federal district. A unit's state reads as a country on its own: Paraná as Puerto Rico,
+// Espírito Santo as Spain, Pará as Panama.
+const STATES = new Set(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI',
+  'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
+
+/** The Brazilian unit a row names, as "city, state, BR", or empty. */
 function unitPlace(row: JsonObject): string {
   const address = isRecord(row.unidade) && isRecord(row.unidade.endereco) ? row.unidade.endereco : null;
-  return address ? [clean(address.cidade, 100), clean(address.uf, 8)].filter(Boolean).join(', ') : '';
+  if (!address) return '';
+  const state = clean(address.uf, 8);
+  return [clean(address.cidade, 100), state, STATES.has(state.toUpperCase()) ? 'BR' : ''].filter(Boolean).join(', ');
 }
 
 // The portal shows its delivery forecast only for an object in transit

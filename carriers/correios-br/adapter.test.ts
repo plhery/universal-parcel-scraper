@@ -42,7 +42,7 @@ describe('Correios parser', () => {
     const result = normalizeCarrierResult(parseCorreios(fixture, NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-05T16:10:47-03:00', delivered_at: '2026-01-05T16:10:47-03:00', expected_delivery: null });
     expect(result.events).toHaveLength(7);
-    expect(result.events?.[0]).toEqual({ description: 'Objeto entregue ao destinatário', provider_code: 'BDE/01', time: '2026-01-05T16:10:47-03:00', location: 'Cidade Exemplo, SP', stage: 'delivered' });
+    expect(result.events?.[0]).toEqual({ description: 'Objeto entregue ao destinatário', provider_code: 'BDE/01', time: '2026-01-05T16:10:47-03:00', location: 'Cidade Exemplo, SP, BR', stage: 'delivered' });
     expect(result.events?.[2]!.stage).toBe('exception');
     expect(result.events?.[3]!.stage).toBe('exception');
     // Posted after its customs declaration: an import's hand-over abroad.
@@ -87,7 +87,7 @@ describe('Correios parser', () => {
     const waiting = { ...scan('LDI', '01', 'Objeto aguardando retirada no endereço indicado', clock), unidade: { endereco: { cidade: 'Cidade Exemplo', uf: 'SP' } } };
     const result = parseCorreios({ ...fixture, eventos: [waiting, ...fixture.eventos] }, NUMBER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup' });
-    expect(result.events?.[0]).toMatchObject({ provider_code: 'LDI/01', location: 'Cidade Exemplo, SP', stage: 'ready_for_pickup' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'LDI/01', location: 'Cidade Exemplo, SP, BR', stage: 'ready_for_pickup' });
   });
 
   it('reads an item posted for abroad through export customs and a receipt without a unit address', () => {

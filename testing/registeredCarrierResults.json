@@ -1133,14 +1133,14 @@
           "description": "Objeto entregue ao destinatário",
           "provider_code": "BDE/01",
           "time": "2026-01-05T16:10:47-03:00",
-          "location": "Cidade Exemplo, SP",
+          "location": "Cidade Exemplo, SP, BR",
           "stage": "delivered"
         },
         {
           "description": "Objeto saiu para entrega ao destinatário",
           "provider_code": "OEC/01",
           "time": "2026-01-05T13:54:24-03:00",
-          "location": "Cidade Exemplo, SP",
+          "location": "Cidade Exemplo, SP, BR",
           "stage": "out_for_delivery"
         },
         {
@@ -3136,14 +3136,14 @@
           "description": "Objeto entregue ao destinatário",
           "provider_code": "BDE/01",
           "provider_time_text": "2026-02-30 18:00:00",
-          "location": "Cidade Exemplo, SP",
+          "location": "Cidade Exemplo, SP, BR",
           "stage": "delivered"
         },
         {
           "description": "Objeto saiu para entrega ao destinatário",
           "provider_code": "OEC/01",
           "time": "2026-01-05T13:54:24-03:00",
-          "location": "Cidade Exemplo, SP",
+          "location": "Cidade Exemplo, SP, BR",
           "stage": "out_for_delivery"
         },
         {
