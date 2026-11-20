@@ -5587,5 +5587,10 @@
     "kind": "open",
     "carrier": "jyldam-logistics",
     "reason": "The native tracker confirms one full JL reference. Explicit selection is available while issued formats and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "flow-progressive-logistics",
+    "reason": "The official tracker confirms one indexed FLOW waybill. Explicit selection is available while issuance and overlaps remain open."
   }
 ]

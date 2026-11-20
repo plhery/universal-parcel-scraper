@@ -26023,6 +26023,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "flow-progressive-logistics": {
+    "displayName": "Flow Progressive Logistics",
+    "color": "#16365f",
+    "aliases": [
+      "FLOW",
+      "Flow Progressive",
+      "Flow Logistics",
+      "فلو بروجرسف"
+    ],
+    "countries": [
+      "SA"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Riyadh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "flow-progressive-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.flowpl.com/order-tracking/",
+    "trackingUrlTemplate": "https://www.flowpl.com/order-tracking/",
+    "trackingSearchUrl": "https://www.flowpl.com/order-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "flyking": {
     "displayName": "Flyking Courier Services",
     "color": "#da251d",
@@ -66367,6 +66392,7 @@ export const CARRIER_IDS = [
   "flippost",
   "flipxpress",
   "fliway",
+  "flow-progressive-logistics",
   "flyking",
   "flyt-express",
   "fm-transportes",
@@ -68247,6 +68273,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "flippost": [],
   "flipxpress": [],
   "fliway": [],
+  "flow-progressive-logistics": [],
   "flyking": [],
   "flyt-express": [],
   "fm-transportes": ["fm-transportes-1"],

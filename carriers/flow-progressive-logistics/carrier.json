@@ -1,0 +1,27 @@
+{
+  "id": "flow-progressive-logistics",
+  "displayName": "Flow Progressive Logistics",
+  "aliases": ["FLOW", "Flow Progressive", "Flow Logistics", "فلو بروجرسف"],
+  "region": { "countries": ["SA"] },
+  "brand": { "color": "#16365f" },
+  "selectable": true,
+  "timezone": "Asia/Riyadh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "flow-progressive-logistics",
+    "steps": ["direct"],
+    "localClocks": true
+  },
+  "capabilities": ["history"],
+  "portal": {
+    "url": "https://www.flowpl.com/order-tracking/",
+    "searchUrl": "https://www.flowpl.com/order-tracking/",
+    "canaryUrl": "https://www.flowpl.com/order-tracking/",
+    "shows": ["status", "history", "event_locations", "summary_route"],
+    "scraped": ["status", "history"],
+    "discarded": ["event_locations", "summary_route"],
+    "unavailable": ["clock_offsets"]
+  },
+  "links": [],
+  "detection": []
+}

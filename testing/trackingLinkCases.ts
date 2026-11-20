@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'flow-progressive-logistics', number: 'FLOW000000000000000',
+    route: /^https:\/\/www\.flowpl\.com\/order-tracking\/$/,
+    marker: /Track Your FLOW Shipment/, forwarding: 'none' },
   { carrier: 'jyldam-logistics', number: 'JL000000000000000',
     route: /^https:\/\/jyldam-logistics\.kz\/site\/$/,
     marker: /Где мой груз прямо сейчас/, forwarding: 'none' },

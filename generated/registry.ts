@@ -296,6 +296,7 @@ import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
 import { adapter as fletesDelSur } from '../carriers/fletes-del-sur/adapter.js';
 import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
 import { adapter as flippost } from '../carriers/flippost/adapter.js';
+import { adapter as flowProgressiveLogistics } from '../carriers/flow-progressive-logistics/adapter.js';
 import { adapter as fmTransportes } from '../carriers/fm-transportes/adapter.js';
 import { adapter as fmx } from '../carriers/fmx/adapter.js';
 import { adapter as followmont } from '../carriers/followmont/adapter.js';
@@ -1203,6 +1204,7 @@ export const REGISTRY: RegistryDefinition = {
     "fletes-del-sur": fletesDelSur,
     "flickpost": flickpost,
     "flippost": flippost,
+    "flow-progressive-logistics": flowProgressiveLogistics,
     "fm-transportes": fmTransportes,
     "fmx": fmx,
     "followmont": followmont,
@@ -2442,6 +2444,7 @@ export const REGISTRY: RegistryDefinition = {
     "flippost": "flippost",
     "flipxpress": "universal",
     "fliway": "universal",
+    "flow-progressive-logistics": "flow-progressive-logistics",
     "flyking": "universal",
     "flyt-express": "universal",
     "fm-transportes": "fm-transportes",
