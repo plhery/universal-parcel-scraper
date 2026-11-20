@@ -5120,5 +5120,11 @@
     "pattern": "^SWS[0-9]{8}$",
     "kind": "open",
     "reason": "BIZ Courier's public tracking page provides shipment histories for these SWS references. Detection does not currently offer BIZ Courier."
+  },
+  {
+    "carrier": "bir-gunde-kargo",
+    "pattern": "^(?:B[0-9]{9}|BGK[0-9]{8}|3126[0-9]{12})$",
+    "kind": "open",
+    "reason": "Published delivery complaints identify these codes as Bir Günde Kargo parcel references. Detection does not offer the carrier for these examples."
   }
 ]
