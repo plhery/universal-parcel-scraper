@@ -1,5 +1,28 @@
 {
   "carrier": "gbs-broker",
-  "gap": "No public page shows a GBS number.",
-  "records": []
+  "records": [
+    {
+      "number": "RLAI00887529",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://yandex.com/maps/org/gbs_broker/44479567537/reviews/",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "AliExpress import clearance in Russia",
+        "reportedRole": "marketplace parcel reference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress",
+          "colis-prive"
+        ]
+      },
+      "note": "A customer quotes this reference when describing GBS customs tracking. GBS’s public result lists the identical reference and reports the shipment’s departure from customs."
+    }
+  ]
 }
