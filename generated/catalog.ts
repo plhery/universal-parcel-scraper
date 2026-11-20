@@ -36313,7 +36313,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lafasta",
+      "localClocks": true
     },
     "canaryUrl": "https://c.lafasta.sa.com/Track/",
     "trackingUrlTemplate": "https://c.lafasta.sa.com/Track/{trackingNumber}",

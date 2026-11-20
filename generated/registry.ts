@@ -431,6 +431,7 @@ import { adapter as laPosteBurkinaFaso } from '../carriers/la-poste-burkina-faso
 import { adapter as laPosteSenegal } from '../carriers/la-poste-senegal/adapter.js';
 import { adapter as laarCourier } from '../carriers/laar-courier/adapter.js';
 import { adapter as labaih } from '../carriers/labaih/adapter.js';
+import { adapter as lafasta } from '../carriers/lafasta/adapter.js';
 import { adapter as landmarkGlobal } from '../carriers/landmark-global/adapter.js';
 import { adapter as laserLogistics } from '../carriers/laser-logistics/adapter.js';
 import { adapter as lastOneMileCoop } from '../carriers/last-one-mile-coop/adapter.js';
@@ -1274,6 +1275,7 @@ export const REGISTRY: RegistryDefinition = {
     "la-poste-senegal": laPosteSenegal,
     "laar-courier": laarCourier,
     "labaih": labaih,
+    "lafasta": lafasta,
     "landmark-global": landmarkGlobal,
     "laser-logistics": laserLogistics,
     "last-one-mile-coop": lastOneMileCoop,
@@ -2636,7 +2638,7 @@ export const REGISTRY: RegistryDefinition = {
     "la-poste-tunisienne": "universal",
     "laar-courier": "laar-courier",
     "labaih": "labaih",
-    "lafasta": "universal",
+    "lafasta": "lafasta",
     "landmark-global": "landmark-global",
     "lao-post": "universal",
     "laser-logistics": "laser-logistics",

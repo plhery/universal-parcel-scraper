@@ -1,4 +1,41 @@
 {
   "carrier": "lafasta",
-  "entries": []
+  "entries": [
+    {
+      "wording": "تم تسليم الطلب بنجاح",
+      "language": "ar",
+      "confirmedBy": "live",
+      "stage": "delivered"
+    },
+    {
+      "wording": "جاري التوصيل",
+      "language": "ar",
+      "confirmedBy": "live",
+      "stage": "out_for_delivery"
+    },
+    {
+      "wording": "غادرت محطة لافاستا لفرز الشحنات",
+      "language": "ar",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "تم تجهيز الطلب",
+      "language": "ar",
+      "confirmedBy": "live",
+      "stage": "registered"
+    },
+    {
+      "wording": "جاري تجهيز الطلب",
+      "language": "ar",
+      "confirmedBy": "live",
+      "stage": "registered"
+    },
+    {
+      "wording": "طلب جديد - بانتظار الاستلام ...",
+      "language": "ar",
+      "confirmedBy": "live",
+      "stage": "registered"
+    }
+  ]
 }
