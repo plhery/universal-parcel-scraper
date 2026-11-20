@@ -256,6 +256,14 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
     seen.add(key);
     events.push({ event, timestamp: at.timestamp, ...(classified ? { classified } : {}) });
   }
+  // A scan abroad can come twice at one instant, placed once by its country alone and once by its town and country
+  // ("International arrival - awaiting clearance"): the copy with the country alone is left out.
+  const coarser = ({ event, timestamp }: typeof events[number], other: typeof events[number]) => other.timestamp === timestamp
+    && other.event.description === event.description && other.event.provider_code === event.provider_code
+    && !!event.location && !!other.event.location?.endsWith(`, ${event.location}`);
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    if (events.some((other) => coarser(events[index]!, other))) events.splice(index, 1);
+  }
   // A wall clock without a zone sorts on the clock the reply's other scans abroad keep, when they keep one.
   const keeping = zones.size === 1 ? [...zones][0]! : null;
   for (const entry of keeping ? events : []) {

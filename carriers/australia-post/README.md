@@ -156,6 +156,8 @@ key alone does not clear a DataDome challenge; browser verification stays in its
   Canadian province, else the foreign country's single zone; otherwise the wall clock stays in
   `local_time` and sorts on the zone the reply's other scans abroad keep. The scan identity policy
   in `app.ts` (`relabelledFrom: 'UTC'`) lets such a scan take over the row stored under the label.
+  The reply can list a scan abroad twice at one instant, by its town and country and by the country
+  alone; the copy with the country alone is left out.
 - A parcel awaiting collection at a post office or locker gets that place, as its awaiting-collection
   scan (`DD-ER4`, `NT-ER4`) names it, in `pickup_point`. It keeps it once collected: when only
   deliveries follow that scan and none was left in a safe place. A delivery after another round, or

@@ -242,6 +242,12 @@ describe('Australia Post status codes and places', () => {
     expect(unplaced.delivered_at).toBeUndefined();
     expect(journey('NL', [scan('INT-0037', 'Delivered', 'EXAMPLE CITY', '2026-06-12T11:22:00Z', 'Delivered')]).events?.[0]?.time)
       .toBe('2026-06-12T11:22:00+02:00');
+    // One arrival listed twice at one instant, by its country alone and by its town and country, is one scan.
+    const twice = journey('NL', [
+      scan('INT-0030', 'International arrival - awaiting clearance', 'EXAMPLE CITY, NETHERLANDS', '2026-06-10T11:22:00Z'),
+      scan('INT-0030', 'International arrival - awaiting clearance', 'NETHERLANDS', '2026-06-10T11:22:00Z'),
+    ]);
+    expect(twice.events?.map((event) => event.location)).toEqual(['EXAMPLE CITY, NETHERLANDS']);
     // A domestic reply has no post abroad, so a UTC label stands.
     expect(journey('AU', [scan('DD-ER13', 'Delivered', 'EXAMPLE VIC', '2026-06-12T01:22:00Z', 'Delivered')]).last_update)
       .toBe('2026-06-12T01:22:00Z');
