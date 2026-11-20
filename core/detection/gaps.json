@@ -5504,5 +5504,10 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "transdirect",
+    "kind": "by_design",
+    "reason": "Transdirect accepts its own booking IDs and references issued by several partner couriers. Select it explicitly."
   }
 ]

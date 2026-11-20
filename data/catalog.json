@@ -58615,6 +58615,35 @@
     ],
     "detectionRules": []
   },
+  "transdirect": {
+    "displayName": "Transdirect",
+    "color": "#73cf11",
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Brisbane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transdirect"
+    },
+    "canaryUrl": "https://www.transdirect.com.au/education/tracking/",
+    "trackingUrlTemplate": "https://www.transdirect.com.au/education/tracking/?reference={trackingNumber}",
+    "trackingSearchUrl": "https://www.transdirect.com.au/education/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "transdirect.com.au",
+          "www.transdirect.com.au"
+        ],
+        "pathPattern": "^/education/tracking/?$",
+        "params": [
+          "reference"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "transfera": {
     "displayName": "Transfera",
     "color": "#ed1c24",

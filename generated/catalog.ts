@@ -58619,6 +58619,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "transdirect": {
+    "displayName": "Transdirect",
+    "color": "#73cf11",
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Brisbane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transdirect"
+    },
+    "canaryUrl": "https://www.transdirect.com.au/education/tracking/",
+    "trackingUrlTemplate": "https://www.transdirect.com.au/education/tracking/?reference={trackingNumber}",
+    "trackingSearchUrl": "https://www.transdirect.com.au/education/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "transdirect.com.au",
+          "www.transdirect.com.au"
+        ],
+        "pathPattern": "^/education/tracking/?$",
+        "params": [
+          "reference"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "transfera": {
     "displayName": "Transfera",
     "color": "#ed1c24",
@@ -66967,6 +66996,7 @@ export const CARRIER_IDS = [
   "trans-pack",
   "transaher",
   "transcorp",
+  "transdirect",
   "transfera",
   "transgo-mx",
   "transilvania-post",
@@ -68832,6 +68862,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trans-pack": [],
   "transaher": ["transaher-1"],
   "transcorp": [],
+  "transdirect": [],
   "transfera": [],
   "transgo-mx": [],
   "transilvania-post": [],

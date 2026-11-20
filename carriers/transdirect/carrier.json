@@ -1,0 +1,36 @@
+{
+  "id": "transdirect",
+  "displayName": "Transdirect",
+  "aliases": [],
+  "region": {
+    "countries": ["AU"]
+  },
+  "brand": {
+    "color": "#73cf11"
+  },
+  "selectable": true,
+  "timezone": "Australia/Brisbane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "transdirect",
+    "steps": ["direct"]
+  },
+  "capabilities": ["history", "location", "provider_code", "offset_timestamps"],
+  "portal": {
+    "url": "https://www.transdirect.com.au/education/tracking/?reference={trackingNumber}",
+    "searchUrl": "https://www.transdirect.com.au/education/tracking/",
+    "canaryUrl": "https://www.transdirect.com.au/education/tracking/",
+    "shows": ["status", "history", "location", "eta", "proof_of_delivery"],
+    "scraped": ["status", "history", "location", "provider_code", "offset_timestamps"],
+    "discarded": ["eta", "proof_of_delivery"],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": ["transdirect.com.au", "www.transdirect.com.au"],
+      "pathPattern": "^/education/tracking/?$",
+      "params": ["reference"]
+    }
+  ],
+  "detection": []
+}
