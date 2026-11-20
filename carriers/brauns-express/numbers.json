@@ -1,5 +1,30 @@
 {
   "carrier": "brauns-express",
-  "gap": "No public page shows a Braun's Express PRO or bill of lading number.",
-  "records": []
+  "records": [
+    {
+      "number": "10712086",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170416142911/http://braunsexpress.com:80/tracking.php?bill=10712086&go.x=6&go.y=12&order_id=W584622003&cm_mmc=hd_email-_-Ship_Conf-_-20170412_PP_ET_Merch_Ship_Conf_3017423-_-TRACK+YOUR+ORDER+BUTTON__W584622003",
+        "date": "2017-04-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "order number used to look up a shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The archived Braun's Express page from a merchant shipment email places this bill value into its tracking frame as an order-number search. The current official tracker returned No Records Found."
+    }
+  ]
 }

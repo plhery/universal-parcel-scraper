@@ -472,6 +472,12 @@
     "reason": "Bosta's seven- to ten-digit shipment numbers are a bare digit run many carriers share."
   },
   {
+    "carrier": "brauns-express",
+    "pattern": "^\\d{8}$",
+    "kind": "open",
+    "reason": "An archived Braun's Express shipment link uses an eight-digit tracking reference. Detection suggests other carriers for that shape."
+  },
+  {
     "carrier": "bts-uz",
     "pattern": "^\\d{11,12}$",
     "kind": "by_design",
