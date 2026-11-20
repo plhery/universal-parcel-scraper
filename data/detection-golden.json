@@ -96451,6 +96451,14 @@
     ]
   },
   {
+    "input": "LX773395087TW",
+    "carrier": "chunghwa-post",
+    "confidence": "high",
+    "candidates": [
+      "chunghwa-post"
+    ]
+  },
+  {
     "input": "LX999999987DE",
     "carrier": "dhl",
     "confidence": "high",

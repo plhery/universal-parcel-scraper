@@ -12,6 +12,7 @@
  */
 import { statusMap as tejCouriers } from '../../carriers/tej-couriers/status.js';
 import { statusMap as bhPosta } from '../../carriers/bh-posta/status.js';
+import { statusMap as honducorStatus } from '../../carriers/honducor/status.js';
 import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
 import { statusMap as carrybee } from '../../carriers/carrybee/status.js';
 import { statusMap as huuneh } from '../../carriers/huuneh/status.js';
@@ -840,6 +841,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bh-posta': bhPosta,
+  'honducor': honducorStatus,
   'tej-couriers': tejCouriers,
   'correos-costa-rica': costaRica,
   aeropost,

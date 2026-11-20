@@ -1,5 +1,25 @@
 {
   "carrier": "honducor",
-  "gap": "No public page shows a Honducor number.",
-  "records": []
+  "records": [
+    {
+      "number": "LX773395087TW",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portalunico.iaip.gob.hn/sugerencia/372",
+        "date": "2026-10-20",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "service": "Inbound international postal item"
+      },
+      "expect": {
+        "carrier": "chunghwa-post",
+        "confidence": "high"
+      },
+      "note": "A customer posts the whole reference on the government public-comment page, and Honducor confirms custody in its reply. The native guest tracker returns the matching reference and dated history. The reference was issued abroad; it does not establish an HN number rule."
+    }
+  ]
 }

@@ -342,6 +342,7 @@ import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as homexpress } from '../carriers/homexpress/adapter.js';
+import { adapter as honducor } from '../carriers/honducor/adapter.js';
 import { adapter as hongkongPost } from '../carriers/hongkong-post/adapter.js';
 import { adapter as horoz } from '../carriers/horoz/adapter.js';
 import { adapter as houndExpress } from '../carriers/hound-express/adapter.js';
@@ -1182,6 +1183,7 @@ export const REGISTRY: RegistryDefinition = {
     "hispapost": hispapost,
     "hitch": hitch,
     "homexpress": homexpress,
+    "honducor": honducor,
     "hongkong-post": hongkongPost,
     "horoz": horoz,
     "hound-express": houndExpress,
@@ -2440,7 +2442,7 @@ export const REGISTRY: RegistryDefinition = {
     "holisol": "universal",
     "home-delivery-team": "universal",
     "homexpress": "homexpress",
-    "honducor": "universal",
+    "honducor": "honducor",
     "hongkong-post": "hongkong-post",
     "hongsuda": "universal",
     "hop-envios": "universal",

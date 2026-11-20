@@ -1,0 +1,18 @@
+{
+  "challenge": {
+    "parameters": {
+      "algorithm": "SHA-256",
+      "cost": 1,
+      "keyLength": 32,
+      "keyPrefix": "16",
+      "nonce": "00222222222222222222222222222222",
+      "salt": "11111111111111111111111111111111",
+      "expiresAt": 0
+    },
+    "signature": "synthetic-signature-value"
+  },
+  "expected": {
+    "counter": 17,
+    "digest": "16c8d3e7d19f61de0bfaf127c29c7a0636889e52382c90e0a514fcd50323b1e8"
+  }
+}

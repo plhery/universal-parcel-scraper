@@ -1,4 +1,65 @@
 {
   "carrier": "honducor",
-  "entries": []
+  "entries": [
+    {
+      "wording": "entrega final",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "投遞成功",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "離開寄達國互換局",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到達寄達國互換局",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "郵袋接收",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "salida de la oficina internacional de origen",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已出口－資料詳如右方",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到達出口互換局",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "承運人已攬收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entregado",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "live"
+    }
+  ]
 }

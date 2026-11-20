@@ -1,26 +1,25 @@
 # Honducor
 
-Honducor parcels use enabled universal providers. There is no dedicated adapter.
+The adapter supports Honducor's international postal history, including events reported by
+foreign posts. Other services retain enabled provider fallback. It is used when the caller selects Honducor; a postal number alone does not
+establish that Honducor carries it.
 
-Honducor (Empresa de Correos de Honduras) is Honduras's national post, based at Toncontín airport
-in Tegucigalpa. Its site is honducor.gob.hn.
+The adapter opens the [tracking form](https://rastreo.honducor.gob.hn/) in an anonymous
+session. It obtains a signed ALTCHA challenge and computes the SHA-256 answer used by the
+[public widget](https://rastreo.honducor.gob.hn/postal_trace/static/lib/altcha/altcha.min.js),
+then posts the whole reference. Only the native result redirect for that same reference is
+followed. Work, bytes and requests stay inside the caller's budget; a costlier or changed
+challenge remains a challenge.
 
-## Numbers
+The result's own reference must match and its history must include a Honduras postal office.
+Foreign-only history stays inconclusive. This expensive check is not offered as automatic
+number recognition. Every displayed clock is retained. Any timezone inferred by the consumer stays labelled
+beside that clock; the adapter applies no blanket Honduras offset. Postal office codes and the operational wording stay; recipient names,
+bag details and the page's query clock are omitted. An empty or unfinished result is
+inconclusive, so enabled providers can still answer.
 
-Honducor gives items UPU S10 numbers ending `HN`, as its tracker's example shows. Generic postal
-detection handles these numbers, so no rule for Honducor claims them.
+Run live retrieval with `HONDUCOR_TEST_NUMBER` set outside Git:
 
-## Why there is no adapter
-
-Its tracker on rastreo.honducor.gob.hn is a plain page that reads the number from its address
-without a session or CAPTCHA. It answers an unknown number as waiting for its provider rather
-than as not found, and no public number has shown a known item's reply yet.
-
-## Links
-
-Tracking links carry the number as `tracking_number` on the tracker's `/rastreo` page.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+npm run test:live -- carriers/honducor/adapter.live.test.ts
+```

@@ -30187,7 +30187,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Tegucigalpa",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "honducor",
+      "localClocks": true
     },
     "canaryUrl": "https://honducor.gob.hn/",
     "trackingUrlTemplate": "https://rastreo.honducor.gob.hn/rastreo?tracking_number={trackingNumber}",
