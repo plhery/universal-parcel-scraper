@@ -1,5 +1,47 @@
 {
   "carrier": "lx-pantos",
-  "gap": "No public page shows an LX Pantos number.",
-  "records": []
+  "records": [
+    {
+      "number": "PSEAPNYC26083038",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/fnsinclax",
+        "date": "2026-09-26",
+        "dateKind": "manifest listing date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "LX Pantos maritime freight to the United States",
+        "reportedRole": "House Bill",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest row records this exact LX Pantos house bill separately from its ocean carrier’s master bill. The carrier’s public tracking page echoed the query without returning shipment history in the HTML."
+    },
+    {
+      "number": "PSEAPNYC26090503",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/fnsinclax",
+        "date": "2026-10-19",
+        "dateKind": "manifest listing date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "LX Pantos maritime freight to the United States",
+        "reportedRole": "House Bill",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest row records this exact LX Pantos house bill separately from its ocean carrier’s master bill. The carrier’s public tracking page echoed the query without returning shipment history in the HTML."
+    }
+  ]
 }
