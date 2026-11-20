@@ -1,0 +1,59 @@
+{
+  "carrier": "ignazio-messina",
+  "records": [
+    {
+      "number": "LMCU9201572",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/ignazio-messina/LMCU",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "This container is listed with Ignazio Messina in the public directory. The carrier’s dedicated equipment lookup returned movements for this query."
+    },
+    {
+      "number": "LMCU1298954",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/ignazio-messina/LMCU",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "This container is listed with Ignazio Messina in the public directory. The carrier’s dedicated equipment lookup returned movements for this query."
+    },
+    {
+      "number": "LMCU0550001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/ignazio-messina/LMCU",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "This container is listed with Ignazio Messina in the public directory. The carrier’s dedicated equipment lookup returned movements for this query."
+    }
+  ]
+}

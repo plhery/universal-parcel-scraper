@@ -5619,5 +5619,10 @@
     "carrier": "gardewine",
     "kind": "open",
     "reason": "The guest lookup uses a shared numeric shipment shape. Select Gardewine explicitly."
+  },
+  {
+    "carrier": "ignazio-messina",
+    "kind": "open",
+    "reason": "The guest route uses a shared container equipment identifier. Select Ignazio Messina explicitly."
   }
 ]

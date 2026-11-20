@@ -31711,6 +31711,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ignazio-messina": {
+    "displayName": "Ignazio Messina",
+    "color": "#e63027",
+    "aliases": [
+      "Messina Line",
+      "Linea Messina",
+      "Ignazio Messina & C."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ignazio-messina",
+      "localClocks": true
+    },
+    "canaryUrl": "https://messinaline.it/cntr-tracking/",
+    "trackingUrlTemplate": "https://messinaline.it/cntr-tracking/",
+    "trackingSearchUrl": "https://messinaline.it/cntr-tracking/",
+    "trackingSiteName": "Messina Line Container Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ilyang-logis": {
     "displayName": "Ilyang Logis",
     "color": "#003c83",
@@ -66761,6 +66786,7 @@ export const CARRIER_IDS = [
   "idexpress",
   "ids-logistik",
   "iflow",
+  "ignazio-messina",
   "ilyang-logis",
   "imile",
   "indah-logistik",
@@ -68649,6 +68675,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "idexpress": ["idexpress-1"],
   "ids-logistik": [],
   "iflow": ["iflow-1"],
+  "ignazio-messina": [],
   "ilyang-logis": [],
   "imile": ["imile-3","imile-1","imile-4","imile-5","imile-2"],
   "indah-logistik": ["indah-logistik-1"],
