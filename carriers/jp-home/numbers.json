@@ -1,5 +1,31 @@
 {
   "carrier": "jp-home",
-  "gap": "JP HOME's order numbers are eight- or nine-digit counters, lengths many carriers share, and its tracker also asks for the delivery postcode.",
-  "records": []
+  "records": [
+    {
+      "number": "6020204549000 09123150",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fr.trustpilot.com/review/homedeluxe.de",
+        "date": "2026-02-05",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "French home delivery",
+        "reportedRole": "tracking reference quoted from merchant dispatch notice",
+        "assessment": "review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "hermes",
+          "seur"
+        ]
+      },
+      "note": "The recipient reproduced this exact pair of digit groups as a single tracking reference naming JP HOME. It is unclear which part, if any, is the carrier-issued reference. Its public tracker requires the delivery postcode, which the source does not provide."
+    }
+  ]
 }
