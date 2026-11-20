@@ -34,7 +34,9 @@ const TRACKING_STATUS: Record<string, ClassifiedStatus> = {
   'LMD.1004': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
   'LMD.1005': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
   'LMD.9001': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
-  'LMD.9002': { status: 'exception', stage: 'failed_attempt' },
+  // The pickup deadline passed ("Upłynął termin odbioru"): nobody tried a delivery, and the return
+  // (LMD.9014) has not started yet.
+  'LMD.9002': { status: 'exception', stage: 'exception' },
   // The courier tried to deliver the parcel it was handed (LMD.1001) and could not.
   'LMD.9004': { status: 'exception', stage: 'failed_attempt' },
   // The recipient refused the parcel.

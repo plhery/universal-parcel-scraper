@@ -18,7 +18,7 @@
     { "code": "LMD.1004", "language": "en", "wording": "Ready for collection", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "In the locker or pickup point." },
     { "code": "LMD.1005", "language": "en", "wording": "Ready for collection", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "In the locker or pickup point." },
     { "code": "LMD.9001", "language": "en", "wording": "Reminder of a waiting parcel", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "Awaiting collection." },
-    { "code": "LMD.9002", "language": "en", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-08-31", "note": "" },
+    { "code": "LMD.9002", "language": "pl", "wording": "Upłynął termin odbioru", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "The pickup deadline passed at the locker: no delivery was tried, and the return (LMD.9014) has not started yet." },
     { "code": "LMD.9004", "language": "en", "wording": "Failed delivery attempt", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The courier could not deliver the parcel it was handed for delivery." },
     { "code": "LMD.9006", "language": "en", "wording": "Acceptance refusal", "stage": "failed_attempt", "confirmedBy": "live", "note": "The recipient refused the parcel." },
     { "code": "LMD.9015", "language": "pl", "wording": "Brak możliwości doręczenia", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-10-28", "note": "Delivery not possible: it came while the courier had the parcel, which went back to a logistics centre and out for delivery again." },
