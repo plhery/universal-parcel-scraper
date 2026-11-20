@@ -1,0 +1,75 @@
+{
+  "carrier": "exfreight",
+  "entries": [
+    {
+      "wording": "Booking confirmed",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Commercial booking confirmed."
+    },
+    {
+      "wording": "Picked up from shipper",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Freight picked up at origin."
+    },
+    {
+      "wording": "Departed origin port on vessel",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Freight departed the origin port."
+    },
+    {
+      "wording": "Loaded on vessel",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Freight loaded on the vessel."
+    },
+    {
+      "wording": "Departed transshipment port",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Freight left a transshipment port."
+    },
+    {
+      "wording": "Customs cleared",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "The carrier reports completed customs clearance."
+    },
+    {
+      "wording": "Arrived at destination port on vessel",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Vessel reached its destination port."
+    },
+    {
+      "wording": "Departed from international terminal",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Freight departed an international terminal."
+    },
+    {
+      "wording": "Delivery complete",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Delivery milestone in the tracking updates."
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Summary on the matched shipment row."
+    }
+  ]
+}

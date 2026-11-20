@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'exfreight', number: '1747977505',
+    route: /^https:\/\/exfreight\.flipstone\.com\/track\/1747977505\/?$/,
+    marker: /Track a Shipment|Tracking Updates/i },
   { carrier: 'tailwind-shipping-lines', number: 'TSHGNGB26046910',
     route: /^https:\/\/ecom\.tailwind-ahead\.com\/tracking\/?$/,
     marker: /Booking No|Tracking/i, forwarding: 'none' },

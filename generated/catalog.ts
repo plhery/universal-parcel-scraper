@@ -24283,6 +24283,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "exfreight": {
+    "displayName": "ExFreight",
+    "color": "#034B75",
+    "aliases": [
+      "ExFreight Zeta",
+      "ExFreight Zeta Inc.",
+      "Exfresso"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "exfreight",
+      "localClocks": true
+    },
+    "canaryUrl": "https://exfreight.flipstone.com/track",
+    "trackingUrlTemplate": "https://exfreight.flipstone.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://exfreight.flipstone.com/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "exline-kz": {
     "displayName": "Exline",
     "color": "#0535ef",
@@ -67730,6 +67754,7 @@ export const CARRIER_IDS = [
   "evropat",
   "ewe",
   "exelot",
+  "exfreight",
   "exline-kz",
   "exmate",
   "expedico",
@@ -69667,6 +69692,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "evropat": [],
   "ewe": [],
   "exelot": ["exelot-1"],
+  "exfreight": [],
   "exline-kz": [],
   "exmate": ["exmate-1"],
   "expedico": [],

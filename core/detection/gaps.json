@@ -5859,5 +5859,10 @@
     "carrier": "tailwind-shipping-lines",
     "kind": "open",
     "reason": "The verified bills use a TSHG prefix with destination-dependent sequences. The carrier also accepts equipment owned by Tailwind or lessors. The format needs collision review."
+  },
+  {
+    "carrier": "exfreight",
+    "kind": "open",
+    "reason": "Exfresso’s public shipment references use ten generic digits. Select ExFreight explicitly."
   }
 ]

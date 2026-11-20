@@ -283,6 +283,7 @@ import { adapter as evriUk } from '../carriers/evri-uk/adapter.js';
 import { adapter as evropat } from '../carriers/evropat/adapter.js';
 import { adapter as ewe } from '../carriers/ewe/adapter.js';
 import { adapter as exelot } from '../carriers/exelot/adapter.js';
+import { adapter as exfreight } from '../carriers/exfreight/adapter.js';
 import { adapter as exlineKz } from '../carriers/exline-kz/adapter.js';
 import { adapter as exmate } from '../carriers/exmate/adapter.js';
 import { adapter as expedico } from '../carriers/expedico/adapter.js';
@@ -1248,6 +1249,7 @@ export const REGISTRY: RegistryDefinition = {
     "evropat": evropat,
     "ewe": ewe,
     "exelot": exelot,
+    "exfreight": exfreight,
     "exline-kz": exlineKz,
     "exmate": exmate,
     "expedico": expedico,
@@ -2510,6 +2512,7 @@ export const REGISTRY: RegistryDefinition = {
     "evropat": "evropat",
     "ewe": "ewe",
     "exelot": "exelot",
+    "exfreight": "exfreight",
     "exline-kz": "exline-kz",
     "exmate": "exmate",
     "expedico": "expedico",
