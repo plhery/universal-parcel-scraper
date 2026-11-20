@@ -80772,6 +80772,28 @@
     ]
   },
   {
+    "input": "BRU1414966",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
+    "input": "BRU1419814",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "BS123456789MG",
     "carrier": "unknown",
     "confidence": "low",
