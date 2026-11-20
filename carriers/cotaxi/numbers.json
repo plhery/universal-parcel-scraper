@@ -1,0 +1,41 @@
+{
+  "carrier": "cotaxi",
+  "records": [
+    {
+      "number": "RCFEB-4805",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cotaxi.com.co/wp-content/uploads/2026/09/CUARTO-TRIMESTRE-2025.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "full COTAXI guide printed in the fourth-quarter uncollected shipment report",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The official tracking PDF printed the full guide and recorded five dated tracking milestones."
+    },
+    {
+      "number": "RBGR-558600",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cotaxi.com.co/wp-content/uploads/2026/09/CUARTO-TRIMESTRE-2025.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "full COTAXI guide printed in the fourth-quarter uncollected shipment report",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The official tracking PDF printed the full guide and recorded four dated tracking milestones."
+    }
+  ]
+}

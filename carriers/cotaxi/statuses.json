@@ -1,0 +1,35 @@
+{
+  "carrier": "cotaxi",
+  "entries": [
+    {
+      "wording": "GENERADA",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EN BODEGA DE ORIGEN",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "VIAJANDO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EN BODEGA INTERMEDIA",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EN BODEGA DE DESTINO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
+}

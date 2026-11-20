@@ -16878,6 +16878,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "cotaxi": {
+    "displayName": "COTAXI",
+    "color": "#e45a2a",
+    "aliases": [
+      "Cotaxi Colombia",
+      "Cooperativa Multiactiva de Taxistas y Transportadores Unidos"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cotaxi",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.cotaxi.com.co/",
+    "trackingUrlTemplate": "https://www.cotaxi.com.co/",
+    "trackingSearchUrl": "https://www.cotaxi.com.co/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "coupang-logistics": {
     "displayName": "Coupang Logistics Services",
     "color": "#935227",

@@ -16882,6 +16882,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "cotaxi": {
+    "displayName": "COTAXI",
+    "color": "#e45a2a",
+    "aliases": [
+      "Cotaxi Colombia",
+      "Cooperativa Multiactiva de Taxistas y Transportadores Unidos"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cotaxi",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.cotaxi.com.co/",
+    "trackingUrlTemplate": "https://www.cotaxi.com.co/",
+    "trackingSearchUrl": "https://www.cotaxi.com.co/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "coupang-logistics": {
     "displayName": "Coupang Logistics Services",
     "color": "#935227",
@@ -66881,6 +66904,7 @@ export const CARRIER_IDS = [
   "coship",
   "costco-logistics",
   "cot-uy",
+  "cotaxi",
   "coupang-logistics",
   "courier-center",
   "courier-express-malta",
@@ -68791,6 +68815,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "coship": [],
   "costco-logistics": ["costco-logistics-1"],
   "cot-uy": [],
+  "cotaxi": [],
   "coupang-logistics": [],
   "courier-center": [],
   "courier-express-malta": [],

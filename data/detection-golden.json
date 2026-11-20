@@ -105810,6 +105810,12 @@
     ]
   },
   {
+    "input": "RBGR-558600",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "RC032051689ZA",
     "carrier": "intl-post",
     "confidence": "high",
@@ -105879,6 +105885,12 @@
     "asked": [
       "chronopost"
     ]
+  },
+  {
+    "input": "RCFEB-4805",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "RCKY020026617",

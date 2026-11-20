@@ -5729,5 +5729,10 @@
     "carrier": "confirmed-freight",
     "kind": "open",
     "reason": "The public shipment demonstration does not establish the carrier's customer reference formats."
+  },
+  {
+    "carrier": "cotaxi",
+    "kind": "open",
+    "reason": "The confirmed guide prefixes vary by branch. COTAXI remains an explicit selection while those prefixes are documented."
   }
 ]
