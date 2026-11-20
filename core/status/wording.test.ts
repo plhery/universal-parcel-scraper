@@ -771,6 +771,9 @@ describe('classifyWording', () => {
       // A hand-over to a warehouse on the way, as JCEX words its partner's depot; the recipient's own is a delivery.
       ['Delivered to warehouse, waiting to be scanned（已交仓，待扫描）', 'in_transit'], ['Delivered to the warehouse', 'in_transit'],
       ['Delivered to overseas warehouse', 'in_transit'], ['Delivered to the transit warehouse', 'in_transit'], ['Delivered to origin warehouse', 'in_transit'],
+      // Taken in there, the whole scan; a warehouse that is not on the way says whose it is.
+      ['Received at warehouse', 'in_transit'], ['Received at the warehouse', 'in_transit'],
+      ['Received at warehouse of the sender', 'registered'],
       ['Delivered to the warehouse of the recipient', 'delivered'], ['Delivered to recipient', 'delivered'], ['Delivered to the mailbox', 'delivered'], ['Delivered', 'delivered'],
       // A forwarder's warehouse steps and its collection from the destination airport.
       ['Weighed at Warehouse', 'in_transit'], ['Consolidation Completed', 'in_transit'],

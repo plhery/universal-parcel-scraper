@@ -536,6 +536,10 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // A hand-over to a warehouse on the way, as JCEX words its partner's depot: "Delivered to warehouse, waiting to be
   // scanned". A warehouse of the recipient's is a delivery.
   if (/delivered to (?:the |a |an |our )?(?:(?:origin|overseas|transit|destination|local|sorting) )?warehouse\b(?! of\b)/.test(text)) return 'in_transit';
+  // A warehouse on the way taking the parcel in, the whole scan, as ParcelsApp relays a US shipping partner's "Received
+  // at warehouse" beside USPS's arrival at that partner, after the partner's own receipt. A relayed "Received in
+  // warehouse" or "Package received at warehouse" is a line's first scan, which providers read as its acceptance.
+  if (/^received at (?:the )?warehouse$/.test(text)) return 'in_transit';
   if (/(?<!\b(?:sera|seran|ser|sea|for) )\bentregad[oa]s? (?:(?:el|su|tu) (?:paquete|envio|pedido|bulto) )?(?:a|al|en) (?:el |la |un |una |nuestr[oa] )?(?:transportista|agencia (?:de )?(?:transporte|colaboradora|destino|origen)|operador(?: postal| logistico)?|mensajer(?:o|ia)|courier|empresa de (?:transporte|mensajeria|paqueteria)|compania (?:aerea|de transporte)|aerolinea|distribuidora?|centro (?:de )?(?:clasificacion|distribucion|tratamiento|logistico|operaciones)|almacen|delegacion|plataforma|hub|correos|seur|mrw|nacex|tipsa|ctt|gls|dhl|dpd|ups|fedex|tnt|envialia|zeleris|paack|celeritas|inpost)\b|\bentregad[oa] por (?:el remitente|la aerolinea|aerolinea)\b|(?<!\b(?:sera|serao|ser|seja|for) )\bentregues? (?:(?:a|o) (?:encomenda|envio|objeto) )?(?:a|ao|aos|as|na|no|nos|em) (?:transportadora|transportador|operador(?: postal| logistico)?|parceiro|companhia aerea|centro (?:de )?(?:distribuicao|tratamento|triagem|operacional|logistico)|armazem|plataforma|hub|ctt|correios|dpd|gls|dhl|ups|fedex|tnt|seur|mrw|nacex|tipsa|inpost)\b|\bentregue pelo remetente\b/.test(text)) return 'in_transit';
   // A forwarder naming the last-mile carrier it handed the parcel to, and that carrier's number:
   // "LM Carrier: [DHL] , LM Tracking No.: [1234567890]".
