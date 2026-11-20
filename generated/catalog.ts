@@ -63166,6 +63166,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "wallenius-wilhelmsen": {
+    "displayName": "Wallenius Wilhelmsen",
+    "color": "#144f73",
+    "aliases": [
+      "Wallenius Wilhelmsen Ocean",
+      "Wallenius Wilhelmsen Logistics",
+      "WWL"
+    ],
+    "countries": [
+      "NO",
+      "SE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wallenius-wilhelmsen",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.walleniuswilhelmsen.com/track-trace",
+    "trackingUrlTemplate": "https://www.walleniuswilhelmsen.com/track-trace",
+    "trackingSearchUrl": "https://www.walleniuswilhelmsen.com/track-trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "wanbexpress": {
     "displayName": "WanbExpress",
     "color": "#da381b",
@@ -68366,6 +68392,7 @@ export const CARRIER_IDS = [
   "wakilni",
   "walker-logistics",
   "walkers-transport",
+  "wallenius-wilhelmsen",
   "wanbexpress",
   "wangjing-3cq",
   "ward-trucking",
@@ -70281,6 +70308,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wakilni": [],
   "walker-logistics": [],
   "walkers-transport": [],
+  "wallenius-wilhelmsen": [],
   "wanbexpress": ["wanbexpress-1"],
   "wangjing-3cq": [],
   "ward-trucking": [],

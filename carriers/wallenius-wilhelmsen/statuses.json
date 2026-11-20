@@ -1,0 +1,18 @@
+{
+  "carrier": "wallenius-wilhelmsen",
+  "entries": [
+    {
+      "code": "DISC",
+      "wording": "DISCHARGED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DEPARTED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
+}

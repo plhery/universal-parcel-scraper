@@ -1,0 +1,17 @@
+{
+  "successful": true,
+  "message": "Processed Successfully",
+  "responseCode": "OK",
+  "forceRecaptchaFlag": false,
+  "result": [
+    {
+      "billNumber": "GB2582814",
+      "cargoSeqNo": "96145221",
+      "currentDateTime": "07-11-2026 17:09:32",
+      "currentLocation": "USBAL",
+      "currentLocationDesc": "BALTIMORE, MD",
+      "currentStatus": "DISC",
+      "currentStatusDesc": "DISCHARGED"
+    }
+  ]
+}

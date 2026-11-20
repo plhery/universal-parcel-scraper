@@ -5754,5 +5754,10 @@
     "carrier": "xanh-thl",
     "kind": "open",
     "reason": "The carrier publishes one live X-prefixed guide. Similar layouts occur across multiple carrier catalogs and need review."
+  },
+  {
+    "carrier": "wallenius-wilhelmsen",
+    "kind": "open",
+    "reason": "The WLWH-qualified manifest sample matches after removing its SCAC. A larger published bill sample is needed for a detection rule."
   }
 ]
