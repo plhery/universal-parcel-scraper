@@ -1,5 +1,121 @@
 {
   "carrier": "bolt-kargo",
-  "gap": "No public page shows a BOLT Kargo tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "3021269",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kigili-giyim/kigili-siparisim-dagitimda-kaldi-kargo-teslim-edilemedi",
+        "date": "2026-09-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The customer identifies this parcel number in a Bolt Kargo delivery SMS for a Kiğılı shipment. Carrier lookup blocked by verification. The tracker requires the recipient's phone number."
+    },
+    {
+      "number": "3026582",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/bolt-kargo/bolt-kargo-teslim-edildi-gorunuyor-ama-paket-ofiste-yok",
+        "date": "2026-09-21",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The customer gives this as the trackable number for a Denebunu shipment carried by Bolt Kargo. Carrier lookup blocked by verification. The tracker requires the recipient's phone number."
+    },
+    {
+      "number": "3060680",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/bolt-kargo/e-bebek-siparisindeki-kargo-gecikmesi-ve-iletisimsizlik",
+        "date": "2026-10-13",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The customer reports this Bolt Kargo tracking number for an ebebek shipment. Carrier lookup blocked by verification. The tracker requires the recipient's phone number."
+    },
+    {
+      "number": "2510625683",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/bolt-kargo/shark-dikey-supurge-takibi-gorunmuyor-bolt-kargo-yanit-vermiyor",
+        "date": "2026-11-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The customer identifies this number from the tracking screen for a Shark shipment handled by Bolt Kargo. Carrier lookup blocked by verification. The tracker requires the recipient's phone number."
+    },
+    {
+      "number": "BLT10083873",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/ebebek/kargo-firmasi/yapamiyorum",
+        "date": "2024-08-27",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "quarantine": true,
+      "context": {
+        "reportedRole": "tracking number",
+        "assessment": "quarantine"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "In the indexed complaint titled Bolt Kargo Ebebek Ürün İadesi Yapılmadı, the customer says Bolt Kargo rejected this number as invalid."
+    }
+  ]
 }

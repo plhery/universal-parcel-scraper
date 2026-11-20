@@ -1,5 +1,41 @@
 {
   "carrier": "buho-logistics",
-  "gap": "No public page shows a Búho Logistics number.",
-  "records": []
+  "records": [
+    {
+      "number": "191189574928",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/987814216/Captura-de-Pantalla-2024-05-28-a-La-s-10-39-21",
+        "date": "2024-05-23",
+        "dateKind": "shipment date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Paquetexpress parcel fulfilled by Búho Logistics",
+        "reportedRole": "tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The published Paquetexpress tracking screenshot shows this as the tracking number and identifies Búho Logistics at collection. Búho's public tracker returned shipment history for the same number."
+    }
+  ]
 }

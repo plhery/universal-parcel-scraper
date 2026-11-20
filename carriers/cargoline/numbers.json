@@ -1,5 +1,30 @@
 {
   "carrier": "cargoline",
-  "gap": "CargoLine's colli numbers are SSCCs, which every GS1 shipper prints, and no public page shows one its tracker answers.",
-  "records": []
+  "records": [
+    {
+      "number": "29517163",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://hinterberger-logistik.de/wp-content/uploads/sites/60/2023/01/Handbuch-Cepra-CustomerExpert-.pdf#page=5",
+        "date": "2018-05-23",
+        "dateKind": "document revision",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment number displayed by CEPRA",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The CargoLine CEPRA manual shows this value in the heading of a tracking result. The same page documents an NVE barcode or a depot and shipment number for guest searches."
+    }
+  ]
 }

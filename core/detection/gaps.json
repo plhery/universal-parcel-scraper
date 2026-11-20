@@ -5300,5 +5300,107 @@
     "pattern": "^(?:[0-9]{6}FDY/MBS|[0-9]{6})$",
     "kind": "open",
     "reason": "A Nigerian news report and an independent customer comment identify two ABC Cargo Express waybill formats. Detection does not offer ABC Cargo Express."
+  },
+  {
+    "carrier": "bluestreak-couriers",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "The published Blue Streak shipping form prints the tracking ID as four digits, a dot and six digits. Normalized detection does not offer Blue Streak."
+  },
+  {
+    "carrier": "bm-cargo",
+    "pattern": "^WR01\\d{9}$",
+    "kind": "open",
+    "reason": "Archived BM Cargo tracking results show the WR01 prefix, a hyphen and nine digits. Detection does not offer BM Cargo for these warehouse receipts."
+  },
+  {
+    "carrier": "bolt-kargo",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "Recipient reports identify seven-digit shipment references in Bolt Kargo tracking or notifications, and detection does not offer Bolt Kargo."
+  },
+  {
+    "carrier": "bolt-kargo",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "A recipient reports a ten-digit shipment reference in Bolt Kargo tracking, and detection does not offer Bolt Kargo."
+  },
+  {
+    "carrier": "brauns-express",
+    "pattern": "^\\d{8}$",
+    "kind": "open",
+    "reason": "An archived Braun's Express shipment link uses an eight-digit tracking reference. Detection suggests other carriers for that shape."
+  },
+  {
+    "carrier": "buho-logistics",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Búho's tracker follows a published twelve-digit Paquetexpress reference for an order Búho fulfilled. Detection offers Paquetexpress and other carriers."
+  },
+  {
+    "carrier": "campos-cadilhe",
+    "pattern": "^PRZ21\\d{6}$",
+    "kind": "open",
+    "reason": "Campos & Cadilhe's OTM results show a PRZ service prefix, a two-digit year and a six-digit reference, with dots between the parts. Detection does not offer the carrier."
+  },
+  {
+    "carrier": "cargoline",
+    "pattern": "^\\d{8}$",
+    "kind": "open",
+    "reason": "CargoLine's CEPRA manual displays an eight-digit shipment number. Detection does not offer CargoLine for that reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^KAR\\d{7}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Amazon shipment reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported parcel reported out for delivery reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^\\d{13}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Gratis shipment reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^MB\\d{8}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Modamizbir shipment reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^\\d{20}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Zara shipment reference."
+  },
+  {
+    "carrier": "chapar",
+    "pattern": "^541000\\d{11}$",
+    "kind": "open",
+    "reason": "Archived Chapar tracking links use 17-digit references starting 541000. Detection suggests other carriers for these inputs."
+  },
+  {
+    "carrier": "chinz-logistics",
+    "pattern": "^CR\\d{6}$",
+    "kind": "open",
+    "reason": "Chinz's published shipment reference has a CR prefix and six digits. Detection suggests other carriers and does not offer Chinz."
+  },
+  {
+    "carrier": "cope-sensitive-freight",
+    "pattern": "^BRU\\d{7}$",
+    "kind": "open",
+    "reason": "Two COPE eSmart consignment notes show the BRU customer prefix and seven digits. Detection does not offer COPE."
+  },
+  {
+    "carrier": "delibox",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Delibox's archived tracker shows a twelve-digit shipment number. Detection offers other carriers for this input."
   }
 ]
