@@ -113487,6 +113487,12 @@
     "candidates": []
   },
   {
+    "input": "c66h0wk23amg00839dx0",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "ca000591121bf",
     "carrier": "intl-post",
     "confidence": "high",
@@ -113521,6 +113527,12 @@
     "candidates": [
       "postnord"
     ]
+  },
+  {
+    "input": "cnwx77m23amg008jsc50",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "cp003640229ke",

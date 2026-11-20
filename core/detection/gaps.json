@@ -3597,6 +3597,12 @@
     "reason": "Fourteen digits are shared by several carriers and nothing in the number points to Sürat Kargo."
   },
   {
+    "carrier": "sway",
+    "pattern": "^[0-9A-Z]{20}$",
+    "kind": "open",
+    "reason": "A confirmed shipment from Sway's Swyft tracking platform uses a twenty-character alphanumeric identifier. Detection returns no carrier for it."
+  },
+  {
     "carrier": "swiss-post-cargo",
     "kind": "by_design",
     "reason": "The shipment number goes with a company number; eight digits alone are generic."
