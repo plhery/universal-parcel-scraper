@@ -277,6 +277,16 @@ const DUTIES_DUE = new RegExp([
   String.raw`\b(?:awaiting|waiting for|pending) (?:the )?(?:payment of )?(?:the )?${IMPORT_CHARGES}\b`,
   String.raw`\b${IMPORT_CHARGES} (?:are |is )?(?:due|owed|outstanding|unpaid|payable|to be paid|must be paid|payment (?:is )?(?:required|due|pending|outstanding))\b`,
 ].join('|'));
+/**
+ * Customs refusing the parcel entry, and the return it then allows: "Customs clearance: Refusal to release",
+ * "Return: Refusal by customs", "Failed to clear at import customs", "Customs clearance: Return allowed", and
+ * Russian Post's "Отказ в выпуске таможней" and "Таможенное оформление, Возврат разрешен".
+ */
+const CUSTOMS_REFUSED = new RegExp([
+  String.raw`\brefusal (?:to release|of (?:release|entry|import))\b|\brefusal by (?:the )?${CUSTOMS_SIDE}customs\b`,
+  String.raw`\bfailed to clear (?:at |through |in )?(?:the )?${CUSTOMS_SIDE}customs\b|\bcustoms clearance\b[\s,:;-]{1,4}return allowed\b`,
+  String.raw`отказ в выпуске|таможенное оформление[\s,:;-]{1,4}возврат разрешен`,
+].join('|'));
 /** A customs problem or hold that has ended: the parcel moves on. */
 const CUSTOMS_PROBLEM_ENDED = new RegExp([
   String.raw`\b(?:released|freed|cleared) (?:from|of) (?:the )?customs (?:hold|detention|inspection|examination)\b`,
@@ -483,6 +493,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (CUSTOMS_PROBLEM_ENDED.test(text)) return 'in_transit';
   // A customs problem is an exception; a customs hold is customs at work.
   if (/customs (?:issue|problem)|probleme de douane|zollproblem|problema doganale|problema de aduana|problema (?:alfandegario|na alfandega)|problem celny/.test(text)) return 'exception';
+  // So is a refusal: the parcel will not be delivered, and goes back once customs allows it.
+  if (CUSTOMS_REFUSED.test(text)) return 'exception';
   // So are import charges the recipient still owes: customs keeps the parcel until they are paid.
   if (CUSTOMS_HOLD.test(text) || DUTIES_DUE.test(text)) return 'customs';
   // A customs agent's step relayed under its name ("Customs agent: ready for pickup"): the parcel

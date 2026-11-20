@@ -414,6 +414,14 @@ describe('classifyWording', () => {
     expect(wordingStage('Held by customs, delivery attempt failed')).toBe('failed_attempt');
   });
 
+  it('reads customs refusing a parcel, and the return it then allows, as an exception', () => {
+    for (const wording of ['Customs clearance: Refusal to release', 'Return: Refusal by customs', 'Failed to clear at import customs',
+      'Customs clearance: Return allowed', 'Возврат,Отказ в выпуске таможней', 'Таможенное оформление,Возврат разрешен']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'exception', source: 'wording:language' });
+    }
+    expect(wordingStage('Handed over to the customs')).toBe('customs');
+  });
+
   it('reads import charges the recipient still owes as customs', () => {
     for (const wording of [
       // UPS's OQ activity, as universal providers relay it, and cut short.

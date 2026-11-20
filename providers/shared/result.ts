@@ -351,8 +351,11 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (/out for delivery/i.test(description)
     && !/(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery|\bout for delivery soon\b/i.test(description)) return 'out_for_delivery';
   // Customs wording outranks a provider's own stage. The shared rules tell a
-  // release or a completed clearance from customs still at work.
-  if (/customs|clearance/i.test(description)) return trackingLanguageStage(description) === 'in_transit' ? 'in_transit' : 'customs';
+  // release or a completed clearance, and a refusal, from customs still at work.
+  if (/customs|clearance/i.test(description)) {
+    const read = trackingLanguageStage(description);
+    return read === 'in_transit' || (read === 'exception' && CUSTOMS_REFUSAL.test(description)) ? read : 'customs';
+  }
   if (/instruction data.*provided.*electronically|instruction data transmitted\b|electronic information|information (?:received|submitted)|label (?:created|printed)|pre.?advice|shipment announced/i.test(description)) return 'registered';
   if (/will be transported to the destination country/i.test(description)) return 'in_transit';
   if (!includeBroadMovement) return undefined;
@@ -767,6 +770,9 @@ const DELAY_MESSAGE = /^受[^，,。]{1,30}影响[，,]\s*邮件(?:投递)?时�
 // DPD Poland's notices to the recipient, in English and Polish, which 17TRACK files under the codes of the scans
 // beside them: messages, not movements, as DPD Poland's own map reads them.
 const DPD_PL_NOTICE = /^(?:(?:mail|sms) notification|sent notification|powiadomienie (?:mail|sms)|wysłano powiadomienie)$/i;
+
+// Customs refusing the parcel, which the shared rules read as an exception: the provider keeps that reading.
+const CUSTOMS_REFUSAL = /\brefusal\b|\bfailed to clear\b|\breturn allowed\b/i;
 
 /** A message the shared rules give no stage, whatever code a provider files it under. */
 export function isMessageRow(description: string): boolean {

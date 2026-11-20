@@ -4,6 +4,12 @@ import { statusMap } from '../status.js';
 import { hasPrivateDeliveryDetails } from '../../core/status/index.js';
 
 describe('shared provider result', () => {
+  it('keeps customs refusing a parcel an exception, not customs at work', () => {
+    for (const wording of ['Customs clearance: Refusal to release', 'Return: Refusal by customs', 'Failed to clear at import customs',
+      'Customs clearance: Return allowed']) expect(classifyEvent(wording), wording).toEqual({ stage: 'exception', stage_source: 'wording:provider' });
+    expect(classifyEvent('Handed over to the customs').stage).toBe('customs');
+  });
+
   it("reads DHL's \"Available for pickup shortly\" relayed by a provider as on its way to the outlet, as DHL does", () => {
     expect(classifyEvent('Available for pickup shortly').stage).toBe('in_transit');
     expect(classifyEvent('Will be available for collection tomorrow').stage).toBe('in_transit');
