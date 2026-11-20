@@ -12,7 +12,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -25,7 +25,7 @@
           "loggi"
         ]
       },
-      "note": "The published tracking history names New Zealand Chinz Logistics and lists this reference as in transit. The carrier's tracking page echoed the input without a shipment result in the response."
+      "note": "The published tracking history names Chinz Logistics. Its public API returned the matching order number with Chinz and downstream scans."
     }
   ]
 }

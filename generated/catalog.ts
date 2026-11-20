@@ -14570,7 +14570,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Pacific/Auckland",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "chinz-logistics",
+      "localClocks": true
     },
     "canaryUrl": "https://chinzlogistics.com/",
     "trackingUrlTemplate": "https://chinzlogistics.com/en/consult?keywords={trackingNumber}",

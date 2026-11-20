@@ -1,0 +1,74 @@
+{
+  "status": 200,
+  "message": "success",
+  "data": [
+    {
+      "order_sn": "CR122430",
+      "logicinfo": [
+        {
+          "order_status": 0,
+          "info_status": null,
+          "created_at": "2025-04-12 11:33:02",
+          "message": "物流单已生成",
+          "server_point": "新西兰"
+        },
+        {
+          "order_status": 2,
+          "info_status": null,
+          "created_at": "2025-04-22 12:36:00",
+          "message": "货物已入库",
+          "server_point": "新西兰"
+        },
+        {
+          "order_status": 6,
+          "info_status": null,
+          "created_at": "2025-04-22 12:55:27",
+          "message": "货物正在等待转运",
+          "server_point": "新西兰"
+        },
+        {
+          "order_status": 7,
+          "info_status": null,
+          "created_at": "2025-04-23 15:43:07",
+          "message": "货物正在等待出港",
+          "server_point": "新西兰"
+        },
+        {
+          "order_status": 8,
+          "info_status": null,
+          "created_at": "2025-04-26 09:14:30",
+          "message": "货物已出港",
+          "server_point": "新西兰"
+        },
+        {
+          "order_status": 9,
+          "info_status": null,
+          "created_at": "2025-04-30 00:10:12",
+          "message": "货物已到达，等待清关",
+          "server_point": "中国"
+        },
+        {
+          "order_status": 9,
+          "info_status": null,
+          "created_at": "2025-04-30 00:10:12",
+          "message": "货物已到达，等待清关",
+          "server_point": "中国"
+        },
+        {
+          "order_status": -1,
+          "info_status": "ARRIVAL",
+          "created_at": "2025-05-01 01:56:47",
+          "message": "您的快件已经到达【西安转运中心】",
+          "server_point": "您的快件已经到达【西安转运中心】"
+        },
+        {
+          "order_status": -1,
+          "info_status": "DEPARTURE",
+          "created_at": "2025-05-01 02:58:06",
+          "message": "您的快件离开【西安转运中心】",
+          "server_point": "您的快件离开【西安转运中心】"
+        }
+      ]
+    }
+  ]
+}
