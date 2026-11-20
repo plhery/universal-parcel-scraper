@@ -5090,5 +5090,11 @@
     "pattern": "^R[0-9]{8}$",
     "kind": "open",
     "reason": "The court reproduces a Buspack tracking guide with the letter, branch and serial in the form FlechaCarga describes. Detection does not offer FlechaCarga."
+  },
+  {
+    "carrier": "fast-express-tr",
+    "pattern": "^3514785[0-9]{5}$",
+    "kind": "open",
+    "reason": "Fast Express carrier archives confirm these numeric consignments. Detection does not offer Fast Express."
   }
 ]
