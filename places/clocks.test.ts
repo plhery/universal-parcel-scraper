@@ -137,6 +137,14 @@ describe('dateLocalClocks', () => {
     ]);
     // On a parcel to Jamaica, the country; and on another carrier's parcel too.
     expect(events('JM')[2]).toMatchObject({ time: '2026-10-25T10:55:00-05:00', time_zone: 'America/Jamaica' });
+    // India Post relays USPS's rows for a parcel to the United States, the bare name included.
+    expect(dateLocalClocks('india-post', { status: 'in_transit', destination_country: 'US', events: [
+      { local_time: '2026-07-19T00:45:00', description: 'Arrived at sorting Centre', location: 'JAMAICA' },
+      { local_time: '2026-07-18T00:45:00', description: 'Item received at office of exchange (Inb)', location: 'ISC NEW YORK NY (USPS)' },
+    ] }).events![0]).toMatchObject({ time: '2026-07-19T00:45:00-04:00', time_zone: 'America/New_York', time_zone_basis: 'place' });
+    expect(dateLocalClocks('india-post', { status: 'in_transit', destination_country: 'JM', events: [
+      { local_time: '2026-07-19T00:45:00', description: 'Arrived at sorting Centre', location: 'JAMAICA' },
+    ] }).events![0]).toMatchObject({ time_zone: 'America/Jamaica' });
     expect(dateLocalClocks('dhl', { status: 'in_transit', destination_country: 'ES', events: [
       { local_time: '2026-10-25T10:55:00', description: 'Processed', location: 'JAMAICA' },
     ] }).events![0]).toMatchObject({ time_zone: 'America/Jamaica' });
