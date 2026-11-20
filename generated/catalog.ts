@@ -27908,6 +27908,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "globkurier": {
+    "displayName": "GlobKurier",
+    "color": "#e53930",
+    "aliases": [
+      "GlobKurier.pl"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "globkurier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.globkurier.pl/tracking",
+    "trackingUrlTemplate": "https://www.globkurier.pl/tracking",
+    "trackingSearchUrl": "https://www.globkurier.pl/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gls-at": {
     "displayName": "GLS Austria",
     "color": "#ffdd00",
@@ -66315,6 +66337,7 @@ export const CARRIER_IDS = [
   "global-parcel-service",
   "globalpost",
   "globex-post",
+  "globkurier",
   "gls-at",
   "gls-ca",
   "gls-es",
@@ -68190,6 +68213,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "global-parcel-service": [],
   "globalpost": ["globalpost-1"],
   "globex-post": [],
+  "globkurier": [],
   "gls-at": ["gls-at-1","gls-at-2"],
   "gls-ca": [],
   "gls-es": ["gls-es-1","gls-es-2"],

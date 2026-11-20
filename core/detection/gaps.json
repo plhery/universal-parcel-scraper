@@ -5554,5 +5554,10 @@
     "carrier": "courierit-nz",
     "kind": "by_design",
     "reason": "Courierit New Zealand publishes numeric consignment references without a carrier-specific prefix. Select it explicitly."
+  },
+  {
+    "carrier": "globkurier",
+    "kind": "by_design",
+    "reason": "The published GlobKurier GK tracking reference has no automatic rule. Select the carrier explicitly."
   }
 ]

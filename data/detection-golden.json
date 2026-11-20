@@ -92471,6 +92471,12 @@
     ]
   },
   {
+    "input": "GK241014834170",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "GLAC0008785864",
     "carrier": "ekart",
     "confidence": "high",

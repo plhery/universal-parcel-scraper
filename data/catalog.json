@@ -27904,6 +27904,28 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "globkurier": {
+    "displayName": "GlobKurier",
+    "color": "#e53930",
+    "aliases": [
+      "GlobKurier.pl"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "globkurier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.globkurier.pl/tracking",
+    "trackingUrlTemplate": "https://www.globkurier.pl/tracking",
+    "trackingSearchUrl": "https://www.globkurier.pl/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gls-at": {
     "displayName": "GLS Austria",
     "color": "#ffdd00",
