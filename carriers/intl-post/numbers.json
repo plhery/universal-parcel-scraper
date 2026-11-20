@@ -193,6 +193,24 @@
       "note": "Invented number whose S10 check digit passes but whose XB suffix names no country, so it is not international mail."
     },
     {
+      "number": "EC583147022LP",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose LP suffix is no ISO 3166 country code, so it is not international mail."
+    },
+    {
       "number": "RO400351158EE",
       "role": "shipment",
       "evidence": "public_shipment_report",

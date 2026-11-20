@@ -6,7 +6,7 @@ import { carrierIdFromName } from '../catalog/hints.js';
 
 describe('S10-shaped numbers', () => {
   it.each(['RR999999987TY', 'RR999999987MI', 'RR999999987XX', 'RR999999987GO', 'RR999999987YW', 'RR999999987CS', 'RR999999987EN', 'RR999999987MB',
-    'RR999999987DY', 'RR999999987OI', 'RR999999987XB'])(
+    'RR999999987DY', 'RR999999987OI', 'RR999999987XB', 'RR999999987LP', 'RR999999987YQ'])(
     'leaves %s out of international mail: its suffix names no issuing country',
     (number) => {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
@@ -15,6 +15,16 @@ describe('S10-shaped numbers', () => {
       expect(checksumRejections(number)).toEqual([]);
     },
   );
+
+  it('claims international mail only for a suffix that is a region code', () => {
+    const regions = new Intl.DisplayNames(['en'], { type: 'region' });
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const unnamed = [...letters].flatMap(first => [...letters].map(second => first + second)).filter(code => regions.of(code) === code);
+    expect(unnamed.length).toBeGreaterThan(300);
+    const claimed = unnamed.filter(code => detectCarrierMatch(`RR999999987${code}`).candidates.includes('intl-post'));
+    expect(claimed).toEqual([]);
+    expect(detectCarrierMatch('RR999999987ZW')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+  });
 
   it('suggests AliExpress first for a TY number, a suffix Cainiao gives AliExpress parcels', () => {
     expect(detectCarrierMatch('rr 123 456 785 ty')).toEqual({
