@@ -17,3 +17,4 @@ export { fedexRetryTrial } from './carriers/fedex/adapter.js';
 export { keepAdapterHolds, type AdapterHold, type AdapterHoldStore } from './core/runner/holds.js';
 export { warmDpdSession, type DpdSession, type DpdSessionEvent, type DpdSessionStore } from './carriers/dpd-de/service.js';
 export { createTrackingServer, type TrackingServerOptions } from './server/index.js';
+export { proxyEgressPool } from './core/transport/proxyEgress.js';

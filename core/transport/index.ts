@@ -9,3 +9,5 @@ export type { UniversalBrowserOptions } from './browser.js';
 export { withLocalBrowser } from './localBrowser.js';
 export type { LocalBrowserOptions, LocalBrowserSession } from './localBrowser.js';
 export { DEFAULT_USER_AGENT, userAgentOf } from './userAgent.js';
+export { EgressPacer, egressesOf } from './egress.js';
+export type { Egress, EgressChoice, EgressLimit } from './egress.js';

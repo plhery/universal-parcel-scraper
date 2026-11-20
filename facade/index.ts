@@ -33,6 +33,8 @@ export interface TrackerOptions {
   env?: Readonly<Record<string, string | undefined>>;
   /** Where a long-lived host keeps retry route trials, as `AdapterEnvironment.retryTrialStores`. */
   retryTrialStores?: AdapterEnvironment['retryTrialStores'];
+  /** Named pools of other egresses for carriers that limit each address, such as `datacenter` (`proxyEgressPool`). */
+  egressPools?: AdapterEnvironment['egressPools'];
   /** A registry built by the host carries its own environment, `userAgent` included. */
   registry?: AdapterRegistry;
   /** Minimum gap between calls to the same universal provider in this process. */
@@ -168,6 +170,7 @@ export function createTracker(options: TrackerOptions = {}) {
     recorder: options.recorder ?? NOOP_RECORDER,
     env: options.env ?? {},
     ...(options.retryTrialStores ? { retryTrialStores: options.retryTrialStores } : {}),
+    ...(options.egressPools ? { egressPools: options.egressPools } : {}),
   };
   const registry = options.registry ?? new AdapterRegistry(REGISTRY, environment);
   const universal = new UniversalTracker({ environment });

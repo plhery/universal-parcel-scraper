@@ -3123,7 +3123,7 @@
       "adapter": "poste-italiane",
       "recognitionRank": 900,
       "refresh": {
-        "minMinutes": 60,
+        "minMinutes": 30,
         "afterFailureMinutes": 60
       },
       "browser": true

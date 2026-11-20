@@ -11,6 +11,7 @@ import { isPlaceholderNumber } from '../detection/placeholder.js';
 import { BudgetExceededError, CarrierError, carrierErrorKind, InvalidInputError } from '../errors/index.js';
 import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 import type { StepRecorder } from '../telemetry/index.js';
+import type { Egress } from '../transport/egress.js';
 import type { RetryRouteTrialStore } from '../transport/retryRouteTrial.js';
 import type { TrawlClient } from '../transport/trawl.js';
 import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime } from '../time/index.js';
@@ -134,6 +135,11 @@ export interface AdapterEnvironment {
   trawl: TrawlClient | null;
   /** Optional named browser routes, constructed and isolated by the host. */
   trawlRoutes?: Readonly<Record<string, TrawlClient | null>>;
+  /**
+   * Optional named pools of other egresses, constructed by the host, such as `datacenter` proxies. An
+   * adapter for a carrier that limits each address spreads its reads over them (`EgressPacer`).
+   */
+  egressPools?: Readonly<Record<string, readonly Egress[]>>;
   /** Where a long-lived host keeps a bounded retry route trial, by trial kind (`fedex-retry`). */
   retryTrialStores?: Readonly<Record<string, RetryRouteTrialStore>>;
   /** A Chromium executable for adapters that must run a browser locally, or null. */
