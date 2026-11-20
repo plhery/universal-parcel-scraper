@@ -1,3 +1,5 @@
+import { withHelperContext } from './helper-context.mjs';
+
 const ORIGIN = 'https://tracking.ozon.ru';
 const API_PATH = '/p-api/ozon-track-bff/tracking/';
 const POSTING = /^(?:\d{8}|\d{10})-\d{4}-\d$/;
@@ -80,89 +82,60 @@ export async function runOzonBrowser({ url, capture, handle, tier, maxTimeout, i
   const request = ozonBrowserRequest(url, capture);
   if (!request) return undefined;
   const started = Date.now(), entries = [];
-  let context, page, timer, abort, observer, responseObserver, expired = false, observed = false, statusCode = 0;
+  let page, observer, responseObserver, expired = false, observed = false, statusCode = 0;
   const remaining = () => {
     const left = Math.floor(maxTimeout - (Date.now() - started));
     if (expired || left < 1 || signal?.aborted) throw new Error('Ozon browser ended');
     return left;
   };
-  const close = async target => {
-    let closed = false, timeout;
-    try {
-      await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }).catch(() => {}),
-        new Promise(resolve => { timeout = setTimeout(resolve, 1500); })]);
-    } finally {
-      clearTimeout(timeout);
-      if (!closed) handle.requestBrowserReplacement?.('Ozon context cleanup failed');
-    }
-  };
   const result = () => ({ tier, status: statusCode || entries.length ? 'success' : 'error', statusCode,
     durationMs: Date.now() - started, effectiveUrl: url, html: '', body: new Uint8Array(), cookies: [],
     capturedResponses: entries, ...(!statusCode && !entries.length ? { reason: 'Ozon guest tracking did not answer' } : {}) });
-  try {
-    if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || signal?.aborted) return result();
-    return await Promise.race([
-      (async () => {
-        const created = await handle.browser.newContext();
-        handle.noteTemporaryContext?.();
-        if (expired) { await close(created); return result(); }
-        context = created;
-        page = await context.newPage();
-        if (expired) return result();
-        await installPolicy?.(page);
-        observer = incoming => {
-          if (expired || incoming.method() !== 'GET') return;
-          if (incoming.url() === request.api) observed = true;
-        };
-        responseObserver = incoming => {
-          if (expired || incoming.request().method() !== 'GET') return;
-          let target;
-          try { target = new URL(incoming.url()); } catch { return; }
-          if (target.origin !== ORIGIN || target.pathname !== new URL(request.api).pathname) return;
-          // Retain refusals and redirects, including an automatic verification retry.
-          // Only the bounded in-page read below can attach a body.
-          if (entries.length === 8) entries.shift();
-          entries.push({ url: request.api, status: incoming.status(), headers: {}, body: null,
-            error: 'response-unreadable', truncated: false, base64Encoded: false,
-            trackingNumberSubmitted: request.number });
-        };
-        page.on('request', observer);
-        page.on('response', responseObserver);
-        const navigation = await page.goto(`${ORIGIN}/`, { waitUntil: 'domcontentloaded', timeout: remaining() });
-        statusCode = navigation?.status() ?? 0;
-        // Ozon's ordinary page script can navigate from its initial response to this form.
-        await page.locator('input[placeholder="Введите трек-номер отправления"]').waitFor({ state: 'visible', timeout: remaining() });
-        statusCode = 200;
-        const response = await page.evaluate(readOzonPageApi,
-          { path: new URL(request.api).pathname, timeoutMs: remaining(), maxBytes: 1_000_000 });
-        if (expired || !observed) return result();
-        const latest = entries.at(-1);
-        if (!response.status && latest) {
-          latest.error = response.error;
-          return result();
-        }
-        if (latest?.status === response.status) entries.pop();
-        if (entries.length === 8) entries.shift();
-        entries.push({ url: request.api, status: response.status, headers: response.headers ?? {},
-          body: response.body, error: response.error, truncated: response.truncated === true,
-          base64Encoded: false, trackingNumberSubmitted: request.number });
-        return result();
-      })(),
-      new Promise((_, reject) => {
-        timer = setTimeout(() => { expired = true; reject(new Error('Ozon browser deadline')); }, maxTimeout);
-        abort = () => { expired = true; reject(new Error('Ozon browser cancelled')); };
-        signal?.addEventListener('abort', abort, { once: true });
-        if (signal?.aborted) abort();
-      }),
-    ]);
-  } catch {
+  if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || signal?.aborted) return result();
+  return withHelperContext({ handle, label: 'Ozon', timeoutMs: maxTimeout, signal, installPolicy,
+    onExpire: () => { expired = true; }, onFailure: result,
+    onStop: () => {
+      expired = true;
+      if (page && observer) page.off('request', observer);
+      if (page && responseObserver) page.off('response', responseObserver);
+    } }, async run => {
+    page = run.page;
+    observer = incoming => {
+      if (expired || incoming.method() !== 'GET') return;
+      if (incoming.url() === request.api) observed = true;
+    };
+    responseObserver = incoming => {
+      if (expired || incoming.request().method() !== 'GET') return;
+      let target;
+      try { target = new URL(incoming.url()); } catch { return; }
+      if (target.origin !== ORIGIN || target.pathname !== new URL(request.api).pathname) return;
+      // Retain refusals and redirects, including an automatic verification retry.
+      // Only the bounded in-page read below can attach a body.
+      if (entries.length === 8) entries.shift();
+      entries.push({ url: request.api, status: incoming.status(), headers: {}, body: null,
+        error: 'response-unreadable', truncated: false, base64Encoded: false,
+        trackingNumberSubmitted: request.number });
+    };
+    page.on('request', observer);
+    page.on('response', responseObserver);
+    const navigation = await page.goto(`${ORIGIN}/`, { waitUntil: 'domcontentloaded', timeout: remaining() });
+    statusCode = navigation?.status() ?? 0;
+    // Ozon's ordinary page script can navigate from its initial response to this form.
+    await page.locator('input[placeholder="Введите трек-номер отправления"]').waitFor({ state: 'visible', timeout: remaining() });
+    statusCode = 200;
+    const response = await page.evaluate(readOzonPageApi,
+      { path: new URL(request.api).pathname, timeoutMs: remaining(), maxBytes: 1_000_000 });
+    if (expired || !observed) return result();
+    const latest = entries.at(-1);
+    if (!response.status && latest) {
+      latest.error = response.error;
+      return result();
+    }
+    if (latest?.status === response.status) entries.pop();
+    if (entries.length === 8) entries.shift();
+    entries.push({ url: request.api, status: response.status, headers: response.headers ?? {},
+      body: response.body, error: response.error, truncated: response.truncated === true,
+      base64Encoded: false, trackingNumberSubmitted: request.number });
     return result();
-  } finally {
-    expired = true;
-    clearTimeout(timer);
-    signal?.removeEventListener('abort', abort);
-    if (page && observer) page.off('request', observer);
-    if (page && responseObserver) page.off('response', responseObserver);
-    if (context) await close(context);
-  }
+  });
 }

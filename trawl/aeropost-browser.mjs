@@ -1,3 +1,5 @@
+import { withHelperContext } from './helper-context.mjs';
+
 const ORIGIN = 'https://aeropost.com';
 const API = `${ORIGIN}/api/tracking`;
 const MAX_BODY = 1_000_000;
@@ -41,7 +43,7 @@ export async function runAeropostBrowser({ url, handle, tier, maxTimeout, captur
   const started = Date.now(), entries = [], pending = new Set();
   const cleanupMs = Math.min(1500, Math.max(1, Math.floor(maxTimeout / 5)));
   const deadline = started + maxTimeout - cleanupMs;
-  let context, page, timer, settleTimer, abort, onResponse, onFailed, route, finish;
+  let page, settleTimer, onResponse, onFailed, route, finish;
   let expired = false, accepting = true, statusCode = 0, totalBytes = 0, requests = 0;
   const remaining = () => Math.max(1, Math.floor(deadline - Date.now()));
   const entryFor = (status, error = null) => ({ url: API, status, headers: {}, body: null, error,
@@ -52,80 +54,60 @@ export async function runAeropostBrowser({ url, handle, tier, maxTimeout, captur
     return { tier, status: 'success', durationMs: Date.now() - started, effectiveUrl: url,
       html: '', body: new Uint8Array(), statusCode, cookies: [], capturedResponses: captured.slice(-3) };
   };
-  const close = async target => {
-    let closed = false, timeout;
-    try { await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }).catch(() => {}),
-      new Promise(resolve => { timeout = setTimeout(resolve, cleanupMs); })]); }
-    finally { clearTimeout(timeout); if (!closed) handle.requestBrowserReplacement?.('Aeropost context cleanup failed'); }
-  };
   const settle = () => {
     clearTimeout(settleTimer);
     if (!pending.size && entries.length) settleTimer = setTimeout(finish, Math.min(250, remaining()));
   };
-  try {
-    if (!Number.isFinite(maxTimeout) || maxTimeout < 2000 || signal?.aborted) return result();
-    const terminal = new Promise(resolve => { finish = resolve; });
-    return await Promise.race([
-      (async () => {
-        const created = await handle.browser.newContext(); handle.noteTemporaryContext?.();
-        if (expired) { await close(created); return result(); }
-        context = created; page = await context.newPage();
-        if (expired) return result();
-        await installPolicy?.(page);
-        if (expired) return result();
-        route = async intercepted => {
-          const request = intercepted.request();
-          if (!accepting || expired || Date.now() >= deadline || !aeropostRequestMatches(request, page, number) || requests >= 2) {
-            await intercepted.abort(); return;
-          }
-          requests++; clearTimeout(settleTimer); pending.add(request);
-          await intercepted.continue();
-        };
-        onFailed = request => {
-          if (!accepting || !pending.has(request)) return;
-          pending.delete(request); entries.push(entryFor(0, 'tracking-request-failed')); settle();
-        };
-        onResponse = response => {
-          const request = response.request();
-          if (!accepting || !pending.has(request) || response.url() !== API) return;
-          const headers = response.headers(), entry = entryFor(response.status()); entries.push(entry);
-          entry.headers = Object.fromEntries(['content-type', 'retry-after'].filter(key => headers[key])
-            .map(key => [key, headers[key].slice(0, 100)]));
-          const length = Number(headers['content-length'] ?? 0);
-          if (!Number.isSafeInteger(length) || length < 0 || length > MAX_BODY || totalBytes >= 2 * MAX_BODY) {
-            entry.truncated = true; pending.delete(request); finish(); return;
-          }
-          // Challenges retain status only; their tokens never leave this context.
-          if (![200, 404].includes(entry.status)) { pending.delete(request); settle(); return; }
-          void response.body().then(bytes => {
-            if (!accepting) return;
-            totalBytes += bytes.length;
-            if (bytes.length > MAX_BODY || totalBytes > 2 * MAX_BODY) entry.truncated = true;
-            else {
-              try { entry.body = JSON.stringify(projectAeropostTracking(JSON.parse(bytes.toString('utf8')))); }
-              catch { entry.error = 'invalid-json'; }
-            }
-          }).catch(() => { if (accepting) entry.error = 'response-unreadable'; }).finally(() => {
-            pending.delete(request); if (accepting) settle();
-          });
-        };
-        page.on('response', onResponse); page.on('requestfailed', onFailed);
-        await page.route(`${API}**`, route);
-        const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
-        statusCode = navigation?.status() ?? 0;
-        await terminal; return result();
-      })(),
-      new Promise((_, reject) => {
-        abort = () => { expired = true; reject(new Error('Aeropost browser ended')); };
-        signal?.addEventListener('abort', abort, { once: true }); timer = setTimeout(abort, remaining());
-      }),
-    ]);
-  } catch { return result(); }
-  finally {
-    accepting = false; expired = true; clearTimeout(timer); clearTimeout(settleTimer);
-    if (abort) signal?.removeEventListener('abort', abort);
-    if (page && onResponse) page.off('response', onResponse);
-    if (page && onFailed) page.off('requestfailed', onFailed);
-    if (context) await close(context);
-  }
+  if (!Number.isFinite(maxTimeout) || maxTimeout < 2000 || signal?.aborted) return result();
+  const terminal = new Promise(resolve => { finish = resolve; });
+  return withHelperContext({ handle, label: 'Aeropost', timeoutMs: remaining(), signal, installPolicy, cleanupMs,
+    onExpire: () => { expired = true; }, onFailure: result,
+    onStop: () => {
+      accepting = false; expired = true; clearTimeout(settleTimer);
+      if (page && onResponse) page.off('response', onResponse);
+      if (page && onFailed) page.off('requestfailed', onFailed);
+    } }, async run => {
+    page = run.page;
+    route = async intercepted => {
+      const request = intercepted.request();
+      if (!accepting || expired || Date.now() >= deadline || !aeropostRequestMatches(request, page, number) || requests >= 2) {
+        await intercepted.abort(); return;
+      }
+      requests++; clearTimeout(settleTimer); pending.add(request);
+      await intercepted.continue();
+    };
+    onFailed = request => {
+      if (!accepting || !pending.has(request)) return;
+      pending.delete(request); entries.push(entryFor(0, 'tracking-request-failed')); settle();
+    };
+    onResponse = response => {
+      const request = response.request();
+      if (!accepting || !pending.has(request) || response.url() !== API) return;
+      const headers = response.headers(), entry = entryFor(response.status()); entries.push(entry);
+      entry.headers = Object.fromEntries(['content-type', 'retry-after'].filter(key => headers[key])
+        .map(key => [key, headers[key].slice(0, 100)]));
+      const length = Number(headers['content-length'] ?? 0);
+      if (!Number.isSafeInteger(length) || length < 0 || length > MAX_BODY || totalBytes >= 2 * MAX_BODY) {
+        entry.truncated = true; pending.delete(request); finish(); return;
+      }
+      // Challenges retain status only; their tokens never leave this context.
+      if (![200, 404].includes(entry.status)) { pending.delete(request); settle(); return; }
+      void response.body().then(bytes => {
+        if (!accepting) return;
+        totalBytes += bytes.length;
+        if (bytes.length > MAX_BODY || totalBytes > 2 * MAX_BODY) entry.truncated = true;
+        else {
+          try { entry.body = JSON.stringify(projectAeropostTracking(JSON.parse(bytes.toString('utf8')))); }
+          catch { entry.error = 'invalid-json'; }
+        }
+      }).catch(() => { if (accepting) entry.error = 'response-unreadable'; }).finally(() => {
+        pending.delete(request); if (accepting) settle();
+      });
+    };
+    page.on('response', onResponse); page.on('requestfailed', onFailed);
+    await page.route(`${API}**`, route);
+    const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
+    statusCode = navigation?.status() ?? 0;
+    await terminal; return result();
+  });
 }

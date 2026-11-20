@@ -1,3 +1,4 @@
+import { withHelperContext } from './helper-context.mjs';
 import { recaptchaAudioBackoff } from './recaptcha-backoff.mjs';
 
 const ORIGIN = 'https://www.poste.it';
@@ -41,7 +42,7 @@ export async function runPosteItalianeBrowser({ url, handle, tier, maxTimeout, c
   const entries = [];
   const requests = new Map(), pending = new Set(), complete = new Set();
   const controller = new AbortController();
-  let context, page, timer, onResponse, onRequest, onFailed, abort;
+  let page, onResponse, onRequest, onFailed;
   let accepting = true, expired = false, totalBytes = 0, statusCode = 0;
   let sawChallenge = false, paused = false, waitedForRequest = false, nativeOutcome = 'not_started';
   let finish, challenge;
@@ -50,15 +51,10 @@ export async function runPosteItalianeBrowser({ url, handle, tier, maxTimeout, c
   const remaining = () => Math.max(1, Math.floor(maxTimeout - (Date.now() - started)));
   const result = () => ({ tier, status: 'success', durationMs: Date.now() - started,
     effectiveUrl: url, html: '', body: new Uint8Array(), statusCode, cookies: [], capturedResponses: entries });
-  const close = async target => {
-    let closed = false, cleanup;
-    try {
-      await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }).catch(() => {}),
-        new Promise(resolve => { cleanup = setTimeout(resolve, 1500); })]);
-    } finally {
-      clearTimeout(cleanup);
-      if (!closed) handle.requestBrowserReplacement?.('Poste Italiane context cleanup failed');
-    }
+  const failed = () => {
+    if (entries.length) return result();
+    return { tier, status: 'error', durationMs: Date.now() - started,
+      reason: expired ? 'Poste Italiane browser budget exhausted' : 'Poste Italiane browser retrieval failed' };
   };
   try {
     if (!Number.isFinite(maxTimeout) || maxTimeout < 1) throw new Error('No browser budget');
@@ -69,129 +65,112 @@ export async function runPosteItalianeBrowser({ url, handle, tier, maxTimeout, c
       paused = true; nativeOutcome = 'audio_cooldown';
       return result();
     }
-    await Promise.race([
-      (async () => {
-        const created = await handle.browser.newContext();
-        handle.noteTemporaryContext?.();
-        if (expired) { await close(created); throw new Error('Late browser context'); }
-        context = created;
-        page = await context.newPage();
-        if (expired) throw new Error('Late browser page');
-        await installPolicy?.(page);
-        if (expired) throw new Error('Late browser policy');
-        const bound = request => {
-          if (!accepting || expired || request.url() !== API || request.method() !== 'POST') return null;
-          let body;
-          try { body = request.postDataJSON(); } catch { return null; }
-          return record(body) && body.codiceSpedizione === number && body.tipoRichiedente === 'WEB' ? body : null;
-        };
-        const begin = request => {
-          if (requests.has(request)) return requests.get(request);
-          if (entries.length >= 10) { entries.at(-1).error = 'Poste tracking response limit exceeded'; accepting = false; finish(); return; }
-          const entry = { url: API, status: 0, body: null, headers: {}, truncated: false, base64Encoded: false,
-            error: 'Poste tracking request unfinished' };
-          entries.push(entry); requests.set(request, entry); pending.add(request);
-          return entry;
-        };
-        const settle = (request, entry, terminal = true) => {
-          pending.delete(request);
-          if (terminal) complete.add(entry);
-          if (!pending.size && complete.has(entries.at(-1))) finish();
-        };
-        onRequest = request => { if (bound(request)) begin(request); };
-        onFailed = request => {
-          if (!bound(request)) return;
-          const entry = begin(request);
-          if (!entry) return;
-          entry.error = 'Poste tracking request failed';
-          settle(request, entry);
-        };
-        onResponse = response => {
-          const request = response.request(), body = bound(request);
-          if (!body || response.url() !== API) return;
-          const hasCaptcha = Boolean(body.captcha);
-          const entry = begin(request);
-          if (!entry) return;
-          const headers = response.headers();
-          entry.status = response.status();
-          entry.headers = Object.fromEntries(['content-type', 'retry-after'].filter(key => headers[key])
-            .map(key => [key, headers[key].slice(0, 100)]));
-          entry.error = null;
-          if (![200, 400].includes(entry.status)) { settle(request, entry); return; }
-          const length = Number(headers['content-length'] ?? 0);
-          if (!Number.isSafeInteger(length) || length < 0 || length > MAX_BODY || totalBytes >= 3 * MAX_BODY) {
-            entry.truncated = true; settle(request, entry); return;
-          }
-          void response.body().then(body => {
-            if (!accepting) return;
-            totalBytes += body.length;
-            if (body.length > MAX_BODY || totalBytes > 3 * MAX_BODY) { entry.truncated = true; settle(request, entry); return; }
-            const payload = JSON.parse(body.toString('utf8'));
-            if (entry.status === 400 && record(payload) && payload.id === 2 && payload.tipo === 'error'
-              && /captcha/i.test(String(payload.descrizione))) {
-              // Preserve the gate, without its request token or unrelated error details.
-              entry.body = JSON.stringify({ id: 2, tipo: 'error', descrizione: 'CAPTCHA required' });
-              sawChallenge = true;
-              challenge();
-              settle(request, entry, hasCaptcha);
-              return;
-            }
-            if (entry.status === 200) entry.body = JSON.stringify(trackingOnly(payload));
-            settle(request, entry);
-          }).catch(() => {
-            if (accepting) { entry.error = 'Poste tracking response could not be decoded'; settle(request, entry); }
-          });
-        };
-        page.on('request', onRequest);
-        page.on('response', onResponse);
-        page.on('requestfailed', onFailed);
-        const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
-        statusCode = navigation?.status() ?? 0;
-        const gate = await Promise.race([terminal.then(() => false), challenged.then(() => true)]);
-        if (gate && await audioBackoff.remainingMs() > 0) {
-          nativeOutcome = 'audio_cooldown';
-          waitedForRequest = pending.size > 0;
-          if (waitedForRequest) await terminal;
-        } else if (gate && solveCaptcha && remaining() > 5000) {
-          await page.getByRole('button', { name: 'Non accetto', exact: true }).click({ timeout: Math.min(1000, remaining()) }).catch(() => {});
-          // Success removes the widget before the solver can see its tick. The
-          // bound tracking reply, not that boolean, decides completion.
-          const solved = await Promise.race([terminal, solveCaptcha(page, Math.min(30000, remaining()), controller.signal,
-            event => {
-              if (NATIVE_EVENTS.has(event)) nativeOutcome = event;
-              if (event === 'audio_blocked') audioBackoff.block();
-            }).catch(() => false)]);
-          // The callback can remove the widget before its tracking response or
-          // body arrives. Finish an observed request within the same deadline.
-          waitedForRequest = solved !== true && pending.size > 0;
-          if (solved === true || waitedForRequest) await terminal;
+    return await withHelperContext({ handle, label: 'Poste Italiane', timeoutMs: maxTimeout, signal, installPolicy,
+      onExpire: () => { expired = true; controller.abort(); }, onFailure: failed,
+      onStop: () => {
+        accepting = false; expired = true; controller.abort();
+        for (const request of pending) requests.get(request).error ??= 'Poste tracking response unfinished';
+        if (page) {
+          if (onRequest) page.off('request', onRequest);
+          if (onResponse) page.off('response', onResponse);
+          if (onFailed) page.off('requestfailed', onFailed);
         }
-        // A refused solve leaves the captured challenge; do not wait out the deadline.
-        if (!gate) await terminal;
-      })(),
-      new Promise((_, reject) => {
-        const stop = () => { expired = true; controller.abort(); reject(new Error('Poste browser deadline')); };
-        timer = setTimeout(stop, maxTimeout);
-        abort = stop;
-        signal?.addEventListener('abort', abort, { once: true });
-        if (signal?.aborted) stop();
-      }),
-    ]);
-    return result();
+      } }, async run => {
+      page = run.page;
+      const bound = request => {
+        if (!accepting || expired || request.url() !== API || request.method() !== 'POST') return null;
+        let body;
+        try { body = request.postDataJSON(); } catch { return null; }
+        return record(body) && body.codiceSpedizione === number && body.tipoRichiedente === 'WEB' ? body : null;
+      };
+      const begin = request => {
+        if (requests.has(request)) return requests.get(request);
+        if (entries.length >= 10) { entries.at(-1).error = 'Poste tracking response limit exceeded'; accepting = false; finish(); return; }
+        const entry = { url: API, status: 0, body: null, headers: {}, truncated: false, base64Encoded: false,
+          error: 'Poste tracking request unfinished' };
+        entries.push(entry); requests.set(request, entry); pending.add(request);
+        return entry;
+      };
+      const settle = (request, entry, terminal = true) => {
+        pending.delete(request);
+        if (terminal) complete.add(entry);
+        if (!pending.size && complete.has(entries.at(-1))) finish();
+      };
+      onRequest = request => { if (bound(request)) begin(request); };
+      onFailed = request => {
+        if (!bound(request)) return;
+        const entry = begin(request);
+        if (!entry) return;
+        entry.error = 'Poste tracking request failed';
+        settle(request, entry);
+      };
+      onResponse = response => {
+        const request = response.request(), body = bound(request);
+        if (!body || response.url() !== API) return;
+        const hasCaptcha = Boolean(body.captcha);
+        const entry = begin(request);
+        if (!entry) return;
+        const headers = response.headers();
+        entry.status = response.status();
+        entry.headers = Object.fromEntries(['content-type', 'retry-after'].filter(key => headers[key])
+          .map(key => [key, headers[key].slice(0, 100)]));
+        entry.error = null;
+        if (![200, 400].includes(entry.status)) { settle(request, entry); return; }
+        const length = Number(headers['content-length'] ?? 0);
+        if (!Number.isSafeInteger(length) || length < 0 || length > MAX_BODY || totalBytes >= 3 * MAX_BODY) {
+          entry.truncated = true; settle(request, entry); return;
+        }
+        void response.body().then(body => {
+          if (!accepting) return;
+          totalBytes += body.length;
+          if (body.length > MAX_BODY || totalBytes > 3 * MAX_BODY) { entry.truncated = true; settle(request, entry); return; }
+          const payload = JSON.parse(body.toString('utf8'));
+          if (entry.status === 400 && record(payload) && payload.id === 2 && payload.tipo === 'error'
+            && /captcha/i.test(String(payload.descrizione))) {
+            // Preserve the gate, without its request token or unrelated error details.
+            entry.body = JSON.stringify({ id: 2, tipo: 'error', descrizione: 'CAPTCHA required' });
+            sawChallenge = true;
+            challenge();
+            settle(request, entry, hasCaptcha);
+            return;
+          }
+          if (entry.status === 200) entry.body = JSON.stringify(trackingOnly(payload));
+          settle(request, entry);
+        }).catch(() => {
+          if (accepting) { entry.error = 'Poste tracking response could not be decoded'; settle(request, entry); }
+        });
+      };
+      page.on('request', onRequest);
+      page.on('response', onResponse);
+      page.on('requestfailed', onFailed);
+      const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
+      statusCode = navigation?.status() ?? 0;
+      const gate = await Promise.race([terminal.then(() => false), challenged.then(() => true)]);
+      if (gate && await audioBackoff.remainingMs() > 0) {
+        nativeOutcome = 'audio_cooldown';
+        waitedForRequest = pending.size > 0;
+        if (waitedForRequest) await terminal;
+      } else if (gate && solveCaptcha && remaining() > 5000) {
+        await page.getByRole('button', { name: 'Non accetto', exact: true }).click({ timeout: Math.min(1000, remaining()) }).catch(() => {});
+        // Success removes the widget before the solver can see its tick. The
+        // bound tracking reply, not that boolean, decides completion.
+        const solved = await Promise.race([terminal, solveCaptcha(page, Math.min(30000, remaining()), controller.signal,
+          event => {
+            if (NATIVE_EVENTS.has(event)) nativeOutcome = event;
+            if (event === 'audio_blocked') audioBackoff.block();
+          }).catch(() => false)]);
+        // The callback can remove the widget before its tracking response or
+        // body arrives. Finish an observed request within the same deadline.
+        waitedForRequest = solved !== true && pending.size > 0;
+        if (solved === true || waitedForRequest) await terminal;
+      }
+      // A refused solve leaves the captured challenge; do not wait out the deadline.
+      if (!gate) await terminal;
+      return result();
+    });
   } catch {
-    if (entries.length) return result();
-    return { tier, status: 'error', durationMs: Date.now() - started,
-      reason: expired ? 'Poste Italiane browser budget exhausted' : 'Poste Italiane browser retrieval failed' };
+    return failed();
   } finally {
-    accepting = false; expired = true; controller.abort(); clearTimeout(timer);
-    for (const request of pending) requests.get(request).error ??= 'Poste tracking response unfinished';
-    if (abort) signal?.removeEventListener('abort', abort);
-    if (page) {
-      if (onRequest) page.off('request', onRequest);
-      if (onResponse) page.off('response', onResponse);
-      if (onFailed) page.off('requestfailed', onFailed);
-    }
-    if (context) await close(context);
     if (sawChallenge || paused) {
       const last = entries.at(-1);
       try {
