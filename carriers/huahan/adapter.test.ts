@@ -305,6 +305,20 @@ describe('HuaHan guest tracking', () => {
     expect(parseHuahan(notice, NUMBER)).toMatchObject({ last_update: '2026-01-01T21:51:00+01:00' });
   });
 
+  it('reads DHL Paket\'s rows relayed before the hand-off on Germany\'s clock', () => {
+    const relayed = fixture();
+    Object.assign(relayed.data[0]!, { Status: 'Flight departures', Local_Carrier: 'DHL', Country_code: 'DE' });
+    relayed.data[0]!.Detail = [
+      { Occur_date: '2026-01-04 17:30:00', Status: '', Comment: 'Flight departures', track_area: '' },
+      { Occur_date: '2026-01-02 13:40:00', Status: '', Comment: 'The shipment is in transit to DHL', track_area: '' },
+      { Occur_date: '2026-01-02 00:51:00', Status: '', Comment: 'The instruction data for this shipment have been provided by the sender to DHL electronically', track_area: '' },
+      { Occur_date: '2026-01-01 23:10:00', Status: 'AF', Comment: 'Arrived at origin facility', track_area: 'SHENZHEN' },
+    ];
+    const events = parseHuahan(relayed, NUMBER).events!;
+    expect(events.map((event) => event.time ?? null)).toEqual([null, '2026-01-02T13:40:00+01:00', '2026-01-02T00:51:00+01:00', null]);
+    expect(events[1]).toMatchObject({ local_time: '2026-01-02T13:40:00', time_zone: 'Europe/Berlin', time_zone_basis: 'carrier' });
+  });
+
   it('reads the flight, clearance and destination milestones by their codes', () => {
     const journey = fixture();
     journey.data[0]!.Detail = [

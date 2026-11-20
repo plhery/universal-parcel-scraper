@@ -267,13 +267,24 @@ describe('DHLink HTTP adapter', () => {
     expect(line.last_update_local).toBeUndefined();
     // Recorded 16½ hours after its clock: Beijing or New York could both be its time.
     expect(line.events![1]).toMatchObject({ local_time: '2026-03-09T21:30:00', location: 'LAX HUB, US' });
-    // GOFO's and SwiftX's relayed scans are on Beijing time however late DHLink records them, a state's office too.
+    // GOFO's and SwiftX's relayed scans are on Beijing time however late DHLink records them, a state's office too,
+    // but GOFO's label, which GOFO dates on Pacific time.
     const late = [row('2026-03-09 21:30:00', '2026-03-11 14:00:00', 'SAMPLEVILLE, GA 99901', 'Arrived at GOFO Regional Hub'),
       row('2026-03-09 08:00:00', '2026-03-11 14:00:00', 'none', 'Shipping Label Created')];
-    for (const lastTurnNo of ['GFUS99000000000001', 'SWX990000000000000001']) {
+    for (const [lastTurnNo, label] of [['GFUS99000000000001', '2026-03-09T08:00:00-07:00'], ['SWX990000000000000001', '2026-03-09T08:00:00+08:00']]) {
       expect(timeline(relayed(late, 'US', lastTurnNo).events), lastTurnNo).toEqual([
-        ['2026-03-09T21:30:00+08:00', null, 'in_transit', 'SAMPLEVILLE, GA'], ['2026-03-09T08:00:00+08:00', null, 'registered', null]]);
+        ['2026-03-09T21:30:00+08:00', null, 'in_transit', 'SAMPLEVILLE, GA'], [label, null, 'registered', null]]);
     }
+    // GOFO's scans at a station GOFO names keep that station's clock, and so do its scans without a place after the
+    // first of them, by the station row nearest them. DHLink's own rows before stay on Beijing time.
+    const gofo = [row('2026-03-10 22:47:13', '2026-03-11 14:00:00', 'Detroit, MI, US', 'Departed GOFO Regional Hub'),
+      row('2026-03-10 22:30:02', '2026-03-11 14:00:00', 'none', 'Loaded on Vehicle'),
+      row('2026-03-10 10:56:40', '2026-03-11 14:00:00', 'Melrose Park, IL, US', 'Departed GOFO Regional Hub'),
+      row('2026-03-10 10:20:00', '2026-03-11 14:00:00', 'none', 'Customs import clearance completed')];
+    expect(timeline(relayed(gofo, 'US', 'GFUS99000000000001').events).map(([time]) => time)).toEqual([
+      '2026-03-10T22:47:13-04:00', '2026-03-10T22:30:02-04:00', '2026-03-10T10:56:40-05:00', '2026-03-10T10:20:00+08:00']);
+    // A station's clock that has not struck by the record is not the scan's.
+    expect(relayed([{ ...gofo[0]!, createDate: '2026-03-10 23:00:00' }], 'US', 'GFUS99000000000001').last_update).toBe('2026-03-10T22:47:13+08:00');
     // SwiftX's copy of a scan DHLink records on Beijing time, on its Chicago clock, is the same scan.
     const hub = [row('2026-03-10 16:10:56', '2026-03-10 16:11:30', 'SAMPLE HUB, US', 'Arrived at Origin Hub'),
       row('2026-03-10 03:10:56', '2026-03-10 16:12:00', 'SAMPLEVILLE, US', 'Arrived at Origin Hub'),
