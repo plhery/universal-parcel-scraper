@@ -1,5 +1,39 @@
 {
   "carrier": "altex-curier",
-  "gap": "No public page shows an Altex Curier number.",
-  "records": []
+  "records": [
+    {
+      "number": "200022702276",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://curier.altex.ro/tracking.aspx?AWB=200022702276",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Romanian parcel delivery",
+        "reportedRole": "air waybill tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "j-and-t-cargo",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "Altex Curier's indexed tracking result displays an AWB details heading with the exact number. The accessible result supplies no dated tracking events."
+    }
+  ]
 }
