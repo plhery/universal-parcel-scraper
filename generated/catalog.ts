@@ -20034,6 +20034,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "dongjin-shipping": {
+    "displayName": "Dongjin Shipping",
+    "color": "#003e80",
+    "aliases": [
+      "Dongjin Shipping Co., Ltd.",
+      "Dong Jin Shipping",
+      "동진상선"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dongjin-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do",
+    "trackingUrlTemplate": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSearchUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSiteName": "Dongjin Shipping Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "doobalhero": {
     "displayName": "Doobalhero",
     "color": "#ea2545",
@@ -66275,6 +66300,7 @@ export const CARRIER_IDS = [
   "domex-do",
   "domina",
   "dongdu",
+  "dongjin-shipping",
   "doobalhero",
   "doora-logistics",
   "dpd-at",
@@ -68157,6 +68183,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "domex-do": [],
   "domina": [],
   "dongdu": ["dongdu-1"],
+  "dongjin-shipping": [],
   "doobalhero": [],
   "doora-logistics": [],
   "dpd-at": ["dpd-at-1"],

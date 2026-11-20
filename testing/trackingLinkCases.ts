@@ -2463,6 +2463,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'dongjin-shipping': 'The official e-service opens the guest cargo search form.',
   'heung-a-line': 'The e-service opens the guest bill of lading search.',
   'g2-ocean': 'The MyG2 cargo tracker opens its public bill search.',
   'salam-pacific-indonesia-lines': 'The mySPIL home page opens the guest Track & Trace form.',

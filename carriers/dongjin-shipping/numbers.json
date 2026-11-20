@@ -1,0 +1,25 @@
+{
+  "carrier": "dongjin-shipping",
+  "records": [
+    {
+      "number": "DJLU2010030",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/index.php?Prefix=DJLU&layout=prefix",
+        "access": "full_page",
+        "date": "2026-11-20",
+        "dateKind": "accessed"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Pier2Pier lists the full container identifier under Dongjin Shipping. Dongjin’s own guest lookup returned its current movements."
+    }
+  ]
+}

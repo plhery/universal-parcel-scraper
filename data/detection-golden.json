@@ -87624,6 +87624,12 @@
     ]
   },
   {
+    "input": "DJLU2010030",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "DL121224VS8TTJ",
     "carrier": "pathao-courier",
     "confidence": "high",

@@ -1,0 +1,56 @@
+{
+  "id": "dongjin-shipping",
+  "displayName": "Dongjin Shipping",
+  "aliases": [
+    "Dongjin Shipping Co., Ltd.",
+    "Dong Jin Shipping",
+    "동진상선"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#003e80"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dongjin-shipping",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
+    "searchUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
+    "canaryUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "Dongjin Shipping Cargo Tracking"
+  },
+  "links": [],
+  "detection": []
+}

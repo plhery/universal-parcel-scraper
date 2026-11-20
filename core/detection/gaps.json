@@ -5589,5 +5589,10 @@
     "carrier": "heung-a-line",
     "kind": "open",
     "reason": "The e-service confirms the full bill of lading. Select Heung-A Line explicitly."
+  },
+  {
+    "carrier": "dongjin-shipping",
+    "kind": "open",
+    "reason": "The guest search accepts shared container equipment identifiers. Select Dongjin Shipping explicitly."
   }
 ]

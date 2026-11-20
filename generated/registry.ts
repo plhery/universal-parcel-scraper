@@ -205,6 +205,7 @@ import { adapter as dohrnTransfer } from '../carriers/dohrn-transfer/adapter.js'
 import { adapter as domainLogistics } from '../carriers/domain-logistics/adapter.js';
 import { adapter as domex } from '../carriers/domex/adapter.js';
 import { adapter as dongdu } from '../carriers/dongdu/adapter.js';
+import { adapter as dongjinShipping } from '../carriers/dongjin-shipping/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
 import { adapter as dpdAt } from '../carriers/dpd-at/adapter.js';
 import { adapter as dpdBe } from '../carriers/dpd-be/adapter.js';
@@ -1115,6 +1116,7 @@ export const REGISTRY: RegistryDefinition = {
     "domain-logistics": domainLogistics,
     "domex": domex,
     "dongdu": dongdu,
+    "dongjin-shipping": dongjinShipping,
     "dpd": dpd,
     "dpd-at": dpdAt,
     "dpd-be": dpdBe,
@@ -2273,6 +2275,7 @@ export const REGISTRY: RegistryDefinition = {
     "domex-do": "universal",
     "domina": "universal",
     "dongdu": "dongdu",
+    "dongjin-shipping": "dongjin-shipping",
     "doobalhero": "universal",
     "doora-logistics": "universal",
     "dpd": "dpd",
