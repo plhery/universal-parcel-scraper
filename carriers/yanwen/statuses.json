@@ -176,10 +176,9 @@
     {
       "wording": "Shipping Order Created.",
       "language": "en",
-      "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "A last-mile order created before the parcel leaves China."
+      "note": "A last-mile partner's order created before the parcel leaves China: a notice that keeps the stage the parcel already had."
     },
     {
       "wording": "Pre-Shipment, USPS Awaiting Item",
@@ -408,10 +407,9 @@
     {
       "wording": "Shipment created",
       "language": "en",
-      "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-21",
-      "note": "A destination partner's order, written after Yanwen's facility scans and before the parcel leaves China, like Shipping Order Created."
+      "note": "A destination partner's order, written after Yanwen's facility scans and before the parcel leaves China, like Shipping Order Created: a notice that keeps the stage the parcel already had."
     },
     {
       "wording": "Shipment under processing at origin hub",

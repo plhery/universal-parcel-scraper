@@ -387,6 +387,18 @@ describe('Yanwen result projection', () => {
     expect(statusMap.gaps?.map((gap) => gap.wording)).toContain(normalizeStatusWording('Initial item information received'));
   });
 
+  it("keeps a partner's order, written after Yanwen's pickup, on the pickup's stage without the order's place", () => {
+    const result = history([
+      ['2026-03-04', '08:18:45 [GMT+08]', '', 'Arrived at domestic terminal station'],
+      ['2026-03-03', '22:24:03 [GMT+08]', 'Exampletown, ZZ, US', 'Shipping Order Created.'],
+      ['2026-03-03', '15:09:00 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ], '运输途中', 'US');
+    expect(result.events?.[1]).toMatchObject({ description: 'Shipping Order Created.', stage: 'accepted', stage_source: 'none', location: '' });
+    // Alone, it is the order a label opens.
+    const alone = history([['2026-03-03', '22:24:03 [GMT+08]', '', 'Shipping Order Created.']], '运输途中', 'US');
+    expect(alone.events?.[0]).toMatchObject({ stage: 'registered', stage_source: 'none' });
+  });
+
   it("stages the delivering carrier's loading in Canada on the scan itself, as the category files it", () => {
     const result = history([
       ['2026-03-10', '07:43:04 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Loaded on Truck'],

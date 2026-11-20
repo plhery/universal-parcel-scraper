@@ -36,7 +36,6 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Order processed by shipper', { status: 'pending', stage: 'registered' }],
   ['Order Submited.', { status: 'pending', stage: 'registered' }],
   ['Waybill Generated', { status: 'pending', stage: 'registered' }],
-  ['Shipping Order Created.', { status: 'pending', stage: 'registered' }],
   // Last-mile wording relayed without codes. Pre-advice lines come before the
   // parcel leaves China; a partner's acceptance follows Yanwen's own pickup
   // scan, so it is a handover rather than the parcel's acceptance.
@@ -63,9 +62,8 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Manifest created', { status: 'in_transit', stage: 'in_transit' }],
   // DHL's own line once Yanwen's facility has sent the parcel on to it.
   ['The shipment is in transit to DHL', { status: 'in_transit', stage: 'in_transit' }],
-  // A destination partner's own record: its order before the parcel leaves China, then
-  // its intake and transfer scans after Yanwen's batch handover at the destination port.
-  ['Shipment created', { status: 'pending', stage: 'registered' }],
+  // A destination partner's intake and transfer scans after Yanwen's batch handover at the
+  // destination port; its order before the parcel leaves China is a notice.
   ['Shipment under processing at origin hub', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment received', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment despatched to transshipment hub', { status: 'in_transit', stage: 'in_transit' }],
@@ -230,6 +228,8 @@ const staged = (description: string) => description.replace(DELIVERY_DETAIL, '')
 
 export function yanwenStatus(description: string, code?: string): ClassifiedStatus | undefined {
   if (code === DELIVERY_ICON) return { status: 'delivered', stage: 'delivered' };
+  // A notice takes the stage of the scan before it (the adapter's `withNotices`).
+  if (yanwenNotice(description)) return undefined;
   return WORDING.get(bare(staged(description))) ?? relayedStatus(staged(description));
 }
 
@@ -244,6 +244,8 @@ const NOTICES = new Map([
   ['The recipient has selected a Packstation as the new delivery address.', "DHL's record of the recipient's choice of a Packstation, relayed while the parcel can still be in China: not a scan, so it keeps the stage the parcel already had."],
   ['Pre-shipment Info sent to carrier', "InPost's record of the sender's data reaching it, relayed while Yanwen still has the parcel: not a scan, so it keeps the stage the parcel already had."],
   ['Preference applied', "InPost's record of the recipient's delivery choice, relayed while the parcel can still be in China: not a scan, so it keeps the stage the parcel already had."],
+  ['Shipping Order Created.', "A last-mile partner's order, written while Yanwen still has the parcel: not a scan, so it keeps the stage the parcel already had."],
+  ['Shipment created', "A destination partner's order, written after Yanwen's facility scans and before the parcel leaves China: not a scan, so it keeps the stage the parcel already had."],
   ['Initial item information received', "A delivering post's record of the item's data reaching it, relayed between Yanwen's export scans with \"In Transit\" as its place: not a scan, so it keeps the stage the parcel already had."],
 ].map(([wording, note]) => [normalizeStatusWording(wording!), note!]));
 
@@ -253,7 +255,7 @@ export const yanwenNotice = (description: string): boolean => NOTICES.has(normal
 /** What the map says about one scan by its milestone icon, the only code it keeps, else its wording. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered'
-    : STAGE_BY_WORDING.get(bare(staged(wording))) ?? relayedStage(staged(wording))),
+    : yanwenNotice(wording) ? undefined : STAGE_BY_WORDING.get(bare(staged(wording))) ?? relayedStage(staged(wording))),
   gaps: [
     { wording: 'ua.', note: "A partner's scan in Ukraine that Yanwen relays as its country's code alone, without words: it names no stage." },
     ...[...NOTICES].map(([wording, note]) => ({ wording, note })),
