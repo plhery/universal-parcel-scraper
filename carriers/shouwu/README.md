@@ -47,6 +47,8 @@ numbers `shouwu-1` offers.
   part of the registration, and In Transit on registration rows alone stays registered. Written a
   day or more after the order data, the same row is the handover itself, an acceptance, which the
   first movement follows within a day.
+- Without such a receipt, the first "Shipment arrived at a carrier facility" right after the
+  registration is the acceptance; later ones are on the way.
 - `traceTime` is epoch seconds, which the page shows in the visitor's zone without naming one.
   Shouwu's back office reads every scan's wall clock on Beijing time, a scan abroad's too, so a
   flight out of Shanghai reads hours shorter than it is. Each scan keeps the wall clock its epoch

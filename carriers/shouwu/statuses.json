@@ -501,7 +501,7 @@
       "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "note": "After the handover to the carrier that flies the parcel."
+      "note": "After the handover to the carrier that flies the parcel. The first one right after the registration, without a receipt that moved the parcel, is the acceptance."
     },
     {
       "wording": "Shipment arrived at an air hub",

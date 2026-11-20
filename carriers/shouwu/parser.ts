@@ -43,6 +43,7 @@ const MAX_EVENTS = 100;
 const ORDER_DATA = 'Shipment information received';
 const RECEIPT = 'Carrier received the shipment';
 const LATE_RECEIPT_S = 86_400;
+const FIRST_FACILITY = 'Shipment arrived at a carrier facility';
 /**
  * The stages each status covers without naming them, as the page explains
  * the status: a newest scan staged one of them refines it. Shouwu's four
@@ -191,6 +192,11 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
       Object.assign(event, { stage: 'accepted', stage_source: 'carrier_map' });
     }
   }
+  // Without a receipt that moved it, the first arrival at a carrier facility right after the order data is the acceptance.
+  const oldestFirst = scans.map(({ event }) => event).reverse();
+  const moved = oldestFirst.findIndex((event) => event.stage && event.stage !== 'registered');
+  const first = moved > 0 && oldestFirst.slice(0, moved).some((event) => event.stage === 'registered') ? oldestFirst[moved] : undefined;
+  if (first?.description === FIRST_FACILITY && first.stage === 'in_transit') Object.assign(first, { stage: 'accepted', stage_source: 'carrier_map' });
   // A wall clock that would land after a newer row read at its epoch, wherever in its country, is read at its
   // epoch too: customs written days late must not come after the round out for delivery.
   let bound = Infinity;

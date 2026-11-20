@@ -190,6 +190,13 @@ describe('Shouwu International HTTP adapter', () => {
     expect(staged('TRACE_STATUS_ON_THE_WAY', [trace(1776353952 + 2 * 86_400, 'Carrier received the shipment'), trace(1776353952, 'Shipment information received')]))
       .toMatchObject({ status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map',
         events: [{ stage: 'accepted', stage_source: 'carrier_map' }, { stage: 'registered', stage_source: 'carrier_map' }] });
+    // Without a receipt that moved it, the first arrival at a carrier facility is the acceptance; the next is on the way.
+    const facility = (at: number) => trace(at, 'Shipment arrived at a carrier facility');
+    const received = [trace(1776361152, 'Carrier received the shipment'), trace(1776353952, 'Shipment information received')];
+    expect(staged('TRACE_STATUS_ON_THE_WAY', [facility(1776500000), ...received]))
+      .toMatchObject({ status: 'in_transit', current_stage: 'accepted', events: [{ stage: 'accepted' }, { stage: 'registered' }, { stage: 'registered' }] });
+    expect(staged('TRACE_STATUS_ON_THE_WAY', [facility(1776600000), facility(1776500000), ...received]).events?.map((event) => event.stage))
+      .toEqual(['in_transit', 'accepted', 'registered', 'registered']);
     expect(staged('TRACE_STATUS_ON_THE_WAY', [trace(1776361152, 'Carrier received the shipment'), trace(1776353952, 'Shipment information received'),
       trace(1776720000, 'Waybill printed at a partner depot')]))
       .toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
