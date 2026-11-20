@@ -1419,7 +1419,7 @@
           "provider_code": "2400",
           "description": "Nuevo reparto",
           "time": "2026-01-03T12:00:00.970Z",
-          "stage": "out_for_delivery"
+          "stage": "in_transit"
         },
         {
           "provider_code": "1600",

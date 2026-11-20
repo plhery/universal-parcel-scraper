@@ -859,7 +859,7 @@ describe('status map answers', () => {
     expect(answer('usps', null, 'arrived at post office')).toEqual(mapped('in_transit'));
     expect(answer('evri', null, 'departed origin country')).toEqual(mapped('in_transit'));
     expect(answer('evri', null, 'departed')).toEqual(unknown);
-    for (const [code, stage] of [['30', 'registered'], ['100', 'in_transit'], ['375', 'in_transit'], ['415', 'in_transit'], ['-581', 'exception']] as const) {
+    for (const [code, stage] of [['30', 'registered'], ['100', 'out_for_delivery'], ['375', 'in_transit'], ['415', 'in_transit'], ['-581', 'exception']] as const) {
       expect(answer('zto-international', code, 'Any wording at all'), code).toEqual(mapped(stage));
     }
   });
