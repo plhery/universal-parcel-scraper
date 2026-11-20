@@ -1,0 +1,182 @@
+{
+ "result": {
+  "title_label": "Booking Data - ",
+  "title_label_color": "#000000",
+  "title": "035GX71907",
+  "title_color": "#000000",
+  "description_label": "通知　:",
+  "description_label_color": "#000000",
+  "description": "預訂資訊僅供參考，如有疑問請聯絡當地萬海辦事處，謝謝。",
+  "description_color": "#8E8E8E",
+  "warning": "貨物未到達目的港前，如有轉船資料，抵達日期僅供參考或請與業務確認",
+  "warning_color": "#8E8E8E",
+  "basic_list": [
+   {
+    "key": "訂艙日期",
+    "key_color": "#000000",
+    "value": "2026/10/07 18:45:11",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "船名",
+    "key_color": "#000000",
+    "value": "WAN HAI 176",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "航次",
+    "key_color": "#000000",
+    "value": "N113",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "訂艙狀態",
+    "key_color": "#000000",
+    "value": "LOADED",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Close Date:",
+    "key_color": "#000000",
+    "value": "2026/10/15 20:00",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Earliest Return Date:",
+    "key_color": "#000000",
+    "value": "",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Doc Cutoff Date:",
+    "key_color": "#000000",
+    "value": "2026/10/08",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Place of Receipt & Estimated Departure Date",
+    "key_color": "#000000",
+    "value": "LAEM CHABANG (TH) - 2026/10/17",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Port of Loading & Estimated Departure Date",
+    "key_color": "#000000",
+    "value": "LAEM CHABANG (TH) - 2026/10/17",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "T/S Port & Estimated Arrival Date",
+    "key_color": "#000000",
+    "value": "TAIPEI (TW) - 2026/10/27",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "T/S Port & Estimated Departure Date",
+    "key_color": "#000000",
+    "value": "TAIPEI (TW) - 2026/10/30",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Port of Discharging & Estimated Arrival Date",
+    "key_color": "#000000",
+    "value": "NORFOLK,VA (US) - 2026/12/22",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Place of Delivery & Estimated Arrival Date",
+    "key_color": "#000000",
+    "value": "NORFOLK,VA (US) - 2026/12/22",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "Final Destination",
+    "key_color": "#000000",
+    "value": "---",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "(1)貨櫃類型/貨櫃尺寸/貨櫃高度",
+    "key_color": "#000000",
+    "value": "DRY STEEL / 20' / 8'6\"",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   },
+   {
+    "key": "DG Goods/Quantity",
+    "key_color": "#000000",
+    "value": "No / 1",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": ""
+   }
+  ],
+  "container_list": [
+   {
+    "ctnr_no_label": "Container No :",
+    "ctnr_no_label_color": "#007AFF",
+    "ctnr_no": "WHSU2069337",
+    "ctnr_no_color": "#007AFF",
+    "container_label": "貨櫃類型/貨櫃尺寸/貨櫃高度 :",
+    "container_label_color": "#8E8E8E",
+    "container": "DRY STEEL / 20' / 8'6\"",
+    "container_color": "#8E8E8E",
+    "seal_no_label": "封條號碼 :",
+    "seal_no_label_color": "#8E8E8E",
+    "seal_no": "WHLT378965",
+    "seal_no_color": "#8E8E8E",
+    "gate_out_time_label": "Gate out time :",
+    "gate_out_time_label_color": "#8E8E8E",
+    "gate_out_time": "2026/10/12 17:40",
+    "gate_out_time_color": "",
+    "out_depot_label": "領櫃 :",
+    "out_depot_label_color": "#8E8E8E",
+    "out_depot": "Wgd Container Service (Thailand) Co., Ltd.",
+    "out_depot_color": "#8E8E8E",
+    "gete_in_time_label": "Gate in time :",
+    "gete_in_time_label_color": "#8E8E8E",
+    "gete_in_time": "2026/10/14 01:03",
+    "gete_in_time_color": "#8E8E8E",
+    "in_depot_label": "進櫃 :",
+    "in_depot_label_color": "#007AFF",
+    "in_depot": "Thai Laemchabang Terminal Co., Ltd. (A2)",
+    "in_depot_color": "#007AFF",
+    "action_url": "https://whlapiv2.wanhai.com/shipping/rest/eshipping/skd/cargo-tracking/movement",
+    "segment_layout": "movement_page"
+   }
+  ]
+ },
+ "status": "0000",
+ "message": "操作成功",
+ "timestamp": "2026-11-20T22:37:53.048",
+ "error": ""
+}
