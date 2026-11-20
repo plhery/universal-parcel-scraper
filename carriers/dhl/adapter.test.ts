@@ -460,6 +460,23 @@ describe('DHL public tracking normalization', () => {
     expect(parseDHLTrackingResponse(shipment({ zustellung: { zustellzeitfensterVon: '2026-02-30' } }), NUMBER).expected_delivery).toBeNull();
   });
 
+  it('reads the delivery of a shipment DHL repacked and sent back as the return to the sender', () => {
+    const payload = shipment({ istZugestellt: true, ruecksendung: true });
+    const timeline = payload.sendungen[0]!.sendungsdetails.sendungsverlauf;
+    timeline.status = 'Zustellung erfolgreich';
+    timeline.events.push(
+      { datum: '2026-08-11T01:18:40+02:00', status: 'Aufgrund einer Beschädigung der Umverpackung wurde die Sendung von DHL nachverpackt und befindet sich jetzt auf dem Weg zum Absender.' },
+      { datum: '2026-08-12T10:39:06+02:00', status: 'Die Sendung wurde erfolgreich zugestellt.' },
+    );
+    const result = parseDHLTrackingResponse(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(result.events?.slice(0, 2).map((event) => event.stage)).toEqual(['returned', 'returned']);
+    // Without the flag, the delivery is the recipient's.
+    const delivered = shipment({ istZugestellt: true });
+    delivered.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push({ datum: '2026-08-12T10:39:06+02:00', status: 'Die Sendung wurde erfolgreich zugestellt.' });
+    expect(parseDHLTrackingResponse(delivered, NUMBER).events?.[0]?.stage).toBe('delivered');
+  });
+
   it('keeps both ends of the delivery window', () => {
     const window = (von: unknown, bis: unknown) => {
       const result = parseDHLTrackingResponse(shipment({ zustellung: { zustellzeitfensterVon: von, zustellzeitfensterBis: bis } }), NUMBER);

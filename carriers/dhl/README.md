@@ -114,7 +114,8 @@ how a consumer learns that DHL holds one behind a postcode.
 - The endpoint has no status codes: stages come from English or German wording,
   and the `istZugestellt` / `ruecksendung` flags outrank it. `ruecksendung` marks a
   shipment sent back, such as one DHL repacked after damage "auf dem Weg zum Absender",
-  so its delivered scan is the delivery back to the sender. The German wording
+  so its delivered scan is the delivery back to the sender and reads as returned, as the
+  repack's row does. The German wording
   is DHL's own, not a translation of the English: a parcel being prepared for
   the delivery vehicle, "processed in the delivery base" in English, is in
   transit in both. Times are the same in both languages, and places are

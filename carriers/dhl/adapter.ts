@@ -276,6 +276,11 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   });
   // The moves after DHL's latest return start carry the parcel back to the sender.
   for (const event of events.slice(0, returnTrip(events.map((event) => event.stage)))) event.stage = 'returned';
+  // A shipment DHL flags as sent back and delivered went back to its sender: its delivery is the return's end.
+  if (details.istZugestellt === true && details.ruecksendung === true) {
+    const delivery = events.find((event) => event.stage === 'delivered');
+    if (delivery) delivery.stage = 'returned';
+  }
   // A second acceptance after the parcel moved on, as the courier's pickup ("Die Sendung wurde abgeholt.") minutes after
   // DHL took the parcel out of the Packstation the sender posted it in, is that move, not a step back.
   let accepted = false;
