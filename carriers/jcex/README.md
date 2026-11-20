@@ -45,7 +45,9 @@ Tracked through the lookup its tracking page makes.
 - JCEX writes its own rows on Beijing's clock, under China's offset or the destination's. It
   lists a scan it relays from Yanwen or the delivering partner twice: as the source's row under
   the source's offset, and as its own copy, the same instant on Beijing's clock under the same
-  code. The copy is dropped, and the source's offset holds for every row under it, wherever its
+  code. A copy without a place can be to the minute of a scan listed to the second, under the
+  scan's code or, with no code, in the words after the partner's short status ("Delivered, …").
+  The copy is dropped, and the source's offset holds for every row under it, wherever its
   place. A scan relayed on Beijing's clock comes twice too, once in JCEX's own words under the
   bare place `CN`, sometimes under another code; that row is dropped and the source's words
   stay. The order data, filed under neither a country nor a place, is on Beijing's clock

@@ -160,21 +160,30 @@ function rowOf(row: unknown, index: number): Row | null {
  * time as its own row, on Beijing's wall clock under China's offset or the
  * destination's: a row whose wall clock, on Beijing's clock, is the instant
  * another row of the same code states under an offset other than China's.
+ * A copy without a place can also be to the minute of a scan stated to the
+ * second, under the scan's code or, without a code, in the words after the
+ * partner's short status ("Delivered, Your parcel has been left …").
  * The copies are dropped, and the offsets they were dated from are the
  * relaying sources' own: every row under one keeps it, wherever its place.
  */
 function relayedCopies(rows: readonly Row[]): { copies: Set<Row>; offsets: Set<string> } {
   const stated = new Map<string, Row[]>();
+  const minutes = new Map<number, Row[]>();
   for (const row of rows) {
     const time = row.code && row.label !== HOME_OFFSET ? labelledTime(row.local, row.label) : null;
     if (!time) continue;
     const key = JSON.stringify([row.code, time.timestamp]);
     stated.set(key, [...(stated.get(key) ?? []), row]);
+    const minute = Math.floor(time.timestamp / 60_000);
+    minutes.set(minute, [...(minutes.get(minute) ?? []), row]);
   }
   const copies = new Set<Row>();
   const relayed = new Set<Row>();
+  const repeats = (copy: Row, source: Row) => copy.code ? source.code === copy.code : source.description.endsWith(`, ${copy.description}`);
   for (const row of rows) {
-    const sources = stated.get(JSON.stringify([row.code, row.home]))?.filter((other) => other !== row) ?? [];
+    const exact = stated.get(JSON.stringify([row.code, row.home])) ?? [];
+    const minute = !row.location && row.home % 60_000 === 0 ? (minutes.get(row.home / 60_000) ?? []).filter((source) => repeats(row, source)) : [];
+    const sources = [...new Set([...exact, ...minute])].filter((other) => other !== row);
     if (!sources.length) continue;
     copies.add(row);
     sources.forEach((source) => relayed.add(source));

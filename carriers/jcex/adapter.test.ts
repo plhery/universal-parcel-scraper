@@ -299,6 +299,29 @@ describe('JCEX HTTP adapter', () => {
     expect(descriptions).toContain('Arrived at Facility');
   });
 
+  it("drops JCEX's placeless copy to the minute of a partner's scan to the second, under its code or in its words without a code", () => {
+    const result = parseJcex(changed('relayed', (content) => {
+      const delivered = content.trackDetails.find((row) => row.eventDetailEn === 'Delivered')!;
+      const row = (eventTime: string, timeZone: string, platformEventCode: string, eventDetailEn: string, countryCode: string, location: string) => ({
+        ...delivered, eventTime, timeZone, platformEventCode, eventDetailEn, eventDetailCn: eventDetailEn, countryCode, location });
+      content.trackDetails.push(
+        row('2026-09-21 09:28:08', '+11:00', 'OutForDelivery_Other', 'Onboard, Our driver has your parcel onboard for delivery', 'AU', 'EXAMPLETOWN'),
+        // JCEX's copy: Beijing's wall clock to the minute under the destination's offset, without a place.
+        row('2026-09-21 06:28:00', '+11:00', 'OutForDelivery_Other', 'Our driver has your parcel onboard for delivery', 'AU', ''),
+        row('2026-09-21 11:17:10', '+11:00', 'Delivered_Other', 'Delivered, Your parcel has been left at the front door', 'AU', 'EXAMPLETOWN, NSW, AU'),
+        // And without a code, under China's offset, in the words after the partner's short status.
+        row('2026-09-21 08:17:00', '+08:00', '', 'Your parcel has been left at the front door', '', ''),
+        // A placed scan of the same code in the same minute is a scan of its own.
+        row('2026-09-21 06:28:00', '+11:00', 'OutForDelivery_Other', 'Our driver has your parcel onboard for delivery', 'AU', 'OTHERTOWN'));
+    }), RELAYED, Date.parse('2026-10-01T00:00:00Z'));
+    const shown = result.events!.map((event) => [event.time ?? event.local_time, event.description]);
+    expect(shown).toContainEqual(['2026-09-21T09:28:08+11:00', 'Onboard, Our driver has your parcel onboard for delivery']);
+    expect(shown).toContainEqual(['2026-09-21T11:17:10+11:00', 'Delivered, Your parcel has been left at the front door']);
+    expect(shown).toContainEqual(['2026-09-21T06:28:00+11:00', 'Our driver has your parcel onboard for delivery']);
+    expect(shown.filter(([, description]) => description === 'Our driver has your parcel onboard for delivery')).toHaveLength(1);
+    expect(shown.map(([, description]) => description)).not.toContain('Your parcel has been left at the front door');
+  });
+
   it('lets the scan a stored copy repeats take the copy\'s row over, by its instant on Beijing\'s clock or its wording and place', () => {
     const policy = sameInstantIdentityPolicy('jcex', { supportsScanMatching: true });
     expect(policy).toMatchObject({ storedSources: ['jcex'], requireProviderCode: false, matchEachScan: true,
