@@ -31,6 +31,7 @@
     {"wording": "The shipment has arrived in the destination country/destination area.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Relayed from DHL, followed by the destination operator's tracking link in brackets; the map reads the wording without the link."},
     {"wording": "The shipment has been loaded onto the delivery vehicle", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-20", "note": "The last-mile carrier's delivery run, in Mayi Yinfu's English."},
     {"wording": "The shipment has been successfully delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-20"},
-    {"wording": "国内清关完成", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Export customs clearance in China is complete, after the parcel left the operations centre; it carries on."}
+    {"wording": "国内清关完成", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Export customs clearance in China is complete, after the parcel left the operations centre; it carries on."},
+    {"wording": "进仓时间：2026-11-14（计划：11-18）；Warehouse entry time:2026-11-14（Plan: 11-18）", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The intake into the warehouse before export, on a day already past when the row came, with the planned flight day; any dates. Read by its English."}
   ]
 }

@@ -14,11 +14,11 @@ export const FLIGHT_BOOKED = /^已排航班$/u;
 const EXPECTED_DAY = /^(\p{Script=Han}+)[，,]\p{Script=Han}*预计\d{1,2}号/u;
 
 // Rows that end with their English after a semicolon, read by that English where the Chinese varies:
-// the release once customs cleared the parcel, and two notices of what the forwarder plans or expects,
-// the parcel's entry into the warehouse with its planned time and the flight it expects to load it on.
-const RELEASED = /[；;]\s*after customs clearance$/;
+// the release once customs cleared the parcel and the parcel's entry into the warehouse before its
+// flight, both in transit, and the flight the forwarder expects to load it on, still to come. The
+// warehouse entry's own date has passed when the row comes; the plan it adds is the flight's day.
+const IN_TRANSIT = /[；;]\s*(?:after customs clearance$|warehouse entry time:)/;
 const FORECASTS: readonly (readonly [RegExp, string])[] = [
-  [/[；;]\s*warehouse entry time:/, 'The parcel\'s entry into the warehouse with the time planned for it: a plan, not a scan.'],
   [/[；;]\s*estimated [a-z]+ flight time:/, 'The flight time the forwarder expects: still to come.'],
 ];
 
@@ -30,7 +30,7 @@ const FORECASTS: readonly (readonly [RegExp, string])[] = [
  */
 export function mayiyinfuStage(_code: string | null, wording: string): Stage | undefined {
   return WORDINGS.stage(wording) ?? WORDINGS.stage(wording.replace(LINK, '')) ?? WORDINGS.stage(STEP.exec(wording)?.[1] ?? '')
-    ?? (RELEASED.test(wording) ? 'in_transit' : undefined);
+    ?? (IN_TRANSIT.test(wording) ? 'in_transit' : undefined);
 }
 
 /**
