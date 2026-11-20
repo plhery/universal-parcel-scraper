@@ -12,6 +12,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   // Written with the label, before the parcel is handed over: it is one of several in a shipment.
   ['EA', "Colis faisant partie d'une expédition groupée", 'registered'],
   ['DB', "Colis déposé par l'expéditeur", 'accepted'],
+  // The post office counter that takes in a parcel the sender drops there, seconds before the drop itself (DB).
+  ['DY', 'Colis enregistré par le bureau de poste', 'accepted'],
   // The courier takes over a parcel dropped at a pickup point, right after the point hands it over.
   ['PC', 'Colis pris en charge par le transporteur', 'accepted'],
   // The first depot's sort, under either code, as it takes the parcel over.

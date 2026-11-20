@@ -233,6 +233,7 @@ describe('Chronopost direct tracking', () => {
   it.each([
     ['EA', "Colis faisant partie d'une expédition groupée", 'registered'],
     ['PC', 'Colis pris en charge par le transporteur', 'accepted'],
+    ['DY', 'Colis enregistré par le bureau de poste', 'accepted'],
     ['EC', "Tri effectué dans l'agence de départ", 'in_transit'],
     ['T', "Entrée dans l'agence", 'in_transit'],
     ['TT', 'Colis remis par le relais Pickup au chauffeur', 'accepted'],

@@ -69,6 +69,14 @@
       "language": "fr"
     },
     {
+      "code": "DY",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The post office counter takes in a parcel the sender drops there, seconds before the sender's drop (DB).",
+      "wording": "Colis enregistré par le bureau de poste",
+      "language": "fr"
+    },
+    {
       "code": "PC",
       "stage": "accepted",
       "confirmedBy": "live",
