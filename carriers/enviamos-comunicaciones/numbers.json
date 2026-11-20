@@ -1,0 +1,63 @@
+{
+  "carrier": "enviamos-comunicaciones",
+  "records": [
+    {
+      "number": "1040101785113",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=8c73bedc-ab2a-4855-5a64-25cdc0d3dc85",
+        "access": "full_page",
+        "date": "2026-10-30",
+        "dateKind": "publication"
+      },
+      "context": {
+        "reportedRole": "full guide for a physical certified mailing identified in a Colombian court order",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The carrier’s tracker echoes the guide, the certified outcome and a last visit dated 2026-06-03."
+    },
+    {
+      "number": "1040078304813",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=9dda9f55-a625-484a-20be-7cbe4bdd4cc6",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "full guide for a physical certified mailing identified in a Colombian court order",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The carrier’s tracker echoes the guide, the certified outcome and a last visit dated 2025-08-06."
+    }
+  ]
+}

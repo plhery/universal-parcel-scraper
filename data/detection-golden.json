@@ -14967,6 +14967,42 @@
     ]
   },
   {
+    "input": "1040078304813",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery"
+    ]
+  },
+  {
+    "input": "1040101785113",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery"
+    ]
+  },
+  {
     "input": "1040200044620",
     "carrier": "unknown",
     "confidence": "low",

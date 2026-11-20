@@ -23149,6 +23149,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "enviamos-comunicaciones": {
+    "displayName": "Enviamos Comunicaciones",
+    "color": "#16649a",
+    "aliases": [
+      "Enviamos Comunicaciones S.A.S.",
+      "Enviamos Mensajería Certificada",
+      "Enviamos CYM"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "enviamos-comunicaciones",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php",
+    "trackingUrlTemplate": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php?codigo={trackingNumber}&tipo-codigo=cod-principal",
+    "trackingSearchUrl": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "enviopack-ar": {
     "displayName": "Envíopack Argentina",
     "color": "#ff6000",
@@ -67124,6 +67148,7 @@ export const CARRIER_IDS = [
   "enset",
   "envia-colombia",
   "envialia",
+  "enviamos-comunicaciones",
   "enviopack-ar",
   "enviopack-mx",
   "eparcel-kr",
@@ -69037,6 +69062,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "enset": [],
   "envia-colombia": [],
   "envialia": [],
+  "enviamos-comunicaciones": [],
   "enviopack-ar": [],
   "enviopack-mx": [],
   "eparcel-kr": ["eparcel-kr-1"],

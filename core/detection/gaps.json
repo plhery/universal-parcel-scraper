@@ -5744,5 +5744,10 @@
     "carrier": "mandde",
     "kind": "open",
     "reason": "The carrier confirms its published numeric guide. More samples and a collision review are needed to establish a detection rule."
+  },
+  {
+    "carrier": "enviamos-comunicaciones",
+    "kind": "open",
+    "reason": "The full numeric guides work in the carrier's own tracker. Length and prefix overlap other carriers and do not establish a unique format."
   }
 ]
