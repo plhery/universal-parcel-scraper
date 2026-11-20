@@ -429,6 +429,9 @@ export function parseGLSSwitzerlandTrackingResponse(
 }
 
 /** One parcel row of a GLS reply, once it is bound to the requested number. */
+// The page's pointer, after the status, to the scans it lists below it: a summary shown without them points at nothing.
+const withoutPointer = (text: string) => text.replace(/\s*For more information, please see the detailed shipment tracking below\.?$/i, '');
+
 export function parseGLSParcel(parcel: JsonObject): CarrierResult {
   if (!isRecord(parcel.progressBar)) {
     throw new SchemaError(PROVIDER, 'GLS did not return a shipment status');
@@ -439,8 +442,8 @@ export function parseGLSParcel(parcel: JsonObject): CarrierResult {
   ));
   const currentCode = statusCode(progress.statusInfo) || statusCode(current?.status);
   const currentMetadata = GLS_STATUSES.get(currentCode);
-  const currentText = plainText(current?.statusText)
-    || plainText(progress.statusText)
+  const currentText = withoutPointer(plainText(current?.statusText))
+    || withoutPointer(plainText(progress.statusText))
     || plainText(current?.imageText)
     || 'Tracking information received';
   const parsedEvents = parseEvents(parcel);

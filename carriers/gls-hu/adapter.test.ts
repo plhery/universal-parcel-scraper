@@ -33,6 +33,10 @@ describe('GLS Hungary overview', () => {
       status: 'delivered', current_stage: 'delivered', canonical_tracking_number: '1000000001',
       summary_only: true, timezone: 'Europe/Budapest', events: [],
     });
+    // The page's pointer to the scans below the status goes: the summary has none.
+    const pointing = row('1000000001', 'DELIVERED');
+    pointing.progressBar.statusBar[1]!.statusText = 'The parcel has been delivered.\nFor more information, please see the detailed shipment tracking below.';
+    expect(parseGLSHungaryOverview({ tuStatus: [pointing] }, '1000000001')).toMatchObject({ last_status_text: 'The parcel has been delivered.' });
     expect(parseGLSHungaryOverview({ tuStatus: [row('01000000001', 'PREADVICE')] }, '01000000001')).toMatchObject({
       status: 'pending', current_stage: 'registered', canonical_tracking_number: '01000000001',
     });

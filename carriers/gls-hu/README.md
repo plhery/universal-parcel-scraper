@@ -18,7 +18,7 @@ Hungary, through the group's tracking service under Hungary's own path.
   bar is read by gls-ch's parser, so the status codes and their stages are the group's.
 - The overview has no scans: GLS shows them only with the delivery postcode. The answer is the
   status, marked `summary_only`, which a fuller history from an enabled universal provider
-  replaces. A status code the parser does not know is indeterminate, not a missing parcel.
+  replaces. The status leaves out the page's pointer to the scans it lists below it. A status code the parser does not know is indeterminate, not a missing parcel.
 - Only GLS's own `E000` and `E206` on an HTTP 404 are not found. Any other 404, and a 200 with no
   row, leave the answer open.
 - Links to `gls-group.com/HU/` or `gls-group.eu/HU/` name this carrier, whatever the number,
