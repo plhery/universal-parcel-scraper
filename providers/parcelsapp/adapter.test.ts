@@ -205,6 +205,15 @@ describe('ParcelsApp YTO scans', () => {
     expect(fromBelgium('2026-11-03T02:05:00Z')).toEqual([['Item dispatched abroad', '2026-11-03T13:05:00.000Z']]);
     // Its UTC hour on the dial is not its copy.
     expect(fromBelgium('2026-11-03T01:05:00Z')).toHaveLength(2);
+    // Synthetic rows: Morocco Post's own dispatch in Rabat, or a row with no place, at the dial's minute of a scan of the same
+    // stage in New South Wales, is a scan of its own: the relays name the sending post's country.
+    for (const location of ['Rabat, Morocco', '']) {
+      expect(parseParcelsAppResponse({ carriers: ['Australia Post', 'Morocco Post'], states: [
+        { date: '2026-11-03T22:21:11Z', status: 'Cleared and awaiting international departure', location: 'EXAMPLE NSW', carrier: 0 },
+        { date: '2026-11-03T10:21:00Z', status: 'Package shipped', location, carrier: 1 },
+      ] }, number, identity()).events?.map((event) => event.description), location)
+        .toEqual(['Cleared and awaiting international departure', 'Package shipped']);
+    }
   });
 
   it("reads Croatia Post's relayed labels by its own map and a post abroad on that office's clock", () => {

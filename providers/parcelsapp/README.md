@@ -232,7 +232,8 @@ step exists for future protocol changes.
   day, minute and twelve-hour hour of another network's scan of the same stage, the sending
   post's own in the same reply, is that scan's copy and is not read. That scan is compared on
   its own wall clock: a scan read as an instant is taken at the offset it states or on its carrier's home clock, so
-  bpost's 13:05 UTC matches the dial's 2:05.
+  bpost's 13:05 UTC matches the dial's 2:05. The relays name the sending post's country; a row placed in
+  another country, Morocco's own dispatch for one, or in none is a scan of its own.
 - DHL Express scans carry the facility's clock, whatever the label: DHL's mobile API gives
   the same clocks scan for scan, and Ship24 gives them with the facility's offset. They
   skip the steps above and take the zone the

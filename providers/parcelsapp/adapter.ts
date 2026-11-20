@@ -231,7 +231,9 @@ function twelveHourDial(name: unknown): boolean {
  * The scan is compared on its own wall clock: its digits where a zone places them or nothing
  * reads them as an instant, else its instant at the offset it states or on its carrier's home
  * clock (bpost's 13:05 UTC is 2:05 on the dial in Brussels).
- * Read by its day alone, the copy would stand beside the scan, so it is not read.
+ * Read by its day alone, the copy would stand beside the scan, so it is not read. The copy names
+ * the sending post's country, as the relays do; a row placed in Morocco or another country, or
+ * in none, is a scan of its own, since no field then shows it is a copy.
  */
 function twelveHourCopies<T extends { name: unknown; date: unknown; offset: string | null; location: string;
   nationwide: boolean; wallOnly: boolean; scan: CarrierScan | undefined; wording: string }>(entries: readonly T[], zones: readonly { zone: string | null }[]): Set<T> {
@@ -254,12 +256,22 @@ function twelveHourCopies<T extends { name: unknown; date: unknown; offset: stri
   return new Set(entries.filter((copy) => {
     const relayed = twelveHourDial(copy.name) ? copy.scan?.stage : undefined;
     const dial = relayed ? at(copy.date) : null;
-    return dial !== null && entries.some((own, index) => {
+    const country = dial ? locatePlace(copy.location)?.country : undefined;
+    return dial !== null && country !== undefined && entries.some((own, index) => {
       if (twelveHourDial(own.name) || (own.scan?.stage ?? eventStage(own.wording)) !== relayed) return false;
+      if (!sendingCountries(own).includes(country)) return false;
       const scan = ownClock(own, index);
       return scan !== null && scan.toISODate() === dial.toISODate() && scan.minute === dial.minute && scan.hour % 12 === dial.hour % 12;
     });
   }));
+}
+
+/** The countries a sending post's scan is in: its place's, else its carrier's. */
+function sendingCountries(own: { name: unknown; location: string }): readonly string[] {
+  const placed = locatePlace(own.location)?.country;
+  if (placed) return [placed];
+  const carrier = typeof own.name === 'string' ? carrierIdFromName(own.name) : undefined;
+  return carrier ? carrierDefinition(carrier).countries ?? [] : [];
 }
 
 /**
