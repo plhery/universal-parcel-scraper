@@ -229,6 +229,23 @@ describe('India Post response normalization', () => {
     expect(JSON.stringify(result)).not.toContain('must never survive normalization');
   });
 
+  it('reads the rows after the destination office sends the item back as the return, until the sender has it', () => {
+    const row = (tracked_at: string, event_type: string, event: string, office: string) =>
+      ({ tracked_at, event_type, event, office, pincode: '', remarks: '' });
+    const result = parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, [
+      row('2026-09-01T02:34:51.000000Z', 'ItemBooked', 'Item Booked', 'Dadar BPC'),
+      row('2026-09-03T05:20:00.000000Z', 'OutForDelivery', 'Taken out for delivery', 'Maker SO'),
+      row('2026-09-03T05:27:00.000000Z', 'ItemReturned', 'Item Returned to Sender', 'Maker SO'),
+      row('2026-09-03T06:00:00.000000Z', 'ItemDispatched', 'Item Dispatched', 'Maker SO'),
+      row('2026-09-06T04:00:00.000000Z', 'OutForDelivery', 'Taken out for delivery', 'Dadar BPC'),
+    ]), SAMPLE_NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(result.events?.map((event) => [event.stage, event.provider_leg])).toEqual([
+      ['exception', 'return'], ['exception', 'return'], ['exception', 'return'], ['out_for_delivery', undefined], ['accepted', undefined],
+    ]);
+    expect(classifyIndiaPostEvent('ItemDelivered', 'Item Delivered (Returned to Sender)')).toEqual({ status: 'exception', stage: 'returned' });
+  });
+
   it('keeps an office point only from a verified entry for the same office', () => {
     const events = parseIndiaPostTrackingHtml(trackingHistoryHtml(), SAMPLE_NUMBER).events ?? [];
     const byOffice = Object.fromEntries(events.map((event) => [event.location, event.point]));

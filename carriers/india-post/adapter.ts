@@ -20,7 +20,7 @@ import {
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { exchangeCodeCountry } from './office.js';
-import { classifyIndiaPostEvent, indiaPostEventText } from './status.js';
+import { classifyIndiaPostEvent, indiaPostEventText, RETURN_START } from './status.js';
 
 // Protocol provenance (inspected 2026-09-01):
 // https://github.com/bivu-m/njs-tracker-scraper
@@ -295,6 +295,7 @@ const INBOUND = /\(Inb\)/i;
 const OUTBOUND = /\(Otb\)/i;
 // India Post's code for a transfer to the office of exchange, in either reply.
 const TRANSFER_CODE = 'ItemTransfered';
+const RETURN_LEG_STAGES = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
 // The codes of a bag's arrival, with the flight's route in the remark.
 const ARRIVAL_CODES = new Set(['MailArrived', 'BagUnloaded']);
 
@@ -587,6 +588,17 @@ function indiaPostResult(rows: readonly JsonObject[], { destination, service, sy
     });
   });
   parsed.sort((left, right) => right.timestamp - left.timestamp || right.index - left.index);
+  // After the destination office sends the item back, its ordinary rows, its round to the sender
+  // included, are the return under way until the sender has it.
+  let returning = false;
+  for (const item of [...parsed].reverse()) {
+    if (item.event.provider_code === RETURN_START && item.classified.stage === 'exception') returning = true;
+    if (!returning) continue;
+    item.event.provider_leg = 'return';
+    if (!RETURN_LEG_STAGES.has(item.classified.stage)) continue;
+    item.classified = { status: 'exception', stage: 'exception' };
+    item.event.stage = 'exception';
+  }
   const latest = parsed[0];
   if (!latest) throw new SchemaError('India Post', 'India Post returned no usable tracking events');
   const classified = latest.classified.status === 'unknown'

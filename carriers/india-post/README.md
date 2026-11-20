@@ -59,6 +59,9 @@ Outcomes:
   The parcel app's review (`statusMap`) reads a stored scan's code and wording the same way, without
   the remarks it does not keep, which can give a row another stage. It leaves an unrecognized row
   open, so the review shows wording no rule knows.
+- `ItemReturned` "Item Returned to Sender" is the destination office sending the item back. Its
+  later rows, the round to the sender included, are the return under way (an exception) until
+  "Item Delivered (Returned to Sender)", which is returned.
 - `CUSTOM_RECEIVE` is customs. `CUSTOM_RETURN`, "Out of Export Customs" and "released by export Customs" mean customs handed
   the item back: in transit, not returned to sender. "Sent to Export Customs" is the export clearance on the way
   abroad, in transit too.

@@ -37,9 +37,17 @@ function includesAny(value: string, candidates: string[]): boolean {
  * undefined: an unrecognized row falls back to an `unknown` status on an
  * `in_transit` stage.
  */
+export const RETURN_START = 'ItemReturned';
+
 export function classifyIndiaPostEvent(...values: unknown[]): ClassifiedStatus {
   if (statusKey(values[0]) === 'aircrafttakeoff') return { status: 'in_transit', stage: 'in_transit' };
   const key = values.map(statusKey).filter(Boolean).join(' ');
+  // `ItemReturned` "Item Returned to Sender" is the destination office sending the item back, which
+  // then travels as any other item; `ItemDelivered` "Item Delivered (Returned to Sender)" ends the
+  // return with the sender.
+  if (includesAny(key, ['returnedtosender'])) {
+    return includesAny(key, ['itemdelivered']) ? { status: 'exception', stage: 'returned' } : { status: 'exception', stage: 'exception' };
+  }
   if (includesAny(key, [
     'returntosender',
     'returnedtocustomer',
