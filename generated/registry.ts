@@ -451,6 +451,7 @@ import { adapter as loomisExpress } from '../carriers/loomis-express/adapter.js'
 import { adapter as lotteGlobal } from '../carriers/lotte-global/adapter.js';
 import { adapter as mAndP } from '../carriers/m-and-p/adapter.js';
 import { adapter as mOne } from '../carriers/m-one/adapter.js';
+import { adapter as m24Logistics } from '../carriers/m24-logistics/adapter.js';
 import { adapter as madhurCourier } from '../carriers/madhur-courier/adapter.js';
 import { adapter as maerskEcommerce } from '../carriers/maersk-ecommerce/adapter.js';
 import { adapter as magyarPosta } from '../carriers/magyar-posta/adapter.js';
@@ -1283,6 +1284,7 @@ export const REGISTRY: RegistryDefinition = {
     "lotte-global": lotteGlobal,
     "m-and-p": mAndP,
     "m-one": mOne,
+    "m24-logistics": m24Logistics,
     "madhur-courier": madhurCourier,
     "maersk-ecommerce": maerskEcommerce,
     "magyar-posta": magyarPosta,
@@ -2674,7 +2676,7 @@ export const REGISTRY: RegistryDefinition = {
     "m-and-p": "m-and-p",
     "m-one": "m-one",
     "m-xpress": "universal",
-    "m24-logistics": "universal",
+    "m24-logistics": "m24-logistics",
     "m5-continent": "universal",
     "maam-envios": "universal",
     "macau-post": "universal",

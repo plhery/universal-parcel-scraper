@@ -24,7 +24,7 @@
           "gls-it"
         ]
       },
-      "note": "The Wayback index preserves this exact lowercase reference in an M24 order link. The live HTML embeds the reference in its application data without a shipment history."
+      "note": "The archived M24 order link preserves this exact lowercase reference. The order page's server action returns its order and parcel history."
     },
     {
       "number": "o2001531786",
@@ -49,7 +49,7 @@
           "gls-it"
         ]
       },
-      "note": "The archived and live M24 pages carry the identical lowercase order reference in their application data. Their returned HTML contains no shipment history."
+      "note": "The archived M24 order link preserves this exact lowercase reference. The order page's server action returns its order and parcel history."
     }
   ]
 }

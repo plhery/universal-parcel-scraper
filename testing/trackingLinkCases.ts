@@ -2321,6 +2321,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gruber-logistics', number: 'ZZ0000000199',
     route: /^https:\/\/glapptracking\.gruber-logistics\.com\/(?:\?trackingId=ZZ0000000199|search-tracking-number)$/,
     marker: /Cerca tracking spedizione|Numero tracking|Search Tracking Number|Suche nach Tracking-Nummer/ },
+  // The order page's script looks the reference in its path up and renders its order view.
+  { carrier: 'm24-logistics', number: 'o0000000000',
+    route: /^https:\/\/lms\.m24logistics\.com\/track-my-order\/o0000000000$/,
+    marker: /Order Details|Order Summary|Parcel Summary/ },
 ];
 
 /**
