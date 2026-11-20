@@ -88,7 +88,7 @@ describe('DHL Express projection', () => {
     expect(statusMapAnswer({ carrier: 'dhl-express', providerCode: null, description: partial }))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
   });
-  it('reads a hold written in the same minute as a clearance step as that customs hold, and a hold alone as a problem', () => {
+  it('reads a hold written in the same minute as a clearance step as that customs hold, beside the wait for transport as transit, and a hold alone as a problem', () => {
     const web = payload();
     web.results[0]!.checkpoints = [
       { description: 'Clearance Event', date: 'Tuesday, October 13, 2026', time: '01:33', location: 'EXAMPLE CITY - PORTUGAL' },
@@ -105,6 +105,14 @@ describe('DHL Express projection', () => {
     const read = parseUnified(unified, number);
     expect(read).toMatchObject({ current_stage: 'customs', current_stage_source: 'carrier_map' });
     expect(read.events?.slice(0, 2).map((event) => event.stage)).toEqual(['customs', 'customs']);
+    // A hold in the same minute as the routine wait for the next planned movement is that wait.
+    const waiting = payload();
+    waiting.results[0]!.checkpoints = [
+      { description: 'Scheduled to depart on the next planned movement', date: 'Friday, November 13, 2026', time: '11:00', location: 'EXAMPLE CITY - ITALY' },
+      { description: 'Shipment is on hold', date: 'Friday, November 13, 2026', time: '11:00', location: 'EXAMPLE CITY - ITALY' },
+      { description: 'Processed at EXAMPLE CITY - ITALY', date: 'Friday, November 13, 2026', time: '07:10', location: 'EXAMPLE CITY - ITALY' },
+    ];
+    expect(parse(waiting, number).events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit']);
   });
   it('maps DHL checkpoints that end with their facility, and leaves other wording to the classifier', () => {
     expect([

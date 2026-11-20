@@ -99,18 +99,24 @@ export function withPieceDeliveries<T extends { description?: string; stage?: st
 
 const ON_HOLD = 'shipment is on hold';
 const CLEARANCE_STEP = 'clearance event';
+const WAIT_STEP = 'scheduled to depart on the next planned movement';
 
 /**
  * Events newest first, a hold written in the same minute as a clearance step read as that customs hold. DHL
  * repeats the pair each day the parcel waits in clearance, so the hold alone would set the parcel to a problem
- * and back each day.
+ * and back each day. A hold written in the same minute as the routine wait for the next planned movement is
+ * that wait: in transit.
  */
 export function withCustomsHolds<T extends { description?: string; stage?: string; stage_source?: string; time?: string | null; local_time?: string }>(events: T[]): T[] {
   const clock = (event: T) => event.time ?? event.local_time ?? '';
   const wording = (event: T) => (event.description ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
-  const clearance = new Set(events.filter((event) => wording(event) === CLEARANCE_STEP && clock(event)).map(clock));
-  return events.map((event) => wording(event) === ON_HOLD && clearance.has(clock(event))
-    ? { ...event, stage: 'customs', stage_source: 'carrier_map' } : event);
+  const at = (step: string) => new Set(events.filter((event) => wording(event) === step && clock(event)).map(clock));
+  const [clearance, waiting] = [at(CLEARANCE_STEP), at(WAIT_STEP)];
+  return events.map((event) => {
+    if (wording(event) !== ON_HOLD) return event;
+    if (clearance.has(clock(event))) return { ...event, stage: 'customs', stage_source: 'carrier_map' };
+    return waiting.has(clock(event)) ? { ...event, stage: 'in_transit', stage_source: 'carrier_map' } : event;
+  });
 }
 
 /** The checkpoint's stage from DHL's own wording, if the wording is one of DHL's checkpoints. */

@@ -137,7 +137,9 @@ the last piece is delivered, so it keeps the stage of the scan before it. So doe
 note that the clearance "may start while the shipment is in transit to the destination",
 which DHL writes at the destination's facilities from the pickup on. A hold
 written in the same minute as a "Clearance Event", a pair DHL repeats each day the
-parcel waits in clearance, is that customs hold; a hold alone is a problem.
+parcel waits in clearance, is that customs hold; one in the same minute as "Scheduled to
+depart on the next planned movement" is that routine wait, in transit; a hold alone is a
+problem.
 
 ## Limits
 
