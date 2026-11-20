@@ -132,9 +132,11 @@
     },
     {
       "code": "66",
-      "stage": "customs",
-      "confirmedBy": "bundle",
-      "note": "The app files it under customs."
+      "wording": "Your item is being sorted by the local delivery provider",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The app files it under customs, but its words are the destination's sorting, after the item arrived abroad (code 40)."
     },
     {
       "code": "83",

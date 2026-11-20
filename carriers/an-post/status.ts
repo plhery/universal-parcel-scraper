@@ -20,6 +20,9 @@ const CODES: ReadonlyMap<number, CodeStage> = new Map<number, CodeStage>([
   [48, { stage: 'accepted' }],
   [49, { stage: 'in_transit' }],
   [67, { stage: 'in_transit' }],
+  // The app files 66 under customs, but its words are the destination's sorting: "Your item is being sorted by
+  // the local delivery provider", after the item arrived abroad.
+  [66, { stage: 'in_transit' }],
   [4, { stage: 'out_for_delivery' }],
   [14, { stage: 'delivered' }],
   [70, { stage: 'ready_for_pickup' }],
@@ -28,7 +31,7 @@ const CODES: ReadonlyMap<number, CodeStage> = new Map<number, CodeStage>([
   // charge raised, refused and expired; 32 and 37 its acceptance codes.
   ...each([42], { stage: 'delivered' }),
   ...each([13], { stage: 'failed_attempt' }),
-  ...each([7, 9, 64, 65, 66, 83, 86, 87], { stage: 'customs' }),
+  ...each([7, 9, 64, 65, 83, 86, 87], { stage: 'customs' }),
   ...each([6, 32, 36, 37, 41], { stage: 'accepted' }),
   // The app's "in transit" and "sorting" also hold codes 4 and 70, and its
   // "return to sender" holds returns still under way.
