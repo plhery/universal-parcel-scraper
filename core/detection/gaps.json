@@ -4724,5 +4724,17 @@
     "pattern": "^(?:\\d{8}|00\\d{18})$",
     "kind": "by_design",
     "reason": "The archived shipment reference and NVE package reference share shapes used by other networks and issuers. A selected Hellmann road package needs a whole native match, without an automatic ownership rule."
+  },
+  {
+    "carrier": "thabit-logistics",
+    "pattern": "^[A-Z0-9]{5,40}$",
+    "kind": "by_design",
+    "reason": "A selected Thabit guest lookup can read a whole waybill; its generic alphanumeric shape does not establish ownership."
+  },
+  {
+    "carrier": "tramaco",
+    "pattern": "^\\d{15}$",
+    "kind": "by_design",
+    "reason": "Tramaco guide numbers share their fifteen-digit shape with other carriers; a native whole-guide reply is required."
   }
 ]

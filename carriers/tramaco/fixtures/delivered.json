@@ -1,0 +1,69 @@
+{
+  "cuerpoRespuesta": {
+    "codigo": "1",
+    "mensaje": "EXITO"
+  },
+  "transaccion": {
+    "origen": "SYNTHETIC ORIGIN",
+    "parDestino": "SYNTHETIC DESTINATION",
+    "fecha": "2026-02-10",
+    "guia": "984726193850612",
+    "latitud": -1.0,
+    "longitud": -78.0
+  },
+  "remitente": {
+    "nombres": "SYNTHETIC SENDER",
+    "telefono": "0000000000"
+  },
+  "destinatario": {
+    "nombres": "SYNTHETIC RECIPIENT",
+    "telefono": "0000000000"
+  },
+  "lstSalidaTrackGuiaWs": [
+    {
+      "fechaHora": "13/02/2026 11:39",
+      "descripcion": "CS - GUIA COLOCADA EN CONTENEDOR CONTRATOS CONTRATOS QUITO MATRIZ-QUITO",
+      "estado": "DISTRIBUCION"
+    },
+    {
+      "fechaHora": "12/02/2026 18:58",
+      "descripcion": "DR - INGRESO DE RUTA",
+      "estado": "ENTREGA"
+    },
+    {
+      "fechaHora": "12/02/2026 10:03",
+      "descripcion": "GUIA ENTREGADA -SYNTHETIC SIGNER - 0000000000",
+      "estado": "ENTREGA"
+    },
+    {
+      "fechaHora": "12/02/2026 08:30",
+      "descripcion": "DR - SALIENDO A ENTREGA",
+      "estado": "ENTREGA"
+    },
+    {
+      "fechaHora": "12/02/2026 08:29",
+      "descripcion": "DR - SALIENDO A ENTREGA",
+      "estado": "ENTREGA"
+    },
+    {
+      "fechaHora": "11/02/2026 01:46",
+      "descripcion": "CI - INGRESO A CIUDAD",
+      "estado": "DISTRIBUCION"
+    },
+    {
+      "fechaHora": "10/02/2026 18:41",
+      "descripcion": "CS - SALIDA A CIUDAD",
+      "estado": "DISTRIBUCION"
+    },
+    {
+      "fechaHora": "10/02/2026 18:30",
+      "descripcion": "DI - GUIA CREADA CONTRATOS",
+      "estado": "ADMISION"
+    },
+    {
+      "fechaHora": "10/02/2026 18:30",
+      "descripcion": "INICIO RUTA DE RETIRO",
+      "estado": "ADMISION"
+    }
+  ]
+}

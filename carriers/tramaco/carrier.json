@@ -17,18 +17,38 @@
   "timezone": "America/Guayaquil",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "tramaco",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://www.tramaco.com.ec/rastreo.html?guia={trackingNumber}",
     "searchUrl": "https://www.tramaco.com.ec/rastreo.html",
     "canaryUrl": "https://www.tramaco.com.ec/rastreo.html",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "Guide identity",
+      "Parcel milestones",
+      "Local scan clocks"
+    ],
+    "scraped": [
+      "Guide identity",
+      "Parcel milestones",
+      "Local scan clocks"
+    ],
+    "discarded": [
+      "Sender and recipient details",
+      "Signer and identity value",
+      "Map coordinates",
+      "Contract-document containers",
+      "Route bookkeeping"
+    ],
+    "unavailable": [
+      "Expected delivery"
+    ]
   },
   "links": [
     {

@@ -1,4 +1,13 @@
 {
   "carrier": "thabit-logistics",
-  "entries": []
+  "entries": [
+    { "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" },
+    { "wording": "Dispatched", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "In sorting facility", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Recipient mobile switched off", "stage": "failed_attempt", "language": "en", "confirmedBy": "live" },
+    { "wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "wording": "Recipient mobile no response", "stage": "failed_attempt", "language": "en", "confirmedBy": "live" },
+    { "wording": "In Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live" }
+  ]
 }

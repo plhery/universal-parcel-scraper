@@ -732,6 +732,7 @@ import { adapter as teleship } from '../carriers/teleship/adapter.js';
 import { adapter as tfmExpress } from '../carriers/tfm-express/adapter.js';
 import { adapter as tforceFreight } from '../carriers/tforce-freight/adapter.js';
 import { adapter as tforceLogistics } from '../carriers/tforce-logistics/adapter.js';
+import { adapter as thabitLogistics } from '../carriers/thabit-logistics/adapter.js';
 import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
 import { adapter as thhy } from '../carriers/thhy/adapter.js';
@@ -754,6 +755,7 @@ import { adapter as totalExpress } from '../carriers/total-express/adapter.js';
 import { adapter as toyou } from '../carriers/toyou/adapter.js';
 import { adapter as trackon } from '../carriers/trackon/adapter.js';
 import { adapter as tracxLogis } from '../carriers/tracx-logis/adapter.js';
+import { adapter as tramaco } from '../carriers/tramaco/adapter.js';
 import { adapter as transaher } from '../carriers/transaher/adapter.js';
 import { adapter as transcorp } from '../carriers/transcorp/adapter.js';
 import { adapter as transmission } from '../carriers/transmission/adapter.js';
@@ -1575,6 +1577,7 @@ export const REGISTRY: RegistryDefinition = {
     "tfm-express": tfmExpress,
     "tforce-freight": tforceFreight,
     "tforce-logistics": tforceLogistics,
+    "thabit-logistics": thabitLogistics,
     "thailand-post": thailandPost,
     "the-courier-guy": theCourierGuy,
     "thhy": thhy,
@@ -1597,6 +1600,7 @@ export const REGISTRY: RegistryDefinition = {
     "toyou": toyou,
     "trackon": trackon,
     "tracx-logis": tracxLogis,
+    "tramaco": tramaco,
     "transaher": transaher,
     "transcorp": transcorp,
     "transmission": transmission,
@@ -3269,7 +3273,7 @@ export const REGISTRY: RegistryDefinition = {
     "tforce-freight": "tforce-freight",
     "tforce-integrated-solutions": "universal",
     "tforce-logistics": "tforce-logistics",
-    "thabit-logistics": "universal",
+    "thabit-logistics": "thabit-logistics",
     "thailand-post": "thailand-post",
     "the-courier-guy": "the-courier-guy",
     "the-delivery-group": "universal",
@@ -3319,7 +3323,7 @@ export const REGISTRY: RegistryDefinition = {
     "trackon": "trackon",
     "tracopa": "universal",
     "tracx-logis": "tracx-logis",
-    "tramaco": "universal",
+    "tramaco": "tramaco",
     "trans-express-lk": "universal",
     "trans-o-flex": "universal",
     "trans-ontario": "universal",

@@ -1,4 +1,10 @@
 {
   "carrier": "tramaco",
-  "entries": []
+  "entries": [
+    { "wording": "DI - GUIA CREADA CONTRATOS", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "wording": "CS - SALIDA A CIUDAD", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "wording": "CI - INGRESO A CIUDAD", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "wording": "DR - SALIENDO A ENTREGA", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live" },
+    { "wording": "GUIA ENTREGADA", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
 }

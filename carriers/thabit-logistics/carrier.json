@@ -21,18 +21,37 @@
   "timezone": "Asia/Riyadh",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "thabit-logistics",
+    "steps": [
+      "direct",
+      "trawl"
+    ],
+    "browser": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://thabit-logistics.com/track-shipment/{trackingNumber}",
     "searchUrl": "https://thabit-logistics.com/track-shipment",
     "canaryUrl": "https://thabit-logistics.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "Status",
+      "Scan clock",
+      "Station"
+    ],
+    "scraped": [
+      "Status",
+      "Scan clock",
+      "Station"
+    ],
+    "discarded": [
+      "Form state and contact details"
+    ],
+    "unavailable": [
+      "Expected delivery"
+    ]
   },
   "links": [
     {

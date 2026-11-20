@@ -8106,6 +8106,34 @@
     ]
   },
   {
+    "input": "031002004307073",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "brt",
+      "yunda",
+      "ozon-logistics"
+    ],
+    "asked": [
+      "brt"
+    ]
+  },
+  {
+    "input": "031002005632898",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "brt",
+      "yunda",
+      "ozon-logistics"
+    ],
+    "asked": [
+      "brt"
+    ]
+  },
+  {
     "input": "031168321009",
     "carrier": "unknown",
     "confidence": "low",
@@ -76157,6 +76185,22 @@
     ]
   },
   {
+    "input": "9922397264990",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery"
+    ]
+  },
+  {
     "input": "992338535",
     "carrier": "unknown",
     "confidence": "low",
@@ -76306,6 +76350,24 @@
     "confidence": "low",
     "candidates": [
       "seur"
+    ]
+  },
+  {
+    "input": "9952992582670",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ukrposhta",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "ukrposhta",
+      "delhivery"
     ]
   },
   {

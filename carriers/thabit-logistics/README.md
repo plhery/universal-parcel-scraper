@@ -1,29 +1,13 @@
 # Thabit Logistics
 
-Thabit Logistics parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads the Saudi carrier's public HTML tracking page with a normal browser User-Agent. A scoped native “Record Not Found” table is a missing parcel; generic error pages and unfinished results are not.
 
-Thabit Logistics (ثابت), the Al Thabit Mail Transport Company, is a Riyadh last-mile and e-commerce courier, a
-licensed postal service provider delivering online shops' parcels across Saudi Arabia with payment on
-delivery. Its site is thabit-logistics.com.
+TRAWL can recover a challenged guest page when configured. The browser localizes visible scan clocks, so the parser reads their original `data-utc-time` values. Direct HTML carries those same explicit UTC clocks. It requires the whole waybill in both the tracking form and canonical URL, together with the native result table.
 
-## Numbers
-
-Its tracker takes an air waybill number as free text. No public page shows one or its layout, so there is no
-rule.
-
-## Why there is no adapter
-
-Its tracker is an open HTML page without a session or CAPTCHA:
-`GET thabit-logistics.com/track-shipment/{number}`. It shows the number's result table, and for an unknown
-number HTTP 200 with a "Record Not Found" heading in that table. An adapter should read that heading as a
-missing parcel only on a page that carries the tracker form, as a blocked page is not a miss. No public number
-is known to see a found reply.
-
-## Links
-
-The tracker opens a number from its path, `/track-shipment/<number>`.
+Known administrative updates preserve the preceding physical milestone; unsupported wordings remain inconclusive. Sender, recipient and delivery-document details are not extracted. No account or phone digits are required. No number-shape rule establishes ownership.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+THABIT_NUMBER=… npm run test:live -- carriers/thabit-logistics/adapter.live.test.ts
+```

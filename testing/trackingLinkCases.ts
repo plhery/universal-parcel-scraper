@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'thabit-logistics', number: 'ZZ000000014',
+    route: /^https:\/\/thabit-logistics\.com\/track-shipment\/ZZ000000014$/,
+    marker: /Record Not Found/ },
   { carrier: 'hellmann', number: '00000000000000000000',
     route: /^https:\/\/public-road\.tracking\.hellmann\.net\/no-result$/,
     marker: /No shipment found/i, forwarding: { notFound: /No shipment found/i } },
@@ -2338,6 +2341,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  tramaco: 'The page sends guia to its lookup, then clears the input. An unknown guide leaves no visible number or specific missing notice, so the DOM-only daily check cannot verify forwarding.',
   'best-express-th': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
   'best-express-vn': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
   peddler: 'the tracker answers only after its Turnstile, so the link opens the form with the number filled in; native retrieval submits it in a scoped browser helper',

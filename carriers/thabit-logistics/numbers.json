@@ -1,5 +1,62 @@
 {
   "carrier": "thabit-logistics",
-  "gap": "No public page shows a Thabit Logistics number.",
-  "records": []
+  "records": [
+    {
+      "number": "9922397264990",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.4tracking.net/en/carriers/thabit-logistics",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Thabit parcel delivery",
+        "reportedRole": "AWB",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The published 4Tracking article attributes this exact AWB to a Thabit tracking record. The carrier’s public page returned HTTP 406, so the lookup did not establish shipment history."
+    },
+    {
+      "number": "9952992582670",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.4tracking.net/en/carriers/thabit-logistics",
+        "date": "2025-11-26",
+        "dateKind": "reported delivery",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Saudi domestic parcel delivery",
+        "reportedRole": "AWB",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ukrposhta",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The current carrier-owned guest page matches the whole waybill in the form and canonical address and returns a dated delivered history. A distinct synthetic waybill returns the exact scoped missing-record table. The browser retains each original explicit UTC clock in data-utc-time after localizing its displayed text."
+    }
+  ]
 }

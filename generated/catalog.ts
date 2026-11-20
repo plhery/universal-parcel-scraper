@@ -56740,7 +56740,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "thabit-logistics",
+      "browser": true
     },
     "canaryUrl": "https://thabit-logistics.com/",
     "trackingUrlTemplate": "https://thabit-logistics.com/track-shipment/{trackingNumber}",
@@ -58237,7 +58238,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Guayaquil",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tramaco"
     },
     "canaryUrl": "https://www.tramaco.com.ec/rastreo.html",
     "trackingUrlTemplate": "https://www.tramaco.com.ec/rastreo.html?guia={trackingNumber}",

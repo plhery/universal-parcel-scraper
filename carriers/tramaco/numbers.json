@@ -1,5 +1,57 @@
 {
   "carrier": "tramaco",
-  "gap": "No public page shows a Tramaco number.",
-  "records": []
+  "records": [
+    {
+      "number": "031002004307073",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/848393097/VALORACION-ULTIMO-RECURSO-1-1",
+        "date": "2025-01-14",
+        "dateKind": "document date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ecuador domestic parcels",
+        "reportedRole": "guía de encomienda",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "The Universidad UTE case write-up reproduces a guide number from a reported March 2023 customs inspection of a Tramaco Express parcel. The public tracking page returned its landing form without shipment history."
+    },
+    {
+      "number": "031002005632898",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.tramaco.com.ec/js/rastreo.js?v=1.2",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ecuadorian parcel delivery",
+        "reportedRole": "guide",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "The carrier publishes this guide as a rastreo.js example; its current guest API confirms the same whole guide and dated parcel milestones. Contract-document container entries are omitted by the native client."
+    }
+  ]
 }

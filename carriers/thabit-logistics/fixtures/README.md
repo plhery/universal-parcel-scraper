@@ -1,0 +1,1 @@
+These fixtures are synthetic. Their result layout and status wordings follow the carrier's anonymous tracking page. Browser tests attach the original UTC attribute while replacing its visible clock with a localized display.
