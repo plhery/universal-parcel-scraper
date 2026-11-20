@@ -1,0 +1,25 @@
+{
+  "carrier": "evergreen-line",
+  "records": [
+    {
+      "number": "EGLV010601013164",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/astg-container-line-ltd-d-b-a-at-c",
+        "date": "2026-11-02",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest identifies Evergreen Line as the issuing carrier. ShipmentLink returned the same bill and container, with movements through Boston."
+    }
+  ]
+}

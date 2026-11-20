@@ -1272,6 +1272,11 @@
     "reason": "Evdemo Lojistik's twelve-digit numbers, 1 then the registration day and month and a serial, share their shape with many carriers' numeric waybills."
   },
   {
+    "carrier": "evergreen-line",
+    "kind": "open",
+    "reason": "The confirmed Evergreen bill is selectable explicitly. The EGLV maritime prefix is not offered by detection."
+  },
+  {
     "carrier": "evropat",
     "pattern": "^91\\d{8}$",
     "kind": "collision",

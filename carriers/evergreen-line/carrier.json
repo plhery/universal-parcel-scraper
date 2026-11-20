@@ -1,0 +1,58 @@
+{
+  "id": "evergreen-line",
+  "displayName": "Evergreen Line",
+  "aliases": [
+    "Evergreen Marine",
+    "Evergreen Marine Corporation",
+    "EGLV",
+    "長榮海運"
+  ],
+  "region": {
+    "countries": [
+      "TW"
+    ]
+  },
+  "brand": {
+    "color": "#00833e"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "evergreen-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "searchUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "canaryUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "weight",
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "ShipmentLink"
+  },
+  "links": [],
+  "detection": []
+}

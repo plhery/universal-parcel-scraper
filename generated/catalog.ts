@@ -23504,6 +23504,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "evergreen-line": {
+    "displayName": "Evergreen Line",
+    "color": "#00833e",
+    "aliases": [
+      "Evergreen Marine",
+      "Evergreen Marine Corporation",
+      "EGLV",
+      "長榮海運"
+    ],
+    "countries": [
+      "TW"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "evergreen-line",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "trackingUrlTemplate": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "trackingSearchUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "trackingSiteName": "ShipmentLink",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "evri-uk": {
     "displayName": "Evri UK",
     "color": "#00014d",
@@ -65934,6 +65961,7 @@ export const CARRIER_IDS = [
   "europoshta",
   "eushipments",
   "evdemo-lojistik",
+  "evergreen-line",
   "evri-uk",
   "evropat",
   "ewe",
@@ -67799,6 +67827,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "europoshta": [],
   "eushipments": [],
   "evdemo-lojistik": [],
+  "evergreen-line": [],
   "evri-uk": ["evri-uk-domestic","evri-uk-1","evri-uk-2","evri-uk-3"],
   "evropat": [],
   "ewe": [],
