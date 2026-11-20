@@ -1,0 +1,68 @@
+{
+  "id": "parcel2go",
+  "displayName": "Parcel2Go",
+  "aliases": [
+    "Parcel2Go.com"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#015db9"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "parcel2go",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.parcel2go.com/tracking",
+    "canaryUrl": "https://www.parcel2go.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "parcel_count",
+      "proof_of_delivery",
+      "progress_rail",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "eta",
+      "parcel_count",
+      "proof_of_delivery",
+      "progress_rail"
+    ],
+    "unavailable": [],
+    "url": "https://www.parcel2go.com/tracking/{trackingNumber}"
+  },
+  "links": [
+    {
+      "domains": [
+        "www.parcel2go.com",
+        "parcel2go.com"
+      ],
+      "path": "^/tracking/(P2G\\d{8,9})/?$"
+    }
+  ],
+  "detection": []
+}

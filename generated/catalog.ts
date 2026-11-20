@@ -44432,6 +44432,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "parcel2go": {
+    "displayName": "Parcel2Go",
+    "color": "#015db9",
+    "aliases": [
+      "Parcel2Go.com"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "parcel2go",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.parcel2go.com/tracking",
+    "trackingUrlTemplate": "https://www.parcel2go.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.parcel2go.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.parcel2go.com",
+          "parcel2go.com"
+        ],
+        "path": "^/tracking/(P2G\\d{8,9})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "parcelabc": {
     "displayName": "ParcelABC",
     "color": "#8ec642",
@@ -66558,6 +66588,7 @@ export const CARRIER_IDS = [
   "paquetexpress",
   "paquexpress-urgente",
   "parcel-one",
+  "parcel2go",
   "parcelabc",
   "parceljet",
   "parcelpoint",
@@ -68423,6 +68454,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
   "paquexpress-urgente": [],
   "parcel-one": [],
+  "parcel2go": [],
   "parcelabc": [],
   "parceljet": [],
   "parcelpoint": [],

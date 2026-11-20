@@ -1,0 +1,117 @@
+{
+  "carrier": "parcel2go",
+  "entries": [
+    {
+      "code": "97664C9B",
+      "wording": "Item delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "F71F5093",
+      "wording": "Your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "9E1D3F28",
+      "wording": "Item has been sorted",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "F71F5093",
+      "wording": "Departure to distribution network",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "58D03FEA",
+      "wording": "Customs cleared : authorized",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "F71F5093",
+      "wording": "Customs",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "F71F5093",
+      "wording": "Item presented at the Customs",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "F71F5093",
+      "wording": "Arrival from abroad",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "9E1D3F28",
+      "wording": "Departure to country of destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "EDBE6B15",
+      "wording": "Received at international processing center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "57FB2B4A",
+      "wording": "Crossing border and in transit to carrier hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "FA1F1BD7",
+      "wording": "Transmitted customs information",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "58D03FEA",
+      "wording": "Customs cleared",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "A9B636A0",
+      "wording": "Grouped when pallet scanned to crossing (POSTAL #23)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "98DDAC48",
+      "wording": "Scanned at Landmark crossdock facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "14C2EE78",
+      "wording": "Processed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}
