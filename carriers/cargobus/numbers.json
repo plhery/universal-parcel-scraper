@@ -1,5 +1,29 @@
 {
   "carrier": "cargobus",
-  "gap": "Cargobus waybill numbers have no published layout, and no public page shows one.",
-  "records": []
+  "records": [
+    {
+      "number": "285253241",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.temidy.lt/byla/e28d1e9a-00d9-4ede-9bde-4e9e4d2ea853",
+        "date": "2025-05-13",
+        "dateKind": "judgment",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Cargobus Lithuania",
+        "reportedRole": "shipment code",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "The Lithuanian court cites the shipment code from the shipping declaration and Cargobus records. The cataloged Cargobus tracker returned no history for the 2022 shipment."
+    }
+  ]
 }
