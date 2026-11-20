@@ -1,5 +1,48 @@
 {
   "carrier": "transpress",
-  "gap": "No public page shows a Transpress number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "362997",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://dela.bg/Acts/f63faff8-9622-44a2-aede-36cc731d0e93",
+        "date": "2021-09-10",
+        "dateKind": "court record",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "товарителница",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Pleven court record identifies this Transpress waybill and its shipment date. Lookup blocked by verification."
+    },
+    {
+      "number": "TRIERAA25077",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://dela.bg/Acts/aa27ebdf-4e30-498f-9055-7580433ddf73",
+        "date": "2019-10-09",
+        "dateKind": "judgment",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "товарителница",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The Plovdiv court decision identifies the waybill issued when Transpress accepted the consignment. The public tracker requires reCAPTCHA."
+    }
+  ]
 }
