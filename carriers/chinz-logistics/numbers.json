@@ -1,5 +1,31 @@
 {
   "carrier": "chinz-logistics",
-  "gap": "No public page shows a Chinz Logistics or Parcelmate number.",
-  "records": []
+  "records": [
+    {
+      "number": "CR122430",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kdso.net/kdso/1573907/d.htm",
+        "date": "2025-04-30",
+        "dateKind": "tracking update",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The published tracking history names New Zealand Chinz Logistics and lists this reference as in transit. The carrier's tracking page echoed the input without a shipment result in the response."
+    }
+  ]
 }

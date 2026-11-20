@@ -716,6 +716,12 @@
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to Chilexpress."
   },
   {
+    "carrier": "chinz-logistics",
+    "pattern": "^CR\\d{6}$",
+    "kind": "open",
+    "reason": "Chinz's published shipment reference has a CR prefix and six digits. Detection suggests other carriers and does not offer Chinz."
+  },
+  {
     "carrier": "chit-chats",
     "pattern": "^[0-9A-Z]{10}$",
     "kind": "by_design",
