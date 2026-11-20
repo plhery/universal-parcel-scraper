@@ -1,0 +1,46 @@
+[
+  {
+    "entityType": "IJobShipment",
+    "data": {
+      "HOUSEBILLNUMBER": "SE260402290",
+      "SHIPMENTID": "SE260402290BRE"
+    },
+    "events": [
+      {
+        "eventTimeUtc": "2026-10-30T14:19:00Z",
+        "isEstimate": false,
+        "eventDescription": "Delivery Complete"
+      },
+      {
+        "eventTimeUtc": "2026-10-20T14:14:57.54Z",
+        "isEstimate": false,
+        "eventDescription": "Cargo Customs Cleared"
+      },
+      {
+        "eventTimeUtc": "2026-10-05T15:13:51.48Z",
+        "isEstimate": false,
+        "eventDescription": "Shipped On Board"
+      },
+      {
+        "eventTimeUtc": "2026-09-29T05:56:00Z",
+        "isEstimate": false,
+        "eventDescription": "FCL arrived at Port"
+      },
+      {
+        "eventTimeUtc": "2026-09-28T08:00:00Z",
+        "isEstimate": false,
+        "eventDescription": "Cargo Picked up"
+      },
+      {
+        "eventTimeUtc": "2026-09-16T09:59:25.047Z",
+        "isEstimate": false,
+        "eventDescription": "Booking Confirmed"
+      },
+      {
+        "eventTimeUtc": "2026-09-16T09:56:43.287Z",
+        "isEstimate": false,
+        "eventDescription": "Received the Order"
+      }
+    ]
+  }
+]

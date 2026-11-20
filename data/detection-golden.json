@@ -81232,6 +81232,18 @@
     ]
   },
   {
+    "input": "ASQRSE260399713",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "ASQRSE260402290",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "AT9999999980",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -108318,6 +108330,17 @@
     "asked": [
       "elta",
       "chronopost"
+    ]
+  },
+  {
+    "input": "SE260401571",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
     ]
   },
   {

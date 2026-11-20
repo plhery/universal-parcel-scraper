@@ -43556,6 +43556,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ots-astracon": {
+    "displayName": "O.T.S. ASTRACON",
+    "color": "#00427a",
+    "aliases": [
+      "OTS Astracon",
+      "O.T.S. Astracon International Air + Sea Forwarder",
+      "ASQR"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ots-astracon"
+    },
+    "canaryUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "trackingSearchUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ots-chile": {
     "displayName": "OTS Chile",
     "color": "#ffc100",
@@ -66669,6 +66691,7 @@ export const CARRIER_IDS = [
   "orian",
   "orlen-paczka",
   "osm-worldwide",
+  "ots-astracon",
   "ots-chile",
   "overnite",
   "overseas-express",
@@ -68539,6 +68562,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "orian": [],
   "orlen-paczka": ["orlen-paczka-1"],
   "osm-worldwide": ["osm-worldwide-1","osm-worldwide-2"],
+  "ots-astracon": [],
   "ots-chile": [],
   "overnite": [],
   "overseas-express": [],

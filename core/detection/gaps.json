@@ -5534,5 +5534,11 @@
     "pattern": "^SHPT\\d{10}$",
     "kind": "open",
     "reason": "The public a. hartrodt tracker confirms a house bill beginning with SHPT. The adapter tracks explicitly selected references."
+  },
+  {
+    "carrier": "ots-astracon",
+    "pattern": "^(?:ASQR)?SE\\d{9}$",
+    "kind": "open",
+    "reason": "Public house bills resolve with explicit selection. ASQR is an external customs carrier code and the bare SE house shape has no demonstrated exclusive ownership."
   }
 ]

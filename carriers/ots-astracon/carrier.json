@@ -1,0 +1,58 @@
+{
+  "id": "ots-astracon",
+  "displayName": "O.T.S. ASTRACON",
+  "aliases": [
+    "OTS Astracon",
+    "O.T.S. Astracon International Air + Sea Forwarder",
+    "ASQR"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#00427a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ots-astracon",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "searchUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "canaryUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "shows": [
+      "status",
+      "history",
+      "route",
+      "route_eta",
+      "container_number",
+      "house_bill",
+      "pieces",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "route",
+      "route_eta",
+      "container_number",
+      "house_bill",
+      "pieces",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
