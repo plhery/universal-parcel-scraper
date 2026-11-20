@@ -1,4 +1,15 @@
 {
   "carrier": "bfe-express",
-  "entries": []
+  "entries": [
+    {"wording": "…, Arrived at Airport of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "BFE's own row, the place first: the flight's arrival in the destination country, its first row on a parcel to Argentina. The adapter moves the place into the location."},
+    {"wording": "…, Transport to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "BFE's own row, the place first: on the way within the destination country, before the clearance row."},
+    {"wording": "…, Customs declaration completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "BFE's own row, the place first, an hour after the transport to the next facility and an hour before the hand-over to the last mile, at the same place: the clearance done, the parcel not held."},
+    {"wording": "…, Turned over to last mile facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "BFE's own row, the place first: handed to the delivering depot, before that depot's own scans."},
+    {"wording": "Tu paquete fue recibido por en: …", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Your parcel was received at …: the first scan of the Uruguayan last mile, after BFE's hand-over to it."},
+    {"wording": "Tu paquete está en viaje a …", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Your parcel is on its way to …: the place is where it goes, not where it is."},
+    {"wording": "En espera para salir a reparto en …", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Waiting to go out for delivery at …: at the delivering office, hours before the round starts."},
+    {"wording": "Tu paquete se encuentra en …", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Your parcel is at …, written at the same minute as the wait for the round, before it."},
+    {"wording": "Reparto en curso", "language": "es", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Delivery in progress: the round, before the delivery."},
+    {"wording": "Entregado", "language": "es", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Delivered; BFE's own status for the parcel says Delivered beside it."}
+  ]
 }

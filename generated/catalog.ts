@@ -11364,7 +11364,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "bfe-express"
     },
     "canaryUrl": "https://www.bfeexpress.com/tracking",
     "trackingUrlTemplate": "https://www.bfeexpress.com/track?track_number={trackingNumber}",

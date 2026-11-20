@@ -19,17 +19,37 @@
   "timezone": "America/Argentina/Buenos_Aires",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "bfe-express",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "eta"
+  ],
   "portal": {
     "url": "https://www.bfeexpress.com/track?track_number={trackingNumber}",
     "searchUrl": "https://www.bfeexpress.com/tracking",
     "canaryUrl": "https://www.bfeexpress.com/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "estimated_delivery",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "estimated_delivery"
+    ],
+    "discarded": [
+      "proof_of_delivery",
+      "addresses"
+    ],
     "unavailable": []
   },
   "links": [

@@ -1444,6 +1444,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/tracker\.shadowfax\.in\/#\/(?:awb\/SF000000001ZZZ|track\/)/,
     marker: /Invalid AWB Number\. Please check again\.|Track Your Order with Shadowfax/ },
   // The page fills its field in from the address and looks the number up on load.
+  // The page shows the number it was given with BFE's answer for it, after a banner and a lookup that can take
+  // over ten seconds headless.
+  { carrier: 'bfe-express', number: 'NOTAPARCEL',
+    route: /^https:\/\/www\.bfeexpress\.com\/track\?track_number=NOTAPARCEL$/,
+    marker: /In Process|This number can't be found at this moment/, renderTimeoutMs: 20_000 },
   { carrier: 'imile', number: '0000000000013',
     route: /^https:\/\/www\.imile\.com\/[^/]+\/track\/?\?waybillNo=0000000000013$/,
     marker: /TRACK YOUR ORDER|TYPE YOUR ORDER NUMBER/i },

@@ -1,9 +1,34 @@
 # BFE Express
 
-BFE Express parcels use enabled universal providers. There is no dedicated adapter.
-
 BFE Express delivers the last mile of online orders, many from marketplaces abroad, in Argentina,
 Peru, Uruguay and the United States. Its site is bfeexpress.com.
+
+## How it works
+
+One bounded JSON POST asks the service the tracking page uses. The page signs each request with
+a key its script gives every visitor: the UTC clock to the hundredth of a second, its MD5 with
+the key, and the number encrypted with AES-256-CBC under that digest. The adapter signs the same
+way. The service refuses a request signed about a minute away from its own clock and states that
+clock in the refusal; the adapter then signs once more on it. Any other refusal is a schema error,
+since it means the page signs differently.
+
+The reply lists the shipment under the number asked, with BFE's status for it and its scans in
+groups, by leg and carrier. A number BFE does not know comes back with the status `NotFound` and
+stays inconclusive with the reason `portal_not_found`. A shipment listed without a scan, such as
+one to Peru whose number is "being transferred", ends as no history with the reason `listed`.
+
+## Notes
+
+BFE's own rows are in English and start with their place, as "<place>, Arrived at Airport of
+destination". The adapter shows them without it, with the place as the location and the whole
+row as `original_description`. A last mile's rows, in Spanish in Uruguay, are kept as written,
+with the place as the location where the wording says the parcel is there ("en"). The map reads
+both forms whole, the place included, so a provider's copy reads the same.
+
+Each scan states its offset, as "(GMT-03:00)", and keeps it. Scans follow the page's order
+numbers, newest first. BFE's status `Delivered` decides the stage when the last scan's wording
+is unknown. Its planned day is kept while the parcel is on its way and no scan is later. The
+destination country is kept; postcodes and proof of delivery are left out.
 
 ## Numbers
 
@@ -13,16 +38,12 @@ nineteen-digit series in Argentina. Rules `bfe-express-1` and `bfe-express-2` su
 for the CK and WYB layouts; a universal provider named BFE Express for a CK54 parcel. Other
 carriers print nineteen plain digits too, so nothing suggests BFE Express for those series.
 
-## Why there is no adapter
-
-The tracking page encrypts the numbers it sends to an open JSON service with a key in its script.
-No public number has shown a known parcel's reply yet. An adapter can follow.
-
 ## Links
 
 Tracking links carry the number as `track_number` on the tracking page.
 
-## Testing
+## Live test
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `BFE_EXPRESS_TRACKING_NUMBER` outside the repository and run
+`npm run test:carriers:live -- carriers/bfe-express/adapter.live.test.ts`.
+Optionally set `BFE_EXPRESS_UNKNOWN_NUMBER` to check an inconclusive answer.
