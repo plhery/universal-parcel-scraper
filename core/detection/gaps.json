@@ -5664,5 +5664,10 @@
     "carrier": "sky-courier-co",
     "kind": "open",
     "reason": "The guest form confirms a public SKY guide with a year and serial. Explicit selection binds the full guide while the scope of any detection rule is open."
+  },
+  {
+    "carrier": "united-africa-feeder-line",
+    "kind": "open",
+    "reason": "A published UFLN bill resolves to the exact booking. The scope of a future carrier prefix rule is open."
   }
 ]

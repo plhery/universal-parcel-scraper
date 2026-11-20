@@ -112241,6 +112241,12 @@
     ]
   },
   {
+    "input": "UFLNSAMUM000512",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "UH015319935DO",
     "carrier": "intl-post",
     "confidence": "high",

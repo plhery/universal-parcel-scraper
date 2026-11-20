@@ -846,6 +846,7 @@ import { adapter as twsExpress } from '../carriers/tws-express/adapter.js';
 import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.js';
 import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
+import { adapter as unitedAfricaFeederLine } from '../carriers/united-africa-feeder-line/adapter.js';
 import { adapter as unitedDeliveryService } from '../carriers/united-delivery-service/adapter.js';
 import { adapter as uniuni } from '../carriers/uniuni/adapter.js';
 import { adapter as uofExpress } from '../carriers/uof-express/adapter.js';
@@ -1771,6 +1772,7 @@ export const REGISTRY: RegistryDefinition = {
     "ubi-smart-parcel": ubiSmartParcel,
     "ukp-worldwide": ukpWorldwide,
     "ukrposhta": ukrposhta,
+    "united-africa-feeder-line": unitedAfricaFeederLine,
     "united-delivery-service": unitedDeliveryService,
     "uniuni": uniuni,
     "uof-express": uofExpress,
@@ -3572,6 +3574,7 @@ export const REGISTRY: RegistryDefinition = {
     "ukrposhta": "ukrposhta",
     "union-express": "universal",
     "unipost-express": "universal",
+    "united-africa-feeder-line": "united-africa-feeder-line",
     "united-az": "universal",
     "united-delivery-service": "united-delivery-service",
     "united-pallet-network": "universal",

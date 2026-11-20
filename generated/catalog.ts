@@ -60916,6 +60916,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "united-africa-feeder-line": {
+    "displayName": "United Africa Feeder Line",
+    "color": "#155e8a",
+    "aliases": [
+      "UAFL",
+      "United Africa Feeder Line DMCC",
+      "UAFL Shipping"
+    ],
+    "countries": [
+      "AE",
+      "MU",
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "united-africa-feeder-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.uaflshipping.com/Tracking",
+    "trackingUrlTemplate": "https://www.uaflshipping.com/Tracking?BookingNo={trackingNumber}",
+    "trackingSearchUrl": "https://www.uaflshipping.com/Tracking",
+    "trackingSiteName": "UAFL Container Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "united-az": {
     "displayName": "United.az",
     "color": "#f47b31",
@@ -67855,6 +67882,7 @@ export const CARRIER_IDS = [
   "ukp-worldwide",
   "union-express",
   "unipost-express",
+  "united-africa-feeder-line",
   "united-az",
   "united-delivery-service",
   "united-pallet-network",
@@ -69752,6 +69780,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ukp-worldwide": ["ukp-worldwide-1"],
   "union-express": [],
   "unipost-express": [],
+  "united-africa-feeder-line": [],
   "united-az": [],
   "united-delivery-service": ["united-delivery-service-1"],
   "united-pallet-network": [],

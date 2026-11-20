@@ -1,0 +1,41 @@
+{
+  "carrier": "united-africa-feeder-line",
+  "entries": [
+    {
+      "wording": "RECEIVED FROM SHIPPER",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "LOAD FULL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DISCHARGE FULL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "SENT TO CONSIGNEE",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "RECEIVED EMPTY",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "SENT TO SHIPPER",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    }
+  ]
+}
