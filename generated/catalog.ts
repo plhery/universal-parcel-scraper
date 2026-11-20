@@ -26298,6 +26298,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "flywing-cargo": {
+    "displayName": "Flywing Cargo",
+    "color": "#1554a0",
+    "aliases": [
+      "Flywing Cargo Pvt Ltd",
+      "Fly Wing Cargo",
+      "Flywing Cargo Private Limited"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "flywing-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://flywingcargo.com/tracking/",
+    "trackingUrlTemplate": "https://flywingcargo.com/tracking/?lr={trackingNumber}",
+    "trackingSearchUrl": "https://flywingcargo.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "fm-transportes": {
     "displayName": "FM Transportes",
     "color": "#e52327",
@@ -66955,6 +66979,7 @@ export const CARRIER_IDS = [
   "fliway",
   "flyking",
   "flyt-express",
+  "flywing-cargo",
   "fm-transportes",
   "fmd-distribution",
   "fmx",
@@ -68857,6 +68882,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fliway": [],
   "flyking": [],
   "flyt-express": [],
+  "flywing-cargo": [],
   "fm-transportes": ["fm-transportes-1"],
   "fmd-distribution": [],
   "fmx": ["fmx-1"],

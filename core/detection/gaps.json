@@ -5689,5 +5689,10 @@
     "carrier": "asg-logistics",
     "kind": "open",
     "reason": "The guest tracker takes a house waybill, master airway bill or delivery order. These identifiers can be shared by freight networks and remain explicit."
+  },
+  {
+    "carrier": "flywing-cargo",
+    "kind": "open",
+    "reason": "An eight-digit goods receipt does not identify Flywing by itself. The carrier verifies the full receipt on explicit selection."
   }
 ]
