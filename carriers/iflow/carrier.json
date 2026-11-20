@@ -38,5 +38,11 @@
       "fragment": "^/tracking/code/([^/?#]+)/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "iflow-1",
+      "pattern": "^TRI\\d{13}$",
+      "confidence": "low"
+    }
+  ]
 }

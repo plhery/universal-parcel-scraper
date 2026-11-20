@@ -134,7 +134,8 @@
         "confidence": "low",
         "candidates": [
           "colis-prive",
-          "bjs-home-delivery"
+          "bjs-home-delivery",
+          "fastway-za"
         ]
       },
       "note": "An archived lookup on BJS's own tracker; the capture was not opened, so the history was not seen."
@@ -157,7 +158,8 @@
         "confidence": "low",
         "candidates": [
           "colis-prive",
-          "bjs-home-delivery"
+          "bjs-home-delivery",
+          "fastway-za"
         ]
       },
       "note": "An archived lookup on BJS's own tracker; the capture was not opened, so the history was not seen."
@@ -180,7 +182,8 @@
         "confidence": "low",
         "candidates": [
           "colis-prive",
-          "bjs-home-delivery"
+          "bjs-home-delivery",
+          "fastway-za"
         ]
       },
       "note": "An archived lookup on BJS's own tracker; the capture was not opened, so the history was not seen."

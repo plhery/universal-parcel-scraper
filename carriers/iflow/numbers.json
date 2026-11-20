@@ -18,7 +18,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "iflow"
+        ]
       },
       "note": "The saved iFLOW tracking result shows this exact number with dated collection and transit events. A fresh lookup could not reach the public tracking endpoint."
     }

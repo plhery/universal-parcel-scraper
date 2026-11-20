@@ -11570,7 +11570,12 @@
         "path": "^/app/[a-z]{2}(?:-[a-z]{2})?/([^/]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^SWS\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "bjs-home-delivery": {
     "displayName": "BJS Home Delivery",
@@ -24761,7 +24766,12 @@
         "path": "^/([A-Za-z0-9]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^FDA\\d{9}CA$",
+        "confidence": "low"
+      }
+    ]
   },
   "fasttrack-ar": {
     "displayName": "Fast Track",
@@ -24815,7 +24825,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^(?:B1|D6)\\d{10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "fastwl": {
     "displayName": "Fast World Logistic",
@@ -26909,7 +26924,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^RLAI\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "gcx": {
     "displayName": "GCX",
@@ -28763,7 +28783,13 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^127\\d{8}$",
+        "confidence": "high",
+        "rawPattern": "^127-\\d{4} ?\\d{4}$"
+      }
+    ]
   },
   "golucky": {
     "displayName": "GoLucky Express",
@@ -29847,7 +29873,12 @@
     "canaryUrl": "https://www.heronaexpress.co.id/",
     "trackingSearchUrl": "https://tracking.heronaexpress.co.id/lacak.php",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^TSMA\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "hey-couriers": {
     "displayName": "Hey Couriers",
@@ -31293,7 +31324,12 @@
         "fragment": "^/tracking/code/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^TRI\\d{13}$",
+        "confidence": "low"
+      }
+    ]
   },
   "ilyang-logis": {
     "displayName": "Ilyang Logis",
@@ -36774,7 +36810,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^LEX(?:PU|DO)\\d{10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "lex-vn": {
     "displayName": "LEX Vietnam",
@@ -48863,7 +48904,12 @@
     "canaryUrl": "https://rayspeed.com/en/track",
     "trackingSearchUrl": "https://rayspeed.com/en/track",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^RAY\\d{13}$",
+        "confidence": "low"
+      }
+    ]
   },
   "recibelo": {
     "displayName": "Recíbelo",

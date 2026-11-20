@@ -1,27 +1,5 @@
 {
   "carrier": "intime-bg",
-  "records": [
-    {
-      "number": "1Z A 84 808 04 9838 7954",
-      "role": "quarantined",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://dela.bg/Acts/ef9488e5-9ec1-46f5-868a-0b12b5a88a7d",
-        "date": "2026-07-06",
-        "dateKind": "judgment",
-        "access": "full_page"
-      },
-      "quarantine": true,
-      "context": {
-        "service": "UPS international shipments",
-        "reportedRole": "waybill number",
-        "assessment": "scope_review"
-      },
-      "expect": {
-        "carrier": "ups",
-        "confidence": "high"
-      },
-      "note": "The Bulgarian court quotes this UPS waybill on a shipment handled by In Time. In Time's public form returned no events for the number with the printed spaces removed. Its local waybill format is still unverified."
-    }
-  ]
+  "gap": "No public page shows an In Time shipment number; the one public number found was the waybill of the UPS parcel it delivered.",
+  "records": []
 }

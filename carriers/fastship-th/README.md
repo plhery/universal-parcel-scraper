@@ -8,8 +8,8 @@ FedEx, Aramex, SF Express, USPS, PostNL or Thailand Post. Its site is fastship.c
 
 ## Numbers
 
-Its tracker's placeholder shows FS, seven digits and TH. No public page shows a FastShip number,
-so there is no rule.
+Its tracker's placeholder shows FS, seven digits and TH. An archived tracker result shows FDA, nine
+digits and CA, which rule `fastship-th-1` suggests FastShip for.
 
 ## Why there is no adapter
 

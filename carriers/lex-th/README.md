@@ -12,6 +12,12 @@ client retries once after a network failure within the same lookup budget.
 The guest endpoint gives the current status alone. The detailed history asks for the recipient's
 phone digits. The site can return a slider check, which the client reports as a challenge.
 
+## Numbers
+
+Lazada parcels that LEX delivers in Thailand carry LEXPU or LEXDO and ten digits, which rule
+`lex-th-1` suggests LEX Thailand for. LEX numbers differ by country, and these have been seen in
+Thailand alone, so the rule stays low.
+
 ## Testing
 
 `LEX_TH_TRACKING_NUMBER=… LEX_TH_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/lex-th`

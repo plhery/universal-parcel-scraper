@@ -41,5 +41,11 @@
     "unavailable": []
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "rayspeed-1",
+      "pattern": "^RAY\\d{13}$",
+      "confidence": "low"
+    }
+  ]
 }

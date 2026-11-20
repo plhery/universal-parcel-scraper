@@ -7,8 +7,8 @@ delivers their online orders.
 
 ## Numbers
 
-Its tracker takes the number in the order's confirmation email. Its example starts with OR, but no
-public page shows an iFLOW number, so there is no rule.
+Its tracker takes the number in the order's confirmation email. Its example starts with OR. A
+published tracker result shows TRI and thirteen digits, which rule `iflow-1` suggests iFLOW for.
 
 ## Why there is no adapter
 

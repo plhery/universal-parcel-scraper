@@ -14,6 +14,12 @@ scan is a handoff in transit. A signature can be from a regional on-forwarder, s
 stage also requires the explicit delivery wording. The tracker uses the same no-scans reply for
 unknown labels and labels still awaiting their first scan.
 
+## Numbers
+
+Fastway's own tracker returned histories for labels starting B1 and D6, then ten digits, which
+rule `fastway-za-1` suggests Fastway South Africa for. BJ's Home Delivery's numbers are a B and
+eleven digits too, so the rule stays low.
+
 ## Testing
 
 `FASTWAY_ZA_TRACKING_NUMBER=… FASTWAY_ZA_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/fastway-za`

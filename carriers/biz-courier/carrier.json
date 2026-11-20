@@ -49,5 +49,11 @@
       "path": "^/app/[a-z]{2}(?:-[a-z]{2})?/([^/]+)/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "biz-courier-1",
+      "pattern": "^SWS\\d{8}$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -1200,6 +1200,15 @@
     "reason": "Colis Privé accepts any 12-character alphanumeric, so it overlaps YTO letter-prefixed numbers; the specific high-confidence rule decides."
   },
   {
+    "shape": "D6 and ten digits",
+    "carriers": [
+      "colis-prive",
+      "yto",
+      "fastway-za"
+    ],
+    "reason": "Colis Privé accepts any 12-character alphanumeric and YTO's letter-prefixed rule takes a letter and eleven digits; fastway-za-1 suggests Fastway South Africa for its D6 labels without naming it, so all stay suggestions."
+  },
+  {
     "shape": "A{3}9{16}",
     "carriers": [
       "dhl",
@@ -3333,6 +3342,15 @@
       "colis-prive"
     ],
     "reason": "Colis Privé accepts generic twelve- and seventeen-character composites, so it overlaps references Cainiao's tracker follows; both stay suggestions."
+  },
+  {
+    "shape": "RLAI and eight digits",
+    "carriers": [
+      "aliexpress",
+      "colis-prive",
+      "gbs-broker"
+    ],
+    "reason": "Colis Privé accepts generic twelve-character composites and AliExpress's rule takes RL references Cainiao's tracker follows; gbs-broker-1 suggests GBS for its RLAI marketplace references, so all stay suggestions."
   },
   {
     "shape": "PA followed by ten digits",
@@ -7530,6 +7548,23 @@
     "reason": "Colis Privé accepts generic twelve-character numbers; bjs-home-delivery-1 suggests BJS for a B and eleven digits without naming it, since numbers of that shape also come from outside BJS's British network."
   },
   {
+    "shape": "B1 and ten digits",
+    "carriers": [
+      "bjs-home-delivery",
+      "colis-prive",
+      "fastway-za"
+    ],
+    "reason": "Colis Privé accepts generic twelve-character numbers; bjs-home-delivery-1 suggests BJS for a B and eleven digits and fastway-za-1 suggests Fastway South Africa for B1 and ten digits, so the shape names neither."
+  },
+  {
+    "shape": "TSMA and eight digits",
+    "carriers": [
+      "colis-prive",
+      "herona-express"
+    ],
+    "reason": "Colis Privé accepts generic twelve-character alphanumerics; herona-express-1 suggests Herona Express for TSMA and eight digits, so both stay suggestions."
+  },
+  {
     "shape": "EM, sixteen digits and CA",
     "carriers": [
       "four-px",
@@ -8156,6 +8191,22 @@
       "paquetexpress"
     ],
     "reason": "An IATA air waybill with Amerijet's 810 prefix printed with its dash also fits several carriers' broad eleven-digit candidates; the dashed Amerijet rule decides. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
+  },
+  {
+    "shape": "127, a dash and eight digits",
+    "carriers": [
+      "gollog",
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "mainfreight",
+      "postlogistics",
+      "paquetexpress"
+    ],
+    "reason": "An IATA air waybill with GOL's 127 prefix printed with its dash also fits several carriers' broad eleven-digit candidates; the dashed GOLLOG rule decides. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
   {
     "shape": "Eleven digits starting 8 that pass the mod 7 check, passing DHL eCommerce Poland's check",

@@ -8,7 +8,8 @@ follows each shipment to delivery on its own tracker.
 
 ## Numbers
 
-No public page shows a Búho Logistics number, so there is no rule.
+Its tracker follows the partner carrier's number, such as a Paquetexpress number. No number of
+Búho's own is known, so there is no rule.
 
 ## Why there is no adapter
 

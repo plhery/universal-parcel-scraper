@@ -38,5 +38,11 @@
       "path": "^/([A-Za-z0-9]+)/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "fastship-th-1",
+      "pattern": "^FDA\\d{9}CA$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -19,7 +19,8 @@
         "confidence": "low",
         "candidates": [
           "aliexpress",
-          "colis-prive"
+          "colis-prive",
+          "gbs-broker"
         ]
       },
       "note": "A customer quotes this reference when describing GBS customs tracking. GBS’s public result lists the identical reference and reports the shipment’s departure from customs."

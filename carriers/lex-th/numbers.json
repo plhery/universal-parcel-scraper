@@ -18,7 +18,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "lex-th"
+        ]
       },
       "note": "The buyer identifies LEX Thailand and posts this as the parcel number for a Lazada delivery held at its destination station."
     },
@@ -61,7 +64,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "lex-th"
+        ]
       },
       "note": "The buyer’s Lazada tracking screenshot names LEX TH and displays the whole number. Its guest search confirms that number and names LEX TH for both legs."
     }

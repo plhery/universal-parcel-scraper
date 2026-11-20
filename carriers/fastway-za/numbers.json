@@ -21,7 +21,8 @@
         "confidence": "low",
         "candidates": [
           "colis-prive",
-          "bjs-home-delivery"
+          "bjs-home-delivery",
+          "fastway-za"
         ]
       },
       "note": "The archived carrier link identifies the label in its query. The same public tracker returned dated depot, attempted delivery and delivered scans for the full label number."
@@ -46,7 +47,8 @@
         "confidence": "low",
         "candidates": [
           "colis-prive",
-          "yto"
+          "yto",
+          "fastway-za"
         ]
       },
       "note": "The archived carrier link identifies the label in its query. The same public tracker returned dated depot, Johannesburg sorting hub and delivered scans for the full label number."

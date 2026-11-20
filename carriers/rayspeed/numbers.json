@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rayspeed"
+        ]
       },
       "note": "A RaySpeed representative’s public reply repeats and acknowledges the exact airwaybill that the customer posted. The carrier’s public tracker returned matching events dated September 2–5, 2025."
     }

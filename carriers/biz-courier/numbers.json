@@ -18,7 +18,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "biz-courier"
+        ]
       },
       "note": "BIZ Courier's own public result matches the exact code and shows the parcel's delivery."
     },
@@ -39,7 +42,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "biz-courier"
+        ]
       },
       "note": "BIZ Courier's own public result matches the exact code and shows confirmation of deposit."
     },
@@ -60,7 +66,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "biz-courier"
+        ]
       },
       "note": "BIZ Courier's own public result matches the exact code and shows confirmation of deposit."
     }

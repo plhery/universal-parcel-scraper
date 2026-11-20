@@ -796,8 +796,8 @@
   {
     "carrier": "cupost",
     "pattern": "^\\d{12}$",
-    "kind": "open",
-    "reason": "Detection does not offer CUpost for the twelve-digit waybill returned by its domestic tracking page."
+    "kind": "collision",
+    "reason": "Twelve-digit CUpost numbers share their shape with other carriers' numeric numbers, so the shape cannot name CUpost."
   },
   {
     "carrier": "custom-companies",
@@ -867,8 +867,8 @@
   {
     "carrier": "delivery-auto",
     "pattern": "^\\d{10}$",
-    "kind": "open",
-    "reason": "Detection does not offer Delivery for ten-digit receipt numbers reported by its Ukrainian customers."
+    "kind": "collision",
+    "reason": "Ten-digit Delivery numbers share their shape with other carriers' numeric numbers, so the shape cannot name Delivery."
   },
   {
     "carrier": "dellin",
@@ -897,8 +897,8 @@
   {
     "carrier": "der-kurier",
     "pattern": "^\\d{11}$",
-    "kind": "open",
-    "reason": "Detection does not offer DER KURIER for the eleven-digit parcel number in a customer report with dated tracking history."
+    "kind": "collision",
+    "reason": "Eleven-digit DER KURIER numbers share their shape with other carriers' numeric numbers, so the shape cannot name DER KURIER."
   },
   {
     "carrier": "dhl",
@@ -1005,8 +1005,8 @@
   {
     "carrier": "dialogo-logistica",
     "pattern": "^\\d{12}$",
-    "kind": "open",
-    "reason": "Detection does not offer Diálogo Logística for the twelve-digit tracking code reported with its dated delivery attempts."
+    "kind": "collision",
+    "reason": "Twelve-digit Diálogo Logística numbers share their shape with other carriers' numeric numbers, so the shape cannot name Diálogo Logística."
   },
   {
     "carrier": "direct-freight-express",
@@ -1035,8 +1035,8 @@
   {
     "carrier": "domesa",
     "pattern": "^\\d{9}$",
-    "kind": "open",
-    "reason": "Detection does not offer Domesa Venezuela for the nine-digit waybills that customers reported after a forwarding handoff."
+    "kind": "collision",
+    "reason": "Nine-digit Domesa numbers share their shape with other carriers' numeric numbers, so the shape cannot name Domesa."
   },
   {
     "carrier": "domex",
@@ -1316,8 +1316,8 @@
   {
     "carrier": "famiport",
     "pattern": "^\\d{11}$",
-    "kind": "open",
-    "reason": "Detection does not offer FamilyMart Taiwan for the eleven-digit store-to-store number shown in the SmilePay integration guide."
+    "kind": "collision",
+    "reason": "Eleven-digit FamilyMart Taiwan numbers share their shape with other carriers' numeric numbers, so the shape cannot name FamilyMart Taiwan."
   },
   {
     "carrier": "fargo-uz",
@@ -1336,18 +1336,6 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "Fastfrate probill numbers are ten bare digits that many carriers share."
-  },
-  {
-    "carrier": "fastship-th",
-    "pattern": "^FDA\\d{9}CA$",
-    "kind": "open",
-    "reason": "Detection does not offer FastShip for the FDA-prefixed number its archived tracker returned with dated events."
-  },
-  {
-    "carrier": "fastway-za",
-    "pattern": "^(?:B1|D6)\\d{10}$",
-    "kind": "open",
-    "reason": "Detection does not offer Fastway South Africa for the B1 and D6 labels its own tracker returned with dated shipment history."
   },
   {
     "carrier": "fedex-freight",
@@ -1660,12 +1648,6 @@
     "pattern": "^YT\\d{16}$",
     "kind": "by_design",
     "reason": "YunExpress numbers that GOFO delivers in the US under the same number. GOFO's tracker answers for them, but they are YunExpress's own, so detection reads them as YunExpress; the GOFO adapter takes them when the user picks GOFO or opens a GOFO link."
-  },
-  {
-    "carrier": "gollog",
-    "pattern": "^127\\d{8}$",
-    "kind": "open",
-    "reason": "Detection does not offer GOLLOG for the airline's 127-prefixed air waybill published in a public filing."
   },
   {
     "carrier": "goodluck-courier",
@@ -2078,8 +2060,8 @@
   {
     "carrier": "kerry-express-tw",
     "pattern": "^\\d{11}$",
-    "kind": "open",
-    "reason": "Detection does not offer Kerry Express Taiwan for the eleven-digit waybill on the public Shopee shipping label."
+    "kind": "collision",
+    "reason": "Eleven-digit KE 嘉里快遞 numbers share their shape with other carriers' numeric numbers, so the shape cannot name KE 嘉里快遞."
   },
   {
     "carrier": "kerry-tj",
@@ -2230,18 +2212,6 @@
     "pattern": "^[A-Z]{2}\\d{9,10}$",
     "kind": "by_design",
     "reason": "Two letters and nine or ten digits are printed by several carriers and no known check sets Leopards apart."
-  },
-  {
-    "carrier": "lex-th",
-    "pattern": "^LEXDO\\d{10}$",
-    "kind": "open",
-    "reason": "Detection does not offer LEX Thailand for the LEXDO-prefixed parcel number reported by a Lazada Thailand buyer."
-  },
-  {
-    "carrier": "lex-th",
-    "pattern": "^LEXPU0718466614$",
-    "kind": "open",
-    "reason": "The Thai guest tracker confirms this published parcel while detection offers no carrier."
   },
   {
     "carrier": "libanpost",
@@ -3306,8 +3276,8 @@
   {
     "carrier": "sentral-cargo",
     "pattern": "^\\d{11}$",
-    "kind": "open",
-    "reason": "Detection does not offer Sentral Cargo for the eleven-digit domestic receipt number its tracker returned with shipment history."
+    "kind": "collision",
+    "reason": "Eleven-digit Sentral Cargo numbers share their shape with other carriers' numeric numbers, so the shape cannot name Sentral Cargo."
   },
   {
     "carrier": "servientrega",
@@ -3324,8 +3294,8 @@
   {
     "carrier": "seur",
     "pattern": "^\\d{15}$",
-    "kind": "open",
-    "reason": "A public SEUR report uses fifteen digits; the service and accepted reference format remain unconfirmed."
+    "kind": "collision",
+    "reason": "Fifteen-digit SEUR numbers share their shape with other carriers' numeric numbers, so the shape cannot name SEUR."
   },
   {
     "carrier": "seven-eleven-tw",
@@ -3910,8 +3880,8 @@
   {
     "carrier": "tuffnells",
     "pattern": "^\\d{16}$",
-    "kind": "open",
-    "reason": "Detection does not offer Tuffnells for the sixteen-digit URN returned by its archived tracking page."
+    "kind": "collision",
+    "reason": "Sixteen-digit Tuffnells numbers share their shape with other carriers' numeric numbers, so the shape cannot name Tuffnells."
   },
   {
     "carrier": "tws-express",
@@ -4556,8 +4526,8 @@
   {
     "carrier": "jamef",
     "pattern": "^\\d{9}$",
-    "kind": "open",
-    "reason": "The one public Jamef number is a nine-digit CTRC from its former tracker, which today's tracker cannot take; one number does not establish a layout."
+    "kind": "by_design",
+    "reason": "The one public Jamef number is a nine-digit CTRC from its former tracker, which today's tracker cannot take."
   },
   {
     "carrier": "om-logistics",
@@ -4836,8 +4806,8 @@
   {
     "carrier": "xls-futar",
     "pattern": "^\\d{7}$",
-    "kind": "open",
-    "reason": "The public guest summary confirms a parcel, but this shared numeric shape supplies no unique ownership evidence. Number recognition remains open."
+    "kind": "collision",
+    "reason": "Seven-digit XLS Futár numbers share their shape with other carriers' numeric numbers, so the shape cannot name XLS Futár."
   },
   {
     "carrier": "hellmann",
@@ -4872,14 +4842,14 @@
   {
     "carrier": "ziegler",
     "pattern": "^\\d{19}$",
-    "kind": "open",
-    "reason": "Easytrack documents a 19-character tracking number and its archived road tracking link contains an all-digit example. Detection offers no carrier for that input."
+    "kind": "collision",
+    "reason": "Nineteen-digit Ziegler numbers share their shape with other carriers' numeric numbers, so the shape cannot name Ziegler."
   },
   {
     "carrier": "zajel",
     "pattern": "^\\d{10}$",
-    "kind": "open",
-    "reason": "The Zajel Z-Lite guide shows a ten-digit Zajel air waybill. The current detection rules offer other carriers for that input."
+    "kind": "collision",
+    "reason": "Ten-digit Zajel numbers share their shape with other carriers' numeric numbers, so the shape cannot name Zajel."
   },
   {
     "carrier": "yol-kargo",
@@ -4890,8 +4860,8 @@
   {
     "carrier": "xpressen",
     "pattern": "^003707\\d{14}$",
-    "kind": "open",
-    "reason": "Xpressen’s archived tracker shows a delivered package for a 20-digit SSCC input. Detection offers other carriers for that package number."
+    "kind": "collision",
+    "reason": "This is an SSCC, which every GS1 shipper prints with its own company prefix, so the shape cannot name Xpressen."
   },
   {
     "carrier": "xindus",
@@ -4920,14 +4890,14 @@
   {
     "carrier": "united-pallet-network",
     "pattern": "^\\d{9}$",
-    "kind": "open",
-    "reason": "A public UPN shipment report gives a nine-digit consignment number with leading zeros. Detection currently offers TNT for the number."
+    "kind": "collision",
+    "reason": "Nine-digit United Pallet Network numbers share their shape with other carriers' numeric numbers, so the shape cannot name United Pallet Network."
   },
   {
     "carrier": "treggo",
     "pattern": "^\\d{15}$",
-    "kind": "open",
-    "reason": "A public case study documents a merchant order reference for a Treggo shipment. Detection offers other carriers for the normalized number."
+    "kind": "collision",
+    "reason": "Fifteen-digit Treggo numbers share their shape with other carriers' numeric numbers, so the shape cannot name Treggo."
   },
   {
     "carrier": "transpress",
@@ -4944,8 +4914,8 @@
   {
     "carrier": "trackings-ge",
     "pattern": "^\\d{15}$",
-    "kind": "open",
-    "reason": "A public Trackings.GE tracking link carries a fifteen-digit number. Detection lists other carriers that share the length."
+    "kind": "collision",
+    "reason": "Fifteen-digit Trackings.GE numbers share their shape with other carriers' numeric numbers, so the shape cannot name Trackings.GE."
   },
   {
     "carrier": "the-delivery-group",
@@ -4962,8 +4932,8 @@
   {
     "carrier": "tig-freight",
     "pattern": "^7377\\d{9}$",
-    "kind": "open",
-    "reason": "The TIG webinar shows its tracking portal recognizing a thirteen-digit Toll consignment with this prefix. Detection lists other carriers and omits TIG for that reference."
+    "kind": "collision",
+    "reason": "Thirteen-digit TIG Freight numbers, whose leading 7377 no published format ties to TIG Freight, share their shape with other carriers' numeric numbers, so the shape cannot name TIG Freight."
   },
   {
     "carrier": "suning-logistics",
@@ -4986,20 +4956,20 @@
   {
     "carrier": "skif-cargo",
     "pattern": "^\\d{9}$",
-    "kind": "open",
-    "reason": "A public court decision identifies two Skif-Cargo application numbers accepted for freight carriage. The carrier’s public tracking page asks for such an application number, and detection omits Skif-Cargo."
+    "kind": "collision",
+    "reason": "Nine-digit Skif-Cargo numbers share their shape with other carriers' numeric numbers, so the shape cannot name Skif-Cargo."
   },
   {
     "carrier": "shiplowcost",
     "pattern": "^\\d{6}$",
-    "kind": "open",
-    "reason": "The Maltese court decision identifies a six-digit ShipLowCost reference printed on a parcel. Detection does not offer ShipLowCost."
+    "kind": "collision",
+    "reason": "Six-digit ShipLowCost numbers share their shape with other carriers' numeric numbers, so the shape cannot name ShipLowCost."
   },
   {
     "carrier": "shipgce",
     "pattern": "^GC\\d{9}US$",
-    "kind": "open",
-    "reason": "The carrier’s public tracker recognizes a GC-prefixed US-suffix waybill. The input does not validate as S10, and detection omits Feiyang GCEx."
+    "kind": "collision",
+    "reason": "This waybill has the S10 shape of a U.S.-issued postal item, which USPS's rule suggests, so the shape cannot name Feiyang GCEx."
   },
   {
     "carrier": "scan-global-logistics",
@@ -5026,16 +4996,10 @@
     "reason": "A Nigerian parcel recipient reports two six-digit Red Star waybills beginning with zero. Detection does not offer Red Star Express."
   },
   {
-    "carrier": "rayspeed",
-    "pattern": "^RAY\\d{13}$",
-    "kind": "open",
-    "reason": "A customer and the carrier identify a RaySpeed waybill using RAY and thirteen digits. The tracker recognizes it, while detection omits RaySpeed."
-  },
-  {
     "carrier": "pxc-pacific",
     "pattern": "^888\\d{7}$",
-    "kind": "open",
-    "reason": "Two indexed PXC Pacific tracker links identify ten-digit AWBs with this prefix, and PXC’s tracker knows both. Detection offers other carriers."
+    "kind": "collision",
+    "reason": "Ten-digit PXC Pacific Global numbers, whose leading 888 no published format ties to PXC Pacific Global, share their shape with other carriers' numeric numbers, so the shape cannot name PXC Pacific Global."
   },
   {
     "carrier": "postnet-za",
@@ -5052,8 +5016,8 @@
   {
     "carrier": "peshkariki",
     "pattern": "^\\d{7}$",
-    "kind": "open",
-    "reason": "A Peshkariki representative confirms a seven-digit courier order in a public forum. The published tracking input is not offered for Peshkariki by detection."
+    "kind": "collision",
+    "reason": "Seven-digit Peshkariki numbers share their shape with other carriers' numeric numbers, so the shape cannot name Peshkariki."
   },
   {
     "carrier": "pds-direct",
@@ -5082,8 +5046,8 @@
   {
     "carrier": "navata",
     "pattern": "^[PWY]\\d{6}$",
-    "kind": "open",
-    "reason": "Three public Navata reports identify lorry receipts with a leading letter and six digits. The tracker recognizes two, and detection omits Navata."
+    "kind": "collision",
+    "reason": "Navata Road Transport's seven-character numbers are a letter and six digits, a shape other carriers' references share, so it cannot name Navata Road Transport."
   },
   {
     "carrier": "mzz-briefdienst",
@@ -5094,8 +5058,8 @@
   {
     "carrier": "movvi",
     "pattern": "^\\d{6}$",
-    "kind": "open",
-    "reason": "A public invoice names Movvi as the carrier and instructs the customer to track with the six-digit invoice reference. Detection does not offer Movvi."
+    "kind": "collision",
+    "reason": "Six-digit Movvi numbers share their shape with other carriers' numeric numbers, so the shape cannot name Movvi."
   },
   {
     "carrier": "mongol-post",
@@ -5130,8 +5094,8 @@
   {
     "carrier": "logsis",
     "pattern": "^\\d{5}$",
-    "kind": "open",
-    "reason": "A customer publishes a five-digit Logsis waybill. Detection does not offer Logsis for that sample."
+    "kind": "collision",
+    "reason": "Five-digit Logsis numbers share their shape with other carriers' numeric numbers, so the shape cannot name Logsis."
   },
   {
     "carrier": "liftit",
@@ -5142,8 +5106,8 @@
   {
     "carrier": "lafasta",
     "pattern": "^[0-9]{8}$",
-    "kind": "open",
-    "reason": "A confirmed Lafasta shipment uses an eight-digit number shared with other carriers. Detection does not offer Lafasta."
+    "kind": "collision",
+    "reason": "Eight-digit Lafasta numbers share their shape with other carriers' numeric numbers, so the shape cannot name Lafasta."
   },
   {
     "carrier": "kurly-nextmile",
@@ -5154,14 +5118,14 @@
   {
     "carrier": "king-kong-express",
     "pattern": "^[0-9]{10}$",
-    "kind": "open",
-    "reason": "Chinese judgments name 京廣速遞 on these ten-digit waybills, and its carrier tracker recognized two. Detection does not offer King Kong Express."
+    "kind": "collision",
+    "reason": "Ten-digit King Kong Express numbers share their shape with other carriers' numeric numbers, so the shape cannot name King Kong Express."
   },
   {
     "carrier": "jas-worldwide",
     "pattern": "^(?:S[0-9]{9}|(?:SHA|ANR)[0-9]{8,9})$",
-    "kind": "open",
-    "reason": "MyJAS recognizes these Blue World Line house bills and displays native JAS shipment IDs. Detection does not offer JAS Worldwide."
+    "kind": "collision",
+    "reason": "JAS Worldwide's house bills are a letter or a station code and digits, a shape other forwarders' references share, so it cannot name JAS Worldwide."
   },
   {
     "carrier": "itc-delivery",
@@ -5172,20 +5136,14 @@
   {
     "carrier": "intras-jp",
     "pattern": "^50[09][0-9]{9}$",
-    "kind": "open",
-    "reason": "The public INTRAS tracker recognizes these twelve-digit INTRAS waybills. Detection does not offer INTRAS."
+    "kind": "collision",
+    "reason": "Twelve-digit INTRAS numbers, whose leading 50 no published format ties to INTRAS, share their shape with other carriers' numeric numbers, so the shape cannot name INTRAS."
   },
   {
     "carrier": "inter-global-kargo",
     "pattern": "^G[0-9]{11}$",
     "kind": "open",
     "reason": "A recipient names İnter Global Kargo and publishes this prefixed reference. Detection does not offer the carrier."
-  },
-  {
-    "carrier": "iflow",
-    "pattern": "^TRI[0-9]{13}$",
-    "kind": "open",
-    "reason": "A published iFLOW tracking result displays this TRI-prefixed shipment number. Detection does not offer iFLOW."
   },
   {
     "carrier": "hub-group-final-mile",
@@ -5196,20 +5154,20 @@
   {
     "carrier": "hop-envios",
     "pattern": "^3999999[0-9]{8}$",
-    "kind": "open",
-    "reason": "The archived HOP tracker confirms this pickup-point shipment number. Detection does not offer HOP Envíos."
+    "kind": "collision",
+    "reason": "Fifteen-digit HOP Envíos numbers, whose leading 3999999 no published format ties to HOP Envíos, share their shape with other carriers' numeric numbers, so the shape cannot name HOP Envíos."
   },
   {
     "carrier": "herona-express",
-    "pattern": "^(?:TSMA[0-9]{8}|0[0-9]{4})$",
-    "kind": "open",
-    "reason": "The Herona form example has a branch prefix, and public merchant shipment rows have short leading-zero references. Detection does not offer Herona Express."
+    "pattern": "^0[0-9]{4}$",
+    "kind": "collision",
+    "reason": "Herona Express's merchant rows show five-digit shipment numbers, a shape other carriers' short references share, so the shape cannot name Herona Express."
   },
   {
     "carrier": "hellmann",
     "pattern": "^[0-9]{8}$",
-    "kind": "open",
-    "reason": "An archived Hellmann tracking URL supplies an eight-digit shipment query. Detection does not offer Hellmann."
+    "kind": "collision",
+    "reason": "Eight-digit Hellmann Worldwide Logistics numbers share their shape with other carriers' numeric numbers, so the shape cannot name Hellmann Worldwide Logistics."
   },
   {
     "carrier": "golilla",
@@ -5224,12 +5182,6 @@
     "reason": "GCX customer reports publish the SN family both with and without the carrier prefix. Detection does not offer GCX."
   },
   {
-    "carrier": "gbs-broker",
-    "pattern": "^RLAI[0-9]{8}$",
-    "kind": "open",
-    "reason": "GBS’s public tracker returns customs events for this marketplace reference. Detection does not offer GBS."
-  },
-  {
     "carrier": "furdeco",
     "pattern": "^F[0-9]{11}$",
     "kind": "open",
@@ -5238,20 +5190,20 @@
   {
     "carrier": "focus-logistics-il",
     "pattern": "^[0-9]{7}$",
-    "kind": "open",
-    "reason": "The customer distinguishes this seven-digit Focus shipment reference from the merchant’s order reference. Detection does not offer Focus Logistics."
+    "kind": "collision",
+    "reason": "Seven-digit Focus Logistics numbers share their shape with other carriers' numeric numbers, so the shape cannot name Focus Logistics."
   },
   {
     "carrier": "flechacarga",
     "pattern": "^R[0-9]{8}$",
-    "kind": "open",
-    "reason": "The court reproduces a Buspack tracking guide with the letter, branch and serial in the form FlechaCarga describes. Detection does not offer FlechaCarga."
+    "kind": "collision",
+    "reason": "FlechaCarga's receipts are R and eight digits, a shape other carriers' references share, so it cannot name FlechaCarga."
   },
   {
     "carrier": "fast-express-tr",
     "pattern": "^3514785[0-9]{5}$",
-    "kind": "open",
-    "reason": "Fast Express carrier archives confirm these numeric consignments. Detection does not offer Fast Express."
+    "kind": "collision",
+    "reason": "Twelve-digit Fast Express numbers, whose leading 3514785 no published format ties to Fast Express, share their shape with other carriers' numeric numbers, so the shape cannot name Fast Express."
   },
   {
     "carrier": "fan-courier-md",
@@ -5268,14 +5220,8 @@
   {
     "carrier": "domina",
     "pattern": "^[0-9]{11}$",
-    "kind": "open",
-    "reason": "Colombian court documents attribute these eleven-digit delivery guides to Domina. Detection does not offer Domina."
-  },
-  {
-    "carrier": "biz-courier",
-    "pattern": "^SWS[0-9]{8}$",
-    "kind": "open",
-    "reason": "BIZ Courier's public tracking page provides shipment histories for these SWS references. Detection does not currently offer BIZ Courier."
+    "kind": "collision",
+    "reason": "Eleven-digit Domina numbers share their shape with other carriers' numeric numbers, so the shape cannot name Domina."
   },
   {
     "carrier": "bir-gunde-kargo",
@@ -5292,14 +5238,14 @@
   {
     "carrier": "altex-curier",
     "pattern": "^2000[0-9]{8}$",
-    "kind": "open",
-    "reason": "An indexed Altex Curier tracking result identifies this numeric AWB. Detection does not offer Altex Curier."
+    "kind": "collision",
+    "reason": "Twelve-digit Altex Curier numbers, whose leading 2000 no published format ties to Altex Curier, share their shape with other carriers' numeric numbers, so the shape cannot name Altex Curier."
   },
   {
     "carrier": "airways-courier-in",
     "pattern": "^22[0-9]{7}$",
-    "kind": "open",
-    "reason": "Airways Courier tracking links publish these nine-digit waybills, including one with a dated delivery history. Detection does not offer Airways Courier."
+    "kind": "collision",
+    "reason": "Nine-digit Airways Courier numbers, whose leading 22 no published format ties to Airways Courier, share their shape with other carriers' numeric numbers, so the shape cannot name Airways Courier."
   },
   {
     "carrier": "agt-kurye",
@@ -5328,8 +5274,8 @@
   {
     "carrier": "bluestreak-couriers",
     "pattern": "^\\d{10}$",
-    "kind": "open",
-    "reason": "The published Blue Streak shipping form prints the tracking ID as four digits, a dot and six digits. Normalized detection does not offer Blue Streak."
+    "kind": "collision",
+    "reason": "Ten-digit Blue Streak Couriers numbers share their shape with other carriers' numeric numbers, so the shape cannot name Blue Streak Couriers."
   },
   {
     "carrier": "bm-cargo",
@@ -5340,26 +5286,26 @@
   {
     "carrier": "bolt-kargo",
     "pattern": "^\\d{7}$",
-    "kind": "open",
-    "reason": "Recipient reports identify seven-digit shipment references in Bolt Kargo tracking or notifications, and detection does not offer Bolt Kargo."
+    "kind": "collision",
+    "reason": "Seven-digit BOLT Kargo numbers share their shape with other carriers' numeric numbers, so the shape cannot name BOLT Kargo."
   },
   {
     "carrier": "bolt-kargo",
     "pattern": "^\\d{10}$",
-    "kind": "open",
-    "reason": "A recipient reports a ten-digit shipment reference in Bolt Kargo tracking, and detection does not offer Bolt Kargo."
+    "kind": "collision",
+    "reason": "Ten-digit BOLT Kargo numbers share their shape with other carriers' numeric numbers, so the shape cannot name BOLT Kargo."
   },
   {
     "carrier": "brauns-express",
     "pattern": "^\\d{8}$",
-    "kind": "open",
-    "reason": "An archived Braun's Express shipment link uses an eight-digit tracking reference. Detection suggests other carriers for that shape."
+    "kind": "collision",
+    "reason": "Eight-digit Braun's Express numbers share their shape with other carriers' numeric numbers, so the shape cannot name Braun's Express."
   },
   {
     "carrier": "buho-logistics",
     "pattern": "^\\d{12}$",
-    "kind": "open",
-    "reason": "Búho's tracker follows a published twelve-digit Paquetexpress reference for an order Búho fulfilled. Detection offers Paquetexpress and other carriers."
+    "kind": "by_design",
+    "reason": "Búho fulfils orders through partner carriers and its tracker follows the partner's number. This twelve-digit number is Paquetexpress's, which detection offers."
   },
   {
     "carrier": "campos-cadilhe",
@@ -5370,8 +5316,8 @@
   {
     "carrier": "cargoline",
     "pattern": "^\\d{8}$",
-    "kind": "open",
-    "reason": "CargoLine's CEPRA manual displays an eight-digit shipment number. Detection does not offer CargoLine for that reference."
+    "kind": "by_design",
+    "reason": "Each CargoLine partner numbers its own shipments, and the guest search takes such a number only with the partner's depot code, so eight digits alone name no shipment."
   },
   {
     "carrier": "cargox",
@@ -5382,14 +5328,14 @@
   {
     "carrier": "cargox",
     "pattern": "^\\d{10}$",
-    "kind": "open",
-    "reason": "Detection does not suggest Cargo X for the reported parcel reported out for delivery reference."
+    "kind": "collision",
+    "reason": "Ten-digit Cargo X numbers share their shape with other carriers' numeric numbers, so the shape cannot name Cargo X."
   },
   {
     "carrier": "cargox",
     "pattern": "^\\d{13}$",
-    "kind": "open",
-    "reason": "Detection does not suggest Cargo X for the reported Gratis shipment reference."
+    "kind": "collision",
+    "reason": "Thirteen-digit Cargo X numbers share their shape with other carriers' numeric numbers, so the shape cannot name Cargo X."
   },
   {
     "carrier": "cargox",
@@ -5400,8 +5346,8 @@
   {
     "carrier": "cargox",
     "pattern": "^\\d{20}$",
-    "kind": "open",
-    "reason": "Detection does not suggest Cargo X for the reported Zara shipment reference."
+    "kind": "collision",
+    "reason": "Twenty-digit Cargo X numbers share their shape with other carriers' numeric numbers, so the shape cannot name Cargo X."
   },
   {
     "carrier": "chapar",
@@ -5424,8 +5370,8 @@
   {
     "carrier": "delibox",
     "pattern": "^\\d{12}$",
-    "kind": "open",
-    "reason": "Delibox's archived tracker shows a twelve-digit shipment number. Detection offers other carriers for this input."
+    "kind": "collision",
+    "reason": "Twelve-digit Delibox numbers share their shape with other carriers' numeric numbers, so the shape cannot name Delibox."
   },
   {
     "carrier": "akis-express",
@@ -5448,20 +5394,20 @@
   {
     "carrier": "bigpost",
     "pattern": "^\\d{7}$",
-    "kind": "open",
-    "reason": "Big Post documents a seven-digit tracking ID and a recipient reported one. Detection only offers SEUR for this sample."
+    "kind": "collision",
+    "reason": "Seven-digit Big Post numbers share their shape with other carriers' numeric numbers, so the shape cannot name Big Post."
   },
   {
     "carrier": "cargobus",
     "pattern": "^\\d{9}$",
-    "kind": "open",
-    "reason": "A Cargobus shipment code in a Lithuanian court record has nine digits. Detection only offers TNT for that sample."
+    "kind": "collision",
+    "reason": "Nine-digit Cargobus numbers share their shape with other carriers' numeric numbers, so the shape cannot name Cargobus."
   },
   {
     "carrier": "cheetah-delivery",
     "pattern": "^\\d{14}$",
-    "kind": "open",
-    "reason": "A historical Cheetah Delivery tracking number had fourteen digits. The current detector offers several carriers for the sample without including Cheetah Delivery."
+    "kind": "collision",
+    "reason": "Fourteen-digit Cheetah Delivery numbers share their shape with other carriers' numeric numbers, so the shape cannot name Cheetah Delivery."
   },
   {
     "carrier": "crane-worldwide",
@@ -5472,8 +5418,8 @@
   {
     "carrier": "cvc",
     "pattern": "^\\d{8}$",
-    "kind": "open",
-    "reason": "A confirmed eight-digit CVC shipment number returns candidates without CVC."
+    "kind": "collision",
+    "reason": "Eight-digit CVC numbers share their shape with other carriers' numeric numbers, so the shape cannot name CVC."
   },
   {
     "carrier": "diakinisis",
@@ -5484,8 +5430,8 @@
   {
     "carrier": "dpd-gr",
     "pattern": "^\\d{14}$",
-    "kind": "open",
-    "reason": "An archived DPD Greece result binds a fourteen-digit parcel number, and detection offers other carriers without DPD Greece."
+    "kind": "collision",
+    "reason": "Fourteen-digit DPD Greece numbers share their shape with other carriers' numeric numbers, so the shape cannot name DPD Greece."
   },
   {
     "carrier": "first-flight-me",
@@ -5508,8 +5454,8 @@
   {
     "carrier": "interlogistica",
     "pattern": "^\\d{7}$",
-    "kind": "open",
-    "reason": "Two confirmed Interlogistica waybills have seven digits. Detection offers SEUR without Interlogistica."
+    "kind": "collision",
+    "reason": "Seven-digit Interlogistica numbers share their shape with other carriers' numeric numbers, so the shape cannot name Interlogistica."
   },
   {
     "carrier": "matson",
@@ -5520,8 +5466,8 @@
   {
     "carrier": "rhenus-it",
     "pattern": "^\\d{11}$",
-    "kind": "open",
-    "reason": "A confirmed Rhenus Italia home delivery number has nine digits followed by a hyphen and two digits. Detection does not offer Rhenus Italia."
+    "kind": "collision",
+    "reason": "Eleven-digit Rhenus Italia numbers share their shape with other carriers' numeric numbers, so the shape cannot name Rhenus Italia."
   },
   {
     "carrier": "rhenus-it",

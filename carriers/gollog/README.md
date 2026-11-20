@@ -14,6 +14,13 @@ omitted, as they are in the public timeline. The release milestone means ready f
 store-collection shipment and out for delivery on a home-delivery shipment. The estimate is
 left out because the tracker gives only the day and month.
 
+## Numbers
+
+GOLLOG tracks a shipment by its air waybill: GOL's airline prefix 127, then an eight-digit serial
+whose last digit is the remainder of the first seven divided by seven. Waybills print a dash after
+the prefix, and rule `gollog-1` names GOLLOG for that dashed form, since 127 is GOL's own prefix.
+Eleven digits without the dash fit several carriers' numbers, so the rule leaves them to those.
+
 ## Testing
 
 `GOLLOG_TRACKING_NUMBER=… GOLLOG_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/gollog`

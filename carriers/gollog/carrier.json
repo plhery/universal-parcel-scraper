@@ -60,5 +60,12 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "gollog-1",
+      "pattern": "^127\\d{8}$",
+      "rawPattern": "^127-\\d{4} ?\\d{4}$",
+      "confidence": "high"
+    }
+  ]
 }

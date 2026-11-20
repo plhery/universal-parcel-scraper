@@ -21,28 +21,6 @@
         "confidence": "none"
       },
       "note": "The Sway-branded Swyft tracking page displays the exact number with dated scans through delivery in California."
-    },
-    {
-      "number": "c66h0wk23amg00839dx0",
-      "role": "quarantined",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://web.archive.org/web/20220926055639/https://track.useswyft.com/track?trackingNumber=c66h0wk23amg00839dx0",
-        "date": "2022-09-26",
-        "dateKind": "capture",
-        "access": "full_page"
-      },
-      "quarantine": true,
-      "context": {
-        "service": "Swyft Canada",
-        "reportedRole": "tracking number",
-        "assessment": "scope_review"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
-      },
-      "note": "The archived Swyft tracker shows a 2021 Canadian shipment with delivery events. The cataloged Sway service covers the United States and the current tracking scope for legacy Canadian numbers is uncertain."
     }
   ]
 }

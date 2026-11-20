@@ -11574,7 +11574,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/app/[a-z]{2}(?:-[a-z]{2})?/([^/]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^SWS\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "bjs-home-delivery": {
     "displayName": "BJS Home Delivery",
@@ -24765,7 +24770,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/([A-Za-z0-9]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^FDA\\d{9}CA$",
+        "confidence": "low"
+      }
+    ]
   },
   "fasttrack-ar": {
     "displayName": "Fast Track",
@@ -24819,7 +24829,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^(?:B1|D6)\\d{10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "fastwl": {
     "displayName": "Fast World Logistic",
@@ -26913,7 +26928,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^RLAI\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "gcx": {
     "displayName": "GCX",
@@ -28767,7 +28787,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^127\\d{8}$",
+        "confidence": "high",
+        "rawPattern": "^127-\\d{4} ?\\d{4}$"
+      }
+    ]
   },
   "golucky": {
     "displayName": "GoLucky Express",
@@ -29851,7 +29877,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.heronaexpress.co.id/",
     "trackingSearchUrl": "https://tracking.heronaexpress.co.id/lacak.php",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^TSMA\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "hey-couriers": {
     "displayName": "Hey Couriers",
@@ -31297,7 +31328,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "fragment": "^/tracking/code/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^TRI\\d{13}$",
+        "confidence": "low"
+      }
+    ]
   },
   "ilyang-logis": {
     "displayName": "Ilyang Logis",
@@ -36778,7 +36814,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^LEX(?:PU|DO)\\d{10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "lex-vn": {
     "displayName": "LEX Vietnam",
@@ -48867,7 +48908,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://rayspeed.com/en/track",
     "trackingSearchUrl": "https://rayspeed.com/en/track",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^RAY\\d{13}$",
+        "confidence": "low"
+      }
+    ]
   },
   "recibelo": {
     "displayName": "Recíbelo",
@@ -67372,7 +67418,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bigfoot-express": [],
   "bigpost": [],
   "bir-gunde-kargo": [],
-  "biz-courier": [],
+  "biz-courier": ["biz-courier-1"],
   "bjs-home-delivery": ["bjs-home-delivery-1"],
   "bla-kurer": [],
   "blitznow": [],
@@ -67746,9 +67792,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "faster-shipe": [],
   "fastfrate": [],
   "fastgo": ["fastgo-1"],
-  "fastship-th": [],
+  "fastship-th": ["fastship-th-1"],
   "fasttrack-ar": [],
-  "fastway-za": [],
+  "fastway-za": ["fastway-za-1"],
   "fastwl": [],
   "favorita-transportes": [],
   "fedex-freight": [],
@@ -67813,7 +67859,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "garantpost": [],
   "garudavega": [],
   "gati": [],
-  "gbs-broker": [],
+  "gbs-broker": ["gbs-broker-1"],
   "gcx": [],
   "gdex": ["gdex-1"],
   "gebrueder-weiss": [],
@@ -67862,7 +67908,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gofo-nl": ["gofo-nl-1"],
   "gogo-xpress": ["gogo-xpress-1"],
   "golilla": [],
-  "gollog": [],
+  "gollog": ["gollog-1"],
   "golucky": [],
   "goodluck-courier": [],
   "goodmaji": [],
@@ -67896,7 +67942,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hepsijet": [],
   "hercules-freight": [],
   "hermes-at": [],
-  "herona-express": [],
+  "herona-express": ["herona-express-1"],
   "hey-couriers": [],
   "hfd": [],
   "hi-trans": [],
@@ -67941,7 +67987,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ics-couriers-ua": [],
   "idexpress": ["idexpress-1"],
   "ids-logistik": [],
-  "iflow": [],
+  "iflow": ["iflow-1"],
   "ilyang-logis": [],
   "imile": ["imile-3","imile-1","imile-4","imile-5","imile-2"],
   "indah-logistik": ["indah-logistik-1"],
@@ -68104,7 +68150,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "letter-track": [],
   "lex-id": ["lex-id-1"],
   "lex-my": ["lex-my-1"],
-  "lex-th": [],
+  "lex-th": ["lex-th-1"],
   "lex-vn": ["lex-vn-1","lex-vn-2"],
   "lexship": [],
   "lhtex": [],
@@ -68461,7 +68507,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rapiboy": [],
   "rapid-courier-gr": [],
   "rapido-ochoa": [],
-  "rayspeed": [],
+  "rayspeed": ["rayspeed-1"],
   "recibelo": [],
   "red-courier-gr": [],
   "red-express": [],

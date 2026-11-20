@@ -43,5 +43,11 @@
     "unavailable": []
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "herona-express-1",
+      "pattern": "^TSMA\\d{8}$",
+      "confidence": "low"
+    }
+  ]
 }

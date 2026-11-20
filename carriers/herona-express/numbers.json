@@ -20,7 +20,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive"
+          "colis-prive",
+          "herona-express"
         ]
       },
       "note": "Herona prints this exact example in its tracking form. Its public lookup returns a populated response for the example, consistent with the carrier's documented shipment scans."

@@ -59,5 +59,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "fastway-za-1",
+      "pattern": "^(?:B1|D6)\\d{10}$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -15,19 +15,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "postlogistics",
-          "gls-ch",
-          "gls-fr",
-          "gls-de",
-          "coordinadora",
-          "gls-at",
-          "gls-pl",
-          "mainfreight",
-          "paquetexpress"
-        ]
+        "carrier": "gollog",
+        "confidence": "high"
       },
       "note": "The indexed text of the Brazilian electoral court filing identifies the GOLLOG waybill and prints this full AWB in its control-number field."
     },
@@ -47,19 +36,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "postlogistics",
-          "gls-ch",
-          "gls-fr",
-          "gls-de",
-          "coordinadora",
-          "gls-at",
-          "gls-pl",
-          "mainfreight",
-          "paquetexpress"
-        ]
+        "carrier": "gollog",
+        "confidence": "high"
       },
       "note": "The customer posts the complete waybill for an Urgente shipment. The carrier’s guest tracker confirms the number and displays its dated transfer and collection scans."
     }

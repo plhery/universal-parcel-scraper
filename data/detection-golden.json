@@ -18774,46 +18774,18 @@
   },
   {
     "input": "127-35920231",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "gollog",
+    "confidence": "high",
     "candidates": [
-      "postlogistics",
-      "gls-ch",
-      "gls-fr",
-      "gls-de",
-      "coordinadora",
-      "gls-at",
-      "gls-pl",
-      "mainfreight",
-      "paquetexpress"
-    ],
-    "asked": [
-      "gls-fr",
-      "gls-de",
-      "gls-ch",
-      "postlogistics"
+      "gollog"
     ]
   },
   {
     "input": "127-6302 7370",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "gollog",
+    "confidence": "high",
     "candidates": [
-      "postlogistics",
-      "gls-ch",
-      "gls-fr",
-      "gls-de",
-      "coordinadora",
-      "gls-at",
-      "gls-pl",
-      "mainfreight",
-      "paquetexpress"
-    ],
-    "asked": [
-      "gls-fr",
-      "gls-de",
-      "gls-ch",
-      "postlogistics"
+      "gollog"
     ]
   },
   {
@@ -26867,14 +26839,6 @@
     ],
     "asked": [
       "sameday"
-    ]
-  },
-  {
-    "input": "1Z A 84 808 04 9838 7954",
-    "carrier": "ups",
-    "confidence": "high",
-    "candidates": [
-      "ups"
     ]
   },
   {
@@ -81600,7 +81564,8 @@
     "confidence": "low",
     "candidates": [
       "colis-prive",
-      "bjs-home-delivery"
+      "bjs-home-delivery",
+      "fastway-za"
     ],
     "asked": [
       "bjs-home-delivery",
@@ -81613,7 +81578,8 @@
     "confidence": "low",
     "candidates": [
       "colis-prive",
-      "bjs-home-delivery"
+      "bjs-home-delivery",
+      "fastway-za"
     ],
     "asked": [
       "bjs-home-delivery",
@@ -81626,7 +81592,8 @@
     "confidence": "low",
     "candidates": [
       "colis-prive",
-      "bjs-home-delivery"
+      "bjs-home-delivery",
+      "fastway-za"
     ],
     "asked": [
       "bjs-home-delivery",
@@ -81639,7 +81606,8 @@
     "confidence": "low",
     "candidates": [
       "colis-prive",
-      "bjs-home-delivery"
+      "bjs-home-delivery",
+      "fastway-za"
     ],
     "asked": [
       "bjs-home-delivery",
@@ -82904,14 +82872,6 @@
     "confidence": "high",
     "candidates": [
       "ceska-posta"
-    ]
-  },
-  {
-    "input": "BY000870933JB",
-    "carrier": "chronopost",
-    "confidence": "high",
-    "candidates": [
-      "chronopost"
     ]
   },
   {
@@ -87213,7 +87173,8 @@
     "confidence": "low",
     "candidates": [
       "colis-prive",
-      "yto"
+      "yto",
+      "fastway-za"
     ],
     "asked": [
       "colis-prive"
@@ -90908,8 +90869,10 @@
   {
     "input": "FDA130288253CA",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "fastship-th"
+    ]
   },
   {
     "input": "FDAV2511000000254601",
@@ -97350,14 +97313,18 @@
   {
     "input": "LEXDO0038488007",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "lex-th"
+    ]
   },
   {
     "input": "LEXPU0718466614",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "lex-th"
+    ]
   },
   {
     "input": "LEXRT0002055865VNA",
@@ -104952,8 +104919,10 @@
   {
     "input": "RAY8991695905349",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "rayspeed"
+    ]
   },
   {
     "input": "RB007749592CY",
@@ -106029,7 +105998,8 @@
     "confidence": "low",
     "candidates": [
       "aliexpress",
-      "colis-prive"
+      "colis-prive",
+      "gbs-broker"
     ],
     "asked": [
       "colis-prive",
@@ -109914,20 +109884,26 @@
   {
     "input": "SWS43517107",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "biz-courier"
+    ]
   },
   {
     "input": "SWS43517108",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "biz-courier"
+    ]
   },
   {
     "input": "SWS43560315",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "biz-courier"
+    ]
   },
   {
     "input": "SWX039330000187892873",
@@ -111080,8 +111056,10 @@
   {
     "input": "TRI0000001337139",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "iflow"
+    ]
   },
   {
     "input": "TRIERAA25077",
@@ -111179,7 +111157,8 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "colis-prive"
+      "colis-prive",
+      "herona-express"
     ],
     "asked": [
       "colis-prive"
@@ -116184,12 +116163,6 @@
   },
   {
     "input": "bqh4fn5qaqyv3sdq",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
-    "input": "c66h0wk23amg00839dx0",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []

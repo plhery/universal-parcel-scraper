@@ -54,5 +54,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "lex-th-1",
+      "pattern": "^LEX(?:PU|DO)\\d{10}$",
+      "confidence": "low"
+    }
+  ]
 }
