@@ -2404,6 +2404,15 @@ describe('ParcelsApp result parsing', () => {
       ['International flight has departed', '2026-11-05T16:26:00.000Z', 'Asia/Shanghai'],
       ['Arrived at the origin international airport', '2026-11-05T08:07:31.000Z', 'Asia/Shanghai'],
     ]);
+    // Its export clearance and flight out from Hong Kong, unplaced, are on Hong Kong's clock.
+    expect(parseParcelsAppResponse({ carriers: ['Yun Express'], destinationCode: 'US', states: [
+      scan('2026-11-17T08:48:01Z', 'Departed from AIRPORT'),
+      scan('2026-11-17T07:46:11Z', 'Clearance processing completed - Export'),
+      scan('2026-11-14T23:09:18Z', 'Arrived at the origin international airport', 'HONG KONG, HK'),
+    ] }, number, identity()).events?.map((event) => [event.time, event.time_zone])).toEqual([
+      ['2026-11-17T00:48:01.000Z', 'Asia/Hong_Kong'], ['2026-11-16T23:46:11.000Z', 'Asia/Hong_Kong'],
+      ['2026-11-14T15:09:18.000Z', 'Asia/Hong_Kong'],
+    ]);
     // With no scan placed in China, it keeps its label.
     expect(parseParcelsAppResponse({ carriers: ['Yun Express'], states: states(town).slice(0, -1) }, number, identity())
       .events?.find((event) => event.description === 'International flight has departed')?.time_zone).toBe('UTC');

@@ -53,7 +53,7 @@ import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
 import { destinationRelay, europeanAbroad, ROYAL_MAIL_RELAY_CLOCK } from '../../carriers/royal-mail/clock.js';
 import { USPS_FACILITY_KIND, uspsMailerLabel } from '../../carriers/usps/clock.js';
-import { YUNEXPRESS_ORIGIN_ZONE, yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
+import { yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
 import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
@@ -1948,9 +1948,9 @@ function yunExpressDestinationZones(items: readonly { name: unknown; date: unkno
 }
 
 /**
- * The clock of YunExpress's scans with no place on China's leg, up to the flight out: China's, when
- * its nearest scan with a place, the older one first, is in China, as YunExpress's own adapter dates
- * them (`yunExpressOriginLeg`). Its flight out came at China's digits: as labeled, it left eight
+ * The clock of YunExpress's scans with no place on China's leg, up to the flight out: China's, or
+ * Hong Kong's, when its nearest scan with a place, the older one first, is there, as YunExpress's
+ * own adapter dates them (`yunExpressOriginLeg`). Its flight out came at China's digits: as labeled, it left eight
  * hours late, after the import clearance its destination's town dated.
  */
 function yunExpressOriginZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined; wording: string }[],
@@ -1959,7 +1959,7 @@ function yunExpressOriginZones(items: readonly { name: unknown; date: unknown; l
     .sort((a, b) => (a.wall < b.wall ? 1 : a.wall > b.wall ? -1 : 0));
   const leg = yunExpressOriginLeg(rows.map(({ item }) => ({ location: item.location.trim(), wording: item.wording })));
   const found = items.map((): string | null => null);
-  rows.forEach(({ item, index }, at) => { if (leg[at] && !item.offset && !zones[index]!.zone) found[index] = YUNEXPRESS_ORIGIN_ZONE; });
+  rows.forEach(({ item, index }, at) => { if (leg[at] && !item.offset && !zones[index]!.zone) found[index] = leg[at]!; });
   return found;
 }
 

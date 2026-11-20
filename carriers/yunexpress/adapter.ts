@@ -66,15 +66,16 @@ const LA_POSTE_UTC = new Set(['arrived at destination', 'handled by local carrie
 
 /**
  * Dates the rows without a place that China's leg holds, up to the flight
- * out, on China's clock when the nearest row with a place, the older one
- * first, is in China (`yunExpressOriginLeg`). Events are newest first.
+ * out, on China's or Hong Kong's clock when the nearest row with a place, the
+ * older one first, is there (`yunExpressOriginLeg`). Events are newest first.
  */
 function dateOriginLeg(events: CarrierEvent[]): CarrierEvent[] {
   const leg = yunExpressOriginLeg(events.map((event) => ({ location: event.location ?? '', wording: event.description ?? '' })));
   return events.map((event, at) => {
-    if (!leg[at] || !event.local_time || event.time) return event;
-    const time = firstOccurrence(DateTime.fromISO(event.local_time, { zone: ORIGIN_ZONE })).toISO({ suppressMilliseconds: true })!;
-    return { ...event, time, time_zone: ORIGIN_ZONE, time_zone_basis: 'neighbour' };
+    const zone = leg[at];
+    if (!zone || !event.local_time || event.time) return event;
+    const time = firstOccurrence(DateTime.fromISO(event.local_time, { zone })).toISO({ suppressMilliseconds: true })!;
+    return { ...event, time, time_zone: zone, time_zone_basis: 'neighbour' };
   });
 }
 

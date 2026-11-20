@@ -29,8 +29,9 @@ in winter as 13:21:33. Read on Paris time, they showed twice beside La Poste's
 own. The record states Paris's offset for them as well, but its delivery
 office's scans keep the office's clock. Storage timezone fields never supply scan offsets. China's
 rows name only the country, so a row without a place on China's leg, up to the
-flight out, is dated on China's clock when the nearest row with a place, the
-older one first, is in China: a departure given as the latest scan carries
+flight out ("International flight has departed" or "Departed from AIRPORT"), is
+dated on China's clock when the nearest row with a place, the older one first, is
+in China, and on Hong Kong's when it is there: a departure given as the latest scan carries
 +08:00, and read on the destination's clock the flight would land hours too
 soon. The flight's arrival and the destination's import customs rows ("… - Import"
 and the clearance's start, "Start Customs Clearence") that name no place, or only

@@ -303,6 +303,10 @@ describe('YunExpress captured response projection', () => {
       expect(result.events?.[at]).toMatchObject({ time, local_time: time.slice(0, 19), time_zone: 'Asia/Shanghai', time_zone_basis: 'neighbour' });
     }
     for (const at of [1, 2, 3, 4, 7, 12]) expect(result.events?.[at]!.time).toBeUndefined();
+    // A leg in Hong Kong is on Hong Kong's clock.
+    const hongKong = Object.fromEntries([7, 8, 9, 10, 11, 12].map((at) => [at, 'HONG KONG, HK']));
+    expect(parse(placing({ ...hongKong, 4: 'ES', 5: '', 6: '' }), NUMBER).events?.[6])
+      .toMatchObject({ time: '2026-03-14T13:39:00+08:00', time_zone: 'Asia/Hong_Kong', time_zone_basis: 'neighbour' });
   });
 
   it("leaves a row without a place to the facade when its nearest placed row is abroad or it follows the flight out", () => {
