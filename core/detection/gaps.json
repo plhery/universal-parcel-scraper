@@ -5597,5 +5597,10 @@
     "kind": "open",
     "carrier": "thai-nexus",
     "reason": "The carrier confirms its published TNX waybill and separate demo. Explicit selection is available while issuance, suffix lengths, and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "icasa-cargo",
+    "reason": "ICASA confirms one Volaris-issued AWB it handled. Explicit selection does not attribute the airline prefix to a handling agent."
   }
 ]

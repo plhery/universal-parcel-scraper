@@ -31203,6 +31203,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "icasa-cargo": {
+    "displayName": "ICASA Cargo",
+    "color": "#203c70",
+    "aliases": [
+      "ICASA",
+      "Integradores de Carga Aérea"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "icasa-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://integracargo.com/rastreo/",
+    "trackingUrlTemplate": "https://integracargo.com/rastreo/",
+    "trackingSearchUrl": "https://integracargo.com/rastreo/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "icc-courier-gr": {
     "displayName": "ICC Courier",
     "color": "#dc2626",

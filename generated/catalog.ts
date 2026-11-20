@@ -31207,6 +31207,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "icasa-cargo": {
+    "displayName": "ICASA Cargo",
+    "color": "#203c70",
+    "aliases": [
+      "ICASA",
+      "Integradores de Carga Aérea"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "icasa-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://integracargo.com/rastreo/",
+    "trackingUrlTemplate": "https://integracargo.com/rastreo/",
+    "trackingSearchUrl": "https://integracargo.com/rastreo/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "icc-courier-gr": {
     "displayName": "ICC Courier",
     "color": "#dc2626",
@@ -66570,6 +66593,7 @@ export const CARRIER_IDS = [
   "hywl",
   "hzt",
   "ibex-express-bo",
+  "icasa-cargo",
   "icc-courier-gr",
   "icc-worldwide",
   "icl-express",
@@ -68452,6 +68476,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hywl": ["hywl-1","hywl-2"],
   "hzt": [],
   "ibex-express-bo": [],
+  "icasa-cargo": [],
   "icc-courier-gr": [],
   "icc-worldwide": [],
   "icl-express": [],

@@ -1,0 +1,18 @@
+{
+  "carrier": "icasa-cargo",
+  "records": [
+    {
+      "number": "036-25917183",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": { "url": "https://es.scribd.com/document/752851540/036-25917183-20240711073633", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["postlogistics", "gls-ch", "gls-fr", "gls-de", "coordinadora", "gls-at", "gls-pl", "mainfreight", "paquetexpress"]
+      },
+      "note": "The published July 2024 Volaris air waybill names ICASA as the shipper and destination handling agent. The ICASA tracker returns its booking, acceptance and eight movement rows."
+    }
+  ]
+}
