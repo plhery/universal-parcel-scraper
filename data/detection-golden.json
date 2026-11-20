@@ -36177,6 +36177,44 @@
     ]
   },
   {
+    "input": "2783260613206",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "fan-courier",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery",
+      "fan-courier"
+    ]
+  },
+  {
+    "input": "2783260753830",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "fan-courier",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery",
+      "fan-courier"
+    ]
+  },
+  {
     "input": "2783745005292",
     "carrier": "unknown",
     "confidence": "low",
@@ -62223,6 +62261,27 @@
       "colis-prive",
       "j-and-t",
       "metropolitan-warehouse"
+    ]
+  },
+  {
+    "input": "7000018009111",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fan-courier",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "preferred": [
+      "fan-courier"
+    ],
+    "asked": [
+      "fan-courier",
+      "delhivery"
     ]
   },
   {

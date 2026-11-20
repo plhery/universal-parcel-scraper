@@ -1,5 +1,97 @@
 {
   "carrier": "agt-kurye",
-  "gap": "Its tracker needs the sender and part of the surname, so no public number can be checked.",
-  "records": []
+  "records": [
+    {
+      "number": "2783260613206",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/agt-kurye/agt-kargosu-takip-bilgisi-yok-acil-aciklama-istiyorum",
+        "date": "2026-06-11",
+        "dateKind": "complaint publication date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish domestic courier delivery",
+        "reportedRole": "parcel tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The recipient explicitly provides the AGT tracking number. The carrier's lookup requires a recipient surname prefix and a customer selection that were unavailable as published tracking inputs."
+    },
+    {
+      "number": "2783260753830",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/agt-kurye/takip-numarali-gonderim-icin-kurye-iletisim-sorunu-ve-acil-teslimat-talebi",
+        "date": "2026-10-07",
+        "dateKind": "complaint publication date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish domestic courier delivery",
+        "reportedRole": "parcel tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The recipient quotes the exact number and describes the carrier's delivery app. The carrier's lookup requires a recipient surname prefix and a customer selection that were unavailable as published tracking inputs."
+    },
+    {
+      "number": "7000018009111",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/agt-kurye/agt-kurye-kargomun-teslimati-10-gun-boyunca-erteleniyor-ve-yanit-yok",
+        "date": "2026-06-10",
+        "dateKind": "complaint publication date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish domestic courier delivery",
+        "reportedRole": "parcel tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fan-courier",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The recipient quotes this tracking number in a complaint about repeated delivery rescheduling. The carrier's lookup requires a recipient surname prefix and a customer selection that were unavailable as published tracking inputs."
+    }
+  ]
 }
