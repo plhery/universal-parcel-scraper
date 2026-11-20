@@ -44335,6 +44335,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "paqueteria-vencedor": {
+    "displayName": "Paquetería Vencedor",
+    "color": "#ae232a",
+    "aliases": [
+      "Grupo Vencedor",
+      "Vencedor Paquetería"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "paqueteria-vencedor",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.grupovencedor.com/paqueteria",
+    "trackingUrlTemplate": "https://www.grupovencedor.com/paqueteria",
+    "trackingSearchUrl": "https://www.grupovencedor.com/paqueteria",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "paquetexpress": {
     "displayName": "Paquetexpress",
     "color": "#002a52",

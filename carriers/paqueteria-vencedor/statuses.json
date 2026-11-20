@@ -1,0 +1,13 @@
+{
+  "carrier": "paqueteria-vencedor",
+  "entries": [
+    { "wording": "VENDIDA", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "wording": "DOCUMENTADA", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "wording": "EMBARCADA", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "wording": "TRANSBORDADA", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "wording": "DESEMBARCADA", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "wording": "LISTO PARA ENTREGAR", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Ready for delivery. The status does not give a recipient pickup instruction." },
+    { "wording": "EN RUTA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The wording says en route without specifying the type of route." },
+    { "wording": "ENTREGADA", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
+}

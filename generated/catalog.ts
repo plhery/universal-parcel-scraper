@@ -44339,6 +44339,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "paqueteria-vencedor": {
+    "displayName": "Paquetería Vencedor",
+    "color": "#ae232a",
+    "aliases": [
+      "Grupo Vencedor",
+      "Vencedor Paquetería"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "paqueteria-vencedor",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.grupovencedor.com/paqueteria",
+    "trackingUrlTemplate": "https://www.grupovencedor.com/paqueteria",
+    "trackingSearchUrl": "https://www.grupovencedor.com/paqueteria",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "paquetexpress": {
     "displayName": "Paquetexpress",
     "color": "#002a52",
@@ -66581,6 +66604,7 @@ export const CARRIER_IDS = [
   "paperfly",
   "paps",
   "paqline",
+  "paqueteria-vencedor",
   "paquetexpress",
   "paquexpress-urgente",
   "parcel-one",
@@ -68447,6 +68471,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paperfly": ["paperfly-1","paperfly-2","paperfly-3"],
   "paps": [],
   "paqline": [],
+  "paqueteria-vencedor": [],
   "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
   "paquexpress-urgente": [],
   "parcel-one": [],
