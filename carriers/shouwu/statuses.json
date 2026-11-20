@@ -1199,6 +1199,30 @@
       "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: the delivering carrier's receipt, before its round."
     },
     {
+      "wording": "Awaiting for transit to final delivery office Package arrived at facility of the local delivery company",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: the delivering carrier's facility, before its receipt."
+    },
+    {
+      "wording": "Out for delivery Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: the delivery round."
+    },
+    {
+      "wording": "Arrived at pick-up point. Package available for collection. Awaiting for you to pick-up",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The pick-up point's receipt, as Shouwu relays it on the line into Europe. The delivering carrier repeats it while the parcel waits, each a scan of its own."
+    },
+    {
       "wording": "Delivery attempt unsuccessful, Carrier note: Delivery attempt unsuccessful",
       "stage": "failed_attempt",
       "language": "en",
