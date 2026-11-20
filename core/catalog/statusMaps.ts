@@ -1,3 +1,4 @@
+import { statusMap as cpxGuatemala } from '../../carriers/cpx-guatemala/status.js';
 import { statusMap as ewlCostaRica } from '../../carriers/ewl-costa-rica/status.js';
 import { statusMap as bjaLogistic } from '../../carriers/bja-logistic/status.js';
 import { statusMap as cescoLogistics } from '../../carriers/cesco-logistics/status.js';
@@ -922,6 +923,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'cpx-guatemala': cpxGuatemala,
   'ewl-costa-rica': ewlCostaRica,
   'bja-logistic': bjaLogistic,
   'cesco-logistics': cescoLogistics,

@@ -17059,6 +17059,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cpx-guatemala": {
+    "displayName": "CPX Guatemala",
+    "color": "#a3312b",
+    "aliases": [
+      "CPX",
+      "CPXBOX",
+      "CPX Box",
+      "Pio Tracking"
+    ],
+    "countries": [
+      "GT",
+      "US",
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cpx-guatemala",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tracking.cpxbox.com/",
+    "trackingUrlTemplate": "https://tracking.cpxbox.com/wr/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.cpxbox.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "crane-worldwide": {
     "displayName": "Crane Worldwide",
     "color": "#273572",
@@ -66327,6 +66354,7 @@ export const CARRIER_IDS = [
   "couriersplease",
   "cps-lastmile",
   "cpszy",
+  "cpx-guatemala",
   "crane-worldwide",
   "crc-post",
   "credifin",
@@ -68216,6 +68244,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "couriersplease": ["couriersplease-1"],
   "cps-lastmile": [],
   "cpszy": [],
+  "cpx-guatemala": [],
   "crane-worldwide": [],
   "crc-post": [],
   "credifin": [],

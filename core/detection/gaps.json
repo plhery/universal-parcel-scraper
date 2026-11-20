@@ -5632,5 +5632,10 @@
     "kind": "open",
     "carrier": "ewl-costa-rica",
     "reason": "The guest tracker confirms its one public guide. Explicit selection is available while guide issuance and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "cpx-guatemala",
+    "reason": "CPX confirms its one published FGUA reference. Explicit selection is available while issuance, printed segments and overlaps remain open."
   }
 ]

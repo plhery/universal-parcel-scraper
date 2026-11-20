@@ -91416,6 +91416,12 @@
     ]
   },
   {
+    "input": "FGUA107000-82026-1",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "FKS08VTSC6GOY",
     "carrier": "cycloon",
     "confidence": "high",

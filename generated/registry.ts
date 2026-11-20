@@ -166,6 +166,7 @@ import { adapter as correosSpain } from '../carriers/correos-spain/adapter.js';
 import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter.js';
 import { adapter as courierCenter } from '../carriers/courier-center/adapter.js';
 import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js';
+import { adapter as cpxGuatemala } from '../carriers/cpx-guatemala/adapter.js';
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
 import { adapter as cseRussia } from '../carriers/cse-russia/adapter.js';
 import { adapter as ctt } from '../carriers/ctt/adapter.js';
@@ -1082,6 +1083,7 @@ export const REGISTRY: RegistryDefinition = {
     "costco-logistics": costcoLogistics,
     "courier-center": courierCenter,
     "couriersplease": couriersplease,
+    "cpx-guatemala": cpxGuatemala,
     "cruz-del-sur": cruzDelSur,
     "cse-russia": cseRussia,
     "ctt": ctt,
@@ -2193,6 +2195,7 @@ export const REGISTRY: RegistryDefinition = {
     "couriersplease": "couriersplease",
     "cps-lastmile": "universal",
     "cpszy": "universal",
+    "cpx-guatemala": "cpx-guatemala",
     "crane-worldwide": "universal",
     "crc-post": "universal",
     "credifin": "universal",
