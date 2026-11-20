@@ -106555,6 +106555,17 @@
     ]
   },
   {
+    "input": "SP00078479",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt-it"
+    ],
+    "asked": [
+      "tnt-it"
+    ]
+  },
+  {
     "input": "SP029692450001607639",
     "carrier": "spee-dee",
     "confidence": "high",
