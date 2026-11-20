@@ -2473,6 +2473,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'asg-logistics': 'The public ASG tracker opens a form that posts the waybill or delivery-order number to its own API.',
   'calidex-courier': 'The carrier’s TrackingPremium tenant opens a public form and submits the selected guide through its tracking API.',
   'hede-shipping': 'The carrier’s equipment tracker opens the public search form and posts the container number.',
   'sky-courier-co': 'The official guest widget opens a guide search form and loads the result through its own API.',

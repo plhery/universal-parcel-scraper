@@ -58,6 +58,7 @@ import { adapter as arasKargo } from '../carriers/aras-kargo/adapter.js';
 import { adapter as arrowXl } from '../carriers/arrow-xl/adapter.js';
 import { adapter as arubaPost } from '../carriers/aruba-post/adapter.js';
 import { adapter as asendia } from '../carriers/asendia/adapter.js';
+import { adapter as asgLogistics } from '../carriers/asg-logistics/adapter.js';
 import { adapter as asyadExpress } from '../carriers/asyad-express/adapter.js';
 import { adapter as atlanticContainerLine } from '../carriers/atlantic-container-line/adapter.js';
 import { adapter as atlanticCourier } from '../carriers/atlantic-courier/adapter.js';
@@ -987,6 +988,7 @@ export const REGISTRY: RegistryDefinition = {
     "arrow-xl": arrowXl,
     "aruba-post": arubaPost,
     "asendia": asendia,
+    "asg-logistics": asgLogistics,
     "asyad-express": asyadExpress,
     "atlantic-container-line": atlanticContainerLine,
     "atlantic-courier": atlanticCourier,
@@ -1989,6 +1991,7 @@ export const REGISTRY: RegistryDefinition = {
     "asap-couriers": "universal",
     "ase-express": "universal",
     "asendia": "asendia",
+    "asg-logistics": "asg-logistics",
     "asiafly": "universal",
     "asigna": "universal",
     "asl-asia": "universal",

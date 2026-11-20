@@ -9946,6 +9946,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "asg-logistics": {
+    "displayName": "ASG Logistics",
+    "color": "#04477d",
+    "aliases": [
+      "ASGL",
+      "ALS Thai Nguyen",
+      "ALS Thái Nguyên",
+      "Công ty Cổ phần Logistics ASG"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "asg-logistics"
+    },
+    "canaryUrl": "https://www.asgl.vn/en/tracking",
+    "trackingUrlTemplate": "https://www.asgl.vn/en/tracking",
+    "trackingSearchUrl": "https://www.asgl.vn/en/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "asiafly": {
     "displayName": "Asiafly",
     "color": "#2d2f83",
@@ -66456,6 +66480,7 @@ export const CARRIER_IDS = [
   "aruba-post",
   "asap-couriers",
   "ase-express",
+  "asg-logistics",
   "asiafly",
   "asigna",
   "asl-asia",
@@ -68357,6 +68382,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aruba-post": ["aruba-post-s10"],
   "asap-couriers": [],
   "ase-express": [],
+  "asg-logistics": [],
   "asiafly": [],
   "asigna": [],
   "asl-asia": [],
