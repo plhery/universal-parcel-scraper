@@ -10,7 +10,7 @@ import { firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { postnlRecordZone } from '../spring-gds/adapter.js';
-import { EPOST_GLOBAL_GLS_ZONE, EPOST_GLOBAL_ROYAL_MAIL_ZONE, epostGlobalFacilityScan, epostGlobalOwnRow, epostGlobalStage } from './status.js';
+import { EPOST_GLOBAL_GLS_ZONE, EPOST_GLOBAL_ROYAL_MAIL_ZONE, epostGlobalFacilityScan, epostGlobalNotice, epostGlobalOwnRow, epostGlobalStage } from './status.js';
 
 export const PROVIDER = 'ePost Global';
 // A delivered parcel's reply is up to a hundred kilobytes: its history twice,
@@ -201,14 +201,23 @@ export function parseEpostGlobal(html: string, raw: string): CarrierResult {
   // instants, so its order stands. A receipt after the parcel moved on is the
   // partner's, not its acceptance.
   let moved = false;
+  let before: Stage = 'registered';
   for (const event of [...events].reverse()) {
+    // A notice keeps the stage of the row before it.
+    if (epostGlobalNotice(event.description!)) {
+      delete event.location;
+      Object.assign(event, { stage: before, stage_source: 'none' });
+      continue;
+    }
     const stage = event.stage as Stage | undefined;
     if (stage === 'accepted' && moved) Object.assign(event, { stage: 'in_transit', stage_source: 'carrier_map' });
     if (stage && !['registered', 'accepted', 'exception'].includes(stage)) moved = true;
+    if (event.stage) before = event.stage as Stage;
   }
   const newest = events[0]!;
-  // A partner's announcement after ePost Global shipped the parcel is no step back.
-  const current = events.find((event) => event.stage && event.stage !== 'registered') ?? events.find((event) => event.stage);
+  // A partner's announcement after ePost Global shipped the parcel is no step back, and a notice moves nothing.
+  const staged = events.filter((event) => event.stage && event.stage_source !== 'none');
+  const current = staged.find((event) => event.stage !== 'registered') ?? staged[0];
   const stage = current?.stage as Stage | undefined;
   const delivery = partnerNumber(track, number);
   const country = text(details, 'DC', 8).toUpperCase();

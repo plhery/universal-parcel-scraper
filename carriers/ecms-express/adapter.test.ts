@@ -79,13 +79,14 @@ describe('ECMS history', () => {
     expect(() => parseEcmsExpress(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
-  it('registers the parcel on the manifest in the newer page\'s wording', () => {
+  it('registers the parcel on the manifest in the newer page\'s wording, without the station as its place', () => {
     const data = fixture();
     const manifest = { ...row(), eventCode: 'EVENT_104', eventDescription: 'Virtual Manifest has been received', operatorTime: Date.UTC(2026, 6, 1, 9), timeZone: 8 };
     data.orderInfo[0]!.baseInfo = manifest;
     data.orderInfo[0]!.infoList = [manifest];
     expect(parseEcmsExpress(data, NUMBER)).toMatchObject({ current_stage: 'registered',
       events: [{ provider_code: 'EVENT_104', stage: 'registered', stage_source: 'carrier_map' }] });
+    expect(parseEcmsExpress(data, NUMBER).events?.[0]?.location).toBeUndefined();
   });
 
   it('reads the arrival warehouse, a return notice and a parcel held for collection by ECMS\'s map', () => {

@@ -19,7 +19,8 @@ steps of their own, so the logs show which one waited.
 
 The response must repeat the complete ECMS identifier in its shipment summary
 and every scan. The parser keeps the full event sequence, status codes, locations
-and a named delivery partner. A partner reference is retained only from that
+and a named delivery partner. The sender's manifest (`EVENT_101`, `EVENT_104`) is data
+reaching ECMS's station before the parcel, so it names no place. A partner reference is retained only from that
 partner's relayed scans when they agree. Merchant references and payment links
 are discarded.
 

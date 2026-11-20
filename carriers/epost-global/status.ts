@@ -116,6 +116,15 @@ export function epostGlobalCopyZone(wording: string, feed: readonly string[]): s
   return rows.some((row) => ROYAL_MAIL_HANDED_OVER.test(row)) ? EPOST_GLOBAL_ROYAL_MAIL_ZONE : null;
 }
 
+// ECMS Express's record of the sender's manifest, relayed minutes after ePost Global's own receipt and hours before the
+// parcel ships: data reaching ECMS's station, not a scan, so it keeps the stage before it and names no place.
+const NOTICES = new Set(['electronic manifest received']);
+
+/** A partner's record that moves nothing: it keeps the stage of the row before it and names no place. */
+export function epostGlobalNotice(wording: string): boolean {
+  return NOTICES.has(normalizeStatusWording(wording));
+}
+
 /** A scan at one of ePost Global's processing centers. */
 export function epostGlobalFacilityScan(wording: string): boolean {
   return FACILITY_SCANS.has(normalizeStatusWording(wording));
@@ -135,5 +144,5 @@ export function epostGlobalStage(wording: string, code = ''): ClassifiedWording 
 /** Codes are shared with the partners' own, so only OSM Worldwide's and the wording are read. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => epostGlobalScanStage(wording, code ?? ''),
-  gaps: [],
+  gaps: [...NOTICES].map((wording) => ({ wording, note: "ECMS Express's record of the sender's manifest, relayed after ePost Global's receipt: data, not a scan, so it keeps the stage of the row before it and names no place." })),
 };

@@ -27,7 +27,9 @@ it on ppxtrack.com, so that name counts as ePost Global's.
 - Rows ePost Global relays from its partner keep the partner's code, so codes collide: the map
   reads the wording. OSM Worldwide's codes name it, so its rows read as OSM's own tracker reads
   them. ePost Global's own wording comes first; a receipt after the parcel moved on is in transit,
-  and a partner's announcement after shipping is no step back.
+  and a partner's announcement after shipping is no step back. ECMS Express's "Electronic manifest
+  received" is the sender's data reaching ECMS's station: it keeps the stage before it and names
+  no place.
 - "Shipment in Transit to the ePost Global Processing Center" follows the shipping data by a
   minute on every parcel that has it: it is the label, not a scan. The shared wording rules read
   a universal provider's copy of it the same way.

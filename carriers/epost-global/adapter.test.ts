@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, EPOST_GLOBAL_ENDPOINT, EpostGlobalTracker } from './adapter.js';
@@ -173,6 +174,23 @@ describe('ePost Global HTTP adapter', () => {
     }), ROYAL);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Shipment Announced' });
     expect(result.events![0]).toMatchObject({ stage: 'registered' });
+  });
+
+  it('keeps ECMS’s relayed manifest on the stage before it, without its station as a place', () => {
+    const manifest = { ECode: 'S01N100', Event: 'Electronic manifest received', EventDT: '2026-07-11T21:51:25', Loc: 'Sampleton United States' };
+    const result = parseEpostGlobal(rewrite('royal-mail-in-transit', (details) => {
+      details.Events.splice(6, 0, { ...details.Events[6]!, ...manifest });
+    }), ROYAL);
+    const row = result.events!.find((event) => event.provider_code === 'S01N100')!;
+    expect(row).toMatchObject({ description: 'Electronic manifest received', stage: 'accepted', stage_source: 'none' });
+    expect(row.location).toBeUndefined();
+    expect(statusMap.stage('S01N100', normalizeStatusWording('Electronic manifest received'))).toBeUndefined();
+    expect(statusMap.gaps.map((gap) => gap.wording)).toContain(normalizeStatusWording('Electronic manifest received'));
+    // As the newest row, it leaves the parcel at the stage before it.
+    const newest = parseEpostGlobal(rewrite('royal-mail-in-transit', (details) => {
+      details.Events.splice(0, 5, { ...details.Events[5]!, ...manifest, EventDT: '2026-07-11T23:20:00' });
+    }), ROYAL);
+    expect(newest).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Electronic manifest received' });
   });
 
   it('reads the rows it relays from OSM Worldwide by OSM’s codes, in the stages OSM’s own tracker gives them', () => {

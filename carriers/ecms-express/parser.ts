@@ -9,6 +9,7 @@ import { ecmsExpressStage } from './status.js';
 
 export const PROVIDER = 'ECMS Express';
 export const ECMS_MAX_BYTES = 1_000_000;
+const MANIFESTS = new Set(['EVENT_101', 'EVENT_104']);
 
 export function normalizeEcmsExpressNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
@@ -57,7 +58,9 @@ function scan(row: unknown, number: string): CarrierEvent {
   const minutes = typeof offset === 'number' ? Math.abs(offset * 60) : 0;
   const time = typeof offset !== 'number' ? undefined : offset === 0 ? `${local}Z`
     : `${local}${offset < 0 ? '-' : '+'}${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
-  const location = [...new Set(['cityEnName', 'provinceEnName', 'countryEnName'].map(key => text(row, key, 100)).filter(Boolean))].join(', ');
+  // The sender's manifest is data reaching ECMS's station, not a scan: the parcel has not been there.
+  const location = MANIFESTS.has(code) ? ''
+    : [...new Set(['cityEnName', 'provinceEnName', 'countryEnName'].map(key => text(row, key, 100)).filter(Boolean))].join(', ');
   const classified = ecmsExpressStage(code, description);
   // A flight row can give the flight's day alone, at midnight sharp, recorded hours later: a day, not a clock.
   const flightDay = code === 'EVENT_313' || code === 'EVENT_314';
