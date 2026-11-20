@@ -1,0 +1,71 @@
+{
+  "id": "maersk",
+  "displayName": "Maersk",
+  "aliases": [
+    "Maersk Line",
+    "A.P. Moller - Maersk"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#42b0d5"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "maersk",
+    "steps": [
+      "browser"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://www.maersk.com/tracking/{trackingNumber}",
+    "searchUrl": "https://www.maersk.com/tracking/",
+    "canaryUrl": "https://www.maersk.com/tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.maersk.com"
+      ],
+      "path": "^/tracking/([A-Za-z0-9]{9}|[A-Za-z]{3}[UJZujz]\\d{7})/?$"
+    }
+  ],
+  "detection": []
+}

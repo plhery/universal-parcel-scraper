@@ -2322,6 +2322,18 @@
     "reason": "A P and nine digits is one complaint's C-Note layout and also matches Australia Post's consignment layout, so it is too thin to claim."
   },
   {
+    "carrier": "maersk",
+    "pattern": "^MAEU[A-Z0-9]{9}$",
+    "kind": "open",
+    "reason": "Import records list Maersk master bills as MAEU, its carrier code, and the bill's nine characters; Maersk's tracker returns each sample. Detection does not offer Maersk."
+  },
+  {
+    "carrier": "maersk",
+    "pattern": "^MRKU\\d{7}$",
+    "kind": "open",
+    "reason": "MRKU is one of the owner codes of Maersk's own containers, whose ISO 6346 numbers end in a check digit; Maersk's tracker returns the sample container's moves. Detection does not offer Maersk."
+  },
+  {
     "carrier": "maersk-ecommerce",
     "pattern": "^1MCAINIXX\\d{10}$",
     "kind": "collision",

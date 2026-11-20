@@ -1,0 +1,27 @@
+{
+  "carrier": "maersk",
+  "entries": [
+    {"code": "GATE-OUT-EMPTY", "wording": "Gate out Empty", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper's trucker collects an empty container to load it; the cargo is not yet with Maersk."},
+    {"code": "GATE-IN", "wording": "Gate in", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading. After a move it reads as transit."},
+    {"code": "LOAD", "wording": "Load", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on a vessel at a port of loading or transshipment."},
+    {"code": "CONTAINER-DEPARTURE", "wording": "Vessel departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The page names a feeder's, barge's, train's or truck's departure by its means of transport."},
+    {"code": "CONTAINER-ARRIVAL", "wording": "Vessel arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The page names a feeder's, barge's, train's or truck's arrival by its means of transport."},
+    {"code": "DISCHARG", "wording": "Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at a port of transshipment or discharge."},
+    {"code": "GATE-OUT-DELIVERY", "wording": "Gate out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker collects the loaded container for delivery."},
+    {"code": "CONTAINER-RETURN", "wording": "Empty container return", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee has unloaded the container and returned it empty."},
+    {"code": "GATE-OUT", "wording": "Gate out", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The loaded container leaves a terminal or yard other than for its delivery, inland towards a port or onward from one."},
+    {"code": "ON-RAIL", "wording": "On rail", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "OFF-RAIL", "wording": "Off rail", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "RAIL-DEPARTURE", "wording": "Rail departure", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "RAIL-ARRIVAL-AT-DESTINATION", "wording": "Rail arrival", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "GATE-IN-EMPTY", "wording": "Gate in Empty", "language": "en", "confirmedBy": "bundle", "note": "An empty container entering a yard: after the consignee unloaded it, its return, but at the origin an unused container's. Only the place tells them apart."},
+    {"code": "CUSTOMER-GATE-IN", "wording": "Gate in (customer facility)", "language": "en", "confirmedBy": "bundle", "note": "The loaded container entering a customer's facility: the shipper's for loading or the consignee's for delivery. Only the place tells them apart."},
+    {"code": "CUSTOMER-GATE-IN-EMPTY", "wording": "Gate in empty (customer facility)", "language": "en", "confirmedBy": "bundle", "note": "An empty container entering a customer's facility, before loading or after unloading. Only the place tells them apart."},
+    {"code": "CUSTOMER-GATE-OUT", "wording": "Gate out (customer facility)", "language": "en", "confirmedBy": "bundle", "note": "The loaded container leaving a customer's facility: the shipper's once loaded, or the consignee's. Only the place tells them apart."},
+    {"code": "CUSTOMER-GATE-OUT-EMPTY", "wording": "Gate out empty (customer facility)", "language": "en", "confirmedBy": "bundle", "note": "An empty container leaving a customer's facility, before loading or after unloading. Only the place tells them apart."},
+    {"code": "ARRIVECU", "wording": "Arrival at customer site", "language": "en", "confirmedBy": "bundle", "note": "The container reaching a customer's site: the shipper's for loading or the consignee's for delivery. Only the place tells them apart."},
+    {"code": "DEPARTCU", "wording": "Departure from customer site", "language": "en", "confirmedBy": "bundle", "note": "The container leaving a customer's site, the shipper's or the consignee's. Only the place tells them apart."},
+    {"code": "STUFFING", "wording": "Container packing", "language": "en", "confirmedBy": "bundle", "note": "The cargo packed into the container at a warehouse; the bundle does not say whose."},
+    {"code": "STRIPPIN", "wording": "Container unpacking", "language": "en", "confirmedBy": "bundle", "note": "The cargo unpacked from the container at a warehouse, which may be a stop before delivery or the delivery itself."}
+  ]
+}

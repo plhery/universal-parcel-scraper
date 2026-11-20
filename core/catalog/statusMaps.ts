@@ -484,6 +484,7 @@ import { statusMap as mailamericas } from '../../carriers/mailamericas/status.js
 import { statusMap as mailplusAu } from '../../carriers/mailplus-au/status.js';
 import { statusMap as mainfreight } from '../../carriers/mainfreight/status.js';
 import { statusMap as makatiExpress } from '../../carriers/makati-express/status.js';
+import { statusMap as maersk } from '../../carriers/maersk/status.js';
 import { statusMap as maerskEcommerce } from '../../carriers/maersk-ecommerce/status.js';
 import { statusMap as maltapost } from '../../carriers/maltapost/status.js';
 import { statusMap as mandae } from '../../carriers/mandae/status.js';
@@ -941,7 +942,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'lietuvos-pastas': lietuvosPastas, 'lightning-express': lightningExpress,
   'line-clear': lineClear, lingdong, linhan, liuchen, 'lion-parcel': lionParcel, logen, loggi, logisimple, logistiq, logoix, 'loomis-express': loomisExpress,
   'lotte-global': lotteGlobal, 'm-and-p': mAndP, 'm-one': mOne, 'madhur-courier': madhurCourier, 'magic-trans': magicTrans, 'magyar-posta': magyarPosta, mailamericas, 'mailplus-au': mailplusAu, mainfreight,
-  'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, mandae, 'maritime-ontario': maritimeOntario, 'maruti-air': marutiAir, matkahuolto, 'mauritius-post': mauritiusPost, mayiyinfu,
+  maersk, 'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, mandae, 'maritime-ontario': maritimeOntario, 'maruti-air': marutiAir, matkahuolto, 'mauritius-post': mauritiusPost, mayiyinfu,
   'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'meso-global': mesoGlobal, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, mhi, 'micro-express': microExpress,
   'midland-transport': midlandTransport, 'mng-kargo': mngKargo, 'mondial-relay': mondialRelay, 'mongol-infinity-post': mongolInfinityPost, 'morning-global': morningGlobal, 'mrl-global': mrlGlobal, mrw, mtscn, mylerz, nacex, naqel, nationex,
   'next-level-delivery': nextLevelDelivery, 'nhat-tin': nhatTin, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, 'no-limit': noLimit, noest, 'norsk-global': norskGlobal,
