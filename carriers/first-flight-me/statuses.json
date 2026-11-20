@@ -1,4 +1,70 @@
 {
   "carrier": "first-flight-me",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered To ALHADI",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The carrier’s archived public tracking history."
+    },
+    {
+      "wording": "Arrived Delivery Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The carrier’s archived public tracking history."
+    },
+    {
+      "wording": "Arrived Hub Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The carrier’s archived public tracking history."
+    },
+    {
+      "wording": "Customs Released",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The carrier’s archived public tracking history."
+    },
+    {
+      "wording": "In Clearance Processing",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The carrier’s archived public tracking history."
+    },
+    {
+      "wording": "Sent To Riyadh",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The carrier’s archived public tracking history."
+    },
+    {
+      "wording": "Arrived Facility",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The carrier’s archived public tracking history."
+    },
+    {
+      "code": "POD",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The current tracker labels this code Delivered."
+    },
+    {
+      "code": "RTO",
+      "wording": "Returned",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "documentation",
+      "note": "The current tracker labels this code Returned."
+    }
+  ]
 }

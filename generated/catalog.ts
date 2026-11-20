@@ -25294,7 +25294,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Dubai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "first-flight-me",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://firstflightme.com/",
     "trackingUrlTemplate": "https://firstflightme.com/tracking/awb/{trackingNumber}",

@@ -19,17 +19,42 @@
   "timezone": "Asia/Dubai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "first-flight-me",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://firstflightme.com/tracking/awb/{trackingNumber}",
     "searchUrl": "https://firstflightme.com/",
     "canaryUrl": "https://firstflightme.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "customer_reference",
+      "signatory",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "customer_reference",
+      "signatory",
+      "weight"
+    ],
     "unavailable": []
   },
   "links": [

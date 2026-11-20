@@ -1,29 +1,25 @@
 # First Flight (Middle East)
 
-First Flight (Middle East) parcels use enabled universal providers. There is no dedicated
-adapter.
+Tracks air waybills from First Flight Couriers (Middle East), the UAE courier.
 
-First Flight Couriers (Middle East) L.L.C. is a Dubai courier founded in 1998, with domestic
-delivery across the United Arab Emirates and international service through partners. It runs
-its own systems and numbers. India's First Flight Couriers, its former partner, is in liquidation
-and is not covered.
+## Retrieval
 
-## Numbers
+The browser service opens the carrier's guest waybill page and captures the
+tracking response for that page. The reply must name the requested waybill.
+The guest API returns HTTP 403 when called directly. Its successful reply with
+an empty shipment and no scans is the tracker's not-found result.
 
-The only public numbers are archived lookups from 2017 to 2024, three letters and six or seven
-digits, which its tracker no longer knows. Many carriers share those layouts, so no rule names
-it.
+The tracker shows scan locations and separate dates and clocks. The adapter
+keeps the scan clocks without assigning offsets and leaves out shipper
+references and other shipment metadata.
 
-## Why there is no adapter
+## Numbers and evidence
 
-The tracker's lookup answers without a key or CAPTCHA, but no public number it still knows has
-been found. It answers an unknown number with a success code and empty fields.
-
-## Links
-
-The tracker opens an air waybill at `/tracking/awb/<number>`.
+Select First Flight (Middle East) explicitly or open its waybill link. The
+public samples have dated histories in the archive and have expired from the
+current tracker. The positive fixture projects the archive scans into the
+current fields described by the tracking site's script.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`FLARESOLVERR_URL=… FIRST_FLIGHT_ME_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/first-flight-me`

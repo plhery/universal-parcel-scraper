@@ -1,0 +1,16 @@
+{
+  "AirwayBillTrackList": [
+    {
+      "AirWayBillNo": "DUC616804",
+      "Destination": null,
+      "ForwardingNumber": null,
+      "Origin": null,
+      "ShipmentProgress": 0,
+      "ShipperReference": null,
+      "TrackingLogDetails": null,
+      "Weight": null
+    }
+  ],
+  "Code": 1,
+  "Description": "Success"
+}
