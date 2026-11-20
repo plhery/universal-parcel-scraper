@@ -769,10 +769,10 @@ describe('Cainiao projection', () => {
     const sentBack = journey(['RT_EX_SIGNED', 'RT_EX_PICKUP', 'RT_CW_OUTBOUND', 'CW_INBOUND_FAILURE', 'CW_SIGN_IN_SUCCESS', 'PU_PICKUP_SUCCESS']);
     expect(sentBack).toMatchObject({ status: 'exception', current_stage: 'returned' });
     expect(sentBack.events?.map((event) => event.stage)).toEqual(['returned', 'exception', 'exception', 'exception', 'in_transit', 'accepted']);
-    // A parcel the airline would not take turns back at the departure hub: the way back, not transit.
+    // A parcel the airline would not take turns back at the departure hub: a problem, then the way back, not transit.
     const turned = journey(['RT_WH_HO_OUT', 'RT_LH_HO', 'LH_HO_AIRLINE_FAILURE', 'LH_HO_IN_SUCCESS', 'SC_OUTBOUND_SUCCESS', 'PU_PICKUP_SUCCESS']);
     expect(turned).toMatchObject({ status: 'exception', current_stage: 'exception' });
-    expect(turned.events?.map((event) => event.stage)).toEqual(['exception', 'exception', 'in_transit', 'in_transit', 'in_transit', 'accepted']);
+    expect(turned.events?.map((event) => event.stage)).toEqual(['exception', 'exception', 'exception', 'in_transit', 'in_transit', 'accepted']);
   });
 
   it('reads a pickup order the seller closed as a cancellation', () => {

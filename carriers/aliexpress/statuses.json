@@ -758,10 +758,10 @@
       "code": "LH_HO_AIRLINE_FAILURE",
       "wording": "Airline handover problem at departure transport hub",
       "language": "en",
-      "stage": "in_transit",
+      "stage": "exception",
       "confirmedBy": "live",
       "firstSeen": "2026-11-17",
-      "note": "The hand-over to the airline failed at the departure hub, so the flight waits for another hand-over: a delay before the flight, like a sorting center's processing delay, not an exception."
+      "note": "The airline would not take the parcel at the departure hub: a problem, and the way back to the seller followed."
     },
     {
       "code": "SC_OUTBOUND_FAILURE",
