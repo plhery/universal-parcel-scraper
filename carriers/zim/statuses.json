@@ -1,0 +1,17 @@
+{
+  "carrier": "zim",
+  "entries": [
+    {"code": "OCLE", "wording": "Empty container dispatched from inland point to Customer", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it, from a depot or the port; the cargo is not yet with ZIM."},
+    {"code": "IEXF", "wording": "Export gate-in from Customer to Port of Loading", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the port of loading or an inland depot. After a move it reads as transit."},
+    {"code": "OEXF", "wording": "Export Gate-Out from intermediate point", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The loaded container leaves an inland depot for the port of loading."},
+    {"code": "LODF", "wording": "Container was loaded at Port of Loading to Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "CNT_VESSEL_DEPARTURE", "wording": "Vessel departure from Port of Loading to Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "CNT_VESSEL_ARRIVAL", "wording": "Vessel arrival to Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "DISF", "wording": "Container was discharged at Port of Destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "AVLB", "wording": "Container is available to be released / delivered", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker may collect the container at the port of discharge."},
+    {"code": "OICF", "wording": "Import truck departure from Port of Discharge to Customer", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker collects the loaded container for delivery."},
+    {"code": "INME", "wording": "Empty container gate in by Truck", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee unloaded the container and returned it empty. Before the container moved, it is an unused one and has no stage."},
+    {"code": "CNT_CARL", "wording": "Carrier Release", "language": "en", "confirmedBy": "live", "note": "ZIM releases the cargo to the consignee, often before it arrives: a notice, not a move."},
+    {"code": "CNT_CURL", "wording": "Customs release", "language": "en", "confirmedBy": "live", "note": "Customs cleared the cargo, often before it arrives: a notice, not a move."}
+  ]
+}

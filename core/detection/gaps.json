@@ -4396,6 +4396,12 @@
     "reason": "Zimpost's tracker also reads other posts' items, which their own rules name, and its own ZP reference has one example; no public item ends in ZW yet."
   },
   {
+    "carrier": "zim",
+    "pattern": "^ZIMU[A-Z]{3}\\d{7,9}$",
+    "kind": "open",
+    "reason": "Import records list ZIM bills as ZIMU, its carrier code, an office's three letters and a serial number; ZIM's tracker returns each sample. Detection does not offer ZIM."
+  },
+  {
     "carrier": "citi-sprint",
     "kind": "by_design",
     "reason": "Citi-Sprint's portal references open with a prefix each client account sets and its paper waybills carry six pre-printed digits; neither layout is Citi-Sprint's alone, so no rule claims them."
