@@ -20,6 +20,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['68', 'in_transit'], // COLETA RECEBIDA NO CD: the collection reached the distribution centre.
   ['69', 'in_transit'],
   ['101', 'in_transit'], // RECEBIDA E PROCESSADA NO CD
+  ['98', 'in_transit'], // AGUARDANDO CUBAGEM: waiting at the distribution centre to be measured, between 69 and 101.
   ['78', 'in_transit'], // EMBARCADO PARA: loaded for another base.
   ['79', 'in_transit'], // EMBARQUE RECEBIDO NO CD
   ['102', 'in_transit'], // TRANSFERENCIA PARA
@@ -112,7 +113,6 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
 
 /** Bookkeeping the history records beside the scans; it moves nothing. */
 const GAPS: ReadonlyMap<string, string> = new Map([
-  ['98', 'Waiting to be measured, logged with the arrival at the distribution centre; the parcel moves on whatever it says.'],
   ['70', 'A delivery notice; it moves nothing.'],
   ['75', 'Taken off an earlier departure, then logged with the next one; it moves nothing.'],
   ['76', 'Taken off an earlier departure, then logged with the next one; it moves nothing.'],

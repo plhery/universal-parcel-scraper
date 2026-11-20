@@ -34,8 +34,9 @@ itself, or hands some to Correios. Tracked through the API its tracking page rea
   location. The page shows a friendlier message per milestone instead; the adapter keeps neither
   those messages nor the milestone names.
 - The status id, `statid`, stages a scan. The ids and their labels come from the list the page
-  bundles. Waiting to be measured and other bookkeeping move nothing. `EM ROTA` puts the parcel on
-  a delivery round at the delivery base; `PROCESSO DE ENTREGA` follows when the driver takes it.
+  bundles. Waiting at a distribution centre to be measured reads as on the way; a shelf address and
+  other bookkeeping move nothing. `EM ROTA` puts the parcel on a delivery round at the delivery
+  base; `PROCESSO DE ENTREGA` follows when the driver takes it.
 - The page lists each milestone's scans newest first. The adapter sorts all scans by clock, puts
   a later milestone's scan first at the same second, and keeps a repeated scan once.
 - The merchant the reply names is the sender. The delivery estimate is a calendar day, kept until

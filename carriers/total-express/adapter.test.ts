@@ -71,8 +71,8 @@ describe('Total Express HTTP adapter', () => {
       ['2026-03-03T15:22:30', '103', 'in_transit', 'RECEBIDO CD DE: HUB/MATRIZ'],
       ['2026-03-03T12:15:47', '102', 'in_transit', 'TRANSFERENCIA PARA'],
       ['2026-03-02T18:03:23', '101', 'in_transit', 'RECEBIDA E PROCESSADA NO CD - XAA'],
-      // Waiting to be measured moves nothing.
-      ['2026-03-02T18:03:23', '98', null, 'AGUARDANDO CUBAGEM'],
+      // Waiting at the distribution centre to be measured.
+      ['2026-03-02T18:03:23', '98', 'in_transit', 'AGUARDANDO CUBAGEM'],
       ['2026-03-02T18:03:22', '69', 'in_transit', 'COLETA RECEBIDA COM NC NO CD DE'],
       ['2026-03-02T18:03:22', '84', 'accepted', 'COLETA REALIZADA C/ NÃO CONFORMIDADE'],
     ]);
