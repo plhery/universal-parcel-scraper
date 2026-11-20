@@ -608,8 +608,10 @@ describe('DHLink status vocabulary', () => {
       expect(statusMap.stage(code || null, wording.toLowerCase()), `${code} ${wording}`).toBe(entry.stage);
       expect(dhlinkStage(code, '', wording)?.stage, `${code} ${wording}`).toBe(entry.stage);
     }
-    // A line whose codes the map does not know is read by its node's name.
-    expect(dhlinkStage('ZZ001', 'Pending delivery', 'Synthetic note')).toEqual({ stage: 'out_for_delivery', source: 'carrier_map' });
+    // A line whose codes the map does not know is read by its node's name: the rail's pending delivery is DHLink's
+    // step once the last-mile partner has the parcel, before that partner's own round.
+    expect(dhlinkStage('ZZ001', 'Pending delivery', 'Synthetic note')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(dhlinkStage('DE002', 'Pending delivery', 'Out for delivery')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     // The partners' relayed English goes through the shared rules.
     expect(dhlinkStage('', '', 'Out for Delivery SAMPLETOWN NY')).toEqual({ stage: 'out_for_delivery', source: 'wording:language' });
     expect(dhlinkStage('', '', 'Synthetic note')).toBeNull();

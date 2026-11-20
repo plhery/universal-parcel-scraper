@@ -24,7 +24,10 @@ const NODE_CODES: ReadonlyMap<string, Stage> = new Map([
   ['QG002', 'in_transit'],
   ['JH001', 'in_transit'],
   ['J013', 'out_for_delivery'],
-  ['DE002', 'out_for_delivery'],
+  // The rail's "Pending delivery", which DHLink words "Out for delivery": its own step once the last-mile partner
+  // has the parcel, a day or more before that partner's first hub scan on some parcels. The partner's round is the
+  // delivery round.
+  ['DE002', 'in_transit'],
   ['J014', 'delivered'],
   ['DE001', 'delivered'],
 ]);
@@ -36,7 +39,7 @@ const NODE_NAMES: ReadonlyMap<string, Stage> = new Map([
   ['origin leaving', 'in_transit'],
   ['original leaving', 'in_transit'],
   ['destination arrived', 'in_transit'],
-  ['pending delivery', 'out_for_delivery'],
+  ['pending delivery', 'in_transit'],
   ['delivered', 'delivered'],
 ]);
 

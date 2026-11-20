@@ -60,7 +60,9 @@ page makes.
 - A row with a node is read by its code, else by the node's name. Other rows are read by
   DHLink's wordings, GOFO's relayed ones and China Post's Chinese ones, else by the shared
   rules, which read the other partners' relayed English. The hand-over to the US partner ("delivered to UPS/USPS/Fedex"),
-  the last-mile partner's pickup and China Post's hand-over to the airline are transit.
+  the last-mile partner's pickup and China Post's hand-over to the airline are transit. So is
+  the node after that pickup, `DE002` ("Pending delivery", worded "Out for delivery"): it can
+  come a day or more before the partner's first hub scan, so the partner's round is the round.
   DHLink's delivered count makes the parcel delivered when the last row says less.
 - A line on the Hualei platform writes an order row (`货物电子信息已经收到`) when the parcel's data
   reaches it, and a partner a label. Before any scan they are registered; written after DHLink
