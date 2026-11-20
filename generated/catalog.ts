@@ -43771,6 +43771,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pacific-international-lines": {
+    "displayName": "Pacific International Lines",
+    "color": "#d41925",
+    "aliases": [
+      "PIL",
+      "PIL Shipping",
+      "PABV"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pacific-international-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.pilship.com/digital-solutions/",
+    "trackingUrlTemplate": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace&label=containerTandT&module=TrackContStatus&refNo={trackingNumber}",
+    "trackingSearchUrl": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace",
+    "trackingSiteName": "PIL Container T&T",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pack-man": {
     "displayName": "Pack-Man",
     "color": "#06377b",
@@ -66691,6 +66716,7 @@ export const CARRIER_IDS = [
   "oxperta-express",
   "ozon-express-ma",
   "ozon-logistics",
+  "pacific-international-lines",
   "pack-man",
   "packli-punkt",
   "packlink",
@@ -68562,6 +68588,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "oxperta-express": [],
   "ozon-express-ma": [],
   "ozon-logistics": ["ozon-logistics-1","ozon-logistics-2","ozon-logistics-3"],
+  "pacific-international-lines": [],
   "pack-man": [],
   "packli-punkt": [],
   "packlink": ["packlink-1"],

@@ -5534,5 +5534,10 @@
     "carrier": "honour-lane-shipping",
     "kind": "open",
     "reason": "The guest lookup uses equipment identifiers shared across shipping lines and voyages."
+  },
+  {
+    "carrier": "pacific-international-lines",
+    "kind": "open",
+    "reason": "The guest lookup uses equipment identifiers shared across shipping lines and voyages."
   }
 ]

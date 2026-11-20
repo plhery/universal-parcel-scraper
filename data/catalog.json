@@ -43767,6 +43767,31 @@
       }
     ]
   },
+  "pacific-international-lines": {
+    "displayName": "Pacific International Lines",
+    "color": "#d41925",
+    "aliases": [
+      "PIL",
+      "PIL Shipping",
+      "PABV"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pacific-international-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.pilship.com/digital-solutions/",
+    "trackingUrlTemplate": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace&label=containerTandT&module=TrackContStatus&refNo={trackingNumber}",
+    "trackingSearchUrl": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace",
+    "trackingSiteName": "PIL Container T&T",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pack-man": {
     "displayName": "Pack-Man",
     "color": "#06377b",
