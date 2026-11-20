@@ -1,5 +1,36 @@
 {
   "carrier": "zajel",
-  "gap": "No public page shows a Zajel waybill number.",
-  "records": []
+  "records": [
+    {
+      "number": "1592570001",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://zfze.zajel.com/Content/ZAJEL-Z-Lite%20User%20Guide.pdf",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Zajel-FZE domestic document booking",
+        "reportedRole": "Airway Bill Id",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "gls-es"
+        ]
+      },
+      "note": "The indexed Zajel Z-Lite guide shows the carrier assigning this air waybill in a successful booking screenshot. The current public result page returned its application shell without shipment history."
+    }
+  ]
 }
