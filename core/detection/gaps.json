@@ -5012,5 +5012,11 @@
     "pattern": "^D[0-9]{7}$",
     "kind": "open",
     "reason": "Legacy ITC Delivery tracking pages print these D-prefixed invoice references. Detection does not offer ITC Delivery."
+  },
+  {
+    "carrier": "intras-jp",
+    "pattern": "^50[09][0-9]{9}$",
+    "kind": "open",
+    "reason": "The public INTRAS tracker recognizes these twelve-digit INTRAS waybills. Detection does not offer INTRAS."
   }
 ]
