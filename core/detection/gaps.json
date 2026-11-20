@@ -883,6 +883,12 @@
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to Deprisa."
   },
   {
+    "carrier": "der-kurier",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer DER KURIER for the eleven-digit parcel number in a customer report with dated tracking history."
+  },
+  {
     "carrier": "dhl",
     "pattern": "^JJS\\d{18}$",
     "kind": "open",
