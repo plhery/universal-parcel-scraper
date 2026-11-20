@@ -18,6 +18,9 @@ const vocabulary: Record<string, ClassifiedStatus> = {
   'delivery scheduled for next working day': { status: 'in_transit', stage: 'in_transit' },
   'delivery delayed': { status: 'exception', stage: 'exception' },
   'delay caused beyond control': { status: 'exception', stage: 'exception' },
+  // A delay in Blue Dart's network, and a shipment held for its receiver to call Blue Dart: the scan asks for it.
+  'network issues': { status: 'exception', stage: 'exception' },
+  'contact customer service': { status: 'exception', stage: 'exception' },
   'cnee refused id/otp not shared-incorrect': { status: 'exception', stage: 'failed_attempt' },
   'shipment returned back to shipper': { status: 'exception', stage: 'returned' },
 };

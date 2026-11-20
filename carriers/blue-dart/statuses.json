@@ -85,6 +85,20 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Network Issues",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "A delay in Blue Dart's network, read like its other delay notices; the next arrival scan follows."
+    },
+    {
+      "wording": "Contact Customer Service",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "Right after an arrival at the delivery office: the shipment waits for its receiver to call Blue Dart."
+    },
+    {
       "wording": "Cnee Refused Id/Otp Not Shared-Incorrect",
       "language": "en",
       "stage": "failed_attempt",
