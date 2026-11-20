@@ -4874,5 +4874,11 @@
     "pattern": "^888\\d{7}$",
     "kind": "open",
     "reason": "Two indexed PXC Pacific tracker links identify ten-digit AWBs with this prefix. Detection offers other carriers."
+  },
+  {
+    "carrier": "postnet-za",
+    "pattern": "^(?:PNA|PPA)\\d{10,11}$",
+    "kind": "open",
+    "reason": "Customers publish PostNet references beginning PNA and PPA. Detection does not offer PostNet for those references."
   }
 ]
