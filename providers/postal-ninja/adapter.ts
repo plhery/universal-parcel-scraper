@@ -181,6 +181,11 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   const after = (scan: CarrierEvent) => (scan.time ? Date.parse(scan.time)
     : Date.parse(`${String(scan.local_time)}Z`) - EARLIEST_ZONE_MS) > readAt + CLOCK_SKEW_MS;
   const kept = events.filter((scan) => !after(scan));
+  // Postal Ninja words a line's first scan with the parcel in hand "Received by carrier", the step ParcelsApp words
+  // "Accepted by carrier" at the same second. Before any scan moved the parcel it is the acceptance; after one, the
+  // shared rules' transit stands.
+  const first = [...kept].reverse().find((scan) => scan.stage && scan.stage !== 'registered' && scan.stage !== 'pending');
+  if (first?.stage === 'in_transit' && /^received by carrier[.!]?$/i.test(first.description ?? '')) first.stage = 'accepted';
   // Services on different clocks interleave in Postal Ninja's order. Once
   // every scan has an instant, they are ordered by it.
   return { ...result(kept, SOURCE, kept.some((scan) => !scan.time)), ...hints };

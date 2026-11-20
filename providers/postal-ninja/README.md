@@ -196,7 +196,9 @@ capture failure.
   whole (`relayedWordingStage()`), as PostNL's domestic labels are: the shared rules read
   "Driver is en route" as in transit. A map that reads such wording by keywords is not
   asked, since Royal Mail's would read a redelivery request after a missed delivery as an
-  acceptance. Other scans go through the wording rules every provider applies.
+  acceptance. Other scans go through the wording rules every provider applies. A line's
+  "Received by carrier", which those rules read as transit, is the acceptance when no scan
+  moved the parcel before it: ParcelsApp words the same step "Accepted by carrier".
 - `track.toAddress` is never read. At most 1000 events.
 
 ## Rejected approaches

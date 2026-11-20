@@ -42,6 +42,19 @@ describe('Postal Ninja result parsing', () => {
     ]);
   });
 
+  it("reads a line's receipt as the acceptance when no scan moved the parcel before it", () => {
+    const stages = (events: unknown[]) => parsePostalNinjaResponse(withEvents(events), number).events?.map(({ description, stage }) => [description, stage]);
+    expect(stages([
+      { ds: 'Example', dt: '2026-11-06T08:00:00', dsc: 'Order information received' },
+      { ds: 'Example', dt: '2026-11-06T16:23:13', dsc: 'Received by carrier' },
+      { ds: 'Example', dt: '2026-11-07T05:27:58', dsc: 'Departed from sorting center' },
+    ])).toEqual([['Departed from sorting center', 'in_transit'], ['Received by carrier', 'accepted'], ['Order information received', 'registered']]);
+    expect(stages([
+      { ds: 'Example', dt: '2026-11-06T08:00:00', dsc: 'Departed from sorting center' },
+      { ds: 'Example', dt: '2026-11-06T16:23:13', dsc: 'Received by carrier' },
+    ])).toEqual([['Received by carrier', 'in_transit'], ['Departed from sorting center', 'in_transit']]);
+  });
+
   it("reads a marketplace's seller still packing the order as registered", () => {
     const parsed = parsePostalNinjaResponse(withEvents([{ ds: 'Example', dt: '2026-08-12T08:00:00',
       dsc: 'Awaiting shipping confirmation. The seller has already received your order and is preparing the packaging for shipping.' }]), number);
