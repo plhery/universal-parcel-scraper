@@ -215,8 +215,10 @@ It declines ambiguous images and layouts outside its supported geometry, and its
 displayed images. Readiness and clicks identify the unique image pair inside JD’s
 verification modal, so changing inner widget classes does not break the helper.
 Its official page retains the original guest session and submits tracking only after
-accepted verification. After a visual abstention, the helper may refresh once in the same session when
-the remaining lookup budget permits it. Both new images must load and settle before analysis;
+accepted verification. After a visual abstention, the helper may refresh up to three times in the same
+session while the remaining lookup budget permits it: the matcher declines puzzles, not waybills, so a
+fresh puzzle is a fresh chance. It waits a second after a puzzle appears before refreshing it, since
+JD's widget ignores a refresh clicked sooner. Both new images must load and settle before analysis;
 worker failures and submitted refusals are not retried. Diagnostics retain only the bounded
 attempt reasons and refresh count. Both the request and response bind the whole
 waybill. A planned click alone is not accepted verification.
