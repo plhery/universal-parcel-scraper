@@ -1,0 +1,9 @@
+{
+  "carrier": "pack-express-gt",
+  "entries": [
+    { "code": "creado", "wording": "Creado", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "code": "recolectada", "wording": "Recolectado", "stage": "accepted", "language": "es", "confirmedBy": "live" },
+    { "code": "en_ruta", "wording": "En ruta", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": "entregado", "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
+}

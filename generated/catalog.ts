@@ -44092,6 +44092,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pack-express-gt": {
+    "displayName": "Pack Express Guatemala",
+    "color": "#0C2340",
+    "aliases": [
+      "Pack Express",
+      "PackExpress GT"
+    ],
+    "countries": [
+      "GT"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pack-express-gt",
+      "localClocks": true
+    },
+    "canaryUrl": "https://packexpress.com.gt/rastreo-de-envios/",
+    "trackingUrlTemplate": "https://packexpress.com.gt/rastreo-de-envios/?guia={trackingNumber}",
+    "trackingSearchUrl": "https://packexpress.com.gt/rastreo-de-envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pack-man": {
     "displayName": "Pack-Man",
     "color": "#06377b",
@@ -67221,6 +67244,7 @@ export const CARRIER_IDS = [
   "oxperta-express",
   "ozon-express-ma",
   "ozon-logistics",
+  "pack-express-gt",
   "pack-man",
   "packli-punkt",
   "packlink",
@@ -69114,6 +69138,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "oxperta-express": [],
   "ozon-express-ma": [],
   "ozon-logistics": ["ozon-logistics-1","ozon-logistics-2","ozon-logistics-3"],
+  "pack-express-gt": [],
   "pack-man": [],
   "packli-punkt": [],
   "packlink": ["packlink-1"],

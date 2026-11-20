@@ -44088,6 +44088,29 @@
       }
     ]
   },
+  "pack-express-gt": {
+    "displayName": "Pack Express Guatemala",
+    "color": "#0C2340",
+    "aliases": [
+      "Pack Express",
+      "PackExpress GT"
+    ],
+    "countries": [
+      "GT"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pack-express-gt",
+      "localClocks": true
+    },
+    "canaryUrl": "https://packexpress.com.gt/rastreo-de-envios/",
+    "trackingUrlTemplate": "https://packexpress.com.gt/rastreo-de-envios/?guia={trackingNumber}",
+    "trackingSearchUrl": "https://packexpress.com.gt/rastreo-de-envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pack-man": {
     "displayName": "Pack-Man",
     "color": "#06377b",

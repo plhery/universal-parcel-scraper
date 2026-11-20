@@ -5652,5 +5652,10 @@
     "kind": "open",
     "carrier": "amanat-logistics-af",
     "reason": "The carrier confirms one published tracking number. Explicit selection is available while issued formats and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "pack-express-gt",
+    "reason": "The guest tracker confirms the published PE guide. Explicit selection is available while issuance and overlaps remain open."
   }
 ]

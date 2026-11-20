@@ -581,6 +581,7 @@ import { adapter as osmWorldwide } from '../carriers/osm-worldwide/adapter.js';
 import { adapter as overseasExpress } from '../carriers/overseas-express/adapter.js';
 import { adapter as ozonLogistics } from '../carriers/ozon-logistics/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
+import { adapter as packExpressGt } from '../carriers/pack-express-gt/adapter.js';
 import { adapter as packMan } from '../carriers/pack-man/adapter.js';
 import { adapter as packeta } from '../carriers/packeta/adapter.js';
 import { adapter as packlink } from '../carriers/packlink/adapter.js';
@@ -1501,6 +1502,7 @@ export const REGISTRY: RegistryDefinition = {
     "overseas-express": overseasExpress,
     "ozon-logistics": ozonLogistics,
     "paack": paack,
+    "pack-express-gt": packExpressGt,
     "pack-man": packMan,
     "packeta": packeta,
     "packlink": packlink,
@@ -3038,6 +3040,7 @@ export const REGISTRY: RegistryDefinition = {
     "ozon-express-ma": "universal",
     "ozon-logistics": "ozon-logistics",
     "paack": "paack",
+    "pack-express-gt": "pack-express-gt",
     "pack-man": "pack-man",
     "packeta": "packeta",
     "packli-punkt": "universal",

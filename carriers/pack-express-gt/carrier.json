@@ -1,0 +1,22 @@
+{
+  "id": "pack-express-gt",
+  "displayName": "Pack Express Guatemala",
+  "aliases": ["Pack Express", "PackExpress GT"],
+  "region": { "countries": ["GT"] },
+  "brand": { "color": "#0C2340" },
+  "selectable": true,
+  "timezone": "America/Guatemala",
+  "tracking": { "mode": "automatic", "adapter": "pack-express-gt", "steps": ["direct"], "localClocks": true },
+  "capabilities": ["history", "provider_code"],
+  "portal": {
+    "url": "https://packexpress.com.gt/rastreo-de-envios/?guia={trackingNumber}",
+    "searchUrl": "https://packexpress.com.gt/rastreo-de-envios/",
+    "canaryUrl": "https://packexpress.com.gt/rastreo-de-envios/",
+    "shows": ["status", "history", "route_details", "reception_details", "device_details", "live_vehicle_position"],
+    "scraped": ["status", "history", "provider_code"],
+    "discarded": ["route_details", "reception_details", "device_details", "live_vehicle_position"],
+    "unavailable": ["wall_clock_offsets", "expected_delivery"]
+  },
+  "links": [],
+  "detection": []
+}
