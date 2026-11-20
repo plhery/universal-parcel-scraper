@@ -56,6 +56,9 @@
     {"wording": "Arrived at GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "GOFO's row on a line it delivers, copied with its words: the last-mile carrier's hub on the way."},
     {"wording": "Loaded on Vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "GOFO's row on the same line, between its regional hub's arrival and departure."},
     {"wording": "Departed GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "GOFO's row on the same line."},
+    {"wording": "Departure Scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The last-mile carrier's departure scan on a line to Cyprus, after the import clearance."},
+    {"wording": "Arrival Scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "Its arrival scan an hour later on the same line."},
+    {"wording": "sorted_at_terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "A last-mile carrier's status token, as SXW copies it: sorted at its terminal."},
     {"wording": "Returned parcel has been recieved by shipper", "language": "en", "stage": "returned", "confirmedBy": "live", "note": "Spelled so. The seller took the parcel back at the origin; it can send it again under the same waybill, and the rows that follow then lead."}
   ]
 }
