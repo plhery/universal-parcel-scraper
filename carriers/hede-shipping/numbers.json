@@ -1,0 +1,23 @@
+{
+  "carrier": "hede-shipping",
+  "records": [
+    {
+      "number": "FFAU7750036",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.importgenius.com/importers/cn-link-freight-services-inc",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest names this full container under the Hede bill. The carrier’s equipment search echoed the exact container and returned its dated movements."
+    }
+  ]
+}

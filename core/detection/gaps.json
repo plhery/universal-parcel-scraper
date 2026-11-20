@@ -5669,5 +5669,10 @@
     "carrier": "united-africa-feeder-line",
     "kind": "open",
     "reason": "A published UFLN bill resolves to the exact booking. The scope of a future carrier prefix rule is open."
+  },
+  {
+    "carrier": "hede-shipping",
+    "kind": "open",
+    "reason": "Container numbers identify equipment and may be shared across ocean lines. Hede’s native lookup confirms the whole equipment number."
   }
 ]

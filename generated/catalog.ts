@@ -30026,6 +30026,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hede-shipping": {
+    "displayName": "Hede Shipping",
+    "color": "#1554a0",
+    "aliases": [
+      "Hede Hong Kong",
+      "Hede Hongkong International Shipping",
+      "合德海运",
+      "HDUJ"
+    ],
+    "countries": [
+      "HK",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hede-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://hede.orcapayments.app/container-tracking/",
+    "trackingUrlTemplate": "http://elines.hedehk.com/cargoDynamicEN",
+    "trackingSearchUrl": "https://hede.orcapayments.app/container-tracking/",
+    "trackingSiteName": "Hede Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hellmann": {
     "displayName": "Hellmann Worldwide Logistics",
     "color": "#004c99",
@@ -66962,6 +66989,7 @@ export const CARRIER_IDS = [
   "hct-logistics",
   "hecny-ecom",
   "hecny-shipping",
+  "hede-shipping",
   "hellmann",
   "helthjem",
   "hepsijet",
@@ -68860,6 +68888,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hct-logistics": [],
   "hecny-ecom": [],
   "hecny-shipping": [],
+  "hede-shipping": [],
   "hellmann": [],
   "helthjem": ["helthjem-1","helthjem-2"],
   "hepsijet": [],
