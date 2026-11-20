@@ -5647,5 +5647,10 @@
     "kind": "open",
     "carrier": "livra-lynx",
     "reason": "The native tracker confirms its public numeric parcel example. Explicit selection is available while issuance and numeric overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "amanat-logistics-af",
+    "reason": "The carrier confirms one published tracking number. Explicit selection is available while issued formats and overlaps remain open."
   }
 ]

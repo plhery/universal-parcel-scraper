@@ -8412,6 +8412,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "amanat-logistics-af": {
+    "displayName": "Amanat Logistics",
+    "color": "#542146",
+    "aliases": [
+      "Amanat Logistics Kandahar",
+      "Amanat Logistics Afghanistan"
+    ],
+    "countries": [
+      "AF",
+      "UZ",
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kabul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "amanat-logistics-af",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://www.amanatlogistics.com/tracking/orders",
+    "trackingUrlTemplate": "https://www.amanatlogistics.com/tracking/orders?lang=en&code={trackingNumber}",
+    "trackingSearchUrl": "https://www.amanatlogistics.com/tracking/orders",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "amazon-order": {
     "displayName": "Amazon order",
     "displayNames": {
@@ -66147,6 +66173,7 @@ export const CARRIER_IDS = [
   "altex-curier",
   "am-home-delivery",
   "amalgamated-distribution",
+  "amanat-logistics-af",
   "amazon-order",
   "ambro-express",
   "ameex",
@@ -68039,6 +68066,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "altex-curier": [],
   "am-home-delivery": [],
   "amalgamated-distribution": [],
+  "amanat-logistics-af": [],
   "amazon-order": [],
   "ambro-express": [],
   "ameex": [],

@@ -1,0 +1,18 @@
+{
+  "carrier": "amanat-logistics-af",
+  "entries": [
+    { "code": null, "wording": "Docs Created — Kandahar", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Customs Cleared — Kandahar", "stage": "customs", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Departed Kandahar", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Reached Kabul", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Passed Salang", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Reached Hairatan", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Loaded to TAS Truck", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Customs Cleared — Hairatan", "stage": "customs", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "At Termez Border", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "On the Way to Tashkent", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Reached Tashkent Airport", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Booked & Cleared — Awaiting Flight", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Delivered to Delhi", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

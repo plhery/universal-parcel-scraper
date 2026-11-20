@@ -1,0 +1,22 @@
+{
+  "id": "amanat-logistics-af",
+  "displayName": "Amanat Logistics",
+  "aliases": ["Amanat Logistics Kandahar", "Amanat Logistics Afghanistan"],
+  "region": { "countries": ["AF", "UZ", "IN"] },
+  "brand": { "color": "#542146" },
+  "selectable": true,
+  "timezone": "Asia/Kabul",
+  "tracking": { "mode": "automatic", "adapter": "amanat-logistics-af", "steps": ["direct"], "localClocks": true, "dateOnlyScans": true },
+  "capabilities": ["history"],
+  "portal": {
+    "url": "https://www.amanatlogistics.com/tracking/orders?lang=en&code={trackingNumber}",
+    "searchUrl": "https://www.amanatlogistics.com/tracking/orders",
+    "canaryUrl": "https://www.amanatlogistics.com/tracking/orders",
+    "shows": ["status", "history", "gross_weight", "route_and_cargo_details", "step_notes"],
+    "scraped": ["status", "history", "gross_weight"],
+    "discarded": ["route_and_cargo_details", "step_notes", "current_date_when_earlier_than_previous_steps"],
+    "unavailable": ["clock_times", "clock_offsets", "expected_delivery"]
+  },
+  "links": [],
+  "detection": []
+}
