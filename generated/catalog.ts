@@ -44682,6 +44682,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "parcelninja": {
+    "displayName": "Parcelninja",
+    "color": "#172d38",
+    "aliases": [
+      "Parcel Ninja",
+      "Parcelninja South Africa"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "parcelninja",
+      "localClocks": true
+    },
+    "canaryUrl": "https://store.parcelninja.com/tracking.aspx",
+    "trackingUrlTemplate": "https://store.parcelninja.com/tracking.aspx?WaybillNo={trackingNumber}",
+    "trackingSearchUrl": "https://store.parcelninja.com/tracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "parcelpoint": {
     "displayName": "ParcelPoint",
     "color": "#000000",
@@ -66834,6 +66857,7 @@ export const CARRIER_IDS = [
   "parcel-one",
   "parcelabc",
   "parceljet",
+  "parcelninja",
   "parcelpoint",
   "pargo",
   "parts-express",
@@ -68710,6 +68734,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "parcel-one": [],
   "parcelabc": [],
   "parceljet": [],
+  "parcelninja": [],
   "parcelpoint": [],
   "pargo": ["pargo-1"],
   "parts-express": [],

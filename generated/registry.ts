@@ -582,6 +582,7 @@ import { adapter as paqueteriaVencedor } from '../carriers/paqueteria-vencedor/a
 import { adapter as paquetex } from '../carriers/paquetex/adapter.js';
 import { adapter as paquetexpress } from '../carriers/paquetexpress/adapter.js';
 import { adapter as parcelabc } from '../carriers/parcelabc/adapter.js';
+import { adapter as parcelninja } from '../carriers/parcelninja/adapter.js';
 import { adapter as parcelpoint } from '../carriers/parcelpoint/adapter.js';
 import { adapter as pasarex } from '../carriers/pasarex/adapter.js';
 import { adapter as passport } from '../carriers/passport/adapter.js';
@@ -1485,6 +1486,7 @@ export const REGISTRY: RegistryDefinition = {
     "paquetex": paquetex,
     "paquetexpress": paquetexpress,
     "parcelabc": parcelabc,
+    "parcelninja": parcelninja,
     "parcelpoint": parcelpoint,
     "pasarex": pasarex,
     "passport": passport,
@@ -3022,6 +3024,7 @@ export const REGISTRY: RegistryDefinition = {
     "parcelabc": "parcelabc",
     "parcelforce": "royal-mail",
     "parceljet": "universal",
+    "parcelninja": "parcelninja",
     "parcelpoint": "parcelpoint",
     "pargo": "universal",
     "parts-express": "universal",

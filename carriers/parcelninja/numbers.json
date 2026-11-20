@@ -1,0 +1,17 @@
+{
+  "carrier": "parcelninja",
+  "records": [
+    {
+      "number": "PNJ62131222",
+      "role": "shipment",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://boolanga.zohodesk.eu/portal/en/kb/articles/how-can-i-track-my-order",
+        "access": "full_page"
+      },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "A shipper's public tracking help lists this as its South African waybill example. Parcelninja's public tracker returned ten dated events in November 2026."
+    }
+  ]
+}
