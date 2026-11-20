@@ -3,7 +3,7 @@
   "records": [
     {
       "number": "JBX1750798",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://zh.wikisource.org/wiki/%E4%B8%8A%E6%B5%B7%E5%B8%82%E7%AC%AC%E4%B8%89%E4%B8%AD%E7%BA%A7%E4%BA%BA%E6%B0%91%E6%B3%95%E9%99%A2%EF%BC%882024%EF%BC%89%E6%B2%AA03%E6%B0%91%E7%BB%8810%E5%8F%B7%E6%B0%91%E4%BA%8B%E5%88%A4%E5%86%B3%E4%B9%A6",
@@ -24,7 +24,7 @@
           "australia-post"
         ]
       },
-      "note": "The published judgment quotes Shanghai Junjia confirming that it handled this shipment for Jianmao. The shipment label and tracking reference came through the forwarding arrangement. UOF’s tracking page returned no shipment history in the current lookup."
+      "note": "The published judgment quotes Shanghai Junjia confirming that it handled this shipment for Jianmao. The public lookup returns the same waybill and its history through delivery. The number came through the forwarding arrangement, so its broader scope as a UOF number remains unverified."
     }
   ]
 }

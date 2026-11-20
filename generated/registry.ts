@@ -810,6 +810,7 @@ import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
 import { adapter as unitedDeliveryService } from '../carriers/united-delivery-service/adapter.js';
 import { adapter as uniuni } from '../carriers/uniuni/adapter.js';
+import { adapter as uofExpress } from '../carriers/uof-express/adapter.js';
 import { adapter as upaya } from '../carriers/upaya/adapter.js';
 import { adapter as ups } from '../carriers/ups/adapter.js';
 import { adapter as urbano } from '../carriers/urbano/adapter.js';
@@ -1695,6 +1696,7 @@ export const REGISTRY: RegistryDefinition = {
     "ukrposhta": ukrposhta,
     "united-delivery-service": unitedDeliveryService,
     "uniuni": uniuni,
+    "uof-express": uofExpress,
     "upaya": upaya,
     "ups": ups,
     "urbano": urbano,
@@ -3467,7 +3469,7 @@ export const REGISTRY: RegistryDefinition = {
     "unitrade": "universal",
     "uniuni": "uniuni",
     "unknown": "universal",
-    "uof-express": "universal",
+    "uof-express": "uof-express",
     "uparcel": "universal",
     "upaya": "upaya",
     "ups": "ups",

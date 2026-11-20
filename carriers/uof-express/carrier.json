@@ -22,18 +22,44 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "uof-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination"
+  ],
   "portal": {
     "url": "https://www.uofexp.com/search_order.aspx?trackNumber={trackingNumber}",
     "searchUrl": "https://www.uofexp.com/search_order.aspx",
     "canaryUrl": "https://www.uofexp.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "canonical_tracking_number",
+      "parcel_count"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination"
+    ],
+    "discarded": [
+      "canonical_tracking_number",
+      "parcel_count"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

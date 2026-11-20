@@ -1,4 +1,15 @@
 {
   "carrier": "uof-express",
-  "entries": []
+  "entries": [
+    { "wording": "配达完了", "stage": "delivered", "confirmedBy": "live" },
+    { "wording": "通関許可", "stage": "in_transit", "language": "ja", "confirmedBy": "live", "note": "Inbound customs release." },
+    { "wording": "通関予定7/23", "language": "ja", "confirmedBy": "live", "note": "A customs schedule, not a clearance or a movement." },
+    { "wording": "資料検査", "language": "ja", "confirmedBy": "live", "note": "Document inspection does not say the shipment is held." },
+    { "wording": "抵达目的港", "stage": "in_transit", "language": "zh", "confirmedBy": "live" },
+    { "wording": "快件已出港", "stage": "in_transit", "language": "zh", "confirmedBy": "live" },
+    { "wording": "出口报关完成", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Export clearance." },
+    { "wording": "出口报关中 计划开船日7/17", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Export clearance is underway. The sailing date is a plan." },
+    { "wording": "快件操作完成", "stage": "in_transit", "language": "zh", "confirmedBy": "live" },
+    { "wording": "快件到达作业中心", "stage": "in_transit", "language": "zh", "confirmedBy": "live" }
+  ]
 }
