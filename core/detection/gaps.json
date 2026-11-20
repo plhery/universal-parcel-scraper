@@ -5624,5 +5624,10 @@
     "carrier": "ignazio-messina",
     "kind": "open",
     "reason": "The guest route uses a shared container equipment identifier. Select Ignazio Messina explicitly."
+  },
+  {
+    "carrier": "kenya-airways-cargo",
+    "kind": "open",
+    "reason": "The guest search confirms the full Kenya Airways Cargo air waybill. Select Kenya Airways Cargo explicitly."
   }
 ]

@@ -448,6 +448,7 @@ import { adapter as junfengInternational } from '../carriers/junfeng-internation
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
 import { adapter as kecEcommerce } from '../carriers/kec-ecommerce/adapter.js';
+import { adapter as kenyaAirwaysCargo } from '../carriers/kenya-airways-cargo/adapter.js';
 import { adapter as kex } from '../carriers/kex/adapter.js';
 import { adapter as kexExpressHk } from '../carriers/kex-express-hk/adapter.js';
 import { adapter as kingKongExpress } from '../carriers/king-kong-express/adapter.js';
@@ -1365,6 +1366,7 @@ export const REGISTRY: RegistryDefinition = {
     "kargoturk": kargoturk,
     "kazpost": kazpost,
     "kec-ecommerce": kecEcommerce,
+    "kenya-airways-cargo": kenyaAirwaysCargo,
     "kex": kex,
     "kex-express-hk": kexExpressHk,
     "king-kong-express": kingKongExpress,
@@ -2756,6 +2758,7 @@ export const REGISTRY: RegistryDefinition = {
     "kazpost": "kazpost",
     "kdz-express": "universal",
     "kec-ecommerce": "kec-ecommerce",
+    "kenya-airways-cargo": "kenya-airways-cargo",
     "kerry-express-tw": "universal",
     "kerry-tj": "universal",
     "kex": "kex",

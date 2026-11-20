@@ -1,0 +1,37 @@
+{
+  "carrier": "kenya-airways-cargo",
+  "entries": [
+    {
+      "code": "BKD",
+      "wording": "Booking confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The guest response supplies the code and the official tracker supplies the English label."
+    },
+    {
+      "code": "RCS",
+      "wording": "Shipment accepted",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The guest response supplies the code and the official tracker supplies the English label."
+    },
+    {
+      "code": "MAN",
+      "wording": "Manifested in",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The guest response supplies the code and the official tracker supplies the English label."
+    },
+    {
+      "code": "DEP",
+      "wording": "Departed from",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The guest response supplies the code and the official tracker supplies the English label."
+    }
+  ]
+}

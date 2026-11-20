@@ -1,0 +1,65 @@
+{
+  "trackingDatas": [
+    {
+      "trackAWBNo": "706-50587725",
+      "awbNo": "50587725",
+      "awbStatus": "BKD",
+      "pieces": "1"
+    },
+    {
+      "trackAWBNo": "706-50587725",
+      "awbNo": "50587725",
+      "awbStatus": "RCS",
+      "pieces": "1"
+    },
+    {
+      "trackAWBNo": "706-50587725",
+      "awbNo": "50587725",
+      "awbStatus": "MAN",
+      "pieces": "1"
+    },
+    {
+      "trackAWBNo": "706-50587725",
+      "awbNo": "50587725",
+      "awbStatus": "DEP",
+      "pieces": "1"
+    }
+  ],
+  "trackingMilestones": [
+    {
+      "awbNo": "50587725",
+      "action": "BKD",
+      "createdon": "07-Aug-2023 15:15",
+      "station": "DSS",
+      "actualPieces": "1",
+      "pieces": "1"
+    },
+    {
+      "awbNo": "50587725",
+      "action": "RCS",
+      "createdon": "08-Aug-2023 10:27",
+      "station": "DSS",
+      "actualPieces": "1",
+      "pieces": "1"
+    },
+    {
+      "awbNo": "50587725",
+      "action": "MAN",
+      "createdon": "08-Aug-2023 21:04",
+      "station": "DSS",
+      "actualPieces": "1",
+      "pieces": "1"
+    },
+    {
+      "awbNo": "50587725",
+      "action": "DEP",
+      "createdon": "08-Aug-2023 21:04",
+      "station": "DSS",
+      "actualPieces": "1",
+      "pieces": "1"
+    }
+  ],
+  "trackingOffloadDatas": [
+    {}
+  ]
+}

@@ -35410,6 +35410,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "kenya-airways-cargo": {
+    "displayName": "Kenya Airways Cargo",
+    "color": "#df1024",
+    "aliases": [
+      "KQ Cargo",
+      "Kenya Airways Air Cargo"
+    ],
+    "countries": [
+      "KE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "kenya-airways-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargotrack.kenya-airways.com/",
+    "trackingUrlTemplate": "https://cargotrack.kenya-airways.com/",
+    "trackingSearchUrl": "https://cargotrack.kenya-airways.com/",
+    "trackingSiteName": "KQ Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kerry-express-tw": {
     "displayName": "KE 嘉里快遞",
     "color": "#f36f21",
@@ -66894,6 +66918,7 @@ export const CARRIER_IDS = [
   "kazpost",
   "kdz-express",
   "kec-ecommerce",
+  "kenya-airways-cargo",
   "kerry-express-tw",
   "kerry-tj",
   "kex",
@@ -68783,6 +68808,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kazpost": ["kazpost-s10"],
   "kdz-express": [],
   "kec-ecommerce": [],
+  "kenya-airways-cargo": [],
   "kerry-express-tw": [],
   "kerry-tj": [],
   "kex": [],
