@@ -261,6 +261,13 @@ function parseShipment(payload: unknown, trackingNumber: string): { result: Carr
     };
   });
 
+  // A parcel La Poste first scans on its platforms after the sender's announcement, with nothing between them that
+  // moved the parcel, was handed over there without a separate taking in charge (PC1): that scan is the acceptance.
+  const oldestFirst = rawEvents.length === kept.length ? [...events].reverse() : [];
+  const moved = oldestFirst.findIndex((event) => event.stage && event.stage !== 'registered');
+  const firstMove = moved > 0 && oldestFirst.slice(0, moved).some((event) => event.stage === 'registered') ? oldestFirst[moved] : undefined;
+  if (firstMove?.stage === 'in_transit' && /(?:^|\/)ET1$/.test(firstMove.provider_code ?? '')) firstMove.stage = 'accepted';
+
   const timeline = records(shipment.timeline)
     .filter((step) => step.status === true)
     .sort((left, right) => (number(right.id) ?? -1) - (number(left.id) ?? -1));

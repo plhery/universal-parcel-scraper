@@ -79,6 +79,9 @@ input, so recognition reads them as unknown rather than as a transport failure.
   the arrival at the delivery site being step 3. The delivery, a failed attempt or the pickup
   point's scan follows the same day, or `MD1` again the next day when the round left the parcel
   behind; La Poste sends no other round scan.
+- A parcel handed over at a platform has no taking in charge (`PC1`): its first scan there
+  right after the sender's announcement, `ET1` ("en transit sur nos plateformes logistiques"),
+  is the acceptance.
 - `PB1` is a delivery that could not happen that day. Parcels word it as a
   coming delivery round, so the code makes it a failed attempt.
 - `AG1` means ready for pickup whatever its group or sentence. `DO1` is customs

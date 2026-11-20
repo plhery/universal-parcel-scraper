@@ -91,7 +91,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "Event code: in transit."
+      "note": "Event code: in transit. Right after the sender's announcement, without a taking in charge, it is the acceptance."
     },
     {
       "code": "EP1",

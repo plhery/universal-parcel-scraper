@@ -506,6 +506,25 @@ describe('La Poste response normalization', () => {
     expect(announced('DISINS', '2026-01-08T00:00:00+01:00').events?.[0]).toMatchObject({ time: '2026-01-08T00:00:00+01:00' });
   });
 
+  it('reads the first scan on La Poste\'s platforms as the acceptance when nothing before it moved the parcel', () => {
+    const parse = (event: LaPosteEvent[]) => {
+      const fixture = deliveredFixture();
+      fixture[0]!.shipment.isFinal = false;
+      fixture[0]!.shipment.timeline = [];
+      fixture[0]!.shipment.event = event;
+      return parseLaPosteTrackingResponse(fixture, TRACKING_NUMBER);
+    };
+    const announced = { group: 'EXPANN', code: 'DR1', label: 'Votre Colissimo va bientôt nous être confié !', date: '2026-01-08T15:34:18+01:00', country: 'FR', order: 1 };
+    const platform = { group: 'ACHNAT', code: 'ET1', label: 'Votre colis est en transit sur nos plateformes logistiques.', date: '2026-01-09T17:02:23+01:00', country: 'FR', order: 2 };
+    const again = { ...platform, date: '2026-01-09T20:54:27+01:00', order: 3 };
+    const first = parse([platform, announced]);
+    expect(first).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(parse([again, platform, announced]).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+    // After La Poste took the parcel in charge, the platform scan is a step on the way.
+    const taken = { group: 'EDRDEP', code: 'PC1', label: 'Votre colis est pris en charge par La Poste.', date: '2026-01-09T12:00:00+01:00', country: 'FR', order: 2 };
+    expect(parse([{ ...platform, order: 3 }, taken, announced]).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+  });
+
   it('uses timeline data when an announced parcel has no event history', () => {
     const fixture = deliveredFixture();
     fixture[0]!.shipment.isFinal = false;
