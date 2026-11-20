@@ -7511,7 +7511,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "airways-courier-in",
+      "localClocks": true
     },
     "canaryUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
     "trackingUrlTemplate": "https://airwayscourier.co.in/Tracking_new.aspx?awb_no={trackingNumber}&type=w",

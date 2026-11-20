@@ -1,4 +1,41 @@
 {
   "carrier": "airways-courier-in",
-  "entries": []
+  "entries": [
+    {
+      "wording": "DELIVERED at 17:27:56 (SIGN STAMP)",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "SHIPMENT OUT FOR DELIVERY",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ARRIVED AT DESTINATION",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "PROCESS FOR AIRWAYS-GURGAON",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "PROCESS FOR AIRWAYS DELHI(APO)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "SHIPMENT BOOKED",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }
