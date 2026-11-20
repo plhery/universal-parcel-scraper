@@ -1176,6 +1176,22 @@ describe('17TRACK result parsing', () => {
       '2026-11-11T02:09:00.000Z', '2026-11-10T22:03:00.000Z', '2026-11-10T20:58:00.000Z']);
   });
 
+  it("reads the origin post's scans Correo Argentino relays, marked (Otb) or (EDI-received), on that post's clock", () => {
+    const row = (date: string, time: string, description: string) => ({ time_iso: `${date}T${time}+00:00`, time_utc: null,
+      time_raw: { date, time, timezone: null }, description, location: 'CHINA', stage: null, sub_status: 'InTransit_Other' });
+    const times = (requested: string) => parse17TrackResponse({ meta: { code: 200 }, shipments: [{ number: requested, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key: 1121, name: 'Correo Argentino', country: 'AR' },
+        events: [
+          row('2026-11-07', '18:40:00', 'Send item abroad (EDI-received)'),
+          row('2026-11-05', '16:35:00', 'Receive item at office of exchange (Otb)'),
+          row('2026-11-05', '09:12:00', 'Receive item from customer (Otb)'),
+        ] }] } } }] }, requested).events?.map(e => e.time);
+    // The origin post's receipt at 09:12 and its office of exchange at 16:35 Beijing time, under 17TRACK's +00:00.
+    expect(times('ZZ123456785CN')).toEqual(['2026-11-07T10:40:00.000Z', '2026-11-05T08:35:00.000Z', '2026-11-05T01:12:00.000Z']);
+    // An item Correo Argentino sends keeps 17TRACK's reading.
+    expect(times('ZZ123456785AR')).toEqual(['2026-11-07T18:40:00.000Z', '2026-11-05T16:35:00.000Z', '2026-11-05T09:12:00.000Z']);
+  });
+
   it('reads Correos de El Salvador\'s scans in UTC, its copies of the origin post\'s and Swiss Post\'s relays on their offices\' clocks', () => {
     const row = (date: string, time: string, offset: string | null, description: string, location: string | null = null) => ({
       time_iso: `${date}T${time}${offset ?? '-05:00'}`, time_utc: null, time_raw: { date, time, timezone: offset },
