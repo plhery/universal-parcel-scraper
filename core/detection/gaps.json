@@ -4712,5 +4712,11 @@
     "pattern": "^\\d{19}$",
     "kind": "open",
     "reason": "Easytrack documents a 19-character tracking number and its archived road tracking link contains an all-digit example. Detection offers no carrier for that input."
+  },
+  {
+    "carrier": "zajel",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "The Zajel Z-Lite guide shows a ten-digit Zajel air waybill. The current detection rules offer other carriers for that input."
   }
 ]
