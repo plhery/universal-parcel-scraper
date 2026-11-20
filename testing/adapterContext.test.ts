@@ -105,6 +105,7 @@ const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   'wallenius-wilhelmsen': ['chromium'],
   oocl: ['chromium'],
   maersk: ['chromium'],
+  hmm: ['chromium'],
   veho: ['service'],
   mandae: ['service'],
   yunexpress: ['service', 'chromium'], 'Postal Ninja': ['service', 'chromium'],

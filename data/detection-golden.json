@@ -94493,6 +94493,30 @@
     ]
   },
   {
+    "input": "HDMUNBOM63007200",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HDMUSHAZ3PM78800",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HDMUTAOM77162500",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HDMUTSNM63064100",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "HE0000451419",
     "carrier": "unknown",
     "confidence": "low",

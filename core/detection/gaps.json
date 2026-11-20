@@ -6076,5 +6076,11 @@
     "pattern": "^COSU\\d{10}$",
     "kind": "open",
     "reason": "Import records list COSCO master bills as COSU, its carrier code, and the booking's ten digits; COSCO's tracker returns each sample. Detection does not offer COSCO."
+  },
+  {
+    "carrier": "hmm",
+    "pattern": "^HDMU[A-Z]{4}[A-Z0-9]{8}$",
+    "kind": "open",
+    "reason": "Import records list HMM master bills as HDMU, its carrier code, and the twelve-character bill; HMM's tracker returns each sample. Detection does not offer HMM."
   }
 ]

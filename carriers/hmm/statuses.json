@@ -1,0 +1,19 @@
+{
+  "carrier": "hmm",
+  "entries": [
+    {"wording": "Export Empty Container Released", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not yet with HMM."},
+    {"wording": "Export Truck Gate In to Terminal", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading."},
+    {"wording": "Vessel Loading at POL", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Departure from POL", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Arrival at T/S Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Berthing at T/S Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Discharged at T/S Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Loading at T/S Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Departure from T/S Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Arrival at POD", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Berthing at POD", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel Discharged at POD", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Import Truck Gate Out from Terminal", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The loaded container leaves the port of discharge by truck for the consignee."},
+    {"wording": "Import Empty Container Returned", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee unloaded the container and returned it empty, the last move of the shipment."}
+  ]
+}
