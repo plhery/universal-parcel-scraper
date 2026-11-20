@@ -1,0 +1,12 @@
+{
+  "carrier": "icasa-cargo",
+  "entries": [
+    { "code": null, "wording": "Reservado", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Aceptado", "stage": "accepted", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Manifestado", "stage": null, "language": "es", "confirmedBy": "live",
+      "note": "Manifesting the cargo lists it for flight. The carrier confirms departure with a separate Partió scan." },
+    { "code": null, "wording": "Partió", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Arribó", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
+}

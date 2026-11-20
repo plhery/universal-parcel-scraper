@@ -1,0 +1,27 @@
+{
+  "id": "ibex-express-bo",
+  "displayName": "IBEX Express",
+  "aliases": ["IBEX Express Ltda."],
+  "region": { "countries": ["BO"] },
+  "brand": { "color": "#d51a2d" },
+  "selectable": true,
+  "timezone": "America/La_Paz",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ibex-express-bo",
+    "steps": ["direct"],
+    "localClocks": true
+  },
+  "capabilities": ["history"],
+  "portal": {
+    "url": "https://www.ibex.com.bo/",
+    "searchUrl": "https://www.ibex.com.bo/",
+    "canaryUrl": "https://www.ibex.com.bo/",
+    "shows": ["history", "status", "actual_delivery_date", "estimated_delivery_date", "recipient", "package_details", "proof_of_delivery"],
+    "scraped": ["history", "status", "actual_delivery_date"],
+    "discarded": ["estimated_delivery_date", "recipient", "package_details", "proof_of_delivery"],
+    "unavailable": ["scan_offsets"]
+  },
+  "links": [],
+  "detection": []
+}

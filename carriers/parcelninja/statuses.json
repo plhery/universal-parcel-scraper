@@ -1,0 +1,13 @@
+{
+  "carrier": "parcelninja",
+  "entries": [
+    { "code": null, "wording": "Shipment Created", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Waybill Printed", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Submitted To Courier", "stage": "registered", "language": "en", "confirmedBy": "live",
+      "note": "The portal later marked physical collection separately." },
+    { "code": null, "wording": "Collected By Courier", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Routing delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

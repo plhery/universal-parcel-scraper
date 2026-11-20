@@ -1,0 +1,22 @@
+{
+  "id": "mbg-africa",
+  "displayName": "MBG-Africa",
+  "aliases": ["MBG Africa", "Muremera Business Group"],
+  "region": { "countries": ["BI"] },
+  "brand": { "color": "#0B2A52" },
+  "selectable": true,
+  "timezone": "Africa/Bujumbura",
+  "tracking": { "mode": "automatic", "adapter": "mbg-africa", "steps": ["direct"], "localClocks": true },
+  "capabilities": ["history", "location", "expected_delivery", "service_name"],
+  "portal": {
+    "url": "https://mbg-africa.com/track.php?tn={trackingNumber}&lang=en",
+    "searchUrl": "https://mbg-africa.com/track.php",
+    "canaryUrl": "https://mbg-africa.com/track.php",
+    "shows": ["status", "history", "expected_delivery", "transport_mode", "route_details", "cargo_details", "document_availability"],
+    "scraped": ["status", "history", "expected_delivery", "service", "destination_country"],
+    "discarded": ["route_details", "cargo_details", "document_availability"],
+    "unavailable": ["wall_clock_offsets"]
+  },
+  "links": [],
+  "detection": []
+}

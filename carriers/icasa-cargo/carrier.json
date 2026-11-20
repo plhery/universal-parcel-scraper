@@ -1,0 +1,27 @@
+{
+  "id": "icasa-cargo",
+  "displayName": "ICASA Cargo",
+  "aliases": ["ICASA", "Integradores de Carga Aérea"],
+  "region": { "countries": ["MX"] },
+  "brand": { "color": "#203c70" },
+  "selectable": true,
+  "timezone": "America/Mexico_City",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "icasa-cargo",
+    "steps": ["direct"],
+    "localClocks": true
+  },
+  "capabilities": ["history"],
+  "portal": {
+    "url": "https://integracargo.com/rastreo/",
+    "searchUrl": "https://integracargo.com/rastreo/",
+    "canaryUrl": "https://integracargo.com/rastreo/",
+    "shows": ["status", "history", "event_locations", "flights", "cargo_details"],
+    "scraped": ["status", "history", "event_locations"],
+    "discarded": ["flights", "cargo_details"],
+    "unavailable": ["clock_offsets"]
+  },
+  "links": [],
+  "detection": []
+}

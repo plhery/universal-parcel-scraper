@@ -1,0 +1,31 @@
+{
+  "id": "redecarga",
+  "displayName": "Redecarga",
+  "aliases": ["Redecarga S.A.S."],
+  "region": {
+    "countries": ["CO"]
+  },
+  "brand": {
+    "color": "#16446d"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "redecarga",
+    "steps": ["direct"],
+    "localClocks": true
+  },
+  "capabilities": ["history"],
+  "portal": {
+    "url": "https://redecarga.gelotra.com/rastrearguia?guia={trackingNumber}",
+    "searchUrl": "https://redecarga.gelotra.com/rastrearguia",
+    "canaryUrl": "https://redecarga.gelotra.com/rastrearguia",
+    "shows": ["history", "actual_delivery_date", "delivery_details", "documents"],
+    "scraped": ["history", "status"],
+    "discarded": ["delivery_details", "documents"],
+    "unavailable": ["scan_offsets"]
+  },
+  "links": [],
+  "detection": []
+}

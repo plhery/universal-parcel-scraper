@@ -1,0 +1,22 @@
+{
+  "id": "cesco-logistics",
+  "displayName": "CESCO Logistics",
+  "aliases": ["CESCO", "CESCO Logistik Indonesia", "PT CESCO Logistik Indonesia"],
+  "region": { "countries": ["ID"] },
+  "brand": { "color": "#1463a2" },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": { "mode": "automatic", "adapter": "cesco-logistics", "steps": ["direct"], "localClocks": true },
+  "capabilities": ["history"],
+  "portal": {
+    "url": "https://cesco-logistics.com/tracking.php",
+    "searchUrl": "https://cesco-logistics.com/tracking.php",
+    "canaryUrl": "https://cesco-logistics.com/tracking.php",
+    "shows": ["status", "history", "proof_of_delivery"],
+    "scraped": ["status", "history"],
+    "discarded": ["proof_of_delivery"],
+    "unavailable": ["event_locations", "clock_offsets"]
+  },
+  "links": [],
+  "detection": []
+}

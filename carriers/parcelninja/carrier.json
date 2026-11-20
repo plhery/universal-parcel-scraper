@@ -1,0 +1,51 @@
+{
+  "id": "parcelninja",
+  "displayName": "Parcelninja",
+  "aliases": [
+    "Parcel Ninja",
+    "Parcelninja South Africa"
+  ],
+  "region": {
+    "countries": [
+      "ZA"
+    ]
+  },
+  "brand": {
+    "color": "#172d38"
+  },
+  "selectable": true,
+  "timezone": "Africa/Johannesburg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "parcelninja",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://store.parcelninja.com/tracking.aspx?WaybillNo={trackingNumber}",
+    "searchUrl": "https://store.parcelninja.com/tracking.aspx",
+    "canaryUrl": "https://store.parcelninja.com/tracking.aspx",
+    "shows": [
+      "status",
+      "history",
+      "delivery_details"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "delivery_details"
+    ],
+    "unavailable": [
+      "scan_offsets"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,14 @@
+{
+  "carrier": "obana-logistics",
+  "entries": [
+    { "code": "pending", "wording": "Package Created", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": "created", "wording": "Shipment created successfully", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": "picked_up", "wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "documentation" },
+    { "code": "in_transit", "wording": "In Transit", "stage": "in_transit", "language": "en", "confirmedBy": "documentation" },
+    { "code": "delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "documentation" },
+    { "code": "fulfilled", "wording": "Fulfilled", "stage": "delivered", "language": "en", "confirmedBy": "documentation", "note": "Obana uses Fulfilled for its final shipment milestone after transport." },
+    { "code": "failed", "wording": "Failed", "stage": "exception", "language": "en", "confirmedBy": "documentation" },
+    { "code": "cancelled", "wording": "Cancelled", "stage": "exception", "language": "en", "confirmedBy": "documentation" },
+    { "code": "returned", "wording": "Returned", "stage": "returned", "language": "en", "confirmedBy": "documentation" }
+  ]
+}

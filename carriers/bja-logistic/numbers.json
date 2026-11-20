@@ -1,0 +1,23 @@
+{
+  "carrier": "bja-logistic",
+  "records": [
+    {
+      "number": "8203",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://bjalogistic.id/cek-resi", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The public tracking guide shows this shipment as 008203 and instructs customers to omit leading zeros. The native tracker returned six dated August 2026 events."
+    },
+    {
+      "number": "10702",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://bjalogistic.id/cek-resi", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The carrier publishes this invoice example. The native tracker returned four dated events from October and November 2026."
+    }
+  ]
+}

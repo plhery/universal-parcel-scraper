@@ -1,0 +1,22 @@
+{
+  "carrier": "flow-progressive-logistics",
+  "entries": [
+    { "code": null, "wording": "Pickup Awaited", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "assigned_courier_partner", "stage": "registered", "language": "en", "confirmedBy": "live",
+      "note": "Courier assignment appears before the separate completed pickup scan." },
+    { "code": null, "wording": "softdata_update", "stage": null, "language": "en", "confirmedBy": "live",
+      "note": "An electronic data update does not establish physical movement." },
+    { "code": null, "wording": "pickup_completed", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "inscan_at_hub", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "intransittohub", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "outscan_at_hub", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "reachedathub", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "delivery_scheduled", "stage": null, "language": "en", "confirmedBy": "live",
+      "note": "The tracker records scheduling without confirming dispatch." },
+    { "code": null, "wording": "accept", "stage": null, "language": "en", "confirmedBy": "live",
+      "note": "The portal does not identify what was accepted after scheduling." },
+    { "code": null, "wording": "delivery_arrival", "stage": null, "language": "en", "confirmedBy": "live",
+      "note": "Destination arrival precedes the separate Delivered update." },
+    { "code": null, "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "carrier": "ibex-express-bo",
+  "entries": [
+    { "code": null, "wording": "Preparado para despacho", "stage": "accepted", "language": "es", "confirmedBy": "live",
+      "note": "The waybill is prepared by the dispatch office. The event appends the route codes." },
+    { "code": null, "wording": "Envío despachado", "stage": "in_transit", "language": "es", "confirmedBy": "live",
+      "note": "The event appends the route codes." },
+    { "code": null, "wording": "Carga arribada a destino", "stage": "in_transit", "language": "es", "confirmedBy": "live",
+      "note": "The freight has reached the destination branch, whose code can follow the status." },
+    { "code": null, "wording": "Envío arribado a destino", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Envío en poder del Cartero", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live",
+      "note": "The service may append a courier identifier. The adapter keeps the status wording." },
+    { "code": null, "wording": "ENTREGADO", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
+}

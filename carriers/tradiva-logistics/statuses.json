@@ -1,0 +1,14 @@
+{
+  "carrier": "tradiva-logistics",
+  "entries": [
+    { "code": null, "wording": "تم تأكيد الحجز", "stage": "registered", "language": "ar", "confirmedBy": "live" },
+    { "code": null, "wording": "تم استلام البضاعة", "stage": "accepted", "language": "ar", "confirmedBy": "live" },
+    { "code": null, "wording": "جمارك التصدير", "stage": "customs", "language": "ar", "confirmedBy": "live" },
+    { "code": null, "wording": "تم الشحن", "stage": "in_transit", "language": "ar", "confirmedBy": "live" },
+    { "code": null, "wording": "في الطريق", "stage": "in_transit", "language": "ar", "confirmedBy": "live" },
+    { "code": null, "wording": "وصلت لجهة الوصول", "stage": "in_transit", "language": "ar", "confirmedBy": "portal" },
+    { "code": null, "wording": "جمارك الاستيراد", "stage": "customs", "language": "ar", "confirmedBy": "portal" },
+    { "code": null, "wording": "خرجت للتسليم", "stage": "out_for_delivery", "language": "ar", "confirmedBy": "portal" },
+    { "code": null, "wording": "تم التسليم", "stage": "delivered", "language": "ar", "confirmedBy": "portal" }
+  ]
+}

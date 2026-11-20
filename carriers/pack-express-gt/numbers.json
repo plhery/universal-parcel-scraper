@@ -1,0 +1,14 @@
+{
+  "carrier": "pack-express-gt",
+  "records": [
+    {
+      "number": "PE20266190869",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://packexpress.com.gt/rastreo-de-envios/", "access": "full_page" },
+      "context": { "assessment": "confirmed", "reportedRole": "número de guía" },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["la-poste"] },
+      "note": "The full reference appears in the official tracking field. The public endpoint returned four dated June 2026 milestones for the same guide."
+    }
+  ]
+}

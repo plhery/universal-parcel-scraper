@@ -1,0 +1,64 @@
+{
+  "carrier": "paqueteria-vencedor",
+  "records": [
+    {
+      "number": "1019201223",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.grupovencedor.com/paqueteria",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "geniki-taxydromiki",
+          "gls-es"
+        ]
+      }
+    },
+    {
+      "number": "1103615274",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.teeslp.gob.mx/wp-content/uploads/2020/10/0.-Demanda-JDC-federal-vs-incidente-TESLP-JDC-11-2020.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "gls-es"
+        ]
+      }
+    }
+  ]
+}

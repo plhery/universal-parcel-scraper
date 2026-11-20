@@ -1,0 +1,22 @@
+{
+  "carrier": "paquetex",
+  "records": [
+    {
+      "number": "46086",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://paquetex.net/tracking",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "PaquetEx's published box number returns its Honduras record with twelve dated status changes. The Mexico-prefixed form printed beside it returns the same Honduras box and is not its canonical reference."
+    }
+  ]
+}

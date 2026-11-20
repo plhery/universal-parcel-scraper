@@ -1,0 +1,36 @@
+{
+  "noResi": "8203",
+  "layanan": "Express",
+  "estimasiTiba": "15 Agu 2026",
+  "events": [
+    {
+      "status": "Barang Diterima di Warehouse Bekasi",
+      "waktu": "4 Agu 2026"
+    },
+    {
+      "status": "Perjalanan Menuju Hub Transit",
+      "waktu": "5 Agu 2026"
+    },
+    {
+      "status": "Barang Diproses di Hub Transit",
+      "waktu": "7 Agu 2026"
+    },
+    {
+      "status": "Menunggu Jadwal Keberangkatan Kapal",
+      "waktu": "11 Agu 2026",
+      "kapal": {
+        "nama": "KM. GUNUNG DEMPO",
+        "tanggalBerangkat": "11 Agu 2026",
+        "estimasiPerjalanan": 9
+      }
+    },
+    {
+      "status": "Perjalanan ke Hub Tujuan",
+      "waktu": "13 Agu 2026"
+    },
+    {
+      "status": "Barang Diterima",
+      "waktu": "31 Agu 2026"
+    }
+  ]
+}

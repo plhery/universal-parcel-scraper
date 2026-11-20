@@ -1,0 +1,14 @@
+{
+  "carrier": "cpx-guatemala",
+  "records": [
+    {
+      "number": "FGUA107000-82026-1",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://tracking.cpxbox.com/", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The carrier prints this guide in its guest field. It resolves to two dated August 2026 events, pickup availability and payment."
+    }
+  ]
+}

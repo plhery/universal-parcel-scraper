@@ -1,0 +1,10 @@
+{
+  "carrier": "cesco-logistics",
+  "entries": [
+    { "code": null, "wording": "Order booking", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Order pickup", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "To city destination", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Received to city destination", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Order Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

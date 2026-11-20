@@ -1,0 +1,17 @@
+{
+  "carrier": "cootranstame",
+  "records": [
+    {
+      "number": "2257392",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/903555009/2257392",
+        "access": "full_page"
+      },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["seur"] },
+      "note": "The public July 2025 CootransTame receipt identifies this as the guide number. Its guest tracker returned four scans in November 2026."
+    }
+  ]
+}

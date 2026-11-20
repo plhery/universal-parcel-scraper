@@ -1,0 +1,24 @@
+{
+  "carrier": "cpx-guatemala",
+  "entries": [
+    { "code": "OH", "wording": "Recibido en centro de distribución", "stage": "accepted", "language": "es", "confirmedBy": "portal" },
+    { "code": "RECEIVED", "wording": "Recibido en centro de distribución", "stage": "accepted", "language": "es", "confirmedBy": "portal" },
+    { "code": "RT", "wording": "Factura recibida", "stage": null, "language": "es", "confirmedBy": "portal" },
+    { "code": "TR", "wording": "En tránsito", "stage": "in_transit", "language": "es", "confirmedBy": "portal" },
+    { "code": "TRD", "wording": "Despachado al aeropuerto", "stage": "in_transit", "language": "es", "confirmedBy": "portal" },
+    { "code": "DELAYED", "wording": "Vuelo demorado", "stage": "exception", "language": "es", "confirmedBy": "portal" },
+    { "code": "PRE_ALERT", "wording": "Recibido en país de destino", "stage": "in_transit", "language": "es", "confirmedBy": "portal" },
+    { "code": "CUSTOMS_TAXES", "wording": "Procesando en aduana", "stage": "customs", "language": "es", "confirmedBy": "portal" },
+    { "code": "CUSTOMS_COSTS_ADDED", "wording": "Listo para entrega", "stage": null, "language": "es", "confirmedBy": "portal" },
+    { "code": "INVOICED", "wording": "Tu paquete está listo para entrega en tienda", "stage": "ready_for_pickup", "language": "es", "confirmedBy": "live", "note": "The accompanying store-collection wording distinguishes this scan from generic invoicing." },
+    { "code": "ROUTE", "wording": "En ruta de entrega", "stage": "out_for_delivery", "language": "es", "confirmedBy": "portal" },
+    { "code": "GUIDE_CREATED", "wording": "En ruta de entrega", "stage": null, "language": "es", "confirmedBy": "portal" },
+    { "code": "ROUTE_PAYMENT", "wording": "Pago realizado", "stage": null, "language": "es", "confirmedBy": "portal" },
+    { "code": "APP_PAYMENT", "wording": "Pago realizado", "stage": null, "language": "es", "confirmedBy": "portal" },
+    { "code": "CPX_PAYMENT", "wording": "Tu paquete ya fue pagado", "stage": null, "language": "es", "confirmedBy": "live" },
+    { "code": "POD", "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "portal" },
+    { "code": "DELIVERED_TO", "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "portal" },
+    { "code": "ROUTE_DELIVERED", "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "portal" },
+    { "code": "CANCELED_DELIVERY", "wording": "Entrega cancelada", "stage": "exception", "language": "es", "confirmedBy": "portal" }
+  ]
+}

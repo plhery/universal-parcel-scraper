@@ -1,0 +1,11 @@
+{
+  "carrier": "paqmex",
+  "entries": [
+    { "code": null, "wording": "Envío documentado", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Viajando a su destino", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Mercancía en bodega destino", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Lista para recoger", "stage": "ready_for_pickup", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Mercancía entregada confirmada", "stage": "delivered", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Entregada", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
+}

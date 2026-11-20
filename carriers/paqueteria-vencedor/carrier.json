@@ -1,0 +1,52 @@
+{
+  "id": "paqueteria-vencedor",
+  "displayName": "Paquetería Vencedor",
+  "aliases": [
+    "Grupo Vencedor",
+    "Vencedor Paquetería"
+  ],
+  "region": {
+    "countries": [
+      "MX"
+    ]
+  },
+  "brand": {
+    "color": "#ae232a"
+  },
+  "selectable": true,
+  "timezone": "America/Mexico_City",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "paqueteria-vencedor",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.grupovencedor.com/paqueteria",
+    "searchUrl": "https://www.grupovencedor.com/paqueteria",
+    "canaryUrl": "https://www.grupovencedor.com/paqueteria",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

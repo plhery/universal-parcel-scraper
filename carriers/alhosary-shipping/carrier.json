@@ -1,0 +1,54 @@
+{
+  "id": "alhosary-shipping",
+  "displayName": "Alhosary International Shipping",
+  "aliases": [
+    "Alhosary Shipping",
+    "الحصري للشحن الدولي"
+  ],
+  "region": {
+    "countries": [
+      "EG"
+    ]
+  },
+  "brand": {
+    "color": "#1a3668"
+  },
+  "selectable": true,
+  "timezone": "Africa/Cairo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "alhosary-shipping",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://alhosaryshipping.com/tracking",
+    "searchUrl": "https://alhosaryshipping.com/tracking",
+    "canaryUrl": "https://alhosaryshipping.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "event_locations",
+      "estimated_delivery",
+      "shipment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "event_locations",
+      "provider_code"
+    ],
+    "discarded": [
+      "estimated_delivery",
+      "shipment_details"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

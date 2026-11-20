@@ -1,0 +1,25 @@
+{
+  "carrier": "ewl-costa-rica",
+  "records": [
+    {
+      "number": "ANA5922554BD",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://ewl-cr.com/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The carrier prints this guide in the public tracking field. The guest tracker returned eight June 2026 scans ending in delivery."
+    }
+  ]
+}

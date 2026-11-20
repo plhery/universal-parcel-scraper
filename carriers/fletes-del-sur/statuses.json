@@ -1,0 +1,9 @@
+{
+  "carrier": "fletes-del-sur",
+  "entries": [
+    { "code": null, "wording": "DOCUMENTACION DE MERCANCIA", "stage": "registered", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "SALIDA DE MERCANCIA", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "LLEGADA DE MERCANCIA", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "ENTREGA DE MERCANCIA", "stage": "delivered", "language": "es", "confirmedBy": "live" }
+  ]
+}

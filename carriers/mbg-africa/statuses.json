@@ -1,0 +1,13 @@
+{
+  "carrier": "mbg-africa",
+  "entries": [
+    { "wording": "In Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Booking Confirmed", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "wording": "Cargo Received", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "In Transit — Ocean", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Arrived at Port", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Customs Clearance", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "The history describes clearance currently in progress." },
+    { "wording": "Road Transport", "stage": "in_transit", "language": "en", "confirmedBy": "live" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "carrier": "redecarga",
+  "entries": [
+    { "code": null, "wording": "Mercancía aforada", "stage": "accepted", "language": "es", "confirmedBy": "live",
+      "note": "Redecarga checked the domestic shipment before moving it from the origin depot." },
+    { "code": null, "wording": "EN BODEGA ORIGEN", "stage": "accepted", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "GUIA EN VEHICULO NACIONAL", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "GUIA EN VIAJE TRONCAL", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "EN BODEGA DESTINO", "stage": "in_transit", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "GUIA EN REPARTO", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "LLEGO AL PUNTO DE ENTREGA", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live",
+      "note": "The courier reached the delivery point before the later delivered scan." },
+    { "code": null, "wording": "ENTREGADO", "stage": "delivered", "language": "es", "confirmedBy": "live" },
+    { "code": null, "wording": "Recibido en destino", "stage": "delivered", "language": "es", "confirmedBy": "live",
+      "note": "The carrier uses the same clock for this event and the actual delivery summary." }
+  ]
+}

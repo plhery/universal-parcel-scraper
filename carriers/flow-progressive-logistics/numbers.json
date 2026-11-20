@@ -1,0 +1,17 @@
+{
+  "carrier": "flow-progressive-logistics",
+  "records": [
+    {
+      "number": "FLOW1224685",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.flowpl.com/order-tracking/?ref_num=FLOW1224685&searchBy=referenceNumber",
+        "access": "indexed_excerpt"
+      },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The indexed public tracker URL contains the waybill. Submitting it to the official form returned fourteen dated October 2026 scans."
+    }
+  ]
+}
