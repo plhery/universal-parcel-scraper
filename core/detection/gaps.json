@@ -5549,5 +5549,10 @@
     "carrier": "akr-express",
     "kind": "by_design",
     "reason": "AKR Express lorry receipts start with one letter followed by six or seven digits. Select the carrier explicitly."
+  },
+  {
+    "carrier": "courierit-nz",
+    "kind": "by_design",
+    "reason": "Courierit New Zealand publishes numeric consignment references without a carrier-specific prefix. Select it explicitly."
   }
 ]

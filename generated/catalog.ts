@@ -16887,6 +16887,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "courierit-nz": {
+    "displayName": "Courierit New Zealand",
+    "color": "#166893",
+    "aliases": [
+      "Courierit NZ",
+      "Courierit Freight Gateway",
+      "Courierit Classic"
+    ],
+    "countries": [
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Auckland",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "courierit-nz",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.courierit.net.nz/Home/Track",
+    "trackingUrlTemplate": "https://www.courierit.net.nz/Home/Track",
+    "trackingSearchUrl": "https://www.courierit.net.nz/Home/Track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "couriersplease": {
     "displayName": "CouriersPlease",
     "color": "#c21e36",
@@ -65975,6 +65999,7 @@ export const CARRIER_IDS = [
   "courier-express-malta",
   "courier-it",
   "courier-plus-ng",
+  "courierit-nz",
   "couriersplease",
   "cps-lastmile",
   "cpszy",
@@ -67849,6 +67874,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "courier-express-malta": [],
   "courier-it": [],
   "courier-plus-ng": [],
+  "courierit-nz": [],
   "couriersplease": ["couriersplease-1"],
   "cps-lastmile": [],
   "cpszy": [],

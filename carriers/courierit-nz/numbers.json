@@ -1,0 +1,131 @@
+{
+  "carrier": "courierit-nz",
+  "records": [
+    {
+      "number": "806703085971",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.courierit.net.nz/Order/View?consignmentRef=806703085971",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Consignment reference on the public Courierit Freight Gateway booking page",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      }
+    },
+    {
+      "number": "819642999269",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.courierit.net.nz/Order/View?consignmentRef=819642999269",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Consignment reference on the public Courierit Freight Gateway booking page",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      }
+    },
+    {
+      "number": "001872527051",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.courierit.net.nz/Order/View?consignmentRef=001872527051",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Consignment reference on the public Courierit Freight Gateway booking page",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      }
+    },
+    {
+      "number": "303240072994",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.courierit.net.nz/Order/View?consignmentRef=303240072994",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Consignment reference on the public Courierit Freight Gateway booking page",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      }
+    }
+  ]
+}
