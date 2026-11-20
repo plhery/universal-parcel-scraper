@@ -86672,6 +86672,18 @@
     ]
   },
   {
+    "input": "E2005574691GB",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "E2006261744US",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "E202881612140229",
     "carrier": "unknown",
     "confidence": "low",
