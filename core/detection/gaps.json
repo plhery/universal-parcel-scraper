@@ -424,6 +424,12 @@
     "reason": "The published Blue Streak shipping form prints the tracking ID as four digits, a dot and six digits. Normalized detection does not offer Blue Streak."
   },
   {
+    "carrier": "bm-cargo",
+    "pattern": "^WR01\\d{9}$",
+    "kind": "open",
+    "reason": "Archived BM Cargo tracking results show the WR01 prefix, a hyphen and nine digits. Detection does not offer BM Cargo for these warehouse receipts."
+  },
+  {
     "carrier": "bolt-kargo",
     "pattern": "^\\d{7}$",
     "kind": "open",
