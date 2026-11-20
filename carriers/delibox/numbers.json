@@ -1,5 +1,39 @@
 {
   "carrier": "delibox",
-  "gap": "No public page shows a Delibox number.",
-  "records": []
+  "records": [
+    {
+      "number": "702433319563",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251128141109/https://www.dbox.co.kr/delivery.php?laasInvcNo=702433319563",
+        "date": "2025-11-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The archived popup from Delibox's own tracker displays the waybill number, the delivery-complete status and a dated scan history."
+    }
+  ]
 }
