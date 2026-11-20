@@ -172,6 +172,7 @@ import { adapter as customCompanies } from '../carriers/custom-companies/adapter
 import { adapter as cvc } from '../carriers/cvc/adapter.js';
 import { adapter as cyprusPost } from '../carriers/cyprus-post/adapter.js';
 import { adapter as dExpress } from '../carriers/d-express/adapter.js';
+import { adapter as dJesuComer } from '../carriers/d-jesu-comer/adapter.js';
 import { adapter as dachser } from '../carriers/dachser/adapter.js';
 import { adapter as daiPost } from '../carriers/dai-post/adapter.js';
 import { adapter as danskeFragtmaend } from '../carriers/danske-fragtmaend/adapter.js';
@@ -1082,6 +1083,7 @@ export const REGISTRY: RegistryDefinition = {
     "cvc": cvc,
     "cyprus-post": cyprusPost,
     "d-express": dExpress,
+    "d-jesu-comer": dJesuComer,
     "dachser": dachser,
     "dai-post": daiPost,
     "danske-fragtmaend": danskeFragtmaend,
@@ -2203,6 +2205,7 @@ export const REGISTRY: RegistryDefinition = {
     "cyprus-post": "cyprus-post",
     "czl-express": "universal",
     "d-express": "d-express",
+    "d-jesu-comer": "d-jesu-comer",
     "dac-uy": "universal",
     "dachser": "dachser",
     "daewoo-fastex": "universal",

@@ -5602,5 +5602,10 @@
     "kind": "open",
     "carrier": "icasa-cargo",
     "reason": "ICASA confirms one Volaris-issued AWB it handled. Explicit selection does not attribute the airline prefix to a handling agent."
+  },
+  {
+    "kind": "open",
+    "carrier": "d-jesu-comer",
+    "reason": "The published DJC guide returns its tracking milestones. Explicit selection is available while issued formats and overlaps remain open."
   }
 ]

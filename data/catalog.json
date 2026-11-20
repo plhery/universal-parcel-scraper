@@ -17719,6 +17719,31 @@
     ],
     "detectionRules": []
   },
+  "d-jesu-comer": {
+    "displayName": "D'Jesu COMER",
+    "color": "#3b235d",
+    "aliases": [
+      "D’Jesu Comer",
+      "Jesu Comer Paquetería"
+    ],
+    "countries": [
+      "MX",
+      "CU"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "d-jesu-comer",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jesucomer.com/rastreo-envio/",
+    "trackingUrlTemplate": "https://www.jesucomer.com/rastreo-envio/?orden={trackingNumber}",
+    "trackingSearchUrl": "https://www.jesucomer.com/rastreo-envio/",
+    "helpUrl": "https://www.jesucomer.com/paqueteria/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dac-uy": {
     "displayName": "DAC",
     "color": "#d50c29",

@@ -17723,6 +17723,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "d-jesu-comer": {
+    "displayName": "D'Jesu COMER",
+    "color": "#3b235d",
+    "aliases": [
+      "D’Jesu Comer",
+      "Jesu Comer Paquetería"
+    ],
+    "countries": [
+      "MX",
+      "CU"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "d-jesu-comer",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jesucomer.com/rastreo-envio/",
+    "trackingUrlTemplate": "https://www.jesucomer.com/rastreo-envio/?orden={trackingNumber}",
+    "trackingSearchUrl": "https://www.jesucomer.com/rastreo-envio/",
+    "helpUrl": "https://www.jesucomer.com/paqueteria/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dac-uy": {
     "displayName": "DAC",
     "color": "#d50c29",
@@ -66207,6 +66232,7 @@ export const CARRIER_IDS = [
   "cyprus-post",
   "czl-express",
   "d-express",
+  "d-jesu-comer",
   "dac-uy",
   "daewoo-fastex",
   "dago-express",
@@ -68090,6 +68116,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cyprus-post": ["cyprus-post-s10"],
   "czl-express": [],
   "d-express": [],
+  "d-jesu-comer": [],
   "dac-uy": [],
   "daewoo-fastex": [],
   "dago-express": [],
