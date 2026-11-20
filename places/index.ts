@@ -4,7 +4,7 @@ import { brotliDecompressSync } from 'node:zlib';
 import { DateTime } from 'luxon';
 import { CARRIER_DEFINITIONS } from '../core/catalog/definitions.js';
 import type { CarrierResult } from '../core/result/index.js';
-import { countryCode, timeZoneCountry } from '../core/time/index.js';
+import { countryCode, timeZoneCountry, usStateTimeZone } from '../core/time/index.js';
 import { ambiguousAddressCodes, militaryPostOffice, stateFormName, trackingPlace } from './trackingLocation.js';
 import facilityList from './facilities.json' with { type: 'json' };
 import hubList from './hubs.json' with { type: 'json' };
@@ -782,9 +782,11 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   const site = HUBS.get(nameKey(text))?.find((hub) => !hub.town && hub.carriers?.some((carrier) => carriers.includes(carrier)));
   if (site) return countryPlace(data, site.country, true);
   // A carrier's hub it names alone by a country's name, on a parcel nothing puts in that country:
-  // USPS's "JAMAICA" is its international service centre at JFK, in Jamaica, New York.
+  // USPS's "JAMAICA" is its international service centre at JFK, in Jamaica, New York. A carrier
+  // that delivers only in the hub's country names the same hub: it does not go to the other.
   const alone = split && country && !explicit.place && !context.includes(country)
-    ? HUBS.get(nameKey(text))?.find((hub) => hub.alone && hub.carriers?.some((carrier) => carriers.includes(carrier))) : undefined;
+    ? HUBS.get(nameKey(text))?.find((hub) => hub.alone && (hub.carriers?.some((carrier) => carriers.includes(carrier))
+      || carriers.some((carrier) => deliversOnlyIn(carrier, hub.country)))) : undefined;
   const hubAirport = alone?.airport ? data.airports.get(alone.airport) : undefined;
   const hubPoint = hubAirport ?? (alone?.latitude !== undefined && alone.longitude !== undefined ? { latitude: alone.latitude, longitude: alone.longitude } : undefined);
   if (alone?.town && hubPoint) {
@@ -1055,6 +1057,13 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
     && facilityWords.every((token) => FACILITY_WORDS.has(token.key))) {
     const town = locate(text, hints, false);
     if (town?.place.precision === 'city' && context.includes(town.place.country) && (town.thousands ?? 0) >= NAMESAKE_THOUSANDS) return town;
+  }
+  // A town named after a country, with its US state written after it: "JAMAICA NEW YORK" and
+  // "JAMAICA PLAIN MA" are in the United States, not in Jamaica.
+  if (country && country !== 'US' && explicit.place && text.endsWith(rest) && !context.includes(country)
+    && (outer.some((region) => region.country === 'US') || stated.some((code) => usStateTimeZone(code) !== null))) {
+    const town = locate(text, hints, false);
+    if (town?.place.precision === 'city' && town.place.country === 'US') return town;
   }
   // A two-letter code with no town of its country before it, on a parcel nothing else puts
   // there, may be no country at all: Royal Mail ends its mail centres with MC and its
@@ -1475,6 +1484,12 @@ function cachedPlace(location: string | null | undefined, countries: readonly st
   if (cache.size >= CACHE_SIZE) cache.clear();
   cache.set(key, place);
   return place;
+}
+
+/** Whether a carrier delivers in this one country and no other. */
+function deliversOnlyIn(carrier: string, country: string): boolean {
+  const countries = (CARRIER_DEFINITIONS as Record<string, { countries?: readonly string[] } | undefined>)[carrier]?.countries;
+  return countries?.length === 1 && countries[0] === country;
 }
 
 /** The countries a carrier delivers in under its own name, home first, and its clock's. */

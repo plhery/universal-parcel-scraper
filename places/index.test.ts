@@ -169,6 +169,18 @@ describe('locatePlace', () => {
     expectPlace('JAMAICA, NY', queens);
     expectPlace('JAMAICA, NEWYORK, US', queens);
     expect(place('JAMAICA', ['US'])).toMatchObject({ precision: 'country', country: 'JM' });
+    // A US state written after the name, without a comma, is the US town's.
+    expectPlace('JAMAICA NEW YORK', queens);
+    expectPlace('JAMAICA NEW YORK 11430', queens);
+    expect(place('JAMAICA VERMONT')).toMatchObject({ precision: 'city', country: 'US', name: 'Jamaica' });
+    expect(place('JAMAICA PLAIN MA')).toMatchObject({ precision: 'city', country: 'US' });
+    // A carrier that delivers only in the United States names USPS's centre alone too; one that
+    // delivers abroad as well names the island, and so does anything that names the island's towns.
+    expect(locatePlace('JAMAICA', { carriers: ['ontrac'] })).toMatchObject({ precision: 'city', country: 'US', name: 'Jamaica', site: expect.stringContaining('Kennedy') });
+    expect(locatePlace('JAMAICA', { carriers: ['fedex'] })).toMatchObject({ precision: 'country', country: 'JM' });
+    expect(locatePlace('JAMAICA', { carriers: ['ontrac'], countries: ['JM'] })).toMatchObject({ precision: 'country', country: 'JM' });
+    expect(place('JAMAICA KINGSTON')).toMatchObject({ country: 'JM', name: 'Kingston' });
+    expect(place('KINGSTON, JAMAICA')).toMatchObject({ country: 'JM', name: 'Kingston' });
   });
 
   it('reads a country named before other words as that country, not a small town named after it', () => {

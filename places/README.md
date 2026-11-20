@@ -313,8 +313,11 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   Brazil's "ShiYan", whose wording names Shenzhen, is in Shenzhen's Shiyan, not the city in Hubei.
   MRW's "Meres (Plataforma)" is its platform in Meres, Asturias, not the town in Turkey.
   A hub marked `alone` is named only by a country's name written alone, on its carriers'
-  parcels that nothing puts in that country: USPS's "JAMAICA" is its international service
-  centre at JFK, in Jamaica, New York, unless the parcel goes to Jamaica.
+  parcels, and on those of a carrier that delivers only in the hub's country, that nothing puts
+  in the named country: USPS's "JAMAICA" is its international service centre at JFK, in
+  Jamaica, New York, unless the parcel goes to Jamaica. A US state written after a country's
+  name makes it the US town of that name: "JAMAICA NEW YORK" is in Queens, "JAMAICA VERMONT" in
+  Vermont.
   Royal Mail's mail centres named after an area ("Thames Valley MC", in Swindon, not Valley
   on Anglesey) count on Royal Mail and Parcelforce parcels, and on any parcel with MC after
   the name. China Post's exchange offices go by the initials of their Chinese names
