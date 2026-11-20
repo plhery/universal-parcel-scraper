@@ -1,0 +1,33 @@
+{
+  "carrier": "transportes-chevalier",
+  "records": [
+    {
+      "number": "7749120505",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/846275950/Tercero-Equivocado-Tania-Rojas",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "carrier guide number printed in the freight invoice observations",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The dated Chevalier invoice lists the full guide. The native FivePostal tracker echoed it in its shipment and movement records and confirmed delivery in Maicao."
+    }
+  ]
+}

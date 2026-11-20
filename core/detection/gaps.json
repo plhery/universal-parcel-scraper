@@ -5714,5 +5714,10 @@
     "carrier": "sendbox-argentina",
     "kind": "open",
     "reason": "The two guide components identify shipments in the selected SendBox tracker. The numeric components also fit other carriers."
+  },
+  {
+    "carrier": "transportes-chevalier",
+    "kind": "open",
+    "reason": "The native portal confirms the full numeric guide. Its length is shared by other carriers and remains an explicit choice."
   }
 ]

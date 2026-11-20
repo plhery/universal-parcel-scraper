@@ -59870,6 +59870,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "transportes-chevalier": {
+    "displayName": "Transportes Chevalier",
+    "color": "#173b5d",
+    "aliases": [
+      "Transportes Chevalier S.A.",
+      "Chevalier Colombia",
+      "Chevalier Transportes"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transportes-chevalier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.transporteschevalier.com/consulttag.html",
+    "trackingUrlTemplate": "https://chevalier.fivesoft.com.co/tag_detail_v1.html?d={trackingNumber}",
+    "trackingSearchUrl": "https://www.transporteschevalier.com/consulttag.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transportes-condesa": {
     "displayName": "Transportes Condesa",
     "color": "#101888",
@@ -68073,6 +68097,7 @@ export const CARRIER_IDS = [
   "transnet-couriers",
   "transport-rdl",
   "transportes-bertolini",
+  "transportes-chevalier",
   "transportes-condesa",
   "transportes-rapex",
   "transports-besson",
@@ -69980,6 +70005,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transnet-couriers": [],
   "transport-rdl": [],
   "transportes-bertolini": [],
+  "transportes-chevalier": [],
   "transportes-condesa": [],
   "transportes-rapex": [],
   "transports-besson": [],

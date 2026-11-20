@@ -1,0 +1,65 @@
+{
+  "id": "transportes-chevalier",
+  "displayName": "Transportes Chevalier",
+  "aliases": [
+    "Transportes Chevalier S.A.",
+    "Chevalier Colombia",
+    "Chevalier Transportes"
+  ],
+  "region": {
+    "countries": [
+      "CO"
+    ]
+  },
+  "brand": {
+    "color": "#173b5d"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "transportes-chevalier",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://chevalier.fivesoft.com.co/tag_detail_v1.html?d={trackingNumber}",
+    "searchUrl": "https://www.transporteschevalier.com/consulttag.html",
+    "canaryUrl": "https://www.transporteschevalier.com/consulttag.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

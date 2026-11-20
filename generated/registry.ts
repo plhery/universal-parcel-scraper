@@ -844,6 +844,7 @@ import { adapter as transaher } from '../carriers/transaher/adapter.js';
 import { adapter as transcorp } from '../carriers/transcorp/adapter.js';
 import { adapter as translinkShipping } from '../carriers/translink-shipping/adapter.js';
 import { adapter as transmission } from '../carriers/transmission/adapter.js';
+import { adapter as transportesChevalier } from '../carriers/transportes-chevalier/adapter.js';
 import { adapter as transportesRapex } from '../carriers/transportes-rapex/adapter.js';
 import { adapter as trendyolExpress } from '../carriers/trendyol-express/adapter.js';
 import { adapter as tsbEs } from '../carriers/tsb-es/adapter.js';
@@ -1779,6 +1780,7 @@ export const REGISTRY: RegistryDefinition = {
     "transcorp": transcorp,
     "translink-shipping": translinkShipping,
     "transmission": transmission,
+    "transportes-chevalier": transportesChevalier,
     "transportes-rapex": transportesRapex,
     "trendyol-express": trendyolExpress,
     "tsb-es": tsbEs,
@@ -3559,6 +3561,7 @@ export const REGISTRY: RegistryDefinition = {
     "transnet-couriers": "universal",
     "transport-rdl": "universal",
     "transportes-bertolini": "universal",
+    "transportes-chevalier": "transportes-chevalier",
     "transportes-condesa": "universal",
     "transportes-rapex": "transportes-rapex",
     "transports-besson": "universal",
