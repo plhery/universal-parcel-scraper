@@ -4772,5 +4772,11 @@
     "pattern": "^\\d{15}$",
     "kind": "open",
     "reason": "A public case study documents a merchant order reference for a Treggo shipment. Detection offers other carriers for the normalized number."
+  },
+  {
+    "carrier": "transpress",
+    "pattern": "^(?:\\d{6}|TRIERAA\\d{5})$",
+    "kind": "open",
+    "reason": "Public court records name these numeric and shipper-prefixed Transpress waybills. Detection leaves Transpress out for both."
   }
 ]
