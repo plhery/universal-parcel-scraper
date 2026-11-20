@@ -4916,5 +4916,11 @@
     "pattern": "^20\\d{7}$",
     "kind": "open",
     "reason": "Turkish customers publish Pamukkale tracking numbers in this nine-digit family. Detection omits Pamukkale Kargo."
+  },
+  {
+    "carrier": "ondot-courier",
+    "pattern": "^\\d{9}(?:\\d{2})?$",
+    "kind": "open",
+    "reason": "Published Ondot complaint titles show nine- and eleven-digit shipment references. Detection omits Ondot."
   }
 ]
