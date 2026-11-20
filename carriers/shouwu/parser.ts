@@ -38,6 +38,11 @@ const MAX_ENTRIES = 20;
 const CLOCK_SLACK_S = 600;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
+// Shouwu writes its receipt on schedule, two hours after the order data; one written a day or more after it is the
+// handover itself, which the first movement follows within a day.
+const ORDER_DATA = 'Shipment information received';
+const RECEIPT = 'Carrier received the shipment';
+const LATE_RECEIPT_S = 86_400;
 /**
  * The stages each status covers without naming them, as the page explains
  * the status: a newest scan staged one of them refines it. Shouwu's four
@@ -180,6 +185,12 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
   // Newest first; equal instants keep the reply's order, which lists the newest first.
   if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((left, right) => right.timestamp - left.timestamp);
+  const ordered = [...scans].reverse().find(({ event }) => event.description === ORDER_DATA)?.timestamp;
+  for (const { event, timestamp } of scans) {
+    if (ordered !== undefined && event.description === RECEIPT && event.stage === 'registered' && timestamp - ordered >= LATE_RECEIPT_S) {
+      Object.assign(event, { stage: 'accepted', stage_source: 'carrier_map' });
+    }
+  }
   // A wall clock that would land after a newer row read at its epoch, wherever in its country, is read at its
   // epoch too: customs written days late must not come after the round out for delivery.
   let bound = Infinity;

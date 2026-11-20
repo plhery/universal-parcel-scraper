@@ -186,6 +186,10 @@ describe('Shouwu International HTTP adapter', () => {
     expect(staged('TRACE_STATUS_ON_THE_WAY', [trace(1776361152, 'Carrier received the shipment'), trace(1776353952, 'Shipment information received')]))
       .toMatchObject({ status: 'pending', current_stage: 'registered', current_stage_source: 'carrier_map',
         events: [{ stage: 'registered', stage_source: 'carrier_map' }, { stage: 'registered', stage_source: 'carrier_map' }] });
+    // One written two days after the order data is the handover itself.
+    expect(staged('TRACE_STATUS_ON_THE_WAY', [trace(1776353952 + 2 * 86_400, 'Carrier received the shipment'), trace(1776353952, 'Shipment information received')]))
+      .toMatchObject({ status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map',
+        events: [{ stage: 'accepted', stage_source: 'carrier_map' }, { stage: 'registered', stage_source: 'carrier_map' }] });
     expect(staged('TRACE_STATUS_ON_THE_WAY', [trace(1776361152, 'Carrier received the shipment'), trace(1776353952, 'Shipment information received'),
       trace(1776720000, 'Waybill printed at a partner depot')]))
       .toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
