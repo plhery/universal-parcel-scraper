@@ -1,0 +1,42 @@
+{
+  "success": true,
+  "data": {
+    "shipment_reference": "OBN-20260430-IYU2FXS7",
+    "status": "pending",
+    "carrier_name": "Obana Logistics",
+    "service_level": "Standard",
+    "createdAt": "2026-04-30T09:39:45.476Z",
+    "actual_delivery_at": null,
+    "delivery_address": {
+      "country": "Nigeria"
+    },
+    "tracking_events": [
+      {
+        "status": "created",
+        "description": "Shipment created successfully",
+        "createdAt": "2026-04-30T09:39:45.492Z"
+      }
+    ],
+    "display_status": "Package Created",
+    "timeline": [
+      {
+        "label": "Package Created",
+        "at": "2026-04-30T09:39:45.492Z",
+        "done": true,
+        "current": true
+      },
+      {
+        "label": "In Transit",
+        "at": null,
+        "done": false,
+        "current": false
+      },
+      {
+        "label": "Fulfilled",
+        "at": null,
+        "done": false,
+        "current": false
+      }
+    ]
+  }
+}

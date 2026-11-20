@@ -42845,6 +42845,28 @@
     ],
     "detectionRules": []
   },
+  "obana-logistics": {
+    "displayName": "Obana Logistics",
+    "color": "#1B3B5F",
+    "aliases": [
+      "Obana Africa",
+      "Obana.Africa"
+    ],
+    "countries": [
+      "NG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Lagos",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "obana-logistics"
+    },
+    "canaryUrl": "https://logistics.obana.africa/",
+    "trackingUrlTemplate": "https://logistics.obana.africa/?track={trackingNumber}",
+    "trackingSearchUrl": "https://logistics.obana.africa/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "obibox": {
     "displayName": "Obibox",
     "color": "#ec6615",

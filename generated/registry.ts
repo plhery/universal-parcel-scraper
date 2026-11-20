@@ -563,6 +563,7 @@ import { adapter as nox } from '../carriers/nox/adapter.js';
 import { adapter as nzCouriers } from '../carriers/nz-couriers/adapter.js';
 import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
 import { adapter as oakHarbor } from '../carriers/oak-harbor/adapter.js';
+import { adapter as obanaLogistics } from '../carriers/obana-logistics/adapter.js';
 import { adapter as oca } from '../carriers/oca/adapter.js';
 import { adapter as ocasa } from '../carriers/ocasa/adapter.js';
 import { adapter as ocsAna } from '../carriers/ocs-ana/adapter.js';
@@ -1484,6 +1485,7 @@ export const REGISTRY: RegistryDefinition = {
     "nz-couriers": nzCouriers,
     "nz-post": nzPost,
     "oak-harbor": oakHarbor,
+    "obana-logistics": obanaLogistics,
     "oca": oca,
     "ocasa": ocasa,
     "ocs-ana": ocsAna,
@@ -3003,6 +3005,7 @@ export const REGISTRY: RegistryDefinition = {
     "nz-couriers": "nz-couriers",
     "nz-post": "nz-post",
     "oak-harbor": "oak-harbor",
+    "obana-logistics": "obana-logistics",
     "obibox": "universal",
     "oca": "oca",
     "ocasa": "ocasa",

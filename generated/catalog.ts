@@ -42849,6 +42849,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "obana-logistics": {
+    "displayName": "Obana Logistics",
+    "color": "#1B3B5F",
+    "aliases": [
+      "Obana Africa",
+      "Obana.Africa"
+    ],
+    "countries": [
+      "NG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Lagos",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "obana-logistics"
+    },
+    "canaryUrl": "https://logistics.obana.africa/",
+    "trackingUrlTemplate": "https://logistics.obana.africa/?track={trackingNumber}",
+    "trackingSearchUrl": "https://logistics.obana.africa/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "obibox": {
     "displayName": "Obibox",
     "color": "#ec6615",
@@ -67210,6 +67232,7 @@ export const CARRIER_IDS = [
   "ntc-express",
   "nz-couriers",
   "oak-harbor",
+  "obana-logistics",
   "obibox",
   "oca",
   "ocasa",
@@ -69104,6 +69127,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ntc-express": [],
   "nz-couriers": [],
   "oak-harbor": [],
+  "obana-logistics": [],
   "obibox": ["obibox-1"],
   "oca": ["oca-1"],
   "ocasa": ["ocasa-1"],
