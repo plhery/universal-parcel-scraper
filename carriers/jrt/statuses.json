@@ -277,7 +277,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-17",
-      "note": "Copied from DHL."
+      "note": "Copied from DHL, for a trunk run or a round. Straight after the destination parcel centre, on a parcel without DHL's export rows, the adapter reads it as the round, out for delivery."
     },
     {
       "wording": "pick-up was successful.",

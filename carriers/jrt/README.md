@@ -86,6 +86,9 @@ browser is needed, and no portal link is published.
   that way is taken over by the same row on its wall clock. A help link DHL adds to a row is left
   out of its text. The tracker writes the country's code in lower case ("de"); it is shown in upper
   case, as other places name a country, and a row stored beside the lower case is taken over.
+- DHL loads a parcel "to movement / tour vehicle" for a trunk run as for its round. Straight after
+  the destination parcel centre it is the round, out for delivery, unless the record holds DHL's
+  export rows: that centre is then the export centre in Germany, and the vehicle crosses the border.
 - Other scan times are wall clocks without an offset on the platform's Beijing clock, as
   [GZYL's](../gzyl/README.md) are, and are read on it; a row dated after the lookup is held back.
 

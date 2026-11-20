@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { languageStageStatus } from '../../core/status/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { canadaProvinceTimeZone, firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
 import { dateDhlRows } from '../gzyl/dhl-rows.js';
 import { dateHualeiGofoRows, dateWallClocks, isHualeiUsPartnerRow } from '../gzyl/gofo-rows.js';
@@ -82,6 +84,25 @@ export function dateJrtUspsSentences(result: CarrierResult): CarrierResult {
   return { ...result, last_update: events[0]?.time ?? result.last_update, events };
 }
 
+// DHL loads a parcel "to movement / tour vehicle" for a trunk run as for its round. Straight after the
+// destination parcel centre it is the round, unless the record holds DHL's export rows: that centre is then
+// the export centre in Germany, and the vehicle takes the parcel abroad.
+const LOADED = normalizeStatusWording('loaded to movement / tour vehicle');
+const DESTINATION_CENTRE = normalizeStatusWording('the shipment has been processed in the destination parcel center');
+const DHL_EXPORT = /\bexport parcel center\b|\btransported to the destination country\b/i;
+
+/** The result with DHL's load straight after the destination parcel centre, on a parcel DHL did not export, out for delivery. */
+export function stageJrtDhlRounds(result: CarrierResult): CarrierResult {
+  const events = result.events ?? [];
+  const wording = (event: CarrierEvent | undefined) => normalizeStatusWording(event?.description ?? '');
+  const rounds = events.map((event, index) => wording(event) === LOADED && wording(events[index + 1]) === DESTINATION_CENTRE);
+  if (!rounds.includes(true) || events.some((event) => DHL_EXPORT.test(event.description ?? ''))) return result;
+  const staged = events.map((event, index): CarrierEvent => (rounds[index] ? { ...event, stage: 'out_for_delivery' } : event));
+  const current = staged.find((event) => event.stage && event.stage !== 'pending');
+  const round = current !== undefined && rounds[staged.indexOf(current)];
+  return { ...result, events: staged, ...(round ? { status: languageStageStatus('out_for_delivery'), current_stage: 'out_for_delivery' } : {}) };
+}
+
 /** The result with the rows the tracker copies from DHL, J&T Express Mexico, the courier into Canada, GOFO and USPS dated on their clocks. */
 export const dateJrtRows = (result: CarrierResult): CarrierResult =>
   dateJrtUspsSentences(dateHualeiGofoRows(dateJrtCanadaRows(dateJrtJtMexicoRows(dateJrtDhlRows(result)))));
@@ -90,7 +111,7 @@ export const normalizeJrtNumber = (raw: string): string => normalizeHualeiNumber
 /** The track interface's reply, or null when it holds no row for the number. */
 export function parseJrtTrack(payload: unknown, number: string, readAt?: number): CarrierResult | null {
   const result = parseHualeiTrack(payload, number, JRT, readAt);
-  return result && dateJrtRows(result);
+  return result && stageJrtDhlRounds(dateJrtRows(result));
 }
 export const parseJrtPage = (html: string, number: string, readAt?: number): CarrierResult =>
-  dateJrtRows(parseHualeiPage(html, number, JRT, readAt));
+  stageJrtDhlRounds(dateJrtRows(parseHualeiPage(html, number, JRT, readAt)));

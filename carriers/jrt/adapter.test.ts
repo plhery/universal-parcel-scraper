@@ -1,13 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
-import { dateJrtUspsSentences, JRT_ORIGIN, jrtCanadaZone, parseJrtPage, parseJrtTrack } from './parser.js';
+import { dateJrtUspsSentences, JRT_ORIGIN, jrtCanadaZone, parseJrtPage, parseJrtTrack, stageJrtDhlRounds } from './parser.js';
 import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtEnglish, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
@@ -92,6 +93,25 @@ describe('JRT tracking adapter', () => {
       ['The electronic cargo information has been received', 'registered', 'carrier_map'],
     ]);
     expect(JSON.stringify(result)).not.toContain('Synthetic Recipient');
+  });
+
+  it('reads DHL’s load straight after the destination parcel centre as its round, unless DHL exported the parcel', () => {
+    const row = (description: string, stage = 'in_transit'): CarrierEvent => ({ description, stage, stage_source: 'carrier_map' });
+    const rows = [row('loaded to movement / tour vehicle'), row('the shipment has been processed in the destination parcel center'),
+      row('loaded to movement / tour vehicle'), row('the shipment has been processed in the parcel center of origin')];
+    const domestic: CarrierResult = { status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', events: rows };
+    const staged = stageJrtDhlRounds(domestic);
+    expect(staged).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'carrier_map' });
+    // A load after the parcel centre of origin is a trunk run.
+    expect(staged.events?.map(({ stage }) => stage)).toEqual(['out_for_delivery', 'in_transit', 'in_transit', 'in_transit']);
+    const delivered = stageJrtDhlRounds({ ...domestic, status: 'delivered', current_stage: 'delivered',
+      events: [row('the shipment has been successfully delivered', 'delivered'), ...rows] });
+    expect(delivered).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(delivered.events?.[1]?.stage).toBe('out_for_delivery');
+    // Abroad, the destination parcel centre is DHL's export centre in Germany, and the vehicle takes the parcel across the border.
+    const exported: CarrierResult = { ...domestic,
+      events: [...rows.slice(0, 2), row('the international shipment has been processed in the export parcel center')] };
+    expect(stageJrtDhlRounds(exported)).toEqual(exported);
   });
 
   it('reads an order handed over by JRT’s own number, which the record no longer holds, and hands it to DHL or FedEx', () => {
