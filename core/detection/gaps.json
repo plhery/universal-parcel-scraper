@@ -1998,6 +1998,12 @@
     "reason": "Kargoist tracks parcels by the shop's barcode, bare digit runs of many lengths that other carriers print too."
   },
   {
+    "carrier": "kerry-express-tw",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer Kerry Express Taiwan for the eleven-digit waybill on the public Shopee shipping label."
+  },
+  {
     "carrier": "kerry-tj",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
