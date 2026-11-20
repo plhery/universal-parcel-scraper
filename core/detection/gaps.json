@@ -4694,5 +4694,11 @@
     "pattern": "^26[0-9]{8}$",
     "kind": "open",
     "reason": "Jetizz customers report this family of ten-digit waybills. Other carriers share the numeric length and detection does not offer Jetizz."
+  },
+  {
+    "carrier": "jetizz",
+    "pattern": "^\\d{13}$",
+    "kind": "by_design",
+    "reason": "Jetizz's tracker also takes the thirteen-digit number of partner Aras Kargo for a parcel Aras delivers. The number is Aras's, so detection offers Aras rather than Jetizz."
   }
 ]

@@ -87005,6 +87005,18 @@
     ]
   },
   {
+    "input": "EK572324490VN",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "ems-vietnam",
+      "chronopost"
+    ]
+  },
+  {
     "input": "EKTRU6677036526YQ",
     "carrier": "unknown",
     "confidence": "none",
