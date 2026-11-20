@@ -5150,5 +5150,11 @@
     "pattern": "^22[0-9]{7}$",
     "kind": "open",
     "reason": "Airways Courier tracking links publish these nine-digit waybills, including one with a dated delivery history. Detection does not offer Airways Courier."
+  },
+  {
+    "carrier": "agt-kurye",
+    "pattern": "^(?:278326[0-9]{7}|7000018[0-9]{6})$",
+    "kind": "open",
+    "reason": "Three independently published delivery complaints identify numeric AGT Kurye tracking numbers. Detection does not offer AGT Kurye."
   }
 ]
