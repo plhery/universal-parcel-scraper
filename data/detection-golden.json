@@ -8162,6 +8162,20 @@
     ]
   },
   {
+    "input": "031002004307073",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "brt",
+      "yunda",
+      "ozon-logistics"
+    ],
+    "asked": [
+      "brt"
+    ]
+  },
+  {
     "input": "031168321009",
     "carrier": "unknown",
     "confidence": "low",
