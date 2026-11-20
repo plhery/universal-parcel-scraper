@@ -8,7 +8,7 @@
 
 /** One adapter's pause or pacing state, which ends at `until` (epoch milliseconds). */
 export interface AdapterHold {
-  /** The hold's kind, a slash, and what it holds within the kind. Never a secret or a URL. */
+  /** The hold's kind, a slash, and what it holds within the kind. Never a secret, a URL or a tracking number. */
   key: string;
   until: number;
   /** What the hold keeps besides its end, as JSON; absent when its end is all. */

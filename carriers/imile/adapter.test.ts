@@ -6,7 +6,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
-import { keepAdapterHolds, resetAdapterHolds, type AdapterHold } from '../../core/runner/holds.js';
+import { keepAdapterHolds, resetAdapterHolds, serviceTag, type AdapterHold } from '../../core/runner/holds.js';
 import { adapter, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_PAGE, IMILE_SIGNING, ImileTracker, imileSignature, scriptSigning, type ImileSigning } from './adapter.js';
 import { cainiaoScans, withCainiaoLeg } from './cainiao.js';
 import { imileReceiver, imileSummary, imileWording, normalizeImileNumber, parseImile } from './parser.js';
@@ -702,7 +702,7 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     expect(sliders).toHaveBeenCalledTimes(2);
   });
 
-  it('saves the numbers Cainiao had no record of to the host\'s holds, and takes them up after a restart', async () => {
+  it('saves the numbers Cainiao had no record of to the host\'s holds by tag, and takes them up after a restart', async () => {
     const saved: AdapterHold[] = [];
     await keepAdapterHolds({ load: async () => [], save: async (hold) => { saved.push(hold); } });
     try {
@@ -710,7 +710,9 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
       const cainiao = vi.fn((number: string) => reply(cainiaoUnknown(number)));
       const transport = () => site(FIRST, { [DELIVERED]: fixture('delivered') }, { cainiao });
       await new ImileTracker({ fetcher: transport(), signing: FIRST.signing, now: () => now }).fetch(DELIVERED);
-      expect(saved).toEqual([{ key: `imile-cainiao-unknown/${DELIVERED}`, until: now + CAINIAO_UNKNOWN_MS }]);
+      // The host's store gets the number's tag, never the number.
+      expect(saved).toEqual([{ key: `imile-cainiao-unknown/${serviceTag(DELIVERED)}`, until: now + CAINIAO_UNKNOWN_MS }]);
+      expect(JSON.stringify(saved)).not.toContain(DELIVERED);
       // A process that starts within the day leaves the number unasked on any transport, until the day is over.
       await keepAdapterHolds({ load: async () => saved, save: async () => undefined });
       await new ImileTracker({ fetcher: transport(), signing: FIRST.signing, now: () => now }).fetch(DELIVERED);
