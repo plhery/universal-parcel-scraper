@@ -1,0 +1,39 @@
+{
+  "carrier": "litegua-cargo",
+  "entries": [
+    {
+      "wording": "PENDIENTE DE ASIGNACION A RUTA",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Pending assignment alone does not establish movement."
+    },
+    {
+      "wording": "EN RUTA EXPRESS, LISTO PARA SER ENTREGADO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Used on express legs between Litegua agencies."
+    },
+    {
+      "wording": "TRASBORDO, PENDIENTE DE ASIGNAR A RUTA",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Records a transfer in the transport network."
+    },
+    {
+      "wording": "LISTO PARA SER ENTREGADO",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Readiness alone does not identify a door-delivery attempt or a collection handover."
+    },
+    {
+      "wording": "ENTREGADO SATISFACTORIAMENTE",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}

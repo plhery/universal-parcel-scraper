@@ -37914,6 +37914,30 @@
     ],
     "detectionRules": []
   },
+  "litegua-cargo": {
+    "displayName": "Litegua Express",
+    "color": "#2776ab",
+    "aliases": [
+      "Litegua Cargo",
+      "Litegua Encomiendas"
+    ],
+    "countries": [
+      "GT"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "litegua-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://apps.litegua.com/rastreoweb/ge.php",
+    "trackingUrlTemplate": "https://apps.litegua.com/rastreoweb/ge.php",
+    "trackingSearchUrl": "https://apps.litegua.com/rastreoweb/ge.php",
+    "trackingSiteName": "Litegua Express Rastreo de Encomiendas",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "litexpress": {
     "displayName": "LiteXpress",
     "color": "#72166c",

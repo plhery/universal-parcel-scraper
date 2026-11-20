@@ -37918,6 +37918,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "litegua-cargo": {
+    "displayName": "Litegua Express",
+    "color": "#2776ab",
+    "aliases": [
+      "Litegua Cargo",
+      "Litegua Encomiendas"
+    ],
+    "countries": [
+      "GT"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "litegua-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://apps.litegua.com/rastreoweb/ge.php",
+    "trackingUrlTemplate": "https://apps.litegua.com/rastreoweb/ge.php",
+    "trackingSearchUrl": "https://apps.litegua.com/rastreoweb/ge.php",
+    "trackingSiteName": "Litegua Express Rastreo de Encomiendas",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "litexpress": {
     "displayName": "LiteXpress",
     "color": "#72166c",
@@ -67018,6 +67042,7 @@ export const CARRIER_IDS = [
   "linhan",
   "lion-parcel",
   "lionwheel",
+  "litegua-cargo",
   "litexpress",
   "liuchen",
   "ljx-express",
@@ -68909,6 +68934,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "linhan": ["linhan-1"],
   "lion-parcel": ["lion-parcel-1"],
   "lionwheel": [],
+  "litegua-cargo": [],
   "litexpress": [],
   "liuchen": ["liuchen-1"],
   "ljx-express": [],

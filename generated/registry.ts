@@ -489,6 +489,7 @@ import { adapter as linearLogistics } from '../carriers/linear-logistics/adapter
 import { adapter as lingdong } from '../carriers/lingdong/adapter.js';
 import { adapter as linhan } from '../carriers/linhan/adapter.js';
 import { adapter as lionParcel } from '../carriers/lion-parcel/adapter.js';
+import { adapter as liteguaCargo } from '../carriers/litegua-cargo/adapter.js';
 import { adapter as liuchen } from '../carriers/liuchen/adapter.js';
 import { adapter as lmParcel } from '../carriers/lm-parcel/adapter.js';
 import { adapter as logen } from '../carriers/logen/adapter.js';
@@ -1408,6 +1409,7 @@ export const REGISTRY: RegistryDefinition = {
     "lingdong": lingdong,
     "linhan": linhan,
     "lion-parcel": lionParcel,
+    "litegua-cargo": liteguaCargo,
     "liuchen": liuchen,
     "lm-parcel": lmParcel,
     "logen": logen,
@@ -2839,6 +2841,7 @@ export const REGISTRY: RegistryDefinition = {
     "linhan": "linhan",
     "lion-parcel": "lion-parcel",
     "lionwheel": "universal",
+    "litegua-cargo": "litegua-cargo",
     "litexpress": "universal",
     "liuchen": "liuchen",
     "ljx-express": "universal",

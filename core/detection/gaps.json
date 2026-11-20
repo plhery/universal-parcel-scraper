@@ -5634,5 +5634,10 @@
     "carrier": "qatar-airways-cargo",
     "kind": "open",
     "reason": "The public guest portal confirms the master air waybill prefix and serial. The eleven-digit number shares a shape with other carriers."
+  },
+  {
+    "carrier": "litegua-cargo",
+    "kind": "open",
+    "reason": "An eleven-digit numeric guide shares its shape with other carriers. Litegua Express prints the full guide number in its electronic lookup."
   }
 ]
