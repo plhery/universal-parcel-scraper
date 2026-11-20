@@ -5060,5 +5060,11 @@
     "pattern": "^[0-9]{8}$",
     "kind": "open",
     "reason": "An archived Hellmann tracking URL supplies an eight-digit shipment query. Detection does not offer Hellmann."
+  },
+  {
+    "carrier": "golilla",
+    "pattern": "^4[0-9]{6}$",
+    "kind": "open",
+    "reason": "Customer reports identify these seven-digit Golilla delivery codes separately from their shop orders. Detection does not offer Golilla."
   }
 ]
