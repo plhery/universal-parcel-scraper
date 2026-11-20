@@ -5024,5 +5024,11 @@
     "pattern": "^G[0-9]{11}$",
     "kind": "open",
     "reason": "A recipient names İnter Global Kargo and publishes this prefixed reference. Detection does not offer the carrier."
+  },
+  {
+    "carrier": "iflow",
+    "pattern": "^TRI[0-9]{13}$",
+    "kind": "open",
+    "reason": "A published iFLOW tracking result displays this TRI-prefixed shipment number. Detection does not offer iFLOW."
   }
 ]
