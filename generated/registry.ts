@@ -519,6 +519,7 @@ import { adapter as marutiAir } from '../carriers/maruti-air/adapter.js';
 import { adapter as matkahuolto } from '../carriers/matkahuolto/adapter.js';
 import { adapter as mauritiusPost } from '../carriers/mauritius-post/adapter.js';
 import { adapter as mayiyinfu } from '../carriers/mayiyinfu/adapter.js';
+import { adapter as mbgAfrica } from '../carriers/mbg-africa/adapter.js';
 import { adapter as mdsCollivery } from '../carriers/mds-collivery/adapter.js';
 import { adapter as meest } from '../carriers/meest/adapter.js';
 import { adapter as meihooPegasus } from '../carriers/meihoo-pegasus/adapter.js';
@@ -1441,6 +1442,7 @@ export const REGISTRY: RegistryDefinition = {
     "matkahuolto": matkahuolto,
     "mauritius-post": mauritiusPost,
     "mayiyinfu": mayiyinfu,
+    "mbg-africa": mbgAfrica,
     "mds-collivery": mdsCollivery,
     "meest": meest,
     "meihoo-pegasus": meihooPegasus,
@@ -2910,6 +2912,7 @@ export const REGISTRY: RegistryDefinition = {
     "mayiyinfu": "mayiyinfu",
     "maystro-delivery": "universal",
     "mazet": "universal",
+    "mbg-africa": "mbg-africa",
     "mds-collivery": "mds-collivery",
     "mebel-taxi": "universal",
     "meest": "meest",

@@ -5662,5 +5662,10 @@
     "kind": "open",
     "carrier": "obana-logistics",
     "reason": "The public tracker confirms one published OBN reference. Explicit selection is available while issued formats and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "mbg-africa",
+    "reason": "The guest tracker confirms the carrier's public demo reference. Issued consignment formats and overlaps remain open."
   }
 ]

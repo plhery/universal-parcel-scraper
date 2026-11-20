@@ -1,3 +1,4 @@
+import { statusMap as mbgAfrica } from '../../carriers/mbg-africa/status.js';
 import { statusMap as obanaLogistics } from '../../carriers/obana-logistics/status.js';
 import { statusMap as packExpressGt } from '../../carriers/pack-express-gt/status.js';
 import { statusMap as amanatLogisticsAf } from '../../carriers/amanat-logistics-af/status.js';
@@ -928,6 +929,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'mbg-africa': mbgAfrica,
   'obana-logistics': obanaLogistics,
   'pack-express-gt': packExpressGt,
   'amanat-logistics-af': amanatLogisticsAf,

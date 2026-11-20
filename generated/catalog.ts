@@ -39991,6 +39991,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "mbg-africa": {
+    "displayName": "MBG-Africa",
+    "color": "#0B2A52",
+    "aliases": [
+      "MBG Africa",
+      "Muremera Business Group"
+    ],
+    "countries": [
+      "BI"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Bujumbura",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mbg-africa",
+      "localClocks": true
+    },
+    "canaryUrl": "https://mbg-africa.com/track.php",
+    "trackingUrlTemplate": "https://mbg-africa.com/track.php?tn={trackingNumber}&lang=en",
+    "trackingSearchUrl": "https://mbg-africa.com/track.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mds-collivery": {
     "displayName": "MDS Collivery",
     "color": "#00823d",
@@ -67142,6 +67165,7 @@ export const CARRIER_IDS = [
   "mayiyinfu",
   "maystro-delivery",
   "mazet",
+  "mbg-africa",
   "mds-collivery",
   "mebel-taxi",
   "meest",
@@ -69037,6 +69061,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mayiyinfu": ["mayiyinfu-1","mayiyinfu-2"],
   "maystro-delivery": [],
   "mazet": [],
+  "mbg-africa": [],
   "mds-collivery": [],
   "mebel-taxi": [],
   "meest": ["meest-1","meest-2","meest-3"],

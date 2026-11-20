@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'mbg-africa', number: 'MBG-2026-000123',
+    route: /^https:\/\/mbg-africa\.com\/track\.php\?tn=MBG-2026-000123&lang=en$/,
+    marker: /Shipment History|Track Shipment/i },
   { carrier: 'obana-logistics', number: 'OBN-20260430-IYU2FXS7',
     route: /^https:\/\/logistics\.obana\.africa\/\?track=OBN-20260430-IYU2FXS7$/,
     marker: /Obana Logistics|Track Shipment/i },
