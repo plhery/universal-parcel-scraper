@@ -1,0 +1,59 @@
+{
+  "carrier": "genei",
+  "records": [
+    {
+      "number": "93PUOHQK",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas?companyId=500000169",
+        "date": "2026-11-09",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "Genei tracking reference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "Genei confirmed a shipment carried by GLS with a dated pickup notice."
+    },
+    {
+      "number": "IRNCOI8G",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas?companyId=500000169",
+        "date": "2026-11-09",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "Genei tracking reference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "Genei confirmed a shipment carried by OnTime with dated failed collection scans."
+    }
+  ]
+}

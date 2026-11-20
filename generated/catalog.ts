@@ -27181,6 +27181,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "genei": {
+    "displayName": "Genei",
+    "color": "#214fc6",
+    "aliases": [
+      "Genei.es",
+      "Genei Global Logistic"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "genei"
+    },
+    "canaryUrl": "https://www.genei.es/seguimiento-envios/",
+    "trackingUrlTemplate": "https://www.genei.es/seguimiento-envios/?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://www.genei.es/seguimiento-envios/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.genei.es",
+          "genei.es"
+        ],
+        "path": "^/seguimiento-envios/?$",
+        "query": "(?:^|&)tracking=([A-Z0-9]{8})(?:&|$)",
+        "detectFromNumber": false
+      }
+    ],
+    "detectionRules": []
+  },
   "geniki-taxydromiki": {
     "displayName": "Geniki Taxydromiki",
     "color": "#004fa0",
@@ -66072,6 +66104,7 @@ export const CARRIER_IDS = [
   "gebrueder-weiss",
   "geis",
   "gel-express",
+  "genei",
   "geniki-taxydromiki",
   "geodis-pl",
   "georgian-post",
@@ -67938,6 +67971,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gebrueder-weiss": [],
   "geis": [],
   "gel-express": [],
+  "genei": [],
   "geniki-taxydromiki": ["geniki-taxydromiki-1"],
   "geodis-pl": ["geodis-pl-1"],
   "georgian-post": [],

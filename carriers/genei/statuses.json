@@ -1,0 +1,63 @@
+{
+  "carrier": "genei",
+  "entries": [
+    {
+      "code": "85",
+      "wording": "DISPONIBLE EN OFICINA",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "3",
+      "wording": "PAQUETE ENTREGADO",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The partner can also issue this code when it deposits a parcel at a pickup point. A matching pickup notice takes priority over those deposit records."
+    },
+    {
+      "code": "80",
+      "wording": "ENVIO EN REPARTO",
+      "stage": "out_for_delivery",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "5",
+      "wording": "RECOGIDA EFECTUADA, ENVIO EN TRANSITO",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "80",
+      "wording": "Recogido en Cliente",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "10",
+      "wording": "ENVIO EN TRANSITO CON INCIDENCIA",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "13",
+      "wording": "CONCERTADO PROXIMO REPARTO",
+      "language": "es",
+      "confirmedBy": "live",
+      "stage": null,
+      "note": "A later delivery round was arranged. This notice carries no change in the parcel’s stage."
+    },
+    {
+      "code": "9",
+      "wording": "RECOGIDA FALLIDA",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "live"
+    }
+  ]
+}

@@ -27177,6 +27177,38 @@
     ],
     "detectionRules": []
   },
+  "genei": {
+    "displayName": "Genei",
+    "color": "#214fc6",
+    "aliases": [
+      "Genei.es",
+      "Genei Global Logistic"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "genei"
+    },
+    "canaryUrl": "https://www.genei.es/seguimiento-envios/",
+    "trackingUrlTemplate": "https://www.genei.es/seguimiento-envios/?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://www.genei.es/seguimiento-envios/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.genei.es",
+          "genei.es"
+        ],
+        "path": "^/seguimiento-envios/?$",
+        "query": "(?:^|&)tracking=([A-Z0-9]{8})(?:&|$)",
+        "detectFromNumber": false
+      }
+    ],
+    "detectionRules": []
+  },
   "geniki-taxydromiki": {
     "displayName": "Geniki Taxydromiki",
     "color": "#004fa0",
