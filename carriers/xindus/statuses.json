@@ -1,4 +1,19 @@
 {
   "carrier": "xindus",
-  "entries": []
+  "entries": [
+    {"code": "SHIPMENT_READY_FOR_PICKUP", "wording": "Ready for Pickup", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "Booked and waiting for Xindus to collect it from the exporter, not for the recipient."},
+    {"code": "SHIPMENT_PICKUP_SUCCESSFUL", "wording": "Pickup Successful", "language": "en", "stage": "accepted", "confirmedBy": "live"},
+    {"code": "SHIPMENT_RECIEVED_AT_HUB", "wording": "Received At Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "SHIPMENT_AT_ORIGIN_CUSTOMS", "wording": "Out for Origin Customs Clearance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in India, a routine step before the flight."},
+    {"code": "SHIPMENT_CLEARED_AT_ORIGIN_CUSTOMS", "wording": "Cleared At Origin Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "SHIPMENT_CONNECTED_TO_GATEWAY_COUNTRY", "wording": "Connected to Gateway Country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "SHIPMENT_ARRIVED_AT_DESTINATION_COUNTRY", "wording": "Arrived At Destination Country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "SHIPMENT_CLEARED_AT_DESTINATION_CUSTOMS", "wording": "Cleared at Destination Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "INTRANSIT_001", "wording": "Intransit With Local Carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivery carrier's in-transit scan; its own wording is the scan's description."},
+    {"code": "INTRANSIT_002", "wording": "Intransit With Local Carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivery carrier's acceptance of the parcel from Xindus."},
+    {"code": "INTRANSIT_003", "wording": "Intransit With Local Carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Arrived at one of the delivery carrier's facilities."},
+    {"code": "INTRANSIT_007", "wording": "Intransit With Local Carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Left one of the delivery carrier's facilities."},
+    {"code": "SHIPMENT_OUT_FOR_DELIVERY", "wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"code": "SHIPMENT_DELIVERED", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"}
+  ]
 }

@@ -2321,6 +2321,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gruber-logistics', number: 'ZZ0000000199',
     route: /^https:\/\/glapptracking\.gruber-logistics\.com\/(?:\?trackingId=ZZ0000000199|search-tracking-number)$/,
     marker: /Cerca tracking spedizione|Numero tracking|Search Tracking Number|Suche nach Tracking-Nummer/ },
+  // The page's script prefills its search box from `awb` and looks the number up; an unknown
+  // one ends in its "Search Result Empty" card.
+  { carrier: 'xindus', number: 'X000000000',
+    route: /^https:\/\/www\.xindus\.net\/tracking\?awb=X000000000$/,
+    marker: /Track Exporter Cargo|Enter your Xindus airway bill reference|Search Result Empty/ },
 ];
 
 /**

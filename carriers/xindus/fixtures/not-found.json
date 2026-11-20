@@ -1,0 +1,10 @@
+{
+  "http_status": 500,
+  "xindus_error_code": "IXOS-ERROR",
+  "error_status": true,
+  "error_description": "Invalid Data - Cannot Perform Operation - Please provide valid AWB",
+  "records_total": 0,
+  "records_filtered": 0,
+  "pages_total": 0,
+  "draw": 0
+}

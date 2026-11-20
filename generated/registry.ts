@@ -799,6 +799,7 @@ import { adapter as xcargo } from '../carriers/xcargo/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
 import { adapter as xgs } from '../carriers/xgs/adapter.js';
+import { adapter as xindus } from '../carriers/xindus/adapter.js';
 import { adapter as xingheFreight } from '../carriers/xinghe-freight/adapter.js';
 import { adapter as xlcourier } from '../carriers/xlcourier/adapter.js';
 import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
@@ -1631,6 +1632,7 @@ export const REGISTRY: RegistryDefinition = {
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
     "xgs": xgs,
+    "xindus": xindus,
     "xinghe-freight": xingheFreight,
     "xlcourier": xlcourier,
     "xpo-ltl": xpoLtl,
@@ -3453,7 +3455,7 @@ export const REGISTRY: RegistryDefinition = {
     "xde-logistics": "xde-logistics",
     "xdp": "xdp",
     "xgs": "xgs",
-    "xindus": "universal",
+    "xindus": "xindus",
     "xinghe-freight": "xinghe-freight",
     "xingyunyi": "universal",
     "xinsu": "universal",

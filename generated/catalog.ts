@@ -63041,7 +63041,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "xindus"
     },
     "canaryUrl": "https://www.xindus.net/tracking",
     "trackingUrlTemplate": "https://www.xindus.net/tracking?awb={trackingNumber}",
