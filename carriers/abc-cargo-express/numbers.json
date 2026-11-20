@@ -1,5 +1,47 @@
 {
   "carrier": "abc-cargo-express",
-  "gap": "No public page shows an ABC Cargo Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "655743FDY/MBS",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://guardian.ng/news/customer-alleges-loss-of-cargo-to-abc-express/",
+        "date": "2020-01-26",
+        "dateKind": "article publication date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Nigerian road cargo courier",
+        "reportedRole": "carrier waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Guardian Nigeria reports this exact punctuated waybill for an ABC Cargo Express shipment booked at a branch."
+    },
+    {
+      "number": "374303",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.tracking-status.com/abc-transport-cargo-express-tracking/",
+        "date": "2022-09-24",
+        "dateKind": "customer comment date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Nigerian road cargo courier",
+        "reportedRole": "carrier waybill tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A customer comment identifies ABC Cargo Express and quotes the tracking number of a shipment booked from Abuja to Aba."
+    }
+  ]
 }

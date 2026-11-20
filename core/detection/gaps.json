@@ -5168,5 +5168,11 @@
     "pattern": "^E7M[0-9]{11}$",
     "kind": "open",
     "reason": "A Spanish consumer complaint reports this ADER delivery tracking format. Detection does not offer ADER."
+  },
+  {
+    "carrier": "abc-cargo-express",
+    "pattern": "^(?:[0-9]{6}FDY/MBS|[0-9]{6})$",
+    "kind": "open",
+    "reason": "A Nigerian news report and an independent customer comment identify two ABC Cargo Express waybill formats. Detection does not offer ABC Cargo Express."
   }
 ]
