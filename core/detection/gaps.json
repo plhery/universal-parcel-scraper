@@ -5513,5 +5513,10 @@
     "carrier": "sheensync",
     "kind": "open",
     "reason": "SheenSync waybills are SS and twelve digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "yuanpeng",
+    "kind": "open",
+    "reason": "Yuanpeng numbers are YP, ten digits and two letters; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   }
 ]

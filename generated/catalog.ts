@@ -64537,6 +64537,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "yuanpeng": {
+    "displayName": "Yuanpeng Supply Chain",
+    "color": "#8e8e93",
+    "aliases": [
+      "远朋",
+      "远朋跨境",
+      "深圳市远朋跨境供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yuanpeng",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yuema-express": {
     "displayName": "Yuema Express",
     "color": "#a81d30",
@@ -67228,6 +67250,7 @@ export const CARRIER_IDS = [
   "youbang-express",
   "yqs",
   "yto-ph",
+  "yuanpeng",
   "yuema-express",
   "yuexi-logistics",
   "yurtici-kargo",
@@ -69096,6 +69119,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "youbang-express": ["youbang-express-1"],
   "yqs": [],
   "yto-ph": [],
+  "yuanpeng": [],
   "yuema-express": [],
   "yuexi-logistics": [],
   "yurtici-kargo": [],
