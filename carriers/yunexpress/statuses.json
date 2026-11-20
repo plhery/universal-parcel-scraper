@@ -1072,6 +1072,7 @@
     {"wording": "Arrived at Carrier's Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Votre colis est en transit sur nos plateformes logistiques.", "language": "fr", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Votre Colissimo est en transit sur nos plateformes logistiques.", "language": "fr", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "Arrived at Pickup Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
+    {"wording": "Arrived at Pickup Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Delegación de tránsito", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "CTT Express's transit branch, relayed for a parcel it delivers, at the minute of CTT Express's own \"Enviado\"."}
   ]
 }

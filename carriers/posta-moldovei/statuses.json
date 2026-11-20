@@ -35,6 +35,7 @@
     {"wording": "Deliver item (Inb)", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "Delivery of an item from abroad. Seen in Poșta Moldovei's tracking API reply for a public sample listed in numbers.json."},
     {"wording": "Send item to domestic location", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "A domestic item sent on, without the outbound or inbound suffix. Seen in Poșta Moldovei's tracking API reply for a public sample listed in numbers.json."},
     {"wording": "Arrival at delivery office", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "A domestic item at its delivery office. Seen in Poșta Moldovei's tracking API reply for a public sample listed in numbers.json."},
-    {"wording": "Record Final Delivery", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "A domestic item's delivery, recorded at the office. Seen in Poșta Moldovei's tracking API reply for a public sample listed in numbers.json."}
+    {"wording": "Record Final Delivery", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "A domestic item's delivery, recorded at the office. Seen in Poșta Moldovei's tracking API reply for a public sample listed in numbers.json."},
+    {"wording": "Item presented to import customs", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "The English reply's wording of \"Trimitere prezentată organelor vamale de import\"."}
   ]
 }
