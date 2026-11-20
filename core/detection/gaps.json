@@ -5156,5 +5156,11 @@
     "pattern": "^111[0-9]{6}$",
     "kind": "open",
     "reason": "A federal court opinion identifies this exact numeric Aeronet waybill. Detection does not offer Aeronet."
+  },
+  {
+    "carrier": "ader",
+    "pattern": "^E7M[0-9]{11}$",
+    "kind": "open",
+    "reason": "A Spanish consumer complaint reports this ADER delivery tracking format. Detection does not offer ADER."
   }
 ]
