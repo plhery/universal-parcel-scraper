@@ -4952,5 +4952,11 @@
     "pattern": "^V\\d{10}$",
     "kind": "open",
     "reason": "A public Marvisur electronic carrier guide uses V followed by ten digits after normalization. Detection offers other carriers."
+  },
+  {
+    "carrier": "m24-logistics",
+    "pattern": "^O\\d{10}$",
+    "kind": "open",
+    "reason": "Two archived M24 tracking links publish order references with O and ten digits. Detection offers other carriers."
   }
 ]
