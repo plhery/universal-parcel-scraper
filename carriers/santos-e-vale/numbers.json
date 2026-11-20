@@ -1,5 +1,40 @@
 {
   "carrier": "santos-e-vale",
-  "gap": "No public page shows a whole Santos e Vale reference.",
-  "records": []
+  "records": [
+    {
+      "number": "999911313064",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.deco.proteste.pt/reclamar/todas-as-reclamacoes/n-C3-A3o-devolu-C3-A7-C3-A3o-do-valor-pago/f2cb48cfb0130062ff",
+        "date": "2026-01-07",
+        "dateKind": "consumer complaint",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Portuguese domestic delivery",
+        "reportedRole": "número de tracking",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The DECO consumer complaint quotes the seller’s dispatch email, which identifies Santos e Vale and gives this reference. The carrier’s tracking form needs the delivery postcode, which the source does not publish."
+    }
+  ]
 }

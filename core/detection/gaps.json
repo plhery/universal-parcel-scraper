@@ -4850,5 +4850,11 @@
     "pattern": "^UCI\\d{8}$",
     "kind": "open",
     "reason": "A public air waybill issued on behalf of Scan Global Logistics uses the UCI prefix and eight digits. Detection omits Scan Global Logistics."
+  },
+  {
+    "carrier": "santos-e-vale",
+    "pattern": "^9999\\d{8}$",
+    "kind": "open",
+    "reason": "A Portuguese consumer report quotes a dispatch email naming Santos e Vale and providing a twelve-digit reference. Detection offers other carriers."
   }
 ]
