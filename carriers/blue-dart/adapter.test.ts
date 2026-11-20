@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { BlueDartTracker, adapter } from './adapter.js';
 import { parseBlueDart } from './parser.js';
@@ -28,6 +29,8 @@ describe('Blue Dart direct tracking', () => {
     expect(result.events?.map(e => e.stage)).toEqual(['returned', 'accepted', 'registered']);
     expect(result).not.toHaveProperty('delivered_at');
     for (const entry of statuses.entries) expect(classifyBlueDartStatus(entry.wording)?.stage, entry.wording).toBe(entry.stage);
+    // The booked pickup comes before Blue Dart has the parcel.
+    expect(statusMapAnswer({ carrier: 'blue-dart', providerCode: null, description: 'Pickup Has Been Registered' })).toEqual({ kind: 'mapped', stage: 'registered' });
   });
   it('rejects wrong and duplicate summaries and treats an empty shell as schema failure', () => {
     for (const value of [html.replace(NUMBER, '00000000002'), html + html, '<html>Unavailable</html>']) {

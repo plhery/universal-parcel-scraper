@@ -2,7 +2,8 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const vocabulary: Record<string, ClassifiedStatus> = {
-  // A pickup run to the shipper: the parcel is not with Blue Dart yet.
+  // The shipper's pickup booked, then a pickup run to it: the parcel is not with Blue Dart yet.
+  'pickup has been registered': { status: 'pending', stage: 'registered' },
   'pickup employee is out to p/u shipment': { status: 'pending', stage: 'registered' },
   'shipment picked up': { status: 'in_transit', stage: 'accepted' },
   'shipment delivered': { status: 'delivered', stage: 'delivered' },

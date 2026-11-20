@@ -2,6 +2,14 @@
   "carrier": "blue-dart",
   "entries": [
     {
+      "wording": "Pickup Has Been Registered",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The shipper's pickup booked, the day before the pickup run and Shipment Picked Up: the parcel is not with Blue Dart yet."
+    },
+    {
       "wording": "Pickup Employee Is Out To P/U Shipment",
       "language": "en",
       "stage": "registered",
