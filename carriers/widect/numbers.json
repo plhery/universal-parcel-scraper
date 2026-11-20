@@ -1,5 +1,27 @@
 {
   "carrier": "widect",
-  "gap": "No public page shows a Widect tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "aja100007784756",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/widect/widect-kargo-problemi",
+        "date": "2025-12-26",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Türkiye to United Arab Emirates",
+        "reportedRole": "tracking number",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "ajex",
+        "confidence": "high"
+      },
+      "note": "A Şikayetvar customer names Widect for the shipment and gives a number in the AJEX waybill family. The source leaves its scope on Widect’s tracker unresolved. Lookup blocked by verification."
+    }
+  ]
 }
