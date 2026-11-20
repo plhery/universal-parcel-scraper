@@ -78,7 +78,7 @@ is the service's network, and no browser is launched. MTCaptcha (Hongkong Post)
 needs handling that this image's solvers do not provide; its
 [documentation](../carriers/hongkong-post/README.md) describes the verification flow.
 
-Track123 uses a fresh context for its public FedEx form. The page owns guest verification and polling; only the matching history is captured. It adds no challenge attempts or retained verification state.
+Track123 uses a fresh context for the public form of the courier page the request names. The page owns guest verification and polling; only history whose query names that courier and the whole number is captured. It adds no challenge attempts or retained verification state.
 
 LBC Express binds the public page's main-frame tracking POST to the whole label and
 decodes its compressed response. Its bounded capture retains automatic verification

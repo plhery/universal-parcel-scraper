@@ -5,25 +5,38 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { isRecord } from '../../core/types.js';
 import { localEvent, numberOf, place, result, text } from '../shared/result.js';
+import { track123Carrier, track123CourierCode } from './couriers.js';
 
 const SOURCE = 'Track123';
-const PAGE = 'https://www.track123.com/carriers/fedex';
-export const TRACK123_QUERY = 'https://www.track123.com/tk/api/v2/anonymous/track/query-track-nos';
-export const TRACK123_POLL = 'https://www.track123.com/tk/api/v2/anonymous/track/polling-waybill';
+const ORIGIN = 'https://www.track123.com';
+export const TRACK123_QUERY = `${ORIGIN}/tk/api/v2/anonymous/track/query-track-nos`;
+export const TRACK123_POLL = `${ORIGIN}/tk/api/v2/anonymous/track/polling-waybill`;
 
-export function parseTrack123Response(payload: unknown, number: string): CarrierResult {
+const pageOf = (code: string) => `${ORIGIN}/carriers/${code}`;
+
+/**
+ * Reads the courier page's final reply for `number`. The shipment must be the one asked of the
+ * courier `code` (FedEx's when omitted) and every event must repeat the number.
+ */
+export function parseTrack123Response(payload: unknown, number: string, code = 'fedex'): CarrierResult {
   if (!isRecord(payload) || typeof payload.code !== 'string') throw new SchemaError(SOURCE, 'Unreadable tracking reply');
   // A rejected guest request says nothing about shipment existence.
   if (payload.code !== '00000') throw new IndeterminateError(SOURCE, 'The guest tracking request was refused', { reason: 'guest_refused' });
   const records = isRecord(payload.data) ? payload.data.landWaybillLists : null;
   if (!Array.isArray(records) || records.length !== 1 || !isRecord(records[0])) throw new SchemaError(SOURCE, 'No unique shipment');
   const shipment = records[0];
-  if (shipment.trackingNo !== number || shipment.localProviderCode !== 'fedex') {
-    throw new SchemaError(SOURCE, 'The shipment does not match the requested FedEx number');
+  if (shipment.trackingNo !== number || shipment.localProviderCode !== code) {
+    throw new SchemaError(SOURCE, 'The shipment does not match the requested number and courier');
   }
   if (shipment.querying !== false) throw new IndeterminateError(SOURCE, 'The provider is still retrieving history', { reason: 'query_pending' });
   if (!Array.isArray(shipment.localDetails) || shipment.localDetails.length > 1000) throw new SchemaError(SOURCE, 'Invalid tracking history');
-  if (!shipment.localDetails.length) throw new NoHistoryError(SOURCE, 'No available tracking history');
+  if (!shipment.localDetails.length) {
+    // Track123 marks a courier site it could not read; that empty answer is about the courier, not the parcel.
+    if (shipment.nodeStatus === 'UNSTABLE_OFFICIAL_WEBSITE') {
+      throw new IndeterminateError(SOURCE, 'The provider could not reach the courier', { reason: 'carrier_unavailable' });
+    }
+    throw new NoHistoryError(SOURCE, 'No available tracking history');
+  }
   const events: CarrierEvent[] = [];
   for (const raw of shipment.localDetails) {
     if (!isRecord(raw) || raw.trackingNo !== number || typeof raw.eventTime !== 'string'
@@ -39,20 +52,24 @@ export function parseTrack123Response(payload: unknown, number: string): Carrier
     const event = localEvent(offset ? wall + offset : wall, text(raw.eventDetail) || text(raw.desc));
     if (event) events.push({ ...event, local_time: wall, ...(place(raw.address) ? { location: place(raw.address) } : {}) });
   }
-  return { ...result(events, SOURCE), tracking_url: PAGE, reported_carriers: ['FedEx'], discovered_carrier: 'fedex' };
+  const shown = text(shipment.localProviderEnName) || text(shipment.localProviderName);
+  const carrier = track123Carrier(code);
+  return { ...result(events, SOURCE), tracking_url: pageOf(code), ...(shown ? { reported_carriers: [shown] } : {}),
+    ...(carrier ? { discovered_carrier: carrier } : {}) };
 }
 
 export const adapter: AdapterFactory = environment => ({
   id: SOURCE, recordsSteps: true, steps: ['trawl'],
   async track(input, context = {}) {
     const number = numberOf(input.number);
-    if (input.carrier !== 'fedex' || !/^(?:\d{12}|\d{15}|\d{20})$/.test(number)) {
-      throw new IndeterminateError(SOURCE, 'This provider is enabled only for named FedEx lookups', { reason: 'unsupported_scope' });
+    const code = track123CourierCode(input.carrier);
+    if (!code) {
+      throw new IndeterminateError(SOURCE, 'This provider answers only for a named carrier it has a courier page for', { reason: 'unsupported_scope' });
     }
     return runSteps({ carrier: SOURCE, recorder: environment.recorder, signal: context.signal, budgetMs: context.budgetMs ?? 30_000 }, [{
       id: 'trawl', run: async ({ remainingMs, signal }) => {
         if (!environment.trawl) throw new TransportError(SOURCE, 'A browser service is required');
-        const page = await environment.trawl.scrape({ url: `${PAGE}#trawl-number=${number}`, skipHttp: true, maxTier: 3,
+        const page = await environment.trawl.scrape({ url: `${pageOf(code)}#trawl-number=${number}`, skipHttp: true, maxTier: 3,
           maxTimeout: Math.max(1, Math.floor(remainingMs - 2000)), captureResponses: [TRACK123_QUERY, TRACK123_POLL] },
         { provider: SOURCE, timeoutMs: remainingMs, maxBytes: 5_000_000, fetcher: environment.fetcher, signal, captureWindow: 'last' });
         const entries = page.capturedResponses.filter(row => [TRACK123_QUERY, TRACK123_POLL].includes(row.url)
@@ -64,7 +81,7 @@ export const adapter: AdapterFactory = environment => ({
         if (last.status !== 200 || last.truncated || last.error || !last.body) throw new TransportError(SOURCE, 'Incomplete guest tracking response');
         let payload: unknown;
         try { payload = JSON.parse(last.body); } catch { throw new SchemaError(SOURCE, 'Unreadable guest tracking response'); }
-        return parseTrack123Response(payload, number);
+        return parseTrack123Response(payload, number, code);
       },
     }]);
   },

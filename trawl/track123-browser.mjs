@@ -1,19 +1,26 @@
 const ORIGIN = 'https://www.track123.com';
-const PAGE = `${ORIGIN}/carriers/fedex`;
 const QUERY = `${ORIGIN}/tk/api/v2/anonymous/track/query-track-nos`;
 const POLL = `${ORIGIN}/tk/api/v2/anonymous/track/polling-waybill`;
 const MAX_BODY = 2_000_000;
+const COURIER = /^[a-z0-9][a-z0-9_-]{0,63}$/;
+const NUMBER = /^(?=.*\d)[A-Z0-9]{4,40}$/;
 
-export function track123Number(raw, capture = {}) {
+/** The courier code and whole number of a `/carriers/<code>#trawl-number=<number>` request, or null. */
+export function track123Request(raw, capture = {}) {
   let url;
   try { url = new URL(raw); } catch { return null; }
   const values = new URLSearchParams(url.hash.slice(1));
   const number = values.get('trawl-number');
-  return url.origin === ORIGIN && url.pathname === '/carriers/fedex' && !url.search
+  const code = /^\/carriers\/([^/]+)$/.exec(url.pathname)?.[1];
+  return url.origin === ORIGIN && COURIER.test(code ?? '') && !url.search
     && !url.username && !url.password && [...values].length === 1
-    && /^\d{12}$|^\d{15}$|^\d{20}$/.test(number ?? '')
+    && NUMBER.test(number ?? '')
     && capture.captureResponses?.length === 2 && capture.captureResponses[0] === QUERY
-    && capture.captureResponses[1] === POLL ? number : null;
+    && capture.captureResponses[1] === POLL ? { code, number } : null;
+}
+
+export function track123Number(raw, capture = {}) {
+  return track123Request(raw, capture)?.number ?? null;
 }
 
 function containsNumber(value, number, depth = 0) {
@@ -28,7 +35,8 @@ export function track123Data(payload) {
   return { code: typeof payload?.code === 'string' && /^[A-Z0-9_]{1,30}$/.test(payload.code) ? payload.code : null,
     data: { landWaybillLists: Array.isArray(payload?.data?.landWaybillLists)
       ? payload.data.landWaybillLists.slice(0, 10).map(value => ({
-        ...pick(value, ['trackingNo', 'localProviderCode', 'querying', 'hasTrackingDetails']),
+        ...pick(value, ['trackingNo', 'localProviderCode', 'localProviderName', 'localProviderEnName', 'querying',
+          'hasTrackingDetails', 'nodeStatus']),
         localDetails: Array.isArray(value.localDetails) ? value.localDetails.slice(0, 1001).map(event =>
           pick(event, ['trackingNo', 'eventTime', 'eventTimeUtc', 'timezone', 'eventDetail', 'desc', 'address'])) : null,
       })) : null } };
@@ -36,8 +44,10 @@ export function track123Data(payload) {
 
 /** Submit once; the page owns its guest verification and bounded history polling. */
 export async function runTrack123Browser({ url, capture, handle, tier, maxTimeout, installPolicy }) {
-  const number = track123Number(url, capture);
-  if (!number) return undefined;
+  const request = track123Request(url, capture);
+  if (!request) return undefined;
+  const { code, number } = request;
+  const pageUrl = `${ORIGIN}/carriers/${code}`;
   const started = Date.now();
   let context, page, timer, wake, expired = false, submitted = false, statusCode = 200;
   let pending = 0, bytes = 0, lastActivity = started;
@@ -46,15 +56,16 @@ export async function runTrack123Browser({ url, capture, handle, tier, maxTimeou
   const changed = () => { lastActivity = Date.now(); wake?.(); };
   const result = () => ({ tier, status: 'success', statusCode, durationMs: Date.now() - started,
     // TRAWL requires a payload to return captures instead of escalating to another tier.
-    effectiveUrl: PAGE, html: '<html><head><title>Track123 capture</title></head><body></body></html>', cookies: [], capturedResponses: [...entries, ...(pending > 0 ? [{ url: POLL, status: 0, headers: {}, body: null,
+    effectiveUrl: pageUrl, html: '<html><head><title>Track123 capture</title></head><body></body></html>', cookies: [], capturedResponses: [...entries, ...(pending > 0 ? [{ url: POLL, status: 0, headers: {}, body: null,
       error: 'track123-request-pending', trackingNumberSubmitted: number }] : [])].slice(-12) });
   const observe = request => {
     if (!submitted || request.method() !== 'POST' || ![QUERY, POLL].includes(request.url())) return;
     try {
       const body = request.postDataJSON();
       if (!containsNumber(body, number)) return;
-      if (request.url() === QUERY && (body.logisticsCode !== 'fedex'
+      if (request.url() === QUERY && (body.logisticsCode !== code
         || body.trackNos?.length !== 1 || body.trackNos[0] !== number)) return;
+      if (request.url() === POLL && (!Array.isArray(body) || body.length !== 1 || body[0]?.trackingNo !== number)) return;
       requests.add(request); pending++; changed();
     } catch { /* Unbound requests never become history. */ }
   };
@@ -95,7 +106,7 @@ export async function runTrack123Browser({ url, capture, handle, tier, maxTimeou
             error: 'track123-request-failed', trackingNumberSubmitted: number }); changed();
         }
       });
-      const response = await page.goto(PAGE, { waitUntil: 'domcontentloaded', timeout: remaining() });
+      const response = await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: remaining() });
       statusCode = response?.status() ?? 0;
       if (statusCode !== 200) return result();
       const field = page.locator('textarea[name="order-input"]');
