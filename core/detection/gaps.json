@@ -5964,5 +5964,10 @@
     "carrier": "bermuda-container-line",
     "kind": "open",
     "reason": "The verified ISO container identifier and booking do not establish an exclusive number range. Select Bermuda Container Line explicitly."
+  },
+  {
+    "carrier": "sfl-worldwide",
+    "kind": "open",
+    "reason": "The confirmed SFL shipment uses a shared numeric shape. Select SFL Worldwide explicitly."
   }
 ]

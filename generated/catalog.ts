@@ -53488,6 +53488,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "sfl-worldwide": {
+    "displayName": "SFL Worldwide",
+    "color": "#136BA7",
+    "aliases": [
+      "SFL Worldwide LLC",
+      "SFL Worldwide Shipping"
+    ],
+    "countries": [
+      "US",
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sfl-worldwide",
+      "localClocks": true
+    },
+    "canaryUrl": "https://track.sflworldwide.com/",
+    "trackingUrlTemplate": "https://track.sflworldwide.com/",
+    "trackingSearchUrl": "https://track.sflworldwide.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sfyd-express": {
     "displayName": "SFYD Express",
     "color": "#f47920",
@@ -69105,6 +69129,7 @@ export const CARRIER_IDS = [
   "servipost",
   "seven-eleven-tw",
   "sfc",
+  "sfl-worldwide",
   "sfyd-express",
   "sgk-home-delivery",
   "sgxpress",
@@ -71063,6 +71088,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "servipost": [],
   "seven-eleven-tw": [],
   "sfc": ["sfc-1","sfc-ae"],
+  "sfl-worldwide": [],
   "sfyd-express": [],
   "sgk-home-delivery": [],
   "sgxpress": [],

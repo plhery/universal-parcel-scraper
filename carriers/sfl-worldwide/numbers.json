@@ -1,0 +1,51 @@
+{
+  "carrier": "sfl-worldwide",
+  "records": [
+    {
+      "number": "155411113354",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "source": {
+        "url": "https://www.bbb.org/us/tx/farmers-branch/profile/logistics/sfl-worldwide-0875-90225242/complaints",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "SFL Worldwide’s public response names this shipment number. The current guest lookup confirms it and shows delivery status and a dated handoff."
+      }
+    },
+    {
+      "number": "101038384",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "source": {
+        "url": "https://www.bbb.org/us/tx/farmers-branch/profile/logistics/sfl-worldwide-0875-90225242/complaints?page=2",
+        "access": "full_page"
+      },
+      "note": "A tracking number published by SFL Worldwide for which the public portal now reports no shipment."
+    }
+  ]
+}

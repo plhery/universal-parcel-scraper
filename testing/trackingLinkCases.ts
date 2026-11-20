@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'sfl-worldwide', number: '155411113354',
+    route: /^https:\/\/track\.sflworldwide\.com\/?$/,
+    marker: /Track Your Shipment|Tracking ID|Track Shipment/i, forwarding: 'none', renderTimeoutMs: 10000 },
   { carrier: 'bermuda-container-line', number: 'BCLU8009690',
     route: /^https:\/\/neptunebermuda\.com\/track-shipment\/?$/,
     marker: /Booking or Container Number|Bermuda Container Line/i, forwarding: 'none' },

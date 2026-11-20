@@ -1,0 +1,47 @@
+{
+  "id": "sfl-worldwide",
+  "displayName": "SFL Worldwide",
+  "aliases": [
+    "SFL Worldwide LLC",
+    "SFL Worldwide Shipping"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#136BA7"
+  },
+  "selectable": true,
+  "timezone": "America/Chicago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sfl-worldwide",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://track.sflworldwide.com/",
+    "searchUrl": "https://track.sflworldwide.com/",
+    "canaryUrl": "https://track.sflworldwide.com/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

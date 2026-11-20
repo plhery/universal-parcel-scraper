@@ -53484,6 +53484,30 @@
       }
     ]
   },
+  "sfl-worldwide": {
+    "displayName": "SFL Worldwide",
+    "color": "#136BA7",
+    "aliases": [
+      "SFL Worldwide LLC",
+      "SFL Worldwide Shipping"
+    ],
+    "countries": [
+      "US",
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sfl-worldwide",
+      "localClocks": true
+    },
+    "canaryUrl": "https://track.sflworldwide.com/",
+    "trackingUrlTemplate": "https://track.sflworldwide.com/",
+    "trackingSearchUrl": "https://track.sflworldwide.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sfyd-express": {
     "displayName": "SFYD Express",
     "color": "#f47920",

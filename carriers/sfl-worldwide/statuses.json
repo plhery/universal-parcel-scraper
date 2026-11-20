@@ -1,0 +1,18 @@
+{
+  "carrier": "sfl-worldwide",
+  "entries": [
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment has been connected via Blue Dart",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The dated SFL handoff wording with the partner waybill and lookup instructions omitted."
+    }
+  ]
+}
