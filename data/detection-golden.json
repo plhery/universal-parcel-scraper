@@ -109180,6 +109180,28 @@
     ]
   },
   {
+    "input": "UB112005949HU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "UB112006034HU",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "UB209300714LV",
     "carrier": "intl-post",
     "confidence": "high",
