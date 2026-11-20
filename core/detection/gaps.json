@@ -4137,6 +4137,12 @@
     "reason": "Two examples in the number field of USEA's own tracker; the family is not established."
   },
   {
+    "carrier": "usend-chile",
+    "pattern": "^WB\\d{9}$",
+    "kind": "open",
+    "reason": "USEND's guides are WB and nine digits, a shape GLS Italy's rule also offers; one public sample establishes no family. USEND's tracker returns the sample's history."
+  },
+  {
     "carrier": "vasp-expresso",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

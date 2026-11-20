@@ -1,0 +1,26 @@
+{
+  "carrier": "usend-chile",
+  "records": [
+    {
+      "number": "WB186756797",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://usend.cl/tracking/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "guía",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "USEND's tracking API documentation gives this guide in its example reply, a delivered parcel of medical supplies from Santiago to Concepción. The guest tracker returns the same guide and route with its dated movements."
+    }
+  ]
+}

@@ -61629,6 +61629,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "usend-chile": {
+    "displayName": "USEND Chile",
+    "color": "#273BA5",
+    "aliases": [
+      "USEND",
+      "Usend Courier",
+      "Usend Logistics Chile"
+    ],
+    "countries": [
+      "CL"
+    ],
+    "selectable": true,
+    "timezone": "America/Santiago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "usend-chile",
+      "localClocks": true
+    },
+    "canaryUrl": "https://usend.cl/",
+    "trackingUrlTemplate": "https://portal.usend.cl/rastrear-shipper/{trackingNumber}",
+    "trackingSearchUrl": "https://usend.cl/",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.usend.cl"
+        ],
+        "path": "^/rastrear-shipper/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "utec-logistics": {
     "displayName": "UTEC Logistics",
     "color": "#014886",
@@ -68217,6 +68248,7 @@ export const CARRIER_IDS = [
   "us-cargo",
   "usasd",
   "usea-express",
+  "usend-chile",
   "utec-logistics",
   "uvan",
   "uzbekistan-post",
@@ -70127,6 +70159,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "us-cargo": [],
   "usasd": [],
   "usea-express": [],
+  "usend-chile": [],
   "utec-logistics": ["utec-logistics-1"],
   "uvan": [],
   "uzbekistan-post": ["uzbekistan-post-s10"],
