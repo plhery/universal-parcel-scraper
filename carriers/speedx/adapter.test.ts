@@ -115,6 +115,23 @@ describe('SpeedX tracking page', () => {
     expect(result.events?.[0]).toEqual({ time: '2026-03-19T13:14:05-07:00', description: 'Held for review', location: 'Example City, EX', provider_code: '59999' });
   });
 
+  it('reads the drop at a parcelshop before the shop\'s waiting scan as a notice on the round', () => {
+    const shop = (drop: boolean, waiting: boolean) => parse(withData((_data, events) => {
+      const last = Object.assign(events[0]!, { eventCode: '57701', category: 'LAST_MILE_DELIVERED', eventDescription: 'Waiting for collection from Parcelshop', eventSupplementalInfo: null });
+      const dropped = { ...last, eventId: 'c0000000000000000000000000000001', eventCode: '57204', eventDescription: 'Delivered to PUDO', ts: '2026-03-19T19:56:05.000Z' };
+      if (!waiting) events.shift();
+      if (drop) events.splice(waiting ? 1 : 0, 0, dropped);
+    }));
+    const both = shop(true, true);
+    expect(both.events?.slice(0, 3).map(({ provider_code, stage, stage_source }) => [provider_code, stage, stage_source]))
+      .toEqual([['57701', 'ready_for_pickup', 'carrier_map'], ['57204', 'out_for_delivery', 'none'], ['57104', 'out_for_delivery', 'carrier_map']]);
+    expect(both.current_stage).toBe('ready_for_pickup');
+    // Without the shop's scan, the drop is the parcel ready for the recipient.
+    const alone = shop(true, false);
+    expect(alone.events?.[0]).toMatchObject({ provider_code: '57204', stage: 'ready_for_pickup', stage_source: 'carrier_map' });
+    expect(alone.current_stage).toBe('ready_for_pickup');
+  });
+
   it('prints the wording and its note as the page does', () => {
     const attempted = parse(withData((_data, events) => {
       Object.assign(events[1]!, { eventCode: '57614', category: 'LAST_MILE_ATTEMPTED', description: 'Ignored',

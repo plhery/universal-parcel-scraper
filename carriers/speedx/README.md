@@ -29,7 +29,8 @@ or a browser.
 - Event codes map through `status.ts`, then the event's category. Shipping Label Created
   is the shipper's label, and Pickup Requested the pickup the shipper booked, so both are
   `registered`, not `accepted` or in transit. At a parcelshop, Delivered to PUDO and Waiting for
-  collection are the parcel ready for the recipient, and Self picked up its collection. Other codes stay unmapped
+  collection are the parcel ready for the recipient, and Self picked up its collection. The drop comes
+  minutes before the shop's scan, so with that scan after it, the drop is a notice on the round. Other codes stay unmapped
   for the shared wording rules. `statusMap` answers the app's review by code alone, so a code
   staged only by its category is not answered.
 - The page prints each event's wording, then its note. A delivery's note says where the

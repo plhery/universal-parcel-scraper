@@ -210,6 +210,14 @@ export function parseSpeedx(body: string, contentType: string | null, raw: strin
   // The page lists scans newest first. Instants order them; equal ones keep the page's order.
   if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((left, right) => right.timestamp - left.timestamp);
+  // The round's drop at a parcelshop (Delivered to PUDO) comes minutes before the shop's "Waiting for collection",
+  // which says the parcel can be collected: with the shop's scan after it, the drop is a notice on the round.
+  const waiting = scans.find(({ event }) => event.provider_code === '57701');
+  scans.forEach(({ event, timestamp }, index) => {
+    if (!waiting || event.provider_code !== '57204' || timestamp > waiting.timestamp) return;
+    const before = scans.slice(index + 1).find((older) => older.event.stage && older.event.stage_source !== 'none')?.event.stage;
+    if (before) Object.assign(event, { stage: before, stage_source: 'none' });
+  });
   const newest = scans[0]!;
   const current = newest.status;
   // The country of the recipient's postcode, which the page's proof-of-delivery check uses.
