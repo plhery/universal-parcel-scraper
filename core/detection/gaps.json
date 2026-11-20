@@ -5539,5 +5539,10 @@
     "carrier": "pacific-international-lines",
     "kind": "open",
     "reason": "The guest lookup uses equipment identifiers shared across shipping lines and voyages."
+  },
+  {
+    "carrier": "sitc-container-lines",
+    "kind": "open",
+    "reason": "SITC tracks equipment identifiers that can be reused across carriers and voyages."
   }
 ]

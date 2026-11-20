@@ -1,0 +1,41 @@
+{
+  "carrier": "sitc-container-lines",
+  "records": [
+    {
+      "number": "SITU9145532",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://hict.net.vn/ho-tro-khach-hang/DanhSachQuyTrinh/SITC%20EDO.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The delivery order published by the port names this SITC container. The SITC tracker returned movements with the same full number."
+    },
+    {
+      "number": "UETU5717763",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://hict.net.vn/ho-tro-khach-hang/DanhSachQuyTrinh/SITC%20EDO.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The delivery order published by the port names this SITC container. The SITC tracker returned movements with the same full number."
+    }
+  ]
+}

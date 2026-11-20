@@ -707,6 +707,7 @@ import { adapter as shreeAnjani } from '../carriers/shree-anjani/adapter.js';
 import { adapter as shreeMaruti } from '../carriers/shree-maruti/adapter.js';
 import { adapter as sicepat } from '../carriers/sicepat/adapter.js';
 import { adapter as singaporePost } from '../carriers/singapore-post/adapter.js';
+import { adapter as sitcContainerLines } from '../carriers/sitc-container-lines/adapter.js';
 import { adapter as skladusa } from '../carriers/skladusa/adapter.js';
 import { adapter as skroutzLastMile } from '../carriers/skroutz-last-mile/adapter.js';
 import { adapter as skybox } from '../carriers/skybox/adapter.js';
@@ -1607,6 +1608,7 @@ export const REGISTRY: RegistryDefinition = {
     "shree-maruti": shreeMaruti,
     "sicepat": sicepat,
     "singapore-post": singaporePost,
+    "sitc-container-lines": sitcContainerLines,
     "skladusa": skladusa,
     "skroutz-last-mile": skroutzLastMile,
     "skybox": skybox,
@@ -3269,6 +3271,7 @@ export const REGISTRY: RegistryDefinition = {
     "silpo-pack": "universal",
     "sinapseria": "universal",
     "singapore-post": "singapore-post",
+    "sitc-container-lines": "sitc-container-lines",
     "sitra-es": "universal",
     "siuntos-autobusais": "universal",
     "sjl-express": "universal",

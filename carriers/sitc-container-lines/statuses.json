@@ -1,0 +1,67 @@
+{
+  "carrier": "sitc-container-lines",
+  "entries": [
+    {
+      "wording": "OUTBOUND PICKUP",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "客户提空箱",
+      "language": "zh",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EMPTY DISCHARGE FROM VESSEL",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "进口空箱入场",
+      "language": "zh",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "LOADED ONTO VESSEL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "出口装船",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EMPTY CONTAINER RETURN/GATE-IN",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "空箱入场",
+      "language": "zh",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "INBOUND DELIVERY",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parallel Chinese status describes laden container gate-out at the import terminal."
+    },
+    {
+      "wording": "进口重箱出场",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parallel Chinese status describes laden container gate-out at the import terminal."
+    }
+  ]
+}

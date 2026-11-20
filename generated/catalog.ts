@@ -52928,6 +52928,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sitc-container-lines": {
+    "displayName": "SITC Container Lines",
+    "color": "#1490c7",
+    "aliases": [
+      "SITC",
+      "SITC Shipping Lines",
+      "海丰集运"
+    ],
+    "countries": [
+      "HK",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sitc-container-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebusiness.sitcline.com/",
+    "trackingUrlTemplate": "https://ebusiness.sitcline.com/",
+    "trackingSearchUrl": "https://ebusiness.sitcline.com/",
+    "trackingSiteName": "SITC E-Business",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sitra-es": {
     "displayName": "SITRA",
     "color": "#009cf8",
@@ -66984,6 +67010,7 @@ export const CARRIER_IDS = [
   "sicepat",
   "silpo-pack",
   "sinapseria",
+  "sitc-container-lines",
   "sitra-es",
   "siuntos-autobusais",
   "sjl-express",
@@ -68856,6 +68883,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sicepat": [],
   "silpo-pack": [],
   "sinapseria": [],
+  "sitc-container-lines": [],
   "sitra-es": [],
   "siuntos-autobusais": [],
   "sjl-express": [],
