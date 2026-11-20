@@ -150,6 +150,12 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to Akash Ganga Courier."
   },
   {
+    "carrier": "akis-express",
+    "pattern": "^S\\d{9}$",
+    "kind": "open",
+    "reason": "A confirmed AKIS Express waybill has S followed by nine digits. Detection only offers Australia Post for this sample."
+  },
+  {
     "carrier": "aks-express",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

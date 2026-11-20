@@ -1,5 +1,28 @@
 {
   "carrier": "akis-express",
-  "gap": "No public page shows an AKIS Express tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "S220044843",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://new.cy/tg/1382067251?offset=1718396339",
+        "date": "2024-06-14",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The recipient posted the AKIS Express tracking link in a public discussion about parcel delivery in Cyprus. The carrier's tracking page returned a history with a delivery scan dated June 14, 2024."
+    }
+  ]
 }
