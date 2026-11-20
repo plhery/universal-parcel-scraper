@@ -1,0 +1,83 @@
+{
+  "return_code": 200,
+  "return_message": "OK",
+  "result": {
+    "delivery": [
+      {
+        "Descripcion": "Guia: ",
+        "Valor": "WK123578467"
+      },
+      {
+        "Descripcion": "Cod. Postal Destino: ",
+        "Valor": "68300               "
+      },
+      {
+        "Descripcion": "Direccion_Entrega",
+        "Valor": "CALLE EJEMPLO 100 COL. CENTRO, SAN JUAN BAUTISTA TUXTEPEC, OAX."
+      },
+      {
+        "Descripcion": "Destinatario:",
+        "Valor": "DESTINATARIO EJEMPLO"
+      },
+      {
+        "Descripcion": "Recibio:",
+        "Valor": "RECEPTOR EJEMPLO"
+      },
+      {
+        "Descripcion": "Piezas entregadas",
+        "Valor": "9"
+      }
+    ],
+    "tracking": [
+      {
+        "GUIA": "WK123578467",
+        "FechaCaptura": "2023-11-29T15:29:00",
+        "Movimiento": "Confirmacion de entrega ",
+        "Oficina": "VERACRUZ",
+        "Comentarios": "Recibió: RECEPTOR EJEMPLO Identificación:  //Observ:"
+      },
+      {
+        "GUIA": "WK123578467",
+        "FechaCaptura": "2023-11-28T20:32:54.987",
+        "Movimiento": "Embarque a ruta VER-04 [TUXTEPEC]",
+        "Oficina": "VERACRUZ",
+        "Comentarios": ""
+      },
+      {
+        "GUIA": "WK123578467",
+        "FechaCaptura": "2023-11-22T01:52:02.177",
+        "Movimiento": "Embarcado a circuito PUEBLA - VERACRUZ",
+        "Oficina": "PUEBLA",
+        "Comentarios": ""
+      },
+      {
+        "GUIA": "WK123578467",
+        "FechaCaptura": "2023-11-22T00:04:25.36",
+        "Movimiento": "Embarcado a circuito RECOLEC PUEBLA",
+        "Oficina": "PUEBLA",
+        "Comentarios": ""
+      },
+      {
+        "GUIA": "WK123578467",
+        "FechaCaptura": "2023-11-21T22:13:34",
+        "Movimiento": "Recoleccion <br> <a href=\"http://documentacion.dypaq.com/mapa.aspx?guia=WK123578467&lat=19.0000000&lon=-98.0000000&m=recoleccionpredoc\" target=_Blank>Ver mapa</a>",
+        "Oficina": "PUEBLA",
+        "Comentarios": "Envio recolectado en domicilio del cliente"
+      },
+      {
+        "GUIA": "WK123578467",
+        "FechaCaptura": "2023-11-21T14:42:27.22",
+        "Movimiento": "Envío PRE-Documentado en Sitio Web del Cliente",
+        "Oficina": "CIUDAD DE MEXICO",
+        "Comentarios": ""
+      }
+    ],
+    "recipient": {
+      "Recibio": "RECEPTOR EJEMPLO",
+      "Firma": "iVBORw0KGgo=",
+      "Latitud": "18.0000000",
+      "Longitud": "-96.0000000"
+    }
+  },
+  "errors": []
+}

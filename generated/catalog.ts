@@ -21188,6 +21188,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "dypaq": {
+    "displayName": "DYPAQ",
+    "color": "#f08226",
+    "aliases": [
+      "Dypaq",
+      "DYPAQ Mensajería",
+      "Dypaq Paquetería"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Merida",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dypaq",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.dypaq.com/",
+    "trackingSearchUrl": "https://www.dypaq.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "e-cargo": {
     "displayName": "e-Cargo",
     "color": "#ee4037",
@@ -65888,6 +65911,7 @@ export const CARRIER_IDS = [
   "dx",
   "dylo-express",
   "dynalogic",
+  "dypaq",
   "e-cargo",
   "e-commerce-international",
   "e-pick",
@@ -67754,6 +67778,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dx": ["dx-1","dx-2"],
   "dylo-express": [],
   "dynalogic": [],
+  "dypaq": [],
   "e-cargo": [],
   "e-commerce-international": ["e-commerce-international-1"],
   "e-pick": [],

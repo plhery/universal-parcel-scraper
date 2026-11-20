@@ -1158,6 +1158,12 @@
     "reason": "Fourteen digits are shared by several carriers and nothing in the number points to Dynalogic."
   },
   {
+    "carrier": "dypaq",
+    "pattern": "^[A-Z]{2}\\d{9}$",
+    "kind": "by_design",
+    "reason": "Two letters and nine digits are shared with other carriers, and DYPAQ's API documentation shows a single real guía."
+  },
+  {
     "carrier": "early-bird",
     "pattern": "^00\\d{18}$",
     "kind": "by_design",

@@ -21184,6 +21184,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "dypaq": {
+    "displayName": "DYPAQ",
+    "color": "#f08226",
+    "aliases": [
+      "Dypaq",
+      "DYPAQ Mensajería",
+      "Dypaq Paquetería"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Merida",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dypaq",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.dypaq.com/",
+    "trackingSearchUrl": "https://www.dypaq.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "e-cargo": {
     "displayName": "e-Cargo",
     "color": "#ee4037",

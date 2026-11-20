@@ -113592,6 +113592,17 @@
     "candidates": []
   },
   {
+    "input": "WK123578467",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "WKRW260048622",
     "carrier": "unknown",
     "confidence": "none",

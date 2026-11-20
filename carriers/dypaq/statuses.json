@@ -1,0 +1,11 @@
+{
+  "carrier": "dypaq",
+  "entries": [
+    {"wording": "Envío PRE-Documentado en Sitio Web del Cliente", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "The merchant documented the shipment on its own site."},
+    {"wording": "Recoleccion", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "Collected from the merchant; the reply adds a map link, which is not read."},
+    {"wording": "Embarcado a circuito RECOLEC PUEBLA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Loaded onto a line haul; the circuit is named after the fixed start."},
+    {"wording": "Embarcado a circuito PUEBLA - VERACRUZ", "stage": "in_transit", "language": "es", "confirmedBy": "live"},
+    {"wording": "Embarque a ruta VER-04 [TUXTEPEC]", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "note": "Loaded onto a delivery route, named by its code and town."},
+    {"wording": "Confirmacion de entrega", "stage": "delivered", "language": "es", "confirmedBy": "live"}
+  ]
+}
