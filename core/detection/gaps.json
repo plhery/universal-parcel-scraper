@@ -1800,6 +1800,12 @@
     "reason": "Two house air waybills in Hey Couriers' documentation only offer PFLogistics in the detector."
   },
   {
+    "carrier": "hfd",
+    "pattern": "^A\\d{14}$",
+    "kind": "open",
+    "reason": "A historical HFD tracking report shows A followed by fourteen digits. Detection returns no carrier."
+  },
+  {
     "carrier": "hi-trans",
     "pattern": "^[A-Z]{3}\\d{3,12}$",
     "kind": "by_design",
