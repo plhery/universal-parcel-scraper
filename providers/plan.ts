@@ -1,7 +1,8 @@
 import { isValidS10TrackingNumber } from '../core/detection/s10.js';
 import { normalizeTrackingNumber } from '../core/detection/normalize.js';
-import { CARRIER_CATALOG, CARRIER_IDS, type CarrierId } from '../generated/catalog.js';
+import { CARRIER_IDS } from '../generated/catalog.js';
 import { coverageTiers, type CoverageTier } from './coverage.js';
+import { linkTokenKept, numberIsLinkToken } from './linkToken.js';
 import type { UniversalSource as Source } from './types.js';
 export const UNIVERSAL_SOURCES: Source[] = ['ParcelsApp', 'Ship24', '17TRACK', 'Track718', 'UPU'];
 /** Providers reached only through the browser service: slower, and sharing one TRAWL. */
@@ -74,14 +75,7 @@ const UNANSWERED: Readonly<Record<string, 'all' | readonly Source[]>> = {
   gzyl: ['Ship24'],
 };
 
-/**
- * Whether a carrier's number is the token of the link that opens the parcel (`tracking.linkToken`),
- * as an Amazon order's: it means nothing to a provider, so none is asked about it.
- */
-export function numberIsLinkToken(carrier: string | null | undefined): boolean {
-  return !!carrier && Object.hasOwn(CARRIER_CATALOG, carrier)
-    && CARRIER_CATALOG[carrier as CarrierId].tracking.linkToken === true;
-}
+export { numberIsLinkToken } from './linkToken.js';
 
 /**
  * The providers to ask for a number, ordered by the coverage evidence of the
@@ -106,7 +100,7 @@ export function universalPlan(options: {
   const tiers = coverageTiers(carrier);
   const first = carriers.find(candidate => candidate && CARRIERS.has(candidate));
   const unanswered = first && Object.hasOwn(UNANSWERED, first) ? UNANSWERED[first]! : [];
-  if (carriers.some(numberIsLinkToken) || unanswered === 'all') {
+  if (carriers.some(numberIsLinkToken) || (!first && linkTokenKept(null, trackingNumber)) || unanswered === 'all') {
     return { sources: [], carrier, tier: (source) => tiers?.[source] ?? 'unknown', rank: (source) => tierRank(tiers, source) };
   }
   const named = !!first;

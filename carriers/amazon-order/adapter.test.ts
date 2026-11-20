@@ -47,7 +47,9 @@ describe('Amazon order tracking links', () => {
 
   it('asks no universal provider about a link token', () => {
     expect(universalPlan({ carriers: ['amazon-order'], trackingNumber: numberOf(SYNTHETIC), enablePostalNinja: true }).sources).toEqual([]);
-    expect(universalPlan({ trackingNumber: numberOf(SYNTHETIC) }).sources.length).toBeGreaterThan(0);
+    // Nor about the token alone, as an integration may pass it on: only a carrier named for the number is asked.
+    expect(universalPlan({ trackingNumber: numberOf(SYNTHETIC) }).sources).toEqual([]);
+    expect(universalPlan({ carriers: ['fedex'], trackingNumber: numberOf(SYNTHETIC) }).sources.length).toBeGreaterThan(0);
   });
 });
 

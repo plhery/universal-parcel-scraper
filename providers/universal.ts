@@ -48,7 +48,8 @@ export { TrackingCaptureError } from './shared/capture.js';
 export type { UniversalSource } from './shared/result.js';
 
 export * from './plan.js';
-import { numberIsLinkToken, universalPlan, universalSourceBudget } from './plan.js';
+import { linkTokenKept } from './linkToken.js';
+import { universalPlan, universalSourceBudget } from './plan.js';
 
 /**
  * A source is asked only with this much budget left. A provider that runs out
@@ -175,8 +176,9 @@ export class UniversalTracker {
         { reason: 'usps_routing_barcode' });
     }
     const number = pic ?? normalized;
-    // An Amazon order's number is its share link's token, which no provider can look up.
-    if (numberIsLinkToken(carrier)) {
+    // An Amazon order's number is its share link's token, which opens the order to whoever holds it:
+    // no provider is sent it, nor a number of its shape without another carrier named for it.
+    if (linkTokenKept(carrier, number)) {
       throw new InvalidInputError(source, 'A link token is not sent', { reason: 'link_token' });
     }
     // Providers merge other people's shipments under a placeholder such as 123456789.

@@ -5,7 +5,8 @@ import type { CarrierResult } from '../core/result/index.js';
 import { parcelOwners } from '../core/result/partial.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
-import { UniversalTracker, UniversalTrackingError, universalPlan, universalSources, UNIVERSAL_SOURCES } from './universal.js';
+import { parseTrackingInput } from '../core/detection/index.js';
+import { UniversalTracker, UniversalTrackingError, universalPlan, universalSources, UNIVERSAL_SOURCES, type UniversalTrackerOptions } from './universal.js';
 
 const number = 'ZZ12340678900';
 const identity = (value = number) => `<div class="tracking-info"><div class="parcel"><table class="parcel-attributes"><tr><td>Tracking number</td><td>${value}</td></tr></table></div></div>`;
@@ -305,6 +306,38 @@ describe('universal discovery chain', () => {
         .rejects.toMatchObject({ kind: 'invalid_input', provider: source, reason: 'link_token' });
     }
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it("sends no provider a number of a share token's shape that no other carrier is named for", async () => {
+    // Synthetic token. The link's token is the number parseTrackingInput reads, and an integration may pass it on alone.
+    const SYNTHETIC = '0f1e2d3c-4b5a-4968-8776-a5b4c3d2e1f0';
+    const link = `https://www.amazon.co.uk/progress-tracker/package/share/?vt=SHARED_PACKAGE_TRACKING&shareToken=${SYNTHETIC}`;
+    const { trackingNumber } = parseTrackingInput(link);
+    const providers = ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'] as const;
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new Error('no request expected'));
+    const browserLookup = vi.fn<NonNullable<UniversalTrackerOptions['browserLookup']>>().mockRejectedValue(new Error('no lookup expected'));
+    for (const options of [{ trawlUrl: 'http://browser.test' }, { browserLookup }]) {
+      const tracker = new UniversalTracker({ providers: [...providers], enablePostalNinja: true, fetcher, ...options });
+      for (const number of [trackingNumber, trackingNumber.toUpperCase().replace(/-/g, '')]) {
+        for (const carrier of [undefined, null, 'unknown']) {
+          for (const source of providers) {
+            await expect(tracker.fetchSource(source, number, 20_000, null, null, undefined, null, carrier))
+              .rejects.toMatchObject({ kind: 'invalid_input', provider: source, reason: 'link_token' });
+          }
+          await expect(tracker.fetch(number, null, {}, null, carrier)).rejects.toBeInstanceOf(UniversalTrackingError);
+        }
+        expect(universalPlan({ trackingNumber: number }).sources).toEqual([]);
+      }
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(browserLookup).not.toHaveBeenCalled();
+    // A carrier named for the number is asked about it, and thirty-two digits have no token's letter.
+    expect(universalPlan({ carriers: ['fedex'], trackingNumber }).sources).not.toEqual([]);
+    expect(universalPlan({ trackingNumber: '9'.repeat(32) }).sources).not.toEqual([]);
+    const named = vi.fn<NonNullable<UniversalTrackerOptions['browserLookup']>>().mockRejectedValue(new Error('asked'));
+    await expect(new UniversalTracker({ providers: ['Ship24'], browserLookup: named }).fetchSource('Ship24', trackingNumber, 20_000, null, null, undefined, null, 'fedex'))
+      .rejects.toThrow('asked');
+    expect(named).toHaveBeenCalledTimes(1);
   });
 
   it('sends a number of seven characters or fewer only with its carrier, whose shipment a provider would otherwise guess', async () => {
