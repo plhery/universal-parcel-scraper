@@ -260,6 +260,18 @@ describe('Australia Post status codes and places', () => {
     expect(journey('AU', [received("We've got it")], 'In transit')).toMatchObject({ current_stage: 'in_transit' });
   });
 
+  it("reads the receipt for transport as the acceptance when it is the parcel's first move", () => {
+    const label = scan('ADMIN-ER39', 'Shipping information received by Australia Post', 'EXAMPLETOWN VIC', '2026-06-05T11:12:41+10:00', 'Label created by sender');
+    const received = scan('DOM-0046', 'Received by Australia Post for transportation to processing facility', 'MELBOURNE (AU)', '2026-06-06T09:44:00+10:00');
+    const sorted = scan('NSS-ER42', 'Item processed at sorting facility', 'MELBOURNE VIC', '2026-06-07T09:41:07+10:00');
+    const lodged = journey('AU', [sorted, received, label], 'In transit');
+    expect(lodged.events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+    expect(journey('AU', [received, label], 'In transit')).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    // After a scan that moved the parcel, it goes on.
+    const arrived = scan('INT-0008', 'Item arrived in Australia', 'SYDNEY (AU)', '2026-06-04T09:00:00+10:00');
+    expect(journey('AU', [received, arrived], 'In transit').events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit']);
+  });
+
   it('expects the parcel on the days the reply gives, else by the day it names, until it is delivered', () => {
     const departed = scan('AA-0001', 'Item processed at facility', 'MELBOURNE VIC', '2026-06-06T17:41:25+10:00');
     const range = { estimatedDeliveryDateRange: { fromDate: '2026-06-09', toDate: '2026-06-10' }, deliveredByDateISO: '2026-06-10' };

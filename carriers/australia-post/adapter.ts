@@ -263,6 +263,13 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
   }
   if (listsNewestFirst(events.map(({ event }) => event)) === false) events.reverse();
   events.sort((a, b) => b.timestamp - a.timestamp);
+  // The receipt for transport to a processing facility (DOM-0046) is the acceptance when no scan moved the parcel before
+  // it: a parcel lodged in Australia, or one a forwarder cleared in. After scans abroad it is the parcel going on.
+  const firstMove = [...events].reverse().find(({ classified }) => classified && classified.stage !== 'registered');
+  if (firstMove && australiaPostCodeParts(String(firstMove.event.provider_code ?? '')).code === 'DOM-0046') {
+    firstMove.classified = { stage: 'accepted', status: 'in_transit' };
+    firstMove.event.stage = 'accepted';
+  }
   const summary = clean(selected.trackStatusOfArticle)
     || (isRecord(selected.status) ? clean(selected.status.statusAttributeValue) : '');
   if (!summary) throw new SchemaError(PROVIDER, 'Australia Post returned no article status');
@@ -274,7 +281,7 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
   const latest = events[0]!;
   const labelled = australiaPostStatus(summary);
   const { code: latestCode, milestone: latestMilestone } = australiaPostCodeParts(String(latest.event.provider_code ?? ''));
-  const coded = australiaPostStatus('', latestCode);
+  const coded = australiaPostStatus('', latestCode) && latest.classified;
   const echoed = labelled && latestMilestone !== undefined && australiaPostStatus(latestMilestone)?.stage === labelled.stage;
   const status = labelled && coded && (echoed || furtherAlong(labelled.stage, coded.stage)) ? coded : labelled ?? latest.classified;
   const deliveredAt = status?.status === 'delivered' ? events.find(({ event }) => event.stage === 'delivered')?.event.time : null;

@@ -316,7 +316,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "The first Australia Post scan of an item already cleared into Australia."
+      "note": "Australia Post's first scan of an item lodged in Australia or cleared into it, the adapter's acceptance when no scan moved the parcel before it."
     },
     {
       "code": "INT-0008",

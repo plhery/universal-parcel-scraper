@@ -141,7 +141,8 @@ key alone does not clear a DataDome challenge; browser verification stays in its
   stage stands. So does it when the summary stages the parcel as that scan's own milestone does:
   `In transit` over an acceptance abroad filed under `It's on its way` says no more than the
   acceptance, so the parcel is accepted, and a consumer does not record a transit step no scan
-  dates.
+  dates. The receipt for transport to a processing facility (`DOM-0046`) is the acceptance when
+  no scan moved the parcel before it; after scans abroad it is the parcel going on.
 - A scan keeps both as its `provider_code`: the event code, a slash and the milestone label
   (`TTP-ER81/It's on its way`), or the code alone without a label. The parcel app's review asks
   the same map (`statusMap`) by that code, so it stages a scan as the adapter does. A scan stored
