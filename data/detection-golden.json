@@ -26152,6 +26152,14 @@
     ]
   },
   {
+    "input": "1Z A 84 808 04 9838 7954",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
     "input": "1Z000Y770414233027",
     "carrier": "ups",
     "confidence": "high",
