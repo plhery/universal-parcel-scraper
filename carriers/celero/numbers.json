@@ -1,5 +1,29 @@
 {
   "carrier": "celero",
-  "gap": "No public page shows a Celero number.",
-  "records": []
+  "records": [
+    {
+      "number": "MU120109191821",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/1031141779/84616f02-1e8f-4c4e-8411-896f1208d961",
+        "date": "2026-04-11",
+        "dateKind": "invoice date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Temu parcel into Mauritius",
+        "reportedRole": "air waybill",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "speedaf"
+        ]
+      },
+      "note": "A published Celero customs invoice lists this air waybill, wrapped over two lines in its column. Lookup blocked by verification. Celero's tracking form requires Cloudflare Turnstile."
+    }
+  ]
 }
