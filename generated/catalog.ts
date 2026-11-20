@@ -29997,6 +29997,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hgd": {
+    "displayName": "HGD International",
+    "color": "#1f5fa8",
+    "aliases": [
+      "HGD",
+      "Hengguangda",
+      "恒广达国际",
+      "恒广达",
+      "恒广达（深圳）供应链科技有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hgd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hi-trans": {
     "displayName": "Hi-Trans Express",
     "color": "#c82027",
@@ -66323,6 +66347,7 @@ export const CARRIER_IDS = [
   "herona-express",
   "hey-couriers",
   "hfd",
+  "hgd",
   "hi-trans",
   "hintzen",
   "hispapost",
@@ -68196,6 +68221,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "herona-express": ["herona-express-1"],
   "hey-couriers": [],
   "hfd": [],
+  "hgd": [],
   "hi-trans": [],
   "hintzen": [],
   "hispapost": [],

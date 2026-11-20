@@ -5548,5 +5548,10 @@
     "carrier": "runforint",
     "kind": "open",
     "reason": "Runforint waybills are RF and twelve digits; two public samples from one series are too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "hgd",
+    "kind": "open",
+    "reason": "Two public waybills, HGD, two letters, ten digits and YQ: too few to tell the series from the Hualei forwarders' numbers of the same layout"
   }
 ]

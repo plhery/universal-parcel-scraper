@@ -1,0 +1,66 @@
+{
+  "id": "hgd",
+  "displayName": "HGD International",
+  "aliases": [
+    "HGD",
+    "Hengguangda",
+    "恒广达国际",
+    "恒广达",
+    "恒广达（深圳）供应链科技有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1f5fa8"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hgd",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "weight"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "parcel_count",
+      "order_reference"
+    ],
+    "scraped": [
+      "history",
+      "location",
+      "destination_country",
+      "weight"
+    ],
+    "discarded": [
+      "status",
+      "parcel_count",
+      "order_reference",
+      "sender_address"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

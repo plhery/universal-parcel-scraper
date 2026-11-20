@@ -362,6 +362,7 @@ import { adapter as hermes } from '../carriers/hermes/adapter.js';
 import { adapter as hermesAt } from '../carriers/hermes-at/adapter.js';
 import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
 import { adapter as heronaExpress } from '../carriers/herona-express/adapter.js';
+import { adapter as hgd } from '../carriers/hgd/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as homexpress } from '../carriers/homexpress/adapter.js';
@@ -1265,6 +1266,7 @@ export const REGISTRY: RegistryDefinition = {
     "hermes-at": hermesAt,
     "hermes-de": hermesDe,
     "herona-express": heronaExpress,
+    "hgd": hgd,
     "hispapost": hispapost,
     "hitch": hitch,
     "homexpress": homexpress,
@@ -2557,6 +2559,7 @@ export const REGISTRY: RegistryDefinition = {
     "herona-express": "herona-express",
     "hey-couriers": "universal",
     "hfd": "universal",
+    "hgd": "hgd",
     "hi-trans": "universal",
     "hintzen": "universal",
     "hispapost": "hispapost",
