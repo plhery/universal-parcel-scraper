@@ -29823,7 +29823,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Jakarta",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "herona-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.heronaexpress.co.id/",
     "trackingSearchUrl": "https://tracking.heronaexpress.co.id/lacak.php",
