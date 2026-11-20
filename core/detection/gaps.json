@@ -4886,5 +4886,11 @@
     "pattern": "^PO\\d{11}$",
     "kind": "open",
     "reason": "A Pointpack customer report gives a PO-prefixed parcel reference from a handoff dispute. Detection omits Pointpack."
+  },
+  {
+    "carrier": "peshkariki",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "A Peshkariki representative confirms a seven-digit courier order in a public forum. The published tracking input is not offered for Peshkariki by detection."
   }
 ]
