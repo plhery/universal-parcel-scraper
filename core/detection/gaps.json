@@ -4838,5 +4838,11 @@
     "pattern": "^\\d{6}$",
     "kind": "open",
     "reason": "The Maltese court decision identifies a six-digit ShipLowCost reference printed on a parcel. Detection does not offer ShipLowCost."
+  },
+  {
+    "carrier": "shipgce",
+    "pattern": "^GC\\d{9}US$",
+    "kind": "open",
+    "reason": "The carrier’s public tracker recognizes a GC-prefixed US-suffix waybill. The input does not validate as S10, and detection omits Feiyang GCEx."
   }
 ]
