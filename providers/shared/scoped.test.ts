@@ -18,8 +18,8 @@ describe('carrier-scoped wording', () => {
   });
 
   it('reads a word for its carrier and provider only', () => {
-    expect(scopedWordingStage('RETURNS', { carrier: 'buffalo-ex', provider: 'ParcelsApp' })).toBe('in_transit');
-    expect(scopedWordingStage('  returns ', { carrier: 'buffalo-ex', provider: 'ParcelsApp' })).toBe('in_transit');
+    expect(scopedWordingStage('RETURNS', { carrier: 'buffalo-ex', provider: 'ParcelsApp' })).toBe('failed_attempt');
+    expect(scopedWordingStage('  returns ', { carrier: 'buffalo-ex', provider: 'ParcelsApp' })).toBe('failed_attempt');
     expect(scopedWordingStage('RETURNS', { carrier: 'buffalo-ex', provider: 'Ship24' })).toBeUndefined();
     expect(scopedWordingStage('RETURNS', { carrier: 'buffalo-ex' })).toBeUndefined();
     expect(scopedWordingStage('RETURNS', { carrier: 'la-poste', provider: 'ParcelsApp' })).toBeUndefined();
@@ -33,6 +33,9 @@ describe('carrier-scoped wording', () => {
     expect(scopedWordingStage('SCAN VEHICLE DEPARTURE', { carrier: 'buffalo-ex', provider: 'Ship24' })).toBeUndefined();
     expect(scopedWordingStage('SCAN VEHICLE DEPARTURE', { carrier: 'la-poste', provider: 'ParcelsApp' })).toBeUndefined();
     expect(classifyEvent('SCAN VEHICLE DEPARTURE')).toMatchObject({ stage: 'in_transit' });
+    // The courier collecting the parcel from BUFFALO's depot, not the sender handing it over.
+    expect(scopedWordingStage('COLLECTED', { carrier: 'buffalo-ex', provider: 'ParcelsApp' })).toBe('in_transit');
+    expect(classifyEvent('COLLECTED')).toMatchObject({ stage: 'accepted' });
   });
 
   const answer = (overrides: Partial<CarrierResult> = {}): CarrierResult => ({
@@ -47,9 +50,9 @@ describe('carrier-scoped wording', () => {
 
   it('restages the scan and the headline it leads', () => {
     const read = withScopedWording(answer({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'wording:language' }), 'ParcelsApp');
-    expect(read.events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+    expect(read.events?.[0]).toMatchObject({ stage: 'failed_attempt', stage_source: 'wording:provider' });
     expect(read.events?.[1]).toMatchObject({ stage: 'out_for_delivery', stage_source: 'wording:provider' });
-    expect(read).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'wording:provider' });
+    expect(read).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'wording:provider' });
     // With the departure the newest scan, the headline follows it out for delivery.
     const out = withScopedWording(answer({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'wording:language',
       events: answer().events!.slice(1) }), 'ParcelsApp');
@@ -68,6 +71,6 @@ describe('carrier-scoped wording', () => {
       reporting_carrier: 'Universal Postal Union' }] }), 'ParcelsApp');
     const named = withScopedWording(answer({ discovered_carrier: undefined, reported_carriers: [], events: [{ time: '2026-03-03T17:10:00.000Z',
       description: 'RETURNS', stage: 'pending', stage_source: 'none', reporting_carrier: 'Buffalo Logistics' }] }), 'ParcelsApp');
-    expect(named.events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+    expect(named.events?.[0]).toMatchObject({ stage: 'failed_attempt', stage_source: 'wording:provider' });
   });
 });

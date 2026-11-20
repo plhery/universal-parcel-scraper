@@ -20,9 +20,15 @@ export interface ScopedWordingRule {
 
 export const SCOPED_WORDINGS: readonly ScopedWordingRule[] = [
   {
-    carrier: 'buffalo-ex', providers: ['ParcelsApp'], wording: 'returns', stage: 'in_transit',
-    note: "BUFFALO's parcel back at its depot after a round, as ParcelsApp relays it: each came the evening after a vehicle "
-      + "departure, and the parcel left again the next morning. Elsewhere the bare word can name a return to the sender.",
+    carrier: 'buffalo-ex', providers: ['ParcelsApp'], wording: 'returns', stage: 'failed_attempt',
+    note: "BUFFALO's parcel back at its depot undelivered after a round, as ParcelsApp relays it: each came the evening after a "
+      + "vehicle departure, the parcel left again the next morning, and after four such rounds it went back to the sender. "
+      + "Elsewhere the bare word can name a return to the sender.",
+  },
+  {
+    carrier: 'buffalo-ex', providers: ['ParcelsApp'], wording: 'collected', stage: 'in_transit',
+    note: "The local courier collecting a BUFFALO parcel from BUFFALO's depot, as ParcelsApp relays it: it came after the "
+      + "customs release and the hubs, before the courier's first round. Elsewhere the word is the acceptance from the sender.",
   },
   {
     carrier: 'buffalo-ex', providers: ['ParcelsApp'], wording: 'scan vehicle departure', stage: 'out_for_delivery',

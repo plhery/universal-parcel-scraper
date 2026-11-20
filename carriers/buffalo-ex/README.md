@@ -16,10 +16,12 @@ tracker shows next to the number is not a tracking number.
 ## Statuses
 
 ParcelsApp relays the local courier's round as "SCAN VEHICLE DEPARTURE" early in the morning,
-and the parcel back at the depot that evening as a bare "RETURNS"; it leaves again on the next
-round. Rules scoped to BUFFALO and ParcelsApp read the departure as out for delivery and the return
-as in transit; elsewhere a vehicle can leave for another depot, and the word can name a return to
-the sender.
+and the parcel back at the depot undelivered that evening as a bare "RETURNS"; it leaves again on
+the next round, and after rounds like these goes back to the sender. The courier collecting the
+parcel from BUFFALO's depot, after the customs release and the hubs, is "COLLECTED". Rules scoped
+to BUFFALO and ParcelsApp read the departure as out for delivery, the return as a failed attempt
+and the collection as in transit; elsewhere a vehicle can leave for another depot, the word can
+name a return to the sender, and a collection is the acceptance.
 
 ## Links
 

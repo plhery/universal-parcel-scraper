@@ -402,8 +402,8 @@ describe('universal discovery chain', () => {
     const lookup = (carriers: string[]) => new UniversalTracker({ providers: ['ParcelsApp'],
       fetcher: vi.fn<typeof fetch>().mockResolvedValue(reply({ carriers, states })) }).fetchSource('ParcelsApp', 'BUFZA0SK00000BUYQ', 20_000);
     const buffalo = await lookup(['Buffalo Logistics']);
-    expect(buffalo).toMatchObject({ discovered_carrier: 'buffalo-ex', current_stage: 'in_transit' });
-    expect(buffalo.events?.find((event) => event.description === 'RETURNS')).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+    expect(buffalo).toMatchObject({ discovered_carrier: 'buffalo-ex', current_stage: 'failed_attempt' });
+    expect(buffalo.events?.find((event) => event.description === 'RETURNS')).toMatchObject({ stage: 'failed_attempt', stage_source: 'wording:provider' });
     expect(buffalo.events?.find((event) => event.description === 'SCAN VEHICLE DEPARTURE'))
       .toMatchObject({ stage: 'out_for_delivery', stage_source: 'wording:provider' });
     const other = await lookup(['Universal Postal Union']);
