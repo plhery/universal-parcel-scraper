@@ -30244,7 +30244,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "hop-envios",
+      "localClocks": true
     },
     "canaryUrl": "https://hopenvios.com.ar/segui-tu-envio",
     "trackingUrlTemplate": "https://hopenvios.com.ar/segui-tu-envio?c={trackingNumber}",
