@@ -46,6 +46,9 @@ it.each([
   ['International flight has arrived', 'in_transit'],
   ['Parcel arrived at exchange office', 'in_transit'],
   ['Shipment picked up', 'accepted'],
+  // Colis Privé's notices, relayed while Shouwu's warehouse still has the parcel.
+  ['Your parcel arrived at the shipping partner. It will be sent to Colis Privé.', 'accepted'],
+  ['Your package is in transit to Colis Privé', 'accepted'],
   ['The shipment has been loaded onto the delivery vehicle', 'out_for_delivery'],
   ['Your package is being prepared by the sender and will be handed over to us soon', 'registered'],
   ['Accepted at USPS facility', 'in_transit'],

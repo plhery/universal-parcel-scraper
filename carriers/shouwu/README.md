@@ -32,7 +32,9 @@ numbers `shouwu-1` offers.
   at the warehouse and In Transit as anything from the handover to delivery in the destination
   country, so the newest staged scan refines a status within what it covers. A status without
   scans is a summary. Scans have no code; the status map stages the wording seen on them, such as
-  the warehouse's intake and processing as accepted, and the shared rules stage the rest. On
+  the warehouse's intake and processing as accepted, and the shared rules stage the rest.
+  Colis Privé's relayed notices that its partner has the parcel, or carries it there, come beside
+  that intake, before the parcel leaves the warehouse, and are accepted too. On
   some lines Shouwu writes its own rows in Chinese, through the flight and the clearance abroad;
   the delivering partner's "Your consignment has been picked up", or FedEx's "Picked up", after
   them is that partner collecting the parcel from Shouwu's depot, in transit, not a handover from

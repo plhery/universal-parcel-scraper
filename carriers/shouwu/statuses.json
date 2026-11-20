@@ -551,17 +551,17 @@
     },
     {
       "wording": "Your parcel arrived at the shipping partner. It will be sent to Colis Privé.",
-      "stage": "in_transit",
+      "stage": "accepted",
       "language": "en",
       "confirmedBy": "live",
-      "note": "Colis Privé's record of the parcel reaching the partner that brings it to France, relayed."
+      "note": "Colis Privé's record of the parcel reaching the partner that brings it to France, relayed. That partner is Shouwu's line, and the row comes before the parcel leaves Shouwu's warehouse, beside its intake."
     },
     {
       "wording": "Your package is in transit to Colis Privé",
-      "stage": "in_transit",
+      "stage": "accepted",
       "language": "en",
       "confirmedBy": "live",
-      "note": "Relayed from Colis Privé before it has the parcel."
+      "note": "Relayed from Colis Privé before it has the parcel. The row comes before the parcel leaves Shouwu's warehouse, beside its intake and processing: the line has the parcel, which has not moved."
     },
     {
       "wording": "The shipment has been processed in the parcel center of origin",
