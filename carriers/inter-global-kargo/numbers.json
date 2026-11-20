@@ -1,5 +1,30 @@
 {
   "carrier": "inter-global-kargo",
-  "gap": "No public page shows an İnter Global Kargo number.",
-  "records": []
+  "records": [
+    {
+      "number": "g25100794856",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/karcher/se-4001/kargo",
+        "date": "2025-10-13",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkey domestic repair shipment",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "yto"
+        ]
+      },
+      "note": "The shipper names İnterglobal Kargo and types the tracking number with a lowercase g. The carrier's public tracker with its default series did not return a matching record."
+    }
+  ]
 }
