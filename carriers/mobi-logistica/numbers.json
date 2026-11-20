@@ -1,5 +1,27 @@
 {
   "carrier": "mobi-logistica",
-  "gap": "No public page shows a Mobi Logística tracking code.",
-  "records": []
+  "records": [
+    {
+      "number": "IS300078175BR",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/icourier_187748/meu-cartao-itau-nao-chegou-apos-mais-de-um-mes-de-espera_CknXbTOr4ZAbC0qi/",
+        "date": "2026-09-20",
+        "dateKind": "customer complaint",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Brazil domestic small parcel",
+        "reportedRole": "Código de rastreio",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "correios-br",
+        "confidence": "high"
+      },
+      "note": "The customer names MOBI and provides this complete tracking code. Its valid Brazil S10 form leaves scope on MOBI’s own tracker unresolved. Lookup blocked by verification. The public form requires reCAPTCHA and a postcode."
+    }
+  ]
 }
