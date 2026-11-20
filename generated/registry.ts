@@ -743,6 +743,7 @@ import { adapter as tforceLogistics } from '../carriers/tforce-logistics/adapter
 import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
 import { adapter as thhy } from '../carriers/thhy/adapter.js';
+import { adapter as tigFreight } from '../carriers/tig-freight/adapter.js';
 import { adapter as tiki } from '../carriers/tiki/adapter.js';
 import { adapter as timeMatters } from '../carriers/time-matters/adapter.js';
 import { adapter as timelyTitan } from '../carriers/timely-titan/adapter.js';
@@ -1593,6 +1594,7 @@ export const REGISTRY: RegistryDefinition = {
     "thailand-post": thailandPost,
     "the-courier-guy": theCourierGuy,
     "thhy": thhy,
+    "tig-freight": tigFreight,
     "tiki": tiki,
     "time-matters": timeMatters,
     "timely-titan": timelyTitan,
@@ -3290,7 +3292,7 @@ export const REGISTRY: RegistryDefinition = {
     "the-human-express": "universal",
     "thelorry": "universal",
     "thhy": "thhy",
-    "tig-freight": "universal",
+    "tig-freight": "tig-freight",
     "tiki": "tiki",
     "time-critical-line": "universal",
     "time-matters": "time-matters",

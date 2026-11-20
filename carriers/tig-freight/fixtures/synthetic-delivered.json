@@ -1,0 +1,11 @@
+{
+  "data": {
+    "shipment": {
+      "shipmentReferenceId": "TIGTEST0000",
+      "tracking": [
+        {"timestamp":"2020-01-04T09:12:00","level0":{"name":"In Transit"},"level1":{"name":"Onboard for delivery"},"location":"Melbourne"},
+        {"timestamp":"2020-01-04T12:15:00+11:00","level0":{"name":"Delivered"},"level1":{"name":"Delivered"},"location":null}
+      ]
+    }
+  }
+}

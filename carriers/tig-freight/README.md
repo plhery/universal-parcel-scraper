@@ -1,27 +1,21 @@
 # TIG Freight
 
-TIG Freight parcels use enabled universal providers. There is no dedicated adapter.
+TIG Freight manages Australian freight booked with partner carriers through Open360.
 
-TIG Freight Management is a Melbourne freight manager that books shipments with partner carriers
-for its clients through its own platform, Open360. Its site is tigfreight.com.
+## Retrieval
 
-## Numbers
+The adapter sends the guest `Shipment` query to `api.open360.com/tracking/graphql` and reads
+the scan list only when the reply names the entire requested shipment reference. It keeps an
+offset when supplied and otherwise reads the scan as a wall clock. Scan details appear in
+the order shown on the tracking page.
 
-Its tracker also shows shipments under the consignment numbers of the carriers that move them, and
-no public page shows a number of TIG's own, so there is no rule.
+## Limitations
 
-## Why there is no adapter
-
-The tracking page asks an open GraphQL endpoint, `POST api.open360.com/tracking/graphql`, for the
-shipment by its reference, without a session or CAPTCHA. An unknown reference gets the error
-`Shipment not found`. No current public number is known to see a found reply.
-
-## Links
-
-The tracking page opens the number from its path. A number that another carrier's rule names
-with high confidence stays that carrier's.
+This adapter covers the Open360 endpoint by direct shipment reference. The legacy OpenFreight
+endpoint requires browser access and the historic consignment shown in TIG's webinar has no
+history in Open360. The success fixture is synthetic and follows the public tracker's query.
+Partner carriers issue their own numbers, so the adapter runs when TIG Freight is selected.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`TIG_FREIGHT_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/tig-freight`

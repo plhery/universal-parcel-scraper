@@ -56918,7 +56918,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Melbourne",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tig-freight",
+      "localClocks": true
     },
     "canaryUrl": "https://tigfreight.com/",
     "trackingUrlTemplate": "https://tracking.open360.com/tracking/{trackingNumber}",

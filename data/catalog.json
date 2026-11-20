@@ -56914,7 +56914,8 @@
     "timezone": "Australia/Melbourne",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tig-freight",
+      "localClocks": true
     },
     "canaryUrl": "https://tigfreight.com/",
     "trackingUrlTemplate": "https://tracking.open360.com/tracking/{trackingNumber}",

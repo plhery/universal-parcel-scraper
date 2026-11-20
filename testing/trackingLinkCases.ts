@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'tig-freight', number: 'TIGZZZ0000',
+    route: /^https:\/\/tracking\.open360\.com\/tracking\/TIGZZZ0000\/?$/,
+    marker: /We can't find that tracking number|Tracking Details/ },
   { carrier: 'shipgce', number: 'GC000000000US',
     route: /^https:\/\/express\.shipgce\.com\/postcheck\.htm\?checkvalue=GC000000000US&type=identity$/,
     marker: /GCEx could not locate the shipment details for you|未找到相关订单/,
