@@ -261,10 +261,13 @@ describe('JS Express tracking adapter', () => {
       row('2026-05-02 09:00:00', 'Sample Town, NY', 'Departed USPS Facility'),
     ]), DELIVERED).events?.[0];
     expect(history('1')).toEqual(history(''));
+    // The notice waits for the recipient's answer about the address: an exception, not a missed round.
+    expect(history('')).toMatchObject({ stage: 'exception', stage_source: 'carrier_map' });
+    expect(jsExpressMappedStage('收件人地址不详或有误，派送失败，逾期退回或销毁的具体费用以账单为准，麻烦让收件人联系下当地')).toBe('exception');
     expect(history('1')).not.toHaveProperty('location');
     // The row stored with it is taken over by the row without it, and only such a row.
     const policy = sameInstantIdentityPolicy('js-express', { supportsScanMatching: true });
-    const scan = { stage: 'failed_attempt', description: history('')!.description!, location: '', providerCode: '' };
+    const scan = { stage: 'exception', description: history('')!.description!, location: '', providerCode: '' };
     expect(policy?.matches?.(scan, { ...scan, location: '1' })).toBe(true);
     expect(policy?.matches?.(scan, { ...scan, location: 'Sample Town, NY' })).toBe(false);
     // So is a row stored at the tracker's "Array", whatever stage it had, and an iMile delivery stored with its receiver type.

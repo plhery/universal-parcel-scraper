@@ -111,6 +111,9 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   A call to the recipient ("Consignee Contacted") moves nothing:
   the miss at its second still leads. Nor does DHL's record that the recipient chose a Packstation as
   the new delivery address, or a preferred place or neighbour.
+- JS Express's own notice that the address is wrong or unclear and the recipient should call its local
+  office is an exception: the parcel waits for the recipient's answer before it is returned or disposed
+  of. A round the destination courier missed is its own scan.
 - The waybill's `estimateArriveTime` is the expected delivery, its day alone since a clock after
   it names no zone. Straightship's round gives its own day in the town's province instead, while
   the parcel is on it.
