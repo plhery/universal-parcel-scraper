@@ -109022,6 +109022,12 @@
     ]
   },
   {
+    "input": "SMLMSEL6D8966500",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SN221198170JP",
     "carrier": "unknown",
     "confidence": "low",

@@ -1,0 +1,54 @@
+{
+  "id": "sm-line",
+  "displayName": "SM Line",
+  "aliases": [
+    "SM Line Corporation",
+    "SMLM",
+    "에스엠상선"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#c9192d"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sm-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
+    "searchUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
+    "canaryUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "SM Line e-Service"
+  },
+  "links": [],
+  "detection": []
+}

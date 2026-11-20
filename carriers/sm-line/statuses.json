@@ -1,0 +1,69 @@
+{
+  "carrier": "sm-line",
+  "entries": [
+    {
+      "wording": "Empty Container Release to Shipper",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Equipment pickup before cargo tender."
+    },
+    {
+      "wording": "Gate In to Outbound Terminal",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Loaded on 'SM BUSAN 2605E' at Port of Loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "'SM BUSAN 2605E' Departure from Port of Loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "'SM BUSAN 2605E' Arrival at Port of Discharging",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "'SM BUSAN 2605E' POD Berthing Destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Unloaded from 'SM BUSAN 2605E' at Port of Discharging",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Truck Gate In to I/B Terminal",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Truck gate activity at the inbound terminal under a generic event code."
+    },
+    {
+      "wording": "Truck Gate Out from I/B Terminal",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Truck gate activity at the inbound terminal under a generic event code."
+    },
+    {
+      "wording": "Empty Container Returned from Customer",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Return of empty equipment. This movement does not identify a cargo handover."
+    }
+  ]
+}

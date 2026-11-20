@@ -5509,5 +5509,10 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "sm-line",
+    "kind": "open",
+    "reason": "The bare bill format is shared. SM Line confirms ownership through its guest bill search."
   }
 ]

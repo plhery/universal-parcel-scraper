@@ -713,6 +713,7 @@ import { adapter as skypostal } from '../carriers/skypostal/adapter.js';
 import { adapter as slgtrax } from '../carriers/slgtrax/adapter.js';
 import { adapter as slovakParcelService } from '../carriers/slovak-parcel-service/adapter.js';
 import { adapter as slovenskaPosta } from '../carriers/slovenska-posta/adapter.js';
+import { adapter as smLine } from '../carriers/sm-line/adapter.js';
 import { adapter as smsaExpress } from '../carriers/smsa-express/adapter.js';
 import { adapter as southAfricanPostOffice } from '../carriers/south-african-post-office/adapter.js';
 import { adapter as southPost } from '../carriers/south-post/adapter.js';
@@ -1607,6 +1608,7 @@ export const REGISTRY: RegistryDefinition = {
     "slgtrax": slgtrax,
     "slovak-parcel-service": slovakParcelService,
     "slovenska-posta": slovenskaPosta,
+    "sm-line": smLine,
     "smsa-express": smsaExpress,
     "south-african-post-office": southAfricanPostOffice,
     "south-post": southPost,
@@ -3272,6 +3274,7 @@ export const REGISTRY: RegistryDefinition = {
     "slovenska-posta": "slovenska-posta",
     "slx-kr": "universal",
     "sm-express": "universal",
+    "sm-line": "sm-line",
     "smafrakt": "universal",
     "smsa-express": "smsa-express",
     "sofex-post": "universal",

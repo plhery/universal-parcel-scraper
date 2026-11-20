@@ -53503,6 +53503,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sm-line": {
+    "displayName": "SM Line",
+    "color": "#c9192d",
+    "aliases": [
+      "SM Line Corporation",
+      "SMLM",
+      "에스엠상선"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sm-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do",
+    "trackingUrlTemplate": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSearchUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSiteName": "SM Line e-Service",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "smafrakt": {
     "displayName": "Småfrakt",
     "color": "#0e7f40",
@@ -66848,6 +66873,7 @@ export const CARRIER_IDS = [
   "slovenska-posta",
   "slx-kr",
   "sm-express",
+  "sm-line",
   "smafrakt",
   "smsa-express",
   "sofex-post",
@@ -68714,6 +68740,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "slovenska-posta": ["slovenska-posta-own","slovenska-posta-s10"],
   "slx-kr": [],
   "sm-express": [],
+  "sm-line": [],
   "smafrakt": [],
   "smsa-express": [],
   "sofex-post": [],

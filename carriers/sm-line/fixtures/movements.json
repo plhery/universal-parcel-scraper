@@ -1,0 +1,87 @@
+{
+  "Exception": "",
+  "TRANS_RESULT_KEY": "S",
+  "count": "10",
+  "list": [
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "BUSAN ,REPUBLIC OF KOREA",
+      "actTpCd": "A",
+      "eventDt": "2026-08-25 09:12",
+      "statusNm": "Empty Container Release to Shipper",
+      "statusCd": "MOTYDO"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "BUSAN ,REPUBLIC OF KOREA",
+      "actTpCd": "A",
+      "eventDt": "2026-08-28 22:06",
+      "statusNm": "Gate In to Outbound Terminal",
+      "statusCd": "FOTMAD"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "BUSAN ,REPUBLIC OF KOREA",
+      "actTpCd": "A",
+      "eventDt": "2026-08-30 16:46",
+      "statusNm": "Loaded on 'SM BUSAN 2605E' at Port of Loading",
+      "statusCd": "FLVMLO"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "BUSAN ,REPUBLIC OF KOREA",
+      "actTpCd": "A",
+      "eventDt": "2026-08-31 02:54",
+      "statusNm": "'SM BUSAN 2605E' Departure from Port of Loading",
+      "statusCd": "FLVMDO"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "LONG BEACH,CA ,UNITED STATES",
+      "actTpCd": "A",
+      "eventDt": "2026-09-11 12:48",
+      "statusNm": "'SM BUSAN 2605E' Arrival at Port of Discharging",
+      "statusCd": "FUVMAD"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "LONG BEACH,CA ,UNITED STATES",
+      "actTpCd": "A",
+      "eventDt": "2026-09-11 16:00",
+      "statusNm": "'SM BUSAN 2605E' POD Berthing Destination",
+      "statusCd": "FUVMBD"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "LONG BEACH,CA ,UNITED STATES",
+      "actTpCd": "A",
+      "eventDt": "2026-09-11 19:59",
+      "statusNm": "Unloaded from 'SM BUSAN 2605E' at Port of Discharging",
+      "statusCd": "FUVMUD"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "LONG BEACH,CA ,UNITED STATES",
+      "actTpCd": "A",
+      "eventDt": "2026-09-11 19:59",
+      "statusNm": "Truck Gate In to I/B Terminal",
+      "statusCd": "YYYYYY"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "LONG BEACH,CA ,UNITED STATES",
+      "actTpCd": "A",
+      "eventDt": "2026-09-14 10:19",
+      "statusNm": "Truck Gate Out from I/B Terminal",
+      "statusCd": "YYYYYY"
+    },
+    {
+      "copNo": "CSEL6720797880",
+      "placeNm": "LONG BEACH,CA ,UNITED STATES",
+      "actTpCd": "A",
+      "eventDt": "2026-09-16 18:53",
+      "statusNm": "Empty Container Returned from Customer",
+      "statusCd": "MITYAD"
+    }
+  ]
+}
