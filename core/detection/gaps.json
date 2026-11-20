@@ -5042,5 +5042,11 @@
     "pattern": "^3999999[0-9]{8}$",
     "kind": "open",
     "reason": "The archived HOP tracker confirms this pickup-point shipment number. Detection does not offer HOP Envíos."
+  },
+  {
+    "carrier": "herona-express",
+    "pattern": "^(?:TSMA[0-9]{8}|0[0-9]{4})$",
+    "kind": "open",
+    "reason": "The Herona form example has a branch prefix, and public merchant shipment rows have short leading-zero references. Detection does not offer Herona Express."
   }
 ]
