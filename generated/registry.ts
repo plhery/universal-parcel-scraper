@@ -884,6 +884,7 @@ import { adapter as yanwen } from '../carriers/yanwen/adapter.js';
 import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
 import { adapter as ydh } from '../carriers/ydh/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
+import { adapter as yitu } from '../carriers/yitu/adapter.js';
 import { adapter as yto } from '../carriers/yto/adapter.js';
 import { adapter as yuanpeng } from '../carriers/yuanpeng/adapter.js';
 import { adapter as yunda } from '../carriers/yunda/adapter.js';
@@ -1790,6 +1791,7 @@ export const REGISTRY: RegistryDefinition = {
     "ycs-logistics": ycsLogistics,
     "ydh": ydh,
     "yilong-logistics": yilongLogistics,
+    "yitu": yitu,
     "yto": yto,
     "yuanpeng": yuanpeng,
     "yunda": yunda,
@@ -3645,6 +3647,7 @@ export const REGISTRY: RegistryDefinition = {
     "yilong-logistics": "yilong-logistics",
     "yimidida": "universal",
     "yingtu": "universal",
+    "yitu": "yitu",
     "yol-kargo": "universal",
     "yongma-logis": "universal",
     "yoseus": "universal",

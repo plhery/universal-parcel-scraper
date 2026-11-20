@@ -1,0 +1,66 @@
+{
+  "id": "yitu",
+  "displayName": "YITU",
+  "aliases": [
+    "Yitu",
+    "义途",
+    "义途供应链",
+    "义乌市义途供应链管理有限公司",
+    "Yiwu Yitu Supply Chain"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#ff613e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "yitu",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_tracking_number",
+    "destination_country"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number",
+      "customer_reference",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

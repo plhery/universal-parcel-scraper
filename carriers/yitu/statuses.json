@@ -1,0 +1,43 @@
+{
+  "carrier": "yitu",
+  "entries": [
+    {
+      "code": "IR",
+      "wording": "Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 快件电子信息已经收到. The waybill's information reached YITU, before it has the parcel."
+    },
+    {
+      "code": "AF",
+      "wording": "Shipment arrived at facility",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 快件到达作业中心. \"The parcel reached the operations centre\": the first scan, at YITU's site in Yiwu."
+    },
+    {
+      "code": "DF",
+      "wording": "Shipment departed from facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 快件操作完成. \"Handling of the parcel is complete\"; it leaves the site."
+    },
+    {
+      "wording": "快件到达作业中心",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The parcel reached the operations centre\", without a code: a later centre on the way, after the first scan."
+    },
+    {
+      "wording": "快件操作完成",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Handling of the parcel is complete\", without a code: it leaves a later centre."
+    }
+  ]
+}

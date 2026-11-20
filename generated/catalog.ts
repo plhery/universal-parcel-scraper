@@ -64505,6 +64505,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "yitu": {
+    "displayName": "YITU",
+    "color": "#ff613e",
+    "aliases": [
+      "Yitu",
+      "义途",
+      "义途供应链",
+      "义乌市义途供应链管理有限公司",
+      "Yiwu Yitu Supply Chain"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yitu",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yol-kargo": {
     "displayName": "Yol Kargo",
     "color": "#f66814",
@@ -67421,6 +67445,7 @@ export const CARRIER_IDS = [
   "yilong-logistics",
   "yimidida",
   "yingtu",
+  "yitu",
   "yol-kargo",
   "yongma-logis",
   "yoseus",
@@ -69297,6 +69322,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yilong-logistics": ["yilong-logistics-1"],
   "yimidida": [],
   "yingtu": [],
+  "yitu": [],
   "yol-kargo": [],
   "yongma-logis": [],
   "yoseus": [],
