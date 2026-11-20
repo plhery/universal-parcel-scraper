@@ -1,5 +1,47 @@
 {
   "carrier": "liftit",
-  "gap": "No public page shows a Liftit number.",
-  "records": []
+  "records": [
+    {
+      "number": "T013773A3EA51CCAC7BL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20200911134718id_/https://tracking.liftit.co/T013773A3EA51CCAC7BL",
+        "date": "2020-09-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Liftit last-mile delivery",
+        "reportedRole": "tracking link path reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archive preserves this identifier in the URL of Liftit’s tracking application. The captured HTML is an application shell, and the public live link now returns HTTP 404."
+    },
+    {
+      "number": "T03D23446F1868EE13CL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230508102445id_/https://tracking.liftit.co/T03D23446F1868EE13CL",
+        "date": "2023-05-08",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Liftit last-mile delivery",
+        "reportedRole": "tracking link path reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wayback index preserves this exact historical Liftit tracking link. The public live link now returns HTTP 404."
+    }
+  ]
 }

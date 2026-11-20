@@ -4970,5 +4970,11 @@
     "pattern": "^\\d{5}$",
     "kind": "open",
     "reason": "A customer publishes a five-digit Logsis waybill. Detection does not offer Logsis for that sample."
+  },
+  {
+    "carrier": "liftit",
+    "pattern": "^T[0-9A-F]{17}[BC]L$",
+    "kind": "open",
+    "reason": "Archived Liftit tracking URLs contain these exact prefixed references. Detection does not offer Liftit."
   }
 ]
