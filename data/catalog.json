@@ -27743,6 +27743,28 @@
     ],
     "detectionRules": []
   },
+  "gaint-logistic": {
+    "displayName": "Gaint Logistic",
+    "color": "#4f46e5",
+    "aliases": [
+      "Gaint Logistic Private Limited",
+      "Gaint Logistic Pvt Ltd"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gaint-logistic"
+    },
+    "canaryUrl": "https://gaintlogistic.com/track",
+    "trackingSearchUrl": "https://gaintlogistic.com/track",
+    "helpUrl": "https://gaintlogistic.com/contact",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "garantpost": {
     "displayName": "Garantpost",
     "color": "#094fa3",

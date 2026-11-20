@@ -27747,6 +27747,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "gaint-logistic": {
+    "displayName": "Gaint Logistic",
+    "color": "#4f46e5",
+    "aliases": [
+      "Gaint Logistic Private Limited",
+      "Gaint Logistic Pvt Ltd"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gaint-logistic"
+    },
+    "canaryUrl": "https://gaintlogistic.com/track",
+    "trackingSearchUrl": "https://gaintlogistic.com/track",
+    "helpUrl": "https://gaintlogistic.com/contact",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "garantpost": {
     "displayName": "Garantpost",
     "color": "#094fa3",
@@ -68496,6 +68518,7 @@ export const CARRIER_IDS = [
   "g4s-kenya",
   "gaash",
   "gaaubesi",
+  "gaint-logistic",
   "garantpost",
   "garuda-indonesia-cargo",
   "garudavega",
@@ -70457,6 +70480,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "g4s-kenya": [],
   "gaash": [],
   "gaaubesi": [],
+  "gaint-logistic": [],
   "garantpost": [],
   "garuda-indonesia-cargo": [],
   "garudavega": [],

@@ -1677,6 +1677,12 @@
     "reason": "Only one GAASH lookup shows this layout, and the tracker names Cainiao as that parcel's courier, so the prefix may come from the sender's label."
   },
   {
+    "carrier": "gaint-logistic",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Gaint's LR numbers are nine digits, a shape TNT and many other carriers print, and nothing in the number points to Gaint."
+  },
+  {
     "carrier": "garuda-indonesia-cargo",
     "kind": "open",
     "reason": "Issued Garuda Cargo waybills use prefix 126 and overlap generic numeric shapes. Select Garuda Indonesia Cargo explicitly."
