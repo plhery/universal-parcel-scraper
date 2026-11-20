@@ -17,18 +17,55 @@
   "timezone": "Europe/Amsterdam",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "peddler",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "eta",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://track.pdlr.nl/trackntrace/{trackingNumber}",
     "searchUrl": "https://track.pdlr.nl/",
     "canaryUrl": "https://track.pdlr.nl/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "eta_window",
+      "offset_timestamps",
+      "delivered_at",
+      "recipient_address",
+      "driver_name",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta",
+      "offset_timestamps",
+      "delivered_at",
+      "remarks"
+    ],
+    "discarded": [
+      "eta_window",
+      "recipient_address",
+      "driver_name"
+    ],
+    "unavailable": [
+      "location",
+      "weight",
+      "sender_name",
+      "recipient_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

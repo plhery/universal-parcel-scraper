@@ -1,0 +1,165 @@
+{
+  "data": {
+    "inquiryNumber": "NLEXP0024995356INTPED",
+    "carrier": {
+      "name": "Cainiao"
+    },
+    "package": {
+      "status": "DELIVERED",
+      "trackingNumber": "NLEXP0024995356INTPED",
+      "estimatedDeliveryDate": "2026-03-18T11:32:17.374Z",
+      "deliveryDate": "2026-03-18T11:32:17.374Z",
+      "events": [
+        {
+          "code": 100,
+          "status": "SHIPMENT_CONFIRMED",
+          "ts": "2026-03-09T22:47:49.686Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Shipment confirmed",
+                "description": "Shipment registered by client with Peddler"
+              }
+            }
+          }
+        },
+        {
+          "code": 210,
+          "status": "SHIPMENT_IN_WAREHOUSE",
+          "ts": "2026-03-14T14:07:57.686Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Package at distribution center",
+                "description": "Package scanned at distribution center"
+              }
+            }
+          }
+        },
+        {
+          "code": 300,
+          "status": "SHIPMENT_ENROUTE_TO_LOCAL_DEPOT",
+          "ts": "2026-03-14T15:53:44.456Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Enroute to local depot",
+                "description": "Shipment enroute to local depot"
+              }
+            }
+          }
+        },
+        {
+          "code": 310,
+          "status": "SHIPMENT_IN_LOCAL_DEPOT",
+          "ts": "2026-03-16T10:23:17.188Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Package in local depot",
+                "description": "Package has arrived in local depot"
+              }
+            }
+          }
+        },
+        {
+          "code": 405,
+          "status": "DELIVERY_ACKNOWLEDGED",
+          "ts": "2026-03-16T13:57:29.324Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Out for delivery",
+                "description": "Package enroute to destination"
+              }
+            }
+          }
+        },
+        {
+          "code": 603,
+          "status": "FAILED_ATTEMPT",
+          "ts": "2026-03-16T15:10:04.239Z",
+          "failedStatus": "INCOMPLETE_ADDRESS",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Delivery attempt failed",
+                "description": "Delivery attempt failed at destination",
+                "subheading": "Delivery failed. Scheduling a redelivery."
+              }
+            }
+          },
+          "lang": {
+            "en": "Incomplete address; missing details"
+          }
+        },
+        {
+          "code": 700,
+          "status": "ON_HOLD",
+          "ts": "2026-03-16T15:10:04.239Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Planning your next delivery attempt now.",
+                "description": "We’re arranging a new delivery attempt for the earliest available slot.",
+                "subheading": "We’re arranging a new delivery attempt. We'll send you an update ASAP"
+              }
+            }
+          }
+        },
+        {
+          "code": 1100,
+          "status": "SHIPMENT_DETAILS_UPDATED",
+          "ts": "2026-03-17T13:56:15.961Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Delivery address updated",
+                "description": "Shipment details updated by support team or consignee"
+              }
+            }
+          }
+        },
+        {
+          "code": 310,
+          "status": "SHIPMENT_IN_LOCAL_DEPOT",
+          "ts": "2026-03-17T17:18:40.316Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Package in local depot",
+                "description": "Package has arrived in local depot"
+              }
+            }
+          }
+        },
+        {
+          "code": 405,
+          "status": "DELIVERY_ACKNOWLEDGED",
+          "ts": "2026-03-18T07:40:22.716Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Out for delivery",
+                "description": "Package enroute to destination"
+              }
+            }
+          }
+        },
+        {
+          "code": 502,
+          "status": "DELIVERED",
+          "ts": "2026-03-18T11:32:17.374Z",
+          "details": {
+            "lang": {
+              "en": {
+                "headline": "Delivered",
+                "description": "Package delivered in mailbox"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

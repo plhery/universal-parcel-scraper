@@ -45158,7 +45158,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Amsterdam",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "peddler",
+      "browser": true
     },
     "canaryUrl": "https://track.pdlr.nl/",
     "trackingUrlTemplate": "https://track.pdlr.nl/trackntrace/{trackingNumber}",

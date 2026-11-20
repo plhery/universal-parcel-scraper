@@ -98500,6 +98500,14 @@
     ]
   },
   {
+    "input": "NLEXP0024995356INTPED",
+    "carrier": "peddler",
+    "confidence": "high",
+    "candidates": [
+      "peddler"
+    ]
+  },
+  {
     "input": "NLIDAP1370713802",
     "carrier": "ninja-van",
     "confidence": "high",

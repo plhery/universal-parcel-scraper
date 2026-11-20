@@ -2,6 +2,25 @@
   "carrier": "peddler",
   "records": [
     {
+      "number": "NLEXP0024995356INTPED",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.klacht.nl/peddler-express/klacht/package-marked-delivered-but-not-received-no-proof-of-delivery/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "peddler",
+        "confidence": "high"
+      },
+      "note": "A complaint gives this AliExpress parcel's number; Peddler's tracker shows it from its order through a failed attempt to its delivery."
+    },
+    {
       "number": "NLEXP0019271437INTPED",
       "role": "shipment",
       "evidence": "public_shipment_report",
