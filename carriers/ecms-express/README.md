@@ -31,7 +31,10 @@ that offset they land on the second the API records them, also where the offset 
 place's civil one. A `timeZone` of zero marks the relayed partners' scans, SpeedX's and
 MICOM's, whose `operatorTime` is the instant: SpeedX's own copies state the same second with
 the place's offset, and read on the place's clock the scan would fall after ECMS recorded it.
-Those scans carry the instant alone. The API's ingestion clock is not a scan timestamp.
+Those scans carry the instant alone. Taiwan's delivery partner also states zero but writes its
+wall clock: read as the instant, its scans would fall hours after ECMS recorded them
+(`createDateTime`). A feed with such a scan keeps its offset-zero scans' wall clocks alone, and
+their place dates them. The API's ingestion clock is not a scan timestamp.
 A flight row can give the flight's day alone at midnight sharp, recorded hours later; it keeps
 that day. Most flight rows carry a clock, so the catalog does not mark ECMS as giving day-only
 scans by design.

@@ -36,7 +36,21 @@ function identity(row: Record<string, unknown>, number: string): void {
   }
 }
 
-function scan(row: unknown, number: string): CarrierEvent {
+// A partner's feed stating offset zero gives the instant (SpeedX, MICOM) unless one of its scans would then fall after
+// ECMS recorded it (`createDateTime`, an instant): Taiwan's delivery partner writes its wall clock there, hours ahead.
+const RECORDING_SLACK_MS = 10 * 60_000;
+
+/** The feeds, by `source`, whose offset-zero scans give a wall clock rather than the instant. */
+function wallClockFeeds(rows: readonly unknown[]): Set<string> {
+  const feeds = new Set<string>();
+  for (const row of rows) {
+    if (isRecord(row) && row.timeZone === 0 && typeof row.operatorTime === 'number' && typeof row.createDateTime === 'number'
+      && row.operatorTime > row.createDateTime + RECORDING_SLACK_MS) feeds.add(typeof row.source === 'string' ? row.source : '');
+  }
+  return feeds;
+}
+
+function scan(row: unknown, number: string, walled: ReadonlySet<string>): CarrierEvent {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'ECMS returned an invalid scan');
   identity(row, number);
   const code = text(row, 'eventCode', 40), description = text(row, 'eventDescription') || text(row, 'customDescription');
@@ -47,10 +61,12 @@ function scan(row: unknown, number: string): CarrierEvent {
   }
   // The portal renders UTC components of this value as the facility's wall clock.
   const local = new Date(clock).toISOString().slice(0, 19);
-  const offset = row.timeZone;
-  if (offset != null && (typeof offset !== 'number' || !Number.isFinite(offset) || Math.abs(offset) > 14 || !Number.isInteger(offset * 60))) {
+  const stated = row.timeZone;
+  if (stated != null && (typeof stated !== 'number' || !Number.isFinite(stated) || Math.abs(stated) > 14 || !Number.isInteger(stated * 60))) {
     throw new SchemaError(PROVIDER, 'ECMS returned an invalid scan offset');
   }
+  // A wall-clock feed's zero is no offset: its scans keep their wall clock alone, which their place dates.
+  const offset = stated === 0 && walled.has(typeof row.source === 'string' ? row.source : '') ? undefined : stated;
   // Zero gives the instant itself, in UTC: the relayed partners' scans carry it, and read in their
   // place they would fall after ECMS recorded them. They have no wall clock of their own here.
   // Preserve nonzero stated offsets, including fixed standard offsets in summer, without replacing
@@ -87,8 +103,9 @@ export function parseEcmsExpress(payload: unknown, raw: string): CarrierResult {
   identity(shipment.baseInfo, number);
   if (!Array.isArray(shipment.infoList) || shipment.infoList.length > 500) throw new SchemaError(PROVIDER, 'ECMS returned an invalid history');
   if (!shipment.infoList.length) throw new NoHistoryError(PROVIDER);
-  const events = shipment.infoList.map(row => scan(row, number));
-  const newest = scan(shipment.baseInfo, number);
+  const walled = wallClockFeeds([...(shipment.infoList as unknown[]), shipment.baseInfo]);
+  const events = shipment.infoList.map(row => scan(row, number, walled));
+  const newest = scan(shipment.baseInfo, number, walled);
   const classified = ecmsExpressStage(newest.provider_code!, newest.description!);
   const destination = text(shipment, 'consigneeCountry', 80).toUpperCase();
   const partner = isRecord(shipment.vendorConfig) && typeof shipment.vendorConfig.name === 'string'

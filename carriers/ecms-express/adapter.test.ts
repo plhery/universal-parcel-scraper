@@ -3,6 +3,7 @@ import { EcmsExpressTracker, normalizeEcmsExpressNumber, parseEcmsExpress } from
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { carrierAdapter } from '../../core/catalog/definitions.js';
 import { isPartialAnswer } from '../../core/result/partial.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 
 const NUMBER = 'ECTST00000000001';
 const PARTNER = 'SPXTEST000000000001';
@@ -36,6 +37,27 @@ describe('ECMS history', () => {
     expect(result.events![2]).toMatchObject({ local_time: '2026-07-02T09:00:00', time: '2026-07-02T09:00:00+09:00' });
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
     expect(isPartialAnswer(result)).toBe(false);
+  });
+
+  it("keeps the wall clocks of a partner feed whose offset-zero scans would postdate ECMS's record", () => {
+    const data = fixture();
+    const order = data.orderInfo[0]!;
+    order.consigneeCountry = 'TW';
+    const taiwan = { source: 'dc_tw.acs', countryEnName: 'TW' };
+    // Delivered at 11:57 in Taiwan, recorded at 05:08 UTC; the morning's round, recorded before 11:56 UTC.
+    Object.assign(order.baseInfo, taiwan, { operatorTime: Date.UTC(2026, 10, 20, 11, 57), createDateTime: Date.UTC(2026, 10, 20, 5, 8, 21) });
+    Object.assign(order.infoList[0]!, taiwan, { operatorTime: Date.UTC(2026, 10, 20, 11, 57), createDateTime: Date.UTC(2026, 10, 20, 5, 8, 21) });
+    order.infoList.splice(1, 0, { ...row(), ...taiwan, eventCode: 'EVENT_302', eventDescription: 'Shipment is out for delivery.',
+      operatorTime: Date.UTC(2026, 10, 20, 8, 47), createDateTime: Date.UTC(2026, 10, 20, 11, 56) });
+    const result = parseEcmsExpress(data, NUMBER);
+    expect(result).toMatchObject({ last_update: null, last_update_local: '2026-11-20T11:57:00' });
+    expect(result.events![0]).toMatchObject({ local_time: '2026-11-20T11:57:00', provider_code: 'EVENT_301' });
+    expect(result.events![1]).toMatchObject({ local_time: '2026-11-20T08:47:00', provider_code: 'EVENT_302' });
+    expect(result.events![0]).not.toHaveProperty('time');
+    expect(result.events![1]).not.toHaveProperty('time');
+    expect(dateLocalClocks('ecms-express', result).events![0]).toMatchObject({ time: '2026-11-20T11:57:00+08:00', time_zone: 'Asia/Taipei' });
+    // SpeedX's feed, whose instants precede their record, stays as it was.
+    expect(parseEcmsExpress(fixture(), NUMBER).events![0]).toMatchObject({ time: '2026-07-04T14:10:00Z' });
   });
 
   it('keeps a midnight partner delivery instant', () => {
