@@ -51,6 +51,8 @@ export function stageFor(event: JsonObject): string {
   if (/package received at dhl|picked up|accepted/.test(text)) return 'accepted';
   if (/^(?:close bag|scanned into sack\/container)$/.test(text)) return 'in_transit';
   if (PARTNER_HANDOVER.test(text)) return 'in_transit';
+  // A last-mile partner's delay notice that names no hold: the parcel is still on its way.
+  if (/^(?:possible|potential) delay$/.test(text)) return 'in_transit';
   // A terminal provider code outranks an intuitive translated label.
   if (event.statusCode === 'delivered') return 'delivered';
   const translated = trackingLanguageStage(typeof event.description === 'string' ? event.description : '');

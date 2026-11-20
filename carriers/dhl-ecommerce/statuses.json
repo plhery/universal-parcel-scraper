@@ -28,6 +28,7 @@
     { "wording": "SHIPMENT ACCEPTED BY USPS", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "USPS taking the parcel after DHL's handover. It read as accepted before, a step back." },
     { "wording": "PROCESSED THROUGH USPS SORT FACILITY", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "A USPS scan relayed by Webtrack." },
     { "wording": "ARRIVAL AT POST OFFICE", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "A USPS scan relayed by Webtrack." },
+    { "wording": "POSSIBLE DELAY", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "A last-mile partner's delay notice, without a place, that names no hold." },
     { "wording": "EN ROUTE", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-10", "note": "Webtrack adds it without a place, stamped with the time of each request. The parser skips the row: it echoes the status and is not a scan." },
     { "code": "delivered", "wording": "DELIVERED - Signed by …", "language": "en", "stage": "delivered", "confirmedBy": "fixture", "firstSeen": "2026-09-12", "note": "The signatory is never retained: a delivered event's description is replaced by \"Delivered\"." }
   ]

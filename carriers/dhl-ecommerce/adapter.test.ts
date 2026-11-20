@@ -123,6 +123,7 @@ describe('DHL eCommerce normalization', () => {
     ['EN ROUTE TO DHL ECOMMERCE OR AWAITING PROCESSING', 'transit', 'registered', 'pending'],
     ['PACKAGE RECEIVED AT DHL ECOMMERCE DISTRIBUTION CENTER', 'transit', 'accepted', 'in_transit'],
     ['OUT FOR DELIVERY', 'transit', 'out_for_delivery', 'out_for_delivery'],
+    ['POSSIBLE DELAY', 'unknown', 'in_transit', 'in_transit'],
     ['READY FOR COLLECTION', 'transit', 'ready_for_pickup', 'out_for_delivery'],
     ['CUSTOMS CLEARANCE', 'transit', 'customs', 'in_transit'],
     ['CUSTOMS CLEARED', 'transit', 'in_transit', 'in_transit'],
