@@ -1,0 +1,41 @@
+{
+  "carrier": "epex-colombia",
+  "records": [
+    {
+      "number": "130199640001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://epex.com.co/wp-content/uploads/2022/04/Rezago_Acta_N006.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "EPEX guide listed in Acta 006 for uncollected consignments",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "EPEX listed this complete guide in its own Acta 006. The native guest tracker echoed the guide and five dated events."
+    }
+  ]
+}

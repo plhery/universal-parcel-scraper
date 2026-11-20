@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'epex-colombia', number: '130199640001',
+    route: /^https:\/\/epex\.com\.co\/rastrea\/\?id=130199640001$/,
+    marker: /Incidencia/i },
   { carrier: 'transportes-chevalier', number: '0000000000',
     route: /^https:\/\/chevalier\.fivesoft\.com\.co\/tag_detail_v1\.html\?d=0000000000$/,
     marker: /No existe en la plataforma FivePostal|N[uú]mero de Gu[ií]a/i },

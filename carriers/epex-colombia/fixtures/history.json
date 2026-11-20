@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "parsed": {
+    "EXPEDICION": {
+      "NUMERO": "130199640001",
+      "ESTADO": "Incidencia",
+      "FECHAESTADO": "28/02/2022 9:37:12",
+      "TRACKINGS": {
+        "TRACKING": [
+          {
+            "FECHA": "06/10/2021 11:16:56",
+            "ESTADO": "Registrado"
+          },
+          {
+            "FECHA": "06/10/2021 18:09:39",
+            "ESTADO": "Despachado"
+          },
+          {
+            "FECHA": "07/10/2021 8:36:39",
+            "ESTADO": "Descargado"
+          },
+          {
+            "FECHA": "07/10/2021 8:36:39",
+            "ESTADO": "Pendiente En Agencia"
+          },
+          {
+            "FECHA": "28/02/2022 9:37:12",
+            "ESTADO": "Incidencia"
+          }
+        ]
+      }
+    }
+  }
+}

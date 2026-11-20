@@ -23210,6 +23210,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "epex-colombia": {
+    "displayName": "EPEX Colombia",
+    "color": "#da291c",
+    "aliases": [
+      "EPEX",
+      "Expreso Palmira Encomiendas",
+      "EPEX Expreso Palmira"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "epex-colombia",
+      "localClocks": true
+    },
+    "canaryUrl": "https://epex.com.co/rastrea/",
+    "trackingUrlTemplate": "https://epex.com.co/rastrea/?id={trackingNumber}",
+    "trackingSearchUrl": "https://epex.com.co/rastrea/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "epost-global": {
     "displayName": "ePost Global",
     "color": "#27967a",
@@ -67010,6 +67034,7 @@ export const CARRIER_IDS = [
   "enviopack-ar",
   "enviopack-mx",
   "eparcel-kr",
+  "epex-colombia",
   "epost-global",
   "equick",
   "esbjerg-gods",
@@ -68918,6 +68943,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "enviopack-ar": [],
   "enviopack-mx": [],
   "eparcel-kr": ["eparcel-kr-1"],
+  "epex-colombia": [],
   "epost-global": ["epost-global-1"],
   "equick": ["equick-eqk"],
   "esbjerg-gods": [],

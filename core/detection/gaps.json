@@ -5719,5 +5719,10 @@
     "carrier": "transportes-chevalier",
     "kind": "open",
     "reason": "The native portal confirms the full numeric guide. Its length is shared by other carriers and remains an explicit choice."
+  },
+  {
+    "carrier": "epex-colombia",
+    "kind": "open",
+    "reason": "The EPEX lookup confirms its published numeric guide. Numeric guides overlap other carriers and are kept explicit."
   }
 ]
