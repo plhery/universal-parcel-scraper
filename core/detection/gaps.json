@@ -358,6 +358,12 @@
     "reason": "Eleven digits are shared by Aramex, CDEK and other carriers, and nothing in the number points to Azul Cargo Express."
   },
   {
+    "carrier": "bel",
+    "pattern": "^BEL\\d{9}$",
+    "kind": "open",
+    "reason": "A recipient posted a BEL tracking number with nine digits after the prefix. Detection offers other carriers for that number and does not offer BEL."
+  },
+  {
     "carrier": "best-express-vn",
     "pattern": "^\\d{14}$",
     "kind": "by_design",
