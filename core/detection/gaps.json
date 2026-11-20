@@ -997,6 +997,12 @@
     "reason": "International numbers in the UPU S10 layout that DHLink's line providers issue belong to postal detection even when the check digit fails, and do not point to DHLink."
   },
   {
+    "carrier": "dialogo-logistica",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Detection does not offer Diálogo Logística for the twelve-digit tracking code reported with its dated delivery attempts."
+  },
+  {
     "carrier": "direct-freight-express",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
