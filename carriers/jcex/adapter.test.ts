@@ -258,9 +258,13 @@ describe('JCEX HTTP adapter', () => {
       const departure = content.trackDetails.find((row) => row.eventDetailEn === 'Port of departure - Departure')!;
       content.trackDetails.push({ ...departure, eventTime: '2026-09-17 08:00:00', platformEventCode: 'InTransit_PickedUp',
         eventDetailEn: 'Consignment Received At Transit Point', eventDetailCn: 'Consignment Received At Transit Point', location: 'DONGGUAN' });
+      content.trackDetails.push({ ...departure, eventTime: '2026-09-17 09:00:00', platformEventCode: 'InTransit_PickedUp',
+        eventDetailEn: 'Carrier received the shipment', eventDetailCn: 'Carrier received the shipment', location: 'SHEN ZHEN' });
     }), RELAYED, Date.parse('2026-10-01T00:00:00Z'));
     const receipts = result.events!.filter((event) => event.description === 'Consignment Received At Transit Point');
     expect(receipts.map((event) => [event.location, event.stage])).toEqual([[expect.not.stringMatching(/DONGGUAN/), 'in_transit'], ['DONGGUAN', 'accepted']]);
+    // A receipt after the acceptance, while the flight is being arranged, is on the way.
+    expect(result.events!.find((event) => event.description === 'Carrier received the shipment')?.stage).toBe('in_transit');
   });
 
   it("keeps the delivering partner's scan in its fuller words when JCEX lists it twice at one clock and place", () => {
