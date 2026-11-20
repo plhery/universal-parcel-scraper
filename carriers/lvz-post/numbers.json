@@ -1,5 +1,32 @@
 {
   "carrier": "lvz-post",
-  "gap": "No public page shows a whole LVZ Post number.",
-  "records": []
+  "records": [
+    {
+      "number": "0100801762360038",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.philaseiten.de/beitrag/85842",
+        "date": "2014-02-06",
+        "dateKind": "postage meter date on cover",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Historical private letter and partner handoff in Germany",
+        "reportedRole": "UPOC-Sendungsnummer on cover",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "pin-ag",
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "A postal collector reproduces the LVZ postal code on a letter cover with a separate Freesort postage mark. Its role in the current registered-mail and parcel tracker remains unresolved."
+    }
+  ]
 }
