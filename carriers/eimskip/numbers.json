@@ -1,0 +1,25 @@
+{
+  "carrier": "eimskip",
+  "records": [
+    {
+      "number": "EIMUL26051590",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/iceland",
+        "date": "2026-10-21",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published Iceland shipment manifest lists the bill with its EIMU prefix. The Eimskip search returned the matching bare number and its shipment milestones."
+    }
+  ]
+}

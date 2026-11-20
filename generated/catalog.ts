@@ -22036,6 +22036,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "eimskip": {
+    "displayName": "Eimskip",
+    "color": "#003b70",
+    "aliases": [
+      "Eimskipafélag Íslands",
+      "Eimskip Ísland",
+      "EIMU"
+    ],
+    "countries": [
+      "IS"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "eimskip",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.eimskip.com/find-shipment/",
+    "trackingUrlTemplate": "https://www.eimskip.com/find-shipment/",
+    "trackingSearchUrl": "https://www.eimskip.com/find-shipment/",
+    "trackingSiteName": "Eimskip Find Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ekart": {
     "displayName": "Ekart",
     "color": "#0074D9",
@@ -66095,6 +66120,7 @@ export const CARRIER_IDS = [
   "efs-asia",
   "egxpress",
   "egypt-post",
+  "eimskip",
   "ekart",
   "eli-express",
   "elianpost",
@@ -67968,6 +67994,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "efs-asia": [],
   "egxpress": ["egxpress-1"],
   "egypt-post": ["egypt-post-1","egypt-post-s10"],
+  "eimskip": [],
   "ekart": ["ekart-ecommerce","ekart-merchant"],
   "eli-express": [],
   "elianpost": [],

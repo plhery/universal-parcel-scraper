@@ -5544,5 +5544,10 @@
     "carrier": "sitc-container-lines",
     "kind": "open",
     "reason": "SITC tracks equipment identifiers that can be reused across carriers and voyages."
+  },
+  {
+    "carrier": "eimskip",
+    "kind": "open",
+    "reason": "The guest tracker accepts a bare shipment number. Eimskip is selected explicitly."
   }
 ]

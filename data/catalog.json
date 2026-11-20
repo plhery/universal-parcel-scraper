@@ -22032,6 +22032,31 @@
       }
     ]
   },
+  "eimskip": {
+    "displayName": "Eimskip",
+    "color": "#003b70",
+    "aliases": [
+      "Eimskipafélag Íslands",
+      "Eimskip Ísland",
+      "EIMU"
+    ],
+    "countries": [
+      "IS"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "eimskip",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.eimskip.com/find-shipment/",
+    "trackingUrlTemplate": "https://www.eimskip.com/find-shipment/",
+    "trackingSearchUrl": "https://www.eimskip.com/find-shipment/",
+    "trackingSiteName": "Eimskip Find Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ekart": {
     "displayName": "Ekart",
     "color": "#0074D9",

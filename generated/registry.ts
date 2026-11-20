@@ -234,6 +234,7 @@ import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
 import { adapter as ecourier } from '../carriers/ecourier/adapter.js';
 import { adapter as egxpress } from '../carriers/egxpress/adapter.js';
 import { adapter as egyptPost } from '../carriers/egypt-post/adapter.js';
+import { adapter as eimskip } from '../carriers/eimskip/adapter.js';
 import { adapter as ekart } from '../carriers/ekart/adapter.js';
 import { adapter as elta } from '../carriers/elta/adapter.js';
 import { adapter as emile } from '../carriers/emile/adapter.js';
@@ -1135,6 +1136,7 @@ export const REGISTRY: RegistryDefinition = {
     "ecourier": ecourier,
     "egxpress": egxpress,
     "egypt-post": egyptPost,
+    "eimskip": eimskip,
     "ekart": ekart,
     "elta": elta,
     "emile": emile,
@@ -2308,6 +2310,7 @@ export const REGISTRY: RegistryDefinition = {
     "efs-asia": "universal",
     "egxpress": "egxpress",
     "egypt-post": "egypt-post",
+    "eimskip": "eimskip",
     "ekart": "ekart",
     "eli-express": "universal",
     "elianpost": "universal",
