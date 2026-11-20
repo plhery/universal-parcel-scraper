@@ -1,0 +1,4 @@
+{
+  "isValid": true,
+  "data": "<table class=\"table table-bordered\" id=\"myTable\">\n<thead><tr><th>Booking#</th><th>BL#</th><th>Invoice#</th><th>Make/Model</th><th>POL</th><th>ATD / ETD</th><th>POD</th><th>ATA / ETA</th><th>VIN#</th><th></th></tr></thead>\n<tbody><tr><td></td><td class=\"table-row-font-size\">\r\n18009522892                                </td><td></td><td></td><td class=\"table-row-font-size\">YOK-DAIKOKU PCC</td><td class=\"table-row-font-size text-success\">04-Oct-2026  3:35 PM</td><td class=\"table-row-font-size\">NEWARK FAPS</td><td class=\"table-row-font-size text-success\">10-Nov-2026  6:05 AM</td><td></td><td></td></tr></tbody>\n</table>"
+}

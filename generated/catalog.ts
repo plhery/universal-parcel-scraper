@@ -41236,6 +41236,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "mol-ace": {
+    "displayName": "MOL Auto Carrier Express",
+    "color": "#1d2c50",
+    "aliases": [
+      "MOL ACE",
+      "Mitsui O.S.K. Lines Auto Carrier Express",
+      "MOL RoRo"
+    ],
+    "countries": [
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mol-ace",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.molace.com/TRK/Search",
+    "trackingUrlTemplate": "https://www.molace.com/TRK/Search",
+    "trackingSearchUrl": "https://www.molace.com/TRK/Search",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mongol-infinity-post": {
     "displayName": "Mongol Infinity Post",
     "color": "#404b9b",
@@ -67817,6 +67841,7 @@ export const CARRIER_IDS = [
   "mnpost-mn",
   "mobel-services",
   "mobi-logistica",
+  "mol-ace",
   "mongol-infinity-post",
   "mongol-post",
   "montenegro-post",
@@ -69736,6 +69761,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mnpost-mn": [],
   "mobel-services": [],
   "mobi-logistica": [],
+  "mol-ace": [],
   "mongol-infinity-post": [],
   "mongol-post": [],
   "montenegro-post": [],

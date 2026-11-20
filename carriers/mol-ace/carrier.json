@@ -1,0 +1,57 @@
+{
+  "id": "mol-ace",
+  "displayName": "MOL Auto Carrier Express",
+  "aliases": [
+    "MOL ACE",
+    "Mitsui O.S.K. Lines Auto Carrier Express",
+    "MOL RoRo"
+  ],
+  "region": {
+    "countries": [
+      "JP"
+    ]
+  },
+  "brand": {
+    "color": "#1d2c50"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "mol-ace",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.molace.com/TRK/Search",
+    "searchUrl": "https://www.molace.com/TRK/Search",
+    "canaryUrl": "https://www.molace.com/TRK/Search",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "delivery_date"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "delivery_date"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

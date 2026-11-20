@@ -1,0 +1,19 @@
+{
+  "carrier": "mol-ace",
+  "entries": [
+    {
+      "wording": "Actual Departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The ATD / ETD column supplies the actual departure when the date is marked as completed."
+    },
+    {
+      "wording": "Actual Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The ATA / ETA column supplies the actual port arrival when the date is marked as completed."
+    }
+  ]
+}

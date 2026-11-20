@@ -5774,5 +5774,10 @@
     "carrier": "k-line-roro",
     "kind": "open",
     "reason": "The carrier confirms its KKLU-prefixed RoRo bills. A detection rule is pending review of other bill formats and collisions."
+  },
+  {
+    "carrier": "mol-ace",
+    "kind": "open",
+    "reason": "The MOLU-prefixed manifest bills match the carrier's numeric form. Detection is pending a review of historical and current MOL formats."
   }
 ]
