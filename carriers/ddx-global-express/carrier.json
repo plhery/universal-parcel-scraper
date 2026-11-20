@@ -1,0 +1,53 @@
+{
+  "id": "ddx-global-express",
+  "displayName": "DDX Global Express",
+  "aliases": [
+    "DDX Express",
+    "DDX Vietnam"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#60309B"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ddx-global-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://ddxpress.vn/tracking?code={trackingNumber}",
+    "searchUrl": "https://ddxpress.vn/tracking",
+    "canaryUrl": "https://ddxpress.vn/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "location",
+      "destination",
+      "eta"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

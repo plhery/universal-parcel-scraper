@@ -18630,6 +18630,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "ddx-global-express": {
+    "displayName": "DDX Global Express",
+    "color": "#60309B",
+    "aliases": [
+      "DDX Express",
+      "DDX Vietnam"
+    ],
+    "countries": [
+      "VN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ddx-global-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ddxpress.vn/tracking",
+    "trackingUrlTemplate": "https://ddxpress.vn/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://ddxpress.vn/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dealersend": {
     "displayName": "DealerSend",
     "color": "#d71d4f",
@@ -67780,6 +67803,7 @@ export const CARRIER_IDS = [
   "dayton-freight",
   "dd-express",
   "ddu-express",
+  "ddx-global-express",
   "dealersend",
   "deleo",
   "delibox",
@@ -69726,6 +69750,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dayton-freight": [],
   "dd-express": [],
   "ddu-express": [],
+  "ddx-global-express": [],
   "dealersend": ["dealersend-1"],
   "deleo": [],
   "delibox": [],

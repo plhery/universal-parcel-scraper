@@ -5904,5 +5904,10 @@
     "carrier": "sb-express-bangladesh",
     "kind": "open",
     "reason": "One published SB Express number is insufficient evidence of a unique NET prefix. Select SB Express Limited explicitly."
+  },
+  {
+    "carrier": "ddx-global-express",
+    "kind": "open",
+    "reason": "One published DDX reference is insufficient to establish a unique prefix rule. Select DDX Global Express explicitly."
   }
 ]

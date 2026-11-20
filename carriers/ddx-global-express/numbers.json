@@ -1,0 +1,23 @@
+{
+  "carrier": "ddx-global-express",
+  "records": [
+    {
+      "number": "DDX178722",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://ddxpress.vn/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "DDX publishes this complete identifier in its tracking form. Its own numbered reply confirms the parcel record.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier shows an assigned shipment awaiting a tracking update, with no dated history."
+    }
+  ]
+}

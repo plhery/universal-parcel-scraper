@@ -1,0 +1,53 @@
+{
+  "carrier": "ddx-global-express",
+  "entries": [
+    {
+      "wording": "PENDING",
+      "language": "vi",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "note": "The public result is awaiting a tracking update."
+    },
+    {
+      "wording": "INFO_RECEIVED",
+      "language": "vi",
+      "stage": "registered",
+      "confirmedBy": "bundle",
+      "note": "Shipment information was received."
+    },
+    {
+      "wording": "IN_TRANSIT",
+      "language": "vi",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "The shipment is moving through the network."
+    },
+    {
+      "wording": "OUT_FOR_DELIVERY",
+      "language": "vi",
+      "stage": "out_for_delivery",
+      "confirmedBy": "bundle",
+      "note": "The carrier started final delivery."
+    },
+    {
+      "wording": "DELIVERED",
+      "language": "vi",
+      "stage": "delivered",
+      "confirmedBy": "bundle",
+      "note": "The carrier confirms final delivery."
+    },
+    {
+      "wording": "EXCEPTION",
+      "language": "vi",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "note": "The carrier reports a transport exception."
+    },
+    {
+      "wording": "EXPIRED",
+      "language": "vi",
+      "confirmedBy": "bundle",
+      "note": "The portal marks the tracking reference expired."
+    }
+  ]
+}

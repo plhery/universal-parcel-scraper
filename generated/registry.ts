@@ -193,6 +193,7 @@ import { adapter as dayRoss } from '../carriers/day-ross/adapter.js';
 import { adapter as daylightTransport } from '../carriers/daylight-transport/adapter.js';
 import { adapter as dayone } from '../carriers/dayone/adapter.js';
 import { adapter as daytonFreight } from '../carriers/dayton-freight/adapter.js';
+import { adapter as ddxGlobalExpress } from '../carriers/ddx-global-express/adapter.js';
 import { adapter as dealersend } from '../carriers/dealersend/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
 import { adapter as deliveryAuto } from '../carriers/delivery-auto/adapter.js';
@@ -1167,6 +1168,7 @@ export const REGISTRY: RegistryDefinition = {
     "daylight-transport": daylightTransport,
     "dayone": dayone,
     "dayton-freight": daytonFreight,
+    "ddx-global-express": ddxGlobalExpress,
     "dealersend": dealersend,
     "delhivery": delhivery,
     "delivery-auto": deliveryAuto,
@@ -2361,6 +2363,7 @@ export const REGISTRY: RegistryDefinition = {
     "dayton-freight": "dayton-freight",
     "dd-express": "universal",
     "ddu-express": "universal",
+    "ddx-global-express": "ddx-global-express",
     "dealersend": "dealersend",
     "deleo": "universal",
     "delhivery": "delhivery",
