@@ -1,0 +1,15 @@
+{
+  "carrier": "navex",
+  "entries": [
+    {"wording": "Commande créée", "stage": "registered", "language": "fr", "confirmedBy": "live", "note": "The merchant created the order."},
+    {"wording": "En attente d'enlèvement", "stage": "registered", "language": "fr", "confirmedBy": "live", "note": "The order waits for a Navex driver to collect it from the merchant."},
+    {"wording": "Réceptionné au magasin", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Received at a Navex depot, the first one or a later one on the way."},
+    {"wording": "Transfert inter-dépôts", "stage": "in_transit", "language": "fr", "confirmedBy": "live"},
+    {"wording": "En cours de livraison", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live"},
+    {"wording": "À vérifier avec l'expéditeur", "stage": "exception", "language": "fr", "confirmedBy": "live", "note": "Delivery stopped until the merchant clears up a problem with the order."},
+    {"wording": "Retour définitif", "stage": "returned", "language": "fr", "confirmedBy": "live", "note": "Delivery given up; the parcel goes back to the merchant."},
+    {"wording": "En préparation pour retour", "stage": "returned", "language": "fr", "confirmedBy": "live"},
+    {"wording": "Retour expéditeur", "stage": "returned", "language": "fr", "confirmedBy": "live"},
+    {"wording": "Retour traité", "stage": "returned", "language": "fr", "confirmedBy": "live", "note": "The return handed back to the merchant."}
+  ]
+}

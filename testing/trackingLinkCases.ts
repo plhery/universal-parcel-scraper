@@ -1257,6 +1257,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'nationex', number: '900000009',
     route: /^https:\/\/nationex\.com\/reperage(?:\/900000009|\?error=true&searchId=900000009)$/,
     marker: /Aucun résultat trouvé pour le numéro de suivi|Numéro d’envoi \(9 chiffres\)/ },
+  { carrier: 'navex', number: '000000000000',
+    route: /^https:\/\/app\.navex\.tn\/track\.php\?track=000000000000$/,
+    marker: /Aucun colis trouvé pour ce numéro de suivi/ },
   // An unknown shipment ID is redirected to the search page, whose notice names it.
   { carrier: 'chit-chats', number: 'Z9Z9Z9Z9Z9',
     route: /^https:\/\/chitchats\.com\/tracking$/,

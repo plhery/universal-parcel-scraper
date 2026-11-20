@@ -41273,6 +41273,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "navex": {
+    "displayName": "Navex Delivery",
+    "color": "#062a43",
+    "aliases": [
+      "Navex",
+      "NAVEX"
+    ],
+    "countries": [
+      "TN"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Tunis",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "navex"
+    },
+    "canaryUrl": "https://app.navex.tn/track.php",
+    "trackingUrlTemplate": "https://app.navex.tn/track.php?track={trackingNumber}",
+    "trackingSearchUrl": "https://app.navex.tn/track.php",
+    "linkRules": [
+      {
+        "domains": [
+          "app.navex.tn"
+        ],
+        "pathPattern": "^/track\\.php$",
+        "params": [
+          "track"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ncs-courier": {
     "displayName": "NCS Kurir",
     "color": "#243f80",
@@ -66458,6 +66490,7 @@ export const CARRIER_IDS = [
   "national-delivery-systems",
   "nationex",
   "navata",
+  "navex",
   "ncs-courier",
   "nege",
   "neighbour-express",
@@ -68323,6 +68356,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "national-delivery-systems": [],
   "nationex": [],
   "navata": [],
+  "navex": [],
   "ncs-courier": [],
   "nege": [],
   "neighbour-express": [],

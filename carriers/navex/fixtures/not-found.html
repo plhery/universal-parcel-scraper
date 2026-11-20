@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Suivi de colis Navex</title>
+    </head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="/images/negative.png" alt="NAVEX">
+            <h1>Suivi de colis</h1>
+            <p>Saisissez votre numéro de suivi pour consulter l'état de votre colis</p>
+        </div>
+
+        <div class="search">
+            <form method="get" action="">
+                <input type="text" name="track" placeholder="Numéro de suivi (ex: 173890871951)" value="173890879999" required autofocus>
+                <button type="submit"><i class="fa fa-search"></i> Suivre</button>
+            </form>
+        </div>
+
+        <div class="body">
+                            <div class="alert error"><i class="fa fa-exclamation-circle"></i> Aucun colis trouvé pour ce numéro de suivi.</div>
+                    </div>
+
+        <div class="footer">
+            &copy; 2026 NAVEX — Suivi de colis
+        </div>
+    </div>
+</body>
+</html>

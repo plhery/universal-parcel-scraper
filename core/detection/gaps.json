@@ -2550,6 +2550,12 @@
     "reason": "Fourteen bare digits are shared with DPD and many other carriers."
   },
   {
+    "carrier": "navex",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Twelve bare digits are shared with many carriers, and a single public Navex number shows the layout."
+  },
+  {
     "carrier": "noest",
     "pattern": "^[A-Z]{3}[A-Z0-9]{3}\\d{8}$",
     "kind": "by_design",
