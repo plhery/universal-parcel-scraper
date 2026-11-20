@@ -251,7 +251,8 @@ step exists for future protocol changes.
   which DHLink dates on China's clock, and
   the New Jersey warehouse's those of SwiftX's own tracker. The ORD hub, at Chicago O'Hare,
   is on Central time, where KTD's copies under the hub's town and state put the same
-  digits. A delivery names the recipient's
+  digits. The DFW hub and warehouses, in the Dallas and Fort Worth area and Austin, are on
+  Central time too. A delivery names the recipient's
   town and no site; SwiftX's tracker gives it the offset of the warehouse that sent it out,
   so it takes the newest listed site's zone before it. Other sites keep SwiftX's catalog
   zone, Pacific, in step 1. Its labels ("Shipping Label

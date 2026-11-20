@@ -633,7 +633,9 @@ function speedafZone(payload: Record<string, unknown>, date: unknown, destinatio
  * DHLink's copies of the same scans, which DHLink dates on China's clock, and
  * its New Jersey warehouse's those SwiftX's own tracker gives. Its ORD hub,
  * at Chicago O'Hare, is on Central time: KTD files its scans at the same
- * digits under the hub's town and state. A delivery or
+ * digits under the hub's town and state. Its DFW hub and warehouses, under
+ * towns around Dallas and Fort Worth and in Austin, send out deliveries in
+ * Texas, all on Central time. A delivery or
  * failed delivery names the recipient's town and no site ("US, EXAMPLE TOWN"):
  * SwiftX's tracker gives it the offset of the warehouse that sent the parcel
  * out, so it takes the zone of the newest listed site scanned before it.
@@ -643,6 +645,7 @@ function speedafZone(payload: Record<string, unknown>, date: unknown, destinatio
  */
 const SWIFTX_SITES: ReadonlyMap<string, string> = new Map([
   ['EWR HUB', 'America/New_York'], ['EWR_NJ WAREHOUSE', 'America/New_York'], ['ORD HUB', 'America/Chicago'],
+  ['DFW HUB', 'America/Chicago'], ['DFW_DC WAREHOUSE', 'America/Chicago'], ['DFW_AUS WAREHOUSE', 'America/Chicago'],
 ]);
 const SWIFTX_LABEL = /^shipping label created$/i;
 const SWIFTX_LABEL_CLOCK = 'UTC-7';

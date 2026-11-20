@@ -2725,6 +2725,15 @@ describe('ParcelsApp result parsing', () => {
       ['2026-10-23T10:39:42.000Z', 'Out for Delivery'], ['2026-10-23T06:45:41.000Z', 'Arrived At Warehouse'],
       ['2026-10-23T06:44:16.000Z', 'Departed Destination Hub'], ['2026-10-19T17:22:17.000Z', 'Shipping Label Created'],
     ]);
+    // The DFW hub and its warehouses in Texas, and the deliveries they send out, are on Central time.
+    expect(times([
+      { date: '2026-11-12T15:20:11Z', status: 'Delivered', carrier: 0, location: 'US, Example Village' },
+      { date: '2026-11-12T08:02:45Z', status: 'Out for Delivery', carrier: 0, location: 'US, EXAMPLE TOWN, DFW_AUS Warehouse' },
+      { date: '2026-11-11T21:30:05Z', status: 'Arrived At Warehouse', carrier: 0, location: 'US, EXAMPLE TOWN, DFW_DC Warehouse' },
+      { date: '2026-11-11T09:14:40Z', status: 'Departed Destination Hub', carrier: 0, location: 'US, EXAMPLE TOWN, DFW HUB' },
+    ])?.map(([time]) => time)).toEqual([
+      '2026-11-12T21:20:11.000Z', '2026-11-12T14:02:45.000Z', '2026-11-12T03:30:05.000Z', '2026-11-11T15:14:40.000Z',
+    ]);
     // A delivery with no listed site before it keeps SwiftX's Pacific time.
     expect(times([
       { date: '2026-10-23T11:12:29Z', status: 'Delivered', carrier: 0, location: 'US, Example Village' },
