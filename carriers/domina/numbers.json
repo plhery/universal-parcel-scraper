@@ -1,5 +1,72 @@
 {
   "carrier": "domina",
-  "gap": "No public page shows a Domina number.",
-  "records": []
+  "records": [
+    {
+      "number": "87024626367",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portalhistorico.ramajudicial.gov.co/documents/2398216/32912601/2020-107%2B%2Bsentencia.pdf/e7608d22-c776-4ba9-a8c4-68cf6d28d5cb",
+        "date": "2020-03-17",
+        "dateKind": "judgment date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Domina domestic document delivery in Colombia",
+        "reportedRole": "physical delivery guide number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dpd-ro",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "The Bogotá court names Domina and cites this exact delivery guide as evidence of three attempted deliveries. The carrier's public tracking form returned HTTP 403. Lookup blocked by verification."
+    },
+    {
+      "number": "26665800642",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portalhistorico.ramajudicial.gov.co/documents/36159027/128271754/Prov%2Bestado%2B202%2Bdel%2B16%2Bde%2Bnoviembre%2Bde%2B2022.pdf/519879ab-f1b3-4748-ae8c-516c850ce51e",
+        "date": "2014-04-10",
+        "dateKind": "shipment date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Domina domestic document delivery in Colombia",
+        "reportedRole": "physical delivery guide number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "In the court record the sender names Domina and gives this exact guide for a mailed notice. The carrier's public tracking form returned HTTP 403. Lookup blocked by verification."
+    }
+  ]
 }
