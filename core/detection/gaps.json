@@ -5006,5 +5006,11 @@
     "pattern": "^[0-9]{10}$",
     "kind": "open",
     "reason": "Chinese judgments name 京廣速遞 on these ten-digit waybills, and its carrier tracker recognized two. Detection does not offer King Kong Express."
+  },
+  {
+    "carrier": "jas-worldwide",
+    "pattern": "^(?:S[0-9]{9}|(?:SHA|ANR)[0-9]{8,9})$",
+    "kind": "open",
+    "reason": "MyJAS recognizes these Blue World Line house bills and displays native JAS shipment IDs. Detection does not offer JAS Worldwide."
   }
 ]
