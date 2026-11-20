@@ -47,7 +47,7 @@ collection points such as newsagencies. Tracked through the lookup its tracking 
 - A row's whole wording stages it when the help centre lists it, otherwise its kind, kept as
   `provider_code`. A failed delivery's kind also covers parcels held for a problem or refused,
   so the wording comes first. A new delivery date and the receiver's delivery instructions move
-  nothing.
+  nothing, whether or not the notice names the new day.
 - The estimate is the details' `Delivery ETA` until the parcel is delivered or returned. While
   the sender's details are the only row, the page shows it as still to be confirmed, so there
   is none.

@@ -320,4 +320,13 @@ describe('CouriersPlease status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     expect(statusMapAnswer({ carrier: 'couriersplease', providerCode: 'status', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
   });
+
+  it('reads a notice that names its new day as the notice, and keeps the next-day reschedule a failed attempt', () => {
+    for (const wording of ['Delivery instructions – Rescheduled for 3 Dec 2026', 'Delivery instructions - Rescheduled for 03 December 2026.', 'Delivery rescheduled for 3 Dec 2026']) {
+      expect(couriersPleaseStage('status', wording), wording).toBeNull();
+      expect(statusMap.stage('status', wording.toLowerCase()), wording).toBeUndefined();
+      expect(statusMapAnswer({ carrier: 'couriersplease', providerCode: 'status', description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
+    }
+    expect(couriersPleaseStage('offboard-depot', 'Delivery rescheduled for next business day')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+  });
 });

@@ -79,7 +79,11 @@ const NOTICES = [
   ['Delivery instructions – Authority to Leave (ATL)', 'An instruction for the delivery still to come; it moves nothing.'],
   ['Delivery instructions – New delivery address', 'An instruction for the delivery still to come; it moves nothing.'],
 ] as const;
-const NOTES: ReadonlySet<string> = new Set(NOTICES.map(([wording]) => key(wording)));
+const NOTES: ReadonlyMap<string, string> = new Map(NOTICES.map(([wording, note]) => [key(wording), note]));
+
+/** A notice can name the new day: "Delivery instructions – Rescheduled for 19 Nov 2026". */
+const NEW_DAY = /\s+for\s+\d{1,2}\s+[a-z]{3,9}\.?\s+\d{4}$/i;
+const noticeKey = (wording: string): string => key(wording).replace(NEW_DAY, '');
 
 /** The stage CouriersPlease's vocabulary gives a row's wording, else its kind. */
 export function couriersPleaseMappedStage(code: string | null, wording: string): Stage | undefined {
@@ -88,7 +92,7 @@ export function couriersPleaseMappedStage(code: string | null, wording: string):
 
 /** A scan's stage: its wording or kind, else the shared wording rules, else nothing. */
 export function couriersPleaseStage(code: string, wording: string): ClassifiedWording | null {
-  if (NOTES.has(key(wording))) return null;
+  if (NOTES.has(noticeKey(wording))) return null;
   const mapped = couriersPleaseMappedStage(code || null, wording);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
@@ -96,6 +100,8 @@ export function couriersPleaseStage(code: string, wording: string): ClassifiedWo
 }
 
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (NOTES.has(key(wording)) ? undefined : couriersPleaseMappedStage(code, wording)),
+  stage: (code, wording) => (NOTES.has(noticeKey(wording)) ? undefined : couriersPleaseMappedStage(code, wording)),
   gaps: NOTICES.map(([wording, note]) => ({ wording: normalizeStatusWording(wording), note })),
+  // A notice that names its new day is the notice.
+  gapNote: (_code, wording) => NOTES.get(noticeKey(wording)),
 };
