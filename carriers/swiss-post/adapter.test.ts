@@ -218,8 +218,11 @@ describe('Swiss Post event codes', () => {
     expect(parseSwissPostShipment(letter, history.slice(1)))
       .toMatchObject({ last_update: '2026-10-26T18:12:57+08:00', current_stage: 'registered' });
     // A notice hours ahead of the hub's deposit.
-    expect(parseSwissPostShipment(letter, [scan('912', '2026-10-30T10:56:57+01:00'), scan('859', '2026-10-30T19:16:41+01:00')])
-      .events?.map((event) => event.time)).toEqual(['2026-10-30T19:16:41+08:00', '2026-10-30T10:56:57+01:00']);
+    const late = parseSwissPostShipment(letter, [scan('912', '2026-10-30T10:56:57+01:00'), scan('859', '2026-10-30T19:16:41+01:00')]);
+    expect(late.events?.map((event) => event.time)).toEqual(['2026-10-30T19:16:41+08:00', '2026-10-30T10:56:57+01:00']);
+    // Read so, it reached Swiss Post after the posting it announces: a notice on the posting's stage, which stays the parcel's.
+    expect(late.events?.[0]).toMatchObject({ stage: 'accepted', stage_source: 'none' });
+    expect(late).toMatchObject({ current_stage: 'accepted' });
     // Senders in Switzerland give their notice under another code, on Swiss Post's clock, as parcels do.
     expect(parseSwissPostShipment(letter, [scan('600', '2026-10-23T17:42:40+02:00')]).events?.[0]?.time)
       .toBe('2026-10-23T17:42:40+02:00');

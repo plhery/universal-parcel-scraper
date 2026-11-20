@@ -339,6 +339,13 @@ export function parseSwissPostShipment(item: JsonObject, rawEvents: unknown[] = 
   // The whole history is ordered before it is capped, so the newest scans are the ones kept.
   if (listsNewestFirst(events) === false) events.reverse();
   events.sort((left, right) => timestamp(right.time ?? '') - timestamp(left.time ?? ''));
+  // The sender's electronic notice that the item will shortly be handed over (859) can reach Swiss Post after the
+  // posting it announces: it moves nothing, so it keeps the stage of the scan before it.
+  events.forEach((event, index) => {
+    if (!event.provider_code?.endsWith(`.${PRE_ADVICE}`) && event.provider_code !== PRE_ADVICE) return;
+    const before = events.slice(index + 1).find((older) => older.stage)?.stage;
+    if (before && before !== 'registered') Object.assign(event, { stage: before, stage_source: 'none' });
+  });
   const truncated = rawEvents.length > MAX_EVENTS_TO_INSPECT || events.length > MAX_EVENTS_TO_RETURN;
   // The newest scan's own stage leads; the shipment summary fills in when that
   // scan has none (an enquiry note, an unmapped code, or no scans at all).

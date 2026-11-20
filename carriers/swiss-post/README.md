@@ -123,8 +123,10 @@ is revoked.
   Chinese consolidator posting letters in Switzerland through its European hub,
   on its system's Beijing wall clock under Swiss Post's offset: one came at
   `18:12+01:00` in a reply given at 13:58 Swiss time. It is read on Beijing's
-  clock whoever the reply names as sender. Senders in Switzerland, for letters
-  and parcels alike, give their pre-advice as `600`, which keeps Swiss Post's offset.
+  clock whoever the reply names as sender. Read so, it can follow the posting it
+  announces; it then moves nothing and keeps the stage of the scan before it.
+  Senders in Switzerland, for letters and parcels alike, give their pre-advice as
+  `600`, which keeps Swiss Post's offset.
 - Wording is only trimmed, not whitespace-collapsed, so `core/transport`'s
   `clean()` is not used.
 - A scan's location is the facility's name and postcode ("Härkingen
