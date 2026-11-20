@@ -101195,6 +101195,17 @@
     ]
   },
   {
+    "input": "NF202612583",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "NG013313285E",
     "carrier": "speedaf",
     "confidence": "high",

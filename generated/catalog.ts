@@ -7914,6 +7914,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "alfa-mensajes": {
+    "displayName": "Alfa Mensajes",
+    "color": "#1969ac",
+    "aliases": [
+      "Alfa Mensajes SAS",
+      "Alfamensajes",
+      "Alfa Mensajes S.A.S."
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "alfa-mensajes"
+    },
+    "canaryUrl": "https://alfamensajes.com/",
+    "trackingUrlTemplate": "https://alfamensajes.com/consulta/{trackingNumber}",
+    "trackingSearchUrl": "https://alfamensajes.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "alfa-transportes": {
     "displayName": "Alfa Transportes",
     "color": "#df2140",
@@ -66376,6 +66399,7 @@ export const CARRIER_IDS = [
   "albatomi",
   "alem-tat",
   "alfa-delivery-kz",
+  "alfa-mensajes",
   "alfa-transportes",
   "alfta-frakt",
   "algerie-poste",
@@ -68276,6 +68300,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "albatomi": [],
   "alem-tat": [],
   "alfa-delivery-kz": [],
+  "alfa-mensajes": [],
   "alfa-transportes": [],
   "alfta-frakt": [],
   "algerie-poste": ["algerie-poste-1","algerie-poste-s10","algerie-poste-ey"],

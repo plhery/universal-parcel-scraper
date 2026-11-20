@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "data": {
+    "guia": "NF202612583",
+    "tipoEnvio": "Fisico",
+    "estado": "entregado",
+    "historial": [
+      {
+        "tipoEvento": "log",
+        "estado": "",
+        "fechaUtc": "2026-10-09T17:05:08.386Z"
+      },
+      {
+        "tipoEvento": "estado",
+        "estado": "revision",
+        "fechaUtc": "2026-10-09T17:05:08.386Z"
+      },
+      {
+        "tipoEvento": "log",
+        "estado": "",
+        "fechaUtc": "2026-10-09T17:05:08.599Z"
+      },
+      {
+        "tipoEvento": "estado",
+        "estado": "casillero",
+        "fechaUtc": "2026-10-13T15:25:55.372Z"
+      },
+      {
+        "tipoEvento": "log",
+        "estado": "",
+        "fechaUtc": "2026-10-13T15:25:55.372Z"
+      },
+      {
+        "tipoEvento": "log",
+        "estado": "",
+        "fechaUtc": "2026-10-13T15:25:55.455Z"
+      },
+      {
+        "tipoEvento": "asignacion",
+        "estado": "Asignado",
+        "fechaUtc": "2026-10-13T21:49:36.741Z"
+      },
+      {
+        "tipoEvento": "hito",
+        "estado": "",
+        "fechaUtc": "2026-10-14T05:00:00Z"
+      },
+      {
+        "tipoEvento": "estado",
+        "estado": "entregado",
+        "fechaUtc": "2026-10-21T18:42:09.328Z"
+      },
+      {
+        "tipoEvento": "log",
+        "estado": "",
+        "fechaUtc": "2026-10-21T18:42:09.335Z"
+      }
+    ]
+  },
+  "message": null,
+  "layer": "",
+  "statusCode": 200
+}

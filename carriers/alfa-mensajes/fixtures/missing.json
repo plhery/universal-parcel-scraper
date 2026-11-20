@@ -1,0 +1,7 @@
+{
+  "success": false,
+  "data": null,
+  "message": "Notificación no encontrada por GuiaId",
+  "layer": "NotificacionQueryService",
+  "statusCode": 404
+}

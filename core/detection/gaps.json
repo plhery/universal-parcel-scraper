@@ -5679,5 +5679,10 @@
     "carrier": "calidex-courier",
     "kind": "open",
     "reason": "The two published Calidex guides use location prefixes in a shared format. The guest lookup confirms the complete guide on explicit selection."
+  },
+  {
+    "carrier": "alfa-mensajes",
+    "kind": "open",
+    "reason": "The public tracker confirms a physical NF guide. The scope of a future prefix rule needs more examples."
   }
 ]
