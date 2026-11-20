@@ -1,5 +1,71 @@
 {
   "carrier": "navata",
-  "gap": "Its waybill shape fits many carriers, and no public page shows a real waybill.",
-  "records": []
+  "records": [
+    {
+      "number": "W030361",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.consumercomplaints.in/navata-road-transport-b104248",
+        "date": "2026-01-13",
+        "dateKind": "reported receipt date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "India domestic road freight",
+        "reportedRole": "LR/Consignment No.",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A customer reports receiving freight under the exact Navata lorry receipt. The carrier needs the booking date, while the report supplies the receipt date."
+    },
+    {
+      "number": "P050549",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.consumercomplaints.in/navata-road-transport-b104248",
+        "date": "2021-08-06",
+        "dateKind": "shipment booking date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "India domestic road freight",
+        "reportedRole": "LR no.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "flecha-amarilla"
+        ]
+      },
+      "note": "The sender publishes the exact Navata lorry receipt and its booking date. The public carrier tracker returned the matching waybill and shipment status."
+    },
+    {
+      "number": "Y030158",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.consumercomplaints.in/navata-road-transport-goods-missing-not-delivered-to-our-customer-more-than-1-month-c2694377",
+        "date": "2020-07-20",
+        "dateKind": "shipment booking date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "India domestic road freight",
+        "reportedRole": "docket number (LR)",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The consignor names the Navata docket and publishes its booking date. The carrier’s public tracker returned the matching waybill and shipment status."
+    }
+  ]
 }
