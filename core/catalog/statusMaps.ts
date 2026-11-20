@@ -1,3 +1,4 @@
+import { statusMap as flechacarga } from '../../carriers/flechacarga/status.js';
 /**
  * The carriers' status maps, asked about one scan at a time.
  *
@@ -866,6 +867,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'laser-logistics': laserLogistics,
   'puntopost': puntopost,
   'south-post': southPost,
+  flechacarga,
   'flecha-amarilla': flechaAmarilla,
   'yandex-delivery': yandexDelivery,
   'amazon-order': amazonOrder,

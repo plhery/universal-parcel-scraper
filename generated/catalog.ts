@@ -25617,7 +25617,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "flechacarga",
+      "localClocks": true
     },
     "canaryUrl": "https://www.flechacarga.com/segui-tu-envio/",
     "trackingSearchUrl": "https://www.flechacarga.com/segui-tu-envio/",

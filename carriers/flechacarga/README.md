@@ -1,25 +1,22 @@
 # FlechaCarga
 
-FlechaCarga parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads retained legacy Buspack receipt history through the public form's service.
+It obtains the shared guest token from the carrier-published tracking script, then requests the
+whole receipt. No account, recipient credentials or document lookup is used.
 
-FlechaCarga carries parcels and freight for Grupo Flecha, the Flecha Bus company. It took over
-Buspack, whose site now leads to it.
+The official form keeps the four-digit branch and converts the receipt serial to a number.
+The response must name Buspack or FlechaCarga, repeat that complete receipt in its result heading, and contain its own dated
+history table. Only the exact number-bound missing-operation reply means not found; other errors,
+changed milestones and ambiguous identities leave fallback available. Arrival at the destination
+agency does not by itself assert pickup readiness.
 
-## Numbers
+Scan clocks retain their local minutes without an offset. The SDK can infer a summary zone from
+the catalog; no delivery instant is asserted. Contacts, cargo descriptions, payment details and
+internal operation metadata are omitted. Modern FLC guides and delivery-number-only searches
+remain outside this adapter's verified scope.
 
-Its tracker takes a receipt number, written as a letter, a four-digit branch and a serial, or a
-delivery number. No public page shows a FlechaCarga number, so there is no rule.
+The form's receipt link takes separate letter, branch and serial parameters, so the catalog opens
+its search page without splitting a number into a generated link. No detection rule is added.
 
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Links
-
-The tracker reads a receipt number split into three address parameters, so there is no tracking link
-for one number.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run live tests with `FLECHACARGA_NUMBER` outside Git and
+`npm run test:carriers:live -- carriers/flechacarga/adapter.live.test.ts`.

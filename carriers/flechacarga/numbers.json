@@ -14,13 +14,13 @@
       "context": {
         "service": "Buspack domestic parcels, now FlechaCarga",
         "reportedRole": "shipment tracking guide number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "The judgment quotes Buspack’s customer service giving this exact spaced number for tracking the shipment. The current tracking form uses a token-backed service, so no live lookup was submitted."
+      "note": "The court quotes Buspack customer service identifying this receipt. The current carrier-published guest route returns the whole receipt and retained dated history. This confirms the legacy Buspack flow, not the modern FLC guide route."
     }
   ]
 }

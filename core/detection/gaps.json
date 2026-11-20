@@ -1368,6 +1368,12 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to First Fly Express."
   },
   {
+    "carrier": "flechacarga",
+    "pattern": "^[A-Z]\\d{5,20}$",
+    "kind": "by_design",
+    "reason": "Legacy receipt references share their letter-and-digits shape with other issuers. A selected lookup binds the native complete receipt; no automatic number rule is added."
+  },
+  {
     "carrier": "fleetex",
     "pattern": "^SR\\d{12}$",
     "kind": "by_design",

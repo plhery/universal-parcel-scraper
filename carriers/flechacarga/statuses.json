@@ -1,4 +1,23 @@
 {
   "carrier": "flechacarga",
-  "entries": []
+  "entries": [
+    {
+      "wording": "En camino",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "En Agencia Destino",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entregado",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "live"
+    }
+  ]
 }

@@ -1,0 +1,12 @@
+{
+  "estado": 1,
+  "mensaje": "",
+  "template": {
+    "estado": 1,
+    "mensaje": "",
+    "template": "<!doctype html><html><head><title>Buspack - Synthetic receipt history</title></head><body><div>Nro. de comprobante: R-0001-1</div><div>Sender: SYNTHETIC PERSON; account SYNTHETIC ACCOUNT; contents SYNTHETIC CARGO</div><table><tr><th>Fecha</th><th>Estado</th></tr><tr><td>28/10/2020 10:15</td><td>En camino</td></tr><tr><td>11/11/2020 11:22</td><td>En Agencia Destino</td></tr><tr><td>11/11/2020 11:26</td><td>Entregado</td></tr></table></body></html>",
+    "contenttemplate": "SYNTHETIC UNUSED COPY",
+    "nrotarea": 999999999,
+    "titulo": "Buspack - Synthetic receipt history"
+  }
+}

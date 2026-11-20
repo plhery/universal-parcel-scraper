@@ -17,17 +17,37 @@
   "timezone": "America/Argentina/Buenos_Aires",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "flechacarga",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "searchUrl": "https://www.flechacarga.com/segui-tu-envio/",
     "canaryUrl": "https://www.flechacarga.com/segui-tu-envio/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "Legacy receipt reference",
+      "Receipt milestones",
+      "Local scan clocks"
+    ],
+    "scraped": [
+      "Legacy receipt reference",
+      "Receipt milestones",
+      "Local scan clocks"
+    ],
+    "discarded": [
+      "Sender and recipient details",
+      "Cargo descriptions",
+      "Collection and payment amounts",
+      "Internal operation metadata"
+    ],
+    "unavailable": [
+      "Expected delivery"
+    ]
   },
   "links": [],
   "detection": []

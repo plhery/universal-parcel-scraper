@@ -273,6 +273,7 @@ import { adapter as flashExpress } from '../carriers/flash-express/adapter.js';
 import { adapter as flashExpressPh } from '../carriers/flash-express-ph/adapter.js';
 import { adapter as flashbirdCa } from '../carriers/flashbird-ca/adapter.js';
 import { adapter as flechaAmarilla } from '../carriers/flecha-amarilla/adapter.js';
+import { adapter as flechacarga } from '../carriers/flechacarga/adapter.js';
 import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
 import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
 import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
@@ -1121,6 +1122,7 @@ export const REGISTRY: RegistryDefinition = {
     "flash-express-ph": flashExpressPh,
     "flashbird-ca": flashbirdCa,
     "flecha-amarilla": flechaAmarilla,
+    "flechacarga": flechacarga,
     "fleetex": fleetex,
     "fleetoptics": fleetoptics,
     "flickpost": flickpost,
@@ -2312,7 +2314,7 @@ export const REGISTRY: RegistryDefinition = {
     "flash-express-ph": "flash-express-ph",
     "flashbird-ca": "flashbird-ca",
     "flecha-amarilla": "flecha-amarilla",
-    "flechacarga": "universal",
+    "flechacarga": "flechacarga",
     "fleetex": "fleetex",
     "fleetoptics": "fleetoptics",
     "flickpost": "flickpost",

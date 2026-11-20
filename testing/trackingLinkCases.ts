@@ -2347,6 +2347,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  flechacarga: 'The receipt link needs separate letter, branch and serial parameters; the catalog opens the public search form without a single-reference link.',
   tramaco: 'The page sends guia to its lookup, then clears the input. An unknown guide leaves no visible number or specific missing notice, so the DOM-only daily check cannot verify forwarding.',
   'best-express-th': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
   'best-express-vn': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
