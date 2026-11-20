@@ -1,5 +1,40 @@
 {
   "carrier": "cupost",
-  "gap": "No public page shows a CUpost invoice number.",
-  "records": []
+  "records": [
+    {
+      "number": "364776877291",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240620130210/https://www.cupost.co.kr/postbox/delivery/allResult.cupost?invoice_no=364776877291",
+        "date": "2024-06-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "CUpost domestic home delivery",
+        "reportedRole": "waybill number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "An archived CUpost result shows the whole waybill in transit with dated collection and terminal receipt scans."
+    }
+  ]
 }

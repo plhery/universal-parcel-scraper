@@ -782,6 +782,12 @@
     "reason": "CSE numbers written in three hyphenated groups become fifteen or sixteen digits after normalization, a shape many carriers share."
   },
   {
+    "carrier": "cupost",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Detection does not offer CUpost for the twelve-digit waybill returned by its domestic tracking page."
+  },
+  {
     "carrier": "custom-companies",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
