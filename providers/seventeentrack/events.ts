@@ -4,7 +4,7 @@ import { EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import type { Stage } from '../../generated/catalog.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { event, isMessageRow, place, text } from '../shared/result.js';
-import { SUB_STAGES, subStatusStage } from './status.js';
+import { roundCodeOnLineHaul, SUB_STAGES, subStatusStage } from './status.js';
 import { chineseFinalStage } from '../../core/status/language.js';
 import { chinaPostRelayedStage } from '../../carriers/china-post/status.js';
 
@@ -58,6 +58,8 @@ export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, place
   const coded = chinese || isMessageRow(parsed.description ?? '') ? undefined : subStatusStage(code, parsed.stage as Stage, parsed.description);
   // A stage the code gives comes from 17TRACK's map, even where its stage name was not one the wording rules read.
   if (coded) Object.assign(parsed, { stage: coded, stage_source: 'carrier_map' });
+  // Its wording, not the delivery round's code, stages a leg between offices.
+  if (roundCodeOnLineHaul(code, parsed.description)) Object.assign(parsed, { stage: 'in_transit', stage_source: 'wording:language' });
   // 17TRACK's generic transit bucket loses Swiss Post's delivery-round scan, and
   // its "Registered", the sender's data before Swiss Post has the item, as its
   // own REGISTERED status reads. Refine only that operator's precise native

@@ -108,6 +108,15 @@ describe('17TRACK result parsing', () => {
       .toMatchObject({ stage: 'out_for_delivery' });
   });
 
+  it("reads Poczta Polska's legs between offices filed under the delivery round's code by their wording", () => {
+    for (const description of ['In transport', 'Arrival at inward office of exchange (Poland)']) {
+      expect(parse17TrackResponse(postalHistory([postalScan('OutForDelivery_Other', description)]), number).events?.[0], description)
+        .toMatchObject({ description, stage: 'in_transit' });
+    }
+    expect(parse17TrackResponse(postalHistory([postalScan('OutForDelivery_Other', 'In transport to the addressee')]), number).events?.[0])
+      .toMatchObject({ stage: 'out_for_delivery' });
+  });
+
   it("reads Deppon's handing to the courier who delivers today, filed under generic transit, as out for delivery", () => {
     const description = '快件交给示例（电话:***********），今日将为您派送，可联系快递员将包裹放置指定地点';
     expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other', description)]), number)).toMatchObject({

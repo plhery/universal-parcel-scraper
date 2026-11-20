@@ -26,6 +26,14 @@ const PARTNER_SCANNED = /^(?:(?:arrived|departed) shipping partner facility|pick
 // A customs step, which 17TRACK can file under the delivery round, as China Post's "Import allowed by destination
 // customs" a minute after the round started.
 const CUSTOMS = /\bcustoms\b|海关/i;
+// A leg between offices, which 17TRACK can file under the delivery round, as Poczta Polska's "In transport" and its
+// "Arrival at inward office of exchange" on a parcel's way back to the sender.
+const LINE_HAUL = /^in transport\.?$|\boffice of exchange\b/i;
+
+/** Whether a scan filed under the delivery round's code is worded as a leg between offices. */
+export function roundCodeOnLineHaul(code: string, description = ''): boolean {
+  return SUB_STAGES[code] === 'out_for_delivery' && LINE_HAUL.test(description.trim());
+}
 
 /**
  * The stage a scan's `sub_status` gives it over the stage its wording got
