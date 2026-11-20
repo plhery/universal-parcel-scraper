@@ -326,13 +326,15 @@ describe('Metropolitan Warehouse twelve-digit numbers', () => {
     for (const number of TWELVE) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low',
         candidates: expect.arrayContaining(['metropolitan-warehouse']) });
-      expect(recognitionCandidates(number).map(({ carrier }) => carrier), number).toContain('metropolitan-warehouse');
+      expect(recognitionCandidates(number, { countryHint: 'US' }).map(({ carrier }) => carrier), number).toContain('metropolitan-warehouse');
+      // Elsewhere twelve digits are other carriers'.
+      expect(recognitionCandidates(number).map(({ carrier }) => carrier), number).not.toContain('metropolitan-warehouse');
       // The check is HTTP; the browser phase does not ask it.
       expect(recognitionCandidates(number, { phase: 'browser' }).map(({ carrier }) => carrier), number).not.toContain('metropolitan-warehouse');
     }
-    // A US caller asks Metropolitan first; without a hint the commoner twelve-digit carriers come before it.
+    // A US caller asks Metropolitan first; a lookup elsewhere does not ask it.
     expect(recognitionCandidates('599999999980', { countryHint: 'US' })[0]).toMatchObject({ carrier: 'metropolitan-warehouse', countryMatch: 'home' });
-    expect(recognitionCandidates('599999999980').map(({ carrier }) => carrier).at(-1)).toBe('metropolitan-warehouse');
+    expect(recognitionCandidates('599999999980', { countryHint: 'ES' }).map(({ carrier }) => carrier)).not.toContain('metropolitan-warehouse');
   });
 
   it('leaves Metropolitan out for other lengths and for letters', () => {

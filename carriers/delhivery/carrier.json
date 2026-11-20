@@ -20,7 +20,8 @@
     ],
     "localClocks": true,
     "recognition": {
-      "rank": 600
+      "rank": 600,
+      "servedCountriesOnly": true
     }
   },
   "capabilities": [

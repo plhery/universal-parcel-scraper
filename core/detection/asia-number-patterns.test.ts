@@ -34,7 +34,9 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
   ])('keeps %s ambiguous while allowing its direct HTTP confirmation', (number, carrier) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch(number).candidates).toContain(carrier);
-    expect(recognitionCandidates(number).map(candidate => candidate.carrier)).toContain(carrier);
+    // Delhivery is asked about a shared run of digits only for a lookup in India.
+    const countryHint = carrier === 'delhivery' ? 'IN' : undefined;
+    expect(recognitionCandidates(number, { countryHint }).map(candidate => candidate.carrier)).toContain(carrier);
   });
 
   it('anchors the two LP reference families independently of postal suffixes', () => {
@@ -50,7 +52,8 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(recognitionAskedCarriers('LP00000000000001')).toContain('aliexpress');
     expect(recognitionAskedCarriers('LP99999999999999980')).toContain('aliexpress');
     expect(recognitionAskedCarriers('LP0000000000001CN')).toContain('four-px');
-    expect(recognitionAskedCarriers('2820000000001')).toContain('delhivery');
+    expect(recognitionAskedCarriers('2820000000001', { countryHint: 'IN' })).toContain('delhivery');
+    expect(recognitionAskedCarriers('2820000000001')).not.toContain('delhivery');
   });
 
   it('asks 4PX first for its twelve-digit waybills of 311 and no other twelve digits', () => {

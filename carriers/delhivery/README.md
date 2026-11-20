@@ -15,7 +15,8 @@ A thirteen- or fourteen-digit waybill is an account's series followed by a count
 check digit from 0 to 6, and no series starts with 0. Detection offers Delhivery only for
 those, so a DPD parcel number starting with 0 or a number ending in 7, 8 or 9 is not asked
 about. Delhivery does not document the check, and some series compute it differently, so
-detection bounds only the last digit.
+detection bounds only the last digit. DPD's fourteen digits and FAN Courier's thirteen still
+fit, so recognition asks Delhivery only for a lookup in India (`servedCountriesOnly`).
 
 ## Notes
 

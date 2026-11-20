@@ -4274,6 +4274,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "delhivery",
       "recognitionRank": 600,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.delhivery.com/tracking",
@@ -41285,6 +41286,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "metropolitan-warehouse",
       "recognitionRank": 8,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://main.gomwd.com/client/wixtrackorder",

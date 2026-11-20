@@ -48,8 +48,9 @@ through the requests the tracker on gomwd.com makes.
 
 The tracker's script takes twelve digits and refuses anything else before it asks. Many
 carriers share twelve digits, so `metropolitan-warehouse-1` suggests Metropolitan at low
-confidence among them and recognition asks the tracker whether it holds the order. A US
-caller asks it first; otherwise the commoner twelve-digit carriers are asked before it.
+confidence among them. Recognition asks the tracker whether it holds the order only for a
+lookup in the United States (`servedCountriesOnly`): elsewhere twelve digits are FedEx's,
+Vinted Go's or another carrier's, and the tracker holds none of them.
 
 ## Testing
 

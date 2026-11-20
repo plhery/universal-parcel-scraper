@@ -4270,6 +4270,7 @@
       "mode": "automatic",
       "adapter": "delhivery",
       "recognitionRank": 600,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.delhivery.com/tracking",
@@ -41281,6 +41282,7 @@
       "mode": "automatic",
       "adapter": "metropolitan-warehouse",
       "recognitionRank": 8,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://main.gomwd.com/client/wixtrackorder",
