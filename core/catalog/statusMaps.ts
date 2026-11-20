@@ -1,3 +1,4 @@
+import { statusMap as jyldamLogistics } from '../../carriers/jyldam-logistics/status.js';
 import { statusMap as alhosaryShipping } from '../../carriers/alhosary-shipping/status.js';
 import { statusMap as astralAviation } from '../../carriers/astral-aviation/status.js';
 import { statusMap as paqmex } from '../../carriers/paqmex/status.js';
@@ -912,6 +913,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'jyldam-logistics': jyldamLogistics,
   'alhosary-shipping': alhosaryShipping,
   'fletes-del-sur': fletesDelSur,
   parcelninja,

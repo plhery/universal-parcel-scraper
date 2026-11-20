@@ -5582,5 +5582,10 @@
     "kind": "open",
     "carrier": "alhosary-shipping",
     "reason": "The two public AHS examples return freight histories. The carrier remains selectable while issued format and overlaps are unconfirmed."
+  },
+  {
+    "kind": "open",
+    "carrier": "jyldam-logistics",
+    "reason": "The native tracker confirms one full JL reference. Explicit selection is available while issued formats and overlaps remain open."
   }
 ]

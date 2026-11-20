@@ -34839,6 +34839,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "jyldam-logistics": {
+    "displayName": "Jyldam Logistics",
+    "color": "#118449",
+    "aliases": [
+      "JYLDAM",
+      "Жылдам Логистик"
+    ],
+    "countries": [
+      "KZ"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Almaty",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jyldam-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://jyldam-logistics.kz/site/",
+    "trackingUrlTemplate": "https://jyldam-logistics.kz/site/",
+    "trackingSearchUrl": "https://jyldam-logistics.kz/site/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kaizen-express": {
     "displayName": "Kaizen Express",
     "color": "#24242b",
@@ -66603,6 +66626,7 @@ export const CARRIER_IDS = [
   "junfeng-international",
   "juxi-express",
   "jy-express",
+  "jyldam-logistics",
   "kaizen-express",
   "kakao-t-same-day",
   "kanga-services",
@@ -68482,6 +68506,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "junfeng-international": [],
   "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
+  "jyldam-logistics": [],
   "kaizen-express": [],
   "kakao-t-same-day": [],
   "kanga-services": [],

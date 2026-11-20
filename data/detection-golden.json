@@ -95523,6 +95523,23 @@
     "candidates": []
   },
   {
+    "input": "JL-2026-27",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
+      "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
+    ]
+  },
+  {
     "input": "JL056759260IN",
     "carrier": "india-post",
     "confidence": "high",
