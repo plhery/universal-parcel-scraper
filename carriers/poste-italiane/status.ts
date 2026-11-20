@@ -95,8 +95,6 @@ export function classifyPosteItalianeStatus(rawWording: unknown): ClassifiedStat
     case 'in data':
     // Registered mail's international processing centre, on its own line.
     case 'presso il centro di lavorazione internazionale':
-    // A change to the delivery instructions: the parcel carries on.
-    case 'cambio disposizioni di consegna':
       return { status: 'in_transit', stage: 'in_transit' };
     case 'sono in corso delle verifiche sulla spedizione. contatta assistenza':
       return { status: 'exception', stage: 'failed_attempt' };
@@ -121,8 +119,17 @@ export function posteItalianeUncollected(wording: string, waited: boolean): Clas
     : undefined;
 }
 
+// A change to the delivery instructions: a notice, before or during a round, after a failed one or before any.
+const KEEPERS = new Map([['cambio disposizioni di consegna',
+  'A change to the delivery instructions. It moves nothing: the scan keeps the stage of the one before it.']]);
+
+/** Whether a scan is a notice that keeps the stage the parcel had. */
+export function keepsPosteItalianeStage(wording: unknown): boolean {
+  return KEEPERS.has(normalizePosteItalianeWording(wording));
+}
+
 /** What the map says about one scan: DoveQuando's wording carries no code. */
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => classifyPosteItalianeStatus(wording)?.stage,
-  gaps: [],
+  gaps: [...KEEPERS].map(([wording, note]) => ({ wording, note })),
 };

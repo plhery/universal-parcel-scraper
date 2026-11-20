@@ -204,6 +204,18 @@ describe('Poste Italiane response parsing', () => {
     ]);
   });
 
+  it('keeps the stage before a change to the delivery instructions', () => {
+    const changed = 'cambio disposizioni di consegna';
+    const round = parsePosteItalianeTrackingResponse(parcel({ stato: undefined, listaMovimenti: [
+      movement('la spedizione è in transito', 1_000), movement('la spedizione è in consegna', 2_000), movement(changed, 3_000),
+    ] }), TRACKING_NUMBER);
+    expect(round).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(round.events?.[0]).toMatchObject({ description: changed, stage: 'out_for_delivery', stage_source: 'none' });
+    // Before any scan it has no stage.
+    const first = parsePosteItalianeTrackingResponse(parcel({ stato: undefined, listaMovimenti: [movement(changed, 1_000), movement('la spedizione è in consegna', 2_000)] }), TRACKING_NUMBER);
+    expect(first.events?.[1]).not.toHaveProperty('stage');
+  });
+
   it('reads a delivery on the return trip as returned to the sender', () => {
     const trip = (flag: boolean | undefined) => ({ ...movement('la spedizione è stata consegnata', 1767657600000),
       ...(flag === undefined ? {} : { flagRitorno: flag }) });

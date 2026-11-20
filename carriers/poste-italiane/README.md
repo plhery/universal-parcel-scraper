@@ -157,6 +157,9 @@ it is its receipt from that post and reads as transit.
   the sender's drop-off there, so it reads as `accepted`. After a pickup notice, the same
   wording is the courier taking back a parcel left uncollected at that Punto Poste, which
   goes back to the sender, so it is an exception.
+- A change to the delivery instructions ("cambio disposizioni di consegna") comes before or
+  during a round, after a failed one or before any: it is a notice that keeps the stage of the
+  scan before it.
 - Customs release wording maps to `in_transit`.
 - A post-office scan names its office, which becomes the event location; the office's
   address, postcode and hours are not kept. Other scans keep `luogo` only when it is a town

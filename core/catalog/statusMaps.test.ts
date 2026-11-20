@@ -326,7 +326,7 @@ describe('status map answers', () => {
       .toEqual(mapped('failed_attempt'));
     expect(answer('poste-italiane', null, 'la spedizione è in consegna')).toEqual(mapped('out_for_delivery'));
     expect(answer('poste-italiane', null, 'la spedizione è stata consegnata')).toEqual(mapped('delivered'));
-    expect(answer('poste-italiane', null, 'cambio disposizioni di consegna')).toEqual(mapped('in_transit'));
+    expect(answer('poste-italiane', null, 'cambio disposizioni di consegna')).toEqual(gap);
     expect(answer('poste-italiane', null, "la spedizione è stata presa in carico da un nostro operatore presso l'ufficio postale")).toEqual(mapped('accepted'));
     expect(answer('poste-italiane', null, 'la spedizione è stata presa in carico da un nostro operatore presso il domicilio del mittente')).toEqual(mapped('accepted'));
     expect(answer('poste-italiane', null, 'da un nostro operatore presso l’ufficio postale')).toEqual(mapped('accepted'));

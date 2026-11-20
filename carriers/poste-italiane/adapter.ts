@@ -13,7 +13,7 @@ import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { budgetWhenOutOfTime, type TrawlClient } from '../../core/transport/trawl.js';
 import { transportOf } from '../../core/transport/transportOf.js';
-import { classifyPosteItalianeStatus, posteItalianeMovementWording, posteItalianeUncollected } from './status.js';
+import { classifyPosteItalianeStatus, keepsPosteItalianeStage, posteItalianeMovementWording, posteItalianeUncollected } from './status.js';
 
 // Protocol provenance:
 // - Prior art (structure + vocabulary, verified independently below, MIT):
@@ -237,6 +237,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
   const abroad = isValidS10TrackingNumber(requested) && !requested.endsWith('IT');
   // Movements come oldest first: whether the parcel already waited for its recipient at a pickup point.
   let waited = false;
+  let previous: ClassifiedStatus | undefined;
   rawMovements.filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
     const wording = posteItalianeMovementWording(clean(rawEvent.statoLavorazione, 500), rawEvent.box);
     const time = parsedTime(rawEvent.dataOra);
@@ -244,9 +245,13 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
     const identity = `${time.iso}\u0000${wording}`;
     if (seen.has(identity)) return;
     seen.add(identity);
-    let classified = posteItalianeUncollected(wording, waited) ?? classifyPosteItalianeStatus(wording);
+    // A notice, such as changed delivery instructions, keeps the stage of the scan before it.
+    const kept = keepsPosteItalianeStage(wording) ? previous : undefined;
+    let classified = kept || keepsPosteItalianeStage(wording) ? undefined
+      : posteItalianeUncollected(wording, waited) ?? classifyPosteItalianeStatus(wording);
     if (abroad && classified?.stage === 'accepted') classified = { status: 'in_transit', stage: 'in_transit' };
     if (classified?.stage === 'ready_for_pickup') waited = true;
+    previous = classified ?? previous;
     parsed.push({
       // A post-office scan names its office, which becomes the location; the
       // office's address, postcode and hours are not kept. Other scans keep
@@ -258,7 +263,7 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
         time: time.iso,
         location: clean(rawEvent.denominazioneUfficio, 80) || townLabel(rawEvent.luogo),
         description: wording,
-        ...(classified ? { stage: classified.stage } : {}),
+        ...(classified ? { stage: classified.stage } : kept ? { stage: kept.stage, stage_source: 'none' } : {}),
       },
       classified: classified ?? undefined,
       returnTrip: typeof rawEvent.flagRitorno === 'boolean' ? rawEvent.flagRitorno : undefined,
