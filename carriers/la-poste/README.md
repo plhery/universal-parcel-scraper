@@ -86,6 +86,9 @@ input, so recognition reads them as unknown rather than as a transport failure.
   coming delivery round, so the code makes it a failed attempt. Under the same code, an address
   La Poste finds incomplete or wrong is an exception, and a day lost "en raison d'une situation
   indépendante de notre volonté" is La Poste's own delay, in transit.
+- `ACHIECA` is La Poste correcting its own route: an address it finds incomplete or wrong, or
+  "une erreur s'est produite dans l'acheminement", a parcel sent the wrong way. Both are an
+  exception; the next scan on the platforms is in transit again.
 - `AG1` means ready for pickup whatever its group or sentence. `DO1` is customs
   entry, `DO2` the release and `RE1` the decision to return the item. Duties paid
   at the door (`DESPAY`) follow the delivery scan and keep it delivered. Duties paid online (`AARPAY`)

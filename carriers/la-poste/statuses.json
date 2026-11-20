@@ -73,6 +73,14 @@
       "note": "Wording rule in eventStage, checked before the status collapse. Reclassified to exception 2026-09-12."
     },
     {
+      "wording": "Une erreur s'est produite dans l'acheminement de votre colis",
+      "language": "fr",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Group ACHIECA, code ET1: the parcel went the wrong way and La Poste puts it back on its route. Wording rule in eventStage, like the group's incomplete-address sentence; the next scan on the platforms is in transit again."
+    },
+    {
       "code": "DR1",
       "stage": "registered",
       "confirmedBy": "fixture",

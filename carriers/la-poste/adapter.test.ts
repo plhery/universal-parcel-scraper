@@ -855,6 +855,10 @@ describe('La Poste status vocabulary', () => {
     expect(eventStage('DISIRST', 'PB1', postponed)).toBe('failed_attempt');
     expect(eventStage('DISAADR', 'PB1', "L'adresse de livraison est incomplète et nous ne pouvons pas vous livrer votre colis.")).toBe('exception');
     expect(eventStage('DISAADR', 'PB1', "l'adresse indiquée sur votre envoi est incomplète ou incorrecte. Nous procédons à sa correction afin de permettre la distribution.")).toBe('exception');
+    // A parcel sent the wrong way, which La Poste puts back on its route; the way on is not an error.
+    expect(eventStage('ACHIECA', 'ET1', "Une erreur s'est produite dans l'acheminement de votre colis. Nous mettons tout en œuvre pour qu'il reprenne son parcours."))
+      .toBe('exception');
+    expect(eventStage('ACHNAT', 'ET1', "Votre colis est en cours d'acheminement vers la plate-forme logistique.")).toBe('in_transit');
     const delayed = "Votre envoi n'a pas pu être distribué ce jour en raison d'une situation indépendante de notre volonté. Il sera remis en distribution au plus tôt.";
     expect(eventStatus('DISIRST', 'PB1', delayed, true)).toBe('in_transit');
     expect(eventStage('DISIRST', 'PB1', delayed)).toBe('in_transit');
