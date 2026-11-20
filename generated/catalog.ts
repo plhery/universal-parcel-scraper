@@ -8464,7 +8464,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Warsaw",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ambro-express",
+      "localClocks": true
     },
     "canaryUrl": "https://ambroexpress.pl/",
     "trackingUrlTemplate": "https://ambroexpress.pl/sledzenie-przesylek#{trackingNumber}",

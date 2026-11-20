@@ -1,4 +1,47 @@
 {
   "carrier": "ambro-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Przesyłka przygotowana przez nadawcę",
+      "stage": "registered",
+      "language": "pl",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Przyjęta od Klienta przez Kuriera",
+      "stage": "accepted",
+      "language": "pl",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Przyjęta w Oddziale Ambro Express",
+      "stage": "in_transit",
+      "language": "pl",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Posortowana",
+      "stage": "in_transit",
+      "language": "pl",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Wysłana z oddziału",
+      "stage": "in_transit",
+      "language": "pl",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Przesyłka przekazana do doręczenia",
+      "stage": "out_for_delivery",
+      "language": "pl",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DORĘCZONO",
+      "stage": "delivered",
+      "language": "pl",
+      "confirmedBy": "live"
+    }
+  ]
 }

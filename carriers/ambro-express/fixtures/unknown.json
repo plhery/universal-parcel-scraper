@@ -1,0 +1,7 @@
+{
+  "state": 1,
+  "content": {
+    "type": "success",
+    "content": "\n\n<div class=\"alert-container\">        <div class=\"alert alert-danger alert-dismissible\">\n            <span class=\"sr-only\">danger:</span>\n            <span class=\"message-icon\"></span>\n            <span class=\"message\">Nie znaleziono</span>\n                            <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Zamknij\"><span aria-hidden=\"true\">&times;</span></button>\n                    </div>\n        </div><div class=\"clearfix\"></div>"
+  }
+}

@@ -30,6 +30,7 @@ import { adapter as alphastline } from '../carriers/alphastline/adapter.js';
 import { adapter as amHomeDelivery } from '../carriers/am-home-delivery/adapter.js';
 import { adapter as amazonOrder } from '../carriers/amazon-order/adapter.js';
 import { adapter as amazonShipping } from '../carriers/amazon-shipping/adapter.js';
+import { adapter as ambroExpress } from '../carriers/ambro-express/adapter.js';
 import { adapter as americanWestExpress } from '../carriers/american-west-express/adapter.js';
 import { adapter as amerijet } from '../carriers/amerijet/adapter.js';
 import { adapter as ampm } from '../carriers/ampm/adapter.js';
@@ -871,6 +872,7 @@ export const REGISTRY: RegistryDefinition = {
     "am-home-delivery": amHomeDelivery,
     "amazon-order": amazonOrder,
     "amazon-shipping": amazonShipping,
+    "ambro-express": ambroExpress,
     "american-west-express": americanWestExpress,
     "amerijet": amerijet,
     "ampm": ampm,
@@ -1769,7 +1771,7 @@ export const REGISTRY: RegistryDefinition = {
     "amazon-logistics": null,
     "amazon-order": "amazon-order",
     "amazon-shipping": "amazon-shipping",
-    "ambro-express": "universal",
+    "ambro-express": "ambro-express",
     "ameex": "universal",
     "american-west-express": "american-west-express",
     "amerijet": "amerijet",

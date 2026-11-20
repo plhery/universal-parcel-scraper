@@ -8460,7 +8460,8 @@
     "timezone": "Europe/Warsaw",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ambro-express",
+      "localClocks": true
     },
     "canaryUrl": "https://ambroexpress.pl/",
     "trackingUrlTemplate": "https://ambroexpress.pl/sledzenie-przesylek#{trackingNumber}",
