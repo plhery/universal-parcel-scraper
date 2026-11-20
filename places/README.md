@@ -130,6 +130,10 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   word ("Latvian sorting center"), places that country, when the text's code or the parcel
   puts the parcel there. A country's name with a depot's number in brackets, as BRT names a
   partner's depot abroad ("SPAIN (12)"), is that country.
+- A country's name alone in the first of several fields ("China, Sorting Center") is that
+  country, not a town under 100,000 people named after it in the parcel's countries: JS
+  Express's warehouses on a parcel to the United States are no China in Maine. A state written
+  after the name keeps the town ("China, ME").
 - A US military post office ("Fpo, AE", "APO AP 96001") names a region of the US armed
   forces, not a country: AE there is not the Emirates, and the base can be anywhere in the
   region. The scan gets no place, and `trackingPlace` and `trackingLocationCountry` give it
