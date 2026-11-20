@@ -32253,7 +32253,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Tokyo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "intras-jp",
+      "localClocks": true
     },
     "canaryUrl": "https://intras.co.jp/",
     "trackingUrlTemplate": "https://intras.co.jp/delivery/tracking?number={trackingNumber}",
