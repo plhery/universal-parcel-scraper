@@ -204,6 +204,13 @@
       "note": "Relayed from DHL a minute after DHL's record of the sender's data, while the parcel is still in China: the recipient's instruction, a notice that keeps the stage before it."
     },
     {
+      "wording": "Initial item information received",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-10",
+      "note": "Relayed between Yanwen's export release and its departure from China, with \"In Transit\" where a place goes, days before the delivering post's counter posting: the item's data reaching that post, a notice that keeps the stage before it."
+    },
+    {
       "wording": "Pre-shipment Info sent to carrier",
       "language": "en",
       "confirmedBy": "live",

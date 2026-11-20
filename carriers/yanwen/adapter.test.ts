@@ -375,6 +375,18 @@ describe('Yanwen result projection', () => {
     expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: '03', description: 'Preference applied' })).toBe(false);
   });
 
+  it("keeps a delivering post's record of the item's data on the stage before it, without its placeholder place", () => {
+    const result = history([
+      ['2026-03-05', '04:28:00 [GMT+08]', '', 'Port of departure - Departure'],
+      ['2026-03-04', '12:33:04 [GMT+08]', 'In Transit', 'Initial item information received'],
+      ['2026-03-04', '08:18:45 [GMT+08]', '', 'Arrived at domestic terminal station'],
+      ['2026-03-03', '15:09:00 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ], '运输途中', 'CR');
+    expect(result.events?.[1]).toMatchObject({ description: 'Initial item information received', stage: 'in_transit', stage_source: 'none', location: '' });
+    expect(statusMap.stage(null, normalizeStatusWording('Initial item information received'))).toBeUndefined();
+    expect(statusMap.gaps?.map((gap) => gap.wording)).toContain(normalizeStatusWording('Initial item information received'));
+  });
+
   it("stages the delivering carrier's loading in Canada on the scan itself, as the category files it", () => {
     const result = history([
       ['2026-03-10', '07:43:04 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Loaded on Truck'],

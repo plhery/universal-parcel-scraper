@@ -236,14 +236,15 @@ export function yanwenStatus(description: string, code?: string): ClassifiedStat
 const STAGE_BY_WORDING = new Map([...WORDING].map(([wording, { stage }]) => [normalizeStatusWording(wording), stage]));
 
 // USPS's record of the label Yanwen made, relayed while Yanwen still has the parcel in China, at the
-// label's US origin, DHL's record of the recipient's choice of a Packstation, and InPost's records of
-// the sender's data and of the recipient's delivery choice: notices that move nothing and name no
-// place the parcel has been.
+// label's US origin, DHL's record of the recipient's choice of a Packstation, InPost's records of
+// the sender's data and of the recipient's delivery choice, and a delivering post's record of the
+// item's data: notices that move nothing and name no place the parcel has been.
 const NOTICES = new Map([
   ['Shipping Label Created, USPS Awaiting Item', "USPS's record of the label Yanwen made for it, relayed while Yanwen still has the parcel: not a scan, so it keeps the stage the parcel already had."],
   ['The recipient has selected a Packstation as the new delivery address.', "DHL's record of the recipient's choice of a Packstation, relayed while the parcel can still be in China: not a scan, so it keeps the stage the parcel already had."],
   ['Pre-shipment Info sent to carrier', "InPost's record of the sender's data reaching it, relayed while Yanwen still has the parcel: not a scan, so it keeps the stage the parcel already had."],
   ['Preference applied', "InPost's record of the recipient's delivery choice, relayed while the parcel can still be in China: not a scan, so it keeps the stage the parcel already had."],
+  ['Initial item information received', "A delivering post's record of the item's data reaching it, relayed between Yanwen's export scans with \"In Transit\" as its place: not a scan, so it keeps the stage the parcel already had."],
 ].map(([wording, note]) => [normalizeStatusWording(wording!), note!]));
 
 /** Whether a scan is a notice: it keeps the stage of the scan before it and names no place. */

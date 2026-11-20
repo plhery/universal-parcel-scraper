@@ -40,7 +40,8 @@ USPS's "Shipping Label Created, USPS Awaiting Item", relayed while Yanwen still
 has the parcel in China, is a notice: it keeps the stage of the scan before it
 and loses its place, the label's US origin, where the parcel has not been.
 DHL's and InPost's records of the sender's data and of the recipient's delivery
-choice are notices too.
+choice are notices too, and so is a delivering post's "Initial item information
+received", relayed on the way with "In Transit" as its place.
 USPS dates its "In Transit to Next Facility" steps by their day alone; Yanwen
 relays them at midnight, so one at 00:00:00 keeps its day as `local_time`.
 
