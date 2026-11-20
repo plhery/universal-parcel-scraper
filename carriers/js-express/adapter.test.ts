@@ -342,6 +342,22 @@ describe('JS Express tracking adapter', () => {
     expect(statusMap.stage('OIT', normalizeStatusWording(wording))).toBeUndefined();
   });
 
+  it('reads the rows after Colissimo sends the parcel back as the way back, and its delivery as the return', () => {
+    const back = parseJsExpress(withList([
+      row('2026-05-09 08:45:00', 'FR', "Votre colis est livré à son expéditeur à la suite d'un retour."),
+      row('2026-05-08 23:27:00', 'FR', 'Votre colis est en transit sur nos plateformes logistiques.'),
+      row('2026-05-06 06:14:00', 'FR', '到达待取'),
+      row('2026-05-02 12:29:00', 'FR', "Votre Colissimo n'a pas pu vous être livré en raison d'un problème d'adresse. Il va être retourné à l'expéditeur."),
+      row('2026-05-01 07:25:00', 'FR', 'Votre Colissimo est en cours de traitement sur le site de tri local.'),
+    ]), DELIVERED);
+    expect(back.events!.map((event) => [event.stage, event.provider_leg])).toEqual([
+      ['returned', 'return'], ['exception', 'return'], ['exception', 'return'], ['exception', undefined], ['in_transit', undefined]]);
+    expect(back).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    const waiting = parseJsExpress(withList([row('2026-05-06 06:14:00', 'FR', '到达待取'),
+      row('2026-05-02 12:29:00', 'FR', "Votre Colissimo n'a pas pu vous être livré en raison d'un problème d'adresse. Il va être retourné à l'expéditeur.")]), DELIVERED);
+    expect(waiting).toMatchObject({ current_stage: 'exception', current_stage_source: 'carrier_map' });
+  });
+
   it('shows its own status in Chinese in English, staged as the Chinese, and the map stages the English too', () => {
     const waiting = parseJsExpress(withList([row('2026-05-03 09:00:00', 'FR', '到达待取')]), DELIVERED);
     expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', last_status_text: 'Arrived, awaiting collection' });

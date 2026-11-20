@@ -120,8 +120,11 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 - Partners' records of the parcel's data move nothing and have no stage. Straightship's "Package
   will be delivered before 9:00pm" is its driver's round, out for delivery, as Straightship's own
   map reads it.
-- A courier's announced return, such as Colissimo's "Il va être retourné à l'expéditeur", is an
-  exception: the parcel is returned only once a scan has it back with its sender.
+- A courier's announced return, such as Colissimo's "Il va être retourné à l'expéditeur", or JS
+  Express's "Return to Sender", is an exception: the parcel is returned only once a scan has it
+  back with its sender. The rows after it are the way back: a move, a round or JS Express's own
+  "Arrived, awaiting collection" is the return under way, an exception, and a delivery is the
+  parcel back with its sender.
 - A delivery keeps a clause naming who took the parcel, as iMile's receiver type or a courier's
   "signed by", and is staged without it. The name in it is the signatory, except iMile's types
   that name a place, such as a mailbox. A row stored without the clause is taken over by the

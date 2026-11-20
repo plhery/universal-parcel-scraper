@@ -5,6 +5,7 @@ import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../../core/detectio
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { calendarDay, canadaProvinceTimeZone, countryCode, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -260,6 +261,11 @@ function roundDay(event: CarrierEvent): string | null {
  * is, and that waybill becomes the canonical number. The delivery photos are
  * not read.
  */
+/** Rows that send the parcel back to its sender. */
+const SENDS_BACK = /\bil va être retourné à l'expéditeur\b|^return to sender$/;
+/** The stages a row on the way back to the sender shows as the return under way. */
+const RETURN_LEG_STAGES: ReadonlySet<string> = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery', 'ready_for_pickup', 'failed_attempt']);
+
 export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeJsExpressNumber(rawNumber);
   if (!isRecord(payload) || typeof payload.code !== 'number') throw new SchemaError(PROVIDER, 'JS Express returned an invalid reply');
@@ -334,6 +340,19 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     if (previous && (isJsExpressDepotReceipt(wording) || isUspsRedeliveryReminder(wording))) Object.assign(event, { stage: previous, stage_source: 'none' });
     // A note mapped as pending, such as the call to the recipient, keeps the stage before it too.
     if (event.stage !== 'pending') previous = (event.stage as Stage | undefined) ?? previous;
+  }
+
+  // Once a row sends the parcel back to its sender, as Colissimo's "Il va être retourné à l'expéditeur" or JS Express's
+  // "Return to Sender", the rows after it are the way back: a move, a round or a wait for collection is the return
+  // under way, an exception, and a delivery is the parcel back with the sender.
+  let returning = false;
+  for (const event of [...events].reverse()) {
+    if (returning) {
+      event.provider_leg = 'return';
+      if (event.stage === 'delivered') Object.assign(event, { stage: 'returned', stage_source: 'carrier_map' });
+      else if (RETURN_LEG_STAGES.has(event.stage ?? '')) Object.assign(event, { stage: 'exception', stage_source: 'carrier_map' });
+    }
+    returning ||= SENDS_BACK.test(normalizeStatusWording(event.description ?? ''));
   }
 
   // The reply's order stands: a history mixes the clocks of several countries.
