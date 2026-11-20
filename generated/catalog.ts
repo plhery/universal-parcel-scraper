@@ -11094,7 +11094,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "benben": {
     "displayName": "Benben International",
-    "color": "#8e8e93",
+    "color": "#01477b",
     "aliases": [
       "犇犇",
       "犇犇国际",
@@ -31819,7 +31819,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "hua-express": {
     "displayName": "HUA Express",
-    "color": "#8e8e93",
+    "color": "#e70012",
     "aliases": [
       "HUAEXPRESS",
       "华联万通",
@@ -37993,7 +37993,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "lerdex": {
     "displayName": "Lerdex",
-    "color": "#8e8e93",
+    "color": "#3370ff",
     "aliases": [
       "LERDEX",
       "乐易汇"
@@ -51255,7 +51255,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "rm-logistics": {
     "displayName": "RM Logistics",
-    "color": "#8e8e93",
+    "color": "#2a56a1",
     "aliases": [
       "荣贸",
       "荣贸供应链",
@@ -53769,7 +53769,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "sheensync": {
     "displayName": "SheenSync",
-    "color": "#8e8e93",
+    "color": "#21803d",
     "aliases": [
       "鲜行供应链",
       "鲜行",
@@ -61669,7 +61669,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "tuomeida": {
     "displayName": "Tuomeida Logistics",
-    "color": "#8e8e93",
+    "color": "#147f79",
     "aliases": [
       "拓美达",
       "拓美达国际物流",
@@ -64759,7 +64759,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "whwdt": {
     "displayName": "Wuhan Wodetong",
-    "color": "#8e8e93",
+    "color": "#30318b",
     "aliases": [
       "WHWDT",
       "武汉沃德通",
@@ -66800,7 +66800,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "yuanpeng": {
     "displayName": "Yuanpeng Supply Chain",
-    "color": "#8e8e93",
+    "color": "#0472be",
     "aliases": [
       "远朋",
       "远朋跨境",
