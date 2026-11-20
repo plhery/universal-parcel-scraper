@@ -292,6 +292,7 @@ import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
 import { adapter as gaash } from '../carriers/gaash/adapter.js';
 import { adapter as garudavega } from '../carriers/garudavega/adapter.js';
 import { adapter as gati } from '../carriers/gati/adapter.js';
+import { adapter as gbsBroker } from '../carriers/gbs-broker/adapter.js';
 import { adapter as gdex } from '../carriers/gdex/adapter.js';
 import { adapter as gebruederWeiss } from '../carriers/gebrueder-weiss/adapter.js';
 import { adapter as geis } from '../carriers/geis/adapter.js';
@@ -1133,6 +1134,7 @@ export const REGISTRY: RegistryDefinition = {
     "gaash": gaash,
     "garudavega": garudavega,
     "gati": gati,
+    "gbs-broker": gbsBroker,
     "gdex": gdex,
     "gebrueder-weiss": gebruederWeiss,
     "geis": geis,
@@ -2338,7 +2340,7 @@ export const REGISTRY: RegistryDefinition = {
     "garantpost": "universal",
     "garudavega": "garudavega",
     "gati": "gati",
-    "gbs-broker": "universal",
+    "gbs-broker": "gbs-broker",
     "gcx": "universal",
     "gdex": "gdex",
     "gebrueder-weiss": "gebrueder-weiss",

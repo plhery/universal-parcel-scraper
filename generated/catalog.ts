@@ -26874,7 +26874,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gbs-broker"
     },
     "canaryUrl": "https://gbs.ru/track/",
     "trackingUrlTemplate": "https://gbs.ru/track/?numbers={trackingNumber}",

@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'gbs-broker', number: 'RLAI99999999',
+    route: /^https:\/\/gbs\.ru\/track\/\?numbers=RLAI99999999$/,
+    marker: /По вашему запросу ничего не найдено/ },
   { carrier: 'aruba-post', number: 'RR999999995AW',
     route: /^https:\/\/cds\.postaruba\.com\/ipswt\/IPSWeb_item_events\.aspx\?itemid=RR999999995AW$/,
     marker: /No information, please check your item identifier/,
