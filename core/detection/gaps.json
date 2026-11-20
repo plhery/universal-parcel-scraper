@@ -4862,5 +4862,11 @@
     "pattern": "^0\\d{5}$",
     "kind": "open",
     "reason": "A Nigerian parcel recipient reports two six-digit Red Star waybills beginning with zero. Detection does not offer Red Star Express."
+  },
+  {
+    "carrier": "rayspeed",
+    "pattern": "^RAY\\d{13}$",
+    "kind": "open",
+    "reason": "A customer and the carrier identify a RaySpeed waybill using RAY and thirteen digits. The tracker recognizes it, while detection omits RaySpeed."
   }
 ]
