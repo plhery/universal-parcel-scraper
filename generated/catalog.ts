@@ -64837,6 +64837,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "zhongzhou-logistics": {
+    "displayName": "Zhongzhou Logistics",
+    "color": "#8e8e93",
+    "aliases": [
+      "ZZWL",
+      "中洲物流",
+      "莆田市中洲物流供应链有限公司",
+      "Putian Zhongzhou Logistics Supply Chain"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ziegler": {
     "displayName": "Ziegler",
     "color": "#066a5d",
@@ -67051,6 +67073,7 @@ export const CARRIER_IDS = [
   "zeleris",
   "zes-express",
   "zheldor",
+  "zhongzhou-logistics",
   "ziegler",
   "zimpost",
   "zipasgo",
@@ -68915,6 +68938,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "zeleris": ["zeleris-1"],
   "zes-express": ["zes-express-1"],
   "zheldor": [],
+  "zhongzhou-logistics": [],
   "ziegler": [],
   "zimpost": [],
   "zipasgo": [],

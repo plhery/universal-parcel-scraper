@@ -1,0 +1,35 @@
+{
+  "id": "zhongzhou-logistics",
+  "displayName": "Zhongzhou Logistics",
+  "aliases": [
+    "ZZWL",
+    "中洲物流",
+    "莆田市中洲物流供应链有限公司",
+    "Putian Zhongzhou Logistics Supply Chain"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#8e8e93"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
