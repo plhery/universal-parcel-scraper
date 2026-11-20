@@ -147,6 +147,9 @@ how a consumer learns that DHL holds one behind a postcode.
   posts' copies of the scan read it so. As the summary of a round whose newest scan
   starts the return ("The shipment is returned to the sender", "wird … zurückgesandt"),
   it gives way to that scan: the parcel is going back.
+- A round that did not reach the parcel for DHL's own reasons ("wegen unerwarteter
+  Umstände", "due to unexpected circumstances") is a delay in transit, not a failed
+  attempt: nobody came to the door, and a new round follows the next working day.
 - A return started or under way is returned, as is a return delivered to the sender. DHL then
   keeps scanning the parcel on its way back, in its parcel centres: the moves after the latest
   return start are returned too, and the parcel gets no delivery date. A round, a failed

@@ -341,6 +341,9 @@ describe('DHL public tracking normalization', () => {
     ['Die Sendung wurde in das Zustellfahrzeug geladen.', 'out_for_delivery', 'out_for_delivery'],
     ['The shipment could not be delivered', 'failed_attempt', 'exception'],
     ['Die Sendung konnte nicht zugestellt werden.', 'failed_attempt', 'exception'],
+    // A round that did not reach the parcel for DHL's own reasons is a delay, not an attempt.
+    ['Ihre Sendung konnte heute leider wegen unerwarteter Umstände wie z.B. Krankheit, Unfall, Arbeitszeitüberschreitung nicht zugestellt werden. Ein neuer Zustellversuch erfolgt am nächsten Werktag.', 'in_transit', 'in_transit'],
+    ['Your shipment could unfortunately not be delivered today due to unexpected circumstances such as illness, accident, or overtime. A new delivery attempt will be made on the next business day.', 'in_transit', 'in_transit'],
     ['Die Sendung wurde nicht erfolgreich zugestellt.', 'failed_attempt', 'exception'],
     // A "nicht" in one sentence and "zugestellt" in the next are no failed delivery.
     ['Eine Umleitung ist nicht mehr möglich. Die Sendung wird heute zugestellt.', 'in_transit', 'in_transit'],

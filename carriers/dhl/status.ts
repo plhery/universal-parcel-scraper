@@ -88,6 +88,10 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   // has not started back yet, so it is an exception, never its acceptance or the return itself.
   if (nonterminalEnglishReturn(text) || /\bwill be (?:returned|sent back)\b|\bnot (?:been )?picked up\b|\bwird\b[^.]*\bzurück|auf dem weg zurück|\bnicht\b[^.]*\babgeholt\b/.test(value)) return 'exception';
   if (/returned to (?:the )?sender|zurück.*absender|rücksendung|retour/.test(value)) return 'returned';
+  // A round that did not reach the parcel for DHL's own reasons ("wegen unerwarteter Umstände wie z.B. Krankheit,
+  // Unfall, Arbeitszeitüberschreitung", "due to unexpected circumstances such as illness, accident, or overtime"): a
+  // delay, not an attempt at the door, and a new round follows the next working day.
+  if (/\bwegen unerwarteter umstände\b|\bdue to unexpected circumstances\b/.test(value)) return 'in_transit';
   // "Delivery not possible" comes after the loading onto the delivery vehicle, before the parcel
   // waits at a retail outlet: a failed attempt, as the partner posts' copies of the scan read it.
   // So is a recipient the courier could not find at the address on the parcel.
