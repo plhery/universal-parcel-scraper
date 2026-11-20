@@ -1,4 +1,4 @@
-import type { SameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
+import type { SameInstantIdentityPolicy, SameInstantScan } from '../../core/catalog/eventIdentity.js';
 import { countryTimeZone } from '../../core/time/index.js';
 
 /** A location without the "Office - " the adapter once kept before an office's name or code. */
@@ -25,9 +25,17 @@ function storedReadings(text: string): string[] {
 // Dispatched" as "Bag Dispatched". A reply never holds two scans at one second and office,
 // so the scan at that second and office, the only one both ways, is the stored one.
 // Scans abroad were read on India's clock until October 2026 and now show the
-// destination's offset, unless a reply lacks what places them abroad.
+// destination's offset, unless a reply lacks what places them abroad. A bag's
+// arrival comes coded (MailArrived) in one reply and in prose ("Bag unloaded at
+// destination Airport") in another, placed only by a flight remark the prose can
+// lack: at one second, one of each is one arrival, placed or not.
+const ARRIVAL_FORMS = ['MailArrived', 'BagUnloaded'].sort().join();
+const arrivalForms = (incoming: SameInstantScan, stored: SameInstantScan) =>
+  [incoming.providerCode, stored.providerCode].sort().join() === ARRIVAL_FORMS;
+
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'india-post', storedSources: ['india-post'], requireProviderCode: false, matchEachScan: true,
-  matches: (incoming, stored) => storedReadings(stored.location).includes(named(incoming.location)),
+  matches: (incoming, stored) => storedReadings(stored.location).includes(named(incoming.location))
+    || (arrivalForms(incoming, stored) && (!incoming.location.trim() || !stored.location.trim())),
   relabelledFrom: 'Asia/Kolkata',
 };

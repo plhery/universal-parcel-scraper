@@ -114,7 +114,9 @@ Outcomes:
   and office. So the app identity policy updates the stored scan at the same instant and location,
   when the match is unique both ways, whatever the provider code. A stored location that kept
   "Office - " before a name or a UPU code, or kept a bare code, matches the location the adapter
-  gives for it. Its `relabelledFrom: 'Asia/Kolkata'` lets a scan abroad take over the row stored
+  gives for it. A bag's arrival, coded `MailArrived` in one reply and worded "Bag unloaded at
+  destination Airport" in another, is one scan even when only one of them is placed: the prose
+  can lack the flight remark that places it. Its `relabelledFrom: 'Asia/Kolkata'` lets a scan abroad take over the row stored
   under India's label, by wall clock, provider code and location. The consumer owns the
   stored rows and notification receipts.
 - IDs and pincodes arrive as numbers or strings, hence `cleanScalar`. A pincode is kept in the

@@ -25,6 +25,13 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(arrived('600001'), arrived('INMAAB 600001'))).toBe(true);
     expect(policy?.matches?.(arrived('KANPUR 208001'), arrived('208001'))).toBe(false);
     expect(policy?.matches?.(arrived(''), arrived('Office - KANPUR 208001'))).toBe(false);
+    // A bag's arrival in prose, without the flight remark that places its coded twin, is that arrival.
+    const unloaded = (location: string) => scan('Bag unloaded at destination Airport', 'BagUnloaded', location);
+    const landed = (location: string) => scan('Flight XX0000 arrived: AAA → BBB', 'MailArrived', location);
+    expect(policy?.matches?.(landed('Example Airport, AE'), unloaded(''))).toBe(true);
+    expect(policy?.matches?.(unloaded(''), landed('Example Airport, AE'))).toBe(true);
+    expect(policy?.matches?.(unloaded('Other Airport, QA'), landed('Example Airport, AE'))).toBe(false);
+    expect(policy?.matches?.(unloaded(''), scan('Item received', 'ItemReceived', 'Example Airport, AE'))).toBe(false);
     // Older app versions match by the instant and code alone, so they get no policy.
     expect(sameInstantIdentityPolicy('india-post')).toBeUndefined();
   });
