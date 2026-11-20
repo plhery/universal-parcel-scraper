@@ -3540,6 +3540,7 @@ export const REGISTRY: RegistryDefinition = {
     "zeleris": "zeleris",
     "zes-express": "zes-express",
     "zheldor": "zheldor",
+    "zhongzhou-logistics": "universal",
     "ziegler": "universal",
     "zimpost": "universal",
     "zipasgo": "universal",
