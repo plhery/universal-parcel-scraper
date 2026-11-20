@@ -19,7 +19,7 @@
         "carrier": "j-and-t-br",
         "confidence": "high"
       },
-      "note": "The indexed 17TRACK link names 3CQ, and the number shares the 888002 waybill family already confirmed for J&T Express Brazil. The carrier’s tracker returned its application shell without shipment history, leaving 3CQ’s role unresolved."
+      "note": "The indexed 17TRACK link names 3CQ, and the number shares the 888002 waybill family already confirmed for J&T Express Brazil. 3CQ’s tracking lookup returns its history from 3CQ’s warehouse in China to delivery by J&T Express Brazil."
     },
     {
       "number": "888002507522830",
@@ -39,7 +39,7 @@
         "carrier": "j-and-t-br",
         "confidence": "high"
       },
-      "note": "The indexed 17TRACK link names 3CQ, and the number shares the 888002 waybill family already confirmed for J&T Express Brazil. The carrier’s tracker returned its application shell without shipment history, leaving 3CQ’s role unresolved."
+      "note": "The indexed 17TRACK link names 3CQ, and the number shares the 888002 waybill family already confirmed for J&T Express Brazil. 3CQ’s tracking lookup returns its history from 3CQ’s warehouse in China to delivery by J&T Express Brazil."
     }
   ]
 }

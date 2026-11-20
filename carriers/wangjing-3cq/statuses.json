@@ -1,4 +1,37 @@
 {
   "carrier": "wangjing-3cq",
-  "entries": []
+  "entries": [
+    {"wording": "As informações sobre a encomenda foram recebidas", "language": "pt", "stage": "registered", "confirmedBy": "live", "note": "The order's data reached 3CQ, before its warehouse handles the goods."},
+    {"wording": "The warehouse is verifying the goods.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "3CQ's warehouse checks the order's goods before packing them."},
+    {"wording": "The warehouse is packing goods.", "language": "en", "stage": "registered", "confirmedBy": "live"},
+    {"wording": "Goods shipped to the consolidation center", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The packed parcel leaves 3CQ's warehouse for the line to Brazil."},
+    {"wording": "Consolidation Center Receiving", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at the transit depot.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Ready for dispatch.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed from origin country.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "En route to customs clearance at Mainland-Hong Kong Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "On the road from Shenzhen to Hong Kong, a routine export step."},
+    {"wording": "Goods en route via Mainland-Hong Kong Customs, currently under ULD palletizing at build-up warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Being loaded onto air cargo pallets in Hong Kong."},
+    {"wording": "Arrived at Sort Facility {facility}", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Received from shipper in {airport}", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The airline's acceptance of the consignment, from its air waybill."},
+    {"wording": "Departed from {airport} on {flight}", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived in {airport} on {flight}", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Received in {airport}", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Objeto postado", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel's declaration to Brazil, dated after it left China."},
+    {"wording": "Informações enviadas para análise da autoridade aduaneira/órgãos anuentes.", "language": "pt", "stage": "customs", "confirmedBy": "live"},
+    {"wording": "Análise concluída - importação autorizada A autorização poderá ser revista pela autoridade aduaneira ou pelos órgãos anuentes.", "language": "pt", "stage": "customs", "confirmedBy": "live"},
+    {"code": "610", "wording": "Pacote pre alertado para o destino", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "The destination's pre-alert, sent before the flight; it shares its code with a customs inspection."},
+    {"code": "610", "wording": "Remessa esta sendo inspecionada pela aduana", "language": "pt", "stage": "customs", "confirmedBy": "live"},
+    {"code": "608", "wording": "Iniciado o processo de desembaraço aduaneiro", "language": "pt", "stage": "customs", "confirmedBy": "live"},
+    {"code": "608", "wording": "Revisão de tributo concluída - Remessa liberado", "language": "pt", "stage": "customs", "confirmedBy": "live"},
+    {"code": "620", "wording": "Remessa retida pela Receita Federal. Instruções serão enviadas por email para o remetente e/ou destinatario", "language": "pt", "stage": "customs", "confirmedBy": "live", "note": "Held for Brazil's customs review; the sample was released and delivered without anyone acting on it."},
+    {"code": "630", "wording": "Remessa liberada pela aduana", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "Released by customs, as the shared wording rules read a clearance."},
+    {"code": "630", "wording": "A remessa foi desembaraçada pela aduana", "language": "pt", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "680", "wording": "Package present in Brazil", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "10", "wording": "【{city}】【{branch}】Your J&T Courier{courier}Picked up。If there is any excption or complaint, please contact the network: 08000550050", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "J&T Express Brazil collects the parcel at Guarulhos after its release, weeks into the journey."},
+    {"code": "50", "wording": "【{city}】Departed【{branch}】Shipped for【{next}】", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "90", "wording": "【{city}】Arrival【{branch}】", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Arrival at a J&T centre; the tracker's own progress value files it under 派送中, which it is not."},
+    {"code": "92", "wording": "【{city}】Arrival【{branch}】", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Arrival at the branch that delivers the parcel."},
+    {"code": "94", "wording": "【{city}】【{branch}】J&T courier{courier}Delivering，If there is any excption or complaint, please contact the network: 08000550050", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The tracker's own progress value files the delivery round under 运输中."},
+    {"code": "100", "wording": "【{city}】Recceived！Recceived by【{signee}】，In case of doubt, please contact：08000550050，If there is any excption or complaint, please contact the network：08000550050", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The signee is a role such as the recipient or another person, not a name."}
+  ]
 }

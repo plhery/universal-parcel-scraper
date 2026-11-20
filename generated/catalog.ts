@@ -61882,7 +61882,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "wangjing-3cq"
     },
     "canaryUrl": "https://track.wjdrop.com/tracking/index",
     "trackingUrlTemplate": "https://track.wjdrop.com/tracking/index?nums={trackingNumber}",
