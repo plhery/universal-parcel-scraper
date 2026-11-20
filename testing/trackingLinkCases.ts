@@ -2397,6 +2397,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'xindus', number: 'X000000000',
     route: /^https:\/\/www\.xindus\.net\/tracking\?awb=X000000000$/,
     marker: /Track Exporter Cargo|Enter your Xindus airway bill reference|Search Result Empty/ },
+  // The order page's script looks the reference in its path up and renders its order view.
+  { carrier: 'm24-logistics', number: 'o0000000000',
+    route: /^https:\/\/lms\.m24logistics\.com\/track-my-order\/o0000000000$/,
+    marker: /Order Details|Order Summary|Parcel Summary/ },
 ];
 
 /**

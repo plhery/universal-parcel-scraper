@@ -14,18 +14,55 @@
   "timezone": "Africa/Johannesburg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "m24-logistics",
+    "steps": [
+      "direct",
+      "action",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "signed_by",
+    "service_name"
+  ],
   "portal": {
     "url": "https://lms.m24logistics.com/track-my-order/{trackingNumber}",
     "searchUrl": "https://lms.m24logistics.com/track-order",
     "canaryUrl": "https://lms.m24logistics.com/track-order",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "progress_rail",
+      "service_name",
+      "delivery_partner",
+      "eta",
+      "signatory",
+      "recipient_address",
+      "order_reference",
+      "invoice_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "service_name",
+      "signatory"
+    ],
+    "discarded": [
+      "progress_rail",
+      "delivery_partner",
+      "eta",
+      "recipient_address",
+      "order_reference",
+      "invoice_reference"
+    ],
+    "unavailable": [
+      "location",
+      "delivery_tracking_number"
+    ]
   },
   "links": [
     {

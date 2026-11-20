@@ -38282,7 +38282,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "m24-logistics",
+      "localClocks": true
     },
     "canaryUrl": "https://lms.m24logistics.com/track-order",
     "trackingUrlTemplate": "https://lms.m24logistics.com/track-my-order/{trackingNumber}",

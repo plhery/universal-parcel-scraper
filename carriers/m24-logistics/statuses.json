@@ -1,4 +1,17 @@
 {
   "carrier": "m24-logistics",
-  "entries": []
+  "entries": [
+    {"code": "1", "wording": "Inserted", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The shop's order reached M24; the tracker files it under Order Placed."},
+    {"code": "2", "wording": "Confirmed", "language": "en", "stage": "registered", "confirmedBy": "live"},
+    {"code": "3", "wording": "Parcel accepted in dispatch area.", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "Packed and taken into M24's dispatch area."},
+    {"code": "7", "wording": "Parcel handed over to courier for delivery.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the partner courier the tracker names."},
+    {"code": "129", "wording": "Expected Delivery Date: {date}", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The courier's delivery day, written into the wording; a notice, not a movement."},
+    {"code": "29", "wording": "At Destination Branch - Delivery Pending", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "54", "wording": "Out on Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"code": "58", "wording": "Courier late", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "The day's round ended without delivery; the tracker files it under Delivery Failed: Courier and shows it as Delivery failed."},
+    {"code": "133", "wording": "Vehicle Breakdown.", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "Filed under Delivery Failed: Courier and shown as Delivery failed."},
+    {"code": "57", "wording": "Recipient could not be reached", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "Filed under Delivery Failed: Customer."},
+    {"code": "67", "wording": "Re-Delivery", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "A new delivery booked after a failed one, filed under Delivery Failed: Customer."},
+    {"code": "9", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"}
+  ]
 }
