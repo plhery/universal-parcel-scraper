@@ -21,6 +21,10 @@
       "direct",
       "trawl"
     ],
+    "recognition": {
+      "rank": 693,
+      "pattern": "^(?:0\\d|1[1-9])\\d{12}$"
+    },
     "browser": true,
     "browserRecognition": {
       "rank": 700,

@@ -26,10 +26,16 @@ non-2xx statuses are indeterminate.
   0 or 1 (12–15 digits) are suggestions; 14-digit numbers from the ex-Exapaq
   depots 10xx list DPD France first (DPD's published depot table and the
   published integration example), without selecting it.
-- HTTP recognition never asks DPD France: Cloudflare challenges every plain GET
-  of the trace page. The opt-in browser phase asks it through the browser
-  service about the ex-Exapaq depots' fourteen digits and the sixteen-digit
-  labels, not every run of digits its rules suggest, which are more often other
+- HTTP recognition never reads the trace page: Cloudflare challenges every plain
+  GET of it. It asks DPD's group guest service, through Belgium's unit as
+  [DPD Ireland](../dpd-ie/README.md) does, about another unit's fourteen digits, the number a
+  parcel sent to France from abroad keeps. It claims the parcel once that service places it at a
+  French delivery depot or past it; before the depot, the service's country can be the sender's,
+  so the answer is inconclusive. The trace page tracks the parcel by that number.
+- The opt-in browser phase asks the trace page through the browser service about
+  the ex-Exapaq depots' fourteen digits and the sixteen-digit labels, which the
+  group service need not hold, so HTTP recognition leaves them to it. It does not
+  ask about every run of digits the rules suggest, which are more often other
   carriers'. The trace page's dated rows for the requested number confirm it.
 - Labels print the `250` number with a GS1 check digit as a sixteenth digit, and
   links often carry that form. When the check digit matches, detection lists DPD

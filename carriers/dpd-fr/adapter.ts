@@ -10,6 +10,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { calendarDay, zonedTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, type TrawlClient } from '../../core/transport/index.js';
+import { DPDTracker } from '../dpd/adapter.js';
 import { isDeliveryStatusCell } from './identity.js';
 import { classifyStatus, comparableText, includesAny, isRebooking, isRecipientNotice } from './status.js';
 
@@ -26,6 +27,10 @@ import { classifyStatus, comparableText, includesAny, isRebooking, isRecipientNo
 //   is configured, and directly only without one.
 const TRACKING_BASE = 'https://trace.dpd.fr/fr/trace';
 const TIMEZONE = 'Europe/Paris';
+/** DPD France's own numbers, which browser recognition reads on the trace page (its catalog `browserRecognition` pattern). */
+const OWN_LAYOUTS = /^(?:10\d{12}|250\d{13})$/;
+/** DPD France as DPD's group guest service names its country. */
+const FRANCE = { country: 'FR', name: 'DPD France', carrier: 'dpd-fr', zone: TIMEZONE };
 const DEFAULT_TIMEOUT_MS = 90_000;
 const DIRECT_TIMEOUT_MS = 20_000;
 /** The browser service keeps its own transport allowance on top of this budget. */
@@ -387,11 +392,23 @@ export const adapter: AdapterFactory = (environment) => {
     trawl: environment.trawl,
     recorder: environment.recorder,
   });
+  // DPD's guest service answers for the whole group; Belgium's unit asks it alone.
+  const group = new DPDTracker({ country: 'BE', fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'dpd-fr',
     // The browser service's native scrape API, or a direct HTML GET without one.
     steps: ['direct', 'retry', 'trawl'],
     track: (input, context) => tracker.fetch(input.number, context, true),
+    // A parcel another DPD unit sent carries that unit's number. DPD's group service, which no
+    // challenge guards, places it at a French delivery depot. DPD France's own layouts are left to
+    // browser recognition: the group service need not hold them.
+    recognize: async (number, context) => {
+      if (!accepted(() => normalizeDPDFranceTrackingNumber(number))) return { known: false };
+      if (OWN_LAYOUTS.test(normalizeDPDFranceTrackingNumber(number))) {
+        throw new IndeterminateError('DPD France', 'Only the trace page settles DPD France\'s own numbers');
+      }
+      return { known: await group.deliversIn(number, FRANCE, context) };
+    },
     // Cloudflare challenges every plain GET, so only the browser phase can ask DPD France. The trace page
     // shows only the requested parcel, on Paris time: its dated rows confirm the number.
     recognizeWithBrowser: (number, context) => (accepted(() => normalizeDPDFranceTrackingNumber(number))

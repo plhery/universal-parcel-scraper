@@ -90,6 +90,22 @@ function recordingRecorder(): { recorder: StepRecorder; steps: StepRecord[] } {
 
 afterEach(() => vi.restoreAllMocks());
 
+/** Synthetic: another DPD unit's fourteen digits, as DPD's group service answers for them. */
+const GROUP_NUMBER = '06080000000001';
+
+/** DPD's group guest service answering for GROUP_NUMBER, placed in `countryCode` with `description` as its status. */
+function groupReply(countryCode: string, description: string) {
+  const details = JSON.parse(readFileSync(new URL('../dpd/fixtures/delivered-unverified.json', import.meta.url), 'utf8')) as
+    { parcelNumber: string; status: Record<string, unknown> };
+  expect(details.parcelNumber).toBe(GROUP_NUMBER);
+  Object.assign(details.status, { countryCode, description });
+  return vi.spyOn(globalThis, 'fetch')
+    .mockResolvedValueOnce(Response.json({ fid: 'unit-test-fid', authToken: { token: 'installation-token', expiresIn: '604800s' } }))
+    .mockResolvedValueOnce(Response.json({ entries: { basic_dpd_token: 'dW5pdDp0ZXN0' } }))
+    .mockResolvedValueOnce(Response.json({ access_token: 'unit-test-access-token', expires_in: 3600 }))
+    .mockResolvedValueOnce(Response.json(details));
+}
+
 it('reads the depot collection notice as ready for pickup', () => {
   const wording = 'Votre colis est disponible au retrait dans votre agence DPD';
   const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: [
@@ -633,7 +649,6 @@ describe('DPD France adapter factory', () => {
       { headers: { 'Content-Type': 'application/json' } });
     const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(scraped(trackingFixture()));
     const instance = adapter({ trawl, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {} });
-    expect(instance.recognize).toBeUndefined();
 
     const known = await instance.recognizeWithBrowser!(TEST_TRACKING_NUMBER, { budgetMs: 30_000 });
     expect(known).toMatchObject({ known: true, lastActivityAt: expect.any(String) });
@@ -660,8 +675,39 @@ describe('DPD France adapter factory', () => {
     // Synthetic: a 10xx depot's fourteen digits.
     const number = '10080000000001';
     expect(recognitionCandidates(number).map((candidate) => candidate.carrier)).not.toContain('dpd-fr');
+    // Another unit's fourteen digits are asked over HTTP, of DPD's group service, and never in a browser.
+    expect(recognitionCandidates(GROUP_NUMBER).map((candidate) => candidate.carrier)).toContain('dpd-fr');
+    expect(recognitionCandidates(GROUP_NUMBER, { phase: 'browser' }).map((candidate) => candidate.carrier)).not.toContain('dpd-fr');
     expect(recognitionCandidates(number, { phase: 'browser' }).map((candidate) => candidate.carrier)).toContain('dpd-fr');
     // Other runs of digits its rules suggest are more often other carriers': no browser lookup is spent on them.
     expect(recognitionCandidates('100800000000', { phase: 'browser' }).map((candidate) => candidate.carrier)).not.toContain('dpd-fr');
+  });
+
+  it('recognizes another DPD unit\'s number once DPD\'s group service places the parcel at a French delivery depot', async () => {
+    const fetcher = groupReply('FR', 'PARCEL_OUT_FOR_DELIVERY');
+    const instance = adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {} });
+    await expect(instance.recognize!(GROUP_NUMBER, { budgetMs: 15_000 })).resolves.toEqual({ known: true });
+    // Belgium's unit asks the group's service, as for DPD Ireland.
+    expect(String(fetcher.mock.calls[3]![0])).toContain('businessUnit=DPD-BE');
+  });
+
+  it('leaves a parcel DPD places in another country to that country\'s unit', async () => {
+    groupReply('DE', 'PARCEL_OUT_FOR_DELIVERY');
+    const instance = adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {} });
+    await expect(instance.recognize!(GROUP_NUMBER, { budgetMs: 15_000 })).resolves.toEqual({ known: false });
+  });
+
+  it('keeps a parcel in France before its delivery depot inconclusive: the country can still be the sender\'s', async () => {
+    groupReply('FR', 'IN_TRANSIT');
+    const instance = adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {} });
+    await expect(instance.recognize!(GROUP_NUMBER, { budgetMs: 15_000 })).rejects.toMatchObject({ kind: 'indeterminate' });
+  });
+
+  it('leaves DPD France\'s own numbers to the trace page and asks nothing for a number it does not issue', async () => {
+    const fetcher = vi.spyOn(globalThis, 'fetch');
+    const instance = adapter({ trawl: null, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {} });
+    await expect(instance.recognize!('10080000000001', { budgetMs: 15_000 })).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(instance.recognize!('84000000000001', { budgetMs: 15_000 })).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 });

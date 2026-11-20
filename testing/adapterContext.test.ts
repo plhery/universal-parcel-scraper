@@ -52,8 +52,15 @@ const APP_USER_AGENT: Readonly<Record<string, string>> = {
   'australia-post': 'okhttp/4.12.0', 'egypt-post': 'Dart/3.9 (dart:io)', jne: 'okhttp/4.12.0', 'posta-slovenije': 'MojaPosta/2.5.0 (android)',
 };
 const BROWSER_SERVICE = 'http://trawl.invalid';
-/** Recognition gets no postcode: Colis Privé recognizes a number only with its postcode at the end, which the corpus does not hold. */
-const RECOGNIZED: Readonly<Record<string, (number: string) => string>> = { 'colis-prive': (number) => `${number}75001` };
+/**
+ * Corpus numbers as recognition is asked about them. It gets no postcode: Colis Privé recognizes a number only with its
+ * postcode at the end, which the corpus does not hold. DPD France's HTTP recognition asks only about another DPD unit's
+ * fourteen digits, which its corpus does not hold either.
+ */
+const RECOGNIZED: Readonly<Record<string, (number: string) => string>> = {
+  'colis-prive': (number) => `${number}75001`,
+  'dpd-fr': (number) => `06${number.replace(/\D/g, '').slice(-12).padStart(12, '0')}`,
+};
 /** The browsers a host can configure besides plain HTTP. */
 interface Browsers { service: boolean; chromium: boolean }
 const ENVIRONMENTS: Readonly<Record<string, Browsers>> = {

@@ -15,7 +15,7 @@ import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { isPhoneNumber } from '../detection/phone.js';
 import { restsOnCheckDigit, ruleFits } from '../detection/rules.js';
 import { AUTOMATIC_CARRIER_IDS, CARRIER_DEFINITIONS, carrierAdapter, requiredRequirements } from './definitions.js';
-import { carrierBrand } from './networks.js';
+import { carrierBrand, GROUP_LOOKUP_BRANDS } from './networks.js';
 import type { CarrierInputField } from './types.js';
 
 /** Carriers asked at once. */
@@ -115,11 +115,14 @@ export function recognitionCandidates(
   const preferred: readonly string[] = unknownPostalCarrier
     ? postalMatches.filter((match) => match.preferred).map(({ carrier }) => carrier) : detected.preferred;
   const ranks = options.phase === 'browser' ? BROWSER_RECOGNITION_RANKS : CARRIER_RECOGNITION_RANKS;
-  // A carrier the number points to but that cannot be asked (DPD France) keeps
-  // its brand's other networks out: DPD's guest API also answers for DPD
-  // France parcels, and would file one under DPD Switzerland.
+  const patterns = options.phase === 'browser' ? BROWSER_RECOGNITION_PATTERNS : RECOGNITION_PATTERNS;
+  // A carrier the number points to but that cannot be asked about it keeps its
+  // brand's other networks out when they share one lookup: DPD's guest API also
+  // answers for DPD France's own parcels, which only DPD France's trace page
+  // reads, and would file one under DPD Switzerland.
   const shadowed = new Set(preferred
-    .filter((carrier) => ranks[carrier] === undefined)
+    .filter((carrier) => ranks[carrier] === undefined
+      || (GROUP_LOOKUP_BRANDS.includes(carrierBrand(carrier) ?? '') && patterns.get(carrier)?.test(normalized) === false))
     .map((carrier) => carrierBrand(carrier)).filter(Boolean));
   const country = options.countryHint?.trim().toUpperCase();
   const countryScore = (carrier: string) => {
@@ -141,8 +144,7 @@ export function recognitionCandidates(
     const tracking = CARRIER_DEFINITIONS[carrier as CarrierId]?.tracking;
     if (tracking?.recognitionServedCountriesOnly && bareRun && countryScore(carrier) === 0) return false;
     // A browser lookup is costly: a carrier names the numbers worth one (DPD France its own layouts, not every run of digits).
-    if (options.phase === 'browser') return BROWSER_RECOGNITION_PATTERNS.get(carrier)?.test(normalized) ?? true;
-    return RECOGNITION_PATTERNS.get(carrier)?.test(normalized) ?? true;
+    return patterns.get(carrier)?.test(normalized) ?? true;
   };
   const asked = candidates.filter((carrier) => ranks[carrier] !== undefined && AUTOMATIC_CARRIER_IDS.has(carrier)
     && carrierAdapter(carrier) !== 'universal' && answers(carrier) && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier));

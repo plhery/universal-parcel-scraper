@@ -1222,6 +1222,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "dpd-fr",
+      "recognitionRank": 693,
+      "recognitionPattern": "^(?:0\\d|1[1-9])\\d{12}$",
       "browserRecognitionRank": 700,
       "browserRecognitionPattern": "^(?:10\\d{12}|250\\d{13})$",
       "browser": true

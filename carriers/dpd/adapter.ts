@@ -1024,6 +1024,35 @@ export class DPDTracker {
   }
 
   /**
+   * Whether the guest reply places a parcel at a delivery depot of `unit`'s country or past it,
+   * for a DPD unit with a tracker of its own but no guest selector, such as DPD France: a parcel
+   * sent from another country there carries that country's number. Before the delivery depot, the
+   * status's country can be the sender's, so that is inconclusive, as is a reply naming no
+   * country. Another country, or a positive not-found, is false.
+   */
+  async deliversIn(raw: string, unit: { country: string; name: string; carrier: string; zone: string },
+    context: TrackingContext = {}): Promise<boolean> {
+    const trackingNumber = dpdParcelNumber(raw);
+    if (!trackingNumber) return false;
+    const lookup = lookupBudget(context, this.budgetMs, unit.carrier);
+    try {
+      const payload = await this.detailsWithFreshToken(trackingNumber, undefined, lookup);
+      if (clean(payload.parcelNumber ?? payload.shipmentId) !== trackingNumber) return false;
+      const current = isRecord(payload.status) ? payload.status : {};
+      const country = known(current.countryCode).toUpperCase();
+      if (/^[A-Z]{2}$/.test(country) && country !== unit.country) return false;
+      if (country !== unit.country || !DELIVERY_SIDE.has(known(current.description).toUpperCase())) {
+        throw new IndeterminateError(unit.name, `DPD placed the parcel at no delivery depot of ${unit.name}`);
+      }
+      requireGuestActivity(payload, parseDPDTrackingApi(payload, trackingNumber, undefined, unit.zone));
+      return true;
+    } catch (error) {
+      if (error instanceof DPDTrackingError) return false;
+      throw this.reported(error);
+    }
+  }
+
+  /**
    * The Swiss page and the German app can answer after Cloudflare's challenge
    * or DPD's rate limit, so those stay inconclusive for them. Belgium, the
    * Netherlands, Hungary, Italy and Brazil have no tier after the guest API, and report them as what they are.
