@@ -5759,5 +5759,10 @@
     "carrier": "wallenius-wilhelmsen",
     "kind": "open",
     "reason": "The WLWH-qualified manifest sample matches after removing its SCAC. A larger published bill sample is needed for a detection rule."
+  },
+  {
+    "carrier": "hoegh-autoliners",
+    "kind": "open",
+    "reason": "The native service confirms the full HOEG-prefixed bills. The carrier remains explicitly selectable pending a detection review."
   }
 ]

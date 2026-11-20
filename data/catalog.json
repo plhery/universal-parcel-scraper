@@ -30748,6 +30748,30 @@
       }
     ]
   },
+  "hoegh-autoliners": {
+    "displayName": "Höegh Autoliners",
+    "color": "#007383",
+    "aliases": [
+      "Hoegh Autoliners",
+      "Höegh Autoliners AS",
+      "HUAL"
+    ],
+    "countries": [
+      "NO"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hoegh-autoliners",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "trackingUrlTemplate": "https://www.hoeghautoliners.com/my-cargo",
+    "trackingSearchUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "holisol": {
     "displayName": "Holisol",
     "color": "#13467b",

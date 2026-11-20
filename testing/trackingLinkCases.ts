@@ -2494,6 +2494,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'hoegh-autoliners': 'The public My Cargo form submits the bill through its API, so the link opens the search form.',
   'wallenius-wilhelmsen': 'The public site embeds Visibility and submits the bill through its form, so the link opens the search page.',
   'xanh-thl': 'The number goes into a homepage form and is posted to the guest API, so the tracking link opens the form.',
   'mandde': 'The public page submits the guide through its API and clears query parameters, so the link opens the search form.',

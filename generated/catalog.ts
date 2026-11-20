@@ -30752,6 +30752,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "hoegh-autoliners": {
+    "displayName": "Höegh Autoliners",
+    "color": "#007383",
+    "aliases": [
+      "Hoegh Autoliners",
+      "Höegh Autoliners AS",
+      "HUAL"
+    ],
+    "countries": [
+      "NO"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hoegh-autoliners",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "trackingUrlTemplate": "https://www.hoeghautoliners.com/my-cargo",
+    "trackingSearchUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "holisol": {
     "displayName": "Holisol",
     "color": "#13467b",
@@ -67424,6 +67448,7 @@ export const CARRIER_IDS = [
   "hiyes",
   "hkd-express",
   "hlog-transportes",
+  "hoegh-autoliners",
   "holisol",
   "home-delivery-team",
   "homexpress",
@@ -69340,6 +69365,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hiyes": [],
   "hkd-express": [],
   "hlog-transportes": ["hlog-transportes-1"],
+  "hoegh-autoliners": [],
   "holisol": [],
   "home-delivery-team": [],
   "homexpress": [],

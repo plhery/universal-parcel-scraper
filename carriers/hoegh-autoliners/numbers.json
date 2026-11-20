@@ -1,0 +1,45 @@
+{
+  "carrier": "hoegh-autoliners",
+  "records": [
+    {
+      "number": "HOEG7L177KSX0008",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/saint-martin-cars",
+        "access": "full_page",
+        "date": "2026-11-10",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "complete Höegh Autoliners bill of lading on a public ocean manifest",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The native cargo tracker echoed the complete bill on all 3 cargo rows and returned dated movements."
+    },
+    {
+      "number": "HOEG3I90SOSJ0002",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/toyota-de-puerto-rico-corp",
+        "access": "full_page",
+        "date": "2026-11-10",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "complete Höegh Autoliners bill of lading on a public ocean manifest",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The native cargo tracker echoed the complete bill on all 39 cargo rows and returned dated movements."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "hoegh-autoliners",
+  "displayName": "Höegh Autoliners",
+  "aliases": [
+    "Hoegh Autoliners",
+    "Höegh Autoliners AS",
+    "HUAL"
+  ],
+  "region": {
+    "countries": [
+      "NO"
+    ]
+  },
+  "brand": {
+    "color": "#007383"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hoegh-autoliners",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.hoeghautoliners.com/my-cargo",
+    "searchUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "canaryUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "delivery_date",
+      "dimensions",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "delivery_date",
+      "dimensions",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
