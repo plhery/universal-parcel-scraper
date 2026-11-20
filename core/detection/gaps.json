@@ -5524,5 +5524,10 @@
     "carrier": "move-cargo",
     "kind": "by_design",
     "reason": "Move Cargo publishes MC-prefixed demo references. Select the carrier explicitly until the issued number format is documented."
+  },
+  {
+    "carrier": "air-greenland",
+    "kind": "by_design",
+    "reason": "Air Greenland cargo is selectable explicitly. The IATA airwaybill prefix and numeric format have not been assessed against existing carrier assignments."
   }
 ]

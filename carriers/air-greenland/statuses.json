@@ -1,0 +1,9 @@
+{
+  "carrier": "air-greenland",
+  "entries": [
+    { "code": "manifested", "wording": "manifested on", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "arrived", "wording": "arrived at", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "delivered_to_handler", "wording": "delivered to handling agent", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": "delivered", "wording": "delivered to customer or his agent", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

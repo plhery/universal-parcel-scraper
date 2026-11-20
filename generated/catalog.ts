@@ -7319,6 +7319,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "air-greenland": {
+    "displayName": "Air Greenland Cargo",
+    "color": "#c3122f",
+    "aliases": [
+      "Air Greenland",
+      "Grønlandsfly"
+    ],
+    "countries": [
+      "GL"
+    ],
+    "selectable": true,
+    "timezone": "America/Nuuk",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-greenland"
+    },
+    "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "trackingUrlTemplate": "https://airgreenland.com/cargo/tracking-awb/",
+    "trackingSearchUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-star-xpress": {
     "displayName": "Air Star Xpress",
     "color": "#227337",
@@ -65575,6 +65597,7 @@ export const CARRIER_IDS = [
   "ahl-courier",
   "aics",
   "aiolos-courier",
+  "air-greenland",
   "air-star-xpress",
   "airmee",
   "airpak-express",
@@ -67444,6 +67467,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ahl-courier": [],
   "aics": [],
   "aiolos-courier": [],
+  "air-greenland": [],
   "air-star-xpress": [],
   "airmee": [],
   "airpak-express": [],
