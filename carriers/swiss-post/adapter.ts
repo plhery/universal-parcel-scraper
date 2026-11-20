@@ -241,8 +241,11 @@ function preAdviceClock(code: string, time: string): string {
   return isoTime(wall, PRE_ADVICE_ZONE)?.iso ?? time;
 }
 
-/** Ready at a PickPost or My Post 24 point, and the point's own arrival scans. */
-const PICKUP_READY = new Set(['2101', '2102']);
+/**
+ * Ready at a PickPost or My Post 24 point, or a pickup notice left on the round,
+ * and the point's own arrival scans.
+ */
+const PICKUP_READY = new Set(['2101', '2102', '910', '2100']);
 const PICKUP_ARRIVAL = new Set(['1001', '1100']);
 const LEFT_THE_POINT = new Set<string>(['out_for_delivery', 'delivered', 'failed_attempt', 'returned']);
 

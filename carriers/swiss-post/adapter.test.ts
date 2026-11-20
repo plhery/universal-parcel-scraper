@@ -283,6 +283,17 @@ describe('Swiss Post event codes', () => {
     // An arrival with no pickup notice before it stays in transit.
     expect(parseSwissPostShipment(item(), [scans[0]!, scans[2]!]).current_stage).toBe('in_transit');
   });
+
+  it('keeps a letter ready for collection when the counter scans its arrival after the notice left on the round', () => {
+    const result = parseSwissPostShipment(item({ type: 'LETTER', product: { code: '106' } }), [
+      scan('1001', '2026-09-01T06:14:00+02:00'),
+      scan('2100', '2026-09-01T09:32:00+02:00'),
+      scan('1300', '2026-09-01T12:23:00+02:00'),
+      scan('1001', '2026-09-02T06:43:00+02:00'),
+    ]);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup' });
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'ready_for_pickup', 'in_transit']);
+  });
 });
 
 describe('Swiss Post projection', () => {
