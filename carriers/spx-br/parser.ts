@@ -226,6 +226,16 @@ function summarize(scans: readonly Scan[]): CarrierResult {
     }
   });
 
+  // A round can end in A106 and then F650 for that round: the attempt is F650's, and A106 before it is a notice that
+  // keeps the round's stage. Alone, A106 is the round's failed end.
+  events.forEach((event, index) => {
+    if (event.provider_code !== 'A106') return;
+    const next = events.slice(0, index).reverse().find((scan) => scan.stage);
+    if (next?.provider_code !== 'F650') return;
+    const before = events.slice(index + 1).find((scan) => scan.stage);
+    Object.assign(event, { stage: before?.stage ?? 'out_for_delivery', stage_source: 'none' });
+  });
+
   // A return to the seller (F680, or F988 asking the buyer to wait) starts the way back: the sorting scans since the latest
   // one carry the parcel back. A round after it takes the parcel to the buyer again, and the scans before the round too.
   const start = events.findIndex((event) => event.stage && event.stage !== 'in_transit');

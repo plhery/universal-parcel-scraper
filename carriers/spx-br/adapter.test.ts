@@ -604,6 +604,21 @@ describe('SPX Express Brazil status vocabulary', () => {
   });
 });
 
+it('reads the round’s end once when A106 and F650 both report it, and A106 alone as that end', () => {
+  const row = (tracking_code: string, actual_time: number, description = 'Sintético') =>
+    ({ tracking_code, tracking_name: 'Sintético', description, actual_time, display_flag: 1 });
+  const history = (...records: Row[]) => parseSpxBr(changed('in-transit', (tracking) => { tracking.records = records; }), IN_TRANSIT);
+  const both = history(row('F600', 1_779_190_000), row('F650', 1_779_180_000), row('A106', 1_779_170_000), row('F600', 1_779_160_000),
+    row('F599', 1_779_150_000));
+  expect(both.events?.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([
+    ['F600', 'out_for_delivery', 'carrier_map'], ['F650', 'failed_attempt', 'carrier_map'], ['A106', 'out_for_delivery', 'none'],
+    ['F600', 'out_for_delivery', 'carrier_map'], ['F599', 'in_transit', 'carrier_map']]);
+  const alone = history(row('F600', 1_779_190_000), row('A106', 1_779_170_000), row('F600', 1_779_160_000));
+  expect(alone.events?.[1]).toMatchObject({ provider_code: 'A106', stage: 'failed_attempt', stage_source: 'carrier_map' });
+  // While A106 is the newest, the round failed.
+  expect(history(row('A106', 1_779_170_000), row('F600', 1_779_160_000))).toMatchObject({ current_stage: 'failed_attempt' });
+});
+
 it('reads the return to the seller from F988 and the sorting scans after it as the way back, until a round', () => {
   expect(['F988', 'F999'].map(code => spxBrStage(code, '')?.stage)).toEqual(['returned', 'returned']);
   const row = (tracking_code: string, actual_time: number, description = 'Sintético') =>

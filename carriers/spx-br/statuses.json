@@ -389,7 +389,7 @@
       "language": "pt",
       "stage": "failed_attempt",
       "confirmedBy": "live",
-      "note": "Given overnight after a delivery round that ended without F980 or F650; the parcel went out again the next day."
+      "note": "Given overnight after a delivery round that ended without F980 or F650; the parcel went out again the next day. When F650 follows it for the same round, the adapter keeps A106 a notice and the attempt F650's."
     },
     {
       "code": "F653",
