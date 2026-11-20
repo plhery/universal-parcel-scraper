@@ -1,0 +1,57 @@
+{
+  "success": true,
+  "core": true,
+  "shipment": {
+    "reference": "ZZ00000000001",
+    "tracker": "ZZ00000000002",
+    "last_status": "D",
+    "exception_code": 0,
+    "courier": "SPEDIRE PRIORITY",
+    "main_alias": "spedire",
+    "courier_logo": "spedire.svg",
+    "sender": "Sender name",
+    "sender_city": "Sender city",
+    "sender_postcode": "00000",
+    "sender_country": "IT",
+    "sender_drop": false,
+    "is_pickup_required": true,
+    "receiver": "Receiver name",
+    "receiver_city": "Receiver city",
+    "receiver_postcode": "00000",
+    "receiver_country": "IT",
+    "pickups": [],
+    "created_at": "2026-03-02 09:15:00"
+  },
+  "tracking": [
+    {
+      "data": "2026-03-04 11:20:00",
+      "place": "MILANO",
+      "status": "Consegnata"
+    },
+    {
+      "data": "2026-03-04 08:05:00",
+      "place": "MILANO",
+      "status": "In consegna"
+    },
+    {
+      "data": "2026-03-03 18:40:00",
+      "place": "BOLOGNA",
+      "status": "In transito"
+    },
+    {
+      "data": "2026-03-03 18:40:00",
+      "place": "BOLOGNA",
+      "status": "In transito"
+    },
+    {
+      "data": "2026-03-02 16:00:00",
+      "place": "ROMA",
+      "status": "Presa in carico"
+    },
+    {
+      "data": "2026-03-02 09:15:00",
+      "place": "Spedire.com",
+      "status": "Spedizione creata"
+    }
+  ]
+}

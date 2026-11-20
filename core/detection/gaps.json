@@ -3483,6 +3483,12 @@
     "reason": "SP Express's Cainiao-page numbers, a destination country code and twelve digits, are too few to tie the layout to SP Express alone, so no rule claims them."
   },
   {
+    "carrier": "spedire",
+    "pattern": "^OE\\d{11}$",
+    "kind": "open",
+    "reason": "One public Spedire shipment reference of this layout; the family is not established."
+  },
+  {
     "carrier": "speedex",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

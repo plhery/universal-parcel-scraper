@@ -53885,6 +53885,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "spedire": {
+    "displayName": "Spedire",
+    "color": "#0F3460",
+    "aliases": [
+      "spedire by alsendo",
+      "spedire pro",
+      "spedire pro by alsendo",
+      "Spedire.com"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spedire",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.spedire.com/traccia-spedizione",
+    "trackingUrlTemplate": "https://www.spedire.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.spedire.com/traccia-spedizione",
+    "linkRules": [
+      {
+        "domains": [
+          "spedire.com"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "speed-and-safe": {
     "displayName": "Gokulam Speed & Safe",
     "color": "#2e3192",
@@ -66832,6 +66864,7 @@ export const CARRIER_IDS = [
   "sp-express",
   "spark-kz",
   "sped-trans",
+  "spedire",
   "speed-and-safe",
   "speedaf",
   "speedex",
@@ -68697,6 +68730,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sp-express": ["sp-express-1"],
   "spark-kz": [],
   "sped-trans": [],
+  "spedire": [],
   "speed-and-safe": [],
   "speedaf": ["speedaf-12","speedaf-r"],
   "speedex": [],
