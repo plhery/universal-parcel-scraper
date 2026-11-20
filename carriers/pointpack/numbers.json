@@ -1,5 +1,51 @@
 {
   "carrier": "pointpack",
-  "gap": "No public page shows a whole Pointpack parcel id.",
-  "records": []
+  "records": [
+    {
+      "number": "Po13200911953",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-pointpack",
+        "date": "2026-01-19",
+        "dateKind": "customer review",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Polish parcel point service",
+        "reportedRole": "numer przesyłki",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "A review lists this exact mixed-case reference and says Pointpack created the shipment order during a DHL handoff. The Pointpack tracking URL returned the application shell without a shipment history."
+    },
+    {
+      "number": "00559007738294153046",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-pointpack",
+        "date": "2025-01-03",
+        "dateKind": "customer review",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Polish parcel point service",
+        "reportedRole": "numer przesyłki",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      },
+      "note": "The customer posts the parcel identifier under a Pointpack review. Its format is also used by Pointpack’s partner Poczta Polska, and the public tracking URL returned the application shell without resolving its scope."
+    }
+  ]
 }
