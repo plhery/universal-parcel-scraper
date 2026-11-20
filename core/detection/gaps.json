@@ -5592,5 +5592,10 @@
     "kind": "open",
     "carrier": "flow-progressive-logistics",
     "reason": "The official tracker confirms one indexed FLOW waybill. Explicit selection is available while issuance and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "thai-nexus",
+    "reason": "The carrier confirms its published TNX waybill and separate demo. Explicit selection is available while issuance, suffix lengths, and overlaps remain open."
   }
 ]

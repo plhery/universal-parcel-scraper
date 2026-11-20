@@ -1,0 +1,23 @@
+{
+  "carrier": "thai-nexus",
+  "records": [
+    {
+      "number": "TNX1783820599067POM",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://thainexus.co.th/en/shipment-tracking", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The official tracking guide shows this number. The public tracker returns eleven dated July 2026 events ending in delivery."
+    },
+    {
+      "number": "SR-FW-000123-1",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://tracking.thainexus.co.th/track/SR-FW-000123-1", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The tracker advertises this separate demo on its not-found screen and returns four dated events for the exact printed form."
+    }
+  ]
+}

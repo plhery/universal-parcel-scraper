@@ -1,0 +1,9 @@
+{
+  "carrier": "thai-nexus",
+  "entries": [
+    { "code": null, "wording": "Created", "stage": "registered", "language": "en", "confirmedBy": "live",
+      "note": "The detail for the first scan says Label created." },
+    { "code": null, "wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
+}

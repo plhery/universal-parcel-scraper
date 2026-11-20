@@ -1,0 +1,27 @@
+{
+  "id": "thai-nexus",
+  "displayName": "Thai Nexus",
+  "aliases": ["Thai Nexus Express", "Thai Nexus Logistics", "Thai Nexus Point"],
+  "region": { "countries": ["TH"] },
+  "brand": { "color": "#182e58" },
+  "selectable": true,
+  "timezone": "Asia/Bangkok",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "thai-nexus",
+    "steps": ["direct"]
+  },
+  "capabilities": ["history"],
+  "portal": {
+    "url": "https://tracking.thainexus.co.th/track/{trackingNumber}",
+    "searchUrl": "https://tracking.thainexus.co.th/",
+    "canaryUrl": "https://tracking.thainexus.co.th/",
+    "helpUrl": "https://thainexus.co.th/en/shipment-tracking",
+    "shows": ["status", "history", "tracking_details", "event_notes", "event_locations"],
+    "scraped": ["status", "history"],
+    "discarded": ["tracking_details", "event_notes", "event_locations"],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

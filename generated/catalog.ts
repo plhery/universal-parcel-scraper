@@ -57297,6 +57297,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "thai-nexus": {
+    "displayName": "Thai Nexus",
+    "color": "#182e58",
+    "aliases": [
+      "Thai Nexus Express",
+      "Thai Nexus Logistics",
+      "Thai Nexus Point"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "thai-nexus"
+    },
+    "canaryUrl": "https://tracking.thainexus.co.th/",
+    "trackingUrlTemplate": "https://tracking.thainexus.co.th/track/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.thainexus.co.th/",
+    "helpUrl": "https://thainexus.co.th/en/shipment-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "the-delivery-group": {
     "displayName": "The Delivery Group",
     "color": "#87b04a",
@@ -67314,6 +67338,7 @@ export const CARRIER_IDS = [
   "tforce-integrated-solutions",
   "tforce-logistics",
   "thabit-logistics",
+  "thai-nexus",
   "the-delivery-group",
   "the-human-express",
   "thelorry",
@@ -69195,6 +69220,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tforce-integrated-solutions": [],
   "tforce-logistics": ["tforce-logistics-1"],
   "thabit-logistics": [],
+  "thai-nexus": [],
   "the-delivery-group": [],
   "the-human-express": ["the-human-express-1"],
   "thelorry": ["thelorry-1"],

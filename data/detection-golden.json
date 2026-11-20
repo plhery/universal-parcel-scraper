@@ -109800,6 +109800,12 @@
     ]
   },
   {
+    "input": "SR-FW-000123-1",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SR270017412103",
     "carrier": "unknown",
     "confidence": "none",
@@ -111343,6 +111349,12 @@
     "asked": [
       "lex-my"
     ]
+  },
+  {
+    "input": "TNX1783820599067POM",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "TP289004151IE",
