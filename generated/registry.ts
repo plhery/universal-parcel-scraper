@@ -303,6 +303,7 @@ import { adapter as forzaDelivery } from '../carriers/forza-delivery/adapter.js'
 import { adapter as fourPx } from '../carriers/four-px/adapter.js';
 import { adapter as foxpost } from '../carriers/foxpost/adapter.js';
 import { adapter as franchExpress } from '../carriers/franch-express/adapter.js';
+import { adapter as freightClub } from '../carriers/freight-club/adapter.js';
 import { adapter as freightwaysGlobal } from '../carriers/freightways-global/adapter.js';
 import { adapter as frontierCa } from '../carriers/frontier-ca/adapter.js';
 import { adapter as ftdNz } from '../carriers/ftd-nz/adapter.js';
@@ -1202,6 +1203,7 @@ export const REGISTRY: RegistryDefinition = {
     "four-px": fourPx,
     "foxpost": foxpost,
     "franch-express": franchExpress,
+    "freight-club": freightClub,
     "freightways-global": freightwaysGlobal,
     "frontier-ca": frontierCa,
     "ftd-nz": ftdNz,
@@ -2439,6 +2441,7 @@ export const REGISTRY: RegistryDefinition = {
     "foz-post": "universal",
     "fragilepak": "universal",
     "franch-express": "franch-express",
+    "freight-club": "freight-club",
     "freightways-global": "freightways-global",
     "freja": "universal",
     "frontdoor-collective": "universal",

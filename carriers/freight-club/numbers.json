@@ -1,0 +1,56 @@
+{
+  "carrier": "freight-club",
+  "records": [
+    {
+      "number": "FCT1331382558750932992",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://app.freightclub.com/Tracking/FCT1331382558750932992",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Public Freight Club result for a January 2025 Pilot Freight Services shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      }
+    },
+    {
+      "number": "FCT914941113746325504",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://app.freightclub.com/Tracking/FCT914941113746325504",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Public Freight Club result for a FragilePAK shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      }
+    },
+    {
+      "number": "FCT903748028093956096",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://app.freightclub.com/Tracking/FCT903748028093956096",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Public Freight Club result for a Metropolitan Warehouse shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      }
+    }
+  ]
+}

@@ -26442,6 +26442,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "freight-club": {
+    "displayName": "Freight Club",
+    "color": "#005a80",
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "freight-club"
+    },
+    "canaryUrl": "https://app.freightclub.com/Tracking",
+    "trackingUrlTemplate": "https://app.freightclub.com/Tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://app.freightclub.com/Tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "app.freightclub.com"
+        ],
+        "pathPattern": "^/Tracking(?:/[A-Za-z0-9_-]{3,80})?/?$",
+        "path": "^/Tracking/([A-Za-z0-9_-]{3,80})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "freightways-global": {
     "displayName": "Freightways Global",
     "color": "#20a9e1",
@@ -66171,6 +66198,7 @@ export const CARRIER_IDS = [
   "foz-post",
   "fragilepak",
   "franch-express",
+  "freight-club",
   "freightways-global",
   "freja",
   "frontdoor-collective",
@@ -68042,6 +68070,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "foz-post": [],
   "fragilepak": ["fragilepak-1"],
   "franch-express": [],
+  "freight-club": [],
   "freightways-global": [],
   "freja": [],
   "frontdoor-collective": [],

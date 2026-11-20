@@ -5534,5 +5534,10 @@
     "carrier": "westjet-cargo",
     "kind": "by_design",
     "reason": "WestJet Cargo is selectable explicitly. The air waybill prefix and check digit have not been assessed against other carriers."
+  },
+  {
+    "carrier": "freight-club",
+    "kind": "by_design",
+    "reason": "Freight Club accepts its own booking references and delivery partners’ references. Select it explicitly."
   }
 ]
