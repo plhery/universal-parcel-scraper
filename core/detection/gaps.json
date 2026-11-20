@@ -5084,5 +5084,11 @@
     "pattern": "^[0-9]{7}$",
     "kind": "open",
     "reason": "The customer distinguishes this seven-digit Focus shipment reference from the merchant’s order reference. Detection does not offer Focus Logistics."
+  },
+  {
+    "carrier": "flechacarga",
+    "pattern": "^R[0-9]{8}$",
+    "kind": "open",
+    "reason": "The court reproduces a Buspack tracking guide with the letter, branch and serial in the form FlechaCarga describes. Detection does not offer FlechaCarga."
   }
 ]
