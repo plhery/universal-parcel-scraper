@@ -61465,7 +61465,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Ho_Chi_Minh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "vnpost"
     },
     "canaryUrl": "https://vnpost.vn/",
     "trackingSearchUrl": "https://vnpost.vn/vi/ca-nhan/chuyen-phat/chuyen-phat-trong-nuoc",

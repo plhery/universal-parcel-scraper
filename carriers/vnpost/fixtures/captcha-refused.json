@@ -1,0 +1,8 @@
+{
+  "message": "Dữ liệu không hợp lệ",
+  "errors": {
+    "captcha": [
+      "Captcha không đúng hoặc đã hết hạn"
+    ]
+  }
+}

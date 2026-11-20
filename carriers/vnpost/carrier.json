@@ -18,17 +18,58 @@
   "timezone": "Asia/Ho_Chi_Minh",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "vnpost",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "weight",
+    "destination_country",
+    "delivered_at"
+  ],
   "portal": {
     "searchUrl": "https://vnpost.vn/vi/ca-nhan/chuyen-phat/chuyen-phat-trong-nuoc",
     "canaryUrl": "https://vnpost.vn/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "coordinates",
+      "offset_timestamps",
+      "weight",
+      "origin",
+      "destination",
+      "origin_country",
+      "destination_country",
+      "recipient_name",
+      "office_contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "coordinates",
+      "offset_timestamps",
+      "weight",
+      "provider_code",
+      "destination_country",
+      "delivered_at"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "origin_country",
+      "recipient_name",
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

@@ -228,6 +228,25 @@
         "confidence": "high"
       },
       "note": "An archived lookup on VNPost's own tracking page passes it as the item number; the capture was not opened."
+    },
+    {
+      "number": "EK572324490VN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://phuocgiang.quangngai.gov.vn/upload/2007032/20260320/%C4%90%C6%A0N%20B%C3%80%20H%C3%80%2018-03-2026%2014.46_1.pdf",
+        "date": "2026-03-20",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An EMS receipt in a document a commune published; VNPost's tracker shows the item's domestic history to its delivery."
     }
   ]
 }

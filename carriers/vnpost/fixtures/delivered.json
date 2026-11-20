@@ -1,0 +1,139 @@
+{
+  "info": {
+    "ID": "EK572324490VN",
+    "Weight": "16",
+    "Nuoc_Chapnhan": "VN - VIETNAM",
+    "BC_GUI": "571020 - Quang Trung",
+    "Nuoc_Phat": "VN - VIETNAM",
+    "BC_PHAT": "57 - Quảng Ngãi ",
+    "LO_GUI": 0,
+    "isBHBG": "0"
+  },
+  "locate": [
+    {
+      "TraceDate": "2026-03-16T19:13:34+07:00",
+      "Date": "16/03/2026",
+      "TimeDetail": "19:13:34",
+      "StatusText": "EMA - Chấp nhận gửi (Posting / Collection) (571020: Quang Trung - Quảng Ngãi ) (Đầu mối CSKH: 1900 545481)",
+      "VI_TRI": "70 Đường Quang Trung, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "571020",
+      "Long": "108.801632846675",
+      "Lat": "15.1308474774935",
+      "Status": "KT1"
+    },
+    {
+      "TraceDate": "2026-03-16T19:32:32.207+07:00",
+      "Date": "16/03/2026",
+      "TimeDetail": "19:32:32",
+      "StatusText": "Đi khỏi bưu cục (Departure from PO) (571020: Quang Trung - Quảng Ngãi )",
+      "VI_TRI": "70 Đường Quang Trung, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "571020",
+      "Long": "108.801632846675",
+      "Lat": "15.1308474774935",
+      "Status": "KT2"
+    },
+    {
+      "TraceDate": "2026-03-17T07:11:06.457+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "07:11:06",
+      "StatusText": "Đã đến bưu cục (Arrival at PO) (570100: KTC1 Quảng Ngãi - Quảng Ngãi )",
+      "VI_TRI": "Đường Đinh Tiên Hoàng, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "570100",
+      "Long": "108.81865757688168",
+      "Lat": "15.108906269732922",
+      "Status": "KT3"
+    },
+    {
+      "TraceDate": "2026-03-17T07:33:10.993+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "07:33:10",
+      "StatusText": "Đi khỏi bưu cục (Departure from PO) (570100: KTC1 Quảng Ngãi - Quảng Ngãi )",
+      "VI_TRI": "Đường Đinh Tiên Hoàng, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "570100",
+      "Long": "108.81865757688168",
+      "Lat": "15.108906269732922",
+      "Status": "KT2"
+    },
+    {
+      "TraceDate": "2026-03-17T07:46:44.64+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "07:46:44",
+      "StatusText": "Đã vận chuyển đi khỏi bưu cục (Transport departure from PO) (570100: KTC1 Quảng Ngãi - Quảng Ngãi )",
+      "VI_TRI": "Đường Đinh Tiên Hoàng, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "570100",
+      "Long": "108.81865757688168",
+      "Lat": "15.108906269732922",
+      "Status": "VC3"
+    },
+    {
+      "TraceDate": "2026-03-17T08:25:13.137+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "08:25:13",
+      "StatusText": "Đã vận chuyển đến bưu cục (Transport arrival at PO) (573050: BCP Nghĩa Hành - Quảng Ngãi )",
+      "VI_TRI": "Tổ Dân Phố Phú Vinh Trung, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "573050",
+      "Long": "108.776973434499",
+      "Lat": "15.0467224982629",
+      "Status": "VC4"
+    },
+    {
+      "TraceDate": "2026-03-17T08:26:38.107+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "08:26:38",
+      "StatusText": "Đã đến bưu cục (Arrival at PO) (573050: BCP Nghĩa Hành - Quảng Ngãi )",
+      "VI_TRI": "Tổ Dân Phố Phú Vinh Trung, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "573050",
+      "Long": "108.776973434499",
+      "Lat": "15.0467224982629",
+      "Status": "KT3"
+    },
+    {
+      "TraceDate": "2026-03-17T08:55:52+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "08:55:52",
+      "StatusText": "EDG - Đã giao bưu tá phát - Item out for physical delivery (573050: BCP Nghĩa Hành - Quảng Ngãi )",
+      "VI_TRI": "Tổ Dân Phố Phú Vinh Trung, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "573050",
+      "Long": "108.776973434499",
+      "Lat": "15.0467224982629",
+      "Status": "KT12"
+    },
+    {
+      "TraceDate": "2026-03-17T08:55:52+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "08:55:52",
+      "StatusText": "Routed (573050: BCP Nghĩa Hành - Quảng Ngãi )",
+      "VI_TRI": "Tổ Dân Phố Phú Vinh Trung, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "573050",
+      "Long": "108.776973434499",
+      "Lat": "15.0467224982629",
+      "Status": "KT18"
+    },
+    {
+      "TraceDate": "2026-03-17T09:12:55+07:00",
+      "Date": "17/03/2026",
+      "TimeDetail": "09:12:55",
+      "StatusText": "EMI - Phát thành công (Delivered) (573050: BCP Nghĩa Hành - Quảng Ngãi )",
+      "VI_TRI": "Tổ Dân Phố Phú Vinh Trung, Quảng Ngãi, Quảng Ngãi ",
+      "POSCode": "573050",
+      "Long": "108.776973434499",
+      "Lat": "15.0467224982629",
+      "Status": "KT5"
+    }
+  ],
+  "delivery": [
+    {
+      "DATE": "17/03/2026",
+      "TIMEDETAIL": "09:12:00",
+      "TimeDetail": "",
+      "NGAY_PHAT": "17/03/2026 09:12:00",
+      "NGAY_NHAP": "17/03/2026 09:12:55",
+      "NGAY_TRUYEN": "17/03/2026 09:13:28 / 17/03/2026 09:13:28",
+      "VI_TRI": "573050 - BCP Nghĩa Hành",
+      "ToPOSCode": "573050",
+      "STATUSTEXT": "Đã phát thành công . Người nhận:()ubnd phước giang",
+      "IsDeliverable": "true",
+      "CauseCode": []
+    }
+  ]
+}

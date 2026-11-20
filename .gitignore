@@ -16,3 +16,4 @@ private.numbers.json
 *.p12
 *.pfx
 .DS_Store
+__pycache__/

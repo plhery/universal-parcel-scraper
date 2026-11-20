@@ -1,9 +1,15 @@
 {
   "carrier": "vnpost",
   "entries": [
+    {"code": "KT1", "wording": "EMA - Chấp nhận gửi (Posting / Collection)", "stage": "accepted", "language": "vi", "confirmedBy": "live", "note": "The posting scan, opened by its UPU event code."},
+    {"code": "KT2", "wording": "Đi khỏi bưu cục (Departure from PO)", "stage": "in_transit", "language": "vi", "confirmedBy": "live", "note": "Left a post office; the office follows in brackets."},
+    {"code": "KT3", "wording": "Đã đến bưu cục (Arrival at PO)", "stage": "in_transit", "language": "vi", "confirmedBy": "live", "note": "Arrived at a post office; the office follows in brackets."},
+    {"code": "VC3", "wording": "Đã vận chuyển đi khỏi bưu cục (Transport departure from PO)", "stage": "in_transit", "language": "vi", "confirmedBy": "live", "note": "The truck left a post office; the office follows in brackets."},
+    {"code": "VC4", "wording": "Đã vận chuyển đến bưu cục (Transport arrival at PO)", "stage": "in_transit", "language": "vi", "confirmedBy": "live", "note": "The truck reached a post office; the office follows in brackets."},
+    {"code": "KT12", "wording": "EDG - Đã giao bưu tá phát - Item out for physical delivery", "stage": "out_for_delivery", "language": "vi", "confirmedBy": "live"},
+    {"code": "KT18", "wording": "Routed", "language": "en", "confirmedBy": "live", "note": "Written in the second the delivery office hands the item to the postman; it keeps the stage before it."},
+    {"code": "KT5", "wording": "EMI - Phát thành công (Delivered)", "stage": "delivered", "language": "vi", "confirmedBy": "live"},
     {"wording": "Chấp nhận gửi (Posting/collection)", "stage": "accepted", "language": "vi", "confirmedBy": "portal"},
-    {"wording": "Đi khỏi bưu cục (Departure from PO)", "stage": "in_transit", "language": "vi", "confirmedBy": "portal", "note": "Left a post office; the office follows in brackets."},
-    {"wording": "Đã đến bưu cục (Arrival at PO)", "stage": "in_transit", "language": "vi", "confirmedBy": "portal", "note": "Arrived at a post office; the office follows in brackets."},
     {"wording": "Chuyển tiếp (Forward)", "stage": "in_transit", "language": "vi", "confirmedBy": "portal", "note": "Forwarded, here to a new address after a failed attempt."},
     {"wording": "Đã giao cho bưu tá", "stage": "out_for_delivery", "language": "vi", "confirmedBy": "portal", "note": "Handed to the postman."},
     {"wording": "Phát không thành công (Not Delivered)", "stage": "failed_attempt", "language": "vi", "confirmedBy": "portal"},
