@@ -43,7 +43,9 @@ DHL's and InPost's records of the sender's data and of the recipient's delivery
 choice are notices too, and so is a delivering post's "Initial item information
 received", relayed on the way with "In Transit" as its place. A partner's order
 ("Shipping Order Created.", "Shipment created"), written while Yanwen still has the
-parcel, is a notice as well.
+parcel, is a notice as well. So are a partner's arrival rows relayed at the second of
+its announcement before any scan took the parcel in: bpost's "Arrival at facilities"
+came hours before Yanwen's pickup and days before the flight.
 USPS dates its "In Transit to Next Facility" steps by their day alone; Yanwen
 relays them at midnight, so one at 00:00:00 keeps its day as `local_time`.
 

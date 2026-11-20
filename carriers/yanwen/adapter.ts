@@ -8,6 +8,7 @@ import { detectCarrierMatch } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
+import { classifyWording } from '../../core/status/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isYanwenPlaceholder } from './app.js';
 import { yanwenCategory, yanwenNotice, yanwenStatus, yanwenWording } from './status.js';
@@ -117,11 +118,24 @@ function onDayAlone(event: CarrierEvent): CarrierEvent {
   return day;
 }
 
-/** Events newest first, with each notice on the stage of the staged scan before it and without a place. */
+/**
+ * Events newest first, with each notice on the stage of the staged scan before it and without a place. A partner's
+ * arrival rows relayed at the second of a registration, before any scan took the parcel in, are that announcement:
+ * bpost's for a parcel Yanwen picked up hours later and flew out days later.
+ */
 function withNotices(events: CarrierEvent[]): CarrierEvent[] {
   const read = [...events];
+  // A partner's rows the map leaves to the shared rules are read as the consumer reads them.
+  const reading = (event: CarrierEvent) => event.stage ?? classifyWording(event.description ?? '', 'pending').stage;
+  const announced = new Set(read.flatMap((event) => reading(event) === 'registered' && event.time ? [Date.parse(event.time)] : []));
+  let taken = false;
   for (let index = read.length - 1; index >= 0; index--) {
-    if (!yanwenNotice(read[index]!.description ?? '')) continue;
+    const event = read[index]!;
+    const announcing = !taken && reading(event) === 'in_transit' && event.time !== undefined && announced.has(Date.parse(event.time));
+    if (!announcing && !yanwenNotice(event.description ?? '')) {
+      taken ||= !['registered', 'pending'].includes(reading(event));
+      continue;
+    }
     const previous = read.slice(index + 1).find((event) => event.stage)?.stage ?? 'registered';
     read[index] = { ...read[index]!, location: '', stage: previous, stage_source: 'none' };
   }

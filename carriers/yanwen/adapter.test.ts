@@ -344,6 +344,34 @@ describe('Yanwen result projection', () => {
     expect(history([['2026-03-07', '07:29:00 [GMT-08]', '', 'In Transit to Next Facility']]).events?.[0]?.time).toBe('2026-03-07T07:29:00-08:00');
   });
 
+  it("keeps a partner's arrival rows relayed at its announcement's second, before Yanwen's pickup, on the registration", () => {
+    const result = history([
+      ['2026-10-31', '01:13:00 [GMT+08]', '', 'Yanwen facility - Outbound'],
+      ['2026-10-30', '19:20:44 [GMT+08]', '', 'Yanwen Pickup Scan'],
+      ['2026-10-30', '04:55:00 [GMT+01]', 'BE', 'Arrival at international depot'],
+      ['2026-10-30', '04:55:00 [GMT+01]', 'Example, BE', 'Arrival at facilities'],
+      ['2026-10-30', '04:55:00 [GMT+01]', 'BE', 'Item is announced / Landmark Global (bpost) received the information'],
+      ['2026-10-29', '21:50:57 [GMT+08]', '', 'Shipment information received'],
+    ], '运输途中', 'BE');
+    expect(result.events?.map((event) => [event.description, event.stage, event.stage_source ?? null])).toEqual([
+      ['Yanwen facility - Outbound', 'in_transit', null],
+      ['Yanwen Pickup Scan', 'accepted', null],
+      ['Arrival at international depot', 'registered', 'none'],
+      ['Arrival at facilities', 'registered', 'none'],
+      // The shared rules read the announcement itself.
+      ['Item is announced / Landmark Global (bpost) received the information', undefined, null],
+      ['Shipment information received', 'registered', null],
+    ]);
+    // The same rows after the pickup are the parcel arriving.
+    const arrived = history([
+      ['2026-11-04', '04:55:00 [GMT+01]', 'BE', 'Arrival at international depot'],
+      ['2026-11-04', '04:55:00 [GMT+01]', 'BE', 'Item is announced / Landmark Global (bpost) received the information'],
+      ['2026-10-30', '19:20:44 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ], '运输途中', 'BE');
+    expect(arrived.events?.[0]).not.toHaveProperty('stage_source');
+    expect(arrived.events?.[0]?.location).toBeTruthy();
+  });
+
   it("keeps InPost's records of the sender's data and the recipient's choice on the stage before them, its pickup from Yanwen in transit, and its code and name as no place", () => {
     const result = history([
       ['2026-03-05', '04:28:00 [GMT+08]', '', 'Despatched and en route to Inpost'],
