@@ -1,3 +1,5 @@
+import { withHelperContext } from './helper-context.mjs';
+
 const API = 'https://apigetway.track718.net/track/real_query_multi';
 const KEY = 'www.juxiex.com';
 
@@ -35,17 +37,10 @@ export async function runTrack718Juxi({ url, capture, handle, tier, maxTimeout, 
   const number = track718JuxiNumber(url, capture);
   if (!number) return undefined;
   const started = Date.now(), entries = [], sockets = [];
-  let context, page, timer, quiet, abort, requestObserver, responseObserver, socketObserver;
+  let page, quiet, requestObserver, responseObserver, socketObserver;
   let expired = false, statusCode = 0, uuid, sentUuid, done;
   const terminal = new Promise(resolve => { done = resolve; });
   const remaining = () => Math.max(1, Math.floor(maxTimeout - (Date.now() - started)));
-  const close = async target => {
-    let closed = false, cleanup;
-    try {
-      await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }).catch(() => {}),
-        new Promise(resolve => { cleanup = setTimeout(resolve, 1500); })]);
-    } finally { clearTimeout(cleanup); if (!closed) handle.requestBrowserReplacement?.('Track718 context cleanup failed'); }
-  };
   const append = (payload, status = 200) => {
     if (expired) return;
     const projected = projectTrack718(payload, number);
@@ -63,63 +58,50 @@ export async function runTrack718Juxi({ url, capture, handle, tier, maxTimeout, 
   };
   const result = () => ({ tier, status: statusCode || entries.length ? 'success' : 'error', statusCode,
     durationMs: Date.now() - started, effectiveUrl: url, html: '', body: new Uint8Array(), cookies: [], capturedResponses: entries });
-  try {
-    if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || signal?.aborted) return result();
-    return await Promise.race([
-      (async () => {
-        const created = await handle.browser.newContext(); handle.noteTemporaryContext?.();
-        if (expired) { await close(created); return result(); }
-        context = created; page = await context.newPage();
-        if (expired) return result();
-        await installPolicy?.(page);
-        requestObserver = request => {
-          if (expired || request.url() !== API || request.method() !== 'POST') return;
-          let body;
-          try { body = JSON.parse(request.postData() ?? ''); } catch { return; }
-          if (body.tracks?.length === 1 && body.tracks[0].track === number && body.tracks[0].key === KEY
-            && typeof body.uuid === 'string' && body.uuid.length <= 100) uuid = body.uuid;
-        };
-        responseObserver = async response => {
-          const request = response.request();
-          if (expired || !uuid || response.url() !== API || request.method() !== 'POST') return;
-          let body;
-          try { body = JSON.parse(request.postData() ?? ''); } catch { return; }
-          if (body.uuid !== uuid || body.tracks?.length !== 1 || body.tracks[0].track !== number || body.tracks[0].key !== KEY) return;
-          if (response.status() >= 400) { append(null, response.status()); return; }
-          const headers = response.headers(), size = Number(headers['content-length']);
-          if (!Number.isSafeInteger(size) || size < 1 || size > 1_000_000 || (headers['content-encoding'] ?? 'identity') !== 'identity') return;
-          try {
-            const bytes = await response.body();
-            if (!expired && bytes.length <= 1_000_000) append(JSON.parse(bytes.toString('utf8')));
-          } catch { /* The WebSocket may still deliver the bound reply. */ }
-        };
-        socketObserver = socket => {
-          if (socket.url() !== 'wss://socket.track718.net/' || expired) return;
-          const sent = frame => { if (typeof frame.payload === 'string' && frame.payload.length <= 100) sentUuid = frame.payload; };
-          const received = frame => {
-            if (expired || !uuid || sentUuid !== uuid || typeof frame.payload !== 'string' || frame.payload.length > 1_000_000) return;
-            try { append(JSON.parse(frame.payload)); } catch { /* No usable tracking reply. */ }
-          };
-          socket.on('framesent', sent); socket.on('framereceived', received); sockets.push({ socket, sent, received });
-        };
-        page.on('request', requestObserver); page.on('response', responseObserver); page.on('websocket', socketObserver);
-        const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
-        statusCode = navigation?.status() ?? 0;
-        await terminal; return result();
-      })(),
-      new Promise((_, reject) => {
-        timer = setTimeout(() => { expired = true; reject(new Error('Track718 deadline')); }, maxTimeout);
-        abort = () => { expired = true; reject(new Error('Track718 cancelled')); };
-        signal?.addEventListener('abort', abort, { once: true }); if (signal?.aborted) abort();
-      }),
-    ]);
-  } catch { return result(); }
-  finally {
-    expired = true; clearTimeout(timer); clearTimeout(quiet); signal?.removeEventListener('abort', abort);
-    if (page && requestObserver) page.off('request', requestObserver);
-    if (page && responseObserver) page.off('response', responseObserver);
-    if (page && socketObserver) page.off('websocket', socketObserver);
-    for (const { socket, sent, received } of sockets) { socket.off('framesent', sent); socket.off('framereceived', received); }
-    if (context) await close(context);
-  }
+  if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || signal?.aborted) return result();
+  return withHelperContext({ handle, label: 'Track718', timeoutMs: maxTimeout, signal, installPolicy,
+    onExpire: () => { expired = true; }, onFailure: result,
+    onStop: () => {
+      expired = true; clearTimeout(quiet);
+      if (page && requestObserver) page.off('request', requestObserver);
+      if (page && responseObserver) page.off('response', responseObserver);
+      if (page && socketObserver) page.off('websocket', socketObserver);
+      for (const { socket, sent, received } of sockets) { socket.off('framesent', sent); socket.off('framereceived', received); }
+    } }, async run => {
+    page = run.page;
+    requestObserver = request => {
+      if (expired || request.url() !== API || request.method() !== 'POST') return;
+      let body;
+      try { body = JSON.parse(request.postData() ?? ''); } catch { return; }
+      if (body.tracks?.length === 1 && body.tracks[0].track === number && body.tracks[0].key === KEY
+        && typeof body.uuid === 'string' && body.uuid.length <= 100) uuid = body.uuid;
+    };
+    responseObserver = async response => {
+      const request = response.request();
+      if (expired || !uuid || response.url() !== API || request.method() !== 'POST') return;
+      let body;
+      try { body = JSON.parse(request.postData() ?? ''); } catch { return; }
+      if (body.uuid !== uuid || body.tracks?.length !== 1 || body.tracks[0].track !== number || body.tracks[0].key !== KEY) return;
+      if (response.status() >= 400) { append(null, response.status()); return; }
+      const headers = response.headers(), size = Number(headers['content-length']);
+      if (!Number.isSafeInteger(size) || size < 1 || size > 1_000_000 || (headers['content-encoding'] ?? 'identity') !== 'identity') return;
+      try {
+        const bytes = await response.body();
+        if (!expired && bytes.length <= 1_000_000) append(JSON.parse(bytes.toString('utf8')));
+      } catch { /* The WebSocket may still deliver the bound reply. */ }
+    };
+    socketObserver = socket => {
+      if (socket.url() !== 'wss://socket.track718.net/' || expired) return;
+      const sent = frame => { if (typeof frame.payload === 'string' && frame.payload.length <= 100) sentUuid = frame.payload; };
+      const received = frame => {
+        if (expired || !uuid || sentUuid !== uuid || typeof frame.payload !== 'string' || frame.payload.length > 1_000_000) return;
+        try { append(JSON.parse(frame.payload)); } catch { /* No usable tracking reply. */ }
+      };
+      socket.on('framesent', sent); socket.on('framereceived', received); sockets.push({ socket, sent, received });
+    };
+    page.on('request', requestObserver); page.on('response', responseObserver); page.on('websocket', socketObserver);
+    const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
+    statusCode = navigation?.status() ?? 0;
+    await terminal; return result();
+  });
 }
