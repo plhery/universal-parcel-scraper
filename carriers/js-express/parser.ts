@@ -66,8 +66,6 @@ const USPS_WORDING = /^(?:shipping label created|arrived at post office|in trans
 const STATE = /,\s*[A-Z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/;
 // A town and its state without a space or postal code, as the feed to the second on its places' clocks writes them.
 const TOWN_STATE = /^[^,]+,([A-Z]{2})$/;
-// USPS's label rows, which that feed dates on UTC, as USPS dates a mailer's label.
-const USPS_LABEL = /^shipping label created\b/i;
 // The offset a row states, as "+02:00".
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
 // J&T Express Germany's rows in German, as the destination courier: its scans opening with the district in 【】, its
@@ -165,7 +163,7 @@ function scanZone(local: string, description: string, location: string, label: s
   if (straightship && (STRAIGHTSHIP.test(description) || canadianTown(location, label)
     || (!location && STRAIGHTSHIP_RECORD.test(description)))) return 'UTC';
   const usps = USPS.test(description) || USPS_WORDING.test(description);
-  if (uspsFeed === 'town' && usps) return USPS_LABEL.test(description) ? 'UTC' : uspsScanZone(location) ?? jsExpressChinaClock(description, location) ?? null;
+  if (uspsFeed === 'town' && usps) return uspsScanZone(location) ?? jsExpressChinaClock(description, location) ?? null;
   const seconds = !local.endsWith(':00');
   if (USPS.test(description) && seconds) return 'UTC';
   if (uspsFeed === 'utc' && usps && (seconds || !STATE.test(location))) return 'UTC';

@@ -345,8 +345,8 @@ describe('USPS rendered page', () => {
     // So is a merchant's notice that it received the order.
     expect(read('Merchant Order Receipt Notification', '2026-11-03T05:00:00Z'))
       .toMatchObject({ current_stage: 'registered', last_update: '2026-11-03T04:40:00Z' });
-    // A mailer's own label, worded alone with its place apart, is on UTC however late it is read.
-    expect(read('Shipping Label Created', '2026-11-03T13:00:00Z').last_update).toBe('2026-11-03T04:40:00Z');
+    // A label worded alone keeps its facility's clock too, once that no longer dates it ahead.
+    expect(read('Shipping Label Created', '2026-11-03T13:00:00Z').last_update).toBe('2026-11-03T04:40:00-08:00');
     // Another row the facility's zone dates ahead stays on it, a planned scan the due filter holds back.
     expect(read('Arrived at USPS Regional Facility', '2026-11-03T05:00:00Z').last_update).toBe('2026-11-03T04:40:00-08:00');
     // So does a shipping partner's scan before USPS has the item, which is no label.

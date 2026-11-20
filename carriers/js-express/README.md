@@ -71,9 +71,8 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   as the post office's arrival, the round and the delivery at a bare town, are on UTC too, and so
   are its rows on a whole minute without a state: each lands on the minute USPS's own tracker
   gives, while the town's clock would put it hours later. The third, also to the second, writes
-  its towns "Town,ST", without a space or postal code: its scans are on their place's clock, as
-  USPS's own tracker gives the same acceptance and arrival to the minute, and only its labels are
-  on UTC, as USPS dates a mailer's label.
+  its towns "Town,ST", without a space or postal code: its scans, labels included, are on their
+  place's clock, as USPS's own tracker gives the same acceptance, arrival and label to the minute.
 - Each row also carries an offset, often another place's: Straightship's rows carry China's,
   Amsterdam's carry its winter offset in summer, and Gatwick's and Singapore's others. A row
   without a place is read on the destination's clock when the destination keeps one clock and the

@@ -28,24 +28,17 @@ export function uspsScanZone(location: string): string | null {
   return splitRegionTownZone('US', state, location.slice(0, named.index)) ?? usStateTimeZone(state);
 }
 
-// A mailer's label as USPS words it, its place apart. Its digits are UTC's: read on its place's
-// clock, each one read soon enough to tell came after that read, and their hours gather past
-// UTC's midnight, America's evening, rather than in its business hours.
-const MAILER_LABEL = /^shipping label created$/i;
-
-/** Whether a USPS row is a mailer's label as USPS words it, which is dated on UTC wherever its place is. */
-export const uspsMailerLabel = (description: string): boolean => MAILER_LABEL.test(description.trim());
-
 /**
- * The zone of a row's wall clock, given its facility's zone. A mailer writes its label
- * ("Shipping Label Created") on UTC. Another label row ("Shipping Label Created, USPS Awaiting
- * Item", "Pre-Shipment Info Sent") that the facility's zone dates after `readAt`, and UTC does
- * not, is read on UTC. Any other row keeps the facility's zone, and so does such a label older
- * than the gap between the two, which nothing tells apart.
+ * The zone of a row's wall clock, given its facility's zone. A label row ("Shipping Label
+ * Created", "Shipping Label Created, USPS Awaiting Item", "Pre-Shipment Info Sent") is mostly
+ * on the facility's clock: DHL eCommerce, 4PX and Yanwen date the mailer's own label at those
+ * digits on the facility's clock, to the second. Some mailers write it on UTC: one that the
+ * facility's zone dates after `readAt`, and UTC does not, is read on UTC. Any other row keeps
+ * the facility's zone, and so does such a label older than the gap between the two, which
+ * nothing tells apart.
  */
 export function uspsRowZone(wall: string, facility: string, description: string, readAt: number): string {
   if (uspsStage(description) !== 'registered') return facility;
-  if (uspsMailerLabel(description)) return 'UTC';
   const ahead = (zone: string) => firstOccurrence(DateTime.fromISO(wall, { zone })).toMillis() > readAt + CLOCK_SKEW_MS;
   return ahead(facility) && !ahead('UTC') ? 'UTC' : facility;
 }

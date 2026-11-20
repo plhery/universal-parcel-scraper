@@ -52,7 +52,7 @@ import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
 import { destinationRelay, europeanAbroad, royalMailPartnerCountry, royalMailPartnerWall, royalMailRelayClock } from '../../carriers/royal-mail/clock.js';
-import { USPS_FACILITY_KIND, uspsMailerLabel, uspsScanZone } from '../../carriers/usps/clock.js';
+import { USPS_FACILITY_KIND, uspsScanZone } from '../../carriers/usps/clock.js';
 import { yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
@@ -350,23 +350,17 @@ const WALL_CLOCKS = new Set(['usps', 'canadapost', 'gofoexpress', 'speedpak', 'e
  * own rows read "Shipping Label Created, USPS Awaiting Item". Its date is the
  * instant: read on its place's clock, three labels came eight hours after
  * ParcelsApp first returned them, and Juxi Express's rows of this shape fall
- * between 17TRACK's instants of the same warehouse's steps as labeled. So is a
- * mailer's label as USPS words it, its place apart ("Shipping Label Created"),
- * which USPS's adapter reads on UTC (`uspsMailerLabel`): read on its place's
- * clock, ParcelsApp's copy came a zone apart from USPS's own row. So is ParcelsApp's copy of that
- * label in USPS's page's words, its place after them ("Shipping Label Created, USPS Awaiting
- * Item, EXAMPLE CITY, TX"): read on its place's clock, each came its place's offset after USPS's
- * own row of the same minute. A
- * shipping partner's steps ("Arrived Shipping Partner Facility, EXAMPLE CITY,
+ * between 17TRACK's instants of the same warehouse's steps as labeled. The
+ * label as USPS words it ("Shipping Label Created", or after "USPS Awaiting
+ * Item" with its place) keeps its place's clock, as USPS's adapter reads it
+ * (`uspsRowZone`). A shipping partner's steps ("Arrived Shipping Partner Facility, EXAMPLE CITY,
  * NV 12345") and USPS's own scans can come with their place after them too, and
  * keep their place's clock, as USPS's own tracker dates them: ParcelsApp's
  * copies of a partner's pickup and arrival had the digits USPS dates on that
  * clock, and its departure, read as an instant, came before the arrival.
  */
 const USPS_LABEL_ROW = /^shipping label created,[^,]+,\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?$/i;
-const USPS_AWAITING_LABEL_ROW = /^shipping label created, usps awaiting item,[^,]+,\s*[A-Z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/i;
-const uspsLabelRow = (name: unknown, status: string) => nameKey(name) === 'usps'
-  && (USPS_LABEL_ROW.test(status.trim()) || USPS_AWAITING_LABEL_ROW.test(status.trim()) || uspsMailerLabel(status));
+const uspsLabelRow = (name: unknown, status: string) => nameKey(name) === 'usps' && USPS_LABEL_ROW.test(status.trim());
 /**
  * How far after the read a USPS scan that its place dates may come out. Later, it is held
  * back until a read catches up with it, as the USPS adapter holds USPS's planned

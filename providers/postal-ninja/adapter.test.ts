@@ -440,12 +440,11 @@ describe('Postal Ninja result parsing', () => {
     for (const zone of ['Australia/Sydney', 'America/Toronto', 'UTC']) {
       expect(times(parsePostalNinjaResponse(unplaced, number, zone))?.[0]).toBe('local 2026-11-02T03:00:29');
     }
-    // The mailer writes its label on UTC, as USPS's adapter reads it: on the facility's clock, it would follow the read.
+    // A label is on its facility's clock, as USPS's adapter reads it.
     const label = withEvents([scans[0], { ds: 'USPS', dt: '2026-11-02T04:40:00', dsc: 'Shipping Label Created', loc: 'EXAMPLE CITY, CA 90001' }]);
-    expect(times(parsePostalNinjaResponse(label, number, 'Europe/Amsterdam', 'spring-gds'))?.[0]).toBe('2026-11-02T04:40:00.000Z');
-    // A UTC stamp is the instant itself, and names no zone.
-    expect(parsePostalNinjaResponse(label, number, 'Europe/Amsterdam', 'spring-gds').events![0]).not.toHaveProperty('time_zone');
-    // That UTC is the label's own, not USPS's clock: the unplaced scan after it still borrows the facility's.
+    expect(parsePostalNinjaResponse(label, number, 'Europe/Amsterdam', 'spring-gds').events![0])
+      .toMatchObject({ time: '2026-11-02T12:40:00.000Z', time_zone: 'America/Los_Angeles' });
+    // The unplaced scan after it borrows that facility's clock.
     const labelled = withEvents([scans[0], { ds: 'USPS', dt: '2026-11-01T22:00:00', dsc: 'Shipping Label Created', loc: 'EXAMPLE CITY, CA 90001' },
       ...scans.slice(1, 3)]);
     expect(parsePostalNinjaResponse(labelled, number, 'Europe/Amsterdam', 'spring-gds').events!

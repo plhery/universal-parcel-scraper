@@ -159,8 +159,7 @@ capture failure.
   reads it, and one that names none borrows from those that do. With none to borrow from it
   keeps its wall time rather than a routing zone outside the US and the territories USPS
   delivers in, such as Puerto Rico and Guam. A mailer's label
-  ("Shipping Label Created") is on UTC, as USPS's adapter reads it, and lends that clock to
-  no other scan.
+  ("Shipping Label Created") is on its facility's clock too, as USPS's adapter reads it.
 - Known clocks that are not established: DHL Express keeps each facility's clock, but
   names its newest US and Canadian scans without their state ("MARSHALL-USA"); Australia
   Post, Canada Post and Correios do Brasil keep the scan's clock in countries with

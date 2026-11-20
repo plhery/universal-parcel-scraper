@@ -783,12 +783,15 @@ describe('17TRACK result parsing', () => {
       .events?.[0]?.time).toBe('2026-07-09T20:05:00.000Z');
     for (const [place, wording, instant] of [
       ['Perth, WA, AUSTRALIA', 'Processed Through Facility', '04:00'],
-      ['CHINA', 'Shipping Label Created', '12:00'],
-      ['', 'Shipping Label Created', '12:00'],
+      ['CHINA', 'Shipping Label Created', '04:00'],
     ] as const) {
       const scan = row('2026-11-03', '12:00:00', '-05:00', place, wording);
       expect(parse17TrackResponse(reply(21051, [scan]), number).events?.[0]?.time).toBe(`2026-11-03T${instant}:00.000Z`);
     }
+    // A label nothing places keeps its wall clock alone, as a scan nothing places does.
+    const unplaced = parse17TrackResponse(reply(21051, [row('2026-11-03', '12:00:00', '-05:00', '', 'Shipping Label Created')]), number).events?.[0];
+    expect(unplaced).toMatchObject({ local_time: '2026-11-03T12:00:00' });
+    expect(unplaced?.time).toBeUndefined();
     const canada = parse17TrackResponse(reply(21051, [row('2026-11-02', '19:04:00', '-05:00', 'CANADA', 'Acceptance')]), number).events?.[0];
     expect(canada).toMatchObject({ local_time: '2026-11-02T19:04:00' });
     expect(canada?.time).toBeUndefined();
@@ -834,8 +837,8 @@ describe('17TRACK result parsing', () => {
       .toBe('2026-11-03T12:40:00.000Z');
     vi.setSystemTime(new Date('2026-11-03T13:00:00Z'));
     expect(parse17TrackResponse(reply([label]), number).events?.[0]?.time).toBe('2026-11-03T12:40:00.000Z');
-    // A mailer's own label, worded alone, stays on UTC.
-    expect(parse17TrackResponse(reply([row('Shipping Label Created', 'InfoReceived')]), number).events?.[0]?.time).toBe('2026-11-03T04:40:00.000Z');
+    // A label worded alone keeps its facility's clock too.
+    expect(parse17TrackResponse(reply([row('Shipping Label Created', 'InfoReceived')]), number).events?.[0]?.time).toBe('2026-11-03T12:40:00.000Z');
   });
 
   it('leaves out the EN ROUTE row DHL eCommerce US stamps with each request', () => {
