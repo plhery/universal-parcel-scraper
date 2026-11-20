@@ -11646,6 +11646,28 @@
       }
     ]
   },
+  "bja-logistic": {
+    "displayName": "BJA Logistic",
+    "color": "#cc1f2a",
+    "aliases": [
+      "BJA Logistics"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bja-logistic",
+      "localClocks": true
+    },
+    "canaryUrl": "https://bjalogistic.id/cek-resi",
+    "trackingUrlTemplate": "https://bjalogistic.id/cek-resi?resi={trackingNumber}",
+    "trackingSearchUrl": "https://bjalogistic.id/cek-resi",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bjs-home-delivery": {
     "displayName": "BJS Home Delivery",
     "color": "#feba30",

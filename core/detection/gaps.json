@@ -5622,5 +5622,10 @@
     "kind": "open",
     "carrier": "cesco-logistics",
     "reason": "The public tracker confirms two CESCO waybills with the same numeric prefix. Explicit selection is available while prefix ownership and numeric overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "bja-logistic",
+    "reason": "BJA publishes and confirms short numeric shipment references. Explicit selection is available while issuance and numeric overlaps remain open."
   }
 ]

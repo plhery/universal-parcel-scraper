@@ -11650,6 +11650,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "bja-logistic": {
+    "displayName": "BJA Logistic",
+    "color": "#cc1f2a",
+    "aliases": [
+      "BJA Logistics"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bja-logistic",
+      "localClocks": true
+    },
+    "canaryUrl": "https://bjalogistic.id/cek-resi",
+    "trackingUrlTemplate": "https://bjalogistic.id/cek-resi?resi={trackingNumber}",
+    "trackingSearchUrl": "https://bjalogistic.id/cek-resi",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bjs-home-delivery": {
     "displayName": "BJS Home Delivery",
     "color": "#feba30",
@@ -66123,6 +66145,7 @@ export const CARRIER_IDS = [
   "bigpost",
   "bir-gunde-kargo",
   "biz-courier",
+  "bja-logistic",
   "bjs-home-delivery",
   "bla-kurer",
   "blitznow",
@@ -68010,6 +68033,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bigpost": [],
   "bir-gunde-kargo": [],
   "biz-courier": ["biz-courier-1"],
+  "bja-logistic": [],
   "bjs-home-delivery": ["bjs-home-delivery-1"],
   "bla-kurer": [],
   "blitznow": [],
