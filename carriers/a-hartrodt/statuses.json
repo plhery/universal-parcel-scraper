@@ -1,0 +1,13 @@
+{
+  "carrier": "a-hartrodt",
+  "entries": [
+    { "wording": "EXP - Consignment registered/initiated", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "wording": "EXP - Consignment in port - Docs complete", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The wording places the consignment in port." },
+    { "wording": "EXP - Consignment definitely loaded", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "EXP - Shipped on board", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "EXP - Flight/Vessel departed (ATD)", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "IMP - Flight/Vessel arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Arrival of the flight or vessel precedes delivery of the consignment." },
+    { "wording": "IMP - shipment schedule changed- new arrival date (ETA): (18.09.2026)", "stage": null, "language": "en", "confirmedBy": "live", "note": "A revised vessel or flight arrival estimate." },
+    { "wording": "IMP - Information", "stage": null, "language": "en", "confirmedBy": "live", "note": "No physical scan or delivery is stated." }
+  ]
+}

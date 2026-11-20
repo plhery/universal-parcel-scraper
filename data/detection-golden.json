@@ -108863,6 +108863,17 @@
     "candidates": []
   },
   {
+    "input": "SHPT2608285747",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "nova-poshta"
+    ],
+    "asked": [
+      "nova-poshta"
+    ]
+  },
+  {
     "input": "SHUA5994810530",
     "carrier": "unknown",
     "confidence": "low",

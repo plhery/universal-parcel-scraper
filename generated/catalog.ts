@@ -6256,6 +6256,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "a-hartrodt": {
+    "displayName": "a. hartrodt",
+    "color": "#163d72",
+    "aliases": [
+      "A Hartrodt",
+      "a. hartrodt GmbH & Co. KG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "a-hartrodt"
+    },
+    "canaryUrl": "https://ttsecure.hartrodt.com/pserv/tt/open",
+    "trackingSearchUrl": "https://ttsecure.hartrodt.com/pserv/tt/open?sep=1",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "a-tu-hora-express": {
     "displayName": "A Tu Hora Express",
     "color": "#1d2a84",
@@ -65553,6 +65574,7 @@ export const CARRIER_IDS = [
   "7hours-express",
   "99minutos",
   "a-duie-pyle",
+  "a-hartrodt",
   "a-tu-hora-express",
   "a1-post",
   "a2b-express",
@@ -67422,6 +67444,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "7hours-express": [],
   "99minutos": [],
   "a-duie-pyle": [],
+  "a-hartrodt": [],
   "a-tu-hora-express": ["a-tu-hora-express-1","a-tu-hora-express-2"],
   "a1-post": [],
   "a2b-express": [],

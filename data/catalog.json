@@ -6252,6 +6252,27 @@
     ],
     "detectionRules": []
   },
+  "a-hartrodt": {
+    "displayName": "a. hartrodt",
+    "color": "#163d72",
+    "aliases": [
+      "A Hartrodt",
+      "a. hartrodt GmbH & Co. KG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "a-hartrodt"
+    },
+    "canaryUrl": "https://ttsecure.hartrodt.com/pserv/tt/open",
+    "trackingSearchUrl": "https://ttsecure.hartrodt.com/pserv/tt/open?sep=1",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "a-tu-hora-express": {
     "displayName": "A Tu Hora Express",
     "color": "#1d2a84",
