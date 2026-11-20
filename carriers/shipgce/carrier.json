@@ -4,10 +4,10 @@
   "aliases": [
     "GCEx",
     "Shipgce",
-    "飛洋轉運",
-    "飞洋转运",
-    "飞洋快递",
-    "飞洋"
+    "\u98db\u6d0b\u8f49\u904b",
+    "\u98de\u6d0b\u8f6c\u8fd0",
+    "\u98de\u6d0b\u5feb\u9012",
+    "\u98de\u6d0b"
   ],
   "region": {
     "countries": [
@@ -24,18 +24,38 @@
   "timezone": "America/Los_Angeles",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "shipgce",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
-    "searchUrl": "https://ebuy.shipgce.com/listSubOrder.aspx",
-    "canaryUrl": "https://ebuy.shipgce.com/listSubOrder.aspx",
-    "shows": [],
-    "scraped": [],
+    "url": "https://express.shipgce.com/postcheck.htm?checkvalue={trackingNumber}&type=identity",
+    "searchUrl": "https://express.shipgce.com/postcheck.htm",
+    "canaryUrl": "https://express.shipgce.com/postcheck.htm",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "express.shipgce.com"
+      ],
+      "pathPattern": "^/postcheck\\.htm$",
+      "query": "^(?=(?:.*&)?type=identity(?:&|$))(?:.*&)?checkvalue=([^&]+)(?=&|$)"
+    }
+  ],
   "detection": []
 }

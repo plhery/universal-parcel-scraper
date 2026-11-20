@@ -29,6 +29,10 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'shipgce', number: 'GC000000000US',
+    route: /^https:\/\/express\.shipgce\.com\/postcheck\.htm\?checkvalue=GC000000000US&type=identity$/,
+    marker: /GCEx could not locate the shipment details for you|未找到相关订单/,
+    forwarding: { notFound: /GCEx could not locate the shipment details for you|未找到相关订单/ } },
   { carrier: 'lafasta', number: '83561427',
     route: /^https:\/\/c\.lafasta\.sa\.com\/Track\/83561427$/,
     marker: /رقم الشحنة غير موجود/,

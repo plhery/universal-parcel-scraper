@@ -51936,11 +51936,21 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "shipgce",
+      "localClocks": true
     },
-    "canaryUrl": "https://ebuy.shipgce.com/listSubOrder.aspx",
-    "trackingSearchUrl": "https://ebuy.shipgce.com/listSubOrder.aspx",
-    "linkRules": [],
+    "canaryUrl": "https://express.shipgce.com/postcheck.htm",
+    "trackingUrlTemplate": "https://express.shipgce.com/postcheck.htm?checkvalue={trackingNumber}&type=identity",
+    "trackingSearchUrl": "https://express.shipgce.com/postcheck.htm",
+    "linkRules": [
+      {
+        "domains": [
+          "express.shipgce.com"
+        ],
+        "pathPattern": "^/postcheck\\.htm$",
+        "query": "^(?=(?:.*&)?type=identity(?:&|$))(?:.*&)?checkvalue=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "shipglobal-in": {

@@ -659,6 +659,7 @@ import { adapter as shadowfax } from '../carriers/shadowfax/adapter.js';
 import { adapter as shipa } from '../carriers/shipa/adapter.js';
 import { adapter as shipblu } from '../carriers/shipblu/adapter.js';
 import { adapter as shipentegra } from '../carriers/shipentegra/adapter.js';
+import { adapter as shipgce } from '../carriers/shipgce/adapter.js';
 import { adapter as shipglobalIn } from '../carriers/shipglobal-in/adapter.js';
 import { adapter as shipglobalUs } from '../carriers/shipglobal-us/adapter.js';
 import { adapter as shiprocket } from '../carriers/shiprocket/adapter.js';
@@ -1508,6 +1509,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipa": shipa,
     "shipblu": shipblu,
     "shipentegra": shipentegra,
+    "shipgce": shipgce,
     "shipglobal-in": shipglobalIn,
     "shipglobal-us": shipglobalUs,
     "shiprocket": shiprocket,
@@ -3137,7 +3139,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipa": "shipa",
     "shipblu": "shipblu",
     "shipentegra": "shipentegra",
-    "shipgce": "universal",
+    "shipgce": "shipgce",
     "shipglobal-in": "shipglobal-in",
     "shipglobal-us": "shipglobal-us",
     "shiplowcost": "universal",

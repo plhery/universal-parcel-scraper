@@ -1,25 +1,22 @@
 # Feiyang GCEx
 
-Feiyang GCEx parcels use enabled universal providers. There is no dedicated adapter.
+Feiyang GCEx (飛洋轉運) ships parcels from the United States to mainland China, Hong Kong and Taiwan.
 
-Feiyang GCEx (飛洋轉運), run by Global Courier Express, Inc. in San Francisco, ships parcels and online shopping door to door
-from the United States to mainland China, Hong Kong and Taiwan. Its site is shipgce.com.
+## Retrieval
 
-## Numbers
+The express tracker serves a public HTML result at `express.shipgce.com/postcheck.htm` with
+`checkvalue` and `type=identity`. The adapter looks up one waybill and requires the result to
+repeat it. It requests the English page, which has a distinct message for an unknown waybill.
 
-No public page shows one of its numbers, so there is no rule.
+The page mixes GCEx and postal scans. The adapter keeps their page order and wall clocks
+because the page gives no offsets. A scan's location and wording can run together in one
+field, which the adapter keeps intact.
 
-## Why there is no adapter
+## Limitations
 
-Its tracker on ebuy.shipgce.com is an ASP.NET WebForms page without a login or CAPTCHA: a lookup posts the
-page's view state back to `listSubOrder.aspx` with the number in `txt_Search`. No public number is known to see a
-found reply.
-
-## Links
-
-Its tracker looks numbers up by posting its form back, so no address names one.
+Select Feiyang GCEx or open one of its express tracking links. The adapter reads express
+waybills and uses the order-number tab of the tracker.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`SHIPGCE_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/shipgce`
