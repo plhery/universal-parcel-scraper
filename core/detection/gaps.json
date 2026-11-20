@@ -859,6 +859,12 @@
     "reason": "Eleven digits, the zero-padded barcode form of a Dayton Freight PRO, are shared by several carriers and nothing else in the number points to Dayton Freight."
   },
   {
+    "carrier": "delivery-auto",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer Delivery for ten-digit receipt numbers reported by its Ukrainian customers."
+  },
+  {
     "carrier": "dellin",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
