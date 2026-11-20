@@ -283,10 +283,11 @@ export function parsePaackTrackingResponse(
     const classified = classifyPaackEvent(rawEvent);
     const time = normalizedTimestamp(rawEvent.timestamp ?? rawEvent.time)!;
     parsedEvents.push({
+      // A state the map does not know is no step: it neither moves the parcel nor stands before its acceptance.
       event: {
         time: time.iso,
         description: classified.description,
-        stage: classified.stage,
+        ...(classified.status === 'unknown' ? {} : { stage: classified.stage }),
       },
       status: classified.status,
       timestamp: time.timestamp,

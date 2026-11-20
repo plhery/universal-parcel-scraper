@@ -577,6 +577,16 @@ describe('Paack history beside the timeline', () => {
     expect(result.events?.map((event) => event.stage)).toEqual(['registered', 'accepted', 'registered']);
   });
 
+  it('gives a state the map does not know no stage, so it is no step before the acceptance', () => {
+    const unknown = step('SX999', 'brandNewState', '2024-07-27T16:38:18.000Z', true);
+    const result = parsePaackTrackingResponse(
+      { ...labelRoute(), triggeredEventList: [...labelRoute().triggeredEventList as object[], unknown] },
+      LABEL_POSTCODE,
+    );
+    expect(result.current_stage).toBe('accepted');
+    expect(result.events?.find((event) => event.description === 'Shipment update')).toEqual({ time: '2024-07-27T16:38:18.000Z', description: 'Shipment update' });
+  });
+
   it('keeps scans of one instant in the carrier’s order', () => {
     const scannedAtOnce = step('SM002', 'scannedAtOrigin', manifested.timestamp, true);
     const timeline = parsePaackTrackingResponse({ ...labelRoute(), eventList: [manifested, scannedAtOnce, inDelivery], triggeredEventList: [] },
