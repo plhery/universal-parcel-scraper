@@ -1,5 +1,47 @@
 {
   "carrier": "pamukkale-kargo",
-  "gap": "No public page shows a Pamukkale Kargo number.",
-  "records": []
+  "records": [
+    {
+      "number": "207289997",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/pamukkale-kargo/takip",
+        "date": "2026-07-13",
+        "dateKind": "customer complaint",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Türkiye domestic coach freight",
+        "reportedRole": "takip numarası",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sender identifies a shipment from İzmir to Marmaris and publishes this exact Pamukkale reference. The carrier also requires the shipment’s sender or recipient phone number."
+    },
+    {
+      "number": "204249547",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/pamukkale-kargo/takip",
+        "date": "2026-06-04",
+        "dateKind": "customer-reported drop-off date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Türkiye domestic coach freight",
+        "reportedRole": "takip numarası",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A different sender reports handing this numbered shipment to Pamukkale in Istanbul. The public source does not give the phone number required for carrier tracking."
+    }
+  ]
 }

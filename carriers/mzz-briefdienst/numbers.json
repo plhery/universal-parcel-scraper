@@ -1,5 +1,31 @@
 {
   "carrier": "mzz-briefdienst",
-  "gap": "No public page shows an MZZ-Briefdienst number.",
-  "records": []
+  "records": [
+    {
+      "number": "0100269190062967",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.philaseiten.de/beitrag/385008",
+        "date": "2026-02-12",
+        "dateKind": "printed label date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "biber post Einwurf Einschreiben in Germany",
+        "reportedRole": "registered-mail number printed under barcode",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "pin-ag",
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "The posted envelope shows a biber post registered standard letter and this intact shipment number between the Code 39 delimiters. The shared sent24 portal echoed the submission without showing a shipment history."
+    }
+  ]
 }

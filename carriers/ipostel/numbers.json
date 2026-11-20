@@ -1,5 +1,25 @@
 {
   "carrier": "ipostel",
-  "gap": "No public page shows an IPOSTEL number.",
-  "records": []
+  "records": [
+    {
+      "number": "RR 000034131 VE",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.infojardin.com/jardineria/jardineria-general/index-37.html",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "reported outbound registered mail from Venezuela",
+        "reportedRole": "postal shipment identifier",
+        "assessment": "review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The recipient quotes this exact spaced reference for a mailing from Venezuela. The post does not show the label, and the reference fails the current S10 check digit, so carrier attribution and transcription remain open."
+    }
+  ]
 }

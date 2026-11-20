@@ -1,5 +1,29 @@
 {
   "carrier": "peshkariki",
-  "gap": "No public page shows a Peshkariki order number.",
-  "records": []
+  "records": [
+    {
+      "number": "1048996",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://oborot.ru/forum/peshkariki-otzyvy-i33940-25.html",
+        "date": "2018-02-28",
+        "dateKind": "carrier forum reply",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Russian local courier delivery",
+        "reportedRole": "номер заказа",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The customer publishes the delivery order number, and a Peshkariki representative repeats it and gives its creation date. The live tracker requires the order’s phone number, which the source does not publish."
+    }
+  ]
 }

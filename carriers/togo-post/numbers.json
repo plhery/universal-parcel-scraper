@@ -1,5 +1,24 @@
 {
   "carrier": "togo-post",
-  "gap": "No public page shows a La Poste du Togo number.",
-  "records": []
+  "records": [
+    {
+      "number": "RR 000337331 TG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://arge-r-v-zettel.de/files/2025/03/MBM_25.pdf#page=31",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Registered international mail",
+        "reportedRole": "Togo registered-mail label number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "The November 2006 postal collectors’ journal reproduces the label on a Togo cover. The number is transcribed with its printed spaces and leading zeroes. The public tracking host was unreachable on the single lookup attempt."
+    }
+  ]
 }

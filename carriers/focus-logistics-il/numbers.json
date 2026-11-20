@@ -1,5 +1,27 @@
 {
   "carrier": "focus-logistics-il",
-  "gap": "No public page shows a Focus Logistics number.",
-  "records": []
+  "records": [
+    {
+      "number": "3916052",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://sherutplus.com/complaints/focus-deliveries",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Israel retail delivery for LastPrice",
+        "reportedRole": "Focus shipment number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The recipient distinguishes the exact Focus shipment number from the LastPrice order number. The tracker requires the recipient phone, which the public report masks."
+    }
+  ]
 }

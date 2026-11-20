@@ -4838,5 +4838,467 @@
     "pattern": "^YHC\\d{12}CN$",
     "kind": "open",
     "reason": "One public sample and an aggregator's carrier hint show YHC, twelve digits and CN; TipTop has no tracker of its own to confirm the family."
+  },
+  {
+    "carrier": "zufall",
+    "pattern": "^00340355246\\d{9}$",
+    "kind": "open",
+    "reason": "Archived ZUFALL tracking pages recognize these 20-digit Colli references. The current rules offer Swiss Post Cargo, USPS and NZ Post for both references."
+  },
+  {
+    "carrier": "ziegler",
+    "pattern": "^\\d{19}$",
+    "kind": "open",
+    "reason": "Easytrack documents a 19-character tracking number and its archived road tracking link contains an all-digit example. Detection offers no carrier for that input."
+  },
+  {
+    "carrier": "zajel",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "The Zajel Z-Lite guide shows a ten-digit Zajel air waybill. The current detection rules offer other carriers for that input."
+  },
+  {
+    "carrier": "yol-kargo",
+    "pattern": "^950\\d{6}$",
+    "kind": "open",
+    "reason": "Two public shipment reports give nine-digit Yol Kargo numbers beginning with 950. Detection does not offer Yol Kargo for either number."
+  },
+  {
+    "carrier": "xpressen",
+    "pattern": "^003707\\d{14}$",
+    "kind": "open",
+    "reason": "Xpressen’s archived tracker shows a delivered package for a 20-digit SSCC input. Detection offers other carriers for that package number."
+  },
+  {
+    "carrier": "xindus",
+    "pattern": "^X\\d{9}$",
+    "kind": "open",
+    "reason": "A public Xindus Lite shipment report identifies air waybills with X followed by nine digits. Detection currently offers Australia Post for both inputs."
+  },
+  {
+    "carrier": "xd-express",
+    "pattern": "^XD\\d{8}AU$",
+    "kind": "open",
+    "reason": "A published shipment history identifies an XD Express waybill with an XD prefix and AU suffix. Detection offers Colis Privé for this input."
+  },
+  {
+    "carrier": "wmg-group",
+    "pattern": "^C\\d{21}$",
+    "kind": "open",
+    "reason": "WMG Postal publishes a C-prefixed consignment example with 21 digits. Detection currently assigns this input to Canpar."
+  },
+  {
+    "carrier": "vichare",
+    "pattern": "^MH\\d{13}$",
+    "kind": "open",
+    "reason": "A public Vichare shipment report gives an MH consignment prefix and thirteen digits. Detection offers no carrier for this input."
+  },
+  {
+    "carrier": "united-pallet-network",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "A public UPN shipment report gives a nine-digit consignment number with leading zeros. Detection currently offers TNT for the number."
+  },
+  {
+    "carrier": "treggo",
+    "pattern": "^\\d{15}$",
+    "kind": "open",
+    "reason": "A public case study documents a merchant order reference for a Treggo shipment. Detection offers other carriers for the normalized number."
+  },
+  {
+    "carrier": "transpress",
+    "pattern": "^(?:\\d{6}|TRIERAA\\d{5})$",
+    "kind": "open",
+    "reason": "Public court records name these numeric and shipper-prefixed Transpress waybills. Detection leaves Transpress out for both."
+  },
+  {
+    "carrier": "tramaco",
+    "pattern": "^031\\d{12}$",
+    "kind": "open",
+    "reason": "A published account of an Ecuadorian customs inspection identifies a Tramaco Express parcel guide with this prefix and length. Detection offers other carriers."
+  },
+  {
+    "carrier": "trackings-ge",
+    "pattern": "^\\d{15}$",
+    "kind": "open",
+    "reason": "A public Trackings.GE tracking link carries a fifteen-digit number. Detection lists other carriers that share the length."
+  },
+  {
+    "carrier": "the-delivery-group",
+    "pattern": "^ETENE\\d{9}$",
+    "kind": "open",
+    "reason": "An archived DocketHub link in the TDG tracking interface uses an ETENE reference. Detection does not offer The Delivery Group."
+  },
+  {
+    "carrier": "thabit-logistics",
+    "pattern": "^99\\d{11}$",
+    "kind": "open",
+    "reason": "Publicly reported Thabit AWBs include thirteen digits starting with 99. Detection offers other carriers that share the length."
+  },
+  {
+    "carrier": "tig-freight",
+    "pattern": "^7377\\d{9}$",
+    "kind": "open",
+    "reason": "The TIG webinar shows its tracking portal recognizing a thirteen-digit Toll consignment with this prefix. Detection lists other carriers and omits TIG for that reference."
+  },
+  {
+    "carrier": "suning-logistics",
+    "pattern": "^000\\d{13}$",
+    "kind": "open",
+    "reason": "A public Chinese court decision identifies a sixteen-digit Suning Express waybill with leading zeroes. Detection suggests other carriers."
+  },
+  {
+    "carrier": "spark-kz",
+    "pattern": "^SP\\d{8}$",
+    "kind": "open",
+    "reason": "Spark’s indexed freight document identifies an SP-prefixed waybill with eight digits. Detection offers another carrier."
+  },
+  {
+    "carrier": "slx-kr",
+    "pattern": "^6890\\d{8}$",
+    "kind": "open",
+    "reason": "An indexed SLX tracker URL contains a twelve-digit waybill with this prefix. Detection offers other carriers and omits SLX."
+  },
+  {
+    "carrier": "skif-cargo",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "A public court decision identifies two Skif-Cargo application numbers accepted for freight carriage. The carrier’s public tracking page asks for such an application number, and detection omits Skif-Cargo."
+  },
+  {
+    "carrier": "shiplowcost",
+    "pattern": "^\\d{6}$",
+    "kind": "open",
+    "reason": "The Maltese court decision identifies a six-digit ShipLowCost reference printed on a parcel. Detection does not offer ShipLowCost."
+  },
+  {
+    "carrier": "shipgce",
+    "pattern": "^GC\\d{9}US$",
+    "kind": "open",
+    "reason": "The carrier’s public tracker recognizes a GC-prefixed US-suffix waybill. The input does not validate as S10, and detection omits Feiyang GCEx."
+  },
+  {
+    "carrier": "scan-global-logistics",
+    "pattern": "^UCI\\d{8}$",
+    "kind": "open",
+    "reason": "A public air waybill issued on behalf of Scan Global Logistics uses the UCI prefix and eight digits. Detection omits Scan Global Logistics."
+  },
+  {
+    "carrier": "santos-e-vale",
+    "pattern": "^9999\\d{8}$",
+    "kind": "open",
+    "reason": "A Portuguese consumer report quotes a dispatch email naming Santos e Vale and providing a twelve-digit reference. Detection offers other carriers."
+  },
+  {
+    "carrier": "relay-express",
+    "pattern": "^24VJWD\\d{7}$",
+    "kind": "open",
+    "reason": "Relay Express’s guest tracker recognizes a docket number with this prefix and length. Detection does not offer Relay Express."
+  },
+  {
+    "carrier": "red-star-express",
+    "pattern": "^0\\d{5}$",
+    "kind": "open",
+    "reason": "A Nigerian parcel recipient reports two six-digit Red Star waybills beginning with zero. Detection does not offer Red Star Express."
+  },
+  {
+    "carrier": "rayspeed",
+    "pattern": "^RAY\\d{13}$",
+    "kind": "open",
+    "reason": "A customer and the carrier identify a RaySpeed waybill using RAY and thirteen digits. The tracker recognizes it, while detection omits RaySpeed."
+  },
+  {
+    "carrier": "pxc-pacific",
+    "pattern": "^888\\d{7}$",
+    "kind": "open",
+    "reason": "Two indexed PXC Pacific tracker links identify ten-digit AWBs with this prefix. Detection offers other carriers."
+  },
+  {
+    "carrier": "postnet-za",
+    "pattern": "^(?:PNA|PPA)\\d{10,11}$",
+    "kind": "open",
+    "reason": "Customers publish PostNet references beginning PNA and PPA. Detection does not offer PostNet for those references."
+  },
+  {
+    "carrier": "pointpack",
+    "pattern": "^PO\\d{11}$",
+    "kind": "open",
+    "reason": "A Pointpack customer report gives a PO-prefixed parcel reference from a handoff dispute. Detection omits Pointpack."
+  },
+  {
+    "carrier": "peshkariki",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "A Peshkariki representative confirms a seven-digit courier order in a public forum. The published tracking input is not offered for Peshkariki by detection."
+  },
+  {
+    "carrier": "pds-direct",
+    "pattern": "^[0-9A-F]{32}$",
+    "kind": "open",
+    "reason": "Archived PDS Direct tracking links use UUID-shaped shipment references. Detection does not offer PDS Direct for those references."
+  },
+  {
+    "carrier": "pamukkale-kargo",
+    "pattern": "^20\\d{7}$",
+    "kind": "open",
+    "reason": "Turkish customers publish Pamukkale tracking numbers in this nine-digit family. Detection omits Pamukkale Kargo."
+  },
+  {
+    "carrier": "ondot-courier",
+    "pattern": "^\\d{9}(?:\\d{2})?$",
+    "kind": "open",
+    "reason": "Published Ondot complaint titles show nine- and eleven-digit shipment references. Detection omits Ondot."
+  },
+  {
+    "carrier": "neighbour-express",
+    "pattern": "^NR\\d{10}$",
+    "kind": "open",
+    "reason": "A Temu customer gives a complete Neighbour Express return number in this family. Detection offers other carriers."
+  },
+  {
+    "carrier": "navata",
+    "pattern": "^[PWY]\\d{6}$",
+    "kind": "open",
+    "reason": "Three public Navata reports identify lorry receipts with a leading letter and six digits. The tracker recognizes two, and detection omits Navata."
+  },
+  {
+    "carrier": "mzz-briefdienst",
+    "pattern": "^010026\\d{10}$",
+    "kind": "open",
+    "reason": "A published biber post registered-mail label carries this sixteen-digit UPOC. Detection offers other carriers and omits MZZ-Briefdienst."
+  },
+  {
+    "carrier": "movvi",
+    "pattern": "^\\d{6}$",
+    "kind": "open",
+    "reason": "A public invoice names Movvi as the carrier and instructs the customer to track with the six-digit invoice reference. Detection does not offer Movvi."
+  },
+  {
+    "carrier": "mongol-post",
+    "pattern": "^RR0030\\d{5}MN$",
+    "kind": "open",
+    "reason": "A postmarked Mongol Post cover shows an RR-prefixed label that fails the current S10 check. Detection does not offer Mongol Post for the printed input."
+  },
+  {
+    "carrier": "mobel-services",
+    "pattern": "^5241\\d{14}$",
+    "kind": "open",
+    "reason": "A Spanish consumer report identifies an eighteen-digit Möbel order tracking reference. Detection suggests other carriers."
+  },
+  {
+    "carrier": "marvisur",
+    "pattern": "^V\\d{10}$",
+    "kind": "open",
+    "reason": "A public Marvisur electronic carrier guide uses V followed by ten digits after normalization. Detection offers other carriers."
+  },
+  {
+    "carrier": "m24-logistics",
+    "pattern": "^O\\d{10}$",
+    "kind": "open",
+    "reason": "Two archived M24 tracking links publish order references with O and ten digits. Detection offers other carriers."
+  },
+  {
+    "carrier": "lx-pantos",
+    "pattern": "^PSEAPNYC\\d{8}$",
+    "kind": "open",
+    "reason": "Public U.S. manifest records identify LX Pantos house bills with this prefix and length. Detection does not offer LX Pantos."
+  },
+  {
+    "carrier": "logsis",
+    "pattern": "^\\d{5}$",
+    "kind": "open",
+    "reason": "A customer publishes a five-digit Logsis waybill. Detection does not offer Logsis for that sample."
+  },
+  {
+    "carrier": "liftit",
+    "pattern": "^T[0-9A-F]{17}[BC]L$",
+    "kind": "open",
+    "reason": "Archived Liftit tracking URLs contain these exact prefixed references. Detection does not offer Liftit."
+  },
+  {
+    "carrier": "lafasta",
+    "pattern": "^[0-9]{8}$",
+    "kind": "open",
+    "reason": "A confirmed Lafasta shipment uses an eight-digit number shared with other carriers. Detection does not offer Lafasta."
+  },
+  {
+    "carrier": "kurly-nextmile",
+    "pattern": "^[0-9]{3}S0JA9[A-Z0-9]{10}[0-9]{4}$",
+    "kind": "open",
+    "reason": "Archived Kurly Nextmile invoice query links contain this hyphenated identifier family. Detection does not offer Kurly Nextmile."
+  },
+  {
+    "carrier": "king-kong-express",
+    "pattern": "^[0-9]{10}$",
+    "kind": "open",
+    "reason": "Chinese judgments name 京廣速遞 on these ten-digit waybills, and its carrier tracker recognized two. Detection does not offer King Kong Express."
+  },
+  {
+    "carrier": "jas-worldwide",
+    "pattern": "^(?:S[0-9]{9}|(?:SHA|ANR)[0-9]{8,9})$",
+    "kind": "open",
+    "reason": "MyJAS recognizes these Blue World Line house bills and displays native JAS shipment IDs. Detection does not offer JAS Worldwide."
+  },
+  {
+    "carrier": "itc-delivery",
+    "pattern": "^D[0-9]{7}$",
+    "kind": "open",
+    "reason": "Legacy ITC Delivery tracking pages print these D-prefixed invoice references. Detection does not offer ITC Delivery."
+  },
+  {
+    "carrier": "intras-jp",
+    "pattern": "^50[09][0-9]{9}$",
+    "kind": "open",
+    "reason": "The public INTRAS tracker recognizes these twelve-digit INTRAS waybills. Detection does not offer INTRAS."
+  },
+  {
+    "carrier": "inter-global-kargo",
+    "pattern": "^G[0-9]{11}$",
+    "kind": "open",
+    "reason": "A recipient names İnter Global Kargo and publishes this prefixed reference. Detection does not offer the carrier."
+  },
+  {
+    "carrier": "iflow",
+    "pattern": "^TRI[0-9]{13}$",
+    "kind": "open",
+    "reason": "A published iFLOW tracking result displays this TRI-prefixed shipment number. Detection does not offer iFLOW."
+  },
+  {
+    "carrier": "hub-group-final-mile",
+    "pattern": "^[0-9]{7,8}$",
+    "kind": "open",
+    "reason": "NSD public tracking links and recipient reports use these seven- and eight-digit references. Detection does not offer Hub Group Final Mile."
+  },
+  {
+    "carrier": "hop-envios",
+    "pattern": "^3999999[0-9]{8}$",
+    "kind": "open",
+    "reason": "The archived HOP tracker confirms this pickup-point shipment number. Detection does not offer HOP Envíos."
+  },
+  {
+    "carrier": "herona-express",
+    "pattern": "^(?:TSMA[0-9]{8}|0[0-9]{4})$",
+    "kind": "open",
+    "reason": "The Herona form example has a branch prefix, and public merchant shipment rows have short leading-zero references. Detection does not offer Herona Express."
+  },
+  {
+    "carrier": "hellmann",
+    "pattern": "^[0-9]{8}$",
+    "kind": "open",
+    "reason": "An archived Hellmann tracking URL supplies an eight-digit shipment query. Detection does not offer Hellmann."
+  },
+  {
+    "carrier": "golilla",
+    "pattern": "^4[0-9]{6}$",
+    "kind": "open",
+    "reason": "Customer reports identify these seven-digit Golilla delivery codes separately from their shop orders. Detection does not offer Golilla."
+  },
+  {
+    "carrier": "gcx",
+    "pattern": "^(?:GCX)?SN[0-9]{7}$",
+    "kind": "open",
+    "reason": "GCX customer reports publish the SN family both with and without the carrier prefix. Detection does not offer GCX."
+  },
+  {
+    "carrier": "gbs-broker",
+    "pattern": "^RLAI[0-9]{8}$",
+    "kind": "open",
+    "reason": "GBS’s public tracker returns customs events for this marketplace reference. Detection does not offer GBS."
+  },
+  {
+    "carrier": "furdeco",
+    "pattern": "^F[0-9]{11}$",
+    "kind": "open",
+    "reason": "A recipient names Furdeco as the carrier and publishes this F-prefixed tracking number. Detection does not offer Furdeco."
+  },
+  {
+    "carrier": "focus-logistics-il",
+    "pattern": "^[0-9]{7}$",
+    "kind": "open",
+    "reason": "The customer distinguishes this seven-digit Focus shipment reference from the merchant’s order reference. Detection does not offer Focus Logistics."
+  },
+  {
+    "carrier": "flechacarga",
+    "pattern": "^R[0-9]{8}$",
+    "kind": "open",
+    "reason": "The court reproduces a Buspack tracking guide with the letter, branch and serial in the form FlechaCarga describes. Detection does not offer FlechaCarga."
+  },
+  {
+    "carrier": "fast-express-tr",
+    "pattern": "^3514785[0-9]{5}$",
+    "kind": "open",
+    "reason": "Fast Express carrier archives confirm these numeric consignments. Detection does not offer Fast Express."
+  },
+  {
+    "carrier": "fan-courier-md",
+    "pattern": "^FAN[0-9]{7}$",
+    "kind": "open",
+    "reason": "An archived link to the Moldovan carrier's tracking tenant includes this AWB. Detection does not offer FAN Courier Moldova."
+  },
+  {
+    "carrier": "espeedpost",
+    "pattern": "^E[0-9]{10}[A-Z]{2}$",
+    "kind": "open",
+    "reason": "Archived EspeedPost tracking links prefill these E-prefixed consignment references. Detection does not offer EspeedPost."
+  },
+  {
+    "carrier": "domina",
+    "pattern": "^[0-9]{11}$",
+    "kind": "open",
+    "reason": "Colombian court documents attribute these eleven-digit delivery guides to Domina. Detection does not offer Domina."
+  },
+  {
+    "carrier": "biz-courier",
+    "pattern": "^SWS[0-9]{8}$",
+    "kind": "open",
+    "reason": "BIZ Courier's public tracking page provides shipment histories for these SWS references. Detection does not currently offer BIZ Courier."
+  },
+  {
+    "carrier": "bir-gunde-kargo",
+    "pattern": "^(?:B[0-9]{9}|BGK[0-9]{8}|3126[0-9]{12})$",
+    "kind": "open",
+    "reason": "Published delivery complaints identify these codes as Bir Günde Kargo parcel references. Detection does not offer the carrier for these examples."
+  },
+  {
+    "carrier": "baikal-service",
+    "pattern": "^[А-ЯЁ]{3}[0-9]{6}$",
+    "kind": "open",
+    "reason": "A Russian arbitration decision quotes Baikal Service tracking under this Cyrillic waybill shape. Detection does not offer Baikal Service."
+  },
+  {
+    "carrier": "altex-curier",
+    "pattern": "^2000[0-9]{8}$",
+    "kind": "open",
+    "reason": "An indexed Altex Curier tracking result identifies this numeric AWB. Detection does not offer Altex Curier."
+  },
+  {
+    "carrier": "airways-courier-in",
+    "pattern": "^22[0-9]{7}$",
+    "kind": "open",
+    "reason": "Airways Courier tracking links publish these nine-digit waybills, including one with a dated delivery history. Detection does not offer Airways Courier."
+  },
+  {
+    "carrier": "agt-kurye",
+    "pattern": "^(?:278326[0-9]{7}|7000018[0-9]{6})$",
+    "kind": "open",
+    "reason": "Three independently published delivery complaints identify numeric AGT Kurye tracking numbers. Detection does not offer AGT Kurye."
+  },
+  {
+    "carrier": "aeronet",
+    "pattern": "^111[0-9]{6}$",
+    "kind": "open",
+    "reason": "A federal court opinion identifies this exact numeric Aeronet waybill. Detection does not offer Aeronet."
+  },
+  {
+    "carrier": "ader",
+    "pattern": "^E7M[0-9]{11}$",
+    "kind": "open",
+    "reason": "A Spanish consumer complaint reports this ADER delivery tracking format. Detection does not offer ADER."
+  },
+  {
+    "carrier": "abc-cargo-express",
+    "pattern": "^(?:[0-9]{6}FDY/MBS|[0-9]{6})$",
+    "kind": "open",
+    "reason": "A Nigerian news report and an independent customer comment identify two ABC Cargo Express waybill formats. Detection does not offer ABC Cargo Express."
   }
 ]

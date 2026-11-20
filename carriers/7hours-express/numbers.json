@@ -1,5 +1,25 @@
 {
   "carrier": "7hours-express",
-  "gap": "No public page shows a 7 Hours Express tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "WsZUmERW8q",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://api.7hoursexpress.com/tracking/?objectId=WsZUmERW8q",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "7 Hours Express public order tracking",
+        "reportedRole": "public tracking URL object ID",
+        "assessment": "review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier's search-indexed Track Order URL contains this case-sensitive object ID. The page exposed only a JavaScript shell, so the role of the value as a standalone tracking input remains unverified."
+    }
+  ]
 }

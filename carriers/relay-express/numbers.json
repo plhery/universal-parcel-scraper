@@ -1,5 +1,26 @@
 {
   "carrier": "relay-express",
-  "gap": "No public page shows a Relay Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "24VJWD3700135",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/913498145/Dc-to-Delta-Delivery-Challan-Return-tps-A0187959-Unused-777662",
+        "date": "2025-08-13",
+        "dateKind": "delivery challan date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "India domestic freight",
+        "reportedRole": "Docket Number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public delivery challan identifies Relay Express and gives the exact docket number. The carrier’s guest tracker returned matching shipment details and delivery status."
+    }
+  ]
 }

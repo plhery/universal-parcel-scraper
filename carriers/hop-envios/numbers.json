@@ -1,5 +1,31 @@
 {
   "carrier": "hop-envios",
-  "gap": "No public page shows a HOP number.",
-  "records": []
+  "records": [
+    {
+      "number": "399999930408185",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240919213325id_/https://hopenvios.com.ar/segui-tu-envio?c=399999930408185",
+        "date": "2024-09-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Argentina pickup-point delivery",
+        "reportedRole": "código de seguimiento",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "The archived carrier tracking result shows this exact number and four dated handling events. The current tracker returned no matching shipment."
+    }
+  ]
 }

@@ -1,5 +1,110 @@
 {
   "carrier": "intras-jp",
-  "gap": "No public page shows an INTRAS number.",
-  "records": []
+  "records": [
+    {
+      "number": "509632781115",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260815030433id_/https://intras.co.jp/delivery/tracking/number/509632781115",
+        "date": "2026-08-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "INTRAS Korea–Japan delivery",
+        "reportedRole": "carrier waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The Wayback capture URL preserves the exact waybill. The carrier's current public tracking page returns the same waybill and a dated delivery history."
+    },
+    {
+      "number": "509625839731",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260323034029id_/https://intras.co.jp/delivery/tracking/number/509625839731",
+        "date": "2026-03-23",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "INTRAS Korea–Japan delivery",
+        "reportedRole": "carrier waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The Wayback capture URL preserves the exact waybill. The carrier's current public tracking page returns the same waybill and a dated delivery history."
+    },
+    {
+      "number": "500051784806",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260401093434id_/https://intras.co.jp/delivery/tracking/number/500051784806",
+        "date": "2026-04-01",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "INTRAS Korea–Japan delivery",
+        "reportedRole": "carrier waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The Wayback capture URL preserves the exact waybill. The carrier's current public tracking page returns the same waybill and a dated delivery history."
+    }
+  ]
 }

@@ -1,5 +1,26 @@
 {
   "carrier": "ader",
-  "gap": "No public page shows an ADER number.",
-  "records": []
+  "records": [
+    {
+      "number": "E7M26080300656",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/entrega-no-realizada-dos-inte/9147e7488162dfc0d9",
+        "date": "2026-08-14",
+        "dateKind": "complaint publication date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Spanish domestic home delivery",
+        "reportedRole": "shipment tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A complaint filed with OCU quotes the full ADER tracking number and describes carrier scans. ADER's public order information form requires human verification and is a contact form. Carrier lookup blocked by verification."
+    }
+  ]
 }

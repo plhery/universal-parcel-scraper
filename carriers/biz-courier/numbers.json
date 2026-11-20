@@ -1,5 +1,68 @@
 {
   "carrier": "biz-courier",
-  "gap": "No public page shows a BIZ Courier number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "SWS43517108",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackit.bizcourier.eu/app/en/SWS43517108%2CSWS43560315%2CSWS43517107",
+        "date": "2020-07-22",
+        "dateKind": "tracking event date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "BIZ Courier cross-border parcel delivery",
+        "reportedRole": "shipment tracking code",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "BIZ Courier's own public result matches the exact code and shows the parcel's delivery."
+    },
+    {
+      "number": "SWS43560315",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackit.bizcourier.eu/app/en/SWS43517108%2CSWS43560315%2CSWS43517107",
+        "date": "2020-08-07",
+        "dateKind": "tracking event date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "BIZ Courier cross-border parcel delivery",
+        "reportedRole": "shipment tracking code",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "BIZ Courier's own public result matches the exact code and shows confirmation of deposit."
+    },
+    {
+      "number": "SWS43517107",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackit.bizcourier.eu/app/en/SWS43517108%2CSWS43560315%2CSWS43517107",
+        "date": "2020-09-09",
+        "dateKind": "tracking event date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "BIZ Courier cross-border parcel delivery",
+        "reportedRole": "shipment tracking code",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "BIZ Courier's own public result matches the exact code and shows confirmation of deposit."
+    }
+  ]
 }

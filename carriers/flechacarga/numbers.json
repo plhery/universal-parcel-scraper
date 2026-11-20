@@ -1,5 +1,26 @@
 {
   "carrier": "flechacarga",
-  "gap": "No public page shows a FlechaCarga number.",
-  "records": []
+  "records": [
+    {
+      "number": "R 4062 5613",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www2.jus.mendoza.gov.ar/listas/proveidos/vertexto.php?ide=10483798493",
+        "date": "2024-06-18",
+        "dateKind": "judgment date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Buspack domestic parcels, now FlechaCarga",
+        "reportedRole": "shipment tracking guide number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The judgment quotes Buspack’s customer service giving this exact spaced number for tracking the shipment. The current tracking form uses a token-backed service, so no live lookup was submitted."
+    }
+  ]
 }

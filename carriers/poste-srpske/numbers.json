@@ -1,5 +1,47 @@
 {
   "carrier": "poste-srpske",
-  "gap": "Pošte Srpske's tracking page shows only a placeholder number.",
-  "records": []
+  "records": [
+    {
+      "number": "UB112006034HU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.benchmark.rs/threads/pra%C4%87enje-po%C5%A1iljki-2024-2025-faq-u-prvoj-poruci.499188/page-114",
+        "date": "2024-07-06",
+        "dateKind": "forum post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Inbound mail from Hungary",
+        "reportedRole": "postal tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "The forum participant lists this Hungarian S10 item under Pošte Srpske and reproduces its local tracking updates. The Pošte Srpske public form timed out."
+    },
+    {
+      "number": "UB112005949HU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.benchmark.rs/threads/pra%C4%87enje-po%C5%A1iljki-2024-2025-faq-u-prvoj-poruci.499188/page-114",
+        "date": "2024-07-06",
+        "dateKind": "forum post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Inbound mail from Hungary",
+        "reportedRole": "postal tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "The forum participant lists this Hungarian S10 item under Pošte Srpske and reproduces its local tracking updates. The Pošte Srpske public form timed out."
+    }
+  ]
 }

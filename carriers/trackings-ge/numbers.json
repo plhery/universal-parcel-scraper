@@ -1,5 +1,31 @@
 {
   "carrier": "trackings-ge",
-  "gap": "No public page shows a Trackings.GE number.",
-  "records": []
+  "records": [
+    {
+      "number": "901209910387000",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251213212918id_/https://trackings.ge/en/track?track_num=901209910387000",
+        "date": "2025-12-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Georgia domestic parcels",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "The archive preserves a direct link to the carrier's public tracker with the number in its tracking parameter. The archived and live pages showed no shipment history in their returned HTML."
+    }
+  ]
 }

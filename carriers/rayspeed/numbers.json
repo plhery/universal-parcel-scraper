@@ -1,5 +1,24 @@
 {
   "carrier": "rayspeed",
-  "gap": "No public page shows a RaySpeed Asia air waybill number.",
-  "records": []
+  "records": [
+    {
+      "number": "RAY8991695905349",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://id.linkedin.com/in/rifano-b843408",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Indonesia to Malaysia parcel delivery",
+        "reportedRole": "airwaybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A RaySpeed representative’s public reply repeats and acknowledges the exact airwaybill that the customer posted. The carrier’s public tracker returned matching events dated September 2–5, 2025."
+    }
+  ]
 }

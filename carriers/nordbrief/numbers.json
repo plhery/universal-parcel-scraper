@@ -1,5 +1,35 @@
 {
   "carrier": "nordbrief",
-  "gap": "No public page shows a NordBrief number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "0100380690717150",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.philaseiten.de/cgi-bin/index.pl?ST=4909&full=1",
+        "date": "2013-09-03",
+        "dateKind": "carrier label date",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Private letter delivery from Lübeck through CITIPOST",
+        "reportedRole": "UPOC-Sendungsnummer",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "pin-ag",
+          "dhl-ecommerce",
+          "correos-express",
+          "canada-post",
+          "tnt",
+          "evri-uk"
+        ]
+      },
+      "note": "A postal collector reproduces the NordBrief UPOC on a letter and identifies the local NordBrief processing label that reused it. The regular letter and inter-carrier reference remain outside the verified scope of the current parcel tracker."
+    }
+  ]
 }

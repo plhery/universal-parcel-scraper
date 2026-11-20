@@ -1,5 +1,71 @@
 {
   "carrier": "gcx",
-  "gap": "No public page shows a GCX number; its tracker takes numbers in a form.",
-  "records": []
+  "records": [
+    {
+      "number": "SN8094856",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://sherutplus.com/reviews/gcx",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GCX e-commerce imports into Israel",
+        "reportedRole": "recipient-reported tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
+      },
+      "note": "The recipient posts this exact tracking input in their GCX review or complaint. The catalogued public tracking page returned HTTP 404 before a shipment lookup could be submitted."
+    },
+    {
+      "number": "SN7062052",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://sherutplus.com/gcx",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GCX e-commerce imports into Israel",
+        "reportedRole": "recipient-reported tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
+      },
+      "note": "The recipient posts this exact tracking input in their GCX review or complaint. The catalogued public tracking page returned HTTP 404 before a shipment lookup could be submitted."
+    },
+    {
+      "number": "GCX-SN6629790",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://sherutplus.com/reviews/gcx",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GCX e-commerce imports into Israel",
+        "reportedRole": "recipient-reported tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The recipient posts this exact tracking input in their GCX review or complaint. The catalogued public tracking page returned HTTP 404 before a shipment lookup could be submitted."
+    }
+  ]
 }

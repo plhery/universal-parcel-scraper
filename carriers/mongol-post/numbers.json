@@ -1,5 +1,26 @@
 {
   "carrier": "mongol-post",
-  "gap": "No public page shows a Mongol Post number.",
-  "records": []
+  "records": [
+    {
+      "number": "RR 003007611 MN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://arge-r-v-zettel.de/files/2025/03/MBM_28.pdf#page=27",
+        "date": "2007-08-17",
+        "dateKind": "postmark",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "International registered mail from Mongolia",
+        "reportedRole": "RR-Sendungsnummer on Mongol Post cover",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The philatelic journal reproduces a postmarked Mongol Post envelope and its UPU-style label. The published spaces and digits are preserved. The printed identifier fails current S10 validation, and a live match remains unverified."
+    }
+  ]
 }

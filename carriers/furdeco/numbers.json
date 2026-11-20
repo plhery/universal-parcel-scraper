@@ -1,5 +1,27 @@
 {
   "carrier": "furdeco",
-  "gap": "No public page shows a Furdeco number.",
-  "records": []
+  "records": [
+    {
+      "number": "F48668413340",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.justanswer.co.uk/computer/vd7eh-course-furdeco-s-main-customer-service-contact-details.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "UK bulky home delivery",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The recipient reports that Furdeco contacted them about delivery and quotes this exact tracking number separately from the retailer’s order reference. Furdeco’s tracker requires a delivery postcode, which the public discussion does not provide."
+    }
+  ]
 }

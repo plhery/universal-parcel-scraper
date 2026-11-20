@@ -1,5 +1,49 @@
 {
   "carrier": "transfera",
-  "gap": "No public page shows a Transfera shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "PT070655022RS",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.benchmark.rs/threads/pra%C4%87enje-po%C5%A1iljki-2024-2025-faq-u-prvoj-poruci.499188/post-7642886",
+        "date": "2026-01-10",
+        "dateKind": "forum post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Serbian marketplace delivery",
+        "reportedRole": "parcel tracking number",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A forum participant says Transfera forwarded this parcel to City Express and reports a dated distribution-centre scan. The valid Serbian S10 number leaves its issuer and scope on Transfera’s tracker uncertain. The official guest tracker returned not found."
+    },
+    {
+      "number": "PT070655036RS",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.benchmark.rs/threads/pra%C4%87enje-po%C5%A1iljki-2024-2025-faq-u-prvoj-poruci.499188/post-7642886",
+        "date": "2026-01-10",
+        "dateKind": "forum post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Serbian marketplace delivery",
+        "reportedRole": "parcel tracking number",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A forum participant says Transfera forwarded this parcel to City Express and reports a dated handoff to the courier. The valid Serbian S10 number leaves its issuer and scope on Transfera’s tracker uncertain. The official guest tracker returned not found."
+    }
+  ]
 }

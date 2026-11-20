@@ -1,5 +1,31 @@
 {
   "carrier": "mobel-services",
-  "gap": "No public page shows a Möbel order reference.",
-  "records": []
+  "records": [
+    {
+      "number": "524100334574062301",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas?companyId=1B434595-167F1C7E2&page=4",
+        "date": "2024-10-15",
+        "dateKind": "consumer complaint",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Spanish home delivery",
+        "reportedRole": "número de seguimiento del pedido",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bpost",
+          "ecoscooting",
+          "gls-es"
+        ]
+      },
+      "note": "A public OCU complaint about Möbel’s delivery prints the complete order tracking reference. The carrier’s tracker requires the order phone number, which the complaint does not publish."
+    }
+  ]
 }

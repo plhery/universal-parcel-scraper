@@ -1,5 +1,25 @@
 {
   "carrier": "wise-express",
-  "gap": "No public page shows a Wise Express number; its tracker takes numbers in a form.",
-  "records": []
+  "records": [
+    {
+      "number": "9274892700515800004962",
+      "role": "quarantined",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://s3.cn-north-1.amazonaws.com.cn/wishpost-production-wishpost-announcement/WishPost-WiseExpress-label-sample.pdf",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "WishPost Wise Express",
+        "reportedRole": "USPS eVS tracking number",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "WishPost’s Wise Express label example puts this number under the USPS eVS barcode. Whether Wise Express’s own tracker accepts the postal number remains unverified."
+    }
+  ]
 }
