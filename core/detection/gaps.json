@@ -536,6 +536,12 @@
     "reason": "CACESA clears parcels through customs under the numbers of the platforms and carriers it works for, so it has no number format of its own. Cainiao's Spanish and Portuguese numbers belong to Ecoscooting, which delivers them."
   },
   {
+    "carrier": "campos-cadilhe",
+    "pattern": "^PRZ21\\d{6}$",
+    "kind": "open",
+    "reason": "Campos & Cadilhe's OTM results show a PRZ service prefix, a two-digit year and a six-digit reference, with dots between the parts. Detection does not offer the carrier."
+  },
+  {
     "carrier": "cargus",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
