@@ -31917,7 +31917,8 @@
     "timezone": "Europe/Sofia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "interlogistica",
+      "localClocks": true
     },
     "canaryUrl": "https://www.interlogistica.bg/bg/",
     "trackingSearchUrl": "https://tracking.interlogistica.bg/",

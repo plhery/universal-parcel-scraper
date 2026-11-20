@@ -31921,7 +31921,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Sofia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "interlogistica",
+      "localClocks": true
     },
     "canaryUrl": "https://www.interlogistica.bg/bg/",
     "trackingSearchUrl": "https://tracking.interlogistica.bg/",

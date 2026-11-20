@@ -372,6 +372,7 @@ import { adapter as instabox } from '../carriers/instabox/adapter.js';
 import { adapter as integralPack } from '../carriers/integral-pack/adapter.js';
 import { adapter as intelValley } from '../carriers/intel-valley/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
+import { adapter as interlogistica } from '../carriers/interlogistica/adapter.js';
 import { adapter as internetExpress } from '../carriers/internet-express/adapter.js';
 import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.js';
 import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
@@ -1217,6 +1218,7 @@ export const REGISTRY: RegistryDefinition = {
     "integral-pack": integralPack,
     "intel-valley": intelValley,
     "intelcom": intelcom,
+    "interlogistica": interlogistica,
     "internet-express": internetExpress,
     "interrapidisimo": interrapidisimo,
     "intertown-transport": intertownTransport,
@@ -2504,7 +2506,7 @@ export const REGISTRY: RegistryDefinition = {
     "inter-global-kargo": "universal",
     "intereuropa": "universal",
     "interfjord": "universal",
-    "interlogistica": "universal",
+    "interlogistica": "interlogistica",
     "international-bridge": "universal",
     "internet-express": "internet-express",
     "interrapidisimo": "interrapidisimo",
