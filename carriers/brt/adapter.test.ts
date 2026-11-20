@@ -678,6 +678,13 @@ describe('BRT origin legs', () => {
       coded('SPL', 'Your parcel is on its way', '2026-01-12T09:00:00Z')));
     expect(early.events!.map(event => event.stage)).toEqual(['accepted', undefined]);
     expect(stagedDpdLeg({ status: 'in_transit', events: [] })).toEqual({ status: 'in_transit', events: [] });
+    // Back at the delivery center after a missed delivery, the parcel waits for the next round.
+    const missed = stagedDpdLeg(partner(coded('AT_DELIVERY_CENTER', 'At delivery center', '2026-01-17T16:52:00+01:00'),
+      coded('UNSUCCESSFUL_DELIVERY_ATTEMPT', 'Unsuccessful delivery attempt', '2026-01-17T12:59:00+01:00', 'failed_attempt'),
+      coded('AT_DELIVERY_CENTER', 'At delivery center', '2026-01-17T07:43:00+01:00'),
+      coded('PARCEL_HANDED', 'Parcel handed to DPD', '2026-01-12T15:50:00Z')));
+    expect(missed.events!.map(event => [event.stage, event.stage_source])).toEqual([
+      ['failed_attempt', 'none'], ['failed_attempt', undefined], ['in_transit', undefined], ['accepted', undefined]]);
   });
 
   it("gives BRT's own scans the stage its status map gives their label", () => {

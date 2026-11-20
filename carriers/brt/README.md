@@ -46,7 +46,8 @@ gives no delivery estimate, so the partner's stands until BRT delivers the parce
 holds it for collection or scans it on a later day. DPD's
 map leaves its hand-over, depot intake and transit scans unstaged, because an
 origin depot can follow an import's customs. Before BRT's hand-over they are the
-acceptance and transit, unless DPD staged the parcel past acceptance first. The status map
+acceptance and transit, unless DPD staged the parcel past acceptance first. Back at the
+delivery center after a missed delivery, the parcel keeps the attempt's stage. The status map
 answers a partner's scan, which has a code, by that partner's map. It leaves the transit
 scans DPD had before it took the parcel in out on purpose, and has no answer for the
 hand-over and intake, whose stage the scans before them decide.

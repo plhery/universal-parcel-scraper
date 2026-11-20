@@ -435,12 +435,16 @@ export function stagedDpdLeg(result: CarrierResult): CarrierResult {
   if (!result.events?.length) return result;
   let taken = false;
   let moved = false;
+  let attempted = false;
   const events = [...result.events].reverse().map((event) => {
     const code = event.provider_code ?? '';
+    // Back at the delivery center after a missed delivery, the parcel waits there for the next round.
+    if (attempted && !event.stage && code === 'AT_DELIVERY_CENTER') return { ...event, stage: 'failed_attempt', stage_source: 'none' };
     const stage = event.stage
       ?? (DPD_INTAKE.has(code) ? (moved ? 'in_transit' : 'accepted') : DPD_TRANSIT.has(code) && taken ? 'in_transit' : undefined);
     if (stage && stage !== 'registered') taken = true;
     if (event.stage && event.stage !== 'registered' && event.stage !== 'accepted') moved = true;
+    if (stage) attempted = stage === 'failed_attempt';
     return stage === event.stage ? event : { ...event, stage };
   }).reverse();
   return { ...result, events };
