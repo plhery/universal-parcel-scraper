@@ -196,6 +196,9 @@ describe('NZ Post courier labels and international mail', () => {
     ] }] }, inbound);
     expect(presented).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Presented for border clearance' });
     expect(presented.events?.map(event => event.stage)).toEqual(['customs', 'in_transit', 'in_transit']);
+    // It is a note made before the arrival at the office it names: a notice, with no place.
+    expect(presented.events?.[2]).toMatchObject({ provider_code: '5057', stage_source: 'none' });
+    expect(presented.events?.[2]).not.toHaveProperty('location');
     // The Ministry of Health's Medsafe assessment holds the item in border clearance.
     expect(classifyNzPostStatus('5188')).toEqual({ status: 'in_transit', stage: 'customs' });
     // Presented for border assessment, after that assessment and a second presentation for clearance.

@@ -137,7 +137,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-31",
-      "note": "Noted hours before the item's arrival at the office of exchange, which the origin post's relay dates to the same minute as NZ Post's: the item is still on its way."
+      "note": "Noted hours before the item's arrival at the office of exchange, which the origin post's relay dates to the same minute as NZ Post's: the item is still on its way. The adapter gives it as a notice (stage source none) without the office as its place."
     },
     {
       "code": "5208",

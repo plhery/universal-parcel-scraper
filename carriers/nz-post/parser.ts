@@ -36,6 +36,7 @@ function clock(value: unknown): Pick<CarrierEvent, 'time'> & Record<string, stri
 }
 
 const INTERNATIONAL_DEPARTURE = '5007';
+const PENDING_CLEARANCE = '5057';
 /** An airline's scan, "In transit with airline": 5064, or a 528x code (5280 to 5285 seen on an EMS item). */
 const AIRLINE = /^(?:5064|528\d)$/;
 /** NZ Post's own scans of an item from abroad: its arrival, the border clearance pending, the border agency, its hold and the presentation to it. */
@@ -115,7 +116,10 @@ export function parseNzPost(payload: unknown, number: string): CarrierResult {
     const code = clean(raw.edifact_code, 40);
     if (!description || !code) throw new SchemaError('nz-post', 'NZ Post returned an incomplete scan');
     const depot = clean(raw.depot_name, 160);
-    const location = isNzPostPlaceholderLocation(depot) ? '' : depot;
+    // Border clearance pending is a note made before the item reaches the office of exchange it names: the item is
+    // still on its way there, so the note keeps that stage as a notice and names no place.
+    const pending = code === PENDING_CLEARANCE;
+    const location = pending || isNzPostPlaceholderLocation(depot) ? '' : depot;
     const mapped = classifyNzPostStatus(code);
     const country = location ? trackingPlace(location).country : null;
     // Long descriptions embed signatures and other recipient details. The
@@ -129,7 +133,7 @@ export function parseNzPost(payload: unknown, number: string): CarrierResult {
     if (leaving) beforeDeparture.push({ index, country, wall: AIRLINE.test(code) ? null : abroadWall(clocked) });
     if (code === INTERNATIONAL_DEPARTURE) leaving = false;
     return { ...clocked, description, provider_code: code,
-      ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) };
+      ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}), ...(pending ? { stage_source: 'none' as const } : {}) };
   });
   // A scan nothing places keeps NZ Post's Auckland reading, the last guess:
   // hours off, but the reply keeps its instant.
