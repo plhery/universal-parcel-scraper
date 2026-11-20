@@ -803,6 +803,7 @@ import { adapter as tracxLogis } from '../carriers/tracx-logis/adapter.js';
 import { adapter as tramaco } from '../carriers/tramaco/adapter.js';
 import { adapter as transaher } from '../carriers/transaher/adapter.js';
 import { adapter as transcorp } from '../carriers/transcorp/adapter.js';
+import { adapter as transglobalExpress } from '../carriers/transglobal-express/adapter.js';
 import { adapter as transmission } from '../carriers/transmission/adapter.js';
 import { adapter as transportesRapex } from '../carriers/transportes-rapex/adapter.js';
 import { adapter as trendyolExpress } from '../carriers/trendyol-express/adapter.js';
@@ -1696,6 +1697,7 @@ export const REGISTRY: RegistryDefinition = {
     "tramaco": tramaco,
     "transaher": transaher,
     "transcorp": transcorp,
+    "transglobal-express": transglobalExpress,
     "transmission": transmission,
     "transportes-rapex": transportesRapex,
     "trendyol-express": trendyolExpress,
@@ -3428,6 +3430,7 @@ export const REGISTRY: RegistryDefinition = {
     "transaher": "transaher",
     "transcorp": "transcorp",
     "transfera": "universal",
+    "transglobal-express": "transglobal-express",
     "transgo-mx": "universal",
     "transilvania-post": "universal",
     "transmission": "transmission",

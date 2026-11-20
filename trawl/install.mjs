@@ -64,6 +64,8 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && onexBrowserNumber(url, capture)) return await runOnexBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && neighbourBrowserNumber(url, capture)) return await runNeighbourBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && magicTransBrowserNumber(url, capture)) return await runMagicTransBrowser({ ...carrierRun, signal: budget.signal })
+  if (carrierPage && transglobalBrowserNumber(url, capture)) return await runTransglobalBrowser({ ...carrierRun, signal: budget.signal,
+    waitCloudflare: waitPaxelCloudflare })
   if (carrierPage && onlogExpressBrowserNumber(url, capture)) return await runOnlogExpressBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && flashCourierRequest(url, capture)) return await runFlashCourierGuest({ ...carrierRun, signal: budget.signal, validateTarget: validateOutboundUrl ? address => budget.run(() => validateOutboundUrl(address)) : undefined })
   if (carrierPage && paxelBrowserNumber(url, capture)) return await runPaxelBrowser({ ...carrierRun, signal: budget.signal,
@@ -154,6 +156,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { onexBrowserNumber, runOnexBrowser } from "../utils/onex-browser.mjs"\n'
     + 'import { neighbourBrowserNumber, runNeighbourBrowser } from "../utils/neighbour-express-browser.mjs"\n'
     + 'import { magicTransBrowserNumber, runMagicTransBrowser } from "../utils/magic-trans-browser.mjs"\n'
+    + 'import { transglobalBrowserNumber, runTransglobalBrowser } from "../utils/transglobal-express-browser.mjs"\n'
     + 'import { onlogExpressBrowserNumber, runOnlogExpressBrowser } from "../utils/onlog-express-browser.mjs"\n'
     + 'import { flashCourierRequest, runFlashCourierGuest } from "../utils/flash-courier-guest.mjs"\n'
     + 'import { paxelBrowserNumber, runPaxelBrowser } from "../utils/paxel-browser.mjs"\n'

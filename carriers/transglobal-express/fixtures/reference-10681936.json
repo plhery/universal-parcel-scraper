@@ -1,0 +1,26 @@
+{
+  "kind": "history",
+  "legs": [
+    {
+      "name": "Spring (Main)",
+      "number": "LX112076891NL"
+    }
+  ],
+  "days": [
+    {
+      "date": "Monday, October 19, 2026",
+      "rows": [
+        {
+          "time": "13:11",
+          "description": "PARCEL CREATED",
+          "location": ""
+        },
+        {
+          "time": "13:11",
+          "description": "Booking Made",
+          "location": "Awaiting drop-off"
+        }
+      ]
+    }
+  ]
+}

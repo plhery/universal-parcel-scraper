@@ -1,0 +1,57 @@
+{
+  "id": "transglobal-express",
+  "displayName": "Transglobal Express",
+  "aliases": [
+    "Transglobal"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#02548F"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "transglobal-express",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_partner"
+  ],
+  "portal": {
+    "url": "https://www.transglobalexpress.co.uk/track-shipment/",
+    "searchUrl": "https://www.transglobalexpress.co.uk/track-shipment/",
+    "canaryUrl": "https://www.transglobalexpress.co.uk/track-shipment/",
+    "shows": [
+      "history",
+      "location",
+      "delivery_partner",
+      "parcel_image"
+    ],
+    "scraped": [
+      "history",
+      "location",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "parcel_image"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -3860,6 +3860,12 @@
     "reason": "Elite airwaybills are ten digits, a plain run many carriers share, so no rule claims them."
   },
   {
+    "carrier": "transglobal-express",
+    "pattern": "^TP[1-9]\\d{5,8}$",
+    "kind": "by_design",
+    "reason": "A TP- reference is a Transglobal Express order number, TP and digits: a short generic shape other carriers' references share, so the shape cannot name Transglobal Express."
+  },
+  {
     "carrier": "trendyol-express",
     "pattern": "^\\d{16}$",
     "kind": "by_design",

@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Transglobal Express. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -34,6 +34,12 @@ Onex opens its English tracker for the number once Cloudflare lets the page load
 submits the number from its address. The helper captures that lookup alone and passes on the
 events and the import and export dates without weights, boxes, prices, taxes or another carrier's
 scans.
+
+Transglobal Express opens its tracking form once Cloudflare lets it load, types the whole
+reference and lets that one post through. The form redirects a reference it knows to the result
+page of that order; the helper checks that the redirect names the reference's order number and
+follows it. It passes on the legs and dated rows alone, or the form's `Order not found`. The
+redirect's address carries the order's delivery postcode, which no row or log keeps.
 
 Magic Trans opens its tracker for the number, drags the thumb of Yandex's SmartCaptcha slider
 across its track and, once the check issues its token, clicks the page's button, which posts the
