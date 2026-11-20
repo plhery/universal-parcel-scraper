@@ -99,6 +99,8 @@ describe('SpeedX tracking page', () => {
     // At a parcelshop after the round: the parcel waits for the recipient, who then collects it.
     expect(statusMapAnswer({ carrier: 'speedx', providerCode: '57701', description: 'Waiting for collection from Parcelshop' }))
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    // The round's drop at the parcelshop is not the delivery, whatever its delivered category says.
+    expect(speedxStatus('57204', 'LAST_MILE_DELIVERED')).toEqual({ status: 'out_for_delivery', stage: 'ready_for_pickup' });
     expect(statusMapAnswer({ carrier: 'speedx', providerCode: '57702', description: 'Self picked up from Parcelshop' }))
       .toEqual({ kind: 'mapped', stage: 'delivered' });
     const result = parse(withData((_data, events) => {

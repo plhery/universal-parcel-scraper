@@ -35,8 +35,9 @@ const CODES = new Map<string, ClassifiedStatus>([
   // The day's note on a parcel not delivered that day; it goes out again the next morning.
   ['57409', IN_TRANSIT],
   ['57201', DELIVERED],
-  // After the round out for delivery, at a parcelshop: the parcel waits there for the recipient,
-  // then the recipient collects it.
+  // After the round out for delivery, at a parcelshop: the parcel left there (Delivered to PUDO,
+  // filed under LAST_MILE_DELIVERED) waits for the recipient, then the recipient collects it.
+  ['57204', READY_FOR_PICKUP],
   ['57701', READY_FOR_PICKUP],
   ['57702', DELIVERED],
   // The delivery address corrected, filed under LAST_MILE_INTERCEPT: seen before the parcel landed,
