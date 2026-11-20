@@ -4766,5 +4766,11 @@
     "pattern": "^\\d{9}$",
     "kind": "open",
     "reason": "A public UPN shipment report gives a nine-digit consignment number with leading zeros. Detection currently offers TNT for the number."
+  },
+  {
+    "carrier": "treggo",
+    "pattern": "^\\d{15}$",
+    "kind": "open",
+    "reason": "A public case study documents a merchant order reference for a Treggo shipment. Detection offers other carriers for the normalized number."
   }
 ]
