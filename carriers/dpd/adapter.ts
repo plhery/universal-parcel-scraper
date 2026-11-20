@@ -2,7 +2,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 
 import { randomBytes } from 'node:crypto';
 import { contains, load, type Cheerio, type CheerioAPI } from 'cheerio';
-import type { AnyNode, Element } from 'domhandler';
+import type { AnyNode } from 'domhandler';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
@@ -659,7 +659,7 @@ function timelineCount($: CheerioAPI, panel: Cheerio<AnyNode>): number {
     const root = element.closest('.parcelStatus')[0] ?? element.parent()[0];
     if (root) roots.add(root);
   });
-  return [...roots].filter(root => ![...roots].some(other => other !== root && contains(other as Element, root))).length;
+  return [...roots].filter(root => ![...roots].some(other => other !== root && contains(other, root))).length;
 }
 
 export function parseDPDTrackingHtml(html: string, trackingNumber: string): CarrierResult {

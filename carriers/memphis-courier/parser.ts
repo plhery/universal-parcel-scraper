@@ -58,7 +58,7 @@ function clockOf(value: unknown): { local_time: string } | { time: string } | nu
   const date = new Date(`${wall!}Z`);
   if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 19) !== wall) return null;
   const millis = (fraction ?? '').slice(0, 3).padEnd(3, '0');
-  const clock = millis === '000' ? wall! : `${wall}.${millis}`;
+  const clock = millis === '000' ? wall : `${wall}.${millis}`;
   if (!offset) return { local_time: clock };
   const instant = explicitOffsetTime(`${clock}${offset}`);
   return instant ? { time: instant.iso } : null;
