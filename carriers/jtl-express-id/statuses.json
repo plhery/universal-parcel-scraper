@@ -1,0 +1,9 @@
+{
+  "carrier": "jtl-express-id",
+  "entries": [
+    {"wording": "Terima permintaan pick up dari [JTL]", "stage": "registered", "language": "id", "confirmedBy": "live", "note": "JTL Express received the request to pick the parcel up."},
+    {"wording": "Barang di terima di POS (C4BLT002) di Kota Kota Blitar - Jawa Timur", "stage": "accepted", "language": "id", "confirmedBy": "live", "note": "A branch took the parcel in; the branch code and town vary."},
+    {"wording": "Paket telah di pick up", "stage": "accepted", "language": "id", "confirmedBy": "live", "note": "A courier picked the parcel up. The tracker names the courier after \"oleh\", which the adapter leaves out."},
+    {"wording": "Paket di kembalikan di Blitar [Blitar Sananwetan] - (HOLD) Menunggu Konfirmasi Pelanggan", "stage": "exception", "language": "id", "confirmedBy": "live", "note": "The parcel was taken back to a branch and is held there until the customer confirms; the town varies."}
+  ]
+}

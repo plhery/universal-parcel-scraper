@@ -34527,6 +34527,28 @@
       }
     ]
   },
+  "jtl-express-id": {
+    "displayName": "JTL Express",
+    "color": "#FF0000",
+    "aliases": [
+      "PT Jagad Total Logistic Express"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jtl-express-id",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jtlexpress.co.id/Tracking",
+    "trackingUrlTemplate": "https://www.jtlexpress.co.id/Tracking",
+    "trackingSearchUrl": "https://www.jtlexpress.co.id/Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jumppoint": {
     "displayName": "Jumppoint",
     "color": "#0f4ae1",

@@ -5498,5 +5498,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "jtl-express-id",
+    "pattern": "^[A-Z0-9]{2,12}\\d{9}$",
+    "kind": "open",
+    "reason": "JTL Express resis, a branch code, a month and a serial, have no detection rule yet."
   }
 ]

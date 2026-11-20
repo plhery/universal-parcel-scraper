@@ -1,0 +1,25 @@
+{
+  "carrier": "jtl-express-id",
+  "records": [
+    {
+      "number": "C4BLT002-0323-00006",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cekidot.id/cek-resi/jtl",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Standart",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Cekidot's JTL Express tracking page offers it as the resi to try. JTL Express's tracker answers it with a parcel taken in at a Blitar branch, picked up, then held at Blitar for the customer's confirmation."
+    }
+  ]
+}

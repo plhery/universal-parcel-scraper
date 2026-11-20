@@ -832,6 +832,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/dragonflyshipping\.ca\/en\/track-your-package\/(?:\?|$)/,
     marker: /The number you entered doesn't seem to match any of our current deliveries|Track another package/i,
     forwarding: { notFound: /The number you entered doesn't seem to match any of our current deliveries/i }, renderTimeoutMs: 20_000 },
+  // The tracker reads resis from its form only, behind a picture code.
+  { carrier: 'jtl-express-id', number: 'ZZ000000-0000-00000',
+    route: /^https:\/\/www\.jtlexpress\.co\.id\/Tracking$/, marker: /posisi paketmu/i, forwarding: 'none' },
   { carrier: 'jd-logistics', number: 'JD0000000000001',
     route: /^https:\/\/www\.jingdonglogistics\.com\/Tracking(?:\?|$)/,
     marker: /Track your shipment|Tracking your waybill/i },
