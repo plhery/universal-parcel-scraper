@@ -96,7 +96,7 @@ describe('XYL-Ships tracker', () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
-  it('refuses fragments and lists without a request, and keeps detection as it was', async () => {
+  it('refuses fragments and lists without a request, and claims NUDE and XLWL numbers whole', async () => {
     expect(normalizeXylShipsNumber(' nude 9999 9999 80ex ')).toBe(NUMBER);
     for (const value of ['NUDE', NUMBER + ',NUDE9999999981EX', 'NUDE-9999999980EX/']) {
       const fetcher = vi.fn<typeof fetch>();
@@ -104,6 +104,12 @@ describe('XYL-Ships tracker', () => {
       expect(fetcher).not.toHaveBeenCalled();
     }
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'xyl-ships' });
+    for (const number of ['XLWL8261937504EX', 'XLWL8261937517EXP']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'xyl-ships', confidence: 'high' });
+    }
+    for (const number of ['XLWL826193750EX', 'XLWL82619375040EX', 'XLWL8261937504EXPP', 'XLWL8261937504XP', 'XLWX8261937504EX']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('xyl-ships');
+    }
     expect(instance(vi.fn<typeof fetch>()).recognize).toBeUndefined();
   });
 });

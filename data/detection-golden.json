@@ -114271,6 +114271,22 @@
     ]
   },
   {
+    "input": "XLWL8261937504EX",
+    "carrier": "xyl-ships",
+    "confidence": "high",
+    "candidates": [
+      "xyl-ships"
+    ]
+  },
+  {
+    "input": "XLWL8261937517EXP",
+    "carrier": "xyl-ships",
+    "confidence": "high",
+    "candidates": [
+      "xyl-ships"
+    ]
+  },
+  {
     "input": "XN136114912JB",
     "carrier": "chronopost",
     "confidence": "high",

@@ -23,7 +23,9 @@ non-zero code is inconclusive.
 
 XYL-Ships publishes no number format and no public page shows one of its numbers. Numbers made
 of NUDE, ten digits and EX are its own: 17TRACK files their histories under FXYL, and no other
-carrier's rule takes the shape, so the rule has high confidence. The corpus holds a synthetic one.
+carrier's rule takes the shape, so the rule has high confidence. Numbers of XLWL, ten digits and
+EX or EXP have the same layout, and XYL-Ships's tracker answers them with whole histories, so a
+second high rule takes them. The corpus holds synthetic ones.
 
 ## Limitations
 

@@ -63897,6 +63897,10 @@
       {
         "pattern": "^NUDE\\d{10}EX$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^XLWL\\d{10}EXP?$",
+        "confidence": "high"
       }
     ]
   },
