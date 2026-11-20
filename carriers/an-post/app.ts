@@ -3,6 +3,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { AN_POST, isAnPostItemNumber, normalizeAnPostNumber, parseAnPostEvents, parseAnPostReference, parseAnPostSummary, type AnPostSummary } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The guest tracking service of the An Post app (ie.anpost.app), behind Azure API Management. */
 export const AN_POST_APP_API = 'https://apim-anpost-anpostmobileapp.anpost.com/TTServicePublic';
@@ -79,12 +80,4 @@ function quotaSpent(response: Response, text: string): boolean {
     const body: unknown = JSON.parse(text);
     return isRecord(body) && typeof body.message === 'string' && /\bquota\b/i.test(body.message);
   } catch { return false; }
-}
-
-/** Retry-After as seconds or an HTTP date. */
-function retryAfterMs(header: string | null): number | undefined {
-  const value = header?.trim();
-  if (!value) return undefined;
-  const delay = /^\d+$/.test(value) ? Number(value) * 1_000 : Date.parse(value) - Date.now();
-  return Number.isFinite(delay) ? Math.max(0, delay) : undefined;
 }

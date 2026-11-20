@@ -5,11 +5,10 @@ import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/trawl.js';
 import { COSTCO_API, COSTCO_MAX_BYTES, costcoTrackingUrl, isCostcoBlockPage, normalizeCostcoLogisticsNumber, parseCostcoLogisticsBody, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 function httpFailure(status: number, headers: Record<string, string> = {}): void {
-  const retry = Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1];
-  const retryAfterMs = retry === undefined ? undefined : /^\d+$/.test(retry.trim()) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-  if (status === 429) throw new RateLimitedError(PROVIDER, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined);
+  if (status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1]));
   if ([401, 403, 412, 428].includes(status)) throw new ChallengeError(PROVIDER, 'Costco Logistics refused browser tracking', { status });
   // The API's explicit HTTP 200 envelope identifies a missing parcel, not a missing route.
   if (status === 404 || status === 410) throw new TransportError(PROVIDER, 'Costco Logistics tracking route is unavailable', { status });

@@ -8,6 +8,7 @@ import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/trawl.js';
 import { normalizeLbcNumber, parseLbcWebsite } from './parser.js';
 import { readLbcMobile } from './mobile.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const ORIGIN = 'https://www.lbcexpress.com';
 const MAX_BYTES = 1_000_000;
@@ -16,11 +17,10 @@ export const LBC_TRACK_REQUEST = `${ORIGIN}/wp-admin/admin-ajax.php`;
 
 function httpFailure(status: number, retryAfter?: string): Error {
   if (status < 100) return new TransportError('lbc-express', 'The bound browser request failed');
-  const retryMs = retryAfter === undefined ? NaN : /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : Date.parse(retryAfter) - Date.now();
   if ([401, 403].includes(status)) return new ChallengeError('lbc-express');
   return [404, 410].includes(status)
     ? new TransportError('lbc-express', 'LBC tracking endpoint is unavailable', { status })
-    : new UpstreamHttpError('lbc-express', status, Number.isFinite(retryMs) ? Math.max(0, retryMs) : undefined);
+    : new UpstreamHttpError('lbc-express', status, retryAfterMs(retryAfter));
 }
 
 /** The service observes the page's whole-number POST and decodes only that response. */

@@ -7,6 +7,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeParcelpointNumber, PARCELPOINT_MAX_BYTES, parseParcelpoint, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The lookup the tracking page on parcelpoint.com.au makes, through the site's own proxy. */
 export const PARCELPOINT_API = 'https://parcelpoint.com.au/wp-json/parcelpoint/v1/track';
@@ -17,11 +18,6 @@ const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*(?:Just a moment|Attention
 /** The lookup's address for a number, as the page builds it. */
 export function parcelpointTrackUrl(number: string): string {
   return `${PARCELPOINT_API}?trackingId=${encodeURIComponent(number)}`;
-}
-
-/** Seconds in a Retry-After header, in milliseconds. */
-function retryAfterMs(header: string | null): number | undefined {
-  return header && /^\d{1,6}$/.test(header.trim()) ? Number(header.trim()) * 1000 : undefined;
 }
 
 function json(body: string): unknown {
@@ -56,7 +52,7 @@ export class ParcelpointTracker {
       const body = decodeText(bytes);
       if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'ParcelPoint redirected its tracking lookup');
       if (response.status === 429) {
-        throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after')), 'ParcelPoint refused more lookups for now', { status: 429 });
+        throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), 'ParcelPoint refused more lookups for now', { status: 429 });
       }
       if (response.status === 403) {
         const message = CHALLENGE.test(body.slice(0, 64_000)) ? 'ParcelPoint answered with a browser check' : 'ParcelPoint refused the lookup';

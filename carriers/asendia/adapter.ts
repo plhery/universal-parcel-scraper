@@ -49,6 +49,7 @@ import { daiPostScanZone } from '../dai-post/clock.js';
 import { classifyAsendiaA1Event, comparableText, type ClassifiedAsendiaStatus } from './status.js';
 import { asendiaBrowser } from './browser.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Asendia';
 const PAGE_URL = 'https://a1.asendiausa.com/tracking/';
@@ -284,13 +285,6 @@ export function parseAsendiaA1TrackingResponse(payload: unknown, rawTrackingNumb
     ...(vendor && vendor !== requested && /^[A-Z0-9]{4,40}$/.test(vendor) ? { delivery_tracking_number: vendor } : {}),
     events,
   };
-}
-
-function retryAfterMs(header: string | null): number | undefined {
-  if (header === null) return undefined;
-  const value = header.trim();
-  const delay = /^\d+$/.test(value) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-  return Number.isFinite(delay) ? Math.max(0, delay) : undefined;
 }
 
 export interface AsendiaA1TrackerOptions {

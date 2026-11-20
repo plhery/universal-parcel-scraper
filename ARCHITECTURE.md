@@ -125,6 +125,9 @@ time left, so the retry fits in the budget. An HTTP status or a reply is never s
 A read that opts into [fetchBounded](core/transport/boundedFetch.ts)'s own retry passes the
 lookup's deadline with it. A pause that would reach it is not taken: a rate limit then fails
 at once with its kind and `Retry-After` window, rather than when the budget runs out.
+An adapter reads a `Retry-After` header with [retryAfterMs](core/transport/retryAfter.ts):
+whole seconds, or an HTTP date unless the carrier only sends seconds, with a digit cap where it
+has one. An adapter whose wait has its own cap, floor or default keeps its own reading.
 A direct step that a check only a browser passes refuses, such as Correios's Turnstile page,
 can rest through [DirectRest](core/runner/directRest.ts): the carrier's lookups with a browser
 service then skip it for a few hours, and the next one after that asks it again. Only that

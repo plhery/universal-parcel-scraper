@@ -7,6 +7,7 @@ import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { normalizePostaMoldoveiNumber, parsePostaMoldovei, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export { normalizePostaMoldoveiNumber, parsePostaMoldovei } from './parser.js';
 
@@ -54,8 +55,7 @@ export class PostaMoldoveiTracker {
         if (captures.length > 10) throw new SchemaError(PROVIDER, 'Poșta Moldovei returned too many tracking responses');
         const capture = captures[captures.length - 1]!;
         if (capture.status === 429) {
-          const retry = capture.headers['retry-after'];
-          throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1_000 : undefined);
+          throw new RateLimitedError(PROVIDER, retryAfterMs(capture.headers['retry-after'], { dates: false }));
         }
         if ([401, 403].includes(capture.status)) throw new ChallengeError(PROVIDER);
         // "Not found." answers an item the tracker does not hold and a request whose Turnstile token

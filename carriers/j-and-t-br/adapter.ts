@@ -5,10 +5,9 @@ import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { JT_BR_API, JT_BR_MAX_BYTES, JT_BR_PAGE, normalizeJAndTBrNumber, parseJAndTBr, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 function retryAfter(headers: Record<string, string>): number | undefined {
-  const value = Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1]?.trim();
-  const delay = value === undefined ? NaN : /^\d+$/.test(value) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-  return Number.isFinite(delay) ? Math.max(0, delay) : undefined;
+  return retryAfterMs(Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1]);
 }
 function lastReason(page: TrawlScrapeResponse): string {
   const timing: unknown = Array.isArray(page.raw.timings) ? page.raw.timings.at(-1) : undefined;

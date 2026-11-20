@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { APPLE_EXPRESS_MAX_BYTES, appleExpressOrderFor, normalizeAppleExpressNumber, parseAppleExpress, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The tracking API the page on track.appleexpress.com reads. */
 export const APPLE_EXPRESS_API = 'https://trackapi.appleexpress.com/api/track';
@@ -23,11 +24,6 @@ export function appleExpressOrdersUrl(reference: string): string {
   return `${APPLE_EXPRESS_API}/trackmultiple/${encodeURIComponent(reference)}/language/en`;
 }
 
-/** Seconds in a Retry-After header, as the service sends them, in milliseconds. */
-function retryAfterMs(header: string | null): number | undefined {
-  return header && /^\d{1,6}$/.test(header.trim()) ? Number(header.trim()) * 1000 : undefined;
-}
-
 export class AppleExpressTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
@@ -43,7 +39,7 @@ export class AppleExpressTracker {
     }
     // It counts the lookups of each address an hour, and answers past its quota with when to ask again.
     if (response.status === 429) {
-      throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after')),
+      throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }),
         'Apple Express refused more lookups of this number for now', { status: 429 });
     }
     const body = decodeText(bytes);

@@ -5,6 +5,7 @@ import type { TrawlScrapeResponse } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { chinaClock, chinaPostDescription, PROVIDER } from './parser.js';
 import { chinaPostEnglish, chinaPostStatus } from './status.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const CHINA_POST_WEB = 'https://www.ems.com.cn/queryList';
 export const CHINA_POST_WEB_FLAG = 'https://www.ems.com.cn/ems-web/trackTestQuery/getLogisticsTestFlag';
@@ -17,9 +18,7 @@ export function parseChinaPostWebPreview(page: TrawlScrapeResponse, number: stri
   if (!entry || entries.length > 10) throw new ChallengeError(PROVIDER, 'China Post returned no verified guest preview');
   if (entry.trackingNumberSubmitted !== number) throw new SchemaError(PROVIDER, 'China Post browser request did not match the shipment');
   if (entry.status === 429) {
-    const retry = entry.headers['retry-after'] ?? '';
-    const delay = /^\d+$/.test(retry) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-    throw new RateLimitedError(PROVIDER, Number.isFinite(delay) ? Math.max(0, delay) : undefined);
+    throw new RateLimitedError(PROVIDER, retryAfterMs(entry.headers['retry-after']));
   }
   if ([401, 403, 405, 412].includes(entry.status)) throw new ChallengeError(PROVIDER, 'China Post refused the guest preview');
   if (entry.status >= 500) throw new UpstreamHttpError(PROVIDER, entry.status);

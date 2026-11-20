@@ -1,6 +1,7 @@
 import { ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { withRemoteBrowser } from '../../core/transport/localBrowser.js';
 import { API, MAX_BYTES, ORIGIN, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 interface Reply { url: string; status: number; retryAfter: string | null; body: string | null; truncated: boolean }
 interface GuestResult { replies: Reply[]; verification?: { status: number; retryAfter: string | null } }
@@ -73,8 +74,7 @@ export async function wanbGuestFlow({ number, timeoutMs, maxBytes }: { number: s
 function checkStatus(status: number, retryAfter: string | null): void {
   if ([401, 403, 428].includes(status)) throw new ChallengeError(PROVIDER);
   if (status === 429) {
-    const delay = retryAfter && /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : retryAfter ? Date.parse(retryAfter) - Date.now() : NaN;
-    throw new RateLimitedError(PROVIDER, Number.isFinite(delay) ? Math.max(0, delay) : undefined);
+    throw new RateLimitedError(PROVIDER, retryAfterMs(retryAfter));
   }
   if (status >= 500) throw new UpstreamHttpError(PROVIDER, status);
   if (status >= 400) throw new TransportError(PROVIDER, 'WanbExpress browser endpoint is unavailable', { status });

@@ -7,6 +7,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded } from '../../core/transport/boundedFetch.js';
 import { userAgentOf } from '../../core/transport/userAgent.js';
 import { normalizeTccNumber, parseTcc, PROVIDER, TCC_MAX_BYTES, tccJson } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const TCC_STATES = 'https://tccrestify-dot-tcc-cloud.appspot.com/tracking/estados';
 // The same appId ships to every visitor in the official guest client's interceptor.
@@ -30,11 +31,9 @@ export class TccTracker {
       if ([401, 403].includes(response.status)) throw new ChallengeError(PROVIDER, 'TCC refused the tracking lookup', { status: response.status });
       if ([301, 302, 303, 307, 308, 404, 405, 410].includes(response.status)) throw new TransportError(PROVIDER, 'TCC tracking endpoint is unavailable', { status: response.status });
       if (!response.ok) {
-        const retry = response.headers.get('retry-after');
-        const retryAfterMs = retry === null ? undefined : /^\d+$/.test(retry.trim()) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
         // Error bodies can contain free-text observations. Preserve HTTP kind
         // and retry time without returning those fields as diagnostics.
-        throw new UpstreamHttpError(PROVIDER, response.status, retryAfterMs);
+        throw new UpstreamHttpError(PROVIDER, response.status, retryAfterMs(response.headers.get('retry-after')));
       }
       return parseTcc(tccJson(decodeText(bytes)), number);
     };

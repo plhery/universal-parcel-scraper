@@ -9,6 +9,7 @@ import { IndeterminateError, UpstreamHttpError, UpstreamNetworkError, type Upstr
 import { defineHidden } from '../errors/redaction.js';
 import { paused } from '../runner/pause.js';
 import { readUpstreamHttpDiagnostics } from './upstreamHttpDiagnostics.js';
+import { retryAfterMs } from './retryAfter.js';
 
 const DEFAULT_MAX_BYTES = 2_000_000;
 const TRANSIENT_HTTP_STATUSES = new Set([429, 502, 503, 504]);
@@ -108,11 +109,8 @@ export async function fetchBounded(
     }
     if (response.ok || options.allowHttpError || options.allowHttpStatuses?.includes(response.status)) break;
     const delay = retryDelay(response.headers.get('retry-after'), response.status);
-    const retryHeader = response.headers.get('retry-after');
-    const retryAfterMs = retryHeader === null ? undefined : /^\d+$/.test(retryHeader.trim())
-      ? Number(retryHeader) * 1000 : Date.parse(retryHeader) - Date.now();
     const rejection = (diagnostics?: Awaited<ReturnType<typeof readUpstreamHttpDiagnostics>>) => new UpstreamHttpError(
-      options.provider, response.status, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined, diagnostics,
+      options.provider, response.status, retryAfterMs(response.headers.get('retry-after')), diagnostics,
       requestDiagnostics(url, init, options.timeoutMs ?? 15_000));
     if (options.retryTransient && attempt === 0
       && TRANSIENT_HTTP_STATUSES.has(response.status) && delay !== null

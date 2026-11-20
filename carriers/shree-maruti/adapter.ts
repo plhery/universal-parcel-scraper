@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeShreeMarutiNumber, parseShreeMaruti, PROVIDER, SHREE_MARUTI_MAX_BYTES } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The lookup the tracker on tracking.shreemaruti.com makes for the number in its address. */
 export const SHREE_MARUTI_API = 'https://apis-hubops.innofulfill.com/tracking/v2/';
@@ -15,10 +16,10 @@ const GONE = [404, 410];
 const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*Just a moment|AwsWafIntegration|awswaf\.com|captcha|<title>\s*(?:403 )?Forbidden/i;
 
 /** How long the service asks a client to wait: `Retry-After`, else the seconds until its window resets. */
-function retryAfterMs(response: Response): number | undefined {
+function waitMs(response: Response): number | undefined {
   for (const name of ['retry-after', 'x-ratelimit-reset']) {
-    const value = response.headers.get(name)?.trim();
-    if (value && /^\d{1,4}$/.test(value)) return Number(value) * 1000;
+    const wait = retryAfterMs(response.headers.get(name), { dates: false, maxDigits: 4 });
+    if (wait !== undefined) return wait;
   }
   return undefined;
 }
@@ -46,7 +47,7 @@ export class ShreeMarutiTracker {
         throw new TransportError(PROVIDER, 'Shree Maruti tracking lookup is unavailable', { status: response.status });
       }
       // The service allows a client 120 lookups a minute.
-      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response), undefined, { status: 429 });
+      if (response.status === 429) throw new RateLimitedError(PROVIDER, waitMs(response), undefined, { status: 429 });
       if (response.status === 403) throw new ChallengeError(PROVIDER, 'Shree Maruti refused the lookup', { status: 403 });
       return parseShreeMaruti(json(decodeText(bytes)), number);
     };

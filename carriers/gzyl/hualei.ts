@@ -28,6 +28,7 @@ import { isRecord, type JsonObject } from '../../core/types.js';
 import type { CarrierId } from '../../generated/catalog.js';
 import { hualeiServiceName } from './service.js';
 import { hualeiPlace, hualeiScanText, hualeiWording } from './text.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export { hualeiScanText };
 
@@ -706,11 +707,6 @@ export function parseHualeiPage(html: string, raw: string, tenant: HualeiTenant,
   }, tenant, readAt, true);
 }
 
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
-
 /** The track interface's body: GBK unless the reply says UTF-8. */
 function trackText(response: Response, bytes: Uint8Array): string {
   const charset = /charset=([\w-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1]?.toLowerCase();
@@ -734,7 +730,7 @@ export class HualeiTracker {
   /** The HTTP statuses that are not the service's answer. */
   private refuse(response: Response): void {
     const { provider } = this.tenant;
-    if (response.status === 429) throw new RateLimitedError(provider, retryAfterMs(response));
+    if (response.status === 429) throw new RateLimitedError(provider, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
     if (REDIRECTS.includes(response.status)) throw new TransportError(provider, `${provider} redirected its tracking lookup`);
     if (GONE.includes(response.status)) throw new TransportError(provider, `${provider} tracking lookup is unavailable`);
   }

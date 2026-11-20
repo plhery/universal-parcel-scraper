@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { ARAMEX_AU_MAX_BYTES, normalizeAramexAuNumber, parseAramexAu, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const ARAMEX_AU_ORIGIN = 'https://www.aramex.com.au';
 // The service the tracking page asks, without an account, key, cookie or
@@ -31,11 +32,6 @@ const AUSTRALIA: AramexSite = {
   carrier: 'aramex-au', provider: PROVIDER, origin: ARAMEX_AU_ORIGIN, language: 'en-AU,en;q=0.8',
   normalize: normalizeAramexAuNumber, parse: parseAramexAu,
 };
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 /** The address a network's tracking page asks for one number. */
 export function aramexTrackingUrl(site: AramexSite, raw: string): string {
@@ -66,7 +62,7 @@ export class AramexRegionalTracker {
       } }, { provider: site.provider, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: ARAMEX_AU_MAX_BYTES,
         fetcher: this.options.fetcher, allowHttpStatuses: [...GONE, 429] });
       const text = decodeText(bytes);
-      if (response.status === 429) throw new RateLimitedError(site.provider, retryAfterMs(response));
+      if (response.status === 429) throw new RateLimitedError(site.provider, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
       if (GONE.includes(response.status)) throw new TransportError(site.provider, `${site.provider} tracking service is unavailable`);
       let payload: unknown;
       try {

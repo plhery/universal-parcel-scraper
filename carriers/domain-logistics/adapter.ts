@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { DOMAIN_LOGISTICS_MAX_BYTES, normalizeDomainLogisticsNumber, parseDomainLogistics, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The lookup the tracking page on domainlogistics.ca makes, on Domain's tracking service. */
 export const DOMAIN_LOGISTICS_API = 'https://api.domainlogistics.ca/domaintracking/api/tracking/';
@@ -16,11 +17,6 @@ const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*(?:Just a moment|Attention
 /** The lookup's address for a number, as the page builds it. */
 export function domainLogisticsTrackUrl(number: string): string {
   return `${DOMAIN_LOGISTICS_API}${encodeURIComponent(number)}`;
-}
-
-/** Seconds in a Retry-After header, in milliseconds. */
-function retryAfterMs(header: string | null): number | undefined {
-  return header && /^\d{1,6}$/.test(header.trim()) ? Number(header.trim()) * 1000 : undefined;
 }
 
 function json(body: string): unknown {
@@ -45,7 +41,7 @@ export class DomainLogisticsTracker {
       const body = decodeText(bytes);
       if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'Domain Logistics redirected its tracking lookup');
       if (response.status === 429) {
-        throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after')), 'Domain Logistics refused more lookups for now', { status: 429 });
+        throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), 'Domain Logistics refused more lookups for now', { status: 429 });
       }
       if (response.status === 403) {
         const message = CHALLENGE.test(body.slice(0, 64_000)) ? 'Domain Logistics answered with a browser check' : 'Domain Logistics refused the lookup';

@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeUbiNumber, PROVIDER, readUbiReply, UBI_MAX_BYTES, type UbiReply } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const UBI_ORIGIN = 'https://shipper.ubismartparcel.com';
 // The service the tracking page at shipper.ubismartparcel.com/#/ubi asks,
@@ -15,11 +16,6 @@ export const UBI_ENDPOINT = `${UBI_ORIGIN}/api/aggregator/v1/track/trackParcel`;
 const GONE = [404, 410];
 // A CDN's or firewall's block page instead of the service's JSON.
 const CHALLENGE = /<title>\s*(?:Just a moment|Attention Required|Access denied|403 Forbidden)|cf-turnstile|_cf_chl_opt|captcha|The requested URL was rejected/i;
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 /** The request the tracking page sends for one number, with the portal's host as its server name. */
 export function ubiRequestBody(raw: string): string {
@@ -39,7 +35,7 @@ export class UbiSmartParcelTracker {
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: UBI_MAX_BYTES,
         fetcher: this.options.fetcher, allowHttpStatuses: [...GONE, 429] });
       const text = decodeText(bytes);
-      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response));
+      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
       if (GONE.includes(response.status)) throw new TransportError(PROVIDER, 'UBI Smart Parcel tracking service is unavailable');
       let payload: unknown;
       try {

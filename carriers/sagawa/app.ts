@@ -2,6 +2,7 @@ import { BudgetExceededError, ChallengeError, IndeterminateError, RateLimitedErr
 import type { CarrierResult } from '../../core/result/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeSagawaNumber, parseSagawaWidget, PROVIDER, sagawaRejection } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The widget refresh of the official app (jp.co.sagawa.SagawaOfficialApp). */
 export const SAGAWA_WIDGET_API = 'https://www.e-service.sagawa-exp.co.jp/o/wtx/rest/apiOfficialApp/UpdateWidget';
@@ -17,12 +18,6 @@ const timedOut = (reason: unknown) => reason instanceof DOMException && reason.n
 export function sagawaUserAgent(configured: string | undefined): string {
   const host = userAgentOf(configured);
   return BROWSER.test(host) ? SAGAWA_APP_USER_AGENT : host;
-}
-
-function retryAfterMs(header: string | null): number | undefined {
-  const value = header?.trim() ?? '';
-  const delay = /^\d+$/.test(value) ? Number(value) * 1_000 : value ? Date.parse(value) - Date.now() : Number.NaN;
-  return Number.isFinite(delay) ? Math.max(0, delay) : undefined;
 }
 
 export async function readSagawaWidget(raw: string, options: {

@@ -7,6 +7,7 @@ import { calendarDay } from '../../core/time/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, trawlOutOfTime } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { flashCourierStage } from './status.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Flash Courier';
 const ORIGIN = 'https://www.flashcourier.com.br';
@@ -62,13 +63,10 @@ export function parseFlashCourier(payload: unknown, raw: string): CarrierResult 
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: newest.description, last_update: null, last_update_local: newest.local_time, expected_delivery: null, events };
 }
-function retry(value: unknown): number | undefined {
-  return typeof value === 'string' && /^\d{1,6}$/.test(value) ? Number(value) * 1000 : undefined;
-}
 function http(status: number, retryAfter?: unknown): never {
-  if (status === 429) throw new RateLimitedError(PROVIDER, retry(retryAfter));
+  if (status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(retryAfter, { dates: false, maxDigits: 6 }));
   if ([401, 403, 428].includes(status)) throw new ChallengeError(PROVIDER, 'Flash Courier refused guest tracking', { status });
-  if (status >= 500) throw new UpstreamHttpError(PROVIDER, status, retry(retryAfter));
+  if (status >= 500) throw new UpstreamHttpError(PROVIDER, status, retryAfterMs(retryAfter, { dates: false, maxDigits: 6 }));
   throw new TransportError(PROVIDER, 'Flash Courier tracking is unavailable', { status });
 }
 export class FlashCourierTracker {

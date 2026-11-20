@@ -11,6 +11,7 @@
 import { IndeterminateError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/index.js';
 import type { UniversalSource } from './result.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** How many responses the browser may have captured before the newest is meaningless. */
 const MAX_CAPTURED = 20;
@@ -48,12 +49,6 @@ export class TrackingCaptureError extends IndeterminateError {
     super(provider, `Tracking browser: ${reason}`);
     this.name = 'TrackingCaptureError';
   }
-}
-
-function retryAfterMs(headers: Record<string, string>): number | undefined {
-  const raw = headers['retry-after'];
-  if (typeof raw !== 'string') return undefined;
-  return /^\d+$/.test(raw) ? Number(raw) * 1000 : Date.parse(raw) - Date.now();
 }
 
 /** Load the provider's tracking page in the browser service, capturing its API call. */
@@ -94,7 +89,7 @@ export function* capturedBodies(page: TrawlScrapeResponse, spec: CaptureSpec): G
   for (const entry of page.capturedResponses.slice(0, MAX_CAPTURED).reverse()) {
     if (entry.url !== spec.apiUrl) continue;
     // Preserve the provider's own status for the router's backoff policy.
-    if (entry.status === 429) throw new UpstreamHttpError(spec.source, 429, retryAfterMs(entry.headers));
+    if (entry.status === 429) throw new UpstreamHttpError(spec.source, 429, retryAfterMs(entry.headers['retry-after']));
     if (entry.status >= 400) throw new UpstreamHttpError(spec.source, entry.status);
     if (entry.status !== 200 || entry.truncated || entry.base64Encoded || entry.body === null) continue;
     yield entry.body;

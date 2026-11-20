@@ -47,6 +47,7 @@ import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/
 import { transportOf } from '../../core/transport/transportOf.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { postNLCode, postNLDomesticStage, postNLStatus } from './status.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'PostNL';
 const RECOGNIZED = new RegExp(CARRIER_DEFINITIONS['spring-gds']?.tracking.recognitionPattern ?? '(?!)');
@@ -366,18 +367,10 @@ function cancelled(signal: AbortSignal): boolean {
   return signal.aborted && !(reason instanceof DOMException && reason.name === 'TimeoutError');
 }
 
-/** A `Retry-After` header's wait in milliseconds, given in seconds or as a date; undefined when absent or unreadable. */
-function retryAfterOf(header: string | null): number | undefined {
-  const value = header?.trim();
-  if (!value) return undefined;
-  const wait = /^\d+$/.test(value) ? Number(value) * 1_000 : Date.parse(value) - Date.now();
-  return Number.isFinite(wait) ? Math.max(0, wait) : undefined;
-}
-
 /** The wait a refusal names: its `Retry-After`, or else the end of the window `x-rate-limit-reset` gives as a date. */
 function quotaWaitOf(headers: Headers): number | undefined {
   const reset = headers.get('x-rate-limit-reset')?.trim();
-  return retryAfterOf(headers.get('retry-after')) ?? (reset && !/^\d+$/.test(reset) ? retryAfterOf(reset) : undefined);
+  return retryAfterMs(headers.get('retry-after')) ?? (reset && !/^\d+$/.test(reset) ? retryAfterMs(reset) : undefined);
 }
 
 /** A fetcher that counts the requests it makes, so a refusal can say which try met it. */

@@ -8,6 +8,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isUspsNumber, normalizeOsmNumber, OSM_MAX_BYTES, parseOsmWorldwide, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 // The service the tracking component on osmworldwide.com/tracking/ asks,
 // without an account, key, cookie or CAPTCHA token.
@@ -16,11 +17,6 @@ export const OSM_ENDPOINT = 'https://prod.track-pub.osmworldwide.com/tracking/tr
 const GONE = [404, 410];
 // CloudFront's or a firewall's block page instead of the service's JSON.
 const CHALLENGE = /<title>\s*(?:Just a moment|Attention Required|Access denied|403 Forbidden|ERROR: The request could not be satisfied)|cf-turnstile|_cf_chl_opt|captcha/i;
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 /** The address the tracker asks for one number; without an account it takes one at a time. */
 export function osmTrackingUrl(raw: string): string {
@@ -41,7 +37,7 @@ export class OsmWorldwideTracker {
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: OSM_MAX_BYTES,
         fetcher: this.options.fetcher, allowHttpStatuses: [400, ...GONE, 429] });
       const text = decodeText(bytes);
-      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response));
+      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
       if (GONE.includes(response.status)) throw new TransportError(PROVIDER, 'OSM Worldwide tracking service is unavailable');
       let payload: unknown;
       try {

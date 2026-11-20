@@ -8,6 +8,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { fetchBounded } from '../../core/transport/boundedFetch.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeUkrposhtaNumber, parseUkrposhtaHistory, parseUkrposhtaOverview, parseUkrposhtaStatuses } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const UKRPOSHTA_API = 'https://track.ukrposhta.ua/php/track_new.php';
 export const UKRPOSHTA_STATUS_API = 'https://www.ukrposhta.ua/status-tracking/0.0.1/statuses';
@@ -26,8 +27,7 @@ async function readStatuses(number: string, signal: AbortSignal, timeoutMs: numb
   // The refusal of a credential is an HTML page; it says nothing about the parcel.
   if ([401, 403].includes(response.status)) throw new ChallengeError('ukrposhta', 'Ukrposhta refused the tracking API credential');
   if (response.status === 429) {
-    const retryAfter = response.headers.get('retry-after');
-    throw new RateLimitedError('ukrposhta', retryAfter && /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1_000 : undefined);
+    throw new RateLimitedError('ukrposhta', retryAfterMs(response.headers.get('retry-after'), { dates: false }));
   }
   let payload: unknown;
   try { payload = JSON.parse(new TextDecoder().decode(bytes)) as unknown; }
@@ -76,9 +76,7 @@ async function readLookup(page: Page, number: string, deadline: number, signal: 
   if (!requestMatches(response, page, number)) throw new SchemaError('ukrposhta', 'The browser submitted a different tracking request');
   if ([401, 403].includes(response.status())) throw new ChallengeError('ukrposhta');
   if (response.status() !== 200) {
-    const retryAfter = response.headers()['retry-after'];
-    const retryAfterMs = retryAfter && /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1_000 : undefined;
-    throw httpFailure(response.status(), retryAfterMs);
+    throw httpFailure(response.status(), retryAfterMs(response.headers()['retry-after'], { dates: false }));
   }
   if (Number(response.headers()['content-length']) > MAX_BYTES) throw new SchemaError('ukrposhta', 'Ukrposhta returned excessive tracking data');
   const bytes = await response.body();

@@ -16,6 +16,7 @@ import {
 import { isValidUpsTrackingNumber } from '../../core/detection/ups.js';
 import { cleanScalar, decodeText, fetchBounded } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const UPS_API_URL = 'https://onlinetools.ups.com';
 const PROVIDER = 'UPS';
@@ -88,9 +89,7 @@ function httpFailure(response: Response, bytes: Uint8Array, number: string): Err
   const { status } = response;
   if (status === 401 || status === 403) return refused(status);
   if (status === 429) {
-    const header = response.headers.get('retry-after')?.trim() ?? '';
-    const delay = /^\d+$/.test(header) ? Number(header) * 1000 : header ? Date.parse(header) - Date.now() : NaN;
-    return new RateLimitedError(PROVIDER, Number.isFinite(delay) ? Math.max(0, delay) : undefined);
+    return new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after')));
   }
   if (status >= 500) return new UpstreamHttpError(PROVIDER, status);
   let notices: { code: string; message: string }[] = [];

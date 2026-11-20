@@ -2,6 +2,7 @@ import type { Page, Response } from 'playwright-core';
 import type { CarrierResult } from '../result/index.js';
 import { IndeterminateError, TransportError, UpstreamHttpError } from '../errors/index.js';
 import { withLocalBrowser } from './localBrowser.js';
+import { retryAfterMs } from './retryAfter.js';
 
 export interface UniversalBrowserOptions {
   executablePath?: string;
@@ -58,9 +59,7 @@ export async function scrapeUniversalPage(
           const inspect = Object.hasOwn(spec.responseErrors ?? {}, url) ? spec.responseErrors![url] : undefined;
           if (expired || (url !== spec.responseUrl && !inspect)) return;
           if (response.status() === 429) {
-            const raw = response.headers()['retry-after'];
-            const delay = raw && /^\d+$/.test(raw) ? Number(raw) * 1000 : raw ? Date.parse(raw) - Date.now() : undefined;
-            rejectHistory(new UpstreamHttpError(spec.name, 429, delay));
+            rejectHistory(new UpstreamHttpError(spec.name, 429, retryAfterMs(response.headers()['retry-after'])));
             return;
           }
           const success = [200, 201].includes(response.status());

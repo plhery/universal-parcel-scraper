@@ -8,16 +8,12 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { EARLY_BIRD_MAX_BYTES, earlyBirdErrorCode, normalizeEarlyBirdNumber, parseEarlyBird, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 // The service earlybird.se/spara-och-hjalp asks, without a key, cookie or token.
 export const EARLY_BIRD_ENDPOINT = 'https://earlybird.se/api/tracking';
 // Vercel's bot checkpoint or another block page instead of the service's JSON.
 const CHALLENGE = /Vercel Security Checkpoint|<title>\s*(?:Just a moment|Attention Required|Access denied|403 Forbidden)|cf-turnstile|captcha/i;
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 /** The request the tracking page sends for one number, in English. */
 export function earlyBirdRequestBody(raw: string): string {
@@ -45,13 +41,13 @@ export class EarlyBirdTracker {
         payload = JSON.parse(text);
       } catch (cause) {
         if (CHALLENGE.test(text.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'Early Bird answered with a block page', { cause });
-        if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response), undefined, { cause });
+        if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), undefined, { cause });
         if (response.status === 404) throw missingRoute();
         throw new SchemaError(PROVIDER, 'Early Bird returned a reply that is not JSON', { cause });
       }
       if (response.status === 200) return parseEarlyBird(payload, raw);
       const code = earlyBirdErrorCode(payload);
-      if (code === 'rate_limited' || response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response));
+      if (code === 'rate_limited' || response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
       if (response.status === 404 && code === 'tracking_not_found') throw new NotFoundError(PROVIDER);
       if (response.status === 400 && code === 'invalid_tracking_number') {
         throw new InvalidInputError(PROVIDER, 'Early Bird does not take this tracking number', { reason: 'wrong_number' });

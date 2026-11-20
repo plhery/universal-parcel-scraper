@@ -6,15 +6,11 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { CHALLENGE, normalizeTranscorpNumber, parseTranscorp, PROVIDER, TRANSCORP_MAX_BYTES } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** Elite's tracking page, which looks the airwaybill up while it renders. */
 export const TRANSCORP_TRACK_URL = 'https://app.elite-co.com/shipments/track';
 const REDIRECTS = [301, 302, 303, 307, 308];
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 export class TranscorpTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -40,7 +36,7 @@ export class TranscorpTracker {
     if (response.headers.get('x-vercel-mitigated') === 'challenge' || (!response.ok && CHALLENGE.test(decodeText(bytes).slice(0, 64_000)))) {
       throw new ChallengeError(PROVIDER, 'Elite answered with a browser check', { status: response.status });
     }
-    if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response), 'Elite limited the lookups', { status: 429 });
+    if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), 'Elite limited the lookups', { status: 429 });
     if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'Elite redirected its tracking page', { status: response.status });
     // An unknown number is a 200 page naming it; a 404 means the page itself is gone.
     if (!response.ok) throw new TransportError(PROVIDER, 'Elite tracking page is unavailable', { status: response.status });

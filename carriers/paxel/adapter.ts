@@ -5,14 +5,13 @@ import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, trawlOutOfTime, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { MAX_BYTES, normalizePaxelNumber, PAGE, parsePaxel, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const SERVICE_MS = 40_000;
 const MAX_CAPTURES = 12;
 
 function retryAfter(headers: Record<string, string>): number | undefined {
-  const value = Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1]?.trim();
-  const ms = value === undefined ? NaN : /^\d+$/.test(value) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-  return Number.isFinite(ms) ? Math.max(0, ms) : undefined;
+  return retryAfterMs(Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1]);
 }
 
 function reason(page: TrawlScrapeResponse): string {

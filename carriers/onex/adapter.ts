@@ -5,6 +5,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { MAX_BYTES, normalizeOnexNumber, parseOnex, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const ONEX_ORIGIN = 'https://onex.am';
 /** The English tracker, which submits the number in its address itself. */
@@ -47,11 +48,9 @@ export class OnexTracker {
         if ([401, 403, 428, 503].includes(row.status) || row.error === 'challenge-html') {
           throw new ChallengeError(PROVIDER, 'Onex refused guest verification', { status: row.status });
         }
-        const retry = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-        const ms = retry === undefined ? NaN : /^\d+$/.test(retry) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-        const retryAfterMs = Number.isFinite(ms) ? Math.max(0, ms) : undefined;
-        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs);
-        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfterMs);
+        const retryAfter = retryAfterMs(Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1]);
+        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfter);
+        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfter);
         if (row.error === 'invalid-json') throw new SchemaError(PROVIDER, 'Onex returned invalid tracking JSON');
         if (row.error || row.truncated || row.base64Encoded || typeof row.body !== 'string'
           || new TextEncoder().encode(row.body).byteLength > MAX_BYTES) throw new TransportError(PROVIDER, 'Onex returned incomplete tracking data');

@@ -7,13 +7,13 @@ import { trawlPrivateScrape } from '../../core/transport/trawlPrivate.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { AEROPOST_API, AEROPOST_MAX_BYTES, normalizeAeropostNumber, parseAeropost, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 function failure(status: number, retryAfter?: string): Error {
   if ([400, 401, 403].includes(status)) return new ChallengeError(PROVIDER, 'Aeropost did not accept browser verification');
   if (status === 404 || status === 410) return new TransportError(PROVIDER, 'Aeropost tracking endpoint is unavailable', { status });
   if (!status) return new TransportError(PROVIDER, 'Aeropost browser tracking did not finish');
-  const wait = retryAfter === undefined ? NaN : /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : Date.parse(retryAfter) - Date.now();
-  return new UpstreamHttpError(PROVIDER, status, Number.isFinite(wait) ? Math.max(0, wait) : undefined);
+  return new UpstreamHttpError(PROVIDER, status, retryAfterMs(retryAfter));
 }
 
 export class AeropostTracker {

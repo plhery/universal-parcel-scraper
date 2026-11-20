@@ -5,6 +5,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { MAX_BYTES, normalizePeddlerNumber, parsePeddler, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const PEDDLER_ORIGIN = 'https://track.pdlr.nl';
 /** The tracker's form with the number filled in. */
@@ -45,12 +46,10 @@ export class PeddlerTracker {
       const row = replies.at(-1);
       if (row) {
         if ([401, 403, 428].includes(row.status) || row.error === 'challenge-html') throw new ChallengeError(PROVIDER, 'Peddler refused guest verification', { status: row.status });
-        const retry = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-        const ms = retry === undefined ? NaN : /^\d+$/.test(retry) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-        const retryAfterMs = Number.isFinite(ms) ? Math.max(0, ms) : undefined;
-        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs);
+        const retryAfter = retryAfterMs(Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1]);
+        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfter);
         // An unknown number's data reply is a 404 that says so; any other status is not an answer.
-        if (![200, 404].includes(row.status)) throw new UpstreamHttpError(PROVIDER, row.status, retryAfterMs);
+        if (![200, 404].includes(row.status)) throw new UpstreamHttpError(PROVIDER, row.status, retryAfter);
         if (row.error === 'invalid-json') throw new SchemaError(PROVIDER, 'Peddler returned invalid tracking JSON');
         if (row.error || row.truncated || row.base64Encoded || typeof row.body !== 'string'
           || new TextEncoder().encode(row.body).byteLength > MAX_BYTES) throw new TransportError(PROVIDER, 'Peddler returned incomplete tracking data');

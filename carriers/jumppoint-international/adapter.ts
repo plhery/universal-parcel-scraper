@@ -8,6 +8,7 @@ import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { jumppointInternationalStage } from './status.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Jumppoint International Express';
 export const JUMPPOINT_INTERNATIONAL_API = 'https://int-tracking-api.jumppoint.io/shipment/tracking/';
@@ -106,8 +107,7 @@ export class JumppointInternationalTracker {
       if (captures.length > 20) throw new SchemaError(PROVIDER, 'Jumppoint International returned too many replies');
       const reply = captures[captures.length - 1]!;
       if (reply.status === 429) {
-        const retry = reply.headers['retry-after'];
-        throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
+        throw new RateLimitedError(PROVIDER, retryAfterMs(reply.headers['retry-after'], { dates: false }));
       }
       if ([401, 403].includes(reply.status)) throw new ChallengeError(PROVIDER, 'Jumppoint International refused tracking', { status: reply.status });
       if (reply.status >= 500) throw new UpstreamHttpError(PROVIDER, reply.status);

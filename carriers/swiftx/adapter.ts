@@ -6,6 +6,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeSwiftxNumber, parseSwiftx, PROVIDER, SWIFTX_API, SWIFTX_MAX_BYTES, swiftxPhoneDigits, swiftxTrackingUrl } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export { normalizeSwiftxNumber, parseSwiftx, swiftxPhoneDigits, swiftxTrackingUrl, swiftxWording } from './parser.js';
 
@@ -45,8 +46,7 @@ export function parseSwiftxCapture(page: TrawlScrapeResponse, number: string, re
   const reply = unlocked ?? rows.at(-1);
   if (!reply || rows.length > 10) throw new ChallengeError(PROVIDER, 'SwiftX returned no tracking reply in the browser');
   if (reply.status === 429) {
-    const retryAfter = reply.headers['retry-after'];
-    throw new RateLimitedError(PROVIDER, retryAfter && /^\d{1,5}$/.test(retryAfter) ? Number(retryAfter) * 1000 : undefined);
+    throw new RateLimitedError(PROVIDER, retryAfterMs(reply.headers['retry-after'], { dates: false, maxDigits: 5 }));
   }
   if (reply.status === 401 || reply.status === 403) throw new ChallengeError(PROVIDER, 'SwiftX refused the browser tracking request', { status: reply.status });
   if (reply.status >= 400) throw new UpstreamHttpError(PROVIDER, reply.status);

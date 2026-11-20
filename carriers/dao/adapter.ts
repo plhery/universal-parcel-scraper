@@ -8,6 +8,7 @@ import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../cor
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { DAO_MAX_BYTES, normalizeDaoNumber, parseDao, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 // The public page uses its WordPress nonce and a fresh single-use Turnstile token.
 export const DAO_ENDPOINT = 'https://dao.as/wp-json/dao-wp/v1/track-parcel';
@@ -81,12 +82,10 @@ export class DaoTracker {
       if (row) {
         if ([401, 403, 428].includes(row.status) || row.error === 'challenge-html') throw new ChallengeError(PROVIDER, 'DAO refused guest verification', { status: row.status });
         if (row.status === 400) throw new IndeterminateError(PROVIDER, 'DAO rejected the tracking request');
-        const retry = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-        const ms = retry === undefined ? NaN : /^\d+$/.test(retry) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-        const retryAfterMs = Number.isFinite(ms) ? Math.max(0, ms) : undefined;
-        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs);
+        const retryAfter = retryAfterMs(Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1]);
+        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfter);
         if ([0, 404, 410].includes(row.status)) throw new TransportError(PROVIDER, 'DAO tracking service is unavailable', { status: row.status });
-        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfterMs);
+        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfter);
         if (row.error === 'invalid-json') throw new SchemaError(PROVIDER, 'DAO returned invalid tracking JSON');
         if (row.error || row.truncated || row.base64Encoded || typeof row.body !== 'string'
           || new TextEncoder().encode(row.body).byteLength > DAO_MAX_BYTES) throw new TransportError(PROVIDER, 'DAO returned incomplete tracking data');

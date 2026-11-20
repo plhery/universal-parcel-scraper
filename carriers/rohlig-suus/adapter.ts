@@ -5,6 +5,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { MAX_BYTES, normalizeRohligSuusNumber, parseRohligSuus, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const ROHLIG_SUUS_ORIGIN = 'https://portal.suus.com';
 /** The guest order page for one number. */
@@ -50,13 +51,11 @@ export class RohligSuusTracker {
           || (row.status === 500 && !row.body)) {
           throw new ChallengeError(PROVIDER, 'Rohlig SUUS Logistics refused guest verification', { status: row.status });
         }
-        const retry = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-        const ms = retry === undefined ? NaN : /^\d+$/.test(retry) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-        const retryAfterMs = Number.isFinite(ms) ? Math.max(0, ms) : undefined;
-        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs);
+        const retryAfter = retryAfterMs(Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1]);
+        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfter);
         // A number the tracker does not know answers 204 with nothing in it.
         if (row.status === 204 && !row.body) throw new NotFoundError(PROVIDER);
-        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfterMs);
+        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfter);
         if (row.error === 'invalid-json') throw new SchemaError(PROVIDER, 'Rohlig SUUS Logistics returned invalid tracking JSON');
         if (row.error || row.truncated || row.base64Encoded || typeof row.body !== 'string'
           || new TextEncoder().encode(row.body).byteLength > MAX_BYTES) throw new TransportError(PROVIDER, 'Rohlig SUUS Logistics returned incomplete tracking data');

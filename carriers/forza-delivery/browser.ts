@@ -2,6 +2,7 @@ import { BudgetExceededError, ChallengeError, RateLimitedError, SchemaError, Tra
 import { withRemoteBrowser } from '../../core/transport/localBrowser.js';
 import { FORZA_MAX_BYTES, parseForzaReply, PROVIDER } from './parser.js';
 import { FORZA_API, FORZA_ORIGIN, forzaLookupBody } from './request.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 interface BrowserReply { url: string; status: number; retryAfter: string | null; body: string | null; truncated: boolean }
 
@@ -36,8 +37,7 @@ export async function forzaGuestLookup({ body, timeoutMs, maxBytes }: { body: st
 function checkStatus(status: number, retryAfter: string | null): void {
   if ([401, 403, 428].includes(status)) throw new ChallengeError(PROVIDER);
   if (status === 429) {
-    const delay = retryAfter && /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : retryAfter ? Date.parse(retryAfter) - Date.now() : NaN;
-    throw new RateLimitedError(PROVIDER, Number.isFinite(delay) ? Math.max(0, delay) : undefined);
+    throw new RateLimitedError(PROVIDER, retryAfterMs(retryAfter));
   }
   if ([404, 410].includes(status)) throw new TransportError(PROVIDER, 'Forza tracking endpoint is unavailable');
   if (status !== 200) throw new UpstreamHttpError(PROVIDER, status);

@@ -5,6 +5,7 @@ import { trawlPrivateScrape } from '../../core/transport/trawlPrivate.js';
 import { isRecord } from '../../core/types.js';
 import { parseViettelPostHistory } from './history.js';
 import { normalizeViettelPostNumber, PROVIDER, VIETTEL_MAX_BYTES } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const VIETTEL_POST_HISTORY_API = 'https://api.viettelpost.vn/api/orders/viewTrackingOrders3';
 export function viettelPostHistoryUrl(raw: string): string {
@@ -14,8 +15,7 @@ export function viettelPostHistoryUrl(raw: string): string {
 
 function retryAfter(headers: Record<string, string>): number | undefined {
   const value = Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1];
-  const ms = value === undefined ? NaN : /^\d+$/.test(value) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-  return Number.isFinite(ms) ? Math.max(0, ms) : undefined;
+  return retryAfterMs(value);
 }
 
 export async function fetchViettelPostHistory(number: string, options: { trawl: TrawlClient; fetcher?: typeof fetch;

@@ -6,6 +6,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { EMIRATES_POST_MAX_BYTES, emiratesPostUrl, normalizeEmiratesPostNumber, parseEmiratesPost, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const SERVICE_MS = 30_000;
 
@@ -18,8 +19,7 @@ function browserFailure(error: unknown): CarrierError | null {
   if (!isRecord(last) || (last.tier !== 2 && last.tier !== 3)) return null;
   if (last.statusCode === 429) {
     const headers = isRecord(last.responseHeaders) ? last.responseHeaders : {};
-    const retry = headers['retry-after'];
-    return new RateLimitedError(PROVIDER, typeof retry === 'string' && /^\d{1,6}$/.test(retry) ? Number(retry) * 1000 : undefined);
+    return new RateLimitedError(PROVIDER, retryAfterMs(headers['retry-after'], { dates: false, maxDigits: 6 }));
   }
   return last.status === 'blocked' ? new ChallengeError(PROVIDER, 'Emirates Post did not pass its browser verification',
     { ...(typeof last.statusCode === 'number' ? { status: last.statusCode } : {}) }) : null;

@@ -4,6 +4,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { MAX_BYTES, normalizePasarexNumber, parsePasarex, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const PASAREX_PAGE = 'https://tracking.pasarex.com/';
 export const PASAREX_RESULT = 'https://tracking.pasarex.com/tracking';
@@ -38,7 +39,7 @@ export class PasarexTracker {
           if ([401, 403, 419, 428].includes(row.status)) { failure = new ChallengeError(PROVIDER, 'PasarEX refused its tracking form', { status: row.status }); continue; }
           if (row.status === 429) {
             const value = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-            failure = new RateLimitedError(PROVIDER, value && /^\d+$/.test(value) ? +value * 1000 : undefined); continue;
+            failure = new RateLimitedError(PROVIDER, retryAfterMs(value, { dates: false })); continue;
           }
           if (row.status !== 200) { failure = new UpstreamHttpError(PROVIDER, row.status); continue; }
           if (typeof row.body !== 'string' || new TextEncoder().encode(row.body).byteLength > MAX_BYTES) { failure = new TransportError(PROVIDER); continue; }

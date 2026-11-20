@@ -4,6 +4,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { withRemoteBrowser } from '../../core/transport/localBrowser.js';
 import { parseCorreosChileBootstrap, parseCorreosChileTracking } from './parser.js';
 import { solveCorreosChileText } from './text-challenge.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Correos de Chile';
 const PAGE = 'https://www.correos.cl/seguimiento-en-linea';
@@ -121,9 +122,7 @@ export function fetchCorreosChileInBrowser(number: string, endpoint: string, sig
         if (++count > 3) throw new SchemaError(PROVIDER, 'Too many tracking responses');
         const status = response.status();
         if (status === 429) {
-          const retry = response.headers()['retry-after'];
-          const delay = retry && (/^\d+$/.test(retry.trim()) ? Number(retry) * 1_000 : Date.parse(retry) - Date.now());
-          throw new RateLimitedError(PROVIDER, typeof delay === 'number' && Number.isFinite(delay) ? Math.max(0, delay) : undefined);
+          throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers()['retry-after']));
         }
         if ([401, 403].includes(status)) throw new ChallengeError(PROVIDER);
         if ([404, 410].includes(status)) throw new IndeterminateError(PROVIDER, 'Tracking resource is unavailable');

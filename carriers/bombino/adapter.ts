@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { BOMBINO_MAX_BYTES, normalizeBombinoNumber, parseBombino, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The lookup the tracking page on bombinoexp.com makes for each air waybill it opens. */
 export const BOMBINO_API = 'https://www.bombinoexp.com/api/track/';
@@ -14,11 +15,6 @@ const REDIRECTS = [301, 302, 303, 307, 308];
 const GONE = [404, 410];
 // Vercel's bot checkpoint, or another block page, in place of the reply.
 const CHALLENGE = /Vercel Security Checkpoint|_cf_chl_opt|cf-turnstile|<title>\s*(?:Just a moment|Attention Required|Access denied)/i;
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 export class BombinoTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -41,7 +37,7 @@ export class BombinoTracker {
         if (CHALLENGE.test(body.slice(0, 64_000))) throw challenge(cause);
         if (response.ok) throw new SchemaError(PROVIDER, 'Bombino Express returned a reply that is not JSON', { cause });
       }
-      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response), 'Bombino Express limited the lookups', { status: 429 });
+      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), 'Bombino Express limited the lookups', { status: 429 });
       if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'Bombino Express redirected its tracking lookup');
       if (GONE.includes(response.status)) throw new TransportError(PROVIDER, 'Bombino Express tracking lookup is unavailable', { status: response.status });
       return parseBombino(payload, number);

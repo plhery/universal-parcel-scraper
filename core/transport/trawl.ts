@@ -12,6 +12,7 @@ import { BudgetExceededError, CarrierError, ChallengeError, UpstreamHttpError, t
 import { decodeText, fetchBounded, parseJsonBytes } from './boundedFetch.js';
 import { cleanScalar } from './text.js';
 import { isRecord, type JsonObject } from '../types.js';
+import { retryAfterMs } from './retryAfter.js';
 
 export interface TrawlScrapeRequest extends JsonObject {
   url: string;
@@ -93,9 +94,7 @@ const TRANSPORT_ALLOWANCE_MS = TRAWL_TRANSPORT_ALLOWANCE_MS;
 export function pageHttpError(provider: string, status: number, headers: unknown): UpstreamHttpError {
   const retryHeader = isRecord(headers)
     ? Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1] : undefined;
-  const retryAfterMs = typeof retryHeader !== 'string' ? undefined : /^\d+$/.test(retryHeader.trim())
-    ? Number(retryHeader) * 1_000 : Date.parse(retryHeader) - Date.now();
-  return new UpstreamHttpError(provider, status, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined);
+  return new UpstreamHttpError(provider, status, retryAfterMs(retryHeader));
 }
 
 /**

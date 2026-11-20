@@ -5,6 +5,7 @@ import { runSteps, type StepContext } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeThailandPostNumber, parseThailandPostReply, PROVIDER, thailandPostRequestBody } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 // The site's build sends to one of these two hosts; both serve the same records.
 export const THAILAND_POST_ENDPOINTS = [
@@ -19,12 +20,6 @@ const MAX_BYTES = 1_000_000;
 // An interactive check. A rate limit's page can also say access is denied,
 // so that wording is no challenge on an error status.
 const CHALLENGE_PAGE = /captcha|turnstile|cf-chl|challenge-platform|just a moment|verify you are human/i;
-
-function retryAfterMs(header: string | null): number | undefined {
-  const value = header?.trim() ?? '';
-  const ms = /^\d+$/.test(value) ? Number(value) * 1_000 : value ? Date.parse(value) - Date.now() : Number.NaN;
-  return Number.isFinite(ms) ? Math.max(0, ms) : undefined;
-}
 
 /**
  * A failure the site's other host may not share, as its own client retries:

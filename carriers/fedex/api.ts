@@ -12,6 +12,7 @@
 import { RateLimitedError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { decodeText, fetchBounded } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const FEDEX_API_URL = 'https://apis.fedex.com';
 const PROVIDER = 'FedEx';
@@ -57,9 +58,7 @@ function httpFailure(response: Response): Error {
   const { status } = response;
   if (status === 401 || status === 403) return refused(status);
   if (status === 429) {
-    const header = response.headers.get('retry-after')?.trim() ?? '';
-    const delay = /^\d+$/.test(header) ? Number(header) * 1000 : header ? Date.parse(header) - Date.now() : NaN;
-    return new RateLimitedError(PROVIDER, Number.isFinite(delay) ? Math.max(0, delay) : undefined);
+    return new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after')));
   }
   if (status >= 500) return new UpstreamHttpError(PROVIDER, status);
   return new TransportError(PROVIDER, `FedEx API returned HTTP ${status}`, { status });

@@ -4,6 +4,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { MAX_BYTES, normalizeCostaRicaNumber, parseCostaRica, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const COSTA_RICA_PAGE = 'https://sucursal.correos.go.cr/web/rastreo';
 export const COSTA_RICA_POST = 'https://sucursal.correos.go.cr/web/trackingweb';
@@ -34,8 +35,7 @@ export class CostaRicaTracker {
           if ([401,403,419,428].includes(row.status)) { failure = new ChallengeError(PROVIDER, 'Correos refused its guest form', { status: row.status }); continue; }
           if (row.status === 429) {
             const value = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-            const delay = value && /^\d+$/.test(value) ? +value * 1000 : undefined;
-            failure = new RateLimitedError(PROVIDER, delay); continue;
+            failure = new RateLimitedError(PROVIDER, retryAfterMs(value, { dates: false })); continue;
           }
           if (row.status !== 200) { failure = new UpstreamHttpError(PROVIDER, row.status); continue; }
           if (typeof row.body !== 'string' || new TextEncoder().encode(row.body).byteLength > MAX_BYTES) { failure = new TransportError(PROVIDER); continue; }

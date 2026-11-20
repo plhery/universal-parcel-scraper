@@ -7,6 +7,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { isSyncable, MAILPLUS_MAX_BYTES, normalizeMailplusNumber, parseMailplus, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The lookup the tracker at track.mailplus.com.au makes, on MailPlus's customer API. */
 export const MAILPLUS_API = 'https://wapp.mailplus.com.au/api/v1/customer/trackings/public/';
@@ -19,11 +20,6 @@ const REFRESH_MARGIN_MS = 250;
 /** The lookup's address for a number, as the page builds it; `syncable` asks for the partner's newest scans. */
 export function mailplusTrackUrl(number: string, syncable = false): string {
   return `${MAILPLUS_API}${encodeURIComponent(number)}${syncable ? '?syncable=true' : ''}`;
-}
-
-/** Seconds in a Retry-After header, in milliseconds. */
-function retryAfterMs(header: string | null): number | undefined {
-  return header && /^\d{1,6}$/.test(header.trim()) ? Number(header.trim()) * 1000 : undefined;
 }
 
 function json(body: string): unknown {
@@ -55,7 +51,7 @@ export class MailplusTracker {
       const body = decodeText(bytes);
       if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'MailPlus redirected its tracking lookup');
       if (response.status === 429) {
-        throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after')), 'MailPlus refused more lookups for now', { status: 429 });
+        throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), 'MailPlus refused more lookups for now', { status: 429 });
       }
       if (response.status === 403) {
         const message = CHALLENGE.test(body.slice(0, 64_000)) ? 'MailPlus answered with a browser check' : 'MailPlus refused the lookup';

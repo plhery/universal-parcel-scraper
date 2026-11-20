@@ -6,6 +6,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeTodayNumber, parseToday, PROVIDER, TODAY_MAX_BYTES, todayPage } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The tracking page, whose server looks the number up and puts the answer in the page. */
 export const TODAY_PAGE = 'https://my.amazing.today/track/';
@@ -41,11 +42,6 @@ export function todayOpen(sealed: string, passphrase = TODAY_PASSPHRASE): unknow
   }
 }
 
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
-
 export class TodayTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
@@ -64,7 +60,7 @@ export class TodayTracker {
       const page = response.status === 200 ? todayPage(html) : null;
       if (!page) {
         if (CHALLENGE.test(html.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'To-Day answered with a browser check');
-        if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response));
+        if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
         if (response.status === 403) throw new ChallengeError(PROVIDER, 'To-Day refused the lookup', { status: 403 });
         throw new SchemaError(PROVIDER, 'To-Day returned a page without its lookup');
       }

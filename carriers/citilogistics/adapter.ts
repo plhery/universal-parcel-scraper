@@ -9,6 +9,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded } from '../../core/transport/boundedFetch.js';
 import { userAgentOf } from '../../core/transport/userAgent.js';
 import { CITI_MAX_BYTES, CITI_PAGE, citiForm, normalizeCitiNumber, parseCiti, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export class CitilogisticsTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -39,9 +40,7 @@ export class CitilogisticsTracker {
         if ([401, 403].includes(response.status)) throw new ChallengeError(PROVIDER, 'Citilogistics refused its guest tracker', { status: response.status });
         if ([301, 302, 303, 307, 308, 404, 405, 410].includes(response.status)) throw new TransportError(PROVIDER, 'Citilogistics guest endpoint is unavailable', { status: response.status });
         if (!response.ok) {
-          const retry = response.headers.get('retry-after');
-          const delay = retry === null ? undefined : /^\d+$/.test(retry.trim()) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-          throw new UpstreamHttpError(PROVIDER, response.status, Number.isFinite(delay) ? Math.max(0, delay!) : undefined);
+          throw new UpstreamHttpError(PROVIDER, response.status, retryAfterMs(response.headers.get('retry-after')));
         }
         return decodeText(bytes);
       };

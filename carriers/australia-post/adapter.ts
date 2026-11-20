@@ -18,6 +18,7 @@ import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { envChoice, envPositive } from '../../core/adapter/envChoice.js';
 import { budgetWhenOutOfTime, trawlOutOfTime } from '../../core/transport/trawl.js';
 import { australiaPostCode, australiaPostCodeParts, australiaPostStatus } from './status.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Australia Post';
 const DETAIL = 'https://auspost.com.au/mypost/track/details/';
@@ -506,8 +507,7 @@ export class AustraliaPostTracker {
       if (!captures.length || captures.length > 20) throw new TransportError(PROVIDER, 'Australia Post returned no matching browser response');
       const capture = captures[captures.length - 1]!;
       if (capture.status === 429) {
-        const retry = capture.headers['retry-after'];
-        throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
+        throw new RateLimitedError(PROVIDER, retryAfterMs(capture.headers['retry-after'], { dates: false }));
       }
       if ([401, 403].includes(capture.status)) {
         throw new ChallengeError(PROVIDER, `Australia Post tracking API returned HTTP ${capture.status}`,
@@ -556,8 +556,7 @@ export class AustraliaPostTracker {
           maxBytes: MAX_BYTES, allowHttpStatuses: [401, 403, 429], fetcher: asApp(this.options.fetcher),
         });
         if (response.status === 429) {
-          const retry = response.headers.get('retry-after');
-          throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
+          throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false }));
         }
         if (response.status !== 200) {
           rest.refused();

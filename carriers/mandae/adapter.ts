@@ -7,6 +7,7 @@ import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { normalizeMandaeNumber, parseMandae, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export { normalizeMandaeNumber, parseMandae } from './parser.js';
 
@@ -55,8 +56,7 @@ export class MandaeTracker {
         if (captures.length > 10) throw new SchemaError(PROVIDER, 'Mandaê returned too many tracking responses');
         const capture = captures[captures.length - 1]!;
         if (capture.status === 429) {
-          const retry = capture.headers['retry-after'];
-          throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1_000 : undefined);
+          throw new RateLimitedError(PROVIDER, retryAfterMs(capture.headers['retry-after'], { dates: false }));
         }
         // 405 is AWS WAF's picture CAPTCHA, 403 its block.
         if ([401, 403, 405].includes(capture.status) || capture.headers['x-amzn-waf-action']) throw new ChallengeError(PROVIDER);

@@ -4,6 +4,7 @@ import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/trans
 import { isRecord } from '../../core/types.js';
 import { EVRI_UK_UNCONFIRMED, EVRI_UK_UNKNOWN } from './mobile.js';
 import { evriUkTrackingUrl, parseEvriUk } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const SEARCH = 'https://api.evri.com/customer-tracking/v1/search/';
 const HISTORY = 'https://tracking.platform-apis.evri.com/v1/parcels';
@@ -16,8 +17,7 @@ function httpFailure(status: number, retryAfter?: string): Error {
   if (status < 100) return new TransportError('Evri UK', 'Evri UK browser request failed');
   if ([401, 403, 405].includes(status)) return new ChallengeError('Evri UK');
   if ([404, 410].includes(status)) return new TransportError('Evri UK', 'Evri UK tracking endpoint is unavailable', { status });
-  const wait = retryAfter === undefined ? NaN : /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : Date.parse(retryAfter) - Date.now();
-  return new UpstreamHttpError('Evri UK', status, Number.isFinite(wait) ? Math.max(0, wait) : undefined);
+  return new UpstreamHttpError('Evri UK', status, retryAfterMs(retryAfter));
 }
 
 function searchIdentity(payload: unknown, number: string): string {

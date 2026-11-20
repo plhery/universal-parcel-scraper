@@ -6,6 +6,7 @@ import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { normalizeSfExpressNumber, parse } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export { normalizeSfExpressNumber, parse } from './parser.js';
 
@@ -53,8 +54,7 @@ export class SfExpressTracker {
         if (!captures.length || captures.length > 10) throw new TransportError(PROVIDER, 'SF Express returned no matching tracking response');
         const capture = captures[captures.length - 1]!;
         if (capture.status === 429) {
-          const retry = capture.headers['retry-after'];
-          throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1_000 : undefined);
+          throw new RateLimitedError(PROVIDER, retryAfterMs(capture.headers['retry-after'], { dates: false }));
         }
         if ([401, 403].includes(capture.status)) throw new ChallengeError(PROVIDER);
         if ([404, 410].includes(capture.status)) throw new TransportError(PROVIDER, 'SF Express tracking endpoint is unavailable');

@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { CARRIER, EUROEXPRESS_MAX_BYTES, isEuroexpressMissing, normalizeEuroexpressNumber, parseEuroexpress, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The lookup EuroExpress's tracking page on euroexpress.ba makes for a code. */
 export const EUROEXPRESS_API = 'https://app-api.euroexpress.ba/api/v1/pub/track';
@@ -13,11 +14,6 @@ const ORIGIN = new URL(EUROEXPRESS_API).origin;
 const REDIRECTS = [301, 302, 303, 307, 308];
 // Bot checks a CDN or firewall could put in place of the reply.
 const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*(?:Just a moment|Attention Required|Access Denied)|captcha/i;
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 /** The address a redirect sends the lookup to, when it is the same lookup for the same code on the same host. */
 function sameLookup(location: string | null, from: string, number: string): string | null {
@@ -63,7 +59,7 @@ export class EuroexpressTracker {
           url = next;
           continue;
         }
-        if (status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response), 'EuroExpress limited the lookups', { status });
+        if (status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), 'EuroExpress limited the lookups', { status });
         if (status === 401 || status === 403) throw new ChallengeError(PROVIDER, 'EuroExpress refused the lookup', { status });
         if (status === 503) throw new MaintenanceError(PROVIDER, undefined, { status });
         if (status >= 500) throw new IndeterminateError(PROVIDER, `EuroExpress returned HTTP ${status}`, { status });

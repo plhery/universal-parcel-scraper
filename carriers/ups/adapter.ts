@@ -19,6 +19,7 @@ import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPSApiClient, upsApiCredentials, upsApiNotFound, upsApiNotices, type UPSApiCredentials } from './api.js';
 import { isUpsNotice, isUpsRequest, isUpsReturnStart, UPS_PROGRESS_STATUS, UPS_STATUS_TYPE, upsActivityStage, upsBannerStage, upsRecipientAction, upsStatus, upsUncodedScanStage } from './status.js';
 import { decodeEntities } from './text.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
 const STATUS_API = 'https://webapis.ups.com/track/api/Track/GetStatus?loc=en_US';
@@ -265,10 +266,7 @@ function capturedHttpError(status: number, headers: Record<string, string>): Err
     return new IndeterminateError('UPS', `UPS status API returned HTTP ${status}`);
   }
   if (status === 419) return new ChallengeError('UPS', 'UPS rejected the browser session', { status });
-  const retryHeader = Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1];
-  const delay = retryHeader === undefined ? NaN : /^\d+$/.test(retryHeader.trim())
-    ? Number(retryHeader) * 1_000 : Date.parse(retryHeader) - Date.now();
-  return new UpstreamHttpError('UPS', status, Number.isFinite(delay) ? Math.max(0, delay) : undefined);
+  return new UpstreamHttpError('UPS', status, retryAfterMs(Object.entries(headers).find(([key]) => key.toLowerCase() === 'retry-after')?.[1]));
 }
 
 function withoutIcons(value: string): string {

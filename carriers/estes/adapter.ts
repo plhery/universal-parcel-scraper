@@ -6,17 +6,13 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { ESTES_MAX_BYTES, INVALID_CODE, normalizeEstesNumber, NOT_FOUND_CODE, parseEstes, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 // The service the MyEstes shipment tracking page asks, without an account,
 // key, cookie or CAPTCHA token. Its interceptor adds a token only after a login.
 export const ESTES_ENDPOINT = 'https://myestes-api.estes-express.com/shipmenttracking/history';
 // A firewall's or CDN's page instead of the service's JSON.
 const CHALLENGE = /<title>\s*(?:Just a moment|Attention Required|Access denied|Request Rejected|403 Forbidden)|cf-turnstile|_cf_chl_opt|The requested URL was rejected|captcha/i;
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 /** The address the tracking page asks for one PRO number. */
 export function estesTrackingUrl(raw: string): string {
@@ -35,7 +31,7 @@ export class EstesTracker {
         Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: ESTES_MAX_BYTES,
         fetcher: this.options.fetcher, allowHttpStatuses: [400, 404, 410, 429] });
-      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response));
+      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
       // A 404 or 410 without the service's not-found code is a missing route, not a missing shipment.
       const gone = response.status === 404 || response.status === 410;
       const text = decodeText(bytes);

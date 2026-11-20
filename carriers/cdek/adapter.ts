@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { CDEK_ERRORS, CDEK_MAX_BYTES, cdekErrorCode, normalizeCdekNumber, parseCdek, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 // The guest lookup of CDEK's app and of its order page on my.cdek.ru. It asks
 // for no key, cookie or phone confirmation. The tracker on www.cdek.ru sits
@@ -15,11 +16,6 @@ export const CDEK_ENDPOINT = 'https://my.cdek.ru/api/lkfl/v3/tracing/trackInfoBe
 const ANSWERS = [400, 403, 404, 422, 429];
 // ServicePipe's bot check, which fronts CDEK's sites and can answer with HTTP 200.
 const BLOCKED = /servicepipe\.tech|js-challenge-loader|id_captcha_frame_div|get_cookie_spsn|<title>\s*(?:403 )?Forbidden/i;
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 export class CdekTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -37,7 +33,7 @@ export class CdekTracker {
         if (response.status === 403 || BLOCKED.test(decodeText(bytes.subarray(0, 64_000)))) {
           throw new ChallengeError(PROVIDER, 'CDEK answered with its bot check', { cause });
         }
-        if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response), undefined, { cause });
+        if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), undefined, { cause });
         if (!response.ok) throw new TransportError(PROVIDER, `CDEK tracking service answered HTTP ${response.status}`, { cause });
         throw new SchemaError(PROVIDER, 'CDEK returned invalid tracking JSON', { cause });
       }
@@ -45,12 +41,12 @@ export class CdekTracker {
       switch (cdekErrorCode(payload)) {
         // Only the service's own notice is a missing order; a missing route is not.
         case CDEK_ERRORS.notFound: throw new NotFoundError(PROVIDER);
-        case CDEK_ERRORS.limit: throw new RateLimitedError(PROVIDER, retryAfterMs(response), 'CDEK limits how many numbers a client tracks');
+        case CDEK_ERRORS.limit: throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }), 'CDEK limits how many numbers a client tracks');
         case CDEK_ERRORS.later: throw new IndeterminateError(PROVIDER, 'CDEK asked to try the number again later');
         case CDEK_ERRORS.short:
         case CDEK_ERRORS.long: throw new InvalidInputError(PROVIDER, 'CDEK refused the number\'s length', { reason: 'wrong_number' });
       }
-      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response));
+      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
       if (response.status === 403) throw new ChallengeError(PROVIDER, 'CDEK refused the guest lookup');
       throw new TransportError(PROVIDER, `CDEK tracking service answered HTTP ${response.status}`);
     };

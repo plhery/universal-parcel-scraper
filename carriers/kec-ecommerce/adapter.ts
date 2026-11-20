@@ -7,6 +7,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded } from '../../core/transport/boundedFetch.js';
 import { userAgentOf } from '../../core/transport/userAgent.js';
 import { CARRIER, KEC_MAX_BYTES, normalizeKecNumber, parseKec, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const KEC_API = 'https://tt.kec-app.com/api/status';
 // The official https://kec.kln.com/en/logistics-tracking/ guest widget gives every visitor this value.
@@ -60,9 +61,7 @@ export class KecTracker {
 }
 
 function retryAfter(response: Response): number | undefined {
-  const value = response.headers.get('retry-after');
-  const milliseconds = value === null ? NaN : /^\d+$/.test(value.trim()) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-  return Number.isFinite(milliseconds) ? Math.max(0, milliseconds) : undefined;
+  return retryAfterMs(response.headers.get('retry-after'));
 }
 
 export const adapter: AdapterFactory = environment => {

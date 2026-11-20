@@ -6,6 +6,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeOnlogExpressNumber, ONLOG_EXPRESS_MAX_BYTES, parseOnlogExpress, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const ONLOG_EXPRESS_API = 'https://conecta.log.br/view/jsRastreio.php';
 const SERVICE_MS = 60_000;
@@ -17,9 +18,7 @@ function reason(page: TrawlScrapeResponse): string {
   return isRecord(timing) && typeof timing.reason === 'string' ? timing.reason : '';
 }
 function retryAfter(headers: Record<string, string>): number | undefined {
-  const value = Object.entries(headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-  const ms = value === undefined ? NaN : /^\d+$/.test(value) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-  return Number.isFinite(ms) ? Math.max(0, ms) : undefined;
+  return retryAfterMs(Object.entries(headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1]);
 }
 
 export class OnlogExpressTracker {

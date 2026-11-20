@@ -5,6 +5,7 @@ import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
 import { OLD_DOMINION_API, OLD_DOMINION_ORIGIN, OLD_DOMINION_TRACE_PATH, oldDominionPro, oldDominionTraceUrl,
   parseOldDominionReply, type OldDominionReply } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Old Dominion';
 const MAX_BYTES = 1_000_000;
@@ -85,7 +86,7 @@ export async function captureOldDominionReply(page: Page, pro: string, signal: A
 
 function pageFailure(status: number, retryAfter: string | undefined): Error | null {
   if (status === 200) return null;
-  if (status === 429) return new RateLimitedError(PROVIDER, retryAfter && /^\d{1,6}$/.test(retryAfter) ? Number(retryAfter) * 1000 : undefined);
+  if (status === 429) return new RateLimitedError(PROVIDER, retryAfterMs(retryAfter, { dates: false, maxDigits: 6 }));
   if ([401, 403].includes(status)) return new ChallengeError(PROVIDER);
   if ([404, 410].includes(status)) return new TransportError(PROVIDER, 'Old Dominion trace page is unavailable', { status });
   return new UpstreamHttpError(PROVIDER, status);

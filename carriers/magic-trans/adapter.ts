@@ -5,6 +5,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { MAX_BYTES, normalizeMagicTransNumber, parseMagicTrans, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const MAGIC_TRANS_ORIGIN = 'https://magic-trans.ru';
 /** The tracker, which fills its input from the address and posts the number back to the same address. */
@@ -47,11 +48,9 @@ export class MagicTransTracker {
         if ([401, 403, 428, 503].includes(row.status) || row.error === 'challenge-html') {
           throw new ChallengeError(PROVIDER, 'Magic Trans refused guest verification', { status: row.status });
         }
-        const retry = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
-        const ms = retry === undefined ? NaN : /^\d+$/.test(retry) ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-        const retryAfterMs = Number.isFinite(ms) ? Math.max(0, ms) : undefined;
-        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs);
-        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfterMs);
+        const retryAfter = retryAfterMs(Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1]);
+        if (row.status === 429) throw new RateLimitedError(PROVIDER, retryAfter);
+        if (row.status !== 200) throw new UpstreamHttpError(PROVIDER, row.status, retryAfter);
         if (row.error || row.truncated || row.base64Encoded || typeof row.body !== 'string'
           || new TextEncoder().encode(row.body).byteLength > MAX_BYTES) throw new TransportError(PROVIDER, 'Magic Trans returned incomplete tracking data');
         let data: unknown; try { data = JSON.parse(row.body); } catch { throw new SchemaError(PROVIDER, 'Magic Trans returned an unreadable page'); }

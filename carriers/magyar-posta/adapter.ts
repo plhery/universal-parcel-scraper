@@ -8,6 +8,7 @@ import { MAGYAR_POSTA_APP_PAGE, MAGYAR_POSTA_APP_TRACKING, magyarPostaAppFailure
   magyarPostaAppTrackingUrl, readMagyarPostaApp } from './app.js';
 import { MAGYAR_POSTA_MAX_BYTES, magyarPostaAppMiss, magyarPostaTrackingUrl, normalizeMagyarPostaNumber, parseMagyarPosta, parseMagyarPostaApp,
   PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export { MAGYAR_POSTA_APP_PAGE, MAGYAR_POSTA_APP_TRACKING, magyarPostaAppTrackingUrl } from './app.js';
 export { magyarPostaTrackingUrl, normalizeMagyarPostaNumber, parseMagyarPosta, parseMagyarPostaApp } from './parser.js';
@@ -34,7 +35,7 @@ class UnaddedError extends IndeterminateError {}
 
 /** A refused or failed page; a missing route is not a missing item. */
 function httpFailure(status: number, retryAfter?: string): Error | null {
-  if (status === 429) return new RateLimitedError(PROVIDER, retryAfter && /^\d{1,5}$/.test(retryAfter) ? Number(retryAfter) * 1000 : undefined);
+  if (status === 429) return new RateLimitedError(PROVIDER, retryAfterMs(retryAfter, { dates: false, maxDigits: 5 }));
   if (status === 401 || status === 403) return new ChallengeError(PROVIDER);
   if (status === 404 || status === 410) return new TransportError(PROVIDER, 'Magyar Posta tracker is unavailable');
   return status >= 400 ? new UpstreamHttpError(PROVIDER, status) : null;

@@ -6,6 +6,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/trawl.js';
 import { trawlPrivateScrape } from '../../core/transport/trawlPrivate.js';
 import { normalizeWesternBidNumber, parseWesternBid, PROVIDER, validateWesternBidUrl, WESTERN_BID_MAX_BYTES, WESTERN_BID_READY, westernBidApiUrl, westernBidTrackingUrl } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export class WesternBidTracker {
   constructor(private readonly options: { trawl?: TrawlClient | null; fetcher?: typeof fetch; recorder?: StepRecorder } = {}) {}
@@ -35,8 +36,7 @@ export class WesternBidTracker {
         if ([401, 403].includes(latest.status)) throw new ChallengeError(PROVIDER, 'Western Bid refused tracking verification', { status: latest.status });
         if (latest.status === 429) {
           const retry = Object.entries(latest.headers).find(([name]) => name.toLowerCase() === 'retry-after')?.[1];
-          const ms = retry && /^\d{1,8}$/.test(retry.trim()) ? Number(retry) * 1000 : undefined;
-          throw new RateLimitedError(PROVIDER, ms);
+          throw new RateLimitedError(PROVIDER, retryAfterMs(retry, { dates: false, maxDigits: 8 }));
         }
         throw new TransportError(PROVIDER, 'Western Bid tracking lookup is unavailable', { status: latest.status || undefined });
       }

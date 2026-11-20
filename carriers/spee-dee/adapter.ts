@@ -7,6 +7,7 @@ import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/inde
 import type { TrawlClient } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeSpeeDeeNumber, parseSpeeDee } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Spee-Dee';
 // The website's detail page (packageDetail.php) redirects here.
@@ -31,12 +32,10 @@ export function speeDeeProgressUrl(raw: string): string {
 
 /** The search limit a 503 page states, else the 503 itself. */
 function unavailable(page: string, retryAfter: unknown): Error {
-  const header = typeof retryAfter === 'string' ? retryAfter.trim() : '';
-  const delay = /^\d+$/.test(header) ? Number(header) * 1_000 : Date.parse(header) - Date.now();
-  const retryAfterMs = Number.isFinite(delay) ? Math.max(0, delay) : undefined;
+  const wait = retryAfterMs(retryAfter);
   return SEARCH_LIMIT.test(page)
-    ? new RateLimitedError(PROVIDER, retryAfterMs, 'Spee-Dee limits searches per minute')
-    : new UpstreamHttpError(PROVIDER, 503, retryAfterMs);
+    ? new RateLimitedError(PROVIDER, wait, 'Spee-Dee limits searches per minute')
+    : new UpstreamHttpError(PROVIDER, 503, wait);
 }
 
 /**

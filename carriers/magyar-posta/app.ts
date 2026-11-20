@@ -2,6 +2,7 @@ import { BudgetExceededError, ChallengeError, IndeterminateError, MaintenanceErr
 import type { CarrierResult } from '../../core/result/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeMagyarPostaNumber, parseMagyarPostaApp, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The guest tracking API of the Posta app (hu.posta.uzletimobil). */
 export const MAGYAR_POSTA_APP_API = 'https://net.posta.hu/mpl/public/api/mobile/guest';
@@ -22,18 +23,13 @@ export interface MagyarPostaAppOptions {
   timeoutMs: number;
 }
 
-function retryAfterMs(header: string | null | undefined): number | undefined {
-  const value = header?.trim() ?? '';
-  return /^\d{1,5}$/.test(value) ? Number(value) * 1000 : undefined;
-}
-
 /** A refused or failed reply from the guest API; the reply of a number the app would not add is the adapter's to read. */
 export function magyarPostaAppFailure(status: number, retryAfter?: string | null): Error | null {
-  if (status === 429) return new RateLimitedError(PROVIDER, retryAfterMs(retryAfter));
+  if (status === 429) return new RateLimitedError(PROVIDER, retryAfterMs(retryAfter, { dates: false, maxDigits: 5 }));
   // A missing or stale key, or a refused token.
   if (status === 401 || status === 403) return new ChallengeError(PROVIDER, 'Magyar Posta\'s app refused the request');
   if (status === 404 || status === 410) return new TransportError(PROVIDER, 'Magyar Posta\'s app API is unavailable', { status });
-  return status === 200 ? null : new UpstreamHttpError(PROVIDER, status, retryAfterMs(retryAfter));
+  return status === 200 ? null : new UpstreamHttpError(PROVIDER, status, retryAfterMs(retryAfter, { dates: false, maxDigits: 5 }));
 }
 
 // The notice Magyar Posta's hosts serve under HTTP 200 in place of every page and reply while its systems are down.

@@ -8,6 +8,7 @@ import {
   parseRoyalMailTrackingResponse, royalMailEstimate, royalMailEventsApiUrl, royalMailSummaryApiUrl, royalMailTrackingUrl, royalMailUnconfirmed,
 } from './parser.js';
 import { royalMailVisionRecovery, type RoyalMailVisionContext } from './vision.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 const PROVIDER = 'Royal Mail';
 const ORIGIN = 'https://www.royalmail.com';
@@ -82,8 +83,7 @@ export async function captureRoyalMailReply(page: Page, url: string, number: str
       const status = response.status();
       const headers = response.headers();
       if (status === 429) {
-        const retry = headers['retry-after'];
-        throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
+        throw new RateLimitedError(PROVIDER, retryAfterMs(headers['retry-after'], { dates: false }));
       }
       if (status === 403) throw new ChallengeError(PROVIDER);
       if (status === 410) throw new TransportError(PROVIDER, 'Royal Mail tracking endpoint is unavailable');

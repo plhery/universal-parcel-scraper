@@ -4,6 +4,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { blockedMinutes, DYNALOGIC_MAX_BYTES, dynalogicNotice, normalizeDynalogicNumber, NOT_FOUND_NOTICE, parseDynalogic, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export const DYNALOGIC_ORIGIN = 'https://track.mydynalogic.eu';
 
@@ -18,8 +19,7 @@ export const dynalogicOrderUrl = (number: string) =>
 /** An HTTP error without the service's own notice keeps its status; a missing route is not a missing order. */
 function httpFailure(response: Response): Error {
   if ([404, 410].includes(response.status)) return new TransportError(PROVIDER, 'Dynalogic tracking endpoint is unavailable');
-  const seconds = /^\d{1,6}$/.exec(response.headers.get('retry-after')?.trim() ?? '');
-  return new UpstreamHttpError(PROVIDER, response.status, seconds ? Number(seconds[0]) * 1000 : undefined);
+  return new UpstreamHttpError(PROVIDER, response.status, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
 }
 
 export class DynalogicTracker {

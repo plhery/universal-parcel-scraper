@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { FEDEX_FREIGHT_MAX_BYTES, normalizeFedexFreightNumber, parseFedexFreight, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 // The gateway the Detailed Tracking page asks for a visitor who is not signed
 // in, without a key, cookie or CAPTCHA token.
@@ -13,11 +14,6 @@ export const FEDEX_FREIGHT_ENDPOINT = 'https://api.ltl.tech/fxf-external-trackin
 // A firewall's or CDN's page instead of the gateway's JSON.
 const CHALLENGE = /<title>\s*(?:Just a moment|Attention Required|Access denied|Access Denied|Request Rejected|403 Forbidden)|cf-turnstile|_cf_chl_opt|The requested URL was rejected|errors\.edgesuite\.net|captcha/i;
 const REDIRECTS = new Set([301, 302, 303, 307, 308]);
-
-function retryAfterMs(response: Response): number | undefined {
-  const header = response.headers.get('retry-after')?.trim();
-  return header && /^\d{1,6}$/.test(header) ? Number(header) * 1000 : undefined;
-}
 
 /** The body the tracking page posts for one PRO number. */
 export function fedexFreightRequestBody(raw: string): string {
@@ -40,7 +36,7 @@ export class FedexFreightTracker {
         'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: FEDEX_FREIGHT_MAX_BYTES,
         redirect: 'manual', fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, 400, 403, 404, 410, 429] });
-      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response));
+      if (response.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 6 }));
       const text = decodeText(bytes);
       if (response.status === 403) throw new ChallengeError(PROVIDER, 'FedEx Freight refused the request');
       // The gateway answers a request it cannot read with a 400 and an empty

@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { COURIERSPLEASE_MAX_BYTES, couriersPleaseToken, normalizeCouriersPleaseNumber, parseCouriersPlease, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The tracking page, which opens the session its lookup needs. */
 export const COURIERSPLEASE_PAGE = 'https://www.couriersplease.com.au/tools-track';
@@ -23,15 +24,10 @@ const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*Just a moment|challenge-pl
 // The session cookie the page sets beside its token.
 const SESSION = /^__Host-csrf=[A-Za-z0-9._~+/=-]{8,512}$/;
 
-function retryAfterMs(response: Response): number | undefined {
-  const value = response.headers.get('retry-after')?.trim() ?? '';
-  return /^\d{1,5}$/.test(value) ? Number(value) * 1000 : undefined;
-}
-
 /** A refusal before any reply: a rate limit, a firewall block or a moved route. */
 function refusal(response: Response, body: string, stage: string): never {
   if (response.status === 429) {
-    throw new RateLimitedError(PROVIDER, retryAfterMs(response), `CouriersPlease rate limited its ${stage}`, { status: 429 });
+    throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 5 }), `CouriersPlease rate limited its ${stage}`, { status: 429 });
   }
   if (REDIRECTS.includes(response.status) || GONE.includes(response.status)) {
     throw new TransportError(PROVIDER, `CouriersPlease ${stage} is unavailable`, { status: response.status });

@@ -7,6 +7,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { KEX_MAX_BYTES, normalizeKexNumber, parseKex, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The tracking page, which also answers the lookup it makes for the numbers in its `track` parameter. */
 export const KEX_TRACK_PAGE = 'https://th.kex-express.com/en/track/';
@@ -33,11 +34,6 @@ export function kexLookupUrl(number: string, padding: () => string = randomHex):
   return `${KEX_TRACK_PAGE}?track=${encodeURIComponent(track)}`;
 }
 
-function retryAfterMs(response: Response): number | undefined {
-  const value = response.headers.get('retry-after')?.trim() ?? '';
-  return /^\d{1,5}$/.test(value) ? Number(value) * 1000 : undefined;
-}
-
 function json(body: string): unknown {
   try {
     return JSON.parse(body);
@@ -61,7 +57,7 @@ function asksForCaptcha(body: string): boolean {
 function refusal(response: Response, body: string): never {
   const { status } = response;
   if (asksForCaptcha(body)) throw new ChallengeError(PROVIDER, 'KEX Express asked for its slider captcha', { status });
-  if (status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response), 'KEX Express rate limited the lookup', { status });
+  if (status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(response.headers.get('retry-after'), { dates: false, maxDigits: 5 }), 'KEX Express rate limited the lookup', { status });
   if (REDIRECTS.includes(status) || GONE.includes(status)) throw new TransportError(PROVIDER, 'KEX Express tracking lookup is unavailable', { status });
   if (status === 403 || CHALLENGE.test(body)) throw new ChallengeError(PROVIDER, 'KEX Express refused the lookup', { status });
   // The page tries a 401 again and then shows nothing; it says nothing about the parcel.

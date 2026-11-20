@@ -9,6 +9,7 @@ import { fetchRoyalMailInBrowser, royalMailDestination } from './browser.js';
 import type { RoyalMailCaptchaOptions, RoyalMailVerificationRecord } from './vision.js';
 import { normalizeRoyalMailNumber, parseRoyalMailTrackingHtml, parseRoyalMailTrackingResponse,
   royalMailEstimate, royalMailEventsApiUrl, royalMailSummaryApiUrl, royalMailTrackingUrl, royalMailUnconfirmed } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 export { normalizeRoyalMailNumber, parseRoyalMailTrackingHtml, parseRoyalMailTrackingResponse,
   royalMailEventsApiUrl, royalMailSummaryApiUrl, royalMailTrackingUrl } from './parser.js';
@@ -143,9 +144,7 @@ export class RoyalMailTracker {
       for (const entry of page.capturedResponses.slice(0, MAX_CAPTURED).reverse()) {
         if (entry.url !== targetUrl) continue;
         if (entry.status === 429) {
-          const retry = entry.headers['retry-after'];
-          const retryMs = retry && /^\d+$/.test(retry) ? Number(retry) * 1_000 : undefined;
-          throw new RateLimitedError('Royal Mail', retryMs);
+          throw new RateLimitedError('Royal Mail', retryAfterMs(entry.headers['retry-after'], { dates: false }));
         }
         if ([401, 403].includes(entry.status)) throw new ChallengeError('Royal Mail');
         if (entry.status === 404 && entry.body && !entry.truncated && !entry.base64Encoded && !entry.error) {

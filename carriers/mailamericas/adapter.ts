@@ -7,6 +7,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import type { TrawlClient } from '../../core/transport/trawl.js';
 import { MAILAMERICAS_MAX_BYTES, normalizeMailamericasNumber, parseMailamericas, PROVIDER } from './parser.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
 
 /** The lookup the tracking page on mailamericas.com makes for the number typed in. */
 export const MAILAMERICAS_API = 'https://mailamericas.com/api/tracking';
@@ -44,10 +45,7 @@ export class MailamericasTracker {
       throw new ChallengeError(PROVIDER, 'MailAmericas browser verification remained blocked', { status: reply.status, reason: 'verification_refused' });
     }
     if (reply.status === 429 || reply.status >= 500) {
-      const retry = reply.headers['retry-after'];
-      const retryAfterMs = retry === undefined ? undefined : /^\d+$/.test(retry.trim())
-        ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
-      throw new UpstreamHttpError(PROVIDER, reply.status, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined);
+      throw new UpstreamHttpError(PROVIDER, reply.status, retryAfterMs(reply.headers['retry-after']));
     }
     if (reply.status !== 200) throw new TransportError(PROVIDER, 'MailAmericas browser tracking did not answer', { status: reply.status });
     if (reply.truncated || reply.base64Encoded || reply.error || reply.body === null
