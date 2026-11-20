@@ -1,5 +1,45 @@
 {
   "carrier": "campos-cadilhe",
-  "gap": "No public page shows a Campos&Cadilhe number.",
-  "records": []
+  "records": [
+    {
+      "number": "PRZ.21.229881",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://otm.camposcadilhe.pt/track/PRZ.21.229881",
+        "date": "2021-09-30",
+        "dateKind": "carrier event",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Prozis shipments",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The indexed carrier-owned OTM tracking page displays this number and a dated delivery event for the shipment."
+    },
+    {
+      "number": "PRZ.21.231027",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://otm.camposcadilhe.pt/track/PRZ.21.231027",
+        "date": "2021-12-02",
+        "dateKind": "carrier event",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Prozis shipments",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The indexed carrier-owned OTM tracking page displays this number and a dated delivery event for the shipment."
+    }
+  ]
 }
