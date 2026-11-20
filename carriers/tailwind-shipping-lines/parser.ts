@@ -46,7 +46,7 @@ export function parseTracking(data: unknown, number: string): CarrierResult {
     if (!Array.isArray(container.milestones)) {
       throw new SchemaError(provider, 'Tailwind Shipping Lines omitted a container movement list');
     }
-    return container.milestones.map(parseMovement).filter((event): event is TimedEvent => !!event).sort(newestFirst);
+    return container.milestones.map(parseMovement).filter((event): event is TimedEvent => !!event).reverse().sort(newestFirst);
   });
   const distinct = new Map<string, TimedEvent>();
   for (const event of histories.flat()) {

@@ -1,5 +1,5 @@
 import type { AdapterFactory } from '../../core/adapter/index.js';
-import { ChallengeError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { parseTracking, provider } from './parser.js';
@@ -29,13 +29,12 @@ export const adapter: AdapterFactory = environment => ({
             'User-Agent': userAgentOf(environment.userAgent),
           },
         }, {
-          provider, fetcher: environment.fetcher, timeoutMs: remainingMs, maxBytes: 650_000, allowHttpStatuses: [403, 404],
+          provider, fetcher: environment.fetcher, timeoutMs: remainingMs, maxBytes: 650_000, allowHttpStatuses: [403],
         });
         const body = decodeText(bytes);
         if (response.status === 403 || /<title>\s*(?:Just a moment|Access Denied|Security Check)|cf-chl|_Incapsula_Resource/i.test(body)) {
           throw new ChallengeError(provider, 'Tailwind Shipping Lines requires verification');
         }
-        if (response.status === 404) throw new NotFoundError(provider);
         let data: unknown;
         try {
           data = JSON.parse(body);

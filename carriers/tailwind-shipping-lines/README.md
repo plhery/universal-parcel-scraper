@@ -6,9 +6,8 @@ The [guest tracking page](https://ecom.tailwind-ahead.com/tracking) reads the ca
 
 The adapter keeps completed, dated milestones and the source UTC offsets. It omits forecast movements, suggested dates and vessel positions. Identical scan rows can occur across containers under the same bill. The adapter combines those rows and reports a shipment-wide stage when the latest scan on every selected container agrees.
 
-Run the opt-in live tests with the public examples.
+Run the opt-in live tests with published bill and container numbers.
 
 ```sh
-TAILWIND_BILL_NUMBER=TSHGNGB26046910 TAILWIND_CONTAINER_NUMBER=CAIU9779439 \
-  npx vitest run --config vitest.carriers-live.config.ts carriers/tailwind-shipping-lines/adapter.live.test.ts
+TAILWIND_SHIPPING_LINES_TRACKING_NUMBER=… TAILWIND_SHIPPING_LINES_CONTAINER_NUMBER=… npm run test:carriers:live -- carriers/tailwind-shipping-lines
 ```

@@ -9,6 +9,5 @@ History uses the Colombian local dates and times displayed by the tracker. They 
 Run the live test with a published physical guide number.
 
 ```sh
-CERTIPOSTAL_DELIVERED_NUMBER=4083638600015 CERTIPOSTAL_RETURNED_NUMBER=3922901001775 \
-  npx vitest run --config vitest.carriers-live.config.ts carriers/certipostal/adapter.live.test.ts
+CERTIPOSTAL_TRACKING_NUMBER=… CERTIPOSTAL_RETURNED_NUMBER=… npm run test:carriers:live -- carriers/certipostal
 ```

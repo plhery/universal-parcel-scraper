@@ -7199,28 +7199,6 @@
     "linkRules": [],
     "detectionRules": []
   },
-  "ag-cargo-india": {
-    "displayName": "AG Cargo",
-    "color": "#183D5F",
-    "aliases": [
-      "AG Cargo India"
-    ],
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "ag-cargo-india",
-      "localClocks": true
-    },
-    "canaryUrl": "https://agcargo.in/Home/AWBTrack",
-    "trackingUrlTemplate": "https://agcargo.in/Home/AWBTrack",
-    "trackingSearchUrl": "https://agcargo.in/Home/AWBTrack",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "agt-kurye": {
     "displayName": "AGT Kurye",
     "color": "#2e2d2d",
@@ -20358,29 +20336,6 @@
     "linkRules": [],
     "detectionRules": []
   },
-  "don-mariano-express": {
-    "displayName": "Don Mariano Express",
-    "color": "#17654A",
-    "aliases": [
-      "Don Mariano Express S.R.L.",
-      "Rutas Misioneras"
-    ],
-    "countries": [
-      "AR"
-    ],
-    "selectable": true,
-    "timezone": "America/Argentina/Buenos_Aires",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "don-mariano-express",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.don-mariano.com/",
-    "trackingUrlTemplate": "https://www.don-mariano.com/#tracking",
-    "trackingSearchUrl": "https://www.don-mariano.com/#tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "dongdu": {
     "displayName": "Dongdu Logistics",
     "color": "#5b9a68",
@@ -24469,30 +24424,6 @@
       }
     ]
   },
-  "exfreight": {
-    "displayName": "ExFreight",
-    "color": "#034B75",
-    "aliases": [
-      "ExFreight Zeta",
-      "ExFreight Zeta Inc.",
-      "Exfresso"
-    ],
-    "countries": [
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "America/New_York",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "exfreight",
-      "localClocks": true
-    },
-    "canaryUrl": "https://exfreight.flipstone.com/track",
-    "trackingUrlTemplate": "https://exfreight.flipstone.com/track/{trackingNumber}",
-    "trackingSearchUrl": "https://exfreight.flipstone.com/track",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "exline-kz": {
     "displayName": "Exline",
     "color": "#0535ef",
@@ -26424,30 +26355,6 @@
         "path": "^/tracking/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
-  },
-  "flashpy": {
-    "displayName": "Flashpy",
-    "color": "#e4343a",
-    "aliases": [
-      "Flashpy Courier"
-    ],
-    "countries": [
-      "US",
-      "CO",
-      "VE"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "flashpy",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.flashpy.com/co/tracking",
-    "trackingUrlTemplate": "https://www.flashpy.com/co/tracking?code={trackingNumber}",
-    "trackingSearchUrl": "https://www.flashpy.com/co/tracking",
-    "linkRules": [],
     "detectionRules": []
   },
   "flecha-amarilla": {
@@ -31657,29 +31564,6 @@
       }
     ]
   },
-  "hrl-cargo": {
-    "displayName": "HRL Cargo",
-    "color": "#ca4c32",
-    "aliases": [
-      "HRL Cargo India",
-      "HRL Cargo Logistics"
-    ],
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "hrl-cargo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.hrlcargo.com/track/",
-    "trackingUrlTemplate": "https://www.hrlcargo.com/track/",
-    "trackingSearchUrl": "https://www.hrlcargo.com/track/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "hrvatska-posta": {
     "displayName": "Hrvatska pošta",
     "color": "#ffd100",
@@ -31992,29 +31876,6 @@
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "hulak-logistics": {
-    "displayName": "Hulak Logistics",
-    "color": "#194C7B",
-    "aliases": [
-      "Hulak Logistics Nepal",
-      "Hulak Express"
-    ],
-    "countries": [
-      "NP"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kathmandu",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "hulak-logistics",
-      "localClocks": true
-    },
-    "canaryUrl": "https://logistics.hulakexpress.com/tracking/",
-    "trackingUrlTemplate": "https://logistics.hulakexpress.com/tracking/?tracking_number={trackingNumber}",
-    "trackingSearchUrl": "https://logistics.hulakexpress.com/tracking/",
-    "linkRules": [],
     "detectionRules": []
   },
   "hunter-express": {
@@ -38850,28 +38711,6 @@
     ],
     "detectionRules": []
   },
-  "lisa-parcel": {
-    "displayName": "Lisa Parcel",
-    "color": "#20675d",
-    "aliases": [
-      "Lisa Parcel USA"
-    ],
-    "countries": [
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "lisa-parcel",
-      "localClocks": true
-    },
-    "canaryUrl": "https://lisaparcel.com/en/track",
-    "trackingUrlTemplate": "https://lisaparcel.com/en/track/{trackingNumber}",
-    "trackingSearchUrl": "https://lisaparcel.com/en/track",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "litexpress": {
     "displayName": "LiteXpress",
     "color": "#72166c",
@@ -42563,29 +42402,6 @@
     },
     "canaryUrl": "https://portal.sent24.de/index.php/tracking/search",
     "trackingSearchUrl": "https://portal.sent24.de/index.php/tracking/search",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "nacionales-delivery-services": {
-    "displayName": "Nacionales Delivery Services",
-    "color": "#165D39",
-    "aliases": [
-      "Nexgo",
-      "Nexgo Delivery",
-      "Nacionales Delivery Services Guatemala"
-    ],
-    "countries": [
-      "GT"
-    ],
-    "selectable": true,
-    "timezone": "America/Guatemala",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "nacionales-delivery-services"
-    },
-    "canaryUrl": "https://nacionalesdeliveryservices.com/rastreo",
-    "trackingUrlTemplate": "https://nacionalesdeliveryservices.com/rastreo",
-    "trackingSearchUrl": "https://nacionalesdeliveryservices.com/rastreo",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46357,29 +46173,6 @@
       }
     ]
   },
-  "pasha-hawaii": {
-    "displayName": "Pasha Hawaii",
-    "color": "#183771",
-    "aliases": [
-      "Pasha Hawaii Transport Lines",
-      "Pasha Hawaii Shipping"
-    ],
-    "countries": [
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "Pacific/Honolulu",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "pasha-hawaii",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.pashahawaiishipping.com/public/track.htm",
-    "trackingUrlTemplate": "https://www.pashahawaiishipping.com/public/track.htm",
-    "trackingSearchUrl": "https://www.pashahawaiishipping.com/public/track.htm",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "passport": {
     "displayName": "Passport",
     "color": "#00e796",
@@ -47787,30 +47580,6 @@
     "canaryUrl": "https://trackawb.izzygo.ro/",
     "trackingUrlTemplate": "https://trackawb.izzygo.ro/#/track/{trackingNumber}",
     "trackingSearchUrl": "https://trackawb.izzygo.ro/",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "pinoy-pride-worldwide": {
-    "displayName": "Pinoy Pride Worldwide",
-    "color": "#1d4486",
-    "aliases": [
-      "Pinoy Pride Worldwide LLC",
-      "Pinoy Pride Balikbayan Box"
-    ],
-    "countries": [
-      "US",
-      "PH"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "pinoy-pride-worldwide",
-      "localClocks": true
-    },
-    "canaryUrl": "https://pinoyprideworldwidellc.com/tracking",
-    "trackingUrlTemplate": "https://pinoyprideworldwidellc.com/tracking",
-    "trackingSearchUrl": "https://pinoyprideworldwidellc.com/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -51246,29 +51015,6 @@
     ],
     "detectionRules": []
   },
-  "rist-transport": {
-    "displayName": "RIST Transport",
-    "color": "#233B65",
-    "aliases": [
-      "RIST Transport Ltd.",
-      "RIST LTL"
-    ],
-    "countries": [
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "America/New_York",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "rist-transport",
-      "localClocks": true
-    },
-    "canaryUrl": "https://ltl-tracking.risttransport.com/shipmenttrace.htm",
-    "trackingUrlTemplate": "https://ltl-tracking.risttransport.com/boldetail.htm?nav=top&wbtn=PRO&wpro1={trackingNumber}",
-    "trackingSearchUrl": "https://ltl-tracking.risttransport.com/shipmenttrace.htm",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "rivigo": {
     "displayName": "Rivigo",
     "color": "#f4162d",
@@ -53514,31 +53260,6 @@
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "servicios-expresos": {
-    "displayName": "Servicios Expresos",
-    "color": "#c92533",
-    "aliases": [
-      "Servicios Expresos USA",
-      "Servicios Expresos Internacionales",
-      "Servicios Expresos Internacionales de Oriente"
-    ],
-    "countries": [
-      "US",
-      "VE"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "servicios-expresos",
-      "localClocks": true
-    },
-    "canaryUrl": "https://usa.serviciosexpresos.com/",
-    "trackingUrlTemplate": "https://usa.serviciosexpresos.com/",
-    "trackingSearchUrl": "https://usa.serviciosexpresos.com/",
-    "linkRules": [],
     "detectionRules": []
   },
   "servientrega": {
@@ -56065,25 +55786,6 @@
     ],
     "detectionRules": []
   },
-  "speedex-fast-cargo": {
-    "displayName": "Speedex Fast Cargo",
-    "color": "#12306a",
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "speedex-fast-cargo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://speedexfastcargo.com/",
-    "trackingUrlTemplate": "https://speedexfastcargo.com/track.php?awb={trackingNumber}",
-    "trackingSearchUrl": "https://speedexfastcargo.com/#smart-track",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "speedpak": {
     "displayName": "SpeedPAK",
     "color": "#ee7532",
@@ -56706,28 +56408,6 @@
       }
     ]
   },
-  "sri-courier": {
-    "displayName": "SriCourier",
-    "color": "#F97316",
-    "aliases": [
-      "Sri Courier",
-      "SriCourier Lanka"
-    ],
-    "countries": [
-      "LK"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Colombo",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sri-courier"
-    },
-    "canaryUrl": "https://sricourier.lk/track",
-    "trackingUrlTemplate": "https://sricourier.lk/track?tracking_no={trackingNumber}",
-    "trackingSearchUrl": "https://sricourier.lk/track",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "sri-lanka-post": {
     "displayName": "Sri Lanka Post",
     "color": "#cf1839",
@@ -57283,29 +56963,6 @@
         "fragment": "^/query\\?(?:[^#]*&)?trackingNo=([^&]+)"
       }
     ],
-    "detectionRules": []
-  },
-  "sun-logistics": {
-    "displayName": "Sun Logistics",
-    "color": "#ED652B",
-    "aliases": [
-      "Sun Logistics Express",
-      "Sun Logistics NYC"
-    ],
-    "countries": [
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "America/New_York",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sun-logistics",
-      "localClocks": true
-    },
-    "canaryUrl": "https://sunlogistics.com/",
-    "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/snle.pol/facts.htm?startpage=protrace&pronum={trackingNumber}",
-    "trackingSearchUrl": "https://sunlogistics.com/",
-    "linkRules": [],
     "detectionRules": []
   },
   "sundarban-courier": {
@@ -60362,29 +60019,6 @@
       }
     ]
   },
-  "tpl-korea": {
-    "displayName": "TPL Korea",
-    "color": "#235b92",
-    "aliases": [
-      "TBorder",
-      "TPL Korea Co., Ltd.",
-      "티피엘코리아"
-    ],
-    "countries": [
-      "KR"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Seoul",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "tpl-korea"
-    },
-    "canaryUrl": "https://www.tborder.com/",
-    "trackingUrlTemplate": "https://www.tborder.com/freight/hawb_tracking/{trackingNumber}",
-    "trackingSearchUrl": "https://www.tborder.com/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "tpl-rider": {
     "displayName": "Rider",
     "color": "#0189ff",
@@ -61074,29 +60708,6 @@
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "transportes-agael": {
-    "displayName": "Transportes AGAEL",
-    "color": "#A72D24",
-    "aliases": [
-      "Transportes AGAEL S.A.C.",
-      "AGAEL"
-    ],
-    "countries": [
-      "PE"
-    ],
-    "selectable": true,
-    "timezone": "America/Lima",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "transportes-agael",
-      "localClocks": true
-    },
-    "canaryUrl": "https://agaelsac.com/seguimiento/",
-    "trackingUrlTemplate": "https://agaelsac.com/seguimiento/?codigo={trackingNumber}",
-    "trackingSearchUrl": "https://agaelsac.com/seguimiento/",
-    "linkRules": [],
     "detectionRules": []
   },
   "transportes-bertolini": {
