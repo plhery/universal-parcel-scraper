@@ -4946,5 +4946,11 @@
     "pattern": "^\\d{6}$",
     "kind": "open",
     "reason": "A public invoice names Movvi as the carrier and instructs the customer to track with the six-digit invoice reference. Detection does not offer Movvi."
+  },
+  {
+    "carrier": "mongol-post",
+    "pattern": "^RR0030\\d{5}MN$",
+    "kind": "open",
+    "reason": "A postmarked Mongol Post cover shows an RR-prefixed label that fails the current S10 check. Detection does not offer Mongol Post for the printed input."
   }
 ]
