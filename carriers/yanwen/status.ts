@@ -101,11 +101,11 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['At the terminal of the destination city', { status: 'in_transit', stage: 'in_transit' }],
   ['In the New Post Office', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
   // The branch's hold ending uncollected: the parcel goes to storage, unclaimed, then to the
-  // unclaimed cargo area. Its "Delivery is not possible" is the attempt Yanwen's Undelivered
-  // category names.
+  // unclaimed cargo area. Its "Delivery is not possible", at the second of the storage, tried no
+  // door: the parcel waited at the branch, so it is the same exception.
   ['Sent to storage', { status: 'exception', stage: 'exception' }],
   ['Unsolicited shipment', { status: 'exception', stage: 'exception' }],
-  ['Delivery is not possible', { status: 'exception', stage: 'failed_attempt' }],
+  ['Delivery is not possible', { status: 'exception', stage: 'exception' }],
   ['Parcel accepted in the unclaimed cargo area', { status: 'exception', stage: 'exception' }],
   // A leg into Canada. Yanwen's terminal tenders the parcel to the line-haul minutes after its
   // outbound scan, before the export release, so the tender is no delivery round. Then the

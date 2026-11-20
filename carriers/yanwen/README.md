@@ -51,8 +51,8 @@ Partner scans can start with their country's code, as in "UA.In the New Post
 Office"; the map reads the words after it. A scan of the code alone names no
 stage. On Nova Poshta's leg, "Delivered to customs terminal" is customs holding
 the parcel, and the branch's hold ending uncollected, through storage to the
-unclaimed cargo area, is an exception; its "Delivery is not possible" is the
-failed attempt Yanwen's Undelivered category names.
+unclaimed cargo area, is an exception, its "Delivery is not possible" at the same
+second included: the parcel waited at the branch, and no door was tried.
 
 Some relayed histories come twice: once on the local wall clock and once on
 the UTC wall clock under the same offset, so their US scans read hours late. A

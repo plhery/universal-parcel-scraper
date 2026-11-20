@@ -258,7 +258,7 @@ describe('Yanwen result projection', () => {
 
   it("reads a partner's scans past their country's code, and a scan of the code alone as no stage", () => {
     for (const [wording, stage] of [['UA.Delivered to customs terminal', 'customs'], ['HK.He left the airport', 'in_transit'],
-      ['UA.In the New Post Office', 'ready_for_pickup'], ['UA.Sent to storage', 'exception'], ['Delivery is not possible', 'failed_attempt'],
+      ['UA.In the New Post Office', 'ready_for_pickup'], ['UA.Sent to storage', 'exception'], ['Delivery is not possible', 'exception'],
       ['Parcel accepted in the unclaimed cargo area', 'exception']] as const) {
       expect(yanwenStatus(wording)?.stage, wording).toBe(stage);
       expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(stage);
@@ -272,7 +272,7 @@ describe('Yanwen result projection', () => {
       ['2026-03-01', '11:18:05 [GMT+00]', 'UA EXAMPLE', 'UA.In the New Post Office'],
       ['2026-02-27', '09:40:22 [GMT+00]', '', 'UA.Delivered to customs terminal'],
     ], '投递失败');
-    expect(result.events?.map((event) => event.stage)).toEqual([undefined, 'exception', 'failed_attempt', 'ready_for_pickup', 'customs']);
+    expect(result.events?.map((event) => event.stage)).toEqual([undefined, 'exception', 'exception', 'ready_for_pickup', 'customs']);
     // The newest scan names no stage, so the category gives the status.
     expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
   });

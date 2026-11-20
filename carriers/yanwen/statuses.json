@@ -638,10 +638,10 @@
     {
       "wording": "Delivery is not possible",
       "language": "en",
-      "stage": "failed_attempt",
+      "stage": "exception",
       "confirmedBy": "live",
       "firstSeen": "2026-10-26",
-      "note": "Relayed from Nova Poshta a second after the unclaimed notice; Yanwen then files the parcel as Undelivered."
+      "note": "Relayed from Nova Poshta a second after the unclaimed notice, after the parcel waited at the branch: no door was tried. Yanwen then files the parcel as Undelivered."
     },
     {
       "wording": "Parcel accepted in the unclaimed cargo area",
