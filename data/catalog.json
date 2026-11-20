@@ -47108,6 +47108,30 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "pinoy-pride-worldwide": {
+    "displayName": "Pinoy Pride Worldwide",
+    "color": "#1d4486",
+    "aliases": [
+      "Pinoy Pride Worldwide LLC",
+      "Pinoy Pride Balikbayan Box"
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pinoy-pride-worldwide",
+      "localClocks": true
+    },
+    "canaryUrl": "https://pinoyprideworldwidellc.com/tracking",
+    "trackingUrlTemplate": "https://pinoyprideworldwidellc.com/tracking",
+    "trackingSearchUrl": "https://pinoyprideworldwidellc.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pitney-bowes": {
     "displayName": "Pitney Bowes",
     "color": "#3e53a4",

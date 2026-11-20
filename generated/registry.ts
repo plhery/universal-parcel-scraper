@@ -635,6 +635,7 @@ import { adapter as pflogistics } from '../carriers/pflogistics/adapter.js';
 import { adapter as phlpost } from '../carriers/phlpost/adapter.js';
 import { adapter as pilotFreight } from '../carriers/pilot-freight/adapter.js';
 import { adapter as pinAg } from '../carriers/pin-ag/adapter.js';
+import { adapter as pinoyPrideWorldwide } from '../carriers/pinoy-pride-worldwide/adapter.js';
 import { adapter as pitneyBowes } from '../carriers/pitney-bowes/adapter.js';
 import { adapter as pittOhio } from '../carriers/pitt-ohio/adapter.js';
 import { adapter as planzer } from '../carriers/planzer/adapter.js';
@@ -1588,6 +1589,7 @@ export const REGISTRY: RegistryDefinition = {
     "phlpost": phlpost,
     "pilot-freight": pilotFreight,
     "pin-ag": pinAg,
+    "pinoy-pride-worldwide": pinoyPrideWorldwide,
     "pitney-bowes": pitneyBowes,
     "pitt-ohio": pittOhio,
     "planzer": planzer,
@@ -3197,6 +3199,7 @@ export const REGISTRY: RegistryDefinition = {
     "pilot-freight": "pilot-freight",
     "pin-ag": "pin-ag",
     "pink-post": "universal",
+    "pinoy-pride-worldwide": "pinoy-pride-worldwide",
     "pitney-bowes": "pitney-bowes",
     "pitt-ohio": "pitt-ohio",
     "planzer": "planzer",

@@ -47112,6 +47112,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "pinoy-pride-worldwide": {
+    "displayName": "Pinoy Pride Worldwide",
+    "color": "#1d4486",
+    "aliases": [
+      "Pinoy Pride Worldwide LLC",
+      "Pinoy Pride Balikbayan Box"
+    ],
+    "countries": [
+      "US",
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pinoy-pride-worldwide",
+      "localClocks": true
+    },
+    "canaryUrl": "https://pinoyprideworldwidellc.com/tracking",
+    "trackingUrlTemplate": "https://pinoyprideworldwidellc.com/tracking",
+    "trackingSearchUrl": "https://pinoyprideworldwidellc.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pitney-bowes": {
     "displayName": "Pitney Bowes",
     "color": "#3e53a4",
@@ -68136,6 +68160,7 @@ export const CARRIER_IDS = [
   "pilot-freight",
   "pin-ag",
   "pink-post",
+  "pinoy-pride-worldwide",
   "pitney-bowes",
   "pitt-ohio",
   "plycon",
@@ -70061,6 +70086,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pilot-freight": [],
   "pin-ag": ["pin-ag-1"],
   "pink-post": [],
+  "pinoy-pride-worldwide": [],
   "pitney-bowes": ["pitney-bowes-1","pitney-bowes-2","pitney-bowes-3"],
   "pitt-ohio": [],
   "plycon": [],

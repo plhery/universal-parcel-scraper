@@ -1,0 +1,68 @@
+{
+  "success": true,
+  "data": {
+    "invoice_number": "PPW-WA-RR-1001",
+    "tracking_history": [
+      {
+        "status": "rr_delivered",
+        "status_label": "Delivered",
+        "created_at": "October 22, 2026 02:18 PM"
+      },
+      {
+        "status": "rr_under_customs",
+        "status_label": "Under Customs Clearance",
+        "created_at": "October 10, 2026 11:50 AM"
+      },
+      {
+        "status": "rr_arrived_at_port",
+        "status_label": "Arrived at Port",
+        "created_at": "October 09, 2026 02:42 PM"
+      },
+      {
+        "status": "rr_in_transit",
+        "status_label": "In Transit",
+        "created_at": "October 08, 2026 12:18 PM"
+      },
+      {
+        "status": "rr_in_transit",
+        "status_label": "In Transit",
+        "created_at": "October 04, 2026 02:00 PM"
+      },
+      {
+        "status": "rr_in_transit",
+        "status_label": "In Transit",
+        "created_at": "September 25, 2026 11:51 AM"
+      },
+      {
+        "status": "rr_in_transit",
+        "status_label": "In Transit",
+        "created_at": "September 14, 2026 11:42 AM"
+      },
+      {
+        "status": "rr_in_transit",
+        "status_label": "In Transit",
+        "created_at": "September 02, 2026 11:28 AM"
+      },
+      {
+        "status": "rr_in_transit",
+        "status_label": "In Transit",
+        "created_at": "August 20, 2026 01:30 PM"
+      },
+      {
+        "status": "rr_loaded_to_container",
+        "status_label": "Loaded to Container",
+        "created_at": "August 15, 2026 11:29 PM"
+      },
+      {
+        "status": "rr_documents_verified",
+        "status_label": "Documents Verified",
+        "created_at": "August 15, 2026 11:18 PM"
+      },
+      {
+        "status": "rr_registered",
+        "status_label": "Registered",
+        "created_at": "August 02, 2026 02:30 PM"
+      }
+    ]
+  }
+}

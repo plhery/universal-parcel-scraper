@@ -5804,5 +5804,10 @@
     "carrier": "umac-cargo",
     "kind": "open",
     "reason": "The confirmed boxes share a UMTC prefix. Other UMAC box series and collisions need review before detection is assigned."
+  },
+  {
+    "carrier": "pinoy-pride-worldwide",
+    "kind": "open",
+    "reason": "One Washington Returning Resident example is confirmed. Other states, other services and collisions need separate review."
   }
 ]

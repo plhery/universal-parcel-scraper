@@ -1,0 +1,54 @@
+{
+  "id": "pinoy-pride-worldwide",
+  "displayName": "Pinoy Pride Worldwide",
+  "aliases": [
+    "Pinoy Pride Worldwide LLC",
+    "Pinoy Pride Balikbayan Box"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#1d4486"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pinoy-pride-worldwide",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://pinoyprideworldwidellc.com/tracking",
+    "searchUrl": "https://pinoyprideworldwidellc.com/tracking",
+    "canaryUrl": "https://pinoyprideworldwidellc.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

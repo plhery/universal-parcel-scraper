@@ -1,0 +1,23 @@
+{
+  "carrier": "pinoy-pride-worldwide",
+  "records": [
+    {
+      "number": "PPW-WA-RR-1001",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://pinoyprideworldwidellc.com/tracking",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Returning Resident invoice displayed as the carrier’s tracking example.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier confirms the exact example invoice and returns a dated freight history ending in delivery."
+    }
+  ]
+}
