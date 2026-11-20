@@ -76,8 +76,9 @@ input, so recognition reads them as unknown rather than as a transport failure.
 - `DISTOU`/`MD1` ("sur son site de distribution. Nous le préparons pour le mettre en
   livraison") is out for delivery. On a parcel it is the sort into the morning's round: La
   Poste's own timeline shows it as step 4, "Colis en cours de livraison",
-  the arrival at the delivery site being step 3. The delivery or a failed attempt follows the
-  same day, and La Poste sends no other round scan.
+  the arrival at the delivery site being step 3. The delivery, a failed attempt or the pickup
+  point's scan follows the same day, or `MD1` again the next day when the round left the parcel
+  behind; La Poste sends no other round scan.
 - `PB1` is a delivery that could not happen that day. Parcels word it as a
   coming delivery round, so the code makes it a failed attempt.
 - `AG1` means ready for pickup whatever its group or sentence. `DO1` is customs

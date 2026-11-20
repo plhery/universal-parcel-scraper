@@ -49,10 +49,14 @@ const LABEL_STATUS = new Map<string, ReadonlyMap<string, ClassifiedStatus>>([
     ['driver is en route to the pickup location', IN_TRANSIT],
     ['the item is out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ])],
-  // PostNL's own acceptance scans.
-  ['transit', new Map(['consignment received at the postnl acceptance centre',
-    'the shipment is handed over in bulk final acceptance of the item to be confirmed',
-  ].map((label): [string, ClassifiedStatus] => [label, { status: 'in_transit', stage: 'accepted' }]))],
+  ['transit', new Map([
+    // PostNL's own acceptance scans.
+    ...['consignment received at the postnl acceptance centre',
+      'the shipment is handed over in bulk final acceptance of the item to be confirmed',
+    ].map((label): [string, ClassifiedStatus] => [label, { status: 'in_transit', stage: 'accepted' }]),
+    // The customs declaration filed ahead of the item, usually before PostNL has it: its data, not a scan.
+    ['pre-declaration of the item has been received by customs', { status: 'pending', stage: 'registered' }],
+  ])],
   // "Will be returned" can still end in a new delivery attempt; these two are the return itself.
   ['undelivered', new Map(['undeliverable item, has been returned to shipper', 'the item has been returned and arrived at postnl',
   ].map((label): [string, ClassifiedStatus] => [label, { status: 'exception', stage: 'returned' }]))],

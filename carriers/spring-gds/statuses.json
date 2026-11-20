@@ -207,6 +207,14 @@
       "note": "Status 101 in the Transit category, with the sorting centre's arrival; a universal provider relays it without the category."
     },
     {
+      "wording": "Pre-declaration of the item has been received by customs",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "Status 6010 in the Transit category: the customs declaration filed for the item, which comes before PostNL's acceptance on most parcels. Its data, not a scan; after a movement the shared reading makes it transit."
+    },
+    {
       "wording": "Item is nested to commercial bag",
       "language": "en",
       "stage": "in_transit",

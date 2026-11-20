@@ -44,7 +44,8 @@ export const GROUP_STATUSES = new Map<string, CarrierStatus>([
  * whose "il sera livré contre paiement" otherwise reads as an announcement, and
  * `RE1` the decision to send the item back. `MD1` under `DISTOU` is the morning
  * sort into the delivery round: "nous le préparons pour le mettre en
- * livraison" is followed the same day by the delivery or a failed attempt.
+ * livraison" is followed the same day by the delivery, a failed attempt or the
+ * pickup point's scan, or repeated the next day when the round left it behind.
  * `MD2` under `DISILIEU` is the recipient's choice of a postal point: the parcel
  * is routed there, and its arrival there is a later scan. `ET2` and `ET3` are an
  * import's crossing: ready to leave the origin territory (`ACHORI`), then in the

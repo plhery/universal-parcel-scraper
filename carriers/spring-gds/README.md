@@ -94,7 +94,8 @@ it; everything user-facing says PostNL.
   round.
 - Categories supply the status. Exact English labels refine the categories that cover
   several milestones: sorting and the delivery round within `Processing`, PostNL's own
-  acceptance within `Transit`, customs release within `Customs`, and a completed return
+  acceptance and the customs pre-declaration, the item's data filed before PostNL has it,
+  within `Transit`, customs release within `Customs`, and a completed return
   within `Undelivered` ("will be returned" can still end in a new delivery attempt).
   PostNL's acceptance statuses 173 and 3116 read as acceptance whatever their wording, since a
   universal provider rewords 3116 ("Arrive at transit country or district").

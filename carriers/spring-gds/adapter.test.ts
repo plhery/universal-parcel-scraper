@@ -543,6 +543,8 @@ describe('PostNL ambiguity and clock safety', () => {
       '2026-03-11T19:29:53.294Z', '2026-03-11T19:49:00+01:00', '2026-03-05T11:14:24.162Z',
       '2026-03-05T12:01:00+01:00', '2026-03-05T10:01:00+01:00',
     ]);
+    // The customs pre-declaration before PostNL's acceptance is the item's data, not a movement.
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered', 'registered', 'registered']);
     // Summer time, with nothing dated around it.
     const summer = parsePostNLTrackingResponse(payload([
       { category: 'Pre-advised', country_code: '', country_name: null, datetime_local: '2026-09-14T15:20:00Z' },
