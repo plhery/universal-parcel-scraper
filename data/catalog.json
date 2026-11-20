@@ -60524,6 +60524,29 @@
     ],
     "detectionRules": []
   },
+  "transportes-agael": {
+    "displayName": "Transportes AGAEL",
+    "color": "#A72D24",
+    "aliases": [
+      "Transportes AGAEL S.A.C.",
+      "AGAEL"
+    ],
+    "countries": [
+      "PE"
+    ],
+    "selectable": true,
+    "timezone": "America/Lima",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transportes-agael",
+      "localClocks": true
+    },
+    "canaryUrl": "https://agaelsac.com/seguimiento/",
+    "trackingUrlTemplate": "https://agaelsac.com/seguimiento/?codigo={trackingNumber}",
+    "trackingSearchUrl": "https://agaelsac.com/seguimiento/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transportes-bertolini": {
     "displayName": "Transportes Bertolini",
     "color": "#009fe2",

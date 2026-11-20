@@ -60528,6 +60528,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "transportes-agael": {
+    "displayName": "Transportes AGAEL",
+    "color": "#A72D24",
+    "aliases": [
+      "Transportes AGAEL S.A.C.",
+      "AGAEL"
+    ],
+    "countries": [
+      "PE"
+    ],
+    "selectable": true,
+    "timezone": "America/Lima",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "transportes-agael",
+      "localClocks": true
+    },
+    "canaryUrl": "https://agaelsac.com/seguimiento/",
+    "trackingUrlTemplate": "https://agaelsac.com/seguimiento/?codigo={trackingNumber}",
+    "trackingSearchUrl": "https://agaelsac.com/seguimiento/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transportes-bertolini": {
     "displayName": "Transportes Bertolini",
     "color": "#009fe2",
@@ -68881,6 +68904,7 @@ export const CARRIER_IDS = [
   "transnatur",
   "transnet-couriers",
   "transport-rdl",
+  "transportes-agael",
   "transportes-bertolini",
   "transportes-chevalier",
   "transportes-condesa",
@@ -70821,6 +70845,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transnatur": [],
   "transnet-couriers": [],
   "transport-rdl": [],
+  "transportes-agael": [],
   "transportes-bertolini": [],
   "transportes-chevalier": [],
   "transportes-condesa": [],
