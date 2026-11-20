@@ -9,6 +9,15 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "code": "BEI",
+      "wording": "Zum Transport erhalten",
+      "language": "de",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Austrian Post's first scan of a parcel, filed under BEI while the summary reads AN: the parcel received for transport."
+    },
+    {
       "wording": "Sendung im Logistikzentrum in Bearbeitung",
       "language": "de",
       "stage": "in_transit",

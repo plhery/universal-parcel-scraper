@@ -48,8 +48,10 @@ const DELIVERED = /\b(?:wurde zugestellt|aus postempfangsbox abgeholt|successful
 // Scans of an item another post sends to Austria: the sending post's posting
 // (BNT) or acceptance (ANI) and dispatch, as Austrian Post relays them, then its
 // own processing once the item arrives. A letter put through the letterbox is
-// delivered.
+// delivered. Its own first scan of a parcel, filed under BEI while the summary
+// reads AN, is the parcel received for transport.
 const WORDINGS: Readonly<Record<string, ClassifiedStatus | undefined>> = {
+  'zum transport erhalten': SUMMARY.AN,
   'postaufgabe im ausland': SUMMARY.AN,
   'sendung wurde im ausland angenommen': SUMMARY.AN,
   'sendung in bearbeitung aufgabeland': SUMMARY.IV,
@@ -77,6 +79,7 @@ export function austrianPostEventStatus(code: string, reason: string, text: stri
   if (RETURNING.test(text)) return SUMMARY.RE;
   if (code === 'AZT' || OUT_FOR_DELIVERY.test(text)) return SUMMARY.IZ;
   // IMP is the arrival in the destination country, which the page files under distribution.
+  if (byWording(text)?.stage === 'accepted') return SUMMARY.AN;
   if (code === 'BEI' || code === 'PUG' || code === 'IMP' || transitScan(code, text)) return SUMMARY.IV;
   if (customsScan(text)) return HELD_IN_CUSTOMS;
   // Unmapped scan codes retain their wording for the host's classifier.

@@ -149,6 +149,18 @@ describe('Austrian Post public tracking', () => {
     expect(austrianPostEventStatus('BNT', '', 'Benachrichtigung eingeworfen')).toBeUndefined();
   });
 
+  it('reads its first scan of a parcel received for transport as accepted, though BEI usually means processing', () => {
+    const payload = fixture();
+    payload.data.einzelsendung.status = 'AN';
+    payload.data.einzelsendung.sendungsEvents = payload.data.einzelsendung.sendungsEvents.slice(0, 2);
+    payload.data.einzelsendung.sendungsEvents[1].trackingDesc = 'Zum Transport erhalten';
+    const result = parseAustrianPostResponse(payload, NUMBER);
+    expect(result).toMatchObject({ current_stage: 'accepted', last_status_text: 'Zum Transport erhalten' });
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([['BEI', 'accepted'], ['AV', 'registered']]);
+    expect(statusMap.stage('BEI', 'zum transport erhalten')).toBe('accepted');
+    expect(austrianPostEventStatus('BEI', 'EZ', 'Sendung im Logistikzentrum in Bearbeitung')?.stage).toBe('in_transit');
+  });
+
   it('reads the customs scans of an item from abroad as customs, which give the parcel its stage', () => {
     const result = parseAustrianPostResponse(customs(), HELD);
     expect(result).toMatchObject({ status: 'unknown', expected_delivery: null,
