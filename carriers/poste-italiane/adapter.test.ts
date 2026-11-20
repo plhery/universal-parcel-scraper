@@ -10,7 +10,8 @@ import {
   PosteItalianeTracker,
   adapter,
   CAPTCHA_PAUSE_MS,
-  HOURLY_SEARCHES,
+  REFUSED_PAUSE_MS,
+  SEARCHES_PER_MINUTE,
 } from './adapter.js';
 import { trackingLocationCountry, trackingPlace } from '../../places/trackingLocation.js';
 import { classifyPosteItalianeStatus } from './status.js';
@@ -783,25 +784,25 @@ describe('PosteItalianeTracker fetch', () => {
       .rejects.toMatchObject({ name: 'ChallengeError', kind: 'challenge' });
   });
 
-  it('paces the searches sent through one transport, recognition included, and pauses them after a CAPTCHA', async () => {
+  it('paces the searches sent through one egress, recognition included, and pauses it after a CAPTCHA', async () => {
     let now = Date.parse('2026-01-05T08:00:00Z');
     vi.spyOn(Date, 'now').mockImplementation(() => now);
     const service = browser([capture(parcel())]);
     const fetcher = vi.fn<typeof fetch>(async () => response(parcel()));
     const tracker = new PosteItalianeTracker({ fetcher, trawl: service.trawl });
     const recognition = adapter({ fetcher, trawl: null, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
-    for (let search = 1; search < HOURLY_SEARCHES; search++) {
+    for (let search = 1; search < SEARCHES_PER_MINUTE; search++) {
       await tracker.fetch(TRACKING_NUMBER);
-      now += 60_000;
+      now += 1_000;
     }
     expect(await recognition.recognize!(TRACKING_NUMBER)).toMatchObject({ known: true });
-    now += 60_000;
-    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 42 * 60_000, reason: 'self_paced' });
+    now += 1_000;
+    await expect(tracker.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 45_000, reason: 'self_paced' });
     await expect(recognition.recognize!(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited' });
-    expect(fetcher).toHaveBeenCalledTimes(HOURLY_SEARCHES);
-    now += 42 * 60_000;
+    expect(fetcher).toHaveBeenCalledTimes(SEARCHES_PER_MINUTE);
+    now += 45_000;
     await tracker.fetch(TRACKING_NUMBER);
-    expect(fetcher).toHaveBeenCalledTimes(HOURLY_SEARCHES + 1);
+    expect(fetcher).toHaveBeenCalledTimes(SEARCHES_PER_MINUTE + 1);
 
     const refused = vi.fn<typeof fetch>(async () => response(gate, 400));
     const paused = new PosteItalianeTracker({ fetcher: refused, trawl: null });
@@ -814,7 +815,35 @@ describe('PosteItalianeTracker fetch', () => {
     expect(service.fetcher).not.toHaveBeenCalled();
   });
 
-  it('waits out an HTTP 429 for its Retry-After, else the CAPTCHA pause, and passes the wait on', async () => {
+  it('spreads searches over the host\'s datacenter egresses once its own has no turn, and moves past a refused one', async () => {
+    let now = Date.parse('2026-01-05T08:00:00Z');
+    vi.spyOn(Date, 'now').mockImplementation(() => now);
+    const own = vi.fn<typeof fetch>(async () => response(parcel()));
+    const first = vi.fn<typeof fetch>(async () => new Response('<html>Service unavailable</html>', { status: 429 }));
+    const second = vi.fn<typeof fetch>(async () => response(parcel()));
+    const entry = adapter({ fetcher: own, trawl: null, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null,
+      egressPools: { datacenter: [{ id: 'dc-1', fetcher: first }, { id: 'dc-2', fetcher: second }] } });
+    for (let search = 0; search < SEARCHES_PER_MINUTE; search++) await entry.track({ number: TRACKING_NUMBER });
+    expect(own).toHaveBeenCalledTimes(SEARCHES_PER_MINUTE);
+    // The first pool egress is refused and rests; the same lookup goes through the second one.
+    await expect(entry.track({ number: TRACKING_NUMBER })).resolves.toMatchObject({ status: 'delivered' });
+    expect(first).toHaveBeenCalledTimes(1);
+    expect(second).toHaveBeenCalledTimes(1);
+    await entry.track({ number: TRACKING_NUMBER });
+    expect(first).toHaveBeenCalledTimes(1);
+    expect(second).toHaveBeenCalledTimes(2);
+    now += 60_000;
+    await entry.track({ number: TRACKING_NUMBER });
+    expect(own).toHaveBeenCalledTimes(SEARCHES_PER_MINUTE + 1);
+    // Once rested, the refused egress, which rested longest, takes the next search the host's own one has no turn for.
+    now += REFUSED_PAUSE_MS;
+    for (let search = 0; search < SEARCHES_PER_MINUTE; search++) await entry.track({ number: TRACKING_NUMBER });
+    await expect(entry.track({ number: TRACKING_NUMBER })).resolves.toMatchObject({ status: 'delivered' });
+    expect(first).toHaveBeenCalledTimes(2);
+    expect(second).toHaveBeenCalledTimes(3);
+  });
+
+  it('waits out an HTTP 429 for its Retry-After, else a two-minute rest, and passes the wait on', async () => {
     let now = Date.parse('2026-01-05T08:00:00Z');
     vi.spyOn(Date, 'now').mockImplementation(() => now);
     const limited = (headers: Record<string, string>) => vi.fn<typeof fetch>()
@@ -838,11 +867,11 @@ describe('PosteItalianeTracker fetch', () => {
       await expect(immediate.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
     }
     const malformed = new PosteItalianeTracker({ fetcher: limited({ 'Retry-After': '-1' }), trawl: null });
-    await expect(malformed.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ retryAfterMs: CAPTCHA_PAUSE_MS });
+    await expect(malformed.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ retryAfterMs: REFUSED_PAUSE_MS });
     const unnamed = limited({});
     const quiet = new PosteItalianeTracker({ fetcher: unnamed, trawl: null });
-    await expect(quiet.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: CAPTCHA_PAUSE_MS });
-    now += CAPTCHA_PAUSE_MS - 1;
+    await expect(quiet.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: REFUSED_PAUSE_MS });
+    now += REFUSED_PAUSE_MS - 1;
     await expect(quiet.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 1 });
     expect(unnamed).toHaveBeenCalledTimes(1);
 

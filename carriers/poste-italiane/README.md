@@ -40,18 +40,18 @@ it is its receipt from that post and reads as transit.
    - `esitoRicerca` `3` for letter post (`tipoSpedizione` `C`) at `stato` `1`, with neither a
      product nor a movement list: a code Poste does not know, so not-found. A code whose check
      digit fails answers that way.
-   - HTTP 404/410 means the tracking endpoint is unavailable. The web tracker answers two searches after every twenty
-     from one address with HTTP 400 and an error envelope asking
-     for a CAPTCHA: a challenge. The app route keeps the same transport pacing and pause. Other non-200 replies remain upstream errors.
-   - The CAPTCHA counts searches, not hours: twenty pass however long they take, and the two
-     after them are refused. At most eighteen searches an hour go through one transport,
-     recognition included, which spreads a busy hour's searches without keeping the CAPTCHA
-     away, and none for fifteen minutes after a CAPTCHA. An HTTP 429 pauses them for the wait
-     its `Retry-After` names, else for those fifteen minutes. A lookup over that fails as
-     rate-limited without a request, with the time left to wait and the reason `self_paced`,
-     and the browser step does not run. The catalog asks for a refresh at most every hour, a
-     failed one included, so that up to eighteen followed parcels, out for delivery too, keep
-     within the hour's searches.
+   - HTTP 404/410 means the tracking endpoint is unavailable. The web tracker answers two
+     searches after every twenty from one address with HTTP 400 and an error envelope asking
+     for a CAPTCHA: a challenge, after which that address sends nothing for fifteen minutes.
+     Other non-200 replies remain upstream errors.
+   - The app route asks no CAPTCHA. Its firewall answers an address that searches about thirty
+     times a minute with an HTML HTTP 429 for a minute or two. One egress sends at most fifteen
+     searches a minute, recognition included, and rests after a 429 for the wait its
+     `Retry-After` names, else two minutes. When the host offers a `datacenter` egress pool,
+     searches its own address has no turn for go through the pool's egress that rested longest,
+     and a search refused on one egress goes once more through another. A lookup no egress has a
+     turn for fails as rate-limited without a request, with the wait and the reason
+     `self_paced`, and the browser step does not run.
    - Missing or unusable history is a schema failure. Unrecognized empty envelopes remain inconclusive.
 2. `trawl`, only after a challenge: the official page opens in a fresh browser context.
    TRAWL solves its reCAPTCHA checkbox/audio challenge and observes the page retrying the

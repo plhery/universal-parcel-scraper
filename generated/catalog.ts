@@ -3127,7 +3127,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "poste-italiane",
       "recognitionRank": 900,
       "refresh": {
-        "minMinutes": 60,
+        "minMinutes": 30,
         "afterFailureMinutes": 60
       },
       "browser": true

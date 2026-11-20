@@ -7,12 +7,11 @@ import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, ImportCharges } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
-import { clean, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
+import { clean, EgressPacer, egressesOf, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf, type Egress } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { budgetWhenOutOfTime, type TrawlClient } from '../../core/transport/trawl.js';
-import { transportOf } from '../../core/transport/transportOf.js';
 import { classifyPosteItalianeStatus, keepsPosteItalianeStage, posteItalianeMovementWording, posteItalianeUncollected } from './status.js';
 
 // Protocol provenance:
@@ -120,53 +119,31 @@ function importCharges(value: unknown): { import_charges: ImportCharges } | Reco
 }
 
 /**
- * How many searches are sent through one transport in an hour, which spreads a busy hour's
- * searches. It does not keep the CAPTCHA away: the service asks for it after every twenty
- * searches from an address, however long they took, and for the search after that one too; the
- * twenty after them pass.
+ * How many searches one egress sends in a minute. The app route sits behind a firewall that answers
+ * an address searching about thirty times a minute with HTTP 429 for a minute or two; this stays
+ * well under it.
  */
-export const HOURLY_SEARCHES = 18;
+export const SEARCHES_PER_MINUTE = 15;
+/** How long an egress the service refused with an HTTP 429 naming no wait sends nothing. */
+export const REFUSED_PAUSE_MS = 2 * 60_000;
 /**
- * How long after a CAPTCHA no search is sent, since searches this transport did not send drew it,
- * and after an HTTP 429 that names no wait of its own.
+ * How long after a CAPTCHA no search is sent through that egress. The web tracker asks for it
+ * after every twenty searches from an address.
  */
 export const CAPTCHA_PAUSE_MS = 15 * 60_000;
 const HOUR_MS = 60 * 60_000;
 
 /**
- * When one transport sent its past hour's searches and until when the service asked it to wait.
- * The service counts an address's searches, so every tracker in the process that sends through
- * the same fetcher, recognition included, shares this. A restart forgets it.
+ * The turns of every egress, shared by every tracker in the process, recognition included: the
+ * service counts an address's searches. A restart forgets them.
  */
-interface SearchState { sentAt: number[]; pausedUntil: number }
-const searchStates = new WeakMap<object, SearchState>();
-const GLOBAL_FETCH = {};
+const SEARCHES = new EgressPacer('Poste Italiane', { reads: SEARCHES_PER_MINUTE, windowMs: 60_000, pauseMs: REFUSED_PAUSE_MS });
 
-function searchState(fetcher: typeof fetch | undefined): SearchState {
-  const key = transportOf(fetcher) ?? GLOBAL_FETCH;
-  let state = searchStates.get(key);
-  if (!state) searchStates.set(key, state = { sentAt: [], pausedUntil: 0 });
-  return state;
-}
-
-/** How long until the transport may search again, 0 when it may now. */
-function pacedMs(state: SearchState, now: number): number {
-  const sentAt = state.sentAt = state.sentAt.filter((at) => now - at < HOUR_MS);
-  const hourly = sentAt.length < HOURLY_SEARCHES ? 0 : sentAt[sentAt.length - HOURLY_SEARCHES]! + HOUR_MS - now;
-  return Math.max(hourly, state.pausedUntil - now);
-}
-
-/**
- * An HTTP 429 pauses the transport's searches for the wait its Retry-After names, in seconds or as
- * a date, at most an hour, else for the CAPTCHA's pause. The lookup fails as rate-limited with the
- * time until the transport searches again.
- */
-function rateLimited(state: SearchState, retryAfter: string | null | undefined): RateLimitedError {
+/** The wait an HTTP 429 names in its Retry-After, in seconds or as a date, at most an hour; undefined when it names none. */
+function retryAfterMs(retryAfter: string | null | undefined): number | undefined {
   const value = retryAfter?.trim() ?? '';
   const named = /^\d+$/.test(value) ? Number(value) * 1000 : DateTime.fromHTTP(value).toMillis() - Date.now();
-  const waitMs = Number.isFinite(named) ? Math.max(0, Math.min(named, HOUR_MS)) : CAPTCHA_PAUSE_MS;
-  state.pausedUntil = Math.max(state.pausedUntil, Date.now() + waitMs);
-  return new RateLimitedError('Poste Italiane', pacedMs(state, Date.now()));
+  return Number.isFinite(named) ? Math.min(Math.max(named, 0), HOUR_MS) : undefined;
 }
 
 /**
@@ -367,7 +344,9 @@ export class PosteItalianeTracker {
   readonly fetcher: typeof fetch | undefined;
   private readonly userAgent: string;
 
-  constructor(private readonly options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string; trawl?: TrawlClient | null; recorder?: StepRecorder; browserWsEndpoint?: string | null } = {}) {
+  constructor(private readonly options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string; trawl?: TrawlClient | null; recorder?: StepRecorder; browserWsEndpoint?: string | null;
+    /** Other egresses the searches spread over once the host's own one has no turn. */
+    egressPool?: readonly Egress[] } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
@@ -399,14 +378,35 @@ export class PosteItalianeTracker {
   private async direct(trackingNumber: string, context: TrackingContext): Promise<CarrierResult> {
     // The default budget covers the request, the pause and the one transient retry.
     const budget = lookupBudget(context, 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS);
-    const state = searchState(this.fetcher);
-    const waitMs = pacedMs(state, Date.now());
-    if (waitMs > 0) {
-      throw new RateLimitedError('Poste Italiane', waitMs, 'Poste Italiane was searched as often as an hour allows', { reason: 'self_paced' });
+    const egresses = egressesOf(this.fetcher, this.options.egressPool);
+    // An egress the firewall refused rests; the search goes once more through another one that has a turn.
+    for (let attempt = 0; ; attempt++) {
+      budget.signal.throwIfAborted();
+      const egress = SEARCHES.take(egresses);
+      const { response, bytes } = await this.search(trackingNumber, egress.fetcher, budget);
+      budget.signal.throwIfAborted();
+      if ([404, 410].includes(response.status)) {
+        throw new TransportError('Poste Italiane', 'Poste Italiane tracking endpoint is unavailable', {
+          cause: new UpstreamHttpError('Poste Italiane tracking', response.status),
+        });
+      }
+      if (response.status === 429) {
+        SEARCHES.refused(egress, retryAfterMs(response.headers.get('retry-after')));
+        const others = egresses.filter(other => other !== egress);
+        if (attempt === 0 && others.length && SEARCHES.waitMs(others) === 0 && budget.remainingMs() > this.timeoutMs) continue;
+        throw new RateLimitedError('Poste Italiane', SEARCHES.waitMs(egresses));
+      }
+      if (response.status === 400 && captchaRequired(bytes)) {
+        SEARCHES.refused(egress, CAPTCHA_PAUSE_MS);
+        throw new ChallengeError('Poste Italiane', 'Poste Italiane asks for a CAPTCHA before more searches');
+      }
+      if (!response.ok) throw new UpstreamHttpError('Poste Italiane tracking', response.status);
+      return parsePosteItalianeTrackingResponse(parseJsonBytes(bytes, 'Poste Italiane tracking'), trackingNumber);
     }
-    budget.signal.throwIfAborted();
-    state.sentAt.push(Date.now());
-    const { response, bytes } = await fetchBounded(APP_TRACKING_ENDPOINT, {
+  }
+
+  private search(trackingNumber: string, fetcher: typeof fetch | undefined, budget: ReturnType<typeof lookupBudget>) {
+    return fetchBounded(APP_TRACKING_ENDPOINT, {
       method: 'POST',
       signal: budget.signal,
       headers: {
@@ -425,21 +425,8 @@ export class PosteItalianeTracker {
       retryTransient: true,
       deadline: budget.deadline,
       allowHttpError: true,
-      fetcher: this.fetcher,
+      fetcher,
     });
-    budget.signal.throwIfAborted();
-    if ([404, 410].includes(response.status)) {
-      throw new TransportError('Poste Italiane', 'Poste Italiane tracking endpoint is unavailable', {
-        cause: new UpstreamHttpError('Poste Italiane tracking', response.status),
-      });
-    }
-    if (response.status === 429) throw rateLimited(state, response.headers.get('retry-after'));
-    if (response.status === 400 && captchaRequired(bytes)) {
-      state.pausedUntil = Math.max(state.pausedUntil, Date.now() + CAPTCHA_PAUSE_MS);
-      throw new ChallengeError('Poste Italiane', 'Poste Italiane asks for a CAPTCHA before more searches');
-    }
-    if (!response.ok) throw new UpstreamHttpError('Poste Italiane tracking', response.status);
-    return parsePosteItalianeTrackingResponse(parseJsonBytes(bytes, 'Poste Italiane tracking'), trackingNumber);
   }
 
   private async browser(number: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
@@ -452,7 +439,12 @@ export class PosteItalianeTracker {
     const responses = page.capturedResponses.filter(row => row.url === TRACKING_ENDPOINT);
     const response = responses.at(-1);
     if (!response || responses.length > 10) throw new ChallengeError('Poste Italiane', 'Poste Italiane returned no matching browser response');
-    if (response.status === 429) throw rateLimited(searchState(this.fetcher), response.headers['retry-after'] ?? response.headers['Retry-After']);
+    if (response.status === 429) {
+      // The browser goes out through the host's own address.
+      const own = egressesOf(this.fetcher, undefined);
+      SEARCHES.refused(own[0]!, retryAfterMs(response.headers['retry-after'] ?? response.headers['Retry-After']));
+      throw new RateLimitedError('Poste Italiane', SEARCHES.waitMs(own));
+    }
     const bytes = new TextEncoder().encode(response.body ?? '');
     if ([401, 403].includes(response.status) || (response.status === 400 && captchaRequired(bytes))) {
       throw new ChallengeError('Poste Italiane', 'Poste Italiane still requires verification');
@@ -467,7 +459,8 @@ export class PosteItalianeTracker {
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const options = { fetcher: environment.fetcher, userAgent: environment.userAgent, recorder: environment.recorder };
+  const options = { fetcher: environment.fetcher, userAgent: environment.userAgent, recorder: environment.recorder,
+    egressPool: environment.egressPools?.datacenter };
   const endpoint = environment.env.POSTE_ITALIANE_BROWSER_WS_ENDPOINT?.trim() || null;
   const tracker = new PosteItalianeTracker({ ...options, trawl: environment.trawl, browserWsEndpoint: endpoint });
   // Cheap recognition never opens a browser or spends the shared audio allowance.

@@ -157,6 +157,13 @@ carrier refuses the service's own address, and WanbExpress makes one read throug
 after a refused one. Each records its reads' routes the same way. A proxied read solves no
 challenge.
 
+A carrier that limits how often one address reads it paces its reads per egress with
+`EgressPacer` (`core/transport/egress.ts`): a cap per window and a rest after a refusal. The
+host may offer named egress pools in `AdapterEnvironment.egressPools`, built in Node with
+`proxyEgressPool(urls, 'datacenter')`; an adapter then sends what its own address has no turn
+for through the pool. Pools help only where the limit is per address. Poste Italiane uses
+the `datacenter` pool.
+
 `createTracker()` validates the input, its optional fields before recognition asks any
 carrier. A number is four to forty letters and digits and normally holds a digit. Without
 one it must be six to ten unbroken letters that a carrier's detection rule claims, as on a GLS notification card. Such a number is never read out of
