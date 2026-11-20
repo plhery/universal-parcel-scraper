@@ -1,0 +1,33 @@
+{
+  "success": true,
+  "shipment": {
+    "tracking_code": "NET-98214",
+    "status": "HUB RECEIVED",
+    "raw_status": "hub_received",
+    "logs": [
+      {
+        "status": "Hub received",
+        "location": "Dhaka South Hub",
+        "time": "Oct 02, 2026 07:37 PM"
+      },
+      {
+        "status": "Delivered",
+        "time": "Sep 30, 2026 03:47 PM"
+      },
+      {
+        "status": "Out for delivery",
+        "location": "Dhanmondi Dispatch Station",
+        "time": "Sep 20, 2026 02:17 AM"
+      },
+      {
+        "status": "Hub received",
+        "location": "Dhaka Central Hub",
+        "time": "Sep 20, 2026 12:17 AM"
+      },
+      {
+        "status": "Picked up",
+        "time": "Sep 19, 2026 10:17 PM"
+      }
+    ]
+  }
+}

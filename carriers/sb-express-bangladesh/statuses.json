@@ -1,0 +1,33 @@
+{
+  "carrier": "sb-express-bangladesh",
+  "entries": [
+    {
+      "wording": "Picked up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The carrier recorded collection."
+    },
+    {
+      "wording": "Hub received",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The carrier recorded receipt at a hub."
+    },
+    {
+      "wording": "Out for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The carrier reported the final delivery leg."
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "A delivery scan in the carrier’s history."
+    }
+  ]
+}

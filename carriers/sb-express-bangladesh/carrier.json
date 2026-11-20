@@ -1,0 +1,58 @@
+{
+  "id": "sb-express-bangladesh",
+  "displayName": "SB Express Limited",
+  "aliases": [
+    "SB Express Bangladesh",
+    "SB Express Ltd."
+  ],
+  "region": {
+    "countries": [
+      "BD"
+    ]
+  },
+  "brand": {
+    "color": "#6B42A0"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dhaka",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sb-express-bangladesh",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.sbexpresslimited.com/tracking?code={trackingNumber}",
+    "searchUrl": "https://www.sbexpresslimited.com/tracking",
+    "canaryUrl": "https://www.sbexpresslimited.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "recipient_name",
+      "service"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "recipient_name",
+      "service"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -52381,6 +52381,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sb-express-bangladesh": {
+    "displayName": "SB Express Limited",
+    "color": "#6B42A0",
+    "aliases": [
+      "SB Express Bangladesh",
+      "SB Express Ltd."
+    ],
+    "countries": [
+      "BD"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dhaka",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sb-express-bangladesh",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.sbexpresslimited.com/tracking",
+    "trackingUrlTemplate": "https://www.sbexpresslimited.com/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://www.sbexpresslimited.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sbs-sokuhai": {
     "displayName": "SBS Sokuhai",
     "color": "#cb002c",
@@ -68755,6 +68778,7 @@ export const CARRIER_IDS = [
   "sat-ukraine",
   "saudi-post",
   "savar-express",
+  "sb-express-bangladesh",
   "sbs-sokuhai",
   "scan-global-logistics",
   "scg-express",
@@ -70700,6 +70724,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sat-ukraine": [],
   "saudi-post": ["saudi-post-1","saudi-post-s10"],
   "savar-express": [],
+  "sb-express-bangladesh": [],
   "sbs-sokuhai": [],
   "scan-global-logistics": [],
   "scg-express": ["scg-express-1"],

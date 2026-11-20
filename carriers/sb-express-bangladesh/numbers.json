@@ -1,0 +1,30 @@
+{
+  "carrier": "sb-express-bangladesh",
+  "records": [
+    {
+      "number": "NET-98214",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.sbexpresslimited.com/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The carrier pre-fills this reference in the public tracker. Both native guest routes show the exact number and five dated movements.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The current state is Hub received. An older Delivered event also appears in the same native history."
+    }
+  ]
+}

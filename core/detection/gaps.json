@@ -5899,5 +5899,10 @@
     "carrier": "hulak-logistics",
     "kind": "open",
     "reason": "Two published Hulak references have different layouts. Select Hulak Logistics explicitly."
+  },
+  {
+    "carrier": "sb-express-bangladesh",
+    "kind": "open",
+    "reason": "One published SB Express number is insufficient evidence of a unique NET prefix. Select SB Express Limited explicitly."
   }
 ]
