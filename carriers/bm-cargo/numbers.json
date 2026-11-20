@@ -1,5 +1,51 @@
 {
   "carrier": "bm-cargo",
-  "gap": "No public page shows a BM Cargo number.",
-  "records": []
+  "records": [
+    {
+      "number": "WR01-020813410",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221121165543/https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx?id=WR01-020813410",
+        "date": "2022-11-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "warehouse receipt",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "The archived BM Cargo tracking result shows this warehouse-receipt number and a receipt scan."
+    },
+    {
+      "number": "WR01-022926433",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230620134736/https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx?id=WR01-022926433",
+        "date": "2023-06-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "warehouse receipt",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "The archived BM Cargo tracking result shows this warehouse-receipt number and scans for receipt in Miami and handoff to the airline."
+    }
+  ]
 }
