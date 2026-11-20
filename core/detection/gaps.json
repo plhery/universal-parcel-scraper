@@ -4832,5 +4832,11 @@
     "pattern": "^\\d{9}$",
     "kind": "open",
     "reason": "A public court decision identifies two Skif-Cargo application numbers accepted for freight carriage. The carrier’s public tracking page asks for such an application number, and detection omits Skif-Cargo."
+  },
+  {
+    "carrier": "shiplowcost",
+    "pattern": "^\\d{6}$",
+    "kind": "open",
+    "reason": "The Maltese court decision identifies a six-digit ShipLowCost reference printed on a parcel. Detection does not offer ShipLowCost."
   }
 ]
