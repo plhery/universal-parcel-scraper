@@ -1,5 +1,31 @@
 {
   "carrier": "lafasta",
-  "gap": "No public page shows a Lafasta number.",
-  "records": []
+  "records": [
+    {
+      "number": "99771679",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210805061225id_/https://c.lafasta.sa.com/Track/99771679",
+        "date": "2021-08-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Saudi domestic delivery",
+        "reportedRole": "shipment tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The archived Lafasta page shows the exact number and dated sorting and warehouse events. The live public tracker also returned the original shipment and its delivery event."
+    }
+  ]
 }
