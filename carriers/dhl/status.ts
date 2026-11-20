@@ -94,7 +94,8 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   if (/not delivered|could not be delivered|unable to deliver|delivery attempt|delivery (?:was )?not possible|recipient could not be found\b|\bnicht\b[^.]*\bzugestellt\b|zustellversuch|nicht angetroffen/.test(value)) return 'failed_attempt';
   // GENERATED equivalents of DHL's existing forecast behavior: a forecast retains
   // the structured progress fallback; it cannot establish delivery or pre-advice.
-  if (/will be delivered|sera livr[ée]|wird\s+(?!zugestellt\b).+zugestellt|sar[àa] consegnat/.test(value)) return fallback;
+  // So is "Ready for pickup next business day", written after the failed round on the way to the retail outlet.
+  if (/will be delivered|sera livr[ée]|wird\s+(?!zugestellt\b).+zugestellt|sar[àa] consegnat|\bready for (?:pick-?up|collection) (?:on )?(?:the )?next (?:business|working) day\b/.test(value)) return fallback;
   // Still at the delivery base, "processed in the delivery base" in English: not yet on the vehicle.
   if (/für die verladung ins zustellfahrzeug vorbereitet/.test(value)) return 'in_transit';
   const translated = trackingLanguageStage(text);
