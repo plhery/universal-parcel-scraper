@@ -1,25 +1,23 @@
 # Sway
 
-Sway parcels use enabled universal providers. There is no dedicated adapter yet.
+Tracks U.S. deliveries from Sway, formerly Returnmates. The current tracker
+also serves older Swyft shipments with U.S. destinations.
 
-Sway, formerly Returnmates, picks up returns and delivers parcels with its own drivers in several
-US metropolitan areas.
+## Retrieval
+
+The public page reads `/api/tracking/<number>`. The reply must name the same
+shipment. A JSON `null` with HTTP 404 is the tracker's not-found response.
+
+Scan times keep the offsets in the reply. The current status can carry a more
+recent update than the scan list. Addresses, delivery photos and actions that
+change a delivery are outside the history lookup.
 
 ## Numbers
 
-No public page shows a Sway tracking number, so no rule names it. Without its hyphen, the
-tracker's `SWY` example would fit Purolator's rule, which would need to leave `SWY` out.
-
-## Tracker
-
-The tracking page reads a JSON interface without a key or CAPTCHA. More details sit behind a
-postcode or phone check, which a lookup does not need.
-
-## Links
-
-The tracker keeps the number in the path.
+Select Sway explicitly or open its tracking link. The request restores the
+lowercase form of older Swyft IDs and the hyphen in the form's `SWY-` number
+format.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`SWAY_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/sway`

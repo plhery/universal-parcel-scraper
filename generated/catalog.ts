@@ -55345,7 +55345,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sway"
     },
     "canaryUrl": "https://www.shipsway.com/",
     "trackingUrlTemplate": "https://track.shipsway.com/{trackingNumber}",

@@ -29,6 +29,10 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'sway', number: 's6noshipmentzzz0',
+    route: /^https:\/\/track\.shipsway\.com\/s6noshipmentzzz0$/,
+    marker: /Tracking number not found/i,
+    forwarding: { notFound: /Tracking number not found/i } },
   { carrier: 'first-flight-me', number: 'ZZZ0000000',
     route: /^https:\/\/firstflightme\.com\/tracking\/awb\/ZZZ0000000$/,
     marker: /This tracking number is not found/,

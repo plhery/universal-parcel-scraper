@@ -19,17 +19,43 @@
   "timezone": "America/Los_Angeles",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "sway",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://track.shipsway.com/{trackingNumber}",
     "searchUrl": "https://track.shipsway.com/",
     "canaryUrl": "https://www.shipsway.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "delivered_at",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivered_at",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ],
     "unavailable": []
   },
   "links": [
