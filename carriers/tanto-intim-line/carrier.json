@@ -1,0 +1,51 @@
+{
+  "id": "tanto-intim-line",
+  "displayName": "Tanto Intim Line",
+  "aliases": [
+    "PT Tanto Intim Line",
+    "Tanto Line",
+    "Tanto"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#123b75"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "tanto-intim-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.tantonet.com/",
+    "searchUrl": "https://www.tantonet.com/",
+    "canaryUrl": "https://www.tantonet.com/",
+    "shows": [
+      "status",
+      "vessel"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [
+      "vessel"
+    ],
+    "unavailable": [
+      "history",
+      "location"
+    ],
+    "siteName": "Tanto Container Tracking"
+  },
+  "links": [],
+  "detection": []
+}

@@ -768,6 +768,7 @@ import { adapter as tCat } from '../carriers/t-cat/adapter.js';
 import { adapter as tGroup } from '../carriers/t-group/adapter.js';
 import { adapter as takesend } from '../carriers/takesend/adapter.js';
 import { adapter as tamex } from '../carriers/tamex/adapter.js';
+import { adapter as tantoIntimLine } from '../carriers/tanto-intim-line/adapter.js';
 import { adapter as tanzaniaPosts } from '../carriers/tanzania-posts/adapter.js';
 import { adapter as taqbinHk } from '../carriers/taqbin-hk/adapter.js';
 import { adapter as taxydema } from '../carriers/taxydema/adapter.js';
@@ -1673,6 +1674,7 @@ export const REGISTRY: RegistryDefinition = {
     "t-group": tGroup,
     "takesend": takesend,
     "tamex": tamex,
+    "tanto-intim-line": tantoIntimLine,
     "tanzania-posts": tanzaniaPosts,
     "taqbin-hk": taqbinHk,
     "taxydema": taxydema,
@@ -3378,6 +3380,7 @@ export const REGISTRY: RegistryDefinition = {
     "takesend": "takesend",
     "tamdis": "universal",
     "tamex": "tamex",
+    "tanto-intim-line": "tanto-intim-line",
     "tanzania-posts": "tanzania-posts",
     "tapuz-delivery": "universal",
     "taqbin-hk": "taqbin-hk",

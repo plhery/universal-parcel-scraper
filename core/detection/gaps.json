@@ -5564,5 +5564,10 @@
     "carrier": "cdp-courier",
     "kind": "open",
     "reason": "CDP search accepts numeric references and uses explicit carrier selection."
+  },
+  {
+    "carrier": "tanto-intim-line",
+    "kind": "open",
+    "reason": "The guest form uses container numbers, and equipment ownership does not identify the shipment carrier."
   }
 ]

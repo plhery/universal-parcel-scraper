@@ -2463,6 +2463,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'tanto-intim-line': 'The official home page opens the container tracking form in a modal.',
   'cdp-courier': 'The CDP guest tracking form submits the reference from the official home page.',
   'sinokor-merchant-marine': 'The guest page opens the official booking and bill of lading search.',
   'china-united-lines': 'The official Cargo Tracking form runs container searches in the browser.',

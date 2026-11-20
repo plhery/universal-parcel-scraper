@@ -110609,6 +110609,18 @@
     ]
   },
   {
+    "input": "TAKU 604304-7",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "TAKU 607827-5",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "TAL0011GB00007763001",
     "carrier": "unknown",
     "confidence": "low",

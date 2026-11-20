@@ -56182,6 +56182,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "tanto-intim-line": {
+    "displayName": "Tanto Intim Line",
+    "color": "#123b75",
+    "aliases": [
+      "PT Tanto Intim Line",
+      "Tanto Line",
+      "Tanto"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tanto-intim-line",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://www.tantonet.com/",
+    "trackingUrlTemplate": "https://www.tantonet.com/",
+    "trackingSearchUrl": "https://www.tantonet.com/",
+    "trackingSiteName": "Tanto Container Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tanzania-posts": {
     "displayName": "Tanzania Posts Corporation",
     "color": "#dd1f2e",
@@ -67204,6 +67230,7 @@ export const CARRIER_IDS = [
   "takesend",
   "tamdis",
   "tamex",
+  "tanto-intim-line",
   "tanzania-posts",
   "tapuz-delivery",
   "taqbin-hk",
@@ -69081,6 +69108,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "takesend": ["takesend-1"],
   "tamdis": [],
   "tamex": [],
+  "tanto-intim-line": [],
   "tanzania-posts": [],
   "tapuz-delivery": [],
   "taqbin-hk": [],
