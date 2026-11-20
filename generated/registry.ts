@@ -530,6 +530,7 @@ import { adapter as nacex } from '../carriers/nacex/adapter.js';
 import { adapter as naqel } from '../carriers/naqel/adapter.js';
 import { adapter as nationex } from '../carriers/nationex/adapter.js';
 import { adapter as navlungo } from '../carriers/navlungo/adapter.js';
+import { adapter as ncmCapar } from '../carriers/ncm-capar/adapter.js';
 import { adapter as neighbourExpress } from '../carriers/neighbour-express/adapter.js';
 import { adapter as nepalPost } from '../carriers/nepal-post/adapter.js';
 import { adapter as nextLevelDelivery } from '../carriers/next-level-delivery/adapter.js';
@@ -1429,6 +1430,7 @@ export const REGISTRY: RegistryDefinition = {
     "naqel": naqel,
     "nationex": nationex,
     "navlungo": navlungo,
+    "ncm-capar": ncmCapar,
     "neighbour-express": neighbourExpress,
     "nepal-post": nepalPost,
     "next-level-delivery": nextLevelDelivery,
@@ -2912,6 +2914,7 @@ export const REGISTRY: RegistryDefinition = {
     "nationex": "nationex",
     "navata": "universal",
     "navlungo": "navlungo",
+    "ncm-capar": "ncm-capar",
     "ncs-courier": "universal",
     "nege": "universal",
     "neighbour-express": "neighbour-express",

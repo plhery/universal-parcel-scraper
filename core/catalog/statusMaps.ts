@@ -2,6 +2,7 @@ import { statusMap as aHartrodt } from '../../carriers/a-hartrodt/status.js';
 import { statusMap as airEuropaCargo } from '../../carriers/air-europa-cargo/status.js';
 import { statusMap as navlungo } from '../../carriers/navlungo/status.js';
 import { statusMap as genei } from '../../carriers/genei/status.js';
+import { statusMap as ncmCapar } from '../../carriers/ncm-capar/status.js';
 import { statusMap as otsAstracon } from '../../carriers/ots-astracon/status.js';
 import { statusMap as parcel2go } from '../../carriers/parcel2go/status.js';
 import { statusMap as altexCurier } from '../../carriers/altex-curier/status.js';
@@ -916,6 +917,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bh-posta': bhPosta,
   'hellmann': hellmannStatus,
   'honducor': honducorStatus,
+  'ncm-capar': ncmCapar,
   'neighbour-express': neighbourExpress,
   'ots-astracon': otsAstracon,
   'xls-futar': xlsFutarStatus,
