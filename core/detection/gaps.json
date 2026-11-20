@@ -5054,5 +5054,11 @@
     "pattern": "^(?:TSMA[0-9]{8}|0[0-9]{4})$",
     "kind": "open",
     "reason": "The Herona form example has a branch prefix, and public merchant shipment rows have short leading-zero references. Detection does not offer Herona Express."
+  },
+  {
+    "carrier": "hellmann",
+    "pattern": "^[0-9]{8}$",
+    "kind": "open",
+    "reason": "An archived Hellmann tracking URL supplies an eight-digit shipment query. Detection does not offer Hellmann."
   }
 ]
