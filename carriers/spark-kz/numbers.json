@@ -1,5 +1,29 @@
 {
   "carrier": "spark-kz",
-  "gap": "No public page shows a Spark waybill number.",
-  "records": []
+  "records": [
+    {
+      "number": "SP00078479",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://gateway.spark.kz/print/api/ltl-invoice/SP00078479",
+        "date": "2022-05-12",
+        "dateKind": "waybill date",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Kazakhstan LTL freight",
+        "reportedRole": "Номер накладной",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt-it"
+        ]
+      },
+      "note": "The indexed Spark-branded freight document labels this identifier as the waybill number. Its match on the current public tracking form remains unverified."
+    }
+  ]
 }

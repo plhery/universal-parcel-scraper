@@ -4814,5 +4814,11 @@
     "pattern": "^000\\d{13}$",
     "kind": "open",
     "reason": "A public Chinese court decision identifies a sixteen-digit Suning Express waybill with leading zeroes. Detection suggests other carriers."
+  },
+  {
+    "carrier": "spark-kz",
+    "pattern": "^SP\\d{8}$",
+    "kind": "open",
+    "reason": "Spark’s indexed freight document identifies an SP-prefixed waybill with eight digits. Detection offers another carrier."
   }
 ]
