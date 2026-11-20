@@ -492,6 +492,7 @@ import { adapter as moranTransportation } from '../carriers/moran-transportation
 import { adapter as morningGlobal } from '../carriers/morning-global/adapter.js';
 import { adapter as mrlGlobal } from '../carriers/mrl-global/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
+import { adapter as msc } from '../carriers/msc/adapter.js';
 import { adapter as mteXpress } from '../carriers/mte-xpress/adapter.js';
 import { adapter as mtscn } from '../carriers/mtscn/adapter.js';
 import { adapter as mylerz } from '../carriers/mylerz/adapter.js';
@@ -1342,6 +1343,7 @@ export const REGISTRY: RegistryDefinition = {
     "morning-global": morningGlobal,
     "mrl-global": mrlGlobal,
     "mrw": mrw,
+    "msc": msc,
     "mte-xpress": mteXpress,
     "mtscn": mtscn,
     "mylerz": mylerz,
@@ -2793,6 +2795,7 @@ export const REGISTRY: RegistryDefinition = {
     "mrl-global": "mrl-global",
     "mrw": "mrw",
     "mrw-ve": "universal",
+    "msc": "msc",
     "msg-post": "universal",
     "mte-xpress": "mte-xpress",
     "mtscn": "mtscn",

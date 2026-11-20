@@ -40749,6 +40749,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "msc": {
+    "displayName": "MSC",
+    "color": "#a48b5f",
+    "aliases": [
+      "Mediterranean Shipping Company",
+      "MSC Cargo"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "msc",
+      "localClocks": true,
+      "dateOnlyScans": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.msc.com/en/track-a-shipment",
+    "trackingSearchUrl": "https://www.msc.com/en/track-a-shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "msg-post": {
     "displayName": "MSG Post & Koeriers",
     "color": "#111860",
@@ -66283,6 +66304,7 @@ export const CARRIER_IDS = [
   "mr-courier-al",
   "mrl-global",
   "mrw-ve",
+  "msc",
   "msg-post",
   "mte-xpress",
   "mtscn",
@@ -68146,6 +68168,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mr-courier-al": [],
   "mrl-global": [],
   "mrw-ve": [],
+  "msc": [],
   "msg-post": [],
   "mte-xpress": [],
   "mtscn": ["mtscn-1"],

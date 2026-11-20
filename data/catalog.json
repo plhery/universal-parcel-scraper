@@ -40745,6 +40745,27 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "msc": {
+    "displayName": "MSC",
+    "color": "#a48b5f",
+    "aliases": [
+      "Mediterranean Shipping Company",
+      "MSC Cargo"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "msc",
+      "localClocks": true,
+      "dateOnlyScans": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.msc.com/en/track-a-shipment",
+    "trackingSearchUrl": "https://www.msc.com/en/track-a-shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "msg-post": {
     "displayName": "MSG Post & Koeriers",
     "color": "#111860",

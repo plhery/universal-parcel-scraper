@@ -1,0 +1,27 @@
+{
+  "carrier": "msc",
+  "entries": [
+    {"wording": "Empty to Shipper", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not yet with MSC."},
+    {"wording": "Export received at CY", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the container yard at the port of loading. After a move it reads as transit."},
+    {"wording": "Export Loaded on Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Full Transshipment Discharged", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Full Transshipment Positioned Out", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Moved out of one terminal of a transshipment port towards another."},
+    {"wording": "Full Transshipment Positioned In", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Full Transshipment Loaded", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Estimated Time of Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel's expected arrival at the port of discharge, a planned step."},
+    {"wording": "Import Discharged from Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Import Positioning Out", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Moved out of the terminal of discharge towards another yard."},
+    {"wording": "Import Positioning In", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Import Loaded on Rail", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Import Rail Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Import Arrived at Destination Rail Ramp", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Import Unloaded from Rail", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Full Available for Delivery", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The loaded container waits at the terminal or rail ramp for the consignee's trucker to collect it."},
+    {"wording": "Import to consignee", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker takes the loaded container out of the terminal."},
+    {"wording": "Empty received at CY", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee has unloaded the container and returned it empty. Before the container moved it is an unused one's return, and has no stage."},
+    {"wording": "Empty received at origin rail ramp", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The empty container returned at a rail ramp after an inland delivery."},
+    {"wording": "End Import Cycle", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "MSC closes the import once the consignee has the container, where it records no empty return, as for a lessor's container."},
+    {"wording": "Carrier release", "language": "en", "confirmedBy": "live", "note": "MSC releases the cargo to the consignee on paper, dated when it does so, even before the vessel arrives; the container may still be at sea."},
+    {"wording": "Free Time to Expire", "language": "en", "confirmedBy": "live", "note": "The last day the consignee may leave the container at the terminal without charges, a deadline rather than a move."}
+  ]
+}

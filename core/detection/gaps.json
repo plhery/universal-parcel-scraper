@@ -2454,6 +2454,18 @@
     "reason": "MRL Global consignment numbers fall inside C-chez-vous' high-confidence ten-character rule, and two samples cannot show a range narrow enough to claim."
   },
   {
+    "carrier": "msc",
+    "pattern": "^MEDU[A-Z0-9]{8}$",
+    "kind": "open",
+    "reason": "Import records list MSC master bills as MEDU, its carrier code, and eight characters; MSC's tracker returns each sample. Detection does not offer MSC."
+  },
+  {
+    "carrier": "msc",
+    "pattern": "^BEAU\\d{7}$",
+    "kind": "open",
+    "reason": "BEAU is a container lessor's owner code, whose ISO 6346 numbers end in a check digit; MSC's tracker returns the moves of the sample container it leased. Detection does not offer MSC."
+  },
+  {
     "carrier": "naqel",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
