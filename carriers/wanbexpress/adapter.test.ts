@@ -170,6 +170,8 @@ describe('WanbExpress', () => {
     expect(wanbStage(null, 'Parcel handed to DPD')).toBe('in_transit');
     // A round filed as waiting for collection is the round; the code still reads other words.
     expect(wanbStage('LastMileWaitForCollection', 'Out of delivery')).toBe('out_for_delivery');
+    expect(wanbStage('LastMileInTransit', 'Out for Delivery, Parcel is at courier, delivery expected soon.')).toBe('out_for_delivery');
+    expect(wanbStage('LastMileInTransit', 'In transit along Poste Italiane’s logistic network')).toBe('in_transit');
     expect(wanbStage('LastMileWaitForCollection', 'Placed in Parcelshop/Parcel locker')).toBe('ready_for_pickup');
     // The origin's processing centre, the destination's customs, then the last-mile partner's collection after the
     // clearance, which carries the parcel on rather than accepting it.

@@ -275,6 +275,15 @@
       "note": "The same partner leaving the parcel at a parcel shop or locker for the recipient, after the missed round."
     },
     {
+      "code": "LastMileInTransit",
+      "wording": "Out for Delivery, Parcel is at courier, delivery expected soon.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-03",
+      "note": "A partner's courier with the parcel on its round, which WanbExpress files as transit; the missed attempt followed it within hours."
+    },
+    {
       "code": "LastMileWaitForCollection",
       "wording": "Out of delivery",
       "language": "en",

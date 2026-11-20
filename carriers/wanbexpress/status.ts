@@ -73,8 +73,11 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
 ]);
 
 // Partners' lines WanbExpress files under a code their words contradict, by code and `normalizeStatusWording` wording:
-// a round filed as waiting for collection, hours before its delivery.
-const CODED: ReadonlyMap<string, Stage> = new Map([[JSON.stringify(['LastMileWaitForCollection', 'out of delivery']), 'out_for_delivery']]);
+// a round filed as waiting for collection, hours before its delivery, and the courier's round filed as transit.
+const CODED: ReadonlyMap<string, Stage> = new Map(([
+  ['LastMileWaitForCollection', 'out of delivery', 'out_for_delivery'],
+  ['LastMileInTransit', 'out for delivery, parcel is at courier, delivery expected soon.', 'out_for_delivery'],
+] as const).map(([code, wording, stage]) => [JSON.stringify([code, wording]), stage]));
 
 /**
  * A scan's stage by its code, else by the partners' sentences: the tracker relays the last-mile
