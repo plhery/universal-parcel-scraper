@@ -290,7 +290,10 @@ step exists for future protocol changes.
   skips the steps above and
   takes the first zone of:
   1. its place: the state or province (North American scans below) or the single-clock
-     country its location names;
+     country its location names. Cainiao names a Russian office by its postcode alone
+     ("Ru, 101000") on Russian Post's scans it relays in Russian: one in a region on Moscow's
+     or Kaliningrad's clock (postcodes from 1, 2 and 3, Kaliningrad's from 236 to 238) takes it,
+     as Russian Post's own rows of the same scans do;
   2. a copy: the zone of another carrier's scan at the same minute with the same wording,
      or a delivery in any words,
      that the reply places by its carrier's zone, its place or its offset, not by a guess

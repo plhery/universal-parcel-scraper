@@ -3483,6 +3483,19 @@ describe('ParcelsApp result parsing', () => {
       .toEqual([['International processing: Transferred to carrier', '2026-11-12T04:01:15.000Z', 'Europe/Moscow', 'carrier', 'in_transit']]);
   });
 
+  it("reads Cainiao's Russian copies of Russian Post's scans at an office in Moscow's or Kaliningrad's zone on that clock", () => {
+    // Live shape: on an item from China, ParcelsApp files Russian Post's scans in Russian under Cainiao, naming the office
+    // by its postcode. Under the UTC label, the customs scan came three hours after Russian Post's own row of it.
+    const clocks = (location: string) => parseParcelsAppResponse(
+      { carriers: ['China Post', 'Cainiao'], originCode: 'CN', destinationCode: 'RU',
+        states: [{ date: '2026-11-11T11:22:00Z', status: 'Таможенное оформление', carrier: 1, location }] }, number, identity()).events
+      ?.map(({ time, time_zone, time_zone_basis }) => [time, time_zone, time_zone_basis]);
+    expect(clocks('Ru, 140000')).toEqual([['2026-11-11T08:22:00.000Z', 'Europe/Moscow', 'carrier']]);
+    expect(clocks('Ru, 236000')).toEqual([['2026-11-11T09:22:00.000Z', 'Europe/Kaliningrad', 'carrier']]);
+    // East of the Volga a region can keep another clock: the office is left to the other steps, here the label.
+    expect(clocks('Ru, 630000')).toEqual([['2026-11-11T11:22:00.000Z', 'UTC', 'label']]);
+  });
+
   it("reads Emirates Post's scans on Dubai's clock, placed where they name a UAE city", () => {
     // Live shape: "Emirates Post Group" gives Emirates Post's own scans at its tracker's digits, which it dates on Dubai's
     // clock where it names a UAE city; read as labeled they came four hours late, after the UPU's copies of them.

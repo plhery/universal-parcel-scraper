@@ -239,7 +239,9 @@ carrier.
   adapter reads them (the arrival at its processing centre, import customs, the delivery
   office's scans), under the same `+08:00`: Correos's arrival at its exchange office showed
   seven hours before Correos's own row of it. When the recipient's country is on one clock
-  they are read on it; China Post's own arrival in that country stays on China's. The
+  they are read on it, and in Russia, whose copies name no office, on Moscow's, the clock most
+  of Russia keeps and that of Russian Post's own rows on ParcelsApp; China Post's own arrival
+  in that country stays on China's. The
   delivery office's scans count when their 【】 names a country, in its short name too
   (阿联酋); the attempt and the hold at the delivery office (`境外投递点留存`) name none and
   count once a scan of that post comes before them, until a scan at a Chinese office has the

@@ -1019,6 +1019,8 @@ describe('17TRACK result parsing', () => {
       ['Europe/Madrid', 'destination'], ['Europe/Madrid', 'destination'], [undefined, undefined]]);
     // A destination on several clocks keeps 17TRACK's reading.
     expect(times('US')?.[1]).toEqual(['Arrival at processing center in the destination country', '2026-11-05T01:25:00.000Z']);
+    // Russian Post's copies, which name no office, keep Moscow's clock, as ParcelsApp's copies of its rows do.
+    expect(times('RU')?.[1]).toEqual(['Arrival at processing center in the destination country', '2026-11-05T06:25:00.000Z']);
   });
 
   it("reads the destination post's scans placed under China Post's short name, and its place-less attempt, on its clock", () => {

@@ -1375,6 +1375,18 @@ function russianPostCopyZone(location: string, status: string): string | null {
  * Moscow's clock it came three hours before Russian Post's own row of the export.
  */
 const RUSSIAN_POST_EXPORT = /^(?:international processing:\s*\S.*|released from russia)$/i;
+
+/**
+ * The clock of a Russian office Cainiao names by its postcode alone ("Ru, 101000"), where its region keeps
+ * Moscow's or Kaliningrad's: postcodes from 1, 2 and 3, central, north-western and southern Russia, and
+ * Kaliningrad's oblast (236 to 238). The others, from the Volga eastwards, are left to the steps.
+ */
+function cainiaoRussianOfficeZone(location: string): string | undefined {
+  const postcode = /^ru,\s*(\d{6})$/i.exec(location)?.[1];
+  if (!postcode) return undefined;
+  if (/^23[678]/.test(postcode)) return 'Europe/Kaliningrad';
+  return /^[123]/.test(postcode) ? 'Europe/Moscow' : undefined;
+}
 function russianPostExportCopy(carrier: string | undefined, status: string, date: unknown): boolean {
   return carrier === 'russian-post' && RUSSIAN_POST_EXPORT.test(status.trim())
     && /T\d{2}:\d{2}(?::00(?:\.0+)?)?$/.test(mislabeledWallTime(date) ?? '');
@@ -1469,6 +1481,11 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // on its office's clock (`siteZone`). Its own rows keep Moscow's, the catalog's.
   if (russianPostExportCopy(carrier, status, state.date)) return null;
   if (russianPostCopy(carrier, status)) return undefined;
+  // Cainiao relays Russian Post's scans in Russian under the office's postcode, at the digits of Russian Post's own
+  // rows: read under the UTC label, an arrival in Moscow's zone came after its own departure and a customs scan three
+  // hours after Russian Post's row of it.
+  const russianOffice = key === 'cainiao' ? cainiaoRussianOfficeZone(scanLocation(name, state.location)) : undefined;
+  if (russianOffice) return russianOffice;
   if (Object.hasOwn(HOME_CLOCKS, key)) return HOME_CLOCKS[key]!;
   // International Bridge's rows are instants under ParcelsApp's UTC label, wherever its place: on a parcel
   // USPS delivered, its receipt and departure at a facility came at the minutes USPS states for the same

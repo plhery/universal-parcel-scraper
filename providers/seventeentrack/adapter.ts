@@ -22,6 +22,7 @@ import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
+import { mainZone } from '../../places/zones.js';
 import { chinaPostDestinationRows, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { chronopostOfficeLabel } from './chronopost.js';
 import { agencyIntake, agencyZone, cttSiteZone } from '../../carriers/ctt/clock.js';
@@ -751,7 +752,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     // China Post's copies of the destination post's own scans keep that post's wall clock, as China Post's adapter
     // reads them, and 17TRACK labels them with China's offset: Correos's arrival at its exchange office at 09:25
     // Madrid time showed in China Post's leg at 09:25 +08:00, seven hours before Correos's own row of it.
-    const inbound = reported.key === CHINA_POST ? countryTimeZone(recipientCountry(shipment)) : null;
+    // Its copies of Russian Post's scans name no office: they take the clock most of Russia keeps, Moscow's, at whose
+    // digits ParcelsApp gives Russian Post's own rows. Read on China's, a customs scan came five hours before ParcelsApp's.
+    const chinaPostBound = reported.key === CHINA_POST ? recipientCountry(shipment) : null;
+    const inbound = !chinaPostBound ? null : chinaPostBound === 'RU' ? mainZone('RU') : countryTimeZone(chinaPostBound);
     const destination = inbound !== null && provider.events.length <= MAX_EVENTS ? chinaPostDestinationRows(provider.events.map((raw: unknown) => (
       isRecord(raw) ? { wording: text(raw.description), wall: wallMillis(raw) } : { wording: '', wall: Number.NaN }))) : new Set<number>();
     const salvador = reported.key === CORREO_EL_SALVADOR;
