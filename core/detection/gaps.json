@@ -502,6 +502,12 @@
     "reason": "BUFFALO's former fifteen-digit order numbers are bare digits that many carriers share, so no rule claims them."
   },
   {
+    "carrier": "buho-logistics",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Búho's tracker follows a published twelve-digit Paquetexpress reference for an order Búho fulfilled. Detection offers Paquetexpress and other carriers."
+  },
+  {
     "carrier": "burd-delivery",
     "pattern": "^\\d{18}$",
     "kind": "by_design",
