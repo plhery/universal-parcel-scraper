@@ -113720,6 +113720,12 @@
     ]
   },
   {
+    "input": "gc512271603us",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "glb0110003072419",
     "carrier": "unknown",
     "confidence": "low",
