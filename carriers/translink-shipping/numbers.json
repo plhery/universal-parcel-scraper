@@ -1,0 +1,45 @@
+{
+  "carrier": "translink-shipping",
+  "records": [
+    {
+      "number": "TLKPSZXLAX6A260X",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/honggkonggzhixiruutradingglimited",
+        "date": "2026-11-13",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "house bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest attributes the house bill to Translink Shipping and names container CSNU8939628. Both identifiers matched the guest tracker."
+    },
+    {
+      "number": "TLKPHKGVCR69003X",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/awards-shipping-agency-co-ltd",
+        "date": "2026-10-19",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "house bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest attributes the house bill to Translink Shipping and names container YMMU6933546. Both identifiers matched the guest tracker."
+    }
+  ]
+}

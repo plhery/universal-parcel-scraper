@@ -5524,5 +5524,10 @@
     "carrier": "atlantic-container-line",
     "kind": "open",
     "reason": "The public tracker confirms a whole shipment number. The adapter is explicitly selected."
+  },
+  {
+    "carrier": "translink-shipping",
+    "kind": "open",
+    "reason": "The guest history confirms the whole house bill. The adapter is explicitly selected."
   }
 ]

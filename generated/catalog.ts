@@ -58803,6 +58803,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "translink-shipping": {
+    "displayName": "Translink Shipping",
+    "color": "#174780",
+    "aliases": [
+      "Translink Shipping Inc",
+      "TLKP"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "translink-shipping",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "trackingUrlTemplate": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "trackingSearchUrl": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "trackingSiteName": "Translink Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "transmission": {
     "displayName": "TransMission",
     "color": "#e32314",
@@ -67078,6 +67103,7 @@ export const CARRIER_IDS = [
   "transfera",
   "transgo-mx",
   "transilvania-post",
+  "translink-shipping",
   "transmission",
   "transnatur",
   "transnet-couriers",
@@ -68947,6 +68973,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transfera": [],
   "transgo-mx": [],
   "transilvania-post": [],
+  "translink-shipping": [],
   "transmission": ["transmission-1"],
   "transnatur": [],
   "transnet-couriers": [],

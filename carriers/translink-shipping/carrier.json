@@ -1,0 +1,58 @@
+{
+  "id": "translink-shipping",
+  "displayName": "Translink Shipping",
+  "aliases": [
+    "Translink Shipping Inc",
+    "TLKP"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#174780"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "translink-shipping",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "searchUrl": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "canaryUrl": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "weight",
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "Translink Cargo Tracking"
+  },
+  "links": [],
+  "detection": []
+}
