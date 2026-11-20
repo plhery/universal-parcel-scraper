@@ -1,0 +1,146 @@
+{
+  "carrier": "msc",
+  "records": [
+    {
+      "number": "MEDUXG306947",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/medu",
+        "date": "2026-10-09",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The sample import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Vitoria through Rio de Janeiro to New York, returned empty."
+    },
+    {
+      "number": "BEAU2978861",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/medu",
+        "date": "2026-10-09",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The same import record gives this leased container for its master bill. MSC's tracker returns the container's moves from Vitoria to New York, the bill's own."
+    },
+    {
+      "number": "MEDUXG247851",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/medu",
+        "date": "2026-06-17",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Vitoria to Norfolk, then by rail to East Saint Louis, returned empty to a rail ramp in Saint Louis."
+    },
+    {
+      "number": "MEDUSA672436",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/medu",
+        "date": "2026-06-10",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Salvador through Panama to Long Beach, ending with the import cycle's end."
+    },
+    {
+      "number": "MEDUSA673152",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/medu",
+        "date": "2026-06-10",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Salvador through Panama to Long Beach, ending with the import cycle's end."
+    },
+    {
+      "number": "MEDURN080417",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/medu",
+        "date": "2026-08-18",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Rio de Janeiro through Antwerp and Sines to Boston, returned empty."
+    }
+  ]
+}

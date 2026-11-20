@@ -1,0 +1,64 @@
+{
+  "id": "msc",
+  "displayName": "MSC",
+  "aliases": [
+    "Mediterranean Shipping Company",
+    "MSC Cargo"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#a48b5f"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "msc",
+    "steps": [
+      "direct",
+      "retry",
+      "browser"
+    ],
+    "browser": true,
+    "localClocks": true,
+    "dateOnlyScans": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.msc.com/en/track-a-shipment",
+    "canaryUrl": "https://www.msc.com/en/track-a-shipment",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "weight"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
