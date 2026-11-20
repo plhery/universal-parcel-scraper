@@ -369,6 +369,7 @@ import { adapter as internetExpress } from '../carriers/internet-express/adapter
 import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.js';
 import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
 import { adapter as intexPaketdienst } from '../carriers/intex-paketdienst/adapter.js';
+import { adapter as intrasJp } from '../carriers/intras-jp/adapter.js';
 import { adapter as israelPost } from '../carriers/israel-post/adapter.js';
 import { adapter as jAndT } from '../carriers/j-and-t/adapter.js';
 import { adapter as jAndTAu } from '../carriers/j-and-t-au/adapter.js';
@@ -1205,6 +1206,7 @@ export const REGISTRY: RegistryDefinition = {
     "interrapidisimo": interrapidisimo,
     "intertown-transport": intertownTransport,
     "intex-paketdienst": intexPaketdienst,
+    "intras-jp": intrasJp,
     "israel-post": israelPost,
     "j-and-t": jAndT,
     "j-and-t-au": jAndTAu,
@@ -2497,7 +2499,7 @@ export const REGISTRY: RegistryDefinition = {
     "intime-bg": "universal",
     "intime-hr": "universal",
     "intl-post": "universal",
-    "intras-jp": "universal",
+    "intras-jp": "intras-jp",
     "ipostel": "universal",
     "iran-post": "universal",
     "irs-romexpress": "universal",
