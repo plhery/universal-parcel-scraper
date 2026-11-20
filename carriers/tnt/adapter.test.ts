@@ -143,6 +143,31 @@ describe('TNT international public tracking', () => {
     expect(() => normalizeTntExpressNumber('GE123456785GB')).toThrow('9-digit');
   });
 
+  it('reads the depot scans while the parcel waits after a missed delivery as notices on that attempt', () => {
+    const payload = express();
+    const [current] = payload['tracker.output'].consignment;
+    const depot = { city: 'Sample Depot', country: 'Switzerland', countryCode: 'CH' };
+    const scan = (date: string, legacyCode: string, statusDescription: string, location: unknown = depot) => ({ date, legacyCode, statusDescription, location });
+    current.events = [
+      scan('2026-04-06T07:03:00+02:00', 'HW', 'Shipment arrived at TNT location'),
+      scan('2026-04-03T07:24:00+02:00', 'HW', 'Shipment arrived at TNT location'),
+      scan('2026-04-02T15:41:00+02:00', 'HW', 'Shipment arrived at TNT location'),
+      scan('2026-04-02T15:40:00+02:00', 'AS', 'Shipment being processed at TNT location.'),
+      scan('2026-04-02T10:42:00+02:00', 'NH', "Receiver not home. We've left them a message and we're waiting for them to get in contact with us.",
+        { city: 'Sample Town', country: 'Switzerland', countryCode: 'CH' }),
+      scan('2026-04-02T06:54:00+02:00', 'IR', 'Shipment now at depot nearest to delivery address'),
+      scan('2026-04-01T04:45:00+02:00', 'TR', 'Shipment in transit', { city: 'Sample Hub', country: 'Switzerland', countryCode: 'CH' }),
+    ];
+    const held = parseTntExpressResponse(payload, EXPRESS_NUMBER);
+    expect(held.events!.map((event) => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['HW', 'failed_attempt', 'none'], ['HW', 'failed_attempt', 'none'], ['HW', 'failed_attempt', 'none'], ['AS', 'failed_attempt', 'none'],
+      ['NH', 'failed_attempt', undefined], ['IR', 'in_transit', undefined], ['TR', 'in_transit', undefined]]);
+    expect(held).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Shipment arrived at TNT location' });
+    // A scan at another place moves the parcel on.
+    current.events.unshift(scan('2026-04-07T05:00:00+02:00', 'TR', 'Shipment in transit', { city: 'Sample Hub', country: 'Switzerland', countryCode: 'CH' }));
+    expect(parseTntExpressResponse(payload, EXPRESS_NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
   it('keeps delivery, partial delivery and unfamiliar codes apart', () => {
     const payload = express();
     const [current] = payload['tracker.output'].consignment;

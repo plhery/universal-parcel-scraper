@@ -141,6 +141,28 @@ function expressDestination(consignment: Record<string, unknown>): Pick<CarrierR
   };
 }
 
+// The depot's own scans: its arrival, processing, transit and connection scans.
+const DEPOT_SCANS: ReadonlySet<string> = new Set(['HW', 'AS', 'IR', 'TR', 'IS']);
+
+/**
+ * After a missed delivery (NH, the receiver not home and asked to get in touch) the parcel goes back to the depot it
+ * went out from and waits there, scanned again each morning ("Shipment arrived at TNT location"). Those depot scans,
+ * at the place of the depot's scans before the round, are notices on the missed delivery: the parcel waits for the
+ * receiver, it does not move. A scan at another place, or another kind of scan, ends the wait. Events are newest first.
+ */
+function heldAfterAttempt(events: CarrierEvent[]): void {
+  let depot: string | undefined;
+  let waiting: string | undefined;
+  for (const event of [...events].reverse()) {
+    const code = String(event.provider_code ?? '');
+    const atDepot = DEPOT_SCANS.has(code) && event.location !== undefined;
+    if (event.stage === 'failed_attempt') waiting = depot;
+    else if (waiting !== undefined && atDepot && event.location === waiting) Object.assign(event, { stage: 'failed_attempt', stage_source: 'none' });
+    else waiting = undefined;
+    if (atDepot && event.stage_source !== 'none') depot = event.location;
+  }
+}
+
 export function parseTntExpressResponse(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeTntExpressNumber(rawNumber);
   const output = isRecord(payload) ? payload['tracker.output'] : undefined;
@@ -165,7 +187,10 @@ export function parseTntExpressResponse(payload: unknown, rawNumber: string): Ca
   const { consignment, history } = shipments.reduce((best, shipment) => newest(shipment) > newest(best) ? shipment : best);
   if (!history.length) throw new NoHistoryError(EXPRESS_PROVIDER, 'TNT lists the shipment without scans', { reason: 'listed' });
   const events = history.slice(0, 100).map(({ event }) => event);
-  const mapped = tntExpressStatus(String(events[0]!.provider_code ?? ''));
+  heldAfterAttempt(events);
+  // A depot scan while the parcel waits after a missed delivery leaves the missed delivery leading.
+  const lead = events.find((event) => event.stage_source !== 'none') ?? events[0]!;
+  const mapped = tntExpressStatus(String(lead.provider_code ?? ''));
   // `destinationDate` is the estimate until delivery; its day matches the page.
   const sources = isRecord(consignment.analytics) && isRecord(consignment.analytics.destinationDateSources)
     ? consignment.analytics.destinationDateSources : {};

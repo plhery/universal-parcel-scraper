@@ -51,6 +51,9 @@ postcode or account is required.
   wording is prose: "partially delivered" is not a delivery, and a residential delivery
   (`RES`) reads like `OK`. The estimate is kept as a calendar day until delivery.
   Customs release returns to transit even when the wording still mentions customs.
+- After a missed delivery (`NH`) the parcel waits at the depot its round left from, scanned
+  there again each morning. Those depot scans are notices on the missed delivery, which stays
+  the stage, until a scan at another place or another kind of scan.
 - tnt.com enters some transit scans at their planned time, before they happen. A scan dated
   more than five minutes after the lookup is held back until it is due (`plannedScans`).
 - A shipment either site lists without scans is a `NoHistoryError`: TNT knows the label
