@@ -2434,6 +2434,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'wangjing-3cq', number: 'ZZ0000000000',
     route: /^https:\/\/track\.wjdrop\.com\/tracking\/index\?nums=ZZ0000000000$/,
     marker: /暂无物流轨迹|No tracking records|Nenhum registro de rastreamento/ },
+  // The page's script fills its box from `awbno` and looks the number up; an unknown one leaves
+  // the box filled and the results empty.
+  { carrier: 'pxc-pacific', number: 'ZZ0000000000',
+    route: /^https:\/\/(?:www\.)?pacificexp\.net\/tracking-details\.html\?awbno=ZZ0000000000$/,
+    marker: /Enter AWB\s+Numbers in a separate line|PXC Pacific Global Pvt\. Ltd\./ },
 ];
 
 /**

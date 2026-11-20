@@ -48021,7 +48021,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "pxc-pacific",
+      "localClocks": true
     },
     "canaryUrl": "https://pacificexp.net/tracking-details.html",
     "trackingUrlTemplate": "https://pacificexp.net/tracking-details.html?awbno={trackingNumber}",

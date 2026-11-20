@@ -18,18 +18,63 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "pxc-pacific",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://pacificexp.net/tracking-details.html?awbno={trackingNumber}",
     "searchUrl": "https://pacificexp.net/tracking-details.html",
     "canaryUrl": "https://pacificexp.net/tracking-details.html",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "recipient_name",
+      "signatory",
+      "delivered_at",
+      "awb_date",
+      "service_name",
+      "remarks",
+      "delivery_tracking_number",
+      "delivery_partner"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "recipient_name",
+      "signatory",
+      "delivered_at",
+      "awb_date",
+      "service_name",
+      "remarks"
+    ],
+    "unavailable": [
+      "eta",
+      "sender_name",
+      "recipient_address",
+      "weight",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
