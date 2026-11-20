@@ -5528,5 +5528,11 @@
     "pattern": "^996/?\\d{8}$",
     "kind": "open",
     "reason": "Air Europa Cargo confirms 996 master air waybills with eight serial digits. Tracking is available by explicit selection."
+  },
+  {
+    "carrier": "a-hartrodt",
+    "pattern": "^SHPT\\d{10}$",
+    "kind": "open",
+    "reason": "The public a. hartrodt tracker confirms a house bill beginning with SHPT. The adapter tracks explicitly selected references."
   }
 ]

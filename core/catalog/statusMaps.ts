@@ -1,3 +1,4 @@
+import { statusMap as aHartrodt } from '../../carriers/a-hartrodt/status.js';
 import { statusMap as airEuropaCargo } from '../../carriers/air-europa-cargo/status.js';
 import { statusMap as navlungo } from '../../carriers/navlungo/status.js';
 import { statusMap as genei } from '../../carriers/genei/status.js';
@@ -905,6 +906,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'altex-curier': altexCurier,
   'bm-cargo': bmCargo,
+  'a-hartrodt': aHartrodt,
   'air-europa-cargo': airEuropaCargo,
   navlungo,
   genei,

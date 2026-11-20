@@ -1,0 +1,57 @@
+{
+  "id": "a-hartrodt",
+  "displayName": "a. hartrodt",
+  "aliases": [
+    "A Hartrodt",
+    "a. hartrodt GmbH & Co. KG"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#163d72"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "a-hartrodt",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "searchUrl": "https://ttsecure.hartrodt.com/pserv/tt/open?sep=1",
+    "canaryUrl": "https://ttsecure.hartrodt.com/pserv/tt/open",
+    "shows": [
+      "status",
+      "history",
+      "shipper_reference",
+      "consignee_reference",
+      "route",
+      "route_eta",
+      "pieces",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "shipper_reference",
+      "consignee_reference",
+      "route",
+      "route_eta",
+      "pieces",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
