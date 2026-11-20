@@ -109108,6 +109108,12 @@
     ]
   },
   {
+    "input": "UCI-7002 6387",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "UD00000002827950",
     "carrier": "unknown",
     "confidence": "none",
