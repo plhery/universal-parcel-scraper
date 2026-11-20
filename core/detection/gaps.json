@@ -4688,5 +4688,11 @@
     "pattern": "^TSPX\\d{11}$",
     "kind": "by_design",
     "reason": "Paxel’s guest form confirms a merchant TSPX reference, but no issuer specification establishes ownership of the wider prefix. It is accepted only for a parcel filed to Paxel."
+  },
+  {
+    "carrier": "zufall",
+    "pattern": "^00340355246\\d{9}$",
+    "kind": "open",
+    "reason": "Archived ZUFALL tracking pages recognize these 20-digit Colli references. The current rules offer Swiss Post Cargo, USPS and NZ Post for both references."
   }
 ]

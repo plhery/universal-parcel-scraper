@@ -1,5 +1,55 @@
 {
   "carrier": "zufall",
-  "gap": "No public page shows a ZUFALL number.",
-  "records": []
+  "records": [
+    {
+      "number": "00340355246797672776",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221101081939id_/https://tracking.myzufall.de/Track/00340355246797672776?language=en&culture=GB",
+        "date": "2022-11-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Colli number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "ZUFALL’s archived public tracker shows this package’s progress through arrival in the delivery region. It asks for a postcode for further details."
+    },
+    {
+      "number": "00340355246832339640",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231121160532id_/https://tracking.myzufall.de/Track/00340355246832339640?language=de&culture=DE",
+        "date": "2023-11-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Colli number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-post-cargo",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "ZUFALL’s archived public tracker recognizes this package and displays its shipment header and progress indicators. It asks for a postcode for further details."
+    }
+  ]
 }
