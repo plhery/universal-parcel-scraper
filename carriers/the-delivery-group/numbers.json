@@ -1,5 +1,52 @@
 {
   "carrier": "the-delivery-group",
-  "gap": "Its tracking IDs are 8 to 30 letters and digits, a shape that fits many carriers, and no public page shows one.",
-  "records": []
+  "records": [
+    {
+      "number": "JJD0002247735827849",
+      "role": "quarantined",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://wordpress.org/support/topic/tracking-not-correct-on-shipment-email-so-customers-cant-track-properly/",
+        "date": "2024-09-16",
+        "dateKind": "shipment date quoted in forum post",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Yodel Expect Medium 24hr",
+        "reportedRole": "shipment tracking number",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "inpost",
+          "dhl"
+        ]
+      },
+      "note": "The merchant reproduces its dispatch email with a TDG-styled DocketHub link and names Yodel for the delivery service. The public link returned the tracking interface without history, leaving the number’s scope on TDG’s own service unresolved."
+    },
+    {
+      "number": "ETENE000007143",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230317153444id_/https://tracking.dockethub.com/shipment/trackshipment/ETENE000007143?postcode=&style=TDG",
+        "date": "2023-03-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "TDG tracking on DocketHub",
+        "reportedRole": "shipment tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived DocketHub tracking link names TDG in its style parameter and contains this exact shipment reference. The archived and current guest pages returned the form without a shipment history."
+    }
+  ]
 }
