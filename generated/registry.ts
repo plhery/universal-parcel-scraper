@@ -432,6 +432,7 @@ import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
 import { adapter as leopardsCourier } from '../carriers/leopards-courier/adapter.js';
 import { adapter as lexId } from '../carriers/lex-id/adapter.js';
 import { adapter as lexMy } from '../carriers/lex-my/adapter.js';
+import { adapter as lexTh } from '../carriers/lex-th/adapter.js';
 import { adapter as lhtex } from '../carriers/lhtex/adapter.js';
 import { adapter as libanpost } from '../carriers/libanpost/adapter.js';
 import { adapter as liccardi } from '../carriers/liccardi/adapter.js';
@@ -1266,6 +1267,7 @@ export const REGISTRY: RegistryDefinition = {
     "leopards-courier": leopardsCourier,
     "lex-id": lexId,
     "lex-my": lexMy,
+    "lex-th": lexTh,
     "lhtex": lhtex,
     "libanpost": libanpost,
     "liccardi": liccardi,
@@ -2633,7 +2635,7 @@ export const REGISTRY: RegistryDefinition = {
     "letter-track": "universal",
     "lex-id": "lex-id",
     "lex-my": "lex-my",
-    "lex-th": "universal",
+    "lex-th": "lex-th",
     "lex-vn": "universal",
     "lexship": "universal",
     "lhtex": "lhtex",

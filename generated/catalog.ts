@@ -36715,7 +36715,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Bangkok",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lex-th"
     },
     "canaryUrl": "https://lex.th/tracking",
     "trackingUrlTemplate": "https://lex.th/tracking?references={trackingNumber}",

@@ -18,18 +18,30 @@
   "timezone": "Asia/Bangkok",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "lex-th",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "provider_code"
+  ],
   "portal": {
     "url": "https://lex.th/tracking?references={trackingNumber}",
     "searchUrl": "https://lex.th/tracking",
     "canaryUrl": "https://lex.th/tracking",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "history"
+    ]
   },
   "links": [
     {

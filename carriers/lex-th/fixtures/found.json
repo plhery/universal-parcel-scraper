@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "data": [
+    {
+      "trackingNumber": "LEXPU0718466614",
+      "packageCode": "FU8220004800000000009218110533",
+      "packageStatus": "domestic_delivered",
+      "firstMileShippingProvider": "LEX TH",
+      "lastMileShippingProvider": "LEX TH",
+      "originalTrackingNumber": "LEXPU0718466614"
+    }
+  ]
+}

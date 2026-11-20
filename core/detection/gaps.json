@@ -2226,6 +2226,12 @@
     "reason": "Detection does not offer LEX Thailand for the LEXDO-prefixed parcel number reported by a Lazada Thailand buyer."
   },
   {
+    "carrier": "lex-th",
+    "pattern": "^LEXPU0718466614$",
+    "kind": "open",
+    "reason": "The Thai guest tracker confirms this published parcel while detection offers no carrier."
+  },
+  {
     "carrier": "libanpost",
     "pattern": "^PX\\d{11}$",
     "kind": "by_design",
