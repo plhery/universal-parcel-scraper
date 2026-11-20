@@ -12,9 +12,13 @@ export const PROVIDER = 'Loggi';
 export const LOGGI_MAX_BYTES = 2_000_000;
 const MAX_ROWS = 500;
 
+// The tracker answers eight-character codes and thirteen-character ones of four letters, a digit,
+// seven letters and a digit, which it keeps as the parcel's own code.
+const LOGGI_CODE = /^(?:[A-Z0-9]{8}|[A-Z]{4}\d[A-Z]{7}\d)$/;
+
 export function normalizeLoggiNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
-  if (!/^[A-Z0-9]{8}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Loggi requires an eight-character tracking code');
+  if (!LOGGI_CODE.test(number)) throw new InvalidInputError(PROVIDER, 'Loggi requires a tracking code in one of its shapes');
   return number;
 }
 

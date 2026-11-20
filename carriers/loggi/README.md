@@ -15,8 +15,10 @@ so scans keep dates without invented times or offsets and retain the page's orde
 
 ## Limitations
 
-The eight-character code overlaps other carriers and is only a low-confidence suggestion.
-Older merchant references and internal package ids are not supported. No cheap HTTP
+The tracker takes eight-character codes and thirteen-character ones of four letters, a digit,
+seven letters and a digit. The eight-character code overlaps other carriers, and no public page
+shows a thirteen-character one, so both are only low-confidence suggestions. Older merchant
+references and internal package ids are not supported. No cheap HTTP
 recognition is available. Cloudflare can still refuse the browser; enabled universal providers
 remain the fallback. A reused code can require the recipient's postcode on the public form;
 the adapter does not submit recipient verification.
