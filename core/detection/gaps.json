@@ -5508,5 +5508,10 @@
     "carrier": "lerdex",
     "kind": "open",
     "reason": "One confirmed number, letters, digits and YQ, is too few to tell its series from other forwarders' numbers. The tracking page's lookup supports explicit selection."
+  },
+  {
+    "carrier": "sheensync",
+    "kind": "open",
+    "reason": "SheenSync waybills are SS and twelve digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   }
 ]

@@ -51924,6 +51924,40 @@
     ],
     "detectionRules": []
   },
+  "sheensync": {
+    "displayName": "SheenSync",
+    "color": "#8e8e93",
+    "aliases": [
+      "鲜行供应链",
+      "鲜行",
+      "杭州鲜行供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sheensync",
+      "localClocks": true
+    },
+    "canaryUrl": "https://sheen-sync.com/",
+    "trackingUrlTemplate": "https://sheen-sync.com/track.html?c={trackingNumber}",
+    "trackingSearchUrl": "https://sheen-sync.com/track.html",
+    "linkRules": [
+      {
+        "domains": [
+          "sheen-sync.com"
+        ],
+        "pathPattern": "^/track\\.html$",
+        "params": [
+          "c"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "shenghang": {
     "displayName": "Shenghang International Logistics",
     "color": "#212184",

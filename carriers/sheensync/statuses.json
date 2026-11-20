@@ -1,0 +1,50 @@
+{
+  "carrier": "sheensync",
+  "entries": [
+    {
+      "code": "IR",
+      "wording": "Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件电子信息已经收到: the waybill's electronic information reached the forwarder."
+    },
+    {
+      "code": "AF",
+      "wording": "Shipment arrived at facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件到达作业中心: the parcel reached the forwarder's warehouse in China."
+    },
+    {
+      "code": "DF",
+      "wording": "Shipment departed from facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "快件操作完成: the warehouse finished with the parcel and sent it on."
+    },
+    {
+      "code": "PBGJ",
+      "wording": "Arrived at the origin international airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The line haul's steps toward the flight; the same code also reads \"Shipment is in transit to next facility\"."
+    },
+    {
+      "wording": "Warehouse pickup",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Collected from the airport's warehouse at the destination after import clearance."
+    },
+    {
+      "wording": "The shipment is being transshipped via the hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}

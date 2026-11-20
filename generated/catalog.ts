@@ -51928,6 +51928,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "sheensync": {
+    "displayName": "SheenSync",
+    "color": "#8e8e93",
+    "aliases": [
+      "鲜行供应链",
+      "鲜行",
+      "杭州鲜行供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sheensync",
+      "localClocks": true
+    },
+    "canaryUrl": "https://sheen-sync.com/",
+    "trackingUrlTemplate": "https://sheen-sync.com/track.html?c={trackingNumber}",
+    "trackingSearchUrl": "https://sheen-sync.com/track.html",
+    "linkRules": [
+      {
+        "domains": [
+          "sheen-sync.com"
+        ],
+        "pathPattern": "^/track\\.html$",
+        "params": [
+          "c"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "shenghang": {
     "displayName": "Shenghang International Logistics",
     "color": "#212184",
@@ -66818,6 +66852,7 @@ export const CARRIER_IDS = [
   "shadowfax",
   "shalom-pe",
   "sharf",
+  "sheensync",
   "shenghang",
   "shipa",
   "shipblu",
@@ -68685,6 +68720,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shadowfax": ["shadowfax-1","shadowfax-2"],
   "shalom-pe": [],
   "sharf": [],
+  "sheensync": [],
   "shenghang": [],
   "shipa": ["shipa-1"],
   "shipblu": [],

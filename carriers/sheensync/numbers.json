@@ -1,0 +1,24 @@
+{
+  "carrier": "sheensync",
+  "records": [
+    {
+      "number": "SS202600000371",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://sheen-sync.com/track.html",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example the tracking page gives for its number format. Its lookup answers it with a parcel from Hangzhou delivered in Los Angeles."
+    }
+  ]
+}
