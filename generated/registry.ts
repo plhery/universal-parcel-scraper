@@ -459,6 +459,7 @@ import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
 import { adapter as jumppointInternational } from '../carriers/jumppoint-international/adapter.js';
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
+import { adapter as kLineRoro } from '../carriers/k-line-roro/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as karyaPratamaCargo } from '../carriers/karya-pratama-cargo/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
@@ -1405,6 +1406,7 @@ export const REGISTRY: RegistryDefinition = {
     "jumppoint": jumppoint,
     "jumppoint-international": jumppointInternational,
     "junfeng-international": junfengInternational,
+    "k-line-roro": kLineRoro,
     "kargoturk": kargoturk,
     "karya-pratama-cargo": karyaPratamaCargo,
     "kazpost": kazpost,
@@ -2818,6 +2820,7 @@ export const REGISTRY: RegistryDefinition = {
     "junfeng-international": "junfeng-international",
     "juxi-express": "universal",
     "jy-express": "universal",
+    "k-line-roro": "k-line-roro",
     "kaizen-express": "universal",
     "kakao-t-same-day": "universal",
     "kanga-services": "universal",

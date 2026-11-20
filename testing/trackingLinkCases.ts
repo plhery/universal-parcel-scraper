@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'k-line-roro', number: 'KKLUZZZ000000',
+    route: /^https:\/\/apps\.klineglobalroro\.com\/tracking\/search\/?\?q=KKLUZZZ000000$/,
+    marker: /No Booking or B\/L found|Global RoRo Cargo Tracking/i },
   { carrier: 'enviamos-comunicaciones', number: '00000000000000000000',
     route: /^https:\/\/www\.enviamoscym\.com\/rastreo-envios-mensajeria\.php\?codigo=00000000000000000000&tipo-codigo=cod-principal$/,
     marker: /No existe ning[uú]n env[ií]o con el n[uú]mero de env[ií]o/i },

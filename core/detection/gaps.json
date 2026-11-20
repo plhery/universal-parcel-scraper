@@ -5769,5 +5769,10 @@
     "carrier": "sallaum-lines",
     "kind": "open",
     "reason": "The official tracker uses vehicle VINs, which identify vehicles across carriers rather than the operator."
+  },
+  {
+    "carrier": "k-line-roro",
+    "kind": "open",
+    "reason": "The carrier confirms its KKLU-prefixed RoRo bills. A detection rule is pending review of other bill formats and collisions."
   }
 ]

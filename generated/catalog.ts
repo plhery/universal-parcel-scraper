@@ -35422,6 +35422,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "k-line-roro": {
+    "displayName": "K Line Global RoRo",
+    "color": "#bd212a",
+    "aliases": [
+      "K Line RoRo",
+      "K Line",
+      "Kawasaki Kisen Kaisha",
+      "Kawasaki Kisen Kaisha Ltd.",
+      "KKLU"
+    ],
+    "countries": [
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "k-line-roro",
+      "localClocks": true
+    },
+    "canaryUrl": "https://apps.klineglobalroro.com/tracking/search",
+    "trackingUrlTemplate": "https://apps.klineglobalroro.com/tracking/search?q={trackingNumber}",
+    "trackingSearchUrl": "https://apps.klineglobalroro.com/tracking/search",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kaizen-express": {
     "displayName": "Kaizen Express",
     "color": "#24242b",
@@ -67610,6 +67636,7 @@ export const CARRIER_IDS = [
   "junfeng-international",
   "juxi-express",
   "jy-express",
+  "k-line-roro",
   "kaizen-express",
   "kakao-t-same-day",
   "kanga-services",
@@ -69528,6 +69555,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "junfeng-international": [],
   "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
+  "k-line-roro": [],
   "kaizen-express": [],
   "kakao-t-same-day": [],
   "kanga-services": [],

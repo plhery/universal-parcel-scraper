@@ -97082,6 +97082,28 @@
     ]
   },
   {
+    "input": "KKLUSOU012222",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
+    ]
+  },
+  {
+    "input": "KKLUSOU012307",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
+    ]
+  },
+  {
     "input": "KLD1CS28943670",
     "carrier": "indah-logistik",
     "confidence": "high",

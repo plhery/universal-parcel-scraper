@@ -1,0 +1,24 @@
+{
+  "BasicInfo": {
+    "BlPrefixCd": "KKLU",
+    "BlNum": "SOU012222",
+    "BookingNum": "SOU012222",
+    "BlTypeDsc": "WAYBILL"
+  },
+  "Itinerary": [
+    {
+      "LocationCd": "GBSOU",
+      "LocationDsc": "SOUTHAMPTON",
+      "MovementDt": "20-OCT-2026 15:39",
+      "MovementStatusDsc": "Actual Departure",
+      "MovementTypeCd": "POL"
+    },
+    {
+      "LocationCd": "USBAL",
+      "LocationDsc": "BALTIMORE",
+      "MovementDt": "10-NOV-2026 02:54",
+      "MovementStatusDsc": "Actual Arrival",
+      "MovementTypeCd": "POD"
+    }
+  ]
+}
