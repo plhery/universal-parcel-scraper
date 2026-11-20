@@ -1,0 +1,16 @@
+{
+  "carrier": "gintracom",
+  "entries": [
+    {"code": "inicio", "wording": "Guía generada", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "The shop generated the guide."},
+    {"code": "inicio", "wording": "Packing: pedido empacado", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "Gintracom packed the shop's order."},
+    {"code": "reparto", "wording": "En reparto", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "note": "The parcel is on its delivery run."},
+    {"code": "contacto", "wording": "Intento de contacto sin respuesta", "stage": "failed_attempt", "language": "es", "confirmedBy": "live", "note": "The courier could not reach the recipient."},
+    {"code": "devolucion", "wording": "En devolución a la tienda", "stage": "returned", "language": "es", "confirmedBy": "live", "note": "The parcel is going back to the shop."},
+    {"code": "devolucion", "wording": "Devolución en camino a la tienda", "stage": "returned", "language": "es", "confirmedBy": "live", "note": "The parcel is on its way back to the shop."},
+    {"code": "devolucion", "wording": "Devuelto a la tienda", "stage": "returned", "language": "es", "confirmedBy": "live", "note": "The parcel is back at the shop."},
+    {"code": "transito", "stage": "in_transit", "language": "es", "confirmedBy": "bundle", "note": "The tracker's script marks rows of this type as in transit."},
+    {"code": "entregada", "stage": "delivered", "language": "es", "confirmedBy": "bundle", "note": "The tracker's script marks rows of this type as delivered."},
+    {"code": "retiro", "stage": "ready_for_pickup", "language": "es", "confirmedBy": "bundle", "note": "The tracker's script marks rows of this type as waiting at an office for the recipient."},
+    {"code": "novedad", "stage": "exception", "language": "es", "confirmedBy": "bundle", "note": "The tracker's script marks rows of this type as an incident."}
+  ]
+}

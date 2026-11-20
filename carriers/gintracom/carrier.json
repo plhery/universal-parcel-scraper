@@ -1,0 +1,76 @@
+{
+  "id": "gintracom",
+  "displayName": "Gintracom",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "EC"
+    ]
+  },
+  "brand": {
+    "color": "#E53025"
+  },
+  "selectable": true,
+  "timezone": "America/Guayaquil",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gintracom",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://ec.gintracom.site/tracking?guia={trackingNumber}",
+    "searchUrl": "https://ec.gintracom.site/tracking",
+    "canaryUrl": "https://ec.gintracom.site/tracking",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "destination",
+      "sender_name",
+      "order_contents",
+      "payment_details",
+      "eta",
+      "pickup_point",
+      "delivery_options",
+      "delivered_at"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivered_at"
+    ],
+    "discarded": [
+      "progress_rail",
+      "destination",
+      "sender_name",
+      "order_contents",
+      "payment_details",
+      "eta",
+      "pickup_point",
+      "delivery_options"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "ec.gintracom.site"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "guia"
+      ]
+    }
+  ],
+  "detection": []
+}

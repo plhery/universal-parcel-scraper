@@ -28782,6 +28782,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "gintracom": {
+    "displayName": "Gintracom",
+    "color": "#E53025",
+    "countries": [
+      "EC"
+    ],
+    "selectable": true,
+    "timezone": "America/Guayaquil",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gintracom",
+      "browser": true
+    },
+    "canaryUrl": "https://ec.gintracom.site/tracking",
+    "trackingUrlTemplate": "https://ec.gintracom.site/tracking?guia={trackingNumber}",
+    "trackingSearchUrl": "https://ec.gintracom.site/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "ec.gintracom.site"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "guia"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "gio-express": {
     "displayName": "GIO Express",
     "color": "#571216",
@@ -69308,6 +69337,7 @@ export const CARRIER_IDS = [
   "ghtk",
   "gibraltar-post",
   "gig-logistics",
+  "gintracom",
   "gio-express",
   "gk-global-kr",
   "gle-colombia",
@@ -71298,6 +71328,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ghtk": ["ghtk-1"],
   "gibraltar-post": [],
   "gig-logistics": [],
+  "gintracom": [],
   "gio-express": [],
   "gk-global-kr": [],
   "gle-colombia": [],

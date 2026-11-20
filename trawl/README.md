@@ -4,6 +4,7 @@ Some carriers and universal providers only answer a full browser session. This i
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
 Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, DPD UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
 Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, APM Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Gintracom. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -49,6 +50,13 @@ number with the token back to the same address. The helper aborts other lookups 
 maps and analytics, captures that lookup alone, and passes on the status, the dated rows, the
 transport and delivery kinds and the terminals' cities from the answered page, without weights,
 cargo names, payment, addresses or phones.
+
+Gintracom opens its Ecuador tracker for the guide once Cloudflare lets the page load. The page
+reads the guide from its address, gets an invisible reCAPTCHA token and posts both. The helper
+captures that lookup alone and passes on the status, the stage and the dated rows, without the
+shop, the contents, the amount to collect, the return risk or the delivery-day choice. A token
+reCAPTCHA refuses gets 422, and the helper reloads the page once for a new token; when the check
+shows its pictures instead, the helper stops and says so.
 
 Neighbour Express opens the return-label guest page in a fresh context and lets its native
 reCAPTCHA v3 callback submit the whole reference. The helper captures that single POST and

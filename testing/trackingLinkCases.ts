@@ -2785,6 +2785,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   gdex: 'gdexpress.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
   golilla: 'my.golilla.it puts DataDome\'s check before its pages, and its shipment numbers run in sequence, so a synthetic one can open another person\'s shipment; only a known shipment verifies the link',
   'hi-trans': 'online.hi-trans.com.au answers automated Chrome with a Cloudflare managed challenge before the consignment summary, so number forwarding cannot be verified',
+  gintracom: 'ec.gintracom.site answers automated Chrome with a Cloudflare challenge before the tracker page, which the daily link check does not wait for; native retrieval captures the page\'s own lookup in a scoped browser helper',
   hanjin: 'the result page answers an unknown number with an alert and sends the browser back to the empty search form, so only a real parcel verifies the link',
   'indah-logistik': 'the resi page answers an unknown number with a generic internal server error page without the number, so only a real resi verifies the link',
   'integral-pack': 'the page looks the guide in its address up with its parts padded and IPE- before them, and leaves its search form as it was, without the guide or a notice, for one it does not know, so only a real guide verifies the link',

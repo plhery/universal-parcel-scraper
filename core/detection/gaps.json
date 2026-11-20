@@ -6207,5 +6207,11 @@
     "pattern": "^\\d{10}$",
     "kind": "open",
     "reason": "APM Logistics' waybills are ten bare digits, a shape many carriers share; detection has no rule for them yet."
+  },
+  {
+    "carrier": "gintracom",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Ten-digit Gintracom guides share their shape with many carriers' numeric waybills, so the shape cannot name Gintracom."
   }
 ]
