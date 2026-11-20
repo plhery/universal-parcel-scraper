@@ -4718,5 +4718,11 @@
     "pattern": "^\\d{10}$",
     "kind": "open",
     "reason": "The Zajel Z-Lite guide shows a ten-digit Zajel air waybill. The current detection rules offer other carriers for that input."
+  },
+  {
+    "carrier": "yol-kargo",
+    "pattern": "^950\\d{6}$",
+    "kind": "open",
+    "reason": "Two public shipment reports give nine-digit Yol Kargo numbers beginning with 950. Detection does not offer Yol Kargo for either number."
   }
 ]
