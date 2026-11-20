@@ -153,9 +153,10 @@ function track91Snapshot(trackingNumber: string, data: Record<string, unknown>):
   return JSON.stringify({ data: { trackingNumber, result: null, workerPolling: false, ...data }, memo: { name: 'tracking.tracker' } });
 }
 
-it('distinguishes export-customs entry and exit under the same event type', () => {
+it('reads export-customs entry and exit under the same event type as the export clearance, in transit', () => {
   expect(classifyIndiaPostEvent('ExportCustoms', 'Out of Export Customs').stage).toBe('in_transit');
-  expect(classifyIndiaPostEvent('ExportCustoms', 'Sent to Export Customs').stage).toBe('customs');
+  expect(classifyIndiaPostEvent('ExportCustoms', 'Sent to Export Customs').stage).toBe('in_transit');
+  expect(classifyIndiaPostEvent('CUSTOM_RECEIVE', 'Received at customs').stage).toBe('customs');
 });
 
 it('reads the movement codes seen since as transit, no longer unknown', () => {

@@ -60,7 +60,8 @@ Outcomes:
   the remarks it does not keep, which can give a row another stage. It leaves an unrecognized row
   open, so the review shows wording no rule knows.
 - `CUSTOM_RECEIVE` is customs. `CUSTOM_RETURN`, "Out of Export Customs" and "released by export Customs" mean customs handed
-  the item back: in transit, not returned to sender.
+  the item back: in transit, not returned to sender. "Sent to Export Customs" is the export clearance on the way
+  abroad, in transit too.
 - `tracked_at` without an offset is read as `Asia/Kolkata`. `synced_at` is returned as
   `source_synced_at`.
 - The Consignment Details card's Article Type ("Inland Speed Post", "Foreign Speed Post

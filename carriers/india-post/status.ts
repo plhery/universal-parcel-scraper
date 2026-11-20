@@ -76,7 +76,10 @@ export function classifyIndiaPostEvent(...values: unknown[]): ClassifiedStatus {
   ])) return { status: 'out_for_delivery', stage: 'out_for_delivery' };
   // Customs handing the item back (CUSTOM_RETURN, "returned from export
   // Customs/Security", "released by export Customs") ends the customs step.
+  // The item sent to export customs is the export clearance at origin, on its
+  // way abroad.
   if (includesAny(key, [
+    'senttoexportcustoms',
     'customreturn',
     'returnedfromexportcustoms',
     'returnedfromcustoms',
