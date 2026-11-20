@@ -64,9 +64,9 @@ describe('J&T Brazil guest history', () => {
     }
     const d = fixture(); d.data[0].details[0].code = 999;
     expect(parseJAndTBr(d, NUMBER).events![0]!.stage).toBeUndefined();
-    // A transfer worded like 50 and 90, before the collection.
+    // Worded like the transfers 50 and 90, but before the collection: a record of the shipment.
     d.data[0].details[0].code = 210;
-    expect(parseJAndTBr(d, NUMBER).events![0]!.stage).toBe('in_transit');
+    expect(parseJAndTBr(d, NUMBER).events![0]!.stage).toBe('registered');
   });
   it('uses supplied transport, whole submission binding and remaining browser budget', async () => {
     const h = harness(); await expect(h.tracker.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });

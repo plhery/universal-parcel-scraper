@@ -69,11 +69,11 @@
     {
       "code": "210",
       "wording": "Em transferencia",
-      "stage": "in_transit",
+      "stage": "registered",
       "language": "pt",
       "confirmedBy": "live",
       "firstSeen": "2026-11-14",
-      "note": "Worded like the transfers 50 and 90; it came hours before the collection scan, 10."
+      "note": "Worded like the transfers 50 and 90, but it came hours to a day before the collection scan, 10, before J&T had the parcel."
     },
     {
       "code": "94",
