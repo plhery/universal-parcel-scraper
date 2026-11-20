@@ -17,6 +17,9 @@ const UNDELIVERED = new Map<string, ClassifiedStatus>([
 ]);
 // Without a reason it knows, code 70 is read by its remark: the courier waits at a receiving
 // warehouse that inspects the parcel before it accepts it, the step before the delivery.
+// A remark that says the delivery failed is a failed attempt whatever group its reason is in: the courier
+// could not reach the recipient, and the delivery is to be rescheduled.
+const FAILED_REMARK = /^Delivery failed\b/i;
 const UNDELIVERED_REMARKS: readonly (readonly [RegExp, ClassifiedStatus])[] = [
   [/^The shipment has arrived at the warehouse and is waiting for inspection and acceptance\b/i, { stage: 'out_for_delivery', status: 'out_for_delivery' }],
 ];
@@ -54,7 +57,10 @@ export function sfExpressEventStatus(code: string, reason: string, remark = ''):
   if (code === '8000') {
     return REASONS.get(reason);
   }
-  if (code === '70') return UNDELIVERED.get(reason) ?? UNDELIVERED_REMARKS.find(([wording]) => wording.test(remark.trim()))?.[1];
+  if (code === '70') {
+    if (FAILED_REMARK.test(remark.trim())) return { stage: 'failed_attempt', status: 'exception' };
+    return UNDELIVERED.get(reason) ?? UNDELIVERED_REMARKS.find(([wording]) => wording.test(remark.trim()))?.[1];
+  }
   if (code === '99') return NOTICES.find(([wording]) => wording.test(remark.trim()))?.[1];
   if (code === '77') return FLIGHT_WAITS.some((wording) => wording.test(remark.trim())) ? TRANSIT : undefined;
   return CODES.get(code);

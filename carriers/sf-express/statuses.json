@@ -484,6 +484,15 @@
       "note": "Official Taiwan routes opCode 70 with this remark: the courier waits at a receiving warehouse that inspects the parcel before it accepts it, then signs."
     },
     {
+      "code": "70",
+      "wording": "Delivery failed (as the receiver could not be reached due to unavailability/power-off/no signal). Delivery to be rescheduled.",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-18",
+      "note": "Official routes opCode 70 with this remark, after the day's delivery round: a failed attempt whatever its reason's group."
+    },
+    {
       "code": "77",
       "wording": "The shipment is queuing up for flight resources，please wait patiently",
       "stage": "in_transit",

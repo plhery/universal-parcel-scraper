@@ -43,7 +43,8 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
   their `stayWhyCode`: the frontend groups `70` with reasons 5, 7 and 65 with the delivery round,
   and its other reasons are a failed attempt or a parcel left at a pickup point. With another
   reason, its remark that the parcel waits at a warehouse for inspection and acceptance is the
-  delivery round too: the receiving warehouse checks it before it signs. Unknown
+  delivery round too: the receiving warehouse checks it before it signs. A remark that says the
+  delivery failed is a failed attempt whatever the reason. Unknown
   combinations stay unclassified. Code
   `99` is read by its remark: "being returned" is a return and "being forwarded" a parcel sent on,
   and its other remarks stay unclassified. So is `77`: a parcel "queuing up for flight resources"

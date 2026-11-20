@@ -137,6 +137,9 @@ describe('SF Express public route parsing', () => {
     // Code 70 with a reason it does not know is read by its remark.
     expect(sfExpressEventStatus('70', '', 'The shipment has arrived at the warehouse and is waiting for inspection and acceptance. Please wait patiently.'))
       .toEqual({ stage: 'out_for_delivery', status: 'out_for_delivery' });
+    // A failed delivery's remark is a failed attempt, even under a reason the frontend groups with the round.
+    expect(sfExpressEventStatus('70', '5', 'Delivery failed (as the receiver could not be reached due to unavailability/power-off/no signal). Delivery to be rescheduled.'))
+      .toEqual({ stage: 'failed_attempt', status: 'exception' });
     // Code 99 needs a known remark, 70 a known reason or remark.
     for (const [code, reason] of [['99', ''], ['70', ''], ['70', '999'], ['70_5', '']] as const) expect(sfExpressEventStatus(code, reason)).toBeUndefined();
     const value = copy(); value.result[0]!.signed = false; value.result[0]!.routes.pop();
