@@ -31,7 +31,7 @@
     "location"
   ],
   "portal": {
-    "url": "http://elines.hedehk.com/cargoDynamicEN",
+    "url": "https://hede.orcapayments.app/container-tracking/",
     "searchUrl": "https://hede.orcapayments.app/container-tracking/",
     "canaryUrl": "https://hede.orcapayments.app/container-tracking/",
     "shows": [

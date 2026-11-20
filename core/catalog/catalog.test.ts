@@ -39,6 +39,13 @@ describe('the derived CARRIERS record', () => {
     expect(tracksAutomatically('swiss-post')).toBe(true);
   });
 
+  it('links every carrier over HTTPS, as the apps require', () => {
+    for (const carrier of Object.values(CARRIERS)) {
+      const url = carrier.trackingUrl?.('AB 12/3');
+      if (url) expect(url, carrier.id).toMatch(/^https:\/\/[^/]+\//);
+    }
+  });
+
   it('says which numbers a carrier tracks no further than its own country', () => {
     // PostNL's tracker names no carrier in the destination country for Spring's 18-digit numbers;
     // an S10 number goes on to the destination post under the same number.
