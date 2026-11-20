@@ -51571,6 +51571,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sallaum-lines": {
+    "displayName": "Sallaum Lines",
+    "color": "#173253",
+    "aliases": [
+      "Sallaum Lines Switzerland SA",
+      "Sallaum Lines DMCC",
+      "Sallaum Lines Ltd"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sallaum-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://sallaumlines.com/track-shipment/",
+    "trackingUrlTemplate": "https://sallaumlines.com/track-shipment/",
+    "trackingSearchUrl": "https://sallaumlines.com/track-shipment/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sameday": {
     "displayName": "Sameday",
     "color": "#e92427",
@@ -68069,6 +68093,7 @@ export const CARRIER_IDS = [
   "saia",
   "sailpost",
   "salam-pacific-indonesia-lines",
+  "sallaum-lines",
   "sameday",
   "samex",
   "samoa-post",
@@ -69986,6 +70011,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "saia": ["saia-1"],
   "sailpost": [],
   "salam-pacific-indonesia-lines": [],
+  "sallaum-lines": [],
   "sameday": ["sameday-1","sameday-2","sameday-3"],
   "samex": [],
   "samoa-post": [],

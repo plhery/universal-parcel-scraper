@@ -709,6 +709,7 @@ import { adapter as saiBabaTransport } from '../carriers/sai-baba-transport/adap
 import { adapter as saia } from '../carriers/saia/adapter.js';
 import { adapter as sailpost } from '../carriers/sailpost/adapter.js';
 import { adapter as salamPacificIndonesiaLines } from '../carriers/salam-pacific-indonesia-lines/adapter.js';
+import { adapter as sallaumLines } from '../carriers/sallaum-lines/adapter.js';
 import { adapter as sameday } from '../carriers/sameday/adapter.js';
 import { adapter as sapxExpress } from '../carriers/sapx-express/adapter.js';
 import { adapter as satUkraine } from '../carriers/sat-ukraine/adapter.js';
@@ -1654,6 +1655,7 @@ export const REGISTRY: RegistryDefinition = {
     "saia": saia,
     "sailpost": sailpost,
     "salam-pacific-indonesia-lines": salamPacificIndonesiaLines,
+    "sallaum-lines": sallaumLines,
     "sameday": sameday,
     "sapx-express": sapxExpress,
     "sat-ukraine": satUkraine,
@@ -3323,6 +3325,7 @@ export const REGISTRY: RegistryDefinition = {
     "saia": "saia",
     "sailpost": "sailpost",
     "salam-pacific-indonesia-lines": "salam-pacific-indonesia-lines",
+    "sallaum-lines": "sallaum-lines",
     "sameday": "sameday",
     "samex": "universal",
     "samoa-post": "universal",

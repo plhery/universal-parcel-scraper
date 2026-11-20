@@ -5764,5 +5764,10 @@
     "carrier": "hoegh-autoliners",
     "kind": "open",
     "reason": "The native service confirms the full HOEG-prefixed bills. The carrier remains explicitly selectable pending a detection review."
+  },
+  {
+    "carrier": "sallaum-lines",
+    "kind": "open",
+    "reason": "The official tracker uses vehicle VINs, which identify vehicles across carriers rather than the operator."
   }
 ]

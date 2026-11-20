@@ -1,0 +1,55 @@
+{
+  "id": "sallaum-lines",
+  "displayName": "Sallaum Lines",
+  "aliases": [
+    "Sallaum Lines Switzerland SA",
+    "Sallaum Lines DMCC",
+    "Sallaum Lines Ltd"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#173253"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sallaum-lines",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://sallaumlines.com/track-shipment/",
+    "searchUrl": "https://sallaumlines.com/track-shipment/",
+    "canaryUrl": "https://sallaumlines.com/track-shipment/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
