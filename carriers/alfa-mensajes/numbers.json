@@ -1,0 +1,26 @@
+{
+  "carrier": "alfa-mensajes",
+  "records": [
+    {
+      "number": "NF202612583",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=d0ecfce4-1f56-e925-fad9-ec956263a81a",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "physical courier guide number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "The judicial publication explicitly identifies this physical delivery guide. The public carrier lookup returned the exact number and dated status movements."
+    }
+  ]
+}

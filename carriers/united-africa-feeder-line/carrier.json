@@ -1,0 +1,60 @@
+{
+  "id": "united-africa-feeder-line",
+  "displayName": "United Africa Feeder Line",
+  "aliases": [
+    "UAFL",
+    "United Africa Feeder Line DMCC",
+    "UAFL Shipping"
+  ],
+  "region": {
+    "countries": [
+      "AE",
+      "MU",
+      "ZA"
+    ]
+  },
+  "brand": {
+    "color": "#155e8a"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "united-africa-feeder-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.uaflshipping.com/Tracking?BookingNo={trackingNumber}",
+    "searchUrl": "https://www.uaflshipping.com/Tracking",
+    "canaryUrl": "https://www.uaflshipping.com/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "UAFL Container Tracking"
+  },
+  "links": [],
+  "detection": []
+}

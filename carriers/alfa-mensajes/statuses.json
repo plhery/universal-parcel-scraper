@@ -1,0 +1,33 @@
+{
+  "carrier": "alfa-mensajes",
+  "entries": [
+    {
+      "code": "revision",
+      "wording": "revision",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "casillero",
+      "wording": "casillero",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "code": "Asignado",
+      "wording": "Asignado",
+      "language": "es",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "code": "entregado",
+      "wording": "entregado",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}

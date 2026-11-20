@@ -1,0 +1,62 @@
+{
+  "id": "hede-shipping",
+  "displayName": "Hede Shipping",
+  "aliases": [
+    "Hede Hong Kong",
+    "Hede Hongkong International Shipping",
+    "合德海运",
+    "HDUJ"
+  ],
+  "region": {
+    "countries": [
+      "HK",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1554a0"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hede-shipping",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "http://elines.hedehk.com/cargoDynamicEN",
+    "searchUrl": "https://hede.orcapayments.app/container-tracking/",
+    "canaryUrl": "https://hede.orcapayments.app/container-tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta",
+      "origin",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel",
+      "eta",
+      "origin",
+      "destination"
+    ],
+    "unavailable": [],
+    "siteName": "Hede Cargo Tracking"
+  },
+  "links": [],
+  "detection": []
+}

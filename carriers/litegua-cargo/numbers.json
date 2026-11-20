@@ -1,0 +1,36 @@
+{
+  "carrier": "litegua-cargo",
+  "records": [
+    {
+      "number": "22289297909",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://apps.litegua.com/rastreoweb/rastreogc.php",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "carrier electronic guide",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "Litegua’s public courier result prints this full shipment number in its guide header. The separate electronic guide lookup confirms the full number and dated agency scans without any additional identifiers."
+    }
+  ]
+}

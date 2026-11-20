@@ -1,0 +1,23 @@
+{
+  "carrier": "united-africa-feeder-line",
+  "records": [
+    {
+      "number": "UFLNSAMUM000512",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/1015096432/u-Fln-Sam-Um-0005121",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public bill prints this full identifier. The native tracker echoed it for the bill's booked equipment and returned dated movements."
+    }
+  ]
+}

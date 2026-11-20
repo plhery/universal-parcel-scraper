@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "data": {
+    "status_text": "Đã tìm thấy thông tin",
+    "shipments": [
+      {
+        "timeline": [
+          {
+            "time": "2026-11-20 13:36:01",
+            "status": "Delivered SEMV 1/1 PCS",
+            "hawb": "AASEL2632082"
+          }
+        ]
+      }
+    ]
+  }
+}

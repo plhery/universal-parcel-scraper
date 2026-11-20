@@ -1,0 +1,55 @@
+{
+  "id": "kenya-airways-cargo",
+  "displayName": "Kenya Airways Cargo",
+  "aliases": [
+    "KQ Cargo",
+    "Kenya Airways Air Cargo"
+  ],
+  "region": {
+    "countries": [
+      "KE"
+    ]
+  },
+  "brand": {
+    "color": "#df1024"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "kenya-airways-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://cargotrack.kenya-airways.com/",
+    "searchUrl": "https://cargotrack.kenya-airways.com/",
+    "canaryUrl": "https://cargotrack.kenya-airways.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "flight",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "flight",
+      "weight"
+    ],
+    "unavailable": [],
+    "siteName": "KQ Cargo Tracking"
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,28 @@
+{
+  "carrier": "sai-baba-transport",
+  "records": [
+    {
+      "number": "40018310",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.saibabatransport.com/track",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "lorry receipt number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The official guest form publishes this lorry receipt number. Its native lookup echoed the whole receipt and returned four dated movements."
+    }
+  ]
+}

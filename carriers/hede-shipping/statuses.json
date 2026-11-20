@@ -1,0 +1,55 @@
+{
+  "carrier": "hede-shipping",
+  "entries": [
+    {
+      "code": "RTS",
+      "wording": "RELEASE TO SHIPPER",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RBS",
+      "wording": "RETURN BY SHIPPER",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "LOB",
+      "wording": "LOAD ON BOARD",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DIS",
+      "wording": "DISCHARGE",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DTC",
+      "wording": "DELIVERY TO CONSIGNEE",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The portal describes this milestone as Laden Gate Out."
+    },
+    {
+      "code": "RBC",
+      "wording": "RETURN BY CONSIGNEE",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "code": "LSI",
+      "wording": "LEASE IN",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    }
+  ]
+}

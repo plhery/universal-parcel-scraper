@@ -1,0 +1,50 @@
+{
+  "id": "asg-logistics",
+  "displayName": "ASG Logistics",
+  "aliases": [
+    "ASGL",
+    "ALS Thai Nguyen",
+    "ALS Thái Nguyên",
+    "Công ty Cổ phần Logistics ASG"
+  ],
+  "region": {
+    "countries": [
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#04477d"
+  },
+  "selectable": true,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "asg-logistics",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.asgl.vn/en/tracking",
+    "searchUrl": "https://www.asgl.vn/en/tracking",
+    "canaryUrl": "https://www.asgl.vn/en/tracking",
+    "shows": [
+      "status",
+      "location",
+      "weight",
+      "remarks"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [
+      "location",
+      "weight",
+      "remarks"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

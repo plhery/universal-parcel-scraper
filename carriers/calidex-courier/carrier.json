@@ -1,0 +1,59 @@
+{
+  "id": "calidex-courier",
+  "displayName": "Calidex Courier",
+  "aliases": [
+    "Calidex",
+    "Calidex Trading Co",
+    "Calidexco"
+  ],
+  "region": {
+    "countries": [
+      "CO",
+      "VE"
+    ]
+  },
+  "brand": {
+    "color": "#15235a"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "calidex-courier",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "searchUrl": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "canaryUrl": "https://calidex.multitrack.trackingpremium.us/tracking/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "remarks",
+      "parcel_count",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "remarks",
+      "parcel_count",
+      "weight"
+    ],
+    "unavailable": [],
+    "siteName": "Calidex TrackingPremium"
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,41 @@
+{
+  "carrier": "calidex-courier",
+  "records": [
+    {
+      "number": "CAL1500794680",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://calidex.co/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Calidex guide number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Calidex’s public tracking instructions name this complete guide. Its guest lookup returned the exact guide and 18 real movements."
+    },
+    {
+      "number": "CLO1500794271",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/827357577/guide-186-CLO1500794271",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Calidex guide number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published waybill lists this complete guide at the top of the document. Its native lookup returned the exact guide and 11 dated movements."
+    }
+  ]
+}

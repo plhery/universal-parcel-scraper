@@ -1,0 +1,90 @@
+{
+  "actions": [
+    {
+      "state": "SUCCESS",
+      "returnValue": {
+        "returnValue": {
+          "cargoTrackingSOs": [
+            {
+              "docNumber": "82434435",
+              "docType": "MAWB",
+              "docPrefix": "157",
+              "cargoTrackingMvtStausList": [
+                {
+                  "eventDate": "Thu, 26 Jan 2023",
+                  "eventTime": "02:25",
+                  "eventAirport": "NBO",
+                  "movementStatus": "NFD",
+                  "movementDetails": "Notified consignee"
+                },
+                {
+                  "eventDate": "Thu, 26 Jan 2023",
+                  "eventTime": "02:14",
+                  "eventAirport": "NBO",
+                  "movementStatus": "RCF",
+                  "movementDetails": "Received in NBO"
+                },
+                {
+                  "eventDate": "Wed, 25 Jan 2023",
+                  "eventTime": "23:35",
+                  "eventAirport": "NBO",
+                  "movementStatus": "ARR",
+                  "movementDetails": "Arrived in NBO  on  QR 1341/25-Jan-2023"
+                },
+                {
+                  "eventDate": "Wed, 25 Jan 2023",
+                  "eventTime": "18:32",
+                  "eventAirport": "DOH",
+                  "movementStatus": "DEP",
+                  "movementDetails": "Departed from DOH on QR1341/25-Jan-2023"
+                },
+                {
+                  "eventDate": "Wed, 25 Jan 2023",
+                  "eventTime": "09:35",
+                  "eventAirport": "DOH",
+                  "movementStatus": "RCF",
+                  "movementDetails": "Received in DOH"
+                },
+                {
+                  "eventDate": "Wed, 25 Jan 2023",
+                  "eventTime": "07:40",
+                  "eventAirport": "DOH",
+                  "movementStatus": "ARR",
+                  "movementDetails": "Arrived in DOH  on  QR 8254/25-Jan-2023"
+                },
+                {
+                  "eventDate": "Wed, 25 Jan 2023",
+                  "eventTime": "00:06",
+                  "eventAirport": "NBO",
+                  "movementStatus": "ARR",
+                  "movementDetails": "Arrived in NBO  on  QR 1341/25-Jan-2023"
+                },
+                {
+                  "eventDate": "Wed, 25 Jan 2023",
+                  "eventTime": "00:06",
+                  "eventAirport": "NBO",
+                  "movementStatus": "ARR",
+                  "movementDetails": "Arrived in NBO  on  QR 1341/25-Jan-2023"
+                },
+                {
+                  "eventDate": "Tue, 24 Jan 2023",
+                  "eventTime": "23:35",
+                  "eventAirport": "CDG",
+                  "movementStatus": "DEP",
+                  "movementDetails": "Departed from CDG on QR8254/24-Jan-2023"
+                },
+                {
+                  "eventDate": "Mon, 23 Jan 2023",
+                  "eventTime": "13:29",
+                  "eventAirport": "CDG",
+                  "movementStatus": "RCS",
+                  "movementDetails": "Received from shipper in CDG"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

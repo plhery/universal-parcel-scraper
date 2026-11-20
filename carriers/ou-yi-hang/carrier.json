@@ -1,0 +1,57 @@
+{
+  "id": "ou-yi-hang",
+  "displayName": "Ou Yi Hang International Logistics",
+  "aliases": [
+    "Ou Yi Hang",
+    "Ouyihang International Logistics",
+    "OYH Logistics",
+    "欧易航国际物流"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "BE",
+      "GB",
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#1655ae"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ou-yi-hang",
+    "steps": [],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://oyh-exp.com/en/tracking",
+    "searchUrl": "https://oyh-exp.com/en/tracking",
+    "canaryUrl": "https://oyh-exp.com/en/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "transit_days"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "destination",
+      "transit_days"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,54 @@
+{
+  "id": "sinotrans-container-lines",
+  "displayName": "Sinotrans Container Lines",
+  "aliases": [
+    "Sinolines",
+    "SNL Sinotrans Container Lines",
+    "中外运集装箱运输有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#00548d"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sinotrans-container-lines",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://ebusiness.sinolines.com.cn/Ebusiness/EQUERY/TrackingCargoE.aspx?subject=BLNO",
+    "searchUrl": "https://ebusiness.sinolines.com.cn/Ebusiness/EQUERY/TrackingCargoE.aspx?subject=BLNO",
+    "canaryUrl": "https://ebusiness.sinolines.com.cn",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "Sinolines E-Business"
+  },
+  "links": [],
+  "detection": []
+}

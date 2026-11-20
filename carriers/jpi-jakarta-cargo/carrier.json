@@ -1,0 +1,63 @@
+{
+  "id": "jpi-jakarta-cargo",
+  "displayName": "JPI Jakarta Cargo",
+  "aliases": [
+    "JPI Cargo",
+    "Jakarta Cargo (M) Sdn Bhd"
+  ],
+  "region": {
+    "countries": [
+      "MY",
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#e62028"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "jpi-jakarta-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://www.jpicargo.com/tracking/{trackingNumber}",
+    "searchUrl": "https://www.jpicargo.com/tracking",
+    "canaryUrl": "https://www.jpicargo.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "images",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "images",
+      "weight"
+    ],
+    "unavailable": [
+      "event_locations",
+      "offset_timestamps"
+    ],
+    "siteName": "JPI Jakarta Cargo Tracking"
+  },
+  "links": [
+    {
+      "domains": [
+        "jpicargo.com"
+      ],
+      "path": "^/tracking/([A-Za-z0-9-]+)/?$"
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,55 @@
+{
+  "id": "ethiopian-cargo",
+  "displayName": "Ethiopian Cargo",
+  "aliases": [
+    "Ethiopian Airlines Cargo",
+    "Ethiopian Cargo & Logistics Services",
+    "Ethiopian Cargo and Logistics Services"
+  ],
+  "region": {
+    "countries": [
+      "ET"
+    ]
+  },
+  "brand": {
+    "color": "#168447"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ethiopian-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "searchUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "canaryUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "shows": [
+      "status",
+      "history",
+      "weight",
+      "flight",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "weight",
+      "flight",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "Ethiopian Cargo Track Your Shipment"
+  },
+  "links": [],
+  "detection": []
+}

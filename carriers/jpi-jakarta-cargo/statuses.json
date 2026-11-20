@@ -1,0 +1,55 @@
+{
+  "carrier": "jpi-jakarta-cargo",
+  "entries": [
+    {
+      "wording": "PICKUP",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "The short code does not specify whether this is a pickup request or completed collection."
+    },
+    {
+      "wording": "JPI CHECKING",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "The carrier does not specify what was checked."
+    },
+    {
+      "wording": "RECEIVED JPI",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ON SHIPPING",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ON SHIPPING TO BRANCH",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "UNLOADING OFFICE HQ",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "UNLOADING OFFICE BRANCH",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "DELIVERED",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}

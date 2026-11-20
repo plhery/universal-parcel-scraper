@@ -184,6 +184,11 @@
     "reason": "Eight digits are printed by many carriers and nothing in the number points to Alem TAT."
   },
   {
+    "carrier": "alfa-mensajes",
+    "kind": "open",
+    "reason": "The public tracker confirms a physical NF guide. The scope of a future prefix rule needs more examples."
+  },
+  {
     "carrier": "allegro-one",
     "pattern": "^ALE\\d{12}$",
     "kind": "by_design",
@@ -318,6 +323,11 @@
     "pattern": "^ASDLP\\d{7}$",
     "kind": "open",
     "reason": "One reported Asendia USA reference of this layout; the family is not established."
+  },
+  {
+    "carrier": "asg-logistics",
+    "kind": "open",
+    "reason": "The guest tracker takes a house waybill, master airway bill or delivery order. These identifiers can be shared by freight networks and remain explicit."
   },
   {
     "carrier": "astral-aviation",
@@ -543,6 +553,11 @@
     "carrier": "cacesa",
     "kind": "by_design",
     "reason": "CACESA clears parcels through customs under the numbers of the platforms and carriers it works for, so it has no number format of its own. Cainiao's Spanish and Portuguese numbers belong to Ecoscooting, which delivers them."
+  },
+  {
+    "carrier": "calidex-courier",
+    "kind": "open",
+    "reason": "The two published Calidex guides use location prefixes in a shared format. The guest lookup confirms the complete guide on explicit selection."
   },
   {
     "carrier": "cargo-expreso",
@@ -1169,6 +1184,11 @@
     "reason": "DPEX air waybills are twelve digits with a modulo-7 check digit, the same layout and check as Yamato, Sagawa and Japan Post domestic numbers, so the shape cannot name DPEX."
   },
   {
+    "carrier": "dps-cargo",
+    "kind": "open",
+    "reason": "The public portal confirms the full DPS shipment number. The adapter accepts it through explicit carrier selection."
+  },
+  {
     "carrier": "dragon-star-curier",
     "pattern": "^\\d{7}$",
     "kind": "by_design",
@@ -1332,6 +1352,11 @@
     "pattern": "^\\d{13}$",
     "kind": "by_design",
     "reason": "Thirteen-digit references on EFW's tracker are bare digit runs many carriers share."
+  },
+  {
+    "carrier": "ethiopian-cargo",
+    "kind": "open",
+    "reason": "The guest form confirms the Ethiopian Cargo master airway bill serial. Select Ethiopian Cargo explicitly."
   },
   {
     "carrier": "eurodis",
@@ -1536,6 +1561,11 @@
     "reason": "Eight digits are printed by many carriers and nothing in the number points to Flyking."
   },
   {
+    "carrier": "flywing-cargo",
+    "kind": "open",
+    "reason": "An eight-digit goods receipt does not identify Flywing by itself. The carrier verifies the full receipt on explicit selection."
+  },
+  {
     "carrier": "followmont",
     "pattern": "^\\d{7,8}$",
     "kind": "by_design",
@@ -1610,6 +1640,11 @@
     "pattern": "^PH\\d{10}$",
     "kind": "by_design",
     "reason": "Only one GAASH lookup shows this layout, and the tracker names Cainiao as that parcel's courier, so the prefix may come from the sender's label."
+  },
+  {
+    "carrier": "gardewine",
+    "kind": "open",
+    "reason": "The guest lookup uses a shared numeric shipment shape. Select Gardewine explicitly."
   },
   {
     "carrier": "gati",
@@ -1874,6 +1909,11 @@
     "reason": "Hecny confirms a whole house bill through its guest search. The bare format is shared."
   },
   {
+    "carrier": "hede-shipping",
+    "kind": "open",
+    "reason": "Container numbers identify equipment and may be shared across ocean lines. Hede’s native lookup confirms the whole equipment number."
+  },
+  {
     "carrier": "helthjem",
     "pattern": "^00\\d{18}$",
     "kind": "by_design",
@@ -2063,6 +2103,11 @@
     "reason": "Sixteen digits are shared by several carriers and nothing in the number points to IDS Logistik."
   },
   {
+    "carrier": "ignazio-messina",
+    "kind": "open",
+    "reason": "The guest route uses a shared container equipment identifier. Select Ignazio Messina explicitly."
+  },
+  {
     "carrier": "ilyang-logis",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
@@ -2206,6 +2251,11 @@
     "reason": "Fifteen- and sixteen-digit resi numbers carry no JNE marker and other carriers print the same lengths."
   },
   {
+    "carrier": "jpi-jakarta-cargo",
+    "kind": "open",
+    "reason": "A public form example confirms a JPI shipment beginning with KJ, and the carrier lookup binds its full number. The prefix scope remains open."
+  },
+  {
     "carrier": "jrs-express",
     "pattern": "^\\d{6}(?:\\d{3,4})?$",
     "kind": "by_design",
@@ -2216,6 +2266,16 @@
     "pattern": "^(?:\\d{9}|\\d{12}|\\d{16}|\\d{19,20})$",
     "kind": "by_design",
     "reason": "Kargoist tracks parcels by the shop's barcode, bare digit runs of many lengths that other carriers print too."
+  },
+  {
+    "carrier": "karya-pratama-cargo",
+    "kind": "open",
+    "reason": "A short numeric shipment number does not identify its issuer. Karya Pratama Cargo confirms the full number in its public lookup."
+  },
+  {
+    "carrier": "kenya-airways-cargo",
+    "kind": "open",
+    "reason": "The guest search confirms the full Kenya Airways Cargo air waybill. Select Kenya Airways Cargo explicitly."
   },
   {
     "carrier": "kerry-express-tw",
@@ -2413,6 +2473,11 @@
     "pattern": "^70\\d{8}$",
     "kind": "collision",
     "reason": "Linear Logistics numbers are DX's ten-digit secure-delivery references, and ten digits are shared by many carriers, so no rule claims them."
+  },
+  {
+    "carrier": "litegua-cargo",
+    "kind": "open",
+    "reason": "An eleven-digit numeric guide shares its shape with other carriers. Litegua Express prints the full guide number in its electronic lookup."
   },
   {
     "carrier": "logen",
@@ -2882,6 +2947,11 @@
     "reason": "Public house bills resolve with explicit selection. ASQR is an external customs carrier code and the bare SE house shape has no demonstrated exclusive ownership."
   },
   {
+    "carrier": "ou-yi-hang",
+    "kind": "open",
+    "reason": "The carrier publishes one working waybill. Further evidence is needed to distinguish its numbers from other carriers."
+  },
+  {
     "carrier": "overseas-express",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -3266,6 +3336,11 @@
     "reason": "Three letters and seven digits are shared by Australia Post and other carriers, and Pushpak's prefixes are not published."
   },
   {
+    "carrier": "qatar-airways-cargo",
+    "kind": "open",
+    "reason": "The public guest portal confirms the master air waybill prefix and serial. The eleven-digit number shares a shape with other carriers."
+  },
+  {
     "carrier": "quality-post",
     "pattern": "^[A-Z]{3}\\d{7}$",
     "kind": "by_design",
@@ -3425,6 +3500,11 @@
     "pattern": "^S\\d{8}$",
     "kind": "by_design",
     "reason": "An S and eight digits is one archived lookup's layout and also matches Mainfreight corpus numbers, so it is too thin to claim."
+  },
+  {
+    "carrier": "sai-baba-transport",
+    "kind": "open",
+    "reason": "Eight-digit lorry receipts overlap other networks. The guest lookup verifies the full number after explicit selection."
   },
   {
     "carrier": "saia",
@@ -3639,10 +3719,20 @@
     "reason": "The guest site confirms the full Sinokor bill of lading. The adapter is selected explicitly."
   },
   {
+    "carrier": "sinotrans-container-lines",
+    "kind": "open",
+    "reason": "Container ownership does not identify the line operating the shipment. The guest tracker verifies the complete equipment number."
+  },
+  {
     "carrier": "skroutz-last-mile",
     "pattern": "^[A-Z0-9]{13}$",
     "kind": "by_design",
     "reason": "Thirteen capital letters and digits without a prefix or check digit are shared with UPU numbers and other carriers' codes, so nothing in a voucher points to Skroutz Last Mile."
+  },
+  {
+    "carrier": "sky-courier-co",
+    "kind": "open",
+    "reason": "The guest form confirms a public SKY guide with a year and serial. Explicit selection binds the full guide while the scope of any detection rule is open."
   },
   {
     "carrier": "skyex-ae",
@@ -4174,6 +4264,11 @@
     "reason": "Sixteen digits are shared by several carriers and nothing in the number points to UBI Smart Parcel."
   },
   {
+    "carrier": "united-africa-feeder-line",
+    "kind": "open",
+    "reason": "A published UFLN bill resolves to the exact booking. The scope of a future carrier prefix rule is open."
+  },
+  {
     "carrier": "united-delivery-service",
     "pattern": "^(?:\\d{11}|\\d{12}|\\d{18})$",
     "kind": "by_design",
@@ -4250,6 +4345,11 @@
     "pattern": "^999\\d{9}$",
     "kind": "by_design",
     "reason": "Twelve digits starting 999 also occur in deprisa, pecom and sending corpus numbers, so the prefix does not point to Via Cargo alone."
+  },
+  {
+    "carrier": "vidhi-transport",
+    "kind": "open",
+    "reason": "The guest form verifies an unprefixed lorry receipt number. Select Vidhi Transport explicitly."
   },
   {
     "carrier": "viettel-post",

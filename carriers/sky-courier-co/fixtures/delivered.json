@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "package": {
+    "skyTrackingNumber": "SKY-2026-00010",
+    "status": "ENTREGADO"
+  },
+  "packages": [
+    {
+      "skyTrackingNumber": "SKY-2026-00010",
+      "status": "ENTREGADO"
+    }
+  ],
+  "multipleResults": false
+}

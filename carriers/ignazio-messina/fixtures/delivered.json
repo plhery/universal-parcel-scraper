@@ -1,0 +1,50 @@
+{
+  "TIPO": "40HC",
+  "ISO": "45G1",
+  "BL": [],
+  "CNTR": [],
+  "MOV": [
+    {
+      "CODMOV": "IS",
+      "DATAMOV": "26/10/26",
+      "DESCMOV": "Delivered",
+      "LOCATION": "CTL NOATUM"
+    },
+    {
+      "CODMOV": "SBP",
+      "DATAMOV": "19/10/26",
+      "DESCMOV": "Discharged",
+      "LOCATION": "CTL NOATUM"
+    },
+    {
+      "CODMOV": "IBP",
+      "DATAMOV": "14/10/26",
+      "DESCMOV": "Transhipment Load",
+      "LOCATION": "MISURATA"
+    },
+    {
+      "CODMOV": "SBP",
+      "DATAMOV": "07/10/26",
+      "DESCMOV": "Transhipment Discharge",
+      "LOCATION": "MISURATA"
+    },
+    {
+      "CODMOV": "IBP",
+      "DATAMOV": "29/09/26",
+      "DESCMOV": "Loaded",
+      "LOCATION": "JEDDAH RED SEA"
+    },
+    {
+      "CODMOV": "RP",
+      "DATAMOV": "27/09/26",
+      "DESCMOV": "Gate In Full",
+      "LOCATION": "JEDDAH RED SEA"
+    },
+    {
+      "CODMOV": "IR",
+      "DATAMOV": "30/08/26",
+      "DESCMOV": "Empty To Shipper",
+      "LOCATION": "JEDDAH ADEL BAH"
+    }
+  ]
+}
