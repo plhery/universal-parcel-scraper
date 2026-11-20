@@ -1,5 +1,28 @@
 {
   "carrier": "xls-futar",
-  "gap": "No public page shows an XLS Futár parcel number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "3885491",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://xlsfutar.hu/track/3885491",
+        "date": "2023-12-21",
+        "dateKind": "last carrier update",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Csomagkövetési szám",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "XLS Futár’s public tracking summary identifies this parcel and shows it as delivered."
+    }
+  ]
 }

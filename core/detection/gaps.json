@@ -4730,5 +4730,11 @@
     "pattern": "^003707\\d{14}$",
     "kind": "open",
     "reason": "Xpressen’s archived tracker shows a delivered package for a 20-digit SSCC input. Detection offers other carriers for that package number."
+  },
+  {
+    "carrier": "xls-futar",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "XLS Futár’s guest tracker shows a delivered parcel for a seven-digit number. Detection offers only SEUR for this input."
   }
 ]
