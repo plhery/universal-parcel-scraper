@@ -2329,6 +2329,8 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'best-express-th': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
+  'best-express-vn': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
   pasarex: 'the tracker answers only after its reCAPTCHA checkbox, so the link opens the form with the number filled in; native retrieval ticks the checkbox in a scoped browser helper',
   'onlog-express': 'the guest page searches only after its Turnstile callback; the rendered-link canary does not submit verification, while native retrieval fills the whole reference in a scoped browser helper',
   'gls-nl': 'the tracker shows a parcel only with its delivery postcode, which the generated link does not carry, so the link opens the empty search form',
