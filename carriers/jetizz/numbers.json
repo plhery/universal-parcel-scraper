@@ -14,7 +14,7 @@
       "context": {
         "service": "Turkey domestic parcels",
         "reportedRole": "tracking number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -30,7 +30,7 @@
           "dhl-freight"
         ]
       },
-      "note": "The recipient explicitly names Jetizz, quotes the complete number and reports tracking history. The official form has documented image verification and returned a redirect loop during the public visit, so no number was submitted."
+      "note": "The recipient explicitly names Jetizz and quotes the complete number. Jetizz's tracker answers it with its history, handed to partner Aras Kargo for delivery."
     },
     {
       "number": "2600370624",
@@ -45,7 +45,7 @@
       "context": {
         "service": "Turkey domestic parcels",
         "reportedRole": "tracking number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -61,11 +61,11 @@
           "dhl-freight"
         ]
       },
-      "note": "The recipient names Jetizz as the carrier and quotes the exact tracking number for an Incehesap order. The official form has documented image verification and returned a redirect loop during the public visit, so no number was submitted."
+      "note": "The recipient names Jetizz as the carrier and quotes the exact tracking number for an Incehesap order. Jetizz's tracker answers it with its history."
     },
     {
       "number": "6509954188019",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://www.sikayetvar.com/jetizz/jetizz-kargosunun-teslimat-gecikmesi-ve-musteri-hizmetleri-sorunu",
@@ -76,9 +76,8 @@
       "context": {
         "service": "Turkey domestic parcels",
         "reportedRole": "tracking number",
-        "assessment": "scope_review"
+        "assessment": "confirmed"
       },
-      "quarantine": true,
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
@@ -92,7 +91,7 @@
           "paquetexpress"
         ]
       },
-      "note": "The recipient reports a Jetizz delivery and quotes a tracking history. It is unclear whether Jetizz or partner Aras Kargo issued this thirteen-digit family. The official Jetizz form has documented image verification and returned a redirect loop during the public visit, so no number was submitted."
+      "note": "The recipient reports a Jetizz delivery. The number is partner Aras Kargo's, and Jetizz's tracker answers it with the history of its own ten-digit waybill for the parcel."
     }
   ]
 }

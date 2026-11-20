@@ -1,4 +1,21 @@
 {
   "carrier": "jetizz",
-  "entries": []
+  "entries": [
+    {"wording": "YOLDA", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "Movement: on its way, handed to the partner."},
+    {"wording": "DAĞITIMDA - Kurye Üzerinde", "stage": "out_for_delivery", "language": "tr", "confirmedBy": "live", "note": "Movement: out for delivery with the courier."},
+    {"wording": "Acentede İade - Dağıtıma Yetişmedi", "stage": "failed_attempt", "language": "tr", "confirmedBy": "live", "note": "Movement: back at the branch, the round having missed it."},
+    {"wording": "Acentede İade - Tanınmıyor", "stage": "failed_attempt", "language": "tr", "confirmedBy": "live", "note": "Movement: back at the branch, the recipient unknown at the address."},
+    {"wording": "Mobil Alan Tarihi Bekleniyor", "language": "tr", "confirmedBy": "live", "note": "Movement after a failed delivery: waiting for the next day a mobile branch serves the area. It keeps the stage before it."},
+    {"wording": "Kesin İade - Ulaşılamıyor", "stage": "exception", "language": "tr", "confirmedBy": "live", "note": "Movement: the return to the sender is settled, the recipient unreachable."},
+    {"wording": "İade Edildi", "stage": "returned", "language": "tr", "confirmedBy": "live", "note": "Current status: returned to the sender."},
+    {"wording": "TESLİM - Diğer", "stage": "delivered", "language": "tr", "confirmedBy": "live", "note": "Movement: delivered to someone other than the recipient."},
+    {"wording": "Teslim Edildi", "stage": "delivered", "language": "tr", "confirmedBy": "live", "note": "Current status, with the delivery time beside it."},
+    {"wording": "ŞUBEDE ARAÇ YÜKLEME", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "The partner's scan: loaded onto a vehicle at a branch."},
+    {"wording": "ŞUBEDE ARAÇ İNDİRME", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "The partner's scan: unloaded at a branch."},
+    {"wording": "AKTARMADA HAT ARACI YÜKLEME", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "The partner's scan: loaded onto a line-haul vehicle at a transfer centre."},
+    {"wording": "AKTARMADA HAT ARACI İNDİRME", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "The partner's scan: unloaded from a line-haul vehicle at a transfer centre."},
+    {"wording": "AKTARMADA SUBE ARACI YUKLEME", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "The partner's scan: loaded onto a branch vehicle at a transfer centre."},
+    {"wording": "AKTARMADA SUBE ARACI INDIRME", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "The partner's scan: unloaded from a branch vehicle at a transfer centre."},
+    {"wording": "AKTARMADA TORBA DOLDURMA", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "The partner's scan: bagged at a transfer centre."}
+  ]
 }

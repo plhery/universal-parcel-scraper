@@ -33683,7 +33683,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Istanbul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jetizz",
+      "localClocks": true
     },
     "canaryUrl": "https://jetizz.com/",
     "trackingSearchUrl": "https://app.jetizz.com/gonderi-takip",
