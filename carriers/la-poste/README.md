@@ -83,7 +83,9 @@ input, so recognition reads them as unknown rather than as a transport failure.
   right after the sender's announcement, `ET1` ("en transit sur nos plateformes logistiques"),
   is the acceptance.
 - `PB1` is a delivery that could not happen that day. Parcels word it as a
-  coming delivery round, so the code makes it a failed attempt.
+  coming delivery round, so the code makes it a failed attempt. Under the same code, an address
+  La Poste finds incomplete or wrong is an exception, and a day lost "en raison d'une situation
+  indépendante de notre volonté" is La Poste's own delay, in transit.
 - `AG1` means ready for pickup whatever its group or sentence. `DO1` is customs
   entry, `DO2` the release and `RE1` the decision to return the item. Duties paid
   at the door (`DESPAY`) follow the delivery scan and keep it delivered. Duties paid online (`AARPAY`)

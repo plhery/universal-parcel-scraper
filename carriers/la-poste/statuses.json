@@ -65,7 +65,7 @@
       "note": "Progress-bar group: returning to the sender. A return under way stays open, as the shared rules read it, until a scan has the parcel back with its sender."
     },
     {
-      "wording": "incident / anomalie / avarie / endommagé / refusé / adresse incorrecte / adresse de livraison est incomplète",
+      "wording": "incident / anomalie / avarie / endommagé / refusé / adresse … incomplète / adresse … incorrecte",
       "language": "fr",
       "stage": "exception",
       "confirmedBy": "fixture",
@@ -183,6 +183,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "Event code: the item could not be delivered that day and goes back out as soon as possible. Parcels word it as a future delivery round, so the code decides; the result status becomes exception. Seen under the groups DISIRST and DISAADR; the incomplete-address sentence of DISAADR is an exception."
+    },
+    {
+      "code": "PB1",
+      "wording": "Votre envoi n'a pas pu être distribué ce jour en raison d'une situation indépendante de notre volonté. Il sera remis en distribution au plus tôt.",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "PB1 under DISIRST for La Poste's own reasons, after the sort into the round: a delay, not an attempt at the door."
     },
     {
       "code": "DO2",

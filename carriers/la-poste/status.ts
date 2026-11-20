@@ -87,6 +87,10 @@ const PAID_ONLINE_GROUP = 'AARPAY';
 /** Acceptance at the origin, by La Poste (`PC1`) or its partner abroad (`PC2`). */
 const ACCEPTANCE_CODES = new Set(['PC1', 'PC2']);
 
+/** "Adresse incorrecte", "l'adresse de livraison est incomplète", "l'adresse indiquée … est incomplète ou incorrecte". */
+const WRONG_ADDRESS = /\badresse\b[^.]{0,60}\b(?:incomplete|incorrecte)\b/;
+const BEYOND_CONTROL = 'independante de notre volonte';
+
 /** Lowercase, accent-free form used for every wording comparison. */
 export function comparable(value: unknown): string {
   return clean(value)
@@ -126,6 +130,9 @@ export function eventStatus(
   label: string,
   hasEvents: boolean,
 ): CarrierStatus {
+  // `PB1` "n'a pas pu être distribué ce jour en raison d'une situation indépendante de notre volonté": La Poste's
+  // own delay, after the sort into the round, not an attempt at the door; the round comes back as soon as it can.
+  if (code.toLocaleUpperCase('en-US') === 'PB1' && comparable(label).includes(BEYOND_CONTROL)) return 'in_transit';
   const described = labelStatus(label, false);
   if (described === 'exception') return described;
   return CODE_STATUSES.get(code.toLocaleUpperCase('en-US'))
@@ -155,8 +162,7 @@ export function eventStage(group: string, code: string, label: string): Stage {
       .some((term) => value.includes(term))
   )) return 'ready_for_pickup';
   // A carrier-reported problem that is neither a missed attempt nor a return.
-  if (['incident', 'anomalie', 'avarie', 'endommage', 'refuse', 'adresse incorrecte', 'adresse de livraison est incomplete']
-    .some((term) => value.includes(term))) return 'exception';
+  if (['incident', 'anomalie', 'avarie', 'endommage', 'refuse'].some((term) => value.includes(term)) || WRONG_ADDRESS.test(value)) return 'exception';
   if (normalizedGroup === PAID_AT_DELIVERY_GROUP) return 'delivered';
   if (normalizedGroup === PAID_ONLINE_GROUP) return 'in_transit';
   if (normalizedCode === CUSTOMS_ENTRY_CODE || worded === 'customs') return 'customs';
