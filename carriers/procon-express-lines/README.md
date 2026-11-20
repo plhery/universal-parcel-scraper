@@ -6,9 +6,8 @@ The [public tracking form](https://cmsfreight.com/tracking/public-tracking/) ope
 
 The carrier shows local dates and times and describes critical dates as estimates. The adapter preserves the clock values as reported. It reads booking and container movements, omits administrative messages and shipment details, and leaves port arrival and gate activity in transit.
 
-Run the optional live checks against a published house bill and the carrier’s documented form example, which currently has no match.
+Run the optional live checks against a published house bill and a reference the carrier does not find.
 
 ```sh
-PROCON_TRACKING_NUMBER=PCXS2ET26090083 PROCON_UNKNOWN_NUMBER=3XX16020022 \
-  npx vitest run --config vitest.carriers-live.config.ts carriers/procon-express-lines/adapter.live.test.ts
+PROCON_EXPRESS_LINES_TRACKING_NUMBER=… PROCON_EXPRESS_LINES_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/procon-express-lines
 ```

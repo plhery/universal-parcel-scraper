@@ -4,9 +4,9 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 
 const tracker = adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
-const container = process.env.BCL_TRACKING_CONTAINER;
-const booking = process.env.BCL_TRACKING_BOOKING;
-const missing = process.env.BCL_TRACKING_MISSING;
+const container = process.env.BERMUDA_CONTAINER_LINE_TRACKING_NUMBER;
+const booking = process.env.BERMUDA_CONTAINER_LINE_BOOKING_NUMBER;
+const missing = process.env.BERMUDA_CONTAINER_LINE_UNKNOWN_NUMBER;
 
 it.skipIf(!container)('finds dated Bermuda Container Line equipment movements', async () => {
   const result = await tracker.track({ number: directTrackingNumber('bermuda-container-line', container!) });

@@ -7,6 +7,5 @@ The [Visible guest tracker](https://visible.leschaco.com/) calls `GET /v1/Tracki
 The carrier can mark a shipment as finished when the equipment returns empty. The adapter keeps the empty gate-in as an equipment movement without classifying it as consignee delivery. It omits estimates, vessel and equipment identifiers, and customer details.
 
 ```sh
-LESCHACO_TRACKING_NUMBER=ALRB261013270093 LESCHACO_UNKNOWN_NUMBER=ALRB241217210064 \
-  npx vitest run --config vitest.carriers-live.config.ts carriers/leschaco/adapter.live.test.ts
+LESCHACO_TRACKING_NUMBER=… LESCHACO_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/leschaco
 ```

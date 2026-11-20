@@ -45,7 +45,7 @@ export function parseTracking(html: string, serial: string): CarrierResult {
       });
     }
   }
-  const history = [...movements.values()].sort((a, b) => b.local_time.localeCompare(a.local_time));
+  const history = [...movements.values()].reverse().sort((a, b) => b.local_time.localeCompare(a.local_time));
   const latest = history[0];
   const summary = clean(page('#pnlMultipleAWBs [id$="_lblLatestActivity"]').first().text());
   const wording = summary && !hasPrivateDeliveryDetails(summary) ? summary : '';

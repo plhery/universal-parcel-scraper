@@ -7,6 +7,5 @@ The [guest tracking form](https://track.sflworldwide.com/) sends a read-only JSO
 [SFL Worldwide's public complaint response](https://www.bbb.org/us/tx/farmers-branch/profile/logistics/sfl-worldwide-0875-90225242/complaints) identifies the confirmed shipment. The native reply reports delivery without a delivery timestamp. Its dated handoff uses a local clock.
 
 ```sh
-SFL_WORLDWIDE_TRACKING_NUMBER=155411113354 SFL_WORLDWIDE_TRACKING_MISSING=101038384 \
-  npx vitest run --config vitest.carriers-live.config.ts carriers/sfl-worldwide/adapter.live.test.ts
+SFL_WORLDWIDE_TRACKING_NUMBER=… SFL_WORLDWIDE_TRACKING_MISSING=… npm run test:carriers:live -- carriers/sfl-worldwide
 ```

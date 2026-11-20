@@ -20593,28 +20593,6 @@
     ]
   },
   {
-    "input": "139-43814223",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "postlogistics",
-      "gls-ch",
-      "gls-fr",
-      "gls-de",
-      "coordinadora",
-      "gls-at",
-      "gls-pl",
-      "mainfreight",
-      "paquetexpress"
-    ],
-    "asked": [
-      "gls-fr",
-      "gls-de",
-      "gls-ch",
-      "postlogistics"
-    ]
-  },
-  {
     "input": "13918033",
     "carrier": "unknown",
     "confidence": "low",
@@ -57487,14 +57465,6 @@
     ]
   },
   {
-    "input": "5YR-92203705",
-    "carrier": "wedo",
-    "confidence": "high",
-    "candidates": [
-      "wedo"
-    ]
-  },
-  {
     "input": "6 352 932 558 1",
     "carrier": "unknown",
     "confidence": "low",
@@ -84013,18 +83983,6 @@
     ]
   },
   {
-    "input": "BOG-110491",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
-    "input": "BOG00100600000409",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
     "input": "BOK2023192",
     "carrier": "bookurier",
     "confidence": "high",
@@ -88877,12 +88835,6 @@
     ]
   },
   {
-    "input": "DDX178722",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
     "input": "DE0032063021",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -89142,17 +89094,6 @@
       "colis-prive",
       "tnt-au",
       "purolator"
-    ]
-  },
-  {
-    "input": "DO-2025-0087",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "tnt-it"
-    ],
-    "asked": [
-      "tnt-it"
     ]
   },
   {
@@ -93030,12 +92971,6 @@
     "candidates": []
   },
   {
-    "input": "Freight/2025/158",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
     "input": "G0000512000433544",
     "carrier": "unknown",
     "confidence": "low",
@@ -93382,12 +93317,6 @@
   },
   {
     "input": "GE123456789WW",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
-    "input": "GEL-2026-000001",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
@@ -102529,23 +102458,6 @@
     ]
   },
   {
-    "input": "NET-98214",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "gls-ch",
-      "gls-fr",
-      "gls-de",
-      "gls-nl",
-      "loggi"
-    ],
-    "asked": [
-      "gls-fr",
-      "gls-de",
-      "gls-ch"
-    ]
-  },
-  {
     "input": "NET72583581",
     "carrier": "loomis-express",
     "confidence": "high",
@@ -106229,23 +106141,6 @@
     ]
   },
   {
-    "input": "QS207431",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "gls-ch",
-      "gls-fr",
-      "gls-de",
-      "gls-nl",
-      "loggi"
-    ],
-    "asked": [
-      "gls-fr",
-      "gls-de",
-      "gls-ch"
-    ]
-  },
-  {
     "input": "QS416938",
     "carrier": "unknown",
     "confidence": "low",
@@ -106261,12 +106156,6 @@
       "gls-de",
       "gls-ch"
     ]
-  },
-  {
-    "input": "QS570719299745",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
   },
   {
     "input": "QSP147827798",
@@ -111718,12 +111607,6 @@
     ]
   },
   {
-    "input": "ST230047655JP",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
-  },
-  {
     "input": "STR059449783",
     "carrier": "unknown",
     "confidence": "low",
@@ -114667,14 +114550,6 @@
   },
   {
     "input": "UUS61T1260957452967",
-    "carrier": "uniuni",
-    "confidence": "high",
-    "candidates": [
-      "uniuni"
-    ]
-  },
-  {
-    "input": "UUS63D1260298065799",
     "carrier": "uniuni",
     "confidence": "high",
     "candidates": [

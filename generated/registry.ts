@@ -18,7 +18,6 @@ import { adapter as abfFreight } from '../carriers/abf-freight/adapter.js';
 import { adapter as aciExpressKr } from '../carriers/aci-express-kr/adapter.js';
 import { adapter as acsCourier } from '../carriers/acs-courier/adapter.js';
 import { adapter as aerolineasArgentinasCargo } from '../carriers/aerolineas-argentinas-cargo/adapter.js';
-import { adapter as aeromexicoCargo } from '../carriers/aeromexico-cargo/adapter.js';
 import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
 import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
 import { adapter as airEuropaCargo } from '../carriers/air-europa-cargo/adapter.js';
@@ -200,7 +199,6 @@ import { adapter as dayRoss } from '../carriers/day-ross/adapter.js';
 import { adapter as daylightTransport } from '../carriers/daylight-transport/adapter.js';
 import { adapter as dayone } from '../carriers/dayone/adapter.js';
 import { adapter as daytonFreight } from '../carriers/dayton-freight/adapter.js';
-import { adapter as ddxGlobalExpress } from '../carriers/ddx-global-express/adapter.js';
 import { adapter as dealersend } from '../carriers/dealersend/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
 import { adapter as deliveryAuto } from '../carriers/delivery-auto/adapter.js';
@@ -357,7 +355,6 @@ import { adapter as geodis } from '../carriers/geodis/adapter.js';
 import { adapter as geodisPl } from '../carriers/geodis-pl/adapter.js';
 import { adapter as gigLogistics } from '../carriers/gig-logistics/adapter.js';
 import { adapter as globalDeliveryNetwork } from '../carriers/global-delivery-network/adapter.js';
-import { adapter as globalExpressLogisticsTanzania } from '../carriers/global-express-logistics-tanzania/adapter.js';
 import { adapter as globalpost } from '../carriers/globalpost/adapter.js';
 import { adapter as globkurier } from '../carriers/globkurier/adapter.js';
 import { adapter as glsCa } from '../carriers/gls-ca/adapter.js';
@@ -614,7 +611,6 @@ import { adapter as olvaCourier } from '../carriers/olva-courier/adapter.js';
 import { adapter as omLogistics } from '../carriers/om-logistics/adapter.js';
 import { adapter as omgo } from '../carriers/omgo/adapter.js';
 import { adapter as omniva } from '../carriers/omniva/adapter.js';
-import { adapter as oneLogisticsEgypt } from '../carriers/one-logistics-egypt/adapter.js';
 import { adapter as oneWorldExpress } from '../carriers/one-world-express/adapter.js';
 import { adapter as onex } from '../carriers/onex/adapter.js';
 import { adapter as onlogExpress } from '../carriers/onlog-express/adapter.js';
@@ -626,7 +622,6 @@ import { adapter as otsAstracon } from '../carriers/ots-astracon/adapter.js';
 import { adapter as overseasExpress } from '../carriers/overseas-express/adapter.js';
 import { adapter as ozonLogistics } from '../carriers/ozon-logistics/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
-import { adapter as pacificAirCargo } from '../carriers/pacific-air-cargo/adapter.js';
 import { adapter as pacificInternationalLines } from '../carriers/pacific-international-lines/adapter.js';
 import { adapter as packMan } from '../carriers/pack-man/adapter.js';
 import { adapter as packeta } from '../carriers/packeta/adapter.js';
@@ -690,7 +685,6 @@ import { adapter as postnord } from '../carriers/postnord/adapter.js';
 import { adapter as posturinn } from '../carriers/posturinn/adapter.js';
 import { adapter as ppl } from '../carriers/ppl/adapter.js';
 import { adapter as precisionDeliveries } from '../carriers/precision-deliveries/adapter.js';
-import { adapter as pressexLogistics } from '../carriers/pressex-logistics/adapter.js';
 import { adapter as proCarrier } from '../carriers/pro-carrier/adapter.js';
 import { adapter as proconExpressLines } from '../carriers/procon-express-lines/adapter.js';
 import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
@@ -710,7 +704,6 @@ import { adapter as qtExpress } from '../carriers/qt-express/adapter.js';
 import { adapter as quantiumSolutions } from '../carriers/quantium-solutions/adapter.js';
 import { adapter as quickFort } from '../carriers/quick-fort/adapter.js';
 import { adapter as quickRabbit } from '../carriers/quick-rabbit/adapter.js';
-import { adapter as quickshipCanada } from '../carriers/quickship-canada/adapter.js';
 import { adapter as quicksilverSa } from '../carriers/quicksilver-sa/adapter.js';
 import { adapter as quiqup } from '../carriers/quiqup/adapter.js';
 import { adapter as qwintry } from '../carriers/qwintry/adapter.js';
@@ -755,7 +748,6 @@ import { adapter as sameday } from '../carriers/sameday/adapter.js';
 import { adapter as sapxExpress } from '../carriers/sapx-express/adapter.js';
 import { adapter as satUkraine } from '../carriers/sat-ukraine/adapter.js';
 import { adapter as saudiPost } from '../carriers/saudi-post/adapter.js';
-import { adapter as sbExpressBangladesh } from '../carriers/sb-express-bangladesh/adapter.js';
 import { adapter as seaLegendLine } from '../carriers/sea-legend-line/adapter.js';
 import { adapter as seino } from '../carriers/seino/adapter.js';
 import { adapter as seinoSuperExpress } from '../carriers/seino-super-express/adapter.js';
@@ -830,11 +822,9 @@ import { adapter as starken } from '../carriers/starken/adapter.js';
 import { adapter as starlinksGlobal } from '../carriers/starlinks-global/adapter.js';
 import { adapter as sto } from '../carriers/sto/adapter.js';
 import { adapter as stone3pl } from '../carriers/stone3pl/adapter.js';
-import { adapter as stoo } from '../carriers/stoo/adapter.js';
 import { adapter as straightship } from '../carriers/straightship/adapter.js';
 import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
-import { adapter as sunriseLogisticsColombia } from '../carriers/sunrise-logistics-colombia/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
 import { adapter as sway } from '../carriers/sway/adapter.js';
@@ -1018,7 +1008,6 @@ export const REGISTRY: RegistryDefinition = {
     "aci-express-kr": aciExpressKr,
     "acs-courier": acsCourier,
     "aerolineas-argentinas-cargo": aerolineasArgentinasCargo,
-    "aeromexico-cargo": aeromexicoCargo,
     "aeropost": aeropost,
     "aex-paraguay": aexParaguay,
     "air-europa-cargo": airEuropaCargo,
@@ -1200,7 +1189,6 @@ export const REGISTRY: RegistryDefinition = {
     "daylight-transport": daylightTransport,
     "dayone": dayone,
     "dayton-freight": daytonFreight,
-    "ddx-global-express": ddxGlobalExpress,
     "dealersend": dealersend,
     "delhivery": delhivery,
     "delivery-auto": deliveryAuto,
@@ -1357,7 +1345,6 @@ export const REGISTRY: RegistryDefinition = {
     "geodis-pl": geodisPl,
     "gig-logistics": gigLogistics,
     "global-delivery-network": globalDeliveryNetwork,
-    "global-express-logistics-tanzania": globalExpressLogisticsTanzania,
     "globalpost": globalpost,
     "globkurier": globkurier,
     "gls-ca": glsCa,
@@ -1614,7 +1601,6 @@ export const REGISTRY: RegistryDefinition = {
     "om-logistics": omLogistics,
     "omgo": omgo,
     "omniva": omniva,
-    "one-logistics-egypt": oneLogisticsEgypt,
     "one-world-express": oneWorldExpress,
     "onex": onex,
     "onlog-express": onlogExpress,
@@ -1626,7 +1612,6 @@ export const REGISTRY: RegistryDefinition = {
     "overseas-express": overseasExpress,
     "ozon-logistics": ozonLogistics,
     "paack": paack,
-    "pacific-air-cargo": pacificAirCargo,
     "pacific-international-lines": pacificInternationalLines,
     "pack-man": packMan,
     "packeta": packeta,
@@ -1690,7 +1675,6 @@ export const REGISTRY: RegistryDefinition = {
     "posturinn": posturinn,
     "ppl": ppl,
     "precision-deliveries": precisionDeliveries,
-    "pressex-logistics": pressexLogistics,
     "pro-carrier": proCarrier,
     "procon-express-lines": proconExpressLines,
     "profit-fields": profitFields,
@@ -1710,7 +1694,6 @@ export const REGISTRY: RegistryDefinition = {
     "quantium-solutions": quantiumSolutions,
     "quick-fort": quickFort,
     "quick-rabbit": quickRabbit,
-    "quickship-canada": quickshipCanada,
     "quicksilver-sa": quicksilverSa,
     "quiqup": quiqup,
     "qwintry": qwintry,
@@ -1755,7 +1738,6 @@ export const REGISTRY: RegistryDefinition = {
     "sapx-express": sapxExpress,
     "sat-ukraine": satUkraine,
     "saudi-post": saudiPost,
-    "sb-express-bangladesh": sbExpressBangladesh,
     "sea-legend-line": seaLegendLine,
     "seino": seino,
     "seino-super-express": seinoSuperExpress,
@@ -1830,11 +1812,9 @@ export const REGISTRY: RegistryDefinition = {
     "starlinks-global": starlinksGlobal,
     "sto": sto,
     "stone3pl": stone3pl,
-    "stoo": stoo,
     "straightship": straightship,
     "suhu": suhu,
     "sundarban-courier": sundarbanCourier,
-    "sunrise-logistics-colombia": sunriseLogisticsColombia,
     "sunyou": sunyou,
     "surat-kargo": suratKargo,
     "sway": sway,
@@ -2039,7 +2019,6 @@ export const REGISTRY: RegistryDefinition = {
     "adex-al": "universal",
     "ads-intl": "universal",
     "aerolineas-argentinas-cargo": "aerolineas-argentinas-cargo",
-    "aeromexico-cargo": "aeromexico-cargo",
     "aeronet": "universal",
     "aeropaq": "universal",
     "aeropost": "aeropost",
@@ -2420,7 +2399,6 @@ export const REGISTRY: RegistryDefinition = {
     "dayton-freight": "dayton-freight",
     "dd-express": "universal",
     "ddu-express": "universal",
-    "ddx-global-express": "ddx-global-express",
     "dealersend": "dealersend",
     "deleo": "universal",
     "delhivery": "delhivery",
@@ -2719,7 +2697,6 @@ export const REGISTRY: RegistryDefinition = {
     "gle-colombia": "universal",
     "global-business-tw": "universal",
     "global-delivery-network": "global-delivery-network",
-    "global-express-logistics-tanzania": "global-express-logistics-tanzania",
     "global-parcel-service": "universal",
     "globalpost": "globalpost",
     "globex-post": "universal",
@@ -3219,7 +3196,6 @@ export const REGISTRY: RegistryDefinition = {
     "omgo": "omgo",
     "omniva": "omniva",
     "ondot-courier": "universal",
-    "one-logistics-egypt": "one-logistics-egypt",
     "one-world-express": "one-world-express",
     "onex": "onex",
     "online-worldwide-logistics": "universal",
@@ -3242,7 +3218,6 @@ export const REGISTRY: RegistryDefinition = {
     "ozon-express-ma": "universal",
     "ozon-logistics": "ozon-logistics",
     "paack": "paack",
-    "pacific-air-cargo": "pacific-air-cargo",
     "pacific-international-lines": "pacific-international-lines",
     "pack-man": "pack-man",
     "packeta": "packeta",
@@ -3365,7 +3340,6 @@ export const REGISTRY: RegistryDefinition = {
     "precision-deliveries": "precision-deliveries",
     "premier-deliveries-uk": "universal",
     "premo": "universal",
-    "pressex-logistics": "pressex-logistics",
     "primewell": "universal",
     "princesa-dos-campos": "universal",
     "prisma-courier": "universal",
@@ -3400,7 +3374,6 @@ export const REGISTRY: RegistryDefinition = {
     "quick-transport": "universal",
     "quickbox-kg": "universal",
     "quickpac": "planzer",
-    "quickship-canada": "quickship-canada",
     "quicksilver-sa": "quicksilver-sa",
     "quiqup": "quiqup",
     "quriers": "universal",
@@ -3484,7 +3457,6 @@ export const REGISTRY: RegistryDefinition = {
     "sat-ukraine": "sat-ukraine",
     "saudi-post": "saudi-post",
     "savar-express": "universal",
-    "sb-express-bangladesh": "sb-express-bangladesh",
     "sbs-sokuhai": "universal",
     "scan-global-logistics": "universal",
     "scg-express": "universal",
@@ -3614,14 +3586,12 @@ export const REGISTRY: RegistryDefinition = {
     "stg-ltl": "universal",
     "sto": "sto",
     "stone3pl": "stone3pl",
-    "stoo": "stoo",
     "stop-start": "universal",
     "straightship": "straightship",
     "suhu": "suhu",
     "sumxpress": "universal",
     "sundarban-courier": "sundarban-courier",
     "suning-logistics": "universal",
-    "sunrise-logistics-colombia": "sunrise-logistics-colombia",
     "sunyou": "sunyou",
     "super-parcel-track": "universal",
     "superb-express": "universal",

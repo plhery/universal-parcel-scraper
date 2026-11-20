@@ -47,7 +47,7 @@ export function parseTracking(body: string, reference: string): CarrierResult {
     const movement = parseMovement(row);
     if (movement) distinct.set(movement.local_time + '|' + movement.description, movement);
   }
-  const events = [...distinct.values()].sort((left, right) => right.local_time.localeCompare(left.local_time));
+  const events = [...distinct.values()].reverse().sort((left, right) => right.local_time.localeCompare(left.local_time));
   const latest = events[0];
   if (!latest) throw new IndeterminateError(provider, 'Procon Express Lines listed the consignment without dated movements', { reason: 'listed' });
   return {

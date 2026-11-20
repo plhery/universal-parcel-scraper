@@ -24,5 +24,5 @@ export const stages = new Map<number, Stage>([
   [823, 'in_transit'],
   [828, 'in_transit'],
   [829, 'in_transit'],
-  [874, 'out_for_delivery'],
+  [874, 'in_transit'],
 ]);

@@ -3,8 +3,8 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 
 const tracker = adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
-const number = process.env.AEROLINEAS_CARGO_TRACKING_NUMBER;
-const empty = process.env.AEROLINEAS_CARGO_EMPTY_NUMBER;
+const number = process.env.AEROLINEAS_ARGENTINAS_CARGO_TRACKING_NUMBER;
+const empty = process.env.AEROLINEAS_ARGENTINAS_CARGO_EMPTY_NUMBER;
 
 it.skipIf(!number)('returns booking through delivery for the published Aerolíneas Cargo waybill', async () => {
   const result = await tracker.track({ number: number! });

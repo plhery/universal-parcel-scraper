@@ -4,7 +4,7 @@
     {
       "wording": "BOOKED DATE",
       "language": "en",
-      "stage": "pending",
+      "stage": "registered",
       "confirmedBy": "live",
       "note": "Booking entered."
     },

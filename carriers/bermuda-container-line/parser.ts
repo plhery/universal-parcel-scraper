@@ -28,7 +28,7 @@ function movement(value: unknown): Movement | undefined {
   if (!clock.isValid) return;
   const localTime = time ? clock.toFormat("yyyy-MM-dd'T'HH:mm") : clock.toISODate();
   const location = [wording(value.location), wording(value.locationType)].filter(Boolean).join(', ');
-  const stage = stages.get(description);
+  const stage = /^empty$/i.test(wording(value.state)) ? undefined : stages.get(description);
   return {
     local_time: localTime, description,
     ...(location && { location }),

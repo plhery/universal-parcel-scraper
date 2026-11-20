@@ -7012,28 +7012,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "aeromexico-cargo": {
-    "displayName": "Aeroméxico Cargo",
-    "color": "#182843",
-    "aliases": [
-      "Aeromexico Cargo",
-      "AM Cargo"
-    ],
-    "countries": [
-      "MX"
-    ],
-    "selectable": true,
-    "timezone": "America/Mexico_City",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "aeromexico-cargo"
-    },
-    "canaryUrl": "https://amcargo.aeromexico.com/track/",
-    "trackingUrlTemplate": "https://amcargo.aeromexico.com/track/",
-    "trackingSearchUrl": "https://amcargo.aeromexico.com/track/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "aeronet": {
     "displayName": "Aeronet Worldwide",
     "color": "#00529b",
@@ -18787,29 +18765,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "ddx-global-express": {
-    "displayName": "DDX Global Express",
-    "color": "#60309B",
-    "aliases": [
-      "DDX Express",
-      "DDX Vietnam"
-    ],
-    "countries": [
-      "VN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Ho_Chi_Minh",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "ddx-global-express",
-      "localClocks": true
-    },
-    "canaryUrl": "https://ddxpress.vn/tracking",
-    "trackingUrlTemplate": "https://ddxpress.vn/tracking?code={trackingNumber}",
-    "trackingSearchUrl": "https://ddxpress.vn/tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "dealersend": {
     "displayName": "DealerSend",
     "color": "#d71d4f",
@@ -28671,28 +28626,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "global-express-logistics-tanzania": {
-    "displayName": "Global Express Logistics Tanzania",
-    "color": "#1C4A94",
-    "aliases": [
-      "Global Express Tanzania",
-      "Global Express Logistics TZ"
-    ],
-    "countries": [
-      "TZ"
-    ],
-    "selectable": true,
-    "timezone": "Africa/Dar_es_Salaam",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "global-express-logistics-tanzania"
-    },
-    "canaryUrl": "https://globalexpress.co.tz/tracking",
-    "trackingUrlTemplate": "https://globalexpress.co.tz/tracking?number={trackingNumber}",
-    "trackingSearchUrl": "https://globalexpress.co.tz/tracking",
-    "linkRules": [],
     "detectionRules": []
   },
   "global-parcel-service": {
@@ -44487,28 +44420,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "one-logistics-egypt": {
-    "displayName": "ONE Logistics Egypt",
-    "color": "#093387",
-    "aliases": [
-      "One Logistics EG",
-      "One Logistics for Logistics Services"
-    ],
-    "countries": [
-      "EG"
-    ],
-    "selectable": true,
-    "timezone": "Africa/Cairo",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "one-logistics-egypt"
-    },
-    "canaryUrl": "https://onelogisticseg.com/ar/",
-    "trackingUrlTemplate": "https://onelogisticseg.com/ar/",
-    "trackingSearchUrl": "https://onelogisticseg.com/ar/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "one-world-express": {
     "displayName": "One World Express",
     "color": "#161c5e",
@@ -45222,31 +45133,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
-  },
-  "pacific-air-cargo": {
-    "displayName": "Pacific Air Cargo",
-    "color": "#006B9B",
-    "aliases": [
-      "Pacific Air Cargo Hawaii",
-      "PACTRAK"
-    ],
-    "countries": [
-      "US",
-      "AS",
-      "GU"
-    ],
-    "selectable": true,
-    "timezone": "Pacific/Honolulu",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "pacific-air-cargo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.pactracking.com/track/",
-    "trackingUrlTemplate": "https://www.pactracking.com/track/",
-    "trackingSearchUrl": "https://www.pactracking.com/track/",
-    "linkRules": [],
-    "detectionRules": []
   },
   "pacific-international-lines": {
     "displayName": "Pacific International Lines",
@@ -49302,31 +49188,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "pressex-logistics": {
-    "displayName": "PressEx Logistics",
-    "color": "#E56124",
-    "aliases": [
-      "PressEx Courier",
-      "PressEx Colombia",
-      "Pressex Courier SAS"
-    ],
-    "countries": [
-      "CO",
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "America/Bogota",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "pressex-logistics",
-      "localClocks": true
-    },
-    "canaryUrl": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
-    "trackingUrlTemplate": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
-    "trackingSearchUrl": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "primewell": {
     "displayName": "Primewell",
     "color": "#ff5d15",
@@ -50327,33 +50188,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.quickbox.pro/search-express",
     "trackingSearchUrl": "https://www.quickbox.pro/search-express",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "quickship-canada": {
-    "displayName": "QuickShip",
-    "color": "#EA580C",
-    "aliases": [
-      "QuickShip Now",
-      "QuickShip International",
-      "QuickShip Canada"
-    ],
-    "countries": [
-      "IN",
-      "CA",
-      "US",
-      "GB"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "quickship-canada",
-      "localClocks": true
-    },
-    "canaryUrl": "https://track.quickshipnow.com/",
-    "trackingUrlTemplate": "https://track.quickshipnow.com/?awb={trackingNumber}",
-    "trackingSearchUrl": "https://track.quickshipnow.com/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52933,29 +52767,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
     "trackingSearchUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "sb-express-bangladesh": {
-    "displayName": "SB Express Limited",
-    "color": "#6B42A0",
-    "aliases": [
-      "SB Express Bangladesh",
-      "SB Express Ltd."
-    ],
-    "countries": [
-      "BD"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Dhaka",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sb-express-bangladesh",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.sbexpresslimited.com/tracking",
-    "trackingUrlTemplate": "https://www.sbexpresslimited.com/tracking?code={trackingNumber}",
-    "trackingSearchUrl": "https://www.sbexpresslimited.com/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -57219,32 +57030,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "stoo": {
-    "displayName": "STOO",
-    "color": "#1A68D2",
-    "aliases": [
-      "STLine",
-      "Start Today",
-      "STL",
-      "에스티엘"
-    ],
-    "countries": [
-      "KR",
-      "JP"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Seoul",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "stoo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://stline.stload.com/tracking",
-    "trackingUrlTemplate": "https://stline.stload.com/tracking/{trackingNumber}",
-    "trackingSearchUrl": "https://stline.stload.com/tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "stop-start": {
     "displayName": "Stop Start",
     "color": "#d85b2d",
@@ -57432,29 +57217,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://wuliu.suning.com/home/toLogisticsDetail.htm",
     "trackingSearchUrl": "https://wuliu.suning.com/home/toLogisticsDetail.htm",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "sunrise-logistics-colombia": {
-    "displayName": "Sunrise Logistics Group",
-    "color": "#163F73",
-    "aliases": [
-      "Sunrise Logistics Colombia",
-      "Sunrise Cargo Colombia"
-    ],
-    "countries": [
-      "CO"
-    ],
-    "selectable": true,
-    "timezone": "America/Bogota",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sunrise-logistics-colombia",
-      "localClocks": true
-    },
-    "canaryUrl": "https://tracking.sunriselg.com/es",
-    "trackingUrlTemplate": "https://tracking.sunriselg.com/es",
-    "trackingSearchUrl": "https://tracking.sunriselg.com/es",
     "linkRules": [],
     "detectionRules": []
   },
@@ -68072,7 +67834,6 @@ export const CARRIER_IDS = [
   "adex-al",
   "ads-intl",
   "aerolineas-argentinas-cargo",
-  "aeromexico-cargo",
   "aeronet",
   "aeropaq",
   "aeropost",
@@ -68426,7 +68187,6 @@ export const CARRIER_IDS = [
   "dayton-freight",
   "dd-express",
   "ddu-express",
-  "ddx-global-express",
   "dealersend",
   "deleo",
   "delibox",
@@ -68711,7 +68471,6 @@ export const CARRIER_IDS = [
   "gle-colombia",
   "global-business-tw",
   "global-delivery-network",
-  "global-express-logistics-tanzania",
   "global-parcel-service",
   "globalpost",
   "globex-post",
@@ -69188,7 +68947,6 @@ export const CARRIER_IDS = [
   "omgo",
   "omniva",
   "ondot-courier",
-  "one-logistics-egypt",
   "one-world-express",
   "onex",
   "online-worldwide-logistics",
@@ -69209,7 +68967,6 @@ export const CARRIER_IDS = [
   "oxperta-express",
   "ozon-express-ma",
   "ozon-logistics",
-  "pacific-air-cargo",
   "pacific-international-lines",
   "pack-man",
   "packli-punkt",
@@ -69323,7 +69080,6 @@ export const CARRIER_IDS = [
   "precision-deliveries",
   "premier-deliveries-uk",
   "premo",
-  "pressex-logistics",
   "primewell",
   "princesa-dos-campos",
   "prisma-courier",
@@ -69356,7 +69112,6 @@ export const CARRIER_IDS = [
   "quick-rabbit",
   "quick-transport",
   "quickbox-kg",
-  "quickship-canada",
   "quicksilver-sa",
   "quiqup",
   "quriers",
@@ -69438,7 +69193,6 @@ export const CARRIER_IDS = [
   "sat-ukraine",
   "saudi-post",
   "savar-express",
-  "sb-express-bangladesh",
   "sbs-sokuhai",
   "scan-global-logistics",
   "scg-express",
@@ -69560,14 +69314,12 @@ export const CARRIER_IDS = [
   "steadfast",
   "stg-ltl",
   "stone3pl",
-  "stoo",
   "stop-start",
   "straightship",
   "suhu",
   "sumxpress",
   "sundarban-courier",
   "suning-logistics",
-  "sunrise-logistics-colombia",
   "super-parcel-track",
   "superb-express",
   "surat-kargo",
@@ -70042,7 +69794,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "adex-al": [],
   "ads-intl": [],
   "aerolineas-argentinas-cargo": [],
-  "aeromexico-cargo": [],
   "aeronet": [],
   "aeropaq": [],
   "aeropost": ["aeropost-1"],
@@ -70396,7 +70147,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dayton-freight": [],
   "dd-express": [],
   "ddu-express": [],
-  "ddx-global-express": [],
   "dealersend": ["dealersend-1"],
   "deleo": [],
   "delibox": [],
@@ -70681,7 +70431,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gle-colombia": [],
   "global-business-tw": [],
   "global-delivery-network": [],
-  "global-express-logistics-tanzania": [],
   "global-parcel-service": [],
   "globalpost": ["globalpost-1"],
   "globex-post": [],
@@ -71158,7 +70907,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "omgo": ["omgo-1"],
   "omniva": ["omniva-1","omniva-2","omniva-own","omniva-s10"],
   "ondot-courier": [],
-  "one-logistics-egypt": [],
   "one-world-express": ["one-world-express-1"],
   "onex": [],
   "online-worldwide-logistics": [],
@@ -71179,7 +70927,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "oxperta-express": [],
   "ozon-express-ma": [],
   "ozon-logistics": ["ozon-logistics-1","ozon-logistics-2","ozon-logistics-3"],
-  "pacific-air-cargo": [],
   "pacific-international-lines": [],
   "pack-man": [],
   "packli-punkt": [],
@@ -71293,7 +71040,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "precision-deliveries": ["precision-deliveries-1"],
   "premier-deliveries-uk": [],
   "premo": [],
-  "pressex-logistics": [],
   "primewell": [],
   "princesa-dos-campos": [],
   "prisma-courier": [],
@@ -71326,7 +71072,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2","quick-rabbit-3"],
   "quick-transport": [],
   "quickbox-kg": [],
-  "quickship-canada": [],
   "quicksilver-sa": ["quicksilver-sa-1"],
   "quiqup": [],
   "quriers": [],
@@ -71408,7 +71153,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sat-ukraine": [],
   "saudi-post": ["saudi-post-1","saudi-post-s10"],
   "savar-express": [],
-  "sb-express-bangladesh": [],
   "sbs-sokuhai": [],
   "scan-global-logistics": [],
   "scg-express": ["scg-express-1"],
@@ -71530,14 +71274,12 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "steadfast": ["steadfast-1"],
   "stg-ltl": [],
   "stone3pl": ["stone3pl-s18"],
-  "stoo": [],
   "stop-start": [],
   "straightship": ["straightship-1","straightship-2"],
   "suhu": [],
   "sumxpress": [],
   "sundarban-courier": [],
   "suning-logistics": [],
-  "sunrise-logistics-colombia": [],
   "super-parcel-track": [],
   "superb-express": [],
   "surat-kargo": [],

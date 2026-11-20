@@ -166,7 +166,7 @@
       "code": "874",
       "wording": "Picked up at Final Destination for Delivery",
       "language": "en",
-      "stage": "out_for_delivery",
+      "stage": "in_transit",
       "confirmedBy": "live"
     }
   ]

@@ -7,5 +7,5 @@ The [SmartKargo tracking page](https://volarisy4.smartkargo.com/FrmAWBTracking.a
 The [published Baja California procurement waybill](https://wsextbc.ebajacalifornia.gob.mx/CdnBc/api/Imagenes/ObtenerImagenDeSistema?descargar=false&nombreArchivo=FuenteOrigen%2F59%2F2720210803114705.pdf&sistemaSolicitante=setBC%2F) documents the shipment used in the fixture. The airline also documents an `A02` prefix in its older cargo FAQ. This adapter covers the independently verified `036` service.
 
 ```sh
-VOLARIS_CARGO_TRACKING_NUMBER=036-18709025 npx vitest run --config vitest.carriers-live.config.ts carriers/volaris-cargo/adapter.live.test.ts --maxWorkers 1
+VOLARIS_CARGO_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/volaris-cargo
 ```

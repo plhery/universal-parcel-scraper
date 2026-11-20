@@ -107,11 +107,6 @@
     "reason": "The airline-issued AWB begins with 044, while existing generic rules offer other candidates. Select Aerolíneas Argentinas Cargo explicitly."
   },
   {
-    "carrier": "aeromexico-cargo",
-    "kind": "open",
-    "reason": "The carrier-issued AWB starts with 139. Numeric shapes overlap other carriers, so select Aeroméxico Cargo explicitly."
-  },
-  {
     "carrier": "aex-paraguay",
     "pattern": "^A\\d{9}$",
     "kind": "collision",
@@ -980,11 +975,6 @@
     "reason": "Eleven digits, the zero-padded barcode form of a Dayton Freight PRO, are shared by several carriers and nothing else in the number points to Dayton Freight."
   },
   {
-    "carrier": "ddx-global-express",
-    "kind": "open",
-    "reason": "One published DDX reference is insufficient to establish a unique prefix rule. Select DDX Global Express explicitly."
-  },
-  {
     "carrier": "delivery-auto",
     "pattern": "^\\d{10}$",
     "kind": "collision",
@@ -1756,11 +1746,6 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "GIG Logistics does not document its waybill layout, and ten digits are shared with many carriers, so the shape cannot name GIG Logistics."
-  },
-  {
-    "carrier": "global-express-logistics-tanzania",
-    "kind": "open",
-    "reason": "One published GEL reference is insufficient to establish a carrier-specific prefix rule. Select Global Express Logistics Tanzania explicitly."
   },
   {
     "carrier": "globalpost",
@@ -2961,11 +2946,6 @@
     "reason": "This layout is shared with other carriers or too plain to claim, so detection leaves it unclaimed."
   },
   {
-    "carrier": "one-logistics-egypt",
-    "kind": "open",
-    "reason": "The published Odoo freight reference uses a generic Freight prefix and does not establish a carrier-specific family. Select ONE Logistics Egypt explicitly."
-  },
-  {
     "carrier": "ontrac",
     "pattern": "^AD\\d{9}$",
     "kind": "by_design",
@@ -3011,11 +2991,6 @@
     "carrier": "paack",
     "kind": "by_design",
     "reason": "Paack identifiers are retailer order numbers with no stable shape, so one can match another carrier's rule."
-  },
-  {
-    "carrier": "pacific-air-cargo",
-    "kind": "open",
-    "reason": "The confirmed public PACTRAK 5YR waybill currently matches WeDo. Select Pacific Air Cargo explicitly for its waybill or short serial."
   },
   {
     "carrier": "pacific-international-lines",
@@ -3301,11 +3276,6 @@
     "reason": "One archived reply of Precision's tracking API shows PRE, six digits and five letters or digits; a single sample is too thin to claim it."
   },
   {
-    "carrier": "pressex-logistics",
-    "kind": "open",
-    "reason": "One published PressEx guide does not establish a carrier-specific range. Select PressEx Logistics explicitly."
-  },
-  {
     "carrier": "pro-carrier",
     "pattern": "^UBG\\d{9}$",
     "kind": "open",
@@ -3433,11 +3403,6 @@
     "pattern": "^UQ[A-Z][A-Z]{2}\\d{8}$",
     "kind": "by_design",
     "reason": "Quantium reference numbers find a shipment on its own tracker, but universal providers track the tracking number, so detection does not route references."
-  },
-  {
-    "carrier": "quickship-canada",
-    "kind": "open",
-    "reason": "The verified QuickShip AWB overlaps GLS and Loggi candidates. The second reference belongs to the last-mile carrier. Select QuickShip explicitly."
   },
   {
     "carrier": "quiqup",
@@ -3626,11 +3591,6 @@
     "pattern": "^(?:EMSPRI|EBUMSP|ABSINE)\\d{10}$",
     "kind": "by_design",
     "reason": "SPL uses several six-letter prefixes before ten digits, and only one sample each of these three is known, too few to claim them."
-  },
-  {
-    "carrier": "sb-express-bangladesh",
-    "kind": "open",
-    "reason": "One published SB Express number is insufficient evidence of a unique NET prefix. Select SB Express Limited explicitly."
   },
   {
     "carrier": "sbs-sokuhai",
@@ -3964,11 +3924,6 @@
     "reason": "Older Steadfast codes are eight to eleven hexadecimal characters, too generic to claim."
   },
   {
-    "carrier": "stoo",
-    "kind": "open",
-    "reason": "One published reception number does not establish a carrier-specific format. Select STOO explicitly."
-  },
-  {
     "carrier": "sundarban-courier",
     "pattern": "^\\d{14}$",
     "kind": "by_design",
@@ -3979,11 +3934,6 @@
     "pattern": "^[A-Z]{3}\\d{13}[A-Z]{2}$",
     "kind": "open",
     "reason": "One parcel the app tracked shows Suhu's order numbers as three letters, thirteen digits and two letters; with no public number the layout is not established, so recognition asks Suhu's tracker instead."
-  },
-  {
-    "carrier": "sunrise-logistics-colombia",
-    "kind": "open",
-    "reason": "One published Sunrise house air waybill does not establish a unique carrier range. Select Sunrise Logistics Group explicitly."
   },
   {
     "carrier": "sunyou",

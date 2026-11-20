@@ -7,6 +7,5 @@ The tracker fetches the public WordPress form, submits the reference with the an
 The adapter omits routing estimates, arrival notices, administrative actions, and customer and equipment details. It recognizes a completed CFS pickup by the customer as delivery. Freight available at the CFS stays ready for pickup.
 
 ```sh
-SACO_SHIPPING_TRACKING_NUMBER=SSLLNYC296044 SACO_SHIPPING_UNKNOWN_NUMBER=SSLL202613474401 \
-  npx vitest run --config vitest.carriers-live.config.ts carriers/saco-shipping-line/adapter.live.test.ts
+SACO_SHIPPING_LINE_TRACKING_NUMBER=… SACO_SHIPPING_LINE_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/saco-shipping-line
 ```
