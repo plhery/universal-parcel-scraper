@@ -80,6 +80,14 @@
       "note": "Copied from FedEx, which delivers the last leg."
     },
     {
+      "wording": "Left FedEx origin facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "Copied from FedEx, which delivers the last leg: its first facility sent the parcel on."
+    },
+    {
       "wording": "Arrived at FedEx hub",
       "language": "en",
       "stage": "in_transit",
@@ -517,6 +525,14 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "note": "Waiting at the airport for the booked flight, whose days, month.day, are read as an ellipsis."
+    },
+    {
+      "wording": "The flight is expected to depart on …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "Waiting at the airport for the booked flight, naming its departure day alone, month.day, read as an ellipsis."
     },
     {
       "wording": "The flight has departed and is expected to … land",

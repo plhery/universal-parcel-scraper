@@ -547,6 +547,7 @@ describe('JRT tracking adapter', () => {
     expect(answer('Flight is expected to take off on September 11')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Flight is expected to take off on November?3')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight is expected to depart on 10.27 and land on 10.28')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('The flight is expected to depart on 11.17')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight has departed and is expected to 1.3 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // A delayed connecting flight names its landing day the same way.
     expect(answer('Sorry, the second flight has been delayed and is expected to 11.12 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
@@ -696,6 +697,7 @@ describe('JRT tracking adapter', () => {
       '货物已交机场,预计号的航班 Goods delivered to airport, scheduled on flight of the th',
       'loaded to movement / tour vehicle again',
       'The flight is expected to depart on soon and land on 10.27',
+      'The flight is expected to depart on soon',
       '10/22号航班 CA000',
       '预计号航班飞',
       '货物到达口岸，预计2026/11/17号航班起飞 CA000',

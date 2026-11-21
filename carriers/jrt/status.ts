@@ -20,6 +20,8 @@ const TAKE_OFF_DAY = /^(flight is expected to take off on )[a-z]+[ ?]{1,2}\d{1,2
 // The newer English rows name the flight's days as month.day: "expected to depart on 10.27 and land on 10.27",
 // and so does a delayed connecting flight: "Sorry, the second flight has been delayed and is expected to 11.12 land".
 const FLIGHT_DATES = /^(the flight is expected to depart on )\d{1,2}\.\d{1,2}( and land on )\d{1,2}\.\d{1,2}$/;
+// It can name the departure day alone: "The flight is expected to depart on 11.17".
+const DEPARTURE_DATE = /^(the flight is expected to depart on )\d{1,2}\.\d{1,2}$/;
 const LANDING_DATE = /^(the flight has departed and is expected to |sorry, the second flight has been delayed and is expected to )\d{1,2}\.\d{1,2}( land)$/;
 
 // On the line into the United States JRT books the flight by its month and day alone: "10/22号航班".
@@ -61,7 +63,7 @@ export const isJrtJtMexicoRow = isJtMexicoRow;
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
 export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
-  .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
+  .replace(FLIGHT_DATES, '$1…$2…').replace(DEPARTURE_DATE, '$1…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(PORT_FLIGHT_DAY, '货物到达口岸，预计…号航班起飞').replace(EXPECTED_FLIGHT_DAY, '$1…$2')
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(NEW_ADDRESS, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
   .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…');
