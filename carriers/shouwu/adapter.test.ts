@@ -595,6 +595,12 @@ describe('Shouwu International status vocabulary', () => {
     }
   });
 
+  it("reads the partner's collection in China as the first scan in its hands, and its centre's and flight's departures as transit", () => {
+    expect(shouwuStage('Arrive at the delivery location Picked up by Shipping Partner')).toEqual({ stage: 'accepted', source: 'carrier_map' });
+    expect(shouwuStage('Cargo leaving the operation center')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(shouwuStage('Flight departed, package in transit')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+  });
+
   it('reads the last mile\'s return as on its way back, whatever reason it names', () => {
     expect(shouwuStage('Back to Sender for reason: refused by the recipient')).toEqual({ stage: 'exception', source: 'carrier_map' });
     expect(statusMap.stage(null, 'back to sender for reason: sample reason')).toBe('exception');
