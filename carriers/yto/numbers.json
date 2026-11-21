@@ -77,6 +77,37 @@
         ]
       },
       "note": "A YTO tracking page archived by the Wayback Machine, for a G and eleven digits number that YTO detection does not know. YTO's site did not answer from here."
+    },
+    {
+      "number": "YTG852000330450",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.chinapostaltracking.com/qa/parcel-status-stuck-for-weeks-129356/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "review",
+        "reportedRole": "unresolved_reference"
+      },
+      "expect": {
+        "carrier": "yto",
+        "confidence": "high"
+      },
+      "note": "Customer reports a China-origin parcel to Australia without naming the carrier. YTG and twelve digits is the shape of YTO Global's waybills; YTO's feed echoes this one without scans, as it does any well-shaped number.",
+      "quarantine": true
+    },
+    {
+      "number": "YTG990000000017",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-21",
+      "expect": {
+        "carrier": "yto",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of a YTO Global waybill whose scans YTO's tracking feed returned under the whole number, from its overseas centre. YTO's own client accepts YTG and twelve digits. Its digits are not the waybill's."
     }
   ]
 }

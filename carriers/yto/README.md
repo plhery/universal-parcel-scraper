@@ -1,6 +1,7 @@
 # YTO Express
 
-Tracks Chinese domestic waybills through the official website's consumer feed.
+Tracks Chinese domestic waybills, and YTO Global waybills (YTG and twelve digits) once YTO's
+overseas centres scan them, through the official website's consumer feed.
 
 ## How it works
 
@@ -30,6 +31,11 @@ of its own stays malformed.
 Known labels are shown in English, and rows stored with the Chinese label take the
 English in place.
 
+An overseas centre's scan on a YTO Global waybill has a code of words, such as `DEBUS`, no
+label, and a description that names the centre before the label ("<centre>,已收入"). The
+scan takes that label and the centre as its place. Its clock keeps its wall clock: the feed
+does not say whether it is the centre's or China time.
+
 Relayed Chinese labels and their ParcelsApp translations use the same vocabulary as
 direct scans. ParcelsApp's UTC-labelled China clocks are read in the catalog timezone.
 17TRACK relays the expanded description instead; its copy keeps the clauses before the
@@ -40,8 +46,9 @@ and a row that opens with a contact is left out.
 
 An echoed number with no scans, as YTO answers for a waybill not scanned yet, is no history
 (`NoHistoryError`): inconclusive, not a failure of the lookup. It has no `listed` reason: the feed
-echoes a number YTO never issued the same way. Archived histories and international
-YTO Global shipments use separate website flows and are outside this adapter's scope.
+echoes a number YTO never issued the same way. Archived histories, and a YTO Global
+shipment's legs before an overseas centre scans it, use separate website flows and are
+outside this adapter's scope.
 
 ## Testing
 

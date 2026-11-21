@@ -219,6 +219,24 @@
       "stage": "out_for_delivery",
       "confirmedBy": "documentation",
       "note": "Exact code mapping in the official domestic website tracking client."
+    },
+    {
+      "wording": "已揽收",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "An overseas centre's pickup on a YTO Global waybill, sent without a label and written after the centre's name; stored as \"Picked up\".",
+      "code": "PU_PICKUP_SUCCESS"
+    },
+    {
+      "wording": "已收入",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "An overseas centre receiving a YTO Global waybill, sent without a label and written after the centre's name; stored as \"Received at a sorting centre\".",
+      "code": "DEBUS"
     }
   ]
 }

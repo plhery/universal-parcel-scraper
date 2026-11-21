@@ -18,7 +18,20 @@ const STATUS = new Map<string, ClassifiedStatus>([
   ['835', { status: 'exception', stage: 'exception' }],
   // A security check in the network, seen for a winter sports event: the parcel moves on.
   ['996', { status: 'in_transit', stage: 'in_transit' }],
+  // YTO's overseas centres, on a YTO Global waybill.
+  ['PU_PICKUP_SUCCESS', { status: 'in_transit', stage: 'accepted' }],
+  ['DEBUS', { status: 'in_transit', stage: 'in_transit' }],
 ]);
+
+/**
+ * The codes YTO's overseas centres scan under, such as its Sydney centre on a YTO Global waybill.
+ * The feed gives their clocks no zone, and the centre is not in China.
+ */
+const OVERSEAS = new Set(['PU_PICKUP_SUCCESS', 'DEBUS']);
+
+export function isYtoOverseasCode(code: string): boolean {
+  return OVERSEAS.has(code);
+}
 
 /** The locker or station code, read with its sign type. */
 const STATION = '751';
@@ -37,6 +50,8 @@ const LABELS = new Map<string, string>([
   ['310', '揽收扫描'], ['131', '装件入车扫描'], ['171', '下车扫描'], ['710', '派件扫描'], ['745', 'PDA正常签收扫描'],
   ['311', '已取件'], ['111', '运输中'], ['136', '运输中'], ['176', '运输中'], ['741', '派件中'], ['746', '派件中'],
   ['123', '快件城市信息'], ['756', '小件员取出'], ['835', '退回件扫描'], ['996', '冬运会安检'],
+  // An overseas centre's description, "<centre>,已揽收", ends with the label.
+  ['PU_PICKUP_SUCCESS', '已揽收'], ['DEBUS', '已收入'],
 ]);
 
 /**
@@ -87,6 +102,9 @@ const SCANS: ReadonlyArray<readonly [chinese: string, english: string | null, st
   ['PDA正常签收扫描', 'PDA normal delivery scan', 'delivered', 'Delivered'],
   // A security check in the network for a winter sports event: the parcel moves on.
   ['冬运会安检', null, 'in_transit', 'Security check'],
+  // An overseas centre takes the parcel into YTO's network, then receives it.
+  ['已揽收', null, 'accepted', 'Picked up'],
+  ['已收入', null, 'in_transit', 'Received at a sorting centre'],
 ];
 
 function key(label: string): string {

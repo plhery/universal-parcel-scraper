@@ -4598,6 +4598,10 @@
       {
         "pattern": "^G\\d{11}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^YTG\\d{12}$",
+        "confidence": "high"
       }
     ]
   },

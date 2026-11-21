@@ -22,9 +22,12 @@ export function ytoRelayedWording(description: string): string {
 
 /**
  * The place a transit scan's description names first, "您的快件已经到达【<place>】…" or
- * "您的快件离开【<place>】，已发往【…】", for a scan the feed sends without its place.
+ * "您的快件离开【<place>】，已发往【…】", or the overseas centre "<centre>,已收入" names, for a
+ * scan the feed sends without its place.
  */
 export function ytoDescribedPlace(description: string): string | undefined {
-  const place = /^您的快件(?:已经)?(?:到达|离开)【([^【】]{1,100})】/u.exec(description.trim())?.[1]?.trim();
+  const text = description.trim();
+  // An overseas centre's scan names the centre before its label: "<centre>,已收入".
+  const place = (/^您的快件(?:已经)?(?:到达|离开)【([^【】]{1,100})】/u.exec(text) ?? /^([^,，【】]{1,100})[,，](?:已揽收|已收入)$/u.exec(text))?.[1]?.trim();
   return place && !CONTACT.test(place) ? place : undefined;
 }
