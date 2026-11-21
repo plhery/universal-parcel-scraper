@@ -15854,6 +15854,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ck-line": {
+    "displayName": "CK Line",
+    "color": "#003f87",
+    "aliases": [
+      "Chun Kyung",
+      "CK Line Co., Ltd.",
+      "천경해운"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ck-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://es.ckline.co.kr/",
+    "trackingSearchUrl": "https://es.ckline.co.kr/?cmd=TRK",
+    "trackingSiteName": "CK Line E-Service",
+    "helpUrl": "https://www.ckline.co.kr/en/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ckeex": {
     "displayName": "CkeEx",
     "color": "#e8651b",
@@ -68150,6 +68175,7 @@ export const CARRIER_IDS = [
   "civa-cargo",
   "cj-logistics",
   "cj-packet",
+  "ck-line",
   "ckeex",
   "closer-logistics",
   "cmt-express",
@@ -70111,6 +70137,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "civa-cargo": [],
   "cj-logistics": [],
   "cj-packet": ["cj-packet-1"],
+  "ck-line": [],
   "ckeex": [],
   "closer-logistics": [],
   "cmt-express": ["cmt-express-1"],

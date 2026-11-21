@@ -1,0 +1,68 @@
+{
+  "resMeta": {
+    "resultCd": "S",
+    "resultMsg": "정상 처리되었습니다."
+  },
+  "resData": [
+    {
+      "CMVENO": "SEGU2887315",
+      "BINBKN": "PU2626846",
+      "CMVSTA": "Empty container was picked up at 2026-10-19 14:21 at HGCT",
+      "CMVSTACD": "SF",
+      "CDPCMN": "HUTCHISON GAMMAN CONTAINER TERMINAL",
+      "CMVDTM": "2026-10-19 14:21",
+      "CMVFOE": "EMPTY",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "SEGU2887315",
+      "BINBKN": "PU2626846",
+      "CMVSTA": "Full container was brought into 2026-10-19 14:52 at HGCT",
+      "CMVSTACD": "LF",
+      "CDPCMN": "HUTCHISON GAMMAN CONTAINER TERMINAL",
+      "CMVDTM": "2026-10-19 14:52",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "SEGU2887315",
+      "BINBKN": "PU2626846",
+      "CMVSTA": "Cargo has been shipped to POS SINGAPORE V.1042S",
+      "CMVSTACD": "VF",
+      "CDPCMN": "HUTCHISON GAMMAN CONTAINER TERMINAL",
+      "CMVDTM": "2026-10-23 08:46",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "SEGU2887315",
+      "BINBKN": "PU2626846",
+      "CMVSTA": "Cargo has been unloaded to POS SINGAPORE V.1042S",
+      "CMVSTACD": "DF",
+      "CDPCMN": "KERRY SIAM SEAPORT",
+      "CMVDTM": "2026-11-02 10:47",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "SEGU2887315",
+      "BINBKN": "PU2626846",
+      "CMVSTA": "Full container was taken out from 2026-11-02 12:14 at SSP",
+      "CMVSTACD": "CF",
+      "CDPCMN": "KERRY SIAM SEAPORT",
+      "CMVDTM": "2026-11-02 12:14",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "SEGU2887315",
+      "BINBKN": "PU2626846",
+      "CMVSTA": "Empty container was brought into 2026-11-03 08:02 at AONE(Damage)",
+      "CMVSTACD": "TD",
+      "CDPCMN": "A-ONE INTERNATIONAL CONTAINER DEPOT",
+      "CMVDTM": "2026-11-03 08:02",
+      "CMVFOE": "EMPTY",
+      "IMPCHK": "Y"
+    }
+  ]
+}

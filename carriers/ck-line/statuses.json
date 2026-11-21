@@ -1,0 +1,12 @@
+{
+  "carrier": "ck-line",
+  "entries": [
+    {"code": "SF", "wording": "Empty container was picked up", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container from a depot to load it; the cargo is not with CK Line yet."},
+    {"code": "LF", "wording": "Full container was brought into", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal of the port of loading."},
+    {"code": "VF", "wording": "Cargo has been shipped to", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on the vessel the wording names."},
+    {"code": "DF", "wording": "Cargo has been unloaded to", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged from the vessel at the port of discharge."},
+    {"code": "CF", "wording": "Full container was taken out from", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker takes the loaded container out of the terminal of the port of discharge."},
+    {"code": "TE", "wording": "Empty container was brought into", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee unloaded the container and returned it empty. The adapter keeps the code only when the e-service marks the return as the import's."},
+    {"code": "TD", "wording": "Empty container was brought into", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The empty container returned damaged. The adapter keeps the code only when the e-service marks the return as the import's."}
+  ]
+}
