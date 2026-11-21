@@ -4664,7 +4664,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "zto",
       "browserRecognitionRank": 800,
-      "browserRecognitionPattern": "^73\\d{12}$",
+      "browserRecognitionPattern": "^7[39]\\d{12}$",
       "browser": true
     },
     "canaryUrl": "https://www.zto.com/check",

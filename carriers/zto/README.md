@@ -24,9 +24,10 @@ the English of its type, and takes over the row stored in Chinese.
 HTTP recognition does not ask ZTO: its gateway challenges a server's probes, and most
 twelve-digit numbers it would be asked about belong to FedEx, which issues the same shape.
 Browser recognition asks it about fourteen-digit waybills beginning with 73, the series
-of its archived waybill links. It runs the page's verification alone, which fits the
-browser probe's budget. A matching reply confirms the number; GLS Netherlands prints
-some fourteen-digit runs beginning with 73 too.
+of its archived waybill links, or 79, a series its tracker answers with domestic scans
+too. It runs the page's verification alone, which fits the browser probe's budget. A
+matching reply confirms the number; GLS Netherlands prints some fourteen-digit runs
+beginning with 73 too, and Hermes Austria some beginning with 79.
 
 The legacy image endpoint does not supply the page's plain-code challenge. Mobile
 H5 tracking requires a signed-in ZTO account. The

@@ -22,7 +22,6 @@ describe('ZTO', () => {
   it('shares domestic candidate validation and requires the complete identity', () => {
     expect(detectCarrierMatch(number).candidates).toContain('zto');
     expect(detectCarrierMatch(number).carrier).not.toBe('zto');
-    expect(recognitionCandidates(number, { phase: 'browser' }).map(row => row.carrier)).not.toContain('zto');
     expect(recognitionCandidates(number, { hint: 'zto' }).map(row => row.carrier)).not.toContain('zto');
     expect(normalizeZtoNumber('7999 0000000001')).toBe(number);
     expect(normalizeZtoNumber('999000000001')).toBe('999000000001');
@@ -31,12 +30,13 @@ describe('ZTO', () => {
     expect(() => parseZto(wrong, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
-  it('is asked through the browser about its fourteen-digit 73 series alone', () => {
-    const series = '73990000000001';
-    expect(detectCarrierMatch(series)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
-    expect(recognitionCandidates(series, { phase: 'browser' }).map(row => row.carrier)).toEqual(['zto']);
-    expect(recognitionCandidates(series).map(row => row.carrier)).not.toContain('zto');
-    for (const input of ['74990000000001', '739900000000011', '739800000006']) {
+  it('is asked through the browser about its fourteen-digit 73 and 79 series alone', () => {
+    for (const series of ['73990000000001', number]) {
+      expect(detectCarrierMatch(series), series).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(recognitionCandidates(series, { phase: 'browser' }).map(row => row.carrier), series).toEqual(['zto']);
+      expect(recognitionCandidates(series).map(row => row.carrier), series).not.toContain('zto');
+    }
+    for (const input of ['74990000000001', '78990000000001', '739900000000011', '799900000000011', '739800000006']) {
       expect(recognitionCandidates(input, { phase: 'browser' }).map(row => row.carrier)).not.toContain('zto');
     }
   });

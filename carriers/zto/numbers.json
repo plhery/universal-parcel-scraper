@@ -67,6 +67,36 @@
         ]
       },
       "note": "A ZTO tracking link archived by the Wayback Machine. Its shipment remains unconfirmed; the whole identifier is a domestic ZTO candidate."
+    },
+    {
+      "number": "79990000000005",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-21",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "zto",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "Made-up number in the shape of the fourteen-digit 79 waybills ZTO's tracker answers with domestic scans. Its serial sits far beyond the range in use."
     }
   ]
 }
