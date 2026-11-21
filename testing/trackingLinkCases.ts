@@ -49,6 +49,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'freight-club', number: 'FCT000000000000000000',
     route: /^https:\/\/app\.freightclub\.com\/Tracking\/FCT000000000000000000$/,
     marker: /No information was found/i, forwarding: { notFound: /No information was found/i } },
+  // The quick track fills its field from the link and searches; a single result opens the shipment's page.
+  { carrier: 'emo-trans', number: 'S2600A00000000',
+    route: /^https:\/\/portal\.emotrans-global\.com\/track\/quicktrack\?shipment=S2600A00000000$/,
+    marker: /Emo Trans\. All Rights Reserved/i },
   { carrier: 'westjet-cargo', number: '83800000000',
     route: /^https:\/\/westjet\.smartkargo\.com\/FrmAWBTracking\.aspx$/,
     marker: /Track Air Waybill/i, forwarding: 'none' },

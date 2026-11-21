@@ -1,0 +1,13 @@
+{
+  "carrier": "emo-trans",
+  "entries": [
+    { "wording": "Booking Confirmed", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The shipment is booked; the event names the station that booked it." },
+    { "wording": "Delivery Cartage Advised", "stage": null, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The trucker who will deliver the shipment is told it is coming, here before the freight left its origin. It says nothing of where the freight is." },
+    { "wording": "Freight Loaded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Loaded on the flight at the origin station, minutes before its departure." },
+    { "wording": "Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "A flight leg's departure from the station the event names." },
+    { "wording": "Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "A flight leg's arrival at the station the event names, at a transfer as well as at the destination." },
+    { "wording": "Customs Commenced", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Import clearance began at the destination." },
+    { "wording": "Customs Cleared", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Import clearance is done; delivery to the door follows." },
+    { "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The shipment page's last status, which can come without an event of its own." }
+  ]
+}

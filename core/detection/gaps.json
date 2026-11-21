@@ -1357,6 +1357,18 @@
     "reason": "Thirteen-digit domestic numbers share their shape with many carriers, and Emirates Post documents no prefix."
   },
   {
+    "carrier": "emo-trans",
+    "pattern": "^S\\d{4}[A-Z]\\d{8}$",
+    "kind": "by_design",
+    "reason": "EMO Trans, a freight forwarder, documents no shape for its shipment numbers, and one archived link is the only public one, so the shape names no carrier."
+  },
+  {
+    "carrier": "emo-trans",
+    "pattern": "^[A-Z]{3}\\d{8}$",
+    "kind": "collision",
+    "reason": "A forwarder's house bill begins with its station's three-letter code, a shape other forwarders and carriers use too."
+  },
+  {
     "carrier": "energia-tk",
     "pattern": "^\\d{11}$",
     "kind": "by_design",

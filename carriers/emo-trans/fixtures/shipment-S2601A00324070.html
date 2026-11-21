@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+		<title>Quick Track - Emo Trans: Track &amp; Trace</title>
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1" />
+	    <meta name="format-detection" content="telephone=no" />
+	    <meta name="format-detection" content="address=no" />
+	    <meta name="theme-color" content="#0768a7" />
+	</head>
+	<body class="quickTrackBody">
+<div class="quickTrackPage">
+	<header class="pageHeader quickTrack">
+		<div class="container">
+			<div class="content">
+				<div class="logoWrapper">
+					<h1 class="title">
+						Quick Track
+					</h1>
+					<a href="https://www.emotrans-global.com" class="logo">
+						<img src="/track/static/image/logo.png" alt="" />
+					</a>
+				</div>
+				<div class="inputWrapper">
+					<div class="search">
+					<div class="entitySearch">
+						<div class="searchHeader">
+							<div class="searchHeaderTitle">	
+                        <div class="formWrapper">
+                            <form id="quickTrackForm" class="search-form" action="/track/quicktrack/shipment/27147297" method="POST">
+                                <input id="shipmentIdentifier" name="shipmentIdentifier" placeholder="Tracking #" type="text" value="" alt="Tracking #"/>
+                                <input id="referrerUrl" name="referrerUrl" type="hidden" value=""/>
+                                <button type="submit">Track</button>
+                                <div class="info searchFieldsTooltip">
+											<div class="icon" id="infoIcon"></div>
+											<div class="searchFieldsContentWrapper">
+												<div class="searchFieldsContent">
+													<div class="title">Search Options</div>
+													<div class="item">Shipment Number</div>
+													<div class="item">House Bill Number</div>
+													<div class="item">Master Bill Number</div>
+													<div class="item">Entry Number</div>													
+													<div class="item">Reference Number</div>
+													<div class="item">Booking Number</div>
+													<div class="item">Container Number</div>
+													<div class="item">PO Number</div>
+												</div>
+											</div>
+										</div>
+                            </form>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<main class="main quickTrackMain">
+		<div class="quickTrack">
+			<div class="container">
+								<div class="shipmentStatusWrapper">
+									<div class="titleWrapper">
+										<span class="title">Point By Point Status</span>
+									</div>
+	<div class="p2pStatusBar">
+		<div class="step complete">
+			<div class="img originImg">
+				<img src="/track/static/image/origin-complete.png" alt="" />
+			</div>
+			<div class="title">Origin</div>
+			<div class="circle"></div>
+			<div class="statusDescription">
+				    				<span class="statusLocation">
+Düsseldorf
+							       	</span>
+							       	<span class="statusDate">							   
+											N/A
+							       	</span>
+			</div>
+		</div>
+		<div class="step complete">
+			<div class="img polImg">
+				<img src="/track/static/image/air-pol-complete.png" alt="" />
+			</div>
+			<div class="title">POL</div>
+			<div class="circle"></div>
+			<div class="statusDescription">
+				<span class="statusLocation">
+		Düsseldorf 
+			(DEDUS)
+				</span>
+						<span class="statusDate">
+		31-JAN-2026
+</span>
+			</div>
+		</div>
+		<div class="step complete">
+			<div class="img voyageImg">
+				<img src="/track/static/image/air-voyage-complete.png" alt="" />
+			</div>
+			<div class="title">Voyage</div>
+			<div class="circle"></div>
+		</div>
+		<div class="step complete">
+			<div class="img podImg">
+				<img src="/track/static/image/air-pod-complete.png" alt="" />
+			</div>
+			<div class="title">POD</div>
+			<div class="circle"></div>
+			<div class="statusDescription">
+				<span class="statusLocation">
+		Boston 
+			(USBOS)
+				</span>
+						<span class="statusDate">
+		01-FEB-2026
+</span>
+			</div>
+		</div>
+		<div class="step complete">
+			<div class="img destinationImg">
+				<img src="/track/static/image/final-port-complete.png" alt="" />
+			</div>
+			<div class="title">Final Port</div>
+			<div class="circle"></div>
+			<div class="statusDescription">
+				<span class="statusLocation">
+<span>
+					Boston,
+					MA 
+						US
+</span>
+			    </span>
+			    <span class="statusDate">
+		N/A
+			    </span>
+			</div>
+		</div>
+		<div class="step active">
+			<div class="img destinationImg">
+				<img src="/track/static/image/destination-active.png" alt="" />
+			</div>
+			<div class="title">Destination</div>
+			<div class="circle"></div>
+			<div class="statusDescription">
+			</div>
+		</div>
+	</div>
+								</div>
+							<div>
+								<div class="tableWrapper">
+									<div class="table twoColumns">
+										<div class="infoTable">
+											<table>
+												<thead class="tableHead">
+													<tr>
+														<td class="heading">Shipment Summary</td>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Shipment Number</td>
+														<td>
+15112600391 / S2601A00324070</td>
+													</tr>
+													<tr>
+														<td>Conveyance Type</td>
+														<td>
+AIR</td>
+													</tr>
+														<tr>
+															<td>House Bill Number</td>
+															<td>
+DUS15034325</td>
+														</tr>
+													<tr>
+														<td>Origin</td>
+														<td id="polLocation">
+<span>
+					Düsseldorf,
+					NW 
+						DE
+</span></td>
+													</tr>
+													<tr>
+														<td>Destination</td>
+														<td id="podLocation">
+<span>
+					Boston,
+					MA 
+						US
+</span></td>
+													</tr>
+													<tr>
+														<td>Last Status</td>
+														<td>
+Delivered</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="table twoColumns">
+										<div class="infoTable">
+											<table>
+												<thead class="tableHead">
+													<tr>
+														<td class="heading">Dates</td>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Estimated Departure</td>
+														<td>
+		31-JAN-2026
+</td>
+													</tr>
+													<tr>
+														<td>Actual Departure</td>
+														<td>
+		31-JAN-2026
+</td>
+													</tr>
+													<tr>
+														<td>Estimated Arrival</td>
+														<td>
+		01-FEB-2026
+</td>
+													</tr>
+													<tr>
+														<td>Actual Arrival</td>
+														<td>
+		01-FEB-2026
+</td>
+													</tr>
+													<tr>
+														<td>Final PORT ETA</td>
+														<td>N/A</td>
+													</tr>
+													<tr>
+														<td>Door ETA</td>
+														<td>02-FEB-2026</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="tableWrapper">
+									<div class="table twoColumns">
+										<div class="infoTable">
+											<table>
+												<thead class="tableHead">
+													<tr>
+														<td class="heading">Event Description</td>
+														<td class="heading">Date / Time</td>
+														<td class="heading">Location</td>
+													</tr>
+												</thead>
+												<tbody>
+														<tr>
+															<td>
+																		Customs Cleared
+															</td>
+															<td>
+																	02-FEB-2026
+																	<span class="time">
+																			09:41:43 AM
+																	</span>
+															</td>
+															<td>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Customs Commenced
+															</td>
+															<td>
+																	02-FEB-2026
+																	<span class="time">
+																			09:41:06 AM
+																	</span>
+															</td>
+															<td>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Arrival
+															</td>
+															<td>
+																	01-FEB-2026
+																	<span class="time">
+																			08:34:00 PM
+																	</span>
+															</td>
+															<td>
+																		Boston
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Arrival
+															</td>
+															<td>
+																	01-FEB-2026
+																	<span class="time">
+																			07:54:00 PM
+																	</span>
+															</td>
+															<td>
+																		Boston
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Departure
+															</td>
+															<td>
+																	01-FEB-2026
+																	<span class="time">
+																			06:03:00 PM
+																	</span>
+															</td>
+															<td>
+																		Zurich
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Arrival
+															</td>
+															<td>
+																	31-JAN-2026
+																	<span class="time">
+																			10:49:00 AM
+																	</span>
+															</td>
+															<td>
+																		Zurich
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Departure
+															</td>
+															<td>
+																	31-JAN-2026
+																	<span class="time">
+																			09:46:00 AM
+																	</span>
+															</td>
+															<td>
+																		Düsseldorf
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Freight Loaded
+															</td>
+															<td>
+																	31-JAN-2026
+																	<span class="time">
+																			09:45:00 AM
+																	</span>
+															</td>
+															<td>
+																		Düsseldorf
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Delivery Cartage Advised
+															</td>
+															<td>
+																	30-JAN-2026
+																	<span class="time">
+																			05:10:00 PM
+																	</span>
+															</td>
+															<td>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																		Booking Confirmed
+															</td>
+															<td>
+																	30-JAN-2026
+																	<span class="time">
+																			01:50:00 PM
+																	</span>
+															</td>
+															<td>
+																		Zurich
+															</td>
+														</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+			</div>
+		</div>
+	</main>
+</div>
+</div>
+	</body>
+</html>

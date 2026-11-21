@@ -1,0 +1,95 @@
+{
+  "id": "emo-trans",
+  "displayName": "EMO Trans",
+  "aliases": [
+    "EMO Trans, Inc.",
+    "Emotrans",
+    "EMO Trans Global"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#0768A7"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "emo-trans",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "eta"
+  ],
+  "portal": {
+    "url": "https://portal.emotrans-global.com/track/quicktrack?shipment={trackingNumber}",
+    "searchUrl": "https://portal.emotrans-global.com/track/quicktrack",
+    "helpUrl": "https://www.emotrans-global.com/contact/garden-city-head-office/",
+    "canaryUrl": "https://portal.emotrans-global.com/track/quicktrack",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "destination_country",
+      "eta",
+      "departure_date",
+      "progress_rail",
+      "related_tracking_numbers",
+      "emissions"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "departure_date",
+      "progress_rail",
+      "related_tracking_numbers",
+      "emissions"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "portal.emotrans-global.com"
+      ],
+      "pathPattern": "^/track/quicktrack/?$",
+      "params": [
+        "shipment"
+      ]
+    },
+    {
+      "domains": [
+        "portal.emotrans-global.com"
+      ],
+      "pathPattern": "^/track/quicktrack/shipment/\\d+$",
+      "params": [
+        "search"
+      ]
+    }
+  ],
+  "detection": []
+}

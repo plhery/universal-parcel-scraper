@@ -1,0 +1,43 @@
+{
+  "carrier": "emo-trans",
+  "records": [
+    {
+      "number": "S2601A00324070",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://web.archive.org/cdx/search/cdx?url=portal.emotrans-global.com/track/quicktrack&matchType=prefix",
+        "date": "2026-02-16",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wayback Machine's index lists a capture of EMO Trans's quick-track link for this shipment number; the capture does not replay. The quick track answers it with an air shipment from Düsseldorf to Boston, delivered."
+    },
+    {
+      "number": "DUS15034325",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://web.archive.org/cdx/search/cdx?url=portal.emotrans-global.com/track/quicktrack&matchType=prefix",
+        "date": "2026-02-16",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The house bill the quick track gives the archived shipment above, from EMO's Düsseldorf station; the quick track answers it with the same shipment."
+    }
+  ]
+}
