@@ -1,0 +1,17 @@
+{
+  "resMeta": {
+    "resultCd": "S",
+    "resultMsg": "정상 처리되었습니다."
+  },
+  "resData": [
+    {
+      "FRTBNO": "CKCOPUS0223497",
+      "BINBKN": "PU2626846",
+      "KCTCNO": "SEGU2887315",
+      "FRTPOR": "KRPUS",
+      "FRTPVY": "THLCH",
+      "FRTVVD": "POS SINGAPORE V.1042S",
+      "OUTSTS": "3"
+    }
+  ]
+}

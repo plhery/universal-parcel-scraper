@@ -1,0 +1,68 @@
+{
+  "resMeta": {
+    "resultCd": "S",
+    "resultMsg": "정상 처리되었습니다."
+  },
+  "resData": [
+    {
+      "CMVENO": "CKLU3056592",
+      "BINBKN": "DL2602018",
+      "CMVSTA": "Empty container was picked up at 2026-08-26 14:25 at DLST",
+      "CMVSTACD": "SF",
+      "CDPCMN": "SHENG TONG CY(SILVERY)",
+      "CMVDTM": "2026-08-26 14:25",
+      "CMVFOE": "EMPTY",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "CKLU3056592",
+      "BINBKN": "DL2602018",
+      "CMVSTA": "Full container was brought into 2026-08-28 08:15 at DCT",
+      "CMVSTACD": "LF",
+      "CDPCMN": "DCT (DALIAN CONTAINER TERMINAL)",
+      "CMVDTM": "2026-08-28 08:15",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "CKLU3056592",
+      "BINBKN": "DL2602018",
+      "CMVSTA": "Cargo has been shipped to YONG SHENG 158 V.2634E",
+      "CMVSTACD": "VF",
+      "CDPCMN": "DCT (DALIAN CONTAINER TERMINAL)",
+      "CMVDTM": "2026-08-30 10:09",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "CKLU3056592",
+      "BINBKN": "DL2602018",
+      "CMVSTA": "Cargo has been unloaded to YONG SHENG 158 V.2634E",
+      "CMVSTACD": "DF",
+      "CDPCMN": "BUSAN PIER #7",
+      "CMVDTM": "2026-09-02 19:00",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "CKLU3056592",
+      "BINBKN": "DL2602018",
+      "CMVSTA": "Full container was taken out from 2026-09-03 10:58 at PU2P",
+      "CMVSTACD": "CF",
+      "CDPCMN": "BUSAN PIER #7",
+      "CMVDTM": "2026-09-03 10:58",
+      "CMVFOE": "FULL",
+      "IMPCHK": "Y"
+    },
+    {
+      "CMVENO": "CKLU3056592",
+      "BINBKN": "DL2602018",
+      "CMVSTA": "Empty container was brought into 2026-09-03 16:24 at HGCT",
+      "CMVSTACD": "TE",
+      "CDPCMN": "HUTCHISON GAMMAN CONTAINER TERMINAL",
+      "CMVDTM": "2026-09-03 16:24",
+      "CMVFOE": "EMPTY",
+      "IMPCHK": "Y"
+    }
+  ]
+}

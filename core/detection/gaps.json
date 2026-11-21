@@ -795,6 +795,11 @@
     "reason": "CJ waybills are bare twelve digits without a check digit, a shape shared by many carriers."
   },
   {
+    "carrier": "ck-line",
+    "kind": "open",
+    "reason": "The e-service confirms CK Line's bills and bookings, whose shapes no rule claims. Select CK Line explicitly."
+  },
+  {
     "carrier": "closer-logistics",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

@@ -160,6 +160,7 @@ import { adapter as citylinkExpress } from '../carriers/citylink-express/adapter
 import { adapter as citymail } from '../carriers/citymail/adapter.js';
 import { adapter as cjLogistics } from '../carriers/cj-logistics/adapter.js';
 import { adapter as cjPacket } from '../carriers/cj-packet/adapter.js';
+import { adapter as ckLine } from '../carriers/ck-line/adapter.js';
 import { adapter as closerLogistics } from '../carriers/closer-logistics/adapter.js';
 import { adapter as cne } from '../carriers/cne/adapter.js';
 import { adapter as colisPrive } from '../carriers/colis-prive/adapter.js';
@@ -1189,6 +1190,7 @@ export const REGISTRY: RegistryDefinition = {
     "citymail": citymail,
     "cj-logistics": cjLogistics,
     "cj-packet": cjPacket,
+    "ck-line": ckLine,
     "closer-logistics": closerLogistics,
     "cne": cne,
     "colis-prive": colisPrive,
@@ -2383,6 +2385,7 @@ export const REGISTRY: RegistryDefinition = {
     "civa-cargo": "universal",
     "cj-logistics": "cj-logistics",
     "cj-packet": "cj-packet",
+    "ck-line": "ck-line",
     "ckeex": "universal",
     "closer-logistics": "closer-logistics",
     "cmt-express": "universal",

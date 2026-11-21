@@ -1,0 +1,69 @@
+{
+  "id": "ck-line",
+  "displayName": "CK Line",
+  "aliases": [
+    "Chun Kyung",
+    "CK Line Co., Ltd.",
+    "천경해운"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#003f87"
+  },
+  "selectable": true,
+  "timezone": "Asia/Seoul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ck-line",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://es.ckline.co.kr/?cmd=TRK",
+    "helpUrl": "https://www.ckline.co.kr/en/",
+    "canaryUrl": "https://es.ckline.co.kr/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta",
+      "vessel",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta",
+      "vessel"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name",
+      "weight"
+    ],
+    "siteName": "CK Line E-Service"
+  },
+  "links": [],
+  "detection": []
+}

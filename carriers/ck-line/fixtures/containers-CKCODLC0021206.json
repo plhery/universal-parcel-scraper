@@ -1,0 +1,17 @@
+{
+  "resMeta": {
+    "resultCd": "S",
+    "resultMsg": "정상 처리되었습니다."
+  },
+  "resData": [
+    {
+      "FRTBNO": "CKCODLC0021206",
+      "BINBKN": "DL2602018",
+      "KCTCNO": "CKLU3056592",
+      "FRTPOR": "CNDLC",
+      "FRTPVY": "KRPUS",
+      "FRTVVD": "YONG SHENG 158 V.2634E",
+      "OUTSTS": "99"
+    }
+  ]
+}

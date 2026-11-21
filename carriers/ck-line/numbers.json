@@ -1,0 +1,43 @@
+{
+  "carrier": "ck-line",
+  "records": [
+    {
+      "number": "CKCODLC0021206",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/ck-line/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public CK Line tracking directory. CK Line's e-service holds it as a bill from Dalian to Busan with one container, returned empty; the parser fixtures are its replies."
+    },
+    {
+      "number": "CKCOPUS0223497",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/ck-line/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public CK Line tracking directory. CK Line's e-service holds it as a bill from Busan to Laem Chabang with one container, returned empty and damaged; fixtures are its replies."
+    }
+  ]
+}
