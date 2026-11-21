@@ -1,0 +1,13 @@
+{
+  "carrier": "vasco-maritime",
+  "entries": [
+    {"code": "MT", "wording": "MT Taken By Customer", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not with the line yet."},
+    {"code": "LADEN", "wording": "Laden Container Back To Port", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal of the port of loading."},
+    {"code": "LOADED_ON_BOARD", "wording": "Container Loaded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on the vessel at the port of loading."},
+    {"code": "CONTAINER_DISCHARGED_TRANS", "wording": "Container Discharged Transshipment", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at the port where the container changes vessel."},
+    {"code": "CONTAINER_LOAD_TRANS", "wording": "Container Loaded Transshipment", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on the connecting vessel at the transshipment port."},
+    {"code": "CONTAINER_DISCHARGED", "wording": "Container Discharged", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at the final port; the consignee has not collected it yet."},
+    {"code": "SHIPMENT_CLEARED_ON", "wording": "Container Handed Over To Consignee", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee collects the loaded container at the final port."},
+    {"code": "MT_RETURN_BACK_ON", "wording": "MT Returned By Consignee", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee returns the unloaded container empty."}
+  ]
+}

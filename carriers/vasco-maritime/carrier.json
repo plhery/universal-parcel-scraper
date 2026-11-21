@@ -1,0 +1,68 @@
+{
+  "id": "vasco-maritime",
+  "displayName": "Vasco Maritime",
+  "aliases": [
+    "VASCO",
+    "Vasco Maritime Pte Ltd"
+  ],
+  "region": {
+    "countries": [
+      "SG"
+    ]
+  },
+  "brand": {
+    "color": "#2f2483"
+  },
+  "selectable": true,
+  "timezone": "Asia/Singapore",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "vasco-maritime",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.vascomaritime.com/track",
+    "helpUrl": "https://www.vascomaritime.com/",
+    "canaryUrl": "https://www.vascomaritime.com/track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta",
+      "vessel",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta",
+      "vessel"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name",
+      "weight"
+    ],
+    "siteName": "Vasco Maritime Track"
+  },
+  "links": [],
+  "detection": []
+}
