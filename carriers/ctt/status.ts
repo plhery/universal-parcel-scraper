@@ -39,7 +39,7 @@ export function classifyCttStatus(stateId: unknown): ClassifiedStatus | undefine
  * Every scan carries one, so wording alone gets nothing; an id the map does not
  * know stays open for review. State 3 ("Cancelado") is left out: its import
  * cancellation (UPU EDX) voids an arrival scan CTT recorded a second earlier at
- * a second office, so it moves nothing.
+ * a second office, so it moves nothing. So is state 4, a change to the shipment's details.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code) => code !== null && /^[1-9]\d{0,3}$/.test(code) ? EVENT_STATUS[Number(code)]?.stage : undefined,
@@ -47,5 +47,9 @@ export const statusMap: CarrierStatusMap = {
     code: '3',
     wording: normalizeStatusWording('Importação cancelada.'),
     note: 'CTT voiding the arrival scan it recorded a second earlier at another office: it moves nothing, so it keeps the stage of the scan before it.',
+  }, {
+    code: '4',
+    wording: normalizeStatusWording('Os dados de envio foram alterados.'),
+    note: "A change to the shipment's details, such as its delivery moved to a locker: it moves nothing, so it keeps the stage of the scan before it.",
   }],
 };

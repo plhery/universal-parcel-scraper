@@ -38,7 +38,9 @@ carrier.
   also returned as `provider_code`. An unmapped `StateId` gets no stage and the sync records
   the raw wording. The app's review asks the same map by that code (`statusMap`); wording
   without a code stays open there. State 3's "Importação cancelada." voids the arrival scan
-  CTT recorded a second earlier at another office, so the map leaves it without a stage.
+  CTT recorded a second earlier at another office, so the map leaves it without a stage. So
+  does state 4's "Os dados de envio foram alterados.", a change to the shipment's details such
+  as its delivery moved to a locker.
 - Mail from abroad that arrives (UPU `EMD`–`EMI`, `EDA`–`EDH`) at an office of exchange of the
   country it came from is a return back at its origin. From that arrival on the scans carry
   `provider_leg` `return`, and a movement or delivery among them is `returned`: CTT calls
