@@ -434,6 +434,15 @@ describe('JS Express tracking adapter', () => {
     }
   });
 
+  it("reads the destination courier's sorting before its own scans, and GOFO France's departure relayed, as transit", () => {
+    for (const description of [
+      'Being processed at local sorting center', 'Sorting completed, awaiting transshipment', 'The package left sorting center',
+    ]) {
+      expect(jsExpressStage(description, 'OIT'), description).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+      expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+  });
+
   it("reads FedEx's status between its facilities on the line it delivers", () => {
     expect(jsExpressStage('On the way', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'On the way' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
