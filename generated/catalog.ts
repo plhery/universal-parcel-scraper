@@ -51991,6 +51991,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "romocean": {
+    "displayName": "Romocean",
+    "color": "#30336d",
+    "aliases": [
+      "Romocean S.L."
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "romocean",
+      "localClocks": true
+    },
+    "canaryUrl": "https://romocean.com/container-tracking/",
+    "trackingSearchUrl": "https://romocean.com/container-tracking/",
+    "trackingSiteName": "Romocean Container Tracking",
+    "helpUrl": "https://romocean.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rosalia-express": {
     "displayName": "Rosalia Express",
     "color": "#e32b2b",
@@ -69920,6 +69943,7 @@ export const CARRIER_IDS = [
   "rohlig",
   "rohlig-suus",
   "rojas-express",
+  "romocean",
   "rosalia-express",
   "ross-express",
   "route1-fulfilment",
@@ -71907,6 +71931,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rohlig": [],
   "rohlig-suus": [],
   "rojas-express": [],
+  "romocean": [],
   "rosalia-express": [],
   "ross-express": [],
   "route1-fulfilment": [],

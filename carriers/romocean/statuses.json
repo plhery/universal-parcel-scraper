@@ -1,0 +1,17 @@
+{
+  "carrier": "romocean",
+  "entries": [
+    {"code": "T/S", "wording": "SALIDO VACIO AL EXPORTADOR / SHIPPER", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not with the line yet."},
+    {"code": "E/L", "wording": "ENTRADA LLENO EXPORT EN TERMINAL", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "The loaded container enters the terminal of the port of loading."},
+    {"code": "EXP", "wording": "CARGA BUQUE LLENO DE EXPORTACION", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Loaded on the vessel at the port of loading."},
+    {"code": "VSO", "wording": "VSO MOVIMIENTO VSL DE SALIDA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The vessel leaves the port with the container on board."},
+    {"code": "TRI", "wording": "DESCARGA TRASBORDO", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Discharged at the port where the container changes vessel."},
+    {"code": "TRE", "wording": "CARGA TRASBORDO", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Loaded on the connecting vessel at the transshipment port."},
+    {"code": "VSI", "wording": "VSI MOVIMIENTO VSL DE ENTRADA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The vessel arrives at the port of discharge."},
+    {"code": "IMP", "wording": "DESCARGA BUQUE LLENO DE IMPORTACION", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Discharged at the port of discharge; the consignee has not collected it yet."},
+    {"code": "T/C", "wording": "SALIDO LLENO PARA EL RECEPTOR/CONSIGNEE", "stage": "delivered", "language": "es", "confirmedBy": "live", "note": "The consignee collects the loaded container."},
+    {"code": "MTY", "wording": "ENTRADA CONTAINER VACIO DISPONIBLE", "stage": "delivered", "language": "es", "confirmedBy": "live", "note": "The unloaded container is returned empty after its collection."},
+    {"code": "MTO", "wording": "SALIDO VACIO PARA TRASLADO A DEPOT/TERMINAL", "stage": null, "language": "es", "confirmedBy": "live", "note": "An empty container leaves for another depot; it carries no shipment."},
+    {"code": "MTI", "wording": "AGX ---RECIBIDO EN TERMINAL/DEPOT VACIO", "stage": null, "language": "es", "confirmedBy": "live", "note": "An empty container is received at a depot; it carries no shipment."}
+  ]
+}
