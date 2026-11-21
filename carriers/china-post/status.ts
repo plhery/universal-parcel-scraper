@@ -170,6 +170,7 @@ const LABELS: ReadonlyArray<readonly [label: string, english: string]> = [
  * A label without its places: each 【…】 it holds, nested or cut off by the
  * feed, becomes "…", and a note in brackets after it goes. A place after the
  * label is optional, so a label that ends with one is also kept without it.
+ * A label given twice is kept once.
  */
 export function chinaPostLabel(wording: string): string {
   let label = wording.replace(/\s+/g, ' ').trim();
@@ -177,7 +178,9 @@ export function chinaPostLabel(wording: string): string {
     previous = label;
     label = label.replace(/【[^【】]*】/g, '…');
   }
-  return label.replace(/【[^【】]*$/, '…').replace(/(?:（[^（）]*）|\([^()]*\))$/, '').trim();
+  label = label.replace(/【[^【】]*$/, '…').replace(/(?:（[^（）]*）|\([^()]*\))$/, '').trim();
+  // Track123 can give a label twice, the second time with a note: "飞机进港，飞机进港（到达中转地）".
+  return /^(.+)，\1$/u.exec(label)?.[1] ?? label;
 }
 
 const ENGLISH: ReadonlyMap<string, string> = new Map(LABELS);

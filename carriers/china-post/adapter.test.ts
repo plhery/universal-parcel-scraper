@@ -305,5 +305,7 @@ describe('China Post adapter', () => {
     expect(chinaPostRelayedStage('飞机进港')).toBe('in_transit');
     expect(chinaPostRelayedStage('飞机进港，飞机进港（到达中转地）')).toBe('in_transit');
     expect(chinaPostRelayedStage('飞机进港，航班取消')).toBeUndefined();
+    // Its English is the landing's, as China Post's own row at the same minute shows it.
+    expect(chinaPostEnglish('飞机进港，飞机进港（到达中转地）')).toBe('Plane has landed');
   });
 });
