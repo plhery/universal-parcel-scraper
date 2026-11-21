@@ -1668,9 +1668,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true,
       "dateOnlyScans": true
     },
-    "canaryUrl": "https://colisprive.com/moncolis/pages/DetailColis.aspx",
-    "trackingUrlTemplate": "https://colisprive.com/moncolis/pages/DetailColis.aspx?numColis={trackingNumber}&lang=fr",
-    "trackingSearchUrl": "https://colisprive.com/moncolis/pages/DetailColis.aspx",
+    "canaryUrl": "https://www.colisprive.com/moncolis/pages/DetailColis.aspx",
+    "trackingUrlTemplate": "https://www.colisprive.com/moncolis/pages/DetailColis.aspx?numColis={trackingNumber}&lang=fr",
+    "trackingSearchUrl": "https://www.colisprive.com/moncolis/pages/DetailColis.aspx",
     "helpUrl": "https://colisprive.fr/aide/mon-colis-a-du-retard/",
     "linkRules": [
       {

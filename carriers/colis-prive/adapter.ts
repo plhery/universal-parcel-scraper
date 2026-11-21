@@ -27,7 +27,7 @@ import { classifyStatus, comparableText } from './status.js';
 export { classifyStatus } from './status.js';
 
 const PROVIDER = 'Colis Privé';
-const TRACKING_ENDPOINT = 'https://colisprive.com/moncolis/pages/DetailColis.aspx';
+const TRACKING_ENDPOINT = 'https://www.colisprive.com/moncolis/pages/DetailColis.aspx';
 const TIMEZONE = 'Europe/Paris';
 const MAX_RESPONSE_BYTES = 500_000;
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -105,6 +105,22 @@ function plannedDay(description: string): string | null {
 }
 
 const SETTLED: ReadonlySet<string> = new Set(['delivered', 'returned', 'exception', 'failed_attempt', 'ready_for_pickup']);
+
+/** The same page on another Colis Privé host that a redirect names, as the bare domain sends every request to www. */
+function movedHost(response: Response, requested: string): string | null {
+  if (response.status < 300 || response.status >= 400) return null;
+  const location = response.headers.get('location');
+  if (!location) return null;
+  const from = new URL(requested);
+  let to: URL;
+  try {
+    to = new URL(location, from);
+  } catch {
+    return null;
+  }
+  const ours = /(?:^|\.)colisprive\.com$/.test(to.hostname) && to.protocol === 'https:';
+  return ours && to.hostname !== from.hostname && to.pathname === from.pathname && to.search === from.search ? to.toString() : null;
+}
 
 export function colisPriveTrackingUrl(rawCredential: string, rawPostcode = ''): string {
   const credential = normalizeColisPriveCredential(rawCredential, rawPostcode);
@@ -250,7 +266,7 @@ export class ColisPriveTracker {
   async fetch(rawCredential: string, rawPostcode = '', context: TrackingContext = {}): Promise<CarrierResult> {
     const credential = normalizeColisPriveCredential(rawCredential, rawPostcode);
     const budget = lookupBudget(context, this.timeoutMs);
-    const { response, bytes } = await fetchBounded(colisPriveTrackingUrl(credential), {
+    const request = (url: string) => fetchBounded(url, {
       signal: budget.signal,
       headers: {
         Accept: 'text/html,application/xhtml+xml',
@@ -265,6 +281,11 @@ export class ColisPriveTracker {
       allowHttpError: true,
       fetcher: this.#fetcher,
     });
+    const url = colisPriveTrackingUrl(credential);
+    let { response, bytes } = await request(url);
+    // The site moving to another of its hosts keeps the page and its query: that move is followed once.
+    const moved = movedHost(response, url);
+    if (moved) ({ response, bytes } = await request(moved));
 
     // An unknown shipment is bounced to the search page instead of answering 404.
     if (response.status === 404 || (response.status >= 300 && response.status < 400)) {

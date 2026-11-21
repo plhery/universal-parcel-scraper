@@ -122,7 +122,7 @@ describe('Colis Privé combined tracking credential', () => {
 
   it('builds the official detail URL without allowing parameter injection', () => {
     const url = new URL(colisPriveTrackingUrl(PUBLIC_SYNTHETIC_CREDENTIAL));
-    expect(url.origin).toBe('https://colisprive.com');
+    expect(url.origin).toBe('https://www.colisprive.com');
     expect(url.pathname).toBe('/moncolis/pages/DetailColis.aspx');
     expect(url.searchParams.get('numColis')).toBe(PUBLIC_SYNTHETIC_CREDENTIAL);
     expect(url.searchParams.get('lang')).toBe('fr');
@@ -378,5 +378,26 @@ describe('Colis Privé tracker', () => {
     fetcher.mockResolvedValueOnce(new Response('Not found', { status: 404 }));
     await expect(new ColisPriveTracker().fetch(PUBLIC_SYNTHETIC_CREDENTIAL))
       .rejects.toMatchObject({ status: 404 });
+  });
+
+  it('follows the site moving the same page to another of its hosts once, and still reads the bounce as not found', async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    const tracker = new ColisPriveTracker({ fetcher });
+    const page = colisPriveTrackingUrl(PUBLIC_SYNTHETIC_CREDENTIAL);
+    const elsewhere = page.replace('https://www.', 'https://');
+    fetcher.mockResolvedValueOnce(new Response(null, { status: 308, headers: { Location: elsewhere } }))
+      .mockResolvedValueOnce(new Response(trackingPage(), { headers: { 'Content-Type': 'text/html; charset=utf-8' } }));
+    await expect(tracker.fetch(PUBLIC_SYNTHETIC_CREDENTIAL)).resolves.toMatchObject({ status: 'exception' });
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([page, elsewhere]);
+
+    // A move that lands on the search page, or a second move, is the not-found bounce.
+    fetcher.mockReset();
+    fetcher.mockResolvedValueOnce(new Response(null, { status: 308, headers: { Location: elsewhere } }))
+      .mockResolvedValueOnce(new Response(null, { status: 302, headers: { Location: '/moncolis/Default.aspx' } }));
+    await expect(tracker.fetch(PUBLIC_SYNTHETIC_CREDENTIAL)).rejects.toMatchObject({ kind: 'not_found' });
+    fetcher.mockReset();
+    fetcher.mockResolvedValueOnce(new Response(null, { status: 302, headers: { Location: 'https://colisprive.fr/' } }));
+    await expect(tracker.fetch(PUBLIC_SYNTHETIC_CREDENTIAL)).rejects.toMatchObject({ kind: 'not_found' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
   });
 });

@@ -8,11 +8,14 @@ recipient's postcode.
 ## How it works
 
 1. `direct`: one GET of
-   `https://colisprive.com/moncolis/pages/DetailColis.aspx?numColis={number}{postcode}&lang=fr`
+   `https://www.colisprive.com/moncolis/pages/DetailColis.aspx?numColis={number}{postcode}&lang=fr`
    with `redirect: 'manual'`. No session, token or JSON feed: the page is
    server-rendered HTML.
-   - A 404 or any 3xx is not-found (`ColisPriveTrackingError`): an unknown
-     shipment is bounced to the search page instead of answering 404.
+   - A 404 or any other 3xx is not-found (`ColisPriveTrackingError`): an
+     unknown shipment is bounced to the search page instead of answering 404.
+   - A redirect to the same page and query on another `colisprive.com` host is
+     followed once: the bare domain sends every request to `www` with a 308,
+     which is the site moving, not the not-found bounce.
    - Other non-2xx statuses throw `UpstreamHttpError`.
 2. `parse()` reads `.divDesti`, the recipient's name and address, then removes it,
    requires the `.BandeauInfoColis` banner, checks the displayed 12-character number
