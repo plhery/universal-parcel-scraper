@@ -240,6 +240,24 @@
     },
     {
       "code": "DEX",
+      "wording": "Your delivery has been scheduled according to your instructions",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "Scan code: the parcel taken off the round for the day or place the recipient asked for, minutes after DPD received the instruction and before the emailed window. No door was tried."
+    },
+    {
+      "code": "DLR",
+      "wording": "Your delivery was rescheduled according to your instructions",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "Scan code: back at the depot after the parcel was taken off the round at the recipient's request; its next round follows."
+    },
+    {
+      "code": "DEX",
       "wording": "We couldn't deliver your parcel, it will soon be available at a retrieval point. You will be informed of the location upon arrival",
       "language": "en",
       "stage": "failed_attempt",

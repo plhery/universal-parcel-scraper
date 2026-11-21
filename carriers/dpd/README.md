@@ -83,6 +83,8 @@ signal.
   for a round, with none tried before it, and reads as in transit.
 - `DLR`, the parcel taken back to the depot, is a failed round. Right after a missed round (`DEX`),
   it ends that round and stays a notice on its stage rather than count as another attempt.
+- `DEX` and `DLR` labelled as the recipient's instructions take the parcel off its round and back
+  to the depot for the day or place the recipient asked for. No door was tried, so they read as in transit.
 - When DPD's unit in another country takes the parcel, the group's history
   dates `PARCEL_HANDED` anew, after the parcel's later milestones. Dated after
   one of them, it is that hand-off between units and reads as in transit.

@@ -149,10 +149,20 @@ export function scanStage(code: string): Stage | null {
 // closed" is a round that could not be made. Worded as DLQ is, the parcel waits there for a round,
 // none tried yet: German histories show it between the depot's sorting scans with no round before.
 const WAITING_AT_DEPOT = normalizeStatusWording('Your parcel is at our delivery depot, it will soon be on its way');
+// DEX and DLR worded as the recipient's instruction: the parcel taken off the round, then back at the depot, for the
+// day or place the recipient asked for, minutes after DPD received the instruction (MIA, MII) and before the window
+// DPD had emailed. No door was tried, so the parcel waits for its next round.
+const RESCHEDULED: ReadonlyMap<string, string> = new Map([
+  ['DEX', normalizeStatusWording('Your delivery has been scheduled according to your instructions')],
+  ['DLR', normalizeStatusWording('Your delivery was rescheduled according to your instructions')],
+]);
 
 /** The stage for a guest API scan code read with its wording, or null when the code is not mapped. */
 export function wordedScanStage(code: string, wording: string): Stage | null {
-  return code === 'DLW' && normalizeStatusWording(wording) === WAITING_AT_DEPOT ? 'in_transit' : scanStage(code);
+  const normalized = normalizeStatusWording(wording);
+  if (code === 'DLW' && normalized === WAITING_AT_DEPOT) return 'in_transit';
+  if (RESCHEDULED.get(code) === normalized) return 'in_transit';
+  return scanStage(code);
 }
 
 /**

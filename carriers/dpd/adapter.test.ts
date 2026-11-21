@@ -943,6 +943,11 @@ describe('DPD status vocabulary', () => {
     expect(wordedScanStage('DLW', 'Your parcel is being held at our delivery depot, your premises were closed')).toBe('failed_attempt');
     expect(wordedScanStage('DLW', 'Synthetic hold reason')).toBe('failed_attempt');
     expect(wordedScanStage('DLQ', 'Your parcel is at our delivery depot, it will soon be on its way')).toBe('in_transit');
+    // Taken off the round and back at the depot for the recipient's own instruction: no door was tried.
+    expect(wordedScanStage('DEX', 'Your delivery has been scheduled according to your instructions')).toBe('in_transit');
+    expect(wordedScanStage('DLR', 'Your delivery was rescheduled according to your instructions')).toBe('in_transit');
+    expect(wordedScanStage('DEX', "We couldn't deliver your parcel, it will soon be available at a retrieval point")).toBe('failed_attempt');
+    expect(wordedScanStage('DLR', "We couldn't deliver your parcel and had to return it to the depot")).toBe('failed_attempt');
     expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: 'DLW', description: 'Your parcel is at our delivery depot, it will soon be on its way' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: 'DLW', description: 'Your parcel is being held at our delivery depot, your premises were closed' }))
