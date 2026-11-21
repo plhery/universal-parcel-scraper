@@ -7,7 +7,7 @@ import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { USPS_FACILITY_KIND } from '../../carriers/usps/clock.js';
-import { classifyEvent, event, localEvent, numberOf, place, result, text } from '../shared/result.js';
+import { classifyEvent, event, eventStage, localEvent, numberOf, place, result, text } from '../shared/result.js';
 import { ordertrackerFeeds, type OrdertrackerFeed } from './feeds.js';
 
 const SOURCE = 'Ordertracker';
@@ -125,13 +125,18 @@ export function parseOrdertrackerResponse(payload: unknown, carrier: string, rea
     const copies = [...group].sort((a, b) => a.rank - b.rank);
     const worded = copies.filter((copy) => copy.wording);
     const { feed, wall } = copies[0]!;
-    // A scan dated by its day alone comes at midnight.
-    const day = wall.endsWith('T00:00:00') ? wall.slice(0, 10) : null;
+    // A scan dated by its day alone comes at midnight. On La Poste's or Canada Post's instants,
+    // midnight UTC is a time of day where the scan was.
+    const day = wall.endsWith('T00:00:00') && (feed.clock === 'local' || feed.daysAtMidnight) ? wall.slice(0, 10) : null;
     return { wall, day, utc: feed.clock === 'utc' && !day, wording: (worded.find((copy) => readable(copy.wording)) ?? worded[0])?.wording ?? '',
       location: copies.find((copy) => copy.location)?.location ?? '' };
   });
-  const clocks: CarrierEvent[] = read.map((scan) => ({ ...(scan.utc ? { time: `${scan.wall}Z` } : { local_time: scan.day ?? scan.wall }),
-    description: scan.wording, ...(scan.location ? { location: scan.location } : {}) }));
+  // Their stages tell the places which scans the parcel was at, and so whose clock a neighbour borrows.
+  const clocks: CarrierEvent[] = read.map((scan) => {
+    const stage = scan.wording ? eventStage(scan.wording) : undefined;
+    return { ...(scan.utc ? { time: `${scan.wall}Z` } : { local_time: scan.day ?? scan.wall }),
+      description: scan.wording, ...(stage ? { stage } : {}), ...(scan.location ? { location: scan.location } : {}) };
+  });
   const dated = clocks.some((clock) => clock.local_time) ? dateLocalClocks(carrier, { events: clocks }, readAt).events ?? clocks : clocks;
   // A history whose newest scan lost its wording cannot say where the parcel is, and an older scan must not stand in for it.
   const clockOf = (index: number) => Date.parse(dated[index]!.time ?? `${dated[index]!.local_time}Z`) || 0;

@@ -17,6 +17,11 @@ export interface OrdertrackerFeed {
    * the town and country code after the wording, then any detail.
    */
   lines: 'wording' | 'place_line' | 'bracketed_place' | 'trailing_place';
+  /**
+   * A `utc` feed that writes a scan its carrier dates by its day alone at midnight UTC, as
+   * Mail Boxes Etc writes FedEx's pickup. A `local` feed's scan at midnight is read as its day.
+   */
+  daysAtMidnight?: true;
 }
 
 const LA_POSTE: OrdertrackerFeed = { name: 'LA POSTE', clock: 'utc', lines: 'wording' };
@@ -26,7 +31,7 @@ const FEEDS: Readonly<Record<string, readonly OrdertrackerFeed[]>> = {
   // Pitney Bowes repeats some scans in English where Canada Post's own feed has only French.
   'canada-post': [{ name: 'CANADA POST', clock: 'utc', lines: 'place_line' }, PITNEY_BOWES],
   chronopost: [LA_POSTE],
-  fedex: [{ name: 'MAIL BOXES ETC', clock: 'utc', lines: 'trailing_place' }],
+  fedex: [{ name: 'MAIL BOXES ETC', clock: 'utc', lines: 'trailing_place', daysAtMidnight: true }],
   'la-poste': [LA_POSTE],
   // Each scan comes through both, Pitney Bowes's copy with the seconds and FAR's with the wording it can lose.
   ups: [PITNEY_BOWES, { name: 'FAR', clock: 'local', lines: 'bracketed_place' }],

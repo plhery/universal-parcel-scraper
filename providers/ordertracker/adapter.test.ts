@@ -58,6 +58,12 @@ describe('Ordertracker replies', () => {
     const { events } = parse('la-poste-6H14479158377', 'la-poste');
     expect(events).toHaveLength(6);
     expect(events![0]).toMatchObject({ time: '2026-09-30T15:15:00.000Z', stage: 'delivered', description: 'Votre colis est livré.' });
+    // Midnight UTC is two in the morning in France: a scan's time, not its day.
+    const night = fixture('la-poste-6H14479158377');
+    night.events.at(-1)!.time = '2026-09-28T00:00:00.001Z';
+    const oldest = parseOrdertrackerResponse(night, 'la-poste', READ_AT).events!.at(-1)!;
+    expect(oldest).toMatchObject({ time: '2026-09-28T00:00:00.000Z', stage: 'registered' });
+    expect(oldest).not.toHaveProperty('local_time');
   });
 
   it('turns a reply without any feed, or without the carrier\'s, into no history', () => {

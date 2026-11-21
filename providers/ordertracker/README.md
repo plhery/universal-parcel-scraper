@@ -23,8 +23,10 @@ failure. The reply does not repeat the number.
 Ordertracker merges what several feeds relay about a parcel, each named in `events[].carrier.name`,
 and writes every time as UTC. Some feeds give real instants, La Poste's for instance. Others give
 the scanning place's wall clock marked UTC, as Pitney Bowes does for USPS and UPS. [feeds.ts](feeds.ts)
-lists the feeds whose scans count for each carrier, with their clocks. Rows from other feeds are
-left out, and a reply with none of the carrier's feeds is `unattributed_history`.
+lists the feeds whose scans count for each carrier, with their clocks. A scan at a wall clock's
+midnight is dated by its day alone, and so is Mail Boxes Etc's at midnight UTC, the way it relays
+the pickup FedEx dates by its day. Rows from other feeds are left out, and a reply with none of
+the carrier's feeds is `unattributed_history`.
 
 The milliseconds of a time number the scans: each feed's copy of one scan carries the same
 number. The adapter reads the copies of a scan as one, on the clock of the first listed feed,
