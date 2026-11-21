@@ -2,11 +2,15 @@
   "17TRACK": {
     "carriers": 3600,
     "source": "https://www.17track.net/en",
-    "list": "https://res.17track.net/asset/carrier/info/carrier.all.js",
-    "catalogNotListed": 661
+    "list": "https://res.17track.net/asset/carrier/info/carrier.all.js"
   },
   "Ship24": {
     "carriers": 2500,
-    "source": "https://www.ship24.com/couriers"
+    "source": "https://www.ship24.com/couriers",
+    "list": "https://www.ship24.com/assets/sitemaps/en.sitemap.xml"
+  },
+  "beyond17TRACK": {
+    "catalog": 661,
+    "Ship24": 315
   }
 }

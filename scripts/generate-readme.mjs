@@ -18,10 +18,10 @@ const countries = new Set(documents.flatMap(document => document.region.countrie
 const summary = { catalog: documents.length, activeAdapters, countries, referenceCarriers: benchmark.length,
   comparison: { combined: union, direct: measured.direct, providers: counts } };
 const count = value => value.toLocaleString('en-US');
-// The fallbacks reach what the largest aggregator says it follows, and the adapters add the catalog
-// carriers its list lacks (scripts/reach.mjs counts them). The headline rounds down to the 500.
-const reach = Math.floor(Math.max(...Object.values(read('docs/reach.json'))
-  .map(provider => provider.carriers + (provider.catalogNotListed ?? 0))) / 500) * 500;
+// The fallbacks reach what 17TRACK, the largest aggregator, says it follows. The adapters and Ship24
+// add the carriers its list lacks (scripts/reach.mjs counts them). The headline rounds down to the 500.
+const { beyond17TRACK, ...aggregators } = read('docs/reach.json');
+const reach = Math.floor((aggregators['17TRACK'].carriers + Object.values(beyond17TRACK).reduce((sum, value) => sum + value, 0)) / 500) * 500;
 const rows = [
   { label: 'This project, all fallbacks enabled', count: union, own: true },
   { label: 'This project, dedicated adapters alone', count: summary.comparison.direct, own: true },

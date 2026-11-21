@@ -72,11 +72,11 @@ show one way to do it.
 ## Reach
 
 [reach.json](../docs/reach.json) records how many carriers an aggregator says it follows, with the
-page that says so. For 17TRACK it also records how many catalog carriers its public carrier list
-lacks: `npm run reach` downloads the list and counts again, and a carrier whose name or site
-domain is close to one in the list counts as listed. The README's headline adds the two for the
-largest aggregator and rounds down to the 500. The aggregator's count is its own, and
-[the benchmark](../benchmark/README.md) holds what was measured.
+page that says so, and how many carriers 17TRACK's public carrier list lacks: the catalog's, and
+the couriers Ship24 has a page for that the catalog lacks too. `npm run reach` downloads the lists
+and counts again; a carrier whose name or site domain is close to one in a list counts as listed.
+The README's headline adds them to 17TRACK's count and rounds down to the 500. The aggregators'
+counts are their own, and [the benchmark](../benchmark/README.md) holds what was measured.
 
 ## Shared behaviour
 
