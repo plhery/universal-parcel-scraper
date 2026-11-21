@@ -402,6 +402,10 @@ describe('TopYou status vocabulary', () => {
     for (const [wording, stage] of relayed) expect(topyouStage('20', wording), wording).toEqual({ stage, source: 'carrier_map' });
   });
 
+  it('reads the delivery carrier’s pickup point after the customs release as waiting there', () => {
+    expect(topyouStage('20', 'Ready For Pickup')).toEqual({ stage: 'ready_for_pickup', source: 'carrier_map' });
+  });
+
   it('reads the Russian delivering partner’s hand-overs after the customs as steps in transit, not an acceptance', () => {
     for (const wording of ['Released by custom house and handed over to delivery', 'Handed over for delivery within Russia']) {
       expect(topyouStage('20', wording), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
