@@ -174,6 +174,8 @@ describe('WanbExpress', () => {
     expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: 'Sample wording' }).kind).toBe('unknown');
     // A US partner's codeless scans between its receipt and the run.
     expect(wanbStage(null, 'In Processing at Transit Facility.')).toBe('in_transit');
+    // An acceptance scan between the sorting centre's processing and its departure carries the parcel on.
+    expect(wanbStage(null, 'A-Scan: shipment in international transit')).toBe('in_transit');
     expect(statusMap.stage(null, 'in transit to next facility.')).toBe('in_transit');
     expect(wanbStage(null, 'Departed from the sorting center')).toBe('in_transit');
     // The handover to DPD for the last mile carries the parcel on; DPD's own scans accept it.

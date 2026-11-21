@@ -91,6 +91,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "A-Scan: shipment in international transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "An acceptance scan relayed without a code between the sorting centre's processing and its departure, on a parcel to Germany: the journey goes on."
+    },
+    {
       "wording": "In Processing at Transit Facility.",
       "language": "en",
       "stage": "in_transit",

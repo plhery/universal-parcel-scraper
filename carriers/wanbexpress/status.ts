@@ -20,6 +20,8 @@ const STAGES: Readonly<Record<string, Stage>> = {
 // Null marks a line that moves nothing.
 const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>([
   ['in processing at transit facility.', 'in_transit'],
+  // An acceptance scan relayed between the sorting centre's processing and its departure: the journey goes on.
+  ['a-scan: shipment in international transit', 'in_transit'],
   // A US partner's departure from its destination hub, before its warehouse receives the parcel (LastMileWarehouseReceive).
   ['departed destination hub', 'in_transit'],
   // The same partner's departure from its facility and its local facility's receipt before the delivery run.
