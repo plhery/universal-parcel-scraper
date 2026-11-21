@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { postTrack123, track123Data, track123Key, track123Number, track123Request, runTrack123Browser } from './track123-browser.mjs';
+import { keepTrack123File, postTrack123, track123Data, track123Kept, track123Key, track123Number, track123Request, runTrack123Browser } from './track123-browser.mjs';
 
 const number = '909876543210';
 const pageUrl = 'https://www.track123.com/carriers/fedex';
@@ -50,13 +50,14 @@ test('the request key hashes the time and the body with the pages\' altered MD5'
 
 /** A page whose blank document answers Tencent's check with `verdicts` and Track123's API with `replies`. */
 function browser({ verdicts = [ticket], replies = [], address = pageUrl } = {}) {
-  const seen = { routes: [], served: [], scripts: [], posts: [], waits: [], closed: 0, contexts: 0, policies: 0 };
+  const seen = { routes: [], listeners: [], served: [], scripts: [], posts: [], waits: [], closed: 0, contexts: 0, policies: 0 };
   let verdict = null;
   const frame = {};
   const page = {
     mainFrame: () => frame,
     url: () => address,
     route: async (pattern, handler) => { seen.routes.push([pattern, handler]); },
+    on: (event, handler) => { seen.listeners.push([event, handler]); },
     goto: async (value, options) => {
       assert.equal(value, pageUrl);
       assert.equal(options.waitUntil, 'domcontentloaded');
@@ -254,4 +255,77 @@ test('the page\'s reader posts once and bounds what it reads', async t => {
   assert.deepEqual(await postTrack123(request), { status: 0 });
   answer(options => new Promise((_, reject) => options.signal.addEventListener('abort', () => reject(new Error('aborted')))));
   assert.deepEqual(await postTrack123({ ...request, timeoutMs: 20 }), { status: 0 });
+});
+
+/** A reply the browser read from the network, as the helper's response listener sees it. */
+function reply(address, { control = 'max-age=600', status = 200, method = 'GET', body = Buffer.from('synthetic'), type = 'text/javascript' } = {}) {
+  return { url: () => address, status: () => status, request: () => ({ method: () => method }),
+    headers: () => ({ 'content-type': type, 'cache-control': control, 'set-cookie': 'synthetic=1' }),
+    body: async () => { if (body === null) throw new Error('gone'); return body; } };
+}
+
+test('keeps Tencent\'s script and style files for as long as their replies allow, a day at most', async () => {
+  const script = 'https://turing.captcha.qcloud.com/synthetic-a.js', style = 'https://turing.captcha.gtimg.com/1/synthetic-a.0f0f.css';
+  await keepTrack123File(reply(script), 1000);
+  await keepTrack123File(reply(style, { control: 'public, max-age=2592000', type: 'text/css' }), 1000);
+  assert.deepEqual(track123Kept(script, 1000 + 599_999).headers, { 'content-type': 'text/javascript' });
+  assert.equal(track123Kept(script, 1000 + 599_999).body.toString(), 'synthetic');
+  // A later reply does not extend a kept file's time.
+  await keepTrack123File(reply(script, { control: 'max-age=9000' }), 500_000);
+  assert.equal(track123Kept(script, 1000 + 600_000), null);
+  assert.ok(track123Kept(style, 1000 + 86_399_999));
+  assert.equal(track123Kept(style, 1000 + 86_400_000), null);
+});
+
+test('keeps nothing else', async () => {
+  const cases = [
+    reply('https://turing.captcha.qcloud.com/tdc.js?app_data=1'),
+    reply('https://turing.captcha.qcloud.com/cap_union_prehandle'),
+    reply('https://turing.captcha.qcloud.com.example/synthetic-b.js'),
+    reply('http://turing.captcha.qcloud.com/synthetic-b.js'),
+    reply('https://www.track123.com/synthetic-b.js'),
+    reply('https://turing.captcha.qcloud.com/synthetic-c.js', { control: '' }),
+    reply('https://turing.captcha.qcloud.com/synthetic-d.js', { control: 'no-cache, max-age=600' }),
+    reply('https://turing.captcha.qcloud.com/synthetic-e.js', { control: 'private, max-age=600' }),
+    reply('https://turing.captcha.qcloud.com/synthetic-f.js', { status: 404 }),
+    reply('https://turing.captcha.qcloud.com/synthetic-g.js', { method: 'POST' }),
+    reply('https://turing.captcha.qcloud.com/synthetic-h.js', { body: null }),
+    reply('https://turing.captcha.qcloud.com/synthetic-i.js', { body: Buffer.alloc(0) }),
+    reply('https://turing.captcha.qcloud.com/synthetic-j.js', { body: Buffer.alloc(2_000_001) }),
+  ];
+  for (const item of cases) {
+    await keepTrack123File(item, 1000);
+    assert.equal(track123Kept(item.url(), 1001), null, item.url());
+  }
+});
+
+test('holds a bounded number of files', async () => {
+  const address = index => `https://turing.captcha.gtimg.com/1/synthetic-many-${index}.js`;
+  for (let index = 0; index < 20; index += 1) await keepTrack123File(reply(address(index)), 1000);
+  assert.equal(Array.from({ length: 20 }, (_, index) => track123Kept(address(index), 1001)).filter(Boolean).length, 16);
+  assert.equal(track123Kept(address(0), 1001), null);
+  assert.ok(track123Kept(address(19), 1001));
+});
+
+test('a lookup answers a kept file itself and lets every other request reach the network', async () => {
+  const { seen, run } = browser({ replies: [shipment()] });
+  await run();
+  const [pattern, handler] = seen.routes[1];
+  assert.ok(pattern.test('https://turing.captcha.qcloud.com/TJCaptcha.js'));
+  assert.ok(pattern.test('https://turing.captcha.gtimg.com/1/tgJCap.0f0f0f0f.js'));
+  assert.ok(!pattern.test('https://turing.captcha.qcloud.com/tdc.js?app_data=1'));
+  assert.ok(!pattern.test('https://www.track123.com/carriers/fedex'));
+  const address = 'https://turing.captcha.gtimg.com/1/synthetic-route.js';
+  const ask = async (method = 'GET') => {
+    const out = [];
+    await handler({ request: () => ({ method: () => method, url: () => address }), fulfill: async value => { out.push(value); }, fallback: async () => { out.push('network'); } });
+    return out[0];
+  };
+  assert.equal(await ask(), 'network');
+  assert.deepEqual(seen.listeners.map(([event]) => event), ['response']);
+  seen.listeners[0][1](reply(address));
+  await new Promise(resolve => setImmediate(resolve));
+  const served = await ask();
+  assert.deepEqual([served.status, served.headers, served.body.toString()], [200, { 'content-type': 'text/javascript' }, 'synthetic']);
+  assert.equal(await ask('POST'), 'network');
 });

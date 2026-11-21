@@ -78,7 +78,7 @@ is the service's network, and no browser is launched. MTCaptcha (Hongkong Post)
 needs handling that this image's solvers do not provide; its
 [documentation](../carriers/hongkong-post/README.md) describes the verification flow.
 
-Track123 runs Tencent's invisible check on a blank document served at the address of the courier page the request names, in a fresh context, then sends the page's query for that courier and the whole number, with the check's ticket, and its polls from that document. The courier page itself takes longer to load than the lookup. Only history fields leave the context; the ticket is used once and nothing is kept between lookups. A check that asks for a visitor's answer ends the lookup as a challenge.
+Track123 runs Tencent's invisible check on a blank document served at the address of the courier page the request names, in a fresh context, then sends the page's query for that courier and the whole number, with the check's ticket, and its polls from that document. The courier page itself takes longer to load than the lookup. Only history fields leave the context and the ticket is used once. The service keeps Tencent's script and style files between lookups, for as long as their cache headers allow and a day at most, as a browser that came before would: reading them takes longer than the rest of the lookup, and the network that serves them drops connections from the server in bursts. A check that asks for a visitor's answer ends the lookup as a challenge.
 
 LBC Express binds the public page's main-frame tracking POST to the whole label and
 decodes its compressed response. Its bounded capture retains automatic verification

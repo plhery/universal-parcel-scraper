@@ -13,6 +13,13 @@ const VERDICT = 'data-upc-track123-verdict';
 // Track123's pages ask again this long after an unfinished reply, at most this many times.
 const POLL_MS = 300;
 const POLLS = 100;
+// Tencent's script and style files, kept between lookups for as long as their own cache headers
+// allow and a day at most, as a browser that had made a lookup before would have them.
+const KEPT = /^https:\/\/turing\.captcha\.(?:qcloud|gtimg)\.com\/[\w./-]{1,200}\.(?:js|css)$/;
+const KEPT_MS = 24 * 3600_000;
+const KEPT_BYTES = 2_000_000;
+const KEPT_FILES = 16;
+const kept = new Map();
 
 /** The courier code and whole number of a `/carriers/<code>#trawl-number=<number>` request, or null. */
 export function track123Request(raw, capture = {}) {
@@ -113,6 +120,29 @@ export function track123Data(payload) {
       })) : null } };
 }
 
+/** The kept copy of one of Tencent's files, while it may still be used. */
+export function track123Kept(url, now = Date.now()) {
+  const file = kept.get(url);
+  if (file && file.until <= now) kept.delete(url);
+  return kept.get(url) ?? null;
+}
+
+/** Keeps a file the browser read from Tencent whole, when its reply says for how long it may be reused. */
+export async function keepTrack123File(response, now = Date.now()) {
+  const url = response.url();
+  if (!KEPT.test(url) || response.request().method() !== 'GET' || response.status() !== 200 || track123Kept(url, now)) return;
+  const headers = response.headers();
+  const control = headers['cache-control'] ?? '';
+  const seconds = /(?:^|[\s,])max-age=(\d{1,9})(?:$|[\s,])/i.exec(control)?.[1];
+  if (!seconds || /no-store|no-cache|private/i.test(control)) return;
+  let body;
+  try { body = await response.body(); } catch { return; }
+  if (!body.length || body.length > KEPT_BYTES || track123Kept(url, now)) return;
+  kept.set(url, { until: now + Math.min(Number(seconds) * 1000, KEPT_MS), body,
+    headers: Object.fromEntries(['content-type', 'access-control-allow-origin'].filter(name => headers[name]).map(name => [name, headers[name]])) });
+  while (kept.size > KEPT_FILES) kept.delete(kept.keys().next().value);
+}
+
 /** Tencent's check on the blank page: its ticket, or null when it gives none this lookup can use. */
 async function verify(page, remaining) {
   await page.addScriptTag({ url: VERIFICATION });
@@ -165,6 +195,11 @@ export async function runTrack123Browser({ url, capture, handle, tier, maxTimeou
     await page.route(pageUrl, route => route.request().isNavigationRequest() && route.request().frame() === page.mainFrame()
       ? route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><html><head></head><body></body></html>' })
       : route.fallback());
+    await page.route(KEPT, route => {
+      const file = route.request().method() === 'GET' ? track123Kept(route.request().url()) : null;
+      return file ? route.fulfill({ status: 200, headers: file.headers, body: file.body }) : route.fallback();
+    });
+    page.on('response', response => { void keepTrack123File(response); });
     await page.goto(pageUrl, { waitUntil: 'domcontentloaded', timeout: remaining() });
     if (page.url() !== pageUrl) return result();
     const verdict = await verify(page, remaining);
