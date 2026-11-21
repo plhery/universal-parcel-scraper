@@ -135,7 +135,13 @@ describe('TNT Italy HTTP adapter', () => {
     await expect(lookup('', { status: 302, headers: { Location: 'https://www.tnt.it/' } })).rejects.toMatchObject({ kind: 'transport' });
     await expect(lookup(DENIED, { status: 403 })).rejects.toMatchObject({ kind: 'challenge' });
     await expect(lookup(DENIED)).rejects.toMatchObject({ kind: 'challenge' });
-    await expect(lookup('<html><title>TNT - Tracking</title></html>')).rejects.toMatchObject({ kind: 'schema' });
+    // A reply that is not the tracking XML names its first tag and nothing else.
+    await expect(lookup('<html><title>TNT - Tracking</title></html>')).rejects
+      .toMatchObject({ kind: 'schema', message: 'TNT Italy returned a reply that is not its tracking XML (<html>)' });
+    await expect(lookup('<!DOCTYPE html>\n<HTML lang="it"><body>Servizio</body></HTML>')).rejects
+      .toMatchObject({ kind: 'schema', message: 'TNT Italy returned a reply that is not its tracking XML (<html>)' });
+    await expect(lookup('Servizio non disponibile')).rejects
+      .toMatchObject({ kind: 'schema', message: 'TNT Italy returned a reply that is not its tracking XML (text)' });
     // A blank reply is the tracker down, not a changed reply.
     await expect(lookup('')).rejects.toMatchObject({ kind: 'indeterminate', message: 'TNT Italy returned an empty reply' });
   });

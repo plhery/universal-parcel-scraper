@@ -78,6 +78,14 @@ function refusal(error: XmlNode): never {
   throw new IndeterminateError(PROVIDER, `TNT Italy answered with error ${code || 'without a code'}`);
 }
 
+// What a reply that is not the tracking XML starts with, its first tag's name or "text": the night
+// maintenance sends one, and the name, unlike the body, carries nothing of a shipment.
+const FIRST_TAG = /^\s*(?:<\?xml[^>]*\?>\s*)?(?:<!--[\s\S]*?-->\s*)*(?:<!DOCTYPE\s+([A-Za-z][\w:.-]{0,30})[^>]*>\s*)?<([A-Za-z][\w:.-]{0,30})/;
+function replyShape(body: string): string {
+  const match = FIRST_TAG.exec(body.slice(0, 4096));
+  return match ? `<${(match[2] ?? match[1])!.toLowerCase()}>` : 'text';
+}
+
 /**
  * The XML tnt.it's tracking page reads for one waybill. A number it does not
  * know is error 00015. Waybills are reused: every consignment with the number
@@ -90,7 +98,7 @@ export function parseTntItaly(xml: string, raw: string): CarrierResult {
   const root = xmlDocument(xml.replace(DOCTYPE, '$1'), TNT_ITALY_MAX_BYTES);
   if (!root || root.name !== 'ResultSet' || root.uri) {
     if (CHALLENGE.test(xml.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'TNT Italy answered with a browser check');
-    throw new SchemaError(PROVIDER, 'TNT Italy returned a reply that is not its tracking XML');
+    throw new SchemaError(PROVIDER, `TNT Italy returned a reply that is not its tracking XML (${replyShape(xml)})`);
   }
   const consignments = children(root, 'Consignment');
   const errors = children(root, 'RuntimeError');

@@ -49,7 +49,9 @@ consignments belong to [TNT](../tnt/README.md). Tracked through the lookup its t
 - Older shipments drop out of the tracker, which then answers `00015` as for an unknown waybill.
 - While the tracker is down, as in its night maintenance, the lookup answers HTTP 200 with an empty
   body for every waybill, the official page included; that is an indeterminate failure, not a
-  changed reply.
+  changed reply. Late in the maintenance window it can send a body that is not the tracking XML;
+  the schema error names only that body's first tag, or says it is text, so the reply can be told
+  apart without keeping it.
 
 ## Numbers
 
