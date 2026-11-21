@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+</title></head>
+<body>
+    <form name="aspnetForm" method="post" action="/FrmAWBTracking.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="ctl00_ToolkitScriptManager1_HiddenField" id="ctl00_ToolkitScriptManager1_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+</div>
+<div>
+            <div id="ctl00_ContentPlaceHolder1_pnlMultipleAWBs" class="multiple-awb-wrapper" style="top: 80px !important; overflow: scroll;">
+                    <div class="awb-list-wrapper">
+                        <div class="awb-number-wrapper">
+                            <input type="submit" name="ctl00$ContentPlaceHolder1$rptTrackAWBs$ctl00$btnAWBNumber" value="230-48271635" id="ctl00_ContentPlaceHolder1_rptTrackAWBs_ctl00_btnAWBNumber" disabled="disabled" class="awb-number-2" onmouseover="this.style.cursor=pointer" style="color:#075A7F;" />
+                        </div>
+                        <div class="lastest-activity-wrapper">
+                            <span id="ctl00_ContentPlaceHolder1_rptTrackAWBs_ctl00_lblLatestActivity" class="latest-activity" style="color:#075A7F;">Document not found</span>
+                        </div>
+                          <div class="lastest-activity-wrapper">
+                            <span id="ctl00_ContentPlaceHolder1_rptTrackAWBs_ctl00_lblIdentificationNo" class="latest-activity"></span>
+                        </div>
+                    </div>
+</div>
+        <div id="contentarea_responsive" style="width: 99% !important; padding-top: 5px !important;">
+            <div class="msg">
+                <span id="ctl00_ContentPlaceHolder1_LabelStatus" style="color:Red;">No Records Found</span>
+            </div>
+            <h1 class="responsive">Track Air Waybill
+            </h1>
+            <div class="botline_responsive" style="background-color: #cfdded;">
+                <table>
+                    <tr>
+                        <td valign="top">Prefix</td>
+                        <td valign="top">
+                            <input name="ctl00$ContentPlaceHolder1$txtPrefix" type="text" value="230" maxlength="4" id="ctl00_ContentPlaceHolder1_txtPrefix" title="Enter AWB Prefix e.g.: 230" class="inputbg60" onkeypress="return isSpcCharAWBPrefix(event)" style="width:50px;" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td valign="top">AWB No's
+                        </td>
+                        <td valign="top">
+                            <textarea name="ctl00$ContentPlaceHolder1$TextBoxAWBno" rows="2" cols="20" id="ctl00_ContentPlaceHolder1_TextBoxAWBno" title="Enter AWB no(S). If multiple AWBs, enter comma separated. e.g.:98989898,98989899" onkeypress="return isSpcCharAWBNo(event)" style="height:30px;width:250px;">
+48271635</textarea>
+                        </td>
+                        <td valign="top">
+                            <input type="submit" name="ctl00$ContentPlaceHolder1$ButtonGO" value="Track" onclick="return ChkSpcChar(event);" id="ctl00_ContentPlaceHolder1_ButtonGO" class="button" style="width:60px;" />
+                        </td>
+                        <td style="vertical-align: top; color: black; padding-left: 15px;"><b>NOTE:</b> To track multiple AWB Numbers, you can enter up to <span id="ctl00_ContentPlaceHolder1_AWBMaxLimit">10</span>AWB Numbers separated by comma.</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="contentarea_tracking" style="float: left; width: 80%">
+            </div>
+        </div>
+        <input type="hidden" name="ctl00$ContentPlaceHolder1$hdnIsAlaska" id="ctl00_ContentPlaceHolder1_hdnIsAlaska" value="false" />
+        <div id="uldlistpopup" class="uldlistpopup">
+            <span onclick="CloseULDPopup();" class="uldlistpopupclose">
+                <img src="Images/Tracking/closepopup.png" width="13" height="13" align="right" style="margin: 3px;" /></span>
+            <div class="uldpopupinfo"><span id="uldNos"></span></div>
+        </div>
+        <div class="msg">
+            <span>
+                <span style="margin-top: 5px;"><b>Powered By</b></span>
+                <img src="Images/smartcargo_logoLogin.png" style="vertical-align: middle; margin-top: -4px;" alt="SmartKargo Logo" height="20px" />
+            </span>
+        </div>
+    <a id="ctl00_ContentPlaceHolder1_lnkFake" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$lnkFake&#39;,&#39;&#39;)"></a>
+<div id="ctl00_ContentPlaceHolder1_pnlPopup" class="modalPopup" style="display: none">
+    <div class="header">
+        Details
+    </div>
+    <div class="body">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <span id="ctl00_ContentPlaceHolder1_lblUldDescr"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="footer" align="right">
+        <input type="submit" name="ctl00$ContentPlaceHolder1$btnClose" value="Close" id="ctl00_ContentPlaceHolder1_btnClose" class="mdlbtn" />
+    </div>
+</div>
+        </div>
+        <div style="display: none;"><a href="http://apycom.com/">Apycom jQuery Menus</a></div>
+        <div id="ctl00_csrfDiv"><input name="__RequestVerificationToken" type="hidden" value="" /></div>
+<div>
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="" />
+</div>
+</form>
+</body>
+</html>

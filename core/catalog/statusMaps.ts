@@ -974,6 +974,7 @@ import { statusMap as turkonLine } from '../../carriers/turkon-line/status.js';
 import { statusMap as hapagLloyd } from '../../carriers/hapag-lloyd/status.js';
 import { statusMap as bimanBangladesh } from '../../carriers/biman-bangladesh/status.js';
 import { statusMap as cargolux } from '../../carriers/cargolux/status.js';
+import { statusMap as copaAirlinesCargo } from '../../carriers/copa-airlines-cargo/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -982,6 +983,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh, cargolux,
+  'copa-airlines-cargo': copaAirlinesCargo,
   'sarjak-container-lines': sarjakContainerLines, 'ck-line': ckLine, 'vasco-maritime': vascoMaritime, romocean, amass,
   danx, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
   'wan-hai': wanHai, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,

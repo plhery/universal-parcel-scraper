@@ -1,0 +1,38 @@
+{
+  "carrier": "copa-airlines-cargo",
+  "records": [
+    {
+      "number": "230-61044093",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210616005649/https://copa.smartkargo.com/FrmAWBTracking.aspx?AWBPrefix=230&AWBNo=61044093",
+        "date": "2021-06-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Air cargo",
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "An archived Copa SmartKargo tracking link. The tracker answers it as a shipment from Guayaquil through Panama to New York, delivered at JFK."
+    }
+  ]
+}

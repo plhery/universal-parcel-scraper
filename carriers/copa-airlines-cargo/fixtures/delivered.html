@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+</title></head>
+<body>
+    <form name="aspnetForm" method="post" action="/FrmAWBTracking.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="ctl00_ToolkitScriptManager1_HiddenField" id="ctl00_ToolkitScriptManager1_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+</div>
+<div>
+            <div id="ctl00_ContentPlaceHolder1_pnlMultipleAWBs" class="multiple-awb-wrapper" style="top: 80px !important; overflow: scroll;">
+                    <div class="awb-list-wrapper">
+                        <div class="awb-number-wrapper">
+                            <input type="submit" name="ctl00$ContentPlaceHolder1$rptTrackAWBs$ctl00$btnAWBNumber" value="230-61044093" id="ctl00_ContentPlaceHolder1_rptTrackAWBs_ctl00_btnAWBNumber" class="awb-number-2" style="color:#075A7F;" />
+                        </div>
+                        <div class="lastest-activity-wrapper">
+                            <span id="ctl00_ContentPlaceHolder1_rptTrackAWBs_ctl00_lblLatestActivity" class="latest-activity" style="color:#075A7F;">Delivered at JFK</span>
+                        </div>
+                          <div class="lastest-activity-wrapper">
+                            <span id="ctl00_ContentPlaceHolder1_rptTrackAWBs_ctl00_lblIdentificationNo" class="latest-activity"></span>
+                        </div>
+                    </div>
+</div>
+        <div id="contentarea_responsive" style="width: 99% !important; padding-top: 5px !important;">
+            <div class="msg">
+                <span id="ctl00_ContentPlaceHolder1_LabelStatus" style="color:Red;"></span>
+            </div>
+            <h1 class="responsive">Track Air Waybill
+            </h1>
+            <div class="botline_responsive" style="background-color: #cfdded;">
+                <table>
+                    <tr>
+                        <td valign="top">Prefix</td>
+                        <td valign="top">
+                            <input name="ctl00$ContentPlaceHolder1$txtPrefix" type="text" value="230" maxlength="4" id="ctl00_ContentPlaceHolder1_txtPrefix" title="Enter AWB Prefix e.g.: 230" class="inputbg60" onkeypress="return isSpcCharAWBPrefix(event)" style="width:50px;" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td valign="top">AWB No's
+                        </td>
+                        <td valign="top">
+                            <textarea name="ctl00$ContentPlaceHolder1$TextBoxAWBno" rows="2" cols="20" id="ctl00_ContentPlaceHolder1_TextBoxAWBno" title="Enter AWB no(S). If multiple AWBs, enter comma separated. e.g.:98989898,98989899" onkeypress="return isSpcCharAWBNo(event)" style="height:30px;width:250px;">
+61044093</textarea>
+                        </td>
+                        <td valign="top">
+                            <input type="submit" name="ctl00$ContentPlaceHolder1$ButtonGO" value="Track" onclick="return ChkSpcChar(event);" id="ctl00_ContentPlaceHolder1_ButtonGO" class="button" style="width:60px;" />
+                        </td>
+                        <td style="vertical-align: top; color: black; padding-left: 15px;"><b>NOTE:</b> To track multiple AWB Numbers, you can enter up to <span id="ctl00_ContentPlaceHolder1_AWBMaxLimit">10</span>AWB Numbers separated by comma.</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="contentarea_tracking" style="float: left; width: 80%">
+                <div id="ctl00_ContentPlaceHolder1_pnlShowData" style="width:100%;">
+                    <div style="overflow-y: hidden; overflow-x: auto;">
+                        <table class="table no-bg" width="100%"><tr><td align="center" style="height:77.7778px"><table class="table" width="100%" height="100%"><tr><th colspan="3">GYE</th></tr><tr><td colspan="3"><strong>SIMON BOLIVAR</strong></td></tr><tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td align="center"><table class="table" width="100%" height="100%"><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="valign-top">
+          <img src="Images/Tracking/icon-accepted.png" />
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="flt-info">
+          21/06/2021 23:16
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td><strong>
+            1 P / 24.00 Kgs
+          </strong></td><td>&nbsp;&nbsp;&nbsp;</td></tr></table></td><td align="center"></td><td align="center"><table class="table" width="100%" height="100%"><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="valign-top">
+          <img src="Images/Tracking/icon-dep.png" />
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="flt-info">
+          CM214 / 22/06/2021 03:36
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td><strong>
+            1 P / 24.00 Kgs
+          </strong></td><td>&nbsp;&nbsp;&nbsp;</td></tr></table></td></tr>
+      <tr><td colspan="3">&nbsp;</td></tr></table></td><td align="center" class="con-width-2"><table class="separator" width="100%"><tr><th>&nbsp;</th></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr>
+      <tr><td class="valign-middle"><table width="100%"><tr><td align="center" style="background:url(Images/Tracking/dot.png) scroll center left repeat-x; height:77.7778px">
+              <img src="Images/Tracking/icon-aircraft.png" />
+            </td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></table></td></tr>
+      <tr><td>&nbsp;</td></tr></table></td><td align="center" style="height:77.7778px"><table class="table" width="100%" height="100%"><tr><th colspan="3">PTY</th></tr><tr><td colspan="3"><strong>TOCUMEN INTERNATIONAL AIRPORT</strong></td></tr><tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td align="center"><table class="table" width="100%" height="100%"><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="valign-top">
+          <img src="Images/Tracking/icon-arr.png" />
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="flt-info">
+          CM214 / 22/06/2021 05:45
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td><strong>
+            1 P / 24.00 Kgs
+          </strong></td><td>&nbsp;&nbsp;&nbsp;</td></tr></table></td><td align="center"></td><td align="center"><table class="table" width="100%" height="100%"><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="valign-top">
+          <img src="Images/Tracking/icon-dep.png" />
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="flt-info">
+          CM809 / 22/06/2021 07:38
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td><strong>
+            1 P / 24.00 Kgs
+          </strong></td><td>&nbsp;&nbsp;&nbsp;</td></tr></table></td></tr>
+      <tr><td colspan="3">&nbsp;</td></tr></table></td></tr></table>
+                    </div>
+                    <br />
+                    <div class="scrollbar">
+                        <div class="awb-status">
+                            <div class="awb-info">
+                                <table width="100%" cellpadding="3" cellspacing="6">
+                                    <tr style="border-bottom: 1px solid #ccc;">
+                                        <td>AWB :</td>
+                                        <td style="border-bottom: 1px dotted #dedede;">
+                                            <span id="ctl00_ContentPlaceHolder1_lblAWBNo" class="awb-number">230-61044093</span>
+                                            &nbsp;
+                                        <strong>(<span id="ctl00_ContentPlaceHolder1_lblOrigin">GYE</span>-<span id="ctl00_ContentPlaceHolder1_lblDestination">JFK</span>)
+                                        </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <strong>
+                                                <span id="ctl00_ContentPlaceHolder1_lblPcs">1 P</span>&nbsp;/&nbsp;<span id="ctl00_ContentPlaceHolder1_lblGrossWt">24.00 Kgs</span>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="last-activity">
+                                <table width="100%">
+                                    <tr>
+                                        <td><strong>Last Activity</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="highlight-last-activity">
+                                                <img src="Images/Tracking/last-activity.png" width="25" height="20" style="margin-right: 12px;" />
+                                                <span id="ctl00_ContentPlaceHolder1_lblLatestActivity">Arrived at PTY</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <span id="ctl00_ContentPlaceHolder1_lblLastActivityDescription">1 P / 24.00 Kgs</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div style="float: left; margin-top: 18px; width: 34%;" class="col-12">
+                        <strong>Booking and Acceptance Information</strong>
+                        <div style="margin-top: 10px;">
+                            <div>
+		<table class="newstyle" cellspacing="0" rules="all" border="1" id="ctl00_ContentPlaceHolder1_gvBkAcInfo" style="width:99%;border-collapse:collapse;">
+			<tr class="titlecolr" align="center">
+				<th scope="col">Status</th><th scope="col">Station</th><th scope="col">Dest</th><th scope="col">Pcs</th><th scope="col">Weight</th><th scope="col">Flight#</th><th scope="col">Event Date-Time</th>
+			</tr><tr class="newstyle-tr" align="center">
+				<td>Booked</td><td>GYE</td><td>PTY</td><td>1</td><td>24.00 Kgs</td><td>CM214 GYE 22/06/2021 03:36-PTY 22/06/2021 05:45</td><td>04/06/2021 09:06</td>
+			</tr><tr class="newstyle-tr" align="center">
+				<td>Booked</td><td>PTY</td><td>JFK</td><td>1</td><td>24.00 Kgs</td><td>CM809 PTY 22/06/2021 07:38-JFK 22/06/2021 13:47</td><td>04/06/2021 09:06</td>
+			</tr><tr class="newstyle-tr" align="center">
+				<td>Accepted</td><td>GYE</td><td>JFK</td><td>1</td><td>24.00 Kgs</td><td>&nbsp;</td><td>21/06/2021 23:16</td>
+			</tr>
+		</table>
+	</div>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                    <div style="float: left; margin-top: 18px; width: 65%; border-left: 1px dotted; padding-left: 3px;" class="col-12">
+                        <strong>Status History</strong>
+                        <div style="margin-top: 10px;">
+                            <div>
+		<table class="newstyle" cellspacing="0" rules="all" border="1" id="ctl00_ContentPlaceHolder1_GridViewAwbTracking" style="width:100%;border-collapse:collapse;">
+			<tr class="titlecolr" align="center">
+				<th scope="col">Station</th><th scope="col">Milestone</th><th scope="col">Pcs</th><th scope="col">Weight</th><th scope="col">Flight#</th><th scope="col">Flight Date</th><th scope="col">Org</th><th scope="col">Dest</th><th scope="col">ULD</th>
+			</tr><tr class="newstyle-tr" align="center" valign="middle">
+				<td align="center">
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl02_lblStation" style="color:Brown;">GYE</span>
+                                        </td><td align="center">Departed</td><td>
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl02_lblPcs">1</span>
+                                        </td><td>24.00 Kgs</td><td align="center">CM214</td><td>
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl02_lblFltDate">22/06/2021 03:36</span>
+                                        </td><td align="center">GYE</td><td align="center">PTY</td><td align="center">
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl02_lblULDNo"></span>
+                                            <input name="ctl00$ContentPlaceHolder1$GridViewAwbTracking$ctl02$HidULDNo" type="text" id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl02_HidULDNo" style="display: none" />
+                                        </td>
+			</tr><tr class="newstyle-tr" align="center" valign="middle">
+				<td align="center">
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl03_lblStation" style="color:Brown;">PTY</span>
+                                        </td><td align="center">Departed</td><td>
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl03_lblPcs">1</span>
+                                        </td><td>24.00 Kgs</td><td align="center">CM809</td><td>
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl03_lblFltDate">22/06/2021 07:38</span>
+                                        </td><td align="center">PTY</td><td align="center">JFK</td><td align="center">
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl03_lblULDNo"> BULK/PET-TTO (1)</span>
+                                            <input name="ctl00$ContentPlaceHolder1$GridViewAwbTracking$ctl03$HidULDNo" type="text" value=" BULK/PET-TTO (1)" id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl03_HidULDNo" style="display: none" />
+                                        </td>
+			</tr><tr class="newstyle-tr" align="center" valign="middle">
+				<td align="center">
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl04_lblStation" style="color:Brown;">PTY</span>
+                                        </td><td align="center">Arrived</td><td>
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl04_lblPcs">1</span>
+                                        </td><td>24.00 Kgs</td><td align="center">CM214</td><td>
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl04_lblFltDate">22/06/2021 05:45</span>
+                                        </td><td align="center">GYE</td><td align="center">PTY</td><td align="center">
+                                            <span id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl04_lblULDNo"></span>
+                                            <input name="ctl00$ContentPlaceHolder1$GridViewAwbTracking$ctl04$HidULDNo" type="text" id="ctl00_ContentPlaceHolder1_GridViewAwbTracking_ctl04_HidULDNo" style="display: none" />
+                                        </td>
+			</tr>
+		</table>
+	</div>
+                        </div>
+                    </div>
+                    <br />
+                    <div style="float: left; margin-top: 18px; width: 99%; padding-left: 3px;">
+                        <strong>
+                            </strong>
+                        <div style="margin-top: 10px;">
+                        </div>
+                    </div>
+</div>
+            </div>
+        </div>
+        <input type="hidden" name="ctl00$ContentPlaceHolder1$hdnIsAlaska" id="ctl00_ContentPlaceHolder1_hdnIsAlaska" value="false" />
+        <div id="uldlistpopup" class="uldlistpopup">
+            <span onclick="CloseULDPopup();" class="uldlistpopupclose">
+                <img src="Images/Tracking/closepopup.png" width="13" height="13" align="right" style="margin: 3px;" /></span>
+            <div class="uldpopupinfo"><span id="uldNos"></span></div>
+        </div>
+        <div class="msg">
+            <span>
+                <span style="margin-top: 5px;"><b>Powered By</b></span>
+                <img src="Images/smartcargo_logoLogin.png" style="vertical-align: middle; margin-top: -4px;" alt="SmartKargo Logo" height="20px" />
+            </span>
+        </div>
+    <a id="ctl00_ContentPlaceHolder1_lnkFake" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$lnkFake&#39;,&#39;&#39;)"></a>
+<div id="ctl00_ContentPlaceHolder1_pnlPopup" class="modalPopup" style="display: none">
+    <div class="header">
+        Details
+    </div>
+    <div class="body">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <span id="ctl00_ContentPlaceHolder1_lblUldDescr"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="footer" align="right">
+        <input type="submit" name="ctl00$ContentPlaceHolder1$btnClose" value="Close" id="ctl00_ContentPlaceHolder1_btnClose" class="mdlbtn" />
+    </div>
+</div>
+        </div>
+        <div style="display: none;"><a href="http://apycom.com/">Apycom jQuery Menus</a></div>
+        <div id="ctl00_csrfDiv"><input name="__RequestVerificationToken" type="hidden" value="" /></div>
+<div>
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="" />
+</div>
+</form>
+</body>
+</html>

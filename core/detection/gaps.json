@@ -827,6 +827,11 @@
     "reason": "The native tracker confirms one public numeric guide. The carrier is selectable while its numbering and overlaps remain open."
   },
   {
+    "carrier": "copa-airlines-cargo",
+    "kind": "by_design",
+    "reason": "Copa's master air waybills share the eleven-digit airline format with every airline; only the 230 prefix names Copa. Select Copa Airlines Cargo explicitly."
+  },
+  {
     "carrier": "cordelia-shipping",
     "kind": "open",
     "reason": "The guest form verifies Cordelia bills and shared equipment references. Select Cordelia explicitly."

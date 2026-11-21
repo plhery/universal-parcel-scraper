@@ -10,6 +10,11 @@ export interface SmartKargoPortal {
   tracker: string;
   prefix: string;
   stageForWording: (wording: string) => Stage | undefined;
+  /**
+   * `link` opens the waybill from the tracker's `AWBPrefix` and `AWBNo` query, following one
+   * redirect to the same page; `form` (the default) posts the tracker's ASP.NET form.
+   */
+  route?: 'form' | 'link';
 }
 
 export function normalizeSmartKargoNumber(raw: string, { provider, prefix }: SmartKargoPortal): string {
@@ -26,6 +31,9 @@ function document(html: string, provider: string) {
   }
   return load(html);
 }
+
+/** Some tenants render the tracker inside a master page, which prefixes every control id. */
+const control = ($: CheerioAPI, name: string) => $(`#${name}, #ctl00_ContentPlaceHolder1_${name}`);
 
 export function smartKargoFormFields(html: string, number: string, { provider, tracker }: SmartKargoPortal): URLSearchParams {
   const $ = document(html, provider);
@@ -48,14 +56,14 @@ export function smartKargoFormFields(html: string, number: string, { provider, t
   return fields;
 }
 
-function readRows($: CheerioAPI, table: string, statusColumn: string,
+function readRows($: CheerioAPI, table: string, statusColumn: string, dateColumns: string[],
   { provider, stageForWording }: SmartKargoPortal): CarrierEvent[] {
-  const rows = $(table).find('tr').toArray();
+  const rows = control($, table).find('tr').toArray();
   if (!rows.length) return [];
   const headings = $(rows[0]).children('th').toArray().map(cell => clean($(cell).text()));
   const station = headings.indexOf('Station');
   const status = headings.indexOf(statusColumn);
-  const date = headings.indexOf('Event Date-Time');
+  const date = dateColumns.map(column => headings.indexOf(column)).find(index => index >= 0) ?? -1;
   if (station < 0 || status < 0 || date < 0) throw new SchemaError(provider, 'The tracker changed its event columns');
   return rows.slice(1).map(row => {
     const cells = $(row).children('td').toArray().map(cell => clean($(cell).text()));
@@ -76,15 +84,23 @@ function readRows($: CheerioAPI, table: string, statusColumn: string,
   });
 }
 
+/** The latest activity the tracker's waybill list gives for the requested number. */
+function listedActivity($: CheerioAPI, number: string): string {
+  const button = $('[id$="_btnAWBNumber"]').toArray()
+    .find(element => clean($(element).val()).replace(/[- ]/g, '') === number);
+  const id = button && $(button).attr('id')?.replace(/btnAWBNumber$/, 'lblLatestActivity');
+  return id ? clean($(`[id="${id}"]`).text()) : '';
+}
+
 export function parseSmartKargoTracking(html: string, number: string, portal: SmartKargoPortal): CarrierResult {
   const { provider, stageForWording } = portal;
   const $ = document(html, provider);
-  const identity = clean($('#lblAWBNo').text()).replace(/[- ]/g, '');
+  const identity = clean(control($, 'lblAWBNo').text()).replace(/[- ]/g, '');
   if (!identity) {
-    const prefix = $('#txtPrefix').val();
-    const serial = clean($('#TextBoxAWBno').val());
+    const prefix = control($, 'txtPrefix').val();
+    const serial = clean(control($, 'TextBoxAWBno').val());
     if (prefix === number.slice(0, 3) && serial === number.slice(3)
-      && clean($('#LabelStatus').text()) === 'AWB Details not available') {
+      && ['AWB Details not available', 'No Records Found'].includes(clean(control($, 'LabelStatus').text()))) {
       throw new NotFoundError(provider);
     }
     throw new SchemaError(provider, 'The tracker omitted the air waybill');
@@ -92,14 +108,19 @@ export function parseSmartKargoTracking(html: string, number: string, portal: Sm
   if (identity !== number) throw new IndeterminateError(provider, 'The tracker returned another air waybill');
 
   const events = [
-    ...readRows($, '#gvBkAcInfo', 'Status', portal),
-    ...readRows($, '#GridViewAwbTracking', 'Milestone', portal),
+    ...readRows($, 'gvBkAcInfo', 'Status', ['Event Date-Time'], portal),
+    // Without an event clock, the movement table's flight clock is the milestone's departure or arrival.
+    ...readRows($, 'GridViewAwbTracking', 'Milestone', ['Event Date-Time', 'Flight Date'], portal),
   ].reverse().sort((left, right) => (right.local_time ?? '').localeCompare(left.local_time ?? ''));
   const newest = events[0];
-  const summary = clean($('#lblLatestActivity').text());
+  // The shipment panel and the waybill list can each lag behind the other; a delivery in either stands.
+  const shown = clean(control($, 'lblLatestActivity').text());
+  const listed = listedActivity($, number);
+  const listedDelivery = stageForWording(listed) === 'delivered' && stageForWording(shown) !== 'delivered';
+  const summary = !shown || listedDelivery ? listed : shown;
   const stage = stageForWording(summary) ?? (newest?.description && stageForWording(newest.description));
   if (!summary && !newest) throw new NoHistoryError(provider);
-  const weight = /^(\d+(?:\.\d+)?) Kgs?$/i.exec(clean($('#lblGrossWt').text()));
+  const weight = /^(\d+(?:\.\d+)?) Kgs?$/i.exec(clean(control($, 'lblGrossWt').text()));
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'explicit_mapping' } : {}),

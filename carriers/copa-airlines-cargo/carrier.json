@@ -1,0 +1,61 @@
+{
+  "id": "copa-airlines-cargo",
+  "displayName": "Copa Airlines Cargo",
+  "aliases": [
+    "Copa Cargo",
+    "COPA Airlines Cargo"
+  ],
+  "region": {
+    "countries": [
+      "PA"
+    ]
+  },
+  "brand": {
+    "color": "#0032a0"
+  },
+  "selectable": true,
+  "timezone": "America/Panama",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "copa-airlines-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "weight"
+  ],
+  "portal": {
+    "url": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "searchUrl": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "canaryUrl": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "origin",
+      "destination",
+      "parcel_count",
+      "flight_and_routing"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "flight_and_routing"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
