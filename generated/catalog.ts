@@ -4602,6 +4602,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^G\\d{11}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^YTG\\d{12}$",
+        "confidence": "high"
       }
     ]
   },
@@ -70425,7 +70429,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sf-express": ["sf-express-3","sf-express-1","sf-express-2","sf-express-4"],
   "sto": ["sto-1","sto-2"],
   "yunda": ["yunda-1"],
-  "yto": ["yto-1","yto-2","yto-3"],
+  "yto": ["yto-1","yto-2","yto-3","yto-4"],
   "zto": ["zto-1","zto-2"],
   "jd-logistics": ["jd-logistics-1","jd-logistics-2"],
   "yamato": ["yamato-1"],

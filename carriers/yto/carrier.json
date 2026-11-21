@@ -78,6 +78,11 @@
       "id": "yto-3",
       "pattern": "^G\\d{11}$",
       "confidence": "low"
+    },
+    {
+      "id": "yto-4",
+      "pattern": "^YTG\\d{12}$",
+      "confidence": "high"
     }
   ]
 }

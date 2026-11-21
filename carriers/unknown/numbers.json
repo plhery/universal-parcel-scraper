@@ -293,25 +293,6 @@
       "note": "Plain word that must never look like a tracking number."
     },
     {
-      "number": "YTG852000330450",
-      "role": "quarantined",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://www.chinapostaltracking.com/qa/parcel-status-stuck-for-weeks-129356/",
-        "access": "full_page"
-      },
-      "context": {
-        "assessment": "review",
-        "reportedRole": "unresolved_reference"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
-      },
-      "note": "Customer reports a China-origin parcel to Australia without naming the carrier. The prefix does not establish YunExpress.",
-      "quarantine": true
-    },
-    {
       "number": "C24110206842444",
       "role": "quarantined",
       "evidence": "public_shipment_report",

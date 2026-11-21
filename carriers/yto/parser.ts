@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { YTO_RETURNED, ytoCodeLabel, ytoScan, ytoStatus } from './status.js';
+import { isYtoOverseasCode, YTO_RETURNED, ytoCodeLabel, ytoScan, ytoStatus } from './status.js';
 import { ytoDescribedPlace } from './wording.js';
 
 const PROVIDER = 'YTO Express';
@@ -61,11 +61,13 @@ export function parseYto(payload: unknown, trackingNumber: string): CarrierResul
     const clock = clean(raw.opTime, 64);
     const parsed = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(clock)
       ? zonedTime(clock, 'yyyy-MM-dd HH:mm:ss', ZONE) : null;
+    // An overseas centre's clock keeps its wall clock: the feed does not say whose it is.
+    const wall = parsed && isYtoOverseasCode(code) ? clock.replace(' ', 'T') : null;
     const location = clean(raw.opOrgName, 200) || ytoDescribedPlace(details);
     // opName is the short operation label. The website's expanded description
     // includes courier names/phones, collection addresses and recipient details.
     const event: CarrierEvent = { description, provider_code: code,
-      ...(parsed ? { time: parsed.iso } : clock ? { provider_time_text: clock } : {}),
+      ...(wall ? { local_time: wall } : parsed ? { time: parsed.iso } : clock ? { provider_time_text: clock } : {}),
       ...(location ? { location } : {}), ...(stage ? { stage } : {}),
       ...(returning ? { provider_leg: 'return' } : {}) };
     events.push(event);
@@ -85,7 +87,8 @@ export function parseYto(payload: unknown, trackingNumber: string): CarrierResul
   const returned = latest.stage === 'returned';
   return { status: returned ? 'exception' : mapped?.status ?? 'unknown',
     ...(latest.stage ? { current_stage: latest.stage } : {}),
-    last_status_text: latest.description, last_update: latest.time ?? null, timezone: ZONE,
+    last_status_text: latest.description, last_update: latest.time ?? null,
+    ...(latest.local_time ? { last_update_local: latest.local_time } : {}), timezone: ZONE,
     ...(mapped?.stage === 'delivered' && !returned && latest.time ? { delivered_at: latest.time } : {}),
     events: unique.slice(0, 100) };
 }
