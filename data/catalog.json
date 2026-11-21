@@ -7464,6 +7464,27 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "air-inuit": {
+    "displayName": "Air Inuit",
+    "color": "#d71920",
+    "aliases": [
+      "Air Inuit Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-inuit",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "trackingSearchUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-star-xpress": {
     "displayName": "Air Star Xpress",
     "color": "#227337",
@@ -56167,6 +56188,38 @@
     ],
     "detectionRules": []
   },
+  "spedire": {
+    "displayName": "Spedire",
+    "color": "#0F3460",
+    "aliases": [
+      "spedire by alsendo",
+      "spedire pro",
+      "spedire pro by alsendo",
+      "Spedire.com"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spedire",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.spedire.com/traccia-spedizione",
+    "trackingUrlTemplate": "https://www.spedire.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.spedire.com/traccia-spedizione",
+    "linkRules": [
+      {
+        "domains": [
+          "spedire.com"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "spedition-moeller": {
     "displayName": "Artur Möller",
     "color": "#dd3a32",
@@ -64543,6 +64596,25 @@
     "canaryUrl": "https://www.walleniuswilhelmsen.com/track-trace",
     "trackingUrlTemplate": "https://www.walleniuswilhelmsen.com/track-trace",
     "trackingSearchUrl": "https://www.walleniuswilhelmsen.com/track-trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "wan-hai": {
+    "displayName": "Wan Hai",
+    "color": "#00449e",
+    "aliases": [
+      "Wan Hai Lines",
+      "WHL"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wan-hai",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "trackingSearchUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
     "linkRules": [],
     "detectionRules": []
   },

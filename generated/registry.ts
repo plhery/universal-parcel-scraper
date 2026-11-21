@@ -24,6 +24,7 @@ import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
 import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
 import { adapter as airEuropaCargo } from '../carriers/air-europa-cargo/adapter.js';
 import { adapter as airGreenland } from '../carriers/air-greenland/adapter.js';
+import { adapter as airInuit } from '../carriers/air-inuit/adapter.js';
 import { adapter as airpakExpress } from '../carriers/airpak-express/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as airwaysCourierIn } from '../carriers/airways-courier-in/adapter.js';
@@ -819,6 +820,7 @@ import { adapter as southPost } from '../carriers/south-post/adapter.js';
 import { adapter as southeasternFreightLines } from '../carriers/southeastern-freight-lines/adapter.js';
 import { adapter as spExpress } from '../carriers/sp-express/adapter.js';
 import { adapter as sparkKz } from '../carriers/spark-kz/adapter.js';
+import { adapter as spedire } from '../carriers/spedire/adapter.js';
 import { adapter as speditionMoeller } from '../carriers/spedition-moeller/adapter.js';
 import { adapter as speeDee } from '../carriers/spee-dee/adapter.js';
 import { adapter as speedAndSafe } from '../carriers/speed-and-safe/adapter.js';
@@ -959,6 +961,7 @@ import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as wahana } from '../carriers/wahana/adapter.js';
 import { adapter as walkerLogistics } from '../carriers/walker-logistics/adapter.js';
 import { adapter as walleniusWilhelmsen } from '../carriers/wallenius-wilhelmsen/adapter.js';
+import { adapter as wanHai } from '../carriers/wan-hai/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as wangjing3cq } from '../carriers/wangjing-3cq/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
@@ -1043,6 +1046,7 @@ export const REGISTRY: RegistryDefinition = {
     "aex-paraguay": aexParaguay,
     "air-europa-cargo": airEuropaCargo,
     "air-greenland": airGreenland,
+    "air-inuit": airInuit,
     "airpak-express": airpakExpress,
     "airspeed": airspeed,
     "airways-courier-in": airwaysCourierIn,
@@ -1838,6 +1842,7 @@ export const REGISTRY: RegistryDefinition = {
     "southeastern-freight-lines": southeasternFreightLines,
     "sp-express": spExpress,
     "spark-kz": sparkKz,
+    "spedire": spedire,
     "spedition-moeller": speditionMoeller,
     "spee-dee": speeDee,
     "speed-and-safe": speedAndSafe,
@@ -1978,6 +1983,7 @@ export const REGISTRY: RegistryDefinition = {
     "wahana": wahana,
     "walker-logistics": walkerLogistics,
     "wallenius-wilhelmsen": walleniusWilhelmsen,
+    "wan-hai": wanHai,
     "wanbexpress": wanbexpress,
     "wangjing-3cq": wangjing3cq,
     "we-world-express": weWorldExpress,
@@ -2093,6 +2099,7 @@ export const REGISTRY: RegistryDefinition = {
     "aiolos-courier": "universal",
     "air-europa-cargo": "air-europa-cargo",
     "air-greenland": "air-greenland",
+    "air-inuit": "air-inuit",
     "air-star-xpress": "universal",
     "airmee": "universal",
     "airpak-express": "airpak-express",
@@ -3622,6 +3629,7 @@ export const REGISTRY: RegistryDefinition = {
     "sp-express": "sp-express",
     "spark-kz": "spark-kz",
     "sped-trans": "universal",
+    "spedire": "spedire",
     "spedition-moeller": "spedition-moeller",
     "spee-dee": "spee-dee",
     "speed-and-safe": "speed-and-safe",
@@ -3891,6 +3899,7 @@ export const REGISTRY: RegistryDefinition = {
     "walker-logistics": "walker-logistics",
     "walkers-transport": "universal",
     "wallenius-wilhelmsen": "wallenius-wilhelmsen",
+    "wan-hai": "wan-hai",
     "wanbexpress": "wanbexpress",
     "wangjing-3cq": "wangjing-3cq",
     "ward-trucking": "universal",

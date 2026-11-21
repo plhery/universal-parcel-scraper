@@ -7468,6 +7468,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "air-inuit": {
+    "displayName": "Air Inuit",
+    "color": "#d71920",
+    "aliases": [
+      "Air Inuit Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-inuit",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "trackingSearchUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-star-xpress": {
     "displayName": "Air Star Xpress",
     "color": "#227337",
@@ -56171,6 +56192,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "spedire": {
+    "displayName": "Spedire",
+    "color": "#0F3460",
+    "aliases": [
+      "spedire by alsendo",
+      "spedire pro",
+      "spedire pro by alsendo",
+      "Spedire.com"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "spedire",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.spedire.com/traccia-spedizione",
+    "trackingUrlTemplate": "https://www.spedire.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.spedire.com/traccia-spedizione",
+    "linkRules": [
+      {
+        "domains": [
+          "spedire.com"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "spedition-moeller": {
     "displayName": "Artur Möller",
     "color": "#dd3a32",
@@ -64550,6 +64603,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "wan-hai": {
+    "displayName": "Wan Hai",
+    "color": "#00449e",
+    "aliases": [
+      "Wan Hai Lines",
+      "WHL"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wan-hai",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "trackingSearchUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "wanbexpress": {
     "displayName": "WanbExpress",
     "color": "#da381b",
@@ -68280,6 +68352,7 @@ export const CARRIER_IDS = [
   "aiolos-courier",
   "air-europa-cargo",
   "air-greenland",
+  "air-inuit",
   "air-star-xpress",
   "airmee",
   "airpak-express",
@@ -69726,6 +69799,7 @@ export const CARRIER_IDS = [
   "sp-express",
   "spark-kz",
   "sped-trans",
+  "spedire",
   "spedition-moeller",
   "speed-and-safe",
   "speedaf",
@@ -69979,6 +70053,7 @@ export const CARRIER_IDS = [
   "walker-logistics",
   "walkers-transport",
   "wallenius-wilhelmsen",
+  "wan-hai",
   "wanbexpress",
   "wangjing-3cq",
   "ward-trucking",
@@ -70255,6 +70330,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aiolos-courier": [],
   "air-europa-cargo": [],
   "air-greenland": [],
+  "air-inuit": [],
   "air-star-xpress": [],
   "airmee": [],
   "airpak-express": [],
@@ -71701,6 +71777,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sp-express": ["sp-express-1"],
   "spark-kz": [],
   "sped-trans": [],
+  "spedire": [],
   "spedition-moeller": [],
   "speed-and-safe": [],
   "speedaf": ["speedaf-12","speedaf-r"],
@@ -71954,6 +72031,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "walker-logistics": [],
   "walkers-transport": [],
   "wallenius-wilhelmsen": [],
+  "wan-hai": [],
   "wanbexpress": ["wanbexpress-1"],
   "wangjing-3cq": [],
   "ward-trucking": [],
