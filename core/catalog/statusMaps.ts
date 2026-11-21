@@ -1,4 +1,3 @@
-import { statusMap as sarjakContainerLines } from '../../carriers/sarjak-container-lines/status.js';
 import { statusMap as cescoLogistics } from '../../carriers/cesco-logistics/status.js';
 import { statusMap as rosaliaExpress } from '../../carriers/rosalia-express/status.js';
 import { statusMap as icasaCargo } from '../../carriers/icasa-cargo/status.js';
@@ -963,6 +962,11 @@ import { statusMap as usendChile } from '../../carriers/usend-chile/status.js';
 import { statusMap as phantomCouriers } from '../../carriers/phantom-couriers/status.js';
 import { statusMap as gaintLogistic } from '../../carriers/gaint-logistic/status.js';
 import { statusMap as milaha } from '../../carriers/milaha/status.js';
+import { statusMap as sarjakContainerLines } from '../../carriers/sarjak-container-lines/status.js';
+import { statusMap as ckLine } from '../../carriers/ck-line/status.js';
+import { statusMap as vascoMaritime } from '../../carriers/vasco-maritime/status.js';
+import { statusMap as romocean } from '../../carriers/romocean/status.js';
+import { statusMap as amass } from '../../carriers/amass/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -970,6 +974,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'sarjak-container-lines': sarjakContainerLines, 'ck-line': ckLine, 'vasco-maritime': vascoMaritime, romocean, amass,
   danx, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
   'wan-hai': wanHai, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,
   'ocean-network-express': oceanNetworkExpress, 'cosco-shipping-lines': coscoShippingLines, oocl, maersk, msc, hmm, zim, 'yang-ming': yangMing,
@@ -987,7 +992,6 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'tramaco': tramaco,
   'tej-couriers': tejCouriers,
   'correos-costa-rica': costaRica,
-  'sarjak-container-lines': sarjakContainerLines,
   aeropost,
   'western-bid': westernBid,
   libanpost,
