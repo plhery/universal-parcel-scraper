@@ -39,6 +39,7 @@ import { adapter as allegroOne } from '../carriers/allegro-one/adapter.js';
 import { adapter as alphastline } from '../carriers/alphastline/adapter.js';
 import { adapter as altexCurier } from '../carriers/altex-curier/adapter.js';
 import { adapter as amHomeDelivery } from '../carriers/am-home-delivery/adapter.js';
+import { adapter as amass } from '../carriers/amass/adapter.js';
 import { adapter as amazonOrder } from '../carriers/amazon-order/adapter.js';
 import { adapter as amazonShipping } from '../carriers/amazon-shipping/adapter.js';
 import { adapter as ambroExpress } from '../carriers/ambro-express/adapter.js';
@@ -1071,6 +1072,7 @@ export const REGISTRY: RegistryDefinition = {
     "alphastline": alphastline,
     "altex-curier": altexCurier,
     "am-home-delivery": amHomeDelivery,
+    "amass": amass,
     "amazon-order": amazonOrder,
     "amazon-shipping": amazonShipping,
     "ambro-express": ambroExpress,
@@ -2157,6 +2159,7 @@ export const REGISTRY: RegistryDefinition = {
     "altex-curier": "altex-curier",
     "am-home-delivery": "am-home-delivery",
     "amalgamated-distribution": "universal",
+    "amass": "amass",
     "amazon-logistics": null,
     "amazon-order": "amazon-order",
     "amazon-shipping": "amazon-shipping",

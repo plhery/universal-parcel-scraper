@@ -1,0 +1,62 @@
+{
+  "id": "amass",
+  "displayName": "AMASS",
+  "aliases": [
+    "AMASS Freight",
+    "美设国际",
+    "美设国际物流集团股份有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#182689"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "amass",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "searchUrl": "https://www.amassfreight.com/trace/",
+    "helpUrl": "https://www.amassfreight.com/",
+    "canaryUrl": "https://www.amassfreight.com/trace/",
+    "shows": [
+      "status",
+      "history",
+      "progress_rail",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "progress_rail",
+      "eta"
+    ],
+    "unavailable": [
+      "location",
+      "origin",
+      "destination",
+      "weight",
+      "parcel_count",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ],
+    "siteName": "订单状态跟踪"
+  },
+  "links": [],
+  "detection": []
+}

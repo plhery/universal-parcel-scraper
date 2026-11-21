@@ -1,0 +1,43 @@
+{
+  "carrier": "amass",
+  "records": [
+    {
+      "number": "AMIGL260095687A",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/amass/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "house bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public AMASS tracking directory. The tracker holds its order from booking through the vessel’s arrival to the consignee’s collection; the parser fixture is its reply."
+    },
+    {
+      "number": "AMIGL260134697A",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/amass/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "house bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public AMASS tracking directory. The tracker holds its order through export customs and the house bill’s dispatch; the parser fixture is its reply."
+    }
+  ]
+}

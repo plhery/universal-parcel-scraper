@@ -8606,6 +8606,30 @@
     ],
     "detectionRules": []
   },
+  "amass": {
+    "displayName": "AMASS",
+    "color": "#182689",
+    "aliases": [
+      "AMASS Freight",
+      "美设国际",
+      "美设国际物流集团股份有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "amass"
+    },
+    "canaryUrl": "https://www.amassfreight.com/trace/",
+    "trackingSearchUrl": "https://www.amassfreight.com/trace/",
+    "trackingSiteName": "订单状态跟踪",
+    "helpUrl": "https://www.amassfreight.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "amazon-order": {
     "displayName": "Amazon order",
     "displayNames": {

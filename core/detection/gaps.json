@@ -218,6 +218,11 @@
     "reason": "One archived lookup on AM Home Delivery's tracking page shows AM and nine digits; a single sample is too thin to claim the prefix."
   },
   {
+    "carrier": "amass",
+    "kind": "open",
+    "reason": "The tracker confirms AMASS's house bills and their nine-digit orders, whose shapes no rule claims. Select AMASS explicitly."
+  },
+  {
     "carrier": "amazon-logistics",
     "pattern": "^ZZ\\d{10}$",
     "kind": "by_design",
