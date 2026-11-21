@@ -388,13 +388,17 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressMappedStage('Alert, Forwarded')).toBeUndefined();
   });
 
-  it("reads USPS's status before its sentence by the status's own entry, and USPS's row between facilities", () => {
+  it("reads USPS's status before its sentence about the item or the package by the status's own entry, and USPS's row between facilities", () => {
     const arrived = 'On the Way, Arrived at USPS Facility -> Your item arrived at our USPS facility in SAMPLE TOWN DISTRIBUTION CENTER '
       + 'on January 2, 2030 at 12:05 am. The item is currently in transit to the destination.';
     expect(jsExpressStage(arrived, 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: arrived })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(jsExpressMappedStage('On the Way, Sample Status -> Your item is somewhere')).toBeUndefined();
     expect(jsExpressStage('In Transit to Next Facility', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    const onTime = 'On the Way, In Transit, Arriving On Time -> Your package is moving within the USPS network and is on track to be '
+      + 'delivered by the expected delivery date. As of 12:05 am on January 2, 2030, it is currently in transit to the next facility.';
+    expect(jsExpressStage(onTime, 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: onTime })).toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
   it("reads SpeedX's day-end delay, relayed under DDE, as the parcel still on its way", () => {

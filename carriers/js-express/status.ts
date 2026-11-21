@@ -30,9 +30,9 @@ const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
 const FORWARDED = /^alert, forwarded -> your item was forwarded to a different address\b/;
 
 // USPS's status followed by its sentence, as JS Express relays it: "On the Way, Arrived at USPS Facility -> Your item
-// arrived at our USPS facility in …". The sentence names the facility, day and time; the status before the arrow takes
-// its own entry.
-const USPS_SENTENCE = /^on the way, (.+?) -> your item\b/;
+// arrived at our USPS facility in …", or "… -> Your package is moving within the USPS network …". The sentence names
+// the facility, day and time; the status before the arrow takes its own entry.
+const USPS_SENTENCE = /^on the way, (.+?) -> your (?:item|package)\b/;
 const uspsSentenceStage = (normalized: string): Stage | undefined => {
   const status = USPS_SENTENCE.exec(normalized)?.[1];
   return status ? WORDINGS.stage(status) : undefined;

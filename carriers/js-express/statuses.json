@@ -73,6 +73,7 @@
     {"wording": "Departed USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Processing at USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "In Transit to Next Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS's row between its facilities, as JS Express relays it."},
+    {"code": "OIT", "wording": "In Transit, Arriving On Time", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "USPS's step for a parcel moving in its network and on track for the expected date, as JS Express relays it before USPS's sentence; USPS's own map reads it in transit."},
     {"wording": "Forwarded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS sends the parcel on to another address, as its own map reads it. Its forwarding alert, which names the time, day and town, is read by a rule in status.ts."},
     {"wording": "Arrived at Post Office", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering post office's arrival scan, before the parcel goes out for delivery."},
     {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
