@@ -2704,6 +2704,14 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'polar-express', number: 'PE000000017US',
     route: /^https:\/\/the-tracking\.com\/PE000000017US\/$/,
     marker: /There is no any tracking information by such tracking number|Parcel information:\s*Track number:/ },
+  // The tracker renders the waybill's rows on the server under the number; an unknown one gets a single row.
+  { carrier: 'good-express-us', number: 'GD66139900017US',
+    route: /^https:\/\/www\.goodkuaidi\.com\/TrackingInfo\?TrackginNO=GD66139900017US$/,
+    marker: /运单号：\s*GD66139900017US|无跟踪信息/ },
+  // The English page names the number over its history, or over the notice that it is incorrect.
+  { carrier: 'swiss-universal-express', number: 'SUE9999000000017FR',
+    route: /^https:\/\/swiss-universal-express\.ch\/tracking\/SUE9999000000017FR\?lang=en$/,
+    marker: /Tracking information for\s*SUE9999000000017FR/ },
 ];
 
 /**

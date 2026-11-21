@@ -31017,6 +31017,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "good-express-us": {
+    "displayName": "GOOD Express",
+    "color": "#a93734",
+    "aliases": [
+      "GOOD快递",
+      "goodkuaidi"
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "good-express-us",
+      "recognitionRank": 27
+    },
+    "canaryUrl": "https://www.goodkuaidi.com/",
+    "trackingUrlTemplate": "https://www.goodkuaidi.com/TrackingInfo?TrackginNO={trackingNumber}",
+    "trackingSearchUrl": "https://www.goodkuaidi.com/",
+    "helpUrl": "https://www.goodkuaidi.com/Help?GID=DA8E7BEC-EA26-4536-B76F-EF056C673D86",
+    "linkRules": [
+      {
+        "domains": [
+          "goodkuaidi.com"
+        ],
+        "pathPattern": "^/TrackingInfo/?$",
+        "params": [
+          "TrackginNO"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^GD\\d{11}US$",
+        "confidence": "low"
+      }
+    ]
+  },
   "goodluck-courier": {
     "displayName": "Goodluck Courier Service",
     "color": "#091b5f",
@@ -59869,6 +59909,47 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "swiss-universal-express": {
+    "displayName": "Swiss Universal Express",
+    "color": "#75b7e1",
+    "countries": [
+      "CH",
+      "FR",
+      "DE",
+      "IT",
+      "AT",
+      "BE",
+      "NL",
+      "LU",
+      "ES",
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "swiss-universal-express",
+      "recognitionRank": 29,
+      "localClocks": true
+    },
+    "canaryUrl": "https://swiss-universal-express.ch/tracking/",
+    "trackingUrlTemplate": "https://swiss-universal-express.ch/tracking/{trackingNumber}?lang=en",
+    "trackingSearchUrl": "https://swiss-universal-express.ch/tracking/?lang=en",
+    "linkRules": [
+      {
+        "domains": [
+          "swiss-universal-express.ch"
+        ],
+        "path": "^/tracking/(SUE\\d{13}[A-Z]{2})/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^SUE\\d{13}FR$",
+        "confidence": "low"
+      }
+    ]
+  },
   "swissconnect": {
     "displayName": "swissconnect",
     "color": "#ff7f00",
@@ -71293,6 +71374,7 @@ export const CARRIER_IDS = [
   "golilla",
   "gollog",
   "golucky",
+  "good-express-us",
   "goodluck-courier",
   "goodmaji",
   "gordom-logistika",
@@ -72140,6 +72222,7 @@ export const CARRIER_IDS = [
   "swftbox",
   "swiftx",
   "swire-shipping",
+  "swiss-universal-express",
   "swissconnect",
   "sxjd-freight",
   "sxw-express",
@@ -73298,6 +73381,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "golilla": [],
   "gollog": ["gollog-1"],
   "golucky": [],
+  "good-express-us": ["good-express-us-gd"],
   "goodluck-courier": [],
   "goodmaji": [],
   "gordom-logistika": [],
@@ -74145,6 +74229,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swftbox": [],
   "swiftx": ["swiftx-1"],
   "swire-shipping": [],
+  "swiss-universal-express": ["swiss-universal-express-sue"],
   "swissconnect": [],
   "sxjd-freight": [],
   "sxw-express": ["sxw-express-1"],

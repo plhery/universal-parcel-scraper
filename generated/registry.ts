@@ -404,6 +404,7 @@ import { adapter as gofoNl } from '../carriers/gofo-nl/adapter.js';
 import { adapter as gogoXpress } from '../carriers/gogo-xpress/adapter.js';
 import { adapter as golilla } from '../carriers/golilla/adapter.js';
 import { adapter as gollog } from '../carriers/gollog/adapter.js';
+import { adapter as goodExpressUs } from '../carriers/good-express-us/adapter.js';
 import { adapter as grandSlamExpress } from '../carriers/grand-slam-express/adapter.js';
 import { adapter as gruberLogistics } from '../carriers/gruber-logistics/adapter.js';
 import { adapter as gsPostbox } from '../carriers/gs-postbox/adapter.js';
@@ -879,6 +880,7 @@ import { adapter as swiftx } from '../carriers/swiftx/adapter.js';
 import { adapter as swireShipping } from '../carriers/swire-shipping/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
+import { adapter as swissUniversalExpress } from '../carriers/swiss-universal-express/adapter.js';
 import { adapter as swissconnect } from '../carriers/swissconnect/adapter.js';
 import { adapter as sxwExpress } from '../carriers/sxw-express/adapter.js';
 import { adapter as tCat } from '../carriers/t-cat/adapter.js';
@@ -1454,6 +1456,7 @@ export const REGISTRY: RegistryDefinition = {
     "gogo-xpress": gogoXpress,
     "golilla": golilla,
     "gollog": gollog,
+    "good-express-us": goodExpressUs,
     "grand-slam-express": grandSlamExpress,
     "gruber-logistics": gruberLogistics,
     "gs-postbox": gsPostbox,
@@ -1929,6 +1932,7 @@ export const REGISTRY: RegistryDefinition = {
     "swire-shipping": swireShipping,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
+    "swiss-universal-express": swissUniversalExpress,
     "swissconnect": swissconnect,
     "sxw-express": sxwExpress,
     "t-cat": tCat,
@@ -2869,6 +2873,7 @@ export const REGISTRY: RegistryDefinition = {
     "golilla": "golilla",
     "gollog": "gollog",
     "golucky": "universal",
+    "good-express-us": "good-express-us",
     "goodluck-courier": "universal",
     "goodmaji": "universal",
     "gordom-logistika": "universal",
@@ -3761,6 +3766,7 @@ export const REGISTRY: RegistryDefinition = {
     "swire-shipping": "swire-shipping",
     "swiss-post": "swiss-post",
     "swiss-post-cargo": "swiss-post-cargo",
+    "swiss-universal-express": "swiss-universal-express",
     "swissconnect": "swissconnect",
     "sxjd-freight": "universal",
     "sxw-express": "sxw-express",
