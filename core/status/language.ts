@@ -574,8 +574,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // ParcelsApp relays it without the ampersand.
   if (/^tracking number allocated(?:,? (?:& |and )?order ready)?\.?$/.test(text)) return 'registered';
   if (/will be transported|\barrange (?:a )?(?:truck|train|rail|road) transfer\b|sera (?:transporte|achemine)|wird.*transportiert|sara trasportat/.test(text)) return 'in_transit';
-  // "Available for pickup shortly": the parcel is on its way to the outlet, not waiting there yet.
-  if (/will be available|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b|sera disponible|(?:sera|va etre|doit etre) (?:distribue|remis|mis en (?:livraison|distribution))|wird.*verfugbar|sara disponibile|to be delivered|a livrer|noch zuzustellen|da consegnare|(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery|\bout for delivery soon\b/.test(text)) return 'in_transit';
+  // "Available for pickup shortly", its German "In Kürze in Filiale abholbereit" and "Ready for pickup next business day",
+  // as DHL words them: the parcel is on its way to the outlet, not waiting there yet.
+  if (/will be available|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b|\bin kurze\b[^.]*\babholbereit\b|\bready for (?:pick ?up|collection) (?:on )?(?:the )?next (?:business|working) day\b|sera disponible|(?:sera|va etre|doit etre) (?:distribue|remis|mis en (?:livraison|distribution))|wird.*verfugbar|sara disponibile|to be delivered|a livrer|noch zuzustellen|da consegnare|(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery|\bout for delivery soon\b/.test(text)) return 'in_transit';
   if (/\bestara disponi(?:ble|vel)\b|\b(?:en breve|pronto|proximamente) podr(?:a|as|an) recoger(?:lo|la)?\b|\bpor entregar\b|\bpendiente de (?:entrega|entregar|reparto)\b|\bpendente de entrega\b|\b(?:aguarda|aguardando|a aguardar) (?:a )?entrega\b|\bsera (?:enviad|transportad|expedid|encaminhad)[oa]s?\b/.test(text)) return 'in_transit';
 
   // "Order information has been received and ready for pickup", as SF Express words it: the

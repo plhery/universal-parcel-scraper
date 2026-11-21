@@ -129,8 +129,10 @@ how a consumer learns that DHL holds one behind a postcode.
   progress fallback. Mapping it to `delivered` would announce a delivery that
   hasn't happened; mapping it to `registered` would undo real progress.
   A parcel soon ready at the outlet ("In Kürze in Filiale abholbereit",
-  "Available for pickup shortly") is in transit: the outlet's own scan says
-  when it can be collected.
+  "Available for pickup shortly", or "Ready for pickup next business day"
+  after a failed round) is in transit: the outlet's own scan says when it can
+  be collected. The providers' shared rules read these lines the same way when
+  they relay DHL.
 - A receiving option the recipient booked ("Liefertag als Empfangsoption
   vorgemerkt") is left out: it is a wish, not a movement, as Hermes Germany's
   booked delivery day is. So is a pre-advice ("elektronisch angekündigt") dated

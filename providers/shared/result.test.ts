@@ -22,6 +22,12 @@ describe('shared provider result', () => {
     expect(classifyEvent('Available for pickup shortly').stage).toBe('in_transit');
     expect(classifyEvent('Will be available for collection tomorrow').stage).toBe('in_transit');
     expect(statusMap.stage(null, 'available for pickup shortly')).toBe('in_transit');
+    // Its German, and the outlet announced for the next business day after a failed round: not there yet either.
+    expect(classifyEvent('In Kürze in Filiale abholbereit').stage).toBe('in_transit');
+    expect(classifyEvent('Ready for pickup next business day').stage).toBe('in_transit');
+    expect(statusMap.stage(null, 'in kürze in filiale abholbereit')).toBe('in_transit');
+    expect(statusMap.stage(null, 'ready for pickup next business day')).toBe('in_transit');
+    expect(classifyEvent('Sendung liegt in der Filiale zur Abholung bereit').stage).toBe('ready_for_pickup');
     expect(classifyEvent('The shipment is available for pickup').stage).toBe('ready_for_pickup');
     expect(classifyEvent('The shipment is ready for collection').stage).toBe('ready_for_pickup');
   });

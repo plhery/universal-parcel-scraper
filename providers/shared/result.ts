@@ -290,8 +290,9 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // Post's INT-2185 as Ship24 relays it without its code).
   if (/deliver(?:ed)? to (?:the )?(?:local carrier|delivery partner|post office|distributor)|delivered by (?:the )?airline/i.test(description)) return 'in_transit';
   if (/\bhanded over to (?:the )?local (?:postal (?:authority|operator|service)|carrier|delivery (?:agent|partner))\b/i.test(description)) return 'in_transit';
-  // DHL's "Available for pickup shortly" is the way to the outlet, as DHL's own map reads it.
-  if (/will be available for (?:pickup|collection)|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b/i.test(description)) return 'in_transit';
+  // DHL's "Available for pickup shortly", its German "In Kürze in Filiale abholbereit" and "Ready for pickup next business
+  // day" are the way to the outlet, as DHL's own map reads them.
+  if (/will be available for (?:pickup|collection)|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b|\bin k(?:ü|ue|u)rze\b[^.]*\babholbereit\b|\bready for (?:pick ?up|collection) (?:on )?(?:the )?next (?:business|working) day\b/i.test(description)) return 'in_transit';
   // InPost's steps as aggregators relay them, as its own map reads them: a logistics centre taking the parcel in on
   // the way, after the courier's collection and again on each round trip, and its hand-over to the courier for delivery.
   if (/^accepted at the logistics cent(?:er|re)[.!]?$/i.test(description)) return 'in_transit';

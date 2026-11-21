@@ -381,6 +381,9 @@ describe('DHL public tracking normalization', () => {
     ['Delivery not possible. Forwarding in postal retail outlet', 'failed_attempt', 'exception'],
     // On the way to the outlet after "Forwarding to outlet"; not waiting there yet.
     ['Available for pickup shortly', 'in_transit', 'in_transit'],
+    ['In Kürze in Filiale abholbereit', 'in_transit', 'in_transit'],
+    // A pickup forecast after a failed round: the outlet's own notice says when the parcel is there.
+    ['Ready for pickup next business day', 'in_transit', 'in_transit'],
     ['The shipment is ready for collection', 'ready_for_pickup', 'out_for_delivery'],
     ['Die Sendung liegt zur Abholung bereit.', 'ready_for_pickup', 'out_for_delivery'],
     ['The shipment is being processed by customs', 'customs', 'in_transit'],

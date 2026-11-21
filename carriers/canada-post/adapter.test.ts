@@ -460,6 +460,16 @@ describe('Canada Post scan vocabulary', () => {
     }
   });
 
+  it('reads each wording recorded without its code, as its statuses page lists them, as the stage it records', () => {
+    // A scan whose code the map does not know is read by its wording, as "Delivery Attempt Made / Rescheduled for
+    // delivery next business day" is read as the attempt it reports.
+    for (const entry of statuses.entries) {
+      if (entry.code || !('stage' in entry)) continue;
+      expect(canadaPostStage(entry.wording ?? ''), entry.wording).toBe(entry.stage);
+    }
+    expect(canadaPostStage('Delivery Attempt Made / Rescheduled for delivery next business day')).toBe('failed_attempt');
+  });
+
   it('tracks mail from abroad under the sending post\'s number', async () => {
     const number = 'LX000000005JP';
     expect(normalizeCanadaPostNumber('lx 000000005 jp')).toBe(number);
