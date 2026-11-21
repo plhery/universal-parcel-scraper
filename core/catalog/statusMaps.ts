@@ -433,6 +433,7 @@ import { statusMap as hrvatskaPosta } from '../../carriers/hrvatska-posta/status
 import { statusMap as hunterExpress } from '../../carriers/hunter-express/status.js';
 import { statusMap as huahan } from '../../carriers/huahan/status.js';
 import { statusMap as huayaExpress } from '../../carriers/huaya-express/status.js';
+import { statusMap as huiyu } from '../../carriers/huiyu/status.js';
 import { statusMap as hywl } from '../../carriers/hywl/status.js';
 import { statusMap as iccWorldwide } from '../../carriers/icc-worldwide/status.js';
 import { statusMap as icsCourier } from '../../carriers/ics-courier/status.js';
@@ -1107,7 +1108,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
   hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, homexpress, 'hongkong-post': hongkongPost,
-  horoz, 'hound-express': houndExpress, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaya-express': huayaExpress, 'hunter-express': hunterExpress, hywl,
+  horoz, 'hound-express': houndExpress, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaya-express': huayaExpress, huiyu, 'hunter-express': hunterExpress, hywl,
   'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, 'ilyang-logis': ilyangLogis, imile,
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
   'intex-paketdienst': intexPaketdienst, 'israel-post': israelPost, 'j-and-t': jAndT, 'j-and-t-au': jAndTAu, 'j-and-t-de': jAndTDe, 'j-and-t-uk': jAndTUk, 'j-and-t-cargo': jntCargo,

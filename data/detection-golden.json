@@ -96031,6 +96031,17 @@
     ]
   },
   {
+    "input": "HY9999999999980YQ",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "huiyu"
+    ],
+    "asked": [
+      "huiyu"
+    ]
+  },
+  {
     "input": "HYSLFTAO10260472",
     "carrier": "unknown",
     "confidence": "none",

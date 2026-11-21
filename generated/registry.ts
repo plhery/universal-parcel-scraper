@@ -447,6 +447,7 @@ import { adapter as hrx } from '../carriers/hrx/adapter.js';
 import { adapter as huaExpress } from '../carriers/hua-express/adapter.js';
 import { adapter as huahan } from '../carriers/huahan/adapter.js';
 import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
+import { adapter as huiyu } from '../carriers/huiyu/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
 import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
@@ -1492,6 +1493,7 @@ export const REGISTRY: RegistryDefinition = {
     "hua-express": huaExpress,
     "huahan": huahan,
     "huaya-express": huayaExpress,
+    "huiyu": huiyu,
     "hunter-express": hunterExpress,
     "huuneh": huuneh,
     "hywl": hywl,
@@ -2934,6 +2936,7 @@ export const REGISTRY: RegistryDefinition = {
     "huaya-express": "huaya-express",
     "hub-delivery": "universal",
     "hub-group-final-mile": "universal",
+    "huiyu": "huiyu",
     "hunter-express": "hunter-express",
     "hurtig-gutta": "universal",
     "huuneh": "huuneh",

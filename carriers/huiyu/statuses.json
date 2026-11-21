@@ -1,0 +1,7 @@
+{
+  "carrier": "huiyu",
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "The electronic cargo information has been received", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The platform's order row: the shipment's data received, before Huiyu has the parcel."},
+    {"code": "ARRIVAL", "wording": "到达收货点 / Arrive at the delivery point", "language": "mul", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Huiyu's receiving point in Shenzhen takes the parcel in, in Chinese and English in one row; the delivery point is where the shipper hands it over, not the recipient's."}
+  ]
+}

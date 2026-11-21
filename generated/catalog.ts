@@ -33222,6 +33222,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "huiyu": {
+    "displayName": "Huiyu International",
+    "color": "#213071",
+    "aliases": [
+      "HYGJWL",
+      "辉宇国际",
+      "辉宇国际货运代理有限公司",
+      "深圳市辉宇国际货运代理有限公司",
+      "Shenzhen Huiyu International Freight Forwarding Co., Ltd."
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huiyu",
+      "recognitionRank": 24
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^HY\\d{13}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "hunter-express": {
     "displayName": "Hunter Express",
     "color": "#f7aa3a",
@@ -71194,6 +71223,7 @@ export const CARRIER_IDS = [
   "huaya-express",
   "hub-delivery",
   "hub-group-final-mile",
+  "huiyu",
   "hunter-express",
   "hurtig-gutta",
   "huuneh",
@@ -73195,6 +73225,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "huaya-express": ["huaya-express-1"],
   "hub-delivery": [],
   "hub-group-final-mile": [],
+  "huiyu": ["huiyu-1"],
   "hunter-express": [],
   "hurtig-gutta": [],
   "huuneh": [],

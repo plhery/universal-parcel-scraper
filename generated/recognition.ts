@@ -247,6 +247,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "hovership": 687,
   "hr-parcel": 887,
   "hrvatska-posta": 160,
+  "huiyu": 24,
   "hywl": 993,
   "icc-worldwide": 628,
   "ilyang-logis": 703,

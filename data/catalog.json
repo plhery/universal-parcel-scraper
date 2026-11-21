@@ -33218,6 +33218,35 @@
     ],
     "detectionRules": []
   },
+  "huiyu": {
+    "displayName": "Huiyu International",
+    "color": "#213071",
+    "aliases": [
+      "HYGJWL",
+      "辉宇国际",
+      "辉宇国际货运代理有限公司",
+      "深圳市辉宇国际货运代理有限公司",
+      "Shenzhen Huiyu International Freight Forwarding Co., Ltd."
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huiyu",
+      "recognitionRank": 24
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^HY\\d{13}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "hunter-express": {
     "displayName": "Hunter Express",
     "color": "#f7aa3a",
