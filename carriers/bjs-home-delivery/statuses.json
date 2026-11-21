@@ -6,6 +6,14 @@
     {"wording": "Received", "stage": "accepted", "language": "en", "confirmedBy": "bundle", "note": "Second step of the progress bar: BJS has received the goods. Read from the live tracker's script; no archived lookup shows a history."},
     {"wording": "Scheduled", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Third step of the progress bar: a delivery date is booked. Read from the live tracker's script; no archived lookup shows a history."},
     {"wording": "Confirmed", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Fourth step of the progress bar: the delivery slot is confirmed. Read from the live tracker's script; no archived lookup shows a history."},
+    {
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "An order state outside the progress bar's steps, seen live with no day in the reply: the goods move between BJS's warehouse and the crew."
+    },
     {"wording": "En Route", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "Fifth step of the progress bar: the crew is on the way. Read from the live tracker's script; no archived lookup shows a history."},
     {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Last step of the progress bar, and the status the mini tracker's lookup returned for a delivered order."},
     {"wording": "Completed", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "Order status value that ends tracking for a finished order. Read from the live tracker's script; no archived lookup shows a history."},

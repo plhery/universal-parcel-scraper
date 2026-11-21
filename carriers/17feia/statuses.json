@@ -40,6 +40,7 @@
     {"code": "运输途中", "wording": "Arrived at Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Relayed from UPS in the United States."},
     {"code": "运输途中", "wording": "Departed from Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Relayed from UPS in the United States."},
     {"code": "运输途中", "wording": "On the Way, Delivery will be delayed by one business day.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-17", "note": "Relayed from UPS in the United States, its milestone before its scan: the delivery put off a day while the parcel travels on."},
+    {"code": "运输途中", "wording": "Shipment received in depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Relayed from the delivering partner in the United Kingdom after the road journey's import clearance: its depot's receipt, without a country, so its wall clock keeps no zone."},
     {"code": "成功签收", "stage": "delivered", "language": "zh", "confirmedBy": "bundle", "note": "The last box of the tracking page's progress rail."},
     {"code": "国内退回", "wording": "包裹已做国内退回处理", "stage": "returned", "language": "zh", "confirmedBy": "live", "note": "A domestic return: after the warehouse confirmed the order, the parcel goes back to the sender in China instead of leaving the country."}
   ]

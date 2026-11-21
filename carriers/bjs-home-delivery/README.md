@@ -27,14 +27,15 @@ retailers sell. Tracked through the lookup its mini tracker makes.
   reads only what the mini tracker shows anyone: the current status and its day.
 - The day is a UK calendar day without a time, kept as the status's `local_time` when it is not
   after the lookup's date in the UK. The page labels it "Timestamp" and does not say what a
-  later day is, so a later day is not kept and there is no expected delivery.
+  later day is, so a later day is not kept and there is no expected delivery. A status can also
+  come without a day, as "In Transit" does.
 - The result is a summary, not a history.
 
 ## Limitations
 
 - No scan history, depot, delivery slot or estimate.
-- The status wordings come from the tracker's progress bar and page script, and their sources
-  are in [`statuses.json`](statuses.json).
+- The status wordings come from the tracker's progress bar and page script, and from replies seen
+  live. Their sources are in [`statuses.json`](statuses.json).
 
 ## Numbers
 

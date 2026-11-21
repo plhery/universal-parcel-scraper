@@ -225,7 +225,8 @@ const RELAYED_STAGES: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^【[^【】]+】已出口直封$/u, 'in_transit'],
   [/^(?:已交承运商运输|揽投配发)$/u, 'in_transit'],
   [/^航空公司(?:接收|启运)$/u, 'in_transit'],
-  [/^飞机进港$/u, 'in_transit'],
+  // Track123 can give the landing twice, the second time with where it landed: "飞机进港，飞机进港（到达中转地）".
+  [/^飞机进港(?:，飞机进港[（(][^()（）]{1,20}[)）])?$/u, 'in_transit'],
   [/^到达(?:寄达地|境外经转局)$/u, 'in_transit'],
   [/^(?:承运商接收|抵达)$/u, 'in_transit'],
   [/^送交出口海关$/u, 'customs'],

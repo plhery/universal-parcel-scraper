@@ -14,6 +14,8 @@ const STATUSES: ReadonlyMap<string, Stage> = new Map([
   ['received', 'accepted'],
   ['scheduled', 'in_transit'],
   ['confirmed', 'in_transit'],
+  // Between the warehouse and the crew; the reply can then give no day at all.
+  ['in transit', 'in_transit'],
   ['en route', 'out_for_delivery'],
   ['delivered', 'delivered'],
   ['completed', 'delivered'],

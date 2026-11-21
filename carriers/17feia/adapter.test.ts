@@ -411,6 +411,8 @@ describe('17FEIA status vocabulary', () => {
     for (const wording of ['We have your Package, Arrived at Facility', 'Departed from Facility', 'On the Way, Delivery will be delayed by one business day.']) {
       expect(seventeenFeiaStage('运输途中', wording)).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     }
+    // So is the UK partner's depot receipt, which the shared rules read only by its words.
+    expect(seventeenFeiaStage('运输途中', 'Shipment received in depot')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     // A relayed row whose wording no rule reads is the partner carrying the parcel on.
     expect(statusMapAnswer({ carrier: '17feia', providerCode: '运输途中', description: 'Synthetic partner note' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });

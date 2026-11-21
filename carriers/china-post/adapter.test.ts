@@ -9,7 +9,7 @@ import { TrawlClient } from '../../core/transport/index.js';
 import { REGISTRY } from '../../generated/registry.js';
 import { adapter } from './adapter.js';
 import { CHINA_POST_APP_API, CHINA_POST_CHECK_PATH, CHINA_POST_TRACE_PATH } from './app.js';
-import { chinaPostCodeStatus, chinaPostEnglish, chinaPostStateStatus, statusMap } from './status.js';
+import { chinaPostCodeStatus, chinaPostEnglish, chinaPostRelayedStage, chinaPostStateStatus, statusMap } from './status.js';
 import { CHINA_POST_WEB_FLAG, CHINA_POST_WEB_TRACE } from './web.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -299,5 +299,11 @@ describe('China Post adapter', () => {
     // The destination leg's office of exchange and transit offices abroad.
     expect(chinaPostEnglish('境外进口互换局留存')).toBe('Held at the import office of exchange abroad');
     expect(chinaPostEnglish('到达境外经转局')).toBe('Arrived at a transit office abroad');
+  });
+
+  it("reads the flight's landing relayed in Chinese, given once or twice with where it landed", () => {
+    expect(chinaPostRelayedStage('飞机进港')).toBe('in_transit');
+    expect(chinaPostRelayedStage('飞机进港，飞机进港（到达中转地）')).toBe('in_transit');
+    expect(chinaPostRelayedStage('飞机进港，航班取消')).toBeUndefined();
   });
 });
