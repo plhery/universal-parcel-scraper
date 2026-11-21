@@ -24,7 +24,9 @@ Spain and other carriers deliver them elsewhere, so that shape only suggests Paa
    - A tracking page is the order for the pair. It does not echo a label barcode:
      `external_id` is then the retailer's own reference, so it is not compared. It does echo
      `delivery_address.post_code`; one that differs from the requested postcode in its letters
-     and digits is a `SchemaError`.
+     and digits is a `SchemaError`, unless the PaackGo Point's address holds it whole: a parcel
+     sent on to a point takes the point's address as its delivery address, while the page still
+     checks the recipient's postcode.
    - An empty HTTP 200 is `IndeterminateError`.
    - No postcode on the parcel raises `InputRequiredError`, except for a `PK` number, which
      skips this step.
@@ -106,7 +108,8 @@ Spain and other carriers deliver them elsewhere, so that shape only suggests Paa
   `local_time`, and the catalog marks Paack's clocks local. It has no delivery window. Sender, destination and comments are never read.
 - The recipient's name (`full_name`), street (`address`) and delivery postcode are read, and
   the PaackGo Point's pickup code (`pudo_passcode`) while the parcel waits there. The delivery
-  postcode must also agree with the requested one. Retailer, e-mail, phone and per-event
+  postcode must also agree with the requested one, and is not the recipient's when it is the
+  point's. Retailer, e-mail, phone and per-event
   `variables` (which interpolate them) are never read; a test asserts it. The point's QR link
   and collection deadline are not read either. The delivery country, and in Spain the
   postcode's province, only pick the clock.
@@ -115,8 +118,9 @@ Spain and other carriers deliver them elsewhere, so that shape only suggests Paa
 
 - Paack's own page has no event locations: events carry only the order's country, not where
   the scan happened.
-- No live PaackGo Point reply has been seen; the pickup-point labels and fields come from the
-  tracking page's code and translations.
+- The pickup-point labels and the fixture's fields come from the tracking page's code and
+  translations; live replies agree on the steps and on the point's address standing in the
+  delivery address.
 
 ## Testing
 

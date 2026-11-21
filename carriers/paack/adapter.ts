@@ -255,6 +255,12 @@ function postcodeKey(value: string): string {
   return value.toLocaleUpperCase('en-US').replace(/[^A-Z0-9]/g, '');
 }
 
+/** Whether a PaackGo Point's one-string address holds a postcode's letters and digits as a whole, in any spacing. */
+function addressHoldsPostcode(address: unknown, key: string): boolean {
+  if (typeof address !== 'string' || !key) return false;
+  return new RegExp(`(?<![A-Z0-9])${[...key].join('[\\s-]?')}(?![A-Z0-9])`).test(address.toLocaleUpperCase('en-US'));
+}
+
 export function parsePaackTrackingResponse(
   payload: unknown,
   rawPostcode: string,
@@ -266,10 +272,13 @@ export function parsePaackTrackingResponse(
 
   const order = route.orderTrackData;
   if (!isRecord(order)) throw new SchemaError('Paack', 'Paack returned incomplete tracking details');
-  // The number is not echoed when it is a label barcode; the postcode is.
+  // The number is not echoed when it is a label barcode; the postcode is. A parcel sent on to a
+  // PaackGo Point takes the point's address as its delivery address, while the page still checks
+  // the recipient's postcode: the point's postcode then stands in the echo.
   const address = isRecord(order.delivery_address) ? order.delivery_address : null;
   const echoedPostcode = typeof address?.post_code === 'string' ? postcodeKey(address.post_code) : '';
-  if (echoedPostcode && echoedPostcode !== postcodeKey(postcode)) {
+  const pointPostcode = echoedPostcode !== postcodeKey(postcode) && addressHoldsPostcode(order.pudo_address, echoedPostcode);
+  if (echoedPostcode && echoedPostcode !== postcodeKey(postcode) && !pointPostcode) {
     throw new SchemaError('Paack', 'Paack returned a different shipment');
   }
 
@@ -338,7 +347,7 @@ export function parsePaackTrackingResponse(
   const code = waiting ? cleanScalar(order.pudo_passcode, 32) : '';
   const recipient = clean(order.full_name, 200);
   const street = clean(order.address, 200);
-  const deliveryPostcode = typeof address?.post_code === 'string' ? clean(address.post_code, 16) : '';
+  const deliveryPostcode = typeof address?.post_code === 'string' && !pointPostcode ? clean(address.post_code, 16) : '';
   const recipientAddress = [street, deliveryPostcode].filter(Boolean).join('\n');
   return {
     status: current.status,

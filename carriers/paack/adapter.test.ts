@@ -684,6 +684,21 @@ describe('Paack PaackGo Point', () => {
     expect(parsePaackTrackingResponse(successRoute(), OFFICIAL_EXAMPLE_POSTCODE)).not.toHaveProperty('pickup_code');
   });
 
+  it('takes the point\'s postcode in the echo for a parcel sent on to the point', () => {
+    // Paack still checks the recipient's postcode, and echoes the point's address as the delivery address.
+    const sentOn = parsePaackTrackingResponse(pudoRoute({ delivery_address: { country: 'FR', post_code: '75 002' } }), PUDO_POSTCODE);
+    expect(sentOn).toMatchObject({ current_stage: 'ready_for_pickup', pickup_point: 'Relais Exemple\n1 Rue Exemple, 75002, Paris, France' });
+    // The point's postcode is no address of the recipient's.
+    expect(sentOn.receiver_address).toBeUndefined();
+    expect(parsePaackTrackingResponse(pudoRoute({ delivery_address: { country: 'PT', post_code: '1000001' },
+      pudo_address: 'Rua Exemplo 1\n1000-001 Lisboa' }), '1000-002')).toMatchObject({ current_stage: 'ready_for_pickup' });
+    // A postcode the point's address does not hold whole is another shipment, as is any other without a point's address.
+    for (const order of [{ delivery_address: { country: 'FR', post_code: '75003' } }, { delivery_address: { country: 'FR', post_code: '7500' } },
+      { delivery_address: { country: 'FR', post_code: '5002' } }, { delivery_address: { country: 'FR', post_code: '75002' }, pudo_address: null }]) {
+      expect(() => parsePaackTrackingResponse(pudoRoute(order), PUDO_POSTCODE)).toThrow('Paack returned a different shipment');
+    }
+  });
+
   it('keeps the name alone without an address and the lines the address holds', () => {
     const pickup = (order: Record<string, unknown>) => parsePaackTrackingResponse(pudoRoute(order), PUDO_POSTCODE).pickup_point;
     expect(pickup({ pudo_address: '' })).toBe('Relais Exemple');
