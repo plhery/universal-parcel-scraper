@@ -31,7 +31,7 @@ export function parseTrack718(payloads: unknown[], raw: string): CarrierResult {
     const code = payload.status.code;
     if (code === 2 || code === 7 || code === 8) throw new ChallengeError(SOURCE);
     if (code === 5) throw new RateLimitedError(SOURCE);
-    if (code === 6) throw new IndeterminateError(SOURCE, 'Track718 is temporarily busy');
+    if (code === 6) throw new IndeterminateError(SOURCE, 'Track718 is temporarily busy', { reason: 'provider_busy' });
     if (code !== 0 && code !== 3) throw new SchemaError(SOURCE, 'Track718 returned an unknown outcome');
     if (!Array.isArray(payload.data) || payload.data.length !== 1 || !isRecord(payload.data[0])) throw new SchemaError(SOURCE);
     const row = payload.data[0];
@@ -64,7 +64,7 @@ export function parseTrack718(payloads: unknown[], raw: string): CarrierResult {
   }
   if (!events.length) {
     if (terminal && !pending) throw new NotFoundError(SOURCE, 'Track718 has no available Juxi history');
-    throw new IndeterminateError(SOURCE, 'Track718 has not completed the Juxi lookup');
+    throw new IndeterminateError(SOURCE, 'Track718 has not completed the Juxi lookup', { reason: 'lookup_pending' });
   }
   return { ...result(events, SOURCE), ...(pending || partial ? { history_truncated: true } : {}) };
 }
