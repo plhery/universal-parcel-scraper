@@ -85,6 +85,8 @@ function refusal(error: XmlNode): never {
  */
 export function parseTntItaly(xml: string, raw: string): CarrierResult {
   const number = normalizeTntItalyNumber(raw);
+  // Its page gets the same blank reply for every waybill while the tracker is down, as in its night maintenance.
+  if (!xml.trim()) throw new IndeterminateError(PROVIDER, 'TNT Italy returned an empty reply');
   const root = xmlDocument(xml.replace(DOCTYPE, '$1'), TNT_ITALY_MAX_BYTES);
   if (!root || root.name !== 'ResultSet' || root.uri) {
     if (CHALLENGE.test(xml.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'TNT Italy answered with a browser check');
