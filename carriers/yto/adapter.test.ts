@@ -160,7 +160,7 @@ describe('YTO domestic parser', () => {
     expect(parseYto(value, NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', description: 'Taken out of the locker by the courier' });
   });
 
-  it("reads a YTO Global waybill's overseas centre scans with their wall clocks and the centre their description names", async () => {
+  it("reads a YTO Global waybill's overseas centre scans in China time, with the centre their description names", async () => {
     const number = 'YTG990000000017';
     const reply = [{ waybillNo: number, waybillProcessInfo: [
       { waybillNo: number, opTime: '2026-01-02 16:46:08', opCode: 'SENT_SCAN', description: 'Example centre,派送扫描' },
@@ -168,18 +168,33 @@ describe('YTO domestic parser', () => {
       { waybillNo: number, opTime: '2026-01-02 12:09:35', opCode: 'PU_PICKUP_SUCCESS', description: 'Example centre,已揽收' },
     ] }];
     expect(parseYto(reply, number)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out for delivery',
-      last_update: null, last_update_local: '2026-01-02T16:46:08', events: [
-        { provider_code: 'SENT_SCAN', stage: 'out_for_delivery', description: 'Out for delivery', local_time: '2026-01-02T16:46:08', location: 'Example centre' },
-        { provider_code: 'DEBUS', stage: 'in_transit', description: 'Received at a sorting centre', local_time: '2026-01-02T12:10:44', location: 'Example centre' },
-        { provider_code: 'PU_PICKUP_SUCCESS', stage: 'accepted', description: 'Picked up', local_time: '2026-01-02T12:09:35', location: 'Example centre' },
+      last_update: '2026-01-02T16:46:08+08:00', events: [
+        { provider_code: 'SENT_SCAN', stage: 'out_for_delivery', description: 'Out for delivery', time: '2026-01-02T16:46:08+08:00', location: 'Example centre' },
+        { provider_code: 'DEBUS', stage: 'in_transit', description: 'Received at a sorting centre', time: '2026-01-02T12:10:44+08:00', location: 'Example centre' },
+        { provider_code: 'PU_PICKUP_SUCCESS', stage: 'accepted', description: 'Picked up', time: '2026-01-02T12:09:35+08:00', location: 'Example centre' },
       ] });
-    expect(parseYto(reply, number).events?.[0]!.time).toBeUndefined();
-    // The facade reads a wall clock the centre's name does not place in YTO's zone, and says so.
-    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify(reply), { headers: { 'content-type': 'application/json' } }));
-    const tracked = await createTracker({ fetcher, env: {}, providers: [] }).track({ carrier: 'yto', number });
-    expect(tracked.result.events?.[1]).toMatchObject({ local_time: '2026-01-02T12:10:44', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' });
+    expect(parseYto(reply, number).events?.[0]!.local_time).toBeUndefined();
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'yto', confidence: 'high' });
     expect(detectCarrierMatch('YTG99000000001').carrier).not.toBe('yto');
+    // A centre's code of its own, without a label, takes the label its description gives after
+    // the centre, keeps no stage, and does not stop the lookup.
+    reply[0]!.waybillProcessInfo.unshift({ waybillNo: number, opTime: '2026-01-02 17:18:58', opCode: 'NEW_WORDED_CODE', description: 'Example depot,派送中' });
+    const later = parseYto(reply, number);
+    expect(later).toMatchObject({ status: 'unknown', last_status_text: '派送中', last_update: '2026-01-02T17:18:58+08:00' });
+    expect(later.events?.[0]).toEqual({ provider_code: 'NEW_WORDED_CODE', description: '派送中', time: '2026-01-02T17:18:58+08:00', location: 'Example depot' });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify(reply), { headers: { 'content-type': 'application/json' } }));
+    const tracked = await createTracker({ fetcher, env: {}, providers: [] }).track({ carrier: 'yto', number });
+    expect(tracked.result.events?.map(event => event.provider_code)).toEqual(['NEW_WORDED_CODE', 'SENT_SCAN', 'DEBUS', 'PU_PICKUP_SUCCESS']);
+    // Without the centre, the description's clauses before a contact are the label.
+    reply[0]!.waybillProcessInfo[0]!.description = '派送中，派件员 13000000000';
+    expect(parseYto(reply, number).events?.[0]).toMatchObject({ description: '派送中' });
+    expect(parseYto(reply, number).events?.[0]!.location).toBeUndefined();
+    // A description that opens with a contact gives no label, and a code of digits needs its own.
+    reply[0]!.waybillProcessInfo[0]!.description = '派件员 13000000000';
+    expect(() => parseYto(reply, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    reply[0]!.waybillProcessInfo[0] = { waybillNo: number, opTime: '2026-01-02 17:18:58', opCode: '999', description: 'Example depot,派送中' };
+    expect(() => parseYto(reply, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    reply[0]!.waybillProcessInfo.shift();
     // A centre's name that carries a contact is no place.
     reply[0]!.waybillProcessInfo[1]!.description = '派件员 13000000000,已收入';
     expect(parseYto(reply, number).events?.[1]!.location).toBeUndefined();

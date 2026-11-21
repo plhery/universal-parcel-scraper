@@ -20,14 +20,29 @@ export function ytoRelayedWording(description: string): string {
   return kept.join('').replace(/\s+/gu, ' ').trim().replace(/[\s,，;；:：]+$/u, '');
 }
 
+// An overseas centre's scan names the centre before its label: "<centre>,已收入".
+const OVERSEAS = /^([^,，【】]{1,100})[,，]([^,，【】]{1,60})$/u;
+
 /**
  * The place a transit scan's description names first, "您的快件已经到达【<place>】…" or
- * "您的快件离开【<place>】，已发往【…】", or the overseas centre "<centre>,已收入" names, for a
- * scan the feed sends without its place.
+ * "您的快件离开【<place>】，已发往【…】", or, on an overseas centre's scan, the centre
+ * "<centre>,<label>" names, for a scan the feed sends without its place.
  */
-export function ytoDescribedPlace(description: string): string | undefined {
+export function ytoDescribedPlace(description: string, overseas = false): string | undefined {
   const text = description.trim();
-  // An overseas centre's scan names the centre before its label: "<centre>,已收入".
-  const place = (/^您的快件(?:已经)?(?:到达|离开)【([^【】]{1,100})】/u.exec(text) ?? /^([^,，【】]{1,100})[,，](?:已揽收|已收入|派送扫描)$/u.exec(text))?.[1]?.trim();
+  const place = (/^您的快件(?:已经)?(?:到达|离开)【([^【】]{1,100})】/u.exec(text) ?? (overseas ? overseasScan(text) : null))?.[1]?.trim();
   return place && !CONTACT.test(place) ? place : undefined;
+}
+
+/**
+ * The label of an overseas centre's scan the feed sends without one: what its description,
+ * "<centre>,<label>", gives after the centre, or else the description's clauses before a contact.
+ */
+export function ytoOverseasLabel(description: string): string {
+  return overseasScan(description.trim())?.[2]?.trim() ?? ytoRelayedWording(description);
+}
+
+function overseasScan(text: string): RegExpExecArray | null {
+  const scan = OVERSEAS.exec(text);
+  return scan && !CONTACT.test(scan[2]!) ? scan : null;
 }

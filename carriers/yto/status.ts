@@ -25,13 +25,11 @@ const STATUS = new Map<string, ClassifiedStatus>([
 ]);
 
 /**
- * The codes YTO's overseas centres scan under, such as its Sydney centre on a YTO Global waybill.
- * The feed gives their clocks no zone, and the centre is not in China.
+ * A code of words, as YTO's overseas centres scan under, such as its Sydney centre on a YTO
+ * Global waybill. The domestic network's codes are numbers.
  */
-const OVERSEAS = new Set(['PU_PICKUP_SUCCESS', 'DEBUS', 'SENT_SCAN']);
-
 export function isYtoOverseasCode(code: string): boolean {
-  return OVERSEAS.has(code);
+  return /^[A-Z]+(?:_[A-Z]+)*$/.test(code);
 }
 
 /** The locker or station code, read with its sign type. */

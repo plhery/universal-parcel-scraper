@@ -33,8 +33,10 @@ English in place.
 
 An overseas centre's scan on a YTO Global waybill has a code of words, such as `DEBUS`, no
 label, and a description that names the centre before the label ("<centre>,已收入"). The
-scan takes that label and the centre as its place. Its clock keeps its wall clock: the feed
-does not say whether it is the centre's or China time.
+scan takes that label and the centre as its place. A code of words the adapter does not
+know keeps no stage; without that form, its description's clauses before a contact are its
+label. Its clock is China time: Cainiao's copy of the same scan, with its stated offset,
+gives the same instant to the second.
 
 Relayed Chinese labels and their ParcelsApp translations use the same vocabulary as
 direct scans. ParcelsApp's UTC-labelled China clocks are read in the catalog timezone.
