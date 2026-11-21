@@ -2690,6 +2690,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'pxc-pacific', number: 'ZZ0000000000',
     route: /^https:\/\/(?:www\.)?pacificexp\.net\/tracking-details\.html\?awbno=ZZ0000000000$/,
     marker: /Enter AWB\s+Numbers in a separate line|PXC Pacific Global Pvt\. Ltd\./ },
+  // The Hualei tracker's English page heads each number it was asked with "waybill information",
+  // an unknown one too.
+  { carrier: 'cmt-express', number: 'CMT000000000017',
+    route: /^https:\/\/tms\.cmtexpress\.com\.cn\/en\/trackIndex\.htm\?documentCode=CMT000000000017$/,
+    marker: /waybill information/i },
 ];
 
 /**

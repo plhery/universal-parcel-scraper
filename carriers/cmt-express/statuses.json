@@ -1,4 +1,8 @@
 {
   "carrier": "cmt-express",
-  "entries": []
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "The electronic cargo information has been received", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The platform's order row: the shipment's data received, before CMT Express has the parcel. The English is the platform's own, as BYHD's tenant writes it."},
+    {"wording": "Order processed by shipper", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The shipper's order, before the warehouse has the parcel, as Yanwen words it."},
+    {"code": "ARRIVAL", "wording": "Arrive at SZ warehouse", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "CMT Express's warehouse in Shenzhen takes the parcel in, the first scan in its hands."}
+  ]
 }
