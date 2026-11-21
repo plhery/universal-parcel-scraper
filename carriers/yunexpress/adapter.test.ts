@@ -23,6 +23,7 @@ it.each([
   ["Votre Colissimo est en transit sur nos plateformes logistiques.", "in_transit"],
   ["Arrived at Pickup Facility", "in_transit"],
   ["In transit (12)", "in_transit"],
+  ["In transit to Sample Parcels", "in_transit"],
   [`In Transit (ABCD${'1'.repeat(14)})`, "in_transit"], ] as const)('maps the YunExpress scan %s to %s', (wording, stage) => {
   const payload = fixture();
   const item = payload.ResultList[0];

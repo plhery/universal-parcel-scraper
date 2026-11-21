@@ -764,6 +764,14 @@
       "note": "Relayed from CouriersPlease: its depot's receipt of the parcel, a hand-over between carriers. Matched on its fixed words."
     },
     {
+      "wording": "In transit to <carrier>",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "A partner's line naming where the parcel goes next, such as the last-mile carrier it is handed to. Matched on its fixed words."
+    },
+    {
       "wording": "Onboard for delivery",
       "stage": "out_for_delivery",
       "language": "en",
