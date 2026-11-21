@@ -1,0 +1,72 @@
+{
+  "id": "dora-gate",
+  "displayName": "Dora Gate",
+  "aliases": [
+    "DoraGate",
+    "哆啦任意门",
+    "哆啦任意门科技"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#167ed4"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dora-gate",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://oms.anserx.com/tracking?nos={trackingNumber}",
+    "searchUrl": "https://oms.anserx.com/tracking",
+    "canaryUrl": "https://oms.anserx.com/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "postcodes",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "postcodes"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "delivered_at",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "delivery_partner"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -6253,5 +6253,10 @@
     "pattern": "^TP[1-9]\\d{5,8}$",
     "kind": "by_design",
     "reason": "A TP- reference is a Transglobal Express order number, TP and digits: a short generic shape other carriers' references share, so the shape cannot name Transglobal Express."
+  },
+  {
+    "carrier": "dora-gate",
+    "kind": "open",
+    "reason": "One public waybill, DOR, ten digits and CN: too few to claim the layout"
   }
 ]

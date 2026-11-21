@@ -85,6 +85,19 @@ describe('AnserX HTTP adapter', () => {
     expect(deliveryHandoff('anserx', IN_TRANSIT, normalizeCarrierResult(result))).toEqual({ carrier: 'usps', number: USPS, basis: 'reference' });
   });
 
+  it('keeps a relayed scan on the delivering carrier’s clock', () => {
+    // The tracker relays the delivering carrier's scans as they are (`trackingType` 1), on that
+    // carrier's clock, as Dora Gate's sample shows; AnserX's own scans stay on Beijing time.
+    const result = parseAnserx(changed('in-transit', (shipment) => {
+      shipment.tksTrackingDetailDTOList.unshift({ waybillNo: IN_TRANSIT, trackingType: 1, trackingCode: null,
+        trackingContentEn: 'Arrived at USPS Regional Facility', trackingLocation: 'CHICAGO IL, US', trackingTime: '2026-10-02 21:10:00' });
+    }), IN_TRANSIT);
+    expect(result).toMatchObject({ last_update: null, last_update_local: '2026-10-02T21:10:00' });
+    expect(result.events![0]).toMatchObject({ local_time: '2026-10-02T21:10:00', location: 'CHICAGO IL, US', stage: 'in_transit' });
+    expect(result.events![0]).not.toHaveProperty('time');
+    expect(result.events![1]).toMatchObject({ time: '2026-10-02T07:25:00+08:00', time_zone: 'Asia/Shanghai' });
+  });
+
   it('keeps the delivery carrier’s number without a routing ZIP, else takes the one its scans carry', () => {
     const routed = parseAnserx(changed('in-transit', (shipment) => { shipment.deliveryNo = `42000000${USPS}`; }), IN_TRANSIT);
     expect(routed.delivery_tracking_number).toBe(USPS);

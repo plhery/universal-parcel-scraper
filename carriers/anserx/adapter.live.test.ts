@@ -13,9 +13,10 @@ describe('AnserX live retrieval', () => {
     expect(answer).toMatchObject({ carrier: 'anserx', source: 'anserx' });
     expect(answer.attempts[0]).toMatchObject({ source: 'anserx', kind: 'ok' });
     expect(answer.result.events.length).toBeGreaterThan(0);
-    // Every scan keeps its place's wall clock, without an offset, and its code.
-    expect(answer.result.events.every((event) => event.description && event.provider_code && !event.time
+    // Every scan keeps its wall clock; AnserX's own coded scans are also on Beijing time.
+    expect(answer.result.events.every((event) => event.description
       && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(String(event.local_time)))).toBe(true);
+    expect(answer.result.events.filter((event) => event.provider_code).every((event) => String(event.time).endsWith('+08:00'))).toBe(true);
     await expect(direct().recognize!(NUMBER!)).resolves.toMatchObject({ known: true });
   }, 60_000);
 

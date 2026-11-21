@@ -23,10 +23,13 @@ tracking page makes.
 
 ## Notes
 
-- Every scan time is on Beijing time, the scans abroad too, although the tracking page says
+- AnserX's own scans are on Beijing time, the scans abroad too, although the tracking page says
   each is the time where the scan happened. Each scan also carries the moment it was entered,
   on Beijing time: read on Mexico's clock, Mexican delivery scans would have been entered hours
   before they happened, while on Beijing's every scan comes before its entry.
+- A delivering carrier's scan relayed as it is (`trackingType` 1, without a code) is on that
+  carrier's clock: in [Dora Gate](../dora-gate/README.md)'s sample, USPS's delivery "at 11:33 am"
+  is relayed as 11:33. It keeps its wall clock without an offset.
 - A scan's description is its English wording, or its Chinese one when the English is empty.
   The `trackingCode` (`BTY_LASTMILE_DELIVERED`) stages it. The clearance code's English says
   export customs while its Chinese says import clearance at destination, where it is placed;

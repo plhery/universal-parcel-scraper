@@ -1,0 +1,77 @@
+{
+  "carrier": "dora-gate",
+  "entries": [
+    {
+      "code": "BTY_ORDER_CREATED",
+      "wording": "Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 订单信息已收到. The seller's order reached the tracker; the first scan."
+    },
+    {
+      "code": "BTY_WAREHOUSE_INBOUND",
+      "wording": "Shipment inbound in sorting center",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 分拣中心已入库. Received at the sorting centre in China."
+    },
+    {
+      "code": "BTY_WAREHOUSE_OUTBOUND",
+      "wording": "Departed from sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 货物离开分拣中心."
+    },
+    {
+      "code": "BTY_LINE_HANDOVER",
+      "wording": "Hand over to airline",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 货件交航空公司. Handed to the airline, at Hong Kong in the sample."
+    },
+    {
+      "code": "BTY_LINE_DEPARTED",
+      "wording": "Departed from  origin port",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 离开起运地机场/港口. The flight left; the English has two spaces."
+    },
+    {
+      "code": "BTY_CLEARANCE_IN_PROGRESS",
+      "wording": "Customs clearance in progress",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 清关中."
+    },
+    {
+      "code": "BTY_LINE_ARRIVED",
+      "wording": "Arrived at destination port",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 到达目的地机场/港口."
+    },
+    {
+      "code": "BTY_CLEARANCE_COMPLETED",
+      "wording": "Customs clearance completed, in transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 清关完成，转运中. Cleared; the parcel moves on."
+    },
+    {
+      "code": "BTY_DEST_TRANSIT",
+      "wording": "Arrived at Transit Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Chinese wording 目的地境内转运中. In transit within the destination country, before the delivering carrier's own scans."
+    }
+  ]
+}

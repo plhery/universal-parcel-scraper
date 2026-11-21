@@ -20909,6 +20909,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dora-gate": {
+    "displayName": "Dora Gate",
+    "color": "#167ed4",
+    "aliases": [
+      "DoraGate",
+      "哆啦任意门",
+      "哆啦任意门科技"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dora-gate",
+      "localClocks": true
+    },
+    "canaryUrl": "https://oms.anserx.com/tracking",
+    "trackingUrlTemplate": "https://oms.anserx.com/tracking?nos={trackingNumber}",
+    "trackingSearchUrl": "https://oms.anserx.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dpd-at": {
     "displayName": "DPD Austria",
     "color": "#dc0032",
@@ -69345,6 +69369,7 @@ export const CARRIER_IDS = [
   "dongjin-shipping",
   "doobalhero",
   "doora-logistics",
+  "dora-gate",
   "dpd-at",
   "dpd-be",
   "dpd-by",
@@ -71345,6 +71370,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dongjin-shipping": [],
   "doobalhero": [],
   "doora-logistics": [],
+  "dora-gate": [],
   "dpd-at": ["dpd-at-1"],
   "dpd-be": ["dpd-be-1"],
   "dpd-by": [],

@@ -85,6 +85,7 @@ import { statusMap as rmLogistics } from '../../carriers/rm-logistics/status.js'
 import { statusMap as benben } from '../../carriers/benben/status.js';
 import { statusMap as sfydExpress } from '../../carriers/sfyd-express/status.js';
 import { statusMap as dpdex } from '../../carriers/dpdex/status.js';
+import { statusMap as doraGate } from '../../carriers/dora-gate/status.js';
 import { statusMap as runforint } from '../../carriers/runforint/status.js';
 import { statusMap as hgd } from '../../carriers/hgd/status.js';
 import { statusMap as ywd } from '../../carriers/ywd/status.js';
@@ -1048,6 +1049,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   benben,
   'sfyd-express': sfydExpress,
   dpdex,
+  'dora-gate': doraGate,
   runforint,
   hgd,
   ywd,

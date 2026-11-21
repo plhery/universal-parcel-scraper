@@ -241,6 +241,7 @@ import { adapter as domainLogistics } from '../carriers/domain-logistics/adapter
 import { adapter as domex } from '../carriers/domex/adapter.js';
 import { adapter as dongdu } from '../carriers/dongdu/adapter.js';
 import { adapter as dongjinShipping } from '../carriers/dongjin-shipping/adapter.js';
+import { adapter as doraGate } from '../carriers/dora-gate/adapter.js';
 import { adapter as dpd } from '../carriers/dpd/adapter.js';
 import { adapter as dpdAt } from '../carriers/dpd-at/adapter.js';
 import { adapter as dpdBe } from '../carriers/dpd-be/adapter.js';
@@ -1285,6 +1286,7 @@ export const REGISTRY: RegistryDefinition = {
     "domex": domex,
     "dongdu": dongdu,
     "dongjin-shipping": dongjinShipping,
+    "dora-gate": doraGate,
     "dpd": dpd,
     "dpd-at": dpdAt,
     "dpd-be": dpdBe,
@@ -2575,6 +2577,7 @@ export const REGISTRY: RegistryDefinition = {
     "dongjin-shipping": "dongjin-shipping",
     "doobalhero": "universal",
     "doora-logistics": "universal",
+    "dora-gate": "dora-gate",
     "dpd": "dpd",
     "dpd-at": "dpd-at",
     "dpd-be": "dpd-be",
