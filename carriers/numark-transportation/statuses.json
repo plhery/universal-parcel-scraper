@@ -1,0 +1,10 @@
+{
+  "carrier": "numark-transportation",
+  "entries": [
+    {"wording": "PU", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The first row, without a terminal and with PICK UP in the column other rows give a manifest number: the pickup on the bill, before the row that says it was made."},
+    {"wording": "PICK UP MADE", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Picked up from the shipper, at the terminal that collected it."},
+    {"wording": "TERMINAL XFR", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A transfer from one terminal to another; the row names both."},
+    {"wording": "OUT FOR DELVRY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "On the delivering terminal's truck, spelled so."},
+    {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Its row can give the driver's clock in and out at the consignee, and who signed."}
+  ]
+}

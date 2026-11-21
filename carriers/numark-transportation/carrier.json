@@ -1,0 +1,84 @@
+{
+  "id": "numark-transportation",
+  "displayName": "NuMark Transportation",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#130958"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "numark-transportation",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "receiver_address"
+  ],
+  "portal": {
+    "searchUrl": "https://www.numarktransportation.net/",
+    "helpUrl": "https://www.numarktransportation.net/contact-us",
+    "canaryUrl": "https://www.numarktransportation.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "signatory",
+      "sender_name",
+      "sender_address",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "customer_reference",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "recipient_address"
+    ],
+    "discarded": [
+      "signatory",
+      "sender_name",
+      "sender_address",
+      "recipient_name",
+      "postcodes",
+      "customer_reference",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "proof_of_delivery",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.numarktransportation.net"
+      ],
+      "pathPattern": "^/cgibin/wbprotrk/?$",
+      "params": [
+        "wbfb"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -6264,5 +6264,11 @@
     "carrier": "dora-gate",
     "kind": "open",
     "reason": "One public waybill, DOR, ten digits and CN: too few to claim the layout"
+  },
+  {
+    "carrier": "numark-transportation",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "NuMark's nine-digit PRO numbers share their shape with many carriers' numbers, and nothing in the number points to NuMark."
   }
 ]

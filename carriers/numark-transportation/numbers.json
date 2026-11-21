@@ -1,0 +1,50 @@
+{
+  "carrier": "numark-transportation",
+  "records": [
+    {
+      "number": "138762265",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170424232625/http://tracking.numarktransportation.net:80/cgibin/wbprotrk?wbfb=138762265&wbscac=&idbutton=Trace",
+        "date": "2017-04-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie"
+        ]
+      },
+      "note": "An archived lookup on NuMark's PRO trace; the trace still knows it as a delivered PRO number."
+    },
+    {
+      "number": "138762277",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170424232633/http://tracking.numarktransportation.net:80/cgibin/wbprotrk?wbfb=138762277&wbscac=&idbutton=Trace",
+        "date": "2017-04-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "An archived lookup on NuMark's PRO trace; the trace still knows it as a delivered PRO number."
+    }
+  ]
+}
