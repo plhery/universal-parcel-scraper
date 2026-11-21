@@ -44,12 +44,16 @@ const OWN_OFFSET = '+08:00';
 // that found it, and 17TRACK's and ParcelsApp's copies have the instants of their digits on China's.
 // Its import clearance read on Oslo's clock came seven hours after 17TRACK's copy. Its arrival in the
 // destination country and the cargo terminal's notice after it, which follow scans stated +08:00, came
-// five and six hours after the lookups that found them when read on Germany's clock.
+// five and six hours after the lookups that found them when read on Germany's clock. So did its import
+// clearance and release, its clearance warehouse's exit and its cargo handling's end on lines into Germany,
+// which Ship24's copies have at the instants of their digits on China's.
 const OWN_WITHOUT_OFFSET = new RegExp(`^(?:${[
   'shipment completed the customs clearance process at destination',
   'airline arrived at (?:destination|transit) country(?: or district)?', 'airline departed from transit or district country',
   '(?:export|import) clearance success', 'arrive at destination country', 'arrived in destination country/region',
   'the destination port cargo terminal notifies the delivery', 'parcel in transit',
+  'import customs clearance and customs release', 'customs clearance warehouse (?:entry|outbound)',
+  'cargo handling completed, awaiting final delivery',
 ].join('|')})\\.?$`, 'i');
 const OWN_ZONE = 'Asia/Shanghai';
 

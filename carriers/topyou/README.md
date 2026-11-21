@@ -43,7 +43,9 @@ destination's, the clearance fell after the hand-over TopYou scans next, or afte
 first found it, and the arrival in the destination country came after the lookup that found it,
 hours after 17TRACK's and ParcelsApp's copies of it. So do its "Arrived in destination
 country/region" and the cargo terminal's notice after it, which each came after the lookup that
-found it when read on Germany's clock. So does "Parcel in transit", which TopYou writes two days
+found it when read on Germany's clock, and its import clearance and release, its clearance
+warehouse's entry and exit and its cargo handling's end on lines into Germany, which read so came
+after Ship24 had found them. So does "Parcel in transit", which TopYou writes two days
 after the scan before it when no other came: its wall clock follows that scan's by two days and a
 few minutes, and read on Israel's clock it came after the lookup that found it. A reply with no
 scans and no destination is the page's "查询不到" (not found); one with a destination and no scans

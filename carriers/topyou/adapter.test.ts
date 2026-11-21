@@ -223,6 +223,15 @@ describe('TopYou HTTP adapter', () => {
       { time: '2026-04-19T07:23:31+08:00', local_time: '2026-04-19T07:23:31', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier', stage: 'in_transit' },
       { time: '2026-04-18T07:23:31+08:00', local_time: '2026-04-18T07:23:31', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier', stage: 'in_transit' },
     ]);
+    // And its clearance warehouse and cargo handling lines into Germany: read on Germany's clock, each came after Ship24's copy was found.
+    const handled = changed('in-transit', (track) => {
+      const last = track.trackInfo!.at(-1)!;
+      track.trackInfo!.push(...['Import customs clearance and customs release', 'Customs clearance warehouse entry',
+        'Cargo handling completed, awaiting final delivery', 'Customs clearance warehouse outbound'].map((record, index) =>
+        ({ ...last, id: `90005${index}`, changeDate: `2026/04/${18 + index} 06:47:48`, timeZone: null, location: null, record, status: '20' })));
+    });
+    expect(parseTopyou(handled, IN_TRANSIT).events!.slice(0, 4).map(({ time, time_zone, stage }) => [time, time_zone, stage])).toEqual(
+      [21, 20, 19, 18].map((day) => [`2026-04-${day}T06:47:48+08:00`, 'Asia/Shanghai', 'in_transit']));
     // And its "Parcel in transit" two days after the scan before it: read on Israel's clock, it came after the lookup that found it.
     const waited = changed('in-transit', (track) => {
       track.trackInfo!.push({ ...track.trackInfo!.at(-1)!, id: '900040', changeDate: '2026/04/20 06:04:07', timeZone: null, location: null,
