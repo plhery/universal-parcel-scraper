@@ -644,6 +644,9 @@ step exists for future protocol changes.
   the zone of the origin post's scans at its minute, when the origin keeps that zone. Its
   despatch from the sending post's data ("Send item abroad (EDI-received)") is on Yerevan's clock,
   as HayPost's own tracker dates it ([HayPost](../../carriers/haypost/README.md)).
+  Tusass (Greenland Post) names the country of a post abroad ("Poland") at that post's exchange
+  office: read on Nuuk's clock, its copies of Poczta Polska's scans came three hours after Poczta
+  Polska's own rows of them.
 - Russian Post's own scans have Moscow time's digits wherever they were, but the US post's copies
   that ParcelsApp files under Russian Post, the country after USPS's words ("Acceptance, RUSSIAN
   FEDERATION"), have the scanning office's. Those at a town in Moscow's or Kaliningrad's zone take

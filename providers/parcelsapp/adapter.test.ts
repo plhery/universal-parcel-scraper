@@ -895,6 +895,19 @@ describe('ParcelsApp result parsing', () => {
     expect(time()).toEqual(['2026-11-02T08:25:14.000Z']);
   });
 
+  it("reads Greenland Post's copies of a post's scans abroad on the clock of the country they name", () => {
+    const time = (location?: string) => parseParcelsAppResponse({
+      carriers: ['Greenland Post'], originCode: 'PL', destinationCode: 'GL',
+      states: [{ date: '2026-11-11T19:59:00Z', status: 'Item into bag. The item has been delivered to the carrier.', carrier: 0, ...(location ? { location } : {}) }],
+    }, number, identity()).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
+    // Poczta Polska's own row of the dispatch is at 18:59 UTC; read on Nuuk's clock it came three hours later.
+    expect(time('Exchange office, Poland')).toEqual(['2026-11-11T18:59:00.000Z']);
+    expect(time('Exchange office, Denmark')).toEqual(['2026-11-11T18:59:00.000Z']);
+    // Its own scans, at home or without a place, stay on Nuuk's.
+    expect(time('Nuuk, Greenland')).toEqual(['2026-11-11T21:59:00.000Z']);
+    expect(time()).toEqual(['2026-11-11T21:59:00.000Z']);
+  });
+
   it("reads La Poste's copy of a sending post's posting on the clock of the country it names", () => {
     const time = (location: string) => parseParcelsAppResponse({
       carriers: ['La Poste'], originCode: 'CN', destinationCode: 'FR',

@@ -1378,9 +1378,12 @@ function placeClockLine(carrier: string, status: string, location: string, date:
  * (`IPS_OFFICE`): read on Yerevan's clock, its copy of Russian Post's
  * acceptance came an hour before Russian Post's own row of it. Its despatch
  * from the sending post's data is on its own clock (`haypostEdiReceived`).
+ * Tusass (Greenland Post) names the country of a post abroad ("Poland") at
+ * that post's exchange office: read on Nuuk's clock, its copies of Poczta
+ * Polska's scans came three hours after Poczta Polska's own rows of them.
  */
 const RELAYING_POSTS: Readonly<Record<string, string>> = {
-  azerpost: 'AZ', 'correios-br': 'BR', 'correo-uruguayo': 'UY', dhl: 'DE', haypost: 'AM', 'la-poste': 'FR', 'slovenska-posta': 'SK',
+  azerpost: 'AZ', 'correios-br': 'BR', 'correo-uruguayo': 'UY', dhl: 'DE', haypost: 'AM', 'la-poste': 'FR', 'slovenska-posta': 'SK', tusass: 'GL',
 };
 // An office as HayPost names it after IPS: its postcode, then its country in ISO's style ("Netherlands (the)").
 const IPS_OFFICE = /^(?:\d{3,6}\s+)?(.+?)(?:\s*\(the\))?$/i;
