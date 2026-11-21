@@ -101,18 +101,18 @@ test('a USPS session sent to the outage page is dropped after a replay and never
     '      }',
     '      if (hasUsablePayload(t3) && !crossed3) {',
     '        const cookies: Cookie[] = t3.cookies ?? []',
-    '        if (cookies.length > 0 && !explicitProxy && !importedCookies) {',
+    '        if (cookies.length > 0 && !explicitProxy && !privateRequest) {',
     '          await deps.saveSession(domain, {})',
     '        }',
     '      }',
     '      if (hasUsablePayload(t4) && !crossed4) {',
     '      const cookies: Cookie[] = t4.cookies ?? []',
-    '      if (cookies.length > 0 && !explicitProxy && !importedCookies) {',
+    '      if (cookies.length > 0 && !explicitProxy && !privateRequest) {',
   ].join('\n');
   const patched = forgetUspsOutageSessions(source);
   assert.match(patched, /^import \{ uspsOutage \} from "\.\/utils\/usps-tracking\.mjs"\n/);
   assert.match(patched, /if \(uspsOutage\(t2\)\) await deps\.invalidateSession\(domain\)\n {8}else if \(t2\.cookies/);
-  assert.match(patched, /!importedCookies && !uspsOutage\(t3\)\) \{/);
+  assert.match(patched, /!privateRequest && !uspsOutage\(t3\)\) \{/);
   assert.equal(patched.split('uspsOutage(').length, 3);
   assert.throws(() => forgetUspsOutageSessions(source.replace('t2.cookies &&', 't2.cookies?.length &&')), /review the USPS outage session patch/);
   assert.throws(() => forgetUspsOutageSessions(source + '\n        if (t2.cookies && t2.cookies.length > 0) {'), /review the USPS outage session patch/);

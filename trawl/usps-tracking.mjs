@@ -65,8 +65,8 @@ export function uspsOutage(result) {
 const SESSION_PATCHES = [
   ['        if (t2.cookies && t2.cookies.length > 0) {',
     '        if (uspsOutage(t2)) await deps.invalidateSession(domain)\n        else if (t2.cookies && t2.cookies.length > 0) {'],
-  ['        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !importedCookies) {',
-    '        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !importedCookies && !uspsOutage(t3)) {'],
+  ['        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !privateRequest) {',
+    '        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !privateRequest && !uspsOutage(t3)) {'],
 ];
 
 // USPS sends the first read of every browser session to the outage page, and keeps sending some
