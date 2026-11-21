@@ -1,0 +1,103 @@
+{
+  "carrier": "milaha",
+  "records": [
+    {
+      "number": "MILCN1HMD011302",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/qatar-navigation/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Qatar Navigation Lines tracking directory. Milaha's tracker holds it as a booking from Ningbo to Hamad with one container, transhipped and returned empty; the parser fixtures are its reply."
+    },
+    {
+      "number": "MILCN1HMD013521",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/qatar-navigation/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Qatar Navigation Lines tracking directory. Milaha's tracker holds it as a booking from Shekou to Hamad with one container on its vessel."
+    },
+    {
+      "number": "MILIN1025122",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/qatar-navigation/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Qatar Navigation Lines tracking directory. Milaha's tracker holds it as a booking from Nhava Sheva to Sohar, returned empty."
+    },
+    {
+      "number": "MILCN1JEA010381",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/qatar-navigation/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Qatar Navigation Lines tracking directory. Milaha's tracker holds it as a booking from Shekou, transhipped at Mundra and returned empty at Sohar."
+    },
+    {
+      "number": "QNLU8003955",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/qatar-navigation/QNLU",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Qatar Navigation Lines tracking directory under Milaha's QNLU prefix. Milaha's tracker returns the container under its latest booking, loaded at Shekou."
+    }
+  ]
+}

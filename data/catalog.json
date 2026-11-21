@@ -41811,6 +41811,31 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "milaha": {
+    "displayName": "Milaha",
+    "color": "#00467f",
+    "aliases": [
+      "Qatar Navigation",
+      "Qatar Navigation Lines",
+      "QNL",
+      "Milaha Container Shipping"
+    ],
+    "countries": [
+      "QA"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Qatar",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "milaha",
+      "localClocks": true
+    },
+    "canaryUrl": "https://erp-qnl.solverminds.net/ecomonline/",
+    "trackingSearchUrl": "https://erp-qnl.solverminds.net/ecomonline/",
+    "helpUrl": "https://www.milaha.com/en/business-area/container-shipping",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "miles-express": {
     "displayName": "Miles Express",
     "color": "#2a394b",
