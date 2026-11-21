@@ -68,8 +68,15 @@ export class ApCargoTracker {
 
   private async read(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
     // Both trackers are asked at once; only the first decides whether the parcel is found.
-    const [payload, legacy] = await Promise.all([this.request(number, signal, timeoutMs), this.legacy(number, signal, timeoutMs)]);
-    return parseApCargo(payload, number, legacy);
+    // A failed read ends the other request, so no request outlives the read.
+    const sibling = new AbortController();
+    const both = AbortSignal.any([signal, sibling.signal]);
+    try {
+      const [payload, legacy] = await Promise.all([this.request(number, both, timeoutMs), this.legacy(number, both, timeoutMs)]);
+      return parseApCargo(payload, number, legacy);
+    } finally {
+      sibling.abort();
+    }
   }
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
