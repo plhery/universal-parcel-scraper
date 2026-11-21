@@ -271,6 +271,14 @@
       "note": "The flight landed, a day after it left China; the tracker places it at \"EU\"."
     },
     {
+      "wording": "The shipment has reached the destination station",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The destination's station after the flight landed and before customs started on the parcel."
+    },
+    {
       "wording": "Customs clearance has been completed",
       "stage": "in_transit",
       "language": "en",
