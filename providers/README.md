@@ -72,8 +72,11 @@ show one way to do it.
 ## Reach
 
 [reach.json](../docs/reach.json) records how many carriers an aggregator says it follows, with the
-page that says so. The README's headline uses the largest. It is the aggregator's own count,
-and [the benchmark](../benchmark/README.md) holds what was measured.
+page that says so. For 17TRACK it also records how many catalog carriers its public carrier list
+lacks: `npm run reach` downloads the list and counts again, and a carrier whose name or site
+domain is close to one in the list counts as listed. The README's headline adds the two for the
+largest aggregator and rounds down to the 500. The aggregator's count is its own, and
+[the benchmark](../benchmark/README.md) holds what was measured.
 
 ## Shared behaviour
 

@@ -1,4 +1,12 @@
 {
-  "17TRACK": { "carriers": 3500, "source": "https://www.17track.net/en" },
-  "Ship24": { "carriers": 2500, "source": "https://www.ship24.com/couriers" }
+  "17TRACK": {
+    "carriers": 3600,
+    "source": "https://www.17track.net/en",
+    "list": "https://res.17track.net/asset/carrier/info/carrier.all.js",
+    "catalogNotListed": 661
+  },
+  "Ship24": {
+    "carriers": 2500,
+    "source": "https://www.ship24.com/couriers"
+  }
 }
