@@ -453,6 +453,22 @@
       "note": "A shipping partner collecting the parcel for the last-mile carrier, the first scan after the label; GOFO's and 4PX's maps read the same wording with their own name as accepted."
     },
     {
+      "wording": "Arrived Shipping Partner Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "USPS's scan at the shipping partner's facility in the United States, before USPS has the parcel, copied without its \"USPS Awaiting Item\" tail; USPS's own feed writes it in the same minute."
+    },
+    {
+      "wording": "Departed Shipping Partner Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The parcel leaving the shipping partner's facility for USPS, copied the same way."
+    },
+    {
       "wording": "POD available",
       "stage": "delivered",
       "language": "en",

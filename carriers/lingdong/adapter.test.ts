@@ -182,6 +182,10 @@ describe('Lingdong International tracking adapter', () => {
       ['Arrived at GOFO Regional Hub', 'in_transit']] as const) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage });
     }
+    // The flight's departure in English alone, and its arrival at whichever airport it names.
+    for (const description of ['Departed from Port of Origin', 'Arrived at Sample Airport', 'Arrived at Sample Town Airport']) {
+      expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     // The delivery partner's scans as the forwarder relays them, in capitals.
     for (const description of ['FIRST PARCEL SCAN ALONG POSTE ITALIANE’S LOGISTIC NETWORK', 'IN TRANSIT ALONG POSTE ITALIANE’S LOGISTIC NETWORK']) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });

@@ -12,6 +12,8 @@
     {"wording": "预计…号航班【Expect flight ….】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for the flight it is booked on; the flight's day of the month, in Chinese and in English, is read as an ellipsis."},
     {"wording": "航班已起飞【The flight has taken off.】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The booked flight has left."},
     {"wording": "航班抵达【Flight arrival】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has landed."},
+    {"wording": "Departed from Port of Origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The flight leaving its airport of origin, in English alone, after the forwarder's own departure rows."},
+    {"wording": "Arrived at … Airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The flight's arrival at the airport the row names, which the map reads as an ellipsis, the morning after the departure from the port of origin."},
     {"wording": "航班已启运/Package in transit to destination country", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The booked flight has left."},
     {"wording": "航班已落地，拆板中/Package arrived at destination country", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has landed and its pallets are being broken down."},
     {"wording": "已完成国内报关手续【Domestic customs clearance procedures have been completed.】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Cleared after the landing, before the delivery."},

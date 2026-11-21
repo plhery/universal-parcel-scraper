@@ -25,6 +25,8 @@ const ENGLISH_FLIGHT_DAY = /^((?:flight scheduled for|scheduled flight on|expect
 const ENGLISH_FLIGHT_DATE = /^(expect flight )\d{1,2}(?:st|nd|rd|th)(\.?)$/;
 
 const FLIGHT_BOOKED = [FLIGHT_DAY, FLIGHT_DATE, ENGLISH_FLIGHT_DAY, ENGLISH_FLIGHT_DATE];
+// The flight's arrival names the airport, "Arrived at <town> Airport".
+const AIRPORT_ARRIVAL = /^(arrived at )[a-z][a-z .'-]{0,40}( airport)$/;
 
 /** Whether a row, whole or by its English half, is the flight booked for the parcel before it flies: a forecast. */
 export function isLingdongFlightBooked(wording: string): boolean {
@@ -35,12 +37,12 @@ export function isLingdongFlightBooked(wording: string): boolean {
 
 function mapped(wording: string): Stage | undefined {
   return WORDINGS.get(wording.replace(FLIGHT_DAY, '$1…$2…').replace(FLIGHT_DATE, '$1…$2…$3')
-    .replace(ENGLISH_FLIGHT_DAY, '$1…').replace(ENGLISH_FLIGHT_DATE, '$1…$2'));
+    .replace(ENGLISH_FLIGHT_DAY, '$1…').replace(ENGLISH_FLIGHT_DATE, '$1…$2').replace(AIRPORT_ARRIVAL, '$1…$2'));
 }
 
 /**
  * The stage Lingdong International's map gives a row, by its `normalizeStatusWording` wording or
- * the English half shown for it, with a booked flight's day read as an ellipsis. A row in both
+ * the English half shown for it, with a booked flight's day and an arrival's airport read as ellipses. A row in both
  * languages that the map lacks whole is read by its English half.
  * A row's kind code, when it has one, groups many wordings and decides nothing.
  */
