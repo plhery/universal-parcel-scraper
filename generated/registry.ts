@@ -94,6 +94,7 @@ import { adapter as bexExpress } from '../carriers/bex-express/adapter.js';
 import { adapter as bfeExpress } from '../carriers/bfe-express/adapter.js';
 import { adapter as bhPosta } from '../carriers/bh-posta/adapter.js';
 import { adapter as bigfootExpress } from '../carriers/bigfoot-express/adapter.js';
+import { adapter as bimanBangladesh } from '../carriers/biman-bangladesh/adapter.js';
 import { adapter as birGundeKargo } from '../carriers/bir-gunde-kargo/adapter.js';
 import { adapter as bizCourier } from '../carriers/biz-courier/adapter.js';
 import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapter.js';
@@ -926,6 +927,7 @@ import { adapter as tramaco } from '../carriers/tramaco/adapter.js';
 import { adapter as transaher } from '../carriers/transaher/adapter.js';
 import { adapter as transcorp } from '../carriers/transcorp/adapter.js';
 import { adapter as transdirect } from '../carriers/transdirect/adapter.js';
+import { adapter as transglobalExpress } from '../carriers/transglobal-express/adapter.js';
 import { adapter as translinkShipping } from '../carriers/translink-shipping/adapter.js';
 import { adapter as transmission } from '../carriers/transmission/adapter.js';
 import { adapter as transportesChevalier } from '../carriers/transportes-chevalier/adapter.js';
@@ -936,6 +938,7 @@ import { adapter as tsjy } from '../carriers/tsjy/adapter.js';
 import { adapter as tstCfExpress } from '../carriers/tst-cf-express/adapter.js';
 import { adapter as tufesa } from '../carriers/tufesa/adapter.js';
 import { adapter as tuomeida } from '../carriers/tuomeida/adapter.js';
+import { adapter as turkonLine } from '../carriers/turkon-line/adapter.js';
 import { adapter as tuskLogistics } from '../carriers/tusk-logistics/adapter.js';
 import { adapter as twsExpress } from '../carriers/tws-express/adapter.js';
 import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.js';
@@ -1130,6 +1133,7 @@ export const REGISTRY: RegistryDefinition = {
     "bfe-express": bfeExpress,
     "bh-posta": bhPosta,
     "bigfoot-express": bigfootExpress,
+    "biman-bangladesh": bimanBangladesh,
     "bir-gunde-kargo": birGundeKargo,
     "biz-courier": bizCourier,
     "bjs-home-delivery": bjsHomeDelivery,
@@ -1962,6 +1966,7 @@ export const REGISTRY: RegistryDefinition = {
     "transaher": transaher,
     "transcorp": transcorp,
     "transdirect": transdirect,
+    "transglobal-express": transglobalExpress,
     "translink-shipping": translinkShipping,
     "transmission": transmission,
     "transportes-chevalier": transportesChevalier,
@@ -1972,6 +1977,7 @@ export const REGISTRY: RegistryDefinition = {
     "tst-cf-express": tstCfExpress,
     "tufesa": tufesa,
     "tuomeida": tuomeida,
+    "turkon-line": turkonLine,
     "tusk-logistics": tuskLogistics,
     "tws-express": twsExpress,
     "ubi-smart-parcel": ubiSmartParcel,
@@ -2269,6 +2275,7 @@ export const REGISTRY: RegistryDefinition = {
     "big-smart": "universal",
     "bigfoot-express": "bigfoot-express",
     "bigpost": "universal",
+    "biman-bangladesh": "biman-bangladesh",
     "bir-gunde-kargo": "bir-gunde-kargo",
     "biz-courier": "biz-courier",
     "bjs-home-delivery": "bjs-home-delivery",
@@ -3823,6 +3830,7 @@ export const REGISTRY: RegistryDefinition = {
     "transcorp": "transcorp",
     "transdirect": "transdirect",
     "transfera": "universal",
+    "transglobal-express": "transglobal-express",
     "transgo-mx": "universal",
     "transilvania-post": "universal",
     "translink-shipping": "translink-shipping",
@@ -3859,6 +3867,7 @@ export const REGISTRY: RegistryDefinition = {
     "tupaq": "universal",
     "turbo-eg": "universal",
     "turkmenpost": "universal",
+    "turkon-line": "turkon-line",
     "tusass": "universal",
     "tusk-logistics": "tusk-logistics",
     "tusou": "universal",

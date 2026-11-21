@@ -39,7 +39,6 @@ import { statusMap as theDeliveryGroup } from '../../carriers/the-delivery-group
 import { statusMap as thabitLogistics } from '../../carriers/thabit-logistics/status.js';
 import { statusMap as tramaco } from '../../carriers/tramaco/status.js';
 import { statusMap as tejCouriers } from '../../carriers/tej-couriers/status.js';
-import { statusMap as bimanBangladesh } from '../../carriers/biman-bangladesh/status.js';
 import { statusMap as bhPosta } from '../../carriers/bh-posta/status.js';
 import { statusMap as hellmannStatus } from '../../carriers/hellmann/status.js';
 import { statusMap as honducorStatus } from '../../carriers/honducor/status.js';
@@ -379,7 +378,6 @@ import { statusMap as geodis } from '../../carriers/geodis/status.js';
 import { statusMap as geodisPl } from '../../carriers/geodis-pl/status.js';
 import { statusMap as geniki } from '../../carriers/geniki-taxydromiki/status.js';
 import { statusMap as gigLogistics } from '../../carriers/gig-logistics/status.js';
-import { statusMap as gintracom } from '../../carriers/gintracom/status.js';
 import { statusMap as globalDeliveryNetwork } from '../../carriers/global-delivery-network/status.js';
 import { statusMap as glsCh } from '../../carriers/gls-ch/status.js';
 import { statusMap as glsNl } from '../../carriers/gls-nl/status.js';
@@ -412,7 +410,6 @@ import { statusMap as gtlGoto } from '../../carriers/gtl-goto/status.js';
 import { statusMap as guatex } from '../../carriers/guatex/status.js';
 import { statusMap as gzyl } from '../../carriers/gzyl/status.js';
 import { statusMap as hanjin } from '../../carriers/hanjin/status.js';
-import { statusMap as hapagLloyd } from '../../carriers/hapag-lloyd/status.js';
 import { statusMap as happyPost } from '../../carriers/happy-post/status.js';
 import { statusMap as haypost } from '../../carriers/haypost/status.js';
 import { statusMap as hctLogistics } from '../../carriers/hct-logistics/status.js';
@@ -970,6 +967,12 @@ import { statusMap as ckLine } from '../../carriers/ck-line/status.js';
 import { statusMap as vascoMaritime } from '../../carriers/vasco-maritime/status.js';
 import { statusMap as romocean } from '../../carriers/romocean/status.js';
 import { statusMap as amass } from '../../carriers/amass/status.js';
+import { statusMap as apmLogistics } from '../../carriers/apm-logistics/status.js';
+import { statusMap as gintracom } from '../../carriers/gintracom/status.js';
+import { statusMap as transglobalExpress } from '../../carriers/transglobal-express/status.js';
+import { statusMap as turkonLine } from '../../carriers/turkon-line/status.js';
+import { statusMap as hapagLloyd } from '../../carriers/hapag-lloyd/status.js';
+import { statusMap as bimanBangladesh } from '../../carriers/biman-bangladesh/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -977,6 +980,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh,
   'sarjak-container-lines': sarjakContainerLines, 'ck-line': ckLine, 'vasco-maritime': vascoMaritime, romocean, amass,
   danx, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
   'wan-hai': wanHai, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,
@@ -986,7 +990,6 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bm-cargo': bmCargo,
   'cargox': cargoX,
   'bh-posta': bhPosta,
-  'biman-bangladesh': bimanBangladesh,
   'hellmann': hellmannStatus,
   'honducor': honducorStatus,
   'neighbour-express': neighbourExpress,
@@ -1089,10 +1092,10 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'flash-express-ph': flashExpressPh,
   'flashbird-ca': flashbirdCa,
   fleetex, fleetoptics, flippost, fmx, followmont, 'fm-transportes': fmTransportes, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, gaash, garudavega, gati, gdex,
-  'gebrueder-weiss': gebruederWeiss, geis, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, gintracom, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-nl': glsNl, 'gls-us': glsUs,
+  'gebrueder-weiss': gebruederWeiss, geis, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-nl': glsNl, 'gls-us': glsUs,
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
-  hanjin, 'hapag-lloyd': hapagLloyd, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, homexpress, 'hongkong-post': hongkongPost,
+  hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, homexpress, 'hongkong-post': hongkongPost,
   horoz, 'hound-express': houndExpress, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaya-express': huayaExpress, 'hunter-express': hunterExpress, hywl,
   'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, 'ilyang-logis': ilyangLogis, imile,
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
