@@ -53,10 +53,11 @@ That issue is a good place to find work.
 ## Add a carrier
 
 ```sh
-npm run carrier:new -- --id example --name "Example" --canary-url https://example.com/
+npm run carrier:new -- --id example --name "Example" --color "#0055a4" --canary-url https://example.com/
 ```
 
-The script writes the folder. From there:
+The script writes the folder. `--color` is the main colour of the carrier's logo or site: the
+apps paint the carrier's parcels with it, and the grey is kept for the unknown carrier. From there:
 
 1. Fill `carrier.json`: the portal facts, the tracking links and the detection rules.
    `portal.searchUrl` is the page, with no number in it, where someone on a phone types a

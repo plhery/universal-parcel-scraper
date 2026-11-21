@@ -5,9 +5,9 @@
  * core/catalog/carrier.schema.json before anything is written, so a fresh
  * folder is never the reason `npm run generate` fails.
  *
- *   node scripts/new-carrier.mjs --id <id> --name "<Name>" \
+ *   node scripts/new-carrier.mjs --id <id> --name "<Name>" --color <#hex> \
  *     [--mode automatic|link-only] [--adapter universal|<id>] \
- *     [--timezone <tz>] [--color #hex] [--portal-url <url>] [--search-url <url>] \
+ *     [--timezone <tz>] [--portal-url <url>] [--search-url <url>] \
  *     [--canary-url <url>]
  */
 
@@ -24,9 +24,9 @@ const schemaPath = path.join(packageRoot, 'core', 'catalog', 'carrier.schema.jso
 const emptyCorpusGap = 'no public sample found yet';
 
 const usage = [
-  'Usage: node scripts/new-carrier.mjs --id <id> --name "<Name>"',
+  'Usage: node scripts/new-carrier.mjs --id <id> --name "<Name>" --color <#hex>',
   '         [--mode automatic|link-only] [--adapter universal|<id>]',
-  '         [--timezone <tz>] [--color #hex] [--portal-url <url>] [--search-url <url>]',
+  '         [--timezone <tz>] [--portal-url <url>] [--search-url <url>]',
   '         [--canary-url <url>]',
 ].join('\n');
 
@@ -48,7 +48,7 @@ function readOptions(argv) {
   const known = new Set(['id', 'name', 'mode', 'adapter', 'timezone', 'color', 'portal-url', 'search-url', 'canary-url']);
   const unknown = Object.keys(options).filter((key) => !known.has(key));
   if (unknown.length > 0) throw new Error(`Unknown option --${unknown[0]}\n${usage}`);
-  if (!options.id || !options.name) throw new Error(`--id and --name are required\n${usage}`);
+  if (!options.id || !options.name || !options.color) throw new Error(`--id, --name and --color are required\n${usage}`);
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(options.id)) {
     throw new Error(`--id must be lowercase words joined by hyphens, got ${options.id}`);
   }
@@ -57,8 +57,10 @@ function readOptions(argv) {
   if (mode === 'link-only' && options.adapter) {
     throw new Error('link-only carriers have no adapter; drop --adapter or use --mode automatic');
   }
-  const color = options.color ?? '#8e8e93';
+  const { color } = options;
   if (!/^#[0-9a-fA-F]{6}$/.test(color)) throw new Error(`--color must be a #rrggbb value, got ${color}`);
+  // The unknown carrier's grey; the catalog generator refuses it for a named carrier.
+  if (color.toLowerCase() === '#8e8e93') throw new Error('--color must be the carrier\'s own colour, not the unknown carrier\'s grey');
   return {
     id: options.id,
     name: options.name,

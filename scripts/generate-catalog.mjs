@@ -178,6 +178,23 @@ function validateDetectionRuleIds(documents) {
   }
 }
 
+/**
+ * The unknown carrier's grey marks a parcel no carrier claims. A named carrier needs a colour
+ * of its own: Peek's apps refuse a release that gives one the grey, so it never reaches them.
+ */
+function validateBrandColors(documents) {
+  const unknown = documents.find(carrier => carrier.id === 'unknown');
+  if (!unknown) return;
+  const grey = unknown.brand.color.toLowerCase();
+  const greyed = documents.filter(carrier => carrier.id !== 'unknown' && carrier.brand.color.toLowerCase() === grey);
+  if (greyed.length) {
+    throw new Error(
+      `${greyed.map(carrier => `carriers/${carrier.id}/carrier.json`).join(', ')} use${greyed.length === 1 ? 's' : ''} `
+      + `the unknown carrier's ${grey} as brand.color; give each the colour of its logo or site.`,
+    );
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Folders -> x-carriers
 // ---------------------------------------------------------------------------
@@ -243,6 +260,7 @@ await validateCarrierSchema(documents);
 const adapters = await readAdapterFolders();
 documents.forEach(document => validateCarrierSemantics(document, adapters));
 validateDetectionRuleIds(documents);
+validateBrandColors(documents);
 const order = JSON.parse(await readFile(path.join(root, 'data/carrier-order.json'), 'utf8'));
 const byId = new Map(documents.map(document => [document.id, document]));
 const ids = [...order.filter(id => byId.has(id)), ...documents.map(document => document.id).filter(id => !order.includes(id))];
