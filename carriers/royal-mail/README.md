@@ -9,12 +9,16 @@ sending post's S10 number once it reaches the UK.
 
 ## Retrieval
 
-The browser opens the homepage, allows functional cookies alone and follows
-its tracking link. The site's consent manager files hCaptcha under functional
-cookies and withholds its frame otherwise, and the tracking application sends
-no request without a CAPTCHA token; a withheld frame ends the lookup at once.
-Consent reloads the page, so number entry waits until it settles. The navigation link can be covered by the site's fixed header;
-the adapter follows its validated destination in the same context.
+The browser opens the homepage and follows its tracking link. The site's
+consent manager files hCaptcha under functional cookies and withholds its frame
+otherwise, and the tracking application sends no request without a CAPTCHA
+token; a withheld frame ends the lookup at once. The context starts with the
+cookies the consent dialog saves for functional cookies alone, which spares the
+dialog and the reload saving it causes. When hCaptcha's frame does not load on
+the tracking page, the adapter makes that choice in the dialog instead, and
+number entry waits for the reload to settle. The navigation link can be covered
+by the site's fixed header; the adapter follows its validated destination in
+the same context.
 
 The page obtains its own CAPTCHA token for the microsummary, then `Get more
 details` uses the issued API session for history. When hCaptcha shows its

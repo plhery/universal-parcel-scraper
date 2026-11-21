@@ -15,6 +15,7 @@ const ORIGIN = 'https://www.royalmail.com';
 const MAX_BYTES = 2_000_000;
 // The page keeps this frame hidden off-screen until hCaptcha wants a person to solve it.
 const CAPTCHA_CHALLENGE = 'iframe[src*="hcaptcha.com"][src*="frame=challenge"]:visible';
+const CONSENT_BANNER = '#truste-show-consent';
 
 export async function royalMailBrowserUserAgent(browser: Browser, remote: boolean): Promise<string> {
   // Use the browser's OS, rather than the calling server's platform.
@@ -25,7 +26,28 @@ export async function royalMailBrowserUserAgent(browser: Browser, remote: boolea
   return `Mozilla/5.0 (${platform}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${major}.0.0.0 Safari/537.36`;
 }
 // The consent manager parks the address of a frame it blocks in `data-ta-src`.
-const CAPTCHA_WITHHELD = 'iframe[data-hcaptcha-widget-id][data-ta-src]';
+const CAPTCHA_FRAME = 'iframe[data-hcaptcha-widget-id]';
+const CAPTCHA_WITHHELD = `${CAPTCHA_FRAME}[data-ta-src]`;
+
+/**
+ * The choice the consent manager's dialog saves when functional cookies alone are
+ * allowed, which is the category it files hCaptcha under. Set before the first page,
+ * it spares the dialog and the reload that saving it causes.
+ */
+export const ROYAL_MAIL_FUNCTIONAL_CONSENT = Object.entries({
+  notice_preferences: '1:',
+  notice_gdpr_prefs: '0,1::implied,eu',
+  cmapi_cookie_privacy: 'permit 1,2 functional',
+  cmapi_gtm_bl: 'ta-asp-bzi-sp-awct-cts-csm-img-flc-fls-mpm-mpr-m6d-tc-tdc',
+  notice_behavior: 'implied,eu',
+}).map(([name, value]) => ({ name, value, domain: '.royalmail.com', path: '/', secure: true, sameSite: 'Lax' as const }));
+
+/** Whether hCaptcha's frame loaded, which tells the consent manager accepted the preset choice. */
+export async function royalMailCaptchaAllowed(page: Page, timeoutMs: number): Promise<boolean> {
+  await page.locator(CAPTCHA_FRAME).first().waitFor({ state: 'attached', timeout: timeoutMs }).catch(() => {});
+  return await page.locator(CAPTCHA_FRAME).count() > 0 && await page.locator(CAPTCHA_WITHHELD).count() === 0
+    && !await page.locator(CONSENT_BANNER).isVisible();
+}
 
 // While the tracking application is down, its address answers 200 with this
 // page in place of the form.
@@ -174,15 +196,16 @@ export function fetchRoyalMailInBrowser(number: string, executablePath: string, 
       const userAgent = await royalMailBrowserUserAgent(browser, endpoint !== null);
       const context = await browser.newContext({ locale: 'en-GB', acceptDownloads: false, serviceWorkers: 'block',
         userAgent });
+      await context.addCookies(ROYAL_MAIL_FUNCTIONAL_CONSENT);
       session.throwIfAborted();
       const page = await context.newPage();
       recovery = vision ? royalMailVisionRecovery(page, vision, session, remainingMs) : undefined;
       const timeout = () => Math.min(10_000, remainingMs());
       // The consent manager withholds hCaptcha's frame unless functional cookies
       // are allowed, and the tracking application sends nothing without its token.
-      // Allow that category alone.
+      // When it does not accept the preset choice, allow that category alone in its dialog.
       const consent = async () => {
-        const choose = page.locator('#truste-show-consent');
+        const choose = page.locator(CONSENT_BANNER);
         await choose.waitFor({ state: 'visible', timeout: Math.min(3_000, remainingMs()) }).catch(() => {});
         session.throwIfAborted();
         if (!await choose.isVisible()) return;
@@ -213,7 +236,6 @@ export function fetchRoyalMailInBrowser(number: string, executablePath: string, 
       if ([404, 410].includes(response.status())) throw new TransportError(PROVIDER, 'Royal Mail tracking page is unavailable');
       if (response.status() !== 200) throw new UpstreamHttpError(PROVIDER, response.status());
       if (new URL(page.url()).origin !== ORIGIN) throw new SchemaError(PROVIDER);
-      await consent();
       const link = page.locator('a').filter({ hasText: /^\s*Track your item\s*$/i }).first();
       await link.waitFor({ state: 'visible', timeout: timeout() });
       const href = await link.getAttribute('href');
@@ -228,7 +250,8 @@ export function fetchRoyalMailInBrowser(number: string, executablePath: string, 
       if ([404, 410].includes(trackingPage.status())) throw new TransportError(PROVIDER, 'Royal Mail tracking page is unavailable');
       if (trackingPage.status() !== 200) throw new UpstreamHttpError(PROVIDER, trackingPage.status());
       const input = await royalMailTrackingForm(page, timeout());
-      await consent();
+      if (!await royalMailCaptchaAllowed(page, Math.min(3_000, remainingMs()))) await consent();
+      session.throwIfAborted();
       await input.waitFor({ state: 'visible', timeout: timeout() });
       const landed = new URL(page.url());
       if (landed.origin !== ORIGIN || landed.pathname !== '/track-your-item') throw new SchemaError(PROVIDER);
