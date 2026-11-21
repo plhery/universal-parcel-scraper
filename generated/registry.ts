@@ -50,6 +50,7 @@ import { adapter as anjun } from '../carriers/anjun/adapter.js';
 import { adapter as anousith } from '../carriers/anousith/adapter.js';
 import { adapter as anserx } from '../carriers/anserx/adapter.js';
 import { adapter as anteraja } from '../carriers/anteraja/adapter.js';
+import { adapter as apCargo } from '../carriers/ap-cargo/adapter.js';
 import { adapter as apcOvernight } from '../carriers/apc-overnight/adapter.js';
 import { adapter as apcPostalLogistics } from '../carriers/apc-postal-logistics/adapter.js';
 import { adapter as apdParcel } from '../carriers/apd-parcel/adapter.js';
@@ -929,6 +930,7 @@ import { adapter as viadireta } from '../carriers/viadireta/adapter.js';
 import { adapter as viettelPost } from '../carriers/viettel-post/adapter.js';
 import { adapter as vimenpaq } from '../carriers/vimenpaq/adapter.js';
 import { adapter as vintedGo } from '../carriers/vinted-go/adapter.js';
+import { adapter as vitranExpress } from '../carriers/vitran-express/adapter.js';
 import { adapter as vnpost } from '../carriers/vnpost/adapter.js';
 import { adapter as volarisCargo } from '../carriers/volaris-cargo/adapter.js';
 import { adapter as vozovoz } from '../carriers/vozovoz/adapter.js';
@@ -1043,6 +1045,7 @@ export const REGISTRY: RegistryDefinition = {
     "anousith": anousith,
     "anserx": anserx,
     "anteraja": anteraja,
+    "ap-cargo": apCargo,
     "apc-overnight": apcOvernight,
     "apc-postal-logistics": apcPostalLogistics,
     "apd-parcel": apdParcel,
@@ -1922,6 +1925,7 @@ export const REGISTRY: RegistryDefinition = {
     "viettel-post": viettelPost,
     "vimenpaq": vimenpaq,
     "vinted-go": vintedGo,
+    "vitran-express": vitranExpress,
     "vnpost": vnpost,
     "volaris-cargo": volarisCargo,
     "vozovoz": vozovoz,
@@ -2098,7 +2102,7 @@ export const REGISTRY: RegistryDefinition = {
     "ant-courier": "universal",
     "antaria": "universal",
     "anteraja": "anteraja",
-    "ap-cargo": "universal",
+    "ap-cargo": "ap-cargo",
     "aparcels": "universal",
     "apc-overnight": "apc-overnight",
     "apc-postal-logistics": "apc-postal-logistics",
@@ -3814,7 +3818,7 @@ export const REGISTRY: RegistryDefinition = {
     "vimenpaq": "vimenpaq",
     "vinted-go": "vinted-go",
     "vip-posta": "universal",
-    "vitran-express": "universal",
+    "vitran-express": "vitran-express",
     "vnlin": "universal",
     "vnpost": "vnpost",
     "volaris-cargo": "volaris-cargo",

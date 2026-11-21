@@ -43,6 +43,7 @@ import { statusMap as bhPosta } from '../../carriers/bh-posta/status.js';
 import { statusMap as hellmannStatus } from '../../carriers/hellmann/status.js';
 import { statusMap as honducorStatus } from '../../carriers/honducor/status.js';
 import { statusMap as xlsFutarStatus } from '../../carriers/xls-futar/status.js';
+import { statusMap as apCargo } from '../../carriers/ap-cargo/status.js';
 import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
 import { statusMap as carrybee } from '../../carriers/carrybee/status.js';
 import { statusMap as huuneh } from '../../carriers/huuneh/status.js';
@@ -826,6 +827,7 @@ import { statusMap as viettelPost } from '../../carriers/viettel-post/status.js'
 import { statusMap as vnpost } from '../../carriers/vnpost/status.js';
 import { statusMap as vimenpaq } from '../../carriers/vimenpaq/status.js';
 import { statusMap as vintedGo } from '../../carriers/vinted-go/status.js';
+import { statusMap as vitranExpress } from '../../carriers/vitran-express/status.js';
 import { statusMap as vozovoz } from '../../carriers/vozovoz/status.js';
 import { statusMap as vrlLogistics } from '../../carriers/vrl-logistics/status.js';
 import { statusMap as wanbexpress } from '../../carriers/wanbexpress/status.js';
@@ -953,7 +955,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'western-bid': westernBid,
   libanpost,
   'om-logistics': omLogistics,
-  'apd-parcel': apdParcel,
+  'ap-cargo': apCargo, 'apd-parcel': apdParcel,
   'carrybee': carrybee,
   'huuneh': huuneh,
   'laser-logistics': laserLogistics,
@@ -1090,7 +1092,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   trackon, 'tracx-logis': tracxLogis, transaher, transcorp, transmission, 'trendyol-express': trendyolExpress, tsjy, 'tst-cf-express': tstCfExpress, tufesa, 'tws-express': twsExpress,
   'ubi-smart-parcel': ubiSmartParcel, 'ukp-worldwide': ukpWorldwide, ukrposhta,
   'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,
-  'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost, vnpost,
+  'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
   yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,

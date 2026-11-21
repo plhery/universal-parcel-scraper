@@ -13,11 +13,13 @@ layout matches GLS Italy's depot numbers, so no rule claims it.
 
 ## Retrieval lead
 
-`consignee.starlinks-me.com` is a single-page app. Its script asks its API for
-`/starlink/shipments/{number}/` followed by `details`, `tracking`, `history` or `delivery-date`, signs
-each request with an HMAC of the method, path and time, and sends a one-time-code token when it
-holds one. An HTTP 401 sends the reader to a page that asks for that code. No reply from the API
-has been seen, so there is no adapter.
+`consignee.starlinks-me.com/tracking/{number}` is a single-page app. It reads the shipment from
+`consignee-api.starlinks-me.com/api/v1/starlink/shipments/seller/{number}/tracking`, which needs no
+code: the reply holds the number, its current status and a timeline of status, date, description
+and city. The recipient pages under `/shipment/` use `details`, `tracking` and `history` under
+`/starlink/shipments/{number}/`, which answer 401 until the recipient enters a one-time code. A
+number the API does not know answers HTTP 400 "Shipment was not found.". The public samples answer
+that or a missing company record, so no history has been seen and there is no adapter.
 
 ## Links
 

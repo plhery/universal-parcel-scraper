@@ -2255,6 +2255,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shree-anjani', number: '9000000001',
     route: /^https:\/\/shreeanjani\.co\.in\/tracking\/\?awb=9000000001$/,
     marker: /Enter your 10-digit docket number to track/ },
+  // Vitran's Quick Track names an unknown number only in its form's address, under its "Not found." notice.
+  { carrier: 'vitran-express', number: '90000001',
+    route: /^https:\/\/www\.vitran\.com\/quicktrack\.aspx\?p=90000001$/,
+    marker: /Document Number:|Not found\./,
+    forwarding: { notFound: /Not found\./ } },
   // The Connecting Nandan app looks up the number in its address and leaves it off the page when it has no record.
   { carrier: 'shree-nandan', number: '1000000000001',
     route: /^https:\/\/connectingnandan\.com\/web-tracking\/1000000000001$/,

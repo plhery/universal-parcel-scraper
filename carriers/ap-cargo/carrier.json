@@ -14,17 +14,49 @@
   "timezone": "Asia/Manila",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ap-cargo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "sender_name",
+    "receiver_name"
+  ],
   "portal": {
     "searchUrl": "https://apcargo.com.ph/track/",
     "canaryUrl": "https://apcargo.com.ph/track/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "references"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "recipient_name"
+    ],
+    "discarded": [
+      "references"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "provider_code",
+      "proof_of_delivery",
+      "delivered_at",
+      "offset_timestamps"
+    ]
   },
   "links": [],
   "detection": []

@@ -9,6 +9,17 @@
     {"wording": "ARRIVED", "stage": "in_transit", "language": "en", "confirmedBy": "official-doc", "note": "Handled by AP Cargo's former tracker script. The tracker adds \" AT \" and the location."},
     {"wording": "OUT FOR DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "official-doc", "note": "Handled by AP Cargo's former tracker script."},
     {"wording": "RETURN UPON DELIVERY", "stage": "failed_attempt", "language": "en", "confirmedBy": "official-doc", "note": "Handled by AP Cargo's former tracker script. The script shows it in its undelivered slot: delivery failed and the cargo goes back."},
-    {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Handled by AP Cargo's former tracker script."}
+    {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Handled by AP Cargo's former tracker script."},
+    {"wording": "Successfully Accepted", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The origin branch accepted the cargo."},
+    {"wording": "Arrived at Origin Sorting Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo reached the sorting hub of its origin; the tracker gives the branch as the location."},
+    {"wording": "In-Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo left a hub; the row names no place. The older tracker uses the same wording."},
+    {"wording": "Arrived at Destination Gateway", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo reached the gateway branch of its destination."},
+    {"wording": "In Transit to Destination Branch", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo left the gateway for the destination branch."},
+    {"wording": "In-Transit (Transferred to Branch)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo moved on to another branch, which the row names."},
+    {"wording": "Arrived at Destination Branch", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo reached the destination branch."},
+    {"wording": "Arrived at Transport Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo reached a transport hub, which the row names."},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The cargo left with a delivery round."},
+    {"wording": "Received", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee received the cargo; the older tracker reports the same waybill delivered that day."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The older tracker's delivery, dated by its day; the current tracker can stop at the delivery round before it."}
   ]
 }

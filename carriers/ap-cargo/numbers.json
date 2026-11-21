@@ -50,6 +50,56 @@
         ]
       },
       "note": "An archived reply of AP Cargo's own tracking API shows this waybill from acceptance in Manila to its claim at the destination branch."
+    },
+    {
+      "number": "47529414",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.facebook.com/groups/4812877945470397/posts/26661580800173464/",
+        "date": "2026-04-28",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "A post in a public Facebook group shows the AP Cargo waybill form of a shipment from Manila to Marbel with this number stamped on it; AP Cargo's tracker answers it with the shipment's history."
+    },
+    {
+      "number": "50479601",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.facebook.com/jjeptradingservices/posts/proof-of-shipping-via-ap-cargopagadian-city13-pcs-bert-blade-disc-22another-repe/1532672548880483/",
+        "date": "2026-10-01",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "A shop's public Facebook post shows the AP Cargo waybill of a shipment to Pagadian City as proof of shipping; AP Cargo's tracker answers it with the shipment's history."
     }
   ]
 }

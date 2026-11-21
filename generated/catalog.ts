@@ -9235,7 +9235,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Manila",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ap-cargo",
+      "localClocks": true
     },
     "canaryUrl": "https://apcargo.com.ph/track/",
     "trackingSearchUrl": "https://apcargo.com.ph/track/",
@@ -63823,7 +63824,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "vitran-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.vitran.com/quicktrack.aspx",
     "trackingUrlTemplate": "https://www.vitran.com/quicktrack.aspx?p={trackingNumber}",
