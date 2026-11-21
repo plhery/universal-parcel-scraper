@@ -70,7 +70,9 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   and Australia, whose scans are all on Sydney's clock: read on Brisbane's, a Queensland hub's
   arrival would come after a consumer first saw it. Brazil, Mexico and the United States span
   several zones and the reply does not say which, so their clocks stay `local_time`. Ship24 and
-  ParcelsApp relay these digits and read them on the same clock ([`clock.ts`](clock.ts)).
+  ParcelsApp relay these digits and read them on the same clock ([`clock.ts`](clock.ts)). They
+  relay iMile's sentences without its codes, and the map reads those sentences whole, as on
+  iMile's page.
 - The order record (`1001`) is on the recipient's clock too. On a parcel with Cainiao's leg it
   lands seconds after Cainiao's last sorting-centre dispatch, when Cainiao notifies iMile; read
   on China's clock it would come hours before that dispatch.

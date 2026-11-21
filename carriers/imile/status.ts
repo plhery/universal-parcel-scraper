@@ -240,4 +240,7 @@ export const statusMap: CarrierStatusMap = {
       ? 'A flight booked for the parcel, logged before it leaves with its planned clocks: still to come, so the adapter leaves the row out.'
       : undefined;
   },
+  // iMile's sentences are read whole, their centre names in 【】 aside, so a provider relaying them without a code is read
+  // as iMile's own scans are.
+  wholeWording: true,
 };

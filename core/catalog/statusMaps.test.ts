@@ -35,6 +35,10 @@ describe('status map answers', () => {
     expect(relayedWordingStage('royal-mail', 'Delivery request received')).toBeUndefined();
     expect(relayedWordingStage('unknown', 'Driver is en route')).toBeUndefined();
     expect(relayedWordingStage('example-carrier', 'Driver is en route')).toBeUndefined();
+    // iMile's sentences, as Ship24 relays them without iMile's codes, its centre in 【】 or not.
+    expect(['【iMile Example DC Center】Your order has been received.', 'Your order has been shipped from 【iMile Example DC Center】.',
+      'Your order has assigned delivery drvier.', 'Your order has an unread wording.'].map((wording) => relayedWordingStage('imile', wording)))
+      .toEqual(['in_transit', 'in_transit', 'in_transit', undefined]);
   });
 
   it("answers DPD's codes, and the codes and labels it leaves unmapped on purpose", () => {
