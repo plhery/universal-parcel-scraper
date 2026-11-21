@@ -14,6 +14,7 @@ import { canadaProvinceTimeZone, countryCode, countryTimeZone, explicitOffsetTim
   mislabeledLocalTime, mislabeledWallTime, usStateTimeZone } from '../../core/time/index.js';
 import { clean, fetchBounded, TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { envChoice, envPositive } from '../../core/adapter/envChoice.js';
 import { budgetWhenOutOfTime, trawlOutOfTime } from '../../core/transport/trawl.js';
@@ -50,6 +51,16 @@ const APP_HEADERS = { Accept: 'application/json', 'Accept-Language': 'en-AU', AP
 // fetch's `no-store` adds a browser reload's cache headers and `no-cache` a `max-age=0`, which
 // the gateway refuses from this client. The app sends neither, and Node's fetch keeps no cache.
 const asApp = (fetcher?: typeof fetch): typeof fetch => (input, init) => (fetcher ?? fetch)(input, { ...init, cache: 'default' });
+
+// A prepaid satchel's or label's barcode; other carriers' rules take any 22 digits.
+const PREPAID_BARCODE = /^0[0-3]\d{20}$/;
+
+/** A number worth a browser lookup: one Australia Post issues, and a prepaid barcode only with its GS1 check digit. */
+function worthBrowserLookup(number: string): boolean {
+  if (!accepted(() => normalizeAustraliaPostNumber(number))) return false;
+  const normalized = normalizeAustraliaPostNumber(number);
+  return !PREPAID_BARCODE.test(normalized) || hasGs1CheckDigit(normalized);
+}
 
 export function normalizeAustraliaPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
@@ -590,7 +601,7 @@ export const adapter: AdapterFactory = (environment) => {
       () => accepted(() => normalizeAustraliaPostNumber(number))),
     // The gateway refuses plain HTTP from many networks, so the opt-in browser phase reads the parcel as a lookup
     // does: only a dated record confirms the number.
-    recognizeWithBrowser: (number, context) => (accepted(() => normalizeAustraliaPostNumber(number))
+    recognizeWithBrowser: (number, context) => (worthBrowserLookup(number)
       ? recognizeFromBrowserLookup(() => tracker.fetch(number, { ...context, budgetMs: Math.min(context?.budgetMs ?? 45_000, 60_000) }))
       : Promise.resolve({ known: false, lastActivityAt: null })) };
 };

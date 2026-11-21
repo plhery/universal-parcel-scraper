@@ -554,13 +554,24 @@ describe('Australia Post recognition', () => {
     browser.mockImplementation(async () => Response.json(service([capture(unknown)])));
     await expect(instance.recognizeWithBrowser!(NUMBER)).resolves.toEqual({ known: false, lastActivityAt: null });
     browser.mockClear();
-    await expect(instance.recognizeWithBrowser!('ABC123')).resolves.toEqual({ known: false, lastActivityAt: null });
+    // A prepaid barcode is read only with its GS1 check digit, since other carriers' rules take any 22 digits.
+    for (const number of ['ABC123', '0100000000000000000000']) {
+      await expect(instance.recognizeWithBrowser!(number), number).resolves.toEqual({ known: false, lastActivityAt: null });
+    }
     expect(browser).not.toHaveBeenCalled();
-    // Consignments with a lettered location ID, StarTrack consignments and R with 24 digits; not the ten-character
-    // consignment or the prepaid barcode, whose shapes other carriers' numbers share.
+    browser.mockImplementation(async () => Response.json(service()));
+    // The stub's capture is another number's, so only the request matters here.
+    await instance.recognizeWithBrowser!('0123456789012345678900').catch(() => null);
+    expect(browser).toHaveBeenCalled();
+    // Consignments with a lettered location ID, StarTrack consignments, R with 24 digits and prepaid barcodes; not the
+    // ten-character consignment, whose shape other carriers' numbers share.
     const asked = (number: string) => recognitionCandidates(number, { phase: 'browser' }).some(({ carrier }) => carrier === 'australia-post');
-    for (const number of ['33ZZZ0000001', '331ZZ0000001', 'ZZZZ00000001', 'R987654321098765432109876']) expect(asked(number), number).toBe(true);
-    for (const number of ['ZZZ0000001', '0100000000000000000000', '331230000001']) expect(asked(number), number).toBe(false);
+    for (const number of ['33ZZZ0000001', '331ZZ0000001', 'ZZZZ00000001', 'R987654321098765432109876', '0123456789012345678900']) {
+      expect(asked(number), number).toBe(true);
+    }
+    for (const number of ['ZZZ0000001', '0412345678901234567890', '331230000001']) expect(asked(number), number).toBe(false);
+    // An Australian prepaid barcode comes before the other carriers' 22 digits.
+    expect(recognitionCandidates('0123456789012345678900', { phase: 'browser', countryHint: 'AU' })[0]).toMatchObject({ carrier: 'australia-post' });
   });
 
   it('names itself for any number in its tracking links, including the search route in the fragment', () => {

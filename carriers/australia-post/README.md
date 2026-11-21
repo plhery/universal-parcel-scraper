@@ -6,8 +6,9 @@ Plain HTTP answers when the request looks like the official Android app's; the T
 service takes over when it is refused. HTTP recognition asks the same API over plain HTTP only, so a
 refusal there starts no browser. The gateway refuses plain HTTP from many networks, so the opt-in
 browser recognition reads the parcel as a lookup does, for the consignment shapes its rules suggest
-Australia Post for first (a location ID with a letter after two digits, StarTrack's) and `R` and
-twenty-four digits. Only a dated record confirms the number.
+Australia Post for first (a location ID with a letter after two digits, StarTrack's), `R` and
+twenty-four digits, and prepaid barcodes whose GS1 check digit passes. Only a dated record confirms
+the number.
 
 ## How it works
 
