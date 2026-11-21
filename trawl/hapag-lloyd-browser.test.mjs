@@ -12,14 +12,20 @@ const lookup = (extra = {}) => ({ method: () => 'GET', url: () => hapagEventsUrl
 const navigation = { method: () => 'GET', url: () => HAPAG_PAGE, frame: () => frame, isNavigationRequest: () => true };
 
 function fixture({ body = JSON.stringify(payload), status = 200, pageStatus = 200, checkbox = false, covered = false, width = 300,
-  respond = true, timeout = 1000, delay = 1, others = [] } = {}) {
+  respond = true, timeout = 1000, delay = 1, others = [], together = false } = {}) {
   const handlers = {}, state = { closed: 0, clicks: 0, read: 0, policy: 0, fallback: 0, aborted: 0, replacement: 0, route: null };
+  // The runner returns once a reply has arrived, so replies on timers of their own race it. `together` sends every
+  // let-through lookup's reply in one timer callback.
+  const queued = [], answer = () => {
+    if (!together) { setTimeout(() => handlers.response?.(reply), delay); return; }
+    if (queued.push(reply) === 1) setTimeout(() => { for (const r of queued.splice(0)) handlers.response?.(r); }, delay);
+  };
   const reply = { request: () => lookup(), url: () => hapagEventsUrl(reference), status: () => status,
     headers: () => ({ 'content-type': 'application/json', 'set-cookie': 'PRIVATE', 'retry-after': '60', 'content-length': String(Buffer.byteLength(body)) }),
     body: async () => { state.read++; return Buffer.from(body); } };
   const page_ = status => ({ request: () => navigation, url: () => HAPAG_PAGE, status: () => status, headers: () => ({}) });
   const route = async request => state.route({ request: () => request,
-    fallback: async () => { state.fallback++; setTimeout(() => handlers.response?.(reply), delay); },
+    fallback: async () => { state.fallback++; answer(); },
     abort: async () => { state.aborted++; } });
   const lookups = async () => { for (const r of others) await route(r); await route(lookup()); };
   const page = { mainFrame: () => frame, on: (e, f) => { handlers[e] = f; }, off: e => { delete handlers[e]; },
@@ -75,7 +81,7 @@ test('observes before navigation, lets only the bound lookup out and closes its 
 });
 
 test('aborts a third lookup of the same reference', async () => {
-  const f = fixture({ others: [lookup(), lookup()], delay: 20 }); const r = await runHapagBrowser(f.options);
+  const f = fixture({ others: [lookup(), lookup()], delay: 20, together: true }); const r = await runHapagBrowser(f.options);
   assert.equal(f.state.fallback, 2); assert.equal(f.state.aborted, 1); assert.equal(r.capturedResponses.length, 2);
 });
 
