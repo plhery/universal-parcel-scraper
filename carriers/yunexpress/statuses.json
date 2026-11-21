@@ -171,6 +171,22 @@
       "firstSeen": "2026-10-04"
     },
     {
+      "wording": "Sort - loaded to trailer",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "A British last mile's trailer loaded at its sort, after the hand-over."
+    },
+    {
+      "wording": "Arrived at depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The same last mile's arrival at its delivery depot, before its Out for delivery."
+    },
+    {
       "wording": "Driver enroute",
       "stage": "out_for_delivery",
       "language": "en",

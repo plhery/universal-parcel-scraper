@@ -132,7 +132,8 @@ describe('YunExpress captured response projection', () => {
     expect(statusMap.stage(null, normalizeStatusWording('Departed from AIRPORT'))).toBe('in_transit');
     expect(yunExpressStatus('Arrived at GOFO Regional Destination Facility')?.stage).toBe('in_transit');
     expect(yunExpressStatus('The driver is out for delivery')?.stage).toBe('out_for_delivery');
-    expect(yunExpressStatus('Driver enroute')?.stage).toBe('out_for_delivery');
+    expect(['Sort - loaded to trailer', 'Arrived at depot', 'Driver enroute'].map((wording) => yunExpressStatus(wording)?.stage))
+      .toEqual(['in_transit', 'in_transit', 'out_for_delivery']);
     // A European last-mile carrier's steps after the flight, and its return of an unclaimed item.
     expect(['Departure transit facility', 'Sorting in hub', 'Transport to destination', 'Returned (Unclaimed item)']
       .map((wording) => statusMap.stage(null, wording.toLowerCase()))).toEqual(['in_transit', 'in_transit', 'in_transit', 'returned']);
