@@ -82968,6 +82968,28 @@
     ]
   },
   {
+    "input": "BCNBJA02895R",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "BCNCAS02907R",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
     "input": "BDM000134200008479236",
     "carrier": "cst-italia",
     "confidence": "high",
@@ -98376,6 +98398,17 @@
     ]
   },
   {
+    "input": "LEICAS00911R",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
     "input": "LEXDO0038488007",
     "carrier": "unknown",
     "confidence": "low",
@@ -109075,6 +109108,17 @@
     ]
   },
   {
+    "input": "SAGTUN02426R",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
     "input": "SCD0000015902735263",
     "carrier": "unknown",
     "confidence": "none",
@@ -114354,6 +114398,39 @@
     "confidence": "high",
     "candidates": [
       "valmo"
+    ]
+  },
+  {
+    "input": "VLCALG02389R",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "VLCALG02550R",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "VLCCAS02357R",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {

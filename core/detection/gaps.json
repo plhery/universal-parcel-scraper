@@ -3489,6 +3489,11 @@
     "reason": "Nine digits are shared by several carriers and nothing in the number points to Roadrunner."
   },
   {
+    "carrier": "romocean",
+    "kind": "open",
+    "reason": "The tracker confirms Romocean's bills; only Colis Privé's generic twelve-character rule offers itself for their shape, at low confidence. Select Romocean explicitly."
+  },
+  {
     "kind": "open",
     "carrier": "rosalia-express",
     "reason": "The native tracker confirms a public twelve-digit receipt with its leading zero. Explicit selection is available while numeric overlaps remain open."

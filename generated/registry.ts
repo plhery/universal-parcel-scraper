@@ -728,6 +728,7 @@ import { adapter as roadie } from '../carriers/roadie/adapter.js';
 import { adapter as roadrunner } from '../carriers/roadrunner/adapter.js';
 import { adapter as rocketShipping } from '../carriers/rocket-shipping/adapter.js';
 import { adapter as rohligSuus } from '../carriers/rohlig-suus/adapter.js';
+import { adapter as romocean } from '../carriers/romocean/adapter.js';
 import { adapter as rosaliaExpress } from '../carriers/rosalia-express/adapter.js';
 import { adapter as royalExpressMm } from '../carriers/royal-express-mm/adapter.js';
 import { adapter as royalMail } from '../carriers/royal-mail/adapter.js';
@@ -1721,6 +1722,7 @@ export const REGISTRY: RegistryDefinition = {
     "roadrunner": roadrunner,
     "rocket-shipping": rocketShipping,
     "rohlig-suus": rohligSuus,
+    "romocean": romocean,
     "rosalia-express": rosaliaExpress,
     "royal-express-mm": royalExpressMm,
     "royal-mail": royalMail,
@@ -3425,6 +3427,7 @@ export const REGISTRY: RegistryDefinition = {
     "rohlig": "universal",
     "rohlig-suus": "rohlig-suus",
     "rojas-express": "universal",
+    "romocean": "romocean",
     "rosalia-express": "rosalia-express",
     "ross-express": "universal",
     "route1-fulfilment": "universal",

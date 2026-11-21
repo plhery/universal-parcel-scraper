@@ -1,0 +1,159 @@
+{
+  "carrier": "romocean",
+  "records": [
+    {
+      "number": "VLCALG02550R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/romocean/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Valencia to Algiers with one container, collected and returned empty; the parser fixture is its reply."
+    },
+    {
+      "number": "BCNBJA02895R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/romocean/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Barcelona to Bejaia with one container, transshipped at Valencia; the parser fixture is its reply."
+    },
+    {
+      "number": "LEICAS00911R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/romocean/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Leixões to Casablanca with three containers, whose collection and empty return come without a bill; the parser fixture is its reply."
+    },
+    {
+      "number": "SAGTUN02426R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/romocean/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Sagunto to Tunis with one container, whose loading it files under another bill; the parser fixture is its reply."
+    },
+    {
+      "number": "BCNCAS02907R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/romocean/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Barcelona to Casablanca with one container, listed with its earlier trips; the parser fixture is its reply."
+    },
+    {
+      "number": "VLCCAS02357R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/romocean/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Romocean tracking directory. The tracker lists one container for it, whose history holds only an earlier bill’s moves; the parser fixture is its reply."
+    },
+    {
+      "number": "VLCALG02389R",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/romocean/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Valencia to Algiers with one container, collected and returned empty."
+    }
+  ]
+}

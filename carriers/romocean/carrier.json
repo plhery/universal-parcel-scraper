@@ -1,0 +1,62 @@
+{
+  "id": "romocean",
+  "displayName": "Romocean",
+  "aliases": [
+    "Romocean S.L."
+  ],
+  "region": {
+    "countries": [
+      "ES"
+    ]
+  },
+  "brand": {
+    "color": "#30336d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Madrid",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "romocean",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://romocean.com/container-tracking/",
+    "helpUrl": "https://romocean.com/",
+    "canaryUrl": "https://romocean.com/container-tracking/",
+    "shows": [
+      "history",
+      "location",
+      "provider_code",
+      "container_number",
+      "vessel"
+    ],
+    "scraped": [
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "container_number",
+      "vessel"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name",
+      "weight"
+    ],
+    "siteName": "Romocean Container Tracking"
+  },
+  "links": [],
+  "detection": []
+}
