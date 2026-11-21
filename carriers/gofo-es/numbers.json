@@ -71,6 +71,20 @@
         "confidence": "high"
       },
       "note": "Synthetic identifier following the national format described by GOFO customer support at https://www.gofo.com/es/contact-us/."
+    },
+    {
+      "number": "GFES26999999999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "gofo-es"
+        ]
+      },
+      "note": "Made-up waybill whose check digit fails."
     }
   ]
 }

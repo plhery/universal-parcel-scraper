@@ -585,10 +585,10 @@ describe('YunExpress captured response projection', () => {
     info.AdditionalNotes = '<p>Last Mile Website:</p><p><a href="https://www.gofo.com/" target="_blank">https://www.gofo.com</a></p>';
     expect(parse(payload, NUMBER)).toMatchObject({ delivery_carrier: 'gofo', delivery_tracking_number: 'GFUS01000000000001' });
     // The same brand's host also serves networks outside the carrier's scope.
-    info.TrackingNumber = 'GFFR00000000000001';
+    info.TrackingNumber = 'GFFR00000000000019';
     const regional = parse(payload, NUMBER);
     expect(regional.delivery_carrier).toBeUndefined();
-    expect(regional.delivery_tracking_number).toBe('GFFR00000000000001');
+    expect(regional.delivery_tracking_number).toBe('GFFR00000000000019');
     info.TrackingNumber = 'GFUS01000000000001';
     info.AdditionalNotes += '<p><a href="https://tracking.dpd.de/">https://tracking.dpd.de</a></p>';
     expect(parse(payload, NUMBER).delivery_carrier).toBeUndefined();

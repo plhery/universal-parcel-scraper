@@ -243,11 +243,17 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^DOFR\\d{13}HD$",
-        "confidence": "high"
+        "pattern": "^DOFR901\\d{10}HD$",
+        "confidence": "high",
+        "checksum": "cainiao-hd"
       },
       {
-        "pattern": "^CNFR\\d{13}HD$",
+        "pattern": "^CNFR901\\d{10}HD$",
+        "confidence": "high",
+        "checksum": "cainiao-hd"
+      },
+      {
+        "pattern": "^(?:DOFR|CNFR)(?!901)\\d{13}HD$",
         "confidence": "high"
       },
       {
@@ -4233,11 +4239,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^4PX\\d{13}CN$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "gs1-digits"
       },
       {
         "pattern": "^4XP\\d{13}CN$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "gs1-digits"
       },
       {
         "pattern": "^LP\\d{13}CN$",
@@ -4949,7 +4957,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^(?!MA\\d{19}$|JJD\\d{18}$)(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "australia-post"
       },
       {
         "pattern": "^\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}$",
@@ -5156,15 +5165,18 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^ZS\\d{11}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "s10-serial"
       },
       {
         "pattern": "^ZC\\d{11}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "s10-serial"
       },
       {
         "pattern": "^ZA\\d{11}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "s10-serial"
       }
     ]
   },
@@ -5276,7 +5288,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^PX\\d{10}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "poczta-polska-px"
       },
       {
         "pattern": "^(?:C[A-UW-Z]|[ELR][A-Z])\\d{9}PL$",
@@ -30640,7 +30653,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:GF|CI)ES\\d{13,14}$",
+        "pattern": "^GFES\\d{14}$",
+        "confidence": "high",
+        "checksum": "gofo-europe"
+      },
+      {
+        "pattern": "^(?:(?:GF|CI)ES\\d{13}|CIES\\d{14})$",
         "confidence": "high"
       }
     ]
@@ -30688,7 +30706,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:GF|CI)FR\\d{13,14}$",
+        "pattern": "^GFFR\\d{14}$",
+        "confidence": "high",
+        "checksum": "gofo-europe"
+      },
+      {
+        "pattern": "^(?:(?:GF|CI)FR\\d{13}|CIFR\\d{14})$",
         "confidence": "high"
       },
       {
@@ -30740,7 +30763,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:GF|CI)IT\\d{13,14}$",
+        "pattern": "^GFIT\\d{14}$",
+        "confidence": "high",
+        "checksum": "gofo-europe"
+      },
+      {
+        "pattern": "^(?:(?:GF|CI)IT\\d{13}|CIIT\\d{14})$",
         "confidence": "high"
       }
     ]
@@ -30780,7 +30808,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:GF|CI)NL\\d{13,14}$",
+        "pattern": "^GFNL\\d{14}$",
+        "confidence": "high",
+        "checksum": "gofo-europe"
+      },
+      {
+        "pattern": "^(?:(?:GF|CI)NL\\d{13}|CINL\\d{14})$",
         "confidence": "high"
       }
     ]
@@ -35352,7 +35385,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^JTDE\\d{12}$",
+        "pattern": "^JTDE\\d{2}00\\d{8}$",
+        "confidence": "high",
+        "checksum": "j-and-t-de"
+      },
+      {
+        "pattern": "^JTDE(?!\\d{2}00)\\d{12}$",
         "confidence": "high"
       }
     ]
@@ -48698,7 +48736,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^ZXA\\d{9}PY$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "s10-serial"
       }
     ]
   },
@@ -59175,8 +59214,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^STR(?:TD\\d{9}|TD\\d{16,17}|CA\\d{13})$",
+        "pattern": "^STRTD(?:\\d{9}|\\d{16,17})$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^STRCA\\d{13}$",
+        "confidence": "high",
+        "checksum": "luhn-digits"
       },
       {
         "pattern": "^STSH[A-Z]{2}\\d{11}$",
@@ -69540,7 +69584,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^YWE\\d{14}$",
-        "confidence": "high"
+        "confidence": "high",
+        "checksum": "gs1-digits"
       }
     ]
   },
@@ -72253,7 +72298,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiss-post-cargo": ["swiss-post-cargo-sscc","swiss-post-cargo-pl-reference"],
   "quickpac": ["quickpac-1"],
   "planzer": ["planzer-1","planzer-2"],
-  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-cn-dated","aliexpress-gfus","aliexpress-uusc","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-rn-rs-y","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
+  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-hd-other-series","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-cn-dated","aliexpress-gfus","aliexpress-uusc","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-rn-rs-y","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
   "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": ["hermes-delivery-note"],
   "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3","spring-gds-1810"],
@@ -73069,10 +73114,10 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gobolt": [],
   "gofast": [],
   "gofo-ca": ["gofo-ca-1"],
-  "gofo-es": ["gofo-es-1"],
-  "gofo-fr": ["gofo-fr-1","gofo-fr-2"],
-  "gofo-it": ["gofo-it-1"],
-  "gofo-nl": ["gofo-nl-1"],
+  "gofo-es": ["gofo-es-1","gofo-es-unchecked"],
+  "gofo-fr": ["gofo-fr-1","gofo-fr-unchecked","gofo-fr-2"],
+  "gofo-it": ["gofo-it-1","gofo-it-unchecked"],
+  "gofo-nl": ["gofo-nl-1","gofo-nl-unchecked"],
   "gogo-xpress": ["gogo-xpress-1"],
   "golilla": [],
   "gollog": ["gollog-1"],
@@ -73210,7 +73255,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "j-and-t-cargo-br": [],
   "j-and-t-cn": ["j-and-t-cn-1"],
   "j-and-t-co": [],
-  "j-and-t-de": ["j-and-t-de-1"],
+  "j-and-t-de": ["j-and-t-de-1","j-and-t-de-other-series"],
   "j-and-t-eg": ["j-and-t-eg-1"],
   "j-and-t-middle-east": ["j-and-t-middle-east-1"],
   "j-and-t-mx": ["j-and-t-mx-1"],
@@ -73906,7 +73951,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "stg-ltl": [],
   "stone3pl": ["stone3pl-s18"],
   "stop-start": [],
-  "straightship": ["straightship-1","straightship-2"],
+  "straightship": ["straightship-1","straightship-ca","straightship-2"],
   "suhu": [],
   "sumxpress": [],
   "sundarban-courier": [],

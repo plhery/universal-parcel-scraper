@@ -80,7 +80,13 @@
   "detection": [
     {
       "id": "gofo-es-1",
-      "pattern": "^(?:GF|CI)ES\\d{13,14}$",
+      "pattern": "^GFES\\d{14}$",
+      "confidence": "high",
+      "checksum": "gofo-europe"
+    },
+    {
+      "id": "gofo-es-unchecked",
+      "pattern": "^(?:(?:GF|CI)ES\\d{13}|CIES\\d{14})$",
       "confidence": "high"
     }
   ]

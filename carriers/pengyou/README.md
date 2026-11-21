@@ -53,7 +53,8 @@ three letters, nine digits and `PY`, so a low rule suggests Pengyou for that lay
 asks the tracker; the corpus holds a made-up number in that shape. The letters before the digits
 may stand for a channel or a shipper, so the rule stays low for letters other than `ZXA`. Pengyou's
 own tracker answered every parcel the app tracked with `ZXA`, and no other carrier's rule takes the
-layout, so `pengyou-2` names Pengyou for that series at high confidence.
+layout, so `pengyou-2` names Pengyou for that series at high confidence. The nine digits of a `ZXA`
+number are an S10 serial, eight digits and their check digit, which the rule asks for.
 
 ## Links
 

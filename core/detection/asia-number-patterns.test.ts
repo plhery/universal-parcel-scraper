@@ -136,7 +136,7 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
 
   it('selects China Post for ZS, ZC and ZA numbers with eleven digits, even when they close La Poste\'s key', () => {
     // The second set closes La Poste's GS1 key by chance; no La Poste number uses these prefixes.
-    for (const number of ['ZS00000000001', 'ZC00000000001', 'ZA00000000001', 'zs 0000 0000 001', 'ZS00000000000', 'ZC00000000000', 'ZA00000000000']) {
+    for (const number of ['ZS00000000500', 'ZC00000000500', 'ZA00000000500', 'zs 0000 0000 500', 'ZS00000000505', 'ZC00000000505', 'ZA00000000505']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'china-post', confidence: 'high', candidates: ['china-post'] });
       expect(recognitionAskedCarriers(number)).toEqual([]);
     }
@@ -144,14 +144,19 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     for (const number of ['ZT00000000001', 'ZB00000000001', 'AZ00000000001', 'CZ00000000001']) {
       expect(detectCarrierMatch(number).candidates).toEqual(['la-poste']);
     }
-    for (const number of ['ZC0000000001', 'ZC000000000001', 'ZC00000000001CN', 'ZA0000000001', 'ZA000000000001']) {
+    for (const number of ['ZC0000000050', 'ZC000000005000', 'ZC00000000500CN', 'ZA0000000050', 'ZA000000005000']) {
       expect(detectCarrierMatch(number).candidates ?? []).not.toContain('china-post');
+    }
+    // The first nine digits are an S10 serial with its check digit; a number that fails it is nobody's.
+    for (const number of ['ZS00000000001', 'ZC00000000000', 'ZA00000000100']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+      expect(checksumRejections(number), number).toEqual([{ carrier: 'china-post', rule: `china-post-${number.slice(0, 2).toLowerCase()}`, checksum: 's10-serial' }]);
     }
   });
 
   it('names China Post for its own numbers in an ems.com.cn link', () => {
     for (const url of [
-      'https://www.ems.com.cn/mailtracking/e_you_jian_cha_xun.html?mailNum=ZS00000000001',
+      'https://www.ems.com.cn/mailtracking/e_you_jian_cha_xun.html?mailNum=ZS00000000500',
       'http://www.ems.com.cn/qcgzOutQueryAction.do?reqCode=gotoSearchE&mailNum=RR123456785CN',
       'http://www.ems.com.cn/english.html?TrackingNumber=EE123456785CN',
     ]) {
@@ -1043,8 +1048,8 @@ describe('Sending, YWE and ECMS Express links', () => {
   });
 
   it('names YWE from its tracker link only for its own numbers', () => {
-    expect(parseTrackingInput('https://www.yanwenexpress.com/tracking.html?label=YWE10000000000017')).toMatchObject({
-      trackingNumber: 'YWE10000000000017', carrier: 'ywe', source: 'link',
+    expect(parseTrackingInput('https://www.yanwenexpress.com/tracking.html?label=YWE10000000000014')).toMatchObject({
+      trackingNumber: 'YWE10000000000014', carrier: 'ywe', source: 'link',
     });
     expect(parseTrackingInput('https://www.yanwenexpress.com/tracking.html?label=YWABC100000000017')).toMatchObject({
       trackingNumber: 'YWABC100000000017', carrier: 'yanwen', source: 'link',

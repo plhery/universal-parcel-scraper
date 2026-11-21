@@ -333,8 +333,13 @@ describe('Australia Post barcodes', () => {
     expect(detectCarrierMatch('0082800082801234567890001')).toMatchObject({ carrier: 'ctt-express', confidence: 'high' });
   });
 
-  it.each(['33ABC123456701000935106', 'XY1234567801000935107'])('selects Australia Post for the article ID %s', (number) => {
+  it.each(['33ABC123456701000935109', 'XY1234567801000935100'])('selects Australia Post for the article ID %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
+  });
+
+  it.each(['33ABC123456701000935106', 'XY1234567801000935107', '33ABD123456701000935109'])('leaves the article ID %s, whose check digit fails, to no carrier', (number) => {
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+    expect(checksumRejections(number)).toEqual([{ carrier: 'australia-post', rule: 'australia-post-article', checksum: 'australia-post' }]);
   });
 
   it('selects Australia Post for an all-digit article ID that also passes the GS1 check', () => {

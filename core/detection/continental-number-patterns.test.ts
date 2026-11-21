@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionCandidates, recognitionAskedCarriers } from '../catalog/recognition.js';
-import { detectCarrierMatch, parseTrackingInput } from './index.js';
+import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
 import { isBrtTrackingNumber } from './brt.js';
 import { isPosteItalianeTrackingNumber } from './posteItaliane.js';
 import { SHEIN_PACKAGE_NUMBER, isSheinPackageNumber } from './shein.js';
@@ -280,7 +280,7 @@ describe('DHL piece identifiers', () => {
     }
     // A zero-padded serial also fits Australia Post's article ID, which leaves a bare JJD plate to DHL.
     expect(detectCarrierMatch('JJD000390012000123456')).toMatchObject({ carrier: 'dhl', confidence: 'high' });
-    expect(detectCarrierMatch('12JJD123456789000123456')).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
+    expect(detectCarrierMatch('12JJD123456789000123451')).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
     for (const number of ['JD012959123456789012J', 'JD149000012345678901J', 'JD0146000123456789012J']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('dhl-express');
     }
@@ -688,11 +688,16 @@ describe('wave seven courier rules', () => {
   });
 
   it('names Straightship for STRTD and STRCA numbers at their lengths', () => {
-    for (const number of ['STRTD000000001', 'STRTD0000000000000001', 'STRTD00000000000000001', 'STRCA0000000000001']) {
+    for (const number of ['STRTD000000001', 'STRTD0000000000000001', 'STRTD00000000000000001', 'STRCA0000000000018']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'straightship', confidence: 'high', candidates: ['straightship'] });
     }
-    for (const number of ['STRTD00000001', 'STRTD000000000001', 'STRCA000000000001', 'STSH0000000000000']) {
+    for (const number of ['STRTD00000001', 'STRTD000000000001', 'STRCA000000000018', 'STSH0000000000000']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('straightship');
+    }
+    // An STRCA number closes with a Luhn check digit; STRTD numbers carry none.
+    for (const number of ['STRCA0000000000001', 'STRCA0000000000081']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+      expect(checksumRejections(number), number).toEqual([{ carrier: 'straightship', rule: 'straightship-ca', checksum: 'luhn-digits' }]);
     }
   });
 

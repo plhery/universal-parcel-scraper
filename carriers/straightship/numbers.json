@@ -194,6 +194,20 @@
         ]
       },
       "note": "An opened capture of Straightship's own tracker shows this parcel's information created under client code SS01."
+    },
+    {
+      "number": "STRCA9999999999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "straightship"
+        ]
+      },
+      "note": "Made-up STRCA number whose check digit fails."
     }
   ]
 }

@@ -40,6 +40,101 @@
       "note": "GOFO's anonymous national tracking service confirms the whole waybill and national destination. The official reply binds this waybill to the public tracker sample's shipper reference."
     },
     {
+      "number": "GFFR26076061508511",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260501072511/https://www.gofo.com/fr/tracking-results/?id=GFFR26076061508511",
+        "access": "indexed_excerpt",
+        "date": "2026-05-01",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-fr",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on GOFO's French tracker; GOFO's anonymous national tracking service confirms the whole number and a French destination."
+    },
+    {
+      "number": "GFFR26268177804532",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260929140833/https://www.gofo.com/fr/tracking-results/?id=GFFR26268177804532",
+        "access": "indexed_excerpt",
+        "date": "2026-09-29",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-fr",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on GOFO's French tracker; GOFO's anonymous national tracking service confirms the whole number and a French destination."
+    },
+    {
+      "number": "CIFR5207254188668",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250429230808/https://www.cirroparcel.fr/tracking-results/?id=CIFR5207254188668&order_year=2025",
+        "access": "indexed_excerpt",
+        "date": "2025-04-29",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-fr",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on CIRRO Parcel's French tracker, GOFO's former one; GOFO's anonymous national tracking service confirms the whole number and a French destination."
+    },
+    {
+      "number": "CIFR5212481877608",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250517145508/https://www.cirroparcel.fr/tracking-results/?id=CIFR5212481877608&order_year=2025",
+        "access": "indexed_excerpt",
+        "date": "2025-05-17",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-fr",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on CIRRO Parcel's French tracker, GOFO's former one; GOFO's anonymous national tracking service confirms the whole number and a French destination."
+    },
+    {
+      "number": "CIFR5228593654924",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250513160636/https://www.cirroparcel.fr/tracking-results/?id=CIFR5228593654924&order_year=2025",
+        "access": "indexed_excerpt",
+        "date": "2025-05-13",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-fr",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on CIRRO Parcel's French tracker, GOFO's former one; GOFO's anonymous national tracking service confirms the whole number and a French destination."
+    },
+    {
       "number": "CIFR9999999999980",
       "role": "shipment",
       "evidence": "synthetic",
@@ -71,6 +166,20 @@
         "confidence": "high"
       },
       "note": "Synthetic identifier following the national format described by GOFO customer support at https://www.gofo.com/fr/contact-us/."
+    },
+    {
+      "number": "GFFR26999999999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "gofo-fr"
+        ]
+      },
+      "note": "Made-up waybill whose check digit fails."
     }
   ]
 }

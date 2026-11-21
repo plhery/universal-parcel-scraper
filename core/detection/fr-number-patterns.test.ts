@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
-import { detectCarrierMatch } from './detect.js';
+import { checksumRejections, detectCarrierMatch } from './detect.js';
 import { normalizeRelaisColisTrackingNumber } from '../../carriers/relais-colis/adapter.js';
 import { settleRecognition, type RecognitionOutcome } from '../recognition/index.js';
 
@@ -35,12 +35,15 @@ describe('French carrier number candidates', () => {
   });
 
   it("names YWE for YWE and fourteen digits, without reading a postcode into them", () => {
-    for (const number of ['YWE00000000075001', 'ywe 0000 0000 075001']) {
+    for (const number of ['YWE00000000075008', 'ywe 0000 0000 075008']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'ywe', confidence: 'high', candidates: ['ywe'] });
     }
-    for (const number of ['YWE0000000075001', 'YWE000000000075001', 'YWF00000000075001', 'YWE00000000075001US']) {
+    for (const number of ['YWE0000000075008', 'YWE000000000075008', 'YWF00000000075008', 'YWE00000000075008US']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('ywe');
     }
+    // The fourteen digits close with a GS1 check digit, and a number that fails it is nobody's.
+    expect(detectCarrierMatch('YWE00000000075001')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+    expect(checksumRejections('YWE00000000075001')).toEqual([{ carrier: 'ywe', rule: 'ywe-1', checksum: 'gs1-digits' }]);
     // Twelve characters and a postcode that do not open with YWE and fourteen digits stay Colis Privé's.
     expect(detectCarrierMatch('YWE0000000A075001').candidates).toEqual(['colis-prive']);
   });

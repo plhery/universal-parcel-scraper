@@ -15,7 +15,7 @@ import statuses from './statuses.json' with { type: 'json' };
 
 const IN_TRANSIT = '3ZZZ6010100001';
 const UNKNOWN = '3ZZZ6010100002';
-const LINE = 'ZS00000000001';
+const LINE = 'ZS00000000501';
 
 type Row = Record<string, unknown>;
 type Shipment = Row & { track_detail_list: Row[] };

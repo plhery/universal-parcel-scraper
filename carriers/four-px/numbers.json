@@ -306,6 +306,20 @@
         "confidence": "high"
       },
       "note": "The open-source example 4PX3001521662170CN with the P and the X swapped, as readers type 4PX's numbers."
+    },
+    {
+      "number": "4PX9999999999980CN",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "four-px"
+        ]
+      },
+      "note": "Made-up 4PX number whose check digit fails."
     }
   ]
 }

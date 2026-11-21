@@ -78,7 +78,13 @@
   "detection": [
     {
       "id": "gofo-nl-1",
-      "pattern": "^(?:GF|CI)NL\\d{13,14}$",
+      "pattern": "^GFNL\\d{14}$",
+      "confidence": "high",
+      "checksum": "gofo-europe"
+    },
+    {
+      "id": "gofo-nl-unchecked",
+      "pattern": "^(?:(?:GF|CI)NL\\d{13}|CINL\\d{14})$",
       "confidence": "high"
     }
   ]

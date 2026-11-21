@@ -72,12 +72,19 @@
   "detection": [
     {
       "id": "aliexpress-1",
-      "pattern": "^DOFR\\d{13}HD$",
-      "confidence": "high"
+      "pattern": "^DOFR901\\d{10}HD$",
+      "confidence": "high",
+      "checksum": "cainiao-hd"
     },
     {
       "id": "aliexpress-cnfr",
-      "pattern": "^CNFR\\d{13}HD$",
+      "pattern": "^CNFR901\\d{10}HD$",
+      "confidence": "high",
+      "checksum": "cainiao-hd"
+    },
+    {
+      "id": "aliexpress-hd-other-series",
+      "pattern": "^(?:DOFR|CNFR)(?!901)\\d{13}HD$",
       "confidence": "high"
     },
     {

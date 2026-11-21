@@ -38,6 +38,16 @@ import {
   isValidUkrposhtaBarcode,
 } from '../detection/numericChecksums.js';
 import { isValidMagyarPostaNumber } from '../detection/magyarPosta.js';
+import {
+  hasGs1CheckDigitInDigits,
+  hasLuhnCheckDigitInDigits,
+  isValidAustraliaPostArticleId,
+  isValidCainiaoHdNumber,
+  isValidGofoEuropeWaybill,
+  isValidJAndTGermanyNumber,
+  isValidPocztaPolskaPxNumber,
+  startsWithS10Serial,
+} from '../detection/prefixedChecksums.js';
 import { isValidPosLajuConsignment } from '../detection/s10.js';
 import { isValidSfExpressWaybill } from '../detection/sfExpress.js';
 import { isValidOnTracTrackingNumber, isValidUpsTrackingNumber } from '../detection/ups.js';
@@ -53,7 +63,8 @@ export interface DetectionRule {
     | 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc'
     | 'ups' | 'colissimo' | 'ukrposhta' | 'evri' | 'mod7' | 'gs1' | 'ontrac' | 'luhn' | 'fedex' | 'sf-express'
     | 'fedex-ground-96' | 'fedex-1d' | 'identcode' | 'fedex-ground-economy' | 'pos-laju' | 'saia' | 'magyar-posta' | 'poste-italiane'
-    | 'dhl-ecommerce-pl' | 'mondial-relay-head';
+    | 'dhl-ecommerce-pl' | 'mondial-relay-head' | 'gs1-digits' | 'luhn-digits' | 's10-serial' | 'gofo-europe'
+    | 'j-and-t-de' | 'cainiao-hd' | 'australia-post' | 'poczta-polska-px';
   readonly preferred?: true;
 }
 
@@ -104,6 +115,14 @@ function ruleMatches(rule: DetectionRule, value: string, raw: string): boolean {
   if (rule.checksum === 'poste-italiane') return isValidPosteItalianeRegisteredNumber(value);
   if (rule.checksum === 'dhl-ecommerce-pl') return isValidDhlEcommercePolandNumber(value);
   if (rule.checksum === 'mondial-relay-head') return isMondialRelayBarcodeHead(value);
+  if (rule.checksum === 'gs1-digits') return hasGs1CheckDigitInDigits(value);
+  if (rule.checksum === 'luhn-digits') return hasLuhnCheckDigitInDigits(value);
+  if (rule.checksum === 's10-serial') return startsWithS10Serial(value);
+  if (rule.checksum === 'gofo-europe') return isValidGofoEuropeWaybill(value);
+  if (rule.checksum === 'j-and-t-de') return isValidJAndTGermanyNumber(value);
+  if (rule.checksum === 'cainiao-hd') return isValidCainiaoHdNumber(value);
+  if (rule.checksum === 'australia-post') return isValidAustraliaPostArticleId(value);
+  if (rule.checksum === 'poczta-polska-px') return isValidPocztaPolskaPxNumber(value);
   return true;
 }
 

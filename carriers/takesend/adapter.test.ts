@@ -14,7 +14,7 @@ import statuses from './statuses.json' with { type: 'json' };
 
 // Synthetic numbers in Take Send's layout and in YWE's.
 const NUMBER = 'TS2609049999980';
-const PARTNER = 'YWE99999999999901';
+const PARTNER = 'YWE99999999999904';
 
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}.xml`, import.meta.url), 'utf8');
 const reply = (body: string, init: ResponseInit = {}) => new Response(body,

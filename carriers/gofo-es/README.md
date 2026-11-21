@@ -17,6 +17,11 @@ explicitly paired reference, with a Spanish destination. The
 [customer support page](https://www.gofo.com/es/contact-us/) says tracking
 numbers start `CIES` or `GFES`, followed by 13 or 14 digits.
 
+A `GF` waybill of fourteen digits opens with the year and the day of the year and closes with
+a check digit: the second, fourth, … twelfth digits are doubled, nine less above nine, and the
+last brings the sum to a multiple of ten. GOFO does not publish it. Detection asks for it.
+No check digit is known for the thirteen-digit numbers and the `CI` ones, which stay unchecked.
+
 ## Notes
 
 The latest summary must match the first scan. Explicit offsets are preserved,

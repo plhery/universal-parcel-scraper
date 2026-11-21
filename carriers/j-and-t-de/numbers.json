@@ -57,6 +57,31 @@
         "confidence": "high"
       },
       "note": "A Trustpilot review of J&T Express Germany gives it as a parcel number; J&T's German tracker answers it as delivered."
+    },
+    {
+      "number": "JTDE999999999980",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "j-and-t-de",
+        "confidence": "high"
+      },
+      "note": "Made-up JTDE number whose third and fourth digits are not the 00 the check digit is known for, so it is not checked. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "JTDE990099999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "j-and-t-de"
+        ]
+      },
+      "note": "Made-up JTDE number with 00 as its third and fourth digits, whose check digit fails."
     }
   ]
 }

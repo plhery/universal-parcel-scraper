@@ -401,7 +401,7 @@ describe('GOFO direct retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify(negative)));
     const unknown = adapter(environment(fetcher));
     expect(await unknown.recognize!(NUMBER)).toEqual({ known: false });
-    expect(await unknown.recognize!('GFFR00000000000001')).toEqual({ known: false });
+    expect(await unknown.recognize!('GFFR00000000000019')).toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledOnce();
   });
   it('rejects invalid input, cancellation, oversized and malformed responses within a fractional budget', async () => {

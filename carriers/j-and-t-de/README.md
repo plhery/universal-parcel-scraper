@@ -40,7 +40,11 @@ tracking page makes, on the same J&T platform as `j-and-t-au`, whose
 
 Its waybills are `JTDE` and twelve digits, `JT` and the country code, the layout of J&T's
 Australian waybills. Its tracker answers for them and no other carrier's rule takes the shape,
-so `j-and-t-de-1` has high confidence.
+so `j-and-t-de-1` has high confidence. The last digit of a number whose third and fourth digits
+are 0 is a check digit: 5 minus a weighted sum of six of the digits, mod 11, with 10 written
+as 5. J&T does not publish it and the weights fit the numbers its tracker answers, so the
+`j-and-t-de` checksum reads only that series; `j-and-t-de-other-series` keeps any other number
+unchecked.
 
 ## Links
 

@@ -12,7 +12,7 @@ import { statusMap, suhuMappedStage, suhuStage } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const IN_TRANSIT = 'SUH0000000000002AB';
-const LINE = 'JTDE000000000002';
+const LINE = 'JTDE000000000025';
 const UNKNOWN = 'SUH0000000000001AB';
 const NONCE = '0a1b2c3d4e';
 

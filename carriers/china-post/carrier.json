@@ -95,17 +95,20 @@
     {
       "id": "china-post-zs",
       "pattern": "^ZS\\d{11}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "s10-serial"
     },
     {
       "id": "china-post-zc",
       "pattern": "^ZC\\d{11}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "s10-serial"
     },
     {
       "id": "china-post-za",
       "pattern": "^ZA\\d{11}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "s10-serial"
     }
   ]
 }

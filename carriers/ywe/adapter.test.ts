@@ -13,7 +13,7 @@ import { normalizeYweNumber, parseYwe } from './parser.js';
 import { statusMap, yweStage } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
-const PARCEL = 'YWE99000000000001';
+const PARCEL = 'YWE99000000000004';
 const UNKNOWN = 'YWE99000000000002';
 
 type Row = Record<string, unknown>;
@@ -37,7 +37,7 @@ describe('YWE HTTP adapter', () => {
   it('asks the tracking page’s lookup for the whole number in capitals, through the supplied transport', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(text('returned')));
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
-    await expect(new YweTracker({ fetcher, recorder, userAgent: 'SyntheticHost/1.0' }).fetch(' ywe 9900 0000 0000 01 ', { budgetMs: 1000.5 }))
+    await expect(new YweTracker({ fetcher, recorder, userAgent: 'SyntheticHost/1.0' }).fetch(' ywe 9900 0000 0000 04 ', { budgetMs: 1000.5 }))
       .resolves.toMatchObject({ current_stage: 'returned' });
     expect(fetcher).toHaveBeenCalledOnce();
     const [[url, init]] = fetcher.mock.calls as [[string, RequestInit]];
@@ -202,7 +202,7 @@ describe('YWE HTTP adapter', () => {
     await expect(carrier(fetcher).track({ number: PARCEL }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
     await expect(carrier(fetcher).track({ number: PARCEL }, { budgetMs: 0 })).rejects.toMatchObject({ kind: 'budget' });
     expect(fetcher).not.toHaveBeenCalled();
-    expect(normalizeYweNumber('ywe 9900-0000-0000-01')).toBe(PARCEL);
+    expect(normalizeYweNumber('ywe 9900-0000-0000-04')).toBe(PARCEL);
     expect(carrier(fetcher).recognize).toBeUndefined();
   });
 

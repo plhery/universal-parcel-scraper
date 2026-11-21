@@ -1230,6 +1230,20 @@
         ]
       },
       "note": "Made-up number in the shape of AliExpress parcels the app tracked: CN, a date as YYMMDD and six digits, which Cainiao's tracker answered with their scans. No public page shows a whole number in this shape."
+    },
+    {
+      "number": "DOFR9019999999980HD",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "aliexpress"
+        ]
+      },
+      "note": "Made-up number in the 901 series of Cainiao's French home-delivery numbers, whose check digit fails."
     }
   ]
 }

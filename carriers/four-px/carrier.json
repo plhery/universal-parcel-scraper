@@ -69,12 +69,14 @@
     {
       "id": "four-px-1",
       "pattern": "^4PX\\d{13}CN$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "gs1-digits"
     },
     {
       "id": "four-px-swapped",
       "pattern": "^4XP\\d{13}CN$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "gs1-digits"
     },
     {
       "id": "four-px-cainiao-reference",

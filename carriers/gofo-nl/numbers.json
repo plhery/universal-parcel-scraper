@@ -116,6 +116,82 @@
       "note": "Archived lookup on GOFO's Dutch tracker; GOFO's anonymous national tracking service confirms the whole waybill and a Dutch destination."
     },
     {
+      "number": "GFNL26253188080470",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261106164606/https://www.gofo.com/nl/tracking-results/?id=GFNL26253188080470",
+        "access": "indexed_excerpt",
+        "date": "2026-11-06",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-nl",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on GOFO's Dutch tracker; GOFO's anonymous national tracking service confirms the whole number and a Dutch destination."
+    },
+    {
+      "number": "GFNL26309173386538",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261109073111/https://www.gofo.com/nl/tracking-results/?id=GFNL26309173386538",
+        "access": "indexed_excerpt",
+        "date": "2026-11-09",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-nl",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on GOFO's Dutch tracker; GOFO's anonymous national tracking service confirms the whole number and a Dutch destination."
+    },
+    {
+      "number": "GFNL26309193622102",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261109085357/https://www.gofo.com/nl/tracking-results/?id=GFNL26309193622102",
+        "access": "indexed_excerpt",
+        "date": "2026-11-09",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-nl",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on GOFO's Dutch tracker; GOFO's anonymous national tracking service confirms the whole number and a Dutch destination."
+    },
+    {
+      "number": "CINL5030894768076",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20241227120147/https://www.cirroparcel.nl/resultaten-bijhouden/?id=CINL5030894768076&order_year=2024",
+        "access": "indexed_excerpt",
+        "date": "2024-12-27",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "gofo-nl",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on CIRRO Parcel's Dutch tracker, GOFO's former one. GOFO's tracking no longer answers for it."
+    },
+    {
       "number": "CINL9999999999980",
       "role": "shipment",
       "evidence": "synthetic",
@@ -147,6 +223,20 @@
         "confidence": "high"
       },
       "note": "Synthetic identifier following the national format described by GOFO customer support at https://www.gofo.com/nl/contact-us/."
+    },
+    {
+      "number": "GFNL26999999999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "gofo-nl"
+        ]
+      },
+      "note": "Made-up waybill whose check digit fails."
     }
   ]
 }

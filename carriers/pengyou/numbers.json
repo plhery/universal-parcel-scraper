@@ -18,7 +18,7 @@
       "note": "Made-up number in the shape of a parcel the app tracked, which a universal provider filed under Pengyou. Its serial sits far beyond the range in use."
     },
     {
-      "number": "ZXA999999970PY",
+      "number": "ZXA999999995PY",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "donated_real",
@@ -28,6 +28,20 @@
         "confidence": "high"
       },
       "note": "Made-up number in the shape of the parcels the app tracked in Pengyou's ZXA series, which Pengyou's own tracker answered every time. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "ZXA999999970PY",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "pengyou"
+        ]
+      },
+      "note": "Made-up ZXA number whose nine digits fail the S10 check digit."
     }
   ]
 }

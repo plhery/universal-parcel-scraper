@@ -80,8 +80,14 @@
   "detection": [
     {
       "id": "straightship-1",
-      "pattern": "^STR(?:TD\\d{9}|TD\\d{16,17}|CA\\d{13})$",
+      "pattern": "^STRTD(?:\\d{9}|\\d{16,17})$",
       "confidence": "high"
+    },
+    {
+      "id": "straightship-ca",
+      "pattern": "^STRCA\\d{13}$",
+      "confidence": "high",
+      "checksum": "luhn-digits"
     },
     {
       "id": "straightship-2",

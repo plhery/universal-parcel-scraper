@@ -87,7 +87,8 @@
     {
       "id": "ywe-1",
       "pattern": "^YWE\\d{14}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "gs1-digits"
     }
   ]
 }

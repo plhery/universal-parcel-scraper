@@ -21,6 +21,158 @@
       "note": "GOFO's anonymous national tracking service confirms the whole waybill and national destination."
     },
     {
+      "number": "GFIT25235026968385",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/smarrimento-pacchi-ordine-shei/1ddd5e9b69ee6dae71",
+        "access": "full_page",
+        "date": "2025-08-29",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "A complaint about CIRRO Parcel Italia, the name GOFO traded under, quotes the number; GOFO's anonymous national tracking service confirms the whole number and an Italian destination."
+    },
+    {
+      "number": "GFIT25235049754385",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/smarrimento-pacchi-ordine-shei/1ddd5e9b69ee6dae71",
+        "access": "full_page",
+        "date": "2025-08-29",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "A complaint about CIRRO Parcel Italia, the name GOFO traded under, quotes the number; GOFO's anonymous national tracking service confirms the whole number and an Italian destination."
+    },
+    {
+      "number": "GFIT25274004729927",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/non-ricevuta-della-consegna-de/eaef441439df198b31",
+        "access": "full_page",
+        "date": "2025-10-19",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "A complaint about CIRRO Parcel Italia, the name GOFO traded under, quotes the number; GOFO's anonymous national tracking service confirms the whole number and an Italian destination."
+    },
+    {
+      "number": "GFIT25281018226016",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/pacco-non-consegnato/649056603580a235bc",
+        "access": "full_page",
+        "date": "2025-10-16",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "A complaint about CIRRO Parcel Italia, the name GOFO traded under, quotes the number; GOFO's anonymous national tracking service confirms the whole number and an Italian destination."
+    },
+    {
+      "number": "GFIT26013076473650",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260123202829/https://www.gofo.com/it/tracking-results/?id=GFIT26013076473650",
+        "access": "indexed_excerpt",
+        "date": "2026-01-23",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on GOFO's Italian tracker; GOFO's anonymous national tracking service confirms the whole number and a Italian destination."
+    },
+    {
+      "number": "GFIT26202100073261",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720235830/https://www.gofo.com/it/tracking-results/?id=GFIT26202100073261",
+        "access": "indexed_excerpt",
+        "date": "2026-07-20",
+        "dateKind": "capture"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "Archived lookup on GOFO's Italian tracker; GOFO's anonymous national tracking service confirms the whole number and a Italian destination."
+    },
+    {
+      "number": "CIIT5351405008484",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/reclamo-per-mancata-consegna-p/3f37c0adff0adb4422",
+        "access": "full_page",
+        "date": "2025-08-19",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "A complaint about CIRRO Parcel Italia, the name GOFO traded under, quotes the number; GOFO's anonymous national tracking service confirms the whole number and an Italian destination."
+    },
+    {
+      "number": "CIIT5352799256900",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/mancata-consegna-e-falsificazi/e3f9983b95072eed47",
+        "access": "full_page",
+        "date": "2025-08-22",
+        "dateKind": "publication"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "gofo-it",
+        "confidence": "high"
+      },
+      "note": "A complaint about CIRRO Parcel Delivery, the name GOFO traded under, quotes the number; GOFO's anonymous national tracking service confirms the whole number and an Italian destination."
+    },
+    {
       "number": "CIIT9999999999980",
       "role": "shipment",
       "evidence": "synthetic",
@@ -52,6 +204,20 @@
         "confidence": "high"
       },
       "note": "Synthetic identifier following the national format described by GOFO customer support at https://www.gofo.com/it/contact-us/."
+    },
+    {
+      "number": "GFIT26999999999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "gofo-it"
+        ]
+      },
+      "note": "Made-up waybill whose check digit fails."
     }
   ]
 }

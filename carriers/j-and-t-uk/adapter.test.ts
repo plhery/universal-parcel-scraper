@@ -146,10 +146,10 @@ describe('J&T Express UK status vocabulary', () => {
 
 describe('J&T Express links in Europe and Australia', () => {
   it('name each network for its own numbers only, and leave another network\'s number to detection', () => {
-    for (const [host, carrier, own] of [['www.jtexpress.uk', 'j-and-t-uk', 'JTUK000000000001'], ['www.jtexpress.de', 'j-and-t-de', 'JTDE000000000001'],
+    for (const [host, carrier, own] of [['www.jtexpress.uk', 'j-and-t-uk', 'JTUK000000000001'], ['www.jtexpress.de', 'j-and-t-de', 'JTDE000000000012'],
       ['www.jtexpress.au', 'j-and-t-au', 'JTAU000000000001']] as const) {
       expect(parseTrackingInput(`https://${host}/tracking?q=${own}`), host).toMatchObject({ trackingNumber: own, carrier, source: 'link' });
-      for (const other of ['JTDE000000000002', 'JTUK000000000002', 'JT0000000000001', 'JTUK0001'].filter((number) => !number.startsWith(own.slice(0, 4)))) {
+      for (const other of ['JTDE000000000025', 'JTUK000000000002', 'JT0000000000001', 'JTUK0001'].filter((number) => !number.startsWith(own.slice(0, 4)))) {
         expect(parseTrackingInput(`https://${host}/tracking?q=${other}`).carrier, `${host} ${other}`).not.toBe(carrier);
       }
     }

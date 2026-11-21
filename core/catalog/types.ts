@@ -106,7 +106,8 @@ export interface DetectionRule {
     | 's10' | 'mondial-relay' | 'hermes' | 'gls' | 'dhl-express' | 'tnt' | 'poczta-polska' | 'correos-spain' | 'dpd' | 'usps' | 'sscc'
     | 'ups' | 'colissimo' | 'ukrposhta' | 'evri' | 'mod7' | 'gs1' | 'ontrac' | 'luhn' | 'fedex' | 'sf-express'
     | 'fedex-ground-96' | 'fedex-1d' | 'identcode' | 'fedex-ground-economy' | 'pos-laju' | 'saia' | 'magyar-posta' | 'poste-italiane'
-    | 'frankier-id' | 'dhl-ecommerce-pl' | 'mondial-relay-head';
+    | 'frankier-id' | 'dhl-ecommerce-pl' | 'mondial-relay-head' | 'gs1-digits' | 'luhn-digits' | 's10-serial' | 'gofo-europe'
+    | 'j-and-t-de' | 'cainiao-hd' | 'australia-post' | 'poczta-polska-px';
   /** Low confidence only: number evidence that lists this carrier first among suggestions. */
   preferred?: boolean;
   /** Low confidence only: a shape prose shares, offered for a number given on its own, never one read out of a text. */

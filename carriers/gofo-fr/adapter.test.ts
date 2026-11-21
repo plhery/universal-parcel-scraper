@@ -7,10 +7,10 @@ import { adapter as netherlandsAdapter, GofoNetherlandsTracker } from '../gofo-n
 import { adapter as franceAdapter, GofoFranceTracker } from './adapter.js';
 
 const cases = [
-  { region: 'fr', number: 'GFFR00000000000001', adapter: franceAdapter, Tracker: GofoFranceTracker },
-  { region: 'it', number: 'GFIT00000000000001', adapter: italyAdapter, Tracker: GofoItalyTracker },
-  { region: 'nl', number: 'GFNL00000000000001', adapter: netherlandsAdapter, Tracker: GofoNetherlandsTracker },
-  { region: 'es', number: 'GFES00000000000001', adapter: spainAdapter, Tracker: GofoSpainTracker },
+  { region: 'fr', number: 'GFFR00000000000019', adapter: franceAdapter, Tracker: GofoFranceTracker },
+  { region: 'it', number: 'GFIT00000000000019', adapter: italyAdapter, Tracker: GofoItalyTracker },
+  { region: 'nl', number: 'GFNL00000000000019', adapter: netherlandsAdapter, Tracker: GofoNetherlandsTracker },
+  { region: 'es', number: 'GFES00000000000019', adapter: spainAdapter, Tracker: GofoSpainTracker },
 ];
 const reply = (region: string) => new Response(readFileSync(new URL(`../gofo-${region}/fixtures/delivered.json`, import.meta.url), 'utf8'));
 

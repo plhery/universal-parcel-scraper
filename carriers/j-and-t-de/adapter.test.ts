@@ -14,7 +14,7 @@ import statuses from './statuses.json' with { type: 'json' };
 // Synthetic waybills in J&T Express Germany's layout; none is a real parcel.
 const DELIVERED = 'JTDE123450789013';
 const RETURNED = 'JTDE012345678901';
-const UNKNOWN = 'JTDE000000000000';
+const UNKNOWN = 'JTDE000000000005';
 
 type Row = Record<string, unknown>;
 type Answer = Row & { details: Row[] };

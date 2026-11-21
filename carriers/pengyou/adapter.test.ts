@@ -10,7 +10,7 @@ import { adapter, PengyouTracker } from './adapter.js';
 import { PENGYOU_ORIGIN, parsePengyouPage, parsePengyouTrack, splitPengyouRow } from './parser.js';
 import { ENTRIES, statusMap } from './status.js';
 
-const NUMBER = 'ZXA990000001PY';
+const NUMBER = 'ZXA990000006PY';
 const UNKNOWN = 'ZXA990000009PY';
 // Noon in Beijing on 6 March: after the two rows written at their clocks, among the rows written ahead.
 const READ_AT = Date.parse('2026-03-06T04:00:00Z');
@@ -26,7 +26,7 @@ describe('Pengyou numbers', () => {
     const other = `ZXB${NUMBER.slice(3)}`;
     expect(detectCarrierMatch(other)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pengyou'] });
     expect(recognitionCandidates(other, {}).map((candidate) => candidate.carrier)).toEqual(['pengyou']);
-    for (const other of ['ZXA99000001PY', 'ZXA9900000001PY', 'ZX990000001PY', 'ZXA990000001PX', 'ZXA990000001PYX']) {
+    for (const other of ['ZXA99000001PY', 'ZXA9900000001PY', 'ZX990000001PY', 'ZXA990000001PX', 'ZXA990000006PYX']) {
       expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('pengyou');
     }
   });

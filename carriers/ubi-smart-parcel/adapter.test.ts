@@ -13,7 +13,7 @@ import { statusMap, ubiMappedStage, ubiStage } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const DELIVERED = 'AU0000000000017';
-const PARTNER = '99ZZZ000000101000000017';
+const PARTNER = '99ZZZ000000101000000015';
 const LINEHAUL = 'AU0000000000025';
 const ARAMEX = 'MP0000000042';
 const CANADA = '7000000000000018';

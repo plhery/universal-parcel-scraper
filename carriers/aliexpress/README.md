@@ -96,7 +96,9 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   give up on an early parcel. Neither that stage nor a seller token such as `SELLER_PREPARING`
   before any scan comes with a time, so a consumer that dates stages dates it when it first sees it.
   The status text is then Cainiao's wording of the token (`statusDesc`), else the token.
-- `DOFR…HD` and `CNFR…HD` are Cainiao Express's home-delivery numbers in France. Partners such as
+- `DOFR…HD` and `CNFR…HD` are Cainiao Express's home-delivery numbers in France. In the `901`
+  series the thirteenth digit checks the nine before it, with S10's weights and a 1 for the
+  ninth, and detection asks for it; a number of another series is not checked. Partners such as
   4PX and [WanbExpress](../wanbexpress/README.md) hand their own parcels over under them, and
   AliExpress's feed does not hold those, or holds only a seller's record awaiting dispatch while
   Cainiao Express delivers the parcel. Cainiao

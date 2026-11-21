@@ -72,7 +72,13 @@
   "detection": [
     {
       "id": "j-and-t-de-1",
-      "pattern": "^JTDE\\d{12}$",
+      "pattern": "^JTDE\\d{2}00\\d{8}$",
+      "confidence": "high",
+      "checksum": "j-and-t-de"
+    },
+    {
+      "id": "j-and-t-de-other-series",
+      "pattern": "^JTDE(?!\\d{2}00)\\d{12}$",
       "confidence": "high"
     }
   ]

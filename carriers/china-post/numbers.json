@@ -336,6 +336,20 @@
         "confidence": "high"
       },
       "note": "Made-up ZA number whose last digit happens to close La Poste's GS1 key, as about one China Post number in ten does; La Poste uses no Z prefix, so China Post is still selected. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "ZS99999999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "china-post"
+        ]
+      },
+      "note": "Made-up ZS number whose first nine digits fail the S10 check digit."
     }
   ]
 }

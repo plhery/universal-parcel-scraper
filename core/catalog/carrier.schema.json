@@ -509,7 +509,15 @@
             "poste-italiane",
             "frankier-id",
             "dhl-ecommerce-pl",
-            "mondial-relay-head"
+            "mondial-relay-head",
+            "gs1-digits",
+            "luhn-digits",
+            "s10-serial",
+            "gofo-europe",
+            "j-and-t-de",
+            "cainiao-hd",
+            "australia-post",
+            "poczta-polska-px"
           ]
         },
         "preferred": {

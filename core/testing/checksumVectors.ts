@@ -14,7 +14,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CHECKSUMS, type ChecksumId } from '../detection/checksums.js';
-import { hasGs1CheckDigit, mod11CheckDigit } from '../detection/numericChecksums.js';
+import { hasGs1CheckDigit, hasLuhnCheckDigit, mod11CheckDigit } from '../detection/numericChecksums.js';
 
 export type ChecksumVector = readonly [input: string, valid: boolean];
 
@@ -622,6 +622,160 @@ const RECIPES: Record<ChecksumId, (recipe: Recipe) => void> = {
     // A ZIP+4 before a 26-digit PIC has a single reading.
     const routed38 = `420${r.string(9)}${pic('3', 26)}`;
     r.add(routed38, `${routed38.slice(0, -1)}${(Number(routed38.at(-1)) + 5) % 10}`);
+  },
+
+  'gs1-digits'(r) {
+    // 4PX's thirteen digits between its letters, YWE's fourteen after them.
+    const fourPx = (letters: string) => r.complete(`${letters}${r.string(12)}`, 'CN');
+    const ywe = () => r.complete(`YWE${r.string(13)}`);
+    const valid = [fourPx('4PX'), fourPx('4PX'), fourPx('4PX'), fourPx('4XP'), ywe(), ywe(), ywe()];
+    standard(r, valid, 15);
+    // Only the longest run of digits counts: the characters around it are the pattern's.
+    const first = valid[0]!;
+    r.add(`ZZZ${first.slice(3)}`, first.slice(3, 16), `${first.slice(0, 16)}ZZ`, `9${first.slice(1)}`);
+    // Of two runs as long, the first.
+    const six = () => completeBy(hasGs1CheckDigit, r.string(5));
+    const other = () => r.find(() => r.string(6), (digits) => !hasGs1CheckDigit(digits));
+    r.add(`${six()}A${other()}`, `${other()}A${six()}`);
+    // Another script's digit ends a run.
+    r.add(`${six()}\u0663${other()}`, `${other()}\u0663${six()}`, `${first.slice(0, 9)}\u0663${first.slice(10)}`);
+    r.add('4PXCN', 'A1B', r.complete(`4PX${'0'.repeat(12)}`, 'CN'), r.complete(`YWE${'9'.repeat(13)}`));
+  },
+
+  'luhn-digits'(r) {
+    // Straightship's STRCA and thirteen digits.
+    const valid = Array.from({ length: 8 }, () => r.complete(`STRCA${r.string(12)}`));
+    standard(r, valid);
+    // A doubled digit above nine counts nine less; 09 and 90 swap unseen.
+    const swap = r.complete(`STRCA${r.string(3)}09${r.string(7)}`);
+    r.add(swap, `${swap.slice(0, 8)}90${swap.slice(10)}`);
+    // Only the longest run of digits counts; of two as long, the first.
+    const first = valid[0]!;
+    r.add(first.slice(5), `ZZZZZ${first.slice(5)}`, `${first}CA`);
+    const six = () => completeBy(hasLuhnCheckDigit, r.string(5));
+    const other = () => r.find(() => r.string(6), (digits) => !hasLuhnCheckDigit(digits));
+    r.add(`${six()}A${other()}`, `${other()}A${six()}`);
+    // Another script's digit ends a run.
+    r.add(`${six()}\u0663${other()}`, `${other()}\u0663${six()}`, `${first.slice(0, 11)}\u0663${first.slice(12)}`);
+    r.add('STRCA', 'A1B', r.complete(`STRCA${'0'.repeat(12)}`), r.complete(`STRCA${'9'.repeat(12)}`));
+  },
+
+  's10-serial'(r) {
+    // China Post's two letters and eleven digits, Pengyou's ZXA, nine digits and PY.
+    const chinaPost = (letters: string) => r.complete(`${letters}${r.string(8)}`, r.string(2));
+    const pengyou = () => r.complete(`ZXA${r.string(8)}`, 'PY');
+    const valid = [chinaPost('ZC'), chinaPost('ZS'), chinaPost('ZA'), chinaPost('ZC'), pengyou(), pengyou(), pengyou()];
+    standard(r, valid, 10);
+    // 11 minus the sum mod 11: 10 becomes 0 and 11 becomes 5.
+    const ten = r.find(() => r.string(8), (serial) => weightedSum(serial, S10_WEIGHTS) % 11 === 1);
+    const eleven = r.find(() => r.string(8), (serial) => weightedSum(serial, S10_WEIGHTS) % 11 === 0);
+    r.add(`ZC${ten}000`, `ZC${ten}100`, `ZC${eleven}500`, `ZC${eleven}000`, `ZC${eleven}100`);
+    r.add(`ZXA${ten}0PY`, `ZXA${ten}1PY`, `ZXA${eleven}5PY`, `ZXA${eleven}0PY`);
+    // Whatever follows the nine digits is outside the check.
+    const first = valid[0]!;
+    r.add(`${first.slice(0, 11)}${r.string(2)}`, first.slice(0, 11), `${first}CN`, `${first.slice(0, 11)}PY`);
+    // The serial is the first nine digits, and only letters come before it.
+    r.add(first.slice(2), `ZZZZ${first.slice(2)}`, `1${first}`, `Z1C${first.slice(2)}`, `ZC-${first.slice(2)}`, first.slice(0, 10), 'ZC', 'ZXAPY');
+    r.add('ZC00000000500', 'ZC00000000000', 'ZXA999999995PY');
+  },
+
+  'gofo-europe'(r) {
+    // GF, the country, then the year, the day of the year, the serial and the check digit.
+    const valid = ['FR', 'IT', 'NL', 'ES', 'FR', 'NL', 'ES', 'IT'].map((country) => r.complete(`GF${country}${r.string(13)}`));
+    standard(r, valid);
+    // The even places from the left are doubled: Luhn doubles the odd ones of fourteen digits.
+    r.add(`GFFR${r.find(() => completeBy(hasLuhnCheckDigit, r.string(13)), (digits) => !CHECKSUMS['gofo-europe'](`GFFR${digits}`))}`);
+    // A doubled digit above nine counts nine less; 09 and 90 swap unseen.
+    const swap = r.complete(`GFFR${r.string(4)}09${r.string(7)}`);
+    r.add(swap, `${swap.slice(0, 8)}90${swap.slice(10)}`);
+    r.add(r.find(() => r.complete(`GFNL${r.string(13)}`), (value) => value.endsWith('0')));
+    // GF, two letters and fourteen digits: the letters are outside the sum.
+    const first = valid[0]!;
+    const digits = first.slice(4);
+    r.add(`GFZZ${digits}`, `CIFR${digits}`, `FG${first.slice(2)}`, `GF${digits}`, `GFF${digits}`, `GFFRA${digits}`, `GF1R${digits}`, digits);
+    r.add(r.complete(`GFFR${'0'.repeat(13)}`), r.complete(`GFES${'9'.repeat(13)}`));
+  },
+
+  'j-and-t-de'(r) {
+    // JTDE, two digits, 00 and eight digits, the last of them the check.
+    const valid = Array.from({ length: 8 }, () => r.complete(`JTDE${r.string(2)}00${r.string(7)}`));
+    standard(r, valid);
+    // The first, seventh and ninth digits carry no weight.
+    const first = valid[0]!;
+    r.add(...[4, 10, 12].map((index) => substitute(r, first, index)));
+    // 5 minus the weighted sum, mod 11: a result of 10 is written 5, as 5 itself is.
+    const weights = [0, 1, 0, 0, 5, 8, 0, 6, 0, 7, 3];
+    const result = (head: string) => (((5 - weightedSum(head, weights)) % 11) + 11) % 11;
+    for (const wanted of [10, 5, 0, 9]) {
+      const head = r.find(() => `${r.string(2)}00${r.string(7)}`, (digits) => result(digits) === wanted);
+      r.add(`JTDE${head}5`, `JTDE${head}0`, `JTDE${head}9`, `JTDE${head}1`);
+    }
+    // Another third or fourth digit is another series, which this check does not read.
+    const series = replaceAt(first, 6, '1').slice(0, -1);
+    r.add(replaceAt(first, 7, '1'), ...[...DIGITS].map((digit) => series + digit));
+    // JTDE and twelve digits.
+    r.add(`JTAU${first.slice(4)}`, `JT${first.slice(4)}`, `JTDEE${first.slice(5)}`, first.slice(4));
+    r.add(r.complete('JTDE00000000000'), r.complete('JTDE99009999999'));
+  },
+
+  'cainiao-hd'(r) {
+    // Four letters, thirteen digits and HD.
+    const number = (head: string) => r.complete(`${head}${r.string(16 - head.length)}`, 'HD');
+    const valid = [number('DOFR901'), number('CNFR901'), number('DOFR901'), number('CNFR901'), number('DOFR'), number('CNFR'), number('DOIT'), number('CNES')];
+    standard(r, valid, 16);
+    // The first three digits are outside the sum.
+    const first = valid[0]!;
+    r.add(`DOFR${r.string(3)}${first.slice(7)}`, `DOFR000${first.slice(7)}`, `ZZZZ${first.slice(4)}`);
+    // The ninth of the weighed digits weighs 1; then 11 minus the sum mod 11, where 10 becomes 0 and 11 becomes 5.
+    const weights = [8, 6, 4, 2, 3, 5, 9, 7, 1];
+    const ten = r.find(() => r.string(9), (digits) => weightedSum(digits, weights) % 11 === 1);
+    const eleven = r.find(() => r.string(9), (digits) => weightedSum(digits, weights) % 11 === 0);
+    r.add(`DOFR901${ten}0HD`, `DOFR901${ten}1HD`, `CNFR901${eleven}5HD`, `CNFR901${eleven}0HD`, `CNFR901${eleven}1HD`);
+    // Four letters open it and HD closes it.
+    const body = first.slice(4, 17);
+    r.add(`DOF${body}HD`, `D0FR${body}HD`, `DOFRA${body}HD`, `DOFR${body}HC`, `DOFR${body}H`, `DOFR${body}`, `${body}HD`, `DOFR${body}HDD`);
+    r.add(r.complete(`DOFR${'0'.repeat(12)}`, 'HD'), r.complete(`CNFR${'9'.repeat(12)}`, 'HD'));
+  },
+
+  'australia-post'(r) {
+    // Two digits or none, three characters, nine digits, 000 and six digits.
+    const article = (head: string) => r.complete(`${head}${r.string(9)}000${r.string(5)}`);
+    const valid = [
+      article(`${r.string(2)}${r.string(3, LETTERS)}`), article(`${r.pick(DIGITS)}${r.string(2, LETTERS)}`), article(`${r.string(2, LETTERS)}${r.pick(DIGITS)}`),
+      article(r.string(5)), article(r.string(3, ALNUM)), article(`${r.string(2)}${r.string(3, ALNUM)}`), article(r.string(3, LETTERS)), article(r.string(3)),
+    ];
+    standard(r, valid);
+    // A letter counts as its ASCII code, so A, 65, weighs as 5 does and as K, 75, does.
+    const lettered = article('33QAG');
+    r.add(lettered, ...['5', 'K', 'U', 'B', '6', '0'].map((character) => replaceAt(lettered, 3, character)));
+    r.add(replaceAt(lettered, 2, '1'), replaceAt(lettered, 4, '1'), replaceAt(lettered, 4, 'Q'));
+    // Without letters it is the GS1 check digit, at any length.
+    const gs1 = completeBy(hasGs1CheckDigit, r.string(22));
+    r.add(gs1, r.complete(r.string(20)), r.complete('7'), r.complete('Z'), r.complete(r.string(11, LETTERS)));
+    // Capital letters and digits only, and a digit at the end.
+    const first = valid[0]!;
+    r.add(`${first.slice(0, -1)}A`, `${first.slice(0, 2)}-${first.slice(2)}`, 'A', '5', 'AA', 'A5', 'A0');
+    r.add(r.complete(`ZZZ${'9'.repeat(17)}`), r.complete(`AAA${'0'.repeat(17)}`));
+  },
+
+  'poczta-polska-px'(r) {
+    // PX, nine digits and the check digit.
+    const valid = Array.from({ length: 8 }, () => r.complete(`PX${r.string(9)}`));
+    standard(r, valid);
+    // S10's weights and an 8 for the ninth digit; then 11 minus the sum mod 11, where 10 becomes 0 and 11 becomes 5.
+    const weights = [...S10_WEIGHTS, 8];
+    const ten = r.find(() => r.string(9), (digits) => weightedSum(digits, weights) % 11 === 1);
+    const eleven = r.find(() => r.string(9), (digits) => weightedSum(digits, weights) % 11 === 0);
+    r.add(`PX${ten}0`, `PX${ten}1`, `PX${eleven}5`, `PX${eleven}0`, `PX${eleven}1`);
+    // The ninth digit counts: leaving it out gives another check digit.
+    const closing = (sum: number) => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 5][11 - (sum % 11)]!;
+    const eight = (digits: string) => closing(weightedSum(digits.slice(0, 8), S10_WEIGHTS));
+    const counted = r.find(() => r.string(9), (digits) => closing(weightedSum(digits, weights)) !== eight(digits));
+    r.add(r.complete(`PX${counted}`), `PX${counted}${eight(counted)}`);
+    // PX and ten digits.
+    const first = valid[0]!;
+    r.add(`PY${first.slice(2)}`, `XP${first.slice(2)}`, `P${first.slice(2)}`, `PXX${first.slice(2)}`, first.slice(2), `${first}PL`);
+    r.add(r.complete('PX000000000'), r.complete('PX999999999'));
   },
 };
 

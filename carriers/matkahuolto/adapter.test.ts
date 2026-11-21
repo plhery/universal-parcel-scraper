@@ -276,7 +276,7 @@ describe('Matkahuolto tracking adapter', () => {
     expect(detectCarrierMatch(MA)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['matkahuolto'] });
     expect(recognitionAskedCarriers(MA, { countryHint: 'AU' })).toEqual(['matkahuolto']);
     // Australia Post keeps its article IDs, those with a two-digit prefix included.
-    for (const article of ['MB1234567890000123456', '12MA1234567890000123456', 'AP7123456789000123456']) {
+    for (const article of ['MB1234567890000123457', '12MA1234567890000123453', 'AP7123456789000123450']) {
       expect(detectCarrierMatch(article), article).toMatchObject({ carrier: 'australia-post', confidence: 'high' });
     }
   });

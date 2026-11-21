@@ -49,7 +49,7 @@ describe('JS Express tracking adapter', () => {
     const result = parseJsExpress(parsed('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Delivered', last_update: '2026-03-12T20:41:05Z', delivered_at: '2026-03-12T20:41:05Z', expected_delivery: null,
-      destination_country: 'CA', delivery_carrier: 'straightship', delivery_tracking_number: 'STRCA0000000000001' });
+      destination_country: 'CA', delivery_carrier: 'straightship', delivery_tracking_number: 'STRCA0000000000018' });
     expect(result).not.toHaveProperty('last_update_local');
     expect(result.events!.map(event => [event.time ?? event.local_time, event.location, event.description, event.stage])).toEqual([
       // Straightship's rows, on the UTC clock of its own page.
@@ -772,8 +772,8 @@ describe('JS Express tracking adapter', () => {
       const { destination_country, destination_country_name, delivery_carrier, delivery_tracking_number } = parseJsExpress(waybill(scans, fields), DELIVERED);
       return { destination_country, destination_country_name, delivery_carrier, delivery_tracking_number };
     };
-    expect(read({ trackNo: 'STRCA0000000000001', country: 'Canada' }))
-      .toEqual({ destination_country: 'CA', delivery_carrier: 'straightship', delivery_tracking_number: 'STRCA0000000000001' });
+    expect(read({ trackNo: 'STRCA0000000000018', country: 'Canada' }))
+      .toEqual({ destination_country: 'CA', delivery_carrier: 'straightship', delivery_tracking_number: 'STRCA0000000000018' });
     expect(read({ trackNo: 'H1000000000000000001', country: 'Germany' }))
       .toEqual({ destination_country: 'DE', delivery_carrier: 'hermes-de', delivery_tracking_number: 'H1000000000000000001' });
     expect(read({ trackNo: '6A12345678905', country: 'France' }))
@@ -785,8 +785,8 @@ describe('JS Express tracking adapter', () => {
     expect(read({ trackNo: 'H1000000000000000001', country: 'France' }))
       .toEqual({ destination_country: 'FR', delivery_tracking_number: 'H1000000000000000001' });
     expect(read({ trackNo: '19999999999980', country: 'Germany' })).toEqual({ destination_country: 'DE', delivery_tracking_number: '19999999999980' });
-    expect(read({ trackNo: 'STRCA0000000000001', country: 'Sample Land' }))
-      .toEqual({ destination_country_name: 'Sample Land', delivery_tracking_number: 'STRCA0000000000001' });
+    expect(read({ trackNo: 'STRCA0000000000018', country: 'Sample Land' }))
+      .toEqual({ destination_country_name: 'Sample Land', delivery_tracking_number: 'STRCA0000000000018' });
     // No number yet, the waybill's own, or one that is no tracking number.
     for (const trackNo of ['', null, DELIVERED, 'SAMPLE NUMBER?']) expect(read({ trackNo, country: 'Canada' }), String(trackNo)).toEqual({ destination_country: 'CA' });
     // A shape DHL Paket shares with other couriers names DHL in Germany when the history holds DHL Paket's own rows.
@@ -809,7 +809,7 @@ describe('JS Express tracking adapter', () => {
       .toEqual({ carrier: 'dhl', number: 'JJD0000000000000001', basis: 'partner' });
     // The tracker hands the parcel to the courier's adapter.
     expect(deliveryHandoff('js-express', DELIVERED, parseJsExpress(parsed('delivered'), DELIVERED)))
-      .toEqual({ carrier: 'straightship', number: 'STRCA0000000000001', basis: 'partner' });
+      .toEqual({ carrier: 'straightship', number: 'STRCA0000000000018', basis: 'partner' });
     expect(deliveryHandoff('js-express', IN_TRANSIT, parseJsExpress(parsed('in-transit'), IN_TRANSIT)))
       .toEqual({ carrier: 'hermes-de', number: 'H1000000000000000001', basis: 'partner' });
   });
@@ -910,7 +910,7 @@ describe('JS Express tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(page('delivered')));
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED }, { budgetMs: 3000 });
     expect(answer).toMatchObject({ carrier: 'js-express', source: 'js-express',
-      result: { current_stage: 'delivered', delivery_carrier: 'straightship', delivery_tracking_number: 'STRCA0000000000001' } });
+      result: { current_stage: 'delivered', delivery_carrier: 'straightship', delivery_tracking_number: 'STRCA0000000000018' } });
     expect(String(fetcher.mock.calls[0]![0])).toBe(JS_EXPRESS_TRACKER);
     expect(fetcher.mock.calls.filter(([url]) => String(url) === JS_EXPRESS_TRACKER)).toHaveLength(1);
   });

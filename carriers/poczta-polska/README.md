@@ -10,7 +10,8 @@ answered one. The
 [UPU S10 standard](https://www.upu.int/UPU/media/upu/files/postalSolutions/programmesAndServices/standards/S10-12.pdf)
 names the issuing country, not the deliverer, so its other `PL` codes stay with
 the generic postal carrier, and recognition asks Poczta Polska about them
-through the same lookup.
+through the same lookup. Detection also names it for `PX` and ten digits whose last digit
+checks the nine before it, with S10's weights and an 8 for the ninth.
 
 ## How it works
 

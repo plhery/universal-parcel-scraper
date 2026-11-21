@@ -12,24 +12,24 @@ import { gofoPlace, normalizeGofoFranceNumber, parseGofoFrance, regionalGofoRequ
 import { gofoFranceStage } from './status.js';
 
 const cases = [
-  { region: 'fr', number: 'GFFR00000000000001', parse: parseGofoFrance, normalize: normalizeGofoFranceNumber, stage: gofoFranceStage, delivery: 'Livré', count: 7 },
-  { region: 'it', number: 'GFIT00000000000001', parse: parseGofoItaly, normalize: normalizeGofoItalyNumber, stage: gofoItalyStage, delivery: 'Consegnato', count: 10 },
-  { region: 'nl', number: 'GFNL00000000000001', parse: parseGofoNetherlands, normalize: normalizeGofoNetherlandsNumber, stage: gofoNetherlandsStage, delivery: 'Bezorgd', count: 9 },
-  { region: 'es', number: 'GFES00000000000001', parse: parseGofoSpain, normalize: normalizeGofoSpainNumber, stage: gofoSpainStage, delivery: 'Entregado', count: 10 },
+  { region: 'fr', number: 'GFFR00000000000019', parse: parseGofoFrance, normalize: normalizeGofoFranceNumber, stage: gofoFranceStage, delivery: 'Livré', count: 7 },
+  { region: 'it', number: 'GFIT00000000000019', parse: parseGofoItaly, normalize: normalizeGofoItalyNumber, stage: gofoItalyStage, delivery: 'Consegnato', count: 10 },
+  { region: 'nl', number: 'GFNL00000000000019', parse: parseGofoNetherlands, normalize: normalizeGofoNetherlandsNumber, stage: gofoNetherlandsStage, delivery: 'Bezorgd', count: 9 },
+  { region: 'es', number: 'GFES00000000000019', parse: parseGofoSpain, normalize: normalizeGofoSpainNumber, stage: gofoSpainStage, delivery: 'Entregado', count: 10 },
 ];
 const fixture = (region: string) => JSON.parse(readFileSync(new URL(`../gofo-${region}/fixtures/delivered.json`, import.meta.url), 'utf8'));
 const item = (value: ReturnType<typeof fixture>) => value.data[0];
 const bind = (value: ReturnType<typeof fixture>) => { item(value).lastTrackEvent = { ...item(value).trackEventList[0] }; item(value).trackEventCount = item(value).trackEventList.length; };
 
 describe('GOFO France acceptance', () => {
-  const codes = (value: ReturnType<typeof fixture>) => parseGofoFrance(value, 'GFFR00000000000001').events?.map(event => [event.provider_code, event.stage]);
+  const codes = (value: ReturnType<typeof fixture>) => parseGofoFrance(value, 'GFFR00000000000019').events?.map(event => [event.provider_code, event.stage]);
 
   it("reads the sorting centre taking the parcel in as the acceptance when it is GOFO's first scan", () => {
     const value = fixture('fr');
     item(value).trackEventList = item(value).trackEventList.filter((row: { processCode: string }) => ['100', '202', '200'].includes(row.processCode));
     bind(value);
     expect(codes(value)).toEqual([['200', 'in_transit'], ['202', 'accepted'], ['100', 'registered']]);
-    expect(parseGofoFrance(value, 'GFFR00000000000001')).toMatchObject({ current_stage: 'in_transit' });
+    expect(parseGofoFrance(value, 'GFFR00000000000019')).toMatchObject({ current_stage: 'in_transit' });
   });
 
   it('keeps a later sorting centre, and one after a cut list, in transit', () => {
@@ -85,7 +85,7 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
       const candidate = prefix + region.toUpperCase() + '0'.repeat(digits - 1) + '1';
       expect(normalize(candidate.toLowerCase())).toBe(candidate);
     }
-    for (const candidate of ['GFUS00000000000001', region === 'nl' ? 'GFIT00000000000001' : 'GFNL00000000000001', region === 'es' ? 'GFFR00000000000001' : 'GFES00000000000001', `${number}0`, number.slice(0, -2), `${number}&other=1`]) {
+    for (const candidate of ['GFUS00000000000001', region === 'nl' ? 'GFIT00000000000019' : 'GFNL00000000000019', region === 'es' ? 'GFFR00000000000019' : 'GFES00000000000019', `${number}0`, number.slice(0, -2), `${number}&other=1`]) {
       expect(() => normalize(candidate)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
   });
@@ -183,8 +183,8 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
 it("leaves no place for a GOFO hub's code or the country alone, and keeps a French town written alike", () => {
   const placeOf = (region: 'fr' | 'it', written: string) => {
     const reply = fixture(region); item(reply).trackEventList[0].processLocation = written; bind(reply);
-    return region === 'it' ? parseGofoItaly(reply, 'GFIT00000000000001').events?.[0]?.location
-      : parseGofoFrance(reply, 'GFFR00000000000001').events?.[0]?.location;
+    return region === 'it' ? parseGofoItaly(reply, 'GFIT00000000000019').events?.[0]?.location
+      : parseGofoFrance(reply, 'GFFR00000000000019').events?.[0]?.location;
   };
   for (const hub of ['FI-ARS', 'GOFO-NA']) expect(placeOf('it', hub)).toBeUndefined();
   for (const hub of ['75-LED', 'FR']) expect(placeOf('fr', hub)).toBeUndefined();
@@ -204,7 +204,7 @@ it('writes a French town given in capitals in the case its other scans use', () 
 it('reconstructs the French shipper reference and binds it to the national waybill in the same reply', () => {
   const raw = 'PK-0000000000000000001-0', number = normalizeGofoFranceNumber(raw);
   expect(regionalGofoRequestNumber(number)).toBe(raw);
-  expect(parseGofoFrance(fixture('fr'), number).canonical_tracking_number).toBe('GFFR00000000000001');
+  expect(parseGofoFrance(fixture('fr'), number).canonical_tracking_number).toBe('GFFR00000000000019');
   expect(() => normalizeGofoItalyNumber(number)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
   const wrong = fixture('fr'); item(wrong).trackingNumber = raw.slice(0, -1) + '1';
   expect(() => parseGofoFrance(wrong, number)).toThrow(expect.objectContaining({ kind: 'schema' }));

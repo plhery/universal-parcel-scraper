@@ -6,7 +6,8 @@ through the guest trace API of China Post's EMS app. EMS items issued in China
 [EMS adapter](../ems/README.md) reads the EMS Cooperative's tracker when EMS is
 chosen. Domestic 13-digit waybills are out of scope and rejected before any
 request. `YY…CN` numbers are [YYpost's](../yypost/README.md), not China Post's. `ZS`, `ZC` and `ZA` numbers with eleven digits are China Post's too,
-and the adapter takes them. The app asks for a contact phone's last four digits;
+and the adapter takes them. Their first nine digits are an S10 serial, eight digits and their
+check digit, which detection asks for. The app asks for a contact phone's last four digits;
 the optional TRAWL browser instead reads the anonymous web preview after
 character verification. No public sample is known, but every donated number with
 these prefixes was China Post's, by its own service and a universal provider, so

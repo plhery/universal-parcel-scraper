@@ -51,7 +51,7 @@ describe('4PX result projection', () => {
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.recognize!('4xp0000000000001cn', { budgetMs: 1000 })).resolves.toMatchObject({ known: true });
     expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body)).queryCodes).toEqual([NUMBER]);
-    expect(detectCarrierMatch('4XP0000000000001CN')).toMatchObject({ carrier: 'four-px', confidence: 'high' });
+    expect(detectCarrierMatch('4XP3001521662170CN')).toMatchObject({ carrier: 'four-px', confidence: 'high' });
     // Only 4PX's own layout is turned back: another 4XP reference is asked as typed.
     await expect(instance.recognize!('4XP00000000000001', { budgetMs: 1000 })).rejects.toThrow(/different or ambiguous/);
     expect(JSON.parse(String(fetcher.mock.calls[1]?.[1]?.body)).queryCodes).toEqual(['4XP00000000000001']);

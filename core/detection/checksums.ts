@@ -32,6 +32,16 @@ import {
   isValidTntConsignmentNumber,
   isValidUkrposhtaBarcode,
 } from './numericChecksums.js';
+import {
+  hasGs1CheckDigitInDigits,
+  hasLuhnCheckDigitInDigits,
+  isValidAustraliaPostArticleId,
+  isValidCainiaoHdNumber,
+  isValidGofoEuropeWaybill,
+  isValidJAndTGermanyNumber,
+  isValidPocztaPolskaPxNumber,
+  startsWithS10Serial,
+} from './prefixedChecksums.js';
 import { isValidPosLajuConsignment, isValidS10TrackingNumber } from './s10.js';
 import { isValidSfExpressWaybill } from './sfExpress.js';
 import { isValidOnTracTrackingNumber, isValidUpsTrackingNumber } from './ups.js';
@@ -72,4 +82,12 @@ export const CHECKSUMS: Readonly<Record<ChecksumId, (trackingNumber: string) => 
   'poste-italiane': isValidPosteItalianeRegisteredNumber,
   'frankier-id': isValidFrankierId,
   'dhl-ecommerce-pl': isValidDhlEcommercePolandNumber,
+  'gs1-digits': hasGs1CheckDigitInDigits,
+  'luhn-digits': hasLuhnCheckDigitInDigits,
+  's10-serial': startsWithS10Serial,
+  'gofo-europe': isValidGofoEuropeWaybill,
+  'j-and-t-de': isValidJAndTGermanyNumber,
+  'cainiao-hd': isValidCainiaoHdNumber,
+  'australia-post': isValidAustraliaPostArticleId,
+  'poczta-polska-px': isValidPocztaPolskaPxNumber,
 };

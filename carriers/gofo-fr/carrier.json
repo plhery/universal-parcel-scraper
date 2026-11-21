@@ -90,7 +90,13 @@
   "detection": [
     {
       "id": "gofo-fr-1",
-      "pattern": "^(?:GF|CI)FR\\d{13,14}$",
+      "pattern": "^GFFR\\d{14}$",
+      "confidence": "high",
+      "checksum": "gofo-europe"
+    },
+    {
+      "id": "gofo-fr-unchecked",
+      "pattern": "^(?:(?:GF|CI)FR\\d{13}|CIFR\\d{14})$",
       "confidence": "high"
     },
     {

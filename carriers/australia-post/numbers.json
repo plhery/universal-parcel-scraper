@@ -494,6 +494,20 @@
         ]
       },
       "note": "Made-up number in the shape of a domestic Parcel Post article that Australia Post's tracker lists under the whole number: R and twenty-four digits. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "99ZZZ999999999000999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "australia-post"
+        ]
+      },
+      "note": "Made-up article ID whose check digit fails."
     }
   ]
 }

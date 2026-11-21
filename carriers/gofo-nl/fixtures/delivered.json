@@ -3,10 +3,10 @@
   "msg": "Handeling geslaagd",
   "data": [
     {
-      "waybillNo": "GFNL00000000000001",
+      "waybillNo": "GFNL00000000000019",
       "status": "Delivered",
       "trackEventCount": 9,
-      "trackingNumber": "GFNL00000000000001",
+      "trackingNumber": "GFNL00000000000019",
       "frCountry": "NL",
       "toCountry": "NL",
       "thirdNo": null,

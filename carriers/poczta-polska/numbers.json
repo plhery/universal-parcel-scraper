@@ -357,6 +357,25 @@
         "carrier": "poczta-polska",
         "confidence": "high"
       }
+    },
+    {
+      "number": "PX9999999980",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ],
+        "not": [
+          "poczta-polska"
+        ]
+      },
+      "note": "Made-up PX number whose check digit fails, which leaves it to the carriers whose broad rules fit twelve characters."
     }
   ]
 }

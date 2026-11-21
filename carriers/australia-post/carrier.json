@@ -107,7 +107,8 @@
     {
       "id": "australia-post-article",
       "pattern": "^(?!MA\\d{19}$|JJD\\d{18}$)(?:\\d{2})?[A-Z0-9]{3}\\d{9}000\\d{6}$",
-      "confidence": "high"
+      "confidence": "high",
+      "checksum": "australia-post"
     },
     {
       "id": "australia-post-consignment",
