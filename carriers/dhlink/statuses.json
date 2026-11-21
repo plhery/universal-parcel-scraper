@@ -51,6 +51,8 @@
     {"wording": "中国邮政 已收取邮件", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "China Post took the item."},
     {"wording": "邮件到达【广州市国际互换局】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Arrived at an office; any office name."},
     {"wording": "邮件离开【广州市国际互换局】，正在发往下一站", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Left an office for the next; any office name."},
+    {"wording": "货物发往示例机场", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The goods sent on to a city or airport after the warehouse's departure; any place name."},
+    {"wording": "货物到达示例", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The goods arrived at that city or airport; any place name."},
     {"wording": "邮件已在【示例营业部】完成分拣，准备发出", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Sorted at an office; any office name."},
     {"wording": "揽投配发", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Relayed beside a sorting scan."},
     {"wording": "航空公司接收", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The airline received the dispatch."},

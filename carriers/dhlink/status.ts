@@ -151,6 +151,8 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/已收取邮件$/, 'accepted'],
   [/^已出库$/, 'in_transit'],
   [/^邮件(?:到达|离开)/, 'in_transit'],
+  // The goods sent on to a city or airport, and their arrival there, after the warehouse's departure.
+  [/^货物(?:发往|到达)[\u4e00-\u9fff]{1,20}$/, 'in_transit'],
   [/完成分拣/, 'in_transit'],
   [/^揽投配发$/, 'in_transit'],
   [/^航空公司(?:接收|启运)$/, 'in_transit'],

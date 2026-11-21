@@ -634,6 +634,8 @@ describe('DHLink status vocabulary', () => {
     // The partners' relayed English goes through the shared rules.
     expect(dhlinkStage('', '', 'Out for Delivery SAMPLETOWN NY')).toEqual({ stage: 'out_for_delivery', source: 'wording:language' });
     expect(dhlinkStage('', '', 'Synthetic note')).toBeNull();
+    // The goods sent on to a place and their arrival there, whatever place they name.
+    expect(dhlinkStage('', '', '货物到达示例城市')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     // The hand-over to the US partner is no delivery.
     expect(statusMapAnswer({ carrier: 'dhlink', providerCode: null, description: '货物已交UPS/USPS/Fedex,The goods have been delivered to UPS/USPS/Fedex' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
