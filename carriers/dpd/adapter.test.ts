@@ -919,6 +919,9 @@ describe('DPD status vocabulary', () => {
     ]);
     // A sender's hand-in at a pickup point, after the label data.
     expect(['CNP', 'DOPKY', 'DODEH', 'ORS'].map(scanStage)).toEqual(['registered', 'accepted', 'in_transit', 'in_transit']);
+    // The sender's parcel data reaching DPD, as the label data does, before the parcel moves.
+    expect(scanStage('CNA')).toBe('registered');
+    expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: 'CNA', description: 'We received your parcel data' })).toEqual({ kind: 'mapped', stage: 'registered' });
     // ORI and SPL are left to their wording, like their PARCEL_HANDED and
     // IN_TRANSIT twins; notices and estimates are no scan, nor the proofs of delivery.
     for (const code of ['ORI', 'SPL', 'SPE', 'MSDLO', 'MSDLX', 'MIDLI', 'MIA', 'MII', 'ENA', 'DEYY', 'DODEYY', 'XYZ', '', 'CONSTRUCTOR', '__proto__']) {

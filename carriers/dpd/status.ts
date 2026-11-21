@@ -98,6 +98,7 @@ export function apiStage(description: unknown): Stage | null {
  * the point, DODEI (twin AVAILABLE_FOR_COLLECTION) and the notice DOMSDLO when
  * it waits there, DODEY (twin DELIVERED) when the recipient collects it.
  * CRY confirms the collection the sender booked, before the driver comes for the parcel.
+ * CNA is DPD receiving the sender's parcel data, with the order data and before the parcel moves.
  * PKY is the driver collecting the parcel from its sender, before ENA's data
  * exchange ends and the parcel reaches the origin depot. A German parcel the
  * sender left at a pickup point opens with CNP, DPD receiving its label data,
@@ -114,6 +115,7 @@ export function apiStage(description: unknown): Stage | null {
  */
 const SCAN_STAGES: Readonly<Record<string, Stage>> = {
   CNP: 'registered', // "We received your labelling information", before the parcel moves
+  CNA: 'registered', // "We received your parcel data", the sender's data, before the parcel moves
   CRY: 'registered', // "Your collection request has been confirmed": booked, the parcel not yet with DPD
   PKY: 'accepted', // "We have collected your parcel", the pickup from the sender
   DOPKY: 'accepted', // "Your parcel has been dropped off in the retrieval point", the sender's hand-in

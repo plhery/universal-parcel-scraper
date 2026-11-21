@@ -393,6 +393,15 @@
       "note": "Scan code: DPD receives the label data, the first scan of a German parcel left at a pickup point, before ENA."
     },
     {
+      "code": "CNA",
+      "wording": "We received your parcel data",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Scan code: DPD receives the sender's parcel data, at the minute of \"Order information has been transmitted to DPD.\" and before the parcel moves, as CNP receives the label data."
+    },
+    {
       "code": "CRY",
       "wording": "Your collection request has been confirmed",
       "language": "en",
