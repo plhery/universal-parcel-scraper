@@ -14,18 +14,48 @@
   "timezone": "Asia/Tbilisi",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "trackings-ge",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://trackings.ge/en/track?track_num={trackingNumber}",
     "searchUrl": "https://trackings.ge/en/track",
     "canaryUrl": "https://trackings.ge/en/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "sender_name",
+      "pickup_point_address",
+      "order_reference",
+      "recipient_id"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "sender_name",
+      "pickup_point_address",
+      "order_reference",
+      "recipient_id"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "receiver_name",
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

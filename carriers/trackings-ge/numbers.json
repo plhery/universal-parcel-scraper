@@ -12,9 +12,9 @@
         "access": "full_page"
       },
       "context": {
-        "service": "Georgia domestic parcels",
+        "service": "Ozon orders delivered in Georgia",
         "reportedRole": "tracking number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -25,7 +25,7 @@
           "ozon-logistics"
         ]
       },
-      "note": "The archive preserves a direct link to the carrier's public tracker with the number in its tracking parameter. The archived and live pages showed no shipment history in their returned HTML."
+      "note": "The archive preserves a direct link to the carrier's public tracker with the number in its tracking parameter. The page's HTML holds no history: its script posts the number back to the tracker, whose reply names the number in each record, as an Ozon order Trackings.GE was to deliver, and shows one dated cancellation row."
     }
   ]
 }

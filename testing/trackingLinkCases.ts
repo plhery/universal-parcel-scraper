@@ -2258,6 +2258,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shree-anjani', number: '9000000001',
     route: /^https:\/\/shreeanjani\.co\.in\/tracking\/\?awb=9000000001$/,
     marker: /Enter your 10-digit docket number to track/ },
+  // Trackings.GE's page posts the number to its own lookup and shows its "not found" notice about 13 s later.
+  { carrier: 'trackings-ge', number: '904417730582261',
+    route: /^https:\/\/trackings\.ge\/en\/track\?track_num=904417730582261$/,
+    marker: /Looks like it does not exist or was entered incorrectly|Order canceled/,
+    forwarding: { notFound: /Looks like it does not exist or was entered incorrectly/ }, renderTimeoutMs: 20000 },
   // TP Logistics' search page loads its "Not found this Code" notice for an unknown number.
   { carrier: 'tp-logistics-th', number: 'ZZZ999912319999',
     route: /^https:\/\/tptrack\.info\/ecom\/dtrack\.php\?id=ZZZ999912319999&type=a1$/,

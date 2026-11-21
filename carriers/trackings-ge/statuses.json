@@ -1,4 +1,20 @@
 {
   "carrier": "trackings-ge",
-  "entries": []
+  "entries": [
+    {
+      "code": "666",
+      "wording": "Order canceled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The row the English tracker shows for a record of code 666 on an Ozon order Trackings.GE was to deliver; the Georgian tracker words it შეკვეთა გაუქმებულია and the Russian one Заказ отменён. A later record of code 901 on the same order has no row on the page."
+    },
+    {
+      "wording": "We are sorry, but it seems that sending of this parcel was canceled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The status line the English tracker shows above the rows of that cancelled order."
+    }
+  ]
 }

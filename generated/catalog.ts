@@ -60388,7 +60388,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Tbilisi",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "trackings-ge",
+      "localClocks": true
     },
     "canaryUrl": "https://trackings.ge/en/track",
     "trackingUrlTemplate": "https://trackings.ge/en/track?track_num={trackingNumber}",
