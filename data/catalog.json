@@ -21861,6 +21861,38 @@
     ],
     "detectionRules": []
   },
+  "dragonfly-nl": {
+    "displayName": "Dragonfly Netherlands",
+    "color": "#13a58f",
+    "aliases": [
+      "Dragonfly (NL)",
+      "Dragonfly Shipping Netherlands"
+    ],
+    "countries": [
+      "NL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dragonfly-nl"
+    },
+    "canaryUrl": "https://dragonflyshipping.nl/en/track-your-package/",
+    "trackingUrlTemplate": "https://dragonflyshipping.nl/en/track-your-package/?tracking-id={trackingNumber}",
+    "trackingSearchUrl": "https://dragonflyshipping.nl/en/track-your-package/",
+    "helpUrl": "https://dragonflyshipping.nl/en/support/",
+    "linkRules": [
+      {
+        "domains": [
+          "dragonflyshipping.nl"
+        ],
+        "params": [
+          "tracking-id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "drop2shop": {
     "displayName": "Drop2Shop",
     "color": "#d8127d",

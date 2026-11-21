@@ -21865,6 +21865,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dragonfly-nl": {
+    "displayName": "Dragonfly Netherlands",
+    "color": "#13a58f",
+    "aliases": [
+      "Dragonfly (NL)",
+      "Dragonfly Shipping Netherlands"
+    ],
+    "countries": [
+      "NL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dragonfly-nl"
+    },
+    "canaryUrl": "https://dragonflyshipping.nl/en/track-your-package/",
+    "trackingUrlTemplate": "https://dragonflyshipping.nl/en/track-your-package/?tracking-id={trackingNumber}",
+    "trackingSearchUrl": "https://dragonflyshipping.nl/en/track-your-package/",
+    "helpUrl": "https://dragonflyshipping.nl/en/support/",
+    "linkRules": [
+      {
+        "domains": [
+          "dragonflyshipping.nl"
+        ],
+        "params": [
+          "tracking-id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "drop2shop": {
     "displayName": "Drop2Shop",
     "color": "#d8127d",
@@ -69333,6 +69365,7 @@ export const CARRIER_IDS = [
   "dpex",
   "dpx-logistics",
   "dragon-star-curier",
+  "dragonfly-nl",
   "drop2shop",
   "dropp",
   "dsv",
@@ -71332,6 +71365,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpex": [],
   "dpx-logistics": [],
   "dragon-star-curier": [],
+  "dragonfly-nl": [],
   "drop2shop": ["drop2shop-1"],
   "dropp": [],
   "dsv": ["dsv-stt"],
