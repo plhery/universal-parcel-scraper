@@ -8,6 +8,7 @@ the official public tracker. An identifier is confirmed only by a matching track
 1. `trawl`: opens the single-item `all-services/track-a-package/step-two?q=` page. The browser
    clears Cloudflare's managed challenge; the page's server-rendered Next.js data carries the
    history. Both the page query and its one result must name the whole requested identifier.
+   The reCAPTCHA on the page's search form is left alone: the history does not wait on it.
 
 Requires the optional TRAWL service. Recognition through this path is browser-only and opt-in.
 Verification and rate limits stay distinct from the page's explicit not-found response. Enabled

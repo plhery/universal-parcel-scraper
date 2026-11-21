@@ -153,7 +153,7 @@ describe('Emirates Post browser adapter', () => {
     const recorder = { step: vi.fn(), lookup: vi.fn() };
     await new EmiratesPostTracker({ trawl, fetcher, recorder }).fetch(NUMBER, { budgetMs: 24_000 });
     const [request, options] = scrape.mock.calls[0]!;
-    expect(request).toMatchObject({ url: emiratesPostUrl(NUMBER), skipHttp: true, maxTier: 3 });
+    expect(request).toMatchObject({ url: emiratesPostUrl(NUMBER), skipHttp: true, maxTier: 3, solveEmbeddedCaptchas: false });
     expect(request.maxTimeout).toBeGreaterThan(0); expect(request.maxTimeout).toBeLessThanOrEqual(22_000);
     expect(options).toMatchObject({ fetcher, signal: expect.any(AbortSignal), timeoutMs: request.maxTimeout });
     expect(recorder.step).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ carrier: 'emirates-post', step: 'trawl', outcome: 'ok' }));

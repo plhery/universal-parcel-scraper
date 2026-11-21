@@ -38,7 +38,10 @@ export class EmiratesPostTracker {
         const timeoutMs = Math.floor(Math.min(SERVICE_MS, remainingMs - 2000));
         if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
         try {
-          const page = await trawl.scrape({ url: emiratesPostUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs },
+          // The page's search form carries a reCAPTCHA. The history is already in the page, and the browser
+          // cannot pass that widget, so trying it would only hold the reply back.
+          const page = await trawl.scrape({ url: emiratesPostUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
+            solveEmbeddedCaptchas: false },
             { provider: `TRAWL while fetching ${PROVIDER}`, timeoutMs, signal, fetcher: this.options.fetcher,
               maxBytes: 4 * EMIRATES_POST_MAX_BYTES });
           signal.throwIfAborted();

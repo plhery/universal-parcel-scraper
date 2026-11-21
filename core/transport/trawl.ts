@@ -27,6 +27,8 @@ export interface TrawlScrapeRequest extends JsonObject {
   settleTimeout?: number;
   /** Wait for a visible result marker before reading a client-rendered page. */
   contentWaitForSelector?: string;
+  /** False leaves CAPTCHA widgets on the loaded page alone, for a page whose data does not wait on them. */
+  solveEmbeddedCaptchas?: boolean;
   /** A proxy URL the service must route this request's browser through, never falling back to its own address. */
   proxy?: string;
 }
