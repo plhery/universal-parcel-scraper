@@ -31091,7 +31091,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Sydney",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "hi-trans",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://www.hi-trans.com.au/",
     "trackingUrlTemplate": "https://online.hi-trans.com.au/Connotes/ShowConsignmentSummary.aspx?Number={trackingNumber}",

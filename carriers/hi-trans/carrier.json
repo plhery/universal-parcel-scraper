@@ -19,18 +19,56 @@
   "timezone": "Australia/Sydney",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "hi-trans",
+    "steps": [
+      "direct",
+      "retry",
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://online.hi-trans.com.au/Connotes/ShowConsignmentSummary.aspx?Number={trackingNumber}",
     "searchUrl": "https://www.hi-trans.com.au/",
     "canaryUrl": "https://www.hi-trans.com.au/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "sender_name",
+      "service_name",
+      "destination",
+      "proof_of_delivery",
+      "signatory"
+    ],
+    "scraped": [
+      "history",
+      "location",
+      "provider_code",
+      "sender_name",
+      "service_name"
+    ],
+    "discarded": [
+      "status",
+      "destination",
+      "proof_of_delivery",
+      "signatory"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "parcel_count",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
   "links": [
     {

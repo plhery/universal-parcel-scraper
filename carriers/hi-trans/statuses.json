@@ -15,6 +15,14 @@
     {"code": "56", "wording": "Departed Receiver", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Status in Hi-Trans Express's Freight API documentation. The consignment was delivered at the delivery location."},
     {"code": "58", "wording": "Futile Delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "official-doc", "note": "Status in Hi-Trans Express's Freight API documentation. The consignment could not be delivered to the delivery location."},
     {"code": "21", "wording": "Departed Sender / Pickup Complete", "stage": "accepted", "language": "en", "confirmedBy": "official-doc", "note": "Label of status 21 in Hi-Trans Express's freight status webhook documentation."},
-    {"code": "56", "wording": "Departed Receiver / Delivery Complete", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Label of status 56 in Hi-Trans Express's freight status webhook documentation; the event carries the proof of delivery."}
+    {"code": "56", "wording": "Departed Receiver / Delivery Complete", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Label of status 56 in Hi-Trans Express's freight status webhook documentation; the event carries the proof of delivery."},
+    {"code": "10", "wording": "Allocated to Pickup Driver", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Pickup Allocated."},
+    {"code": "15", "wording": "Driver Arrived for Pickup", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Arrived at Sender; the sender still has the freight."},
+    {"code": "21", "wording": "Pickup Completed", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Departed Sender."},
+    {"code": "40", "wording": "Loaded for Linehaul Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Manifested - Pending Arrival."},
+    {"code": "47", "wording": "Arrived at Delivery Depot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Arrived at Receiving Depot."},
+    {"code": "50", "wording": "Loaded for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Delivery Allocated: on a local truck or with a freight forwarder for delivery."},
+    {"code": "52", "wording": "Driver Arrived for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Arrived at Receiver."},
+    {"code": "56", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The tracking page's wording for Departed Receiver."}
   ]
 }
