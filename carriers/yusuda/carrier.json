@@ -90,5 +90,11 @@
     ]
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "yusuda-1",
+      "pattern": "^SYD\\d{10}YQ$",
+      "confidence": "high"
+    }
+  ]
 }

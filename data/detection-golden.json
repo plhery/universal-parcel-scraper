@@ -112190,6 +112190,14 @@
     ]
   },
   {
+    "input": "SYD9900000017YQ",
+    "carrier": "yusuda",
+    "confidence": "high",
+    "candidates": [
+      "yusuda"
+    ]
+  },
+  {
     "input": "SYDE008705604",
     "carrier": "sunyou",
     "confidence": "high",

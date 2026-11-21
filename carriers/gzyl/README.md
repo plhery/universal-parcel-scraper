@@ -50,11 +50,11 @@ instead.
   before its own clock is a forecast, not a scan, and is held back on every tenant; the margin
   leaves room for a destination's clock, up to six hours ahead of Beijing's, on the tenants that
   keep their rows' wall clocks (below). A row written in the same second as such a row, more than
-  six hours before its own clock, is the same script's and is held back too. GZYL writes its own
-  and Xinghe Freight's whole feed as one such script, from one template to a delivery no later
+  six hours before its own clock, is the same script's and is held back too. GZYL writes its own,
+  Xinghe Freight's and Yusuda's whole feed as one such script, from one template to a delivery no later
   scan followed: there a second in which a row was written more than half an hour before its own
   clock is the script's, and every row of it but the order's registration is held back, however
-  soon its clock. A universal provider's copies of these two carry no creation times, so every
+  soon its clock. A universal provider's copies of these three carry no creation times, so every
   one but the registration is set aside when the provider's answer is read. The page shows no
   creation times, so a row dated after the lookup on Beijing time is held back too. An order
   whose rows are all held back has no history yet. Either way the clocks of the rows written

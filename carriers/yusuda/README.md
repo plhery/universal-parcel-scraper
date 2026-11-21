@@ -19,13 +19,23 @@ adapter is GZYL's with this carrier's id: the same requests, steps and not-found
 ## Notes
 
 - The tracker writes GZYL's wordings, so GZYL's status map and row splitting read them, and GZYL's
-  rows written ahead and scripted delivery row are held back here too.
+  rows written ahead and scripted delivery row are held back here too, as is every row written
+  with the script but the order's registration, and a universal provider's copies of them. The
+  script can be in China Post's words, its Hong Kong acceptance included, all written in one
+  second ahead of their clocks.
 - A not-found leaves the enabled universal providers to answer.
 
 ## Limitations
 
-No public page shows a Yusuda number, so detection names no shape and the adapter answers when the
-carrier is chosen or a universal provider names it. HTTP recognition does not ask it.
+HTTP recognition does not ask it.
+
+## Numbers
+
+No public source shows a whole Yusuda number. A parcel a universal provider files under YUSUDA
+has `SYD`, ten digits and `YQ`, the layout of forwarders on the Hualei platform, which open their
+waybills with their own code. Yusuda's tracker holds such parcels under the whole number and names
+their service "SYD全球通" (SYD Global). The rule names Yusuda with high confidence; the corpus holds
+a made-up number in that shape.
 
 ## Links
 

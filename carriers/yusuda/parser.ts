@@ -6,9 +6,9 @@ export const PROVIDER = 'Yusuda';
 /**
  * Yusuda's site sends its tracking form to GZYL's tenant of the Hualei
  * platform, which writes its rows in GZYL's words: the host, the row
- * splitting and the scripted delivery row are GZYL's.
+ * splitting, the scripted delivery row and the one-batch script are GZYL's.
  */
 export const YUSUDA: HualeiTenant = {
   carrier: 'yusuda', provider: PROVIDER, origin: GZYL_ORIGIN, stage: yusudaStage, split: splitGzylRow,
-  scriptedDelivery: true,
+  scriptedDelivery: true, oneBatch: true,
 };

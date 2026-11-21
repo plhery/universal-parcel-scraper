@@ -67701,7 +67701,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^SYD\\d{10}YQ$",
+        "confidence": "high"
+      }
+    ]
   },
   "ywbz": {
     "displayName": "YWBZ Express",
@@ -72432,7 +72437,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yuema-express": [],
   "yuexi-logistics": [],
   "yurtici-kargo": [],
-  "yusuda": [],
+  "yusuda": ["yusuda-1"],
   "ywbz": ["ywbz-1"],
   "ywd": [],
   "ywe": ["ywe-1"],

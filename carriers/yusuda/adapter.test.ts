@@ -2,9 +2,13 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { withoutScriptCopies } from '../../providers/shared/scripts.js';
+import { parseHualeiTrack } from '../gzyl/hualei.js';
 import { GZYL_ORIGIN } from '../gzyl/parser.js';
 import { adapter, YusudaTracker } from './adapter.js';
+import { YUSUDA } from './parser.js';
 import carrier from './carrier.json' with { type: 'json' };
 
 const NUMBER = 'YSD0000000001';
@@ -49,9 +53,25 @@ describe('Yusuda tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'yusuda', providerCode: null, description: 'Synthetic wording' })).toEqual({ kind: 'unknown' });
   });
 
-  it('links no plain-HTTP page and names no number shape', () => {
+  it('holds back every row of its one-batch script but the order’s registration, and a provider’s copies of them', () => {
+    // The whole feed written in one second, its receiving row an hour after that second.
+    const payload = JSON.parse(fixture('track.json'));
+    for (const row of payload[0].data[0].trackDetails) row.track_createdate = '2026-03-02 14:00:00';
+    const after = Date.parse('2026-03-10T00:00:00Z');
+    expect(parseHualeiTrack(payload, NUMBER, YUSUDA, after)?.events?.map(event => event.description)).toEqual(['Order information received']);
+    expect(parseHualeiTrack(payload, NUMBER, { ...YUSUDA, oneBatch: undefined }, after)?.events?.map(event => event.description))
+      .toEqual(['Arrive at the cross border receiving point', 'Order information received']);
+    const copied = withoutScriptCopies({ tracking_provider: '17TRACK', status: 'in_transit', reported_carriers: ['YUSUDA'], events: [
+      { time: '2026-03-02T15:07:14+08:00', description: 'Arrive at the cross border receiving point', stage: 'accepted', reporting_carrier: 'YUSUDA' },
+      { time: '2026-03-01T22:36:51+08:00', description: 'Order information received', stage: 'registered', reporting_carrier: 'YUSUDA' },
+    ] }, '17TRACK');
+    expect(copied.events?.map(event => event.description)).toEqual(['Order information received']);
+  });
+
+  it('links no plain-HTTP page and names its SYD waybills', () => {
     expect(carrier.portal).not.toHaveProperty('url');
     expect(carrier.links).toEqual([]);
-    expect(carrier.detection).toEqual([]);
+    expect(detectCarrierMatch('SYD9900000017YQ')).toMatchObject({ carrier: 'yusuda', confidence: 'high' });
+    for (const near of ['SYD990000001YQ', 'SYD99000000170YQ', 'SYD9900000017Y']) expect(detectCarrierMatch(near).carrier, near).not.toBe('yusuda');
   });
 });

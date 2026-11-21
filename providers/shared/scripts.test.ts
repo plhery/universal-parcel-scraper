@@ -5,6 +5,7 @@ import { ONE_BATCH_SCRIPTS } from '../../carriers/gzyl/script.js';
 import { MTSCN } from '../../carriers/mtscn/parser.js';
 import { PENGYOU } from '../../carriers/pengyou/parser.js';
 import { XINGHE_FREIGHT } from '../../carriers/xinghe-freight/parser.js';
+import { YUSUDA } from '../../carriers/yusuda/parser.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { UniversalTracker } from '../universal.js';
 import { withoutScriptCopies } from './scripts.js';
@@ -23,7 +24,7 @@ const relayed = (overrides: Partial<CarrierResult> = {}): CarrierResult => ({
 
 describe('provider copies of a one-batch script', () => {
   it('names the tenants that keep only the order’s registration from their script', () => {
-    for (const tenant of [GZYL, XINGHE_FREIGHT, MTSCN, PENGYOU]) expect(ONE_BATCH_SCRIPTS.has(tenant.carrier), tenant.carrier).toBe(tenant.oneBatch === true);
+    for (const tenant of [GZYL, XINGHE_FREIGHT, YUSUDA, MTSCN, PENGYOU]) expect(ONE_BATCH_SCRIPTS.has(tenant.carrier), tenant.carrier).toBe(tenant.oneBatch === true);
   });
 
   it('keeps only the order’s registration, and reads the status from it', () => {
