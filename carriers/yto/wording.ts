@@ -28,6 +28,6 @@ export function ytoRelayedWording(description: string): string {
 export function ytoDescribedPlace(description: string): string | undefined {
   const text = description.trim();
   // An overseas centre's scan names the centre before its label: "<centre>,已收入".
-  const place = (/^您的快件(?:已经)?(?:到达|离开)【([^【】]{1,100})】/u.exec(text) ?? /^([^,，【】]{1,100})[,，](?:已揽收|已收入)$/u.exec(text))?.[1]?.trim();
+  const place = (/^您的快件(?:已经)?(?:到达|离开)【([^【】]{1,100})】/u.exec(text) ?? /^([^,，【】]{1,100})[,，](?:已揽收|已收入|派送扫描)$/u.exec(text))?.[1]?.trim();
   return place && !CONTACT.test(place) ? place : undefined;
 }

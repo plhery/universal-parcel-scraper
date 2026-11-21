@@ -237,6 +237,15 @@
       "firstSeen": "2026-11-21",
       "note": "An overseas centre receiving a YTO Global waybill, sent without a label and written after the centre's name; stored as \"Received at a sorting centre\".",
       "code": "DEBUS"
+    },
+    {
+      "wording": "派送扫描",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "An overseas centre sending a YTO Global waybill out for delivery, sent without a label and written after the centre's name; stored as \"Out for delivery\".",
+      "code": "SENT_SCAN"
     }
   ]
 }

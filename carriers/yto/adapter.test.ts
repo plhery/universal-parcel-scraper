@@ -163,11 +163,13 @@ describe('YTO domestic parser', () => {
   it("reads a YTO Global waybill's overseas centre scans with their wall clocks and the centre their description names", async () => {
     const number = 'YTG990000000017';
     const reply = [{ waybillNo: number, waybillProcessInfo: [
+      { waybillNo: number, opTime: '2026-01-02 16:46:08', opCode: 'SENT_SCAN', description: 'Example centre,派送扫描' },
       { waybillNo: number, opTime: '2026-01-02 12:10:44', opCode: 'DEBUS', description: 'Example centre,已收入' },
       { waybillNo: number, opTime: '2026-01-02 12:09:35', opCode: 'PU_PICKUP_SUCCESS', description: 'Example centre,已揽收' },
     ] }];
-    expect(parseYto(reply, number)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Received at a sorting centre',
-      last_update: null, last_update_local: '2026-01-02T12:10:44', events: [
+    expect(parseYto(reply, number)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out for delivery',
+      last_update: null, last_update_local: '2026-01-02T16:46:08', events: [
+        { provider_code: 'SENT_SCAN', stage: 'out_for_delivery', description: 'Out for delivery', local_time: '2026-01-02T16:46:08', location: 'Example centre' },
         { provider_code: 'DEBUS', stage: 'in_transit', description: 'Received at a sorting centre', local_time: '2026-01-02T12:10:44', location: 'Example centre' },
         { provider_code: 'PU_PICKUP_SUCCESS', stage: 'accepted', description: 'Picked up', local_time: '2026-01-02T12:09:35', location: 'Example centre' },
       ] });
@@ -175,12 +177,12 @@ describe('YTO domestic parser', () => {
     // The facade reads a wall clock the centre's name does not place in YTO's zone, and says so.
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify(reply), { headers: { 'content-type': 'application/json' } }));
     const tracked = await createTracker({ fetcher, env: {}, providers: [] }).track({ carrier: 'yto', number });
-    expect(tracked.result.events?.[0]).toMatchObject({ local_time: '2026-01-02T12:10:44', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' });
+    expect(tracked.result.events?.[1]).toMatchObject({ local_time: '2026-01-02T12:10:44', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier' });
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'yto', confidence: 'high' });
     expect(detectCarrierMatch('YTG99000000001').carrier).not.toBe('yto');
     // A centre's name that carries a contact is no place.
-    reply[0]!.waybillProcessInfo[0]!.description = '派件员 13000000000,已收入';
-    expect(parseYto(reply, number).events?.[0]!.location).toBeUndefined();
+    reply[0]!.waybillProcessInfo[1]!.description = '派件员 13000000000,已收入';
+    expect(parseYto(reply, number).events?.[1]!.location).toBeUndefined();
   });
 
   it.each([null, {}, { waybillNo: NUMBER, opCode: 'NEW' }, { waybillNo: NUMBER, opName: '下车扫描' }])('rejects malformed scans %s without dropping them', scan => {
