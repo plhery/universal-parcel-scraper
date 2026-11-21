@@ -117,6 +117,7 @@ describe('BFE Express tracking', () => {
     for (const [wording, stage] of [
       ['example city, arrived at airport of destination', 'in_transit'],
       ['arrived at airport of destination', 'in_transit'],
+      ['ar, en transporte', 'in_transit'],
       ['tu paquete está en viaje a oficina ejemplo', 'in_transit'],
       ['reparto en curso', 'out_for_delivery'],
       ['entregado', 'delivered'],
