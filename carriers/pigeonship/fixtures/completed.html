@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PigeonAdmin</title>
+</head>
+<body class="">
+<div class="wrapper">
+  <header id="page-header">
+    <nav class="navbar navbar-expand-lg navbar-light" style="padding: 0.5rem 1rem; background-color: #F7F7F8;">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="/reports/today/due/">
+          <img src="https://s3.amazonaws.com:443/pigeonship-prod/static/images/logo.png" alt="PigeonShip" height="40" class="d-inline-block align-top">
+        </a>
+        <div class="d-flex align-items-center rs-con" style="flex: 1; justify-content: flex-end;">
+          <a class="btn btn-outline-primary" href="/accounts/login/">Login</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>
+<div class="container-fluid" id="root">
+  <div id="completed-live-tracking" class="row d-flex flex-column justify-content-center mt-4">
+    <h2 class="text-center">
+      Your delivery has been completed successfully.<br>
+      Thank you for choosing PigeonShip.<br>
+      We would be glad to hear from you on our <a href="https://example.com/review">review page</a>.
+    </h2>
+    <div class="d-flex justify-content-center mt-4">
+      <h2>
+        <a v-for="(photo, index) in photos" :href="photo" data-lightbox="delivery" :class="{ 'd-none': index > 0 ? true : false }">
+          View Delivery Photo(s)
+        </a>
+      </h2>
+    </div>
+  </div>
+</div>
+<script src="https://s3.amazonaws.com:443/pigeonship-prod/static/js/vue.min.js"></script>
+<script>
+  new Vue({
+    delimiters: ['${', '}'],
+    el: '#completed-live-tracking',
+    data: {
+      photos: [
+        'https://example.com/synthetic-delivery-photo.jpg?Signature=SYNTHETIC',
+      ]
+    },
+  });
+</script>
+</body>
+</html>

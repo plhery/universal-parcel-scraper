@@ -17,6 +17,11 @@ The page shows "Delivered" for code 64 and "In transit" for every other code, so
 seen are staged and an unseen one leaves the stage unknown. The flag or code 64 makes a delivery.
 The due time becomes the estimate until then.
 
+Once the delivery is complete, the site serves another page at the order's path: "Your delivery
+has been completed successfully." and a link to the delivery's pictures, without the order's
+data or its number. That line is read as a delivery. The page names no number, but the site
+serves it only at a delivered order's path and its "Page not found" at any other.
+
 The page has no scan history, so an answer is a summary without events. Its ready-for-pickup time
 is not read: it falls at midnight UTC, so it is likely a calendar day rather than a clock.
 

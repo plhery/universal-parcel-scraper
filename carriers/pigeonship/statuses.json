@@ -18,6 +18,14 @@
       "confirmedBy": "source",
       "firstSeen": "2026-11-21",
       "note": "The page's script shows \"Delivered\" for this code alone."
+    },
+    {
+      "wording": "Your delivery has been completed successfully.",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The page that replaces the tracking page at a delivered order's path once the delivery is complete, with a link to its pictures and none of the order's data."
     }
   ]
 }

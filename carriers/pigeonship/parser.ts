@@ -26,6 +26,9 @@ export function pigeonshipUrl(number: string): string {
 // The site's page for a path it has nothing at, an unknown number's included.
 const MISSING = /<title>\s*Page not found\s*<\/title>/;
 const SHOWN = /Thank you for choosing PigeonShip\.[^<]{0,200}?Tracking number\s+([^<\s]{1,64})\s*<\/div>/;
+// The page that replaces the tracking page at a delivered order's path once the delivery is
+// complete: its thanks and a link to the delivery's pictures, without the order's data.
+const COMPLETED = /<div\b[^>]*\bid=["']completed-live-tracking["'][^>]*>\s*<h2\b[^>]*>\s*(Your delivery has been completed successfully\.)/;
 // The page's Vue data: the order's fields, then the other stops on the route, which are not read.
 const ORDER = /el:\s*'#live-tracking'[\s\S]{0,4000}?\border:\s*\{([^{}]{0,2000})\}/;
 const ESCAPE = /\\(?:u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2})|([\s\S]))/g;
@@ -50,7 +53,8 @@ function dueBy(order: string): string | null {
 
 /**
  * PigeonShip's tracking page for one number, rendered on its server: the order's status code
- * and label, whether it is delivered and when it is due, with no scan history.
+ * and label, whether it is delivered and when it is due, with no scan history; or, once the
+ * delivery is complete, a page that says so.
  */
 export function parsePigeonshipPage(status: number, page: string, raw: string): CarrierResult {
   const number = normalizePigeonshipNumber(raw);
@@ -60,6 +64,13 @@ export function parsePigeonshipPage(status: number, page: string, raw: string): 
   }
   const shown = SHOWN.exec(page)?.[1];
   const order = ORDER.exec(page)?.[1];
+  if (shown === undefined && order === undefined) {
+    // It names no number: the site serves it only at the path of an order it delivered, and its
+    // "Page not found" at any other.
+    const completed = COMPLETED.exec(page)?.[1];
+    if (completed) return { status: languageStageStatus('delivered'), current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: completed, last_update: null, expected_delivery: null, summary_only: true, events: [] };
+  }
   if (shown === undefined || order === undefined) throw new SchemaError(PROVIDER, 'PigeonShip returned a page without its tracking section');
   if (shown.toUpperCase() !== number) throw new IndeterminateError(PROVIDER, 'PigeonShip answered for another number');
 

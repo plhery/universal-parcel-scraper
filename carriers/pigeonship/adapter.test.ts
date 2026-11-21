@@ -15,7 +15,7 @@ const DELIVERED = '8P7P654H321H09H8PP';
 const page = (name: string) => readFileSync(new URL(`./fixtures/${name}.html`, import.meta.url), 'utf8');
 const assigned = (edit: (html: string) => string = html => html) => edit(page('assigned'));
 const response = (body: string, status = 200, headers: HeadersInit = {}) => new Response(body, { status, headers });
-const statuses = JSON.parse(readFileSync(new URL('./statuses.json', import.meta.url), 'utf8')) as { entries: { code: string; wording: string; stage: string }[] };
+const statuses = JSON.parse(readFileSync(new URL('./statuses.json', import.meta.url), 'utf8')) as { entries: { code?: string; wording: string; stage: string }[] };
 const direct = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('PigeonShip tracking page adapter', () => {
@@ -41,6 +41,26 @@ describe('PigeonShip tracking page adapter', () => {
     expect(parsePigeonshipPage(200, page('delivered'), DELIVERED)).toEqual({
       status: languageStageStatus('delivered'), current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Delivered', provider_code: '64', last_update: null, expected_delivery: null, summary_only: true, events: [] });
+  });
+
+  it('reads the page that replaces the tracking page once the delivery is complete as a delivery', async () => {
+    const delivered = { status: languageStageStatus('delivered'), current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'Your delivery has been completed successfully.', last_update: null, expected_delivery: null, summary_only: true, events: [] };
+    expect(parsePigeonshipPage(200, page('completed'), DELIVERED)).toEqual(delivered);
+    // Its thanks and the delivery's pictures are not read.
+    expect(JSON.stringify(parsePigeonshipPage(200, page('completed'), DELIVERED))).not.toMatch(/example\.com|Thank you|Photo|Signature/);
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => response(page('completed')));
+    await expect(createTracker({ fetcher, env: {}, providers: [] }).track({ carrier: 'pigeonship', number: DELIVERED }))
+      .resolves.toMatchObject({ source: 'pigeonship', result: { current_stage: 'delivered', summary_only: true } });
+    await expect(direct(fetcher).recognize!(DELIVERED)).resolves.toMatchObject({ known: true });
+    for (const edit of [(html: string) => html.replace('completed successfully.', 'completed.'), (html: string) => html.replace('id="completed-live-tracking"', 'id="live"'),
+      (html: string) => html.replace(/<h2 class="text-center">/, '<h3>')]) {
+      expect(() => parsePigeonshipPage(200, edit(page('completed')), DELIVERED)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    }
+    // A tracking page for another number is never taken for the completed one.
+    expect(() => parsePigeonshipPage(200, page('completed').replace('<div class="container-fluid" id="root">',
+      `<div class="container-fluid" id="root">${/<div id='live-tracking'>[\s\S]*?Tracking number [^<]*<\/div>/.exec(assigned())![0]}`), DELIVERED))
+      .toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('takes a delivery from either the flag or the code, and leaves unseen codes unstaged', () => {
@@ -82,8 +102,9 @@ describe('PigeonShip tracking page adapter', () => {
 
   it('maps every recorded code to its stage', () => {
     for (const entry of statuses.entries) {
-      expect(pigeonshipStage(entry.code)).toBe(entry.stage);
-      expect(statusMap.stage(entry.code, entry.wording.toLowerCase())).toBe(entry.stage);
+      if (entry.code) expect(pigeonshipStage(entry.code)).toBe(entry.stage);
+      expect(statusMap.stage(entry.code ?? null, entry.wording.toLowerCase())).toBe(entry.stage);
+      expect(statusMapAnswer({ carrier: 'pigeonship', providerCode: entry.code ?? null, description: entry.wording })).toEqual({ kind: 'mapped', stage: entry.stage });
       expect(STAGES).toContain(entry.stage);
     }
     expect(statusMapAnswer({ carrier: 'pigeonship', providerCode: '16', description: 'Assigned' })).toMatchObject({ kind: 'mapped', stage: 'in_transit' });
