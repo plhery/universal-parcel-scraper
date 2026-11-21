@@ -38,7 +38,10 @@ open their waybills with their own code; the corpus holds a made-up number in th
 is the company's code, the one universal providers file it under, so the rule names Xinghe
 Freight with high confidence. Readers also type the waybill without its final `Q`:
 `xinghe-freight-truncated` names Xinghe for `GZXH`, ten digits and `Y`, and the adapter asks
-with the `Q` back.
+with the `Q` back. Readers also type one digit too few or too many. The tracker never holds
+such a number, so the adapter refuses a `GZXH` waybill without exactly ten digits before
+asking. The reader is then told to check the number instead of waiting for scans that never
+come.
 
 ## Links
 

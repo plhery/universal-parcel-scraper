@@ -44,7 +44,16 @@ describe('Xinghe Freight tracking adapter', () => {
     await expect(adapter(environment(fetcher)).track({ number: NUMBER.slice(0, -1) })).resolves.toMatchObject({ current_stage: 'customs' });
     expect(String(fetcher.mock.calls[0]![0])).toBe(`${GZYL_ORIGIN}/selectTrack.htm?documentCode=${NUMBER}`);
     expect(xingheFreightNumber('gzxh 9999999980 y')).toBe(NUMBER);
-    for (const number of [NUMBER, 'GZXH999999998Y', 'GZXH9999999980X']) expect(xingheFreightNumber(number), number).toBe(number);
+    for (const number of [NUMBER, 'GZXH9999999980X']) expect(xingheFreightNumber(number), number).toBe(number);
+  });
+
+  it('refuses a waybill a digit short or long before asking, as a number Xinghe does not issue', async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    for (const number of ['GZXH999999998YQ', 'GZXH99999999800YQ', 'GZXH999999998Y', 'gzxh 999999998 yq']) {
+      await expect(adapter(environment(fetcher)).track({ number }, { signal: AbortSignal.abort(), budgetMs: 1 }), number)
+        .rejects.toMatchObject({ kind: 'invalid_input' });
+    }
+    expect(fetcher).not.toHaveBeenCalled();
   });
 
   it('settles the interface’s no-row answer with the page', async () => {
