@@ -45,7 +45,15 @@ export class NipostTracker {
 
     const refresh = async (signal: AbortSignal, deadline: number) => {
       const html = await this.get(page, signal, deadline, PAGE_MAX_BYTES);
-      const found = await discoverActionId(html, page, url => this.get(url, signal, deadline, CHUNK_MAX_BYTES));
+      // The page's chunks are read together: a failed read ends the others, so no request outlives the lookup.
+      const sibling = new AbortController();
+      const chunks = AbortSignal.any([signal, sibling.signal]);
+      let found: string | undefined;
+      try {
+        found = await discoverActionId(html, page, url => this.get(url, chunks, deadline, CHUNK_MAX_BYTES));
+      } finally {
+        sibling.abort();
+      }
       if (found === undefined) throw new SchemaError(PROVIDER, 'NIPOST tracking page no longer names its lookup: the tracking lookup changed');
       // The page naming the id that just failed means the id is not what changed.
       if (found === action) throw new SchemaError(PROVIDER, 'NIPOST did not answer its own lookup: the tracking lookup changed');

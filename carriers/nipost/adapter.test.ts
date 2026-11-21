@@ -434,6 +434,23 @@ describe('NIPOST action discovery', () => {
     expect(stop.mock.calls.filter(([, init]) => init?.method === 'POST')).toHaveLength(1);
   });
 
+  it('ends the page’s other chunk reads when one fails, so no request outlives the lookup', async () => {
+    const { fetcher } = site();
+    const open: AbortSignal[] = [];
+    const failing = vi.fn<typeof fetch>((input, init) => {
+      const url = String(input);
+      if (url === PAGE_CHUNK) return Promise.resolve(new Response('Not Found', { status: 404 }));
+      if (url !== LAYOUT_CHUNK) return fetcher(input, init);
+      const signal = init!.signal!;
+      open.push(signal);
+      return new Promise<Response>((_, reject) => { signal.addEventListener('abort', () => reject(signal.reason), { once: true }); });
+    });
+    const lookup = carrier(failing).track({ number: DELIVERED });
+    await expect(lookup).rejects.toMatchObject({ kind: 'transport', status: 404 });
+    expect(open.length).toBeGreaterThan(0);
+    expect(open.every(signal => signal.aborted)).toBe(true);
+  });
+
   it('binds only the id the lookup call’s export is built from, and reads a few chunks at most', async () => {
     const route = text('route-chunk.js');
     const call = lookupCall([route]);
