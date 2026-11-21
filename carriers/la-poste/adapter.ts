@@ -266,7 +266,13 @@ function parseShipment(payload: unknown, trackingNumber: string): { result: Carr
   const oldestFirst = rawEvents.length === kept.length ? [...events].reverse() : [];
   const moved = oldestFirst.findIndex((event) => event.stage && event.stage !== 'registered');
   const firstMove = moved > 0 && oldestFirst.slice(0, moved).some((event) => event.stage === 'registered') ? oldestFirst[moved] : undefined;
-  if (firstMove?.stage === 'in_transit' && /(?:^|\/)ET1$/.test(firstMove.provider_code ?? '')) firstMove.stage = 'accepted';
+  if (firstMove?.stage === 'in_transit' && /(?:^|\/)ET1$/.test(firstMove.provider_code ?? '')) {
+    // La Poste can list that scan twice at one instant, worded for a parcel and for a Colissimo: both are the acceptance.
+    for (const event of oldestFirst) {
+      if (event.stage === 'in_transit' && event.provider_code === firstMove.provider_code && event.time === firstMove.time
+        && event.local_time === firstMove.local_time && event.location === firstMove.location) event.stage = 'accepted';
+    }
+  }
 
   const timeline = records(shipment.timeline)
     .filter((step) => step.status === true)
