@@ -167,6 +167,7 @@ import { adapter as cjLogistics } from '../carriers/cj-logistics/adapter.js';
 import { adapter as cjPacket } from '../carriers/cj-packet/adapter.js';
 import { adapter as ckLine } from '../carriers/ck-line/adapter.js';
 import { adapter as closerLogistics } from '../carriers/closer-logistics/adapter.js';
+import { adapter as cmtExpress } from '../carriers/cmt-express/adapter.js';
 import { adapter as cne } from '../carriers/cne/adapter.js';
 import { adapter as colisPrive } from '../carriers/colis-prive/adapter.js';
 import { adapter as colisweb } from '../carriers/colisweb/adapter.js';
@@ -283,6 +284,7 @@ import { adapter as ellermanCityLiners } from '../carriers/ellerman-city-liners/
 import { adapter as elta } from '../carriers/elta/adapter.js';
 import { adapter as emile } from '../carriers/emile/adapter.js';
 import { adapter as emiratesPost } from '../carriers/emirates-post/adapter.js';
+import { adapter as emoTrans } from '../carriers/emo-trans/adapter.js';
 import { adapter as ems } from '../carriers/ems/adapter.js';
 import { adapter as emsVietnam } from '../carriers/ems-vietnam/adapter.js';
 import { adapter as energiaTk } from '../carriers/energia-tk/adapter.js';
@@ -633,6 +635,7 @@ import { adapter as novaGlobal } from '../carriers/nova-global/adapter.js';
 import { adapter as novaPoshta } from '../carriers/nova-poshta/adapter.js';
 import { adapter as nowCouriers } from '../carriers/now-couriers/adapter.js';
 import { adapter as nox } from '../carriers/nox/adapter.js';
+import { adapter as numarkTransportation } from '../carriers/numark-transportation/adapter.js';
 import { adapter as nzCouriers } from '../carriers/nz-couriers/adapter.js';
 import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
 import { adapter as oakHarbor } from '../carriers/oak-harbor/adapter.js';
@@ -699,6 +702,7 @@ import { adapter as pitneyBowes } from '../carriers/pitney-bowes/adapter.js';
 import { adapter as pittOhio } from '../carriers/pitt-ohio/adapter.js';
 import { adapter as planzer } from '../carriers/planzer/adapter.js';
 import { adapter as pocztaPolska } from '../carriers/poczta-polska/adapter.js';
+import { adapter as polarExpress } from '../carriers/polar-express/adapter.js';
 import { adapter as polonez } from '../carriers/polonez/adapter.js';
 import { adapter as posIndonesia } from '../carriers/pos-indonesia/adapter.js';
 import { adapter as posMalaysia } from '../carriers/pos-malaysia/adapter.js';
@@ -1213,6 +1217,7 @@ export const REGISTRY: RegistryDefinition = {
     "cj-packet": cjPacket,
     "ck-line": ckLine,
     "closer-logistics": closerLogistics,
+    "cmt-express": cmtExpress,
     "cne": cne,
     "colis-prive": colisPrive,
     "colisweb": colisweb,
@@ -1329,6 +1334,7 @@ export const REGISTRY: RegistryDefinition = {
     "elta": elta,
     "emile": emile,
     "emirates-post": emiratesPost,
+    "emo-trans": emoTrans,
     "ems": ems,
     "ems-vietnam": emsVietnam,
     "energia-tk": energiaTk,
@@ -1679,6 +1685,7 @@ export const REGISTRY: RegistryDefinition = {
     "nova-poshta": novaPoshta,
     "now-couriers": nowCouriers,
     "nox": nox,
+    "numark-transportation": numarkTransportation,
     "nz-couriers": nzCouriers,
     "nz-post": nzPost,
     "oak-harbor": oakHarbor,
@@ -1745,6 +1752,7 @@ export const REGISTRY: RegistryDefinition = {
     "pitt-ohio": pittOhio,
     "planzer": planzer,
     "poczta-polska": pocztaPolska,
+    "polar-express": polarExpress,
     "polonez": polonez,
     "pos-indonesia": posIndonesia,
     "pos-malaysia": posMalaysia,
@@ -2425,7 +2433,7 @@ export const REGISTRY: RegistryDefinition = {
     "ck-line": "ck-line",
     "ckeex": "universal",
     "closer-logistics": "closer-logistics",
-    "cmt-express": "universal",
+    "cmt-express": "cmt-express",
     "cn-express-za": "universal",
     "cne": "cne",
     "codexpress": "universal",
@@ -2652,6 +2660,7 @@ export const REGISTRY: RegistryDefinition = {
     "emirates-courier-express": "universal",
     "emirates-post": "emirates-post",
     "emiro": "universal",
+    "emo-trans": "emo-trans",
     "emole-express": "universal",
     "emons": "universal",
     "ems": "ems",
@@ -3315,6 +3324,7 @@ export const REGISTRY: RegistryDefinition = {
     "now-couriers": "now-couriers",
     "nox": "nox",
     "ntc-express": "universal",
+    "numark-transportation": "numark-transportation",
     "nz-couriers": "nz-couriers",
     "nz-post": "nz-post",
     "oak-harbor": "oak-harbor",
@@ -3444,6 +3454,7 @@ export const REGISTRY: RegistryDefinition = {
     "pmm": "universal",
     "poczta-polska": "poczta-polska",
     "pointpack": "universal",
+    "polar-express": "polar-express",
     "polaris-transport": "universal",
     "polonez": "polonez",
     "pony-express": "universal",

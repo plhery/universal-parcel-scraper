@@ -16496,11 +16496,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cmt-express",
+      "recognitionRank": 26
     },
     "canaryUrl": "https://www.cmtexpress.com.cn/track.aspx",
+    "trackingUrlTemplate": "https://tms.cmtexpress.com.cn/en/trackIndex.htm?documentCode={trackingNumber}",
     "trackingSearchUrl": "https://www.cmtexpress.com.cn/track.aspx",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "tms.cmtexpress.com.cn"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^CMT\\d{12}$",
@@ -24035,6 +24047,51 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/tracking/?$",
         "params": [
           "tracking_id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "emo-trans": {
+    "displayName": "EMO Trans",
+    "color": "#0768A7",
+    "aliases": [
+      "EMO Trans, Inc.",
+      "Emotrans",
+      "EMO Trans Global"
+    ],
+    "countries": [
+      "US",
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "emo-trans",
+      "localClocks": true
+    },
+    "canaryUrl": "https://portal.emotrans-global.com/track/quicktrack",
+    "trackingUrlTemplate": "https://portal.emotrans-global.com/track/quicktrack?shipment={trackingNumber}",
+    "trackingSearchUrl": "https://portal.emotrans-global.com/track/quicktrack",
+    "helpUrl": "https://www.emotrans-global.com/contact/garden-city-head-office/",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.emotrans-global.com"
+        ],
+        "pathPattern": "^/track/quicktrack/?$",
+        "params": [
+          "shipment"
+        ]
+      },
+      {
+        "domains": [
+          "portal.emotrans-global.com"
+        ],
+        "pathPattern": "^/track/quicktrack/shipment/\\d+$",
+        "params": [
+          "search"
         ]
       }
     ],
@@ -45421,6 +45478,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "numark-transportation": {
+    "displayName": "NuMark Transportation",
+    "color": "#130958",
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "numark-transportation",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://www.numarktransportation.net/",
+    "trackingSearchUrl": "https://www.numarktransportation.net/",
+    "helpUrl": "https://www.numarktransportation.net/contact-us",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.numarktransportation.net"
+        ],
+        "pathPattern": "^/cgibin/wbprotrk/?$",
+        "params": [
+          "wbfb"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "nz-couriers": {
     "displayName": "New Zealand Couriers",
     "color": "#ffc900",
@@ -49768,6 +49855,52 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ],
     "detectionRules": []
+  },
+  "polar-express": {
+    "displayName": "Polar Express",
+    "color": "#10233D",
+    "aliases": [
+      "PolExp",
+      "Полярный Экспресс"
+    ],
+    "countries": [
+      "US",
+      "CA",
+      "RU",
+      "UZ"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "polar-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://the-tracking.com/",
+    "trackingUrlTemplate": "https://the-tracking.com/{trackingNumber}/",
+    "trackingSearchUrl": "https://the-tracking.com/",
+    "helpUrl": "https://polexp.com/contacts.html",
+    "linkRules": [
+      {
+        "domains": [
+          "the-tracking.com"
+        ],
+        "path": "^/([A-Za-z]{2}\\d{9}[A-Za-z]{2})/?$"
+      },
+      {
+        "domains": [
+          "the-tracking.com"
+        ],
+        "pathPattern": "^/?$",
+        "query": "(?:^|&)track_number=([A-Za-z]{2}\\d{9}[A-Za-z]{2})(?=&|$)"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^PE\\d{9}(?:US|CA)$",
+        "confidence": "low"
+      }
+    ]
   },
   "polaris-transport": {
     "displayName": "Polaris Transportation Group",
@@ -70957,6 +71090,7 @@ export const CARRIER_IDS = [
   "emirates-courier-express",
   "emirates-post",
   "emiro",
+  "emo-trans",
   "emole-express",
   "emons",
   "ems-vietnam",
@@ -71593,6 +71727,7 @@ export const CARRIER_IDS = [
   "now-couriers",
   "nox",
   "ntc-express",
+  "numark-transportation",
   "nz-couriers",
   "oak-harbor",
   "obibox",
@@ -71714,6 +71849,7 @@ export const CARRIER_IDS = [
   "pml-tw",
   "pmm",
   "pointpack",
+  "polar-express",
   "polaris-transport",
   "polonez",
   "pony-express",
@@ -72959,6 +73095,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "emirates-courier-express": [],
   "emirates-post": ["emirates-post-own","emirates-post-s10"],
   "emiro": [],
+  "emo-trans": [],
   "emole-express": [],
   "emons": [],
   "ems-vietnam": ["ems-vietnam-s10"],
@@ -73595,6 +73732,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "now-couriers": [],
   "nox": ["nox-1"],
   "ntc-express": [],
+  "numark-transportation": [],
   "nz-couriers": [],
   "oak-harbor": [],
   "obibox": ["obibox-1"],
@@ -73716,6 +73854,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pml-tw": [],
   "pmm": [],
   "pointpack": [],
+  "polar-express": ["polar-express-pe"],
   "polaris-transport": ["polaris-transport-1"],
   "polonez": ["polonez-1"],
   "pony-express": [],

@@ -93,6 +93,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "cj-logistics": 977,
   "cj-packet": 956,
   "closer-logistics": 849,
+  "cmt-express": 26,
   "colis-prive": 740,
   "connect-couriers": 831,
   "consegnia": 57,
