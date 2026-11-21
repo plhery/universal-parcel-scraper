@@ -63858,6 +63858,21 @@
     ]
   },
   {
+    "input": "6947889999999980",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "aliexpress",
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce",
+      "aliexpress"
+    ]
+  },
+  {
     "input": "6956315632",
     "carrier": "unknown",
     "confidence": "low",

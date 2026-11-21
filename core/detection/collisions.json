@@ -4149,6 +4149,15 @@
     "reason": "Without a GS1 check digit Canada Post, Correos Express and Evri UK drop out; the remaining 16-digit candidates stay a low-confidence suggestion."
   },
   {
+    "shape": "9{16} starting with 694788 that fails the GS1 check",
+    "carriers": [
+      "dhl-ecommerce",
+      "tnt",
+      "aliexpress"
+    ],
+    "reason": "Cainiao's tracker follows warehouse parcels numbered 694788 and ten digits, so AliExpress joins the 16-digit candidates left once Canada Post, Correos Express and Evri UK drop out without a GS1 check digit; all stay a low-confidence suggestion."
+  },
+  {
     "shape": "9{13} starting with 1 or 250 that fails the Ukrposhta check",
     "carriers": [
       "correos-chile",

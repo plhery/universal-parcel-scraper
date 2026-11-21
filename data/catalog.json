@@ -325,6 +325,10 @@
         "confidence": "low"
       },
       {
+        "pattern": "^694788\\d{10}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^PA0{2}\\d{8}$",
         "confidence": "low"
       },

@@ -178,6 +178,11 @@
       "confidence": "low"
     },
     {
+      "id": "aliexpress-694788",
+      "pattern": "^694788\\d{10}$",
+      "confidence": "low"
+    },
+    {
       "id": "aliexpress-pa",
       "pattern": "^PA0{2}\\d{8}$",
       "confidence": "low"
