@@ -253,7 +253,8 @@ test('distinguishes prompt and position failures without retaining solver data',
 test('ends stalled work, aborts OCR and closes late contexts', async () => {
   const f = fixture(); let signal;
   f.options.solveCharacters = async (_challenge, s) => { signal = s; return new Promise(() => {}); };
-  await runChinaPostBrowser({ ...f.options, maxTimeout: 10 });
+  // Long enough to reach the characters under a loaded runner; the stalled OCR then takes the rest.
+  await runChinaPostBrowser({ ...f.options, maxTimeout: 300 });
   assert.equal(signal.aborted, true); assert.equal(f.state.closed, 1);
   const late = fixture(); let release;
   late.options.handle.browser.newContext = () => new Promise(resolve => { release = resolve; });

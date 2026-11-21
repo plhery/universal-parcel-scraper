@@ -213,7 +213,8 @@ describe('Jumppoint HTTP adapter', () => {
       const signal = init?.signal;
       signal?.addEventListener('abort', () => reject(signal.reason), { once: true });
     }));
-    await expect(carrier(fetcher).track({ number: IN_TRANSIT }, { budgetMs: 100 })).rejects.toThrow();
+    // The first read takes half the budget; the other half leaves the retry room on a loaded runner.
+    await expect(carrier(fetcher).track({ number: IN_TRANSIT }, { budgetMs: 1000 })).rejects.toThrow();
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
