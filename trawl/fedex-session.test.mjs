@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { readFileSync } from 'node:fs';
 import { stripTypeScriptTypes } from 'node:module';
-import { FEDEX_HOLD_MAX_AGE_MS, FEDEX_HOLD_MAX_LOOKUPS, FEDEX_HOLD_MAX_MEMORY_SHARE, FedExSessions, fedexBrowserPool,
-  fedexSessionNumber, fedexSessions } from './fedex-session.mjs';
+import { FEDEX_HOLD_MAX_AGE_MS, FEDEX_HOLD_MAX_LOOKUPS, FEDEX_HOLD_MAX_MEMORY_SHARE, FEDEX_SESSION_IDLE_MS,
+  FEDEX_SESSION_MAX_AGE_MS, FedExSessions, fedexBrowserPool, fedexSessionNumber, fedexSessions } from './fedex-session.mjs';
 
 const API = 'https://api.fedex.com/track/v2/shipments';
 const NUMBER = '999999999999';
@@ -594,6 +594,37 @@ test('no second try for a reused session or a refusal that is not the edge\'s', 
   assert.deepEqual(f.requests, [NUMBER, NUMBER, NUMBER]);
   assert.equal(f.contexts[1].closed, true);
   assert.deepEqual(reports.map(x => [x.session, x.cause, x.retry]), [['reused', 'edge', undefined], ['new', 'api', undefined]]);
+  await f.close();
+});
+
+test('keeps an idle working session for two hours by default', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const reports = [], f = fixture([], { onSessionEnd: fields => reports.push(fields) });
+  await f.run();
+  t.mock.timers.tick(FEDEX_SESSION_IDLE_MS - 1);
+  await tick();
+  assert.equal(f.contexts[0].closed, false);
+  t.mock.timers.tick(1);
+  await tick();
+  assert.equal(f.contexts[0].closed, true);
+  assert.deepEqual(reports.map(x => x.reason), ['idle']);
+  await f.close();
+});
+
+test('keeps a session in use for eight hours by default', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const hour = 60 * 60_000, reports = [], f = fixture([], { onSessionEnd: fields => reports.push(fields) });
+  for (let at = 0; at < FEDEX_SESSION_MAX_AGE_MS; at += hour) {
+    await f.run();
+    t.mock.timers.tick(hour - 1);
+    await tick();
+    assert.equal(f.contexts[0].closed, false);
+    t.mock.timers.tick(1);
+  }
+  await tick();
+  assert.equal(f.contexts.length, 1);
+  assert.equal(f.contexts[0].closed, true);
+  assert.deepEqual(reports.map(x => x.reason), ['max_age']);
   await f.close();
 });
 

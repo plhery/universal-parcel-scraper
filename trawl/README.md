@@ -157,7 +157,9 @@ pages within a lookup, or prepare the context before its page keep their own lif
 ## Sessions
 
 The service reuses browser sessions, never parcel responses. FedEx keeps one verified context
-per pooled browser and discards it on expiry, mismatch or failure. A context is verified when the
+per pooled browser and discards it on expiry (`FEDEX_SESSION_IDLE_MS`, two hours idle, or
+`FEDEX_SESSION_MAX_AGE_MS`, eight hours old), mismatch or failure. The edge refuses new
+sessions far more often than kept ones, and a kept one it refuses costs no more than a new one. A context is verified when the
 edge accepted its last lookup and FedEx answered for that number, with tracking or with its
 answer that it has none; each lookup still submits and captures its own request. A refusal,
 an unreadable reply or another number's reply ends it.

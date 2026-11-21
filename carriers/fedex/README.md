@@ -47,9 +47,10 @@ fallback')`.
    - a new context whose first read the edge refuses waits 10 s and submits the same request
      once more in that context, when the budget allows, to measure whether a refused new
      session can still be accepted;
-   - the context stays on its pooled browser and closes after 30 min idle, 2 h total, any
-     failed validation, or a browser restart. The browser outlasts the service's recycle
-     count while the session works, within the limits the TRAWL README gives.
+   - the context stays on its pooled browser and closes after 2 h idle, 8 h total, any
+     failed validation, or a browser restart. The edge refuses new sessions far more often
+     than kept ones, so a working one is kept long. The browser outlasts the service's
+     recycle count while the session works, within the limits the TRAWL README gives.
 
 ## Notes
 

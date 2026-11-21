@@ -83,11 +83,17 @@ async function bounded(promise, ms, message) {
   } finally { clearTimeout(timer); }
 }
 
+// The edge refuses a new session far more often than a kept one, and kept sessions
+// stayed accepted through 40-minute idles at 160 minutes old. A kept session it refuses
+// costs one read, as a new one does, so a working session is kept for a long time.
+export const FEDEX_SESSION_IDLE_MS = 2 * 60 * 60_000;
+export const FEDEX_SESSION_MAX_AGE_MS = 8 * 60 * 60_000;
+
 export class FedExSessions {
   #sessions = new WeakMap();
   #activity = new WeakMap();
   #holds = new WeakMap();
-  constructor({ idleMs = 30 * 60_000, maxAgeMs = 2 * 60 * 60_000, closeMs = 3_000,
+  constructor({ idleMs = FEDEX_SESSION_IDLE_MS, maxAgeMs = FEDEX_SESSION_MAX_AGE_MS, closeMs = 3_000,
     settleMs = 250, incompleteSettleMs = 1_000, onRefusal = reportRefusal, onSessionEnd = reportSessionEnd,
     holdMaxLookups = FEDEX_HOLD_MAX_LOOKUPS, holdMaxAgeMs = FEDEX_HOLD_MAX_AGE_MS,
     holdMaxMemoryShare = FEDEX_HOLD_MAX_MEMORY_SHARE, onHold = reportHold,
