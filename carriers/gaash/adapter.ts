@@ -81,11 +81,20 @@ export class GaashTracker {
     ]);
   }
 
-  /** Both replies for the number, asked together as the page does, or null when the nonce is refused. */
+  /**
+   * Both replies for the number, asked together as the page does, or null when the nonce is refused.
+   * A failed request ends the other, so no request outlives the lookup.
+   */
   async #lookup(number: string, nonce: string, signal: AbortSignal, timeoutMs: number): Promise<{ tracking: unknown; status: unknown } | null> {
     const query = new URLSearchParams({ parcel_id: number, lang: 'en' });
-    const [tracking, status] = await Promise.all(ROUTES.map((route) => this.#route(route, query, nonce, signal, timeoutMs)));
-    return tracking === REFUSED || status === REFUSED ? null : { tracking, status };
+    const sibling = new AbortController();
+    const both = AbortSignal.any([signal, sibling.signal]);
+    try {
+      const [tracking, status] = await Promise.all(ROUTES.map((route) => this.#route(route, query, nonce, both, timeoutMs)));
+      return tracking === REFUSED || status === REFUSED ? null : { tracking, status };
+    } finally {
+      sibling.abort();
+    }
   }
 
   async #route(route: string, query: URLSearchParams, nonce: string, signal: AbortSignal, timeoutMs: number): Promise<unknown> {
