@@ -21,9 +21,12 @@ suppresses earlier traces even after verification. The adapter marks its history
 as incomplete and keeps the carrier's epoch scan clocks. A trace's label in Chinese shows
 the English of its type, and takes over the row stored in Chinese.
 
-ZTO takes no part in recognition. Its gateway challenges a server's probes, the page's
-verification is not solved within a probe's budget, and most twelve-digit numbers it would
-be asked about belong to FedEx, which issues the same shape.
+HTTP recognition does not ask ZTO: its gateway challenges a server's probes, and most
+twelve-digit numbers it would be asked about belong to FedEx, which issues the same shape.
+Browser recognition asks it about fourteen-digit waybills beginning with 73, the series
+of its archived waybill links. It runs the page's verification alone, which fits the
+browser probe's budget. A matching reply confirms the number; GLS Netherlands prints
+some fourteen-digit runs beginning with 73 too.
 
 The legacy image endpoint does not supply the page's plain-code challenge. Mobile
 H5 tracking requires a signed-in ZTO account. The

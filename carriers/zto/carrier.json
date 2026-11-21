@@ -21,7 +21,11 @@
       "direct",
       "trawl"
     ],
-    "browser": true
+    "browser": true,
+    "browserRecognition": {
+      "rank": 800,
+      "pattern": "^73\\d{12}$"
+    }
   },
   "capabilities": [
     "history",

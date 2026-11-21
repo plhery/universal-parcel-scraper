@@ -30,6 +30,16 @@ describe('ZTO', () => {
     const wrong = found(); wrong.result.items[0]!.billCode = other;
     expect(() => parseZto(wrong, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
+
+  it('is asked through the browser about its fourteen-digit 73 series alone', () => {
+    const series = '73990000000001';
+    expect(detectCarrierMatch(series)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(recognitionCandidates(series, { phase: 'browser' }).map(row => row.carrier)).toEqual(['zto']);
+    expect(recognitionCandidates(series).map(row => row.carrier)).not.toContain('zto');
+    for (const input of ['74990000000001', '739900000000011', '739800000006']) {
+      expect(recognitionCandidates(input, { phase: 'browser' }).map(row => row.carrier)).not.toContain('zto');
+    }
+  });
   it('preserves epoch clocks, drops private wording and allows provider completion', () => {
     const result = parseZto(found(), number);
     expect(result).toMatchObject({ current_stage: 'delivered', history_truncated: true,
