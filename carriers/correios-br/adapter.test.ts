@@ -105,6 +105,9 @@ describe('Correios parser', () => {
     // The receipt's wording ends where its unit goes; with no unit the "em" goes too.
     expect(result.events?.[0]).toMatchObject({ description: 'Objeto recebido' });
     expect(result.events?.[0]).not.toHaveProperty('location');
+    // The recipient paid the import's taxes or fee: the item leaves customs for delivery.
+    const paid = parseCorreios({ ...fixture, eventos: [scan('PAR', '31', 'Pagamento confirmado', clock('2026-01-09 10:00:00'))] }, NUMBER);
+    expect(paid.events?.[0]).toMatchObject({ provider_code: 'PAR/31', stage: 'in_transit' });
   });
 
   it('requires one exact response identity and structurally complete bounded scans', () => {
