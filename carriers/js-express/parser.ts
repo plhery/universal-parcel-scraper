@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime, IANAZone } from 'luxon';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../../core/detection/usps.js';
@@ -175,14 +175,20 @@ type UspsFeed = 'utc' | 'town' | null;
  * The destination's clock for a row without a place, when the destination
  * keeps one clock and the offset the row states is that clock's at the row's
  * wall clock: the destination courier's and post's rows, relayed from another
- * country's post or not. Other rows' offsets are not read: Straightship's
- * carry China's, and the airports' can be another country's.
+ * country's post or not. A row at +00:00, where the destination's clock never
+ * is, is on UTC: the destination courier's record of the merchant's data, as
+ * that courier's own tracker clocks it. Other rows' offsets are not read:
+ * Straightship's carry China's, and the airports' can be another country's.
  */
 function destinationInstant(local: string, offset: string, country: string | null): string | null {
   const zone = country && OFFSET.test(offset) && !hasSeveralClocks(country) ? mainZone(country) : null;
   if (!zone) return null;
   const stated = DateTime.fromISO(local + offset, { setZone: true });
-  return stated.setZone(zone).toFormat("yyyy-MM-dd'T'HH:mm:ss") === local ? stated.toISO({ suppressMilliseconds: true }) : null;
+  if (!stated.isValid) return null;
+  if (stated.setZone(zone).toFormat("yyyy-MM-dd'T'HH:mm:ss") === local) return stated.toISO({ suppressMilliseconds: true });
+  // A clock that keeps +00:00 in winter, as London's, can be stated at it in summer.
+  const neverUtc = [0, 6].every((month) => IANAZone.create(zone).offset(Date.UTC(stated.year, month, 1)) !== 0);
+  return offset === '+00:00' && neverUtc ? stated.toISO({ suppressMilliseconds: true }) : null;
 }
 
 /**

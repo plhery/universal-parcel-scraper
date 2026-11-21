@@ -681,6 +681,17 @@ describe('JS Express tracking adapter', () => {
       expect(result.events?.slice(0, 4).map((event) => event.time ?? event.local_time)).toEqual([
         '2026-10-30T08:18:00', '2026-10-29T13:02:00', '2026-10-29T13:02:00', '2026-10-24T01:24:00']);
     }
+    // The destination courier's record of the merchant's data at +00:00 is on UTC where the destination's clock never is:
+    // a minute after the warehouse's inbound scan, as the destination courier's own tracker gives it.
+    const data = stated('2026-11-12 12:53:21', '', 'Package information received.', '+00:00', 'OIT');
+    const inbound = stated('2026-11-12 20:52:18', 'Shenzhen General Warehouse', 'Item inbound in Shenzhen General Warehouse', '+08:00', 'OIT');
+    expect(parseJsExpress(waybill([inbound, data], { country: 'Netherlands' }), DELIVERED).events?.map((event) => event.time ?? event.local_time))
+      .toEqual(['2026-11-12T20:52:18+08:00', '2026-11-12T12:53:21Z']);
+    // London keeps +00:00 in winter, so in summer that offset leaves the wall clock.
+    for (const [date, expected] of [['2026-07-12 12:53:21', '2026-07-12T12:53:21'], ['2026-11-12 12:53:21', '2026-11-12T12:53:21Z']]) {
+      const event = parseJsExpress(waybill([{ ...data, date }], { country: 'United Kingdom' }), DELIVERED).events?.[0];
+      expect(event?.time ?? event?.local_time).toBe(expected);
+    }
     // A code that settles a stage gives it to a wording the map lacks.
     const unknown = parseJsExpress(withList([{ ...row('2026-10-23 13:15:00', '', 'Sample courier note'), code: 'DSD' } as Row]), DELIVERED);
     expect(unknown.events?.[0]).toMatchObject({ provider_code: 'DSD', stage: 'delivered', stage_source: 'carrier_map' });
