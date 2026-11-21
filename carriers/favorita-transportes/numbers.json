@@ -19,7 +19,10 @@
       "quarantine": true,
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The published invoice names Favorita Transportes as carrier and prints this exact dotted number. Favorita’s public lookup starts from the recipient’s tax ID, so the use of the invoice number alone as a shipment identifier remains unclear."
     },
@@ -41,7 +44,10 @@
       "quarantine": true,
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The published invoice names Favorita Transportes as carrier and prints this exact dotted number. Favorita’s public lookup starts from the recipient’s tax ID, so the use of the invoice number alone as a shipment identifier remains unclear."
     }

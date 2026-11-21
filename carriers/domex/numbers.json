@@ -14,7 +14,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The first waybill number in the order-tracking example of Domex's own API documentation."
     },

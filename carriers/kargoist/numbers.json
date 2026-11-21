@@ -137,7 +137,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Şikayetvar complaint about Kargoist giving it as the tracking number of an appliance maker's parcel carried by Kargoist."
     },

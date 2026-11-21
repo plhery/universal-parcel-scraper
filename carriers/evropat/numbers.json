@@ -28,6 +28,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },
@@ -57,7 +58,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Example in the number field of Evropat's own tracking page. Evropat's tracking lookup answers it as a delivered waybill."

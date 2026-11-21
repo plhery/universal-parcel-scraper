@@ -275,7 +275,7 @@ describe('TForce Freight tracking page', () => {
 
   it('is asked, with XPO and TNT, about nine digits that pass its check', () => {
     for (const number of [DELIVERED, IN_TRANSIT]) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['tnt', 'tforce-freight', 'xpo-ltl'] });
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['tnt', 'dpd-ie', 'tforce-freight', 'xpo-ltl'] });
       expect(recognitionAskedCarriers(number, { countryHint: 'US' }), number).toContain('tforce-freight');
     }
     for (const number of ['222222222', '11111112', '1111111114', '2205222222222', '2206222222221']) {

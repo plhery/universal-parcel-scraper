@@ -99,7 +99,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Explicitly labelled pickup request number, not tracking number. The related return shipment is linked separately.",
       "relationships": [

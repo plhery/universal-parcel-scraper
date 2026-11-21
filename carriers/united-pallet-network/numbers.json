@@ -19,7 +19,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "The customer includes this complete UPN tracking number in the review title and describes the carrier’s delivery status. The carrier’s guest tracker requires the delivery postcode, which the review omits."

@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Airways Courier's indexed public waybill link carries the exact number. The retrieved results page shows an empty waybill section."
     },
@@ -40,6 +43,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]

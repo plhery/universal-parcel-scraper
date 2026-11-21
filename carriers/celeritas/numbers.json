@@ -19,6 +19,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -40,7 +41,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Trustpilot review on Celeritas' page gives it as the reference of an FNAC order. Celeritas' tracker answers it as a returned parcel whose last mile was Correos."
     },
@@ -59,7 +63,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Trustpilot review on Celeritas' page gives it for a failed Celeritas delivery. Celeritas' tracker no longer knows it, which can reflect an expired record."
     },
@@ -79,7 +86,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Trustpilot review on Celeritas' page gives it as an Amazon return pickup the reviewer followed on Celeritas' online tracking."
     },
@@ -99,7 +109,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Trustpilot review on Celeritas' page gives it for a Celeritas pickup marked as missed. Celeritas' tracker no longer knows it, which can reflect an expired record."
     }

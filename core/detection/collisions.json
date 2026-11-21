@@ -9,7 +9,8 @@
       "relais-colis",
       "dhl-ecommerce-es",
       "box-now",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "These carriers accept the same numeric length without a DHL Express checksum, and Packeta's packet ID is ten digits without its Z. Direct tracking must confirm the carrier."
   },
@@ -24,7 +25,8 @@
       "dhl-ecommerce-es",
       "box-now",
       "fragilepak",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "FragilePAK's waybill is 902, six digits and a check digit or X, inside the numeric length several carriers accept without a DHL Express checksum. Direct tracking must confirm the carrier."
   },
@@ -37,7 +39,8 @@
       "relais-colis",
       "dhl-ecommerce-es",
       "box-now",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "These carriers accept the same numeric length without a DHL Express checksum. Packeta's packet ID never starts with 0. Direct tracking must confirm the carrier."
   },
@@ -1673,7 +1676,8 @@
       "acs-courier",
       "geniki-taxydromiki",
       "box-now",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "10-digit numbers are shared by several carriers; the number stays a low-confidence suggestion. ACS Courier and Geniki Taxydromiki numbers pass the same modulo-7 check as DHL Express waybills."
   },
@@ -1689,7 +1693,8 @@
       "acs-courier",
       "geniki-taxydromiki",
       "box-now",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "ACS Courier and Geniki Taxydromiki numbers are ten plain digits that pass the same check as DHL Express waybills. Packeta prints no leading zero. The number stays a low-confidence suggestion."
   },
@@ -1703,7 +1708,8 @@
       "dhl-express",
       "dhl-ecommerce-es",
       "box-now",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "10-digit numbers are shared by several carriers; the number stays a low-confidence suggestion. Packeta's packet ID never starts with 0."
   },
@@ -5768,7 +5774,8 @@
       "mondial-relay",
       "relais-colis",
       "box-now",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "Without its hyphen CDL's order number is ten digits, which DHL, Estafeta, Mondial Relay, Relais Colis, Tipsa and DHL eCommerce Spain also print; CDL stays a low-confidence suggestion."
   },
@@ -5849,9 +5856,10 @@
     "carriers": [
       "tforce-freight",
       "tnt",
-      "xpo-ltl"
+      "xpo-ltl",
+      "dpd-ie"
     ],
-    "reason": "XPO's and TForce Freight's PRO numbers end in the remainder of their first eight digits divided by seven, a check TNT's nine-digit consignment numbers can also carry. All three rules are low-confidence, so the number stays a suggestion, TNT first."
+    "reason": "XPO's and TForce Freight's PRO numbers end in the remainder of their first eight digits divided by seven, a check TNT's nine-digit consignment numbers can also carry, and DPD Ireland's consignments are nine digits without a check. All four rules are low-confidence, so the number stays a suggestion, TNT first."
   },
   {
     "shape": "Two letters, or a digit and a letter, followed by ten digits",
@@ -7342,7 +7350,8 @@
       "relais-colis",
       "box-now",
       "cargus",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept, and Packeta's packet ID is ten digits without its Z. Direct tracking must confirm the carrier."
   },
@@ -7361,7 +7370,8 @@
       "geniki-taxydromiki",
       "box-now",
       "cargus",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept. A passing modulo-7 check prioritizes DHL Express, ACS Courier and Geniki Taxydromiki but does not establish any of them; direct tracking must confirm the carrier."
   },
@@ -7376,7 +7386,8 @@
       "relais-colis",
       "box-now",
       "cargus",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept. Direct tracking must confirm the carrier."
   },
@@ -7392,7 +7403,8 @@
       "relais-colis",
       "box-now",
       "cargus",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "GLS Spain's expedition numbers are ten digits starting 1, which these carriers also accept. A passing waybill check prioritizes DHL Express but does not establish it; direct tracking must confirm the carrier."
   },
@@ -7400,9 +7412,34 @@
     "shape": "Nine digits starting 85 or 86",
     "carriers": [
       "cargus",
-      "tnt"
+      "tnt",
+      "dpd-ie"
     ],
-    "reason": "Cargus's nine-digit air waybills come from one block starting 85 or 86, inside the nine digits TNT's consignment numbers take. Both rules are low-confidence, and recognition asks Cargus only for a lookup in Romania; direct tracking must confirm the carrier."
+    "reason": "Cargus's nine-digit air waybills come from one block starting 85 or 86, inside the nine digits TNT's and DPD Ireland's consignment numbers take. All three rules are low-confidence, and recognition asks Cargus only for a lookup in Romania and DPD Ireland only for one in Ireland; direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "Nine digits starting 85 or 86 that fail TNT's check",
+    "carriers": [
+      "cargus",
+      "dpd-ie"
+    ],
+    "reason": "Cargus's air waybill block starting 85 or 86 is inside the nine digits DPD Ireland's consignments take. Both rules are low-confidence, and recognition asks each only for a lookup in its own country; direct tracking must confirm the carrier."
+  },
+  {
+    "shape": "Nine digits that pass TNT's check",
+    "carriers": [
+      "tnt",
+      "dpd-ie"
+    ],
+    "reason": "TNT's consignment numbers are nine digits with a modulus 11 check, and DPD Ireland's consignments are nine digits without one. Both rules are low-confidence, so the number stays a suggestion, TNT first; recognition asks DPD Ireland only for a lookup in Ireland."
+  },
+  {
+    "shape": "Eight digits, a hyphen and one digit",
+    "carriers": [
+      "dpd-ie",
+      "rl-carriers"
+    ],
+    "reason": "R+L writes its nine-digit PRO with a hyphen before the last digit; without it the number is nine digits, the length of DPD Ireland's consignments. Both rules are low-confidence, and recognition asks DPD Ireland only for a lookup in Ireland."
   },
   {
     "shape": "Seventeen digits in the Hermes Einrichtungs-Service delivery-note layout",
@@ -8026,7 +8063,8 @@
       "mondial-relay",
       "relais-colis",
       "box-now",
-      "dhl-freight"
+      "dhl-freight",
+      "dpd-ie"
     ],
     "reason": "orian numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },

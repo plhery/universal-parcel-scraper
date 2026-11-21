@@ -15,7 +15,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "TrackShip's Rocket Shipping page gives it as a tracking code example. Rocket Shipping’s public tracker returns the same load number with dated pickup and delivery events."
     },

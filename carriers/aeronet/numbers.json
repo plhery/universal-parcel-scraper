@@ -20,7 +20,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "A United States district court opinion quotes the exact Aeronet waybill for a pallet shipment. Carrier lookup blocked by verification."

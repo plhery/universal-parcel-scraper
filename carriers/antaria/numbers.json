@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on Antaria's own tracker answers this albarán with a link to its status page, which lists the shipment."

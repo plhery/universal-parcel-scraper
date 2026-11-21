@@ -89,6 +89,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },
@@ -118,7 +119,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Archived overview of GLS Hungary's tracking service (national owner HU01): a 10-digit national parcel, delivered."
@@ -147,7 +149,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Archived overview of GLS Hungary's tracking service (national owner HU01): a 10-digit national parcel picked up by GLS."
@@ -176,7 +179,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Archived overview of GLS Hungary's tracking service (national owner HU01): a 10-digit national parcel, pre-advised."

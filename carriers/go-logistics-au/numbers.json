@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived copy of its own tracker lists four scans from collection to delivery for this consignment."

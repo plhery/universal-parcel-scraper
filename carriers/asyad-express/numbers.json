@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The opened capture of Asyad Express's tracker shows the shipment with the event Order Placed (Awaiting dispatch from the shipper)."
     },

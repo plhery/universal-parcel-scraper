@@ -20,7 +20,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "The Lithuanian court cites the shipment code from the shipping declaration and Cargobus records. The cataloged Cargobus tracker returned no history for the 2022 shipment."

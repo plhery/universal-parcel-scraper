@@ -128,7 +128,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on SEKO's own tracking page; the capture was not opened."
     },

@@ -27,7 +27,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The Meizhou court’s judgment records this exact 京廣速遞 waybill. The carrier’s own public tracking form returned six events for it."
@@ -58,7 +59,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The Meizhou court’s judgment records this exact 京廣速遞 waybill. The carrier’s own public tracking form returned six events for it."
@@ -89,7 +91,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The court records the waybill in the notarial description of receiving and opening the 京廣速遞 parcel. The carrier’s public tracker returned no shipment history for this older number."

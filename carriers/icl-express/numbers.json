@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "ICL's former tracker, archived by the Wayback Machine, shows ICL receiving this waybill in Hyderabad and FedEx delivering it in Florida."
@@ -54,7 +55,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "ICL's former tracker, archived by the Wayback Machine, shows ICL sending this waybill from Hyderabad and FedEx carrying it onward."
@@ -83,7 +85,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "ICL's former tracker, archived by the Wayback Machine, shows this waybill picked up in Hyderabad, held for octroi in Bombay and arriving in New York; the archived lookup ends in a comma, which is not part of the number."
@@ -112,7 +115,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "ICL's former tracker, archived by the Wayback Machine, shows this waybill picked up in Hyderabad and passing octroi in Bombay; the archived lookup ends in a comma, which is not part of the number."

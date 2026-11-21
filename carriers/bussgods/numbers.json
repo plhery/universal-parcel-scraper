@@ -127,6 +127,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -159,6 +160,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },
@@ -188,7 +190,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Opened capture of Bussgods' tracker shows this ten-digit fraktsedel posted in Gävle."
@@ -217,7 +220,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Opened capture of Bussgods' tracker shows this ten-digit fraktsedel handed in at Sundsvall and Östersund."
@@ -246,7 +250,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Opened capture of Bussgods' tracker shows this ten-digit fraktsedel forwarded from Östersund and handed in at Örnsköldsvik."

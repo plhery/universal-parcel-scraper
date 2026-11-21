@@ -24,7 +24,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Averitt's PRO Tracking API guide gives it as an example of the PRO number searched for."
@@ -52,7 +53,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "ParcelPanel's Averitt Express page offers it as a sample to try; it is not described as a live shipment."
@@ -83,6 +85,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -111,7 +114,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Ship24's Averitt Express page gives it as an example tracking number."
@@ -142,6 +146,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -171,7 +176,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Ship24's Averitt tracking-number page gives it as an example of an Averitt Express number."

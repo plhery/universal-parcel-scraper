@@ -83,7 +83,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Ship24's page on CEVA Logistics tracking numbers lists it among its examples."
     },
@@ -146,6 +149,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -166,7 +170,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The Wayback Machine indexes a CEVA Home Delivery tracking lookup for this number; the capture was not opened."
     },
@@ -242,7 +249,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The Wayback Machine indexes a CEVA Home Delivery tracking lookup for this number; the capture was not opened."
@@ -430,7 +438,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The Wayback Machine indexes a request to CEVA's tracking service for this house bill number; the capture was not opened."
@@ -459,7 +468,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The Wayback Machine indexes a request to CEVA's tracking service for this house bill number; the capture was not opened."

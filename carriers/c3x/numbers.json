@@ -23,7 +23,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Example on TrackShip's C3xpress page; C3X's tracker returned its delivered history."

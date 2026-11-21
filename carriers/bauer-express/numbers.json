@@ -19,7 +19,10 @@
       "quarantine": true,
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The procurement invoice names Bauer Express in its transport section. The printed invoice number alone has not been established as a carrier shipment identifier."
     }

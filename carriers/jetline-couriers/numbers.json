@@ -14,7 +14,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Jetline's home page shows it as the example in its AWB tracking field."
     },
@@ -33,7 +36,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Jetline Couriers Private Limited gives it as the AWB number of medicines booked from Ara, Bihar to Punjab."
     },

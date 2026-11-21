@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Gati's former tracker at gati.com; the opened capture shows the docket with its destination, pickup date and the status Delivered."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Gati's former tracker at gati.com; the opened capture shows the docket with its destination and pickup date."
     },
@@ -54,7 +60,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Gati's former tracker at gati.com, as an archived address shows; the capture was not opened."
     },
@@ -73,7 +82,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Gati's former tracker at gati.com, as an archived address shows; the capture was not opened."
     },
@@ -92,7 +104,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Gati KWE gives it as the docket of an air cooler sent from Hyderabad to Kerala."
     },
@@ -111,7 +126,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Gati KWE gives it as the docket of a motorbike delivered damaged."
     },
@@ -130,7 +148,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Gati KWE gives it as the docket of a shipment booked from Trivandrum to Delhi."
     },
@@ -149,7 +170,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Gati KWE gives it as the docket of an air conditioner sent from Gurgaon."
     },
@@ -168,7 +192,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Gati KWE gives it as the docket of an undelivered package."
     },
@@ -187,7 +214,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Gati KWE gives it as the docket of a delayed parcel."
     },
@@ -206,7 +236,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Gati KWE gives it as the docket of a delivery from Hyderabad to Vadodara."
     },
@@ -225,7 +258,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A customer review addressed to Gati on TrackingMore's GATI Courier review page gives it as the AWB of an undelivered parcel."
     },
@@ -244,7 +280,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A customer review on TrackingMore's GATI Courier review page asks for delivery of this number."
     },
@@ -265,7 +304,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "A customer review on TrackingMore's Gati KWE review page asks where the courier with this number is."
@@ -285,7 +325,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A customer review on TrackingMore's Gati KWE review page gives it as a Gati courier number."
     },
@@ -304,7 +347,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A customer review on TrackingMore's GATI Courier review page gives it as the docket of a shipment that arrived on time."
     }

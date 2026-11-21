@@ -19,7 +19,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "The LR number Gaint's home page shows on its own-fleet shipment walkthrough. The tracker returns a booked order on Gaint's own fleet, under this LR and its AWB."

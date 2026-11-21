@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on VRL's LR tracking page shows this LR with booking details, a not-delivered status and a cancelled delivery run."
@@ -54,7 +55,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on VRL's LR tracking page shows this LR with booking details, a not-delivered status and a delivery run cancelled as refused."
@@ -85,6 +87,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -105,7 +108,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on VRL's LR tracking page shows this LR with booking details, loading history and its delivery."
     },
@@ -136,6 +142,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },
@@ -167,6 +174,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },

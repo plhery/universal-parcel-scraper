@@ -44,7 +44,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Team Global Express's MyTeamGE tracker, as an archived address shows; the page draws the result with script, so the capture was not opened."
     },

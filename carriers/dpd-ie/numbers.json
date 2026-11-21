@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on DPD Ireland's former QuickTrack tracker, as an archived address shows; the capture was not opened."
@@ -48,6 +49,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -71,7 +73,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "cargus"
+          "cargus",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
@@ -93,7 +96,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
@@ -113,7 +117,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -132,7 +139,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -151,7 +161,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -179,7 +192,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
@@ -199,7 +213,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -218,7 +235,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -237,7 +257,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -256,7 +279,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows. DPD Ireland's tracker returns its history."
     }

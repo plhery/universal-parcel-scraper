@@ -27,6 +27,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki",
           "gls-es"
         ]
@@ -57,6 +58,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -86,7 +88,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "A review on Elite's Trustpilot page complains about a delayed delivery and gives this tracking number. Elite's tracker knows it: a parcel delivered after several attempts."

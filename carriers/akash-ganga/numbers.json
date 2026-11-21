@@ -163,7 +163,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint filed under Akash Ganga Courier gives it as the consignment number of an undelivered parcel; the complaint text masks it and the page's recent-comments box shows it."
     }

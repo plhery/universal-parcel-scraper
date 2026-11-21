@@ -17,7 +17,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Şikayetvar customer quotes a Yol Kargo dispatch text with the shipment barcode and the carrier’s tracking link. Yol Kargo’s lookup hands it to Aras Kargo, whose tracker returns the shipment."
     },
@@ -40,6 +43,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]

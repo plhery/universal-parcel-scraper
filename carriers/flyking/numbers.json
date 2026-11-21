@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A ConsumerComplaints complaint on the Flyking Courier Services page gives it as the C/N number of a packet sent from Bhubaneswar to Deoghar and not delivered."
     },
@@ -38,6 +41,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -59,7 +63,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A ConsumerComplaints complaint on the Flyking Courier Services page gives it as the consignment note number of a letter."
     },
@@ -78,7 +85,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A ConsumerComplaints complaint on the Flyking Courier Services page gives it as the consignment number of an undelivered courier to Bangalore."
     },

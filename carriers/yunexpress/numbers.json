@@ -80,7 +80,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Customer attributes this numeric tracking reference to YunExpress. The dedicated adapter accepts YT references; no rule establishes this numeric family."

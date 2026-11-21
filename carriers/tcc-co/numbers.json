@@ -18,7 +18,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "cargus"
+          "cargus",
+          "dpd-ie"
         ]
       },
       "note": "The transport regulator's resolution against TCC quotes a customer's complaint giving this remesa number. TCC later gave the same parcel another number, also recorded here."
@@ -38,7 +39,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The transport regulator's resolution against TCC quotes a customer's complaint: TCC gave this number to a parcel whose first remesa it had lost."
     },
@@ -57,7 +61,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The transport regulator's resolution against TCC quotes a customer's complaint giving this remesa number."
     },
@@ -78,7 +85,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "The transport regulator's resolution against TCC quotes a customer's complaint giving this remesa number."
@@ -98,7 +106,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The transport regulator's resolution against TCC quotes a customer's complaint giving this remesa number."
     },
@@ -117,7 +128,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The transport regulator's resolution against TCC quotes a customer's complaint giving this remesa number."
     },
@@ -136,7 +150,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The transport regulator's reply to a complaint quotes a customer who sent equipment through TCC under this guía number."
     },
@@ -158,6 +175,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]

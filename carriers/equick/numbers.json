@@ -19,6 +19,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -42,7 +43,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "cargus"
+          "cargus",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on Equick's own tracker shows this tracking number with its history from Shanghai to delivery in Canada."

@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it in the title of a parcel stuck in Bangalore."
     },
@@ -38,6 +41,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -61,7 +65,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as a parcel kept at the courier office."
@@ -81,7 +86,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in asks for the proof of delivery of this consignment."
     },
@@ -100,7 +108,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in calls it the GMS docket number of an undelivered parcel."
     },
@@ -119,7 +130,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as the shipment number of an undelivered parcel."
     },
@@ -140,7 +154,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in calls it the GMS AWB number of a parcel shown out for delivery in Hyderabad."
@@ -160,7 +175,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as an urgent consignment."
     },
@@ -179,7 +197,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as an undelivered consignment."
     },
@@ -198,7 +219,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as a courier booked in November 2020 and not delivered."
     },
@@ -217,7 +241,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as a delayed consignment."
     },
@@ -236,7 +263,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as a document sent from Hyderabad to New Delhi."
     },
@@ -255,7 +285,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as a GMS Courier consignment number."
     },
@@ -274,7 +307,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on the GMS Worldwide Express page of ConsumerComplaints.in gives it as a consignment tracking number."
     }

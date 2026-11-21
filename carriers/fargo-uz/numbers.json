@@ -57,7 +57,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "Archived lookup on Fargo's own tracker at my.fargo.uz with this id; the opened capture shows only the page shell, so the history was not visible."
@@ -77,7 +78,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Archived lookup on Fargo's own tracker at my.fargo.uz, listed among the ids the tracker keeps with the lookup; the opened capture shows only the page shell, so the history was not visible."
     },

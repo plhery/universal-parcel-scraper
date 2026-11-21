@@ -44,7 +44,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Sample output of the tracking function in Meest's own API documentation, archived by the Wayback Machine; not a real shipment."

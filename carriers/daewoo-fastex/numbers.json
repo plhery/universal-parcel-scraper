@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Archived lookup on Daewoo FastEx's own tracker; the opened capture shows only the page shell, so no history was visible."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Archived lookup on Daewoo FastEx's own tracker; the opened capture shows only the page shell, so no history was visible."
     }

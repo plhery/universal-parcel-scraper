@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The shipment code of a sent order in the screenshots of the manual for EuroExpress's own web shop, in the column where shops enter the code their buyers track."
     }

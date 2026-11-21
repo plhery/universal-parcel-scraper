@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Viettel Post's own tracking page; the opened capture shows the shipment's history."
     },
@@ -58,7 +61,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Viettel Post's former tracking page passes it as the waybill; the capture was not opened."
     },
@@ -77,7 +83,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Viettel Post's former tracking page passes it as the waybill; the capture was not opened."
     },
@@ -96,7 +105,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Viettel Post's former tracking page passes it as the waybill; the capture was not opened."
     },
@@ -275,7 +287,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Viettel Store's guide to Viettel Post tracking gives it as an example waybill to enter on Viettel Post's tracking page."
     },
@@ -292,7 +307,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Viettel Store's guide to Viettel Post tracking gives it as an example waybill to enter on Viettel Post's tracking page."
     },

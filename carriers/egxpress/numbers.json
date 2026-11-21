@@ -104,7 +104,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A label in the screenshots of the EGXPRESS Shipping app's Shopify listing gives it as the air waybill number; EGXPRESS's tracker does not find it."
     }

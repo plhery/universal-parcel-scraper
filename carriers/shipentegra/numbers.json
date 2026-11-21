@@ -35,7 +35,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Şikayetvar complaint about parcels lost after leaving Turkey with ShipEntegra lists this among its ShipEntegra tracking numbers, apart from the shop's order numbers. ShipEntegra's tracker knows it."
     },
@@ -54,7 +57,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The same Şikayetvar complaint lists this as its second ShipEntegra tracking number. ShipEntegra's tracker knows it."
     },
@@ -75,7 +81,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "A Şikayetvar complaint gives this as the label number of a parcel handed to ShipEntegra and recorded at its Istanbul transfer centre. ShipEntegra's tracker knows it."
@@ -95,7 +102,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Şikayetvar complaint about US customs charges gives this as the tracking number of a shipment sent with ShipEntegra. ShipEntegra's tracker knows it."
     }

@@ -82,7 +82,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "A public Test-Aankoop complaint about a Dynalogic delivery gives it as the track & trace number."
@@ -111,7 +112,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "A public Test-Aankoop complaint about a Dynalogic delivery gives it as the track & trace number."
@@ -140,7 +142,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "A public Test-Aankoop complaint about a Dynalogic delivery gives it as the track & trace number."

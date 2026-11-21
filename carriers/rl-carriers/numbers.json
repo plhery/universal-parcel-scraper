@@ -14,7 +14,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "TrackingMore lists it as an example on its R+L Carriers page; it is not described as a live shipment."
     },
@@ -34,6 +37,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -57,7 +61,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "ParcelPanel's R+L Carriers page offered it as a sample to try on 11 Oct 2026. R+L's tracer returns its history."
@@ -101,6 +106,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-ie",
           "rl-carriers"
         ]
       },
@@ -121,7 +127,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on R+L Carriers' own PRO tracer, as an archived address shows. The tracer still returns its history."
     },
@@ -140,7 +149,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on R+L Carriers' own PRO tracer, as an archived address shows. The tracer still returns its history."
     },
@@ -159,7 +171,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on R+L Carriers' own PRO tracer, as an archived address shows. The tracer still returns its history."
     },
@@ -178,7 +193,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on R+L Carriers' own PRO tracer, as an archived address shows; the capture was not opened."
     },
@@ -199,6 +217,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-ie",
           "rl-carriers"
         ]
       },
@@ -221,6 +240,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-ie",
           "rl-carriers"
         ]
       },
@@ -244,6 +264,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -369,7 +390,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on R+L Carriers' own PRO tracer, as an archived address shows; the capture was not opened."
     },
@@ -390,6 +414,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dpd-ie",
           "rl-carriers"
         ]
       },
@@ -410,7 +435,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on R+L Carriers' own PRO tracer, as an archived address shows; the capture was not opened."
     },

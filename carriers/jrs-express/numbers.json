@@ -35,7 +35,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The example the current tracking page's field prints, airbill first and the branch code after the hyphen. The tracker holds a shipment under it, so it is also a real reference."
     }

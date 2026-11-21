@@ -19,6 +19,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -43,7 +44,8 @@
         "confidence": "low",
         "candidates": [
           "tnt",
-          "cargus"
+          "cargus",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
@@ -63,7 +65,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -82,7 +87,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -110,7 +118,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
@@ -139,7 +148,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
@@ -170,6 +180,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -199,7 +210,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
@@ -228,7 +240,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
@@ -259,6 +272,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -288,7 +302,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on 99minutos's own tracker, as an archived address shows; the capture was not opened."
@@ -319,6 +334,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -348,7 +364,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "99minutos's own tracking service answered for it, as an archived reply shows: a Mexican shipment on its way to the recipient."
@@ -377,7 +394,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "99minutos's own tracking service answered for it, as an archived reply shows: a Colombian shipment on its way to the recipient."

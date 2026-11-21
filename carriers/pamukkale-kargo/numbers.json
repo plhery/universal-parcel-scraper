@@ -18,7 +18,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The sender identifies a shipment from İzmir to Marmaris and publishes this exact Pamukkale reference. The carrier also requires the shipment’s sender or recipient phone number."
     },
@@ -39,7 +42,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A different sender reports handing this numbered shipment to Pamukkale in Istanbul. The public source does not give the phone number required for carrier tracking."
     }

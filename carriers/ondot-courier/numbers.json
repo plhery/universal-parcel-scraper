@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The indexed On-Dot complaints directory reproduces a customer’s complete docket number in the subject of a delivery complaint. The current tracking URL returned the page without a shipment history."
     },

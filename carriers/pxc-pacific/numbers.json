@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The carrier’s indexed tracking page publishes this exact value in its AWB query. PXC’s tracking lookup returns its history from PXC’s Mumbai hub to delivery by DTDC Australia."
@@ -54,7 +55,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The carrier’s indexed tracking page publishes this exact value in its AWB query. PXC’s tracking lookup returns its history from PXC’s Mumbai hub to delivery by DTDC Australia."

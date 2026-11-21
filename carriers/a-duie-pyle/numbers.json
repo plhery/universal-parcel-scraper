@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on A. Duie Pyle's own shipment status page; the capture was opened but the page loads its result by script, so it shows no history. A. Duie Pyle's tracker finds the shipment."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on A. Duie Pyle's own shipment status page; the capture was not opened. A. Duie Pyle's tracker finds the shipment."
     },
@@ -54,7 +60,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on A. Duie Pyle's own shipment status page; the capture was not opened. A. Duie Pyle's tracker finds the shipment."
     }

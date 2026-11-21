@@ -23,7 +23,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "A search engine indexed this airwaybill lookup on Sky Express's own tracker; it was not opened, so the history was not visible."

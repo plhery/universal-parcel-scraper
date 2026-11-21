@@ -27,7 +27,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The recipient explicitly names Jetizz and quotes the complete number. Jetizz's tracker answers it with its history, handed to partner Aras Kargo for delivery."
@@ -58,7 +59,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The recipient names Jetizz as the carrier and quotes the exact tracking number for an Incehesap order. Jetizz's tracker answers it with its history."

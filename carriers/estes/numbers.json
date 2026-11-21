@@ -22,7 +22,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -48,7 +49,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -74,7 +76,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -100,7 +103,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -126,7 +130,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -155,6 +160,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },
@@ -181,7 +187,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -210,6 +217,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -239,6 +247,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },

@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on BEX Express's own tracking service, which its tracking page calls; the archived reply lists the shipment's events."
     },
@@ -37,7 +40,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on BEX Express's own tracking service, which its tracking page calls; the archived reply lists the shipment's events."
@@ -57,7 +61,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The example request of the history lookup in BEX Express's API documentation; the tracking service knows it."
     }

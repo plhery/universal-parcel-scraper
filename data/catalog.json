@@ -21150,6 +21150,7 @@
       "mode": "automatic",
       "adapter": "dpd-ie",
       "recognitionRank": 960,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.dpd.ie/tracking/",
@@ -21165,7 +21166,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{9,10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "dpd-nl": {
     "displayName": "DPD Netherlands",

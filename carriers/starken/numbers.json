@@ -14,7 +14,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on Reclamos.cl's Starken page gives it as the order of freight number. Starken's tracker returns its history."
     },
@@ -31,7 +34,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on Reclamos.cl's Starken page gives it as an order of freight number. Starken's tracker returns its history."
     },
@@ -48,7 +54,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A complaint on Reclamos.cl's Starken page gives it as an order of freight number. Starken's tracker returns its history, closed with a claim."
     },
@@ -65,7 +74,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The title of a complaint on Reclamos.cl's Starken page names it as an order of freight number. Starken's tracker returns its history, closed as lost."
     },
@@ -84,7 +96,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -103,7 +118,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -125,6 +143,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -146,7 +165,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -165,7 +187,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -184,7 +209,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -203,7 +231,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -222,7 +253,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the opened capture shows the search page without the shipment's history. Starken's tracker returns its history."
     },
@@ -244,6 +278,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -265,7 +300,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -284,7 +322,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the capture was not opened. Starken's tracker returns its history."
     },
@@ -303,7 +344,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Starken's own tracking page, as an archived address shows; the opened capture shows the search page without the shipment's history. Starken's tracker returns its history."
     }

@@ -18,7 +18,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The commenter labels this the Domesa waybill and reports that Domesa's Coro office traced the parcel to Valencia."
     },
@@ -39,7 +42,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The same commenter gives this as the Domesa waybill for a second parcel that Domesa's Coro office traced to Caracas."
     },
@@ -60,7 +66,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Another customer names this as the Domesa waybill for a separate parcel whose loss they reported after the forwarding handoff."
     }

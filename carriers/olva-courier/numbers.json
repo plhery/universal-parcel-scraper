@@ -22,7 +22,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Olva's help article on finding the tracking number gives it as the example of the code printed on the purchase receipt."
@@ -40,7 +41,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The example in the search field of Olva's own tracker."
     },

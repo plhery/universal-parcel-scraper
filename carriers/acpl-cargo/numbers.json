@@ -26,7 +26,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The example ACPL Cargo's tracking form prints in its search box. The tracker answers it with a consignment booked at Jaipur and delivered at Lonavala."

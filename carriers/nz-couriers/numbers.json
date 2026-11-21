@@ -64,7 +64,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "New Zealand Couriers' track-a-parcel page gives it as its international consignment example."

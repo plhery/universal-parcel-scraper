@@ -27,6 +27,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -60,6 +61,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki",
           "gls-es"
         ]
@@ -92,6 +94,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -123,6 +126,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -154,6 +158,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -174,7 +179,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Cargus's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -195,7 +203,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "cargus"
+          "cargus",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on Cargus's own tracker, as an archived address shows; the capture was not opened."
@@ -217,7 +226,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "cargus"
+          "cargus",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on Cargus's own tracker, as an archived address shows; the capture was not opened."

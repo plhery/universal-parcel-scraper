@@ -14,7 +14,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "TrackingMore lists it as an example on its ABF Freight page; it is not described as a live shipment."
     },
@@ -34,6 +37,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -55,7 +59,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's ABF Freight page offered it as a sample to try on 11 Oct 2026. ArcBest's tracking service answers it as a delivered ABF Freight shipment."
     },
@@ -74,7 +81,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "ParcelPanel's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
@@ -92,7 +100,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
     },
@@ -109,7 +120,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Ship24's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
     },
@@ -126,7 +140,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Ship24's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
     },
@@ -143,7 +160,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Ship24's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
     },
@@ -160,7 +180,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Ship24's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
     },
@@ -177,7 +200,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Ship24's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
     },
@@ -194,7 +220,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Ship24's ABF Freight page gives it as an example PRO number; it is not described as a live shipment."
     },
@@ -213,7 +242,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on ArcBest's tracker, which serves ABF Freight, as an archived address shows; the capture holds only the empty page shell."
     },
@@ -232,7 +264,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on ArcBest's tracker, which serves ABF Freight, as an archived address shows. ArcBest's tracking service answers it as a delivered ABF Freight shipment."
     }

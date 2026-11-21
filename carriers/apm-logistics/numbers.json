@@ -26,7 +26,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The example APM Logistics's tracking form prints in its search box, also the deep link its site script gives as an example. The tracker answers it with a parcel received at its Medan branch and handed on to a partner for Jakarta."

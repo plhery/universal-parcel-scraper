@@ -21,6 +21,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -44,7 +45,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The arbitral decision ties this separate application and freight receipt to carriage accepted by Skif-Cargo. Skif-Cargo's tracker knows the shipment, from the collection to its issue to the consignee."
     }

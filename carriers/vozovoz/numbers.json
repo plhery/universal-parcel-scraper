@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Ivanovo terminal giving it as the order (заказ) number of a shipment from Ivanovo to Saint Petersburg. Vozovoz's tracker knows the order."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Ivanovo terminal giving it as the order (заказ) number. Vozovoz's tracker knows the order."
     },
@@ -54,7 +60,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Ivanovo terminal giving it as the waybill (накладная) of a shipment to Saint Petersburg. Vozovoz's tracker knows the order."
     },
@@ -73,7 +82,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Ivanovo terminal giving it as the number of a shipment to a marketplace in Kazakhstan. Vozovoz's tracker knows the order."
     },
@@ -92,7 +104,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Ryazan terminal giving it as the number of a delivery booked with Vozovoz. Vozovoz's tracker knows the order."
     },
@@ -111,7 +126,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Ryazan terminal giving it as the order (заказ) number. Vozovoz's tracker knows the order."
     },
@@ -133,6 +151,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -154,7 +173,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Novosibirsk terminal giving it as the number of a recent order. Vozovoz's tracker knows the order."
     },
@@ -173,7 +195,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Novosibirsk terminal giving it as the order number of a shipment to Novosibirsk. Vozovoz's tracker knows the order."
     },
@@ -195,6 +220,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -216,7 +242,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Customer review on the Yandex Maps page of Vozovoz's Novosibirsk terminal giving it as the order (заказ) number. Vozovoz's tracker knows the order."
     }

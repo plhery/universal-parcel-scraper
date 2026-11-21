@@ -149,7 +149,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "A ten-digit piece number: an archived shipment lookup on TOPTRANS's own tracking service lists it as the shipment's only piece."

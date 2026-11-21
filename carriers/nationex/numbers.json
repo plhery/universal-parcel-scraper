@@ -17,6 +17,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -38,7 +39,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Nationex page offered it as a sample to try on 11 Oct 2026. Nationex's tracking service knows it."
     },
@@ -57,7 +61,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Nationex page offered it as a sample to try on 11 Oct 2026. Nationex's tracking service knows it."
     },
@@ -76,7 +83,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Nationex page offered it as a sample to try on 11 Oct 2026. Nationex's tracking service knows it."
     },
@@ -95,7 +105,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Nationex page offered it as a sample to try on 11 Oct 2026. Nationex's tracking service knows it."
     },
@@ -114,7 +127,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Nationex's own tracker, as an archived address shows; the capture was not opened. Nationex's tracking service still knows it."
     },
@@ -133,7 +149,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Nationex's own tracker, as an archived address shows; the capture was not opened. Nationex's tracking service still knows it."
     },
@@ -184,7 +203,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Nationex's own tracker, as an archived address shows; the capture was not opened. Nationex's tracking service still knows it."
     },
@@ -203,7 +225,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Nationex's own tracker, as an archived address shows; the capture was not opened."
     },

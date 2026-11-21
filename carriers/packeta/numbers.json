@@ -174,7 +174,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The broker review shows the ten digits without the label's Z; customer reports Poland-to-Hungary delivery."
@@ -204,7 +205,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The broker review shows the ten digits without the label's Z. Packeta's tracking returns the history of the Z-prefixed barcode."

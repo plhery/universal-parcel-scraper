@@ -91,7 +91,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The customer identifies this number from the tracking screen for a Shark shipment handled by Bolt Kargo. Carrier lookup blocked by verification. The tracker requires the recipient's phone number."

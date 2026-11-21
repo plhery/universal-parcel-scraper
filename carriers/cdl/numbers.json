@@ -25,7 +25,8 @@
           "box-now",
           "cdl",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on CDL's own tracker, as an archived address shows; the capture was not opened."
@@ -54,7 +55,8 @@
           "box-now",
           "cdl",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on CDL's own tracker, as an archived address shows; the capture was not opened."
@@ -83,7 +85,8 @@
           "box-now",
           "cdl",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on CDL's own tracker, as an archived address shows; the capture was not opened."

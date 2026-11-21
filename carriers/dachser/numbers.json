@@ -45,7 +45,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Dachser, which no rule claims. Consignment number from a delivery SMS the recipient did not expect."

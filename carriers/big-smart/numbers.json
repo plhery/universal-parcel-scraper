@@ -97,7 +97,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived reply of Big Smart's tracking API, looked up by the alternative tracking number the reply lists, gives this as Big Smart's tracking number and shows 2 events ending Ready at FC. The only ten-digit tracking number among the captures."

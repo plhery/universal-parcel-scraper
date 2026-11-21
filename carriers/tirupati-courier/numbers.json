@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on Shree Tirupati Courier's own tracker shows this docket booked at a Junagadh branch and forwarded to Ahmedabad."
@@ -190,7 +191,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on Shree Tirupati Courier's older tracker shows this docket with an Ambala booking branch and an in-transit status, but no dates or destination."

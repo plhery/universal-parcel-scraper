@@ -35,7 +35,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Gebrüder Weiss Germany page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -91,6 +94,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -345,7 +349,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Looked up on Gebrüder Weiss's own tracker under a customer's search path, as an archived address shows; the capture shows no history, and it may be the customer's own reference."

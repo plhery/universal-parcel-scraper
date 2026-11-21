@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { IndeterminateError, InvalidInputError, NotFoundError } from '../../core/errors/index.js';
@@ -130,6 +131,18 @@ describe('DPD Ireland direct tracking', () => {
     for (const number of ['', '99900000', '99900000101', '999000000000', '0999000000000', PARCEL + wrong, `${PARCEL}00`, 'ABC000001', '999-00a-001']) {
       expect(() => normalizeDpdIeNumber(number), number).toThrow(InvalidInputError);
     }
+  });
+
+  it('offers nine- and ten-digit consignments and is asked about them for a reader in Ireland alone', () => {
+    for (const number of [NUMBER, '9990000010']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates).toContain('dpd-ie');
+      expect(recognitionCandidates(number, { countryHint: 'IE' }).map(row => row.carrier)[0]).toBe('dpd-ie');
+      for (const countryHint of [undefined, 'IT', 'GB']) {
+        expect(recognitionCandidates(number, { countryHint }).map(row => row.carrier), countryHint).not.toContain('dpd-ie');
+      }
+    }
+    for (const number of ['99900000', '99900000101']) expect(detectCarrierMatch(number).candidates).not.toContain('dpd-ie');
   });
 
   it('reports a consignment absent only on the error page that says so', () => {

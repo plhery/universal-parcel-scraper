@@ -22,7 +22,8 @@
       "retry"
     ],
     "recognition": {
-      "rank": 960
+      "rank": 960,
+      "servedCountriesOnly": true
     },
     "localClocks": true
   },
@@ -71,5 +72,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "dpd-ie-1",
+      "pattern": "^\\d{9,10}$",
+      "confidence": "low"
+    }
+  ]
 }

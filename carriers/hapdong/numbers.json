@@ -23,7 +23,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The sample delivery record Hapdong Express shows in the tracking layer on every page of its site, with masked names and a history dated 2023-12-01; that date is labelled a Saturday but was a Friday, so it is a design sample and its history was not seen on the tracker."

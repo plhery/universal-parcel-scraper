@@ -13,7 +13,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The store-to-store number on the general receipt in ezShip's own sample receipt image; its tracker needs an image CAPTCHA, so it has not been looked up."
     },

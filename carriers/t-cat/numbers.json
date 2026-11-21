@@ -199,7 +199,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on T-CAT's own tracker; the opened capture shows this ten-digit number with its scans from collection to delivery."
@@ -231,6 +232,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },
@@ -260,7 +262,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on T-CAT's own tracker; the opened capture shows this ten-digit number with its scans from collection through two transfer centres to delivery."
@@ -289,7 +292,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on T-CAT's own tracker; the opened capture shows this ten-digit number with failed attempts, a branch pickup notice and delivery."
@@ -321,6 +325,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },

@@ -221,7 +221,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Example of a nine-digit return number, not a real shipment. No rule matches this shape; the adapter reads one when the carrier is named."
     },

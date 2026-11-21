@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Pilot's own quick-track page resolved the pro number to a shipment record and redirected to its detail page."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Pilot's own quick-track page resolved the pro number to a shipment record and redirected to its detail page."
     },
@@ -57,6 +63,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -80,7 +87,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "tnt"
+          "tnt",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on Pilot's own quick-track page; the capture redirects to an empty shipment detail, and Pilot's tracking service answers that it has no tracking information for it."

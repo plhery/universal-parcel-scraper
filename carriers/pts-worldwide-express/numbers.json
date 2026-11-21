@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on PTS's former tracker shows this waybill leaving Istanbul and passing customs in Germany before its delivery in Austria."
@@ -54,7 +55,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on PTS's own tracker address; the capture says no shipment with this number was scanned in the previous six months, so its history was not visible."
@@ -83,7 +85,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on PTS's own tracker address; the capture says no shipment with this number was scanned in the previous six months, so its history was not visible."
@@ -112,7 +115,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "A Şikayetvar complaint about PTS Kargo gives this as the tracking number of a Trendyol parcel it had not delivered; PTS's tracker shows the parcel going back after a failed delivery abroad."
@@ -144,6 +148,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },

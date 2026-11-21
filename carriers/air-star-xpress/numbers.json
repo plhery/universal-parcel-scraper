@@ -40,7 +40,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A Voxya complaint against Air Star Express Courier Service gives it as the tracking id of a book a Jaipur book shop sent by this courier."
     }

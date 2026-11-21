@@ -39,7 +39,10 @@
       "evidence": "public_shipment_report",
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "source": {
         "url": "https://www.bbb.org/us/tx/farmers-branch/profile/logistics/sfl-worldwide-0875-90225242/complaints?page=2",

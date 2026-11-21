@@ -14,7 +14,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The placeholder of Redpack's own tracking field gives it as an example guide number; not a real shipment."
     },
@@ -31,7 +34,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The placeholder of Redpack's own tracking field gives it as an example guide number; not a real shipment."
     },
@@ -50,7 +56,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Redpack Mexico page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -93,7 +102,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Redpack Mexico page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -184,7 +196,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Redpack Mexico page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -203,7 +218,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "ParcelPanel's Redpack Mexico page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -295,7 +313,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Redpack's own tracker, archived by the Wayback Machine, shows it delivered on 14 June 2023."
     }

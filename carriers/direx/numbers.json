@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's tracking page lists it in an HTML comment. Direx's tracker answers it as a parcel for Germany that UPS sent back."
@@ -56,6 +57,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -85,7 +87,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's tracking page lists it in an HTML comment. Direx's tracker answers it as a parcel for the United States that USPS delivered."
@@ -114,7 +117,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's own API documentation gives this item number in its partner status example, handed to Swiss Post, with partner events from January 2025."
@@ -143,7 +147,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's own API documentation gives this second item number in its partner status example, handed to Asendia."
@@ -172,7 +177,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's own API documentation gives this item number, sent from Bulgaria to Italy, in its tracking example with Direx events."
@@ -203,6 +209,7 @@
           "cargus",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "gls-es"
         ]
       },
@@ -232,7 +239,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's own API documentation uses this item number in its tracking number, weight and price, label and reference lookup examples."
@@ -261,7 +269,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's own API documentation uses this item number in its tracking number, weight and price and reference lookup examples."
@@ -290,7 +299,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Direx's own API documentation uses this item number in its tracking number, weight and price and reference lookup examples."
@@ -322,6 +332,7 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
+          "dpd-ie",
           "geniki-taxydromiki"
         ]
       },

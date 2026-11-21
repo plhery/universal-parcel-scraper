@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Jamef's former tracker, which took a branch code, this CTRC number and a series, shows a consignment from Hortolândia to Contagem delivered; today's tracker cannot take this kind of number."
     }

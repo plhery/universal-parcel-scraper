@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The archived lookup on Naqel's tracker shows the waybill created and the shipment picked up by Naqel in Dubai for Jubail."
     },
@@ -59,7 +62,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Naqel's own tracker, as an archived address shows; the capture was not opened. Naqel's tracker shows the shipment's history."
     },
@@ -78,7 +84,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Naqel's own tracker, as an archived address shows; the capture was not opened. Naqel's tracker shows the shipment's history."
     },
@@ -97,7 +106,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Naqel's own tracker, as an archived address shows; the capture was not opened. Naqel's tracker shows the shipment's history."
     },
@@ -116,7 +128,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Looked up on Naqel's own tracker, as an archived address shows; the capture was not opened."
     },

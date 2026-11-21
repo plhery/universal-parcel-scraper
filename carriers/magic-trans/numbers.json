@@ -18,7 +18,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
     },
@@ -39,7 +42,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
     },
@@ -60,7 +66,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
     },
@@ -84,6 +93,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -107,7 +117,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
     },
@@ -128,7 +141,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
     },
@@ -149,7 +165,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
     },
@@ -170,7 +189,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
     },
@@ -187,7 +209,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "Magic Trans' tracker page prints it as the example act number; not a known shipment."
     },

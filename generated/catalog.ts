@@ -21154,6 +21154,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "dpd-ie",
       "recognitionRank": 960,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.dpd.ie/tracking/",
@@ -21169,7 +21170,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{9,10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "dpd-nl": {
     "displayName": "DPD Netherlands",
@@ -71206,7 +71212,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-gr": [],
   "dpd-hk": [],
   "dpd-hu": ["dpd-hu-1"],
-  "dpd-ie": [],
+  "dpd-ie": ["dpd-ie-1"],
   "dpd-nl": ["dpd-nl-1"],
   "dpd-pl": ["dpd-pl-1","dpd-pl-2","dpd-pl-3"],
   "dpd-pt": ["dpd-pt-1","dpd-pt-2","dpd-pt-3","dpd-pt-4"],

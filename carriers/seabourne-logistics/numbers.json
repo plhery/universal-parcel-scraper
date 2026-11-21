@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Seabourne's own former tracker shows this air waybill from the Netherlands to India, through to its delivery, with the onward carrier's number as a cross-reference."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Seabourne's own former tracker shows this air waybill from the Netherlands to India, from pickup to delivery, with the onward carrier's number as a cross-reference; the current tracker does not find it."
     }

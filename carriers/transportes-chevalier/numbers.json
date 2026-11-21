@@ -24,7 +24,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The dated Chevalier invoice lists the full guide. The native FivePostal tracker echoed it in its shipment and movement records and confirmed delivery in Maicao."

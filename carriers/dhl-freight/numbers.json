@@ -156,7 +156,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The consignment number (Sendungsnummer) shown on DHL Freight's ActiveTracing for the package of that capture."
     },
@@ -334,7 +337,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The nine-digit consignment number shown on DHL Freight's ActiveTracing beside the domestic ID of that capture."
     },
@@ -429,7 +435,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The nine-digit consignment number shown on DHL Freight's ActiveTracing beside the domestic ID of that capture."
     },
@@ -450,7 +459,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "Made-up number in the shape of a Swedish domestic consignment the app tracked, which ActiveTracing listed as a DHL Servicepoint Domestic consignment of DHL Freight (Sweden)."

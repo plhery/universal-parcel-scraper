@@ -25,7 +25,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on Bombino's own tracker shows this air waybill as SHIPMENT SENT TO DESTINATION from Mumbai, with an India Post number as its corresponding tracking number."
@@ -45,7 +46,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Bombino's own tracker shows this air waybill as REACHED OFFICE at its JFK office."
     },
@@ -64,7 +68,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "An archived lookup on Bombino's own tracker shows this air waybill as Delivered with a delivery date and receiver."
     },
@@ -154,6 +161,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "dpd-ie",
           "tforce-freight",
           "xpo-ltl"
         ]
@@ -175,7 +183,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A shipper's review on Bombino's Trustpilot page gives this as the reference of one of two parcels booked to Amazon in the United States; Bombino's current tracker knows it as an export from India returned to the shipper."
     },
@@ -194,7 +205,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "The other parcel of the same Trustpilot review; Bombino's current tracker knows it as an export from India returned to the shipper."
     },
@@ -213,7 +227,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
       },
       "note": "A customer's review of Bombino on TrackingMore gives this air waybill for a parcel from New York to Delhi; Bombino's current tracker no longer knows it."
     }

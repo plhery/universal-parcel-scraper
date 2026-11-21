@@ -24,7 +24,8 @@
           "estafeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "An archived lookup on Fastdrop's own package tracking page; the capture was opened but shows only the page shell, so the history is not visible."

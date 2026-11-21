@@ -50,7 +50,8 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
-          "dhl-freight"
+          "dhl-freight",
+          "dpd-ie"
         ]
       },
       "note": "The customer gives this as the Cargo X tracking number. The carrier's public result displayed the same identifier and delivery history."

@@ -1182,18 +1182,6 @@
     "reason": "DPD Austria also delivers parcels numbered at other DPD networks' depots; other DPD entries suggest those, and DPD Austria's rule takes only its own depots' codes."
   },
   {
-    "carrier": "dpd-ie",
-    "pattern": "^\\d{9}$",
-    "kind": "by_design",
-    "reason": "Nine digits are shared by several carriers, TNT among them, and nothing in the number points to DPD Ireland."
-  },
-  {
-    "carrier": "dpd-ie",
-    "pattern": "^\\d{10}$",
-    "kind": "by_design",
-    "reason": "Ten digits are shared by several carriers and nothing in the number points to DPD Ireland."
-  },
-  {
     "carrier": "dpd-ru",
     "pattern": "^(?:RU|KZ)\\d{9}$",
     "kind": "by_design",
