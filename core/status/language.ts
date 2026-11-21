@@ -568,6 +568,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/or awaiting processing|ou en attente de traitement|oder wartet auf.*bearbeitung|o in attesa di elaborazione/.test(text)) return 'registered';
   // USPS's "Shipment Received, Package Acceptance Pending": the item reached USPS before its acceptance scan, as USPS's map reads it.
   if (/^shipment received,? package acceptance pending\b/.test(text)) return 'registered';
+  // SEKO's OmniParcel "Tracking number allocated & order ready", created but not dispatched, as SEKO's map reads it;
+  // ParcelsApp relays it without the ampersand.
+  if (/^tracking number allocated(?:,? (?:& |and )?order ready)?\.?$/.test(text)) return 'registered';
   if (/will be transported|\barrange (?:a )?(?:truck|train|rail|road) transfer\b|sera (?:transporte|achemine)|wird.*transportiert|sara trasportat/.test(text)) return 'in_transit';
   // "Available for pickup shortly": the parcel is on its way to the outlet, not waiting there yet.
   if (/will be available|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b|sera disponible|(?:sera|va etre|doit etre) (?:distribue|remis|mis en (?:livraison|distribution))|wird.*verfugbar|sara disponibile|to be delivered|a livrer|noch zuzustellen|da consegnare|(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery|\bout for delivery soon\b/.test(text)) return 'in_transit';
