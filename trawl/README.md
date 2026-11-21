@@ -214,7 +214,8 @@ refusal's status. A request's proxy carries that whole context.
 SF Express solves GeeTest's slider locally and asks for at most two other puzzles when it
 cannot read one.
 ZTO solves Dingxiang's slider and ordered-character challenge locally, with at most two
-concurrent offline OCR workers; a request waits for a free worker within its deadline. Each
+concurrent offline OCR workers; a request waits for a free worker within its deadline. A
+worker reads a picture's characters in parallel, with the scores a serial read gives. Each
 worker ends with its request and retains no images. A puzzle the helper cannot read is
 swapped for another through Dingxiang's refresh control, at most twice per lookup.
 The `zto.verification` warning records how each run ended. For each puzzle it gives the
@@ -231,7 +232,10 @@ an unresolved prepared page, using fixed puzzle types, outcome labels and counts
 Analysis labels distinguish worker limits from an uncertain image match.
 It retains no images, answers, tracking identifiers or verification tokens.
 China Post reads its ordered-character prompt offline and takes click positions from the
-shared character worker; a worker failure stays unreadable. It submits the anonymous preview form
+shared character worker; a worker failure stays unreadable. Its puzzles draw solid characters
+turned at most a quarter turn, so it asks the worker for a quick read first: one reader over
+those turns of each plain crop. An order that does not clearly lead the next one gets the
+worker's full read. It submits the anonymous preview form
 and can refresh a completed but unreadable prompt once through the official widget,
 within the same two-puzzle limit and deadline. Worker errors, cancellation and timeouts
 do not trigger that refresh. The replacement must have a new identifier and background,

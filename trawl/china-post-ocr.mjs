@@ -42,7 +42,8 @@ export async function solveChinaPostCharacters(challenge, signal, timeoutMs, rep
   if (targets?.failure === 'unreadable') report?.('prompt-unreadable');
   if (typeof targets !== 'string' || !/^[\u3400-\u9fff]{2,4}$/.test(targets)) return null;
   report?.('positions');
-  const result = await solveZtoCharacters({ targets, image, region: { x: 0, y: 0, width, height } }, signal,
+  // The puzzle draws solid glyphs turned at most a quarter turn, which the worker's quick read settles.
+  const result = await solveZtoCharacters({ targets, image, region: { x: 0, y: 0, width, height }, quick: true }, signal,
     Math.max(0, timeoutMs - (Date.now() - started)));
   return Array.isArray(result.points) ? result.points : null;
 }

@@ -44,8 +44,12 @@ cache would keep them. HTTP recognition continues to use the app alone.
 
 The character prompt is read one glyph at a time after removing coloured
 interference lines; a whole-line read can omit required clicks. Other prompt
-layouts retain the whole-line reader. The background matcher stays separate,
-and the carrier must accept the ordered clicks before any preview is used.
+layouts retain the whole-line reader. The background matcher stays separate.
+It first reads each character upright to a quarter turn with one reader: the
+puzzle draws solid characters turned no further, and the other turns only add
+false matches. An order that does not clearly lead the next one falls back to
+the full read of every turn and colour. The carrier must accept the ordered
+clicks before any preview is used.
 A completed but unreadable prompt can use the widget's refresh once, consuming
 the remaining puzzle in the existing two-puzzle limit. The helper waits for a
 different puzzle to be displayed; worker failures and timeouts do not trigger

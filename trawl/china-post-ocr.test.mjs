@@ -41,6 +41,7 @@ test('passes the shared worker positions to China Post without its diagnostic en
   assert.equal(inputs.length, 2);
   assert.equal(inputs[1].value.targets, '甲乙');
   assert.deepEqual(inputs[1].value.region, { x: 0, y: 0, width: 200, height: 100 });
+  assert.equal(inputs[1].value.quick, true);
 });
 
 test('keeps a shared worker failure unreadable instead of returning a click plan', async t => {
