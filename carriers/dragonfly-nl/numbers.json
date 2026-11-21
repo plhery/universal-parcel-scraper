@@ -1,0 +1,65 @@
+{
+  "carrier": "dragonfly-nl",
+  "records": [
+    {
+      "number": "AMZNL000009134020",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/*/dragonflyshipping.nl/cfworker/v2/instructions/check/AMZNL000009134020*"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Archived in the Wayback Machine as a call of the Dutch Dragonfly portal's delivery-instruction service. The portal's tracking service answers it with a delivered history."
+    },
+    {
+      "number": "AMZNL000008403664",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/*/dragonflyshipping.nl/cfworker/v2/instructions/check/AMZNL000008403664*"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Archived in the Wayback Machine as a call of the Dutch Dragonfly portal's delivery-instruction service. The portal's tracking service answers it with a failed attempt and then a lost parcel."
+    },
+    {
+      "number": "AMZNL000001037508",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251203094546/https://dragonflyshipping.nl/cfworker/v2/tracking/AMZNL000001037508/",
+        "date": "2025-12-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The Wayback Machine archived the Dutch tracking service's reply, a parcel brought back to the depot after a day out for delivery. The service has since dropped it and answers not_found."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "carrier": "dragonfly-nl",
+  "entries": [
+    { "code": "0", "wording": "Your package is in good hands with Dragonfly!", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "Internal label Data received: the shipper's data arrived." },
+    { "code": "105", "wording": "Dragonfly has your package!", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "Internal label Received." },
+    { "code": "106", "wording": "Your package is on the move!", "language": "en", "stage": "in_transit", "confirmedBy": "portal", "note": "Internal label Hub station inbound scan; seen in an archived reply of the tracking service." },
+    { "code": "300", "wording": "On our way to you!", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Internal label Loaded." },
+    { "code": "590", "wording": "We tried to deliver your package", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "Internal label First delivery attempt / REASON; the long label says the driver will try again." },
+    { "code": "601", "wording": "Hooray! Your package is here", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Internal label Delivered - No Signature." },
+    { "code": "610", "wording": "We’ll try again soon!", "language": "en", "stage": "failed_attempt", "confirmedBy": "portal", "note": "Internal label Returned to warehouse: the parcel went back to the local depot undelivered for another day. Seen in an archived reply of the tracking service." },
+    { "code": "860", "wording": "Uh-oh! We're unable to locate your package", "language": "en", "stage": "exception", "confirmedBy": "live", "note": "Internal label Lost by carrier." }
+  ]
+}

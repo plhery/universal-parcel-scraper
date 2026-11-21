@@ -1,0 +1,372 @@
+{
+  "success": true,
+  "data": {
+    "code": "found",
+    "result": {
+      "tracking_id": "AMZNL000001037508",
+      "eta": "2025-12-02T12:36:27.000000+01:00",
+      "buffered_eta": "2025-12-02T11:36:27.000Z",
+      "public_eta": null,
+      "driver_name": null,
+      "client_code": null,
+      "subsidiary": "dragonfly_nl",
+      "allow_cancel": false,
+      "allow_reschedule": false,
+      "can_reschedule": false,
+      "can_cancel": false,
+      "last_status": {
+        "package_location": {
+          "address": {
+            "zip": "",
+            "country_code": "NL",
+            "country": "Netherlands",
+            "address_line1": "",
+            "city": "Waddinxveen",
+            "timezone": null,
+            "name": "",
+            "event_local_time": "2025-12-02T22:50:53.476000+01:00",
+            "state_province": "ZH",
+            "address_line_2": ""
+          }
+        },
+        "timestamp": 1764712253476,
+        "task_type": "last_mile_delivery",
+        "status": 610,
+        "label": "Returned to warehouse",
+        "step": -3,
+        "showEta": false,
+        "etaType": "none",
+        "etaBuffer": 0,
+        "hidden": false,
+        "freqCap": null,
+        "lottieDesktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/08_Postponed_16x9-%E2%80%93-2024.json",
+        "lottieMobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/08_Postponed_1x1-%E2%80%93-2024.json",
+        "isDelivered": false,
+        "canReschedule": false,
+        "canCancel": false,
+        "shortLabel": {
+          "en": "We’ll try again soon!",
+          "fr": "",
+          "nl": "We proberen het snel weer!"
+        },
+        "longLabel": {
+          "en": "Unfortunately, we couldn't make it in time to deliver your package today. Don’t worry! Your package was safely returned to the local station. Keep an eye out for the rescheduled delivery time. Thanks for your patience!",
+          "fr": "",
+          "nl": "Helaas konden we je pakket vandaag niet op tijd bezorgen. Geen zorgen, we hebben het veilig teruggebracht naar ons lokale depot. Houd je meldingen in de gaten voor een nieuwe bezorgtijd. Dank voor je geduld!"
+        },
+        "driverLabel": {
+          "en": "",
+          "fr": "",
+          "nl": ""
+        },
+        "clientLabel": {
+          "en": "",
+          "fr": "",
+          "nl": ""
+        },
+        "statusCode": 610
+      },
+      "status_list": [
+        {
+          "package_location": {
+            "address": {
+              "zip": "",
+              "country_code": "NL",
+              "country": "Netherlands",
+              "address_line1": "",
+              "city": "Waddinxveen",
+              "timezone": null,
+              "name": "",
+              "event_local_time": "2025-12-02T22:50:53.476000+01:00",
+              "state_province": "ZH",
+              "address_line_2": ""
+            }
+          },
+          "timestamp": 1764712253476,
+          "task_type": "last_mile_delivery",
+          "status": 610,
+          "label": "Returned to warehouse",
+          "step": -3,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": null,
+          "lottieDesktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/08_Postponed_16x9-%E2%80%93-2024.json",
+          "lottieMobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/08_Postponed_1x1-%E2%80%93-2024.json",
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "shortLabel": {
+            "en": "We’ll try again soon!",
+            "fr": "",
+            "nl": "We proberen het snel weer!"
+          },
+          "longLabel": {
+            "en": "Unfortunately, we couldn't make it in time to deliver your package today. Don’t worry! Your package was safely returned to the local station. Keep an eye out for the rescheduled delivery time. Thanks for your patience!",
+            "fr": "",
+            "nl": "Helaas konden we je pakket vandaag niet op tijd bezorgen. Geen zorgen, we hebben het veilig teruggebracht naar ons lokale depot. Houd je meldingen in de gaten voor een nieuwe bezorgtijd. Dank voor je geduld!"
+          },
+          "driverLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "clientLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "statusCode": 610
+        },
+        {
+          "package_location": {
+            "address": {
+              "zip": "",
+              "country_code": "NL",
+              "country": "NL",
+              "address_line1": "",
+              "city": "Maassluis",
+              "timezone": null,
+              "name": "",
+              "event_local_time": "2025-12-02T14:08:26.204000+01:00",
+              "state_province": "ZH",
+              "address_line_2": ""
+            }
+          },
+          "timestamp": 1764680906204,
+          "task_type": "last_mile_delivery",
+          "status": 300,
+          "label": "Loaded",
+          "step": 3,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": null,
+          "lottieDesktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/06_OnTheWay_16x9_Dragonfly_2024-2.json",
+          "lottieMobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/06_OnTheWay_1x1_Dragonfly_2024-2.json",
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "shortLabel": {
+            "en": "On our way to you!",
+            "fr": "",
+            "nl": "We zijn onderweg naar jou!"
+          },
+          "longLabel": {
+            "en": "Exciting update! Your package is currently en route and will be delivered today. If you're not around, don't worry! We'll either leave it with your neighbor or try delivering it again soon.",
+            "fr": "",
+            "nl": "Goed nieuws! We zijn onderweg. We bezorgen je pakket voor vanavond. Ben je niet thuis, geen punt. We bezorgen het op de door jou aangegeven veilige plek rondom je huis, bij je buren of we proberen het zo snel mogelijk nog een keer."
+          },
+          "driverLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "clientLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "statusCode": 300
+        },
+        {
+          "package_location": {
+            "address": {
+              "zip": "",
+              "country_code": "NL",
+              "country": "Netherlands",
+              "address_line1": "",
+              "city": "Waddinxveen",
+              "timezone": null,
+              "name": "",
+              "event_local_time": "2025-12-02T09:38:54.695000+01:00",
+              "state_province": "ZH",
+              "address_line_2": ""
+            }
+          },
+          "timestamp": 1764664734695,
+          "task_type": "last_mile_delivery",
+          "status": 106,
+          "label": "Hub station inbound scan",
+          "step": 2,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": 1,
+          "lottieDesktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/04_In-Transit-Generic_16x9.json",
+          "lottieMobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/04_In-Transit-Generic_1x1.json",
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "shortLabel": {
+            "en": "Your package is on the move!",
+            "fr": "",
+            "nl": "Je pakket is onderweg!"
+          },
+          "longLabel": {
+            "en": "We're leaving {city} now, and we'll notify you once your package reaches the next Dragonfly station.",
+            "fr": "",
+            "nl": "Je pakket is onderweg naar ons regionale depot We  geven je een seintje zodra het daar is aangekomen."
+          },
+          "driverLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "clientLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "statusCode": 106
+        },
+        {
+          "package_location": {
+            "address": {
+              "zip": "",
+              "country_code": "NL",
+              "country": "Netherlands",
+              "address_line1": "",
+              "city": "Waddinxveen",
+              "timezone": null,
+              "name": "",
+              "event_local_time": "2025-12-02T09:38:54.576000+01:00",
+              "state_province": "ZH",
+              "address_line_2": ""
+            }
+          },
+          "timestamp": 1764664734576,
+          "task_type": "last_mile_delivery",
+          "status": 105,
+          "label": "Received",
+          "step": 2,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": 1,
+          "lottieDesktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/03_Package-Received_16x9_Dragonfly_2024-2.json",
+          "lottieMobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/03_Package-Received_1x1_Dragonfly_2024-2.json",
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "shortLabel": {
+            "en": "Dragonfly has your package!",
+            "fr": "",
+            "nl": "We hebben je pakket ontvangen!"
+          },
+          "longLabel": {
+            "en": "Your merchant has handed us your package at our {city} station. We'll make sure to keep you posted as it makes its way to you.",
+            "fr": "",
+            "nl": "Je pakket is aangekomen in ons sorteercentrum. We houden je natuurlijk op de hoogte van de verwachte bezorgtijd."
+          },
+          "driverLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "clientLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "statusCode": 105
+        },
+        {
+          "package_location": null,
+          "timestamp": 1764630175374,
+          "task_type": "last_mile_delivery",
+          "status": 0,
+          "label": "Data received",
+          "step": 1,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": 1,
+          "lottieDesktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/01_Info-Received_16x9_Dragonfly_2024.json",
+          "lottieMobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/01_Info-Received_1x1_Dragonfly_2024.json",
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "shortLabel": {
+            "en": "Your package is in good hands with Dragonfly!",
+            "fr": "",
+            "nl": "Je pakket is bij Dragonfly in veilige handen!"
+          },
+          "longLabel": {
+            "en": "Good news! We've received your shipment details, but the package is still with your merchant. Stay tuned, and we'll notify you as soon as we receive it.",
+            "fr": "",
+            "nl": "Goed nieuws! We hebben de informatie over je zending ontvangen, maar het pakket is nog altijd bij je verzender. Houd je meldingen in de gaten, we geven je een seintje zodra je pakket bij ons binnen is."
+          },
+          "driverLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "clientLabel": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          },
+          "statusCode": 0
+        }
+      ]
+    }
+  },
+  "raw_last_status": {
+    "package_location": {
+      "address": {
+        "zip": "",
+        "country_code": "NL",
+        "country": "Netherlands",
+        "address_line1": "",
+        "city": "Waddinxveen",
+        "timezone": null,
+        "name": "",
+        "event_local_time": "2025-12-02T22:50:53.476000+01:00",
+        "state_province": "ZH",
+        "address_line_2": ""
+      }
+    },
+    "timestamp": 1764712253476,
+    "task_type": "last_mile_delivery",
+    "status": 610,
+    "label": "Returned to warehouse",
+    "step": -3,
+    "showEta": false,
+    "etaType": "none",
+    "etaBuffer": 0,
+    "hidden": false,
+    "freqCap": null,
+    "lottieDesktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/08_Postponed_16x9-%E2%80%93-2024.json",
+    "lottieMobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/08_Postponed_1x1-%E2%80%93-2024.json",
+    "isDelivered": false,
+    "canReschedule": false,
+    "canCancel": false,
+    "shortLabel": {
+      "en": "We’ll try again soon!",
+      "fr": "",
+      "nl": "We proberen het snel weer!"
+    },
+    "longLabel": {
+      "en": "Unfortunately, we couldn't make it in time to deliver your package today. Don’t worry! Your package was safely returned to the local station. Keep an eye out for the rescheduled delivery time. Thanks for your patience!",
+      "fr": "",
+      "nl": "Helaas konden we je pakket vandaag niet op tijd bezorgen. Geen zorgen, we hebben het veilig teruggebracht naar ons lokale depot. Houd je meldingen in de gaten voor een nieuwe bezorgtijd. Dank voor je geduld!"
+    },
+    "driverLabel": {
+      "en": "",
+      "fr": "",
+      "nl": ""
+    },
+    "clientLabel": {
+      "en": "",
+      "fr": "",
+      "nl": ""
+    },
+    "statusCode": 610
+  }
+}

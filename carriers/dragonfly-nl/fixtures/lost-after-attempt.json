@@ -1,0 +1,378 @@
+{
+  "success": true,
+  "data": {
+    "code": "found",
+    "result": {
+      "version": "v3",
+      "tracking_id": "AMZNL000008403664",
+      "eta": "2026-10-13T16:51:45.000000+02:00",
+      "buffered_eta": "2026-10-13T14:51:45.000Z",
+      "live_buffered_eta": "2026-10-13T17:15:00.000Z",
+      "public_eta": {
+        "from": "2026-10-13T16:15:00.000Z",
+        "to": "2026-10-13T17:15:00.000Z",
+        "min": 13,
+        "max": 22
+      },
+      "driver_name": null,
+      "client_code": null,
+      "is_green_task": false,
+      "subsidiary": "dragonfly_nl",
+      "service_type": "SMDYEXP",
+      "allow_cancel": false,
+      "allow_reschedule": false,
+      "can_reschedule": false,
+      "can_cancel": false,
+      "last_status": {
+        "package_location": null,
+        "timestamp": 1794513774154,
+        "task_type": "last_mile_delivery",
+        "status": 860,
+        "label": "Lost by carrier",
+        "step": -2,
+        "showEta": false,
+        "etaType": "none",
+        "etaBuffer": 0,
+        "liveEtaBuffer": 0,
+        "freqCap": null,
+        "isDelivered": false,
+        "canReschedule": false,
+        "canCancel": false,
+        "hidden": false,
+        "driver": {
+          "status": 860,
+          "serviceType": "",
+          "label": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          }
+        },
+        "client": {
+          "status": 860,
+          "label": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          }
+        },
+        "labels": {
+          "status": 860,
+          "serviceType": "",
+          "subReason": "",
+          "shortLabel": {
+            "en": "Uh-oh! We're unable to locate your package",
+            "fr": "",
+            "nl": "Oh, oh! We kunnen je pakket niet vinden"
+          },
+          "longLabel": {
+            "en": "We have some bad news. We regret to inform you that your package has been lost during transit. We understand that this can be disappointing. To find out more, please get in touch with your merchant directly. They will assist you in finding a solution.",
+            "fr": "",
+            "nl": "Slecht nieuws. We zijn je pakket in ons proces kwijtgeraakt. We begrijpen je teleurstelling. Neem voor een oplossing contact op"
+          }
+        },
+        "lottie": {
+          "status": 860,
+          "desktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/10_Problem-Contact-Merchant_16x9_v2.json",
+          "mobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/10_Problem-Contact-Merchant_1x1_v2.json"
+        },
+        "dropoff": null,
+        "statusCode": 860
+      },
+      "status_list": [
+        {
+          "package_location": null,
+          "timestamp": 1794513774154,
+          "task_type": "last_mile_delivery",
+          "status": 860,
+          "label": "Lost by carrier",
+          "step": -2,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "liveEtaBuffer": 0,
+          "freqCap": null,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "hidden": false,
+          "driver": {
+            "status": 860,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 860,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 860,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "Uh-oh! We're unable to locate your package",
+              "fr": "",
+              "nl": "Oh, oh! We kunnen je pakket niet vinden"
+            },
+            "longLabel": {
+              "en": "We have some bad news. We regret to inform you that your package has been lost during transit. We understand that this can be disappointing. To find out more, please get in touch with your merchant directly. They will assist you in finding a solution.",
+              "fr": "",
+              "nl": "Slecht nieuws. We zijn je pakket in ons proces kwijtgeraakt. We begrijpen je teleurstelling. Neem voor een oplossing contact op"
+            }
+          },
+          "lottie": {
+            "status": 860,
+            "desktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/10_Problem-Contact-Merchant_16x9_v2.json",
+            "mobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/10_Problem-Contact-Merchant_1x1_v2.json"
+          },
+          "dropoff": null,
+          "statusCode": 860
+        },
+        {
+          "package_location": null,
+          "timestamp": 1791909595271,
+          "task_type": "last_mile_delivery",
+          "status": 590,
+          "label": "First delivery attempt / REASON",
+          "step": -3,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "liveEtaBuffer": 0,
+          "freqCap": null,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "hidden": false,
+          "driver": {
+            "status": 590,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 590,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 590,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "We tried to deliver your package",
+              "fr": "",
+              "nl": "We proberen het snel weer!"
+            },
+            "longLabel": {
+              "en": "We attempted to deliver your package today but it didn’t go as planned. But don't worry! The driver will give it another go very soon. Be sure to keep an eye out for the rescheduled delivery time.",
+              "fr": "",
+              "nl": "Helaas konden we je pakket vandaag niet bij je bezorgen. Geen zorgen, we proberen het snel weer. Houd onze notificaties in de gaten. Dank voor je geduld!"
+            }
+          },
+          "lottie": {
+            "status": 590,
+            "desktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/08_Postponed_16x9_2024_v2.json",
+            "mobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/08_Postponed_1x1_2024_v2.json"
+          },
+          "dropoff": null,
+          "statusCode": 590
+        },
+        {
+          "package_location": {
+            "address": {
+              "city": "",
+              "state": "",
+              "country": ""
+            }
+          },
+          "timestamp": 1791897564070,
+          "task_type": "last_mile_delivery",
+          "status": 300,
+          "label": "Loaded",
+          "step": 3,
+          "showEta": true,
+          "etaType": "time",
+          "etaBuffer": 4,
+          "liveEtaBuffer": 1,
+          "freqCap": null,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "hidden": false,
+          "driver": {
+            "status": 300,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 300,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 300,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "On our way to you!",
+              "fr": "",
+              "nl": "We zijn onderweg naar je!"
+            },
+            "longLabel": {
+              "en": "Exciting update! Your package is currently en route and will be delivered today. If you're not around, don't worry! We'll either leave it with your neighbor or try delivering it again soon.",
+              "fr": "",
+              "nl": "Goed nieuws! We zijn onderweg naar je en bezorgen je pakket voor 22.00 uur. Ben je niet thuis, geen punt! We bezorgen het pakket op de door jou aangegeven veilige plaats rondom je huis, bij je buren of we proberen het later opnieuw."
+            }
+          },
+          "lottie": {
+            "status": 300,
+            "desktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/06_OnTheWay_16x9_Dragonfly_2024.json",
+            "mobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/06_OnTheWay_1x1_Dragonfly_2024.json"
+          },
+          "dropoff": null,
+          "statusCode": 300
+        },
+        {
+          "package_location": {
+            "address": {
+              "city": "",
+              "state": "",
+              "country": ""
+            }
+          },
+          "timestamp": 1791880359980,
+          "task_type": "last_mile_delivery",
+          "status": 105,
+          "label": "Received",
+          "step": 2,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "liveEtaBuffer": 0,
+          "freqCap": 1,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "hidden": false,
+          "driver": {
+            "status": 105,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 105,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 105,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "Dragonfly has your package!",
+              "fr": "",
+              "nl": "We hebben je pakket ontvangen!"
+            },
+            "longLabel": {
+              "en": "Your merchant has handed us your package at our station. We'll make sure to keep you posted as it makes its way to you.",
+              "fr": "",
+              "nl": "Je pakket is aangekomen in ons sorteercentrum. We houden je op de hoogte van de voortgang van de bezorging."
+            }
+          },
+          "lottie": {
+            "status": 105,
+            "desktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/03_Package-Received_16x9_Dragonfly_2024-2_2026-02-18-163304_emzd.json",
+            "mobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/03_Package-Received_1x1_Dragonfly_2024-2_2026-02-18-163234_kakp.json"
+          },
+          "dropoff": null,
+          "statusCode": 105
+        },
+        {
+          "package_location": null,
+          "timestamp": 1791850747679,
+          "task_type": "last_mile_delivery",
+          "status": 0,
+          "label": "Data received",
+          "step": 1,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "liveEtaBuffer": 0,
+          "freqCap": 1,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "hidden": false,
+          "driver": {
+            "status": 0,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 0,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 0,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "Your package is in good hands with Dragonfly!",
+              "fr": "",
+              "nl": "Je pakket is veilig bij Dragonfly"
+            },
+            "longLabel": {
+              "en": "Good news! We've received your shipment details, but the package is still with your merchant. Stay tuned, and we'll notify you as soon as we receive it.",
+              "fr": "",
+              "nl": "Goed nieuws! De verzender heeft je pakket bij ons aangemeld, het pakket is nog bij de verzender. We laten je weten zodra we je pakket hebben ontvangen."
+            }
+          },
+          "lottie": {
+            "status": 0,
+            "desktop": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/desktop/01_Info-Received_16x9_Dragonfly_2024.json",
+            "mobile": "https://dragonflyshipping.nl/uploads/5_Animations/tracking/mobile/01_Info-Received_1x1_Dragonfly_2024.json"
+          },
+          "dropoff": null,
+          "statusCode": 0
+        }
+      ]
+    }
+  }
+}

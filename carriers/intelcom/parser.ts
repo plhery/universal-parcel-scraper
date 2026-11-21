@@ -8,6 +8,21 @@ import { clean, cleanScalar, textFromHtml } from '../../core/transport/index.js'
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { intelcomCodeStage } from './status.js';
 
+/**
+ * One national Dragonfly tracking service. Canada and the Netherlands run the
+ * same public service contract on separate backends.
+ */
+export interface DragonflyService {
+  /** The provider errors name. */
+  provider: string;
+  /** The name error messages use. */
+  name: string;
+  /** The stage of a status code the service is known to send. */
+  codeStage: (code: string) => Stage | undefined;
+  /** Clients the service's tracking page names, by client code. */
+  clients: Readonly<Record<string, string>>;
+}
+
 const PROVIDER = 'Intelcom / Dragonfly';
 // Clients the tracking page names as "Package from …". It names no other
 // client code, so neither does the adapter.
@@ -38,9 +53,9 @@ function scanTime(value: unknown) {
   return explicitOffsetTime(clock);
 }
 
-function scan(raw: unknown): CarrierEvent {
+function scan(raw: unknown, service: DragonflyService): CarrierEvent {
   if (!isRecord(raw) || cleanScalar(raw.status) === '' || !/^-?\d+(?:\.\d+)?$/.test(cleanScalar(raw.step))) {
-    throw new SchemaError(PROVIDER, 'Intelcom returned an invalid status');
+    throw new SchemaError(service.provider, `${service.name} returned an invalid status`);
   }
   const labels = isRecord(raw.labels) ? raw.labels : {};
   const nested = isRecord(labels.shortLabel) ? labels.shortLabel : {};
@@ -48,10 +63,10 @@ function scan(raw: unknown): CarrierEvent {
   // Public labels can contain recipient-address template tokens. Keep the
   // short milestone wording; never expand them using the address object.
   const description = textFromHtml((clean(nested.en) || clean(direct.en)).replace(/\{[^}]+\}/g, '')).trim();
-  if (!description) throw new SchemaError(PROVIDER, 'Intelcom returned no English milestone label');
+  if (!description) throw new SchemaError(service.provider, `${service.name} returned no English milestone label`);
   const code = cleanScalar(raw.statusCode) || cleanScalar(raw.status);
   // The delivered flag also marks a return collected from the customer.
-  const stage = intelcomCodeStage(code) ?? (raw.isDelivered === true && raw.task_type !== 'last_mile_pickup' ? 'delivered' : undefined);
+  const stage = service.codeStage(code) ?? (raw.isDelivered === true && raw.task_type !== 'last_mile_pickup' ? 'delivered' : undefined);
   const mapped = stage ? { stage, source: 'carrier_map' } : classifyWording(description, 'pending');
   const time = scanTime(raw.timestamp);
   return { description, provider_code: code, ...(time ? { time: time.iso } : { provider_time_text: cleanScalar(raw.timestamp) || undefined }),
@@ -80,25 +95,32 @@ function estimate(result: JsonObject, latest: JsonObject, after: number | null):
   return last ? { expected_delivery: last, ...(first && first !== last ? { expected_delivery_from: first } : {}) } : {};
 }
 
+const INTELCOM: DragonflyService = { provider: PROVIDER, name: 'Intelcom', codeStage: intelcomCodeStage, clients: SHOWN_CLIENTS };
+
 export function parseIntelcom(payload: unknown, rawNumber: string): CarrierResult {
-  const number = normalizeIntelcomNumber(rawNumber);
-  if (!isRecord(payload) || typeof payload.success !== 'boolean' || !isRecord(payload.data)) throw new SchemaError(PROVIDER, 'Intelcom returned an invalid envelope');
+  return parseDragonflyTracking(payload, normalizeIntelcomNumber(rawNumber), INTELCOM);
+}
+
+/** Reads a reply of a national Dragonfly tracking service for a normalized number. */
+export function parseDragonflyTracking(payload: unknown, number: string, service: DragonflyService): CarrierResult {
+  const { provider, name } = service;
+  if (!isRecord(payload) || typeof payload.success !== 'boolean' || !isRecord(payload.data)) throw new SchemaError(provider, `${name} returned an invalid envelope`);
   if (!payload.success) {
-    if (payload.data.code === 'not_found' && payload.data.result === null) throw new NotFoundError(PROVIDER);
-    throw new IndeterminateError(PROVIDER, 'Intelcom did not complete the lookup');
+    if (payload.data.code === 'not_found' && payload.data.result === null) throw new NotFoundError(provider);
+    throw new IndeterminateError(provider, `${name} did not complete the lookup`);
   }
   const result = payload.data.result;
-  if (!isRecord(result) || clean(result.tracking_id) !== number) throw new SchemaError(PROVIDER, 'Intelcom returned a different shipment');
-  const latest = scan(result.last_status);
+  if (!isRecord(result) || clean(result.tracking_id) !== number) throw new SchemaError(provider, `${name} returned a different shipment`);
+  const latest = scan(result.last_status, service);
   const latestRaw = result.last_status as JsonObject;
   const history = result.status_list ?? [];
-  if (!Array.isArray(history) || history.length > 1000) throw new SchemaError(PROVIDER, 'Intelcom returned an invalid history');
-  const events = history.map(scan);
-  if (!events.length && !latest.time) throw new IndeterminateError(PROVIDER, 'Intelcom returned no dated shipment activity');
+  if (!Array.isArray(history) || history.length > 1000) throw new SchemaError(provider, `${name} returned an invalid history`);
+  const events = history.map(row => scan(row, service));
+  if (!events.length && !latest.time) throw new IndeterminateError(provider, `${name} returned no dated shipment activity`);
   // A return collected from the customer goes to the client, which is then its recipient, not its sender:
   // null drops the client an earlier check named.
   const collected = [latestRaw, ...(history as unknown[])].some(row => isRecord(row) && row.task_type === 'last_mile_pickup');
-  const client = typeof result.client_code === 'string' && Object.hasOwn(SHOWN_CLIENTS, result.client_code) ? SHOWN_CLIENTS[result.client_code] : undefined;
+  const client = typeof result.client_code === 'string' && Object.hasOwn(service.clients, result.client_code) ? service.clients[result.client_code] : undefined;
   // The recipient the service names, unless the parcel is a return collected from them.
   const receiver = collected ? '' : clean(result.recipient_name, 160);
   const output: CarrierResult = { status: latest.stage ? languageStageStatus(latest.stage as Stage) : 'unknown',

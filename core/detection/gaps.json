@@ -1246,6 +1246,12 @@
     "reason": "DSC's AWB numbers are eight bare digits, a length other carriers share, so no rule claims them."
   },
   {
+    "carrier": "dragonfly-nl",
+    "pattern": "^AMZNL\\d{12}$",
+    "kind": "by_design",
+    "reason": "AMZNL numbers are Amazon's, not Dragonfly's: Dragonfly documents no format and Amazon can hand the series to its other Dutch delivery partners, so no rule claims it."
+  },
+  {
     "carrier": "dropp",
     "pattern": "^DR[0-9A-Z]{11}$",
     "kind": "by_design",
