@@ -20,7 +20,8 @@
     "adapter": "delibox",
     "steps": [
       "direct"
-    ]
+    ],
+    "localClocks": true
   },
   "capabilities": [
     "history",
@@ -41,8 +42,7 @@
     "scraped": [
       "status",
       "history",
-      "location",
-      "delivered_at"
+      "location"
     ],
     "discarded": [
       "driver_name",

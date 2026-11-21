@@ -10,9 +10,9 @@ describe('Delibox live guest retrieval', () => {
   it.skipIf(!positive)('reads dated scans for the requested waybill', async () => {
     const result = await tracker.track({ number: positive! }, {});
     expect(result.events?.length).toBeGreaterThan(0);
-    expect(result.events?.every(event => event.time && event.description)).toBe(true);
+    expect(result.events?.every(event => event.local_time && event.description)).toBe(true);
   });
   it.skipIf(!unknown)('preserves the generic lookup alert as inconclusive', async () => {
-    await expect(tracker.track({ number: unknown! }, {})).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(tracker.track({ number: unknown! }, {})).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
   });
 });

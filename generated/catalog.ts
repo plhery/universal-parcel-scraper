@@ -18858,7 +18858,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Seoul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "delibox"
+      "adapter": "delibox",
+      "localClocks": true
     },
     "canaryUrl": "https://www.dbox.co.kr/delivery.php",
     "trackingUrlTemplate": "https://www.dbox.co.kr/delivery.php?laasInvcNo={trackingNumber}",

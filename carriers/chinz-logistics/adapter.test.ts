@@ -30,6 +30,16 @@ describe('Chinz Logistics guest tracking', () => {
     expect(() => parseChinz(fixture('order'), 'CR000000')).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('does not read an HTTP 404, a block page or a malformed body as a missing order', async () => {
+    const reply = (response: Response) => adapter({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(response), userAgent: 'Test Agent',
+      trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} }).track({ number: NUMBER }, { budgetMs: 5000 });
+    await expect(reply(new Response('Not Found', { status: 404 }))).rejects.toMatchObject({ kind: 'transport', status: 404 });
+    await expect(reply(new Response('', { status: 429 }))).rejects.toMatchObject({ kind: 'rate_limited' });
+    await expect(reply(new Response('<html><title>Just a moment...</title></html>'))).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(reply(Response.json({ status: 400, message: '轨迹记录没找到！', data: null }))).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(reply(new Response('<html>oops</html>'))).rejects.not.toMatchObject({ kind: 'not_found' });
+  });
+
   it('uses the supplied transport and the normalized order number', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(fixture('order')));
     const tracker = adapter({ fetcher, userAgent: 'Test Agent', trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });

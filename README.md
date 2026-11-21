@@ -153,7 +153,7 @@ too and takes a fuller history that is not behind the carrier's. Only UPU is on 
 Each one you enable receives the tracking number.
 
 ```js
-createTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'Track718', 'UPU'] });
+createTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Ordertracker', 'Postal Ninja', 'Track718', 'UPU'] });
 ```
 
 `track({ number, source: 'ParcelsApp' })` asks one enabled tracker alone, without the carrier;
