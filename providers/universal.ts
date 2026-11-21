@@ -32,9 +32,9 @@ import { TrawlClient } from '../core/transport/index.js';
 import { adapter as parcelsAppAdapter } from './parcelsapp/adapter.js';
 import { adapter as postalNinjaAdapter } from './postal-ninja/adapter.js';
 import { adapter as seventeenTrackAdapter } from './seventeentrack/adapter.js';
+import { adapter as ordertrackerAdapter } from './ordertracker/adapter.js';
 import { adapter as ship24Adapter } from './ship24/adapter.js';
 import { adapter as track718Adapter } from './track718/adapter.js';
-
 import { adapter as track123Adapter } from './track123/adapter.js';
 import { adapter as upuAdapter } from './upu/adapter.js';
 import { numberOf, type UniversalSource as Source } from './shared/result.js';
@@ -68,8 +68,8 @@ const FACTORIES = {
   '17TRACK': seventeenTrackAdapter,
   'UPU': upuAdapter,
   'Track718': track718Adapter,
-
   'Track123': track123Adapter,
+  'Ordertracker': ordertrackerAdapter,
 } as const satisfies Record<Source, unknown>;
 
 interface SourceFailure {

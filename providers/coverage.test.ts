@@ -91,7 +91,7 @@ describe('coverage evidence', () => {
     for (const entry of CARRIER_COVERAGE) {
       expect(catalog[entry.carrier], entry.carrier).toBeDefined();
       expect(coverageProblems(entry), entry.carrier).toEqual([]);
-      expect(Object.keys(entry.references[0]!.results).sort(), entry.carrier).toEqual([...COVERAGE_SOURCES].sort());
+      expect(COVERAGE_SOURCES.filter((source) => !(source in entry.references[0]!.results)), entry.carrier).toEqual([]);
       if (entry.name) expect(entry.name).not.toBe(catalog[entry.carrier]!.displayName);
     }
   });
@@ -152,20 +152,23 @@ describe('coverage-based lookup order', () => {
   const plan = (carrier: string, options: { trackingNumber?: string; enablePostalNinja?: boolean } = {}) =>
     universalPlan({ carriers: [carrier], enablePostalNinja: true, ...options });
 
-  it('asks fuller history first, and HTTP before the browser service within a tier unless the lookup runs in the background', () => {
-    expect(plan('usps').sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24', 'UPU']);
-    expect(plan('la-poste').sources).toEqual(['ParcelsApp', '17TRACK', 'Ship24', 'Postal Ninja', 'UPU']);
+  it('asks fuller history first, and the fast HTTP providers first within a tier unless the lookup runs in the background', () => {
+    expect(plan('usps').sources).toEqual(['17TRACK', 'ParcelsApp', 'Ordertracker', 'Ship24', 'UPU']);
+    // Ordertracker answers seconds later, as the browser service does.
+    expect(plan('la-poste').sources).toEqual(['ParcelsApp', 'Ordertracker', '17TRACK', 'Ship24', 'Postal Ninja', 'UPU']);
     expect(plan('spring-gds').sources).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
     expect(plan('la-poste').rank('ParcelsApp')).toBeLessThan(plan('la-poste').rank('Ship24'));
-    // ParcelsApp and 17TRACK have La Poste's history equally: in the background each leads some numbers,
-    // and Ship24's partial history stays behind both.
-    const leaders = new Set<UniversalSource>();
-    for (let index = 0; index < 200; index++) {
+    // ParcelsApp, Ordertracker and 17TRACK have La Poste's history equally: in the background each leads
+    // some numbers, Ordertracker more than ParcelsApp, and Ship24's partial history stays behind them.
+    const leaders = new Map<UniversalSource, number>();
+    for (let index = 0; index < 600; index++) {
       const { sources } = universalPlan({ carriers: ['la-poste'], trackingNumber: `6A${10_000_000_000 + index * 7919}`, background: true });
-      expect(sources.indexOf('Ship24')).toBe(2);
-      leaders.add(sources[0]!);
+      expect(sources.indexOf('Ship24')).toBe(3);
+      leaders.set(sources[0]!, (leaders.get(sources[0]!) ?? 0) + 1);
     }
-    expect([...leaders].sort()).toEqual(['17TRACK', 'ParcelsApp']);
+    expect([...leaders.keys()].sort()).toEqual(['17TRACK', 'Ordertracker', 'ParcelsApp']);
+    expect(leaders.get('Ordertracker')).toBeGreaterThan(leaders.get('ParcelsApp')!);
+    expect(leaders.get('ParcelsApp')).toBeGreaterThan(leaders.get('17TRACK')!);
   });
 
   it('asks Postal Ninja after the other aggregators and never ranks it fuller than them', () => {
@@ -189,10 +192,17 @@ describe('coverage-based lookup order', () => {
 
   it('leaves out excluded providers and Postal Ninja when it is disabled', () => {
     expect(plan('yamato').sources).not.toContain('ParcelsApp');
-    expect(plan('ups').sources).toEqual(['ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
+    expect(plan('ups').sources).toEqual(['ParcelsApp', 'Ordertracker', '17TRACK', 'Postal Ninja', 'UPU']);
     // Not even as the provider a ten-digit number puts first.
     expect(plan('sf-express', { trackingNumber: '1234567891' }).sources).not.toContain('Ship24');
     expect(plan('australia-post', { enablePostalNinja: false }).sources).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'UPU']);
+  });
+
+  it('asks Ordertracker only about the carrier the lookup is for, when its feeds were checked', () => {
+    for (const carrier of ['ups', 'fedex', 'usps', 'canada-post', 'la-poste', 'chronopost']) expect(plan(carrier).sources, carrier).toContain('Ordertracker');
+    for (const carrier of ['dhl', 'royal-mail', 'unknown']) expect(plan(carrier).sources, carrier).not.toContain('Ordertracker');
+    expect(universalPlan({ carriers: [null, 'ups'] }).sources).not.toContain('Ordertracker');
+    expect(universalPlan({}).sources).not.toContain('Ordertracker');
   });
 
   it('keeps UPU last and postal-only, and China Post C/L numbers on 17TRACK first', () => {
@@ -243,11 +253,11 @@ describe("a consumer's own counts", () => {
   it('order the plan of the carrier the lookup is for', () => {
     const number = '9400100000000000000000';
     // The references alone put 17TRACK before ParcelsApp for USPS.
-    expect(universalPlan({ carriers: ['usps'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
+    expect(universalPlan({ carriers: ['usps'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ordertracker', 'Ship24']);
     const observed = { ParcelsApp: { history: 45, missed: 5 }, Ship24: { history: 0, missed: 30 } };
     // Counted as full, ParcelsApp answers first for someone waiting, and Ship24 is no longer asked.
     const plan = universalPlan({ carriers: ['usps'], trackingNumber: number, observed });
-    expect(plan.sources).toEqual(['ParcelsApp', '17TRACK']);
+    expect(plan.sources).toEqual(['ParcelsApp', '17TRACK', 'Ordertracker']);
     expect(plan.tier('ParcelsApp')).toBe('full');
     expect(plan.rank('ParcelsApp')).toBe(plan.rank('17TRACK'));
     // In the background the two share USPS's numbers.

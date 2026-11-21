@@ -5,6 +5,10 @@ Track123 is asked through a courier's own public page, one carrier at a time. A 
 history are asked ([couriers.ts](track123/couriers.ts)), and the lookup order below shows
 Track123's place for each. See [retrieval and limitations](track123/README.md).
 
+Ordertracker is asked only about the carriers whose feeds were checked
+([feeds.ts](ordertracker/feeds.ts)). Its results are in [the benchmark](../benchmark/README.md),
+and the lookup order below shows its place. See [retrieval and limitations](ordertracker/README.md).
+
 [coverage.json](coverage.json) is the evidence provider order follows: what each provider
 returned for references of a carrier. Most comparison references were private numbers, which
 are not kept, so this table cannot be rerun as is. The README's figures come from
@@ -202,13 +206,13 @@ Providers joined by a dot have equally full history for the carrier and share it
 | --- | --- |
 | DHL | ParcelsApp → Ship24 · 17TRACK · Track123 → Postal Ninja |
 | DHL Express | Ship24 · 17TRACK · Track123 → ParcelsApp |
-| UPS | ParcelsApp · 17TRACK · Track123 → Postal Ninja |
-| FedEx | ParcelsApp · Track123 → Ship24 · 17TRACK → Postal Ninja |
-| USPS | 17TRACK → ParcelsApp → Ship24 |
+| UPS | Ordertracker · ParcelsApp · 17TRACK · Track123 → Postal Ninja |
+| FedEx | Ordertracker · ParcelsApp · Track123 → Ship24 · 17TRACK → Postal Ninja |
+| USPS | 17TRACK → Ordertracker · ParcelsApp → Ship24 |
 | Amazon Shipping | Ship24 · ParcelsApp → 17TRACK → Postal Ninja |
 | Royal Mail | ParcelsApp → 17TRACK → Postal Ninja |
 | Swiss Post | Ship24 · ParcelsApp · 17TRACK → Postal Ninja |
-| La Poste / Colissimo | ParcelsApp · 17TRACK → Ship24 · Track123 → Postal Ninja |
+| La Poste / Colissimo | Ordertracker · ParcelsApp · 17TRACK → Ship24 · Track123 → Postal Ninja |
 | DPD Switzerland | ParcelsApp → Ship24 · 17TRACK → Postal Ninja |
 | DHL eCommerce | ParcelsApp → Ship24 · 17TRACK → Postal Ninja |
 | AliExpress / Cainiao | ParcelsApp · 17TRACK · Track123 → Ship24 → Postal Ninja |
@@ -219,10 +223,10 @@ Providers joined by a dot have equally full history for the carrier and share it
 | GLS France | ParcelsApp · 17TRACK → Ship24 → Postal Ninja |
 | Hermes Germany | ParcelsApp → Ship24 · 17TRACK → Postal Ninja |
 | Evri International | ParcelsApp · Track123 → Ship24 · 17TRACK |
-| Chronopost | 17TRACK → ParcelsApp → Ship24 |
+| Chronopost | Ordertracker · 17TRACK → ParcelsApp → Ship24 |
 | InPost | Ship24 → ParcelsApp · 17TRACK |
 | PostNL | Ship24 → ParcelsApp → 17TRACK → Postal Ninja |
-| Canada Post | Ship24 · ParcelsApp · 17TRACK · Track123 |
+| Canada Post | Ordertracker → Ship24 · ParcelsApp · 17TRACK · Track123 |
 | Australia Post | Ship24 · ParcelsApp → 17TRACK → Postal Ninja |
 | Japan Post | 17TRACK · Track123 → Ship24 · ParcelsApp → Postal Ninja |
 | India Post | 17TRACK → Ship24 → ParcelsApp |

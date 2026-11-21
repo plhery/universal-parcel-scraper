@@ -34,7 +34,7 @@ import { FLIGHT_BOOKED as DHLINK_FLIGHT } from '../../carriers/dhlink/status.js'
 import { flightBooked as intelValleyFlight } from '../../carriers/intel-valley/status.js';
 import { FLIGHT_BOOKED as MAYIYINFU_FLIGHT } from '../../carriers/mayiyinfu/status.js';
 
-export type UniversalSource = '17TRACK' | 'ParcelsApp' | 'Postal Ninja' | 'Ship24' | 'Track718' | 'Track123' | 'UPU';
+export type UniversalSource = '17TRACK' | 'ParcelsApp' | 'Postal Ninja' | 'Ship24' | 'Track718' | 'Track123' | 'Ordertracker' | 'UPU';
 const STAGES: Record<string, Stage> = {
   InfoReceived: 'registered', InTransit: 'in_transit', AvailableForPickup: 'ready_for_pickup',
   OutForDelivery: 'out_for_delivery', DeliveryFailure: 'failed_attempt', Delivered: 'delivered',

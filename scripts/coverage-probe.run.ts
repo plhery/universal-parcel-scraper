@@ -20,6 +20,7 @@ import { CARRIER_CATALOG } from '../generated/catalog.js';
 import { REGISTRY } from '../generated/registry.js';
 import { BROWSER_SOURCES, UniversalTracker } from '../providers/universal.js';
 import { COVERAGE_SOURCES } from '../providers/coverage.js';
+import { ordertrackerFeeds } from '../providers/ordertracker/feeds.js';
 import type { UniversalSource } from '../providers/shared/result.js';
 
 interface ProbeCase {
@@ -34,7 +35,7 @@ interface ProbeCase {
 type Source = 'direct' | UniversalSource;
 
 const TRAWL_URL = process.env.COVERAGE_PROBE_TRAWL_URL ?? '';
-const SOURCES: Source[] = ['direct', ...COVERAGE_SOURCES];
+const SOURCES: Source[] = ['direct', ...COVERAGE_SOURCES, 'Ordertracker'];
 /** ParcelsApp blocked an address after about 145 lookups in 40 minutes (providers/parcelsapp/README.md). */
 const PARCELSAPP_GAP_MS = 60_000;
 /** The benchmark's longest run of real ParcelsApp negatives was four. */
@@ -96,7 +97,8 @@ async function probe(item: ProbeCase, source: Source, registry: AdapterRegistry,
       const adapter = registry.for(item.adapter ?? item.carrier);
       if (!adapter) return { ...base, outcome: 'no_adapter', ms: 0 };
       result = await adapter.track({ number: normalizeTrackingNumber(item.number), postcode: item.postcode ?? null, timezone: null });
-    } else if (source === 'UPU' && !isValidS10TrackingNumber(item.number)) {
+    } else if ((source === 'UPU' && !isValidS10TrackingNumber(item.number))
+      || (source === 'Ordertracker' && !ordertrackerFeeds(item.carrier))) {
       return { ...base, outcome: 'n/a', ms: 0 };
     } else {
       result = await tracker.fetchSource(source, item.number, source === 'UPU' ? undefined : 45_000, item.postcode ?? null, zoneOf(item.carrier),
@@ -117,8 +119,8 @@ it('probes every case through every source', async () => {
   const registry = new AdapterRegistry(REGISTRY, env);
   const tracker = new UniversalTracker({ enablePostalNinja: true, environment: env, ...(TRAWL_URL ? {} : { trawlUrl: '' }) });
   // Browser-service lookups run one at a time, beside the HTTP ones. ParcelsApp's have a
-  // paced lane of their own.
-  const laneOf = (source: Source) => source === 'ParcelsApp' ? 'paced'
+  // paced lane of their own, and Ordertracker's, which can take half a minute, another.
+  const laneOf = (source: Source) => source === 'ParcelsApp' ? 'paced' : source === 'Ordertracker' ? 'slow'
     : BROWSER_SOURCES.has(source as UniversalSource) ? 'browser' : 'http';
   const write = (record: Awaited<ReturnType<typeof probe>>) => {
     appendFileSync(output, `${JSON.stringify(record)}\n`);
@@ -148,5 +150,5 @@ it('probes every case through every source', async () => {
     }
     negatives.forEach(write);
   };
-  await Promise.all([lane('browser'), lane('http'), lane('paced', PARCELSAPP_GAP_MS)]);
+  await Promise.all([lane('browser'), lane('http'), lane('slow'), lane('paced', PARCELSAPP_GAP_MS)]);
 }, 6 * 3_600_000);

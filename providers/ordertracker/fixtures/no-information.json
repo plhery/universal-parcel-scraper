@@ -1,0 +1,54 @@
+{
+  "timezone": "Europe/Paris",
+  "language": "en",
+  "status": {
+    "code": "unknown",
+    "subcode": "unknown",
+    "incidents": [],
+    "heading": "Status",
+    "label": "No information",
+    "sublabel": "No information is currently available for this shipment."
+  },
+  "transit": {
+    "shippingDate": null,
+    "shippingDateHumanReadable": null,
+    "deliveryDate": null,
+    "deliveryDateHumanReadable": null,
+    "daysInTransit": 0,
+    "daysInTransitHumanReadable": null,
+    "lastmileTrackingNumber": null,
+    "originCountryCode": null,
+    "originCountryHumanReadable": null,
+    "destinationCountryCode": null,
+    "destinationCountryHumanReadable": null
+  },
+  "forecast": {
+    "estimatedDeliveryDateMin": null,
+    "estimatedDeliveryDateMax": null,
+    "estimatedDeliveryDateMinHumanReadable": null,
+    "estimatedDeliveryDateMaxHumanReadable": null,
+    "confidenceScore": 0
+  },
+  "events": [
+    {
+      "time": "2026-11-20T23:00:00.000Z",
+      "timeHumanReadable": "Nov 21, 2026",
+      "lines": [
+        {
+          "original": "Please refine your search or try again in a few hours...",
+          "english": "Please refine your search or try again in a few hours...",
+          "translated": "Please refine your search or try again in a few hours..."
+        }
+      ],
+      "carrier": {
+        "name": null,
+        "slug": null,
+        "websiteUrl": null,
+        "websiteAnchor": null
+      },
+      "status": "unknown",
+      "statusHumanReadable": "Your shipment cannot be found."
+    }
+  ],
+  "carriers": []
+}

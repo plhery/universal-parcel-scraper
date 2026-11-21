@@ -1,0 +1,585 @@
+{
+  "timezone": "Europe/Paris",
+  "language": "en",
+  "status": {
+    "code": "delivered",
+    "subcode": "delivered",
+    "incidents": [],
+    "heading": "Delivered",
+    "label": "Oct 10, 2026",
+    "sublabel": "Your shipment has been delivered."
+  },
+  "transit": {
+    "shippingDate": "2026-09-29T11:48:37.001Z",
+    "shippingDateHumanReadable": "Sep 29, 2026",
+    "deliveryDate": "2026-10-10T13:39:00.001Z",
+    "deliveryDateHumanReadable": "Oct 10, 2026",
+    "daysInTransit": 11,
+    "daysInTransitHumanReadable": "11 days",
+    "lastmileTrackingNumber": null,
+    "originCountryCode": "CA",
+    "originCountryHumanReadable": "Canada",
+    "destinationCountryCode": "US",
+    "destinationCountryHumanReadable": "United States"
+  },
+  "forecast": {
+    "estimatedDeliveryDateMin": null,
+    "estimatedDeliveryDateMax": null,
+    "estimatedDeliveryDateMinHumanReadable": null,
+    "estimatedDeliveryDateMaxHumanReadable": null,
+    "confidenceScore": 0
+  },
+  "events": [
+    {
+      "time": "2026-10-10T13:39:00.001Z",
+      "lines": [
+        {
+          "original": "Final delivery",
+          "english": "Final delivery has been completed.",
+          "translated": "Final delivery has been completed."
+        }
+      ],
+      "carrier": {
+        "name": "UNIVERSAL POSTAL UNION",
+        "slug": null,
+        "websiteUrl": "https://www.upu.int",
+        "websiteAnchor": "Get in touch with UNIVERSAL POSTAL UNION"
+      },
+      "status": "delivered",
+      "timeHumanReadable": "Oct 10, 2026",
+      "statusHumanReadable": "Your shipment has been delivered."
+    },
+    {
+      "time": "2026-10-10T11:10:00.012Z",
+      "lines": [
+        {
+          "original": "Article sorti pour livraison",
+          "english": "The item has been dispatched for delivery.",
+          "translated": "The item has been dispatched for delivery."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "outForDelivery",
+      "timeHumanReadable": "Oct 10, 2026",
+      "statusHumanReadable": "The final delivery of your shipment is scheduled today."
+    },
+    {
+      "time": "2026-10-10T10:05:00.011Z",
+      "lines": [
+        {
+          "original": "Article reçu au bureau de livraison du pays de destination",
+          "english": "The article has been received at the delivery office in the destination country.",
+          "translated": "The article has been received at the delivery office in the destination country."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 10, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-10T06:10:00.012Z",
+      "lines": [
+        {
+          "original": "Item out for delivery",
+          "english": "The item is out for delivery.",
+          "translated": "The item is out for delivery."
+        },
+        {
+          "original": "USA",
+          "english": "The destination country is the USA.",
+          "translated": "The destination country is the USA."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "outForDelivery",
+      "timeHumanReadable": "Oct 10, 2026",
+      "statusHumanReadable": "The final delivery of your shipment is scheduled today."
+    },
+    {
+      "time": "2026-10-10T05:05:00.011Z",
+      "lines": [
+        {
+          "original": "Item has arrived at the delivery office in the destination country",
+          "english": "The item has arrived at the delivery office in the destination country.",
+          "translated": "The item has arrived at the delivery office in the destination country."
+        },
+        {
+          "original": "59602,USA",
+          "english": "The shipment is at 59602, USA.",
+          "translated": "The shipment is at 59602, USA."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 10, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-04T15:24:00.010Z",
+      "lines": [
+        {
+          "original": "Processed by Carrier",
+          "english": "The item has been processed by the carrier.",
+          "translated": "The item has been processed by the carrier."
+        },
+        {
+          "original": "CHICAGO,USA",
+          "english": "The package is still in Chicago, USA.",
+          "translated": "The package is still in Chicago, USA."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Oct 4, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-10-03T16:55:00.009Z",
+      "lines": [
+        {
+          "original": "Customs has released item to post office",
+          "english": "Customs has released the item to the post office.",
+          "translated": "Customs has released the item to the post office."
+        },
+        {
+          "original": "Article retourné à la poste par les douanes",
+          "english": "The item was returned to the post office by customs.",
+          "translated": "The item was returned to the post office by customs."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 3, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-03T11:55:00.009Z",
+      "lines": [
+        {
+          "original": "released item to post office",
+          "english": "The item has been released to the post office.",
+          "translated": "The item has been released to the post office."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 3, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-03T06:12:00.008Z",
+      "lines": [
+        {
+          "original": "Article envoyé aux douanes dans le pays de destination",
+          "english": "The article has been sent to customs in the destination country.",
+          "translated": "The article has been sent to customs in the destination country."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 3, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-03T01:12:00.008Z",
+      "lines": [
+        {
+          "original": "Item has been sent to customs in the destination country",
+          "english": "The item has been sent to customs in the destination country.",
+          "translated": "The item has been sent to customs in the destination country."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 3, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-02T06:13:00.007Z",
+      "lines": [
+        {
+          "original": "Item presented to customs",
+          "english": "The item has been presented to customs.",
+          "translated": "The item has been presented to customs."
+        },
+        {
+          "original": "Article présenté à la douane pour examen",
+          "english": "The article has been presented to customs for examination.",
+          "translated": "The article has been presented to customs for examination."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-02T06:13:00.006Z",
+      "lines": [
+        {
+          "original": "Item has arrived in foreign country",
+          "english": "The item has arrived in a foreign country.",
+          "translated": "The item has arrived in a foreign country."
+        },
+        {
+          "original": "Article du régime international arrivé au pays étranger",
+          "english": "The international regime article has arrived in the foreign country.",
+          "translated": "The international regime article has arrived in the foreign country."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-02T06:11:00.005Z",
+      "lines": [
+        {
+          "original": "International shipment has arrived in a foreign country",
+          "english": "The international shipment has arrived in a foreign country.",
+          "translated": "The international shipment has arrived in a foreign country."
+        },
+        {
+          "original": "Envoie du régime international  arrivé au pays étranger",
+          "english": "The international regime shipment has arrived in the foreign country.",
+          "translated": "The international regime shipment has arrived in the foreign country."
+        },
+        {
+          "original": "CAYTOA",
+          "english": "The package is in Caytoa.",
+          "translated": "The package is in Caytoa."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-02T01:13:00.007Z",
+      "lines": [
+        {
+          "original": "Item presented to customs",
+          "english": "The item has been presented to customs.",
+          "translated": "The item has been presented to customs."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-02T01:13:00.006Z",
+      "lines": [
+        {
+          "original": "Item has arrived in foreign country",
+          "english": "The item has arrived in a foreign country.",
+          "translated": "The item has arrived in a foreign country."
+        },
+        {
+          "original": "USORDA,USA",
+          "english": "The shipment is in the United States, specifically in Oregon.",
+          "translated": "The shipment is in the United States, specifically in Oregon."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-02T01:11:00.005Z",
+      "lines": [
+        {
+          "original": "International shipment has arrived in a foreign country",
+          "english": "The international shipment has arrived in a foreign country.",
+          "translated": "The international shipment has arrived in a foreign country."
+        },
+        {
+          "original": "CAYTOA",
+          "english": "The package is in Caytoa.",
+          "translated": "The package is in Caytoa."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-01T16:58:00.004Z",
+      "lines": [
+        {
+          "original": "Article international en cours d'acheminement au pays de destination",
+          "english": "The international article is in transit to the destination country.",
+          "translated": "The international article is in transit to the destination country."
+        },
+        {
+          "original": "MISSISSAUGA, ON, Canada",
+          "english": "The package is now in Mississauga, Ontario, Canada.",
+          "translated": "The package is now in Mississauga, Ontario, Canada."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 1, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-01T12:58:00.004Z",
+      "lines": [
+        {
+          "original": "International item being forwarded to destination country",
+          "english": "The international item is being forwarded to the destination country.",
+          "translated": "The international item is being forwarded to the destination country."
+        },
+        {
+          "original": "MISSISSAUGA, ON",
+          "english": "The package is in Mississauga, Ontario.",
+          "translated": "The package is in Mississauga, Ontario."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Oct 1, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-10-01T01:35:45.003Z",
+      "lines": [
+        {
+          "original": "TORONTO, ON, Canada",
+          "english": "The package is in TORONTO, Ontario, Canada.",
+          "translated": "The package is in TORONTO, Ontario, Canada."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Oct 1, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-30T21:35:45.003Z",
+      "lines": [
+        {
+          "original": "Processed by Carrier",
+          "english": "The item has been processed by the carrier.",
+          "translated": "The item has been processed by the carrier."
+        },
+        {
+          "original": "TORONTO, ON",
+          "english": "The location is Toronto, Ontario.",
+          "translated": "The location is Toronto, Ontario."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 30, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-29T23:45:38.002Z",
+      "lines": [
+        {
+          "original": "Article accepté au bureau de poste",
+          "english": "The article has been accepted at the post office.",
+          "translated": "The article has been accepted at the post office."
+        },
+        {
+          "original": "THORNHILL, ON, Canada",
+          "english": "The shipment is at Thornhill, Ontario, Canada.",
+          "translated": "The shipment is at Thornhill, Ontario, Canada."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "inBetweenFacilities",
+      "timeHumanReadable": "Sep 30, 2026",
+      "statusHumanReadable": "Your shipment has arrived at a transit center, it is on its way."
+    },
+    {
+      "time": "2026-09-29T19:45:38.002Z",
+      "lines": [
+        {
+          "original": "Item accepted at the Post Office",
+          "english": "The item has been accepted at the Post Office.",
+          "translated": "The item has been accepted at the Post Office."
+        },
+        {
+          "original": "THORNHILL, ON",
+          "english": "The shipment is in Thornhill, Ontario.",
+          "translated": "The shipment is in Thornhill, Ontario."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 29, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-29T15:48:37.001Z",
+      "lines": [
+        {
+          "original": "Les renseignements électroniques ont été soumis par l'expéditeur",
+          "english": "Electronic information has been submitted by the sender.",
+          "translated": "Electronic information has been submitted by the sender."
+        }
+      ],
+      "carrier": {
+        "name": "CANADA POST",
+        "slug": "canada-post",
+        "websiteUrl": "https://www.canadapost.ca",
+        "websiteAnchor": "Get in touch with CANADA POST"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 29, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-29T11:48:37.001Z",
+      "lines": [
+        {
+          "original": "Electronic information submitted by shipper",
+          "english": "Electronic information was submitted by the shipper.",
+          "translated": "Electronic information was submitted by the shipper."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "labelCreated",
+      "timeHumanReadable": "Sep 29, 2026",
+      "statusHumanReadable": "The carrier has been informed and will soon collect your shipment."
+    }
+  ],
+  "carriers": [
+    {
+      "name": "CANADA POST",
+      "slug": "canada-post",
+      "websiteUrl": "https://www.canadapost.ca",
+      "websiteAnchor": "Get in touch with CANADA POST"
+    },
+    {
+      "name": "UNIVERSAL POSTAL UNION",
+      "slug": null,
+      "websiteUrl": "https://www.upu.int",
+      "websiteAnchor": "Get in touch with UNIVERSAL POSTAL UNION"
+    },
+    {
+      "name": "PITNEY BOWES",
+      "slug": "pitney-bowes-newgistics",
+      "websiteUrl": "https://www.pitneybowes.com",
+      "websiteAnchor": "Get in touch with PITNEY BOWES"
+    }
+  ]
+}

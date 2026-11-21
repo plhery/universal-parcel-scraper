@@ -92,6 +92,7 @@ export function parcelTrackingLinks(
   const url = provider === '17TRACK' ? `https://t.17track.net/en#nums=${number}`
     : provider === 'ParcelsApp' ? `https://parcelsapp.com/en/tracking/${number}`
     : provider === 'Ship24' ? `https://www.ship24.com/tracking?p=${number}`
+    : provider === 'Ordertracker' ? `https://www.ordertracker.com/track/${number}`
     // Postal Ninja's verified public entry point; no guessed session/private URL.
     : provider === 'Postal Ninja' ? 'https://postal.ninja/en/track'
     : provider === 'UPU' ? 'https://globaltracktrace.ptc.post/gtt.web/Search.aspx' : undefined;

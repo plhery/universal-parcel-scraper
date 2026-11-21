@@ -6,8 +6,10 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
-export const SOURCES = ['direct', 'Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU'];
+export const SOURCES = ['direct', 'Ship24', 'ParcelsApp', '17TRACK', 'Ordertracker', 'Postal Ninja', 'UPU'];
 export const PROVIDERS = SOURCES.slice(1);
+/** The providers a comparison reference written by hand states, COVERAGE_SOURCES in providers/coverage.ts. */
+export const COMPARED = PROVIDERS.filter((source) => source !== 'Ordertracker');
 /** Outcomes that say nothing about the source: a failed lookup keeps the answer it would replace. */
 export const INCONCLUSIVE = new Set(['error', 'blocked']);
 const DAY = 86_400_000;

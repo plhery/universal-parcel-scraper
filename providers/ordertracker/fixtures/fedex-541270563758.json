@@ -1,0 +1,378 @@
+{
+  "timezone": "Europe/Paris",
+  "language": "en",
+  "status": {
+    "code": "delivered",
+    "subcode": "delivered",
+    "incidents": [],
+    "heading": "Delivered",
+    "label": "Sep 8, 2026",
+    "sublabel": "Your shipment has been delivered."
+  },
+  "transit": {
+    "shippingDate": "2026-08-31T12:01:00.001Z",
+    "shippingDateHumanReadable": "Aug 31, 2026",
+    "deliveryDate": "2026-09-08T14:09:37.018Z",
+    "deliveryDateHumanReadable": "Sep 8, 2026",
+    "daysInTransit": 8,
+    "daysInTransitHumanReadable": "8 days",
+    "lastmileTrackingNumber": "541270563758SIGNATURENOTREQUIRED",
+    "originCountryCode": null,
+    "originCountryHumanReadable": null,
+    "destinationCountryCode": null,
+    "destinationCountryHumanReadable": null
+  },
+  "forecast": {
+    "estimatedDeliveryDateMin": null,
+    "estimatedDeliveryDateMax": null,
+    "estimatedDeliveryDateMinHumanReadable": null,
+    "estimatedDeliveryDateMaxHumanReadable": null,
+    "confidenceScore": 0
+  },
+  "events": [
+    {
+      "time": "2026-09-08T14:09:37.018Z",
+      "lines": [
+        {
+          "original": "Delivered Ocala US Left in mail room. Signature Service not requested.",
+          "english": "The shipment was delivered in Ocala, US and left in the mail room. A signature was not requested.",
+          "translated": "The shipment was delivered in Ocala, US and left in the mail room. A signature was not requested."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "delivered",
+      "timeHumanReadable": "Sep 8, 2026",
+      "statusHumanReadable": "Your shipment has been delivered."
+    },
+    {
+      "time": "2026-09-08T07:04:00.017Z",
+      "lines": [
+        {
+          "original": "On FedEx vehicle for delivery OCALA US",
+          "english": "The shipment is on a FedEx vehicle for delivery in Ocala, US.",
+          "translated": "The shipment is on a FedEx vehicle for delivery in Ocala, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "outForDelivery",
+      "timeHumanReadable": "Sep 8, 2026",
+      "statusHumanReadable": "The final delivery of your shipment is scheduled today."
+    },
+    {
+      "time": "2026-09-08T06:04:00.016Z",
+      "lines": [
+        {
+          "original": "At local FedEx facility OCALA US",
+          "english": "The package is at a local FedEx facility in OCALA, US.",
+          "translated": "The package is at a local FedEx facility in OCALA, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "inBetweenFacilities",
+      "timeHumanReadable": "Sep 8, 2026",
+      "statusHumanReadable": "Your shipment has arrived at a transit center, it is on its way."
+    },
+    {
+      "time": "2026-09-08T03:37:40.015Z",
+      "lines": [],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 8, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-06T18:34:47.014Z",
+      "lines": [
+        {
+          "original": "On the way OCALA US",
+          "english": "The package is on the way to Ocala, United States.",
+          "translated": "The package is on the way to Ocala, United States."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 6, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-06T04:27:50.013Z",
+      "lines": [
+        {
+          "original": "Departed FedEx location ORLANDO US",
+          "english": "The package departed from a FedEx location in Orlando, US.",
+          "translated": "The package departed from a FedEx location in Orlando, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 6, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-05T19:01:24.012Z",
+      "lines": [
+        {
+          "original": "Shipment exception ORLANDO US Barcode label unreadable and replaced",
+          "english": "There is a shipment exception in Orlando, US: the barcode label was unreadable and has been replaced.",
+          "translated": "There is a shipment exception in Orlando, US: the barcode label was unreadable and has been replaced."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 5, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-05T18:57:00.011Z",
+      "lines": [
+        {
+          "original": "Arrived at FedEx location ORLANDO US",
+          "english": "The package arrived at a FedEx location in Orlando, US.",
+          "translated": "The package arrived at a FedEx location in Orlando, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 5, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-05T14:02:49.010Z",
+      "lines": [
+        {
+          "original": "On the way BELLE ISLE US",
+          "english": "On the way to Belle Isle, United States.",
+          "translated": "On the way to Belle Isle, United States."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 5, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-04T17:14:19.009Z",
+      "lines": [
+        {
+          "original": "On the way JACOB CITY US",
+          "english": "The shipment is on the way to Jacob City, US.",
+          "translated": "The shipment is on the way to Jacob City, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 4, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-03T17:12:00.008Z",
+      "lines": [
+        {
+          "original": "On the way LIMON US",
+          "english": "The shipment is on the way to Limon, US.",
+          "translated": "The shipment is on the way to Limon, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 3, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-03T05:10:50.007Z",
+      "lines": [
+        {
+          "original": "On the way MALTA US",
+          "english": "The shipment is on the way to Malta, US.",
+          "translated": "The shipment is on the way to Malta, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 3, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-02T17:02:09.006Z",
+      "lines": [
+        {
+          "original": "Departed FedEx location TROUTDALE US",
+          "english": "The package departed from the FedEx location in Troutdale, US.",
+          "translated": "The package departed from the FedEx location in Troutdale, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 2, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-02T11:46:00.005Z",
+      "lines": [
+        {
+          "original": "Arrived at FedEx location TROUTDALE US",
+          "english": "The package arrived at the FedEx location in Troutdale, US.",
+          "translated": "The package arrived at the FedEx location in Troutdale, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-02T05:50:39.004Z",
+      "lines": [
+        {
+          "original": "Departed FedEx location TACOMA US",
+          "english": "Departed from a FedEx location in Tacoma, United States.",
+          "translated": "Departed from a FedEx location in Tacoma, United States."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 2, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-02T03:41:00.003Z",
+      "lines": [
+        {
+          "original": "Arrived at FedEx location TACOMA US",
+          "english": "Arrived at a FedEx location in Tacoma, US.",
+          "translated": "Arrived at a FedEx location in Tacoma, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 2, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-01T00:00:00.002Z",
+      "lines": [
+        {
+          "original": "Picked up AUBURN US",
+          "english": "The package was picked up in Auburn, US.",
+          "translated": "The package was picked up in Auburn, US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 1, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-08-31T12:01:00.001Z",
+      "lines": [
+        {
+          "original": "Shipment information sent to FedEx US",
+          "english": "Shipment information has been sent to FedEx US.",
+          "translated": "Shipment information has been sent to FedEx US."
+        }
+      ],
+      "carrier": {
+        "name": "MAIL BOXES ETC",
+        "slug": "mail-boxes",
+        "websiteUrl": "https://www.mbe.it",
+        "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+      },
+      "status": "labelCreated",
+      "timeHumanReadable": "Aug 31, 2026",
+      "statusHumanReadable": "The carrier has been informed and will soon collect your shipment."
+    }
+  ],
+  "carriers": [
+    {
+      "name": "MAIL BOXES ETC",
+      "slug": "mail-boxes",
+      "websiteUrl": "https://www.mbe.it",
+      "websiteAnchor": "Get in touch with MAIL BOXES ETC"
+    }
+  ]
+}
