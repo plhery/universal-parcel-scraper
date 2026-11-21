@@ -113,6 +113,8 @@ describe('DHL Poland browser history', () => {
       ['Shipment returned do sender. Time for receipt has passed', 'Zwrot przesyłki do nadawcy - minął termin odbioru', 'exception'],
       ['Delivery in the way to the Sender', 'Przesyłka w trakcie zwrotu do Nadawcy', 'exception'],
       ['The shipment was returned to the Sender.', 'Przesyłka została zwrócona do nadawcy.', 'returned'],
+      ['Delivery in the way to the DHL Point', 'Przesyłka w drodze do Punktu DHL POP', 'in_transit'],
+      ['Shipment collected from DHL Parcelstation. . Thank you!', 'Przesyłka została odebrana z Punktu DHL POP. Dziękujemy!', 'delivered'],
     ];
     for (const [english, polish, stage] of pairs) {
       const payload = history();

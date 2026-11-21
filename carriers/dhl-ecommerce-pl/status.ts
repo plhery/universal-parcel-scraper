@@ -93,12 +93,12 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   // The destination's notice that a wrong address stopped the delivery: the parcel goes back to its sender.
   [/^The shipment couldn['’]t be delivered because of bad\/incorrect address and will be returned to the sender\.$/i, 'exception'],
   // On the way from the delivery depot to the DHL BOX locker or DHL POP point that will hold the parcel.
-  [/^Delivery in the way to the DHL Point\.?$/i, 'in_transit'],
+  [/^(?:Delivery in the way to the DHL Point|Przesyłka w drodze do Punktu DHL POP)\.?$/i, 'in_transit'],
   // The DHL BOX locker or DHL POP point holding the parcel for its recipient, with its address and hours.
   [/^(?:Shipment is waiting in|Przesyłka oczekuje na odbiór w) .{1,300}$/i, 'ready_for_pickup'],
   [WAITING, 'ready_for_pickup'],
   // Its recipient collected the parcel from that locker or point.
-  [/^Shipment collected from DHL (?:Parcelstation|POP|Point|BOX)\b.{0,120}$/i, 'delivered'],
+  [/^(?:Shipment collected from DHL (?:Parcelstation|POP|Point|BOX)\b|Przesyłka została odebrana z (?:Punktu|Automatu) DHL (?:POP|BOX)\b).{0,120}$/i, 'delivered'],
 ];
 
 /** Which of the map's scans a wording is, in English or Polish: one number for a scan in either language. */

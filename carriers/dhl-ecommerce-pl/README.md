@@ -52,7 +52,9 @@ parcel on its way to the recipient.
 DHL rewords a scan in place: a terminal arrival later gains its planned
 delivery day. History scans carry no code, so the identity policy in
 [identity.ts](identity.ts) lets a scan at the same instant and named place take
-over its stored row, when the match is unique both ways. A scan without a place
+over its stored row, when the match is unique both ways. The page lists a
+terminal arrival and its sorting at one minute and place, so there two scans the
+map reads as different stay apart unless both are terminal arrivals. A scan without a place
 takes it over when the map reads both wordings as one scan, as it reads a scan in
 either language. The page translates some places too, so a scan at another place
 takes the row over only on that same condition.

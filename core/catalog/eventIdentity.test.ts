@@ -620,6 +620,13 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(polish, named)).toBe(true);
     expect(policy?.matches?.({ ...polish, description: 'Przesyłka jest obsługiwana w Centrum Sortowania' }, named)).toBe(false);
     expect(policy?.matches?.({ ...polish, description: 'Unread wording' }, { ...named, description: 'Unread wording' })).toBe(false);
+    // The page lists a terminal arrival and its sorting at one minute and place: each scan in Polish takes only its own row.
+    const terminal = { ...stored, stage: 'in_transit', description: 'The shipment has reached DHL terminal in Example Town. Planned date of delivery to: 04-11-2026.' };
+    const sorting = { ...stored, stage: 'in_transit', description: 'The shipment is handled in Sorting Center' };
+    const polishTerminal = { ...terminal, description: 'Przesyłka dotarła do oddziału nadawczego DHL Parcel Example Town. Przewidywana data doręczenia do: 04-11-2026.' };
+    const polishSorting = { ...sorting, description: 'Przesyłka jest obsługiwana w Centrum Sortowania' };
+    expect([polishTerminal, polishSorting].map((scan) => [terminal, sorting].map((row) => policy?.matches?.(scan, row)))).toEqual([[true, false], [false, true]]);
+    expect(policy?.matches?.({ ...stored, description: 'Unread wording' }, sorting)).toBe(true);
   });
 
   it('lets a DHL Express record take over the row the other feed stored, by wall clock, place and wording', () => {
