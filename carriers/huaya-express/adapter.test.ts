@@ -207,6 +207,39 @@ describe('Huaya Express tracking adapter', () => {
     expect(delivered.events![0]).toMatchObject({ stage: 'delivered', stage_source: 'carrier_map' });
   });
 
+  it('dates the rows it copies from J&T Express Mexico on J&T’s clock, whatever their towns, sites, courier and phone', () => {
+    const reply = structuredClone(fixture('track')) as [{ data: [{ consigneeCountry: string; trackDetails: Record<string, string>[] }] }];
+    const record = reply[0].data[0];
+    const template = record.trackDetails.at(-1)!;
+    const row = (date: string, created: string, content: string, location: string) =>
+      ({ ...template, track_date: date, track_createdate: created, track_content: content, track_location: location, track_kind: '' });
+    record.consigneeCountry = 'MX';
+    // Newest first, all written in one batch the next afternoon on Beijing time: on Beijing time the collection
+    // would come at one in the morning in Mexico.
+    record.trackDetails = [
+      row('2026-11-20 16:57:06', '2026-11-21 13:29:03', '【Villa Uno】Tu envío ha salido de【SITE.pdv】con destino a【MEXICO.sc】', 'Villa Uno, Estado, México'),
+      row('2026-11-20 15:31:59', '2026-11-21 13:29:03', '【Villa Uno】Tu envío ha llegado a【SITE.pdv】', 'Villa Uno, Estado, México'),
+      row('2026-11-20 15:09:59', '2026-11-21 13:29:03',
+        '【Villa Dos】【CLC-Norte.pdv】?Recolección exitosa!. El mensajero de J&T asignado OTRO.pcp recolectó tu envío. Para mayor información, comunícate al: 5500000000',
+        'Villa Dos, Estado, México'),
+      row('2026-11-10 17:18:18', '2026-11-10 17:18:18', '到达收货点', '广州'),
+    ];
+    const result = parseHuayaTrack(reply, NUMBER, Date.parse('2026-11-21T06:00:00Z'))!;
+    expect(result).toMatchObject({ current_stage: 'in_transit', last_update: '2026-11-20T16:57:06-06:00' });
+    expect(result.events!.map(({ time, time_zone, time_zone_basis, stage, stage_source }) => [time, time_zone, time_zone_basis, stage, stage_source]))
+      .toEqual([
+        ['2026-11-20T16:57:06-06:00', 'America/Mexico_City', 'carrier', 'in_transit', 'carrier_map'],
+        ['2026-11-20T15:31:59-06:00', 'America/Mexico_City', 'carrier', 'in_transit', 'carrier_map'],
+        // J&T's collection of the cleared parcel is no first acceptance.
+        ['2026-11-20T15:09:59-06:00', 'America/Mexico_City', 'carrier', 'in_transit', 'carrier_map'],
+        ['2026-11-10T17:18:18+08:00', undefined, undefined, 'accepted', 'carrier_map'],
+      ]);
+    for (const description of ['【Villa Dos】【CLC-Norte.pdv】¡Recolección exitosa!. El mensajero de J&T asignado CLC-NORTE1 recolectó tu envío.',
+      '【Villa Tres】Tu envío ha llegado a【OTRO.sc】']) {
+      expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+  });
+
   it('holds back a row dated after the lookup', () => {
     const result = parseHuayaTrack(fixture('track'), NUMBER, Date.parse('2026-03-10T00:00:00Z'))!;
     expect(result).toMatchObject({ last_status_text: 'Customs import clearance completed, awaiting pickup by local carrier' });

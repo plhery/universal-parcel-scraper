@@ -41,6 +41,11 @@ browser is needed.
   facility ("US, BENSENVILLE, ORD HUB") and come on that town's wall clock: each is written at the
   platform's next 4-hourly poll after its American time, where Beijing time would put the round
   on the evening before. They keep their wall clocks, which the town dates.
+- On the line into Mexico the tracker copies J&T Express Mexico's rows in Spanish, the town and the
+  site in brackets, as [JRT's](../jrt/README.md) do on the same platform: they come on J&T's clock
+  in Mexico City, the one its own tracker answers on, and are written in a batch the next afternoon
+  on Beijing time. The map reads their towns and sites, and the courier and phone of the
+  collection, as ellipses; J&T's collection of the cleared parcel is in transit.
 - Other scan times are wall clocks without an offset on the platform's Beijing clock and are read
   on it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder GZHY, which is kept as an alias.

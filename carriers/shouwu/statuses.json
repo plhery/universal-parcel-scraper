@@ -300,6 +300,14 @@
       "note": "The facility sending the parcel on, after the forwarder's first scan."
     },
     {
+      "wording": "The shipment is in domestic transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "The parcel on its way across China to the export port, between the forwarder's first scans and the export release."
+    },
+    {
       "wording": "The shipment is waiting for transit",
       "stage": "in_transit",
       "language": "en",

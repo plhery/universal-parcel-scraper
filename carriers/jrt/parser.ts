@@ -5,6 +5,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { canadaProvinceTimeZone, firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
 import { dateDhlRows } from '../gzyl/dhl-rows.js';
 import { dateHualeiGofoRows, dateWallClocks, isHualeiUsPartnerRow } from '../gzyl/gofo-rows.js';
+import { dateJtMexicoRows } from '../gzyl/jt-mexico-rows.js';
 import { normalizeHualeiNumber, parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hualei.js';
 import {
   isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtCountryPlace, jrtEnglish, jrtStage,
@@ -40,12 +41,8 @@ export function dateJrtDhlRows(result: CarrierResult): CarrierResult {
   };
 }
 
-// J&T Express Mexico writes its scans on Mexico City's clock, as its own tracker answers them.
-const JT_MEXICO_ZONE = 'America/Mexico_City';
-
 /** The result with the rows the tracker copies from J&T Express Mexico dated on J&T's clock. */
-export const dateJrtJtMexicoRows = (result: CarrierResult): CarrierResult => dateWallClocks(result,
-  (event) => (isJrtJtMexicoRow(event.description ?? '') ? { zone: JT_MEXICO_ZONE, basis: 'carrier' } : null));
+export const dateJrtJtMexicoRows = dateJtMexicoRows;
 
 /** The result with the rows at a Canadian town dated on its province's clock. */
 export const dateJrtCanadaRows = (result: CarrierResult): CarrierResult => dateWallClocks(result, (event) => {

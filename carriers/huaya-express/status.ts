@@ -1,5 +1,6 @@
 import type { Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { jtMexicoKey } from '../gzyl/jt-mexico-rows.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 export const ENTRIES: readonly { readonly wording: string; readonly stage: string }[] = statuses.entries;
@@ -10,9 +11,10 @@ const ACCENTED = /[\u00C0-\u024F]/g;
 
 /**
  * The key a row's `normalizeStatusWording` wording is mapped under: the flight's landing day becomes an ellipsis,
- * and an accented Latin letter the "?" the page can write in its place, so either spelling finds the row.
+ * J&T Express Mexico's towns, sites, courier and phone too, and an accented Latin letter the "?" the page can
+ * write in its place, so either spelling finds the row.
  */
-export const huayaScanKey = (wording: string): string => wording.replace(LANDING_DAY, '$1…$2').replace(ACCENTED, '?');
+export const huayaScanKey = (wording: string): string => jtMexicoKey(wording).replace(LANDING_DAY, '$1…$2').replace(ACCENTED, '?');
 
 const WORDINGS = new Map<string, Stage>(ENTRIES.map((entry) => [huayaScanKey(normalizeStatusWording(entry.wording)), entry.stage as Stage]));
 

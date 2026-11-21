@@ -2,6 +2,7 @@ import type { Stage } from '../../core/status/index.js';
 import { statusWordings } from '../../core/status/english.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { countryCode } from '../../core/time/index.js';
+import { isJtMexicoRow, jtMexicoKey } from '../gzyl/jt-mexico-rows.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const WORDINGS = statusWordings(statuses.entries);
@@ -54,21 +55,8 @@ const TRANSPORTED_TO = /^(during transportation to )[^\d…]{1,40}$/;
 // sometimes with the month's full stop for the space ("Oct.24.").
 const DELAYED_FLIGHT = /^(航班延误[，,] ?预计)\d{1,2}\/\d{1,2}(号飞出 flight delayed, estimated departure on )[a-z]{3,9}(?:\. ?| )\d{1,2}(?:st|nd|rd|th)?\.?$/;
 
-// J&T Express Mexico's rows, which the tracker copies on the line into Mexico: its sentence after the town and
-// the site in brackets, "【Town】Tu envío ha salido de【SITE.pdv】con destino a【MEXICO.sc】".
-const JT_MEXICO_ROW = /【[^【】]{1,80}】\s*(?:【[^【】]{1,80}】\s*)?(?:tu envío\b|[¡?]?recolección exitosa\b|el mensajero de j&t\b)/i;
-const BRACKETED = /【[^【】]{1,80}】/g;
-// Its collection names the courier and J&T's phone, and the platform's GBK turns its "¡" into "?".
-const JT_MEXICO_COLLECTION = /^((?:【…】){1,2})[¡?]?(recolección exitosa!\. el mensajero de j&t asignado )\S.*?( recolectó tu envío\.).*$/;
-// So does its round to the recipient's home: "El mensajero de J&T Express … está en camino a tu domicilio. Si requieres …".
-const JT_MEXICO_ROUND = /^((?:【…】){1,2})(el mensajero de j&t express )\S.*?( está en camino a tu domicilio\.).*$/;
-
 /** Whether a row is one J&T Express Mexico wrote that the tracker copies, on J&T's clock in Mexico. */
-export const isJrtJtMexicoRow = (wording: string): boolean => JT_MEXICO_ROW.test(wording);
-
-/** A J&T Express Mexico row's key: its towns and sites, and the courier and phone of its collection and round, as ellipses. */
-const jtMexicoKey = (wording: string): string => (JT_MEXICO_ROW.test(wording)
-  ? wording.replace(BRACKETED, '【…】').replace(JT_MEXICO_COLLECTION, '$1¡$2…$3').replace(JT_MEXICO_ROUND, '$1$2…$3') : wording);
+export const isJrtJtMexicoRow = isJtMexicoRow;
 
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
 export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
