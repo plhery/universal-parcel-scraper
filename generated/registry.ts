@@ -770,6 +770,7 @@ import { adapter as salamPacificIndonesiaLines } from '../carriers/salam-pacific
 import { adapter as sallaumLines } from '../carriers/sallaum-lines/adapter.js';
 import { adapter as sameday } from '../carriers/sameday/adapter.js';
 import { adapter as sapxExpress } from '../carriers/sapx-express/adapter.js';
+import { adapter as sarjakContainerLines } from '../carriers/sarjak-container-lines/adapter.js';
 import { adapter as satUkraine } from '../carriers/sat-ukraine/adapter.js';
 import { adapter as saudiPost } from '../carriers/saudi-post/adapter.js';
 import { adapter as seaLegendLine } from '../carriers/sea-legend-line/adapter.js';
@@ -1798,6 +1799,7 @@ export const REGISTRY: RegistryDefinition = {
     "sallaum-lines": sallaumLines,
     "sameday": sameday,
     "sapx-express": sapxExpress,
+    "sarjak-container-lines": sarjakContainerLines,
     "sat-ukraine": satUkraine,
     "saudi-post": saudiPost,
     "sea-legend-line": seaLegendLine,
@@ -3547,6 +3549,7 @@ export const REGISTRY: RegistryDefinition = {
     "sandahls": "universal",
     "santos-e-vale": "universal",
     "sapx-express": "sapx-express",
+    "sarjak-container-lines": "sarjak-container-lines",
     "sat-ukraine": "sat-ukraine",
     "saudi-post": "saudi-post",
     "savar-express": "universal",

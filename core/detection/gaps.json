@@ -3640,6 +3640,11 @@
     "reason": "TKP01 codes are Tokopedia booking codes that several couriers, ID Express among them, track as their own resi."
   },
   {
+    "carrier": "sarjak-container-lines",
+    "kind": "open",
+    "reason": "Sarjak's iTrack confirms its bills, its bookings and the containers it carries, including other owners' equipment. Detection has no rule for any of them. Select Sarjak Container Lines explicitly."
+  },
+  {
     "carrier": "sat-ukraine",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

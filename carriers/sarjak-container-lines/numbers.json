@@ -1,0 +1,65 @@
+{
+  "carrier": "sarjak-container-lines",
+  "records": [
+    {
+      "number": "NSASOH73352158685",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/sarjak/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "Listed in the public Sarjak Container Lines tracking directory. iTrack holds it as a booking from Nhava Sheva to Sohar with one container, returned empty; a parser fixture is its reply."
+    },
+    {
+      "number": "SJKU4520620",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/sarjak/SJKU",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Sarjak Container Lines tracking directory under Sarjak's SJKU prefix. iTrack returns it in a booking from Ennore to Alexandria that has sailed; a parser fixture is cut from its reply."
+    },
+    {
+      "number": "SJKU5403932",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/sarjak/SJKU",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Sarjak Container Lines tracking directory under Sarjak's SJKU prefix. iTrack returns it in a booking from Mundra to Alexandria, transhipped at Gioia Tauro, with one container not yet returned; a parser fixture is cut from its reply."
+    }
+  ]
+}
