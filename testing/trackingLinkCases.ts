@@ -2808,4 +2808,5 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'yol-kargo': 'yolkargo.com.tr sends a number it does not know to Ful Kargo\'s tracker, another network\'s page, and its shipment numbers run in sequence, so only a known shipment reaches Yol Kargo\'s own page',
   'quick-fort': 'An unknown number gets a notice that sends the browser back to the home page after three seconds, and no public number opens an order page.',
   pigeonship: 'An unknown number gets the site\'s general "Page not found" page, and no public number opens an order page.',
+  aquantuo: 'aquantuo.com answers automated requests with a Cloudflare check before the tracking page, so number forwarding cannot be verified',
 };

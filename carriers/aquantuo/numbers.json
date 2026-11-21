@@ -1,0 +1,28 @@
+{
+  "carrier": "aquantuo",
+  "records": [
+    {
+      "number": "2236371763054025",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260421165926/https://aquantuo.com/track-order?package_radio=package_id&package_id=2236371763054025",
+        "date": "2026-04-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "An archived page of Aquantuo's tracker shows this id sorted at its Kenya office. The tracker still answers it, through to its collection."
+    }
+  ]
+}

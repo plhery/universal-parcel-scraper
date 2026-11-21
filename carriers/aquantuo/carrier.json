@@ -1,0 +1,79 @@
+{
+  "id": "aquantuo",
+  "displayName": "Aquantuo",
+  "aliases": [
+    "aquantuo.com"
+  ],
+  "region": {
+    "countries": [
+      "GH",
+      "NG",
+      "KE",
+      "RW",
+      "TZ",
+      "UG",
+      "ZM",
+      "US",
+      "GB",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#066277"
+  },
+  "selectable": true,
+  "timezone": "Africa/Accra",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "aquantuo",
+    "steps": [
+      "direct",
+      "retry",
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://aquantuo.com/track-order?package_id={trackingNumber}",
+    "searchUrl": "https://aquantuo.com/track-order",
+    "canaryUrl": "https://aquantuo.com/track-order",
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "event_message"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta"
+    ],
+    "discarded": [
+      "event_message"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "location",
+      "weight",
+      "recipient_name",
+      "destination_country"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "aquantuo.com",
+        "www.aquantuo.com"
+      ],
+      "pathPattern": "^/track-order/?$",
+      "params": [
+        "package_id"
+      ]
+    }
+  ],
+  "detection": []
+}

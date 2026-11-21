@@ -1,3 +1,4 @@
+import { statusMap as aquantuo } from '../../carriers/aquantuo/status.js';
 import { statusMap as cescoLogistics } from '../../carriers/cesco-logistics/status.js';
 import { statusMap as rosaliaExpress } from '../../carriers/rosalia-express/status.js';
 import { statusMap as icasaCargo } from '../../carriers/icasa-cargo/status.js';
@@ -961,6 +962,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'tramaco': tramaco,
   'tej-couriers': tejCouriers,
   'correos-costa-rica': costaRica,
+  aquantuo,
   aeropost,
   'western-bid': westernBid,
   libanpost,

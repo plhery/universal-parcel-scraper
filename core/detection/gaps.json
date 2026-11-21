@@ -6034,5 +6034,10 @@
     "pattern": "^\\d{9}$",
     "kind": "open",
     "reason": "A public court decision gives two Skif-Cargo application numbers, five digits, a dash and four digits, which its tracker finds by their nine digits. Nine digits are shared by many carriers, so detection omits Skif-Cargo."
+  },
+  {
+    "carrier": "aquantuo",
+    "kind": "open",
+    "reason": "One public tracking id, sixteen digits, a shape many carriers' numbers share, and the page also takes item ids of an unpublished shape. Select Aquantuo explicitly."
   }
 ]

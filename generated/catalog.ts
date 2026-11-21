@@ -9569,6 +9569,49 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "aquantuo": {
+    "displayName": "Aquantuo",
+    "color": "#066277",
+    "aliases": [
+      "aquantuo.com"
+    ],
+    "countries": [
+      "GH",
+      "NG",
+      "KE",
+      "RW",
+      "TZ",
+      "UG",
+      "ZM",
+      "US",
+      "GB",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Accra",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "aquantuo",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://aquantuo.com/track-order",
+    "trackingUrlTemplate": "https://aquantuo.com/track-order?package_id={trackingNumber}",
+    "trackingSearchUrl": "https://aquantuo.com/track-order",
+    "linkRules": [
+      {
+        "domains": [
+          "aquantuo.com",
+          "www.aquantuo.com"
+        ],
+        "pathPattern": "^/track-order/?$",
+        "params": [
+          "package_id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "aquiline": {
     "displayName": "Aquiline",
     "color": "#5e60eb",
@@ -68041,6 +68084,7 @@ export const CARRIER_IDS = [
   "apollo-budbiler",
   "apple-express",
   "apx-logistics",
+  "aquantuo",
   "aquiline",
   "aqx-logistics",
   "aramex-au",
@@ -70003,6 +70047,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "apollo-budbiler": [],
   "apple-express": ["apple-express-1"],
   "apx-logistics": [],
+  "aquantuo": [],
   "aquiline": ["aquiline-1"],
   "aqx-logistics": [],
   "aramex-au": ["aramex-au-1"],
