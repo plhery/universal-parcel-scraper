@@ -109401,6 +109401,17 @@
     ]
   },
   {
+    "input": "RN9999999980Y",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "aliexpress"
+    ],
+    "asked": [
+      "aliexpress"
+    ]
+  },
+  {
     "input": "RO002112910CU",
     "carrier": "intl-post",
     "confidence": "high",
@@ -110574,6 +110585,17 @@
     "confidence": "high",
     "candidates": [
       "swiss-post"
+    ]
+  },
+  {
+    "input": "RS9999999980Y",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "aliexpress"
+    ],
+    "asked": [
+      "aliexpress"
     ]
   },
   {

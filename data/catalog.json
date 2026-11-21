@@ -315,6 +315,10 @@
         "confidence": "low"
       },
       {
+        "pattern": "^R[NS]\\d{10}Y$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^PA0{2}\\d{8}$",
         "confidence": "low"
       },
