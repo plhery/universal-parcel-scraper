@@ -1,0 +1,74 @@
+{
+  "id": "pigeonship",
+  "displayName": "PigeonShip",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "US",
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#f2b02c"
+  },
+  "selectable": true,
+  "timezone": "America/Denver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pigeonship",
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 22
+    }
+  },
+  "capabilities": [
+    "eta",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://admin.pigeonship.com/shipping/tracking/package/{trackingNumber}/",
+    "canaryUrl": "https://admin.pigeonship.com/accounts/login/",
+    "shows": [
+      "status",
+      "eta",
+      "recipient_name",
+      "coordinates",
+      "progress_rail",
+      "delivery_photo"
+    ],
+    "scraped": [
+      "status",
+      "eta",
+      "provider_code"
+    ],
+    "discarded": [
+      "recipient_name",
+      "coordinates",
+      "progress_rail",
+      "delivery_photo"
+    ],
+    "unavailable": [
+      "history",
+      "location",
+      "weight",
+      "service_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "admin.pigeonship.com"
+      ],
+      "path": "^/shipping/tracking/package/([A-Za-z0-9]+)/?$"
+    }
+  ],
+  "detection": [
+    {
+      "id": "pigeonship-1",
+      "pattern": "^\\d[A-Z]\\d[A-Z]\\d{3}[A-Z]\\d{3}[A-Z]\\d{2}[A-Z]\\d[A-Z]{2}$",
+      "confidence": "low"
+    }
+  ]
+}

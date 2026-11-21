@@ -660,6 +660,7 @@ import { adapter as peninsulaTruckLines } from '../carriers/peninsula-truck-line
 import { adapter as pfcExpress } from '../carriers/pfc-express/adapter.js';
 import { adapter as pflogistics } from '../carriers/pflogistics/adapter.js';
 import { adapter as phlpost } from '../carriers/phlpost/adapter.js';
+import { adapter as pigeonship } from '../carriers/pigeonship/adapter.js';
 import { adapter as pilotFreight } from '../carriers/pilot-freight/adapter.js';
 import { adapter as pinAg } from '../carriers/pin-ag/adapter.js';
 import { adapter as pitneyBowes } from '../carriers/pitney-bowes/adapter.js';
@@ -1658,6 +1659,7 @@ export const REGISTRY: RegistryDefinition = {
     "pfc-express": pfcExpress,
     "pflogistics": pflogistics,
     "phlpost": phlpost,
+    "pigeonship": pigeonship,
     "pilot-freight": pilotFreight,
     "pin-ag": pinAg,
     "pitney-bowes": pitneyBowes,
@@ -3307,6 +3309,7 @@ export const REGISTRY: RegistryDefinition = {
     "pickupp": "universal",
     "pickupp-sg": "universal",
     "pigeon-express": "universal",
+    "pigeonship": "pigeonship",
     "piggy-express": "universal",
     "pilot-freight": "pilot-freight",
     "pin-ag": "pin-ag",

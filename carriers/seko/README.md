@@ -2,40 +2,40 @@
 
 SEKO Logistics is a forwarder and freight carrier headquartered near Chicago. Its North
 American network picks up, moves and delivers freight and large parcels, and its forwarding
-arm books air and ocean shipments. Tracked through the lookup its tracking page makes. SEKO's
-eCommerce parcels on its OmniParcel platform are not in that lookup and use enabled universal
-providers.
+arm books air and ocean shipments. Tracked through its tracking page, which SEKO's server
+renders. SEKO's eCommerce parcels on its OmniParcel platform are not on that page and use
+enabled universal providers.
 
 ## How it works
 
-1. `direct`: one `GET https://mysekoapi.sekologistics.io/tracking-service/track/{number}`, as
-   SEKO's tracking page on `sekologistics.com` makes it. It needs no cookie, token, key or
-   browser; the page loads reCAPTCHA, but the lookup sends no token. The JSON reply has the
-   shipment's summary and its milestones.
-2. `retry`: one more request when the first fails to reach the service or hangs. The first
-   gets half of the budget.
+1. `direct`: one `GET https://www.sekologistics.com/en/track/?trackingNumbers={number}`, the
+   page SEKO's tracking form opens. It needs no cookie, token, key or browser. The page shows
+   the shipment's summary, a step rail and its milestones, or a line saying it found nothing for
+   the number.
+2. `retry`: one more request when the first fails to reach the site or hangs. The first gets
+   half of the budget.
 
-- An unknown number is an HTTP 404 without a body. A 404 with the gateway's own JSON, a 410 or
-  a redirect is a moved route.
-- Cloudflare sits in front of the service; its browser check is reported as a challenge.
-- The shipment must echo the number asked.
+- The shipment must show the number asked; a page for several numbers shows each in turn.
+- A missing page or a redirect is a moved route. The hosting's page for a stopped site, an HTTP
+  403, is maintenance: SEKO's former tracking lookup on `mysekoapi.sekologistics.io` answers it.
+- Cloudflare's browser check is reported as a challenge.
 - Recognition makes the same request.
 
 ## Notes
 
-- A milestone's `eventDate` is SEKO's wall clock to the minute, with no zone. The delivery's
+- A milestone's date and time are SEKO's wall clock to the minute, with no zone. The delivery's
   milestone runs one or two hours off the proof of delivery's clock at the address, so the
   clocks are not the scanning place's either, and they stay `local_time`.
-- Most milestones say `Status Changed to [X]`, naming one of the statuses the summary's
-  `shipmentStatus` takes. The summary decides a delivery or a hold; otherwise the further of
-  the summary and the newest staged milestone is the current stage.
+- Most milestones say `Status Changed to [X]`, naming one of SEKO's statuses. The newest staged
+  milestone is the current stage. The step rail is not read: the milestones name each status it
+  shows, and holds besides.
 - The history repeats some status changes within a minute, sometimes in another case; the
   copies are merged. Proof-of-delivery filing rows and a booked return move nothing and are
   dropped or left without a stage.
-- `dueDate` is the expected delivery day. The weight is converted from pounds when the reply
-  gives them.
-- The reply's origin and destination addresses, postcodes, customer references, piece count,
-  proof-of-delivery time and signer are not kept. The milestones name no location.
+- The page gives an expected day or a delivery window. Its weight has no unit and is not kept.
+- The origin and destination addresses, postcodes, references, piece count, proof-of-delivery
+  time and signer are not kept. The destination's country code is. The milestones name no
+  location.
 - The tracker also answers booking references and short partial inputs with the shipments
   that match them, so the adapter sends only whole numbers of eight to twenty letters and
   digits with a run of seven digits.
@@ -44,7 +44,7 @@ providers.
 
 - OmniParcel numbers are not tracked here. `track.omniparcel.com` answers anonymously, but no
   current public sample could check it.
-- The reply names no last-mile partner and no hand-off number.
+- The page names no last-mile partner and no hand-off number.
 
 ## Numbers
 

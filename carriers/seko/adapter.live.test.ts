@@ -11,9 +11,10 @@ describe('SEKO live retrieval', () => {
     expect(answer).toMatchObject({ carrier: 'seko', source: 'seko' });
     expect(answer.attempts[0]).toMatchObject({ source: 'seko', kind: 'ok' });
     expect(answer.result.events.length).toBeGreaterThan(0);
-    // Every milestone keeps SEKO's wall clock, without an offset.
-    expect(answer.result.events.every((event) => event.description && !event.time
-      && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(String(event.local_time)))).toBe(true);
+    // Every milestone keeps SEKO's wall clock; an instant deduced from the carrier's zone says so and keeps it.
+    expect(answer.result.events.every((event) => event.description
+      && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(String(event.local_time))
+      && (!event.time || (event.time_zone_basis === 'carrier' && String(event.time).startsWith(String(event.local_time)))))).toBe(true);
     expect(answer.result.events.some((event) => event.stage)).toBe(true);
   }, 45_000);
 

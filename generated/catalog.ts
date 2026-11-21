@@ -4873,7 +4873,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "australia-post",
       "recognitionRank": 500,
       "browserRecognitionRank": 500,
-      "browserRecognitionPattern": "^(?:\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}|(?=[A-Z0-9]{0,2}[A-Z])[A-Z0-9]{3}Z\\d{8}|R\\d{24})$",
+      "browserRecognitionPattern": "^(?:\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}|(?=[A-Z0-9]{0,2}[A-Z])[A-Z0-9]{3}Z\\d{8}|R\\d{24}|0[0-3]\\d{20})$",
       "localClocks": true,
       "browser": true
     },
@@ -47612,6 +47612,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "pigeonship": {
+    "displayName": "PigeonShip",
+    "color": "#f2b02c",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Denver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pigeonship",
+      "recognitionRank": 22
+    },
+    "canaryUrl": "https://admin.pigeonship.com/accounts/login/",
+    "trackingUrlTemplate": "https://admin.pigeonship.com/shipping/tracking/package/{trackingNumber}/",
+    "linkRules": [
+      {
+        "domains": [
+          "admin.pigeonship.com"
+        ],
+        "path": "^/shipping/tracking/package/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d[A-Z]\\d[A-Z]\\d{3}[A-Z]\\d{3}[A-Z]\\d{2}[A-Z]\\d[A-Z]{2}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "piggy-express": {
     "displayName": "Piggy Express",
     "color": "#fe4646",
@@ -69096,6 +69127,7 @@ export const CARRIER_IDS = [
   "pickupp",
   "pickupp-sg",
   "pigeon-express",
+  "pigeonship",
   "piggy-express",
   "pilot-freight",
   "pin-ag",
@@ -71057,6 +71089,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pickupp": ["pickupp-1"],
   "pickupp-sg": ["pickupp-sg-1"],
   "pigeon-express": [],
+  "pigeonship": ["pigeonship-1"],
   "piggy-express": [],
   "pilot-freight": [],
   "pin-ag": ["pin-ag-1"],

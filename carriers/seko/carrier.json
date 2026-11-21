@@ -36,8 +36,7 @@
     "history",
     "eta",
     "service_name",
-    "destination_country",
-    "weight"
+    "destination_country"
   ],
   "portal": {
     "url": "https://www.sekologistics.com/en/track/?trackingNumbers={trackingNumber}",
@@ -64,8 +63,7 @@
       "history",
       "eta",
       "service_name",
-      "destination_country",
-      "weight"
+      "destination_country"
     ],
     "discarded": [
       "progress_rail",
@@ -75,7 +73,8 @@
       "customer_reference",
       "parcel_count",
       "delivered_at",
-      "signatory"
+      "signatory",
+      "weight"
     ],
     "unavailable": [
       "location",
