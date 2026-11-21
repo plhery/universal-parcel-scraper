@@ -173,6 +173,12 @@ describe('BRT direct tracking', () => {
     expect(held.events![0]).toMatchObject({ stage: 'in_transit', provider_status: 'PATRONAL HOLIDAY' });
   });
 
+  it('reads bad weather holding the parcel up at a depot as transit', () => {
+    const held = parseBrt(edit($ => $('.table_stato_dati tr').eq(1).children('td').last().text('Meteorological event')), NUMBER);
+    expect(held).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Meteorological event' });
+    expect(held.events![0]).toMatchObject({ stage: 'in_transit', provider_status: 'Meteorological event' });
+  });
+
   it('reads a shipment a public demonstration holds up as an exception, until a later scan moves it on', () => {
     const held = parseBrt(edit($ => $('.table_stato_dati tr').eq(1).children('td').last().text('TURMOIL')), NUMBER);
     expect(held).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'TURMOIL' });
