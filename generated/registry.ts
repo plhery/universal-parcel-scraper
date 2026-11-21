@@ -412,6 +412,7 @@ import { adapter as heungALine } from '../carriers/heung-a-line/adapter.js';
 import { adapter as hgd } from '../carriers/hgd/adapter.js';
 import { adapter as hiTrans } from '../carriers/hi-trans/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
+import { adapter as hitCargoNicaragua } from '../carriers/hit-cargo-nicaragua/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as hmm } from '../carriers/hmm/adapter.js';
 import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter.js';
@@ -1426,6 +1427,7 @@ export const REGISTRY: RegistryDefinition = {
     "hgd": hgd,
     "hi-trans": hiTrans,
     "hispapost": hispapost,
+    "hit-cargo-nicaragua": hitCargoNicaragua,
     "hitch": hitch,
     "hmm": hmm,
     "hoegh-autoliners": hoeghAutoliners,
@@ -2825,6 +2827,7 @@ export const REGISTRY: RegistryDefinition = {
     "hi-trans": "hi-trans",
     "hintzen": "universal",
     "hispapost": "hispapost",
+    "hit-cargo-nicaragua": "hit-cargo-nicaragua",
     "hitch": "hitch",
     "hiyes": "universal",
     "hkd-express": "universal",

@@ -1,0 +1,69 @@
+{
+  "id": "hit-cargo-nicaragua",
+  "displayName": "HIT Cargo",
+  "aliases": [
+    "HIT Cargo Nicaragua",
+    "hit-cargo.com"
+  ],
+  "region": {
+    "countries": [
+      "NI",
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#14213D"
+  },
+  "selectable": true,
+  "timezone": "America/Managua",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hit-cargo-nicaragua",
+    "steps": [
+      "direct",
+      "retry",
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "weight",
+    "service_name"
+  ],
+  "portal": {
+    "searchUrl": "https://hit-cargo.com/track/",
+    "canaryUrl": "https://hit-cargo.com/track/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "service_name",
+      "parcel_count",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "service_name"
+    ],
+    "discarded": [
+      "parcel_count",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "recipient_name",
+      "sender_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

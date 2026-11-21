@@ -2044,6 +2044,12 @@
     "reason": "NT numbers are the barcodes of council notifications Hispapost delivers. One public sample does not show that Hispapost issues the shape rather than the notifying administration, so no rule claims it."
   },
   {
+    "carrier": "hit-cargo-nicaragua",
+    "pattern": "^\\d{6}$",
+    "kind": "by_design",
+    "reason": "HIT Cargo's guías are its Miami warehouse's six-digit receipt counter, a bare digit run many carriers share."
+  },
+  {
     "carrier": "hoegh-autoliners",
     "kind": "open",
     "reason": "The native service confirms the full HOEG-prefixed bills. The carrier remains explicitly selectable pending a detection review."

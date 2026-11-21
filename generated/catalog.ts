@@ -31198,6 +31198,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hit-cargo-nicaragua": {
+    "displayName": "HIT Cargo",
+    "color": "#14213D",
+    "aliases": [
+      "HIT Cargo Nicaragua",
+      "hit-cargo.com"
+    ],
+    "countries": [
+      "NI",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Managua",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hit-cargo-nicaragua",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://hit-cargo.com/track/",
+    "trackingSearchUrl": "https://hit-cargo.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hitch": {
     "displayName": "Hitch",
     "color": "#1d6efd",
@@ -68860,6 +68884,7 @@ export const CARRIER_IDS = [
   "hi-trans",
   "hintzen",
   "hispapost",
+  "hit-cargo-nicaragua",
   "hitch",
   "hiyes",
   "hkd-express",
@@ -70830,6 +70855,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hi-trans": [],
   "hintzen": [],
   "hispapost": [],
+  "hit-cargo-nicaragua": [],
   "hitch": ["hitch-1"],
   "hiyes": [],
   "hkd-express": [],
