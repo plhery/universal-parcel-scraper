@@ -5636,6 +5636,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "j-and-t",
       "recognitionRank": 530,
+      "recognitionPattern": "^J[DOPXY]\\d{10}$",
       "localClocks": true
     },
     "canaryUrl": "https://customerapp.jntexpress.id/jandt-app-ifd-web/router.do",

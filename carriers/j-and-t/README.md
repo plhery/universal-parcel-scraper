@@ -56,10 +56,10 @@ approval.
 
 - J&T drops older histories: an old Indonesian waybill answers like an unknown one.
 - A history longer than 100 scans keeps the newest 100.
-- Recognition asks the router only about the prefixes J&T Indonesia issues, since an empty
-  answer settles nothing else. Other `J` prefixes and twelve-digit numbers are answered as
-  unknown without a request, so preflight leaves them to the other carriers and the
-  universal providers.
+- Recognition is asked only about the prefixes J&T Indonesia issues (`recognition.pattern`),
+  since an empty answer settles nothing else. For another `J` prefix or a twelve-digit number
+  J&T stays a suggestion and takes no place among the carriers recognition asks; the adapter
+  answers such a number as unknown without a request.
 - The Indonesian website's tracker, `query/findTrack` on `jet.co.id/index/router/index.html`,
   asks for the recipient's phone digits, so only the app's router is read.
 - The Philippine router answers code `500` and the Malaysian one `490`; Thailand and

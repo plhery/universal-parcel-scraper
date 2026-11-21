@@ -24,7 +24,8 @@
       "direct"
     ],
     "recognition": {
-      "rank": 530
+      "rank": 530,
+      "pattern": "^J[DOPXY]\\d{10}$"
     },
     "localClocks": true
   },
