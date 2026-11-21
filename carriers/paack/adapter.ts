@@ -223,6 +223,12 @@ function pickupPoint(order: JsonObject): string {
   return [name, ...address].join('\n');
 }
 
+/** The identifier of a state the map does not know, kept as the provider code so the next one can be mapped. */
+function unknownStepCode(step: JsonObject): { provider_code?: string } {
+  const id = typeof step.id === 'string' ? step.id.trim() : '';
+  return /^[A-Za-z][\w-]{0,39}$/.test(id) ? { provider_code: id } : {};
+}
+
 /**
  * The steps that happened: the timeline's, then the history's. The history
  * (`triggeredEventList`) repeats the timeline's steps under the same `uniq_id`
@@ -296,7 +302,7 @@ export function parsePaackTrackingResponse(
       event: {
         time: time.iso,
         description: classified.description,
-        ...(classified.status === 'unknown' ? {} : { stage: classified.stage }),
+        ...(classified.status === 'unknown' ? unknownStepCode(rawEvent) : { stage: classified.stage }),
       },
       status: classified.status,
       timestamp: time.timestamp,

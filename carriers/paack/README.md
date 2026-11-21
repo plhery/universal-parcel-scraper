@@ -92,7 +92,8 @@ thirteen-digit order numbers are not tracking numbers.
   timeline. It stays on "Out for delivery" after a failed attempt, so a newer failed attempt,
   courier run, drop-off, delivery or return in the history replaces it. Scheduling notes and
   corrections do not. The history keeps its own per-event stages.
-- Event descriptions are our own English wording. Unknown identifiers read "Shipment update" with no stage, so they are no step.
+- Event descriptions are our own English wording. Unknown identifiers read "Shipment update" with no stage, so they are no step, and
+  keep the identifier as the provider code so the next one can be mapped.
 - Aggregators relay the page's English labels instead of identifiers. `paackScan` maps those
   exact labels for them and stores the same wording as the direct lookup.
 - Event times are parsed locally, not with `core/time`: the loader mixes epoch seconds,

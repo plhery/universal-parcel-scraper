@@ -584,7 +584,7 @@ describe('Paack history beside the timeline', () => {
       LABEL_POSTCODE,
     );
     expect(result.current_stage).toBe('accepted');
-    expect(result.events?.find((event) => event.description === 'Shipment update')).toEqual({ time: '2024-07-27T16:38:18.000Z', description: 'Shipment update' });
+    expect(result.events?.find((event) => event.description === 'Shipment update')).toEqual({ time: '2024-07-27T16:38:18.000Z', description: 'Shipment update', provider_code: 'SX999' });
   });
 
   it('keeps scans of one instant in the carrier’s order', () => {
