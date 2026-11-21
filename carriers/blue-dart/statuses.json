@@ -66,6 +66,14 @@
       "note": "Between a hub's arrival and its onward connection."
     },
     {
+      "wording": "Process Completed, Ready To Despatch",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The hub's paperwork done, at the minute of its paper work inscan, before the onward connection."
+    },
+    {
       "wording": "Delivery Scheduled For Next Working Day",
       "language": "en",
       "stage": "in_transit",
