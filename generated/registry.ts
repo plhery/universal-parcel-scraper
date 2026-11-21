@@ -89,6 +89,7 @@ import { adapter as bexExpress } from '../carriers/bex-express/adapter.js';
 import { adapter as bfeExpress } from '../carriers/bfe-express/adapter.js';
 import { adapter as bhPosta } from '../carriers/bh-posta/adapter.js';
 import { adapter as bigfootExpress } from '../carriers/bigfoot-express/adapter.js';
+import { adapter as birGundeKargo } from '../carriers/bir-gunde-kargo/adapter.js';
 import { adapter as bizCourier } from '../carriers/biz-courier/adapter.js';
 import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapter.js';
 import { adapter as blitznow } from '../carriers/blitznow/adapter.js';
@@ -382,6 +383,7 @@ import { adapter as gofoFr } from '../carriers/gofo-fr/adapter.js';
 import { adapter as gofoIt } from '../carriers/gofo-it/adapter.js';
 import { adapter as gofoNl } from '../carriers/gofo-nl/adapter.js';
 import { adapter as gogoXpress } from '../carriers/gogo-xpress/adapter.js';
+import { adapter as golilla } from '../carriers/golilla/adapter.js';
 import { adapter as gollog } from '../carriers/gollog/adapter.js';
 import { adapter as grandSlamExpress } from '../carriers/grand-slam-express/adapter.js';
 import { adapter as gruberLogistics } from '../carriers/gruber-logistics/adapter.js';
@@ -789,6 +791,7 @@ import { adapter as shreeNandan } from '../carriers/shree-nandan/adapter.js';
 import { adapter as sicepat } from '../carriers/sicepat/adapter.js';
 import { adapter as singaporePost } from '../carriers/singapore-post/adapter.js';
 import { adapter as sinokorMerchantMarine } from '../carriers/sinokor-merchant-marine/adapter.js';
+import { adapter as skifCargo } from '../carriers/skif-cargo/adapter.js';
 import { adapter as skladusa } from '../carriers/skladusa/adapter.js';
 import { adapter as skroutzLastMile } from '../carriers/skroutz-last-mile/adapter.js';
 import { adapter as skybox } from '../carriers/skybox/adapter.js';
@@ -980,6 +983,7 @@ import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
 import { adapter as ydh } from '../carriers/ydh/adapter.js';
 import { adapter as yilongLogistics } from '../carriers/yilong-logistics/adapter.js';
 import { adapter as yitu } from '../carriers/yitu/adapter.js';
+import { adapter as yolKargo } from '../carriers/yol-kargo/adapter.js';
 import { adapter as yto } from '../carriers/yto/adapter.js';
 import { adapter as yuanpeng } from '../carriers/yuanpeng/adapter.js';
 import { adapter as yunda } from '../carriers/yunda/adapter.js';
@@ -1091,6 +1095,7 @@ export const REGISTRY: RegistryDefinition = {
     "bfe-express": bfeExpress,
     "bh-posta": bhPosta,
     "bigfoot-express": bigfootExpress,
+    "bir-gunde-kargo": birGundeKargo,
     "biz-courier": bizCourier,
     "bjs-home-delivery": bjsHomeDelivery,
     "blitznow": blitznow,
@@ -1384,6 +1389,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-it": gofoIt,
     "gofo-nl": gofoNl,
     "gogo-xpress": gogoXpress,
+    "golilla": golilla,
     "gollog": gollog,
     "grand-slam-express": grandSlamExpress,
     "gruber-logistics": gruberLogistics,
@@ -1791,6 +1797,7 @@ export const REGISTRY: RegistryDefinition = {
     "sicepat": sicepat,
     "singapore-post": singaporePost,
     "sinokor-merchant-marine": sinokorMerchantMarine,
+    "skif-cargo": skifCargo,
     "skladusa": skladusa,
     "skroutz-last-mile": skroutzLastMile,
     "skybox": skybox,
@@ -1982,6 +1989,7 @@ export const REGISTRY: RegistryDefinition = {
     "ydh": ydh,
     "yilong-logistics": yilongLogistics,
     "yitu": yitu,
+    "yol-kargo": yolKargo,
     "yto": yto,
     "yuanpeng": yuanpeng,
     "yunda": yunda,
@@ -2196,7 +2204,7 @@ export const REGISTRY: RegistryDefinition = {
     "big-smart": "universal",
     "bigfoot-express": "bigfoot-express",
     "bigpost": "universal",
-    "bir-gunde-kargo": "universal",
+    "bir-gunde-kargo": "bir-gunde-kargo",
     "biz-courier": "biz-courier",
     "bjs-home-delivery": "bjs-home-delivery",
     "bla-kurer": "universal",
@@ -2752,7 +2760,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-it": "gofo-it",
     "gofo-nl": "gofo-nl",
     "gogo-xpress": "gogo-xpress",
-    "golilla": "universal",
+    "golilla": "golilla",
     "gollog": "gollog",
     "golucky": "universal",
     "goodluck-courier": "universal",
@@ -3549,7 +3557,7 @@ export const REGISTRY: RegistryDefinition = {
     "sitra-es": "universal",
     "siuntos-autobusais": "universal",
     "sjl-express": "universal",
-    "skif-cargo": "universal",
+    "skif-cargo": "skif-cargo",
     "skladusa": "skladusa",
     "skroutz-last-mile": "skroutz-last-mile",
     "skybox": "skybox",
@@ -3923,7 +3931,7 @@ export const REGISTRY: RegistryDefinition = {
     "yimidida": "universal",
     "yingtu": "universal",
     "yitu": "yitu",
-    "yol-kargo": "universal",
+    "yol-kargo": "yol-kargo",
     "yongma-logis": "universal",
     "yoseus": "universal",
     "youbang-express": "universal",
