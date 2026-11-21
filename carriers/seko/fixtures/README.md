@@ -12,3 +12,10 @@ page is built inline in the tests.
 `public-delivered.html` is the tracking section of the page SEKO serves for the shipping number
 a [Trustpilot review](https://www.trustpilot.com/reviews/6aa065e723f57535b0e1f741) gives, as
 served, without the sidebar's icons.
+
+`omniparcel-delivered.html` and `omniparcel-hub.html` are the pages OmniParcel's tracker serves
+with its clocks in UTC for two of the archived tracker addresses in
+[`numbers.json`](../numbers.json): a delivered parcel and one at the last-mile courier's hub.
+They are kept as served without the scripts, styles, comments and most of the time zone list,
+and with the summary's order reference zeroed. `omniparcel-unknown.html` is the search form the
+tracker serves for a synthetic number, trimmed the same way.

@@ -6,6 +6,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, SEKO_PAGE, SekoTracker } from './adapter.js';
 import numbers from './numbers.json' with { type: 'json' };
+import { OMNIPARCEL_PAGE, parseOmniParcelPage } from './omniparcel.js';
 import { normalizeSekoNumber, parseSekoPage } from './parser.js';
 import { sekoStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -32,6 +33,10 @@ const missingPage = (number: string) => `<!DOCTYPE html><html><head><title>Track
 <textarea class="form-control" rows="5" name="trackingNumbers" id="trackingNumberString"></textarea></form></div></div></div></div></main>
 <footer class="footer"></footer></body></html>`;
 const missing = (number = UNKNOWN) => reply(missingPage(number));
+/** The number OmniParcel's page for a public sample answers for. */
+const omniNumber = (html: string) => /name="TrackingId" type="hidden" value="([^"]+)"/.exec(html)![1]!;
+// A synthetic OmniParcel number, for the tracker's answer that it knows none.
+const OMNI_UNKNOWN = 'GX000000000000000003';
 const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('SEKO HTTP adapter', () => {
@@ -257,6 +262,133 @@ describe('SEKO HTTP adapter', () => {
   });
 });
 
+describe('SEKO OmniParcel route', () => {
+  const delivered = page('omniparcel-delivered');
+  const hub = page('omniparcel-hub');
+  const DELIVERED_GX = omniNumber(delivered);
+  const HUB_GX = omniNumber(hub);
+  /** The page with its scans' table body replaced. */
+  const withHistory = (html: string, rows: string) => html.replace(/<tbody id="detail1">[\s\S]*?<\/tbody>/, `<tbody id="detail1">${rows}</tbody>`);
+  const scan = (time: string, text: string, location = '') => `<tr><td>&nbsp;</td><td class="time">${time} </td><td><span id="test"> ${text} </span></td><td>${location}</td><td></td></tr>`;
+  const day = (heading: string) => `<tr><td colspan="5">${heading}</td></tr>`;
+
+  it('uses public samples from the catalog', () => {
+    const catalog = new Set(numbers.records.filter((record) => record.source.url.includes('track.omniparcel.com')).map((record) => record.number));
+    expect(catalog).toContain(DELIVERED_GX);
+    expect(catalog).toContain(HUB_GX);
+    // Both lengths OmniParcel issues.
+    expect([...catalog].map((number) => number.length).sort()).toEqual(expect.arrayContaining([19, 20]));
+  });
+
+  it('asks OmniParcel’s tracker, not SEKO’s page, for the whole number in capitals once, with its clocks in UTC', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(delivered));
+    const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    await expect(new SekoTracker({ fetcher, recorder, userAgent: 'SyntheticHost/1.0' }).fetch(` ${DELIVERED_GX.toLowerCase()} `, { budgetMs: 1000 }))
+      .resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    const [url, init] = fetcher.mock.calls[0]!;
+    expect(String(url)).toBe(`${OMNIPARCEL_PAGE}?Id=${DELIVERED_GX}&timezoneId=91`);
+    expect(String(url)).toMatch(/^https:\/\/track\.omniparcel\.com\/\?Id=GX\d{18}&timezoneId=91$/);
+    expect(init).toMatchObject({ method: 'GET', redirect: 'manual', headers: { Accept: 'text/html', 'User-Agent': 'SyntheticHost/1.0' } });
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'seko', step: 'direct', outcome: 'ok' }));
+  });
+
+  it('reads a delivered parcel’s scans as instants, newest first, with their places, service, weight and destination', () => {
+    const result = parseOmniParcelPage(delivered, DELIVERED_GX);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'DELIVERED', last_update: '2026-09-02T03:10:00Z', expected_delivery: null,
+      service_name: 'eCommerce Standard Tracked', weight_kg: 0.2, destination_country: 'AU' });
+    expect(result.events!.map((event) => [event.time, event.stage, event.description, event.location ?? null])).toEqual([
+      ['2026-09-02T03:10:00Z', 'delivered', 'DELIVERED', null],
+      ['2026-09-02T00:02:00Z', 'out_for_delivery', 'THE ORDER IS ON THE WAY TO THE RECIPIENT.', null],
+      ['2026-09-01T21:20:00Z', 'in_transit', 'THE ORDER HAS ARRIVED AT THE GOPEOPLE SORTING HUB.', null],
+      ['2026-09-01T05:47:00Z', 'in_transit', 'PARCEL RECEIVED AND ACCEPTED', 'SYDNEY, NSW, AU'],
+      ['2026-09-01T05:43:00Z', 'in_transit', 'CUSTOMS CLEARED', 'MASCOT, NSW, AU'],
+      ['2026-08-26T13:33:00Z', 'in_transit', 'INTERNATIONAL TRANSIT TO DESTINATION COUNTRY', 'RICKMOND, BRITISH COLUMBIA, CA'],
+      ['2026-08-18T20:36:00Z', 'in_transit', 'PROCESSED THROUGH EXPORT HUB', 'RICKMOND, BRITISH COLUMBIA, CA'],
+      ['2026-08-11T02:04:00Z', 'registered', 'TRACKING NUMBER ALLOCATED & ORDER READY', 'RICHMOND, BC, CA'],
+    ]);
+    expect(result.events!.every((event) => event.local_time === undefined)).toBe(true);
+    // The delivery heading's clock runs ten hours ahead of the scans; the summary's references and the courier's link are not read.
+    expect(JSON.stringify(result)).not.toMatch(/13:10|1507546|gopeople\.com|Parcel#|0\.001/i);
+  });
+
+  it('reads a parcel at the last-mile courier’s hub as in transit', () => {
+    expect(parseOmniParcelPage(hub, HUB_GX)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
+      last_status_text: 'THE ORDER HAS ARRIVED AT THE GOPEOPLE SORTING HUB.', last_update: '2026-08-03T22:13:00Z', expected_delivery: null,
+      destination_country: 'AU', events: expect.arrayContaining([expect.objectContaining({ description: 'CUSTOMS CLEARED', stage: 'in_transit' })]) });
+    expect(parseOmniParcelPage(hub, HUB_GX).events).toHaveLength(6);
+  });
+
+  it('reads scans under each day heading, the same instants in the order the page gives, and wording without a stage', () => {
+    const result = parseOmniParcelPage(withHistory(delivered, `${day('Tuesday, September 1, 2026')}${scan('12:00 PM', 'Synthetic note')}${scan('12:00 PM', 'Attempted delivery')}
+      ${day('Monday, August 31, 2026')}${scan('12:05 AM', 'Return to sender', 'SYNTHETIC,  NSW,  AU')}`), DELIVERED_GX);
+    expect(result.events!.map((event) => [event.time, event.stage ?? null, event.location ?? null])).toEqual([
+      ['2026-09-01T12:00:00Z', null, null],
+      ['2026-09-01T12:00:00Z', 'failed_attempt', null],
+      ['2026-08-31T00:05:00Z', 'returned', 'SYNTHETIC, NSW, AU'],
+    ]);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Synthetic note' });
+  });
+
+  it('answers the tracker’s search form as not found, and a parcel without scans as no history', async () => {
+    const lookup = (response: Response) => carrier(vi.fn<typeof fetch>().mockResolvedValue(response)).track({ number: OMNI_UNKNOWN });
+    await expect(lookup(reply(page('omniparcel-unknown')))).rejects.toMatchObject({ kind: 'not_found' });
+    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(page('omniparcel-unknown')))).recognize!(OMNI_UNKNOWN))
+      .resolves.toEqual({ known: false });
+    expect(() => parseOmniParcelPage(withHistory(delivered, ''), DELIVERED_GX)).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
+  });
+
+  it('counts a page only when it names the number asked, with its clocks in UTC', () => {
+    expect(() => parseOmniParcelPage(delivered, HUB_GX)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseOmniParcelPage(delivered.replace(`value="${DELIVERED_GX}"`, `value="${HUB_GX}"`), DELIVERED_GX))
+      .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseOmniParcelPage(delivered.replace(/<input id="TrackingId"[^>]*>/, ''), DELIVERED_GX))
+      .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    // The tracker's default, Sydney's clock, would put every scan ten hours late.
+    const sydney = delivered.replace('<option selected="selected" value="91">', '<option value="91">')
+      .replace('<option value="9">', '<option selected="selected" value="9">');
+    expect(() => parseOmniParcelPage(sydney, DELIVERED_GX)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('rejects a changed page', () => {
+    for (const changed of [
+      '<html><body><h1>Track your order</h1></body></html>',
+      delivered.replace(/<tbody id="detail1">[\s\S]*?<\/tbody>/, ''),
+      withHistory(delivered, scan('3:10 AM', 'DELIVERED')),
+      withHistory(delivered, `${day('Tuesday, September 1, 2026')}${scan('13:10 PM', 'DELIVERED')}`),
+      withHistory(delivered, `${day('Tuesday, September 31, 2026')}${scan('1:10 PM', 'DELIVERED')}`),
+      withHistory(delivered, `${day('2026-09-01')}${scan('1:10 PM', 'DELIVERED')}`),
+      withHistory(delivered, `${day('Tuesday, September 1, 2026')}${scan('1:10 PM', ' ')}`),
+      withHistory(delivered, `${day('Tuesday, September 1, 2026')}<tr><td>1:10 PM</td><td>DELIVERED</td></tr>`),
+      withHistory(delivered, `${day('Tuesday, September 1, 2026')}${scan('1:10 PM', 'Synthetic note').repeat(500)}`),
+    ]) {
+      expect(() => parseOmniParcelPage(changed, DELIVERED_GX)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    }
+  });
+
+  it('keeps a browser check, a block and a moved page apart from an answer', async () => {
+    const lookup = (response: Response) => carrier(vi.fn<typeof fetch>().mockResolvedValue(response)).track({ number: DELIVERED_GX });
+    const check = '<!DOCTYPE html><html><head><title>Just a moment...</title></head><body><script>window._cf_chl_opt={}</script></body></html>';
+    await expect(lookup(reply(check))).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(lookup(reply('', { status: 403 }))).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(lookup(reply('<html><title>Not found</title></html>', { status: 404 }))).rejects.toMatchObject({ kind: 'transport' });
+    await expect(lookup(new Response(null, { status: 302, headers: { Location: 'https://track.omniparcel.com/' } })))
+      .rejects.toMatchObject({ kind: 'transport' });
+  });
+
+  it('recognizes a parcel by its newest scan’s instant, and routes a number filed under SEKO to the tracker', async () => {
+    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(delivered))).recognize!(DELIVERED_GX))
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-02T03:10:00.000Z' });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(delivered));
+    const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED_GX, carrier: 'seko' }, { budgetMs: 3000 });
+    expect(answer).toMatchObject({ carrier: 'seko', source: 'seko', result: { current_stage: 'delivered', last_update: '2026-09-02T03:10:00Z' } });
+    // The scans' instants are OmniParcel's own, not deduced from SEKO's zone.
+    expect(answer.result.events.every((event) => event.time && event.time_zone_basis === undefined)).toBe(true);
+    expect(fetcher.mock.calls.every(([url]) => String(url).startsWith(OMNIPARCEL_PAGE))).toBe(true);
+  });
+});
+
 describe('SEKO numbers', () => {
   it('leaves SEKO to an explicit choice, since its layouts are other carriers\' too', () => {
     for (const number of [IN_TRANSIT, DELIVERED, UNKNOWN]) {
@@ -284,7 +416,7 @@ describe('SEKO status vocabulary', () => {
     }
     expect(statusMapAnswer({ carrier: 'seko', providerCode: null, description: 'Status Changed to [Return Data Received]' }))
       .toMatchObject({ kind: 'intentional_gap' });
-    // The coded entries are OmniParcel's, which this tracker does not read.
+    // The coded entries are from OmniParcel's code list; neither tracker shows the codes.
     expect(statusMap.stage('OP-72', 'delivered')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'seko', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
   });

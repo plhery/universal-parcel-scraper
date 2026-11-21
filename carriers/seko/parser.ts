@@ -41,7 +41,7 @@ export function normalizeSekoNumber(raw: string): string {
 }
 
 /** The text of a page fragment, its tags gone and its entities read. */
-function pageText(fragment: string, maxLength = 300): string {
+export function pageText(fragment: string, maxLength = 300): string {
   return clean(fragment.replace(/<[^>]*>/g, ' ').replace(/&(?:#(\d{1,7})|#x([0-9a-f]{1,6})|([a-z]+));/gi, (entity, decimal?: string, hex?: string, name?: string) => {
     const code = decimal ? Number(decimal) : hex ? Number.parseInt(hex, 16) : undefined;
     if (code !== undefined) return code > 0 && code <= 0x10_ffff ? String.fromCodePoint(code) : entity;

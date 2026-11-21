@@ -3741,6 +3741,12 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to SEKO."
   },
   {
+    "carrier": "seko",
+    "pattern": "^GX\\d{17,18}$",
+    "kind": "open",
+    "reason": "OmniParcel's parcel numbers; a few archived tracker addresses neither establish the family nor rule out other GX numbers."
+  },
+  {
     "carrier": "sendex",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

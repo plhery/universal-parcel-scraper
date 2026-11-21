@@ -36,7 +36,10 @@
     "history",
     "eta",
     "service_name",
-    "destination_country"
+    "destination_country",
+    "location",
+    "offset_timestamps",
+    "weight"
   ],
   "portal": {
     "url": "https://www.sekologistics.com/en/track/?trackingNumbers={trackingNumber}",

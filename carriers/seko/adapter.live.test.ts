@@ -22,6 +22,16 @@ describe('SEKO live retrieval', () => {
     await expect(direct().recognize!(process.env.SEKO_TRACKING_NUMBER!)).resolves.toMatchObject({ known: true });
   }, 30_000);
 
+  it.skipIf(!process.env.SEKO_OMNIPARCEL_NUMBER)('retrieves an OmniParcel parcel’s scans as instants from its tracker', async () => {
+    const answer = await createTracker({ providers: [] }).track({ number: process.env.SEKO_OMNIPARCEL_NUMBER!, carrier: 'seko' });
+    expect(answer).toMatchObject({ carrier: 'seko', source: 'seko' });
+    expect(answer.attempts[0]).toMatchObject({ source: 'seko', kind: 'ok' });
+    expect(answer.result.events.length).toBeGreaterThan(0);
+    expect(answer.result.events.every((event) => event.description && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00Z$/.test(String(event.time))
+      && event.local_time === undefined)).toBe(true);
+    expect(answer.result.events.some((event) => event.stage)).toBe(true);
+  }, 45_000);
+
   it.skipIf(!process.env.SEKO_UNKNOWN_NUMBER)('reads an unknown number as not found', async () => {
     await expect(direct().track({ number: process.env.SEKO_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'not_found' });
   }, 30_000);

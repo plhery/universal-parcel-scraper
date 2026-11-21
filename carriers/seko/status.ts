@@ -41,6 +41,34 @@ const MESSAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['shipment in transit to delivery station.', 'in_transit'],
 ]);
 
+/**
+ * OmniParcel's statuses, which its tracker shows without their codes: the wordings of SEKO's
+ * OmniParcel code list and API example, and the lines its tracker was seen to show.
+ */
+const OMNIPARCEL: ReadonlyMap<string, Stage> = new Map<string, Stage>([
+  ['tracking number allocated & order ready', 'registered'],
+  ['received at origin warehouse - received at warehouse', 'accepted'],
+  ['processed through export hub', 'in_transit'],
+  ['flight - freight departed to destination', 'in_transit'],
+  ['international transit to destination country', 'in_transit'],
+  ['received by destination customs', 'customs'],
+  ['customs held for inspection and clearance', 'customs'],
+  ['customs cleared', 'in_transit'],
+  // The destination's hub taking the parcel after customs, long after the journey started.
+  ['parcel received and accepted', 'in_transit'],
+  ['received by carrier', 'in_transit'],
+  ['received by last mile provider', 'in_transit'],
+  // The last-mile courier's line, hours before its delivery.
+  ['the order is on the way to the recipient.', 'out_for_delivery'],
+  ['customer to collect from carrier', 'ready_for_pickup'],
+  ['awaiting collection', 'ready_for_pickup'],
+  ['delivered to locker/collection point', 'ready_for_pickup'],
+  ['attempted delivery', 'failed_attempt'],
+  ['attempted delivery - refused by customer', 'failed_attempt'],
+  ['return to sender', 'returned'],
+  ['delivered - authority to leave / safe drop', 'delivered'],
+]);
+
 // "Status Changed to [X]", with the brackets or, for one status, a trailing dash instead.
 const CHANGED = /^status changed to\s*(.*)$/;
 
@@ -58,10 +86,10 @@ export function isSekoBookkeeping(wording: string): boolean {
   return /^pod imag(?:ed|e attached)$/.test(normalizeStatusWording(wording));
 }
 
-/** The stage SEKO's own vocabulary gives a status or milestone. */
+/** The stage SEKO's own vocabulary gives a status or milestone, on its tracking page or OmniParcel's. */
 export function sekoMappedStage(wording: string): Stage | undefined {
   const normalized = normalizeStatusWording(wording);
-  return MESSAGES.get(normalized) ?? STATUSES.get(statusOf(normalized));
+  return MESSAGES.get(normalized) ?? OMNIPARCEL.get(normalized) ?? STATUSES.get(statusOf(normalized));
 }
 
 /** A milestone's stage: SEKO's vocabulary, else the shared wording rules, else nothing. */
@@ -74,7 +102,7 @@ export function sekoStage(wording: string): ClassifiedWording | null {
 }
 
 export const statusMap: CarrierStatusMap = {
-  // SEKO's tracker gives no codes; the coded entries in statuses.json are OmniParcel's.
+  // Neither tracker gives codes; the coded entries in statuses.json are from OmniParcel's code list.
   stage: (code, wording) => (code ? undefined : sekoMappedStage(wording)),
   gaps: [
     { wording: 'pod image attached', note: 'The proof of delivery\'s picture filed after the delivery; it moves nothing.' },

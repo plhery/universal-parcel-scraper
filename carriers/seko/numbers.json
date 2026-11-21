@@ -154,6 +154,101 @@
         "confidence": "high"
       },
       "note": "SEKO's OmniParcel API guide shows it as a consignment number in an example reply; the S10 suffix names a postal operator, so the number may belong to that network."
+    },
+    {
+      "number": "GX155430071018191323",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260717011300/https://track.omniparcel.com/1507546-GX155430071018191323",
+        "date": "2026-07-17",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived address on OmniParcel's tracker; the tracker answers for it with its scans."
+    },
+    {
+      "number": "GX155430081119795674",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260811020557/https://track.omniparcel.com/1507546-GX155430081119795674",
+        "date": "2026-08-11",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived address on OmniParcel's tracker; the tracker answers for it with its scans."
+    },
+    {
+      "number": "GX33140071118202491",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260717012111/https://track.omniparcel.com/1507546-GX33140071118202491",
+        "date": "2026-07-17",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived address on OmniParcel's tracker; the tracker answers for it with its scans."
+    },
+    {
+      "number": "GX35137062917662407",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260629205124/https://track.omniparcel.com/1507546-GX35137062917662407",
+        "date": "2026-06-29",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived address on OmniParcel's tracker; the tracker answers for it with its scans."
+    },
+    {
+      "number": "GX35137112910237283",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260717011754/https://track.omniparcel.com/1507546-GX35137112910237283",
+        "date": "2026-07-17",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived address on OmniParcel's tracker; the tracker no longer finds it."
     }
   ]
 }
