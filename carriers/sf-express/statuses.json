@@ -475,6 +475,15 @@
       "note": "Official Taiwan routes opCode 99 with this remark: the parcel is sent on to another address."
     },
     {
+      "code": "517",
+      "wording": "At the customer’s request, the shipment return application has been submitted and is currently under processing. We have accepted your request. The return arrangement will be completed at our current or the next transit hub. The logistics tracking information may still be updated during this period, which will not affect the return process. Please rest assured.",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The return the customer asked for, accepted: SF turns the parcel back at its current or next hub, and scans may still follow before it does. Read by its remark."
+    },
+    {
       "code": "70",
       "wording": "The shipment has arrived at the warehouse and is waiting for inspection and acceptance. Please wait patiently.",
       "stage": "out_for_delivery",

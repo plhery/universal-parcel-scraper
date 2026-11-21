@@ -308,6 +308,22 @@
       "note": "The parcel on its way across China to the export port, between the forwarder's first scans and the export release."
     },
     {
+      "wording": "The shipment could not be delivered, and the recipient has been notified.",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "DHL's failed delivery on the line into Germany: the recipient got a card, and the parcel goes on to an outlet."
+    },
+    {
+      "wording": "The shipment is being brought to [Postfiliale].The earliest time when it can be picked up can be found on the notification card.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "DHL's parcel on its way to the outlet that keeps it after the failed delivery, as DHL's \"Available for pickup shortly\" is: the card says when it can be picked up, so it is not there yet. Its pattern covers any outlet in the brackets."
+    },
+    {
       "wording": "The shipment is waiting for transit",
       "stage": "in_transit",
       "language": "en",

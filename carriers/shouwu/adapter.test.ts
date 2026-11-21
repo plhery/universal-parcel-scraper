@@ -600,6 +600,10 @@ describe('Shouwu International status vocabulary', () => {
     expect(statusMap.stage(null, 'back to sender for reason: sample reason')).toBe('exception');
     expect(shouwuStage('Failed delivery for reason: recipient was not at home')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     expect(statusMap.stage(null, 'failed delivery for reason: sample reason')).toBe('failed_attempt');
+    // DHL's failed round, then its way to the outlet that keeps it, whichever outlet it names.
+    expect(shouwuStage('The shipment could not be delivered, and the recipient has been notified.')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+    expect(shouwuStage('The shipment is being brought to [Sample outlet].The earliest time when it can be picked up can be found on the notification card.'))
+      .toEqual({ stage: 'in_transit', source: 'carrier_map' });
     // A missort in the last mile is a delay: the parcel goes on to its round.
     expect(shouwuStage('Mis routed')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     // Its partner collecting the parcel from the seller, right after the order data.

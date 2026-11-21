@@ -53,6 +53,9 @@ const PATTERNS: readonly [RegExp, Stage][] = [
   [/^back to sender for reason: \S/, 'exception'],
   // Its attempt that found no one or could not deliver, whatever the reason it names: tried again.
   [/^failed delivery for reason: \S/, 'failed_attempt'],
+  // DHL's parcel on its way to the outlet that keeps it after a failed attempt, naming the outlet:
+  // the card the recipient got says when it can be picked up, so it is not there yet.
+  [/^the shipment is being brought to \[[^\]]{1,120}\]\. ?the earliest time when it can be picked up can be found on the notification card\.?$/, 'in_transit'],
 ];
 
 // 17TRACK's sub-status names, which Shouwu gives as a scan's wording on a line it reads from 17TRACK
