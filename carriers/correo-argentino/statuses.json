@@ -18,6 +18,7 @@
     {"wording": "INTENTO DE ENTREGA: PLAZO VENCIDO NO RECLAMO", "stage": "returned", "language": "es", "confirmedBy": "live", "note": "Nobody collected the item in time; it then goes back to its sender, abroad for an item from abroad."},
     {"wording": "Receive item from customer (Otb)", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Posted at the foreign post of an item sent to Argentina."},
     {"wording": "Receive item at office of exchange (Otb)", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Record item reason for retention by customs (Otb)", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "The origin's export customs holding the item, at the minute of the origin post's own hold."},
     {"wording": "Insert item into bag (Otb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Bagged for dispatch abroad, also by Correo Argentino's return office for an item sent back."},
     {"wording": "Send item abroad (EDI-received)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The origin post's dispatch, from the data it sent ahead."},
     {"wording": "Receive item at office of exchange (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Arrived at Argentina's office of exchange."},

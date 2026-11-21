@@ -26,6 +26,8 @@ const SCANS: ReadonlyMap<string, Stage> = new Map([
   ['send item to domestic location', 'in_transit'],
   ['record item customs information', 'customs'],
   ['send item to customs', 'customs'],
+  // Customs holding the item, at the minute of the origin post's own hold by its export customs.
+  ['record item reason for retention by customs', 'customs'],
   // Customs handed the item back: a release, which the shared rules read as customs.
   ['return item from customs', 'in_transit'],
   ['unsuccessful item delivery attempt', 'failed_attempt'],
