@@ -202,6 +202,61 @@
         ]
       },
       "note": "A Voxya complaint against Shree Nandan Courier gives it, in Hindi, as the number of a parcel not delivered for five days."
+    },
+    {
+      "number": "6538262000059",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.instagram.com/p/DeBTw9sBbra/",
+        "date": "2026-10-03",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "A comment on Shree Nandan Courier's Instagram post gives it as a shipment waiting two days at the commenter's nearest hub; the carrier's tracker shows it booked at Ghaziabad and scanned through Delhi, Ahmedabad and Surat."
+    },
+    {
+      "number": "1706262087963",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.facebook.com/shreenandancourier/posts/on-13th-anniversary-shree-nandan-courier-ltd-has-added-51-franchisee-in-a-single/1508729181268996/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "A comment on Shree Nandan Courier's Facebook post gives it as a docket sent from Rajkot to Bharuch; the carrier's tracker shows that route and a delivery record."
     }
   ]
 }

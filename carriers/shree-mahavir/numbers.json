@@ -45,7 +45,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -71,7 +71,7 @@
           "sending"
         ]
       },
-      "note": "An archived lookup on Shree Mahavir's own tracker; the capture was opened but shows only the page shell, not the history."
+      "note": "An archived lookup on Shree Mahavir's own tracker; the capture was opened but shows only the page shell, not the history. Its live lookup shows the booking office and \"Booked By\" without scans."
     },
     {
       "number": "160110005291",
@@ -84,7 +84,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -105,7 +105,7 @@
           "sending"
         ]
       },
-      "note": "An archived lookup on Shree Mahavir's own tracker; the capture was opened but shows only the page shell, not the history."
+      "note": "An archived lookup on Shree Mahavir's own tracker; the capture was opened but shows only the page shell, not the history. Its live lookup shows the booking office and an office to contact in place of a status."
     },
     {
       "number": "218510010120",
@@ -139,6 +139,74 @@
         ]
       },
       "note": "An archived lookup on Shree Mahavir's own tracker; the capture was opened but shows only the page shell, not the history."
+    },
+    {
+      "number": "123220046997",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/hitlat-ui-dev/dev-oms/blob/2e66e05da932e0fa0a6516661dfcd973ddd066fb/lib/courier/parseAndMatch.ts",
+        "date": "2026-08-21",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A merchant's courier tool quotes it as a docket line of a Shree Mahavir booking register; the live lookup on Shree Mahavir's own tracker shows its booking and transit scans."
+    },
+    {
+      "number": "123220047073",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/hitlat-ui-dev/dev-oms/blob/2e66e05da932e0fa0a6516661dfcd973ddd066fb/lib/courier/parseAndMatch.ts",
+        "date": "2026-08-21",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A merchant's courier tool quotes it as a docket line of a Shree Mahavir booking register; the live lookup on Shree Mahavir's own tracker shows its booking and transit scans."
     }
   ]
 }

@@ -1,6 +1,10 @@
 {
   "carrier": "shree-nandan",
   "entries": [
+    {"wording": "Booked", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Written by the adapter for the booking date the tracker shows, at the booking office."},
+    {"code": "2", "wording": "Shipment Reached at [office]", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An inward scan at a hub or the delivery office; the office's phone, shown beside it, is left out."},
+    {"code": "3", "wording": "Shipment Forwarded from [office] To [office]", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An outward scan towards the next hub or the delivery office."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The status of a delivery record, dated by its delivery date, and of the booking, which the tracker shows as the shipment's status."},
     {"wording": "Shipment Send to Center", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Seen in an archived capture of the tracker's travel information."},
     {"wording": "Shipment Received from Hub", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Seen in an archived capture of the tracker when the delivery center takes the shipment in."},
     {"wording": "Shipment Forwarded to Next Hub", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Seen in an archived capture of the tracker."},

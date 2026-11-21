@@ -2255,6 +2255,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shree-anjani', number: '9000000001',
     route: /^https:\/\/shreeanjani\.co\.in\/tracking\/\?awb=9000000001$/,
     marker: /Enter your 10-digit docket number to track/ },
+  // The Connecting Nandan app looks up the number in its address and leaves it off the page when it has no record.
+  { carrier: 'shree-nandan', number: '1000000000001',
+    route: /^https:\/\/connectingnandan\.com\/web-tracking\/1000000000001$/,
+    marker: /Booking information is not available|Traveling Information/,
+    forwarding: { notFound: /Booking information is not available/ }, renderTimeoutMs: 12000 },
   // CloudFront serves the tracker's app with HTTP 404 for every order, known or not. The app looks up the
   // number in its address and shows it as the order ID over empty parcel details when it has no order.
   { carrier: 'paperfly', number: '010125-0000-A1-A1',

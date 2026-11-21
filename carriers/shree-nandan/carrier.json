@@ -18,17 +18,55 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "shree-nandan",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "receiver_name",
+    "receiver_address"
+  ],
   "portal": {
+    "url": "https://connectingnandan.com/web-tracking/{trackingNumber}",
     "searchUrl": "https://www.shreenandancourier.com/",
     "canaryUrl": "https://www.shreenandancourier.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "service_name",
+      "recipient_name",
+      "delivery_date",
+      "proof_of_delivery",
+      "office_contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "service_name",
+      "recipient_name",
+      "delivery_date"
+    ],
+    "discarded": [
+      "origin",
+      "proof_of_delivery",
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

@@ -1,7 +1,12 @@
 {
   "carrier": "shree-mahavir",
   "entries": [
-    {"wording": "RETURN TO ORIGIN", "stage": "returned", "language": "en", "confirmedBy": "portal", "note": "Shown as the delivery status and as the reason for the failed attempt."},
+    {"code": "OUT", "wording": "Out To … From: …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A transit row: the consignment left the office named last for the one named first. The adapter words it \"Out To …\", as the status line does."},
+    {"code": "IN", "wording": "From: … To: …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A transit row: the office named last received the consignment from the other, the destination office included. The adapter words it \"Inward At …\", as the status line does."},
+    {"wording": "Out To … Dated …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The status line after an OUT row, with the next office and the day."},
+    {"wording": "Inward At … Dated …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The status line after an IN row, with the office and the day. At the destination office it is still not a delivery."},
+    {"wording": "Booked By …", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The status line of a number shown with its booking office alone. The adapter words the booking the same way."},
+    {"wording": "RETURN TO ORIGIN", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "Shown as the delivery status and as the reason for the failed attempt. The return is under way, not delivered."},
     {"wording": "DELIVERY ATTEMPTED BY INDORE R N T ROAD BUT NOT SUCCEED...", "stage": "failed_attempt", "language": "en", "confirmedBy": "portal", "note": "The branch name changes with the delivering branch."}
   ]
 }

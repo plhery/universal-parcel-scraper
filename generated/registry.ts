@@ -777,7 +777,9 @@ import { adapter as shiprocket } from '../carriers/shiprocket/adapter.js';
 import { adapter as shipter } from '../carriers/shipter/adapter.js';
 import { adapter as shouwu } from '../carriers/shouwu/adapter.js';
 import { adapter as shreeAnjani } from '../carriers/shree-anjani/adapter.js';
+import { adapter as shreeMahavir } from '../carriers/shree-mahavir/adapter.js';
 import { adapter as shreeMaruti } from '../carriers/shree-maruti/adapter.js';
+import { adapter as shreeNandan } from '../carriers/shree-nandan/adapter.js';
 import { adapter as sicepat } from '../carriers/sicepat/adapter.js';
 import { adapter as singaporePost } from '../carriers/singapore-post/adapter.js';
 import { adapter as sinokorMerchantMarine } from '../carriers/sinokor-merchant-marine/adapter.js';
@@ -1768,7 +1770,9 @@ export const REGISTRY: RegistryDefinition = {
     "shipter": shipter,
     "shouwu": shouwu,
     "shree-anjani": shreeAnjani,
+    "shree-mahavir": shreeMahavir,
     "shree-maruti": shreeMaruti,
+    "shree-nandan": shreeNandan,
     "sicepat": sicepat,
     "singapore-post": singaporePost,
     "sinokor-merchant-marine": sinokorMerchantMarine,
@@ -3514,9 +3518,9 @@ export const REGISTRY: RegistryDefinition = {
     "showl": "universal",
     "shree-anjani": "shree-anjani",
     "shree-mahabali-express": "universal",
-    "shree-mahavir": "universal",
+    "shree-mahavir": "shree-mahavir",
     "shree-maruti": "shree-maruti",
-    "shree-nandan": "universal",
+    "shree-nandan": "shree-nandan",
     "shunbang-express": "universal",
     "sicepat": "sicepat",
     "silpo-pack": "universal",

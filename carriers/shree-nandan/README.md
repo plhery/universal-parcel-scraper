@@ -1,36 +1,51 @@
 # Shree Nandan Courier
 
-Shree Nandan Courier parcels use enabled universal providers. There is no dedicated adapter.
+Shree Nandan Courier is a domestic courier network in India. Select it explicitly: its shipment
+numbers have eleven or thirteen digits, and digit runs of these lengths are printed by many other
+carriers, so no rule claims them.
 
-Shree Nandan Courier is a domestic courier network in India.
+## Retrieval
 
-## Numbers
+The carrier's Connecting Nandan platform shows a shipment at `connectingnandan.com/web-tracking/{number}`.
+That page posts `{"con_no", "purpose", "is_external_tracking": 1}` as plain JSON to
+`api.connectingnandan.com/v1/utilities/tracking/web-view/{number}` three times: `purpose` 1 returns
+the travel rows, 2 the booking and 3 the delivery records. The adapter makes the same three
+requests at once with the page's `api-key`, `app-id` and `platform` headers, which are the same
+for every visitor. Each reply names the number it answers, and the booking names it again; an
+answer for another number fails the lookup.
 
-The tracking field on the home page accepts shipment numbers of eleven or thirteen digits.
-Lookups archived from the carrier's tracker and a customer complaint show thirteen-digit
-numbers. Digit runs of these lengths are printed by many other carriers, so no rule claims
-them.
+The tracker on the carrier's website calls the same API through another route. It encrypts each
+key and value of the body, and opens its results at an address holding an encrypted value instead
+of the number. The adapter uses the platform's route, which needs neither.
 
-## Retrieval lead
+## Choices
 
-The website is a single-page app. Its tracking page posts `con_no`, `purpose`,
-`is_external_tracking` 1 and `client_id` 0 to
-`api.connectingnandan.com/v1/website/tracking/web-view/consignment` three times, with `purpose`
-1, 2 and 3, and merges the answers: the booking, the `traveling_info` history and the
-`delivery_details`. Each key and value of the body is encrypted with AES-CBC after an HMAC of a
-random value, the time and the value; the key, IV and HMAC secret are in the page's script for
-every visitor, as are the `api-key`, `app-id` and `Platform` headers the requests carry. The
-page shows a shipment for 180 days. For an older one the API answers HTTP 423 with a notice
-naming the booking branch to contact. No found reply has been seen, so there is no adapter.
+The clocks are Indian wall clocks without an offset, so scans keep them as local times. A delivery
+record has only a delivery date, which stays a date and comes after the scans of its day. The
+booking date becomes a "Booked" scan at the booking office. The text of a travel row is shown in
+parts; the adapter joins them and leaves out the office's phone number.
+
+The website shows the booking's status as the shipment's. The adapter takes it as the current
+stage when it names a delivery, since scans can still be written at a hub after a delivery
+record. Otherwise the newest scan sets the stage.
+
+## Limitations
+
+The tracker shows a shipment for 180 days. For an older one the API answers HTTP 423 with a
+notice naming the booking branch to contact, which the adapter reads as expired history. An
+unknown number gets three empty parts, which the website shows as "No Record Found"; the adapter
+reads that as not found. Proof-of-delivery images, office phone numbers and addresses are left
+out.
 
 ## Links
 
-The current tracker opens results at an address holding an encrypted value instead of the
-number, so no address opens one parcel. Lookups archived from the older tracker carry the
-number as `cn` on `TrackingInfo.aspx`, and the carrier's Connecting Nandan platform shows it in
-`/web-tracking/` addresses; the number is read from both.
+Lookups archived from the older tracker carry the number as `cn` on `TrackingInfo.aspx`, and the
+Connecting Nandan platform shows it in `/web-tracking/` addresses; the number is read from both.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+SHREE_NANDAN_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/shree-nandan
+```
+
+`SHREE_NANDAN_UNKNOWN_NUMBER` adds a check of the not-found answer for a number the carrier does not hold.

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Shree Mahavir Express Services Pvt. Ltd.</title></head>
+<body>
+    <input name="hfCenterName" type="hidden" id="hfCenterName" />
+    <form name="Form1" method="post" action="Index.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="Form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="U3ludGhldGljIHZpZXcgc3RhdGUgKyBzbGFzaC8=" />
+</div>
+<div>
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="0A1B2C3D" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="U3ludGhldGljIGV2ZW50IHZhbGlkYXRpb24=" />
+</div>
+        <section>
+            <h2 class="title-1"> Track your consignment </h2>
+            <input name="txtAWBNo" type="text" id="txtAWBNo" class="form-control box-shadow" placeholder="Enter Consignment No." />
+            <input type="submit" name="cmdTrack" value="Tracking" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;cmdTrack&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="cmdTrack" class="btn-1" />
+        </section>
+        <section>
+            <h2 class="title-1"> Find our Outlet </h2>
+            <input name="networksearch" type="text" id="networksearch" class="form-control box-shadow" placeholder="Select Center / Enter Pincode" autocomplete="off" />
+            <input type="submit" name="tmpNetwork" value="Search" id="tmpNetwork" class="btn-1" />
+        </section>
+        <section>
+            <h2 class="title-1"> Pickup Request </h2>
+            <input name="txtFullName" type="text" maxlength="50" id="txtFullName" class="form-control" />
+            <input name="txtCaptcha" type="text" id="txtCaptcha" class="form-control input-md" autocomplete="off" />
+            <input type="image" name="ImageButton2" id="ImageButton2" src="images/refresh.png" />
+            <input type="submit" name="btnSubmit" value="Submit Request" id="btnSubmit" class="btn-1" />
+        </section>
+    </form>
+</body>
+</html>

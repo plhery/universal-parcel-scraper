@@ -54513,10 +54513,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "shree-mahavir",
+      "localClocks": true
     },
     "canaryUrl": "https://www.shreemahavircourier.com/",
-    "trackingUrlTemplate": "https://www.shreemahavircourier.com/Frm_DocTrack.aspx?docno={trackingNumber}",
     "trackingSearchUrl": "https://www.shreemahavircourier.com/",
     "linkRules": [
       {
@@ -54525,9 +54525,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "shreemahavircourier.com"
         ],
         "pathPattern": "^/Frm_DocTrack\\.aspx$",
-        "params": [
-          "docno"
-        ]
+        "query": "^(?:.*&)?docno=(\\d{12})(?=&|$)"
       },
       {
         "domains": [
@@ -54535,9 +54533,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "smespl.in"
         ],
         "pathPattern": "^/Frm_DocTrackWeb\\.aspx$",
-        "params": [
-          "docno"
-        ]
+        "query": "^(?:.*&)?docno=(\\d{12})(?=&|$)"
       }
     ],
     "detectionRules": []
@@ -54631,9 +54627,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "shree-nandan",
+      "localClocks": true
     },
     "canaryUrl": "https://www.shreenandancourier.com/",
+    "trackingUrlTemplate": "https://connectingnandan.com/web-tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.shreenandancourier.com/",
     "linkRules": [
       {
