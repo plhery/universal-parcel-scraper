@@ -18,6 +18,10 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Pick up by local carrier at destination port', { status: 'in_transit', stage: 'in_transit' }],
   ['Custom Clearance in process - Import', { status: 'in_transit', stage: 'customs' }],
   ['International shipment release - Import', { status: 'in_transit', stage: 'in_transit' }],
+  // A destination agent's own steps written as dotted codes: the import declaration lodged after the arrival at the
+  // destination port, and the release to the last mile after the batch handover.
+  ['customs.declared', { status: 'in_transit', stage: 'customs' }],
+  ['lastmile.released', { status: 'in_transit', stage: 'in_transit' }],
   ['International shipment release - Export', { status: 'in_transit', stage: 'in_transit' }],
   ['Port of destination - Arrival', { status: 'in_transit', stage: 'in_transit' }],
   ['Port of departure - Departure', { status: 'in_transit', stage: 'in_transit' }],
@@ -210,11 +214,19 @@ export const yanwenWording = (description: string): string => withoutCourtesy(de
 // read as YWE's own map reads them, its hub's receipt of the container and of the parcel as that handover, in transit.
 const yweRelayedStage = (wording: string): Stage | undefined => yweMappedStage(wording);
 
+// DAO's scans in Danish on a line into Denmark, after Yanwen's batch handover: sorted at one of its terminals, then on
+// the way to the daoSHOP that will hold the parcel, which DAO's own tracker gives as Shop/16 and Shop/23.
+const DAO_RELAYED: readonly (readonly [RegExp, Stage])[] = [
+  [/^sorteret på: terminal [^\d,;]{1,40}$/u, 'in_transit'],
+  [/^på vej til daoshop$/u, 'in_transit'],
+];
+const daoRelayedStage = (normalized: string): Stage | undefined => DAO_RELAYED.find(([pattern]) => pattern.test(normalized))?.[1];
+
 // China Post's domestic scans, which Yanwen relays in Chinese with the centre in 【】, read as China Post's own
 // map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception. Then J&T
 // Australia's, then YWE's, then iMile's in Germany, which open with iMile's centre in 【】 as iMile writes them.
 const relayedStage = (normalized: string): Stage | undefined => chinaPostRelayedStage(normalized) ?? jAndTAuRelayedStage(normalized)
-  ?? yweRelayedStage(normalized) ?? imileRelayedStage(normalized);
+  ?? yweRelayedStage(normalized) ?? imileRelayedStage(normalized) ?? daoRelayedStage(normalized);
 
 function relayedStatus(description: string): ClassifiedStatus | undefined {
   const stage = relayedStage(normalizeStatusWording(description));
@@ -246,6 +258,7 @@ const NOTICES = new Map([
   ['Preference applied', "InPost's record of the recipient's delivery choice, relayed while the parcel can still be in China: not a scan, so it keeps the stage the parcel already had."],
   ['Shipping Order Created.', "A last-mile partner's order, written while Yanwen still has the parcel: not a scan, so it keeps the stage the parcel already had."],
   ['Shipment created', "A destination partner's order, written after Yanwen's facility scans and before the parcel leaves China: not a scan, so it keeps the stage the parcel already had."],
+  ['Forsendelse er oprettet, afventer registrering', "DAO's order in Danish, written before the parcel leaves China, like Shipment created: not a scan, so it keeps the stage the parcel already had."],
   ['Initial item information received', "A delivering post's record of the item's data reaching it, relayed between Yanwen's export scans with \"In Transit\" as its place: not a scan, so it keeps the stage the parcel already had."],
 ].map(([wording, note]) => [normalizeStatusWording(wording!), note!]));
 

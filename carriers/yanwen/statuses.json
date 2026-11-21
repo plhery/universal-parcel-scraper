@@ -412,6 +412,45 @@
       "note": "A destination partner's order, written after Yanwen's facility scans and before the parcel leaves China, like Shipping Order Created: a notice that keeps the stage the parcel already had."
     },
     {
+      "wording": "Forsendelse er oprettet, afventer registrering",
+      "language": "da",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "DAO's order in Danish, written before the parcel leaves China, like Shipment created: a notice that keeps the stage the parcel already had."
+    },
+    {
+      "wording": "customs.declared",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The import declaration lodged after the arrival at the destination port, before the import release."
+    },
+    {
+      "wording": "lastmile.released",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The release to the last mile after the batch handover."
+    },
+    {
+      "wording": "Sorteret på: terminal …",
+      "language": "da",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "DAO sorting the parcel at one of its terminals, which it names, as DAO's own Shop/16."
+    },
+    {
+      "wording": "På vej til daoSHOP",
+      "language": "da",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "On the way to the daoSHOP that will hold the parcel, as DAO's own Shop/23; not yet ready for pickup."
+    },
+    {
       "wording": "Shipment under processing at origin hub",
       "language": "en",
       "stage": "in_transit",
