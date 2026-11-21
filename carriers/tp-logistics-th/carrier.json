@@ -19,18 +19,66 @@
   "timezone": "Asia/Bangkok",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "tp-logistics-th",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "sender_name",
+    "receiver_name",
+    "receiver_address"
+  ],
   "portal": {
     "url": "https://tptrack.info/ecom/dtrack.php?id={trackingNumber}&type=a1",
     "searchUrl": "https://tptrack.info/ecom/dtrack.php",
     "canaryUrl": "https://tptrack.info/ecom/dtrack.php",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "sender_address",
+      "recipient_name",
+      "recipient_address",
+      "customer_reference",
+      "order_contents",
+      "parcel_count",
+      "destination",
+      "depot_code",
+      "failed_delivery_reason",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "failed_delivery_reason"
+    ],
+    "discarded": [
+      "sender_address",
+      "customer_reference",
+      "order_contents",
+      "parcel_count",
+      "destination",
+      "depot_code",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "dimensions",
+      "service_name",
+      "signatory",
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

@@ -60265,7 +60265,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Bangkok",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tp-logistics-th",
+      "localClocks": true
     },
     "canaryUrl": "https://tptrack.info/ecom/dtrack.php",
     "trackingUrlTemplate": "https://tptrack.info/ecom/dtrack.php?id={trackingNumber}&type=a1",

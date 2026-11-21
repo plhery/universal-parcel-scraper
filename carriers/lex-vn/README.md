@@ -14,11 +14,10 @@ tracker no longer finds them.
 
 ## Why there is no adapter
 
-Its tracking page posts the numbers to an open JSON endpoint, `POST logistics.lazada.vn/api/search_packages`
-with a `trackingNumbers` list, without a login or CAPTCHA, on the same platform as LEX Malaysia's. It answers
-the public numbers and a made-up one alike with an empty list, so a found reply has not been seen and a missing
-parcel cannot be told apart. LEX Indonesia's and LEX Malaysia's adapters use the same client
-([lex.ts](../lex-id/lex.ts)); this site can join them once a found reply is seen.
+LEX Vietnam has stopped delivering: Flex Speed ended its last-mile service. Its tracking page still posts the numbers to an open JSON endpoint,
+`POST logistics.lazada.vn/api/search_packages` with a `trackingNumbers` list, the request LEX Indonesia's and
+LEX Malaysia's adapters send ([lex.ts](../lex-id/lex.ts)), but it answers every number, public or made up, with
+an empty list.
 
 ## Links
 

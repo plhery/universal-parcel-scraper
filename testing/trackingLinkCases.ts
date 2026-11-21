@@ -2255,6 +2255,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shree-anjani', number: '9000000001',
     route: /^https:\/\/shreeanjani\.co\.in\/tracking\/\?awb=9000000001$/,
     marker: /Enter your 10-digit docket number to track/ },
+  // TP Logistics' search page loads its "Not found this Code" notice for an unknown number.
+  { carrier: 'tp-logistics-th', number: 'ZZZ999912319999',
+    route: /^https:\/\/tptrack\.info\/ecom\/dtrack\.php\?id=ZZZ999912319999&type=a1$/,
+    marker: /Welcome to TP Logistics Tracking/,
+    forwarding: { notFound: /Not found this Code/ } },
   // Vitran's Quick Track names an unknown number only in its form's address, under its "Not found." notice.
   { carrier: 'vitran-express', number: '90000001',
     route: /^https:\/\/www\.vitran\.com\/quicktrack\.aspx\?p=90000001$/,

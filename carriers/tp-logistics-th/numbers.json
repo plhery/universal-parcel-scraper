@@ -110,6 +110,72 @@
         ]
       },
       "note": "Archived lookup on TP Logistics' tracker; the opened capture lists the parcel with the status Delivered and a button to its history."
+    },
+    {
+      "number": "NRT032506030001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.thaiware.com/tool/check-parcel/tplogistics/",
+        "date": "2025-06-06",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tp-logistics-th"
+        ]
+      },
+      "note": "A comment on Thaiware's TP Logistics tracking page asks when this parcel will arrive; TP Logistics' tracker shows its history from the origin branch to its delivery."
+    },
+    {
+      "number": "PTE052410280003",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.thaiware.com/tool/check-parcel/tplogistics/",
+        "date": "2024-11-02",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tp-logistics-th"
+        ]
+      },
+      "note": "Posted as the commenter's name on Thaiware's TP Logistics tracking page, over a complaint that the delivery was put off; TP Logistics' tracker shows its history, a hold at the recipient's request and its delivery."
+    },
+    {
+      "number": "Ptn022410100003",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.thaiware.com/tool/check-parcel/tplogistics/",
+        "date": "2024-10-16",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tp-logistics-th"
+        ]
+      },
+      "note": "A comment on Thaiware's TP Logistics tracking page gives it, in mixed case, for a parcel waiting two days in Chiang Rai; TP Logistics' tracker shows its history, a hold at the recipient's request and its delivery."
     }
   ]
 }

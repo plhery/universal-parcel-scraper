@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8;" />
+<title>Thaiparcels TrackingSystem</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="bootstrap.css">
+<link rel="stylesheet" href="css/style2">
+<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+<!-- Optional theme -->
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="jquery-1.11.0.min.js"></script>
+<script>
+$(document).ready(function(){
+  $( window ).scroll(function(){
+    //$("nav").hide("slide", 500 );
+    if($(this).scrollTop() > 1){
+      $("footer").fadeOut();
+            //$("nav").hide("slow");
+    } else {
+      $("footer").fadeIn();
+    }
+  });
+   $.get('menu1.php',function(data){})
+        .done(function(data){
+          $('#border').html(data);
+     });
+    $("#menu2").click(function() {
+        $.get('menu2.php',function(data){})
+          .done(function(data){
+            $('#border').html(data);
+        });
+      });
+    $("#menu3").click(function() {
+        $.get('menu3.php',function(data){})
+          .done(function(data){
+            $('#border').html(data);
+        });
+      });
+});
+</script>
+</head>
+<body>
+﻿<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-99653534-1', 'auto');
+  ga('send', 'pageview');
+
+</script><script>
+function myFunction() {
+    window.print();
+}
+function getpage() {
+
+    var x = document.getElementById("a1code").value;
+
+   if (x.length > 0 ){
+     window.location.href  =  'dtrack.php?id=' + x +'&type=a1' ;
+
+   					}
+   					else{
+     					  alert('Data Not Found!');
+
+   						}
+}
+function getpage2() {
+
+    var x = document.getElementById("tcode").value;
+
+   if (x.length > 0 ){
+     window.location.href  =  'dtrack.php?id=' + x +'&type=tk' ;
+
+   					}
+   					else{
+     					  alert('Data Not Found!');
+
+   						}
+}
+
+function getpage3(a1,type) {
+
+
+
+
+     window.location.href  =  'tdetail.php?fn='+type+'&code='+a1+'' ;
+
+   				
+}
+
+function checkTextField(field) {
+    if (field.value == '') {
+        alert('Field is empty');
+		return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<html>
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Thaiparcels Tracking">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    
+  </head>
+
+ <nav class="navbar navbar-default navbar-fixed-top" style="font-family: inherit;font-size: 18px;">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="dtrack.php">Thaiparcels Tracking System</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="http://www.thaiparcels.com">Main</a></li>
+                        <li><a href="#" id='modal-launcher' data-toggle="modal" data-target="#login-modal">
+                  Customer Login
+                </a>
+            </li>
+                           </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+<div class="jumbotron" style="padding-bottom:0px;">
+      <div class="container">
+        <h2 style="text-align:center;margin-top: 35px;font-family: inherit;color:#716363;">Welcome to TP Logistics Tracking</h2>
+        <p style="text-align:center;font-size:15px;font-style: italic;color:#6E6767;font-family: inherit;">
+          Please Enter Document Number For Track Your Shipment.
+        </p>
+ <!DOCTYPE html>
+
+   <script>
+      $.get('false.php',function(data){})
+        .done(function(data){
+          $('#false').html(data);
+      });
+    </script>
+</form>      </div>
+    </div>
+    <div id="false"></div>
+    <div id="border">
+    </div>
+   
+<script>
+        $("#border").hide();
+        $("#hide").hide();
+      </script><footer class="footer">
+<br>
+<div><center style="background-color: #5cc221;color: #fff;padding-top: 8px;padding-bottom: 1px;font-size: 18px;width:100%;
+	position:fixed;
+	bottom:0;
+	left:0;
+  font-family: inherit;">
+
+1010 Thanon Luang Phaeng, Thap Yao, Lat Krabang, Bangkok 10520
+<p>Phone. 02 360 7788 FAX. 02 36075254
+Email. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="44272b2a30252730313704302c252d342536272128376a272b29">[email&#160;protected]</a></div></center>
+<br>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
+
+<div style="margin-top:51px" class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header login_modal_header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2 class="modal-title" id="myModalLabel" style="text-align:center;">TPE Customer Login</h2>
+          </div>
+          <div class="modal-body login-modal">
+                     <div id="login">
+            <form id="myForm" action="chk_user.php" method="get">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="text" name="uid" class="form-control" id="uid" placeholder="Username" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="pwd" class="form-control" id="pwd" placeholder="Password" required>
+              </div>
+              <input id="submit" class="btn btn-default" type="submit" value="Log in" style="width: 100%;background-color:#AEED8A;" />
+            </form>
+            <center> <p><a href="dtrack.php"><span class="fs">Customer</span></a>   ||    <a href="http://www.thaiparcels.com"><span class="fs"> www.thaiparcels.com</span></a></p></center>
+          </div>
+        </div>
+          <div class="clearfix"></div>
+          <div class="modal-footer login_modal_footer">
+          </div>
+      </div>
+    </div>
+</div>
