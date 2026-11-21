@@ -254,6 +254,8 @@ describe('status map answers', () => {
     expect(answer('chronopost', 'TA', 'Livraison effectuée')).toEqual(unknown);
     expect(answer('chronopost', 'SM', 'Destinataire informé par SMS ou mail')).toEqual(gap);
     expect(answer('chronopost', 'CL', 'Instruction de livraison reçue')).toEqual(gap);
+    expect(answer('chronopost', 'I', 'Colis en attente')).toEqual(gap);
+    expect(answer('chronopost', 'I', 'Colis en attente de dédouanement')).toEqual(unknown);
     expect(answer('chronopost', 'SM', 'Autre message')).toEqual(unknown);
     // A partner's missed round under N, as its postponement is.
     expect(answer('chronopost', 'N', 'Colis non livré : client absent')).toEqual(mapped('failed_attempt'));

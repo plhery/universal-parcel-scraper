@@ -97,6 +97,8 @@ for (const [code, label, stage] of OBSERVED) observed.set(code, (observed.get(co
 
 const NOTIFICATION = 'Destinataire informé par SMS ou mail';
 const INSTRUCTION = 'Instruction de livraison reçue';
+// A hold at an agency, seen at the delivery agency after the delivery was put off to the next Monday.
+const HOLD = 'Colis en attente';
 /** Chronopost's notice to the recipient, which providers relay as it is. */
 export const CHRONOPOST_NOTIFICATION = NOTIFICATION;
 
@@ -141,5 +143,8 @@ export const statusMap: CarrierStatusMap = {
   }, {
     code: 'CL', wording: normalizeStatusWording(INSTRUCTION),
     note: "The recipient's delivery instruction, not a scan: it keeps the stage the parcel already had.",
+  }, {
+    code: 'I', wording: normalizeStatusWording(HOLD),
+    note: 'A hold at an agency, which moves nothing: it keeps the stage the parcel already had.',
   }],
 };

@@ -178,6 +178,14 @@
       "language": "fr"
     },
     {
+      "code": "I",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "A hold at an agency, seen at the delivery agency hours after it put the delivery off to the next Monday. It moves nothing: the scan keeps the stage the parcel already had.",
+      "wording": "Colis en attente",
+      "language": "fr"
+    },
+    {
       "code": "T",
       "stage": "in_transit",
       "confirmedBy": "live",

@@ -361,7 +361,7 @@ describe('Chronopost direct tracking', () => {
     expect(parseChronopostTrackingXml(history(instruction('2026-06-27T10:07:00+02:00')), number))
       .toMatchObject({ current_stage: 'pending', current_stage_source: 'none' });
     expect(statusMap.stage('CL', normalizeStatusWording('Instruction de livraison reçue'))).toBeUndefined();
-    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['SM', 'CL']);
+    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['SM', 'CL', 'I']);
   });
 
   it("reads the departure agency's sort right after the sender's announcement as the collection", () => {
