@@ -25,6 +25,7 @@ import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
 import { adapter as airEuropaCargo } from '../carriers/air-europa-cargo/adapter.js';
 import { adapter as airGreenland } from '../carriers/air-greenland/adapter.js';
 import { adapter as airInuit } from '../carriers/air-inuit/adapter.js';
+import { adapter as airasiaCargo } from '../carriers/airasia-cargo/adapter.js';
 import { adapter as airpakExpress } from '../carriers/airpak-express/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as airwaysCourierIn } from '../carriers/airways-courier-in/adapter.js';
@@ -127,6 +128,7 @@ import { adapter as cadenaCourier } from '../carriers/cadena-courier/adapter.js'
 import { adapter as calidexCourier } from '../carriers/calidex-courier/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
+import { adapter as cargolux } from '../carriers/cargolux/adapter.js';
 import { adapter as cargox } from '../carriers/cargox/adapter.js';
 import { adapter as cargus } from '../carriers/cargus/adapter.js';
 import { adapter as carrybee } from '../carriers/carrybee/adapter.js';
@@ -173,6 +175,7 @@ import { adapter as connectCouriers } from '../carriers/connect-couriers/adapter
 import { adapter as consegnia } from '../carriers/consegnia/adapter.js';
 import { adapter as coordinadora } from '../carriers/coordinadora/adapter.js';
 import { adapter as cootranstame } from '../carriers/cootranstame/adapter.js';
+import { adapter as copaAirlinesCargo } from '../carriers/copa-airlines-cargo/adapter.js';
 import { adapter as copaCourier } from '../carriers/copa-courier/adapter.js';
 import { adapter as cordeliaShipping } from '../carriers/cordelia-shipping/adapter.js';
 import { adapter as corre } from '../carriers/corre/adapter.js';
@@ -211,6 +214,7 @@ import { adapter as dayRoss } from '../carriers/day-ross/adapter.js';
 import { adapter as daylightTransport } from '../carriers/daylight-transport/adapter.js';
 import { adapter as dayone } from '../carriers/dayone/adapter.js';
 import { adapter as daytonFreight } from '../carriers/dayton-freight/adapter.js';
+import { adapter as daytonaExpress } from '../carriers/daytona-express/adapter.js';
 import { adapter as dealersend } from '../carriers/dealersend/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
 import { adapter as delibox } from '../carriers/delibox/adapter.js';
@@ -1064,6 +1068,7 @@ export const REGISTRY: RegistryDefinition = {
     "air-europa-cargo": airEuropaCargo,
     "air-greenland": airGreenland,
     "air-inuit": airInuit,
+    "airasia-cargo": airasiaCargo,
     "airpak-express": airpakExpress,
     "airspeed": airspeed,
     "airways-courier-in": airwaysCourierIn,
@@ -1166,6 +1171,7 @@ export const REGISTRY: RegistryDefinition = {
     "calidex-courier": calidexCourier,
     "canada-post": canadaPost,
     "canpar": canpar,
+    "cargolux": cargolux,
     "cargox": cargox,
     "cargus": cargus,
     "carrybee": carrybee,
@@ -1212,6 +1218,7 @@ export const REGISTRY: RegistryDefinition = {
     "consegnia": consegnia,
     "coordinadora": coordinadora,
     "cootranstame": cootranstame,
+    "copa-airlines-cargo": copaAirlinesCargo,
     "copa-courier": copaCourier,
     "cordelia-shipping": cordeliaShipping,
     "corre": corre,
@@ -1250,6 +1257,7 @@ export const REGISTRY: RegistryDefinition = {
     "daylight-transport": daylightTransport,
     "dayone": dayone,
     "dayton-freight": daytonFreight,
+    "daytona-express": daytonaExpress,
     "dealersend": dealersend,
     "delhivery": delhivery,
     "delibox": delibox,
@@ -2135,6 +2143,7 @@ export const REGISTRY: RegistryDefinition = {
     "air-greenland": "air-greenland",
     "air-inuit": "air-inuit",
     "air-star-xpress": "universal",
+    "airasia-cargo": "airasia-cargo",
     "airmee": "universal",
     "airpak-express": "airpak-express",
     "airroad": "universal",
@@ -2346,6 +2355,7 @@ export const REGISTRY: RegistryDefinition = {
     "cargoboard": "universal",
     "cargobus": "universal",
     "cargoline": "universal",
+    "cargolux": "cargolux",
     "cargomini": "universal",
     "cargox": "cargox",
     "cargus": "cargus",
@@ -2425,6 +2435,7 @@ export const REGISTRY: RegistryDefinition = {
     "conwest-logistics": "universal",
     "coordinadora": "coordinadora",
     "cootranstame": "cootranstame",
+    "copa-airlines-cargo": "copa-airlines-cargo",
     "copa-courier": "copa-courier",
     "cope-sensitive-freight": "universal",
     "cordelia-shipping": "cordelia-shipping",
@@ -2504,6 +2515,7 @@ export const REGISTRY: RegistryDefinition = {
     "daylight-transport": "daylight-transport",
     "dayone": "dayone",
     "dayton-freight": "dayton-freight",
+    "daytona-express": "daytona-express",
     "dd-express": "universal",
     "ddu-express": "universal",
     "dealersend": "dealersend",

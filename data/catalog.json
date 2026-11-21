@@ -7513,6 +7513,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "airasia-cargo": {
+    "displayName": "AirAsia Cargo",
+    "color": "#ff0000",
+    "aliases": [
+      "Air Asia Cargo"
+    ],
+    "countries": [
+      "MY",
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "airasia-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "airmee": {
     "displayName": "Airmee",
     "color": "#000000",
@@ -14019,6 +14042,29 @@
     ],
     "detectionRules": []
   },
+  "cargolux": {
+    "displayName": "Cargolux",
+    "color": "#CC0033",
+    "aliases": [
+      "Cargolux Airlines",
+      "Cargolux Airlines International",
+      "Cargolux Italia"
+    ],
+    "countries": [
+      "LU",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Luxembourg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cargolux"
+    },
+    "canaryUrl": "https://www.cargolux.com/track-and-trace/",
+    "trackingSearchUrl": "https://www.cargolux.com/track-and-trace/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cargomini": {
     "displayName": "CargoMini",
     "color": "#ff0026",
@@ -16603,6 +16649,29 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "copa-airlines-cargo": {
+    "displayName": "Copa Airlines Cargo",
+    "color": "#0032a0",
+    "aliases": [
+      "Copa Cargo",
+      "COPA Airlines Cargo"
+    ],
+    "countries": [
+      "PA"
+    ],
+    "selectable": true,
+    "timezone": "America/Panama",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "copa-airlines-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "copa-courier": {
     "displayName": "Copa Airlines Courier",
     "color": "#0032a0",
@@ -18945,6 +19014,36 @@
         "pathPattern": "^/scripts/(?:prostatus|statusdetail)\\.asp$",
         "params": [
           "pro"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "daytona-express": {
+    "displayName": "Daytona Express",
+    "color": "#005BAB",
+    "countries": [
+      "BR"
+    ],
+    "selectable": true,
+    "timezone": "America/Sao_Paulo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "daytona-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.daytonaexpress.com.br/rastreamento",
+    "trackingUrlTemplate": "https://daytonaonline.daytonaexpress.com.br/Conhecimento_daytona/Index?txtcto={trackingNumber}",
+    "trackingSearchUrl": "https://www.daytonaexpress.com.br/rastreamento",
+    "helpUrl": "https://www.daytonaexpress.com.br/fale-conosco",
+    "linkRules": [
+      {
+        "domains": [
+          "daytonaonline.daytonaexpress.com.br"
+        ],
+        "pathPattern": "^/Conhecimento_daytona/Index/?$",
+        "params": [
+          "txtcto"
         ]
       }
     ],

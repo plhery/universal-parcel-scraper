@@ -7517,6 +7517,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "airasia-cargo": {
+    "displayName": "AirAsia Cargo",
+    "color": "#ff0000",
+    "aliases": [
+      "Air Asia Cargo"
+    ],
+    "countries": [
+      "MY",
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "airasia-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "airmee": {
     "displayName": "Airmee",
     "color": "#000000",
@@ -14023,6 +14046,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cargolux": {
+    "displayName": "Cargolux",
+    "color": "#CC0033",
+    "aliases": [
+      "Cargolux Airlines",
+      "Cargolux Airlines International",
+      "Cargolux Italia"
+    ],
+    "countries": [
+      "LU",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Luxembourg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cargolux"
+    },
+    "canaryUrl": "https://www.cargolux.com/track-and-trace/",
+    "trackingSearchUrl": "https://www.cargolux.com/track-and-trace/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cargomini": {
     "displayName": "CargoMini",
     "color": "#ff0026",
@@ -16607,6 +16653,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "copa-airlines-cargo": {
+    "displayName": "Copa Airlines Cargo",
+    "color": "#0032a0",
+    "aliases": [
+      "Copa Cargo",
+      "COPA Airlines Cargo"
+    ],
+    "countries": [
+      "PA"
+    ],
+    "selectable": true,
+    "timezone": "America/Panama",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "copa-airlines-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://copa.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "copa-courier": {
     "displayName": "Copa Airlines Courier",
     "color": "#0032a0",
@@ -18949,6 +19018,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/scripts/(?:prostatus|statusdetail)\\.asp$",
         "params": [
           "pro"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "daytona-express": {
+    "displayName": "Daytona Express",
+    "color": "#005BAB",
+    "countries": [
+      "BR"
+    ],
+    "selectable": true,
+    "timezone": "America/Sao_Paulo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "daytona-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.daytonaexpress.com.br/rastreamento",
+    "trackingUrlTemplate": "https://daytonaonline.daytonaexpress.com.br/Conhecimento_daytona/Index?txtcto={trackingNumber}",
+    "trackingSearchUrl": "https://www.daytonaexpress.com.br/rastreamento",
+    "helpUrl": "https://www.daytonaexpress.com.br/fale-conosco",
+    "linkRules": [
+      {
+        "domains": [
+          "daytonaonline.daytonaexpress.com.br"
+        ],
+        "pathPattern": "^/Conhecimento_daytona/Index/?$",
+        "params": [
+          "txtcto"
         ]
       }
     ],
@@ -68815,6 +68914,7 @@ export const CARRIER_IDS = [
   "air-greenland",
   "air-inuit",
   "air-star-xpress",
+  "airasia-cargo",
   "airmee",
   "airpak-express",
   "airroad",
@@ -69011,6 +69111,7 @@ export const CARRIER_IDS = [
   "cargoboard",
   "cargobus",
   "cargoline",
+  "cargolux",
   "cargomini",
   "cargox",
   "cargus",
@@ -69085,6 +69186,7 @@ export const CARRIER_IDS = [
   "conwest-logistics",
   "coordinadora",
   "cootranstame",
+  "copa-airlines-cargo",
   "copa-courier",
   "cope-sensitive-freight",
   "cordelia-shipping",
@@ -69157,6 +69259,7 @@ export const CARRIER_IDS = [
   "daylight-transport",
   "dayone",
   "dayton-freight",
+  "daytona-express",
   "dd-express",
   "ddu-express",
   "dealersend",
@@ -70810,6 +70913,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "air-greenland": [],
   "air-inuit": [],
   "air-star-xpress": [],
+  "airasia-cargo": [],
   "airmee": [],
   "airpak-express": [],
   "airroad": [],
@@ -71006,6 +71110,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cargoboard": [],
   "cargobus": [],
   "cargoline": [],
+  "cargolux": [],
   "cargomini": [],
   "cargox": [],
   "cargus": ["cargus-1","cargus-2"],
@@ -71080,6 +71185,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "conwest-logistics": [],
   "coordinadora": ["coordinadora-1"],
   "cootranstame": [],
+  "copa-airlines-cargo": [],
   "copa-courier": ["copa-courier-1"],
   "cope-sensitive-freight": [],
   "cordelia-shipping": [],
@@ -71152,6 +71258,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "daylight-transport": [],
   "dayone": ["dayone-1"],
   "dayton-freight": [],
+  "daytona-express": [],
   "dd-express": [],
   "ddu-express": [],
   "dealersend": ["dealersend-1"],
