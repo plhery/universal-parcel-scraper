@@ -238,6 +238,10 @@ describe('Huaya Express tracking adapter', () => {
       '【Villa Tres】Tu envío ha llegado a【OTRO.sc】']) {
       expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
+    // Its courier on the way to the recipient's home reads alike whatever the courier and the phone.
+    expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null,
+      description: '【Villa Uno】【SITE-Sur.pdv】El mensajero de J&T Express OTRO1-DPA.pcp está en camino a tu domicilio. Si requieres mayor información, contáctanos al 5500000000' }))
+      .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
   });
 
   it('holds back a row dated after the lookup', () => {

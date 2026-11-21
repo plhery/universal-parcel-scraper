@@ -45,7 +45,8 @@ browser is needed.
   site in brackets, as [JRT's](../jrt/README.md) do on the same platform: they come on J&T's clock
   in Mexico City, the one its own tracker answers on, and are written in a batch the next afternoon
   on Beijing time. The map reads their towns and sites, and the courier and phone of the
-  collection, as ellipses; J&T's collection of the cleared parcel is in transit.
+  collection and of the round to the recipient's home, as ellipses; J&T's collection of the cleared
+  parcel is in transit.
 - Other scan times are wall clocks without an offset on the platform's Beijing clock and are read
   on it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder GZHY, which is kept as an alias.
