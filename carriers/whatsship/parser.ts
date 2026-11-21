@@ -2,6 +2,7 @@ import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { isWhatsShipReference } from '../../core/detection/whatsShip.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus } from '../../core/status/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { calendarDay, countryCode, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
@@ -41,6 +42,16 @@ function offset(value: string): string {
   return result;
 }
 
+/** The scan code's step, or for a scan without one the step its wording names. */
+function scanStatus(code: string, description: string): (ClassifiedStatus & { source: 'carrier_map' | 'wording:language' }) | undefined {
+  if (code) {
+    const mapped = whatsShipStatus(code, description);
+    return mapped && { ...mapped, source: 'carrier_map' };
+  }
+  const stage = trackingLanguageStage(description);
+  return stage && { stage, status: languageStageStatus(stage), source: 'wording:language' };
+}
+
 interface Scan {
   event: CarrierEvent;
   at: number;
@@ -63,14 +74,15 @@ function scan(row: Record<string, unknown>, index: number): Scan {
   }
   const parsed = ownOffset || rowOffset ? explicitOffsetTime(ownOffset ? raw : `${raw}${rowOffset}`) : null;
   if ((ownOffset || rowOffset) && !parsed) throw new SchemaError(PROVIDER, 'WhatsShip returned an invalid scan clock');
-  const code = text(row, 'TrackNodeCode', 80, true);
+  // The feed WhatsShip relays for some partners' orders names no scan code; its wording names the step.
+  const code = row.TrackNodeCode === undefined || row.TrackNodeCode === null ? '' : text(row, 'TrackNodeCode', 80, true);
   const description = text(row, 'ProcessContent', 2_000, true).replace(SUPPORT, '').trim().slice(0, 500);
   if (!description) throw new SchemaError(PROVIDER, 'WhatsShip returned a scan without milestone wording');
-  const current = whatsShipStatus(code, description);
+  const current = scanStatus(code, description);
   const location = [...new Set(['ProcessCity', 'ProcessProvince', 'ProcessCountry'].map(key => text(row, key, 120)).filter(Boolean))].join(', ');
   return {
-    event: { ...(parsed ? { time: parsed.iso } : { local_time: raw }), description, provider_code: code,
-      ...(location ? { location } : {}), ...(current ? { stage: current.stage, stage_source: 'carrier_map' } : {}) },
+    event: { ...(parsed ? { time: parsed.iso } : { local_time: raw }), description, ...(code ? { provider_code: code } : {}),
+      ...(location ? { location } : {}), ...(current ? { stage: current.stage, stage_source: current.source } : {}) },
     // A local clock is read in UTC here only to compare its digits with other local clocks.
     at: parsed?.timestamp ?? Date.parse(`${raw}Z`), local: !parsed, index,
   };
@@ -123,10 +135,10 @@ export function parseWhatsShip(payload: unknown, rawNumber: string): CarrierResu
   });
   const latest = events[0]!;
   // Neither the envelope's TimeStamp nor an older delivery advances the latest scan.
-  const current = whatsShipStatus(String(latest.provider_code), String(latest.description));
+  const current = scanStatus(latest.provider_code ?? '', String(latest.description));
   const destination = countryCode(item.CountryCode);
-  return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage, current_stage_source: 'carrier_map' } : {}),
-    provider_code: latest.provider_code, last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
+  return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage, current_stage_source: current.source } : {}),
+    ...(latest.provider_code ? { provider_code: latest.provider_code } : {}), last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: null, ...(current?.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(destination ? { destination_country: destination } : {}),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}), events: events.slice(0, MAX_EVENTS) };

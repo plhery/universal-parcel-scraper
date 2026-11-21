@@ -121,6 +121,26 @@ describe('WhatsShip public order-reference parser', () => {
     expect(result.delivered_at).toBeUndefined();
   });
 
+  it('reads the step from the wording of a partner feed that names no scan code', () => {
+    // The shape relayed for a partner's order: a numeric status, no node code, offset or place parts.
+    const raw = (fields: Record<string, unknown>) => ({ ProcessDate: '2026-01-10T01:27:00', ProcessContent: 'Shipment information received',
+      TrackingStatus: 10, ProcessLocation: null, ...fields });
+    const result = parseWhatsShip(reply([raw({}), raw({ ProcessDate: '2026-01-11T19:10:00', ProcessContent: 'Shipment arrived at sorting center',
+      TrackingStatus: 20 })]), NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'wording:language',
+      last_status_text: 'Shipment arrived at sorting center', last_update: null, last_update_local: '2026-01-11T19:10:00' });
+    expect(result).not.toHaveProperty('provider_code');
+    expect(result.events).toEqual([
+      { local_time: '2026-01-11T19:10:00', description: 'Shipment arrived at sorting center', stage: 'in_transit', stage_source: 'wording:language' },
+      { local_time: '2026-01-10T01:27:00', description: 'Shipment information received', stage: 'registered', stage_source: 'wording:language' },
+    ]);
+    // A delivery in wording alone stays on the scan's wall clock.
+    const delivered = parseWhatsShip(reply([raw({ ProcessContent: 'Delivered' })]), NUMBER);
+    expect(delivered).toMatchObject({ status: 'delivered', last_update_local: '2026-01-10T01:27:00' });
+    expect(delivered.delivered_at).toBeUndefined();
+    expect(parseWhatsShip(reply([raw({ ProcessContent: 'Synthetic unmapped step' })]), NUMBER)).toMatchObject({ status: 'unknown' });
+  });
+
   it('uses comparable source order for a mixed local and explicit-offset feed', () => {
     const result = parseWhatsShip(reply([
       scan(),
