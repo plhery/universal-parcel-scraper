@@ -413,6 +413,7 @@ import { adapter as hgd } from '../carriers/hgd/adapter.js';
 import { adapter as hiTrans } from '../carriers/hi-trans/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
+import { adapter as hmm } from '../carriers/hmm/adapter.js';
 import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter.js';
 import { adapter as homexpress } from '../carriers/homexpress/adapter.js';
 import { adapter as honducor } from '../carriers/honducor/adapter.js';
@@ -1426,6 +1427,7 @@ export const REGISTRY: RegistryDefinition = {
     "hi-trans": hiTrans,
     "hispapost": hispapost,
     "hitch": hitch,
+    "hmm": hmm,
     "hoegh-autoliners": hoeghAutoliners,
     "homexpress": homexpress,
     "honducor": honducor,
@@ -2827,6 +2829,7 @@ export const REGISTRY: RegistryDefinition = {
     "hiyes": "universal",
     "hkd-express": "universal",
     "hlog-transportes": "universal",
+    "hmm": "hmm",
     "hoegh-autoliners": "hoegh-autoliners",
     "holisol": "universal",
     "home-delivery-team": "universal",

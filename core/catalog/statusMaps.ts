@@ -234,7 +234,6 @@ import { statusMap as correosDeMexico } from '../../carriers/correos-de-mexico/s
 import { statusMap as correosElSalvador } from '../../carriers/correos-el-salvador/status.js';
 import { statusMap as correosExpress } from '../../carriers/correos-express/status.js';
 import { statusMap as correosSpain } from '../../carriers/correos-spain/status.js';
-import { statusMap as coscoShippingLines } from '../../carriers/cosco-shipping-lines/status.js';
 import { statusMap as courierCenter } from '../../carriers/courier-center/status.js';
 import { statusMap as couriersPlease } from '../../carriers/couriersplease/status.js';
 import { statusMap as cruzDelSur } from '../../carriers/cruz-del-sur/status.js';
@@ -422,7 +421,6 @@ import { statusMap as hermesAt } from '../../carriers/hermes-at/status.js';
 import { statusMap as hermesDe } from '../../carriers/hermes-de/status.js';
 import { statusMap as hitch } from '../../carriers/hitch/status.js';
 import { statusMap as hispapost } from '../../carriers/hispapost/status.js';
-import { statusMap as hmm } from '../../carriers/hmm/status.js';
 import { statusMap as homexpress } from '../../carriers/homexpress/status.js';
 import { statusMap as hongkongPost } from '../../carriers/hongkong-post/status.js';
 import { statusMap as horoz } from '../../carriers/horoz/status.js';
@@ -583,7 +581,6 @@ import { statusMap as nzPost } from '../../carriers/nz-post/status.js';
 import { statusMap as oakHarbor } from '../../carriers/oak-harbor/status.js';
 import { statusMap as oca } from '../../carriers/oca/status.js';
 import { statusMap as ocasa } from '../../carriers/ocasa/status.js';
-import { statusMap as oceanNetworkExpress } from '../../carriers/ocean-network-express/status.js';
 import { statusMap as ocsAna } from '../../carriers/ocs-ana/status.js';
 import { statusMap as oldDominion } from '../../carriers/old-dominion/status.js';
 import { statusMap as olvaCourier } from '../../carriers/olva-courier/status.js';
@@ -855,7 +852,6 @@ import { statusMap as xpressbees } from '../../carriers/xpressbees/status.js';
 import { statusMap as yalidine } from '../../carriers/yalidine/status.js';
 import { statusMap as yamato } from '../../carriers/yamato/status.js';
 import { statusMap as xylShips } from '../../carriers/xyl-ships/status.js';
-import { statusMap as yangMing } from '../../carriers/yang-ming/status.js';
 import { statusMap as yanwen } from '../../carriers/yanwen/status.js';
 import { statusMap as yunda } from '../../carriers/yunda/status.js';
 import { statusMap as ywe } from '../../carriers/ywe/status.js';
@@ -944,6 +940,14 @@ import { statusMap as yolKargo } from '../../carriers/yol-kargo/status.js';
 import { statusMap as matson } from '../../carriers/matson/status.js';
 import { statusMap as skifCargo } from '../../carriers/skif-cargo/status.js';
 import { statusMap as hiTrans } from '../../carriers/hi-trans/status.js';
+import { statusMap as oceanNetworkExpress } from '../../carriers/ocean-network-express/status.js';
+import { statusMap as coscoShippingLines } from '../../carriers/cosco-shipping-lines/status.js';
+import { statusMap as oocl } from '../../carriers/oocl/status.js';
+import { statusMap as maersk } from '../../carriers/maersk/status.js';
+import { statusMap as msc } from '../../carriers/msc/status.js';
+import { statusMap as hmm } from '../../carriers/hmm/status.js';
+import { statusMap as zim } from '../../carriers/zim/status.js';
+import { statusMap as yangMing } from '../../carriers/yang-ming/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -951,6 +955,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'ocean-network-express': oceanNetworkExpress, 'cosco-shipping-lines': coscoShippingLines, oocl, maersk, msc, hmm, zim, 'yang-ming': yangMing,
   'bir-gunde-kargo': birGundeKargo, golilla, 'yol-kargo': yolKargo, matson, 'skif-cargo': skifCargo, 'hi-trans': hiTrans,
   'altex-curier': altexCurier,
   'bm-cargo': bmCargo,
@@ -1041,7 +1046,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'chit-chats': chitChats, chronodiali, chronopost, 'chronopost-ma': chronopostMa, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, citilogistics, 'city-air-express': cityAirExpress, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail,
   'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, cne, 'colis-prive': colisPrive, colisweb, 'connect-couriers': connectCouriers, consegnia, coordinadora,
   'copa-courier': copaCourier, corre,
-  'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain, 'cosco-shipping-lines': coscoShippingLines,
+  'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain,
   'courier-center': courierCenter, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
   'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'day-ross': dayRoss,
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, dellin, delnext, deppon, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
@@ -1061,7 +1066,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'gebrueder-weiss': gebruederWeiss, geis, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-nl': glsNl, 'gls-us': glsUs,
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
-  hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, hmm, homexpress, 'hongkong-post': hongkongPost,
+  hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, homexpress, 'hongkong-post': hongkongPost,
   horoz, 'hound-express': houndExpress, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaya-express': huayaExpress, 'hunter-express': hunterExpress, hywl,
   'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, 'ilyang-logis': ilyangLogis, imile,
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
@@ -1078,7 +1083,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'meso-global': mesoGlobal, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, mhi, 'micro-express': microExpress,
   'midland-transport': midlandTransport, 'mng-kargo': mngKargo, 'mondial-relay': mondialRelay, 'mongol-infinity-post': mongolInfinityPost, 'morning-global': morningGlobal, 'mrl-global': mrlGlobal, mrw, mtscn, muser, mylerz, nacex, naqel, nationex,
   'next-level-delivery': nextLevelDelivery, 'nhat-tin': nhatTin, 'nim-express': nimExpress, 'ninja-van': ninjaVan, nipost, 'nippon-express': nipponExpress, 'no-limit': noLimit, noest, 'norsk-global': norskGlobal,
-  northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocean-network-express': oceanNetworkExpress, 'ocs-ana': ocsAna,
+  northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocs-ana': ocsAna,
   'old-dominion': oldDominion, 'olva-courier': olvaCourier, omgo, omniva,
   'one-world-express': oneWorldExpress, onex, ontrac, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'overseas-express': overseasExpress, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, passport,
@@ -1108,7 +1113,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
-  yalidine, yamato, 'yang-ming': yangMing, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-international': ztoInternational,
+  yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
   'bob-go': bobGo, dypaq, navex,
   'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ots-astracon': otsAstracon,

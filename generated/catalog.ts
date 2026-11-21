@@ -31316,6 +31316,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "hmm": {
+    "displayName": "HMM",
+    "color": "#f26522",
+    "aliases": [
+      "Hyundai Merchant Marine",
+      "HMM Co., Ltd."
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hmm",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
+    "trackingSearchUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hoegh-autoliners": {
     "displayName": "Höegh Autoliners",
     "color": "#007383",
@@ -68844,6 +68864,7 @@ export const CARRIER_IDS = [
   "hiyes",
   "hkd-express",
   "hlog-transportes",
+  "hmm",
   "hoegh-autoliners",
   "holisol",
   "home-delivery-team",
@@ -70813,6 +70834,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hiyes": [],
   "hkd-express": [],
   "hlog-transportes": ["hlog-transportes-1"],
+  "hmm": [],
   "hoegh-autoliners": [],
   "holisol": [],
   "home-delivery-team": [],
