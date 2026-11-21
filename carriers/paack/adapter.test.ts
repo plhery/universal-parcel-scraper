@@ -170,6 +170,15 @@ describe('Paack status vocabulary', () => {
     expect(classifyPaackEvent({ id: 'SA014' }))
       .toEqual({ status: 'exception', stage: 'failed_attempt', description: 'Delivery attempt failed' });
     expect(classifyPaackEvent({ id: 'SA014', label: 'absent' })).toMatchObject({ description: 'Delivery issue' });
+    expect(classifyPaackEvent({ id: 'SA013' }))
+      .toEqual({ status: 'exception', stage: 'failed_attempt', description: 'Delivery attempt failed' });
+    // A round that ended with no outcome.
+    expect(classifyPaackEvent({ id: 'SI000' }))
+      .toEqual({ status: 'exception', stage: 'failed_attempt', description: 'Delivery issue' });
+    // Stored beside "Shipment update" by a release that did not know them, they read by their code.
+    expect(statusMap.stage('SA013', 'shipment update')).toBe('failed_attempt');
+    expect(statusMap.stage('SI000', 'shipment update')).toBe('failed_attempt');
+    expect(statusMap.stage('SI014', 'shipment update')).toBeUndefined();
     expect(classifyPaackEvent({ id: 'SA015', label: 'additionalDeliveryAttemptScheduled' }))
       .toEqual({ status: 'exception', stage: 'failed_attempt', description: 'New delivery attempt scheduled' });
     expect(classifyPaackEvent({ id: 'SA016', label: 'driverAssigned' }))

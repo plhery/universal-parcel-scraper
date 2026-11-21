@@ -15,8 +15,9 @@
  * delivery, not a rejection, and "collectedByCustomer" is the recipient
  * collecting the parcel, not a transit collection.
  * The page's history also lists steps it keeps off the timeline. A failed
- * delivery attempt can come there as `SA014` with no label, so that code is
- * matched whole.
+ * delivery attempt can come there as `SA013` or `SA014` with no label, and a
+ * round that ended without a delivery as `SI000`, so those codes are matched
+ * whole.
  * The provider's own wording is never returned; each mapped entry supplies the
  * English description we display.
  *
@@ -70,7 +71,12 @@ const IN_TRANSIT: ClassifiedPaackStatus = { status: 'in_transit', stage: 'in_tra
 
 /** History codes that come without a label, matched whole. */
 const CODES = new Map<string, ClassifiedPaackStatus>([
+  // At the second of the new attempt Paack schedules after it, like the failure the timeline labels.
+  ['sa013', ATTEMPT_FAILED],
   ['sa014', ATTEMPT_FAILED],
+  // At the end of a delivery round that brought no outcome, before the parcel is back at the depot. The page
+  // drops the delivery date and slot for it, as for a failed step.
+  ['si000', DELIVERY_ISSUE],
 ]);
 
 /** Paack's English timeline labels, keyed like `statusKey`, with the identifier each one renders. */
@@ -184,6 +190,9 @@ const DESCRIBED = new Map<string, Stage>([
  * Evri's map reads.
  */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => DESCRIBED.get(wording) ?? paackScan(wording)?.stage ?? evriStatusMap.stage(code, wording),
+  stage: (code, wording) => DESCRIBED.get(wording) ?? paackScan(wording)?.stage
+    // A history code stored beside "Shipment update" by a release that did not know it.
+    ?? (wording === 'shipment update' ? CODES.get(statusKey(code))?.stage : undefined)
+    ?? evriStatusMap.stage(code, wording),
   gaps: [],
 };

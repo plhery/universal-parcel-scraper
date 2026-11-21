@@ -82,7 +82,10 @@ thirteen-digit order numbers are not tracking numbers.
   adds those kept off the timeline (`timeline: false`): a failed attempt, the new attempt, the
   courier assigned to each run. Steps still to come, without a timestamp, are skipped; the rest
   are sorted newest first and capped at 100.
-- A failed attempt can come as `SA014` with no label, matched as the whole code.
+- A failed attempt can come as `SA013` or `SA014` with no label, matched as the whole code.
+  `SI000`, also unlabelled, ends a round that recorded no outcome; the page drops the delivery
+  date and slot for it as for a failed step, so it reads as a delivery issue. Other unlabelled
+  codes move nothing and keep their code as the provider code.
   `additionalDeliveryAttemptScheduled` follows it and stays a failed attempt, so the stage does
   not fall back to registered while the new attempt waits. Written at the failed attempt's
   instant, it is part of that step and left out; so is ParcelsApp's "We scheduled a new delivery

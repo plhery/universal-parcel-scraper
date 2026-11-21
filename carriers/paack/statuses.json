@@ -114,6 +114,22 @@
       "note": "History step (timeline: false) with no label, at a failed delivery attempt; the page has no text for it. Matched as the whole code."
     },
     {
+      "code": "sa013",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "History step with no label at the second of the new attempt Paack schedules after a failed one, where other rounds have the failure the timeline labels; the page has no text for it. Matched as the whole code."
+    },
+    {
+      "code": "si000",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "History step with no label at the end of a delivery round that recorded no outcome, before the parcel is back at the depot. The page treats it like a failed step and drops the delivery date and slot. Read as a delivery issue. Matched as the whole code."
+    },
+    {
       "code": "absent",
       "language": "en",
       "stage": "failed_attempt",
