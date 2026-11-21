@@ -69,8 +69,9 @@ const API_TIMEOUT_MS = 15_000;
 const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
 const HOUR_MS = 3_600_000;
-// A route worker serves one lookup per browser. While every one is busy, the lookup waits only as long as this much
-// of its budget would remain for the browser afterwards.
+// The least time a browser read of the page needs; a successful one takes 10 to 20 seconds. A route worker serves one
+// lookup per browser: while every one is busy, the lookup waits only as long as this much of its budget would remain
+// for the browser afterwards, and it reads again after a refused tracking call only with this much left.
 const WORKER_BROWSER_MIN_MS = 15_000;
 const WORKER_BUSY_WAIT_MAX_MS = 2_000;
 
@@ -751,11 +752,13 @@ export class FedExTracker {
         }
       }
     };
+    // Without a caller's budget the lookup leaves the service its own time and
+    // the request the allowance to bring the answer back.
+    const budgetMs = context.budgetMs ?? (api ? API_TIMEOUT_MS : 0) + (trawl ? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS : 0);
+    const lookupStarted = performance.now();
     return runSteps<CarrierResult>({
-      // Without a caller's budget the lookup leaves the service its own time and
-      // the request the allowance to bring the answer back.
       carrier: 'fedex',
-      budgetMs: context.budgetMs ?? (api ? API_TIMEOUT_MS : 0) + (trawl ? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS : 0),
+      budgetMs,
       signal: context.signal,
       recorder: trial.recorder,
     }, [
@@ -769,8 +772,10 @@ export class FedExTracker {
             ? browser(trial.primary('datacenter')!, remainingMs, signal, 'datacenter')
             : browser(trial.primary()!, remainingMs, signal) },
         // The service discards a context whose tracking call was refused, so a
-        // second read starts a fresh one: Akamai's 403 is intermittent.
-        { id: 'trawl', recovers: (error: unknown) => error instanceof ChallengeError && error.reason === 'api_denied' && error.status === 403,
+        // second read starts a fresh one: Akamai's 403 is intermittent. With too little budget left for
+        // that read to finish, the refusal stands and the caller keeps its time.
+        { id: 'trawl', recovers: (error: unknown) => error instanceof ChallengeError && error.reason === 'api_denied' && error.status === 403
+            && budgetMs - (performance.now() - lookupStarted) >= WORKER_BROWSER_MIN_MS,
           run: async ({ remainingMs, signal }: StepContext) => {
             if (!this.#datacenterTrawl) {
               const client = trial.retry()!;

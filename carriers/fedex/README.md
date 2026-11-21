@@ -81,7 +81,9 @@ fallback')`.
   A failed or unreadable final reply does not revive an older success.
 - A captured 403 gets one more browser read within the same budget. The service discards
   the refused context, so the second read starts a fresh one, and Akamai's 403 is
-  intermittent. A 401 or a challenged page is not repeated.
+  intermittent. A 401 or a challenged page is not repeated, and neither is the 403 when less
+  than 15 s of the budget is left: a read takes 10 to 20 s, so a short recognition budget
+  would only spend the rest of the caller's time on an abort.
 - Other captured errors: 429 is `RateLimitedError` with its `Retry-After`; 5xx is
   `UpstreamHttpError`; any other 4xx, including 404, is a `TransportError`, never
   not-found.

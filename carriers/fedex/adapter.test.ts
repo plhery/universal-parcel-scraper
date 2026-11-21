@@ -811,6 +811,13 @@ describe('FedEx lookup steps', () => {
       .resolves.toMatchObject({ status: 'delivered' });
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(records).toEqual(['trawl:challenge', 'trawl:ok', 'lookup:trawl:ok']);
+    // Not when the budget left could not see a second read through: the refusal stands.
+    fetcher.mockReset()
+      .mockResolvedValueOnce(reply({ url: TRACK_API, status: 403, body: null }))
+      .mockResolvedValueOnce(reply({ url: TRACK_API, status: 200, body: JSON.stringify(deliveredFixture()) }));
+    await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(DELIVERED_NUMBER, { budgetMs: 14_000 }))
+      .rejects.toMatchObject({ name: 'ChallengeError', reason: 'api_denied', status: 403 });
+    expect(fetcher).toHaveBeenCalledTimes(1);
     // A challenged page, unlike a refused tracking call, is not read again.
     fetcher.mockReset().mockResolvedValueOnce(Response.json({
       tier: 3, statusCode: 200, html: '<html><body><h1>Access Denied</h1></body></html>', capturedResponses: [],
