@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.tealca.com/rastrear-envio/?tracking={trackingNumber}",
     "searchUrl": "https://www.tealca.com/rastrear-envio/",
+    "helpUrl": "https://www.tealca.com/contacto/",
     "canaryUrl": "https://www.tealca.com/rastrear-envio/",
     "shows": [
       "status",

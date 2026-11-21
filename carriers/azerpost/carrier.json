@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi?package_id={trackingNumber}",
     "searchUrl": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi",
+    "helpUrl": "https://www.azerpost.az/az/tez-tez-verilen-suallar/umumi-br-suallar",
     "canaryUrl": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi",
     "shows": [],
     "scraped": [],

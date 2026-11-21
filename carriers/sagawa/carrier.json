@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijoinput.jsp",
     "searchUrl": "https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijoinput.jsp",
+    "helpUrl": "https://www.sagawa-exp.co.jp/contact/",
     "canaryUrl": "https://www.sagawa-exp.co.jp/send/howto-search.html",
     "shows": [
       "status",

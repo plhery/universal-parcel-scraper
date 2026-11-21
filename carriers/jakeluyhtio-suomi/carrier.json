@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://seuranta.jakeluyhtio.fi/seuranta/{trackingNumber}",
     "searchUrl": "https://seuranta.jakeluyhtio.fi/",
+    "helpUrl": "https://www.jakeluyhtio.fi/fi/yhteystiedot",
     "canaryUrl": "https://seuranta.jakeluyhtio.fi/",
     "shows": [],
     "scraped": [],

@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.gofo.com/ca/track?searchID={trackingNumber}",
     "searchUrl": "https://www.gofo.com/ca/track",
+    "helpUrl": "https://www.gofo.com/ca/customer-service",
     "canaryUrl": "https://www.gofo.com/ca/track",
     "shows": [
       "status",

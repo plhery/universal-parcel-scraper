@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.nzpost.co.nz/tools/tracking?trackid={trackingNumber}",
     "searchUrl": "https://www.nzpost.co.nz/tools/tracking",
+    "helpUrl": "https://www.nzpost.co.nz/contact-support",
     "canaryUrl": "https://www.nzpost.co.nz/tools/tracking",
     "shows": [
       "status",

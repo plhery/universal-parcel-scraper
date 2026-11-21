@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.jtexpress.co/tracking",
+    "helpUrl": "https://www.jtexpress.co/contact",
     "canaryUrl": "https://www.jtexpress.co/tracking",
     "shows": [],
     "scraped": [],

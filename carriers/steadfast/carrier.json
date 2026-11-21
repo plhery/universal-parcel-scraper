@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://steadfast.com.bd/tracking",
+    "helpUrl": "https://steadfast.com.bd/contact",
     "canaryUrl": "https://steadfast.com.bd/tracking",
     "shows": [],
     "scraped": [],

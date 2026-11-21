@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://inposdomtech.com/Inposoft/cliente/",
+    "helpUrl": "https://inposdom.gob.do/contactos/",
     "canaryUrl": "https://inposdomtech.com/Inposoft/cliente/",
     "shows": [],
     "scraped": [],

@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://track.budbee.com/en",
+    "helpUrl": "https://budbee.com/customer-service/",
     "canaryUrl": "https://track.budbee.com/en",
     "shows": [],
     "scraped": [],

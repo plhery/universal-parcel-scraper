@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://apcchoice.apc-overnight.com/track-parcel?id={trackingNumber}",
     "searchUrl": "https://apc.co.uk/",
+    "helpUrl": "https://apc.co.uk/contact-us/",
     "canaryUrl": "https://apc.co.uk/",
     "shows": [
       "status",

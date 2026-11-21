@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://posturinn.is/einstaklingar/mottaka/fylgstu-med-sendingunni-thinni/?q={trackingNumber}",
     "searchUrl": "https://posturinn.is/einstaklingar/mottaka/fylgstu-med-sendingunni-thinni/",
+    "helpUrl": "https://posturinn.is/posturinn/hafa-samband/",
     "canaryUrl": "https://posturinn.is/einstaklingar/mottaka/fylgstu-med-sendingunni-thinni/",
     "shows": [
       "status",

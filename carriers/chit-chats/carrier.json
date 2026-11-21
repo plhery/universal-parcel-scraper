@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://chitchats.com/tracking/{trackingNumber}",
     "searchUrl": "https://chitchats.com/tracking",
+    "helpUrl": "https://chitchats.com/contact",
     "canaryUrl": "https://chitchats.com/tracking",
     "shows": [
       "status",

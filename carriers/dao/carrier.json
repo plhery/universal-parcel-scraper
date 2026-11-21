@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://dao.as/find-din-pakke/#q={trackingNumber}",
     "searchUrl": "https://dao.as/find-din-pakke/",
+    "helpUrl": "https://kontakt.dao.as/hc/da",
     "canaryUrl": "https://dao.as/find-din-pakke/",
     "shows": [
       "status",

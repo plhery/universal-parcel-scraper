@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.correos.cl/seguimiento-en-linea",
     "searchUrl": "https://www.correos.cl/seguimiento-en-linea",
+    "helpUrl": "https://www.correos.cl/centro-de-ayuda",
     "canaryUrl": "https://t.17track.net/",
     "shows": [
       "status",

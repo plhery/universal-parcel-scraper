@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://siguetuenvio.interrapidisimo.com/{trackingNumber}",
     "searchUrl": "https://interrapidisimo.com/",
+    "helpUrl": "https://interrapidisimo.com/centro-de-ayuda/pqrs",
     "canaryUrl": "https://siguetuenvio.interrapidisimo.com/",
     "shows": [
       "status",

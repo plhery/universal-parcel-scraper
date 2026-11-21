@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://tiki.id/id/track/{trackingNumber}",
     "searchUrl": "https://tiki.id/id/track",
+    "helpUrl": "https://www.tiki.id/id/bantuan",
     "canaryUrl": "https://tiki.id/id/track",
     "shows": [
       "status",

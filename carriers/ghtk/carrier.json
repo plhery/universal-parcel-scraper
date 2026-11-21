@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://i.ghtk.vn/{trackingNumber}",
     "searchUrl": "https://i.ghtk.vn/",
+    "helpUrl": "https://ghtk.vn/lien-he/",
     "canaryUrl": "https://i.ghtk.vn/",
     "shows": [],
     "scraped": [],

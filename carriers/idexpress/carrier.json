@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.idexpress.com/lacak-paket?waybillNo={trackingNumber}",
     "searchUrl": "https://www.idexpress.com/lacak-paket",
+    "helpUrl": "https://www.idexpress.com/bantuan/hubungi-kami",
     "canaryUrl": "https://www.idexpress.com/lacak-paket",
     "shows": [],
     "scraped": [],

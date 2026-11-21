@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.dexpress.rs/rs/pracenje-posiljaka/{trackingNumber}",
     "searchUrl": "https://www.dexpress.rs/rs/pracenje-posiljaka",
+    "helpUrl": "https://www.dexpress.rs/rs/kontakt",
     "canaryUrl": "https://www.dexpress.rs/rs/pracenje-posiljaka",
     "shows": [
       "status",

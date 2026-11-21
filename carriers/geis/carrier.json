@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.geis-group.cz/cs/detail-zasilky?packNumber={trackingNumber}",
     "searchUrl": "https://www.geis-group.cz/cs/detail-zasilky",
+    "helpUrl": "https://www.geis-group.cz/cs/kontakt",
     "canaryUrl": "https://www.geis-group.cz/cs/detail-zasilky",
     "shows": [
       "status",

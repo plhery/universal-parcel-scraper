@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.sicepat.com/",
+    "helpUrl": "https://ekspres.sicepat.com/company/contact",
     "canaryUrl": "https://www.sicepat.com/",
     "shows": [
       "status",

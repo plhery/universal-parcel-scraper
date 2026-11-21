@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.dellin.ru/tracker/orders/{trackingNumber}/",
     "searchUrl": "https://www.dellin.ru/tracker/",
+    "helpUrl": "https://www.dellin.ru/helpcenter/reception/",
     "canaryUrl": "https://www.dellin.ru/tracker/",
     "shows": [
       "status",

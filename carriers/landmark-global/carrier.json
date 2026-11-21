@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://track.landmarkglobal.com/?search={trackingNumber}",
     "searchUrl": "https://track.landmarkglobal.com/",
+    "helpUrl": "https://landmarkglobal.com/customer-support/",
     "canaryUrl": "https://track.landmarkglobal.com/",
     "shows": [
       "status",

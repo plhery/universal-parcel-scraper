@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://gdexpress.com/tracking/?consignmentno={trackingNumber}",
     "searchUrl": "https://gdexpress.com/our-business/delivery/tools-references/tracking/",
+    "helpUrl": "https://gdexpress.com/contact-us/",
     "canaryUrl": "https://app.gdexpress.com/",
     "shows": [
       "status",

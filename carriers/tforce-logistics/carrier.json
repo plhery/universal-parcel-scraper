@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://direct.tfesg.com/finalmiletrack/Track?trackingNumber={trackingNumber}&brand=0",
     "searchUrl": "https://www.tforcelogistics.com/",
+    "helpUrl": "https://www.tforcelogistics.com/contact/",
     "canaryUrl": "https://www.tforcelogistics.com/",
     "shows": [
       "status",

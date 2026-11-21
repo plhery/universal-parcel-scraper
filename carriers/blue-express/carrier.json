@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.blue.cl/enviar/seguimiento?n_seguimiento={trackingNumber}",
     "searchUrl": "https://www.blue.cl/",
+    "helpUrl": "https://www.blue.cl/nosotros/centro-de-ayuda",
     "canaryUrl": "https://www.blue.cl/",
     "shows": [
       "status",

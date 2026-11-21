@@ -57,6 +57,7 @@
   "portal": {
     "url": "https://gls-group.com/PL/pl/sledzenie-paczek/?match={trackingNumber}",
     "searchUrl": "https://gls-group.com/PL/pl/sledzenie-paczek/",
+    "helpUrl": "https://gls-group.com/PL/pl/gls-kontakt/",
     "canaryUrl": "https://gls-group.com/PL/pl/sledzenie-paczek/",
     "shows": [
       "status",

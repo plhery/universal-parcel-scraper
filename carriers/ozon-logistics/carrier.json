@@ -45,6 +45,7 @@
   "portal": {
     "url": "https://tracking.ozon.ru/?track={trackingNumber}",
     "searchUrl": "https://tracking.ozon.ru/",
+    "helpUrl": "https://docs.ozon.ru/common/dostavka/",
     "canaryUrl": "https://tracking.ozon.ru/",
     "shows": [
       "status",

@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://kargotakip.trendyol.com/?orderNumber={trackingNumber}",
     "searchUrl": "https://trendyolexpress.com/",
+    "helpUrl": "https://trendyolexpress.com/sss",
     "canaryUrl": "https://trendyolexpress.com/",
     "shows": [
       "status",

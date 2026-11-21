@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://centrodeayuda.chilexpress.cl/pre-seguimiento/{trackingNumber}",
     "searchUrl": "https://centrodeayuda.chilexpress.cl/",
+    "helpUrl": "https://centrodeayuda.chilexpress.cl/home",
     "canaryUrl": "https://centrodeayuda.chilexpress.cl/",
     "shows": [
       "status",

@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.starken.cl/seguimiento?codigo={trackingNumber}",
     "searchUrl": "https://www.starken.cl/seguimiento",
+    "helpUrl": "https://www.starken.cl/centro-ayuda",
     "canaryUrl": "https://www.starken.cl/seguimiento",
     "shows": [
       "status",

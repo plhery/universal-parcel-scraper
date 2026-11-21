@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://relaiscolis.com/colis/suivre?tracking_number={trackingNumber}",
     "searchUrl": "https://relaiscolis.com/colis/suivre",
+    "helpUrl": "https://relaiscolis.com/faq",
     "canaryUrl": "https://relaiscolis.com/colis/suivre",
     "shows": [
       "status",

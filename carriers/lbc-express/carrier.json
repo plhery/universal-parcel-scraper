@@ -29,6 +29,7 @@
     "history"
   ],
   "portal": {
+    "helpUrl": "https://www.lbcexpress.com/contact-support/",
     "canaryUrl": "https://www.lbcexpress.com/track/",
     "shows": [
       "status",

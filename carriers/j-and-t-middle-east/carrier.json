@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.jtexpress.me/KSA/trajectoryList?waybillNo={trackingNumber}&type=0",
     "searchUrl": "https://www.jtexpress.me/KSA/trackOrder",
+    "helpUrl": "https://www.jtexpress.me/KSA/contact-us",
     "canaryUrl": "https://www.jtexpress.me/KSA/trackOrder",
     "shows": [
       "status",

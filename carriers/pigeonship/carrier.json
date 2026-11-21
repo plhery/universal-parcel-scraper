@@ -29,6 +29,7 @@
   ],
   "portal": {
     "url": "https://admin.pigeonship.com/shipping/tracking/package/{trackingNumber}/",
+    "helpUrl": "https://www.pigeonship.com/contact-us",
     "canaryUrl": "https://admin.pigeonship.com/accounts/login/",
     "shows": [
       "status",

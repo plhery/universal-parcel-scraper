@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://postakosoves.com/",
+    "helpUrl": "https://postakosoves.com/kontakti/",
     "canaryUrl": "https://postakosoves.com/",
     "shows": [],
     "scraped": [],

@@ -38,6 +38,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.posta.rs/cir/alati/pracenje-posiljke.aspx",
+    "helpUrl": "https://www.posta.rs/cir/korisnicki-servis/kontakt-centar.aspx",
     "canaryUrl": "https://www.posta.rs/cir/alati/pracenje-posiljke.aspx",
     "shows": [
       "status",

@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.posindonesia.co.id/id/tracking/{trackingNumber}",
     "searchUrl": "https://www.posindonesia.co.id/id/tracking",
+    "helpUrl": "https://www.posindonesia.co.id/id/contact",
     "canaryUrl": "https://www.posindonesia.co.id/id/tracking",
     "shows": [
       "status",

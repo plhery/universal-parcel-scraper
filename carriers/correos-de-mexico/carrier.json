@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.correosdemexico.gob.mx/SSLServicios/SeguimientoEnvio/Seguimiento.aspx?guia={trackingNumber}",
     "searchUrl": "https://www.correosdemexico.gob.mx/SSLServicios/SeguimientoEnvio/Seguimiento.aspx",
+    "helpUrl": "https://www.gob.mx/correosdemexico/es/acciones-y-programas/reclamo-de-un-envio",
     "canaryUrl": "https://www.correosdemexico.gob.mx/SSLServicios/SeguimientoEnvio/Seguimiento.aspx",
     "shows": [
       "status",

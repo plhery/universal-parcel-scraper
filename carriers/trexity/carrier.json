@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://tracking.trexity.com/?t={trackingNumber}",
     "searchUrl": "https://tracking.trexity.com/",
+    "helpUrl": "https://trexity.com/contact/",
     "canaryUrl": "https://tracking.trexity.com/",
     "shows": [],
     "scraped": [],

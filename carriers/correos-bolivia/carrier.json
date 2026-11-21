@@ -33,6 +33,7 @@
   ],
   "portal": {
     "searchUrl": "https://trackingbo.correos.gob.bo/",
+    "helpUrl": "https://www.correos.gob.bo/contacto",
     "canaryUrl": "https://trackingbo.correos.gob.bo/",
     "shows": [
       "status",

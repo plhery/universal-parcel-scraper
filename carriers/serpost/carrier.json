@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.serpost.com.pe/Cliente/SegumientoLinea",
+    "helpUrl": "https://www.gob.pe/institucion/serpost/contacto-y-numeros-de-emergencias",
     "canaryUrl": "https://www.serpost.com.pe/Cliente/SegumientoLinea",
     "shows": [
       "status",

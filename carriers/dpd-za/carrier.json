@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.dpd.com/za/en/receiving-parcels/track-my-parcel/tracking-details/?{trackingNumber}",
     "searchUrl": "https://www.dpd.com/za/en/receiving-parcels/track-my-parcel/",
+    "helpUrl": "https://www.dpd.com/za/en/contact-and-support/",
     "canaryUrl": "https://www.dpd.com/za/en/receiving-parcels/track-my-parcel/",
     "shows": [
       "status",

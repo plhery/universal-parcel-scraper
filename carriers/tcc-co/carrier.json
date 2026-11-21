@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://tcc.com.co/rastreo/?documento={trackingNumber}",
     "searchUrl": "https://tcc.com.co/rastreo/",
+    "helpUrl": "https://tcc.com.co/contactenos/",
     "canaryUrl": "https://tcc.com.co/rastreo/",
     "shows": [
       "status",

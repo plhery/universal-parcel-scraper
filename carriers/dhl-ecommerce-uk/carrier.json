@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://track.dhlecommerce.co.uk/?con={trackingNumber}",
     "searchUrl": "https://track.dhlecommerce.co.uk/",
+    "helpUrl": "https://track.dhlecommerce.co.uk/contact-us",
     "canaryUrl": "https://track.dhlecommerce.co.uk/",
     "shows": [
       "status",

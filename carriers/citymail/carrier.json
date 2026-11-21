@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://tracking.citymail.se/?search={trackingNumber}",
     "searchUrl": "https://www.citymail.se/spara-paket/",
+    "helpUrl": "https://www.citymail.se/hjalp/",
     "canaryUrl": "https://www.citymail.se/spara-paket/",
     "shows": [
       "status",

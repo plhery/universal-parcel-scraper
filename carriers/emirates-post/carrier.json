@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.emiratespost.ae/all-services/track-a-package/step-two?q={trackingNumber}",
     "searchUrl": "https://www.emiratespost.ae/all-services/track-a-package",
+    "helpUrl": "https://www.emiratespost.ae/contact-us",
     "canaryUrl": "https://www.emiratespost.ae/",
     "shows": [
       "status",

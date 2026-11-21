@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://fancourier.eu/track-order",
+    "helpUrl": "https://fancourier.eu/contact",
     "canaryUrl": "https://fancourier.eu/track-order",
     "shows": [
       "status",

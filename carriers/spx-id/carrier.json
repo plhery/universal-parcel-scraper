@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://spx.co.id/track?{trackingNumber}",
     "searchUrl": "https://spx.co.id/track",
+    "helpUrl": "https://spx.co.id/customer-service-introduction",
     "canaryUrl": "https://spx.co.id/track",
     "shows": [
       "status",

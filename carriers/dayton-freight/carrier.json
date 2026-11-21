@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://tools.daytonfreight.com/tracking/detail/{trackingNumber}",
     "searchUrl": "https://tools.daytonfreight.com/tracking/bynumber",
+    "helpUrl": "https://daytonfreight.com/contact/",
     "canaryUrl": "https://tools.daytonfreight.com/tracking/bynumber",
     "shows": [
       "status",

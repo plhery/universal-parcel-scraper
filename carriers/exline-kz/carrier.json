@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://exline.kz/ru/tracking?id={trackingNumber}",
     "searchUrl": "https://exline.kz/ru/tracking",
+    "helpUrl": "https://exline.kz/ru/contact",
     "canaryUrl": "https://exline.kz/ru/tracking",
     "shows": [
       "status",

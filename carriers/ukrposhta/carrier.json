@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://track.ukrposhta.ua/en/?barcode={trackingNumber}",
     "searchUrl": "https://track.ukrposhta.ua/en/",
+    "helpUrl": "https://www.ukrposhta.ua/en/kontakt-tsentr",
     "canaryUrl": "https://track.ukrposhta.ua/en/",
     "shows": [
       "status",

@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.cjlogistics.com/ko/tool/parcel/newTracking?gnbInvcNo={trackingNumber}",
     "searchUrl": "https://www.cjlogistics.com/ko/tool/parcel/tracking",
+    "helpUrl": "https://www.cjlogistics.com/ko/support/faq",
     "canaryUrl": "https://www.cjlogistics.com/ko/tool/parcel/tracking",
     "shows": [
       "status",

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.urbano.com.ar/segui-tu-envio",
+    "helpUrl": "https://www.urbano.com.ar/centro-de-ayuda",
     "canaryUrl": "https://www.urbano.com.ar/segui-tu-envio",
     "shows": [],
     "scraped": [],

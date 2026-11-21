@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.best-inc.co.th/track?bills={trackingNumber}",
     "searchUrl": "https://www.best-inc.co.th/track",
+    "helpUrl": "https://www.best-inc.co.th/contactus",
     "canaryUrl": "https://www.best-inc.co.th/track",
     "shows": [
       "status",

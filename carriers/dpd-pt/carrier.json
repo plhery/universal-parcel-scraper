@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://tracking.dpd.pt/pt?reference={trackingNumber}",
     "searchUrl": "https://tracking.dpd.pt/pt",
+    "helpUrl": "https://www.dpd.com/pt/pt/faq/a-minha-encomenda-ainda-nao-chegou-e-agora/",
     "canaryUrl": "https://tracking.dpd.pt/pt",
     "shows": [
       "status",

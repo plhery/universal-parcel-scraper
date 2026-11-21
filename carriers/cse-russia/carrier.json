@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.cse.ru/mow/track/?numbers={trackingNumber}",
     "searchUrl": "https://www.cse.ru/mow/track/",
+    "helpUrl": "https://www.cse.ru/mow/faq/",
     "canaryUrl": "https://www.cse.ru/mow/track/",
     "shows": [
       "status",

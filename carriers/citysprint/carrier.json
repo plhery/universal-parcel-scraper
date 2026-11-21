@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.citysprint.co.uk/",
+    "helpUrl": "https://www.citysprint.co.uk/support/contact-us",
     "canaryUrl": "https://tracking.citysprint.co.uk/",
     "shows": [],
     "scraped": [],

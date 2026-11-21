@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://int-tracking.jumppoint.io/?q={trackingNumber}",
     "searchUrl": "https://int-tracking.jumppoint.io/",
+    "helpUrl": "https://www.jumppoint.io/contact-us",
     "canaryUrl": "https://int-tracking.jumppoint.io/",
     "shows": [
       "status",

@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.posta.hu/nyomkovetes/nyitooldal?searchvalue={trackingNumber}",
     "searchUrl": "https://www.posta.hu/nyomkovetes/nyitooldal",
+    "helpUrl": "https://www.posta.hu/ugyfelszolgalat",
     "canaryUrl": "https://www.posta.hu/nyomkovetes/nyitooldal",
     "shows": [
       "status",

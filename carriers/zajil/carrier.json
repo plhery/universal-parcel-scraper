@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://zajil-express.com/track?tracking_id={trackingNumber}",
     "searchUrl": "https://zajil-express.com/track",
+    "helpUrl": "https://zajil-express.com/contact",
     "canaryUrl": "https://zajil-express.com/track",
     "shows": [
       "status",

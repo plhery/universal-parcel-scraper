@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://stone3pl.com/?route=services/track&nums={trackingNumber}",
     "searchUrl": "https://stone3pl.com/?route=services/track",
+    "helpUrl": "https://stone3pl.com/index.php?route=services/contact_us",
     "canaryUrl": "https://stone3pl.com/",
     "shows": [
       "status",

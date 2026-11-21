@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://tracking.airpak-express.com/tracking_search.aspx?stid=airpak&cn={trackingNumber}",
     "searchUrl": "https://airpak-express.com/tracking/",
+    "helpUrl": "https://airpak-express.com/contact",
     "canaryUrl": "https://airpak-express.com/tracking/",
     "shows": [
       "status",

@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.cttyvip888.com/index/tracknumber/track?nos={trackingNumber}",
     "searchUrl": "https://www.cttyvip888.com/assets/html/search.html",
+    "helpUrl": "https://www.cttyvip888.com/assets/html/contact.html",
     "canaryUrl": "https://www.cttyvip888.com/assets/html/search.html",
     "shows": [
       "status",

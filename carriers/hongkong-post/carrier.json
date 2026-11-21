@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://webapp.hongkongpost.hk/en/mail_tracking2/index.html",
     "searchUrl": "https://webapp.hongkongpost.hk/en/mail_tracking2/index.html",
+    "helpUrl": "https://www.hongkongpost.hk/en/faq_support/index.html",
     "canaryUrl": "https://chatbot.hongkongpost.hk/en",
     "shows": [
       "status",

@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.dhlecommerce.com.tr/gonderitakip",
     "searchUrl": "https://www.dhlecommerce.com.tr/gonderitakip",
+    "helpUrl": "https://www.dhlecommerce.com.tr/iletisim-kanallarimiz",
     "canaryUrl": "https://www.dhlecommerce.com.tr/gonderitakip",
     "shows": [
       "status",

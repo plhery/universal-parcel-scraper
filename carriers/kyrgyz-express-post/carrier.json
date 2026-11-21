@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://kep.kg/en/Tracking",
+    "helpUrl": "https://kep.kg/en/Contacts",
     "canaryUrl": "https://kep.kg/en/Tracking",
     "shows": [],
     "scraped": [],

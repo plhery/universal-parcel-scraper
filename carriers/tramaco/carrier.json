@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.tramaco.com.ec/rastreo.html?guia={trackingNumber}",
     "searchUrl": "https://www.tramaco.com.ec/rastreo.html",
+    "helpUrl": "https://www.tramaco.com.ec/contacto.html",
     "canaryUrl": "https://www.tramaco.com.ec/rastreo.html",
     "shows": [
       "Guide identity",

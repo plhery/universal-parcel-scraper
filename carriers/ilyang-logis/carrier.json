@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.ilyanglogis.co.kr/page/TrackingResult.do?trackingType=0&blNum={trackingNumber}",
     "searchUrl": "https://www.ilyanglogis.co.kr/page/Tracking.do",
+    "helpUrl": "https://www.ilyanglogis.co.kr/page/CustomerCenter.do",
     "canaryUrl": "https://www.ilyanglogis.co.kr/page/Tracking.do",
     "shows": [
       "status",

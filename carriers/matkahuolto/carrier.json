@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.matkahuolto.fi/seuranta?parcelNumber={trackingNumber}",
     "searchUrl": "https://www.matkahuolto.fi/seuranta",
+    "helpUrl": "https://www.matkahuolto.fi/asiakaspalvelu",
     "canaryUrl": "https://www.matkahuolto.fi/seuranta",
     "shows": [
       "status",

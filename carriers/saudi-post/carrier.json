@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://splonline.com.sa/en/shipmentdetailsstatic/?tid={trackingNumber}",
     "searchUrl": "https://splonline.com.sa/en/",
+    "helpUrl": "https://splonline.com.sa/en/customer-service/",
     "canaryUrl": "https://splonline.com.sa/en/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ipostel.gob.ve/",
+    "helpUrl": "https://www.ipostel.gob.ve/atencion-al-ciudadano/",
     "canaryUrl": "https://www.ipostel.gob.ve/",
     "shows": [],
     "scraped": [],

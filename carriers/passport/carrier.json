@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://track.passportglobal.com/{trackingNumber}",
     "searchUrl": "https://passportglobal.com/track/",
+    "helpUrl": "https://help.passportglobal.com/hc/en-us",
     "canaryUrl": "https://passportglobal.com/track/",
     "shows": [
       "status",

@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.econt.com/services/track-shipment/{trackingNumber}",
     "searchUrl": "https://www.econt.com/services/track-shipment",
+    "helpUrl": "https://www.econt.com/client-center",
     "canaryUrl": "https://www.econt.com/services/track-shipment",
     "shows": [
       "status",

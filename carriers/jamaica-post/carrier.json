@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://jamailtracker.jamaicapost.gov.jm/track-status.php",
+    "helpUrl": "https://jamaicapost.gov.jm/contact/",
     "canaryUrl": "https://jamailtracker.jamaicapost.gov.jm/track-status.php",
     "shows": [],
     "scraped": [],

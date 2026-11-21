@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://tracker.shadowfax.in/#/awb/{trackingNumber}",
     "searchUrl": "https://www.shadowfax.in/track",
+    "helpUrl": "https://www.shadowfax.in/contact-us",
     "canaryUrl": "https://www.shadowfax.in/track",
     "shows": [
       "status",

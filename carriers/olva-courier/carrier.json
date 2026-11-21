@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://tracking.olvacourier.com/?q={trackingNumber}",
     "searchUrl": "https://tracking.olvacourier.com/",
+    "helpUrl": "https://www.olvacourier.com/contacto/",
     "canaryUrl": "https://tracking.olvacourier.com/",
     "shows": [
       "status",

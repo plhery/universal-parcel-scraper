@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://redur.es/track-trace/?idioma=es&buscarpor=NTRACKING&valor={trackingNumber}",
     "searchUrl": "https://redur.es/track-trace/",
+    "helpUrl": "https://redur.es/contacto/",
     "canaryUrl": "https://redur.es/track-trace/",
     "shows": [
       "status",

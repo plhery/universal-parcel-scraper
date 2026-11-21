@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.flashexpress.co.th/fle/tracking?se={trackingNumber}",
     "searchUrl": "https://www.flashexpress.co.th/fle/tracking",
+    "helpUrl": "https://www.flashexpress.co.th/fle/contact-us",
     "canaryUrl": "https://www.flashexpress.co.th/fle/tracking",
     "shows": [
       "status",

@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.jerseypost.com/tools/track-trace/?tq={trackingNumber}",
     "searchUrl": "https://www.jerseypost.com/tools/track-trace/",
+    "helpUrl": "https://www.jerseypost.com/help/",
     "canaryUrl": "https://www.jerseypost.com/tools/track-trace/",
     "shows": [
       "status",

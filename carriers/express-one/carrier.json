@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://tracking.expressone.hu/?plc_number={trackingNumber}",
     "searchUrl": "https://tracking.expressone.hu/",
+    "helpUrl": "https://expressone.hu/kapcsolat",
     "canaryUrl": "https://tracking.expressone.hu/",
     "shows": [
       "status",

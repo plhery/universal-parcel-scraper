@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.jtexpress.com.br/trajectoryQuery?waybillNo={trackingNumber}&type=0",
     "searchUrl": "https://www.jtexpress.com.br/trajectoryQuery",
+    "helpUrl": "https://www.jtexpress.com.br/contactus/orderFeedback",
     "canaryUrl": "https://www.jtexpress.com.br/trajectoryQuery",
     "shows": [],
     "scraped": [],

@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.lineclearexpress.com/tracker?id={trackingNumber}",
     "searchUrl": "https://www.lineclearexpress.com/tracker",
+    "helpUrl": "https://www.lineclearexpress.com/my/contactus",
     "canaryUrl": "https://www.lineclearexpress.com/tracker",
     "shows": [
       "status",

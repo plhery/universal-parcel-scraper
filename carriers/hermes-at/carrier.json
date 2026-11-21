@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.myhermes.at/sendungsverfolgung/trackingnummer/{trackingNumber}/",
     "searchUrl": "https://www.myhermes.at/sendungsverfolgung/",
+    "helpUrl": "https://www.myhermes.at/privatkunden/service/hilfefaq/",
     "canaryUrl": "https://www.myhermes.at/sendungsverfolgung/",
     "shows": [
       "status",

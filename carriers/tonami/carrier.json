@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://trc1.tonami.co.jp/trc/search3/excSearch3?id%5B0%5D={trackingNumber}",
     "searchUrl": "https://trc1.tonami.co.jp/trc/search3/excSearch3",
+    "helpUrl": "https://www.tonami.co.jp/contact/",
     "canaryUrl": "https://www.tonami.co.jp/",
     "shows": [
       "status",

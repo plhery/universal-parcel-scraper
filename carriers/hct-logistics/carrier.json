@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.hct.com.tw/Search/SearchGoods_n.aspx",
+    "helpUrl": "https://www.hct.com.tw/ServiceLine.aspx",
     "canaryUrl": "https://www.hct.com.tw/Search/SearchGoods_n.aspx",
     "shows": [
       "status",

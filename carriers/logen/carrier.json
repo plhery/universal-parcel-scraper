@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.ilogen.com/web/personal/trace/{trackingNumber}",
     "searchUrl": "https://www.ilogen.com/web",
+    "helpUrl": "https://www.ilogen.com/web/customer/cs",
     "canaryUrl": "https://www.ilogen.com/web",
     "shows": [
       "status",

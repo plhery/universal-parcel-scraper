@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.mongolpost.mn/mn/track?trackingNumber={trackingNumber}",
     "searchUrl": "https://www.mongolpost.mn/mn/track",
+    "helpUrl": "https://www.mongolpost.mn/mn/help/customer-service",
     "canaryUrl": "https://www.mongolpost.mn/mn/track",
     "shows": [],
     "scraped": [],

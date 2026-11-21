@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://servicios.guatex.gt/Guatex/RastreoTracking?tipo=G&dato={trackingNumber}",
     "searchUrl": "https://servicios.guatex.gt/Guatex/RastreoTracking",
+    "helpUrl": "https://guatex.com/contacto/",
     "canaryUrl": "https://servicios.guatex.gt/Guatex/RastreoTracking",
     "shows": [
       "status",

@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://earlybird.se/spara-och-hjalp?id={trackingNumber}",
     "searchUrl": "https://earlybird.se/spara-och-hjalp",
+    "helpUrl": "https://earlybird.se/kontakta-oss",
     "canaryUrl": "https://earlybird.se/spara-och-hjalp",
     "shows": [
       "status",

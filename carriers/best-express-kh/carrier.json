@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://kh.best-inc.com/track?bills={trackingNumber}",
     "searchUrl": "https://kh.best-inc.com/track",
+    "helpUrl": "https://kh.best-inc.com/contactus",
     "canaryUrl": "https://kh.best-inc.com/track",
     "shows": [],
     "scraped": [],

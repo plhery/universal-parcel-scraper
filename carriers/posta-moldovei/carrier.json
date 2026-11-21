@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://posta.md/en/track-trace/mailing/{trackingNumber}",
     "searchUrl": "https://posta.md/ro/track-trace",
+    "helpUrl": "https://posta.md/ro/complaint-petition",
     "canaryUrl": "https://posta.md/ro/track-trace",
     "shows": [
       "status",

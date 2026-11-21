@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://track.quantiumworldwide.com/?trackno={trackingNumber}",
     "searchUrl": "https://track.quantiumworldwide.com/",
+    "helpUrl": "https://www.quantiumsolutions.com/contact-support/",
     "canaryUrl": "https://track.quantiumworldwide.com/",
     "shows": [
       "status",

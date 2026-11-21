@@ -46,6 +46,7 @@
   "portal": {
     "url": "https://posthaste.co.nz/track?query={trackingNumber}",
     "searchUrl": "https://posthaste.co.nz/tools/track/",
+    "helpUrl": "https://help.posthaste.co.nz/category/receiving-parcels/",
     "canaryUrl": "https://posthaste.co.nz/tools/track/",
     "shows": [
       "status",

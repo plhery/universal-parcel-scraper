@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://aduiepyle.com/resources/shipment-status/?tracking={trackingNumber}",
     "searchUrl": "https://aduiepyle.com/resources/shipment-status/",
+    "helpUrl": "https://aduiepyle.com/contact/",
     "canaryUrl": "https://aduiepyle.com/resources/shipment-status/",
     "shows": [
       "status",

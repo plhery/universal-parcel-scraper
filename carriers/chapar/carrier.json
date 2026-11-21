@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.chaparnet.com/track/{trackingNumber}",
     "searchUrl": "https://www.chaparnet.com/track",
+    "helpUrl": "https://www.chaparnet.com/contact-us",
     "canaryUrl": "https://www.chaparnet.com/track",
     "shows": [],
     "scraped": [],

@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://www.general-overnight.com/deu_de/versenden/sendungsverfolgung.html?reference={trackingNumber}",
     "searchUrl": "https://www.general-overnight.com/deu_de/versenden/sendungsverfolgung.html",
+    "helpUrl": "https://www.general-overnight.com/deu_de/online-services/kontakt.html",
     "canaryUrl": "https://www.general-overnight.com/deu_de/versenden/sendungsverfolgung.html",
     "shows": [
       "status",

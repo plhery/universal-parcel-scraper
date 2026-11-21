@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.skynet.com.my/track",
+    "helpUrl": "https://www.skynet.com.my/contact-us",
     "canaryUrl": "https://www.skynet.com.my/track",
     "shows": [],
     "scraped": [],

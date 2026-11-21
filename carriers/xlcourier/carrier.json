@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.xlcourier.com/trackOrder?number={trackingNumber}",
     "searchUrl": "https://www.xlcourier.com/trackOrder",
+    "helpUrl": "https://www.xlcourier.com/contactUs",
     "canaryUrl": "https://www.xlcourier.com/trackOrder",
     "shows": [
       "status",

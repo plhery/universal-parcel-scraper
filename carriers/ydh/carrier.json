@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://track.ydhex.com/track_query.aspx?track_number={trackingNumber}",
     "searchUrl": "https://track.ydhex.com/track_query.aspx",
+    "helpUrl": "https://www.ydhex.com/product/59/",
     "canaryUrl": "https://track.ydhex.com/track_query.aspx",
     "shows": [
       "status",

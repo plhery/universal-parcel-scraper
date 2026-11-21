@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://slpmail.slpost.gov.lk/track/",
+    "helpUrl": "https://slpost.gov.lk/contact-us/",
     "canaryUrl": "https://slpmail.slpost.gov.lk/track/",
     "shows": [],
     "scraped": [],

@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://onedelivery.cz/sledovani-zasilky?numer={trackingNumber}",
     "searchUrl": "https://onedelivery.cz/sledovani-zasilky",
+    "helpUrl": "https://onedelivery.cz/kontakt",
     "canaryUrl": "https://onedelivery.cz/",
     "shows": [
       "status",

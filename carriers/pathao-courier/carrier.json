@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://merchant.pathao.com/public-tracking?consignment_id={trackingNumber}",
     "searchUrl": "https://pathao.com/courier/",
+    "helpUrl": "https://pathao.com/contact/",
     "canaryUrl": "https://pathao.com/courier/",
     "shows": [
       "status",

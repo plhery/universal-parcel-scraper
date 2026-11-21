@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://fictracking.fedex.com/?MyFICNumber={trackingNumber}",
     "searchUrl": "https://fictracking.fedex.com/",
+    "helpUrl": "https://www.fedex.com/customer-support/en-gb",
     "canaryUrl": "https://fictracking.fedex.com/",
     "shows": [
       "status",

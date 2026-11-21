@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.iompost.com/tools-services/track-your-mail?barcode={trackingNumber}",
     "searchUrl": "https://www.iompost.com/tools-services/track-your-mail",
+    "helpUrl": "https://www.iompost.com/help-support",
     "canaryUrl": "https://www.iompost.com/tools-services/track-your-mail",
     "shows": [],
     "scraped": [],

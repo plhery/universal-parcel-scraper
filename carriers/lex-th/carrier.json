@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://lex.th/tracking?references={trackingNumber}",
     "searchUrl": "https://lex.th/tracking",
+    "helpUrl": "https://lex.th/contact-us",
     "canaryUrl": "https://lex.th/tracking",
     "shows": [
       "status",

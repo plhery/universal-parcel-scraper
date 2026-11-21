@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://ec.chukou1.com/track?track_number={trackingNumber}",
     "searchUrl": "https://ec.chukou1.com/",
+    "helpUrl": "https://www.chukou1.com/About/Contact.aspx",
     "canaryUrl": "https://ec.chukou1.com/",
     "shows": [
       "status",

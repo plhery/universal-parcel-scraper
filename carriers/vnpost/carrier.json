@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://vnpost.vn/vi/ca-nhan/chuyen-phat/chuyen-phat-trong-nuoc",
+    "helpUrl": "https://vnpost.vn/vi/ho-tro",
     "canaryUrl": "https://vnpost.vn/",
     "shows": [
       "status",

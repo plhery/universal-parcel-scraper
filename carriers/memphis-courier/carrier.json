@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://clients.memphiscourier.com.br/",
+    "helpUrl": "https://memphiscourier.com.br/fale-conosco/",
     "canaryUrl": "https://clients.memphiscourier.com.br/",
     "shows": [
       "status",

@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.intereuropa.si/si/tracking?pg=tracking&code={trackingNumber}",
     "searchUrl": "https://orders.intereuropa.si/ietracking/",
+    "helpUrl": "https://www.intereuropa.si/si/o-nas/kontakti",
     "canaryUrl": "https://orders.intereuropa.si/ietracking/",
     "shows": [],
     "scraped": [],

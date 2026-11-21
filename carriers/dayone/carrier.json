@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.dayonetrack.com/track?trackNo={trackingNumber}",
     "searchUrl": "https://www.dayonetrack.com/",
+    "helpUrl": "https://www.dayonetrack.com/contact",
     "canaryUrl": "https://www.dayonetrack.com/",
     "shows": [
       "status",

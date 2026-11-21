@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/?match={trackingNumber}",
     "searchUrl": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/",
+    "helpUrl": "https://gls-group.com/CA/en/support/contact-us/",
     "canaryUrl": "https://gls-group.com/CA/en/send-and-receive/track-a-shipment/",
     "shows": [
       "status",

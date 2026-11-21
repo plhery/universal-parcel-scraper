@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.post.lu/en/particuliers/colis-courrier/track-and-trace#/search?numero={trackingNumber}",
     "searchUrl": "https://www.post.lu/en/particuliers/colis-courrier/track-and-trace",
+    "helpUrl": "https://www.post.lu/en/particuliers/support/courrier",
     "canaryUrl": "https://www.post.lu/en/particuliers/colis-courrier/track-and-trace",
     "shows": [
       "status",

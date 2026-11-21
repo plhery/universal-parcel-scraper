@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.directfreight.com.au/ConsignmentStatus.aspx?lookuptype=0&consignment_no={trackingNumber}",
     "searchUrl": "https://www.directfreight.com.au/",
+    "helpUrl": "https://www.directfreight.com.au/support.aspx",
     "canaryUrl": "https://www.directfreight.com.au/",
     "shows": [
       "status",

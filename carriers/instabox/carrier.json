@@ -43,6 +43,7 @@
   ],
   "portal": {
     "searchUrl": "https://track.instabox.com/en",
+    "helpUrl": "https://instabox.com/en-SE/help",
     "canaryUrl": "https://track.instabox.com/",
     "shows": [
       "status",

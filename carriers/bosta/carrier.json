@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://bosta.co/en-eg/tracking-shipments?shipment-number={trackingNumber}",
     "searchUrl": "https://bosta.co/en-eg/tracking-shipments",
+    "helpUrl": "https://bosta.co/en-eg/faq",
     "canaryUrl": "https://bosta.co/en-eg/tracking-shipments",
     "shows": [
       "status",

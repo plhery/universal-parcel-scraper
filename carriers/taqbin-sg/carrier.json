@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://tracking.yamatosingapore.com/trackitem_custom_y.html?a={trackingNumber}",
     "searchUrl": "https://www.yamatosingapore.com/tracking/",
+    "helpUrl": "https://www.yamatosingapore.com/contact-us/",
     "canaryUrl": "https://www.yamatosingapore.com/tracking/",
     "shows": [],
     "scraped": [],

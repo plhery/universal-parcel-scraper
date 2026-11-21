@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.alliedexpress.com.au/",
+    "helpUrl": "https://www.alliedexpress.com.au/faq/",
     "canaryUrl": "https://www.alliedexpress.com.au/",
     "shows": [],
     "scraped": [],

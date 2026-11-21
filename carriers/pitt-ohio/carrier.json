@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://pittohio.com/myPittOhio/Shipping/LTL/TraceRequest?pro={trackingNumber}",
     "searchUrl": "https://pittohio.com/myPittOhio/",
+    "helpUrl": "https://pittohio.com/myPittOhio/Corporate/Contact/ContactUs",
     "canaryUrl": "https://pittohio.com/myPittOhio/Shipping/LTL/TraceRequest",
     "shows": [
       "status",

@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.quick-fort.com/search_kuai_di/search/orderid/{trackingNumber}",
     "searchUrl": "https://www.quick-fort.com/cms/c/orders",
+    "helpUrl": "https://www.quick-fort.com/cms/c/contactus",
     "canaryUrl": "https://www.quick-fort.com/cms/c/orders",
     "shows": [
       "status",

@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://formularios.viacargo.com.ar/seguimiento-envio/{trackingNumber}",
     "searchUrl": "https://formularios.viacargo.com.ar/seguimiento-envio",
+    "helpUrl": "https://viacargo.com.ar/atencion-al-cliente/",
     "canaryUrl": "https://formularios.viacargo.com.ar/seguimiento-envio",
     "shows": [
       "status",

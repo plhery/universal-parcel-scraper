@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://tracking.dpd.ro/?shipmentNumber={trackingNumber}",
     "searchUrl": "https://www.dpd.com/ro/ro/",
+    "helpUrl": "https://www.dpd.com/ro/ro/suport-dpd/contact/",
     "canaryUrl": "https://www.dpd.com/ro/ro/",
     "shows": [
       "status",

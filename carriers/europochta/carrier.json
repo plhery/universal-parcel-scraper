@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://evropochta.by/?number={trackingNumber}",
     "searchUrl": "https://evropochta.by/",
+    "helpUrl": "https://evropochta.by/info/faq/",
     "canaryUrl": "https://evropochta.by/",
     "shows": [
       "status",

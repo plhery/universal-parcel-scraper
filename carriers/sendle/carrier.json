@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.sendle.com/tracking?ref={trackingNumber}",
     "searchUrl": "https://www.sendle.com/tracking",
+    "helpUrl": "https://www.sendle.com/support",
     "canaryUrl": "https://www.sendle.com/",
     "shows": [
       "status",

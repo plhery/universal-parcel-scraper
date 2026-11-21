@@ -46,6 +46,7 @@
   "portal": {
     "url": "https://nzcouriers.co.nz/track?query={trackingNumber}",
     "searchUrl": "https://nzcouriers.co.nz/tools/track-a-parcel/",
+    "helpUrl": "https://help.nzcouriers.co.nz/receiving-parcels",
     "canaryUrl": "https://nzcouriers.co.nz/tools/track-a-parcel/",
     "shows": [
       "status",

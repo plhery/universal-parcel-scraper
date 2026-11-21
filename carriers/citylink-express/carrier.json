@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.citylinkexpress.com/tracking-result/?track0={trackingNumber}",
     "searchUrl": "https://www.citylinkexpress.com/track-your-shipment/",
+    "helpUrl": "https://www.citylinkexpress.com/contact-us/",
     "canaryUrl": "https://www.citylinkexpress.com/track-your-shipment/",
     "shows": [
       "status",

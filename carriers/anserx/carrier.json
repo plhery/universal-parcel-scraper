@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://oms.anserx.com/tracking?nos={trackingNumber}",
     "searchUrl": "https://oms.anserx.com/tracking",
+    "helpUrl": "https://www.anserx.com/contact-us.html",
     "canaryUrl": "https://oms.anserx.com/tracking",
     "shows": [
       "status",

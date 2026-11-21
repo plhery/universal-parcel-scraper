@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&wblnum={trackingNumber}&schLang=KR",
     "searchUrl": "https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillSch.do",
+    "helpUrl": "https://www.hanjin.com/kor/CMS/Contents/Contents.do?mCode=MN062",
     "canaryUrl": "https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillSch.do",
     "shows": [
       "status",

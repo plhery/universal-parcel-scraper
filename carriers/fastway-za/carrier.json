@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.fastway.co.za/our-services/track-your-parcel/?l={trackingNumber}",
     "searchUrl": "https://www.fastway.co.za/our-services/track-your-parcel/",
+    "helpUrl": "https://www.fastway.co.za/contact-us/",
     "canaryUrl": "https://www.fastway.co.za/our-services/track-your-parcel/",
     "shows": [
       "status",

@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://minu.omniva.ee/track/{trackingNumber}",
     "searchUrl": "https://minu.omniva.ee/track",
+    "helpUrl": "https://www.omniva.ee/kontaktid-erakliendile/",
     "canaryUrl": "https://minu.omniva.ee/track",
     "shows": [
       "status",

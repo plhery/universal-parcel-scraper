@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://tracking.skypostal.com/?trck_number={trackingNumber}&lng_code=ENG",
     "searchUrl": "https://tracking.skypostal.com/",
+    "helpUrl": "https://www.skypostal.com/customer-service",
     "canaryUrl": "https://tracking.skypostal.com/",
     "shows": [
       "status",

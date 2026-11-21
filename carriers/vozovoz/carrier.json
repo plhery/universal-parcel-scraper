@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://vozovoz.ru/order/manage/?id={trackingNumber}",
     "searchUrl": "https://vozovoz.ru/order/manage/",
+    "helpUrl": "https://vozovoz.ru/help/",
     "canaryUrl": "https://vozovoz.ru/order/manage/",
     "shows": [
       "status",

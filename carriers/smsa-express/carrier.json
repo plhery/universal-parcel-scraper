@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.smsaexpress.com/sa/trackingdetails?tracknumbers={trackingNumber}",
     "searchUrl": "https://www.smsaexpress.com/",
+    "helpUrl": "https://www.smsaexpress.com/sa/contact-us",
     "canaryUrl": "https://www.smsaexpress.com/",
     "shows": [
       "status",

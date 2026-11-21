@@ -38,6 +38,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.redpack.com.mx/es/inicio/",
+    "helpUrl": "https://www.redpack.com.mx/es/preguntas-frecuentes/",
     "canaryUrl": "https://www.redpack.com.mx/es/inicio/",
     "shows": [
       "status",

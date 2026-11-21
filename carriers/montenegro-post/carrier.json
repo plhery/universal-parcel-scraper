@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://webpostar.postacg.me/web_services/track_and_trace?tracking_number={trackingNumber}",
     "searchUrl": "https://webpostar.postacg.me/web_services/track_and_trace",
+    "helpUrl": "https://www.postacg.me/centar-za-korisnike/kontakti/pohvale-i-reklamacije/",
     "canaryUrl": "https://webpostar.postacg.me/web_services/track_and_trace",
     "shows": [],
     "scraped": [],

@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://bexexpress.rs/pracenje-posiljke?broj-posiljke={trackingNumber}",
     "searchUrl": "https://bexexpress.rs/pracenje-posiljke",
+    "helpUrl": "https://bexexpress.rs/faq/",
     "canaryUrl": "https://bexexpress.rs/pracenje-posiljke",
     "shows": [
       "status",

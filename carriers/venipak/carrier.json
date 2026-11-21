@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://venipak.com/lt/en/tracking/track/{trackingNumber}",
     "searchUrl": "https://venipak.com/lt/en/parcel-tracking/",
+    "helpUrl": "https://venipak.com/lt/en/contacts/",
     "canaryUrl": "https://venipak.com/lt/en/parcel-tracking/",
     "shows": [
       "status",

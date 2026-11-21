@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://bexonline.borderexpress.com.au/bxo/track?consignmentNumber={trackingNumber}",
     "searchUrl": "https://bexonline.borderexpress.com.au/bxo/track",
+    "helpUrl": "https://www.borderexpress.com.au/customer-service/",
     "canaryUrl": "https://bexonline.borderexpress.com.au/bxo/track",
     "shows": [
       "status",

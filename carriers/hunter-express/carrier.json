@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://portal.hunterexpress.com.au/Track/55010/{trackingNumber}",
     "searchUrl": "https://portal.hunterexpress.com.au/track/55010",
+    "helpUrl": "https://www.hunterexpress.com.au/about/contact/",
     "canaryUrl": "https://portal.hunterexpress.com.au/track/55010",
     "shows": [
       "status",

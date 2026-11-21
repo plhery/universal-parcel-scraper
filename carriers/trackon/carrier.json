@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.trackon.in/courier-tracking?awb={trackingNumber}",
     "searchUrl": "https://www.trackon.in/",
+    "helpUrl": "https://www.trackon.in/customer-service/",
     "canaryUrl": "https://www.trackon.in/",
     "shows": [
       "status",

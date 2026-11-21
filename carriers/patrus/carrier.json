@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://patrus.com.br/rastreie-sua-carga/",
+    "helpUrl": "https://patrus.com.br/contato/central-de-relacionamento/",
     "canaryUrl": "https://patrus.com.br/rastreie-sua-carga/",
     "shows": [],
     "scraped": [],

@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt/{trackingNumber}",
     "searchUrl": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt",
+    "helpUrl": "https://seikyu.fukuyama-tsuun.com/corp/inquiry/entry/",
     "canaryUrl": "https://seikyu.fukuyama-tsuun.com/corp/tracking_no_hunt",
     "shows": [
       "status",

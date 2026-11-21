@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://neighbourexpress.com/track?no={trackingNumber}",
     "searchUrl": "https://neighbourexpress.com/track",
+    "helpUrl": "https://neighbourexpress.com/support",
     "canaryUrl": "https://neighbourexpress.com/track",
     "shows": [
       "Return tracking reference",

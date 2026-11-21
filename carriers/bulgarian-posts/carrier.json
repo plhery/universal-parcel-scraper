@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.bgpost.bg/postal-services/track-package?itemid={trackingNumber}",
     "searchUrl": "https://www.bgpost.bg/postal-services/track-package",
+    "helpUrl": "https://www.bgpost.bg/contacts",
     "canaryUrl": "https://www.bgpost.bg/postal-services/track-package",
     "shows": [
       "status",

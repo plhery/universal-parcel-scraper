@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://www.naqelexpress.com/en/Track/TrackShipment/{trackingNumber}",
     "searchUrl": "https://www.naqelexpress.com/en/sa/tracking/",
+    "helpUrl": "https://www.naqelexpress.com/en/sa/Complaints/reach-us/",
     "canaryUrl": "https://www.naqelexpress.com/en/sa/tracking/",
     "shows": [
       "status",

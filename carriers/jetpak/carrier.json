@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://my.jetpak.com/app/en/track/awb/{trackingNumber}",
     "searchUrl": "https://my.jetpak.com/app/en/track",
+    "helpUrl": "https://jetpak.com/help/faqs/",
     "canaryUrl": "https://my.jetpak.com/app/en/track",
     "shows": [],
     "scraped": [],

@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.delhivery.com/tracking",
     "searchUrl": "https://www.delhivery.com/tracking",
+    "helpUrl": "https://www.delhivery.com/support",
     "canaryUrl": "https://www.delhivery.com/tracking",
     "shows": [
       "status",

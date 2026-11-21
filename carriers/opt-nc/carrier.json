@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://monespace.opt.nc/mes-suivis/{trackingNumber}",
     "searchUrl": "https://monespace.opt.nc/",
+    "helpUrl": "https://www.opt.nc/particuliers/contact",
     "canaryUrl": "https://monespace.opt.nc/",
     "shows": [],
     "scraped": [],

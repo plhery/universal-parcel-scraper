@@ -43,6 +43,7 @@
   "portal": {
     "url": "https://aeropost.com/en/tracking/{trackingNumber}",
     "searchUrl": "https://aeropost.com/en/tracking",
+    "helpUrl": "https://aeropost.com/en/help",
     "canaryUrl": "https://aeropost.com/en/tracking",
     "shows": [
       "status",

@@ -38,6 +38,7 @@
   ],
   "portal": {
     "url": "https://my.liccarditrasporti.com/segui?ldv={trackingNumber}",
+    "helpUrl": "https://www.liccarditrasporti.com/assistenza-reclami-destinatari/",
     "canaryUrl": "https://www.liccarditrasporti.com/",
     "shows": [
       "status",

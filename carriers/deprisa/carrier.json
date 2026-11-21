@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.deprisa.com/es/rastrea",
+    "helpUrl": "https://www.deprisa.com/es/contacto",
     "canaryUrl": "https://www.deprisa.com/es/rastrea",
     "shows": [],
     "scraped": [],

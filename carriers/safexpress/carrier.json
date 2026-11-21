@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.safexpress.com/",
+    "helpUrl": "https://www.safexpress.com/contact-us",
     "canaryUrl": "https://www.safexpress.com/",
     "shows": [
       "status",

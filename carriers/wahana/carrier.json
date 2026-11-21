@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.wahana.com/lacak-kiriman?noresi={trackingNumber}",
     "searchUrl": "https://www.wahana.com/",
+    "helpUrl": "https://www.wahana.com/faq",
     "canaryUrl": "https://www.wahana.com/",
     "shows": [
       "status",

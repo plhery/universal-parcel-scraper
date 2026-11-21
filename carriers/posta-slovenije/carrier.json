@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://moja.posta.si/tracking?trackingNumber={trackingNumber}",
     "searchUrl": "https://moja.posta.si/tracking",
+    "helpUrl": "https://www.posta.si/o-nas/predstavitev/kontakt-in-pomoc",
     "canaryUrl": "https://moja.posta.si/tracking",
     "shows": [
       "status",

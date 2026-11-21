@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.rlcarriers.com/freight/shipping/shipment-tracing?pro={trackingNumber}&docType=PRO&source=web",
     "searchUrl": "https://www.rlcarriers.com/freight/shipping/shipment-tracing",
+    "helpUrl": "https://www.rlcarriers.com/contact/contact-form",
     "canaryUrl": "https://www.rlcarriers.com/freight/shipping/shipment-tracing",
     "shows": [
       "status",

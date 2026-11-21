@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.yurticikargo.com/tr/online-servisler/gonderi-sorgula?code={trackingNumber}",
     "searchUrl": "https://www.yurticikargo.com/tr/online-servisler/gonderi-sorgula",
+    "helpUrl": "https://www.yurticikargo.com/tr/urun-ve-hizmetler/cagri-merkezi",
     "canaryUrl": "https://www.yurticikargo.com/tr/online-servisler/gonderi-sorgula",
     "shows": [
       "status",

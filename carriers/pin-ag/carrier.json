@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://sendungsverfolgung.pin-ag.de/?sendung={trackingNumber}",
     "searchUrl": "https://sendungsverfolgung.pin-ag.de/",
+    "helpUrl": "https://pin-ag.de/servicecenter",
     "canaryUrl": "https://sendungsverfolgung.pin-ag.de/",
     "shows": [
       "status",

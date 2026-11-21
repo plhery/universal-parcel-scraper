@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://tools.averitt.com/servlet/rsoLTLtrack?Type=PN&Number={trackingNumber}",
     "searchUrl": "https://www.averitt.com/",
+    "helpUrl": "https://www.averitt.com/contact/customer-service",
     "canaryUrl": "https://tools.averitt.com/tracking/ltl/by-id",
     "shows": [
       "status",

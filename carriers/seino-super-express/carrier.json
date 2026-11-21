@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://inquire.trc.ssx.seino.co.jp/inquire/Main.jsp?uji.verbs=NAHS0010_find&uji.bean=com.seibu.bean.na.NAHS0010Bean&strDenpyoNo1={trackingNumber}",
     "searchUrl": "https://inquire.trc.ssx.seino.co.jp/inquire/main.jsp",
+    "helpUrl": "https://www.seino.co.jp/seino/contactus/",
     "canaryUrl": "https://inquire.trc.ssx.seino.co.jp/inquire/main.jsp",
     "shows": [
       "status",

@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://post.gi/track-and-trace/",
+    "helpUrl": "https://post.gi/customer-services/",
     "canaryUrl": "https://post.gi/",
     "shows": [],
     "scraped": [],

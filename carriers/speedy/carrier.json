@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://myspeedy.speedy.bg/pub/tracking/{trackingNumber}",
     "searchUrl": "https://myspeedy.speedy.bg/pub/tracking/",
+    "helpUrl": "https://www.speedy.bg/bg/contact-us",
     "canaryUrl": "https://myspeedy.speedy.bg/pub/tracking/",
     "shows": [
       "status",

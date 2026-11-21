@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}",
     "searchUrl": "https://dostavka.yandex.ru/ndd/tracking/",
+    "helpUrl": "https://dostavka.yandex.ru/support/",
     "canaryUrl": "https://dostavka.yandex.ru/ndd/tracking/",
     "shows": [
       "status",

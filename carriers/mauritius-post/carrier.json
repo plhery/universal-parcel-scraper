@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.mauritiuspost.mu/track-trace/?tracking_code={trackingNumber}",
     "searchUrl": "https://www.mauritiuspost.mu/track-trace/",
+    "helpUrl": "https://www.mauritiuspost.mu/contact/",
     "canaryUrl": "https://www.mauritiuspost.mu/track-trace/",
     "shows": [
       "status",

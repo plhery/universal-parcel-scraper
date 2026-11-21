@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.alemtat.kz/tracking/?n={trackingNumber}",
     "searchUrl": "https://www.alemtat.kz/tracking/",
+    "helpUrl": "https://www.alemtat.kz/contacts/",
     "canaryUrl": "https://www.alemtat.kz/tracking/",
     "shows": [],
     "scraped": [],

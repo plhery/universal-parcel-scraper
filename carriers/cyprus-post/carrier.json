@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.cypruspost.post/en/track-n-trace-results",
+    "helpUrl": "https://www.cypruspost.post/en/faq-track-trace",
     "canaryUrl": "https://www.cypruspost.post/en/track-n-trace-results",
     "shows": [
       "status",

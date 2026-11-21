@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://bussgods.se/spara-paket/#{trackingNumber}",
     "searchUrl": "https://bussgods.se/spara-paket/",
+    "helpUrl": "https://bussgods.se/kundservice/",
     "canaryUrl": "https://bussgods.se/spara-paket/",
     "shows": [
       "status",

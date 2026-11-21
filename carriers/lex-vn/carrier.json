@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://logistics.lazada.vn/tracking?references={trackingNumber}",
     "searchUrl": "https://logistics.lazada.vn/tracking",
+    "helpUrl": "https://logistics.lazada.vn/contact-us",
     "canaryUrl": "https://logistics.lazada.vn/tracking",
     "shows": [],
     "scraped": [],

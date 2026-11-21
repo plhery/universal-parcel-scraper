@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://portal.thecourierguy.co.za/track?ref={trackingNumber}",
     "searchUrl": "https://portal.thecourierguy.co.za/track",
+    "helpUrl": "https://thecourierguy.co.za/help-me/",
     "canaryUrl": "https://portal.thecourierguy.co.za/track",
     "shows": [
       "status",

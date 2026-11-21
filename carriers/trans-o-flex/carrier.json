@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.trans-o-flex.com/sendungsverfolgung/tracking?ref={trackingNumber}&type=barcode",
     "searchUrl": "https://www.trans-o-flex.com/sendungsverfolgung/tracking",
+    "helpUrl": "https://www.trans-o-flex.com/ansprechpartner-kontaktieren/fragen-und-antworten/",
     "canaryUrl": "https://www.trans-o-flex.com/",
     "shows": [],
     "scraped": [],

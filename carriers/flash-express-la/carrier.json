@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.flashexpress.la/fle/tracking?se={trackingNumber}",
     "searchUrl": "https://www.flashexpress.la/fle/tracking",
+    "helpUrl": "https://www.flashexpress.la/fle/contact-us",
     "canaryUrl": "https://www.flashexpress.la/fle/tracking",
     "shows": [],
     "scraped": [],

@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.aramex.com.au/tools/track?l={trackingNumber}",
     "searchUrl": "https://www.aramex.com.au/tools/track/",
+    "helpUrl": "https://www.aramex.com.au/contact-us/",
     "canaryUrl": "https://www.aramex.com.au/tools/track/",
     "shows": [
       "status",

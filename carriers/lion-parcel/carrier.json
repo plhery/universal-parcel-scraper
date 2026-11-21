@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://lionparcel.com/track/stt?q={trackingNumber}",
     "searchUrl": "https://lionparcel.com/track/stt",
+    "helpUrl": "https://lionparcel.com/hubungi-kami",
     "canaryUrl": "https://lionparcel.com/track/stt",
     "shows": [
       "status",

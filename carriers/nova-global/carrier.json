@@ -45,6 +45,7 @@
   "portal": {
     "url": "https://nova.global/track/?Tracking_ID={trackingNumber}",
     "searchUrl": "https://nova.global/track/",
+    "helpUrl": "https://www.nova.global/contact/",
     "canaryUrl": "https://nova.global/track/",
     "shows": [
       "status",

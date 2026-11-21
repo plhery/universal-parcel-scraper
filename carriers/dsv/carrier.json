@@ -46,6 +46,7 @@
   "portal": {
     "url": "https://mydsv.com/track-shipment?query={trackingNumber}",
     "searchUrl": "https://mydsv.com/track-shipment",
+    "helpUrl": "https://www.dsv.com/en/support/help-and-contact",
     "canaryUrl": "https://mydsv.com/track-shipment",
     "shows": [
       "status",

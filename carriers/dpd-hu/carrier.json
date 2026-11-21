@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.dpdgroup.com/hu/mydpd/my-parcels/search?lang=en&parcelNumber={trackingNumber}",
     "searchUrl": "https://www.dpd.com/hu/hu/",
+    "helpUrl": "https://www.dpd.com/hu/hu/kapcsolat/",
     "canaryUrl": "https://www.dpd.com/hu/hu/",
     "shows": [
       "status",

@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://donhang.ghn.vn/?order_code={trackingNumber}",
     "searchUrl": "https://donhang.ghn.vn/",
+    "helpUrl": "https://ghn.vn/pages/lien-he",
     "canaryUrl": "https://donhang.ghn.vn/",
     "shows": [],
     "scraped": [],

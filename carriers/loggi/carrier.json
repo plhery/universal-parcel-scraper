@@ -24,6 +24,7 @@
   },
   "capabilities": ["history", "location"],
   "portal": {
+    "helpUrl": "https://ajuda.loggi.com/hc/pt-br",
     "canaryUrl": "https://www.loggi.com/rastreador/",
     "shows": ["status", "history", "location", "recipient_name", "delivery_comments", "sender_name"],
     "scraped": ["status", "history", "location"],

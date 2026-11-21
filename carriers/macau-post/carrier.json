@@ -28,6 +28,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ctt.gov.mo/macaupost/contents/MailTrack.aspx?lang=en",
+    "helpUrl": "https://www.ctt.gov.mo/MacauPost/Contents/Comments.aspx?lang=en-us",
     "canaryUrl": "https://www.ctt.gov.mo/",
     "shows": [],
     "scraped": [],

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.guernseypost.com/track-trace",
+    "helpUrl": "https://www.guernseypost.com/contact-us",
     "canaryUrl": "https://www.guernseypost.com/track-trace",
     "shows": [],
     "scraped": [],

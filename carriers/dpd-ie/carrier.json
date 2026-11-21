@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.dpd.ie/tracking/?consignmentNumber={trackingNumber}",
     "searchUrl": "https://www.dpd.ie/tracking/",
+    "helpUrl": "https://www.dpd.ie/parcel-tracking-support/",
     "canaryUrl": "https://www.dpd.ie/tracking/",
     "shows": [
       "status",

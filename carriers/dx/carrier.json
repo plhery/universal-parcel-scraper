@@ -56,6 +56,7 @@
   "portal": {
     "url": "https://my.dxdelivery.com/query?tracking_number={trackingNumber}",
     "searchUrl": "https://www.dxlogistics.com/track",
+    "helpUrl": "https://www.dxlogistics.com/help-support",
     "canaryUrl": "https://www.dxlogistics.com/track",
     "shows": [
       "status",

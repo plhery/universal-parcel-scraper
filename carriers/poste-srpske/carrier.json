@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.postesrpske.com/pracenje-posiljaka/",
+    "helpUrl": "https://www.postesrpske.com/kontakt/",
     "canaryUrl": "https://www.postesrpske.com/track/tracktracec.html",
     "shows": [],
     "scraped": [],

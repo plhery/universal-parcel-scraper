@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.lso.com/tracking?airbillnos={trackingNumber}",
     "searchUrl": "https://app.lso.com/tracking",
+    "helpUrl": "https://www.lso.com/contact-us",
     "canaryUrl": "https://app.lso.com/tracking",
     "shows": [],
     "scraped": [],

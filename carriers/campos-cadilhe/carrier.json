@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://otm.camposcadilhe.pt/track/{trackingNumber}",
     "searchUrl": "https://otm.camposcadilhe.pt/track/",
+    "helpUrl": "https://c-c.pt/contactos/",
     "canaryUrl": "https://otm.camposcadilhe.pt/track/",
     "shows": [],
     "scraped": [],

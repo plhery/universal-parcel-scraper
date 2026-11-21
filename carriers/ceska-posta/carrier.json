@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.postaonline.cz/trackandtrace/-/zasilka/{trackingNumber}",
     "searchUrl": "https://www.postaonline.cz/trackandtrace",
+    "helpUrl": "https://www.ceskaposta.cz/kontakty",
     "canaryUrl": "https://www.postaonline.cz/trackandtrace",
     "shows": [
       "status",

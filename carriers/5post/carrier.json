@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://fivepost.ru/tracking?id={trackingNumber}",
     "searchUrl": "https://fivepost.ru/",
+    "helpUrl": "https://fivepost.ru/faq/",
     "canaryUrl": "https://fivepost.ru/",
     "shows": [
       "status",

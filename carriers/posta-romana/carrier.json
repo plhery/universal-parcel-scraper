@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.posta-romana.ro/track-trace.html?awb={trackingNumber}",
     "searchUrl": "https://www.posta-romana.ro/track-trace.html",
+    "helpUrl": "https://www.posta-romana.ro/contact.html",
     "canaryUrl": "https://www.posta-romana.ro/track-trace.html",
     "shows": [
       "status",

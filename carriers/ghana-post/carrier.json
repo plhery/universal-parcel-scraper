@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://epstools.ghanapost.com.gh/tracklocal.php",
+    "helpUrl": "https://www.ghanapost.com.gh/contact",
     "canaryUrl": "https://epstools.ghanapost.com.gh/tracklocal.php",
     "shows": [],
     "scraped": [],

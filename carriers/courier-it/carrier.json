@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://intellitrack.courierit.co.za/?SearchString={trackingNumber}",
     "searchUrl": "https://intellitrack.courierit.co.za/",
+    "helpUrl": "https://www.courierit.co.za/contact-us/",
     "canaryUrl": "https://intellitrack.courierit.co.za/",
     "shows": [],
     "scraped": [],

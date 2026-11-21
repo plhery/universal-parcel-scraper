@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://aymakan.com/tracking/{trackingNumber}",
     "searchUrl": "https://aymakan.com/tracking",
+    "helpUrl": "https://aymakan.com/faqs",
     "canaryUrl": "https://aymakan.com/tracking",
     "shows": [
       "status",

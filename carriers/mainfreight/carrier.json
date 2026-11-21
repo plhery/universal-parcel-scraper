@@ -45,6 +45,7 @@
   "portal": {
     "url": "https://www.mainfreight.com/tracking?trackingnumber={trackingNumber}",
     "searchUrl": "https://www.mainfreight.com/tracking",
+    "helpUrl": "https://www.mainfreight.com/forms/contact-us",
     "canaryUrl": "https://www.mainfreight.com/tracking",
     "shows": [
       "status",

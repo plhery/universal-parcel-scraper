@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895",
+    "helpUrl": "https://www.fancourier.md/contact/",
     "canaryUrl": "https://www.fancourier.md/",
     "shows": [],
     "scraped": [],

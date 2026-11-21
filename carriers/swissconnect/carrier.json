@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://swissconnect.ch/de/",
+    "helpUrl": "https://swissconnect.ch/de/haeufige-fragen-faq",
     "canaryUrl": "https://swissconnect.ch/de/",
     "shows": [
       "status",

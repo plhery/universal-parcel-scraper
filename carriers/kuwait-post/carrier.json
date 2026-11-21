@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://moc.gov.kw/en/shipment-tracking",
+    "helpUrl": "https://moc.gov.kw/en/contact-us",
     "canaryUrl": "https://moc.gov.kw/en/shipment-tracking",
     "shows": [],
     "scraped": [],

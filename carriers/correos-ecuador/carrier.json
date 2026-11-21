@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://sipostal.serviciopostal.gob.ec/Navegacion/Tracking",
+    "helpUrl": "https://www.serviciopostal.gob.ec/contactos/",
     "canaryUrl": "https://www.serviciopostal.gob.ec/",
     "shows": [],
     "scraped": [],

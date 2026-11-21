@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://samoapost.ws/",
+    "helpUrl": "https://samoapost.ws/queries-and-assistance/",
     "canaryUrl": "https://samoapost.ws/",
     "shows": [],
     "scraped": [],

@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.correoargentino.com.ar/formularios/e-commerce",
+    "helpUrl": "https://www.correoargentino.com.ar/preguntas-frecuentes",
     "canaryUrl": "https://www.correoargentino.com.ar/formularios/e-commerce",
     "shows": [
       "status",

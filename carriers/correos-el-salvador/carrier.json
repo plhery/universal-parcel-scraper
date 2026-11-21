@@ -38,6 +38,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.correos.gob.sv/servicios/rastrear-paquete/",
+    "helpUrl": "https://correos.gob.sv/contactenos/",
     "canaryUrl": "https://www.correos.gob.sv/servicios/rastrear-paquete/",
     "shows": [
       "status",

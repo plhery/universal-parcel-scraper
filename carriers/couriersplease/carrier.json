@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.couriersplease.com.au/tools-track?no={trackingNumber}",
     "searchUrl": "https://www.couriersplease.com.au/tools-track",
+    "helpUrl": "https://support.couriersplease.com.au/hc/en-au",
     "canaryUrl": "https://www.couriersplease.com.au/tools-track",
     "shows": [
       "status",

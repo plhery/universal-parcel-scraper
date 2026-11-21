@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.singpost.com/track-items?tracknumber={trackingNumber}",
     "searchUrl": "https://www.singpost.com/track-items",
+    "helpUrl": "https://www.singpost.com/support",
     "canaryUrl": "https://www.singpost.com/track-items",
     "shows": [
       "status",

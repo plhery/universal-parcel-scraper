@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://tracking.phlpost.gov.ph/",
+    "helpUrl": "https://phlpost.gov.ph/contact-us/",
     "canaryUrl": "https://tracking.phlpost.gov.ph/",
     "shows": [
       "status",

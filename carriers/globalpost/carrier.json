@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.goglobalpost.com/track-detail/?t={trackingNumber}",
     "searchUrl": "https://www.goglobalpost.com/tracking/",
+    "helpUrl": "https://www.goglobalpost.com/contact-support/",
     "canaryUrl": "https://www.goglobalpost.com/tracking/",
     "shows": [
       "status",

@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://laposte.ci.post/tracking-colis",
+    "helpUrl": "https://laposte.ci.post/contact",
     "canaryUrl": "https://laposte.ci.post/tracking-colis",
     "shows": [],
     "scraped": [],

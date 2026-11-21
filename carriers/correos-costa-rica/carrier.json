@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://sucursal.correos.go.cr/web/rastreo",
+    "helpUrl": "https://correos.go.cr/contactenos/",
     "canaryUrl": "https://sucursal.correos.go.cr/web/rastreo",
     "shows": [
       "status",

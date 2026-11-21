@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.cruzdelsur.com/herramientas_seguimiento_resultado.php?nic={trackingNumber}",
     "searchUrl": "https://www.cruzdelsur.com/herramientas_seguimiento.php",
+    "helpUrl": "https://www.cruzdelsur.com/contacto.php",
     "canaryUrl": "https://www.cruzdelsur.com/herramientas_seguimiento.php",
     "shows": [
       "status",

@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.zeleris.com/detalle-de-envio/?tracking_number={trackingNumber}",
     "searchUrl": "https://www.zeleris.com/seguimiento-de-envios/",
+    "helpUrl": "https://www.zeleris.com/preguntas-frecuentes/",
     "canaryUrl": "https://www.zeleris.com/seguimiento-de-envios/",
     "shows": [
       "status",

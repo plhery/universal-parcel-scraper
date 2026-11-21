@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://web.quickrabbit.es/es/tracking?ref={trackingNumber}",
     "searchUrl": "https://web.quickrabbit.es/es/tracking",
+    "helpUrl": "https://web.quickrabbit.es/es/customer-service",
     "canaryUrl": "https://web.quickrabbit.es/es/tracking",
     "shows": [
       "status",

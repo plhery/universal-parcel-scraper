@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://collivery.net/tracking?waybill={trackingNumber}",
     "searchUrl": "https://collivery.net/tracking",
+    "helpUrl": "https://collivery.net/contact-us",
     "canaryUrl": "https://collivery.net/tracking",
     "shows": [
       "status",

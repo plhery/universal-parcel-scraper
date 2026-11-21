@@ -51,6 +51,7 @@
   "portal": {
     "url": "https://www.myteamge.com/?externalSearchQuery={trackingNumber}",
     "searchUrl": "https://www.myteamge.com/",
+    "helpUrl": "https://teamglobalexp.com/help-support",
     "canaryUrl": "https://www.myteamge.com/",
     "shows": [
       "status",

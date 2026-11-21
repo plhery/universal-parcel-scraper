@@ -58,6 +58,7 @@
   "portal": {
     "url": "https://gls-group.com/ES/es/recibir-paquetes/seguimiento-envio/",
     "searchUrl": "https://gls-group.com/ES/es/recibir-paquetes/seguimiento-envio/",
+    "helpUrl": "https://gls-group.com/ES/es/faq/recibir-paquetes/",
     "canaryUrl": "https://gls-group.com/ES/es/recibir-paquetes/seguimiento-envio/",
     "shows": [
       "status",

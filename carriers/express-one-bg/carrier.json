@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://expressone.bg/en/tracking/{trackingNumber}",
     "searchUrl": "https://expressone.bg/en/tracking",
+    "helpUrl": "https://expressone.bg/bg/faq",
     "canaryUrl": "https://expressone.bg/en/tracking",
     "shows": [
       "status",

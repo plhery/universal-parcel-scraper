@@ -45,6 +45,7 @@
   "portal": {
     "url": "https://ext-web.ltl-xpo.com/public-app/shipments?referenceNumber={trackingNumber}",
     "searchUrl": "https://www.xpo.com/",
+    "helpUrl": "https://www.xpo.com/contact-us/",
     "canaryUrl": "https://www.xpo.com/",
     "shows": [
       "status",

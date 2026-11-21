@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.zrexpress.net/suivi?tn={trackingNumber}",
     "searchUrl": "https://www.zrexpress.net/suivi",
+    "helpUrl": "https://www.zrexpress.net/en/contact",
     "canaryUrl": "https://www.zrexpress.net/suivi",
     "shows": [
       "status",

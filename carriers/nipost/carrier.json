@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://tracking.nipost.gov.ng/{trackingNumber}",
     "searchUrl": "https://tracking.nipost.gov.ng/",
+    "helpUrl": "https://nipost.gov.ng/report-missing-items/",
     "canaryUrl": "https://tracking.nipost.gov.ng/",
     "shows": [
       "status",

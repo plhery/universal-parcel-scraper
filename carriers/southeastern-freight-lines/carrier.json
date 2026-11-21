@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.sefl.com/webconnect/tracing?Type=PN&RefNum1={trackingNumber}",
     "searchUrl": "https://www.sefl.com/Tracing/index.jsp",
+    "helpUrl": "https://www.sefl.com/seflWebsite/contactUs.jsp",
     "canaryUrl": "https://www.sefl.com/Tracing/index.jsp",
     "shows": [
       "status",

@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.airmee.com/#/shipment-search",
+    "helpUrl": "https://www.airmee.com/en/support/",
     "canaryUrl": "https://tracking.airmee.com/",
     "shows": [],
     "scraped": [],

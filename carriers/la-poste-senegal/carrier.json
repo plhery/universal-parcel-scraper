@@ -38,6 +38,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.laposte.sn/",
+    "helpUrl": "https://www.laposte.sn/service-client/",
     "canaryUrl": "https://www.laposte.sn/",
     "shows": [
       "history",

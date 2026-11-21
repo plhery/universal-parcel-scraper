@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://loomisexpress.com/loomship/Track/TrackResults?t=WAYBILL&s={trackingNumber}",
     "searchUrl": "https://loomisexpress.com/loomship/Track",
+    "helpUrl": "https://www.loomisexpress.com/loomship/ContactUs",
     "canaryUrl": "https://loomisexpress.com/loomship/Track",
     "shows": [
       "status",

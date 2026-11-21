@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.cityexpress.rs/pracenje-posiljke",
+    "helpUrl": "https://www.cityexpress.rs/korisnicka-podrska",
     "canaryUrl": "https://www.cityexpress.rs/pracenje-posiljke",
     "shows": [
       "status",

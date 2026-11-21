@@ -44,6 +44,7 @@
   "portal": {
     "url": "https://tk-kit.ru/tracking?track_code={trackingNumber}",
     "searchUrl": "https://tk-kit.ru/tracking",
+    "helpUrl": "https://tk-kit.ru/clients/faq",
     "canaryUrl": "https://tk-kit.ru/tracking",
     "shows": [
       "status",

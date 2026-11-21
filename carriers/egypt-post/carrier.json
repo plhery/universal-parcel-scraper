@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://egyptpost.gov.eg/en-us/home/",
+    "helpUrl": "https://egyptpost.gov.eg/en-us/home/contact-us",
     "canaryUrl": "https://egyptpost.gov.eg/en-us/home/",
     "shows": [
       "status",

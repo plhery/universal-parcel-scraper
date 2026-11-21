@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://app.gogoxpress.com/track/{trackingNumber}",
     "searchUrl": "https://app.gogoxpress.com/track/",
+    "helpUrl": "https://help-center.gogoxpress.com/hc/en-us",
     "canaryUrl": "https://app.gogoxpress.com/track/",
     "shows": [
       "status",

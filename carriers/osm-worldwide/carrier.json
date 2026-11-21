@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.osmworldwide.com/tracking/?trackingIds={trackingNumber}",
     "searchUrl": "https://www.osmworldwide.com/tracking/",
+    "helpUrl": "https://www.osmworldwide.com/contact/",
     "canaryUrl": "https://www.osmworldwide.com/tracking/",
     "shows": [
       "status",

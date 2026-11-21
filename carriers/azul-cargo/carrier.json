@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.azullogistica.com.br/Rastreio/Rastrear?awb={trackingNumber}",
     "searchUrl": "https://www.azullogistica.com.br/Rastreio",
+    "helpUrl": "https://www.azullogistica.com.br/Institucional/Contato",
     "canaryUrl": "https://www.azullogistica.com.br/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.maldivespost.com/tracker?tracking_number={trackingNumber}",
     "searchUrl": "https://www.maldivespost.com/tracker",
+    "helpUrl": "https://www.maldivespost.com/contact-us",
     "canaryUrl": "https://www.maldivespost.com/tracker",
     "shows": [],
     "scraped": [],

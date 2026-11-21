@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.ppl.cz/?form=track-and-trace&shipmentId={trackingNumber}",
     "searchUrl": "https://www.ppl.cz/?form=track-and-trace",
+    "helpUrl": "https://www.ppl.cz/zakaznicky-servis",
     "canaryUrl": "https://www.ppl.cz/",
     "shows": [
       "status",

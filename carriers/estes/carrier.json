@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.estes-express.com/myestes/shipment-tracking/?type=PRO&query={trackingNumber}",
     "searchUrl": "https://www.estes-express.com/",
+    "helpUrl": "https://www.estes-express.com/contact",
     "canaryUrl": "https://www.estes-express.com/",
     "shows": [
       "status",

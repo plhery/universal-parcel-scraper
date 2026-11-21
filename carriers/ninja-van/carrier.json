@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.ninjavan.co/en-my/tracking?id={trackingNumber}",
     "searchUrl": "https://www.ninjavan.co/en-my/tracking",
+    "helpUrl": "https://www.ninjavan.co/en-my/support/consignee-support",
     "canaryUrl": "https://www.ninjavan.co/en-my/tracking",
     "shows": [
       "status",

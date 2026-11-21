@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.buffaloex.com/tracks.html?order={trackingNumber}",
     "searchUrl": "https://www.buffaloex.com/tracks.html",
+    "helpUrl": "https://www.buffaloex.com/contact.html",
     "canaryUrl": "https://www.buffaloex.com/tracks.html",
     "shows": [],
     "scraped": [],

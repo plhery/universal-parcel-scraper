@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://dragonflyshipping.ca/en/track-your-package/?tracking-id={trackingNumber}",
     "searchUrl": "https://dragonflyshipping.ca/en/track-your-package/",
+    "helpUrl": "https://dragonflyshipping.ca/en/support/",
     "canaryUrl": "https://dragonflyshipping.ca/en/track-your-package/",
     "shows": [
       "status",

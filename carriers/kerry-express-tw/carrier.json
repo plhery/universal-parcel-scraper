@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.kerryexpress.com.tw/tools/positchecking.html",
+    "helpUrl": "https://www.kerryexpress.com.tw/contact.aspx",
     "canaryUrl": "https://www.kerryexpress.com.tw/",
     "shows": [],
     "scraped": [],

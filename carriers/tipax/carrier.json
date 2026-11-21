@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tipaxco.com/tracking",
+    "helpUrl": "https://tipaxco.com/customersupport",
     "canaryUrl": "https://tipaxco.com/tracking",
     "shows": [],
     "scraped": [],

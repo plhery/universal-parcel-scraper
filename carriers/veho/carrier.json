@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://track.shipveho.com/#/trackingid/{trackingNumber}",
     "searchUrl": "https://track.shipveho.com/",
+    "helpUrl": "https://www.shipveho.com/customers-faq",
     "canaryUrl": "https://track.shipveho.com/",
     "shows": [
       "status",

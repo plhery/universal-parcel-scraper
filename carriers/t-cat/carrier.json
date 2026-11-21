@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.t-cat.com.tw/Inquire/TraceDetail.aspx?BillID={trackingNumber}",
     "searchUrl": "https://www.t-cat.com.tw/Inquire/Trace.aspx",
+    "helpUrl": "https://www.t-cat.com.tw/services/webcontact.aspx",
     "canaryUrl": "https://www.t-cat.com.tw/Inquire/Trace.aspx",
     "shows": [
       "status",

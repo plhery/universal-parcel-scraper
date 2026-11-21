@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.skroutzlastmile.gr/#{trackingNumber}",
     "searchUrl": "https://www.skroutzlastmile.gr/",
+    "helpUrl": "https://www.skroutzlastmile.gr/contact",
     "canaryUrl": "https://www.skroutzlastmile.gr/",
     "shows": [
       "status",

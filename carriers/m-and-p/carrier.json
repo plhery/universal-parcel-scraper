@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.mulphilog.com/tracking/{trackingNumber}",
     "searchUrl": "https://www.mulphilog.com/",
+    "helpUrl": "https://www.mulphilog.com/contact-us",
     "canaryUrl": "https://www.mulphilog.com/",
     "shows": [
       "status",

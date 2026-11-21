@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://spx.vn/track?{trackingNumber}",
     "searchUrl": "https://spx.vn/track",
+    "helpUrl": "https://spx.vn/vi/help-center/thong-tin-lien-he.html",
     "canaryUrl": "https://spx.vn/track",
     "shows": [
       "status",

@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://web.parcelhub.net/Tracking/reference/{trackingNumber}",
     "searchUrl": "https://web.parcelhub.net/Tracking",
+    "helpUrl": "https://www.whistl.co.uk/contact",
     "canaryUrl": "https://web.parcelhub.net/Tracking",
     "shows": [
       "status",

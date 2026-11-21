@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://dachser.fercam.it/en-it/dachser-fercam-italia-shipment-tracking-707.html",
+    "helpUrl": "https://www.fercam.com/en-int/contacts/contact-us-507.html",
     "canaryUrl": "https://dachser.fercam.it/en-it/dachser-fercam-italia-shipment-tracking-707.html",
     "shows": [],
     "scraped": [],

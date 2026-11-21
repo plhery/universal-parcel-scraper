@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.pamukkalekargo.com.tr/ords/r/pkbs/pamukkale-kargo/kargom-nerede",
+    "helpUrl": "https://www.pamukkalekargo.com.tr/ords/r/pkbs/pamukkale-kargo/iletisim",
     "canaryUrl": "https://www.pamukkalekargo.com.tr/ords/r/pkbs/pamukkale-kargo/kargom-nerede",
     "shows": [],
     "scraped": [],

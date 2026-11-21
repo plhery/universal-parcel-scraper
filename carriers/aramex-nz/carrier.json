@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.aramex.co.nz/tools/track?l={trackingNumber}",
     "searchUrl": "https://www.aramex.co.nz/tools/track/",
+    "helpUrl": "https://www.aramex.co.nz/contact-us/",
     "canaryUrl": "https://www.aramex.co.nz/tools/track/",
     "shows": [
       "status",

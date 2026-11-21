@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
     "searchUrl": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
+    "helpUrl": "https://www.kuronekoyamato.co.jp/ytc/contact/",
     "canaryUrl": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",
     "shows": [
       "status",

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.best-inc.sg/track?bills={trackingNumber}",
     "searchUrl": "https://www.best-inc.sg/track",
+    "helpUrl": "https://www.best-inc.sg/contactus",
     "canaryUrl": "https://www.best-inc.sg/track",
     "shows": [],
     "scraped": [],

@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.ptt.gov.tr/",
     "searchUrl": "https://www.ptt.gov.tr/",
+    "helpUrl": "https://www.ptt.gov.tr/iletisim-bilgileri",
     "canaryUrl": "https://www.ptt.gov.tr/",
     "shows": [
       "status",

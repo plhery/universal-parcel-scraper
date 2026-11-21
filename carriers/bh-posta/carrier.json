@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.posta.ba/pracenje-posiljaka/",
+    "helpUrl": "https://www.posta.ba/contact/",
     "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
     "shows": [
       "status",

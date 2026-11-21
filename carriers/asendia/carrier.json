@@ -62,6 +62,7 @@
   "portal": {
     "url": "https://track.asendia.com/track/{trackingNumber}",
     "searchUrl": "https://track.asendia.com/track/",
+    "helpUrl": "https://www.asendia.com/shopper-support",
     "canaryUrl": "https://a1.asendiausa.com/tracking/",
     "shows": [
       "status",

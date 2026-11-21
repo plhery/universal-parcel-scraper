@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://foxpost.hu/csomagkovetes/?code={trackingNumber}",
     "searchUrl": "https://foxpost.hu/csomagkovetes/",
+    "helpUrl": "https://www.foxpost.hu/ugyfelszolgalat",
     "canaryUrl": "https://foxpost.hu/csomagkovetes/",
     "shows": [
       "status",

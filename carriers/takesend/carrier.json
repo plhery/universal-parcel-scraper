@@ -36,6 +36,7 @@
     "delivery_tracking_number"
   ],
   "portal": {
+    "helpUrl": "https://www.takesend.com/kefu/",
     "canaryUrl": "https://t.17track.net/",
     "shows": [
       "status",

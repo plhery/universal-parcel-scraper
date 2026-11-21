@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.best-inc.vn/track?bills={trackingNumber}",
     "searchUrl": "https://www.best-inc.vn/track",
+    "helpUrl": "https://www.best-inc.vn/contactus",
     "canaryUrl": "https://www.best-inc.vn/track",
     "shows": [
       "status",

@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://giglogistics.com/track-shipment/?waybill={trackingNumber}",
     "searchUrl": "https://giglogistics.com/track-shipment/",
+    "helpUrl": "https://giglogistics.com/contact-us/",
     "canaryUrl": "https://giglogistics.com/track-shipment/",
     "shows": [
       "status",

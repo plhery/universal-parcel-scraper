@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://lex.com.my/tracking?references={trackingNumber}",
     "searchUrl": "https://lex.com.my/tracking",
+    "helpUrl": "https://lex.com.my/contact-us",
     "canaryUrl": "https://lex.com.my/",
     "shows": [
       "status",

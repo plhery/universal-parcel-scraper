@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://rastreo.honducor.gob.hn/rastreo?tracking_number={trackingNumber}",
     "searchUrl": "https://rastreo.honducor.gob.hn/",
+    "helpUrl": "https://honducor.gob.hn/contacto",
     "canaryUrl": "https://honducor.gob.hn/",
     "shows": [
       "status",

@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://anteraja.id/tracking/{trackingNumber}",
     "searchUrl": "https://anteraja.id/id/tracking",
+    "helpUrl": "https://blog.anteraja.id/nomor-cs-anteraja-resmi/",
     "canaryUrl": "https://anteraja.id/id/tracking",
     "shows": [
       "status",

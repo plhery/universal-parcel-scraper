@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://tracking.99minutos.com/search/{trackingNumber}",
     "searchUrl": "https://tracking.99minutos.com/",
+    "helpUrl": "https://www.99minutos.com/preguntas-frecuentes/",
     "canaryUrl": "https://tracking.99minutos.com/",
     "shows": [
       "status",

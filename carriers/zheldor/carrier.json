@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://i.jde.ru/track/?ttn={trackingNumber}",
     "searchUrl": "https://i.jde.ru/track/",
+    "helpUrl": "https://www.jde.ru/company/faq.html",
     "canaryUrl": "https://i.jde.ru/track/",
     "shows": [],
     "scraped": [],

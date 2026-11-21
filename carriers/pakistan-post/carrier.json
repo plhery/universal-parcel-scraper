@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://ep.gov.pk/emtts/EPTrack_Live.aspx?ArticleIDz={trackingNumber}",
     "searchUrl": "https://ep.gov.pk/",
+    "helpUrl": "https://www.pakpost.gov.pk/complaints.php",
     "canaryUrl": "https://ep.gov.pk/",
     "shows": [
       "status",

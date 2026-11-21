@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.postnet.co.za/tracker?pnpp={trackingNumber}",
     "searchUrl": "https://www.postnet.co.za/tracker",
+    "helpUrl": "https://www.postnet.co.za/contact-postnet",
     "canaryUrl": "https://www.postnet.co.za/tracker",
     "shows": [],
     "scraped": [],

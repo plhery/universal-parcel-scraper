@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://rastreo.coordinadora.com/?guia={trackingNumber}",
     "searchUrl": "https://rastreo.coordinadora.com/",
+    "helpUrl": "https://coordinadora.com/preguntas-frecuentes/",
     "canaryUrl": "https://rastreo.coordinadora.com/",
     "shows": [
       "status",

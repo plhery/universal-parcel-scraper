@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://portal.sengiexpress.com/",
+    "helpUrl": "https://portal.sengiexpress.com/contact/",
     "canaryUrl": "https://portal.sengiexpress.com/",
     "shows": [
       "status",

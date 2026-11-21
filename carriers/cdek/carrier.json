@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://my.cdek.ru/lkfl/order/{trackingNumber}",
     "searchUrl": "https://my.cdek.ru/lkfl/",
+    "helpUrl": "https://www.cdek.ru/ru/faq/orders/pochemu-dostavka-mozhet-zaderzhatsya/",
     "canaryUrl": "https://my.cdek.ru/lkfl/",
     "shows": [
       "status",

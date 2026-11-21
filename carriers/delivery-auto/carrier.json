@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt?number={trackingNumber}",
     "searchUrl": "https://www.delivery-auto.com/",
+    "helpUrl": "https://www.delivery-auto.com/uk-UA/FAQ/Index",
     "canaryUrl": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt",
     "shows": [
       "status"

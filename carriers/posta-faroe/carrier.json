@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.posta.fo/en/private/send-receive/track-trace/{trackingNumber}",
     "searchUrl": "https://www.posta.fo/en/private/send-receive/track-trace/",
+    "helpUrl": "https://www.posta.fo/en/private/help-information/contact-us",
     "canaryUrl": "https://www.posta.fo/en/private/send-receive/track-trace/",
     "shows": [
       "status",

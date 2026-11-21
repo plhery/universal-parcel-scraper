@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.maltapost.com/tracking#/tracking?barcode={trackingNumber}",
     "searchUrl": "https://www.maltapost.com/tracking",
+    "helpUrl": "https://www.maltapost.com/customers-service",
     "canaryUrl": "https://www.maltapost.com/tracking",
     "shows": [
       "status",

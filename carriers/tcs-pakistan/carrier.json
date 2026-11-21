@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.tcsexpress.com/track/{trackingNumber}",
     "searchUrl": "https://www.tcsexpress.com/",
+    "helpUrl": "https://www.tcsexpress.com/customer-services",
     "canaryUrl": "https://www.tcsexpress.com/",
     "shows": [
       "status",

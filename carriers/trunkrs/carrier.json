@@ -21,6 +21,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://parcel.trunkrs.nl/",
+    "helpUrl": "https://trunkrs.nl/klantenservice",
     "canaryUrl": "https://parcel.trunkrs.nl/",
     "shows": [],
     "scraped": [],

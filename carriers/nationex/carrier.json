@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://nationex.com/reperage/{trackingNumber}",
     "searchUrl": "https://nationex.com/reperage",
+    "helpUrl": "https://nationex.com/faq",
     "canaryUrl": "https://nationex.com/reperage",
     "shows": [
       "status",

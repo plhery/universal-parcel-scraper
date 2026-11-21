@@ -30,6 +30,7 @@
   ],
   "portal": {
     "searchUrl": "https://lex.co.id/tracking",
+    "helpUrl": "https://lex.co.id/contact-us",
     "canaryUrl": "https://lex.co.id/",
     "shows": [
       "status",

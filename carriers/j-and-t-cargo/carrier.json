@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.jtcargo.id/networkQuery?waybillNo={trackingNumber}&type=0",
     "searchUrl": "https://www.jtcargo.id/networkQuery",
+    "helpUrl": "https://www.jtcargo.id/problem/qa",
     "canaryUrl": "https://www.jtcargo.id/",
     "shows": [
       "status",

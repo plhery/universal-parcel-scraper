@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.alandpost.ax/en/track?shipmentid={trackingNumber}",
     "searchUrl": "https://www.alandpost.ax/en/track",
+    "helpUrl": "https://www.alandpost.ax/en/customer-service",
     "canaryUrl": "https://www.alandpost.ax/",
     "shows": [],
     "scraped": [],

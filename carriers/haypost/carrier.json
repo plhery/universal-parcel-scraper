@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.haypost.am/am/track-trace#{trackingNumber}",
     "searchUrl": "https://www.haypost.am/am/track-trace",
+    "helpUrl": "https://www.haypost.am/am/contact-us",
     "canaryUrl": "https://www.haypost.am/en/track-trace",
     "shows": [
       "history",

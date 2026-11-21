@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.speedex.gr/isapohi.asp?voucher_code={trackingNumber}",
     "searchUrl": "https://www.speedex.gr/isapohi.asp",
+    "helpUrl": "https://www.speedex.gr/content.asp?id=27",
     "canaryUrl": "https://www.speedex.gr/isapohi.asp",
     "shows": [
       "status",

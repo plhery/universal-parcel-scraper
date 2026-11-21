@@ -41,6 +41,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.sendfromchina.com/track",
+    "helpUrl": "https://www.sendfromchina.com/contact-us",
     "canaryUrl": "https://www.sendfromchina.com/track",
     "shows": [
       "status",

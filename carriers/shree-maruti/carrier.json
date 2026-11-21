@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://shreemaruti.com/track-shipment/?awb={trackingNumber}",
     "searchUrl": "https://shreemaruti.com/track-shipment/",
+    "helpUrl": "https://shreemaruti.com/contact-us/",
     "canaryUrl": "https://shreemaruti.com/track-shipment/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://andesmarcargas.com/seguimiento?numero={trackingNumber}&tipo=seguimiento",
     "searchUrl": "https://andesmarcargas.com/seguimiento",
+    "helpUrl": "https://www.andesmarcargas.com/preguntas-frecuentes",
     "canaryUrl": "https://andesmarcargas.com/seguimiento",
     "shows": [],
     "scraped": [],

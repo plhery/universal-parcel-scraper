@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://pk.leopardscourier.com/",
+    "helpUrl": "https://pk.leopardscourier.com/contact/complaint_form",
     "canaryUrl": "https://pk.leopardscourier.com/",
     "shows": [
       "status",

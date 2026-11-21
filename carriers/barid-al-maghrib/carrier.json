@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.barid.ma/bamb2cstorefront/fr/tracking/getdetailentrytracking?code={trackingNumber}",
     "searchUrl": "https://www.barid.ma/bamb2cstorefront/fr/tracking/page",
+    "helpUrl": "https://www.barid.ma/bamb2cstorefront/fr/ContactezNous",
     "canaryUrl": "https://www.barid.ma/bamb2cstorefront/fr/tracking/page",
     "shows": [
       "status",

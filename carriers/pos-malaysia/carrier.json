@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://tracking.pos.com.my/tracking/{trackingNumber}",
     "searchUrl": "https://tracking.pos.com.my/tracking/",
+    "helpUrl": "https://www.pos.com.my/contact-us",
     "canaryUrl": "https://tracking.pos.com.my/",
     "shows": [
       "status",

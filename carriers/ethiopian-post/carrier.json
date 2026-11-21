@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://domestictrack.ethio.post/PostGlobal/WebTrack/Track.aspx",
+    "helpUrl": "https://ethio.post/contact/",
     "canaryUrl": "https://domestictrack.ethio.post/PostGlobal/WebTrack/Track.aspx",
     "shows": [],
     "scraped": [],

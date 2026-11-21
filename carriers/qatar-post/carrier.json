@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.qatarpost.qa/TrackAndTrace?trackingNumber={trackingNumber}",
     "searchUrl": "https://www.qatarpost.qa/TrackAndTrace",
+    "helpUrl": "https://www.qatarpost.qa/ContactUs",
     "canaryUrl": "https://www.qatarpost.qa/TrackAndTrace",
     "shows": [
       "status",

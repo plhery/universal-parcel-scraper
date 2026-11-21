@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.ram.co.za/track/{trackingNumber}",
     "searchUrl": "https://www.ram.co.za/track",
+    "helpUrl": "https://www.ram.co.za/contact",
     "canaryUrl": "https://www.ram.co.za/track",
     "shows": [
       "status",

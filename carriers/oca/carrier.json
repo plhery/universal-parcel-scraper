@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.oca.com.ar/Seguimiento/Paquetes/{trackingNumber}",
     "searchUrl": "https://www.oca.com.ar/Seguimiento/BuscarEnvio",
+    "helpUrl": "https://www.oca.com.ar/CentroDeAyuda",
     "canaryUrl": "https://www.oca.com.ar/Seguimiento/BuscarEnvio",
     "shows": [
       "status",

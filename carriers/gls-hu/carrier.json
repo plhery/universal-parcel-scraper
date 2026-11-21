@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://gls-group.com/HU/hu/csomagkovetes/?match={trackingNumber}",
     "searchUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
+    "helpUrl": "https://gls-group.com/HU/hu/kapcsolat/",
     "canaryUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
     "shows": [
       "status",

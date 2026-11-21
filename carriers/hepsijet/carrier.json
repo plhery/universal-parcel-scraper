@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.hepsijet.com/gonderi-takibi/{trackingNumber}",
     "searchUrl": "https://www.hepsijet.com/",
+    "helpUrl": "https://www.hepsijet.com/bize-ulasin",
     "canaryUrl": "https://www.hepsijet.com/",
     "shows": [
       "status",

@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://pits.gpo.gov.np/Inquiry/InquiryIndexClient?ItemId={trackingNumber}",
     "searchUrl": "https://pits.gpo.gov.np/Inquiry/InquiryIndexClient",
+    "helpUrl": "https://gpo.gov.np/contact-us/",
     "canaryUrl": "https://www.nepalpost.gov.np/",
     "shows": [],
     "scraped": [

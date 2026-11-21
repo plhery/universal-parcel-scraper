@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://lp-trace.nittsu.co.jp/web/webarpaa702.srv?LANG=JP&denpyoNo1={trackingNumber}",
     "searchUrl": "https://www.nipponexpress.com/jp/ja/",
+    "helpUrl": "https://www.nipponexpress.com/jp/ja/contact/",
     "canaryUrl": "https://lp-trace.nittsu.co.jp/web/webarpaa701.srv",
     "shows": [
       "status",

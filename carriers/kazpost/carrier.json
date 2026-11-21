@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://post.kz/services/postal/{trackingNumber}",
     "searchUrl": "https://post.kz/",
+    "helpUrl": "https://post.kz/help/faq-new",
     "canaryUrl": "https://post.kz/",
     "shows": [
       "status",

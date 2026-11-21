@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.lotteglogis.com/home/reservation/tracking/linkView?InvNo={trackingNumber}",
     "searchUrl": "https://www.lotteglogis.com/home/reservation/tracking/index",
+    "helpUrl": "https://www.lotteglogis.com/home/customs/faq",
     "canaryUrl": "https://www.lotteglogis.com/home/reservation/tracking/index",
     "shows": [
       "status",

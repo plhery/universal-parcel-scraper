@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://view.arcb.com/nlo/tools/tracking#/{trackingNumber}",
     "searchUrl": "https://view.arcb.com/nlo/tools/tracking",
+    "helpUrl": "https://arcb.com/contact-us/contact-customer-service",
     "canaryUrl": "https://view.arcb.com/nlo/tools/tracking",
     "shows": [
       "status",

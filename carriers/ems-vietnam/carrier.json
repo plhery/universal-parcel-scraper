@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://ems.com.vn/tra-cuu/tra-cuu-buu-gui?code={trackingNumber}",
     "searchUrl": "https://www.ems.com.vn/tra-cuu/tra-cuu-buu-gui",
+    "helpUrl": "https://ems.com.vn/lien-he",
     "canaryUrl": "https://www.ems.com.vn/tra-cuu/tra-cuu-buu-gui",
     "shows": [
       "status",

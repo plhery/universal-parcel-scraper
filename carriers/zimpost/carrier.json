@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.zimpost.co.zw/",
+    "helpUrl": "https://www.zimpost.co.zw/contact",
     "canaryUrl": "https://www.zimpost.co.zw/",
     "shows": [],
     "scraped": [],

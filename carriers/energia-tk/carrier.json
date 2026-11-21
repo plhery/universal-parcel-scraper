@@ -46,6 +46,7 @@
   "portal": {
     "url": "https://nrg-tk.pro/client/tracking/#{trackingNumber}",
     "searchUrl": "https://nrg-tk.pro/client/tracking/",
+    "helpUrl": "https://nrg-tk.pro/faq/",
     "canaryUrl": "https://nrg-tk.pro/client/tracking/",
     "shows": [
       "status",

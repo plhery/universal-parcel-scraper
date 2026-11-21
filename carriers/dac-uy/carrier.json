@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.dac.com.uy/envios/rastrear",
+    "helpUrl": "https://soporte.dac.com.uy/",
     "canaryUrl": "https://www.dac.com.uy/envios/rastrear",
     "shows": [],
     "scraped": [],

@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://apps.correoparaguayo.gov.py:444/seguimiento.html",
+    "helpUrl": "https://correoparaguayo.gov.py/sitio/contacto/",
     "canaryUrl": "https://apps.correoparaguayo.gov.py:444/seguimiento.html",
     "shows": [],
     "scraped": [],

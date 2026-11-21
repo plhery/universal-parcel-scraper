@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://chronopost.ma/suivez-votre-envoi?SendingNumber={trackingNumber}",
     "searchUrl": "https://chronopost.ma/suivez-votre-envoi",
+    "helpUrl": "https://chronopost.ma/service-clients",
     "canaryUrl": "https://chronopost.ma/suivez-votre-envoi",
     "shows": [
       "status",

@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.mydpd.at/?f=parcel.load&p={trackingNumber}",
     "searchUrl": "https://www.mydpd.at/",
+    "helpUrl": "https://www.dpd.com/at/de/support/",
     "canaryUrl": "https://www.mydpd.at/",
     "shows": [
       "status",

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://operaciones.correospanama.gob.pa/IPSWebTracking/IPSWeb_item_events.aspx?itemid={trackingNumber}",
     "searchUrl": "https://operaciones.correospanama.gob.pa/IPSWebTracking/",
+    "helpUrl": "https://www.correospanama.gob.pa/preguntas-frecuentes/",
     "canaryUrl": "https://operaciones.correospanama.gob.pa/IPSWebTracking/",
     "shows": [],
     "scraped": [],

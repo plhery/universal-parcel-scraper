@@ -35,6 +35,7 @@
     "offset_timestamps"
   ],
   "portal": {
+    "helpUrl": "https://www.andreani.com/preguntas-frecuentes",
     "canaryUrl": "https://www.andreani.com/",
     "shows": [
       "status",

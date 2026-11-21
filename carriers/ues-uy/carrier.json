@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.ues.com.uy/rastreo_paquete.html?criterioId={trackingNumber}",
     "searchUrl": "https://www.ues.com.uy/rastreo_paquete.html",
+    "helpUrl": "https://www.ues.com.uy/faq.html",
     "canaryUrl": "https://www.ues.com.uy/rastreo_paquete.html",
     "shows": [],
     "scraped": [],

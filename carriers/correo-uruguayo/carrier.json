@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://ahiva.correo.com.uy/servicioConsultaTntIps-web/?codigoPieza={trackingNumber}",
     "searchUrl": "https://www.correo.com.uy/seguimientodeenvios",
+    "helpUrl": "https://www.correo.com.uy/contacto",
     "canaryUrl": "https://www.correo.com.uy/seguimientodeenvios",
     "shows": [
       "status",

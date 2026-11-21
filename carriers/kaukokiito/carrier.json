@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.kaukokiito.fi/kuljetuspalvelut/lahetysten-seuranta/?query={trackingNumber}&type=Cmr",
     "searchUrl": "https://www.kaukokiito.fi/kuljetuspalvelut/lahetysten-seuranta/",
+    "helpUrl": "https://www.kaukokiito.fi/yhteystiedot/",
     "canaryUrl": "https://www.kaukokiito.fi/kuljetuspalvelut/lahetysten-seuranta/",
     "shows": [],
     "scraped": [],

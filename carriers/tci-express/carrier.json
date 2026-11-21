@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.tciexpress.in/track-your-shipment?trackshipment={trackingNumber}&dwb=dwb",
     "searchUrl": "https://www.tciexpress.in/trackingdocket.aspx",
+    "helpUrl": "https://www.tciexpress.in/Contact",
     "canaryUrl": "https://www.tciexpress.in/trackingdocket.aspx",
     "shows": [
       "status",

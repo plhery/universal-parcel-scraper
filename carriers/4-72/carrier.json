@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://svc2.sipost.co/TrazabilidadWeb?guia={trackingNumber}",
     "searchUrl": "https://svc2.sipost.co/TrazabilidadWeb",
+    "helpUrl": "https://www.4-72.com.co/preguntas-frecuentes/",
     "canaryUrl": "https://svc2.sipost.co/TrazabilidadWeb",
     "shows": [
       "status",

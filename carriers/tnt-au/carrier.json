@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.tntexpress.com.au/interaction/ASPs/trackref_detail.asp?con={trackingNumber}",
     "searchUrl": "https://www.tntexpress.com.au/interaction/Trackntrace.aspx",
+    "helpUrl": "https://www.tnt.com/express/en_au/site/support.html",
     "canaryUrl": "https://www.tntexpress.com.au/interaction/Trackntrace.aspx",
     "shows": [
       "history",

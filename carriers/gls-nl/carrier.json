@@ -58,6 +58,7 @@
   "portal": {
     "url": "https://www.gls-info.nl/tracking",
     "searchUrl": "https://www.gls-info.nl/tracking",
+    "helpUrl": "https://gls-group.com/NL/nl/veelgestelde-vragen/",
     "canaryUrl": "https://www.gls-info.nl/tracking",
     "shows": [
       "status",

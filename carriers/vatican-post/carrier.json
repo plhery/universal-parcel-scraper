@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.postevaticane.va/it/tracking?trackingNumber={trackingNumber}",
     "searchUrl": "https://www.postevaticane.va/it/tracking",
+    "helpUrl": "https://www.postevaticane.va/it/contatti",
     "canaryUrl": "https://www.postevaticane.va/it/",
     "shows": [],
     "scraped": [],

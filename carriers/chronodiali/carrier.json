@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://chronodiali.ma/suivi_colis.html?id={trackingNumber}",
     "searchUrl": "https://chronodiali.ma/suivi_colis.html",
+    "helpUrl": "https://www.chronodiali.ma/contact_us.html",
     "canaryUrl": "https://chronodiali.ma/suivi_colis.html",
     "shows": [
       "status",

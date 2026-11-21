@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://rodonaves.com.br/rastreio-de-mercadoria",
+    "helpUrl": "https://rodonaves.com.br/fale-conosco",
     "canaryUrl": "https://rodonaves.com.br/rastreio-de-mercadoria",
     "shows": [],
     "scraped": [],

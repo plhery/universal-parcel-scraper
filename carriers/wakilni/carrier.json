@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://portal.wakilni.com/orders/{trackingNumber}",
     "searchUrl": "https://wakilni.com/",
+    "helpUrl": "https://www.wakilni.com/contact",
     "canaryUrl": "https://wakilni.com/",
     "shows": [],
     "scraped": [],

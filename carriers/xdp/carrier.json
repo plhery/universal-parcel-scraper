@@ -48,6 +48,7 @@
   "portal": {
     "url": "https://xdp.co.uk/track/{trackingNumber}",
     "searchUrl": "https://xdp.co.uk/track/",
+    "helpUrl": "https://xdp.co.uk/contact/",
     "canaryUrl": "https://xdp.co.uk/track/",
     "shows": [
       "status",

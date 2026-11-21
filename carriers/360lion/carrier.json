@@ -58,6 +58,7 @@
   "portal": {
     "url": "https://toms.360lion.com/track?trackNumber={trackingNumber}",
     "searchUrl": "https://toms.360lion.com/track",
+    "helpUrl": "https://www.360lion.com/?m=home&c=Lists&a=index&tid=79",
     "canaryUrl": "https://toms.360lion.com/track",
     "shows": [
       "status",

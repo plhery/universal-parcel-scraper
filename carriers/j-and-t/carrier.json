@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.jtexpress.ph/track-and-trace?flag=1&waybillNo={trackingNumber}",
     "searchUrl": "https://www.jtexpress.ph/track-and-trace",
+    "helpUrl": "https://www.jtexpress.ph/contact-us",
     "canaryUrl": "https://customerapp.jntexpress.id/jandt-app-ifd-web/router.do",
     "shows": [
       "status",

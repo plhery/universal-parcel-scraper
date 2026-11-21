@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.sat.ua/tracking/?number={trackingNumber}",
     "searchUrl": "https://www.sat.ua/tracking/",
+    "helpUrl": "https://www.sat.ua/f-a-q/",
     "canaryUrl": "https://www.sat.ua/tracking/",
     "shows": [
       "status",

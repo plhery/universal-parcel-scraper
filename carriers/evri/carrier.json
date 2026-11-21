@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://globaleco.app/track",
     "searchUrl": "https://globaleco.app/track",
+    "helpUrl": "https://www.evri.com/faqs/receiving-a-parcel/what-can-i-do-if-i-havent-received-my-parcel",
     "canaryUrl": "https://globaleco.app/track/",
     "shows": [
       "status",

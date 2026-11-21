@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://spx.com.my/track?{trackingNumber}",
     "searchUrl": "https://spx.com.my/track",
+    "helpUrl": "https://spx.com.my/customer-service-introduction",
     "canaryUrl": "https://spx.com.my/track",
     "shows": [
       "status",

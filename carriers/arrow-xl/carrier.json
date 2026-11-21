@@ -48,6 +48,7 @@
   ],
   "portal": {
     "searchUrl": "https://askaxl.co.uk/tracking",
+    "helpUrl": "https://www.arrowxl.co.uk/help",
     "canaryUrl": "https://askaxl.co.uk/tracking",
     "shows": [
       "status",

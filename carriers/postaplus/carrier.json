@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.postaplus.com/?trackid={trackingNumber}&trackby=awb",
     "searchUrl": "https://www.postaplus.com/",
+    "helpUrl": "https://www.postaplus.com/contact",
     "canaryUrl": "https://www.postaplus.com/",
     "shows": [],
     "scraped": [],

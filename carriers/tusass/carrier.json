@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.tusass.gl/en/track-and-trace/#{trackingNumber}",
     "searchUrl": "https://www.tusass.gl/en/track-and-trace/",
+    "helpUrl": "https://www.tusass.gl/en/support/private/",
     "canaryUrl": "https://www.tusass.gl/en/track-and-trace/",
     "shows": [],
     "scraped": [],

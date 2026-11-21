@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.correiosdeangola.ao/pesquisaencomenda.aspx",
+    "helpUrl": "https://www.correiosdeangola.ao/contactos.aspx",
     "canaryUrl": "https://www.correiosdeangola.ao/",
     "shows": [],
     "scraped": [],

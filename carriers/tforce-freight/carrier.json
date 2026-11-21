@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.tforcefreight.com/ltl/apps/Tracking?proNumbers={trackingNumber}",
     "searchUrl": "https://www.tforcefreight.com/ltl/apps/tracking",
+    "helpUrl": "https://www.tforcefreight.com/ltl/apps/ContactUs",
     "canaryUrl": "https://www.tforcefreight.com/ltl/apps/tracking",
     "shows": [
       "status",

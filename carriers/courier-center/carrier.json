@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.courier.gr/track/result/?tracknr={trackingNumber}",
     "searchUrl": "https://www.courier.gr/",
+    "helpUrl": "https://www.courier.gr/contact",
     "canaryUrl": "https://www.courier.gr/",
     "shows": [
       "status",

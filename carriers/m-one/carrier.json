@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://m-one.rs/en?{trackingNumber}",
     "searchUrl": "https://m-one.rs/en",
+    "helpUrl": "https://www.m-one.rs/en/kontakt",
     "canaryUrl": "https://m-one.rs/en",
     "shows": [
       "status",

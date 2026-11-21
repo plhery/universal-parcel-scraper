@@ -35,6 +35,7 @@
   ],
   "portal": {
     "searchUrl": "https://track.2go.com.ph/",
+    "helpUrl": "https://2go.com.ph/contact-us/",
     "canaryUrl": "https://track.2go.com.ph/",
     "shows": [
       "status",

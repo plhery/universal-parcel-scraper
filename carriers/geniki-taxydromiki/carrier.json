@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://taxydromiki.com/track/{trackingNumber}",
     "searchUrl": "https://taxydromiki.com/track/",
+    "helpUrl": "https://taxydromiki.com/i-etaireia/epikoinonia/",
     "canaryUrl": "https://taxydromiki.com/track/",
     "shows": [
       "status",

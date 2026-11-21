@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://zoom.red/tracking-de-envios-personas/?nro-guia={trackingNumber}&tipo-consulta=1",
     "searchUrl": "https://zoom.red/tracking-de-envios-personas/",
+    "helpUrl": "https://zoom.red/contacto/",
     "canaryUrl": "https://zoom.red/tracking-de-envios-personas/",
     "shows": [
       "status",

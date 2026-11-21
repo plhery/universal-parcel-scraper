@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://tracking.posta.co.tz/index.php/Tracking/tracker",
+    "helpUrl": "https://www.posta.co.tz/en/contact",
     "canaryUrl": "https://tracking.posta.co.tz/index.php/Tracking/tracker",
     "shows": [
       "status",

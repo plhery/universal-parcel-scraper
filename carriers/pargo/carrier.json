@@ -28,7 +28,8 @@
     "discarded": [],
     "unavailable": [],
     "url": "https://track.pargo.co.za/?code={trackingNumber}",
-    "searchUrl": "https://track.pargo.co.za/"
+    "searchUrl": "https://track.pargo.co.za/",
+    "helpUrl": "https://pargo.co.za/faq/"
   },
   "links": [
     {

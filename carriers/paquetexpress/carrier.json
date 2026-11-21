@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.paquetexpress.com.mx/rastreo/{trackingNumber}",
     "searchUrl": "https://www.paquetexpress.com.mx/rastreo",
+    "helpUrl": "https://www.paquetexpress.com.mx/contacto/",
     "canaryUrl": "https://www.paquetexpress.com.mx/rastreo",
     "shows": [
       "status",

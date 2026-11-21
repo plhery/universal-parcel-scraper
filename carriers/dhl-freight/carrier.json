@@ -56,6 +56,7 @@
   "portal": {
     "url": "https://activetracing.dhl.com/DatPublic/datSelection.do?autoSearch=true&search=consignmentId&l=DE&a={trackingNumber}",
     "searchUrl": "https://activetracing.dhl.com/",
+    "helpUrl": "https://www.dhl.com/de-en/home/freight/help-center-for-european-road-and-rail.html",
     "canaryUrl": "https://activetracing.dhl.com/",
     "shows": [
       "status",

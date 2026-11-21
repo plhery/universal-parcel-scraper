@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.sps-sro.sk/moja-zasielka/?shipment_id={trackingNumber}",
     "searchUrl": "https://www.sps-sro.sk/moja-zasielka/",
+    "helpUrl": "https://www.sps-sro.sk/kontakt/",
     "canaryUrl": "https://www.sps-sro.sk/moja-zasielka/",
     "shows": [
       "status",

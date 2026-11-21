@@ -43,6 +43,7 @@
   "portal": {
     "url": "https://www.morninglobal.com/trace-track/?tracking_number={trackingNumber}",
     "searchUrl": "https://www.morninglobal.com/trace-track/",
+    "helpUrl": "https://www.morninglobal.com/contact/",
     "canaryUrl": "https://www.morninglobal.com/trace-track/",
     "shows": [
       "status",

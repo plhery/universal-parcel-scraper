@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://kdexp.com/service/delivery/etc/delivery.do?barcode={trackingNumber}",
     "searchUrl": "https://kdexp.com/index.do",
+    "helpUrl": "https://kdexp.com/cs/cs.do",
     "canaryUrl": "https://kdexp.com/index.do",
     "shows": [
       "status",

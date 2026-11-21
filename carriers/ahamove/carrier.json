@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://express.ahamove.com/s/{trackingNumber}",
     "searchUrl": "https://express.ahamove.com/",
+    "helpUrl": "https://ahamove.com/customer/help-center",
     "canaryUrl": "https://express.ahamove.com/",
     "shows": [],
     "scraped": [],

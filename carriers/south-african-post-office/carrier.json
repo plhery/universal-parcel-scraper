@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://trackingnew.postoffice.co.za/?ParcelId={trackingNumber}",
     "searchUrl": "https://trackingnew.postoffice.co.za/",
+    "helpUrl": "https://www.postoffice.co.za/CustomerService/index.html",
     "canaryUrl": "https://trackingnew.postoffice.co.za/",
     "shows": [
       "status",

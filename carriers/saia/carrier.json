@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.saia.com/track/details;pro={trackingNumber}",
     "searchUrl": "https://www.saia.com/track",
+    "helpUrl": "https://www.saia.com/faq",
     "canaryUrl": "https://www.saia.com/track",
     "shows": [
       "status",

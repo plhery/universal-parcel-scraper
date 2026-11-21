@@ -56,6 +56,7 @@
   "portal": {
     "url": "https://gls-group.com/AT/de/paket-verfolgen/?match={trackingNumber}",
     "searchUrl": "https://gls-group.com/AT/de/paket-verfolgen/",
+    "helpUrl": "https://gls-group.com/AT/de/contact-form/empfaenger-kontaktformular/",
     "canaryUrl": "https://gls-group.com/AT/de/paket-verfolgen/",
     "shows": [
       "status",

@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.gomwd.com/track-a-shipment",
+    "helpUrl": "https://www.gomwd.com/contact-us",
     "canaryUrl": "https://main.gomwd.com/client/wixtrackorder",
     "shows": [
       "status",

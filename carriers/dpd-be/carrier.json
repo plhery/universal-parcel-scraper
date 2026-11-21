@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.dpdgroup.com/be/mydpd/my-parcels/track?lang=en&parcelNumber={trackingNumber}",
     "searchUrl": "https://www.dpd.com/be/en/receiving/track-trace/",
+    "helpUrl": "https://www.dpd.com/be/en/contact/",
     "canaryUrl": "https://www.dpd.com/be/en/receiving/track-trace/",
     "shows": [
       "status",

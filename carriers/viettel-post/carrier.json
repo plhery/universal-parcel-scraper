@@ -35,6 +35,7 @@
   ],
   "portal": {
     "searchUrl": "https://viettelpost.com.vn/tra-cuu-hanh-trinh-don/",
+    "helpUrl": "https://viettelpost.com.vn/gui-khieu-nai/",
     "canaryUrl": "https://viettelpost.com.vn/tra-cuu-hanh-trinh-don/",
     "shows": [
       "status",

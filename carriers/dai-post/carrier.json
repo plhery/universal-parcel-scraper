@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://daipost.com/track?tracknbr={trackingNumber}",
     "searchUrl": "https://daipost.com/track",
+    "helpUrl": "https://daipost.com/help-and-support",
     "canaryUrl": "https://daipost.com/track",
     "shows": [
       "status",

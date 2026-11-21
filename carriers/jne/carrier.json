@@ -33,6 +33,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.jne.co.id/tracking-package",
+    "helpUrl": "https://www.jne.co.id/bantuan",
     "canaryUrl": "https://www.jne.co.id/tracking-package",
     "shows": [
       "status",

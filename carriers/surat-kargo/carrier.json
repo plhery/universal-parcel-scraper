@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.suratkargo.com.tr/KargoTakip/?kargotakipno={trackingNumber}",
     "searchUrl": "https://www.suratkargo.com.tr/KargoTakip/",
+    "helpUrl": "https://www.suratkargo.com.tr/BilgiHizmetleri/GonderiStandartlarimiz/SSS",
     "canaryUrl": "https://www.suratkargo.com.tr/KargoTakip/",
     "shows": [],
     "scraped": [

@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://redx.com.bd/track-global-parcel/?trackingId={trackingNumber}",
     "searchUrl": "https://redx.com.bd/",
+    "helpUrl": "https://redx.com.bd/faq/",
     "canaryUrl": "https://redx.com.bd/",
     "shows": [
       "status",

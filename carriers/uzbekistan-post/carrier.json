@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://uz.post/ru/tracking/{trackingNumber}",
     "searchUrl": "https://uz.post/ru/tracking",
+    "helpUrl": "https://uz.post/ru/aloqa",
     "canaryUrl": "https://uz.post/ru/tracking",
     "shows": [
       "status",

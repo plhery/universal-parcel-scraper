@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.elta.gr/track?code={trackingNumber}",
     "searchUrl": "https://www.elta.gr/track",
+    "helpUrl": "https://www.elta.gr/contact",
     "canaryUrl": "https://www.elta.gr/track",
     "shows": [
       "status",

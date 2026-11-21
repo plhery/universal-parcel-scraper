@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://postglobal.posta.co.ke/postglobaltrack/Track.aspx",
+    "helpUrl": "https://posta.co.ke/contact/",
     "canaryUrl": "https://postglobal.posta.co.ke/postglobaltrack/Track.aspx",
     "shows": [
       "history",

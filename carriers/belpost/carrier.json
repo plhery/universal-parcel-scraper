@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://belpost.by/Otsleditotpravleniye?number={trackingNumber}",
     "searchUrl": "https://belpost.by/Otsleditotpravleniye",
+    "helpUrl": "https://belpost.by/Pomoshch0",
     "canaryUrl": "https://belpost.by/Otsleditotpravleniye",
     "shows": [
       "status",

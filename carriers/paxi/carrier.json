@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.paxi.co.za/track-a-parcel?id={trackingNumber}",
     "searchUrl": "https://www.paxi.co.za/track-a-parcel",
+    "helpUrl": "https://www.paxi.co.za/contact",
     "canaryUrl": "https://www.paxi.co.za/track-a-parcel",
     "shows": [],
     "scraped": [],

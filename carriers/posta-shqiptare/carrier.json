@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://eposta.postashqiptare.al/tracking/{trackingNumber}",
     "searchUrl": "https://www.postashqiptare.al/c/207/tracked",
+    "helpUrl": "https://www.postashqiptare.al/c/69/kujdesi-ndaj-klientit",
     "canaryUrl": "https://eposta.postashqiptare.al/tracking",
     "shows": [
       "status",
