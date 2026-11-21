@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://ellerman.orcapayments.app/container-tracking/",
     "searchUrl": "https://ellerman.orcapayments.app/container-tracking/",
+    "helpUrl": "https://ellermanlines.com/contact-us/",
     "canaryUrl": "https://ellerman.orcapayments.app/container-tracking/",
     "shows": [
       "status",

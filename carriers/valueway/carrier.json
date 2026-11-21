@@ -26,6 +26,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.valueway.net/main.html",
+    "helpUrl": "https://www.valueway.net/Contact/index.html#office",
     "canaryUrl": "https://www.valueway.net/main.html",
     "shows": [],
     "scraped": [],

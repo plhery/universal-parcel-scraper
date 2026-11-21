@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://sgkhomedelivery.co.uk/track-your-order",
+    "helpUrl": "https://sgkhomedelivery.co.uk/contact",
     "canaryUrl": "https://sgkhomedelivery.co.uk/track-your-order",
     "shows": [],
     "scraped": [],

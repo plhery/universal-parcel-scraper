@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://app.navex.tn/track.php?track={trackingNumber}",
     "searchUrl": "https://app.navex.tn/track.php",
+    "helpUrl": "https://navex.tn/a-propos/#formulaire",
     "canaryUrl": "https://app.navex.tn/track.php",
     "shows": [
       "status",

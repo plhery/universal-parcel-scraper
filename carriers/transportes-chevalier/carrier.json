@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://chevalier.fivesoft.com.co/tag_detail_v1.html?d={trackingNumber}",
     "searchUrl": "https://www.transporteschevalier.com/consulttag.html",
+    "helpUrl": "https://www.transporteschevalier.com/contact.html",
     "canaryUrl": "https://www.transporteschevalier.com/consulttag.html",
     "shows": [
       "status",

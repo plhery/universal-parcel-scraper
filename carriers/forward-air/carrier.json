@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.forwardair.com/tracking?numbers={trackingNumber}",
     "searchUrl": "https://www.forwardair.com/tracking",
+    "helpUrl": "https://www.forwardair.com/about/contact",
     "canaryUrl": "https://www.forwardair.com/tracking",
     "shows": [
       "status",

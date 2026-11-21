@@ -42,6 +42,7 @@
   ],
   "portal": {
     "searchUrl": "https://wiio.com/",
+    "helpUrl": "https://wiio.com/contact-wiio/",
     "canaryUrl": "https://wiio.com/",
     "shows": [
       "status",

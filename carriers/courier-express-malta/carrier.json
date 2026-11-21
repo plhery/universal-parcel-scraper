@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://track.courierexpressmalta.com/{trackingNumber}",
     "searchUrl": "https://track.courierexpressmalta.com/",
+    "helpUrl": "https://www.courierexpressmalta.com/contact",
     "canaryUrl": "https://track.courierexpressmalta.com/",
     "shows": [],
     "scraped": [],

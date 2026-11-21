@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://burd.dk/track?code={trackingNumber}",
     "searchUrl": "https://burd.dk/",
+    "helpUrl": "https://burd.dk/kundeservice",
     "canaryUrl": "https://burd.dk/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tccs.in/tracking/",
+    "helpUrl": "https://tccs.in/contact",
     "canaryUrl": "https://tccs.in/tracking/",
     "shows": [],
     "scraped": [],

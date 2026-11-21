@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://portal.internetexpress.co.za/track?ref={trackingNumber}",
     "searchUrl": "https://portal.internetexpress.co.za/track",
+    "helpUrl": "https://www.internetexpress.co.za/contact-details",
     "canaryUrl": "https://portal.internetexpress.co.za/track",
     "shows": [
       "status",

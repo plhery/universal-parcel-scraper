@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://t.alicetms.dk/#/romming/TrackAndTrace/{trackingNumber}",
     "searchUrl": "https://tjwfragt.dk/track-trace/",
+    "helpUrl": "https://tjwfragt.dk/kontakt/",
     "canaryUrl": "https://t.alicetms.dk/",
     "shows": [],
     "scraped": [],

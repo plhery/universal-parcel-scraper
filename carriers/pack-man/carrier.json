@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://pack-man.gr/anazitisi-apostolis.html?code={trackingNumber}",
     "searchUrl": "https://pack-man.gr/anazitisi-apostolis.html",
+    "helpUrl": "https://pack-man.gr/contact-us.html",
     "canaryUrl": "https://pack-man.gr/anazitisi-apostolis.html",
     "shows": [
       "status",

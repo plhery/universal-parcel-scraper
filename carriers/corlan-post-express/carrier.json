@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://track.corlanpostexpress.ro/?lang=ro&tr={trackingNumber}",
     "searchUrl": "https://track.corlanpostexpress.ro/",
+    "helpUrl": "https://corlanpostexpress.ro/contact/",
     "canaryUrl": "https://track.corlanpostexpress.ro/",
     "shows": [],
     "scraped": [],

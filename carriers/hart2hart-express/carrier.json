@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://harttohart.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
     "searchUrl": "https://harttohart.couriernavigator-secure.com/tracking",
+    "helpUrl": "https://hart2hartexpress.co.uk/contact.php",
     "canaryUrl": "https://hart2hartexpress.co.uk/",
     "shows": [],
     "scraped": [],

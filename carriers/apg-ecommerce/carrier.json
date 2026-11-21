@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://apgecommerce.com/track-result/?track_sequenceNo={trackingNumber}",
     "searchUrl": "https://apgecommerce.com/track/",
+    "helpUrl": "https://apgecommerce.com/contact-us/",
     "canaryUrl": "https://apgecommerce.com/track/",
     "shows": ["status", "history", "location"],
     "scraped": ["status", "history", "location"],

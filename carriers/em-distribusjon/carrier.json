@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://emdno.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://emdno.opter.cloud/tt",
+    "helpUrl": "https://emd.as/kontakt-oss/",
     "canaryUrl": "https://emdno.opter.cloud/tt",
     "shows": [],
     "scraped": [],

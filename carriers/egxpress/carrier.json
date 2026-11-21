@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/?trackingID={trackingNumber}",
     "searchUrl": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/",
+    "helpUrl": "https://www.egyptexpress.com.eg/en-us/customer-support",
     "canaryUrl": "https://www.egyptexpress.com.eg/en-us/",
     "shows": [
       "status",

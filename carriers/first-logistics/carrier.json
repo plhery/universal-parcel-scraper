@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.firstlogistics.co.id/trace/",
+    "helpUrl": "https://www.firstlogistics.co.id/contact.html",
     "canaryUrl": "https://www.firstlogistics.co.id/trace/",
     "shows": [],
     "scraped": [],

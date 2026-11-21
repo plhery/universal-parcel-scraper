@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://myjas.com/public/shipments?shipmentNumber={trackingNumber}",
     "searchUrl": "https://www.jas.com/",
+    "helpUrl": "https://www.jas.com/contact/",
     "canaryUrl": "https://myjas.com/public/shipments",
     "shows": [
       "status",

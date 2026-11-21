@@ -22,6 +22,7 @@
   "portal": {
     "url": "https://webportal.pdsdirect.co.uk/tracktrace?reference={trackingNumber}",
     "searchUrl": "https://webportal.pdsdirect.co.uk/tracktrace",
+    "helpUrl": "https://www.pdsdirect.co.uk/contact-us/",
     "canaryUrl": "https://webportal.pdsdirect.co.uk/tracktrace",
     "shows": [],
     "scraped": [],

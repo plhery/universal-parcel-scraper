@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.yue777.com/genzong.php",
+    "helpUrl": "https://www.yue777.com/contact.php",
     "canaryUrl": "https://www.yue777.com/",
     "shows": [],
     "scraped": [],

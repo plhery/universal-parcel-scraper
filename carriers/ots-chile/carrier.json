@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.otschile.cl/tracking",
+    "helpUrl": "https://www.otschile.cl/preguntas-frecuentes",
     "canaryUrl": "https://www.otschile.cl/tracking",
     "shows": [],
     "scraped": [],

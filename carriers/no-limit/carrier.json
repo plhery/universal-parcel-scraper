@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://follow.nolimit.pl/",
     "searchUrl": "https://follow.nolimit.pl/",
+    "helpUrl": "https://nolimit.pl/kontakt",
     "canaryUrl": "https://follow.nolimit.pl/Defaulteng.aspx",
     "shows": [
       "status",

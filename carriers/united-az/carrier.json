@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://cui.united.az/tracking-code?trackingCode={trackingNumber}",
     "searchUrl": "https://cui.united.az/tracking-code",
+    "helpUrl": "https://cui.united.az/contact",
     "canaryUrl": "https://cui.united.az/tracking-code",
     "shows": [],
     "scraped": [],

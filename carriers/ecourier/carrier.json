@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://ecourier.com.bd/tracking?tracking_no={trackingNumber}",
     "searchUrl": "https://ecourier.com.bd/tracking/",
+    "helpUrl": "https://ecourier.com.bd/contact-us/",
     "canaryUrl": "https://ecourier.com.bd/tracking/",
     "shows": [
       "status",

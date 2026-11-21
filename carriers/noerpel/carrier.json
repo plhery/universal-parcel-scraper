@@ -26,6 +26,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://portal.noerpel.de/tracking.html",
+    "helpUrl": "https://noerpel.de/kontakt/",
     "canaryUrl": "https://noerpel.de/",
     "shows": [],
     "scraped": [],

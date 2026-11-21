@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://t.alicetms.dk/#/Esbjerg-gods/TrackAndTrace/{trackingNumber}",
     "searchUrl": "https://esbjerg-gods.dk/",
+    "helpUrl": "https://esbjerg-gods.dk/kontakt/",
     "canaryUrl": "https://t.alicetms.dk/",
     "shows": [],
     "scraped": [],

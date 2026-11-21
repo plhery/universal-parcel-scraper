@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://post.magnit.ru/tracking/",
+    "helpUrl": "https://post.magnit.ru/contacts/",
     "canaryUrl": "https://post.magnit.ru/tracking/",
     "shows": [],
     "scraped": [],

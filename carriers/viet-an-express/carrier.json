@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://vietanexpress.com/tracking-2?tracking_num={trackingNumber}",
     "searchUrl": "https://vietanexpress.com/tracking-2",
+    "helpUrl": "https://vietanexpress.com/ho-tro-khach-hang",
     "canaryUrl": "https://vietanexpress.com/tracking-2",
     "shows": [],
     "scraped": [],

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.tracopacr.com/Servicios_encomiendas",
+    "helpUrl": "https://www.tracopacr.com/Contactenos",
     "canaryUrl": "https://www.tracopacr.com/Servicios_encomiendas",
     "shows": [],
     "scraped": [],

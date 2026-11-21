@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://tracking.sagawa-sgx.com/sgx/trackeng.asp?ENC=JPN&CAT=AWB&AWB={trackingNumber}",
     "searchUrl": "https://tracking.sagawa-sgx.com/sgx/trackeng.asp",
+    "helpUrl": "https://www.sgh-globalj.com/support/",
     "canaryUrl": "https://tracking.sagawa-sgx.com/sgx/trackeng.asp",
     "shows": [
       "status",

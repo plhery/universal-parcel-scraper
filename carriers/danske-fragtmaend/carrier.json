@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://trace.fragt.dk/{trackingNumber}",
     "searchUrl": "https://trace.fragt.dk/",
+    "helpUrl": "https://www.fragt.dk/kontakt/",
     "canaryUrl": "https://trace.fragt.dk/",
     "shows": [
       "status",

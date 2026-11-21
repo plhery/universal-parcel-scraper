@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://onex.am/en/onextrack?track={trackingNumber}",
     "searchUrl": "https://onex.am/en/onextrack",
+    "helpUrl": "https://onex.am/en/user/contact",
     "canaryUrl": "https://onex.am/",
     "shows": [
       "status",

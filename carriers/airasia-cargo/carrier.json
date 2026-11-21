@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
     "searchUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://help.teleport.it/category/cargo/cargo-knowledgebase",
     "canaryUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
     "shows": [
       "status",

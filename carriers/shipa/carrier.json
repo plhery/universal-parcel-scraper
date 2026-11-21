@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://shipa.com/track/?trackingno={trackingNumber}",
     "searchUrl": "https://shipa.com/track/",
+    "helpUrl": "https://shipa.com/help-center/",
     "canaryUrl": "https://tracking.shipadelivery.com/",
     "shows": [
       "status",

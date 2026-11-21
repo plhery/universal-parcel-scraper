@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.kaizenexpres.com/seguimiento/",
+    "helpUrl": "https://kaizenexpress.es/contacto/",
     "canaryUrl": "https://www.kaizenexpres.com/seguimiento/",
     "shows": [],
     "scraped": [],

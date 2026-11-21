@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.line-1.com.au/tracking",
+    "helpUrl": "https://www.line-1.com.au/contact/",
     "canaryUrl": "https://www.line-1.com.au/tracking",
     "shows": [],
     "scraped": [],

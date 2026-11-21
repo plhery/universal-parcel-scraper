@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "helpUrl": "https://www.astracon.com/kontakt-anfrage/",
     "canaryUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
     "shows": [
       "status",

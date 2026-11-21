@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.citytrans.ch/",
+    "helpUrl": "https://www.citytrans.ch/kontakt/",
     "canaryUrl": "https://www.citytrans.ch/",
     "shows": [],
     "scraped": [],

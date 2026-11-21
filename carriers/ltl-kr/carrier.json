@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ltl.kr/order",
+    "helpUrl": "https://ltl.kr/contact-us",
     "canaryUrl": "https://ltl.kr/",
     "shows": [],
     "scraped": [],

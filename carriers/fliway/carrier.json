@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://online.fliway.com/Public/Track/{trackingNumber}",
     "searchUrl": "https://www.fliway.com/",
+    "helpUrl": "https://www.fliway.com/services/contact-support",
     "canaryUrl": "https://www.fliway.com/",
     "shows": [],
     "scraped": [],

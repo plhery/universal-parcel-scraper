@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://ads-intl.com/track-shipment/?type=waybill&number={trackingNumber}",
     "searchUrl": "https://ads-intl.com/track-shipment/",
+    "helpUrl": "https://ads-intl.com/contact/",
     "canaryUrl": "https://ads-intl.com/track-shipment/",
     "shows": [],
     "scraped": [],

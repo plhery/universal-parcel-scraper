@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
+    "helpUrl": "https://www.yangming.com/en/contact/headquarter",
     "canaryUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
     "shows": [
       "status",

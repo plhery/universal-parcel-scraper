@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://express.oxperta.com/seguimiento-de-envio/?localizador={trackingNumber}",
     "searchUrl": "https://express.oxperta.com/seguimiento-de-envio/",
+    "helpUrl": "https://express.oxperta.com/contactanos/",
     "canaryUrl": "https://express.oxperta.com/seguimiento-de-envio/",
     "shows": [],
     "scraped": [],

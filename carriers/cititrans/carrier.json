@@ -33,6 +33,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.cititrans.com/trajectory",
+    "helpUrl": "https://www.cititrans.com/introduction",
     "canaryUrl": "https://www.cititrans.com/",
     "shows": [],
     "scraped": [],

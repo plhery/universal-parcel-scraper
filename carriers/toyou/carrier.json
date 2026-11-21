@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.toyou.co.uk/track/{trackingNumber}",
     "searchUrl": "https://www.toyou.co.uk/track",
+    "helpUrl": "https://www.toyou.co.uk/help",
     "canaryUrl": "https://www.toyou.co.uk/",
     "shows": [
       "status",

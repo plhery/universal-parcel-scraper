@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.mobi.com.br/entrega",
+    "helpUrl": "https://www.mobi.com.br/contato",
     "canaryUrl": "https://www.mobi.com.br/entrega",
     "shows": [],
     "scraped": [],

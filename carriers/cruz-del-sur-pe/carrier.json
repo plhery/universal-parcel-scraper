@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://venta.cruzdelsurcargo.com.pe/home-filtro-busqueda",
+    "helpUrl": "https://www.cruzdelsurcargo.com.pe/servicio-al-cliente/",
     "canaryUrl": "https://venta.cruzdelsurcargo.com.pe/home-filtro-busqueda",
     "shows": [],
     "scraped": [],

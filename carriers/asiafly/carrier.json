@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.asiaflyexp.com/order-search.html?no={trackingNumber}",
     "searchUrl": "https://www.asiaflyexp.com/order-search.html",
+    "helpUrl": "https://www.asiaflyexp.com/contact/",
     "canaryUrl": "https://www.asiaflyexp.com/",
     "shows": [],
     "scraped": [],

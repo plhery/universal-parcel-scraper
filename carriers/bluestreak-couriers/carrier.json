@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.bluestreakcouriersonline.net/clientportal",
+    "helpUrl": "https://www.bluestreakcouriers.com/contact/",
     "canaryUrl": "https://www.bluestreakcouriers.com/",
     "shows": [],
     "scraped": [],

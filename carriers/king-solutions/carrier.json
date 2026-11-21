@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://kingsolutionsglobal.com/track/?pros={trackingNumber}",
     "searchUrl": "https://kingsolutionsglobal.com/track/",
+    "helpUrl": "https://kingsolutionsglobal.com/contact-us/",
     "canaryUrl": "https://kingsolutionsglobal.com/track/",
     "shows": [
       "status",

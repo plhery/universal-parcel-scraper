@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.collicare.no/track-and-trace?s={trackingNumber}",
     "searchUrl": "https://www.collicare.no/kundeservice/sporing",
+    "helpUrl": "https://www.collicare.no/kundeservice/kontakt-oss",
     "canaryUrl": "https://www.collicare.no/track-and-trace",
     "shows": [],
     "scraped": [],

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.walkers-transport.co.uk/",
+    "helpUrl": "https://walkers-transport.co.uk/contact-us/",
     "canaryUrl": "https://tracking.walkers-transport.co.uk/",
     "shows": [],
     "scraped": [],

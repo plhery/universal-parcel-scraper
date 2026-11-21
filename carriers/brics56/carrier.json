@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.brics56.com/track.html?no={trackingNumber}",
     "searchUrl": "https://www.brics56.com/track.html",
+    "helpUrl": "https://www.brics56.com/contact.html",
     "canaryUrl": "https://www.brics56.com/track.html",
     "shows": [],
     "scraped": [],

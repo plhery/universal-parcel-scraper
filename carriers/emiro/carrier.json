@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.emiro.ae/tracking/?tracking_id={trackingNumber}",
     "searchUrl": "https://www.emiro.ae/tracking/",
+    "helpUrl": "https://www.emiro.ae/contact/",
     "canaryUrl": "https://www.emiro.ae/tracking/",
     "shows": [],
     "scraped": [],

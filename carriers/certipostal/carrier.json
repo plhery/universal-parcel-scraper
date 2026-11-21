@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://certipostal.fivesoftcolombia.com/tag_detail_v1.html?d={trackingNumber}",
     "searchUrl": "https://certipostal.com/seguimientos/fivepostal/",
+    "helpUrl": "https://certipostal.com/contacto/",
     "canaryUrl": "https://certipostal.com/seguimientos/fivepostal/",
     "shows": [
       "status",

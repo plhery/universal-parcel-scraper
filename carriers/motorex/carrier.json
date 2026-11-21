@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.motorex.com.my/en/getTrackingList/{trackingNumber}",
     "searchUrl": "https://www.motorex.com.my/en/tracking-motorex",
+    "helpUrl": "https://samedaydelivery.motorex.com.my/cont/contact-us",
     "canaryUrl": "https://www.motorex.com.my/en/tracking-motorex",
     "shows": [],
     "scraped": [],

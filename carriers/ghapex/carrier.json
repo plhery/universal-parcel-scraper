@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ghapex.com/public-tracking",
+    "helpUrl": "https://ghapex.com/contact",
     "canaryUrl": "https://ghapex.com/public-tracking",
     "shows": [],
     "scraped": [],

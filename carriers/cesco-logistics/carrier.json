@@ -11,6 +11,7 @@
   "portal": {
     "url": "https://cesco-logistics.com/tracking.php",
     "searchUrl": "https://cesco-logistics.com/tracking.php",
+    "helpUrl": "https://cesco-logistics.com/contactus.php",
     "canaryUrl": "https://cesco-logistics.com/tracking.php",
     "shows": ["status", "history", "proof_of_delivery"],
     "scraped": ["status", "history"],

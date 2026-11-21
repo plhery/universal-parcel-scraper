@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "helpUrl": "https://www.dkl.ee/en/menu/6-CONTACTS.html",
     "canaryUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
     "shows": [],
     "scraped": [],

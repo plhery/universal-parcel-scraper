@@ -30,6 +30,7 @@
   ],
   "portal": {
     "url": "https://tracking.cargolane.net/tracking/ShipmentInfo?paramType=ctn_no&paramNo={trackingNumber}",
+    "helpUrl": "https://www.hlsholding.com/contactus",
     "canaryUrl": "https://tracking.cargolane.net/tracking/ShipmentInfo",
     "shows": [
       "status",

@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.iccworld.com/track-result.php?track_no={trackingNumber}",
     "searchUrl": "https://www.iccworld.com/",
+    "helpUrl": "https://www.iccworld.com/contact.html",
     "canaryUrl": "https://www.iccworld.com/",
     "shows": [
       "status",

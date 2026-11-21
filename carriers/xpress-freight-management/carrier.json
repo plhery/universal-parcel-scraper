@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://xfm.com.au/xpress-track/?consignmentNumber={trackingNumber}",
     "searchUrl": "https://xfm.com.au/xpress-track/",
+    "helpUrl": "https://xfm.com.au/get-started-with-us/",
     "canaryUrl": "https://xfm.com.au/xpress-track/",
     "shows": [],
     "scraped": [],

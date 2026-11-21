@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.sut56.com/service-query?no={trackingNumber}",
     "searchUrl": "https://www.sut56.com/service-query",
+    "helpUrl": "https://www.sut56.com/contact",
     "canaryUrl": "https://www.sut56.com/service-query",
     "shows": [],
     "scraped": [],

@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://rastreio.fmtransportes.com.br/#/{trackingNumber}",
     "searchUrl": "https://rastreio.fmtransportes.com.br/",
+    "helpUrl": "https://fmtransportes.com.br/faq/",
     "canaryUrl": "https://rastreio.fmtransportes.com.br/",
     "shows": [
       "status",

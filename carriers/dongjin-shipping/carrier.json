@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
     "searchUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
+    "helpUrl": "https://www.djship.co.kr/en/cs/person.asp",
     "canaryUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do",
     "shows": [
       "status",

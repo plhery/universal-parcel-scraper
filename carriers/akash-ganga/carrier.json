@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://agcgroup.in/track-now/?awb={trackingNumber}",
     "searchUrl": "https://agcgroup.in/track-now/",
+    "helpUrl": "https://agcgroup.in/contact/",
     "canaryUrl": "https://agcgroup.in/track-now/",
     "shows": [],
     "scraped": [],

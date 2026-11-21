@@ -35,6 +35,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.vnlin.com/trackIndex.html",
+    "helpUrl": "https://www.vnlin.com/contact-109-1.html",
     "canaryUrl": "https://www.vnlin.com/",
     "shows": [],
     "scraped": [],

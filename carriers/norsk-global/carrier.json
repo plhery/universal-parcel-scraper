@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://norsk.trackmyparcel.info/gb/tracking/{trackingNumber}",
     "searchUrl": "https://norsk.trackmyparcel.info/",
+    "helpUrl": "https://norsk.global/contact/contact-us.html",
     "canaryUrl": "https://norsk.trackmyparcel.info/",
     "shows": [
       "status",

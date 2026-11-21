@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://flashbird.ca/tracking/{trackingNumber}",
     "searchUrl": "https://flashbird.ca/tracking",
+    "helpUrl": "https://flashbird.ca/contact-us",
     "canaryUrl": "https://flashbird.ca/tracking",
     "shows": [
       "status",

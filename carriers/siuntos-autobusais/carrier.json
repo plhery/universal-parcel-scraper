@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
+    "helpUrl": "https://www.siuntosautobusais.lt/kontaktai/siuntos-autobusais-terminalai-lietuvoje/",
     "canaryUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
     "shows": [],
     "scraped": [],

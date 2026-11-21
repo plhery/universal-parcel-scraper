@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://promeddel.e-courier.com/promeddel/home/wizard_tracking.asp",
+    "helpUrl": "https://promeddel.e-courier.com/promeddel/home/AboutTemplate.asp?SubMenuID=0",
     "canaryUrl": "https://promeddel.e-courier.com/promeddel/home/wizard_tracking.asp",
     "shows": [],
     "scraped": [],

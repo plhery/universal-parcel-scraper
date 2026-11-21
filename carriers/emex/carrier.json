@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.emex.kz/otslezhivanie-po-kazahstanu?id={trackingNumber}",
     "searchUrl": "https://www.emex.kz/otslezhivanie-po-kazahstanu",
+    "helpUrl": "https://www.emex.kz/about/contacts",
     "canaryUrl": "https://www.emex.kz/",
     "shows": [],
     "scraped": [],

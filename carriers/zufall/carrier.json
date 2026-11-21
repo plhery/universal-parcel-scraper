@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://connect.zufall.de/Track/",
+    "helpUrl": "https://www.zufall.de/kontakt/",
     "canaryUrl": "https://connect.zufall.de/Track/",
     "shows": [],
     "scraped": [],

@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=en&quickNo={trackingNumber}",
     "searchUrl": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=en",
+    "helpUrl": "https://voc-ext.lxpantos.com/jsp/pc/en/util/customer-voice.jsp",
     "canaryUrl": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do",
     "shows": [
       "status",

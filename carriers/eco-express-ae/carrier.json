@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://app.ecofreight.ae/en/tracking/{trackingNumber}",
     "searchUrl": "https://app.ecofreight.ae/en/tracking",
+    "helpUrl": "https://ecofreight.ae/contact.php",
     "canaryUrl": "https://app.ecofreight.ae/en/tracking",
     "shows": [],
     "scraped": [],

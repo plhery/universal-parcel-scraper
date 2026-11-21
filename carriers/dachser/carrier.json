@@ -40,6 +40,7 @@
     "receiver_address"
   ],
   "portal": {
+    "helpUrl": "https://www.dachser.es/es/contacto-275",
     "canaryUrl": "https://customeriberia.dachser.com/customerarea/",
     "shows": [
       "status",

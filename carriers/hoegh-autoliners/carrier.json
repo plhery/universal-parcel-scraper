@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.hoeghautoliners.com/my-cargo",
     "searchUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "helpUrl": "https://www.hoeghautoliners.com/contact-us",
     "canaryUrl": "https://www.hoeghautoliners.com/my-cargo",
     "shows": [
       "status",

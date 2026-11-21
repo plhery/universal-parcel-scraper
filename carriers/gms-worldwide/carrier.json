@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.gmsworldwide.com/shipment-tracking?tracking_no={trackingNumber}&tracking_type=cnno",
     "searchUrl": "https://www.gmsworldwide.com/",
+    "helpUrl": "https://www.gmsworldwide.com/contact-us/",
     "canaryUrl": "https://www.gmsworldwide.com/",
     "shows": [
       "status",

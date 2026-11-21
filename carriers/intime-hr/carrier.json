@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.in-time.hr/pracenje?id={trackingNumber}",
     "searchUrl": "https://www.in-time.hr/pracenje",
+    "helpUrl": "https://www.in-time.hr/podrska",
     "canaryUrl": "https://www.in-time.hr/pracenje",
     "shows": [],
     "scraped": [],

@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.integralpack.com.ar/seguimiento?codigo={trackingNumber}",
     "searchUrl": "https://www.integralpack.com.ar/seguimiento",
+    "helpUrl": "https://www.integralpack.com.ar/contacto",
     "canaryUrl": "https://www.integralpack.com.ar/seguimiento",
     "shows": [
       "status",

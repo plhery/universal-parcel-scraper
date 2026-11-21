@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://aq-track.com/app/track/{trackingNumber}",
     "searchUrl": "https://aq-track.com/",
+    "helpUrl": "https://aq-track.com/contact",
     "canaryUrl": "https://aq-track.com/",
     "shows": [
       "status",

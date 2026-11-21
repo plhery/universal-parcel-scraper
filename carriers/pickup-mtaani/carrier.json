@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://new.pickupmtaani.com/track-package?package={trackingNumber}",
     "searchUrl": "https://new.pickupmtaani.com/track-package",
+    "helpUrl": "https://new.pickupmtaani.com/support",
     "canaryUrl": "https://new.pickupmtaani.com/track-package",
     "shows": [],
     "scraped": [],

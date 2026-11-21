@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://navata.com/track-consignment",
+    "helpUrl": "https://navata.com/faq",
     "canaryUrl": "https://navata.com/track-consignment",
     "shows": [],
     "scraped": [],

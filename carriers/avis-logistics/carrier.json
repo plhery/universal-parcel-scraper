@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://avislogistics.kz/?trace={trackingNumber}",
     "searchUrl": "https://avislogistics.kz/",
+    "helpUrl": "https://avislogistics.kz/pages/contacts/",
     "canaryUrl": "https://avislogistics.kz/",
     "shows": [],
     "scraped": [],

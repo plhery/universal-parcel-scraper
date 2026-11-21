@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://apcargo.com.ph/track/",
+    "helpUrl": "https://apcargo.com.ph/contact-us/",
     "canaryUrl": "https://apcargo.com.ph/track/",
     "shows": [
       "status",

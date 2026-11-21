@@ -16,6 +16,7 @@
   "portal": {
     "url": "https://integracargo.com/rastreo/",
     "searchUrl": "https://integracargo.com/rastreo/",
+    "helpUrl": "https://integracargo.com/contacto/",
     "canaryUrl": "https://integracargo.com/rastreo/",
     "shows": ["status", "history", "event_locations", "flights", "cargo_details"],
     "scraped": ["status", "history", "event_locations"],

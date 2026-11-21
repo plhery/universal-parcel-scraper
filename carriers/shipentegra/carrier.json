@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://track.shipentegra.com/?trackno={trackingNumber}",
     "searchUrl": "https://track.shipentegra.com/",
+    "helpUrl": "https://www.shipentegra.com/iletisim",
     "canaryUrl": "https://track.shipentegra.com/",
     "shows": [
       "status",

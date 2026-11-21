@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://gioexpress.com/tracking/?tracking={trackingNumber}&type=tracking",
     "searchUrl": "https://gioexpress.com/tracking/",
+    "helpUrl": "https://gioexpress.com/contact/",
     "canaryUrl": "https://gioexpress.com/",
     "shows": [],
     "scraped": [],

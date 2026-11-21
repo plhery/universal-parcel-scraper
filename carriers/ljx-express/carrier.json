@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ljxex.com/#/track",
+    "helpUrl": "https://www.ljxex.com/#/contact",
     "canaryUrl": "https://www.ljxex.com/",
     "shows": [],
     "scraped": [],

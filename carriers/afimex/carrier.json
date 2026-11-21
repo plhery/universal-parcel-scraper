@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://afimex.net/rastrea-envio",
+    "helpUrl": "https://afimex.net/contacto",
     "canaryUrl": "https://afimex.net/rastrea-envio",
     "shows": [],
     "scraped": [],

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "helpUrl": "https://www.nordbrief-ostsee.de/hilfe_kontakt/",
     "canaryUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
     "shows": [],
     "scraped": [],

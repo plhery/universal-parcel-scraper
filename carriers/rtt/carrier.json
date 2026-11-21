@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://intellitrack.rtt.co.za/?SearchString={trackingNumber}",
     "searchUrl": "https://intellitrack.rtt.co.za/",
+    "helpUrl": "https://www.rtt.co.za/contact-us/",
     "canaryUrl": "https://www.rtt.co.za/",
     "shows": [],
     "scraped": [],

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.time-critical-line.com/track-order",
+    "helpUrl": "https://www.time-critical-line.com/contact",
     "canaryUrl": "https://www.time-critical-line.com/track-order",
     "shows": [],
     "scraped": [],

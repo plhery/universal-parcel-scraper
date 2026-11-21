@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://tracking.messenger.cz/{trackingNumber}",
     "searchUrl": "https://tracking.messenger.cz/",
+    "helpUrl": "https://messenger.cz/cs/contact",
     "canaryUrl": "https://tracking.messenger.cz/",
     "shows": [
       "status",

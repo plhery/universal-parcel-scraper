@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.sendoexpress.net/tracking.html?code={trackingNumber}",
     "searchUrl": "https://www.sendoexpress.net/tracking.html",
+    "helpUrl": "https://www.sendoexpress.net/about.html",
     "canaryUrl": "https://www.sendoexpress.net/tracking.html",
     "shows": [],
     "scraped": [],

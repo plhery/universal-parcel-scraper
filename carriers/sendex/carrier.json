@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://sendex.coordi.com/rastreo/",
+    "helpUrl": "https://sendex.coordi.com/contactenos/",
     "canaryUrl": "https://sendex.coordi.com/rastreo/",
     "shows": [
       "status",

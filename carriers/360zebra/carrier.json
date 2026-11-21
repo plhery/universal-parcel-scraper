@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.360zebra.com/web/tracking?trackingnbrs={trackingNumber}",
     "searchUrl": "https://www.360zebra.com/web/tracking",
+    "helpUrl": "https://www.360zebra.com/web/contact",
     "canaryUrl": "https://www.360zebra.com/web/tracking",
     "shows": [],
     "scraped": [],

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.prismacourier.gr/parcel-tracking",
+    "helpUrl": "https://www.prismacourier.gr/contact-us",
     "canaryUrl": "https://www.prismacourier.gr/parcel-tracking",
     "shows": [],
     "scraped": [],

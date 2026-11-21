@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.3peex.com/tracking.html",
+    "helpUrl": "https://www.3peex.com/contact.html",
     "canaryUrl": "https://www.3peex.com/",
     "shows": [],
     "scraped": [],

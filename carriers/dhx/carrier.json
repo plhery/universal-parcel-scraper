@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.dhx.com/quicktrack.aspx",
+    "helpUrl": "https://www.dhx.com/contact-help.aspx",
     "canaryUrl": "https://www.dhx.com/quicktrack.aspx",
     "shows": [],
     "scraped": [],

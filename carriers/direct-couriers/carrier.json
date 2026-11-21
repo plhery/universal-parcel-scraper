@@ -21,6 +21,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://appsrv.directcouriers.com.au/online/jobtrackgen.cl",
+    "helpUrl": "https://www.directcouriers.com.au/resources/faqs",
     "canaryUrl": "https://appsrv.directcouriers.com.au/online/jobtrackgen.cl",
     "shows": [],
     "scraped": [],

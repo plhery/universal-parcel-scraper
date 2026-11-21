@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://qwqer.eu/lv/en/sutijumu-izsekosana",
+    "helpUrl": "https://qwqer.eu/lv/en/kontakti",
     "canaryUrl": "https://qwqer.eu/lv/en/sutijumu-izsekosana",
     "shows": [],
     "scraped": [],

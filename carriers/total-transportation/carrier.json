@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.carrierlogistics.com/scripts/tot.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "searchUrl": "https://tracking.carrierlogistics.com/scripts/tot.pol/facts.htm",
+    "helpUrl": "https://ttdwest.com/contact-us/",
     "canaryUrl": "https://tracking.carrierlogistics.com/scripts/tot.pol/facts.htm",
     "shows": [],
     "scraped": [],

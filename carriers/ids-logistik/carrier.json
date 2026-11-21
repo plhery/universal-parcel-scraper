@@ -45,6 +45,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.ids-logistik.de/de/sendungsverfolgung",
+    "helpUrl": "https://www.ids-logistik.de/de/hilfe",
     "canaryUrl": "https://www.ids-logistik.de/de/sendungsverfolgung",
     "shows": [
       "status",

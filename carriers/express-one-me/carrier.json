@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://expressone.me/pracenje-posiljke",
+    "helpUrl": "https://expressone.me/kontakt",
     "canaryUrl": "https://expressone.me/pracenje-posiljke",
     "shows": [],
     "scraped": [],

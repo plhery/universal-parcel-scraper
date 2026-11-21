@@ -34,6 +34,7 @@
   ],
   "portal": {
     "url": "https://www.nimexpress.com/web/p/tracking?h_i={trackingNumber}",
+    "helpUrl": "https://www.nimexpress.com/web/p/contactus",
     "canaryUrl": "https://www.nimexpress.com/web/p/tracking",
     "shows": [
       "status",

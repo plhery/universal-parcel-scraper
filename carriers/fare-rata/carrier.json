@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://espace-client.farerata.pf/suivre-un-envoi",
+    "helpUrl": "https://www.farerata.pf/fr/p/contactez-nous",
     "canaryUrl": "https://www.farerata.pf/fr/",
     "shows": [],
     "scraped": [],

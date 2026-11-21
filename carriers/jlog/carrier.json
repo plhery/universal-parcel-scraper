@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://jlog.co.za/tracking/{trackingNumber}",
     "searchUrl": "https://jlog.co.za/tracking/",
+    "helpUrl": "https://jlog.co.za/contact-us/",
     "canaryUrl": "https://jlog.co.za/tracking/",
     "shows": [],
     "scraped": [],

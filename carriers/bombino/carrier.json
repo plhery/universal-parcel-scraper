@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://www.bombinoexp.com/track?tracking_no={trackingNumber}",
     "searchUrl": "https://www.bombinoexp.com/track",
+    "helpUrl": "https://www.bombinoexp.com/contact",
     "canaryUrl": "https://www.bombinoexp.com/track",
     "shows": [
       "status",

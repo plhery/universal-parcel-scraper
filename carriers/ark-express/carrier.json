@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://express.arkexpress.com.au/q?s={trackingNumber}",
     "searchUrl": "https://express.arkexpress.com.au/",
+    "helpUrl": "https://express.arkexpress.com.au/contact",
     "canaryUrl": "https://express.arkexpress.com.au/",
     "shows": [],
     "scraped": [],

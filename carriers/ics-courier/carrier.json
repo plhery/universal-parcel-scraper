@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.icscourier.ca/online-services/parcel-tracking.aspx?trackNums={trackingNumber}",
     "searchUrl": "https://www.icscourier.ca/online-services/parcel-tracking.aspx",
+    "helpUrl": "https://www.icscourier.ca/about-us/contactics.aspx",
     "canaryUrl": "https://www.icscourier.ca/online-services/parcel-tracking.aspx",
     "shows": [
       "status",

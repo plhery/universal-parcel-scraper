@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://aics.in/tracking/?tracking_number={trackingNumber}",
     "searchUrl": "https://aics.in/tracking/",
+    "helpUrl": "https://aics.in/contact-aics/",
     "canaryUrl": "https://aics.in/tracking/",
     "shows": [],
     "scraped": [],

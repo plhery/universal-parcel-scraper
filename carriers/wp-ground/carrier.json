@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.wpglogis.com/tracking/?ext_trackingNumber={trackingNumber}",
     "searchUrl": "https://www.wpglogis.com/tracking/",
+    "helpUrl": "https://www.wpglogis.com/support/",
     "canaryUrl": "https://www.wpglogis.com/tracking/",
     "shows": [
       "status",

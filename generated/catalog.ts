@@ -606,6 +606,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       ]
     },
     "canaryUrl": "https://customeriberia.dachser.com/customerarea/",
+    "helpUrl": "https://www.dachser.es/es/contacto-275",
     "linkRules": [
       {
         "domains": [
@@ -932,6 +933,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": null
     },
     "trackingUrlTemplate": "https://www.amazon.com/gp/your-account/order-history",
+    "helpUrl": "https://www.amazon.com/gp/help/customer/display.html?nodeId=GEW3XT9JEMBLTKRV",
     "linkRules": [
       {
         "domains": [
@@ -1831,6 +1833,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://myportal.heppner-group.com/tracking",
     "trackingUrlTemplate": "https://www.heppner-group.com/destinataire-suivez-votre-marchandise/",
     "trackingSearchUrl": "https://www.heppner-group.com/destinataire-suivez-votre-marchandise/",
+    "helpUrl": "https://www.heppner-group.com/contactez-nous/",
     "linkRules": [],
     "detectionRules": [
       {
@@ -5717,6 +5720,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.139express.com/Home/Search_Tracking",
     "trackingUrlTemplate": "https://www.139express.com/Home/vipsearch?keyword={trackingNumber}",
     "trackingSearchUrl": "https://www.139express.com/Home/Search_Tracking",
+    "helpUrl": "https://www.139express.com/home/sef/146",
     "linkRules": [
       {
         "domains": [
@@ -5845,6 +5849,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://24curier.ro/",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13",
+    "helpUrl": "https://24curier.ro/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -5866,6 +5871,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://2eboxcasilla.com/",
     "trackingSearchUrl": "https://2eboxcasilla.com/",
+    "helpUrl": "https://2eboxcasilla.com/contacto",
     "linkRules": [],
     "detectionRules": []
   },
@@ -5995,6 +6001,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.360zebra.com/web/tracking",
     "trackingUrlTemplate": "https://www.360zebra.com/web/tracking?trackingnbrs={trackingNumber}",
     "trackingSearchUrl": "https://www.360zebra.com/web/tracking",
+    "helpUrl": "https://www.360zebra.com/web/contact",
     "linkRules": [
       {
         "domains": [
@@ -6029,6 +6036,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.3peex.com/",
     "trackingSearchUrl": "https://www.3peex.com/tracking.html",
+    "helpUrl": "https://www.3peex.com/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -6105,6 +6113,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cms.4aexpress.com/Query/TrackAwbNoQuery.aspx",
     "trackingSearchUrl": "https://cms.4aexpress.com/Query/TrackAwbNoQuery.aspx",
+    "helpUrl": "https://4aexpress.com/%ce%b5%cf%80%ce%b9%ce%ba%ce%bf%ce%b9%ce%bd%cf%89%ce%bd%ce%af%ce%b1/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -6131,6 +6140,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://4sides.ru/tracking",
     "trackingUrlTemplate": "https://4sides.ru/tracking?number={trackingNumber}",
     "trackingSearchUrl": "https://4sides.ru/tracking",
+    "helpUrl": "https://4sides.ru/contacts",
     "linkRules": [
       {
         "domains": [
@@ -6237,6 +6247,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://api.7hoursexpress.com/tracking/",
     "trackingUrlTemplate": "https://api.7hoursexpress.com/tracking/?objectId={trackingNumber}&language=en",
     "trackingSearchUrl": "https://api.7hoursexpress.com/tracking/",
+    "helpUrl": "https://7hoursexpress.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -6347,6 +6358,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ttsecure.hartrodt.com/pserv/tt/open",
     "trackingSearchUrl": "https://ttsecure.hartrodt.com/pserv/tt/open?sep=1",
+    "helpUrl": "https://www.hartrodt.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -6455,6 +6467,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://a2b.ba/pracenje/",
     "trackingUrlTemplate": "https://a2b.ba/pracenje/?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://a2b.ba/pracenje/",
+    "helpUrl": "https://a2b.ba/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -6487,6 +6500,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://a2bfi.opter.cloud/TT",
     "trackingUrlTemplate": "https://a2bfi.opter.cloud/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://a2bfi.opter.cloud/TT",
+    "helpUrl": "https://a2b.fi/yhteystiedot/",
     "linkRules": [
       {
         "domains": [
@@ -6518,6 +6532,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://a3transportno.opter.cloud/tt",
     "trackingUrlTemplate": "https://a3transportno.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://a3transportno.opter.cloud/tt",
+    "helpUrl": "https://a3transport.no/kontakt-oss/",
     "linkRules": [
       {
         "domains": [
@@ -6598,6 +6613,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://abcourier.com/",
     "trackingUrlTemplate": "https://abcourier.com/CCWebClient/General/TrackingInfo/{trackingNumber}",
     "trackingSearchUrl": "https://abcourier.com/",
+    "helpUrl": "https://abcourier.com/Forms/ContactUs.aspx",
     "linkRules": [
       {
         "domains": [
@@ -6635,6 +6651,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://abccargoxpress.com/",
     "trackingSearchUrl": "https://abccargoxpress.com/",
+    "helpUrl": "https://abccargoxpress.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -6694,6 +6711,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.acelogistics.eu/ee/en/service/cargo-tracking/",
     "trackingUrlTemplate": "https://www.acelogistics.eu/tracker/tracker_en.php?office=EE&cc=EE&ref={trackingNumber}",
     "trackingSearchUrl": "https://www.acelogistics.eu/ee/en/service/cargo-tracking/",
+    "helpUrl": "https://www.acelogistics.eu/ee/en/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -6727,6 +6745,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.acelogistics.eu/lt/en/service/cargo-tracking/",
     "trackingUrlTemplate": "https://www.acelogistics.eu/tracker/tracker_en.php?office=LT&cc=LT&ref={trackingNumber}",
     "trackingSearchUrl": "https://www.acelogistics.eu/lt/en/service/cargo-tracking/",
+    "helpUrl": "https://www.acelogistics.eu/lt/en/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -6759,6 +6778,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.acelogistics.eu/lv/en/service/cargo-tracking/",
     "trackingUrlTemplate": "https://www.acelogistics.eu/tracker/tracker_en.php?office=LV&cc=LV&ref={trackingNumber}",
     "trackingSearchUrl": "https://www.acelogistics.eu/lv/en/service/cargo-tracking/",
+    "helpUrl": "https://www.acelogistics.eu/lv/en/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -6826,6 +6846,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.aciexpress.net/delivery/",
     "trackingUrlTemplate": "https://www.acieshop.com/pod.php?OrderNo={trackingNumber}",
     "trackingSearchUrl": "https://www.aciexpress.net/delivery/",
+    "helpUrl": "https://www.aciexpress.net/customer/board_list.html",
     "linkRules": [
       {
         "domains": [
@@ -6914,6 +6935,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://acplcargo.com/tracking",
     "trackingUrlTemplate": "https://acplcargo.com/tracking?gcNumber={trackingNumber}",
     "trackingSearchUrl": "https://acplcargo.com/tracking",
+    "helpUrl": "https://acplcargo.com/customer-care",
     "linkRules": [
       {
         "domains": [
@@ -7000,6 +7022,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.argoscom.gr/",
     "trackingSearchUrl": "https://www.argoscom.gr/index.php?page=55",
+    "helpUrl": "https://www.argoscom.gr/index.php?page=18",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7020,6 +7043,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://actlogistics.pperfect.com/",
     "trackingSearchUrl": "https://actlogistics.pperfect.com/",
+    "helpUrl": "https://act-logistics.co.za/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7041,6 +7065,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://aderonline.com/contacto/informacion-de-pedidos/",
     "trackingSearchUrl": "https://aderonline.com/contacto/informacion-de-pedidos/",
+    "helpUrl": "https://aderonline.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7063,6 +7088,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://adex.al/gjurmo/",
     "trackingSearchUrl": "https://adex.al/gjurmo/",
+    "helpUrl": "https://adex.al/kontakto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7084,6 +7110,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ads-intl.com/track-shipment/",
     "trackingUrlTemplate": "https://ads-intl.com/track-shipment/?type=waybill&number={trackingNumber}",
     "trackingSearchUrl": "https://ads-intl.com/track-shipment/",
+    "helpUrl": "https://ads-intl.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -7117,6 +7144,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
     "trackingUrlTemplate": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
     "trackingSearchUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://cargo.aerolineas.com.ar/es-ar/contactenos",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7138,6 +7166,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.aeronet.com/tracking/",
     "trackingSearchUrl": "https://www.aeronet.com/tracking/",
+    "helpUrl": "https://www.aeronet.com/national-control-center-24-7-customer-support/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7155,6 +7184,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://aeropaq.com/",
     "trackingSearchUrl": "https://aeropaq.com/",
+    "helpUrl": "https://aeropaq.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7264,6 +7294,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.aex.com.py/web/tracking.php",
     "trackingUrlTemplate": "https://www.aex.com.py/web/tracking.php?guia={trackingNumber}",
     "trackingSearchUrl": "https://www.aex.com.py/web/tracking.php",
+    "helpUrl": "https://www.aex.com.py/web/contactenos.php",
     "linkRules": [
       {
         "domains": [
@@ -7334,6 +7365,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://afimex.net/rastrea-envio",
     "trackingSearchUrl": "https://afimex.net/rastrea-envio",
+    "helpUrl": "https://afimex.net/contacto",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7356,6 +7388,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.agtkurye.com.tr/",
     "trackingSearchUrl": "https://takip.agtkurye.com/",
+    "helpUrl": "https://www.agtkurye.com.tr/bize-ulasin",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7429,6 +7462,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://aics.in/tracking/",
     "trackingUrlTemplate": "https://aics.in/tracking/?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://aics.in/tracking/",
+    "helpUrl": "https://aics.in/contact-aics/",
     "linkRules": [
       {
         "domains": [
@@ -7461,6 +7495,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://aioloscourier.gr/track-trace/",
     "trackingUrlTemplate": "https://aioloscourier.gr/track-trace/?shipping_num={trackingNumber}",
     "trackingSearchUrl": "https://aioloscourier.gr/track-trace/",
+    "helpUrl": "https://aioloscourier.gr/network/",
     "linkRules": [
       {
         "domains": [
@@ -7495,6 +7530,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.uxtracking.com/tracking.asp",
     "trackingSearchUrl": "https://www.uxtracking.com/tracking.asp",
+    "helpUrl": "https://www.uxtracking.com/Contact.asp",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7518,6 +7554,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
     "trackingUrlTemplate": "https://airgreenland.com/cargo/tracking-awb/",
     "trackingSearchUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "helpUrl": "https://airgreenland.com/cargo/contact-air-greenland-cargo/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7539,6 +7576,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
     "trackingSearchUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "helpUrl": "https://www.airinuit.com/en/about-air-inuit/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7561,6 +7599,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://authorcodesoftware.in/airstarxpresscourier/newmastertracking.aspx",
     "trackingSearchUrl": "https://authorcodesoftware.in/airstarxpresscourier/newmastertracking.aspx",
+    "helpUrl": "https://www.airstarxpress.com/Home/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7584,6 +7623,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
     "trackingUrlTemplate": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
     "trackingSearchUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://help.teleport.it/category/cargo/cargo-knowledgebase",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7680,6 +7720,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://myclient.airroad.com.au/",
     "trackingSearchUrl": "https://www.airroad.com.au/quick-track/",
+    "helpUrl": "https://www.airroad.com.au/support/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7707,6 +7748,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://airspeed.ph/track-cargo/",
     "trackingUrlTemplate": "https://logistics.airspeed.com.ph/track/TrackingSearch.aspx?waybill={trackingNumber}",
     "trackingSearchUrl": "https://airspeed.ph/track-cargo/",
+    "helpUrl": "https://airspeed.ph/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -7739,6 +7781,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.airtransgroup.com/results/",
     "trackingUrlTemplate": "https://www.airtransgroup.com/results/?param={trackingNumber}",
     "trackingSearchUrl": "https://www.airtransgroup.com/",
+    "helpUrl": "https://www.airtransgroup.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -7772,6 +7815,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
     "trackingUrlTemplate": "https://airwayscourier.co.in/Tracking_new.aspx?awb_no={trackingNumber}&type=w",
     "trackingSearchUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
+    "helpUrl": "https://airwayscourier.co.in/contact.aspx",
     "linkRules": [
       {
         "domains": [
@@ -7806,6 +7850,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://airwingsindia.com/",
     "trackingUrlTemplate": "https://airwingsindia.com/tracking.html?awbno={trackingNumber}",
     "trackingSearchUrl": "https://airwingsindia.com/tracking.html",
+    "helpUrl": "https://airwingsindia.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -7842,6 +7887,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://aithomedelivery.com/en-gb/",
     "trackingSearchUrl": "https://aithomedelivery.com/en-gb/",
+    "helpUrl": "https://aithomedelivery.com/en-gb/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7867,6 +7913,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://fastrak.aitworldwide.com/",
     "trackingUrlTemplate": "https://fastrak.aitworldwide.com/?trackingnumber={trackingNumber}",
     "trackingSearchUrl": "https://fastrak.aitworldwide.com/",
+    "helpUrl": "https://www.aitworldwide.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -7903,6 +7950,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://aj-ex.com/shipment-tracking",
     "trackingUrlTemplate": "https://aj-ex.com/shipment-status/{trackingNumber}",
     "trackingSearchUrl": "https://aj-ex.com/shipment-tracking",
+    "helpUrl": "https://aj-ex.com/help-and-support/contact-us-now",
     "linkRules": [
       {
         "domains": [
@@ -7949,6 +7997,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
     "trackingUrlTemplate": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
     "trackingSearchUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://www.akasaair.com/quick-links/cargo",
     "linkRules": [],
     "detectionRules": []
   },
@@ -7972,6 +8021,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://agcgroup.in/track-now/",
     "trackingUrlTemplate": "https://agcgroup.in/track-now/?awb={trackingNumber}",
     "trackingSearchUrl": "https://agcgroup.in/track-now/",
+    "helpUrl": "https://agcgroup.in/contact/",
     "linkRules": [
       {
         "domains": [
@@ -8016,6 +8066,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gapakisexpress.com/track-your-packages/",
     "trackingUrlTemplate": "https://gapakisexpress.com/track-your-packages/?tracking_num={trackingNumber}",
     "trackingSearchUrl": "https://gapakisexpress.com/track-your-packages/",
+    "helpUrl": "https://gapakisexpress.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -8048,6 +8099,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://intranet.akropost.com/tracking",
     "trackingSearchUrl": "https://intranet.akropost.com/tracking",
+    "helpUrl": "https://akropost.com/es/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8071,6 +8123,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.aks.rs/pracenje-posiljke/",
     "trackingSearchUrl": "https://www.aks.rs/pracenje-posiljke/",
+    "helpUrl": "https://www.aks.rs/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8130,6 +8183,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.albatomi.ro/",
     "trackingSearchUrl": "https://www.albatomi.ro/",
+    "helpUrl": "https://www.albatomi.ro/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8207,6 +8261,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://alfamensajes.com/",
     "trackingUrlTemplate": "https://alfamensajes.com/consulta/{trackingNumber}",
     "trackingSearchUrl": "https://alfamensajes.com/",
+    "helpUrl": "https://alfamensajes.com/pqrs",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8227,6 +8282,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://alfatransportes.com.br/",
     "trackingSearchUrl": "https://alfatransportes.com.br/",
+    "helpUrl": "https://alfatransportes.com.br/central-de-duvidas/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8248,6 +8304,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://alftafraktse.opter.cloud/tt",
     "trackingUrlTemplate": "https://alftafraktse.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://alftafraktse.opter.cloud/tt",
+    "helpUrl": "https://www.alftafrakt.se/kontakta-oss/",
     "linkRules": [
       {
         "domains": [
@@ -8340,6 +8397,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://alilpost.com/en/tracking/",
     "trackingSearchUrl": "https://alilpost.com/en/tracking/",
+    "helpUrl": "https://alilpost.com/en/contacts/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8416,6 +8474,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://worldtrak.shipalliance.com/cvportal/shipinquiry/quicktrack.aspx",
     "trackingSearchUrl": "https://worldtrak.shipalliance.com/cvportal/shipinquiry/quicktrack.aspx",
+    "helpUrl": "https://shipalliance.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8506,6 +8565,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.alohafreight.com/portal/",
     "trackingSearchUrl": "https://www.alohafreight.com/portal/",
+    "helpUrl": "https://www.alohafreight.com/company-directory",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8588,6 +8648,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://valls.factapp.es/IRIS/Seguimiento",
     "trackingSearchUrl": "https://valls.factapp.es/IRIS/Seguimiento",
+    "helpUrl": "https://www.altcampexpress.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8609,6 +8670,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://curier.altex.ro/",
     "trackingSearchUrl": "https://curier.altex.ro/",
+    "helpUrl": "https://altex.ro/contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -8629,6 +8691,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.amtrucking.com/tracking.php",
     "trackingUrlTemplate": "https://www.amtrucking.com/track-number.php?cnumber={trackingNumber}",
     "trackingSearchUrl": "https://www.amtrucking.com/tracking.php",
+    "helpUrl": "https://www.amtrucking.com/contact.php",
     "linkRules": [
       {
         "domains": [
@@ -8674,6 +8737,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.amaldist.com.au/",
     "trackingUrlTemplate": "https://online.amaldist.com.au/track/?item={trackingNumber}",
     "trackingSearchUrl": "https://online.amaldist.com.au/track/",
+    "helpUrl": "https://www.amaldist.com.au/contact",
     "linkRules": [
       {
         "domains": [
@@ -8741,6 +8805,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "linkToken": true
     },
     "canaryUrl": "https://www.amazon.com/progress-tracker/package/share/",
+    "helpUrl": "https://www.amazon.com/gp/help/customer/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -8800,6 +8865,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ambroexpress.pl/",
     "trackingUrlTemplate": "https://ambroexpress.pl/sledzenie-przesylek#{trackingNumber}",
     "trackingSearchUrl": "https://ambroexpress.pl/sledzenie-przesylek",
+    "helpUrl": "https://ambroexpress.pl/kontakt",
     "linkRules": [
       {
         "domains": [
@@ -8863,6 +8929,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://awest.freightgate.com/awestTrack.html",
     "trackingUrlTemplate": "https://awest.freightgate.com/cgi-bin/tarifftrek5.1/itrek.cgi?database=awest&type=submit&interface=pltx&open_interface_search=Search+Now&open_text={trackingNumber}&SearchOn=open_billno",
     "trackingSearchUrl": "https://awest.freightgate.com/awestTrack.html",
+    "helpUrl": "https://www.awest.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -8895,6 +8962,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://amerijet.com/air-waybill-tracking/",
     "trackingSearchUrl": "https://amerijet.com/air-waybill-tracking/",
+    "helpUrl": "https://amerijet.com/help-and-support-center/",
     "linkRules": [],
     "detectionRules": [
       {
@@ -8924,6 +8992,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ameriship.com/",
     "trackingUrlTemplate": "https://ameriship.com/track/?n={trackingNumber}",
     "trackingSearchUrl": "https://ameriship.com/track/",
+    "helpUrl": "https://ameriship.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -8972,6 +9041,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://grupoampm.com/rastreador/",
     "trackingUrlTemplate": "https://grupoampm.com/rastreador/?tracking-id={trackingNumber}",
     "trackingSearchUrl": "https://grupoampm.com/rastreador/",
+    "helpUrl": "https://grupoampm.com/consulta-el-estatus-de-tus-envios-y-guias-2-2/",
     "linkRules": [
       {
         "domains": [
@@ -9006,6 +9076,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.amsegroup.com.au/track-trace/",
     "trackingSearchUrl": "https://www.amsegroup.com.au/track-trace/",
+    "helpUrl": "https://www.amsegroup.com.au/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -9030,6 +9101,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ancdelivers.com.au/receiving/track-your-item",
     "trackingUrlTemplate": "https://ancdelivers.com.au/track/{trackingNumber}",
     "trackingSearchUrl": "https://ancdelivers.com.au/receiving/track-your-item",
+    "helpUrl": "https://ancdelivers.com.au/help-support/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -9347,6 +9419,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ant-vl.com/%CE%B1%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7-%CE%B1%CF%80%CE%BF%CF%83%CF%84%CE%BF%CE%BB%CE%AE%CF%82/",
     "trackingSearchUrl": "https://ant-vl.com/%CE%B1%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7-%CE%B1%CF%80%CE%BF%CF%83%CF%84%CE%BF%CE%BB%CE%AE%CF%82/",
+    "helpUrl": "https://ant-vl.com/%ce%b5%cf%80%ce%b9%ce%ba%ce%bf%ce%b9%ce%bd%cf%89%ce%bd%ce%af%ce%b1/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -9369,6 +9442,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.antariaclientes.com/seguimiento.php",
     "trackingSearchUrl": "https://www.antariaclientes.com/seguimiento.php",
+    "helpUrl": "https://antariaservices.es/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -9425,6 +9499,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://apcargo.com.ph/track/",
     "trackingSearchUrl": "https://apcargo.com.ph/track/",
+    "helpUrl": "https://apcargo.com.ph/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -9443,6 +9518,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.aparcels.com/",
     "trackingUrlTemplate": "https://www.aparcels.com/track/{trackingNumber}",
     "trackingSearchUrl": "https://www.aparcels.com/",
+    "helpUrl": "https://www.aparcels.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -9517,6 +9593,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.apc-pli.com/",
     "trackingUrlTemplate": "https://tracking.apc-pli.com/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.apc-pli.com/",
+    "helpUrl": "https://www.apc-pli.com/consumer-tracking-support",
     "linkRules": [
       {
         "domains": [
@@ -9555,6 +9632,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://online.apdparcel.com.au/track",
     "trackingSearchUrl": "https://online.apdparcel.com.au/track",
+    "helpUrl": "https://apdparcel.com.au/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -9582,6 +9660,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://apgecommerce.com/track/",
     "trackingUrlTemplate": "https://apgecommerce.com/track-result/?track_sequenceNo={trackingNumber}",
     "trackingSearchUrl": "https://apgecommerce.com/track/",
+    "helpUrl": "https://apgecommerce.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -9616,6 +9695,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.apg-global.com/",
     "trackingUrlTemplate": "https://tracking.apg-global.com/Home/Track?trackings=%5B%22{trackingNumber}%22%5D",
     "trackingSearchUrl": "https://tracking.apg-global.com/",
+    "helpUrl": "https://apg-global.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -9647,6 +9727,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://apmlogistics.id/cek-resi",
     "trackingUrlTemplate": "https://apmlogistics.id/cek-resi?resi={trackingNumber}",
     "trackingSearchUrl": "https://apmlogistics.id/cek-resi",
+    "helpUrl": "https://apmlogistics.id/contact",
     "linkRules": [
       {
         "domains": [
@@ -9678,6 +9759,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://apollono.opter.cloud/TT",
     "trackingUrlTemplate": "https://apollono.opter.cloud/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://apollono.opter.cloud/TT",
+    "helpUrl": "https://apollobud.no/om-oss/#kontakt",
     "linkRules": [
       {
         "domains": [
@@ -9716,6 +9798,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.appleexpress.com/",
     "trackingUrlTemplate": "https://track.appleexpress.com/orderNumber/{trackingNumber}",
     "trackingSearchUrl": "https://track.appleexpress.com/",
+    "helpUrl": "https://www.appleexpress.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -9772,6 +9855,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://corporate.apxlog.com/trc/tracking.php",
     "trackingUrlTemplate": "https://corporate.apxlog.com/trc/tracking.php?id={trackingNumber}",
     "trackingSearchUrl": "https://www.apxlog.com/index.php/en/",
+    "helpUrl": "https://www.apxlog.com/index.php/en/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -9810,6 +9894,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://aq-track.com/",
     "trackingUrlTemplate": "https://aq-track.com/app/track/{trackingNumber}",
     "trackingSearchUrl": "https://aq-track.com/",
+    "helpUrl": "https://aq-track.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -9855,6 +9940,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://aqxlogistics.com/",
     "trackingUrlTemplate": "https://aqxlogistics.com/track?id={trackingNumber}",
     "trackingSearchUrl": "https://aqxlogistics.com/track",
+    "helpUrl": "https://aqxlogistics.com/faqs",
     "linkRules": [
       {
         "domains": [
@@ -10017,6 +10103,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.arcospedizioni.it/",
     "trackingSearchUrl": "https://www.arcospedizioni.it/",
+    "helpUrl": "https://www.arcospedizioni.it/contatti/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -10046,6 +10133,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://express.arkexpress.com.au/",
     "trackingUrlTemplate": "https://express.arkexpress.com.au/q?s={trackingNumber}",
     "trackingSearchUrl": "https://express.arkexpress.com.au/",
+    "helpUrl": "https://express.arkexpress.com.au/contact",
     "linkRules": [
       {
         "domains": [
@@ -10094,6 +10182,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://arrow-express.eu/",
     "trackingSearchUrl": "https://arrow-express.eu/",
+    "helpUrl": "https://arrow-express.eu/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -10224,6 +10313,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://asapcouriers.gr/tracking",
     "trackingUrlTemplate": "https://asapcouriers.gr/tracking?number={trackingNumber}",
     "trackingSearchUrl": "https://asapcouriers.gr/tracking",
+    "helpUrl": "https://asapcouriers.gr/contact",
     "linkRules": [
       {
         "domains": [
@@ -10269,6 +10359,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.ase.com.tr/cwb/trackshipment",
     "trackingUrlTemplate": "https://tracking.ase.com.tr/cwb/trackshipment?lang=en&Id={trackingNumber}",
     "trackingSearchUrl": "https://tracking.ase.com.tr/cwb/trackshipment?lang=en",
+    "helpUrl": "https://online.ase.com.tr/contact?lang=en",
     "linkRules": [
       {
         "domains": [
@@ -10311,6 +10402,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.asiaflyexp.com/",
     "trackingUrlTemplate": "https://www.asiaflyexp.com/order-search.html?no={trackingNumber}",
     "trackingSearchUrl": "https://www.asiaflyexp.com/order-search.html",
+    "helpUrl": "https://www.asiaflyexp.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -10394,6 +10486,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://astral.fr8booking.com/trackAndTrace",
     "trackingUrlTemplate": "https://astral.fr8booking.com/trackAndTrace",
     "trackingSearchUrl": "https://astral.fr8booking.com/trackAndTrace",
+    "helpUrl": "https://astral-aviation.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -10420,6 +10513,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.asyadexpress.om/track-trace",
     "trackingUrlTemplate": "https://www.asyadexpress.om/track-trace/{trackingNumber}",
     "trackingSearchUrl": "https://www.asyadexpress.om/track-trace",
+    "helpUrl": "https://www.asyadexpress.om/contact/contact_us",
     "linkRules": [
       {
         "domains": [
@@ -10508,6 +10602,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ativalog.com.br/",
     "trackingSearchUrl": "https://ativalog.com.br/",
+    "helpUrl": "https://ativalog.com.br/contato/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -10535,6 +10630,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.aclcargo.com/track-trace/",
     "trackingSearchUrl": "https://www.aclcargo.com/track-trace/",
     "trackingSiteName": "ACL Track & Trace",
+    "helpUrl": "https://www.aclcargo.com/contacts/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -10557,6 +10653,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://atlanticcourier.net/track/",
     "trackingUrlTemplate": "https://atlanticcourier.net/track/{trackingNumber}/",
     "trackingSearchUrl": "https://atlanticcourier.net/track/",
+    "helpUrl": "https://atlanticcourier.net/contact/",
     "linkRules": [
       {
         "domains": [
@@ -10601,6 +10698,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.atshealthcare.ca/ShipTracking-en",
     "trackingUrlTemplate": "https://www.atshealthcare.ca/quickTrackResult?ship={trackingNumber}",
     "trackingSearchUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "helpUrl": "https://www.atshealthcare.ca/contact",
     "linkRules": [
       {
         "domains": [
@@ -10632,6 +10730,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cliente.atualcargas.com.br/rastreamento",
     "trackingSearchUrl": "https://cliente.atualcargas.com.br/rastreamento",
+    "helpUrl": "https://www.atualcargas.com.br/fale-conosco/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -10657,6 +10756,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.auexpress.com/tracking",
     "trackingUrlTemplate": "https://www.auexpress.com/tracking?OrderId={trackingNumber}",
     "trackingSearchUrl": "https://www.auexpress.com/tracking",
+    "helpUrl": "https://www.auexpress.com/support",
     "linkRules": [
       {
         "domains": [
@@ -10727,6 +10827,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://avislogistics.kz/",
     "trackingUrlTemplate": "https://avislogistics.kz/?trace={trackingNumber}",
     "trackingSearchUrl": "https://avislogistics.kz/",
+    "helpUrl": "https://avislogistics.kz/pages/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -10806,6 +10907,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.azems.az/az/gonderis-izle",
     "trackingUrlTemplate": "https://www.azems.az/az/gonderis-izle?package_id={trackingNumber}",
     "trackingSearchUrl": "https://www.azems.az/az/gonderis-izle",
+    "helpUrl": "https://www.azems.az/az/elaqe",
     "linkRules": [
       {
         "domains": [
@@ -10928,6 +11030,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.baikalsr.ru/tools/tracking/",
     "trackingSearchUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "helpUrl": "https://www.baikalsr.ru/company/feedback/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -10994,6 +11097,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://banlingwuliu.com/detail/track/transLogistic.html",
     "trackingSearchUrl": "https://banlingwuliu.com/detail/track/transLogistic.html",
+    "helpUrl": "https://banlingwuliu.com/detail/Join/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -11073,6 +11177,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://web.barqfleet.com/en/tracking",
     "trackingUrlTemplate": "https://web.barqfleet.com/en/tracking-details?trackingId={trackingNumber}",
     "trackingSearchUrl": "https://web.barqfleet.com/en/tracking",
+    "helpUrl": "https://barqapp-help.freshdesk.com/en/support/home",
     "linkRules": [
       {
         "domains": [
@@ -11133,6 +11238,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.bauerexpress.com.br/area-do-cliente/rastreamento-de-encomenda/",
     "trackingSearchUrl": "https://www.bauerexpress.com.br/area-do-cliente/rastreamento-de-encomenda/",
+    "helpUrl": "https://www.bauerexpress.com.br/sac",
     "linkRules": [],
     "detectionRules": []
   },
@@ -11154,6 +11260,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.bcscourier.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
     "trackingUrlTemplate": "https://www.bcscourier.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html?r18p01={trackingNumber}",
     "trackingSearchUrl": "https://www.bcscourier.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "helpUrl": "https://www.bcscourier.gr/el/%CE%95%CF%80%CE%B9%CE%BA%CE%BF%CE%B9%CE%BD%CF%89%CE%BD%CE%AF%CE%B1.htm",
     "linkRules": [
       {
         "domains": [
@@ -11185,6 +11292,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.beefast.com.au/",
     "trackingSearchUrl": "https://www.beefast.com.au/#/Tracking",
+    "helpUrl": "https://www.beefast.com.au/#/ContactUs",
     "linkRules": [],
     "detectionRules": []
   },
@@ -11207,6 +11315,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://beexprss.com/tracking",
     "trackingUrlTemplate": "https://beexprss.com/tracking?tracking_name={trackingNumber}",
     "trackingSearchUrl": "https://beexprss.com/tracking",
+    "helpUrl": "https://beexprss.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -11266,6 +11375,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.8256ru.com/",
     "trackingUrlTemplate": "https://8256.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
     "trackingSearchUrl": "https://www.8256ru.com/",
+    "helpUrl": "https://www.8256ru.com/?Col8/",
     "linkRules": [
       {
         "domains": [
@@ -11367,6 +11477,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://bergentsno.opter.cloud/tt",
     "trackingUrlTemplate": "https://bergentsno.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://bergentsno.opter.cloud/tt",
+    "helpUrl": "https://bergentransportsentral.no/kontakt-oss/",
     "linkRules": [
       {
         "domains": [
@@ -11401,6 +11512,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://neptunebermuda.com/track-shipment/",
     "trackingUrlTemplate": "https://neptunebermuda.com/track-shipment/",
     "trackingSearchUrl": "https://neptunebermuda.com/track-shipment/",
+    "helpUrl": "https://neptunebermuda.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -11423,6 +11535,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.bestcourier.ro/",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=12",
+    "helpUrl": "https://www.bestcourier.ro/contact.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -11639,6 +11752,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.800best.com/freight/track",
     "trackingSearchUrl": "https://www.800best.com/freight/track",
+    "helpUrl": "https://www.800best.com/best/tel",
     "linkRules": [],
     "detectionRules": []
   },
@@ -11661,6 +11775,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.bestovernite.com/shipment-tracking/",
     "trackingSearchUrl": "https://www.bestovernite.com/shipment-tracking/",
+    "helpUrl": "https://www.bestovernite.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -11697,6 +11812,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://bst.nu/",
     "trackingUrlTemplate": "https://bst.nu/?search={trackingNumber}",
     "trackingSearchUrl": "https://bst.nu/",
+    "helpUrl": "https://www.besttransport.se/om-best/kontakta-best/",
     "linkRules": [
       {
         "domains": [
@@ -11886,6 +12002,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://t.bftlogistik.dk/",
     "trackingUrlTemplate": "https://t.bftlogistik.dk/#/t/{trackingNumber}",
     "trackingSearchUrl": "https://t.bftlogistik.dk/",
+    "helpUrl": "https://bftlogistik.dk/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -11939,6 +12056,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://bhslogistics.dk/track-and-trace/",
     "trackingSearchUrl": "https://bhslogistics.dk/track-and-trace/",
+    "helpUrl": "https://bhslogistics.dk/kontakt-bhs-logistics/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -12000,6 +12118,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://bigfootexpress.pperfect.com/",
     "trackingSearchUrl": "https://bigfootexpress.pperfect.com/",
+    "helpUrl": "https://www.bigfootexpress.co.za/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -12020,6 +12139,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://bigpost.com.au/tracking/",
     "trackingSearchUrl": "https://bigpost.com.au/tracking/",
+    "helpUrl": "https://bigpost.com.au/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -12068,6 +12188,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.birgundekargo.com/",
     "trackingUrlTemplate": "https://takip.birgundekargo.com/intranet/Tracking_kargo.asp?bgk_barkod={trackingNumber}",
     "trackingSearchUrl": "https://www.birgundekargo.com/",
+    "helpUrl": "https://www.birgundekargo.com/iletisim",
     "linkRules": [
       {
         "domains": [
@@ -12101,6 +12222,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://trackit.bizcourier.eu/app/en",
     "trackingUrlTemplate": "https://trackit.bizcourier.eu/app/en/{trackingNumber}",
     "trackingSearchUrl": "https://trackit.bizcourier.eu/app/en",
+    "helpUrl": "https://www.bizcourier.eu/en/ContactUs.htm",
     "linkRules": [
       {
         "domains": [
@@ -12138,6 +12260,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.bjshomedelivery.com/",
     "trackingUrlTemplate": "https://track.bjshomedelivery.com/?parcel-id={trackingNumber}",
     "trackingSearchUrl": "https://track.bjshomedelivery.com/",
+    "helpUrl": "https://www.bjshomedelivery.com/en-gb/help",
     "linkRules": [
       {
         "domains": [
@@ -12319,6 +12442,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.blue-ex.com/",
     "trackingUrlTemplate": "https://www.blue-ex.com/tracking?trackno={trackingNumber}",
+    "helpUrl": "https://www.blue-ex.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -12397,6 +12521,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.bluestreakcouriers.com/",
     "trackingSearchUrl": "https://www.bluestreakcouriersonline.net/clientportal",
+    "helpUrl": "https://www.bluestreakcouriers.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -12419,6 +12544,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx",
     "trackingUrlTemplate": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx?id={trackingNumber}",
     "trackingSearchUrl": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx",
+    "helpUrl": "https://www.bmcargo.com/contacto",
     "linkRules": [
       {
         "domains": [
@@ -12450,6 +12576,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.bobgo.co.za/",
     "trackingUrlTemplate": "https://track.bobgo.co.za/{trackingNumber}",
     "trackingSearchUrl": "https://track.bobgo.co.za/",
+    "helpUrl": "https://help.bobgo.co.za/portal/en/home",
     "linkRules": [
       {
         "domains": [
@@ -12477,6 +12604,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.boltkargo.com.tr/",
     "trackingSearchUrl": "https://panelv2.boltkargo.com.tr/takip/",
+    "helpUrl": "https://www.boltkargo.com.tr/iletisim.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -12499,6 +12627,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://bombax.in/",
     "trackingUrlTemplate": "https://book.bombax.in/booking/Tracking?OrderNo={trackingNumber}",
     "trackingSearchUrl": "https://book.bombax.in/Booking/Track",
+    "helpUrl": "https://bombax.in/support/",
     "linkRules": [
       {
         "domains": [
@@ -12536,6 +12665,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.bombinoexp.com/track",
     "trackingUrlTemplate": "https://www.bombinoexp.com/track?tracking_no={trackingNumber}",
     "trackingSearchUrl": "https://www.bombinoexp.com/track",
+    "helpUrl": "https://www.bombinoexp.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -12591,6 +12721,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://bondscouriers.com.au/",
     "trackingSearchUrl": "https://appsrv.bondscouriers.com.au/bondsweb/track-job.htm",
+    "helpUrl": "https://bondscouriers.com.au/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -12613,6 +12744,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://t.bookurier.ro/",
     "trackingUrlTemplate": "https://t.bookurier.ro/?awb={trackingNumber}",
     "trackingSearchUrl": "https://t.bookurier.ro/",
+    "helpUrl": "https://app.grupall.ro/contact",
     "linkRules": [
       {
         "domains": [
@@ -12717,6 +12849,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://borzodelivery.com/in/track",
     "trackingUrlTemplate": "https://borzodelivery.com/in/track/{trackingNumber}",
     "trackingSearchUrl": "https://borzodelivery.com/in/track",
+    "helpUrl": "https://borzodelivery.com/in/contacts",
     "linkRules": [
       {
         "domains": [
@@ -12873,6 +13006,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://boxc.com/track",
     "trackingUrlTemplate": "https://boxc.com/track/{trackingNumber}",
     "trackingSearchUrl": "https://boxc.com/track",
+    "helpUrl": "https://support.boxc.com/support/home",
     "linkRules": [
       {
         "domains": [
@@ -12905,6 +13039,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi",
     "trackingUrlTemplate": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi?reference={trackingNumber}",
     "trackingSearchUrl": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi",
+    "helpUrl": "https://help.boxtal.com/fr/fr/",
     "linkRules": [
       {
         "domains": [
@@ -12946,6 +13081,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.boyuangyl.com/",
     "trackingSearchUrl": "https://www.boyuangyl.com/",
+    "helpUrl": "https://www.boyuangyl.com/lianxiwomen/",
     "linkRules": [
       {
         "domains": [
@@ -12984,6 +13120,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.1001000.com/newwl/unLogin/track",
     "trackingSearchUrl": "https://www.1001000.com/newwl/unLogin/track",
+    "helpUrl": "https://www.1001000.com/newwl/bulletin/nbqInfo?gmCode=881",
     "linkRules": [],
     "detectionRules": []
   },
@@ -13010,6 +13147,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://brandingworldwide.com.au/",
     "trackingUrlTemplate": "https://brandingworldwide.com.au/track.html?key={trackingNumber}",
     "trackingSearchUrl": "https://brandingworldwide.com.au/track.html",
+    "helpUrl": "https://brandingworldwide.com.au/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -13064,6 +13202,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.braunsexpress.com/tracking/",
     "trackingUrlTemplate": "https://www.braunsexpress.com/tracking/?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://www.braunsexpress.com/tracking/",
+    "helpUrl": "https://www.braunsexpress.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -13127,6 +13266,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.breaze.co.za/track-order",
     "trackingUrlTemplate": "https://portal.breaze.co.za/track-order/{trackingNumber}",
     "trackingSearchUrl": "https://portal.breaze.co.za/track-order",
+    "helpUrl": "https://www.breaze.co.za/contact/",
     "linkRules": [
       {
         "domains": [
@@ -13158,6 +13298,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.brics56.com/track.html",
     "trackingUrlTemplate": "https://www.brics56.com/track.html?no={trackingNumber}",
     "trackingSearchUrl": "https://www.brics56.com/track.html",
+    "helpUrl": "https://www.brics56.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -13191,6 +13332,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.bri-ems.com/query",
     "trackingSearchUrl": "https://www.bri-ems.com/query",
+    "helpUrl": "https://www.bri-ems.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -13215,6 +13357,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.bringerparcel.com/tracking",
     "trackingUrlTemplate": "https://www.bringerparcel.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.bringerparcel.com/tracking",
+    "helpUrl": "https://www.bringerparcel.com/help",
     "linkRules": [
       {
         "domains": [
@@ -13249,6 +13392,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://brinkdk.opter.cloud/tt",
     "trackingUrlTemplate": "https://brinkdk.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://brinkdk.opter.cloud/tt",
+    "helpUrl": "https://www.brinktransport.dk/kontakt.aspx",
     "linkRules": [
       {
         "domains": [
@@ -13313,6 +13457,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.btdair.com/",
     "trackingSearchUrl": "https://www.btdair.com/",
+    "helpUrl": "https://www.btdair.com/Article/detailbytype?type=%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC&index=5",
     "linkRules": [],
     "detectionRules": []
   },
@@ -13334,6 +13479,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://bts.uz/uz/search-form",
     "trackingSearchUrl": "https://bts.uz/uz/search-form",
+    "helpUrl": "https://bts.uz/uz/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -13532,6 +13678,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://burd.dk/",
     "trackingUrlTemplate": "https://burd.dk/track?code={trackingNumber}",
     "trackingSearchUrl": "https://burd.dk/",
+    "helpUrl": "https://burd.dk/kundeservice",
     "linkRules": [
       {
         "domains": [
@@ -13673,6 +13820,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://bypost.no/spor/",
     "trackingUrlTemplate": "https://bypost.no/spor/{trackingNumber}/",
     "trackingSearchUrl": "https://bypost.no/spor/",
+    "helpUrl": "https://bypost.no/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -13729,6 +13877,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://c3xpress.com/",
     "trackingSearchUrl": "https://c3xpress.com/",
+    "helpUrl": "https://c3xpress.com/Contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -13748,6 +13897,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://c807xpress.com/tracking/",
     "trackingSearchUrl": "https://c807xpress.com/tracking/",
+    "helpUrl": "https://c807xpress.com/sv/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -13771,6 +13921,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cacesa.com/en/tracking",
     "trackingUrlTemplate": "https://www.cacesa.com/en/tracking?busqueda={trackingNumber}",
     "trackingSearchUrl": "https://www.cacesa.com/en/tracking",
+    "helpUrl": "https://www.cacesa.com/en/faqs",
     "linkRules": [
       {
         "domains": [
@@ -13805,6 +13956,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
     "trackingUrlTemplate": "https://guias.cadena.com.co/tracking/consulta.aspx",
     "trackingSearchUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "helpUrl": "https://www.cadena.com.co/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -13998,6 +14150,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cargointernational.de/versandrechner/tracking",
     "trackingUrlTemplate": "https://www.cargointernational.de/versandrechner/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.cargointernational.de/versandrechner/tracking",
+    "helpUrl": "https://hilfe.cargointernational.de/de/",
     "linkRules": [
       {
         "domains": [
@@ -14029,6 +14182,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ctl-partner.net/CTL-Onlineplattform/Tracking/Default.aspx",
     "trackingUrlTemplate": "https://ctl-partner.net/CTL-Onlineplattform/Tracking/Default.aspx?snr={trackingNumber}",
     "trackingSearchUrl": "https://ctl-partner.net/CTL-Onlineplattform/Tracking/Default.aspx",
+    "helpUrl": "https://ctl-ag.de/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -14059,6 +14213,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://my.cargoboard.com/tracking",
     "trackingSearchUrl": "https://my.cargoboard.com/tracking",
+    "helpUrl": "https://cargoboard.com/contact/customer-support",
     "linkRules": [],
     "detectionRules": []
   },
@@ -14086,6 +14241,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cargobusee.opter.cloud/tt",
     "trackingUrlTemplate": "https://cargobusee.opter.cloud/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://cargobusee.opter.cloud/tt",
+    "helpUrl": "https://cargobus.ee/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -14121,6 +14277,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cargoline.de/",
     "trackingUrlTemplate": "https://trackandtrace.cepra.de/Track/{trackingNumber}",
     "trackingSearchUrl": "https://trackandtrace.cepra.de/Track",
+    "helpUrl": "https://www.cargoline.de/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -14151,6 +14308,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.cargolux.com/track-and-trace/",
     "trackingSearchUrl": "https://www.cargolux.com/track-and-trace/",
+    "helpUrl": "https://www.cargolux.com/customer-service/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -14203,6 +14361,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cargox.com.tr/",
     "trackingUrlTemplate": "https://t.cargox.com.tr/getlink.php?barcode={trackingNumber}",
     "trackingSearchUrl": "https://www.cargox.com.tr/",
+    "helpUrl": "https://www.cargox.com.tr/pages/contact",
     "linkRules": [
       {
         "domains": [
@@ -14313,6 +14472,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.carry-flap.com/",
     "trackingUrlTemplate": "https://tracking.carry-flap.com/#/home?invoiceNo={trackingNumber}",
     "trackingSearchUrl": "https://tracking.carry-flap.com/#/home",
+    "helpUrl": "https://www.carry-flap.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -14343,6 +14503,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://carrybee.com/track",
     "trackingUrlTemplate": "https://carrybee.com/track?consignmentId={trackingNumber}",
     "trackingSearchUrl": "https://carrybee.com/track",
+    "helpUrl": "https://carrybee.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -14386,6 +14547,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://receiver.castleparcels.co.nz/",
     "trackingUrlTemplate": "https://receiver.castleparcels.co.nz/?track={trackingNumber}",
     "trackingSearchUrl": "https://receiver.castleparcels.co.nz/",
+    "helpUrl": "https://posthaste.co.nz/about-us/contact/",
     "linkRules": [
       {
         "domains": [
@@ -14496,6 +14658,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cathedis.ma/",
     "trackingUrlTemplate": "https://cathedis.ma/shipment/?track_number={trackingNumber}",
     "trackingSearchUrl": "https://cathedis.ma/shipment/",
+    "helpUrl": "https://cathedis.ma/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -14563,6 +14726,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://clientes.cbl-logistica.com/public/consultaenvio.aspx",
     "trackingUrlTemplate": "https://clientes.cbl-logistica.com/public/consultaenvio.aspx?id={trackingNumber}",
     "trackingSearchUrl": "https://clientes.cbl-logistica.com/public/consultaenvio.aspx",
+    "helpUrl": "https://www.cbl-logistica.com/formulario-de-contacto",
     "linkRules": [
       {
         "domains": [
@@ -14598,6 +14762,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://auth.ccfs.com/track/search",
     "trackingUrlTemplate": "https://auth.ccfs.com/track/detail/{trackingNumber}",
     "trackingSearchUrl": "https://auth.ccfs.com/track/search",
+    "helpUrl": "https://www.ccfs.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -14669,6 +14834,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://apps.cdldelivers.com/Tracking-Page/track",
     "trackingUrlTemplate": "https://apps.cdldelivers.com/Tracking-Page/track?id={trackingNumber}",
     "trackingSearchUrl": "https://apps.cdldelivers.com/Tracking-Page/track",
+    "helpUrl": "https://cdldelivers.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -14750,6 +14916,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://celeritastransporte.com/seguimiento-paquete-pedidos/",
     "trackingUrlTemplate": "https://celeritastransporte.com/seguimiento-paquete-pedidos/?refer={trackingNumber}&lang=es",
     "trackingSearchUrl": "https://celeritastransporte.com/seguimiento-paquete-pedidos/",
+    "helpUrl": "https://celeritastransporte.com/contacto/",
     "linkRules": [
       {
         "domains": [
@@ -14783,6 +14950,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://celerogroup.com/",
     "trackingUrlTemplate": "https://celerogroup.com/",
     "trackingSearchUrl": "https://celerogroup.com/",
+    "helpUrl": "https://celerogroup.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -14874,6 +15042,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://certipostal.com/seguimientos/fivepostal/",
     "trackingUrlTemplate": "https://certipostal.fivesoftcolombia.com/tag_detail_v1.html?d={trackingNumber}",
     "trackingSearchUrl": "https://certipostal.com/seguimientos/fivepostal/",
+    "helpUrl": "https://certipostal.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -14898,6 +15067,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cesco-logistics.com/tracking.php",
     "trackingUrlTemplate": "https://cesco-logistics.com/tracking.php",
     "trackingSearchUrl": "https://cesco-logistics.com/tracking.php",
+    "helpUrl": "https://cesco-logistics.com/contactus.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -14971,6 +15141,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://my.cevalogistics.com/follow",
     "trackingUrlTemplate": "https://www.cevalogistics.com/en/ceva-trak?reference_query={trackingNumber}",
     "trackingSearchUrl": "https://www.cevalogistics.com/en/ceva-trak",
+    "helpUrl": "https://www.cevalogistics.com/en/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -15021,6 +15192,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.changjiangexpress.com/Home/Query",
     "trackingSearchUrl": "https://www.changjiangexpress.com/Home/Query",
+    "helpUrl": "https://www.changjiangexpress.com/Home/Contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -15120,6 +15292,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://chitadelivery.co.il/",
+    "helpUrl": "https://chitadelivery.co.il/%D7%A6%D7%A8%D7%95-%D7%A7%D7%A9%D7%A8-%D7%97%D7%93%D7%A9/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -15139,6 +15312,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.chemcouriers.com/tracking",
     "trackingUrlTemplate": "https://www.chemcouriers.com/tracking?trackingnumber={trackingNumber}",
     "trackingSearchUrl": "https://www.chemcouriers.com/tracking",
+    "helpUrl": "https://www.chemcouriers.com/company-directory",
     "linkRules": [
       {
         "domains": [
@@ -15248,6 +15422,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.95572.com/",
     "trackingSearchUrl": "https://www.95572.com/",
+    "helpUrl": "https://www.95572.com/zxjy/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -15282,6 +15457,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://chinzlogistics.com/",
     "trackingUrlTemplate": "https://chinzlogistics.com/en/consult?keywords={trackingNumber}",
     "trackingSearchUrl": "https://chinzlogistics.com/en/consult",
+    "helpUrl": "https://chinzlogistics.com/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -15368,6 +15544,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://choirexpress.co.id/id",
     "trackingSearchUrl": "https://choirexpress.co.id/id/tracking",
+    "helpUrl": "https://choirexpress.co.id/id/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -15573,6 +15750,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.chunil.co.kr/HTrace/HTrace.jsp",
     "trackingUrlTemplate": "https://www.chunil.co.kr/HTrace/HTrace.jsp?transNo={trackingNumber}",
     "trackingSearchUrl": "https://www.chunil.co.kr/HTrace/HTrace.jsp",
+    "helpUrl": "https://www.chunil.co.kr/kor/mainsite/htmls/subPage.jsp?control=customer&pageNum=02",
     "linkRules": [
       {
         "domains": [
@@ -15608,6 +15786,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.citisprint.co.za/",
     "trackingUrlTemplate": "https://portal.citisprint.co.za/track?ref={trackingNumber}",
     "trackingSearchUrl": "https://www.citisprint.co.za/tracking/",
+    "helpUrl": "https://www.citisprint.co.za/contact/",
     "linkRules": [
       {
         "domains": [
@@ -15651,6 +15830,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
     "trackingUrlTemplate": "https://cargo.garuda-indonesia.com/Search",
     "trackingSearchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "helpUrl": "https://cargo.garuda-indonesia.com/Contact-Us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -15674,6 +15854,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.citilogistics.ca/",
     "trackingSearchUrl": "https://tracking.citilogistics.ca/",
+    "helpUrl": "https://citilogistics.ca/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -15705,6 +15886,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.cititrans.com/",
     "trackingSearchUrl": "https://www.cititrans.com/trajectory",
+    "helpUrl": "https://www.cititrans.com/introduction",
     "linkRules": [],
     "detectionRules": []
   },
@@ -15732,6 +15914,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cityairexpress.com/",
     "trackingUrlTemplate": "https://caebfs.netcourier.net/online/tracking/trackinginfo/{trackingNumber}",
     "trackingSearchUrl": "https://www.cityairexpress.com/track-my-parcel",
+    "helpUrl": "https://www.cityairexpress.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -15769,6 +15952,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.citycourier.gr/anazitisi-apostolis",
     "trackingUrlTemplate": "https://www.citycourier.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
     "trackingSearchUrl": "https://www.citycourier.gr/anazitisi-apostolis",
+    "helpUrl": "https://www.citycourier.gr/el/%CE%95%CF%80%CE%B9%CE%BA%CE%BF%CE%B9%CE%BD%CF%89%CE%BD%CE%AF%CE%B1.htm",
     "linkRules": [
       {
         "domains": [
@@ -15949,6 +16133,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.citypak.lk/",
     "trackingUrlTemplate": "https://track.citypak.lk/track?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://track.citypak.lk/",
+    "helpUrl": "https://www.citypak.lk/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -16018,6 +16203,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.citytrans.ch/",
     "trackingSearchUrl": "https://www.citytrans.ch/",
+    "helpUrl": "https://www.citytrans.ch/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16039,6 +16225,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cityxpress.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
     "trackingUrlTemplate": "https://cityxpress.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html?r18p01={trackingNumber}",
     "trackingSearchUrl": "https://cityxpress.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "helpUrl": "https://cityxpress.gr/%CE%95%CF%80%CE%B9%CE%BA%CE%BF%CE%B9%CE%BD%CF%89%CE%BD%CE%AF%CE%B1.htm",
     "linkRules": [
       {
         "domains": [
@@ -16071,6 +16258,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cargo.civa.com.pe/",
     "trackingSearchUrl": "https://cargo.civa.com.pe/",
+    "helpUrl": "https://civa.com.pe/es/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16224,6 +16412,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ckeex.com/",
     "trackingUrlTemplate": "https://www.ckeex.com/track.html?nos={trackingNumber}",
     "trackingSearchUrl": "https://www.ckeex.com/track.html",
+    "helpUrl": "https://www.ckeex.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -16387,6 +16576,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cbd-tracking.locate2u.com/",
     "trackingSearchUrl": "https://cbd-tracking.locate2u.com/",
+    "helpUrl": "https://www.codexpress.com.au/#/support",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16442,6 +16632,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.collicare.no/track-and-trace",
     "trackingUrlTemplate": "https://www.collicare.no/track-and-trace?s={trackingNumber}",
     "trackingSearchUrl": "https://www.collicare.no/kundeservice/sporing",
+    "helpUrl": "https://www.collicare.no/kundeservice/kontakt-oss",
     "linkRules": [
       {
         "domains": [
@@ -16524,6 +16715,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.conexionesempresariales.com/rastreo/",
     "trackingUrlTemplate": "https://app.conexionesempresariales.com/rastreo/?txtguia={trackingNumber}",
     "trackingSearchUrl": "https://app.conexionesempresariales.com/rastreo/",
+    "helpUrl": "https://conexionesempresariales.com/Contactenos",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16549,6 +16741,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.connectcouriers.eu/tracking/",
     "trackingUrlTemplate": "https://www.connectcouriers.eu/tracking/?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://www.connectcouriers.eu/tracking/",
+    "helpUrl": "https://www.connectcouriers.eu/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -16585,6 +16778,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://clc-express.com/",
     "trackingUrlTemplate": "https://clc-express.com/track-delivery?awb={trackingNumber}",
     "trackingSearchUrl": "https://clc-express.com/track-delivery",
+    "helpUrl": "https://clc-express.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -16622,6 +16816,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://conveyoruniexpress.com/shipment.php",
     "trackingUrlTemplate": "https://conveyoruniexpress.com/shipment.php?hawbno2={trackingNumber}&route=1",
     "trackingSearchUrl": "https://conveyoruniexpress.com/shipment.php",
+    "helpUrl": "https://conveyoruniexpress.com/contact.php",
     "linkRules": [
       {
         "domains": [
@@ -16751,6 +16946,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cootranstame.com/rastreo-envios",
     "trackingUrlTemplate": "https://www.cootranstame.com/rastreo-envios",
     "trackingSearchUrl": "https://www.cootranstame.com/rastreo-envios",
+    "helpUrl": "https://www.cootranstame.com/Medios-de-contacto",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16814,6 +17010,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.copacourier.com/",
     "trackingSearchUrl": "https://www.copacourier.com/",
+    "helpUrl": "https://www.copacourier.com/AtencionCliente",
     "linkRules": [],
     "detectionRules": [
       {
@@ -16842,6 +17039,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.cope.com.au/",
     "trackingSearchUrl": "https://www.cope.com.au/",
+    "helpUrl": "https://www.cope.com.au/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16867,6 +17065,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://cordelialine.com/",
     "trackingSearchUrl": "https://cordelialine.com/",
     "trackingSiteName": "Cordelia Track Shipment",
+    "helpUrl": "https://cordelialine.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16896,6 +17095,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.corlanpostexpress.ro/",
     "trackingUrlTemplate": "https://track.corlanpostexpress.ro/?lang=ro&tr={trackingNumber}",
     "trackingSearchUrl": "https://track.corlanpostexpress.ro/",
+    "helpUrl": "https://corlanpostexpress.ro/contact/",
     "linkRules": [
       {
         "domains": [
@@ -16927,6 +17127,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://corporatecouriers.net/pages/online-order-login/",
     "trackingUrlTemplate": "https://corporatecouriers.net/pages/online-order-login/?tracking-number={trackingNumber}",
     "trackingSearchUrl": "https://corporatecouriers.net/pages/online-order-login/",
+    "helpUrl": "https://corporatecouriers.net/pages/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -17421,6 +17622,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://elines.coscoshipping.com/scct/public/ct",
     "trackingSearchUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "helpUrl": "https://lines.coscoshipping.com/home/Contact/global",
     "linkRules": [],
     "detectionRules": []
   },
@@ -17444,6 +17646,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.coship.ca/tracking/",
     "trackingUrlTemplate": "https://www.coship.ca/tracking/?no={trackingNumber}",
     "trackingSearchUrl": "https://www.coship.ca/tracking/",
+    "helpUrl": "https://www.coship.ca/contact/",
     "linkRules": [
       {
         "domains": [
@@ -17480,6 +17683,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://logistics.costco.com/",
     "trackingUrlTemplate": "https://logistics.costco.com/tracking?id={trackingNumber}",
     "trackingSearchUrl": "https://logistics.costco.com/tracking",
+    "helpUrl": "https://customerservice.costco.com/",
     "linkRules": [
       {
         "domains": [
@@ -17515,6 +17719,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.cot.com.uy/encomiendas",
     "trackingSearchUrl": "https://www.cot.com.uy/encomiendas",
+    "helpUrl": "https://www.cot.com.uy/contacto",
     "linkRules": [],
     "detectionRules": []
   },
@@ -17538,6 +17743,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cotaxi.com.co/",
     "trackingUrlTemplate": "https://www.cotaxi.com.co/",
     "trackingSearchUrl": "https://www.cotaxi.com.co/",
+    "helpUrl": "https://www.cotaxi.com.co/servicio-al-cliente/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -17618,6 +17824,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.courierexpressmalta.com/",
     "trackingUrlTemplate": "https://track.courierexpressmalta.com/{trackingNumber}",
     "trackingSearchUrl": "https://track.courierexpressmalta.com/",
+    "helpUrl": "https://www.courierexpressmalta.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -17691,6 +17898,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://selfservice.courierplus-ng.com/track-shipment",
     "trackingSearchUrl": "https://selfservice.courierplus-ng.com/track-shipment",
+    "helpUrl": "https://www.courierplus-ng.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -17725,6 +17933,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.courierit.net.nz/Home/Track",
     "trackingUrlTemplate": "https://www.courierit.net.nz/Home/Track",
     "trackingSearchUrl": "https://www.courierit.net.nz/Home/Track",
+    "helpUrl": "https://www.courierit.co.nz/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -17817,6 +18026,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cpszy.com/trace.html",
     "trackingUrlTemplate": "https://www.cpszy.com/trace.html?sn={trackingNumber}",
     "trackingSearchUrl": "https://www.cpszy.com/trace.html",
+    "helpUrl": "https://www.cpszy.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -17893,6 +18103,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://credifin.com.ar/seguimiento/",
     "trackingUrlTemplate": "https://credifin.com.ar/seguimiento/{trackingNumber}",
     "trackingSearchUrl": "https://credifin.com.ar/seguimiento/",
+    "helpUrl": "https://credifin.com.ar/faqs",
     "linkRules": [
       {
         "domains": [
@@ -17957,6 +18168,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
     "trackingUrlTemplate": "https://my.crossflight.com/shipping/tracking/tracking.jsp?shipmentNumbers={trackingNumber}",
     "trackingSearchUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
+    "helpUrl": "https://www.crossflight.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -18071,6 +18283,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://venta.cruzdelsurcargo.com.pe/home-filtro-busqueda",
     "trackingSearchUrl": "https://venta.cruzdelsurcargo.com.pe/home-filtro-busqueda",
+    "helpUrl": "https://www.cruzdelsurcargo.com.pe/servicio-al-cliente/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18174,6 +18387,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.cstitaliascarl.it/tracking/",
     "trackingSearchUrl": "https://www.cstitaliascarl.it/tracking/",
+    "helpUrl": "https://www.cstitaliascarl.it/servizio-clienti/",
     "linkRules": [],
     "detectionRules": [
       {
@@ -18208,6 +18422,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://a.ctc-expresstms2.com.tw/",
     "trackingSearchUrl": "https://a.ctc-expresstms2.com.tw/",
+    "helpUrl": "https://www.ctc-express.com.tw/location.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18225,6 +18440,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
     "trackingSearchUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
+    "helpUrl": "https://ctm-messagerie.ma/fr/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18242,6 +18458,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ctsgroup.nl/track-trace/",
     "trackingSearchUrl": "https://www.ctsgroup.nl/track-trace/",
+    "helpUrl": "https://www.ctsgroup.nl/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18345,6 +18562,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://curiera.ro/",
     "trackingSearchUrl": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416",
+    "helpUrl": "https://curiera.ro/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18368,6 +18586,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.customco.com/",
     "trackingUrlTemplate": "https://api.customco.com/scripts/cgiip.exe/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}&seskey=&nav=top&language=",
     "trackingSearchUrl": "https://www.customco.com/",
+    "helpUrl": "https://www.customco.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -18445,6 +18664,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracktrace.cycloon.eu/",
     "trackingSearchUrl": "https://tracktrace.cycloon.eu/",
+    "helpUrl": "https://www.cycloon.eu/klantenservice/ontvangen",
     "linkRules": [
       {
         "domains": [
@@ -18521,6 +18741,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://exp.czl.net/",
     "trackingUrlTemplate": "https://exp.czl.net/track?query={trackingNumber}",
     "trackingSearchUrl": "https://exp.czl.net/track",
+    "helpUrl": "https://exp.czl.net/contact",
     "linkRules": [
       {
         "domains": [
@@ -18610,6 +18831,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://fastex.pk/trackingDetail",
     "trackingSearchUrl": "https://fastex.pk/trackingDetail",
+    "helpUrl": "https://fastex.pk/contactUs/",
     "linkRules": [
       {
         "domains": [
@@ -18641,6 +18863,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://app.dagoexpress.com/find-order",
     "trackingSearchUrl": "https://app.dagoexpress.com/find-order",
+    "helpUrl": "https://dagoexpress.com/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18729,6 +18952,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.daiichi-kamotsu.co.jp/chase/contact_num/",
     "trackingSearchUrl": "https://www.daiichi-kamotsu.co.jp/chase/contact_num/",
+    "helpUrl": "https://www.daiichi-kamotsu.co.jp/inquiry/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18751,6 +18975,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.dailyxpress.in/",
     "trackingUrlTemplate": "https://www.dailyxpress.in/searchAwb.php?awb={trackingNumber}",
     "trackingSearchUrl": "https://www.dailyxpress.in/",
+    "helpUrl": "https://www.dailyxpress.in/contact.php",
     "linkRules": [
       {
         "domains": [
@@ -18787,6 +19012,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://dakotacargo.co.id/",
     "trackingSearchUrl": "https://dakotacargo.co.id/#lacak-kiriman",
+    "helpUrl": "https://dakotacargo.co.id/hubungi-kami.html",
     "linkRules": [],
     "detectionRules": [
       {
@@ -18815,6 +19041,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://dalli-service.com/tracking/",
     "trackingSearchUrl": "https://dalli-service.com/tracking/",
+    "helpUrl": "https://dalli-service.com/support/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -18875,6 +19102,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://trace.fragt.dk/",
     "trackingUrlTemplate": "https://trace.fragt.dk/{trackingNumber}",
     "trackingSearchUrl": "https://trace.fragt.dk/",
+    "helpUrl": "https://www.fragt.dk/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -18921,6 +19149,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://login.danx.com/",
     "trackingUrlTemplate": "https://login.danx.com/",
     "trackingSearchUrl": "https://login.danx.com/",
+    "helpUrl": "https://danx.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -19031,6 +19260,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.dylt.com/",
     "trackingUrlTemplate": "https://mydaylight.dylt.com/external/shipment?probill={trackingNumber}",
     "trackingSearchUrl": "https://www.dylt.com/",
+    "helpUrl": "https://www.dylt.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -19199,6 +19429,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.dd.express/",
     "trackingUrlTemplate": "https://tracking.dd.express/?tracking_ids={trackingNumber}",
     "trackingSearchUrl": "https://tracking.dd.express/",
+    "helpUrl": "https://dd.express/contact/",
     "linkRules": [
       {
         "domains": [
@@ -19229,6 +19460,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ddu-express.com/",
     "trackingUrlTemplate": "https://ddu-express.com/track-shipment/?trackno={trackingNumber}",
     "trackingSearchUrl": "https://ddu-express.com/track-shipment/",
+    "helpUrl": "https://ddu-express.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -19265,6 +19497,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://dealer-send.com/en-US/track-my-shipment",
     "trackingUrlTemplate": "https://dealer-send.com/en-US/track-my-shipment?trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://dealer-send.com/en-US/track-my-shipment",
+    "helpUrl": "https://dealer-send.com/en-US/contact",
     "linkRules": [
       {
         "domains": [
@@ -19335,6 +19568,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.dbox.co.kr/delivery.php",
     "trackingUrlTemplate": "https://www.dbox.co.kr/delivery.php?laasInvcNo={trackingNumber}",
     "trackingSearchUrl": "https://www.dbox.co.kr/delivery.php",
+    "helpUrl": "https://www.dbox.co.kr/shipping/shipping.php",
     "linkRules": [
       {
         "domains": [
@@ -19369,6 +19603,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.deliverdirect.com/",
     "trackingUrlTemplate": "https://www.deliverdirect.com/EcomTracking?axb={trackingNumber}",
     "trackingSearchUrl": "https://www.deliverdirect.com/EcomTracking",
+    "helpUrl": "https://www.deliverdirect.com/contactus",
     "linkRules": [
       {
         "domains": [
@@ -19402,6 +19637,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://deliveright.com/track-orders/",
     "trackingUrlTemplate": "https://app.deliveright.com/gh-lite/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://deliveright.com/track-orders/",
+    "helpUrl": "https://deliveright.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -19467,6 +19703,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://delivro.com/",
     "trackingUrlTemplate": "https://delivro.dsapp.io/customer/{trackingNumber}",
     "trackingSearchUrl": "https://delivro.dsapp.io/customer",
+    "helpUrl": "https://delivro.ca/page/contact",
     "linkRules": [
       {
         "domains": [
@@ -19541,6 +19778,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.delnext.com/PT/track_your_parcel",
     "trackingUrlTemplate": "https://www.delnext.com/PT/track_your_parcel?tracking_code={trackingNumber}",
     "trackingSearchUrl": "https://www.delnext.com/PT/track_your_parcel",
+    "helpUrl": "https://www.delnext.com/PT/contact_us",
     "linkRules": [
       {
         "domains": [
@@ -19582,6 +19820,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://depo.sk/",
     "trackingUrlTemplate": "https://depo.sk/sledovanie-zasielky/?number={trackingNumber}",
     "trackingSearchUrl": "https://depo.sk/sledovanie-zasielky/",
+    "helpUrl": "https://depo.sk/faq/",
     "linkRules": [
       {
         "domains": [
@@ -19680,6 +19919,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://derkurier.de/sendungsverfolgung/",
     "trackingUrlTemplate": "https://derkurier.de/sendungsverfolgung/?d-pt-search={trackingNumber}",
     "trackingSearchUrl": "https://derkurier.de/sendungsverfolgung/",
+    "helpUrl": "https://derkurier.de/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -19710,6 +19950,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://derkurier.sk/",
     "trackingSearchUrl": "https://tracking.derkurier.sk/",
+    "helpUrl": "https://derkurier.sk/kontakt.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -19727,6 +19968,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://track.designertransport.com.au/",
     "trackingSearchUrl": "https://track.designertransport.com.au/",
+    "helpUrl": "https://designertransport.com.au/pages/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -19755,6 +19997,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.dex-i.com/",
     "trackingUrlTemplate": "https://www.dex-i.com/site/tracking?trackingNums={trackingNumber}",
     "trackingSearchUrl": "https://www.dex-i.com/site/tracking",
+    "helpUrl": "https://www.dex-i.com/site/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -19788,6 +20031,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.dex.com.pk/",
     "trackingUrlTemplate": "https://www.dex.com.pk/tracking?references={trackingNumber}",
     "trackingSearchUrl": "https://www.dex.com.pk/tracking",
+    "helpUrl": "https://www.dex.com.pk/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -19825,6 +20069,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.dg-transporte.de/",
     "trackingSearchUrl": "https://www.dg-transporte.de/empfangen/sendungsverfolgung/",
+    "helpUrl": "https://www.dg-transporte.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20286,6 +20531,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.dhx.com/quicktrack.aspx",
     "trackingSearchUrl": "https://www.dhx.com/quicktrack.aspx",
+    "helpUrl": "https://www.dhx.com/contact-help.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20308,6 +20554,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://pod.diakinisis.gr/tnt.php",
     "trackingSearchUrl": "https://pod.diakinisis.gr/tnt.php",
+    "helpUrl": "https://www.diakinisis.gr/epikoinonia-diakinisis.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20368,6 +20615,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.diera.pl/",
     "trackingSearchUrl": "https://tracking.diera.pl/",
+    "helpUrl": "https://diera.pl/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20430,6 +20678,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.directcourier.gr/",
     "trackingSearchUrl": "https://www.directcourier.gr/",
+    "helpUrl": "https://www.directcourier.gr/contact.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20448,6 +20697,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://appsrv.directcouriers.com.au/online/jobtrackgen.cl",
     "trackingSearchUrl": "https://appsrv.directcouriers.com.au/online/jobtrackgen.cl",
+    "helpUrl": "https://www.directcouriers.com.au/resources/faqs",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20508,6 +20758,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://direx.bg/track/",
     "trackingUrlTemplate": "https://direx.bg/track/?code={trackingNumber}",
     "trackingSearchUrl": "https://direx.bg/track/",
+    "helpUrl": "https://direx.bg/contact/",
     "linkRules": [
       {
         "domains": [
@@ -20540,6 +20791,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
     "trackingUrlTemplate": "https://dkexpresscourier.gr/anazitisi-apostolis/?voucher={trackingNumber}",
     "trackingSearchUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
+    "helpUrl": "https://dkexpresscourier.gr/epikoinonia/",
     "linkRules": [
       {
         "domains": [
@@ -20571,6 +20823,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
     "trackingSearchUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "helpUrl": "https://www.dkl.ee/en/menu/6-CONTACTS.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20627,6 +20880,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://dniprollc.com/en/packages-tracking/",
     "trackingUrlTemplate": "https://dniprollc.com/en/packages-tracking/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://dniprollc.com/en/packages-tracking/",
+    "helpUrl": "https://dniprollc.com/en/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -20658,6 +20912,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://dnxerp.in/NewPages/Tracking/Website_Tracking_New.aspx",
     "trackingSearchUrl": "https://dnxerp.in/NewPages/Tracking/Website_Tracking_New.aspx",
+    "helpUrl": "https://dnxindia.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20724,6 +20979,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://facts.dohrn.com/scripts/cgiip.exe/protraceext.htm",
     "trackingUrlTemplate": "https://facts.dohrn.com/scripts/cgiip.exe/protraceext.htm?wpro={trackingNumber}",
     "trackingSearchUrl": "https://facts.dohrn.com/scripts/cgiip.exe/protraceext.htm",
+    "helpUrl": "https://www.dohrn.com/about/contact-directory",
     "linkRules": [
       {
         "domains": [
@@ -20775,6 +21031,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://domainlogistics.ca/tracking/",
     "trackingUrlTemplate": "https://domainlogistics.ca/tracking/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://domainlogistics.ca/tracking/",
+    "helpUrl": "https://domainlogistics.ca/contact/",
     "linkRules": [
       {
         "domains": [
@@ -20807,6 +21064,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.portal.domesa.com.ve/",
     "trackingSearchUrl": "https://www.portal.domesa.com.ve/",
+    "helpUrl": "https://www.portal.domesa.com.ve/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20831,6 +21089,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://domex.lk/Order-Details.php",
     "trackingUrlTemplate": "https://domex.lk/Order-Details.php?wbno={trackingNumber}",
     "trackingSearchUrl": "https://www.domex.lk/",
+    "helpUrl": "https://domex.lk/customer_support.php",
     "linkRules": [
       {
         "domains": [
@@ -20863,6 +21122,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://domex.do/rastreo",
     "trackingUrlTemplate": "https://domex.do/rastreo?guia={trackingNumber}",
     "trackingSearchUrl": "https://domex.do/rastreo",
+    "helpUrl": "https://domex.do/ayuda",
     "linkRules": [
       {
         "domains": [
@@ -20894,6 +21154,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.domina.com.co/",
     "trackingSearchUrl": "https://tracking.domina.com.co/",
+    "helpUrl": "https://domina.com.co/contactanos/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20965,6 +21226,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
     "trackingSearchUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
     "trackingSiteName": "Dongjin Shipping Cargo Tracking",
+    "helpUrl": "https://www.djship.co.kr/en/cs/person.asp",
     "linkRules": [],
     "detectionRules": []
   },
@@ -21022,6 +21284,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.doora.co.kr/",
     "trackingUrlTemplate": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff&bl={trackingNumber}",
     "trackingSearchUrl": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff",
+    "helpUrl": "https://www.doora.co.kr/?p=331528ee-9145-4fc5-a4c2-5b54b585de76",
     "linkRules": [
       {
         "domains": [
@@ -21890,6 +22153,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.dpe.net.my/",
     "trackingSearchUrl": "https://www.dpe.net.my/tracking.php",
+    "helpUrl": "https://www.dpe.net.my/content.php?type=5",
     "linkRules": [],
     "detectionRules": []
   },
@@ -21916,6 +22180,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://dpex.com/track-and-trace/",
     "trackingUrlTemplate": "https://dpex.com/track-and-trace/?cn={trackingNumber}",
     "trackingSearchUrl": "https://dpex.com/track-and-trace/",
+    "helpUrl": "https://dpex.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -21979,6 +22244,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://dpxlogistics.com/en/",
     "trackingUrlTemplate": "https://dpxlogistics.com/en/track/index.html#{trackingNumber}",
     "trackingSearchUrl": "https://dpxlogistics.com/en/track/",
+    "helpUrl": "https://dpxlogistics.com/en/contact/",
     "linkRules": [
       {
         "domains": [
@@ -22015,6 +22281,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://dragonstarcurier.ro/tracking-awb",
     "trackingUrlTemplate": "https://dragonstarcurier.ro/tracking-awb?awb={trackingNumber}",
     "trackingSearchUrl": "https://dragonstarcurier.ro/tracking-awb",
+    "helpUrl": "https://dragonstarcurier.ro/contact",
     "linkRules": [
       {
         "domains": [
@@ -22083,6 +22350,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.drop2shop.ie/tracking",
     "trackingUrlTemplate": "https://www.drop2shop.ie/tracking?trackingnumber={trackingNumber}",
     "trackingSearchUrl": "https://www.drop2shop.ie/tracking",
+    "helpUrl": "https://www.coll-8.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -22238,6 +22506,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.duxiuexp.com/track/",
     "trackingUrlTemplate": "https://www.duxiuexp.com/S/{trackingNumber}",
     "trackingSearchUrl": "https://www.duxiuexp.com/track/",
+    "helpUrl": "https://www.duxiuexp.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -22329,6 +22598,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://dashboard-parner.dylo.com/rastreo",
     "trackingSearchUrl": "https://dashboard-parner.dylo.com/rastreo",
+    "helpUrl": "https://dylo.com/overland-2/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -22353,6 +22623,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.mydynalogic.eu/track/login",
     "trackingUrlTemplate": "https://track.mydynalogic.eu/track/login?ordernumber={trackingNumber}",
     "trackingSearchUrl": "https://track.mydynalogic.eu/track/login",
+    "helpUrl": "https://www.dynalogic.eu/consumenten-contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -22376,6 +22647,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.dypaq.com/",
     "trackingSearchUrl": "https://www.dypaq.com/",
+    "helpUrl": "https://www.dypaq.com/dudas-frecuentes-2/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -22399,6 +22671,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://e-cargo.co.il/",
     "trackingUrlTemplate": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search?searchKey={trackingNumber}",
     "trackingSearchUrl": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search",
+    "helpUrl": "https://e-cargo.co.il/contact/",
     "linkRules": [
       {
         "domains": [
@@ -22463,6 +22736,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.e-pick.com.ar/seguimiento",
     "trackingUrlTemplate": "https://app.e-pick.com.ar/seguimiento?codigo={trackingNumber}",
     "trackingSearchUrl": "https://app.e-pick.com.ar/seguimiento",
+    "helpUrl": "https://app.e-pick.com.ar/faq",
     "linkRules": [
       {
         "domains": [
@@ -22595,6 +22869,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://trackntrace.easymail.gr/",
     "trackingUrlTemplate": "https://trackntrace.easymail.gr/{trackingNumber}",
     "trackingSearchUrl": "https://trackntrace.easymail.gr/",
+    "helpUrl": "https://www.easymail.gr/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -22633,6 +22908,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.easycourier.com.cy/",
     "trackingUrlTemplate": "https://www.easycourier.com.cy/Home/LiveTracking?TrackingId={trackingNumber}",
     "trackingSearchUrl": "https://www.easycourier.com.cy/",
+    "helpUrl": "https://support.easycourier.com.cy/",
     "linkRules": [
       {
         "domains": [
@@ -22667,6 +22943,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ecnetwork.co.uk/order-tracking-shortcode",
     "trackingUrlTemplate": "https://www.ecnetwork.co.uk/order-list/{trackingNumber}",
     "trackingSearchUrl": "https://www.ecnetwork.co.uk/order-tracking-shortcode",
+    "helpUrl": "https://www.ecnetwork.co.uk/contact",
     "linkRules": [
       {
         "domains": [
@@ -22778,6 +23055,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.ecofreight.ae/en/tracking",
     "trackingUrlTemplate": "https://app.ecofreight.ae/en/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://app.ecofreight.ae/en/tracking",
+    "helpUrl": "https://ecofreight.ae/contact.php",
     "linkRules": [
       {
         "domains": [
@@ -22807,6 +23085,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://service.ecohai.co.jp/",
     "trackingSearchUrl": "https://client.ecohai.co.jp/tracking",
+    "helpUrl": "https://www.ecohai.co.jp/faq",
     "linkRules": [],
     "detectionRules": []
   },
@@ -22832,6 +23111,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipecom.com/track",
     "trackingUrlTemplate": "https://shipecom.com/track/{trackingNumber}",
     "trackingSearchUrl": "https://shipecom.com/track",
+    "helpUrl": "https://shipecom.com/support",
     "linkRules": [
       {
         "domains": [
@@ -22923,6 +23203,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ecourier.com.bd/tracking/",
     "trackingUrlTemplate": "https://ecourier.com.bd/tracking?tracking_no={trackingNumber}",
     "trackingSearchUrl": "https://ecourier.com.bd/tracking/",
+    "helpUrl": "https://ecourier.com.bd/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -22957,6 +23238,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ecourier.co.uk/tracking/",
     "trackingUrlTemplate": "https://www.ecourier.co.uk/tracking/?consign_note={trackingNumber}",
     "trackingSearchUrl": "https://www.ecourier.co.uk/tracking/",
+    "helpUrl": "https://www.ecourier.co.uk/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -22991,6 +23273,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.ec-parcel.com/",
     "trackingUrlTemplate": "https://track.ec-parcel.com/track?trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://track.ec-parcel.com/",
+    "helpUrl": "https://www.ec-parcel.com/parcel-problem/",
     "linkRules": [
       {
         "domains": [
@@ -23023,6 +23306,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
     "trackingSearchUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
+    "helpUrl": "https://www.ediexpressinc.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23044,6 +23328,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://eek.driftcentral.net/opter/tt",
     "trackingUrlTemplate": "https://eek.driftcentral.net/opter/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://eek.driftcentral.net/opter/tt",
+    "helpUrl": "https://eeklogistikk.no/web-agency-gb-contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -23101,6 +23386,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://efs.asia/",
     "trackingUrlTemplate": "https://web.efs.asia/script/users/tracking.php?search_no={trackingNumber}&mode=search&lang=",
     "trackingSearchUrl": "https://web.efs.asia/script/users/tracking.php",
+    "helpUrl": "https://efs.asia/customer_form.php",
     "linkRules": [
       {
         "domains": [
@@ -23137,6 +23423,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.egyptexpress.com.eg/en-us/",
     "trackingUrlTemplate": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/?trackingID={trackingNumber}",
     "trackingSearchUrl": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/",
+    "helpUrl": "https://www.egyptexpress.com.eg/en-us/customer-support",
     "linkRules": [
       {
         "domains": [
@@ -23225,6 +23512,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.eimskip.com/find-shipment/",
     "trackingSearchUrl": "https://www.eimskip.com/find-shipment/",
     "trackingSiteName": "Eimskip Find Shipment",
+    "helpUrl": "https://www.eimskip.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23338,6 +23626,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://elitpost.com/en/tracking",
     "trackingSearchUrl": "https://elitpost.com/en/tracking",
+    "helpUrl": "https://elitpost.com/en/support",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23383,6 +23672,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://ellerman.orcapayments.app/container-tracking/",
     "trackingSearchUrl": "https://ellerman.orcapayments.app/container-tracking/",
     "trackingSiteName": "Ellerman Container Track & Trace",
+    "helpUrl": "https://ellermanlines.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23407,6 +23697,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.elog-luxembourg.com/",
     "trackingUrlTemplate": "https://www.elog-luxembourg.com/tracking?q={trackingNumber}",
     "trackingSearchUrl": "https://www.elog-luxembourg.com/",
+    "helpUrl": "https://www.elog-luxembourg.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -23512,6 +23803,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://emdno.opter.cloud/tt",
     "trackingUrlTemplate": "https://emdno.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://emdno.opter.cloud/tt",
+    "helpUrl": "https://emd.as/kontakt-oss/",
     "linkRules": [
       {
         "domains": [
@@ -23547,6 +23839,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.emex.kz/",
     "trackingUrlTemplate": "https://www.emex.kz/otslezhivanie-po-kazahstanu?id={trackingNumber}",
     "trackingSearchUrl": "https://www.emex.kz/otslezhivanie-po-kazahstanu",
+    "helpUrl": "https://www.emex.kz/about/contacts",
     "linkRules": [
       {
         "domains": [
@@ -23620,6 +23913,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.emiratescx.com/en/tracking",
     "trackingUrlTemplate": "https://www.emiratescx.com/en/tracking-details?awb_number={trackingNumber}",
     "trackingSearchUrl": "https://www.emiratescx.com/en/tracking",
+    "helpUrl": "https://www.emiratescx.com/en/supportcenter",
     "linkRules": [
       {
         "domains": [
@@ -23709,6 +24003,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.emiro.ae/tracking/",
     "trackingUrlTemplate": "https://www.emiro.ae/tracking/?tracking_id={trackingNumber}",
     "trackingSearchUrl": "https://www.emiro.ae/tracking/",
+    "helpUrl": "https://www.emiro.ae/contact/",
     "linkRules": [
       {
         "domains": [
@@ -23745,6 +24040,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.emole-express.com/pl/tracking",
     "trackingUrlTemplate": "https://www.emole-express.com/pl/tracking?number={trackingNumber}&autoSearch=true",
     "trackingSearchUrl": "https://www.emole-express.com/pl/tracking",
+    "helpUrl": "https://www.emole-express.com/pl/contact",
     "linkRules": [
       {
         "domains": [
@@ -23779,6 +24075,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.emons.de/",
     "trackingSearchUrl": "https://tracking.myemons.de/public.html",
+    "helpUrl": "https://www.emons.de/kontakt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23849,6 +24146,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://emu.uz/en/tracking",
     "trackingUrlTemplate": "https://emu.uz/en/tracking?id={trackingNumber}",
     "trackingSearchUrl": "https://emu.uz/en/tracking",
+    "helpUrl": "https://emu.uz/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -23877,6 +24175,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://endeavourdelivery.com.au/",
     "trackingSearchUrl": "https://endeavourdelivery.com.au/track",
+    "helpUrl": "https://help.endeavourdelivery.com.au/hc/en-us/requests/new",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23937,6 +24236,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.energologistic.it/tracking/",
     "trackingSearchUrl": "https://www.energologistic.it/tracking/",
+    "helpUrl": "https://www.energologistic.it/contatti/",
     "linkRules": [],
     "detectionRules": [
       {
@@ -23964,6 +24264,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ensetfi.opter.cloud/TT",
     "trackingUrlTemplate": "https://ensetfi.opter.cloud/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://ensetfi.opter.cloud/TT",
+    "helpUrl": "https://enset.fi/yhteystiedot",
     "linkRules": [
       {
         "domains": [
@@ -24075,6 +24376,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php",
     "trackingUrlTemplate": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php?codigo={trackingNumber}&tipo-codigo=cod-principal",
     "trackingSearchUrl": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php",
+    "helpUrl": "https://www.enviamoscym.com/pqr-crear.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24096,6 +24398,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.enviopack.com.ar/",
     "trackingUrlTemplate": "https://tracking.enviopack.com.ar/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.enviopack.com.ar/",
+    "helpUrl": "https://ayuda.enviopack.com/es/articles/10581745-soy-consumidor-final",
     "linkRules": [
       {
         "domains": [
@@ -24124,6 +24427,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.enviopack.com.mx/",
     "trackingUrlTemplate": "https://tracking.enviopack.com.mx/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.enviopack.com.mx/",
+    "helpUrl": "https://ayuda.enviopack.com/es/articles/10581745-soy-consumidor-final",
     "linkRules": [
       {
         "domains": [
@@ -24206,6 +24510,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://epex.com.co/rastrea/",
     "trackingUrlTemplate": "https://epex.com.co/rastrea/?id={trackingNumber}",
     "trackingSearchUrl": "https://epex.com.co/rastrea/",
+    "helpUrl": "https://epex.com.co/epex-soporte-al-cliente/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24336,6 +24641,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://t.alicetms.dk/",
     "trackingUrlTemplate": "https://t.alicetms.dk/#/Esbjerg-gods/TrackAndTrace/{trackingNumber}",
     "trackingSearchUrl": "https://esbjerg-gods.dk/",
+    "helpUrl": "https://esbjerg-gods.dk/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24360,6 +24666,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://clientes.esmlogistica.com/seguimiento",
     "trackingUrlTemplate": "https://clientes.esmlogistica.com/seguimiento?guia={trackingNumber}",
     "trackingSearchUrl": "https://clientes.esmlogistica.com/seguimiento",
+    "helpUrl": "https://esmlogistica.com/pqrs",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24382,6 +24689,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.espeedpost.com/html-tracking.html",
     "trackingUrlTemplate": "https://www.espeedpost.com/html-tracking.html?trackingnumber={trackingNumber}",
     "trackingSearchUrl": "https://www.espeedpost.com/html-tracking.html",
+    "helpUrl": "https://www.espeedpost.com/html-company-contact.html",
     "linkRules": [
       {
         "domains": [
@@ -24416,6 +24724,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.console.espoirer.com/express-tracking",
     "trackingUrlTemplate": "https://www.console.espoirer.com/express-tracking",
     "trackingSearchUrl": "https://www.console.espoirer.com/express-tracking",
+    "helpUrl": "https://espoirer.com/contact/index.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24474,6 +24783,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://efwtrack.com/",
     "trackingUrlTemplate": "https://efwtrack.com/track/{trackingNumber}",
     "trackingSearchUrl": "https://efwtrack.com/",
+    "helpUrl": "https://efwnow.com/services/get-the-efw-experience/",
     "linkRules": [
       {
         "domains": [
@@ -24517,6 +24827,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
     "trackingSearchUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
     "trackingSiteName": "Ethiopian Cargo Track Your Shipment",
+    "helpUrl": "https://cargo.ethiopianairlines.com/customer-care/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24561,6 +24872,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://musteri.etkindagitim.com/",
     "trackingSearchUrl": "https://musteri.etkindagitim.com/",
+    "helpUrl": "https://www.etkindagitim.com/iletisim/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24630,6 +24942,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ets-express.com/",
     "trackingSearchUrl": "https://www.ets-express.com/inquiry.html",
+    "helpUrl": "https://www.ets-express.com/contact.html",
     "linkRules": [],
     "detectionRules": [
       {
@@ -24710,6 +25023,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.euroexpress.ba/pracenje-posiljke",
     "trackingUrlTemplate": "https://www.euroexpress.ba/pracenje-posiljke/{trackingNumber}",
     "trackingSearchUrl": "https://www.euroexpress.ba/pracenje-posiljke",
+    "helpUrl": "https://www.euroexpress.ba/kontakt",
     "linkRules": [
       {
         "domains": [
@@ -24780,6 +25094,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://europoshta.com.ua/tracking/",
     "trackingUrlTemplate": "https://europoshta.com.ua/tracking/?track_input={trackingNumber}&go_button=OK",
     "trackingSearchUrl": "https://europoshta.com.ua/tracking/",
+    "helpUrl": "https://europoshta.com.ua/kontakty/",
     "linkRules": [
       {
         "domains": [
@@ -24816,6 +25131,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://eushipments.com/tracking",
     "trackingUrlTemplate": "https://eushipments.com/tracking",
     "trackingSearchUrl": "https://eushipments.com/tracking",
+    "helpUrl": "https://eushipments.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24840,6 +25156,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.evdemolojistik.com/takip",
     "trackingUrlTemplate": "https://www.evdemolojistik.com/takip?kargo_kodu={trackingNumber}",
     "trackingSearchUrl": "https://www.evdemolojistik.com/takip",
+    "helpUrl": "https://www.evdemolojistik.com/iletisim",
     "linkRules": [
       {
         "domains": [
@@ -24878,6 +25195,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
     "trackingSearchUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
     "trackingSiteName": "ShipmentLink",
+    "helpUrl": "https://www.shipmentlink.com/tcc1/jsp/TCC1_Contact.jsp",
     "linkRules": [],
     "detectionRules": []
   },
@@ -24957,6 +25275,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://evropat.bg/track/",
     "trackingUrlTemplate": "https://evropat.bg/track/?barcode={trackingNumber}",
     "trackingSearchUrl": "https://evropat.bg/track/",
+    "helpUrl": "https://evropat.bg/%d0%ba%d0%be%d0%bd%d1%82%d0%b0%d0%ba%d1%82%d0%b8/",
     "linkRules": [
       {
         "domains": [
@@ -24992,6 +25311,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ewe.com.au/pages/tracking-order",
     "trackingUrlTemplate": "https://www.ewe.com.au/pages/tracking-order?cno={trackingNumber}#track-results",
     "trackingSearchUrl": "https://www.ewe.com.au/pages/tracking-order",
+    "helpUrl": "https://www.ewe.com.au/pages/contact",
     "linkRules": [
       {
         "domains": [
@@ -25046,6 +25366,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.exelot.com/",
     "trackingUrlTemplate": "https://go.exelot.com/tracking?barcodes={trackingNumber}",
     "trackingSearchUrl": "https://www.exelot.com/",
+    "helpUrl": "https://www.exelot.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -25179,6 +25500,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://expedico.eu/tracking",
     "trackingUrlTemplate": "https://expedico.eu/tracking?code={trackingNumber}",
     "trackingSearchUrl": "https://expedico.eu/tracking",
+    "helpUrl": "https://expedico.eu/contact",
     "linkRules": [
       {
         "domains": [
@@ -25213,6 +25535,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://expluslogistics.com/",
     "trackingUrlTemplate": "https://track.expluslogistics.com/tracking-result.html?trackings={trackingNumber}",
     "trackingSearchUrl": "https://track.expluslogistics.com/",
+    "helpUrl": "https://expluslogistics.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -25242,6 +25565,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.expressfreight.co.uk/track",
     "trackingUrlTemplate": "https://www.expressfreight.co.uk/track/view?number_txt={trackingNumber}",
     "trackingSearchUrl": "https://www.expressfreight.co.uk/track",
+    "helpUrl": "https://www.expressfreight.co.uk/contact",
     "linkRules": [
       {
         "domains": [
@@ -25347,6 +25671,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://expressone.me/pracenje-posiljke",
     "trackingSearchUrl": "https://expressone.me/pracenje-posiljke",
+    "helpUrl": "https://expressone.me/kontakt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -25370,6 +25695,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.express.ru/",
     "trackingSearchUrl": "https://www.express.ru/office/tracking",
+    "helpUrl": "https://www.express.ru/contacts",
     "linkRules": [],
     "detectionRules": [
       {
@@ -25396,6 +25722,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://expressgodo.com/track.php",
     "trackingUrlTemplate": "https://expressgodo.com/track.php?order_track={trackingNumber}",
     "trackingSearchUrl": "https://expressgodo.com/track.php",
+    "helpUrl": "https://expressgodo.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -25457,6 +25784,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ezship.com.tw/index.jsp",
     "trackingSearchUrl": "https://www.ezship.com.tw/receiver_query/ezship_query_shipstatus_2017.jsp",
+    "helpUrl": "https://www.ezship.com.tw/service_message/service_message_main.jsp",
     "linkRules": [],
     "detectionRules": []
   },
@@ -25478,6 +25806,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tnt.f2logistics.com/second.php",
     "trackingSearchUrl": "https://www.f2logistics.com/tnt/",
+    "helpUrl": "https://www.f2logistics.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -25505,6 +25834,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://famafutar.hu/tracking/",
     "trackingUrlTemplate": "https://famafutar.hu/tracking/#{trackingNumber}",
     "trackingSearchUrl": "https://famafutar.hu/tracking/",
+    "helpUrl": "https://famafutar.hu/kapcsolat/",
     "linkRules": [
       {
         "domains": [
@@ -25541,6 +25871,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://fmec.famiport.com.tw/FP_Entrance/QueryBox",
     "trackingUrlTemplate": "https://fmec.famiport.com.tw/FP_Entrance/QueryBox?orderno={trackingNumber}",
     "trackingSearchUrl": "https://fmec.famiport.com.tw/FP_Entrance/QueryBox",
+    "helpUrl": "https://www.family.com.tw/Marketing/zh/ContactUs",
     "linkRules": [
       {
         "domains": [
@@ -25745,6 +26076,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.farerata.pf/fr/",
     "trackingSearchUrl": "https://espace-client.farerata.pf/suivre-un-envoi",
+    "helpUrl": "https://www.farerata.pf/fr/p/contactez-nous",
     "linkRules": [],
     "detectionRules": []
   },
@@ -25769,6 +26101,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fargocourier.co.ke/",
     "trackingUrlTemplate": "https://www.fargocourier.co.ke/waybill-viewer/?wayBill={trackingNumber}",
     "trackingSearchUrl": "https://www.fargocourier.co.ke/",
+    "helpUrl": "https://www.fargocourier.co.ke/contact-fargo-courier/",
     "linkRules": [
       {
         "domains": [
@@ -25836,6 +26169,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://fargo.uz/track",
     "trackingUrlTemplate": "https://fargo.uz/track?id={trackingNumber}",
     "trackingSearchUrl": "https://fargo.uz/track",
+    "helpUrl": "https://fargo.uz/uz/contact",
     "linkRules": [
       {
         "domains": [
@@ -25878,6 +26212,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://lms.fastexpresscargo.com/WebTracking/WebTracking.aspx",
     "trackingUrlTemplate": "https://lms.fastexpresscargo.com/WebTracking/WebTracking.aspx?AwbNo={trackingNumber}",
     "trackingSearchUrl": "https://www.fastexpresscargo.com/tracking.html",
+    "helpUrl": "https://www.fastexpresscargo.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -25906,6 +26241,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fast-express.com/en/",
     "trackingUrlTemplate": "https://www.fast-express.com/en/action/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.fast-express.com/en/",
+    "helpUrl": "https://www.fast-express.com/en/pages/iletisim",
     "linkRules": [
       {
         "domains": [
@@ -25937,6 +26273,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://fastbox.co.kr/en/",
     "trackingUrlTemplate": "https://fastbox.co.kr/DHUB/tracking.php?fb_invoice_no={trackingNumber}",
     "trackingSearchUrl": "https://fastbox.co.kr/en/",
+    "helpUrl": "https://fastbox.co.kr/en/introduction/contact.php",
     "linkRules": [
       {
         "domains": [
@@ -25978,6 +26315,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.fastdrop.mt/",
     "trackingUrlTemplate": "https://booking.fastdrop.mt/package-tracking/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.fastdrop.mt/",
+    "helpUrl": "https://fastdrop.mt/contact/",
     "linkRules": [
       {
         "domains": [
@@ -26089,6 +26427,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracker.fastfrate.com/quick-track",
     "trackingUrlTemplate": "https://apps.fastfrate.com/fastnet/FastNet.aspx?ProbillNo={trackingNumber}",
     "trackingSearchUrl": "https://tracker.fastfrate.com/quick-track",
+    "helpUrl": "https://www.fastfrate.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -26129,6 +26468,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fastgo.com.au/",
     "trackingUrlTemplate": "https://www.fastgo.com.au/WaybillQuery/?from=bs&bill={trackingNumber}",
     "trackingSearchUrl": "https://www.fastgo.com.au/WaybillQuery/",
+    "helpUrl": "https://www.fastgo.com.au/ContactUs/",
     "linkRules": [
       {
         "domains": [
@@ -26166,6 +26506,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.fastship.co/",
     "trackingUrlTemplate": "https://track.fastship.co/{trackingNumber}",
     "trackingSearchUrl": "https://track.fastship.co/",
+    "helpUrl": "https://fastship.co/help",
     "linkRules": [
       {
         "domains": [
@@ -26198,6 +26539,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://fasttrack.com.ar/",
     "trackingSearchUrl": "https://fasttrack.com.ar/tracking/",
+    "helpUrl": "https://fasttrack.com.ar/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -26260,6 +26602,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fastwl.com/suivre-un-colis/",
     "trackingUrlTemplate": "https://www.fastwl.com/suivre-un-colis/?trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.fastwl.com/suivre-un-colis/",
+    "helpUrl": "https://www.fastwl.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -26291,6 +26634,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cliente.favorita.com.br/rastreamento",
     "trackingSearchUrl": "https://cliente.favorita.com.br/rastreamento",
+    "helpUrl": "https://favorita.com.br/fale-conosco",
     "linkRules": [],
     "detectionRules": []
   },
@@ -26499,6 +26843,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://fennoroad.fi/",
     "trackingSearchUrl": "https://app.kuljetusvelho.fi/webtrack.php?env=froad&lang=fi",
+    "helpUrl": "https://fennoroad.fi/yhteystiedot/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -26552,6 +26897,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fermopoint.it/traccia-un-ritiro",
     "trackingUrlTemplate": "https://www.fermopoint.it/prenotazione/{trackingNumber}",
     "trackingSearchUrl": "https://www.fermopoint.it/traccia-un-ritiro",
+    "helpUrl": "https://www.fermopoint.it/contatti",
     "linkRules": [
       {
         "domains": [
@@ -26628,6 +26974,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://fgdelivery.it/tracciabilita/",
     "trackingUrlTemplate": "https://fgdelivery.it/tracciabilita/?barcode={trackingNumber}",
     "trackingSearchUrl": "https://fgdelivery.it/tracciabilita/",
+    "helpUrl": "https://fgdelivery.it/contatti/",
     "linkRules": [
       {
         "domains": [
@@ -26665,6 +27012,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://websped-netherlands.fiege.com/",
     "trackingUrlTemplate": "https://websped-netherlands.fiege.com/TrackAndTrace/Search?SearchExpression={trackingNumber}",
     "trackingSearchUrl": "https://websped-netherlands.fiege.com/",
+    "helpUrl": "https://www.fiege.com/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -26698,6 +27046,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://takip.fillo.com.tr/",
     "trackingSearchUrl": "https://takip.fillo.com.tr/",
+    "helpUrl": "https://www.fillo.com.tr/iletisim.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -26719,6 +27068,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fimile.com/website/tracking",
     "trackingUrlTemplate": "https://www.fimile.com/website/tracking?trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.fimile.com/website/tracking",
+    "helpUrl": "https://www.fimile.com/website/contact",
     "linkRules": [
       {
         "domains": [
@@ -26752,6 +27102,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.firstdeliverygroup.com/suivi-de-colis/",
     "trackingSearchUrl": "https://www.firstdeliverygroup.com/suivi-de-colis/",
+    "helpUrl": "https://www.firstdeliverygroup.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -26778,6 +27129,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://firstflightme.com/",
     "trackingUrlTemplate": "https://firstflightme.com/tracking/awb/{trackingNumber}",
     "trackingSearchUrl": "https://firstflightme.com/",
+    "helpUrl": "https://firstflightme.com/contactus",
     "linkRules": [
       {
         "domains": [
@@ -26803,6 +27155,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://firstflyexpress.com/track.asp",
     "trackingSearchUrl": "https://firstflyexpress.com/track.asp",
+    "helpUrl": "https://firstflyexpress.com/cntactus.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -26863,6 +27216,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.firstlogistics.co.id/trace/",
     "trackingSearchUrl": "https://www.firstlogistics.co.id/trace/",
+    "helpUrl": "https://www.firstlogistics.co.id/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -26883,6 +27237,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
     "trackingSearchUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
+    "helpUrl": "https://fiscourier.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -27047,6 +27402,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://flashbird.ca/tracking",
     "trackingUrlTemplate": "https://flashbird.ca/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://flashbird.ca/tracking",
+    "helpUrl": "https://flashbird.ca/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -27105,6 +27461,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.flechacarga.com/segui-tu-envio/",
     "trackingSearchUrl": "https://www.flechacarga.com/segui-tu-envio/",
+    "helpUrl": "https://www.flechacarga.com/asistencia/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -27162,6 +27519,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.fleetopticsinc.com/",
     "trackingUrlTemplate": "https://track.fleetopticsinc.com/?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://track.fleetopticsinc.com/",
+    "helpUrl": "https://fleetopticsinc.com/faq/",
     "linkRules": [
       {
         "domains": [
@@ -27217,6 +27575,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://flickpost.com/tracking/",
     "trackingUrlTemplate": "https://flickpost.com/tracking/?trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://flickpost.com/tracking/",
+    "helpUrl": "https://flickpost.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -27249,6 +27608,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.flightlg.com/myflight-shipment-tracking/",
     "trackingUrlTemplate": "https://www.flightlg.com/myflight-shipment-tracking/?method=tracking&consign_note={trackingNumber}",
     "trackingSearchUrl": "https://www.flightlg.com/myflight-shipment-tracking/?method=tracking",
+    "helpUrl": "https://www.flightlg.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -27287,6 +27647,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://flippost.com/instruments/online/",
     "trackingUrlTemplate": "https://flippost.com/instruments/online/?number={trackingNumber}",
     "trackingSearchUrl": "https://flippost.com/instruments/online/",
+    "helpUrl": "https://flippost.com/about/coordinates/",
     "linkRules": [
       {
         "domains": [
@@ -27319,6 +27680,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.flipxp.com/",
     "trackingSearchUrl": "https://www.flipxp.com/track",
+    "helpUrl": "https://www.flipxp.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -27341,6 +27703,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fliway.com/",
     "trackingUrlTemplate": "https://online.fliway.com/Public/Track/{trackingNumber}",
     "trackingSearchUrl": "https://www.fliway.com/",
+    "helpUrl": "https://www.fliway.com/services/contact-support",
     "linkRules": [
       {
         "domains": [
@@ -27382,6 +27745,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.flowpl.com/order-tracking/",
     "trackingUrlTemplate": "https://www.flowpl.com/order-tracking/",
     "trackingSearchUrl": "https://www.flowpl.com/order-tracking/",
+    "helpUrl": "https://www.flowpl.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -27425,6 +27789,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://t.17track.net/",
+    "helpUrl": "https://www.flytexpress.com/Home/Content?id=3a1341cb-42dd-e075-3b62-555dea451b2d&item=ContactUs&language=0",
     "linkRules": [],
     "detectionRules": []
   },
@@ -27449,6 +27814,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://rastreio.fmtransportes.com.br/",
     "trackingUrlTemplate": "https://rastreio.fmtransportes.com.br/#/{trackingNumber}",
     "trackingSearchUrl": "https://rastreio.fmtransportes.com.br/",
+    "helpUrl": "https://fmtransportes.com.br/faq/",
     "linkRules": [
       {
         "domains": [
@@ -27524,6 +27890,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.fmx.asia/",
     "trackingUrlTemplate": "https://www.fmx.asia/result_detail.php?p=1&conno={trackingNumber}",
     "trackingSearchUrl": "https://www.fmx.asia/",
+    "helpUrl": "https://www.fmx.asia/contact_us.php",
     "linkRules": [
       {
         "domains": [
@@ -27585,6 +27952,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr",
     "trackingUrlTemplate": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr?shipment_num={trackingNumber}",
     "trackingSearchUrl": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr",
+    "helpUrl": "https://www.fofrcz.cz/kontakt",
     "linkRules": [
       {
         "domains": [
@@ -27654,6 +28022,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.forwardair.com/tracking",
     "trackingUrlTemplate": "https://www.forwardair.com/tracking?numbers={trackingNumber}",
     "trackingSearchUrl": "https://www.forwardair.com/tracking",
+    "helpUrl": "https://www.forwardair.com/about/contact",
     "linkRules": [
       {
         "domains": [
@@ -27806,6 +28175,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://fragilepak.com/expecting-a-delivery/",
     "trackingUrlTemplate": "https://tracking.agentgrid.net/progistics/?id={trackingNumber}",
     "trackingSearchUrl": "https://fragilepak.com/expecting-a-delivery/",
+    "helpUrl": "https://fragilepak.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -27841,6 +28211,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.erpfranchexpress.com/api-tracking.php",
     "trackingSearchUrl": "https://franchexpress.com/courier-tracking/",
+    "helpUrl": "https://franchexpress.com/customer-service/",
     "linkRules": [
       {
         "domains": [
@@ -27870,6 +28241,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.freightclub.com/Tracking",
     "trackingUrlTemplate": "https://app.freightclub.com/Tracking/{trackingNumber}",
     "trackingSearchUrl": "https://app.freightclub.com/Tracking",
+    "helpUrl": "https://www.freightclub.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -27947,6 +28319,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://en.freja.com/online-services/track-and-trace-road/",
     "trackingUrlTemplate": "https://en.freja.com/online-services/track-and-trace-road/?{trackingNumber}",
     "trackingSearchUrl": "https://en.freja.com/online-services/track-and-trace-road/",
+    "helpUrl": "https://en.freja.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28051,6 +28424,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ftd.nz/",
     "trackingUrlTemplate": "https://www.ftd.nz/query/?code={trackingNumber}",
     "trackingSearchUrl": "https://www.ftd.nz/query/",
+    "helpUrl": "https://www.ftd.nz/public/contact/",
     "linkRules": [
       {
         "domains": [
@@ -28138,6 +28512,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://furdeco.co.uk/track-your-order",
     "trackingSearchUrl": "https://furdeco.co.uk/track-your-order",
+    "helpUrl": "https://furdeco.co.uk/contact-furdeco",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28158,6 +28533,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
     "trackingSearchUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
+    "helpUrl": "https://furniturelogis.es/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28213,6 +28589,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://fynexcourierdubai.com/tracking/",
     "trackingSearchUrl": "https://fynexcourierdubai.com/tracking/",
+    "helpUrl": "https://fynexcourierdubai.com/contacts/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28237,6 +28614,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://myg2.g2ocean.com/cargo-tracking",
     "trackingSearchUrl": "https://myg2.g2ocean.com/cargo-tracking",
     "trackingSiteName": "MyG2 Cargo Tracker",
+    "helpUrl": "https://www.g2ocean.com/offices/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28284,6 +28662,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gaashwd.com/track-parcel/",
     "trackingUrlTemplate": "https://gaashwd.com/track-parcel/?TrackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://gaashwd.com/track-parcel/",
+    "helpUrl": "https://gaashwd.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -28316,6 +28695,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://delivery.gaaubesi.com/orders/track-order/",
     "trackingUrlTemplate": "https://delivery.gaaubesi.com/orders/track-order/?track_id={trackingNumber}",
     "trackingSearchUrl": "https://delivery.gaaubesi.com/orders/track-order/",
+    "helpUrl": "https://gaaubesi.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -28372,6 +28752,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://garantpost.ru/",
     "trackingSearchUrl": "https://garantpost.ru/tracking/",
+    "helpUrl": "https://garantpost.ru/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28396,6 +28777,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
     "trackingUrlTemplate": "https://cargo.garuda-indonesia.com/Search",
     "trackingSearchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "helpUrl": "https://cargo.garuda-indonesia.com/Contact-Us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28418,6 +28800,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.garudavega.com/track/",
     "trackingUrlTemplate": "https://www.garudavega.com/track/{trackingNumber}",
     "trackingSearchUrl": "https://www.garudavega.com/track/",
+    "helpUrl": "https://www.garudavega.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -28495,6 +28878,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gbs.ru/track/",
     "trackingUrlTemplate": "https://gbs.ru/track/?numbers={trackingNumber}",
     "trackingSearchUrl": "https://gbs.ru/track/",
+    "helpUrl": "https://gbs.ru/help/",
     "linkRules": [
       {
         "domains": [
@@ -28531,6 +28915,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://gcx.co.il/",
     "trackingSearchUrl": "https://gcx.co.il/%d7%9e%d7%a2%d7%a7%d7%91-%d7%9e%d7%a9%d7%9c%d7%95%d7%97%d7%99%d7%9d/",
+    "helpUrl": "https://gcx.co.il/he/%d7%a6%d7%a8%d7%95-%d7%a7%d7%a9%d7%a8/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28624,6 +29009,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://my.gw-world.com/trackntrace/-/search/",
     "trackingSearchUrl": "https://my.gw-world.com/trackntrace/-/search/",
+    "helpUrl": "https://www.gw-world.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -28717,6 +29103,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
     "trackingUrlTemplate": "https://www.gel-express.de/sendungsverfolgung/?snr={trackingNumber}",
     "trackingSearchUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
+    "helpUrl": "https://www.gel-express.de/de/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -28758,6 +29145,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.genei.es/seguimiento-envios/",
     "trackingUrlTemplate": "https://www.genei.es/seguimiento-envios/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://www.genei.es/seguimiento-envios/",
+    "helpUrl": "https://soporte.genei.es/",
     "linkRules": [
       {
         "domains": [
@@ -28934,6 +29322,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pda.gfedi.net/rcserver",
     "trackingUrlTemplate": "https://pda.gfedi.net/rcserver?o=900&SP=401{trackingNumber}",
     "trackingSearchUrl": "https://gfas.no/",
+    "helpUrl": "https://gfas.no/kontakt-oss/",
     "linkRules": [
       {
         "domains": [
@@ -29014,6 +29403,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ghapex.com/public-tracking",
     "trackingSearchUrl": "https://ghapex.com/public-tracking",
+    "helpUrl": "https://ghapex.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -29196,6 +29586,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gioexpress.com/",
     "trackingUrlTemplate": "https://gioexpress.com/tracking/?tracking={trackingNumber}&type=tracking",
     "trackingSearchUrl": "https://gioexpress.com/tracking/",
+    "helpUrl": "https://gioexpress.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -29247,6 +29638,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.glecolombia.com/es/rastreo",
     "trackingUrlTemplate": "https://agile.glecolombia.com/GLEWeb/Home/DetailsGuia?guia={trackingNumber}",
     "trackingSearchUrl": "https://www.glecolombia.com/es/rastreo",
+    "helpUrl": "https://www.glecolombia.com/es/contactanos",
     "linkRules": [
       {
         "domains": [
@@ -29280,6 +29672,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.global-business.com.tw/",
     "trackingSearchUrl": "https://vip.global-business.com.tw/tracking/",
+    "helpUrl": "https://www.global-business.com.tw/contact_us.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -29302,6 +29695,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gdnparcel.com/",
     "trackingUrlTemplate": "https://pds.gdnparcel.com/pds_tracking.asp?track={trackingNumber}",
     "trackingSearchUrl": "https://gdnparcel.com/",
+    "helpUrl": "https://gdnparcel.com/contactus",
     "linkRules": [
       {
         "domains": [
@@ -29337,6 +29731,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.goforgps.com/tracking",
     "trackingUrlTemplate": "https://www.goforgps.com/tracking?search={trackingNumber}",
     "trackingSearchUrl": "https://www.goforgps.com/tracking",
+    "helpUrl": "https://www.goforgps.com/faq",
     "linkRules": [
       {
         "domains": [
@@ -29435,6 +29830,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.globkurier.pl/tracking",
     "trackingUrlTemplate": "https://www.globkurier.pl/tracking",
     "trackingSearchUrl": "https://www.globkurier.pl/tracking",
+    "helpUrl": "https://www.globkurier.pl/kontakt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -29930,6 +30326,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.gmsworldwide.com/",
     "trackingUrlTemplate": "https://www.gmsworldwide.com/shipment-tracking?tracking_no={trackingNumber}&tracking_type=cnno",
     "trackingSearchUrl": "https://www.gmsworldwide.com/",
+    "helpUrl": "https://www.gmsworldwide.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -30007,6 +30404,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gologistics.com.au/track-your-parcel/",
     "trackingUrlTemplate": "https://services.gologistics.com.au/track/iframe2.php?item={trackingNumber}",
     "trackingSearchUrl": "https://gologistics.com.au/track-your-parcel/",
+    "helpUrl": "https://gologistics.com.au/company/contact/",
     "linkRules": [
       {
         "domains": [
@@ -30037,6 +30435,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://gorushbn.com/",
     "trackingSearchUrl": "https://gorushbn.com/",
+    "helpUrl": "https://gorushbn.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -30059,6 +30458,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.goworldexpress.cn/track.html",
     "trackingSearchUrl": "https://www.goworldexpress.cn/track.html",
+    "helpUrl": "https://www.goworldexpress.cn/about/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -30083,6 +30483,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://zona.go4.eu/status/",
     "trackingUrlTemplate": "https://zona.go4.eu/status/?parcelId={trackingNumber}",
     "trackingSearchUrl": "https://zona.go4.eu/status/",
+    "helpUrl": "https://www.go4.sk/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -30117,6 +30518,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.gobolt.com/tracking",
     "trackingUrlTemplate": "https://track.gobolt.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://track.gobolt.com/tracking",
+    "helpUrl": "https://help.gobolt.com/",
     "linkRules": [
       {
         "domains": [
@@ -30360,6 +30762,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.gofo.com/nl/",
     "trackingUrlTemplate": "https://www.gofo.com/nl/tracking-results/?id={trackingNumber}",
     "trackingSearchUrl": "https://www.gofo.com/nl/tracking-results/",
+    "helpUrl": "https://www.gofo.com/nl/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -30468,6 +30871,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://servicos.gollog.com.br/app/site/tracking",
     "trackingUrlTemplate": "https://servicos.gollog.com.br/app/site/tracking?code={trackingNumber}",
     "trackingSearchUrl": "https://servicos.gollog.com.br/app/site/tracking",
+    "helpUrl": "https://www.gollog.com.br/atendimento/canais-de-atendimento",
     "linkRules": [
       {
         "domains": [
@@ -30569,6 +30973,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.goodmaji.com/",
     "trackingSearchUrl": "https://system.goodmaji.com/web/shipmenthistory.aspx",
+    "helpUrl": "https://www.goodmaji.com/question/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -30590,6 +30995,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://gordomlogistika.hr/tracking/",
     "trackingSearchUrl": "https://gordomlogistika.hr/tracking/",
+    "helpUrl": "https://gordomlogistika.hr/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -30612,6 +31018,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.grandslamexpress.in/Web/Track",
     "trackingUrlTemplate": "https://www.grandslamexpress.in/Web/Track?AwbNo={trackingNumber}",
     "trackingSearchUrl": "https://www.grandslamexpress.in/Web/Track",
+    "helpUrl": "https://www.grandslamexpress.in/contact",
     "linkRules": [
       {
         "domains": [
@@ -30709,6 +31116,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://grguweb.tmwcloud.com/trace/external.msw",
     "trackingSearchUrl": "https://grguweb.tmwcloud.com/trace/external.msw",
+    "helpUrl": "https://www.groupeguilbault.com/nous-joindre",
     "linkRules": [],
     "detectionRules": []
   },
@@ -30732,6 +31140,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://glapptracking.gruber-logistics.com/search-tracking-number",
     "trackingUrlTemplate": "https://glapptracking.gruber-logistics.com/?trackingId={trackingNumber}",
     "trackingSearchUrl": "https://glapptracking.gruber-logistics.com/search-tracking-number",
+    "helpUrl": "https://www.gruber-logistics.com/contatti/",
     "linkRules": [
       {
         "domains": [
@@ -30772,6 +31181,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cvsnet.co.kr/reservation-inquiry/delivery/index.do",
     "trackingUrlTemplate": "https://www.cvsnet.co.kr/invoice/tracking.do?invoice_no={trackingNumber}",
     "trackingSearchUrl": "https://www.cvsnet.co.kr/reservation-inquiry/delivery/index.do",
+    "helpUrl": "https://www.cvsnet.co.kr/customer-center/communityid/faq/list.do",
     "linkRules": [
       {
         "domains": [
@@ -30853,6 +31263,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gtaairskip.com/tracking/",
     "trackingUrlTemplate": "https://gtaairskip.com/tracking/?trackingid={trackingNumber}",
     "trackingSearchUrl": "https://gtaairskip.com/tracking/",
+    "helpUrl": "https://gtaairskip.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -31151,6 +31562,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
     "trackingUrlTemplate": "https://www.hapag-lloyd.com/solutions/tracking/#/{trackingNumber}",
     "trackingSearchUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
+    "helpUrl": "https://www.hapag-lloyd.com/en/services-information/offices-localinfo/europe/germany/local-info/customer-service.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31174,6 +31586,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://hdexp.co.kr/index.do",
     "trackingSearchUrl": "https://hdexp.co.kr/index.do",
+    "helpUrl": "https://hdexp.co.kr/cs/cs.do",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31192,6 +31605,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://happycourier.e-anaptixi.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
     "trackingUrlTemplate": "https://happycourier.e-anaptixi.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html?r18p01={trackingNumber}",
     "trackingSearchUrl": "https://happycourier.e-anaptixi.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "helpUrl": "https://happycourier.gr/contact/",
     "linkRules": [
       {
         "domains": [
@@ -31226,6 +31640,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://uk.happy-post.com/track/",
     "trackingUrlTemplate": "https://uk.happy-post.com/track/?id={trackingNumber}",
     "trackingSearchUrl": "https://uk.happy-post.com/track/",
+    "helpUrl": "https://happy-post.com/en/faq",
     "linkRules": [
       {
         "domains": [
@@ -31270,6 +31685,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://hart2hartexpress.co.uk/",
     "trackingUrlTemplate": "https://harttohart.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
     "trackingSearchUrl": "https://harttohart.couriernavigator-secure.com/tracking",
+    "helpUrl": "https://hart2hartexpress.co.uk/contact.php",
     "linkRules": [
       {
         "domains": [
@@ -31300,6 +31716,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cp.hartmann-international.de/Track",
     "trackingSearchUrl": "https://cp.hartmann-international.de/Track",
+    "helpUrl": "https://www.hartmann-international.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31421,6 +31838,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.hecny.com/en/track-and-trace",
     "trackingSearchUrl": "https://www.hecny.com/en/track-and-trace",
     "trackingSiteName": "Hecny Track and Trace",
+    "helpUrl": "https://www.hecny.com/en/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31470,6 +31888,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hellmann.com/en/track-trace",
     "trackingUrlTemplate": "https://public.tracking.hellmann.net/search/{trackingNumber}",
     "trackingSearchUrl": "https://www.hellmann.com/en/track-trace",
+    "helpUrl": "https://www.hellmann.com/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -31582,6 +32001,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://herculesfreight.com/Forms/TrackShipment",
     "trackingSearchUrl": "https://herculesfreight.com/Forms/TrackShipment",
+    "helpUrl": "https://herculesfreight.com/Pages/ContactUs",
     "linkRules": [
       {
         "domains": [
@@ -31651,6 +32071,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.heronaexpress.co.id/",
     "trackingSearchUrl": "https://tracking.heronaexpress.co.id/lacak.php",
+    "helpUrl": "https://heronaexpress.co.id/kontak.php",
     "linkRules": [],
     "detectionRules": [
       {
@@ -31683,6 +32104,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://ebiz.heungaline.com/Tracking",
     "trackingSearchUrl": "https://ebiz.heungaline.com/Tracking",
     "trackingSiteName": "Heung-A e-Service Tracking",
+    "helpUrl": "https://www.heungaline.com/en/contact_01.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31821,6 +32243,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.hintzen.de/orderx/aordata.aspx",
     "trackingSearchUrl": "https://tracking.hintzen.de/orderx/aordata.aspx",
+    "helpUrl": "https://www.hintzen.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31870,6 +32293,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://hitch.com.ph/",
     "trackingUrlTemplate": "https://hitch.com.ph/tracking?no={trackingNumber}",
     "trackingSearchUrl": "https://hitch.com.ph/tracking",
+    "helpUrl": "https://hitch.com.ph/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -31910,6 +32334,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.hiyes.com.tw/",
     "trackingSearchUrl": "https://www.hiyes.com.tw/CargoTracking",
+    "helpUrl": "https://www.hiyes.com.tw/Contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31933,6 +32358,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.hkdexpress.net/track",
     "trackingSearchUrl": "https://www.hkdexpress.net/track",
+    "helpUrl": "https://www.hkdexpress.net/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -31954,6 +32380,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://hlogtransportes.com.br/buscar",
     "trackingSearchUrl": "https://hlogtransportes.com.br/buscar",
+    "helpUrl": "https://hlogtransportes.com.br/faleconosco",
     "linkRules": [],
     "detectionRules": [
       {
@@ -31979,6 +32406,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
     "trackingSearchUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
+    "helpUrl": "https://www.hmm21.com/company/faq.do",
     "linkRules": [],
     "detectionRules": []
   },
@@ -32003,6 +32431,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hoeghautoliners.com/my-cargo",
     "trackingUrlTemplate": "https://www.hoeghautoliners.com/my-cargo",
     "trackingSearchUrl": "https://www.hoeghautoliners.com/my-cargo",
+    "helpUrl": "https://www.hoeghautoliners.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -32027,6 +32456,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://holisollogistics.com/",
     "trackingUrlTemplate": "https://www.holisoldelivery.com/api/tracking/TrackAwb?awb={trackingNumber}",
     "trackingSearchUrl": "https://holisollogistics.com/track-shipment/",
+    "helpUrl": "https://holisollogistics.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -32061,6 +32491,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://homedt.hu/nyomonkovetes",
     "trackingUrlTemplate": "https://homedt.hu/nyomonkovetes?track_number={trackingNumber}",
     "trackingSearchUrl": "https://homedt.hu/nyomonkovetes",
+    "helpUrl": "https://homedt.hu/kapcsolat",
     "linkRules": [
       {
         "domains": [
@@ -32177,6 +32608,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.cargolane.net/tracking/ShipmentInfo",
     "trackingUrlTemplate": "https://tracking.cargolane.net/tracking/ShipmentInfo?paramType=ctn_no&paramNo={trackingNumber}",
     "trackingSiteName": "HLS Online Service",
+    "helpUrl": "https://www.hlsholding.com/contactus",
     "linkRules": [],
     "detectionRules": []
   },
@@ -32199,6 +32631,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://hopenvios.com.ar/segui-tu-envio",
     "trackingUrlTemplate": "https://hopenvios.com.ar/segui-tu-envio?c={trackingNumber}",
     "trackingSearchUrl": "https://hopenvios.com.ar/segui-tu-envio",
+    "helpUrl": "https://hopenvios.com.ar/contacto",
     "linkRules": [
       {
         "domains": [
@@ -32229,6 +32662,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
     "trackingSearchUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "helpUrl": "https://www.hopexpress.rs/kontakt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -32253,6 +32687,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmGonderiTakip.aspx",
     "trackingUrlTemplate": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmAtfDetay.aspx?Ptn={trackingNumber}",
     "trackingSearchUrl": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmGonderiTakip.aspx",
+    "helpUrl": "https://www.horoz.com.tr/iletisim",
     "linkRules": [
       {
         "domains": [
@@ -32284,6 +32719,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.hound-express.com/tracking.html",
     "trackingSearchUrl": "https://www.hound-express.com/tracking.html",
+    "helpUrl": "https://www.hound-express.com/hx/contactanos/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -32342,6 +32778,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hovership.com/track/",
     "trackingUrlTemplate": "https://www.hovership.com/track/{trackingNumber}/",
     "trackingSearchUrl": "https://www.hovership.com/track/",
+    "helpUrl": "https://www.hovership.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -32410,6 +32847,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hrparcel.com/traccia-spedizioni/",
     "trackingUrlTemplate": "https://www.hrparcel.com/traccia-spedizioni/?barcode={trackingNumber}",
     "trackingSearchUrl": "https://www.hrparcel.com/traccia-spedizioni/",
+    "helpUrl": "https://www.hrparcel.com/contatti/",
     "linkRules": [
       {
         "domains": [
@@ -32519,6 +32957,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hrx.lv/en/track-trace/",
     "trackingUrlTemplate": "https://wop.hrx.eu/public/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.hrx.lv/en/track-trace/",
+    "helpUrl": "https://www.hrx.lv/en/kontakti/",
     "linkRules": [
       {
         "domains": [
@@ -32547,6 +32986,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://hssno.opter.cloud/TT",
     "trackingUrlTemplate": "https://hssno.opter.cloud/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://hssno.opter.cloud/TT",
+    "helpUrl": "https://hss.no/om-oss/",
     "linkRules": [
       {
         "domains": [
@@ -32693,6 +33133,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
     "trackingUrlTemplate": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html?search={trackingNumber}",
     "trackingSearchUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
+    "helpUrl": "https://www.hubdelivery.com/HubDelivery/contacts.html",
     "linkRules": [
       {
         "domains": [
@@ -32729,6 +33170,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.hubgroup.com/logistics-management/final-mile/",
     "trackingSearchUrl": "https://www.hubgroup.com/logistics-management/final-mile/",
+    "helpUrl": "https://www.hubgroup.com/about-us/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -32791,6 +33233,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://hurtigguttano.opter.cloud/tt",
     "trackingUrlTemplate": "https://hurtigguttano.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://hurtigguttano.opter.cloud/tt",
+    "helpUrl": "https://hurtig-gutta.no/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -32820,6 +33263,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://huuneh.com/dashboard/tracking.php",
     "trackingUrlTemplate": "https://huuneh.com/dashboard/track.php?order_track={trackingNumber}",
     "trackingSearchUrl": "https://huuneh.com/dashboard/tracking.php",
+    "helpUrl": "https://huuneh.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -32854,6 +33298,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.hy-express.com/",
     "trackingUrlTemplate": "https://order.hy-express.com/track_query.aspx?track_number={trackingNumber}",
     "trackingSearchUrl": "https://order.hy-express.com/track_query.aspx",
+    "helpUrl": "https://www.hy-express.com/index.php?case=archive&act=list&catid=238",
     "linkRules": [
       {
         "domains": [
@@ -32961,6 +33406,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://hztgjwl.com/query/",
     "trackingSearchUrl": "https://hztgjwl.com/query/",
+    "helpUrl": "https://hztgjwl.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33006,6 +33452,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://integracargo.com/rastreo/",
     "trackingUrlTemplate": "https://integracargo.com/rastreo/",
     "trackingSearchUrl": "https://integracargo.com/rastreo/",
+    "helpUrl": "https://integracargo.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33028,6 +33475,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://icccourier.gr/voucher/search",
     "trackingUrlTemplate": "https://icccourier.gr/voucher/search?voucher={trackingNumber}",
     "trackingSearchUrl": "https://icccourier.gr/voucher/search",
+    "helpUrl": "https://icccourier.gr/contact",
     "linkRules": [
       {
         "domains": [
@@ -33066,6 +33514,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.iccworld.com/",
     "trackingUrlTemplate": "https://www.iccworld.com/track-result.php?track_no={trackingNumber}",
     "trackingSearchUrl": "https://www.iccworld.com/",
+    "helpUrl": "https://www.iccworld.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -33109,6 +33558,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://iclexpress.in/tracking/",
     "trackingSearchUrl": "https://iclexpress.in/tracking/",
+    "helpUrl": "https://iclexpress.in/contact/",
     "linkRules": [
       {
         "domains": [
@@ -33142,6 +33592,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.icscourier.ca/online-services/parcel-tracking.aspx",
     "trackingUrlTemplate": "https://www.icscourier.ca/online-services/parcel-tracking.aspx?trackNums={trackingNumber}",
     "trackingSearchUrl": "https://www.icscourier.ca/online-services/parcel-tracking.aspx",
+    "helpUrl": "https://www.icscourier.ca/about-us/contactics.aspx",
     "linkRules": [
       {
         "domains": [
@@ -33179,6 +33630,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
     "trackingSearchUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
+    "helpUrl": "https://ics-couriers.com/info/kontakty/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33254,6 +33706,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ids-logistik.de/de/sendungsverfolgung",
     "trackingSearchUrl": "https://www.ids-logistik.de/de/sendungsverfolgung",
+    "helpUrl": "https://www.ids-logistik.de/de/hilfe",
     "linkRules": [
       {
         "domains": [
@@ -33285,6 +33738,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.iflow21.com/",
     "trackingUrlTemplate": "https://tracking.iflow21.com/#/tracking/code/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.iflow21.com/",
+    "helpUrl": "https://customer.iflow21.com/portal/es/home",
     "linkRules": [
       {
         "domains": [
@@ -33439,6 +33893,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://indahonline.com/tracking/cek-resi",
     "trackingUrlTemplate": "https://indahonline.com/services/view?NO_RESI={trackingNumber}",
     "trackingSearchUrl": "https://indahonline.com/tracking/cek-resi",
+    "helpUrl": "https://indahonline.com/company/contact",
     "linkRules": [
       {
         "domains": [
@@ -33478,6 +33933,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
     "trackingUrlTemplate": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
     "trackingSearchUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "helpUrl": "https://www.goindigo.in/cargo/frequently-asked-questions.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33499,6 +33955,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.indopaket.co.id/",
     "trackingSearchUrl": "https://www.indopaket.co.id/multi-tracking",
+    "helpUrl": "https://www.indopaket.co.id/faq",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33521,6 +33978,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.inntralog.de/",
     "trackingSearchUrl": "https://portal.inntralog.com/track/",
+    "helpUrl": "https://www.inntralog.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33632,6 +34090,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://integraa.net/gestione/tracking.php",
     "trackingSearchUrl": "https://integraa.net/gestione/tracking.php",
+    "helpUrl": "https://www.integraaposta.it/supporto-integraa/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33656,6 +34115,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.integralpack.com.ar/seguimiento",
     "trackingUrlTemplate": "https://www.integralpack.com.ar/seguimiento?codigo={trackingNumber}",
     "trackingSearchUrl": "https://www.integralpack.com.ar/seguimiento",
+    "helpUrl": "https://www.integralpack.com.ar/contacto",
     "linkRules": [
       {
         "domains": [
@@ -33765,6 +34225,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://intelligentlogistik.ro/",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311",
+    "helpUrl": "https://intelligentlogistik.ro/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33824,6 +34285,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://iel.co.th/tracking/",
     "trackingUrlTemplate": "https://iel.co.th/tracking/?trackingNo={trackingNumber}",
     "trackingSearchUrl": "https://iel.co.th/tracking/",
+    "helpUrl": "https://iel.co.th/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -33865,6 +34327,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.globalkargo.com/tr",
     "trackingUrlTemplate": "https://www.globalkargo.com/tr/KargoDetay/{trackingNumber}/0000",
     "trackingSearchUrl": "https://www.globalkargo.com/tr",
+    "helpUrl": "https://www.globalkargo.com/tr/Kurumsal/Iletisim",
     "linkRules": [
       {
         "domains": [
@@ -33939,6 +34402,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.interfjord.dk/",
     "trackingUrlTemplate": "https://tracking.interfjord.dk/?track={trackingNumber}",
     "trackingSearchUrl": "https://tracking.interfjord.dk/",
+    "helpUrl": "https://www.interfjord.dk/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -33973,6 +34437,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.interlogistica.bg/bg/",
     "trackingSearchUrl": "https://tracking.interlogistica.bg/",
+    "helpUrl": "https://www.interlogistica.bg/bg/contacts/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -33996,6 +34461,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.myib.com/",
     "trackingUrlTemplate": "https://tracking.myib.com/?trackingnumber={trackingNumber}",
     "trackingSearchUrl": "https://tracking.myib.com/",
+    "helpUrl": "https://myib.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -34027,6 +34493,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.internetexpress.co.za/track",
     "trackingUrlTemplate": "https://portal.internetexpress.co.za/track?ref={trackingNumber}",
     "trackingSearchUrl": "https://portal.internetexpress.co.za/track",
+    "helpUrl": "https://www.internetexpress.co.za/contact-details",
     "linkRules": [
       {
         "domains": [
@@ -34117,6 +34584,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://intertown.pperfect.com/",
     "trackingSearchUrl": "https://intertown.pperfect.com/",
+    "helpUrl": "https://www.intertown.co.za/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -34138,6 +34606,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.intexcourier.al/packages/getByTrackingCode",
     "trackingUrlTemplate": "https://app.intexcourier.al/packages/getByTrackingCode?tracking_number_list={trackingNumber}",
     "trackingSearchUrl": "https://intexcourier.al/gjurmo.html",
+    "helpUrl": "https://intexcourier.al/kontakt.html",
     "linkRules": [
       {
         "domains": [
@@ -34170,6 +34639,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.intex-paketdienst.de/sendungsstatus/index.php",
     "trackingUrlTemplate": "https://www.intex-paketdienst.de/sendungsstatus/index.php?sdnr={trackingNumber}&mid=1",
     "trackingSearchUrl": "https://www.intex-paketdienst.de/sendungsstatus/index.php",
+    "helpUrl": "https://www.intex-paketdienst.de/websitewp/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -34207,6 +34677,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://intigo.net/",
     "trackingUrlTemplate": "https://intigo.net/?nid={trackingNumber}",
     "trackingSearchUrl": "https://intigo.net/",
+    "helpUrl": "https://intigo.net/contact/",
     "linkRules": [
       {
         "domains": [
@@ -34243,6 +34714,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://intime.bg/",
     "trackingUrlTemplate": "https://intime.bg/tracking/?track_number={trackingNumber}",
     "trackingSearchUrl": "https://intime.bg/tracking/",
+    "helpUrl": "https://intime.bg/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -34281,6 +34753,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.in-time.hr/pracenje",
     "trackingUrlTemplate": "https://www.in-time.hr/pracenje?id={trackingNumber}",
     "trackingSearchUrl": "https://www.in-time.hr/pracenje",
+    "helpUrl": "https://www.in-time.hr/podrska",
     "linkRules": [
       {
         "domains": [
@@ -34400,6 +34873,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.irs.ro/",
     "trackingSearchUrl": "https://www.irs.ro/",
+    "helpUrl": "https://www.irs.ro/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -34425,6 +34899,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.islandwide.com/tracking",
     "trackingUrlTemplate": "https://www.islandwide.com/tracking?TrackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.islandwide.com/tracking",
+    "helpUrl": "https://www.islandwide.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -34543,6 +35018,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.itcdelivery.com/track/",
     "trackingSearchUrl": "https://www.itcdelivery.com/track/",
+    "helpUrl": "https://www.itcdelivery.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -34564,6 +35040,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://itideno.opter.cloud/tt",
     "trackingUrlTemplate": "https://itideno.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://itideno.opter.cloud/tt",
+    "helpUrl": "https://itide.no/kontakt-oss/",
     "linkRules": [
       {
         "domains": [
@@ -35225,6 +35702,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://jananiexpress.com/tracking",
     "trackingUrlTemplate": "https://jananiexpress.com/tracking?cn={trackingNumber}",
     "trackingSearchUrl": "https://jananiexpress.com/tracking",
+    "helpUrl": "https://jananiexpress.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -35268,6 +35746,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.jancoexpress.com/cargotracking_xp/itxp/xpop/xpordertrack",
     "trackingUrlTemplate": "https://track.jancoexpress.com/cargotracking_xp/itxp/xpop/xpordertrack?as_order_no={trackingNumber}",
     "trackingSearchUrl": "https://www.jancoexpress.com/track-trace-2/",
+    "helpUrl": "https://www.jancoexpress.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -35345,6 +35824,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://myjas.com/public/shipments",
     "trackingUrlTemplate": "https://myjas.com/public/shipments?shipmentNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.jas.com/",
+    "helpUrl": "https://www.jas.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -35376,6 +35856,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://jaskipin.co.id/",
     "trackingSearchUrl": "https://jaskipin.co.id/tracking",
+    "helpUrl": "https://jaskipin.co.id/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -35400,6 +35881,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.jbhunt.com/shippers/final-mile-services/track-shipments/",
     "trackingUrlTemplate": "https://www.jbhunt.com/shippers/final-mile-services/track-shipments/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://www.jbhunt.com/shippers/final-mile-services/track-shipments/",
+    "helpUrl": "https://www.jbhunt.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -35502,6 +35984,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://jcwexpress.com/",
     "trackingUrlTemplate": "https://jcwexpress.com/tracking?codes={trackingNumber}",
     "trackingSearchUrl": "https://jcwexpress.com/tracking",
+    "helpUrl": "https://jcwexpress.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -35648,6 +36131,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
     "trackingSearchUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "helpUrl": "https://jet-dp.pl/pl/skontaktuj-si%C4%99-z-nami",
     "linkRules": [],
     "detectionRules": []
   },
@@ -35669,6 +36153,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.kuller.ee/opter/TT",
     "trackingUrlTemplate": "https://portal.kuller.ee/opter/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://portal.kuller.ee/opter/TT",
+    "helpUrl": "https://kuller.ee/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -35704,6 +36189,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.jetft.com/tracking.html",
     "trackingUrlTemplate": "https://www.jetft.com/tracking.html?order={trackingNumber}",
     "trackingSearchUrl": "https://www.jetft.com/tracking.html",
+    "helpUrl": "https://www.jetft.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -35742,6 +36228,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://jetlogistic.kz/",
     "trackingSearchUrl": "https://jetlogistic.kz/",
+    "helpUrl": "https://jetlogistic.kz/%D0%BA%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D1%8B.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -35764,6 +36251,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://jetizz.com/",
     "trackingSearchUrl": "https://app.jetizz.com/gonderi-takip",
+    "helpUrl": "https://jetizz.com/iletisim",
     "linkRules": [],
     "detectionRules": []
   },
@@ -35788,6 +36276,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.jetlinecouriers.in/",
     "trackingSearchUrl": "https://www.jetlinecouriers.in/",
+    "helpUrl": "https://www.jetlinecouriers.in/customercare.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -35854,6 +36343,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.jetspeed-express.com/",
     "trackingUrlTemplate": "https://www.jetspeed-express.com/search_kuai_di/search/orderid/{trackingNumber}",
     "trackingSearchUrl": "https://www.jetspeed-express.com/",
+    "helpUrl": "https://www.jetspeed-express.com/cms/c/contactus",
     "linkRules": [
       {
         "domains": [
@@ -36001,6 +36491,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.jiayingex.com/",
     "trackingSearchUrl": "https://www.jiayingex.com/track-help/",
+    "helpUrl": "https://www.jiayingex.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36030,6 +36521,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://mms.intelink.net.cn/oms/",
     "trackingUrlTemplate": "https://mms.intelink.net.cn/oms/#/logisticsTracking?companyId=10355&nos={trackingNumber}",
     "trackingSearchUrl": "https://www.11000miles.com/",
+    "helpUrl": "https://www.11000miles.com/detail.html?&backend_env=narongliebiao&backend_section=guanyuwomen&content_id=14",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36052,6 +36544,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.jiehang.net/",
     "trackingSearchUrl": "https://xt.jiehang.net/WebTrack",
+    "helpUrl": "https://www.jiehang.net/index.php/about/11",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36183,6 +36676,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.jiufanglogistics.cn/shipmentQueryList",
     "trackingSearchUrl": "https://www.jiufanglogistics.cn/shipmentQueryList",
+    "helpUrl": "https://www.jiufanglogistics.cn/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36205,6 +36699,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://jlog.co.za/tracking/",
     "trackingUrlTemplate": "https://jlog.co.za/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://jlog.co.za/tracking/",
+    "helpUrl": "https://jlog.co.za/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -36354,6 +36849,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://jphome.eu/",
     "trackingSearchUrl": "https://jphome.eu/suivi-de-livraison/",
+    "helpUrl": "https://jphome.eu/faq-consommateur/",
     "linkRules": [
       {
         "domains": [
@@ -36537,6 +37033,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.jtlexpress.co.id/Tracking",
     "trackingUrlTemplate": "https://www.jtlexpress.co.id/Tracking",
     "trackingSearchUrl": "https://www.jtlexpress.co.id/Tracking",
+    "helpUrl": "https://www.jtlexpress.co.id/contact_us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36556,6 +37053,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.jumppoint.io/",
     "trackingUrlTemplate": "https://tracking.jumppoint.io/?q={trackingNumber}",
     "trackingSearchUrl": "https://tracking.jumppoint.io/",
+    "helpUrl": "https://www.jumppoint.io/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -36639,6 +37137,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.junfengfast.com/tracking.html",
     "trackingUrlTemplate": "https://www.junfengfast.com/tracking.html?no={trackingNumber}",
     "trackingSearchUrl": "https://www.junfengfast.com/tracking.html",
+    "helpUrl": "https://www.junfengfast.com/contact-us.html",
     "linkRules": [
       {
         "domains": [
@@ -36732,6 +37231,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://apps.klineglobalroro.com/tracking/search",
     "trackingUrlTemplate": "https://apps.klineglobalroro.com/tracking/search?q={trackingNumber}",
     "trackingSearchUrl": "https://apps.klineglobalroro.com/tracking/search",
+    "helpUrl": "https://www.kline.co.jp/en/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36753,6 +37253,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.kaizenexpres.com/seguimiento/",
     "trackingSearchUrl": "https://www.kaizenexpres.com/seguimiento/",
+    "helpUrl": "https://kaizenexpress.es/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36776,6 +37277,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://todaypickup-partners.kakaomobility.com/front/delivery/list",
     "trackingUrlTemplate": "https://todaypickup-partners.kakaomobility.com/front/delivery/list/{trackingNumber}",
     "trackingSearchUrl": "https://todaypickup-partners.kakaomobility.com/front/delivery/list",
+    "helpUrl": "https://www.kakaomobility.com/customer-support",
     "linkRules": [
       {
         "domains": [
@@ -36805,6 +37307,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
     "trackingSearchUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
+    "helpUrl": "https://kanga.gr/epikoinonia/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36871,6 +37374,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.kargoturk.com.tr/kargo-takip",
     "trackingUrlTemplate": "https://online.kargoturk.com.tr/tracking?har_kod={trackingNumber}",
     "trackingSearchUrl": "https://www.kargoturk.com.tr/kargo-takip",
+    "helpUrl": "https://www.kargoturk.com.tr/iletisim",
     "linkRules": [
       {
         "domains": [
@@ -36903,6 +37407,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.kart2door.com/",
     "trackingUrlTemplate": "https://www.kart2door.com/EcomTracking?axb={trackingNumber}",
     "trackingSearchUrl": "https://www.kart2door.com/EcomTracking",
+    "helpUrl": "https://www.kart2door.com/contactus",
     "linkRules": [
       {
         "domains": [
@@ -37018,6 +37523,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://kdz.com/track-trace/",
     "trackingUrlTemplate": "https://kdz.com/track-trace/?nr={trackingNumber}",
     "trackingSearchUrl": "https://kdz.com/track-trace/",
+    "helpUrl": "https://kdz.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -37056,6 +37562,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://kec.kln.com/en/logistics-tracking/",
     "trackingUrlTemplate": "https://kec.kln.com/en/logistics-tracking/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://kec.kln.com/en/logistics-tracking/",
+    "helpUrl": "https://kec.kln.com/en/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -37170,6 +37677,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://th.kex-express.com/en/track-parcel",
     "trackingUrlTemplate": "https://th.kex-express.com/en/track/?track={trackingNumber}",
     "trackingSearchUrl": "https://th.kex-express.com/en/track-parcel",
+    "helpUrl": "https://th.kex-express.com/en/faq",
     "linkRules": [
       {
         "domains": [
@@ -37212,6 +37720,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.kex.kln.com/en/track",
     "trackingUrlTemplate": "https://www.kex.kln.com/en/track?track={trackingNumber}",
     "trackingSearchUrl": "https://www.kex.kln.com/en/track",
+    "helpUrl": "https://www.kex.kln.com/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -37251,6 +37760,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://run10.kexpress.co.il/RunCom.Server/www/pub/pub_random_form.htm",
     "trackingSearchUrl": "https://run10.kexpress.co.il/RunCom.Server/www/pub/pub_random_form.htm",
+    "helpUrl": "https://kexpress.co.il/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -37301,6 +37811,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.khubaniairpack.com/tracking.html",
     "trackingUrlTemplate": "https://www.khubaniairpack.com/tracking.html?awbno={trackingNumber}",
     "trackingSearchUrl": "https://www.khubaniairpack.com/tracking.html",
+    "helpUrl": "https://www.khubaniairpack.com/contactus.html",
     "linkRules": [
       {
         "domains": [
@@ -37357,6 +37868,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.kke.com.hk/home/index/que",
     "trackingSearchUrl": "https://www.kke.com.hk/home/index/que",
+    "helpUrl": "https://www.kke.com.hk/home/index/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -37378,6 +37890,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://kingsolutionsglobal.com/track/",
     "trackingUrlTemplate": "https://kingsolutionsglobal.com/track/?pros={trackingNumber}",
     "trackingSearchUrl": "https://kingsolutionsglobal.com/track/",
+    "helpUrl": "https://kingsolutionsglobal.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -37466,6 +37979,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.kiwiexpress.co.nz/",
     "trackingUrlTemplate": "https://my.kiwiexpress.co.nz/barcode/{trackingNumber}",
     "trackingSearchUrl": "https://www.kiwiexpress.co.nz/",
+    "helpUrl": "https://www.kiwiexpress.co.nz/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -37494,6 +38008,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tt.kleine.eu/tracking/home.jsf",
     "trackingUrlTemplate": "https://tt.kleine.eu/tracking/anon/anondetail.seam?colliScanNumber={trackingNumber}",
     "trackingSearchUrl": "https://tt.kleine.eu/tracking/home.jsf",
+    "helpUrl": "https://kleine.eu/kontakt",
     "linkRules": [
       {
         "domains": [
@@ -37603,6 +38118,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://koombiyodelivery.lk/track",
     "trackingUrlTemplate": "https://koombiyodelivery.lk/track?id={trackingNumber}",
     "trackingSearchUrl": "https://koombiyodelivery.lk/track",
+    "helpUrl": "https://koombiyodelivery.lk/contact",
     "linkRules": [
       {
         "domains": [
@@ -37637,6 +38153,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://korex.by/",
     "trackingSearchUrl": "https://korex.by/",
+    "helpUrl": "https://korex.by/contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -37660,6 +38177,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.kronosexpress.com/tracking_system_en.aspx",
     "trackingUrlTemplate": "https://tracking.kronosexpress.com/tracking_system_en.aspx?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://tracking.kronosexpress.com/tracking_system_en.aspx",
+    "helpUrl": "https://www.kronosexpress.com/en/contactus/",
     "linkRules": [
       {
         "domains": [
@@ -37757,6 +38275,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ky-express.com/88.html",
     "trackingUrlTemplate": "https://www.ky-express.com/88.html?tab=3&orders={trackingNumber}",
     "trackingSearchUrl": "https://www.ky-express.com/88.html",
+    "helpUrl": "https://www.ky-express.com/101.html",
     "linkRules": [
       {
         "domains": [
@@ -37995,6 +38514,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://opter.kurer.no/opter/tt",
     "trackingUrlTemplate": "https://opter.kurer.no/opter/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://opter.kurer.no/opter/tt",
+    "helpUrl": "https://kurer.no/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -38026,6 +38546,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.kurierzentrale.ch/",
     "trackingSearchUrl": "https://crm.kuz.ch/",
+    "helpUrl": "https://www.kurierzentrale.ch/uberuns",
     "linkRules": [],
     "detectionRules": []
   },
@@ -38048,6 +38569,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.kurlynextmile.com/information/invoice",
     "trackingUrlTemplate": "https://www.kurlynextmile.com/information/invoice?invoice_no={trackingNumber}",
     "trackingSearchUrl": "https://www.kurlynextmile.com/information/invoice",
+    "helpUrl": "https://www.kurlynextmile.com/customer/inquiry_write",
     "linkRules": [
       {
         "domains": [
@@ -38096,6 +38618,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.kwick-box.com/",
     "trackingSearchUrl": "https://www.kwick-box.com/",
+    "helpUrl": "https://www.kwick-box.com/en/contactUs/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -38237,6 +38760,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://l-post.ru/tracking",
     "trackingUrlTemplate": "https://l-post.ru/tracking?id={trackingNumber}",
     "trackingSearchUrl": "https://l-post.ru/tracking",
+    "helpUrl": "https://l-post.ru/support",
     "linkRules": [
       {
         "domains": [
@@ -38494,6 +39018,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://c.lafasta.sa.com/Track/",
     "trackingUrlTemplate": "https://c.lafasta.sa.com/Track/{trackingNumber}",
     "trackingSearchUrl": "https://c.lafasta.sa.com/Track/",
+    "helpUrl": "https://lafasta.sa.com/Contact",
     "linkRules": [
       {
         "domains": [
@@ -38524,6 +39049,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://lmtco.com/tracking-serices.html",
     "trackingUrlTemplate": "https://lmtco.com/tracking-serices.html",
     "trackingSearchUrl": "https://lmtco.com/tracking-serices.html",
+    "helpUrl": "https://lmtco.com/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -38576,6 +39102,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
     "trackingUrlTemplate": "https://www.laserlogistics.co.za/parcel-tracking/?waybillnumber={trackingNumber}",
     "trackingSearchUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
+    "helpUrl": "https://www.laserlogistics.co.za/contact/",
     "linkRules": [
       {
         "domains": [
@@ -38609,6 +39136,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://lastonemile.org/",
     "trackingUrlTemplate": "https://y-track.jp/ytrack/inqservlet?cd=81118&id=02116&number01={trackingNumber}",
+    "helpUrl": "https://lastonemile.org/contact-informations/",
     "linkRules": [
       {
         "domains": [
@@ -38645,6 +39173,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.latamcargo.com/en/trackshipment",
     "trackingSearchUrl": "https://www.latamcargo.com/en/trackshipment",
+    "helpUrl": "https://www.latamcargo.com/en/customercare",
     "linkRules": [],
     "detectionRules": []
   },
@@ -38774,6 +39303,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.lbtxkd.com/",
     "trackingSearchUrl": "https://www.lbtxkd.com/search_kj.aspx",
+    "helpUrl": "https://www.lbtxkd.com/Contact.aspx?ClassID=23",
     "linkRules": [],
     "detectionRules": []
   },
@@ -38794,6 +39324,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://track.leman.com/",
     "trackingSearchUrl": "https://track.leman.com/",
+    "helpUrl": "https://leman.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -38878,6 +39409,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://visible.leschaco.com/",
     "trackingUrlTemplate": "https://visible.leschaco.com/?forwarderRef={trackingNumber}",
     "trackingSearchUrl": "https://visible.leschaco.com/",
+    "helpUrl": "https://www.leschaco.com/en/service/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -39073,6 +39605,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.lexship.biz/",
     "trackingUrlTemplate": "https://track.lexship.biz/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://track.lexship.biz/",
+    "helpUrl": "https://www.lexship.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -39107,6 +39640,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.lhtex.com.cn/",
     "trackingSearchUrl": "https://www.lhtex.com.cn/",
+    "helpUrl": "https://www.lhtex.com.cn/abouts_36/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -39196,6 +39730,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://iqpack.libertyexpress.com/SearchGuide",
     "trackingSearchUrl": "https://iqpack.libertyexpress.com/SearchGuide",
+    "helpUrl": "https://libertyexpress.com/es-us/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -39395,6 +39930,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.lightningexpressca.com/",
     "trackingUrlTemplate": "https://www.lightningexpressca.com/track.html?id={trackingNumber}",
     "trackingSearchUrl": "https://www.lightningexpressca.com/",
+    "helpUrl": "https://www.lightningexpressca.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -39426,6 +39962,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://kundportal.lillebil.se/opter/TT",
     "trackingUrlTemplate": "https://kundportal.lillebil.se/opter/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://kundportal.lillebil.se/opter/TT",
+    "helpUrl": "https://www.lillebil.se/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -39456,6 +39993,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.line-1.com.au/tracking",
     "trackingSearchUrl": "https://www.line-1.com.au/tracking",
+    "helpUrl": "https://www.line-1.com.au/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -39704,6 +40242,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://litexpress.com.ph/track-and-trace/",
     "trackingSearchUrl": "https://litexpress.com.ph/track-and-trace/",
+    "helpUrl": "https://www.litexpress.com.ph/contactus",
     "linkRules": [],
     "detectionRules": []
   },
@@ -39773,6 +40312,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ljxex.com/",
     "trackingSearchUrl": "https://www.ljxex.com/#/track",
+    "helpUrl": "https://www.ljxex.com/#/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -39835,6 +40375,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://loadmasterno.opter.cloud/tt",
     "trackingUrlTemplate": "https://loadmasterno.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://loadmasterno.opter.cloud/tt",
+    "helpUrl": "https://www.loadmaster.no/kontakt-oss",
     "linkRules": [
       {
         "domains": [
@@ -39992,6 +40533,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.logistaparcel.com/en/home/seguimiento-envios.html",
     "trackingSearchUrl": "https://www.logistaparcel.com/en/home/seguimiento-envios.html",
+    "helpUrl": "https://www.logistaparcel.com/en/home/contacto.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40042,6 +40584,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://logistics-solution.eu/de/",
     "trackingSearchUrl": "https://logistics-solution.eu/de/",
+    "helpUrl": "https://logistics-solution.eu/de/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40062,6 +40605,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://logistiq.io/track/",
     "trackingUrlTemplate": "https://gecko.logistiq.io/#/order/tracking?awb={trackingNumber}",
     "trackingSearchUrl": "https://logistiq.io/track/",
+    "helpUrl": "https://logistiq.io/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -40093,6 +40637,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.logoix.com/cgi-bin/tnt.pl",
     "trackingUrlTemplate": "https://www.logoix.com/cgi-bin/tnt.pl?q={trackingNumber}",
     "trackingSearchUrl": "https://www.logoix.com/cgi-bin/tnt.pl",
+    "helpUrl": "https://www.logoix.com/cgi-bin/kontakt.pl",
     "linkRules": [
       {
         "domains": [
@@ -40132,6 +40677,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://logsis.ru/traking",
     "trackingSearchUrl": "https://logsis.ru/traking",
+    "helpUrl": "https://logsis.ru/contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40155,6 +40701,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.longcps.com/",
     "trackingUrlTemplate": "https://www.longcps.com/select.html?type=cnum&num={trackingNumber}",
     "trackingSearchUrl": "https://www.longcps.com/select.html",
+    "helpUrl": "https://www.longcps.com/content.html?ParendID=271&CategoryID=302&ID=0",
     "linkRules": [
       {
         "domains": [
@@ -40333,6 +40880,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ltl.kr/",
     "trackingSearchUrl": "https://ltl.kr/order",
+    "helpUrl": "https://ltl.kr/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40387,6 +40935,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://paketversand.lvz-post.de/index.php/tracking/search",
     "trackingSearchUrl": "https://lvz-post.de/privatkunden/sendungsverfolgung/",
+    "helpUrl": "https://lvz-post.de/privatkunden/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40412,6 +40961,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do",
     "trackingUrlTemplate": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=en&quickNo={trackingNumber}",
     "trackingSearchUrl": "https://www.epantos.com/ecp/web/pr/dt/popup/dlvChaseInqPopup.do?locale=en",
+    "helpUrl": "https://voc-ext.lxpantos.com/jsp/pc/en/util/customer-voice.jsp",
     "linkRules": [
       {
         "domains": [
@@ -40526,6 +41076,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.mxpress2u.com/",
     "trackingSearchUrl": "https://goldv2.mxpress2u.net/goldv2webtracking/",
+    "helpUrl": "https://www.mxpress2u.com/EnquiryPage",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40545,6 +41096,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://lms.m24logistics.com/track-order",
     "trackingUrlTemplate": "https://lms.m24logistics.com/track-my-order/{trackingNumber}",
     "trackingSearchUrl": "https://lms.m24logistics.com/track-order",
+    "helpUrl": "https://m24logistics.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -40573,6 +41125,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://m5clogs.com/track.aspx",
     "trackingSearchUrl": "https://m5clogs.com/track.aspx",
+    "helpUrl": "https://m5clogs.com/contact.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40675,6 +41228,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.maersk.com/tracking/",
     "trackingUrlTemplate": "https://www.maersk.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.maersk.com/tracking/",
+    "helpUrl": "https://www.maersk.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -40748,6 +41302,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://magic-trans.ru/otsledit-gruz/",
     "trackingUrlTemplate": "https://magic-trans.ru/otsledit-gruz/?id={trackingNumber}",
     "trackingSearchUrl": "https://magic-trans.ru/otsledit-gruz/",
+    "helpUrl": "https://magic-trans.ru/kontakty/",
     "linkRules": [
       {
         "domains": [
@@ -40779,6 +41334,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://post.magnit.ru/tracking/",
     "trackingSearchUrl": "https://post.magnit.ru/tracking/",
+    "helpUrl": "https://post.magnit.ru/contacts/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40800,6 +41356,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://magnumlog.com/track-shipment",
     "trackingSearchUrl": "https://magnumlog.com/track-shipment",
+    "helpUrl": "https://magnumlog.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -40885,6 +41442,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://mahex.com/tracking",
     "trackingSearchUrl": "https://mahex.com/tracking",
+    "helpUrl": "https://mahex.com/customer-support",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41004,6 +41562,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.mailplus.com.au/",
     "trackingUrlTemplate": "https://track.mailplus.com.au/{trackingNumber}",
     "trackingSearchUrl": "https://track.mailplus.com.au/",
+    "helpUrl": "https://mailplus.com.au/support-ticket",
     "linkRules": [
       {
         "domains": [
@@ -41095,6 +41654,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://major-express.ru/useful-services/track/",
     "trackingUrlTemplate": "https://major-express.ru/useful-services/track/?type=1&tracking-number={trackingNumber}",
     "trackingSearchUrl": "https://major-express.ru/useful-services/track/",
+    "helpUrl": "https://major-express.ru/about/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -41175,6 +41735,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.makesend.asia/tracking",
     "trackingUrlTemplate": "https://app.makesend.asia/tracking?t={trackingNumber}",
     "trackingSearchUrl": "https://app.makesend.asia/tracking",
+    "helpUrl": "https://www.makesend.asia/contact/",
     "linkRules": [
       {
         "domains": [
@@ -41325,6 +41886,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.25431010.tw/",
     "trackingSearchUrl": "https://www.25431010.tw/tracking",
+    "helpUrl": "https://www.25431010.tw/contact_us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41369,6 +41931,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cp.m-o.com/trace/external.msw",
     "trackingUrlTemplate": "https://www.m-o.com/track/?t={trackingNumber}",
     "trackingSearchUrl": "https://www.m-o.com/track/",
+    "helpUrl": "https://www.m-o.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41393,6 +41956,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://markexpress.co.in/",
     "trackingUrlTemplate": "https://crm.markerp.in/Frm_DocTrackWeb.aspx?docno={trackingNumber}",
     "trackingSearchUrl": "https://markexpress.co.in/",
+    "helpUrl": "https://markexpress.co.in/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -41427,6 +41991,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.marken.com/track-shipment",
     "trackingUrlTemplate": "https://www.marken.com/track-shipment?jobNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.marken.com/track-shipment",
+    "helpUrl": "https://www.marken.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -41505,6 +42070,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.expresomarvisur.com/seccion/consulta-gret",
     "trackingSearchUrl": "https://www.expresomarvisur.com/seccion/consulta-gret",
+    "helpUrl": "https://www.expresomarvisur.com/contacto",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41584,6 +42150,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.matson.com/shipment-tracking.html",
     "trackingSearchUrl": "https://www.matson.com/shipment-tracking.html",
+    "helpUrl": "https://www.matson.com/corporate/contactus",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41603,6 +42170,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://matyexpress.com/tracking/",
     "trackingSearchUrl": "https://matyexpress.com/tracking/",
+    "helpUrl": "https://matyexpress.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41657,6 +42225,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://maxexuae.com/tracking/",
     "trackingSearchUrl": "https://maxexuae.com/tracking/",
+    "helpUrl": "https://maxexuae.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41677,6 +42246,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://emens.mendrix.cloud/TrackAndTrace",
     "trackingSearchUrl": "https://emens.mendrix.cloud/TrackAndTrace",
+    "helpUrl": "https://maxpakket.nl/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41700,6 +42270,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://maxzeego.com/",
     "trackingSearchUrl": "https://maxzeego.com/",
+    "helpUrl": "https://maxzeego.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41722,6 +42293,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://maycouriermadrid.com/consulta-tu-envio/",
     "trackingSearchUrl": "https://maycouriermadrid.com/consulta-tu-envio/",
+    "helpUrl": "https://maycouriermadrid.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41789,6 +42361,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://maystro-delivery.com/trackingSD.html",
     "trackingSearchUrl": "https://maystro-delivery.com/trackingSD.html",
+    "helpUrl": "https://maystro-delivery.com/ContactUS.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41819,6 +42392,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://extranet.mazet.fr/suiviexpedition",
     "trackingSearchUrl": "https://extranet.mazet.fr/suiviexpedition?lang=fr",
+    "helpUrl": "https://www.mazet.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41973,6 +42547,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://megacitycourier.in/Track.aspx",
     "trackingSearchUrl": "https://megacitycourier.in/Track.aspx",
+    "helpUrl": "https://megacitycourier.in/Contactus.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42020,6 +42595,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
     "trackingSearchUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
+    "helpUrl": "https://www.meitetsuunyu.co.jp/store/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42068,6 +42644,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://mensajerosurbanos.com/",
     "trackingUrlTemplate": "https://plataforma.mensajerosurbanos.com/ext/seguimiento-domicilios/{trackingNumber}",
     "trackingSearchUrl": "https://mensajerosurbanos.com/",
+    "helpUrl": "https://pqrs.mensajerosurbanos.com/centro-de-ayuda",
     "linkRules": [
       {
         "domains": [
@@ -42133,6 +42710,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.messenger.cz/",
     "trackingUrlTemplate": "https://tracking.messenger.cz/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.messenger.cz/",
+    "helpUrl": "https://messenger.cz/cs/contact",
     "linkRules": [
       {
         "domains": [
@@ -42162,6 +42740,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://method-logistics.com/localizador-de-envios/",
     "trackingSearchUrl": "https://method-logistics.com/localizador-de-envios/",
+    "helpUrl": "https://method-logistics.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42234,6 +42813,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://kundeportal.meyership.no/ms/opter/TT",
     "trackingUrlTemplate": "https://kundeportal.meyership.no/ms/opter/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://kundeportal.meyership.no/ms/opter/TT",
+    "helpUrl": "https://meyership.no/kontakt-oss",
     "linkRules": [
       {
         "domains": [
@@ -42268,6 +42848,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.mglexpress.com.mm/tracking",
     "trackingUrlTemplate": "https://www.mglexpress.com.mm/waybills?waybill={trackingNumber}",
     "trackingSearchUrl": "https://www.mglexpress.com.mm/tracking",
+    "helpUrl": "https://www.mglexpress.com.mm/complain-form",
     "linkRules": [
       {
         "domains": [
@@ -42368,6 +42949,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ship.midlandtransport.com/Tracking/TrackClientTrackings",
     "trackingUrlTemplate": "https://ship.midlandtransport.com/Tracking/TrackClientTrackings?TrackingNumber={trackingNumber}&Lang=0",
     "trackingSearchUrl": "https://ship.midlandtransport.com/Tracking/TrackClientTrackings",
+    "helpUrl": "https://www.midlandtransport.com/en/help-center/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -42396,6 +42978,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://track.mikropakket.nl/",
     "trackingSearchUrl": "https://track.mikropakket.nl/",
+    "helpUrl": "https://www.mikropakket.nl/klantenservice/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42443,6 +43026,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://booking.milesxp.com/tracking",
     "trackingUrlTemplate": "https://booking.milesxp.com/tracking?tracking_no={trackingNumber}",
     "trackingSearchUrl": "https://booking.milesxp.com/tracking",
+    "helpUrl": "https://www.milesxp.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -42476,6 +43060,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://status.millerdeliveries.co.il/",
     "trackingUrlTemplate": "https://status.millerdeliveries.co.il/?shipment_id={trackingNumber}",
     "trackingSearchUrl": "https://status.millerdeliveries.co.il/",
+    "helpUrl": "https://millerdeliveries.co.il/%d7%a6%d7%a8%d7%95-%d7%a7%d7%a9%d7%a8/",
     "linkRules": [
       {
         "domains": [
@@ -42503,6 +43088,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cliente.mira.com.br/rastreamento",
     "trackingSearchUrl": "https://cliente.mira.com.br/rastreamento",
+    "helpUrl": "https://mira.com.br/faq/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42525,6 +43111,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://mixpakk.hu/nyomkovetes/",
     "trackingUrlTemplate": "https://mixpakk.hu/nyomkovetes/?package={trackingNumber}",
     "trackingSearchUrl": "https://mixpakk.hu/nyomkovetes/",
+    "helpUrl": "https://mixpakk.hu/kapcsolat/",
     "linkRules": [
       {
         "domains": [
@@ -42559,6 +43146,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://mmcargoservices.co.za/track",
     "trackingUrlTemplate": "https://mmcargoservices.co.za/track?number={trackingNumber}",
     "trackingSearchUrl": "https://mmcargoservices.co.za/track",
+    "helpUrl": "https://mmcargoservices.co.za/contact",
     "linkRules": [
       {
         "domains": [
@@ -42620,6 +43208,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://mnpost.mn/tracking",
     "trackingUrlTemplate": "https://mnpost.mn/tracking?nums={trackingNumber}",
     "trackingSearchUrl": "https://mnpost.mn/tracking",
+    "helpUrl": "https://mnpost.mn/contact",
     "linkRules": [
       {
         "domains": [
@@ -42653,6 +43242,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.mobelservices.com/seguimiento-envios/",
     "trackingSearchUrl": "https://tracking.mobelservices.com/",
+    "helpUrl": "https://www.mobelservices.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42674,6 +43264,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.mobi.com.br/entrega",
     "trackingSearchUrl": "https://www.mobi.com.br/entrega",
+    "helpUrl": "https://www.mobi.com.br/contato",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42722,6 +43313,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://mypost.mn/",
     "trackingSearchUrl": "https://mypost.mn/",
+    "helpUrl": "https://mypost.mn/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -42870,6 +43462,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.carrierlogistics.com/scripts/mor.pol/facts.htm",
     "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/mor.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "trackingSearchUrl": "https://tracking.carrierlogistics.com/scripts/mor.pol/facts.htm",
+    "helpUrl": "https://www.moranltl.com/contact_main/",
     "linkRules": [
       {
         "domains": [
@@ -42967,6 +43560,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.motorex.com.my/en/tracking-motorex",
     "trackingUrlTemplate": "https://www.motorex.com.my/en/getTrackingList/{trackingNumber}",
     "trackingSearchUrl": "https://www.motorex.com.my/en/tracking-motorex",
+    "helpUrl": "https://samedaydelivery.motorex.com.my/cont/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -42997,6 +43591,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://work.mymmtl.com/track",
     "trackingUrlTemplate": "https://work.mymmtl.com/track/{trackingNumber}",
     "trackingSearchUrl": "https://work.mymmtl.com/track",
+    "helpUrl": "https://mymmtl.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -43047,6 +43642,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.movin.in/shipment/track",
     "trackingUrlTemplate": "https://movin.portal.shipsy.io/track/result?searchBy=referenceNumber&refNum={trackingNumber}",
     "trackingSearchUrl": "https://www.movin.in/shipment/track",
+    "helpUrl": "https://www.movin.in/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -43074,6 +43670,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://movvi.com.br/ferramentas/rastreio",
     "trackingSearchUrl": "https://movvi.com.br/ferramentas/rastreio",
+    "helpUrl": "https://movvi.com.br/central-de-ajuda",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43095,6 +43692,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://mrcourier.al/gjurmo-dergesen/",
     "trackingSearchUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "helpUrl": "https://mrcourier.al/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43119,6 +43717,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.mrlglobal.com/tracking/",
     "trackingUrlTemplate": "https://www.mrlglobal.com/tracking/?connoteno={trackingNumber}",
     "trackingSearchUrl": "https://www.mrlglobal.com/tracking/",
+    "helpUrl": "https://www.mrlglobal.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -43168,6 +43767,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.msc.com/en/track-a-shipment",
     "trackingSearchUrl": "https://www.msc.com/en/track-a-shipment",
+    "helpUrl": "https://www.msc.com/en/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43210,6 +43810,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.mtexpress.co.za/track",
     "trackingUrlTemplate": "https://portal.mtexpress.co.za/track?ref={trackingNumber}",
     "trackingSearchUrl": "https://portal.mtexpress.co.za/track",
+    "helpUrl": "https://mtexpress.co.za/contacts",
     "linkRules": [
       {
         "domains": [
@@ -43480,6 +44081,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://portal.sent24.de/index.php/tracking/search",
     "trackingSearchUrl": "https://portal.sent24.de/index.php/tracking/search",
+    "helpUrl": "https://mzz-briefdienst.de/kontakt-37",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43541,6 +44143,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://nasxpress.com/",
     "trackingSearchUrl": "https://online.nasxpress.com/track/",
+    "helpUrl": "https://www.nasxpress.com/contact.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43561,6 +44164,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
     "trackingSearchUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
+    "helpUrl": "https://national-delivery.com/Contact_Us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43613,6 +44217,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://navata.com/track-consignment",
     "trackingSearchUrl": "https://navata.com/track-consignment",
+    "helpUrl": "https://navata.com/faq",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43635,6 +44240,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.navex.tn/track.php",
     "trackingUrlTemplate": "https://app.navex.tn/track.php?track={trackingNumber}",
     "trackingSearchUrl": "https://app.navex.tn/track.php",
+    "helpUrl": "https://navex.tn/a-propos/#formulaire",
     "linkRules": [
       {
         "domains": [
@@ -43668,6 +44274,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://domestic-track.navlungo.com/en/",
     "trackingUrlTemplate": "https://domestic-track.navlungo.com/en/check/{trackingNumber}/",
     "trackingSearchUrl": "https://domestic-track.navlungo.com/en/",
+    "helpUrl": "https://support.navlungo.com/support/home",
     "linkRules": [
       {
         "domains": [
@@ -43699,6 +44306,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ncskurir.com/ncskurir/track",
     "trackingUrlTemplate": "https://ncskurir.com/ncskurir/track?awb={trackingNumber}",
     "trackingSearchUrl": "https://ncskurir.com/ncskurir/track",
+    "helpUrl": "https://ncskurir.com/ncskurir/contact_us",
     "linkRules": [
       {
         "domains": [
@@ -43736,6 +44344,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sst.lt/",
     "trackingUrlTemplate": "https://sst.lt/sekti/{trackingNumber}",
     "trackingSearchUrl": "https://sst.lt/",
+    "helpUrl": "https://sst.lt/kontaktai",
     "linkRules": [
       {
         "domains": [
@@ -43796,6 +44405,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://portal.nepalcanmove.com/track/",
     "trackingSearchUrl": "https://portal.nepalcanmove.com/track/",
+    "helpUrl": "https://nepalcanmove.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43864,6 +44474,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://netpost.vn/Home/tra_cuu_van_don",
     "trackingUrlTemplate": "https://netpost.vn/Home/tra_cuu_van_don?hawbNo={trackingNumber}",
     "trackingSearchUrl": "https://netpost.vn/Home/tra_cuu_van_don",
+    "helpUrl": "https://netpost.vn/Lien_He",
     "linkRules": [
       {
         "domains": [
@@ -43895,6 +44506,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://newaytransport.com.au/track/",
     "trackingSearchUrl": "https://newaytransport.com.au/track/",
+    "helpUrl": "https://newaytransport.com.au/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -43926,6 +44538,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://nextlevel.delivery/",
     "trackingUrlTemplate": "https://nextlevel.delivery/track?awb={trackingNumber}",
     "trackingSearchUrl": "https://nextlevel.delivery/",
+    "helpUrl": "https://nextlevel.delivery/contacts",
     "linkRules": [
       {
         "domains": [
@@ -43961,6 +44574,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ntlogistics.vn/tra-van-don.html",
     "trackingUrlTemplate": "https://ntlogistics.vn/tra-van-don.html?bill={trackingNumber}",
     "trackingSearchUrl": "https://ntlogistics.vn/tra-van-don.html",
+    "helpUrl": "https://ntlogistics.vn/lien-he.html",
     "linkRules": [
       {
         "domains": [
@@ -43999,6 +44613,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://customer.night-star-express.de/",
     "trackingUrlTemplate": "https://customer.night-star-express.de/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://customer.night-star-express.de/",
+    "helpUrl": "https://www.night-star-express.de/de/kontakt.html",
     "linkRules": [
       {
         "domains": [
@@ -44028,6 +44643,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.nimexpress.com/web/p/tracking",
     "trackingUrlTemplate": "https://www.nimexpress.com/web/p/tracking?h_i={trackingNumber}",
+    "helpUrl": "https://www.nimexpress.com/web/p/contactus",
     "linkRules": [
       {
         "domains": [
@@ -44146,6 +44762,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.nklogistic.pl/",
     "trackingUrlTemplate": "https://tracking.nklogistic.pl/?awb={trackingNumber}",
     "trackingSearchUrl": "https://tracking.nklogistic.pl/",
+    "helpUrl": "https://tracking.nklogistic.pl/contact",
     "linkRules": [
       {
         "domains": [
@@ -44179,6 +44796,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://follow.nolimit.pl/Defaulteng.aspx",
     "trackingUrlTemplate": "https://follow.nolimit.pl/",
     "trackingSearchUrl": "https://follow.nolimit.pl/",
+    "helpUrl": "https://nolimit.pl/kontakt",
     "linkRules": [],
     "detectionRules": [
       {
@@ -44242,6 +44860,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://noerpel.de/",
     "trackingSearchUrl": "https://portal.noerpel.de/tracking.html",
+    "helpUrl": "https://noerpel.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -44295,6 +44914,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://nomex.kg/",
     "trackingUrlTemplate": "https://nomex.kg/?iShip_Invoice={trackingNumber}",
     "trackingSearchUrl": "https://nomex.kg/",
+    "helpUrl": "https://nomex.kg/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -44329,6 +44949,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://nordw.ru/tracking/",
     "trackingUrlTemplate": "https://nordw.ru/tracking/?n={trackingNumber}",
     "trackingSearchUrl": "https://nordw.ru/tracking/",
+    "helpUrl": "https://nordw.ru/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -44360,6 +44981,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
     "trackingSearchUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "helpUrl": "https://www.nordbrief-ostsee.de/hilfe_kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -44384,6 +45006,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://norsk.trackmyparcel.info/",
     "trackingUrlTemplate": "https://norsk.trackmyparcel.info/gb/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://norsk.trackmyparcel.info/",
+    "helpUrl": "https://norsk.global/contact/contact-us.html",
     "linkRules": [
       {
         "domains": [
@@ -44419,6 +45042,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.northline.com.au/",
     "trackingUrlTemplate": "https://track.northline.com.au/status/{trackingNumber}",
     "trackingSearchUrl": "https://track.northline.com.au/",
+    "helpUrl": "https://www.northline.com.au/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -44501,6 +45125,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://webpostman.novakargo.com/tracking",
     "trackingUrlTemplate": "https://webpostman.novakargo.com/tracking?har_kod={trackingNumber}",
+    "helpUrl": "https://novakargo.com/iletisim/",
     "linkRules": [
       {
         "domains": [
@@ -44598,6 +45223,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://receiver.nowcouriers.co.nz/",
     "trackingUrlTemplate": "https://receiver.nowcouriers.co.nz/?track={trackingNumber}",
     "trackingSearchUrl": "https://receiver.nowcouriers.co.nz/",
+    "helpUrl": "https://nowcouriers.co.nz/contact/",
     "linkRules": [
       {
         "domains": [
@@ -44705,6 +45331,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ntclog.me/",
     "trackingUrlTemplate": "https://ntclog.me/?page=shipment-tracking&lang=me&shipment_code={trackingNumber}",
     "trackingSearchUrl": "https://ntclog.me/?page=shipment-tracking&lang=me",
+    "helpUrl": "https://ntclog.me/kontakt?lang=me",
     "linkRules": [
       {
         "domains": [
@@ -44819,6 +45446,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.oakh.com/page/tracing",
     "trackingUrlTemplate": "https://www.oakh.com/quicktrace&PRO={trackingNumber}",
     "trackingSearchUrl": "https://www.oakh.com/page/tracing",
+    "helpUrl": "https://www.oakh.com/page/contact",
     "linkRules": [
       {
         "domains": [
@@ -44850,6 +45478,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://obibox.co/",
     "trackingUrlTemplate": "https://tracking.obibox.io/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.obibox.io/",
+    "helpUrl": "https://obibox.co/faq/",
     "linkRules": [
       {
         "domains": [
@@ -44991,6 +45620,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
     "trackingSearchUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
+    "helpUrl": "https://www.one-line.com/en/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45013,6 +45643,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ock56.com/track.php",
     "trackingSearchUrl": "https://www.ock56.com/track.php",
+    "helpUrl": "https://www.ock56.com/contact.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45061,6 +45692,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do",
     "trackingUrlTemplate": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do?cwbno={trackingNumber}",
     "trackingSearchUrl": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do",
+    "helpUrl": "https://www.ocs.co.jp/contact",
     "linkRules": [
       {
         "domains": [
@@ -45098,6 +45730,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://odmexpress.com.mx/",
     "trackingUrlTemplate": "https://odmexpress.com.mx/rastreo-2/?rastreo_fall={trackingNumber}",
     "trackingSearchUrl": "https://odmexpress.com.mx/rastreo/",
+    "helpUrl": "https://odmexpress.com.mx/contacto/",
     "linkRules": [
       {
         "domains": [
@@ -45134,6 +45767,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.okaken.co.jp/refer/",
     "trackingSearchUrl": "https://www.okaken.co.jp/refer/",
+    "helpUrl": "https://www.okaken.co.jp/inquiry/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45243,6 +45877,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.olzalogistic.com/",
     "trackingSearchUrl": "https://tracking.olzalogistic.com/",
+    "helpUrl": "https://www.olzalogistic.com/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45267,6 +45902,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://omlogisticssupplychain.com/",
     "trackingSearchUrl": "https://omlogisticssupplychain.com/track-shipment",
+    "helpUrl": "https://omlogisticssupplychain.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45389,6 +46025,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ondotcourier.in/tracking",
     "trackingUrlTemplate": "https://www.ondotcourier.in/tracking?awb={trackingNumber}",
     "trackingSearchUrl": "https://www.ondotcourier.in/tracking",
+    "helpUrl": "https://www.ondotcourier.in/contact",
     "linkRules": [
       {
         "domains": [
@@ -45424,6 +46061,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.oneworldexpress.com/tracking",
     "trackingUrlTemplate": "https://www.smarttrack.co/tracking.php?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://www.oneworldexpress.com/tracking",
+    "helpUrl": "https://www.oneworldexpress.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -45467,6 +46105,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://onex.am/",
     "trackingUrlTemplate": "https://onex.am/en/onextrack?track={trackingNumber}",
     "trackingSearchUrl": "https://onex.am/en/onextrack",
+    "helpUrl": "https://onex.am/en/user/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45494,6 +46133,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.online56.com.cn/",
     "trackingUrlTemplate": "https://www.online56.com.cn/cargo-tracking/?sn={trackingNumber}",
     "trackingSearchUrl": "https://www.online56.com.cn/cargo-tracking/",
+    "helpUrl": "https://www.online56.com.cn/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -45593,6 +46233,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://onway.ge/",
     "trackingSearchUrl": "https://onway.ge/",
+    "helpUrl": "https://onway.ge/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45612,6 +46253,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx",
     "trackingSearchUrl": "https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx",
+    "helpUrl": "https://www.oocl.com/eng/contactus/Pages/default.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45634,6 +46276,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://shipping.oohpod.com/tracking",
     "trackingSearchUrl": "https://shipping.oohpod.com/tracking",
+    "helpUrl": "https://help.oohpod.com/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45711,6 +46354,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.shipoptima.com/pages/tracking",
     "trackingUrlTemplate": "https://www.shipoptima.com/pages/tracking?tracking={trackingNumber}",
     "trackingSearchUrl": "https://www.shipoptima.com/pages/tracking",
+    "helpUrl": "https://www.shipoptima.com/pages/contact",
     "linkRules": [
       {
         "domains": [
@@ -45749,6 +46393,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://optimuscourier.ro/tracking/",
     "trackingUrlTemplate": "https://optimuscourier.ro/tracking/?awb_nr={trackingNumber}",
     "trackingSearchUrl": "https://optimuscourier.ro/tracking/",
+    "helpUrl": "https://optimuscourier.ro/contact/",
     "linkRules": [
       {
         "domains": [
@@ -45784,6 +46429,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking-ecom.orian.com/CargoTracking/public-tracking/search",
     "trackingUrlTemplate": "https://tracking-ecom.orian.com/CargoTracking/public-tracking/search?searchKey={trackingNumber}",
     "trackingSearchUrl": "https://tracking-ecom.orian.com/CargoTracking/public-tracking/search",
+    "helpUrl": "https://www.orian.com/menu/TopMenu/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8/",
     "linkRules": [
       {
         "domains": [
@@ -45915,6 +46561,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
     "trackingSearchUrl": "https://www-oaoosf.wisegrid.net/Portals/NEO/Desktop",
+    "helpUrl": "https://www.astracon.com/kontakt-anfrage/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -45932,6 +46579,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.otschile.cl/tracking",
     "trackingSearchUrl": "https://www.otschile.cl/tracking",
+    "helpUrl": "https://www.otschile.cl/preguntas-frecuentes",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46030,6 +46678,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://express.oxperta.com/seguimiento-de-envio/",
     "trackingUrlTemplate": "https://express.oxperta.com/seguimiento-de-envio/?localizador={trackingNumber}",
     "trackingSearchUrl": "https://express.oxperta.com/seguimiento-de-envio/",
+    "helpUrl": "https://express.oxperta.com/contactanos/",
     "linkRules": [
       {
         "domains": [
@@ -46061,6 +46710,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ozonexpress.ma/",
     "trackingUrlTemplate": "https://ozonexpress.ma/tracking-colis/{trackingNumber}",
     "trackingSearchUrl": "https://ozonexpress.ma/",
+    "helpUrl": "https://ozonexpress.ma/contact",
     "linkRules": [
       {
         "domains": [
@@ -46161,6 +46811,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace&label=containerTandT&module=TrackContStatus&refNo={trackingNumber}",
     "trackingSearchUrl": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace",
     "trackingSiteName": "PIL Container T&T",
+    "helpUrl": "https://www.pilship.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46186,6 +46837,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pack-man.gr/anazitisi-apostolis.html",
     "trackingUrlTemplate": "https://pack-man.gr/anazitisi-apostolis.html?code={trackingNumber}",
     "trackingSearchUrl": "https://pack-man.gr/anazitisi-apostolis.html",
+    "helpUrl": "https://pack-man.gr/contact-us.html",
     "linkRules": [
       {
         "domains": [
@@ -46233,6 +46885,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.paeckli-punkt.ch/paket-verfolgen/",
     "trackingUrlTemplate": "https://www.paeckli-punkt.ch/paket-verfolgen/?packet={trackingNumber}",
     "trackingSearchUrl": "https://www.paeckli-punkt.ch/paket-verfolgen/",
+    "helpUrl": "https://www.paeckli-punkt.ch/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -46273,6 +46926,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.packlink.es/seguimiento-envios/",
     "trackingSearchUrl": "https://www.packlink.es/seguimiento-envios/",
+    "helpUrl": "https://support.packlink.com/hc/es-es",
     "linkRules": [],
     "detectionRules": [
       {
@@ -46310,6 +46964,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.packs.nl/track-trace/",
     "trackingSearchUrl": "https://www.packs.nl/track-trace/",
+    "helpUrl": "https://www.packs.nl/contact/",
     "linkRules": [
       {
         "domains": [
@@ -46426,6 +47081,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.paisleyfreight.com/tracking",
     "trackingSearchUrl": "https://www.paisleyfreight.com/tracking",
+    "helpUrl": "https://www.paisleyfreight.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46479,6 +47135,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pakettipisteseuranta.r2web.fi/",
     "trackingUrlTemplate": "https://pakettipisteseuranta.r2web.fi/?tid={trackingNumber}",
     "trackingSearchUrl": "https://pakettipisteseuranta.r2web.fi/",
+    "helpUrl": "https://www.pakettipiste.fi/tuki/",
     "linkRules": [
       {
         "domains": [
@@ -46554,6 +47211,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.palletforce.com/en/track-my-pallet/",
     "trackingSearchUrl": "https://www.palletforce.com/en/track-my-pallet/",
+    "helpUrl": "https://www.palletforce.com/en/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46575,6 +47233,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://palletonline.co.uk/track",
     "trackingUrlTemplate": "https://palletonline.co.uk/track?tn={trackingNumber}",
     "trackingSearchUrl": "https://palletonline.co.uk/track",
+    "helpUrl": "https://palletonline.co.uk/help/",
     "linkRules": [
       {
         "domains": [
@@ -46613,6 +47272,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://track2.palletways.com/",
     "trackingSearchUrl": "https://track2.palletways.com/",
+    "helpUrl": "https://www.palletways.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46637,6 +47297,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://mynexus.pallex.com/tracking",
     "trackingSearchUrl": "https://mynexus.pallex.com/tracking",
+    "helpUrl": "https://www.pallex.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -46690,6 +47351,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://pandulogistics.com/track/",
     "trackingSearchUrl": "https://pandulogistics.com/track/",
+    "helpUrl": "https://pandulogistics.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46712,6 +47374,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://mypxp.pannonxp.hu/csomagkovetes",
     "trackingSearchUrl": "https://mypxp.pannonxp.hu/csomagkovetes",
+    "helpUrl": "https://mypxp.pannonxp.hu/kapcsolat",
     "linkRules": [],
     "detectionRules": [
       {
@@ -46760,6 +47423,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://paperfly.com.bd/",
     "trackingUrlTemplate": "https://go.paperfly.com.bd/track/order/{trackingNumber}",
     "trackingSearchUrl": "https://paperfly.com.bd/",
+    "helpUrl": "https://paperfly.com.bd/contact",
     "linkRules": [
       {
         "domains": [
@@ -46803,6 +47467,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://papslogistics.com/tracking/",
     "trackingUrlTemplate": "https://papslogistics.com/tracking/?uid={trackingNumber}",
     "trackingSearchUrl": "https://papslogistics.com/tracking/",
+    "helpUrl": "https://papslogistics.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -46881,6 +47546,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.grupovencedor.com/paqueteria",
     "trackingUrlTemplate": "https://www.grupovencedor.com/paqueteria",
     "trackingSearchUrl": "https://www.grupovencedor.com/paqueteria",
+    "helpUrl": "https://www.grupovencedor.com/contacto",
     "linkRules": [],
     "detectionRules": []
   },
@@ -46997,6 +47663,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.parcel2go.com/tracking",
     "trackingUrlTemplate": "https://www.parcel2go.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.parcel2go.com/tracking",
+    "helpUrl": "https://www.parcel2go.com/help-centre",
     "linkRules": [
       {
         "domains": [
@@ -47033,6 +47700,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.parcelabc.com/content/tracking",
     "trackingSearchUrl": "https://www.parcelabc.com/content/tracking",
+    "helpUrl": "https://www.parcelabc.com/page/faqs/1",
     "linkRules": [
       {
         "domains": [
@@ -47112,6 +47780,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://parcelpoint.com.au/track-your-parcel/",
     "trackingUrlTemplate": "https://parcelpoint.com.au/track-your-parcel/?trackingnumber={trackingNumber}",
     "trackingSearchUrl": "https://parcelpoint.com.au/track-your-parcel/",
+    "helpUrl": "https://parcelpoint.com.au/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -47227,6 +47896,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tnt.partsexpress.nl/",
     "trackingSearchUrl": "https://tnt.partsexpress.nl/",
+    "helpUrl": "https://partsexpress.eu/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -47452,6 +48122,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pavancourierservice.com/Home/Tracking",
     "trackingUrlTemplate": "https://pavancourierservice.com/Home/Tracking?TrackingNo={trackingNumber}",
     "trackingSearchUrl": "https://pavancourierservice.com/Home/Tracking",
+    "helpUrl": "https://pavancourierservice.com/Home/Contact",
     "linkRules": [
       {
         "domains": [
@@ -47496,6 +48167,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://paxel.co/id/lacak-pengiriman",
     "trackingUrlTemplate": "https://paxel.co/id/lacak-pengiriman?awb_req={trackingNumber}",
     "trackingSearchUrl": "https://paxel.co/id/lacak-pengiriman",
+    "helpUrl": "https://paxel.co/en/help-and-support",
     "linkRules": [
       {
         "domains": [
@@ -47601,6 +48273,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.pbt.nz/",
     "trackingUrlTemplate": "https://www.pbt.nz/tracking-result/?consignmentNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.pbt.nz/",
+    "helpUrl": "https://www.pbt.nz/contact/",
     "linkRules": [
       {
         "domains": [
@@ -47660,6 +48333,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.pcpexpress.com/",
     "trackingUrlTemplate": "https://pcpexpress.com/lacak_detailv2.php?awb={trackingNumber}",
     "trackingSearchUrl": "https://www.pcpexpress.com/",
+    "helpUrl": "https://www.pcpexpress.com/hubungi",
     "linkRules": [
       {
         "domains": [
@@ -47696,6 +48370,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pcs-logistics.com/en/track-trace",
     "trackingUrlTemplate": "https://pcs-logistics.com/en/track-trace?code={trackingNumber}",
     "trackingSearchUrl": "https://pcs-logistics.com/en/track-trace",
+    "helpUrl": "https://pcs-logistics.com/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -47731,6 +48406,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pdn.express/en/track/",
     "trackingUrlTemplate": "https://pdn.express/en/track/{trackingNumber}",
     "trackingSearchUrl": "https://pdn.express/en/track/",
+    "helpUrl": "https://pdn.express/en/support/",
     "linkRules": [
       {
         "domains": [
@@ -47769,6 +48445,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.pdq.cl/tracking",
     "trackingUrlTemplate": "https://www.pdq.cl/tracking?q={trackingNumber}",
     "trackingSearchUrl": "https://www.pdq.cl/tracking",
+    "helpUrl": "https://www.pdq.cl/contacto",
     "linkRules": [
       {
         "domains": [
@@ -47799,6 +48476,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://webportal.pdsdirect.co.uk/tracktrace",
     "trackingUrlTemplate": "https://webportal.pdsdirect.co.uk/tracktrace?reference={trackingNumber}",
     "trackingSearchUrl": "https://webportal.pdsdirect.co.uk/tracktrace",
+    "helpUrl": "https://www.pdsdirect.co.uk/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -47941,6 +48619,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://query2.e-can.com.tw/%E5%A4%9A%E7%AD%86%E6%9F%A5%E4%BB%B6A.htm",
     "trackingUrlTemplate": "https://query2.e-can.com.tw/self_link/id_link.asp?txtMainID={trackingNumber}",
     "trackingSearchUrl": "https://query2.e-can.com.tw/%E5%A4%9A%E7%AD%86%E6%9F%A5%E4%BB%B6A.htm",
+    "helpUrl": "https://www.e-can.com.tw/aboutUs_contact.aspx",
     "linkRules": [
       {
         "domains": [
@@ -47975,6 +48654,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.penguinbox.cz/",
     "trackingUrlTemplate": "https://www.penguinbox.cz/sledovani-zasilky?track={trackingNumber}",
     "trackingSearchUrl": "https://www.penguinbox.cz/sledovani-zasilky",
+    "helpUrl": "https://www.penguinbox.cz/faq",
     "linkRules": [
       {
         "domains": [
@@ -48204,6 +48884,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.peruboxair.pe/seguimiento-de-envios/",
     "trackingSearchUrl": "https://www.peruboxair.pe/seguimiento-de-envios/",
+    "helpUrl": "https://www.peruboxair.pe/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -48225,6 +48906,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://peshkariki.ru/tracking",
     "trackingSearchUrl": "https://peshkariki.ru/tracking",
+    "helpUrl": "https://peshkariki.ru/kontakty",
     "linkRules": [],
     "detectionRules": []
   },
@@ -48270,6 +48952,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.pfctrack.com/",
     "trackingUrlTemplate": "https://www.pfctrack.com/?nums={trackingNumber}",
     "trackingSearchUrl": "https://www.pfctrack.com/",
+    "helpUrl": "https://www.pfcexpress.com/abouts/lianxiwomen.html",
     "linkRules": [
       {
         "domains": [
@@ -48323,6 +49006,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pflogistics.com.au/",
     "trackingUrlTemplate": "https://pflogistics.com.au/tracking-result?tracking={trackingNumber}",
     "trackingSearchUrl": "https://pflogistics.com.au/tracking",
+    "helpUrl": "https://pflogistics.com.au/contact",
     "linkRules": [
       {
         "domains": [
@@ -48465,6 +49149,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://new.pickupmtaani.com/track-package",
     "trackingUrlTemplate": "https://new.pickupmtaani.com/track-package?package={trackingNumber}",
     "trackingSearchUrl": "https://new.pickupmtaani.com/track-package",
+    "helpUrl": "https://new.pickupmtaani.com/support",
     "linkRules": [
       {
         "domains": [
@@ -48498,6 +49183,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://hk.pickupp.io/en/tracking",
     "trackingUrlTemplate": "https://hk.pickupp.io/en/tracking?orderNumber={trackingNumber}",
     "trackingSearchUrl": "https://hk.pickupp.io/en/tracking",
+    "helpUrl": "https://hk.pickupp.io/en/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -48544,6 +49230,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sg.pickupp.io/en/tracking",
     "trackingUrlTemplate": "https://sg.pickupp.io/tracking/?orderNumber={trackingNumber}",
     "trackingSearchUrl": "https://sg.pickupp.io/en/tracking",
+    "helpUrl": "https://sg.pickupp.io/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -48590,6 +49277,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.pigeonexpress.com/",
     "trackingUrlTemplate": "https://track.pigeonexpress.com/?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://track.pigeonexpress.com/",
+    "helpUrl": "https://pigeonexpress.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -48657,6 +49345,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://piggyexp.com/track",
     "trackingSearchUrl": "https://piggyexp.com/track",
+    "helpUrl": "https://piggyexp.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -48705,6 +49394,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://delivers.maersk.com/tracking/",
     "trackingUrlTemplate": "https://delivers.maersk.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://delivers.maersk.com/tracking/",
+    "helpUrl": "https://delivers.maersk.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -48907,6 +49597,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.plyconvanlines.com/",
     "trackingUrlTemplate": "https://track.plyconvanlines.com/singletrack.php?trackingnum={trackingNumber}",
     "trackingSearchUrl": "https://track.plyconvanlines.com/",
+    "helpUrl": "https://plycongroup.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -48988,6 +49679,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.pointpack.pl/sledz-przesylke",
     "trackingUrlTemplate": "https://www.pointpack.pl/sledz-przesylke/{trackingNumber}",
     "trackingSearchUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "helpUrl": "https://www.pointpack.pl/pomoc",
     "linkRules": [
       {
         "domains": [
@@ -49072,6 +49764,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://polonez.express/us-en/parcel-track",
     "trackingUrlTemplate": "https://tracking-iframe.meest.com/t/en/{trackingNumber}",
     "trackingSearchUrl": "https://polonez.express/us-en/parcel-track",
+    "helpUrl": "https://polonez.express/us-en/contact",
     "linkRules": [],
     "detectionRules": [
       {
@@ -49144,6 +49837,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.porlor.co.th/",
     "trackingUrlTemplate": "https://www.porlor.co.th/Tracking?search={trackingNumber}",
     "trackingSearchUrl": "https://www.porlor.co.th/Tracking",
+    "helpUrl": "https://www.porlor.co.th/Contactus",
     "linkRules": [
       {
         "domains": [
@@ -49344,6 +50038,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://post-int.com/",
     "trackingSearchUrl": "https://post-int.com/",
+    "helpUrl": "https://post-int.com/home/kontakti/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -49418,6 +50113,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://paketversand.post-modern.de/index.php/tracking/search",
     "trackingSearchUrl": "https://www.post-modern.de/tracking/",
+    "helpUrl": "https://www.post-modern.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -49447,6 +50143,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://postone.eu/en",
     "trackingUrlTemplate": "https://postone.eu/en/track?code={trackingNumber}",
     "trackingSearchUrl": "https://postone.eu/en/products/view/track",
+    "helpUrl": "https://postone.eu/en/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -49986,6 +50683,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://postex.pk/tracking",
     "trackingUrlTemplate": "https://postex.pk/tracking?cn={trackingNumber}",
     "trackingSearchUrl": "https://postex.pk/tracking",
+    "helpUrl": "https://postex.pk/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -50034,6 +50732,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://postmediaparcelservices.com/",
     "trackingSearchUrl": "https://postmediaparcelservices.com/",
+    "helpUrl": "https://postmediaparcelservices.com/#/support",
     "linkRules": [
       {
         "domains": [
@@ -50102,6 +50801,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://post.plus/",
     "trackingUrlTemplate": "https://post.plus/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://post.plus/",
+    "helpUrl": "https://post.plus/contact",
     "linkRules": [
       {
         "domains": [
@@ -50226,6 +50926,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.precisiondeliveries.com/",
     "trackingUrlTemplate": "https://track.precisiondeliveries.com/{trackingNumber}",
     "trackingSearchUrl": "https://track.precisiondeliveries.com/",
+    "helpUrl": "https://precisiondeliveries.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -50276,6 +50977,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.premo.se/paketsparning",
     "trackingUrlTemplate": "https://www.premo.se/paketsparning?id={trackingNumber}",
     "trackingSearchUrl": "https://www.premo.se/paketsparning",
+    "helpUrl": "https://www.premo.se/fragor-svar",
     "linkRules": [
       {
         "domains": [
@@ -50307,6 +51009,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://primewell.cy/",
     "trackingSearchUrl": "https://tracking.primewell.cy/OD_WEB_APP_EX/Track.aspx",
+    "helpUrl": "https://primewell.cy/epikoinonia/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50327,6 +51030,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://encomendas.princesadoscampos.com.br/rastreio/",
     "trackingSearchUrl": "https://encomendas.princesadoscampos.com.br/rastreio/",
+    "helpUrl": "https://encomendas.princesadoscampos.com.br/contato/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50347,6 +51051,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.prismacourier.gr/parcel-tracking",
     "trackingSearchUrl": "https://www.prismacourier.gr/parcel-tracking",
+    "helpUrl": "https://www.prismacourier.gr/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50374,6 +51079,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.weareprocarrier.com/",
     "trackingUrlTemplate": "https://tracking.weareprocarrier.com/?tn={trackingNumber}",
     "trackingSearchUrl": "https://tracking.weareprocarrier.com/",
+    "helpUrl": "https://www.weareprocarrier.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -50413,6 +51119,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cmsfreight.com/tracking/public-tracking/",
     "trackingUrlTemplate": "https://cmsfreight.com/tracking/public-tracking/",
     "trackingSearchUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "helpUrl": "https://cmsfreight.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50433,6 +51140,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://myorder.productcaregroup.com/",
     "trackingSearchUrl": "https://myorder.productcaregroup.com/",
+    "helpUrl": "https://www.productcaregroup.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50484,6 +51192,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.8dt.com/",
     "trackingUrlTemplate": "https://www.8dt.com/tracking?track={trackingNumber}",
     "trackingSearchUrl": "https://www.8dt.com/tracking",
+    "helpUrl": "https://www.8dt.com/faq",
     "linkRules": [
       {
         "domains": [
@@ -50524,6 +51233,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://promeddel.e-courier.com/promeddel/home/wizard_tracking.asp",
     "trackingSearchUrl": "https://promeddel.e-courier.com/promeddel/home/wizard_tracking.asp",
+    "helpUrl": "https://promeddel.e-courier.com/promeddel/home/AboutTemplate.asp?SubMenuID=0",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50548,6 +51258,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://promptxpress.lk/TrackItem.aspx",
     "trackingUrlTemplate": "https://web.promptxpress.lk/PublicTracking/TrackingStatus?trackingNo={trackingNumber}",
     "trackingSearchUrl": "https://promptxpress.lk/TrackItem.aspx",
+    "helpUrl": "https://promptxpress.lk/ContactUs.aspx",
     "linkRules": [
       {
         "domains": [
@@ -50641,6 +51352,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://proships.com/tracking/",
     "trackingUrlTemplate": "https://proships.com/tracking?tracking={trackingNumber}",
     "trackingSearchUrl": "https://proships.com/tracking/",
+    "helpUrl": "https://proships.com/ayuda/",
     "linkRules": [
       {
         "domains": [
@@ -50677,6 +51389,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://wp.pts.net/gonderi-takip",
     "trackingUrlTemplate": "https://tracking.pts.net/{trackingNumber}",
     "trackingSearchUrl": "https://wp.pts.net/gonderi-takip",
+    "helpUrl": "https://wp.pts.net/iletisim/destek",
     "linkRules": [
       {
         "domains": [
@@ -50755,6 +51468,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pullmancargo.cl/seguimiento",
     "trackingUrlTemplate": "https://pullmancargo.cl/seguimiento/{trackingNumber}",
     "trackingSearchUrl": "https://pullmancargo.cl/seguimiento",
+    "helpUrl": "https://pullmancargo.cl/contacto",
     "linkRules": [
       {
         "domains": [
@@ -50814,6 +51528,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://pushpakcourier.net/query.php",
     "trackingSearchUrl": "https://pushpakcourier.net/query.php",
+    "helpUrl": "https://pushpakcourier.net/contact-us.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50864,6 +51579,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://pacificexp.net/tracking-details.html",
     "trackingUrlTemplate": "https://pacificexp.net/tracking-details.html?awbno={trackingNumber}",
     "trackingSearchUrl": "https://pacificexp.net/tracking-details.html",
+    "helpUrl": "https://pacificexp.net/contact-us.html",
     "linkRules": [
       {
         "domains": [
@@ -50899,6 +51615,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.qrcargo.com/s/track-your-shipment",
     "trackingSearchUrl": "https://www.qrcargo.com/s/track-your-shipment",
     "trackingSiteName": "Qatar Airways Cargo Tracking",
+    "helpUrl": "https://www.qrcargo.com/s/help-centre/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50967,6 +51684,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://chintongex.com/",
     "trackingUrlTemplate": "https://chintongex.com/#/track?number={trackingNumber}",
     "trackingSearchUrl": "https://chintongex.com/",
+    "helpUrl": "https://chintongex.com/#/help",
     "linkRules": [
       {
         "domains": [
@@ -51028,6 +51746,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.qtlogistics.eu/hu",
     "trackingUrlTemplate": "https://tracking.qtlogistics.eu/hu/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.qtlogistics.eu/hu",
+    "helpUrl": "https://qtlogistics.eu/contact/",
     "linkRules": [
       {
         "domains": [
@@ -51059,6 +51778,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.qualitypost.com.mx/",
     "trackingUrlTemplate": "https://wstracking.qualitypost.com.mx/portal_seguimiento?info={trackingNumber}",
     "trackingSearchUrl": "https://www.qualitypost.com.mx/",
+    "helpUrl": "https://www.qualitypost.com.mx/contactanos",
     "linkRules": [
       {
         "domains": [
@@ -51321,6 +52041,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://quick-silver.express/Tracking",
     "trackingUrlTemplate": "https://erp.quick-silver.express/v2/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://quick-silver.express/Tracking",
+    "helpUrl": "https://quick-silver.express/ContactUs",
     "linkRules": [
       {
         "domains": [
@@ -51385,6 +52106,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.quriers.pl/sledz-przesylke",
     "trackingSearchUrl": "https://www.quriers.pl/sledz-przesylke",
+    "helpUrl": "https://www.quriers.pl/kontakt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -51410,6 +52132,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://logistics.qwintry.com/",
     "trackingUrlTemplate": "https://logistics.qwintry.com/track?tracking={trackingNumber}",
     "trackingSearchUrl": "https://logistics.qwintry.com/",
+    "helpUrl": "https://logistics.qwintry.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -51447,6 +52170,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://qwqer.eu/lv/en/sutijumu-izsekosana",
     "trackingSearchUrl": "https://qwqer.eu/lv/en/sutijumu-izsekosana",
+    "helpUrl": "https://qwqer.eu/lv/en/kontakti",
     "linkRules": [],
     "detectionRules": []
   },
@@ -51526,6 +52250,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.railcontinent.ru/tracking/",
     "trackingSearchUrl": "https://www.railcontinent.ru/tracking/",
+    "helpUrl": "https://www.railcontinent.ru/contacts/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -51584,6 +52309,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ramberg.no/sporing/",
     "trackingSearchUrl": "https://www.ramberg.no/sporing/",
+    "helpUrl": "https://www.ramberg.no/kontakt-ramberg/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -51605,6 +52331,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.rangel.com/",
     "trackingUrlTemplate": "https://my.rangel.com/track/search/{trackingNumber}",
     "trackingSearchUrl": "https://my.rangel.com/track/search",
+    "helpUrl": "https://www.rangel.com/pt/apoio-ao-cliente/",
     "linkRules": [
       {
         "domains": [
@@ -51655,6 +52382,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
     "trackingUrlTemplate": "https://rapidcourier.gr/anazhthsh-apostolhs/?voucher={trackingNumber}",
     "trackingSearchUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
+    "helpUrl": "https://rapidcourier.gr/epikoinonia/",
     "linkRules": [
       {
         "domains": [
@@ -51709,6 +52437,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://rayspeed.com/en/track",
     "trackingSearchUrl": "https://rayspeed.com/en/track",
+    "helpUrl": "https://rayspeed.com/en/faq",
     "linkRules": [],
     "detectionRules": [
       {
@@ -51735,6 +52464,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.recibelo.cl/seguimiento/",
     "trackingUrlTemplate": "https://www.recibelo.cl/seguimiento/?codigo={trackingNumber}",
     "trackingSearchUrl": "https://www.recibelo.cl/seguimiento/",
+    "helpUrl": "https://www.recibelo.cl/contacto/",
     "linkRules": [
       {
         "domains": [
@@ -51769,6 +52499,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://redcourier.gr/track-and-trace/",
     "trackingUrlTemplate": "https://redcourier.gr/track-and-trace/?voucher={trackingNumber}",
     "trackingSearchUrl": "https://redcourier.gr/track-and-trace/",
+    "helpUrl": "https://redcourier.gr/epikoinonia/",
     "linkRules": [
       {
         "domains": [
@@ -51805,6 +52536,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://redexpress.kg/",
     "trackingSearchUrl": "https://redexpress.kg/",
+    "helpUrl": "https://redexpress.kg/support",
     "linkRules": [],
     "detectionRules": []
   },
@@ -51826,6 +52558,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://redstarplc.com/tracker/",
     "trackingSearchUrl": "https://redstarplc.com/tracker/",
+    "helpUrl": "https://redstarplc.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -51849,6 +52582,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://redbox.mv/",
     "trackingUrlTemplate": "https://redbox.mv/tracking?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://redbox.mv/tracking",
+    "helpUrl": "https://redbox.mv/contact",
     "linkRules": [
       {
         "domains": [
@@ -52000,6 +52734,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://scm.relayexpress.in/DocketTrack",
     "trackingSearchUrl": "https://scm.relayexpress.in/DocketTrack",
+    "helpUrl": "https://www.relayexpress.in/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52040,6 +52775,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://relaytech.co/track-order",
     "trackingSearchUrl": "https://relaytech.co/track-order",
+    "helpUrl": "https://www.relaytech.co/track-order-contact-form",
     "linkRules": [],
     "detectionRules": [
       {
@@ -52090,6 +52826,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.rex.co.id/id",
     "trackingUrlTemplate": "https://www.rex.co.id/id/tracking/?airwaybill={trackingNumber}",
     "trackingSearchUrl": "https://www.rex.co.id/id",
+    "helpUrl": "https://www.rex.co.id/id/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -52124,6 +52861,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://trace.rgw-express.pl/search2/",
     "trackingUrlTemplate": "https://trace.rgw-express.pl/search2/tracking.php?reference_no={trackingNumber}&language=polish",
     "trackingSearchUrl": "https://trace.rgw-express.pl/search2/",
+    "helpUrl": "https://rgw-express.pl/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -52154,6 +52892,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.rhenus.group/de/de/",
     "trackingSearchUrl": "https://rhenusmydelivery.com/de",
+    "helpUrl": "https://rhenusmydelivery.com/de/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52177,6 +52916,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.rhenus.group/it/it/",
     "trackingUrlTemplate": "https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s={trackingNumber}",
     "trackingSearchUrl": "https://tracking.rhenusitalia.it/rhenus/track.jsf",
+    "helpUrl": "https://tracking.rhenusitalia.it/rhenus/faq.jsf",
     "linkRules": [
       {
         "domains": [
@@ -52204,6 +52944,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
     "trackingSearchUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "helpUrl": "https://www.riders.com.pl/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52226,6 +52967,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://rika.kz/en/tracking/",
     "trackingUrlTemplate": "https://home.courierexe.ru/350/tracking?orderno={trackingNumber}&submit=1&lang=2",
     "trackingSearchUrl": "https://rika.kz/en/tracking/",
+    "helpUrl": "https://rika.kz/en/contact/",
     "linkRules": [
       {
         "domains": [
@@ -52297,6 +53039,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://zoom.rivigo.com/",
     "trackingUrlTemplate": "https://zoom.rivigo.com/#/trackconsignment/{trackingNumber}",
+    "helpUrl": "https://mahindralogistics.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -52461,6 +53204,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tools.rrts.com/LTLTrack/",
     "trackingUrlTemplate": "https://tools.rrts.com/LTLTrack/?searchValues={trackingNumber}",
     "trackingSearchUrl": "https://freight.rrts.com/Tools/Tracking/Pages/default.aspx",
+    "helpUrl": "https://www.shiproadrunnerfreight.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -52577,6 +53321,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.suus.com/visibility",
     "trackingUrlTemplate": "https://portal.suus.com/order-details/{trackingNumber}",
     "trackingSearchUrl": "https://portal.suus.com/visibility",
+    "helpUrl": "https://suus.com/pl/kontakt",
     "linkRules": [
       {
         "domains": [
@@ -52675,6 +53420,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.rossexpress.com/",
     "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "trackingSearchUrl": "https://www.rossexpress.com/",
+    "helpUrl": "https://www.rossexpress.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -52716,6 +53462,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://route1groupltd.co.uk/two-person-home-delivery/customer-hub/",
     "trackingSearchUrl": "https://route1groupltd.co.uk/two-person-home-delivery/customer-hub/",
+    "helpUrl": "https://route1groupltd.co.uk/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52735,6 +53482,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://royalx.net/tracking",
     "trackingSearchUrl": "https://royalx.net/tracking",
+    "helpUrl": "https://royalx.net/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52760,6 +53508,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.royaleinternational.com/tracking",
     "trackingUrlTemplate": "https://www.royaleinternational.com/tracking?waybillno={trackingNumber}",
     "trackingSearchUrl": "https://www.royaleinternational.com/tracking",
+    "helpUrl": "https://www.royaleinternational.com/help-center",
     "linkRules": [
       {
         "domains": [
@@ -52839,6 +53588,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.rpxonline.com/",
     "trackingUrlTemplate": "https://tracking.rpxonline.com/?trackNo={trackingNumber}",
     "trackingSearchUrl": "https://tracking.rpxonline.com/",
+    "helpUrl": "https://www.rpxonline.com/network/",
     "linkRules": [
       {
         "domains": [
@@ -52885,6 +53635,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ke-api-admin-v2-x3ct6vzffa-et.a.run.app/",
     "trackingSearchUrl": "https://rpx.co.id/tracking",
+    "helpUrl": "https://rpx.co.id/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -52919,6 +53670,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.rrexpress.com.sg/tracking.aspx",
     "trackingUrlTemplate": "https://tracking.frontierforce.com/tracking.aspx?cn={trackingNumber}&stid=rr",
     "trackingSearchUrl": "https://www.rrexpress.com.sg/tracking.aspx",
+    "helpUrl": "https://www.rrexpress.com.sg/contacts.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52942,6 +53694,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.rrswl.com/order/searchLishi",
     "trackingSearchUrl": "https://www.rrswl.com/order/searchLishi",
+    "helpUrl": "https://www.rrswl.com/front/prob/list",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52964,6 +53717,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.rtt.co.za/",
     "trackingUrlTemplate": "https://intellitrack.rtt.co.za/?SearchString={trackingNumber}",
     "trackingSearchUrl": "https://intellitrack.rtt.co.za/",
+    "helpUrl": "https://www.rtt.co.za/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -53028,6 +53782,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.runforint.com/",
     "trackingUrlTemplate": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137&key={trackingNumber}",
     "trackingSearchUrl": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137",
+    "helpUrl": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=107",
     "linkRules": [
       {
         "domains": [
@@ -53059,6 +53814,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://runnerexpress.co.il/",
     "trackingUrlTemplate": "https://runnerexpress.co.il/track/?search_query={trackingNumber}",
     "trackingSearchUrl": "https://runnerexpress.co.il/track/",
+    "helpUrl": "https://runnerexpress.co.il/contact/",
     "linkRules": [
       {
         "domains": [
@@ -53137,6 +53893,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://rxo.com/",
     "trackingUrlTemplate": "https://track.rxo.com/?trackingnumber={trackingNumber}",
     "trackingSearchUrl": "https://track.rxo.com/",
+    "helpUrl": "https://rxo.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -53170,6 +53927,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
     "trackingSearchUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
+    "helpUrl": "https://www.ryder.com/en-us/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53194,6 +53952,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sacoshipping.com/track/",
     "trackingUrlTemplate": "https://sacoshipping.com/track/",
     "trackingSearchUrl": "https://sacoshipping.com/track/",
+    "helpUrl": "https://sacoshipping.com/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53272,6 +54031,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.safewayxp.com/en/track/",
     "trackingUrlTemplate": "https://www.safewayxp.com/track.php?awb={trackingNumber}",
     "trackingSearchUrl": "https://www.safewayxp.com/en/track/",
+    "helpUrl": "https://www.safewayxp.com/en/contact/",
     "linkRules": [
       {
         "domains": [
@@ -53380,6 +54140,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.sagawa-sgx.com/sgx/trackeng.asp",
     "trackingUrlTemplate": "https://tracking.sagawa-sgx.com/sgx/trackeng.asp?ENC=JPN&CAT=AWB&AWB={trackingNumber}",
     "trackingSearchUrl": "https://tracking.sagawa-sgx.com/sgx/trackeng.asp",
+    "helpUrl": "https://www.sgh-globalj.com/support/",
     "linkRules": [
       {
         "domains": [
@@ -53412,6 +54173,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://saharaexpress.com/",
     "trackingUrlTemplate": "https://saharaexpress.com/showDetails1.php?taTrackNumber={trackingNumber}",
     "trackingSearchUrl": "https://saharaexpress.com/",
+    "helpUrl": "https://saharaexpress.com/contact.php",
     "linkRules": [
       {
         "domains": [
@@ -53510,6 +54272,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.sailpost.it/traccia-il-pacco/",
     "trackingUrlTemplate": "https://www.sailpost.it/traccia-il-pacco/?codice={trackingNumber}",
     "trackingSearchUrl": "https://www.sailpost.it/traccia-il-pacco/",
+    "helpUrl": "https://www.sailpost.it/contattaci/informazioni-spedizioni/",
     "linkRules": [
       {
         "domains": [
@@ -53546,6 +54309,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://myspil.com/",
     "trackingSearchUrl": "https://myspil.com/",
     "trackingSiteName": "mySPIL Track & Trace",
+    "helpUrl": "https://www.spil.co.id/id/kontak",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53570,6 +54334,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sallaumlines.com/track-shipment/",
     "trackingUrlTemplate": "https://sallaumlines.com/track-shipment/",
     "trackingSearchUrl": "https://sallaumlines.com/track-shipment/",
+    "helpUrl": "https://sallaumlines.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53638,6 +54403,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.samex.cl/wp-content/rastreo/rastreo/v1/rastreo_form.php",
     "trackingUrlTemplate": "https://mysamex.samex.cl/gts/pub/locNumSeguimiento.seam?tipo=L&localizador={trackingNumber}",
     "trackingSearchUrl": "https://www.samex.cl/wp-content/rastreo/rastreo/v1/rastreo_form.php",
+    "helpUrl": "https://www.samex.cl/contactanos/",
     "linkRules": [
       {
         "domains": [
@@ -53692,6 +54458,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.samus.lt/siuntu-sekimas/",
     "trackingUrlTemplate": "https://www.samus.lt/siuntu-sekimas/?id={trackingNumber}",
     "trackingSearchUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "helpUrl": "https://www.samus.lt/kontaktai/",
     "linkRules": [
       {
         "domains": [
@@ -53725,6 +54492,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.sandahlsbolagen.se/opter/TT",
     "trackingUrlTemplate": "https://portal.sandahlsbolagen.se/opter/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://portal.sandahlsbolagen.se/opter/TT",
+    "helpUrl": "https://sandahls.com/kontakta-oss/",
     "linkRules": [
       {
         "domains": [
@@ -53756,6 +54524,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://santosevale.pt/track/",
     "trackingSearchUrl": "https://santosevale.pt/track/",
+    "helpUrl": "https://santosevale.pt/contatos/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53782,6 +54551,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.sapx.id/id/cek-awb",
     "trackingUrlTemplate": "https://www.sapx.id/id/cek-awb/{trackingNumber}",
     "trackingSearchUrl": "https://www.sapx.id/id/cek-awb",
+    "helpUrl": "https://www.sapx.id/id/kontak-kami",
     "linkRules": [
       {
         "domains": [
@@ -53936,6 +54706,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
     "trackingSearchUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
+    "helpUrl": "https://www.savarexpress.com.pe/contactanos/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53960,6 +54731,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.saqura-web.com/SBS_LTRC/",
     "trackingUrlTemplate": "https://www.saqura-web.com/SBS_LTRC/KF_5020.aspx?IraNo={trackingNumber}",
     "trackingSearchUrl": "https://www.saqura-web.com/SBS_LTRC/",
+    "helpUrl": "https://www.sbs-sokuhai.com/sbsskhi/contact/",
     "linkRules": [
       {
         "domains": [
@@ -53998,6 +54770,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.scangl.com/",
     "trackingUrlTemplate": "https://tracking.scangl.com/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.scangl.com/",
+    "helpUrl": "https://www.scangl.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -54029,6 +54802,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.scgexpress.co.th/tracking/",
     "trackingUrlTemplate": "https://www.scgexpress.co.th/tracking/detail/{trackingNumber}/",
     "trackingSearchUrl": "https://www.scgexpress.co.th/tracking/",
+    "helpUrl": "https://www.scgexpress.co.th/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -54065,6 +54839,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://my.schaeflein.de/Track",
     "trackingUrlTemplate": "https://my.schaeflein.de/Track/{trackingNumber}?language=en&culture=GB",
     "trackingSearchUrl": "https://my.schaeflein.de/Track",
+    "helpUrl": "https://www.schaeflein.de/kontakt",
     "linkRules": [
       {
         "domains": [
@@ -54092,6 +54867,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://schneider.com/track",
     "trackingSearchUrl": "https://schneider.com/track",
+    "helpUrl": "https://schneider.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54118,6 +54894,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.slg-shipping.com/#/home/tracking",
     "trackingSearchUrl": "https://www.slg-shipping.com/#/home/tracking",
     "trackingSiteName": "Sea Legend Cargo Tracking",
+    "helpUrl": "https://www.slg-shipping.com/#/home/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54142,6 +54919,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://eutracking.seabournelogistics.com/UK-EN-1",
     "trackingSearchUrl": "https://eutracking.seabournelogistics.com/UK-EN-1",
+    "helpUrl": "https://seabournelogistics.com/uk/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54167,6 +54945,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.seino.co.jp/cgi-bin/gnpquery.pgm",
     "trackingUrlTemplate": "https://track.seino.co.jp/cgi-bin/gnpquery.pgm?GNPNO1={trackingNumber}",
     "trackingSearchUrl": "https://www.seino.co.jp/",
+    "helpUrl": "https://www.seino.co.jp/seino/contactus/",
     "linkRules": [
       {
         "domains": [
@@ -54293,6 +55072,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://clientes.sendainsular.com/DlWebTrackingVWE/",
     "trackingSearchUrl": "https://clientes.sendainsular.com/DlWebTrackingVWE/",
+    "helpUrl": "https://sendainsular.com/contacto/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54317,6 +55097,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://sendex.coordi.com/rastreo/",
     "trackingSearchUrl": "https://sendex.coordi.com/rastreo/",
+    "helpUrl": "https://sendex.coordi.com/contactenos/",
     "linkRules": [
       {
         "domains": [
@@ -54438,6 +55219,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.sendoexpress.net/tracking.html",
     "trackingUrlTemplate": "https://www.sendoexpress.net/tracking.html?code={trackingNumber}",
     "trackingSearchUrl": "https://www.sendoexpress.net/tracking.html",
+    "helpUrl": "https://www.sendoexpress.net/about.html",
     "linkRules": [
       {
         "domains": [
@@ -54506,6 +55288,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sentralcargo.co.id/",
     "trackingUrlTemplate": "https://sentralcargo.co.id/cekresi?resi={trackingNumber}",
     "trackingSearchUrl": "https://sentralcargo.co.id/",
+    "helpUrl": "https://sentralcargo.co.id/hubungi-kami",
     "linkRules": [
       {
         "domains": [
@@ -54594,6 +55377,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.servex.com.tr/tracking",
     "trackingUrlTemplate": "https://www.servex.com.tr/tracking?awbNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.servex.com.tr/tracking",
+    "helpUrl": "https://www.servex.com.tr/servex-support",
     "linkRules": [
       {
         "domains": [
@@ -54761,6 +55545,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.sflworldwide.com/",
     "trackingUrlTemplate": "https://track.sflworldwide.com/",
     "trackingSearchUrl": "https://track.sflworldwide.com/",
+    "helpUrl": "https://www.sflworldwide.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54784,6 +55569,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sfydexpress.com/tracking.html",
     "trackingUrlTemplate": "https://sfydexpress.com/tracking.html?c={trackingNumber}",
     "trackingSearchUrl": "https://sfydexpress.com/tracking.html",
+    "helpUrl": "https://sfydexpress.com/support/faq.html",
     "linkRules": [
       {
         "domains": [
@@ -54816,6 +55602,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://sgkhomedelivery.co.uk/track-your-order",
     "trackingSearchUrl": "https://sgkhomedelivery.co.uk/track-your-order",
+    "helpUrl": "https://sgkhomedelivery.co.uk/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -54834,6 +55621,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.sgxpress.com/query/",
     "trackingUrlTemplate": "https://www.sgxpress.com/query/?logic_num={trackingNumber}",
     "trackingSearchUrl": "https://www.sgxpress.com/query/",
+    "helpUrl": "https://www.sgxpress.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -54996,6 +55784,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.shenghanggj.com/checkexpress",
     "trackingUrlTemplate": "https://www.shenghanggj.com/checkexpress?act=cx&order_tracking_search={trackingNumber}",
     "trackingSearchUrl": "https://www.shenghanggj.com/checkexpress",
+    "helpUrl": "https://www.shenghanggj.com/help-20.html",
     "linkRules": [
       {
         "domains": [
@@ -55028,6 +55817,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.shipadelivery.com/",
     "trackingUrlTemplate": "https://shipa.com/track/?trackingno={trackingNumber}",
     "trackingSearchUrl": "https://shipa.com/track/",
+    "helpUrl": "https://shipa.com/help-center/",
     "linkRules": [
       {
         "domains": [
@@ -55067,6 +55857,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://go.shipblu.com/en/",
     "trackingUrlTemplate": "https://go.shipblu.com/en/{trackingNumber}",
     "trackingSearchUrl": "https://go.shipblu.com/en/",
+    "helpUrl": "https://support.shipblu.com/en",
     "linkRules": [
       {
         "domains": [
@@ -55097,6 +55888,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.shipentegra.com/",
     "trackingUrlTemplate": "https://track.shipentegra.com/?trackno={trackingNumber}",
     "trackingSearchUrl": "https://track.shipentegra.com/",
+    "helpUrl": "https://www.shipentegra.com/iletisim",
     "linkRules": [
       {
         "domains": [
@@ -55142,6 +55934,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://express.shipgce.com/postcheck.htm",
     "trackingUrlTemplate": "https://express.shipgce.com/postcheck.htm?checkvalue={trackingNumber}&type=identity",
     "trackingSearchUrl": "https://express.shipgce.com/postcheck.htm",
+    "helpUrl": "https://express.shipgce.com/news.htm?key=help17",
     "linkRules": [
       {
         "domains": [
@@ -55181,6 +55974,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipglobal.in/",
     "trackingUrlTemplate": "https://shipglobal.in/tracking/?awb={trackingNumber}",
     "trackingSearchUrl": "https://shipglobal.in/tracking/",
+    "helpUrl": "https://shipglobal.in/contact/",
     "linkRules": [
       {
         "domains": [
@@ -55223,6 +56017,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipglobal.us/",
     "trackingUrlTemplate": "https://shipglobal.us/track.html?waybill={trackingNumber}",
     "trackingSearchUrl": "https://shipglobal.us/track.html",
+    "helpUrl": "https://shipglobal.us/contact-us.html",
     "linkRules": [
       {
         "domains": [
@@ -55261,6 +56056,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.shiplowcost.com/",
     "trackingSearchUrl": "https://www.shiplowcost.com/",
+    "helpUrl": "https://www.shiplowcost.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55427,6 +56223,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipx.asia/toolkit/shipment-tracker",
     "trackingUrlTemplate": "https://shipx.asia/toolkit/shipment-tracker?trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://shipx.asia/toolkit/shipment-tracker",
+    "helpUrl": "https://shipx.asia/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -55459,6 +56256,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.shivaicl.net/track.html",
     "trackingSearchUrl": "https://www.shivaicl.net/track.html",
+    "helpUrl": "https://www.shivaicl.net/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55482,6 +56280,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.shopiniworld.com/track-shipments",
     "trackingSearchUrl": "https://www.shopiniworld.com/track-shipments",
+    "helpUrl": "https://www.shopiniworld.com/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55548,6 +56347,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://oms.showl.com/tracking",
     "trackingSearchUrl": "https://oms.showl.com/tracking",
+    "helpUrl": "https://www.showl.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55573,6 +56373,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shreeanjani.co.in/tracking",
     "trackingUrlTemplate": "https://shreeanjani.co.in/tracking?awb={trackingNumber}",
     "trackingSearchUrl": "https://shreeanjani.co.in/tracking",
+    "helpUrl": "https://shreeanjani.co.in/contact/",
     "linkRules": [
       {
         "domains": [
@@ -55642,6 +56443,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.shreemahavircourier.com/",
     "trackingSearchUrl": "https://www.shreemahavircourier.com/",
+    "helpUrl": "https://www.shreemahavircourier.com/contact-us.aspx",
     "linkRules": [
       {
         "domains": [
@@ -55758,6 +56560,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.shreenandancourier.com/",
     "trackingUrlTemplate": "https://connectingnandan.com/web-tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.shreenandancourier.com/",
+    "helpUrl": "https://www.shreenandancourier.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -55863,6 +56666,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://sinapseria.ro/",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
+    "helpUrl": "https://sinapseria.ro/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55889,6 +56693,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://ebiz.sinokor.co.kr/Tracking",
     "trackingSearchUrl": "https://ebiz.sinokor.co.kr/Tracking",
     "trackingSiteName": "Sinokor E-Biz Tracking",
+    "helpUrl": "https://www.sinokor.co.kr/en/net_01kr.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55931,6 +56736,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
     "trackingSearchUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
+    "helpUrl": "https://www.siuntosautobusais.lt/kontaktai/siuntos-autobusais-terminalai-lietuvoje/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55981,6 +56787,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.skif-cargo.ru/tracking/",
     "trackingUrlTemplate": "https://www.skif-cargo.ru/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.skif-cargo.ru/tracking/",
+    "helpUrl": "https://www.skif-cargo.ru/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -56013,6 +56820,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://skladusa.com/en/tracking/",
     "trackingUrlTemplate": "https://skladusa.com/en/tracking/{trackingNumber}/",
     "trackingSearchUrl": "https://skladusa.com/en/tracking/",
+    "helpUrl": "https://skladusa.com/en/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -56089,6 +56897,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.skybox.net/",
     "trackingUrlTemplate": "https://www.skybox.net/TrackingInformation/IndexPublic?tracking={trackingNumber}",
     "trackingSearchUrl": "https://www.skybox.net/TrackingInformation/IndexPublic",
+    "helpUrl": "https://www.skybox.net/Contact-us",
     "linkRules": [
       {
         "domains": [
@@ -56122,6 +56931,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://skyexpressinternational.com/Home/Tracking",
     "trackingUrlTemplate": "https://www.skyexpressinternational.com/Home/Tracking?trackingType=AWB&tid={trackingNumber}",
     "trackingSearchUrl": "https://skyexpressinternational.com/Home/Tracking",
+    "helpUrl": "https://skyexpressinternational.com/Home/Contact",
     "linkRules": [
       {
         "domains": [
@@ -56151,6 +56961,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://skyex.gr/el/entopismos",
     "trackingUrlTemplate": "https://skyex.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
     "trackingSearchUrl": "https://skyex.gr/el/entopismos",
+    "helpUrl": "https://skyex.gr/el/epikoinonia",
     "linkRules": [
       {
         "domains": [
@@ -56184,6 +56995,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://skyking.co/track",
     "trackingUrlTemplate": "https://skyking.co/track?cno={trackingNumber}",
     "trackingSearchUrl": "https://skyking.co/track",
+    "helpUrl": "https://skyking.co/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -56384,6 +57196,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sonic.pk/tracking",
     "trackingUrlTemplate": "https://sonic.pk/tracking?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://sonic.pk/tracking",
+    "helpUrl": "https://slgtrax.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -56579,6 +57392,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.smexpress.in/",
     "trackingSearchUrl": "https://www.smexpress.in/Home/track",
+    "helpUrl": "https://www.smexpress.in/home/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -56604,6 +57418,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
     "trackingSearchUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
     "trackingSiteName": "SM Line e-Service",
+    "helpUrl": "https://esvc.smlines.com/smline/CUP_HOM_1614.do?sessLocale=en",
     "linkRules": [],
     "detectionRules": []
   },
@@ -56622,6 +57437,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://smafraktse.opter.cloud/TT",
     "trackingUrlTemplate": "https://smafraktse.opter.cloud/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://smafraktse.opter.cloud/TT",
+    "helpUrl": "https://www.smafrakt.se/web/kontakta-oss/",
     "linkRules": [
       {
         "domains": [
@@ -56703,6 +57519,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://sofexpost.md/",
     "trackingSearchUrl": "https://sofexpost.md/",
+    "helpUrl": "https://sofexpost.md/ro/contacte/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -56727,6 +57544,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.sol-track.com/",
     "trackingUrlTemplate": "https://www.sol-track.com/{trackingNumber}",
     "trackingSearchUrl": "https://www.sol-track.com/",
+    "helpUrl": "https://www.sol-track.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -56838,6 +57656,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.southpost.com.ar/",
     "trackingUrlTemplate": "https://www.southpost.com.ar/#/t/{trackingNumber}",
     "trackingSearchUrl": "https://www.southpost.com.ar/",
+    "helpUrl": "https://www.southpost.com.ar/#/Q&A",
     "linkRules": [
       {
         "domains": [
@@ -56909,6 +57728,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.smtl.com/",
     "trackingSearchUrl": "https://profoundui.smtl.com/profoundui/start?pgm=profoundui/mwp705c&p1=0&l1=1&p2=none&l2=4&p3=none&l3=4",
+    "helpUrl": "https://www.smtl.com/contact-smt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -56936,6 +57756,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sp.express/tt",
     "trackingUrlTemplate": "https://en.sp.express/tt/{trackingNumber}",
     "trackingSearchUrl": "https://sp.express/tt",
+    "helpUrl": "https://sp.express/w2/site/contact",
     "linkRules": [
       {
         "domains": [
@@ -56984,6 +57805,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://spark.kz/",
     "trackingSearchUrl": "https://spark.kz/",
+    "helpUrl": "https://spark.kz/en/contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -57006,6 +57828,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://amp.andmork.com/opter/tt",
     "trackingUrlTemplate": "https://amp.andmork.com/opter/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://amp.andmork.com/opter/tt",
+    "helpUrl": "https://spedtrans.no/kontakt-oss/",
     "linkRules": [
       {
         "domains": [
@@ -57041,6 +57864,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.spedire.com/traccia-spedizione",
     "trackingUrlTemplate": "https://www.spedire.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.spedire.com/traccia-spedizione",
+    "helpUrl": "https://www.spedire.com/serve-aiuto",
     "linkRules": [
       {
         "domains": [
@@ -57071,6 +57895,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.spedition-moeller.com/tracking.html",
     "trackingUrlTemplate": "https://portal.spedition-moeller.com/tracking.html",
     "trackingSearchUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "helpUrl": "https://portal.spedition-moeller.com/tickets.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -57328,6 +58153,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://spfly.com.br/",
     "trackingSearchUrl": "https://spfly.com.br/rastreamento/",
+    "helpUrl": "https://spfly.com.br/contato-2/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -57350,6 +58176,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://spourgitis.gr/entopismos-apostolon/",
     "trackingSearchUrl": "https://spourgitis.gr/entopismos-apostolon/",
+    "helpUrl": "https://spourgitis.gr/contact/",
     "linkRules": [
       {
         "domains": [
@@ -57409,6 +58236,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://spt-logistics.eu/",
     "trackingSearchUrl": "https://spt-logistics.eu/#sledzenie-przesylek",
+    "helpUrl": "https://spt-logistics.eu/kontakt",
     "linkRules": [
       {
         "domains": [
@@ -57880,6 +58708,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.stcourier.com/",
     "trackingSearchUrl": "https://www.stcourier.com/",
+    "helpUrl": "https://stcourier.com/corporate-office",
     "linkRules": [
       {
         "domains": [
@@ -57913,6 +58742,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://stallion.ca/track/",
     "trackingUrlTemplate": "https://stallion.ca/track/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://stallion.ca/track/",
+    "helpUrl": "https://stallion.ca/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -57966,6 +58796,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://starexglobal.com/az/",
     "trackingUrlTemplate": "https://starexglobal.com/az/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://starexglobal.com/az/",
+    "helpUrl": "https://starexglobal.com/az/contact",
     "linkRules": [
       {
         "domains": [
@@ -58079,6 +58910,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.starlinks-me.com/tracking",
     "trackingUrlTemplate": "https://consignee.starlinks-me.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.starlinks-me.com/tracking",
+    "helpUrl": "https://www.starlinks-me.com/support",
     "linkRules": [
       {
         "domains": [
@@ -58205,6 +59037,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.carrierlogistics.com/scripts/fro.pol/facts.htm",
     "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/fro.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "trackingSearchUrl": "https://tracking.carrierlogistics.com/scripts/fro.pol/facts.htm",
+    "helpUrl": "https://www.stgltl.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -58287,6 +59120,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track-my-order.co.uk/",
     "trackingUrlTemplate": "https://track-my-order.co.uk/?s={trackingNumber}",
     "trackingSearchUrl": "https://track-my-order.co.uk/",
+    "helpUrl": "https://www.stop-start.co.uk/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -58422,6 +59256,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://operation.sundarbancourierltd.com/",
     "trackingUrlTemplate": "https://operation.sundarbancourierltd.com/?cnnumber={trackingNumber}",
     "trackingSearchUrl": "https://operation.sundarbancourierltd.com/",
+    "helpUrl": "https://www.sundarbancourierltd.com/Support",
     "linkRules": [
       {
         "domains": [
@@ -58455,6 +59290,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://wuliu.suning.com/home/toLogisticsDetail.htm",
     "trackingSearchUrl": "https://wuliu.suning.com/home/toLogisticsDetail.htm",
+    "helpUrl": "https://wuliu.suning.com/home/contact.htm",
     "linkRules": [],
     "detectionRules": []
   },
@@ -58601,6 +59437,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.sut56.com/service-query",
     "trackingUrlTemplate": "https://www.sut56.com/service-query?no={trackingNumber}",
     "trackingSearchUrl": "https://www.sut56.com/service-query",
+    "helpUrl": "https://www.sut56.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -58634,6 +59471,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://svennsno.opter.cloud/TT",
     "trackingUrlTemplate": "https://svennsno.opter.cloud/TT?keyword={trackingNumber}",
     "trackingSearchUrl": "https://svennsno.opter.cloud/TT",
+    "helpUrl": "https://www.svenns.no/ac/kontakt-oss",
     "linkRules": [
       {
         "domains": [
@@ -58666,6 +59504,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://svuum.gr/",
     "trackingUrlTemplate": "https://live.svuum.com/track.html?com_code=svm&pm_Id=5630&track_page_version=v1&only_latest=true&tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://svuum.gr/",
+    "helpUrl": "https://svuum.gr/contact_form/",
     "linkRules": [
       {
         "domains": [
@@ -58727,6 +59566,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.swftbox.com/",
     "trackingSearchUrl": "https://t.swftbox.com/",
+    "helpUrl": "https://www.swftbox.com/contactus",
     "linkRules": [],
     "detectionRules": []
   },
@@ -58800,6 +59640,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://online.swireshipping.com/tracking",
     "trackingSearchUrl": "https://online.swireshipping.com/tracking",
+    "helpUrl": "https://www.swireshipping.com/information/offices/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -58844,6 +59685,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.sxjdfreight.com/service/waybillList.html",
     "trackingSearchUrl": "https://www.sxjdfreight.com/service/waybillList.html",
+    "helpUrl": "https://www.sxjdfreight.com/about/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -58897,6 +59739,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.suyd56.com/Index.html",
     "trackingUrlTemplate": "https://sud.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
     "trackingSearchUrl": "https://www.suyd56.com/Index.html",
+    "helpUrl": "https://www.suyd56.com/Contact/",
     "linkRules": [
       {
         "domains": [
@@ -58927,6 +59770,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.szamigroup.hu/nyomonkovetes/",
     "trackingSearchUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "helpUrl": "https://www.szamigroup.hu/kapcsolat/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -58948,6 +59792,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://erp.szendex.com/DlWebTrackingVWE/",
     "trackingUrlTemplate": "https://erp.szendex.com/DlWebTrackingVWE/?seg={trackingNumber}",
     "trackingSearchUrl": "https://erp.szendex.com/DlWebTrackingVWE/",
+    "helpUrl": "https://www.szendex.com/contacto",
     "linkRules": [
       {
         "domains": [
@@ -59020,6 +59865,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tgroupspa.com/",
     "trackingUrlTemplate": "https://track.tgroupspa.com/ttnet/traccia_spedizione/{trackingNumber}",
     "trackingSearchUrl": "https://www.tgroupspa.com/",
+    "helpUrl": "https://www.tgroupspa.com/contatti/",
     "linkRules": [
       {
         "domains": [
@@ -59171,6 +60017,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.tantonet.com/",
     "trackingSearchUrl": "https://www.tantonet.com/",
     "trackingSiteName": "Tanto Container Tracking",
+    "helpUrl": "https://www.tantonet.com/contact.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -59229,6 +60076,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://crm.tapuzdelivery.co.il/Baldar/deliverystatus.aspx",
     "trackingSearchUrl": "https://crm.tapuzdelivery.co.il/Baldar/deliverystatus.aspx",
+    "helpUrl": "https://www.tapuzdelivery.co.il/%D7%A6%D7%A8%D7%95-%D7%A7%D7%A9%D7%A8/%D7%A9%D7%99%D7%A8%D7%95%D7%AA-%D7%9C%D7%A7%D7%95%D7%97%D7%95%D7%AA/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -59343,6 +60191,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tascourier.gr/track",
     "trackingUrlTemplate": "https://www.tascourier.gr/track?v={trackingNumber}",
     "trackingSearchUrl": "https://www.tascourier.gr/track",
+    "helpUrl": "https://www.tascourier.gr/contact",
     "linkRules": [
       {
         "domains": [
@@ -59400,6 +60249,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.taxydema.gr/track-and-trace.html",
     "trackingUrlTemplate": "https://www.taxydema.gr/entopismos/{trackingNumber}",
     "trackingSearchUrl": "https://www.taxydema.gr/track-and-trace.html",
+    "helpUrl": "https://www.taxydema.gr/epikoinonia.html",
     "linkRules": [
       {
         "domains": [
@@ -59465,6 +60315,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tccs.in/tracking/",
     "trackingSearchUrl": "https://tccs.in/tracking/",
+    "helpUrl": "https://tccs.in/contact",
     "linkRules": [
       {
         "domains": [
@@ -59546,6 +60397,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tcifreight.in/tracking-consignment/",
     "trackingSearchUrl": "https://tcifreight.in/tracking-consignment/",
+    "helpUrl": "https://tcifreight.in/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -59605,6 +60457,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tdn.es/tracking/",
     "trackingUrlTemplate": "https://www.tdn.es/tracking?envio={trackingNumber}&autoredir=1",
     "trackingSearchUrl": "https://www.tdn.es/tracking/",
+    "helpUrl": "https://www.tdn.es/contacto",
     "linkRules": [
       {
         "domains": [
@@ -59645,6 +60498,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.tdv-group.com/tracktrace",
     "trackingUrlTemplate": "https://portal.tdv-group.com/tracktrace/{trackingNumber}",
     "trackingSearchUrl": "https://portal.tdv-group.com/tracktrace",
+    "helpUrl": "https://tdv-group.com/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -59717,6 +60571,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://teamexpressme.com/tracking",
     "trackingUrlTemplate": "https://teamexpressme.com/tracking?trackno={trackingNumber}",
     "trackingSearchUrl": "https://teamexpressme.com/tracking",
+    "helpUrl": "https://teamexpressme.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -59814,6 +60669,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.teamww.com/tracking/team-trac/",
     "trackingUrlTemplate": "https://www.teamww.com/wp-content/tracking/teamTrac.php?hbl={trackingNumber}",
     "trackingSearchUrl": "https://www.teamww.com/tracking/team-trac/",
+    "helpUrl": "https://www.teamww.com/company/contact/",
     "linkRules": [
       {
         "domains": [
@@ -59909,6 +60765,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "trackingSearchUrl": "https://www.tejcouriers.com/shipment-tracking.php",
+    "helpUrl": "https://www.tejcouriers.com/contact.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -59933,6 +60790,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.teleport.asia/track",
     "trackingUrlTemplate": "https://www.teleport.asia/track?tracking_number={trackingNumber}",
     "trackingSearchUrl": "https://www.teleport.asia/track",
+    "helpUrl": "https://help.teleport.it/",
     "linkRules": [
       {
         "domains": [
@@ -59966,6 +60824,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://teleship.com/tracking",
     "trackingUrlTemplate": "https://teleship.com/tracking?number={trackingNumber}",
     "trackingSearchUrl": "https://teleship.com/tracking",
+    "helpUrl": "https://teleship.com/faqs",
     "linkRules": [
       {
         "domains": [
@@ -60006,6 +60865,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://customer.tfmex.com/Skybill/TrackSkybill",
     "trackingUrlTemplate": "https://customer.tfmex.com/Skybill/TrackSkybill?awb={trackingNumber}",
     "trackingSearchUrl": "https://customer.tfmex.com/Skybill/TrackSkybill",
+    "helpUrl": "https://tfmex.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -60101,6 +60961,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tforce-solutions.com/",
     "trackingUrlTemplate": "https://tforce-solutions.com/quick-tracking/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://tforce-solutions.com/",
+    "helpUrl": "https://tforce-solutions.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -60182,6 +61043,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://thabit-logistics.com/",
     "trackingUrlTemplate": "https://thabit-logistics.com/track-shipment/{trackingNumber}",
     "trackingSearchUrl": "https://thabit-logistics.com/track-shipment",
+    "helpUrl": "https://thabit-logistics.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -60213,6 +61075,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://chorus.thaicargo.com/skychain/app",
     "trackingUrlTemplate": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
     "trackingSearchUrl": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "helpUrl": "https://www.thaicargo.com/en/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -60251,6 +61114,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.dockethub.com/shipment/",
     "trackingUrlTemplate": "https://tracking.dockethub.com/shipment/{trackingNumber}?style=TDG",
     "trackingSearchUrl": "https://tracking.dockethub.com/shipment/?style=TDG",
+    "helpUrl": "https://thedeliverygroup.co.uk/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -60387,6 +61251,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tigfreight.com/",
     "trackingUrlTemplate": "https://tracking.open360.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.open360.com/tracking/",
+    "helpUrl": "https://tigfreight.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -60448,6 +61313,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.time-critical-line.com/track-order",
     "trackingSearchUrl": "https://www.time-critical-line.com/track-order",
+    "helpUrl": "https://www.time-critical-line.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -60470,6 +61336,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://booking.time-matters.com/en-US/tracking",
     "trackingUrlTemplate": "https://booking.time-matters.com/en-US/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://booking.time-matters.com/en-US/tracking",
+    "helpUrl": "https://www.time-matters.com/customer-service/",
     "linkRules": [
       {
         "domains": [
@@ -60507,6 +61374,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://timelytitan.com/tracking.html",
     "trackingUrlTemplate": "https://timelytitan.com/tracking.html?number={trackingNumber}",
     "trackingSearchUrl": "https://timelytitan.com/tracking.html",
+    "helpUrl": "https://timelytitan.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -60545,6 +61413,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tinypack.mx/rastreo/",
     "trackingUrlTemplate": "https://tinypack.mx/rastreo?codigo={trackingNumber}",
     "trackingSearchUrl": "https://tinypack.mx/rastreo/",
+    "helpUrl": "https://tinypack.mx/contacto/",
     "linkRules": [
       {
         "domains": [
@@ -60622,6 +61491,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.shreetirupaticourier.net/",
     "trackingSearchUrl": "https://www.shreetirupaticourier.net/",
+    "helpUrl": "https://www.shreetirupaticourier.net/contactUs.aspx",
     "linkRules": [
       {
         "domains": [
@@ -60684,6 +61554,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://t.alicetms.dk/",
     "trackingUrlTemplate": "https://t.alicetms.dk/#/romming/TrackAndTrace/{trackingNumber}",
     "trackingSearchUrl": "https://tjwfragt.dk/track-trace/",
+    "helpUrl": "https://tjwfragt.dk/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -60706,6 +61577,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tmcargo.net/track.php",
     "trackingUrlTemplate": "https://www.tmcargo.net/track.php?cn={trackingNumber}",
     "trackingSearchUrl": "https://www.tmcargo.net/track.php",
+    "helpUrl": "https://www.tmcargo.net/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -60738,6 +61610,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.tmacompanies.com/Tracking/default.aspx",
     "trackingSearchUrl": "https://www.tmacompanies.com/Tracking/default.aspx",
+    "helpUrl": "https://www.tmacompanies.com/ContactUs.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -60786,6 +61659,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ukr.tmm-express.com/en/callback",
     "trackingUrlTemplate": "https://ukr.tmm-express.com/en/trackparcels?num={trackingNumber}&mark=is_code",
     "trackingSearchUrl": "https://ukr.tmm-express.com/en/callback",
+    "helpUrl": "https://ukr.tmm-express.com/uk/content/kontakty-ukr",
     "linkRules": [
       {
         "domains": [
@@ -60908,6 +61782,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://my.amazing.today/track",
     "trackingUrlTemplate": "https://my.amazing.today/track/{trackingNumber}",
     "trackingSearchUrl": "https://my.amazing.today/track",
+    "helpUrl": "https://amazing.today/help",
     "linkRules": [
       {
         "domains": [
@@ -61042,6 +61917,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tarrive.com/",
     "trackingUrlTemplate": "https://www.tarrive.com/track?q={trackingNumber}",
     "trackingSearchUrl": "https://www.tarrive.com/track",
+    "helpUrl": "https://www.tarrive.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -61099,6 +61975,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://toplogistics.com.au/",
     "trackingUrlTemplate": "https://toplogistics.com.au/?s={trackingNumber}",
     "trackingSearchUrl": "https://toplogistics.com.au/",
+    "helpUrl": "https://toplogistics.com.au/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -61135,6 +62012,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.topdelivery.ru/",
     "trackingUrlTemplate": "https://www.topdelivery.ru/tracking/?order={trackingNumber}",
     "trackingSearchUrl": "https://www.topdelivery.ru/tracking/",
+    "helpUrl": "https://www.topdelivery.ru/contacts/",
     "linkRules": [
       {
         "domains": [
@@ -61192,6 +62070,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://topnic.com.hk/order-tracking",
     "trackingUrlTemplate": "https://topnic.com.hk/order-tracking/{trackingNumber}",
     "trackingSearchUrl": "https://topnic.com.hk/order-tracking",
+    "helpUrl": "https://topnic.com.hk/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -61225,6 +62104,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://topparcel.com/parcels/tracking",
     "trackingUrlTemplate": "https://topparcel.com/parcels/tracking",
     "trackingSearchUrl": "https://topparcel.com/parcels/tracking",
+    "helpUrl": "https://topparcel.com/contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -61322,6 +62202,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.torrestir.com/",
     "trackingUrlTemplate": "https://tracking.torrestir.com/?id={trackingNumber}",
+    "helpUrl": "https://www.torrestir.com/en/send-us-a-message/",
     "linkRules": [
       {
         "domains": [
@@ -61411,6 +62292,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.carrierlogistics.com/scripts/tot.pol/facts.htm",
     "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/tot.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "trackingSearchUrl": "https://tracking.carrierlogistics.com/scripts/tot.pol/facts.htm",
+    "helpUrl": "https://ttdwest.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -61451,6 +62333,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://sporing.toten-transport.no/",
     "trackingUrlTemplate": "https://sporing.toten-transport.no/?gsin={trackingNumber}",
     "trackingSearchUrl": "https://sporing.toten-transport.no/",
+    "helpUrl": "https://www.toten-transport.no/finn-naermeste-kontor/",
     "linkRules": [
       {
         "domains": [
@@ -61487,6 +62370,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.toyou.co.uk/",
     "trackingUrlTemplate": "https://www.toyou.co.uk/track/{trackingNumber}",
     "trackingSearchUrl": "https://www.toyou.co.uk/track",
+    "helpUrl": "https://www.toyou.co.uk/help",
     "linkRules": [
       {
         "domains": [
@@ -61520,6 +62404,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tptrack.info/ecom/dtrack.php",
     "trackingUrlTemplate": "https://tptrack.info/ecom/dtrack.php?id={trackingNumber}&type=a1",
     "trackingSearchUrl": "https://tptrack.info/ecom/dtrack.php",
+    "helpUrl": "https://thaiparcels.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -61591,6 +62476,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
     "trackingSearchUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
+    "helpUrl": "https://www.trablisa.es/area-negocio/trablisa-expres#datos-de-contacto",
     "linkRules": [],
     "detectionRules": []
   },
@@ -61610,6 +62496,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://trackings.ge/en/track",
     "trackingUrlTemplate": "https://trackings.ge/en/track?track_num={trackingNumber}",
     "trackingSearchUrl": "https://trackings.ge/en/track",
+    "helpUrl": "https://trackings.ge/en/contacts",
     "linkRules": [
       {
         "domains": [
@@ -61678,6 +62565,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.tracopacr.com/Servicios_encomiendas",
     "trackingSearchUrl": "https://www.tracopacr.com/Servicios_encomiendas",
+    "helpUrl": "https://www.tracopacr.com/Contactenos",
     "linkRules": [],
     "detectionRules": []
   },
@@ -61707,6 +62595,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tracxlogis.com/tracking",
     "trackingUrlTemplate": "https://www.tracxlogis.com/tracking?trackingNo={trackingNumber}",
     "trackingSearchUrl": "https://www.tracxlogis.com/tracking",
+    "helpUrl": "https://www.tracxlogis.com/info/contact",
     "linkRules": [
       {
         "domains": [
@@ -61785,6 +62674,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.transexpress.lk/tracking",
     "trackingSearchUrl": "https://tracking.transexpress.lk/tracking",
+    "helpUrl": "https://transexpress.lk/about-us/our-company/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -61840,6 +62730,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://trace.transontario.com/",
     "trackingSearchUrl": "https://trace.transontario.com/",
+    "helpUrl": "https://trans-ontario.com/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -61862,6 +62753,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://partner.trans-pack.hu/csomagkovetes",
     "trackingUrlTemplate": "https://partner.trans-pack.hu/csomagkovetes?id={trackingNumber}",
     "trackingSearchUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "helpUrl": "https://trans-pack.hu/kapcsolat",
     "linkRules": [
       {
         "domains": [
@@ -61896,6 +62788,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://transaher.es/",
     "trackingUrlTemplate": "https://clientes.transaher.es/webclient/htracking/-5,0,{trackingNumber}",
     "trackingSearchUrl": "https://transaher.es/",
+    "helpUrl": "https://transaher.es/contacto/",
     "linkRules": [
       {
         "domains": [
@@ -61940,6 +62833,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.elite-co.com/shipments/track",
     "trackingUrlTemplate": "https://app.elite-co.com/shipments/track?references={trackingNumber}",
     "trackingSearchUrl": "https://app.elite-co.com/shipments/track",
+    "helpUrl": "https://transcorp-intl.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -61977,6 +62871,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.transdirect.com.au/education/tracking/",
     "trackingUrlTemplate": "https://www.transdirect.com.au/education/tracking/?reference={trackingNumber}",
     "trackingSearchUrl": "https://www.transdirect.com.au/education/tracking/",
+    "helpUrl": "https://www.transdirect.com.au/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -62013,6 +62908,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.transfera.com/",
     "trackingUrlTemplate": "https://tracking.transfera.com/package/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.transfera.com/",
+    "helpUrl": "https://transfera.com/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -62043,6 +62939,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.transglobalexpress.co.uk/track-shipment/",
     "trackingUrlTemplate": "https://www.transglobalexpress.co.uk/track-shipment/",
     "trackingSearchUrl": "https://www.transglobalexpress.co.uk/track-shipment/",
+    "helpUrl": "https://www.transglobalexpress.co.uk/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62064,6 +62961,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.transgo.mx/",
     "trackingSearchUrl": "https://www.transgo.mx/",
+    "helpUrl": "https://www.transgo.mx/contacto.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62082,6 +62980,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.transilvaniapost.ro/awb",
     "trackingUrlTemplate": "https://www.transilvaniapost.ro/awb/{trackingNumber}",
     "trackingSearchUrl": "https://www.transilvaniapost.ro/awb",
+    "helpUrl": "https://www.transilvaniapost.ro/pagini/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -62152,6 +63051,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://api.trans-mission.nl/Search-shipment",
     "trackingSearchUrl": "https://api.trans-mission.nl/Search-shipment",
+    "helpUrl": "https://www.trans-mission.nl/nl/onze-vestigingen",
     "linkRules": [
       {
         "domains": [
@@ -62187,6 +63087,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.transnatur.com/",
     "trackingUrlTemplate": "https://portal.transnatur.com/crm/track/{trackingNumber}/",
     "trackingSearchUrl": "https://www.transnatur.com/",
+    "helpUrl": "https://www.transnatur.com/contacto/",
     "linkRules": [
       {
         "domains": [
@@ -62215,6 +63116,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://30584626.courier-bookings.com/trackit.aspx",
     "trackingUrlTemplate": "https://30584626.courier-bookings.com/trackit.aspx?AWB={trackingNumber}",
     "trackingSearchUrl": "https://www.transnetservices.co.uk/login.html",
+    "helpUrl": "https://www.transnetservices.co.uk/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -62247,6 +63149,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://transportrdl.com/suivre-un-colis/",
     "trackingUrlTemplate": "https://transportrdl.com/suivre-un-colis/?tracking-number={trackingNumber}",
     "trackingSearchUrl": "https://transportrdl.com/suivre-un-colis/",
+    "helpUrl": "https://transportrdl.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -62280,6 +63183,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tbl.com.br/RastreamentoCarga",
     "trackingSearchUrl": "https://tbl.com.br/RastreamentoCarga",
+    "helpUrl": "https://tbl.com.br/fale-conosco",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62304,6 +63208,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.transporteschevalier.com/consulttag.html",
     "trackingUrlTemplate": "https://chevalier.fivesoft.com.co/tag_detail_v1.html?d={trackingNumber}",
     "trackingSearchUrl": "https://www.transporteschevalier.com/consulttag.html",
+    "helpUrl": "https://www.transporteschevalier.com/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62321,6 +63226,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.tcondesa.com.mx/Home/Support",
     "trackingSearchUrl": "https://www.tcondesa.com.mx/Home/Support",
+    "helpUrl": "https://www.tcondesa.com.mx/Home/Contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62374,6 +63280,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.reseaubesson.com/",
     "trackingSearchUrl": "https://www.reseaubesson.com/",
+    "helpUrl": "https://www.reseaubesson.com/Lug?controller=Contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62399,6 +63306,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://transpress.bg/bg/prosledjavane",
     "trackingUrlTemplate": "https://transpress.bg/bg/prosledjavane?track-number={trackingNumber}",
     "trackingSearchUrl": "https://transpress.bg/bg/prosledjavane",
+    "helpUrl": "https://transpress.bg/bg/kontakti",
     "linkRules": [
       {
         "domains": [
@@ -62432,6 +63340,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://portal.travelexpress.com.cy/system/",
     "trackingUrlTemplate": "https://portal.travelexpress.com.cy/system/?page=track&awb={trackingNumber}",
     "trackingSearchUrl": "https://portal.travelexpress.com.cy/system/",
+    "helpUrl": "https://www.travelexpresscourier.com/support.html",
     "linkRules": [
       {
         "domains": [
@@ -62462,6 +63371,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ar.treggo.co/tracking/",
     "trackingSearchUrl": "https://ar.treggo.co/tracking/",
+    "helpUrl": "https://ar.treggo.co/preguntas.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62551,6 +63461,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://app.tribexcourier.al/apps/package-tracking",
     "trackingSearchUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "helpUrl": "https://tribexcourier.al/kontakt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62603,6 +63514,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tbsno.opter.cloud/tt",
     "trackingUrlTemplate": "https://tbsno.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://tbsno.opter.cloud/tt",
+    "helpUrl": "https://tbs.no/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -62635,6 +63547,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ace2.trumpcardinc.com/searchairbill",
     "trackingUrlTemplate": "https://ace2.trumpcardinc.com/searchairbill?SearchByAirbill={trackingNumber}&SearchByRefPO=",
     "trackingSearchUrl": "https://ace2.trumpcardinc.com/searchairbill",
+    "helpUrl": "https://trumpcardinc.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -62718,6 +63631,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://trustexpress.bg/tracking",
     "trackingSearchUrl": "https://trustexpress.bg/tracking",
+    "helpUrl": "https://trustexpress.bg/kontakti",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62742,6 +63656,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tsbconnect.net/app/tracking/public",
     "trackingUrlTemplate": "https://www.tsbconnect.net/app/tracking/public/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.tsbconnect.net/app/tracking/public?search=true",
+    "helpUrl": "https://www.tsbtrans.com/contacto/",
     "linkRules": [
       {
         "domains": [
@@ -62811,6 +63726,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cptsngroen.dirextion.nl/",
     "trackingSearchUrl": "https://cptsngroen.dirextion.nl/",
+    "helpUrl": "https://tsngroen.nl/mijn-bezorging/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -62837,6 +63753,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://m.tst-cfexpress.com/tracing",
     "trackingUrlTemplate": "https://www.tst-cfexpress.com/tracing/by-url?lang=e&PRO={trackingNumber}",
     "trackingSearchUrl": "https://m.tst-cfexpress.com/tracing",
+    "helpUrl": "https://www.tst-cfexpress.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -62873,6 +63790,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ttkeu.com/",
     "trackingUrlTemplate": "https://ttkeu.com/tracking/tracking-detail/?id={trackingNumber}",
     "trackingSearchUrl": "https://ttkeu.com/tracking/",
+    "helpUrl": "https://ttkeu.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -62943,6 +63861,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tuffnells.co.uk/track",
     "trackingUrlTemplate": "https://www.tuffnells.co.uk/track/{trackingNumber}",
     "trackingSearchUrl": "https://www.tuffnells.co.uk/track",
+    "helpUrl": "https://www.tuffnells.co.uk/contact",
     "linkRules": [
       {
         "domains": [
@@ -62977,6 +63896,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.tuodatong56.com/",
     "trackingSearchUrl": "https://www.tuodatong56.com/tms/trackIndex.htm",
+    "helpUrl": "https://www.tuodatong56.com/lxwm.html",
     "linkRules": [
       {
         "domains": [
@@ -63036,6 +63956,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://app.iplus.com.do/tupaq/fe/lg-es/ut/Estatus.aspx",
     "trackingUrlTemplate": "https://app.iplus.com.do/tupaq/fe/lg-es/ut/Estatus.aspx?id={trackingNumber}",
     "trackingSearchUrl": "https://app.iplus.com.do/tupaq/fe/lg-es/ut/Estatus.aspx",
+    "helpUrl": "https://www.tupaq.com.do/contacto",
     "linkRules": [
       {
         "domains": [
@@ -63068,6 +63989,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://turbo.info/en/track",
     "trackingUrlTemplate": "https://turbo.info/en/track/{trackingNumber}",
     "trackingSearchUrl": "https://turbo.info/en/track",
+    "helpUrl": "https://turbo.info/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -63134,6 +64056,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://myturkonline.turkon.com/tracking",
     "trackingUrlTemplate": "https://myturkonline.turkon.com/tracking",
     "trackingSearchUrl": "https://myturkonline.turkon.com/tracking",
+    "helpUrl": "https://turkon.com/en/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63188,6 +64111,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipmenttracking.tusklogistics.com/",
     "trackingUrlTemplate": "https://shipmenttracking.tusklogistics.com/?trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.tusklogistics.com/track-your-shipment",
+    "helpUrl": "https://www.tusklogistics.com/help-desk",
     "linkRules": [
       {
         "domains": [
@@ -63253,6 +64177,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.2daytranspo.com/",
     "trackingUrlTemplate": "https://www.2daytranspo.com/admin/code/PopUp/PopUp_ShippingTrackingItem.aspx?ProNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.2daytranspo.com/",
+    "helpUrl": "https://www.2daytranspo.com/contactus",
     "linkRules": [
       {
         "domains": [
@@ -63287,6 +64212,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://twsexpresscourier.it/traccia-spedizione/",
     "trackingUrlTemplate": "https://www.mytws.it/tracking-status;ldv={trackingNumber}",
     "trackingSearchUrl": "https://twsexpresscourier.it/traccia-spedizione/",
+    "helpUrl": "https://twsexpresscourier.it/contatti/",
     "linkRules": [
       {
         "domains": [
@@ -63332,6 +64258,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://u-envios.com/ue-tracking",
     "trackingUrlTemplate": "https://u-envios.com/ue-tracking?orden={trackingNumber}",
     "trackingSearchUrl": "https://u-envios.com/ue-tracking",
+    "helpUrl": "https://u-envios.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -63365,6 +64292,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.upost.com.ua/tracking/",
     "trackingSearchUrl": "https://www.upost.com.ua/tracking/",
+    "helpUrl": "https://www.upost.com.ua/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63391,6 +64319,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipper.ubismartparcel.com/",
     "trackingUrlTemplate": "https://shipper.ubismartparcel.com/#/ubi?trackingNos={trackingNumber}",
     "trackingSearchUrl": "https://shipper.ubismartparcel.com/#/ubi",
+    "helpUrl": "https://www.ubismartparcel.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -63426,6 +64355,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://ui.ubsend.io/track-and-trace",
     "trackingUrlTemplate": "https://ui.ubsend.io/track-and-trace?search={trackingNumber}",
     "trackingSearchUrl": "https://ui.ubsend.io/track-and-trace",
+    "helpUrl": "https://ubsend.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -63461,6 +64391,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ubx.uk.net/",
     "trackingUrlTemplate": "https://www.ubx.uk.net/tracking/?consign_note={trackingNumber}",
     "trackingSearchUrl": "https://www.ubx.uk.net/tracking/",
+    "helpUrl": "https://www.ubx.uk.net/contact-ubx/",
     "linkRules": [
       {
         "domains": [
@@ -63493,6 +64424,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://uello.com.br/consulta-do-pedido/",
     "trackingSearchUrl": "https://uello.com.br/consulta-do-pedido/",
+    "helpUrl": "https://uello.com.br/canais/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63561,6 +64493,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.ukpworldwide.com/",
     "trackingUrlTemplate": "https://www.ukpworldwide.com/tracking/?x={trackingNumber}",
     "trackingSearchUrl": "https://www.ukpworldwide.com/tracking/",
+    "helpUrl": "https://www.ukpworldwide.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -63603,6 +64536,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.umaccargo.net/track-your-box-new.html",
     "trackingUrlTemplate": "https://www.umaccargo.net/track-your-box-new.html",
     "trackingSearchUrl": "https://www.umaccargo.net/track-your-box-new.html",
+    "helpUrl": "https://www.umaccargo.net/contact-us.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63628,6 +64562,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.szlhyt.com/",
     "trackingSearchUrl": "https://www.szlhyt.com/package-inquiry",
+    "helpUrl": "https://www.szlhyt.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63649,6 +64584,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.unipost.md/",
     "trackingSearchUrl": "https://www.unipost.md/",
+    "helpUrl": "https://www.unipost.md/ru/contacts",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63704,6 +64640,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://cui.united.az/tracking-code",
     "trackingUrlTemplate": "https://cui.united.az/tracking-code?trackingCode={trackingNumber}",
     "trackingSearchUrl": "https://cui.united.az/tracking-code",
+    "helpUrl": "https://cui.united.az/contact",
     "linkRules": [
       {
         "domains": [
@@ -63773,6 +64710,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.upn.co.uk/",
     "trackingSearchUrl": "https://www.upn.co.uk/",
+    "helpUrl": "https://www.upn.co.uk/get-in-touch",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63793,6 +64731,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.unitedcouriers.biz/tracking",
     "trackingSearchUrl": "https://www.unitedcouriers.biz/tracking",
+    "helpUrl": "https://unitedcouriers.biz/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -63854,6 +64793,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.uofexp.com/",
     "trackingUrlTemplate": "https://www.uofexp.com/search_order.aspx?trackNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.uofexp.com/search_order.aspx",
+    "helpUrl": "https://www.uofexp.com/company_show.aspx?id=194",
     "linkRules": [
       {
         "domains": [
@@ -63887,6 +64827,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.uparcel.sg/track",
     "trackingUrlTemplate": "https://www.uparcel.sg/track?tracking-code={trackingNumber}",
     "trackingSearchUrl": "https://www.uparcel.sg/track",
+    "helpUrl": "https://www.uparcel.sg/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -63920,6 +64861,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://upaya.com.np/track/",
     "trackingUrlTemplate": "https://upaya.com.np/track/?tracking={trackingNumber}",
     "trackingSearchUrl": "https://upaya.com.np/track/",
+    "helpUrl": "https://upaya.com.np/contact/",
     "linkRules": [
       {
         "domains": [
@@ -63961,6 +64903,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.uralsvip.com/",
     "trackingSearchUrl": "https://tmsplus.ilinexpress.com/#/track",
+    "helpUrl": "https://www.uralsvip.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -63986,6 +64929,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.urbano.com.pe/tracking/",
     "trackingUrlTemplate": "https://www.urbano.com.pe/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.urbano.com.pe/tracking/",
+    "helpUrl": "https://www.urbano.com.pe/contactanos",
     "linkRules": [
       {
         "domains": [
@@ -64095,6 +65039,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.us-cargo.com/track-your-shipment",
     "trackingUrlTemplate": "https://www.us-cargo.com/track-your-shipment?checksrch=prodnumber&prodnumber={trackingNumber}",
     "trackingSearchUrl": "https://www.us-cargo.com/track-your-shipment",
+    "helpUrl": "https://www.us-cargo.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -64132,6 +65077,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.usasd.com/",
     "trackingUrlTemplate": "https://www.usasd.com/index.php?c=index&f=search&sn={trackingNumber}",
     "trackingSearchUrl": "https://www.usasd.com/",
+    "helpUrl": "https://www.usasd.com/index.php?id=contactus",
     "linkRules": [
       {
         "domains": [
@@ -64220,6 +65166,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://utec.ua/",
     "trackingUrlTemplate": "https://utec.ua/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://utec.ua/",
+    "helpUrl": "https://utec.ua/kontakty",
     "linkRules": [
       {
         "domains": [
@@ -64333,6 +65280,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://vxpress.in/",
     "trackingSearchUrl": "https://vxpress.in/track-result-new/",
+    "helpUrl": "https://vxpress.in/customer-care/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -64391,6 +65339,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://value.co.za/",
     "trackingUrlTemplate": "https://value.co.za/track/index.php?wb={trackingNumber}",
     "trackingSearchUrl": "https://value.co.za/track/search.php",
+    "helpUrl": "https://value.co.za/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -64426,6 +65375,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.valueway.net/main.html",
     "trackingSearchUrl": "https://www.valueway.net/main.html",
+    "helpUrl": "https://www.valueway.net/Contact/index.html#office",
     "linkRules": [],
     "detectionRules": []
   },
@@ -64448,6 +65398,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://varubudse.opter.cloud/tt",
     "trackingUrlTemplate": "https://varubudse.opter.cloud/tt?keyword={trackingNumber}",
     "trackingSearchUrl": "https://varubudse.opter.cloud/tt",
+    "helpUrl": "https://varubud.se/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -64507,6 +65458,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.vaspexpresso.pt/pt/geral/track-and-trace/",
     "trackingUrlTemplate": "https://www.vaspexpresso.pt/pt/geral/track-and-trace/?search={trackingNumber}",
     "trackingSearchUrl": "https://www.vaspexpresso.pt/pt/geral/track-and-trace/",
+    "helpUrl": "https://www.vaspexpresso.pt/pt/particulares/ajuda/",
     "linkRules": [
       {
         "domains": [
@@ -64621,6 +65573,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.veloblitz.ch/",
     "trackingSearchUrl": "https://veloblitz.kuz.ch/",
+    "helpUrl": "https://www.veloblitz.ch/faq",
     "linkRules": [],
     "detectionRules": []
   },
@@ -64668,6 +65621,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://velexp.com/home-tracking",
     "trackingUrlTemplate": "https://velexp.com/home-tracking/{trackingNumber}?type=awb",
     "trackingSearchUrl": "https://velexp.com/home-tracking",
+    "helpUrl": "https://velexp.com/contact-us",
     "linkRules": [
       {
         "domains": [
@@ -64738,6 +65692,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://login.smartsys.no/smartTrackAndTrace/PublicTrackAndTrace",
     "trackingUrlTemplate": "https://login.smartsys.no/smartTrackAndTrace/PublicTrackAndTrace?TenantGUID=ad936210-03b6-4ca7-9776-a491c03d4ba6&SearchFor={trackingNumber}",
     "trackingSearchUrl": "https://login.smartsys.no/smartTrackAndTrace/PublicTrackAndTrace?TenantGUID=ad936210-03b6-4ca7-9776-a491c03d4ba6",
+    "helpUrl": "https://www.veoy.no/kontakt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -64780,6 +65735,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://vestovoi.ru/monitoring_dostavki/",
     "trackingSearchUrl": "https://vestovoi.ru/monitoring_dostavki/",
+    "helpUrl": "https://vestovoi.ru/kontakti/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -64838,6 +65794,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://cliente.viapajucara.com.br/rastrear",
     "trackingSearchUrl": "https://cliente.viapajucara.com.br/rastrear",
+    "helpUrl": "https://www.viapajucara.com.br/fale-conosco/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -64861,6 +65818,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.viadireta.pt/pt/tracking",
     "trackingUrlTemplate": "https://www.viadireta.pt/pt/tracking?codigo={trackingNumber}",
     "trackingSearchUrl": "https://www.viadireta.pt/pt/tracking",
+    "helpUrl": "https://www.viadireta.pt/pt/contactos",
     "linkRules": [
       {
         "domains": [
@@ -64931,6 +65889,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://viaxpress.es/envios/",
     "trackingSearchUrl": "https://viaxpress.es/envios/",
+    "helpUrl": "https://viaxpressteam.freshdesk.com/support/tickets/new",
     "linkRules": [],
     "detectionRules": []
   },
@@ -64953,6 +65912,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.vichareloginext.com/track-shipment",
     "trackingSearchUrl": "https://www.vichareloginext.com/track-shipment",
+    "helpUrl": "https://www.vichareloginext.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -65008,6 +65968,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://vietanexpress.com/tracking-2",
     "trackingUrlTemplate": "https://vietanexpress.com/tracking-2?tracking_num={trackingNumber}",
     "trackingSearchUrl": "https://vietanexpress.com/tracking-2",
+    "helpUrl": "https://vietanexpress.com/ho-tro-khach-hang",
     "linkRules": [
       {
         "domains": [
@@ -65244,6 +66205,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.vnlin.com/",
     "trackingSearchUrl": "https://www.vnlin.com/trackIndex.html",
+    "helpUrl": "https://www.vnlin.com/contact-109-1.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -65297,6 +66259,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
     "trackingUrlTemplate": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
     "trackingSearchUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://cms.volaris.com/es/informacion-util/carga-y-mensajeria/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -65359,6 +66322,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.vrlgroup.in/Tracking/TrackShipment",
     "trackingSearchUrl": "https://www.vrlgroup.in/Tracking/TrackShipment",
+    "helpUrl": "https://www.vrlgroup.in/ContactUs",
     "linkRules": [
       {
         "domains": [
@@ -65415,6 +66379,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.vtfe.com.au/",
     "trackingUrlTemplate": "https://portal.vtfe.com.au/Track/VTFE/{trackingNumber}",
     "trackingSearchUrl": "https://www.vtfe.com.au/",
+    "helpUrl": "https://www.vtfe.com.au/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -65448,6 +66413,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.wwwexpress.com.ph/track-and-trace/",
     "trackingUrlTemplate": "https://www.wwwexpress.com.ph/track-and-trace/?trackingNo={trackingNumber}",
     "trackingSearchUrl": "https://www.wwwexpress.com.ph/track-and-trace/",
+    "helpUrl": "https://www.wwwexpress.com.ph/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -65580,6 +66546,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://tracking.walkers-transport.co.uk/",
     "trackingSearchUrl": "https://tracking.walkers-transport.co.uk/",
+    "helpUrl": "https://walkers-transport.co.uk/contact-us/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -65606,6 +66573,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.walleniuswilhelmsen.com/track-trace",
     "trackingUrlTemplate": "https://www.walleniuswilhelmsen.com/track-trace",
     "trackingSearchUrl": "https://www.walleniuswilhelmsen.com/track-trace",
+    "helpUrl": "https://www.walleniuswilhelmsen.com/ocean-support/customer-service",
     "linkRules": [],
     "detectionRules": []
   },
@@ -65625,6 +66593,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
     "trackingSearchUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "helpUrl": "https://www.wanhai.com/views/faq/Faq.xhtml?file_num=67064&parent_id=67334&top_file_num=64735",
     "linkRules": [],
     "detectionRules": []
   },
@@ -65680,6 +66649,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.wjdrop.com/tracking/index",
     "trackingUrlTemplate": "https://track.wjdrop.com/tracking/index?nums={trackingNumber}",
     "trackingSearchUrl": "https://track.wjdrop.com/tracking/index",
+    "helpUrl": "https://wjdrop.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -65713,6 +66683,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.wardtlc.com/",
     "trackingUrlTemplate": "https://wardtlctools.com/wardtrucking/traceshipment/create?pro={trackingNumber}",
     "trackingSearchUrl": "https://wardtlctools.com/wardtrucking/traceshipment/create",
+    "helpUrl": "https://www.wardtlc.com/contact-ward-tlc/",
     "linkRules": [
       {
         "domains": [
@@ -65749,6 +66720,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://wassel.ps/en/tracking",
     "trackingUrlTemplate": "https://wassel.ps/en/tracking?awb={trackingNumber}",
     "trackingSearchUrl": "https://wassel.ps/en/tracking",
+    "helpUrl": "https://wassel.ps/en/contact",
     "linkRules": [
       {
         "domains": [
@@ -65785,6 +66757,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.weworldexpress.com/",
     "trackingSearchUrl": "https://www.weworldexpress.com/wwe/track",
+    "helpUrl": "https://www.weworldexpress.com/contact.html",
     "linkRules": [],
     "detectionRules": [
       {
@@ -65811,6 +66784,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tracking.webrinq.com/",
     "trackingUrlTemplate": "https://tracking.webrinq.com/{trackingNumber}",
     "trackingSearchUrl": "https://tracking.webrinq.com/",
+    "helpUrl": "https://webrinq.com/faq/",
     "linkRules": [
       {
         "domains": [
@@ -65945,6 +66919,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.wepost.com.my/tracking",
     "trackingUrlTemplate": "https://www.wepost.com.my/tracking?nums={trackingNumber}",
     "trackingSearchUrl": "https://www.wepost.com.my/tracking",
+    "helpUrl": "https://www.wepost.com.my/contact",
     "linkRules": [
       {
         "domains": [
@@ -65977,6 +66952,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.wps.com.gr/trackshipment",
     "trackingSearchUrl": "https://www.wps.com.gr/trackshipment",
+    "helpUrl": "https://www.wps.com.gr/%CE%B5%CF%80%CE%B9%CE%BA%CE%BF%CE%B9%CE%BD%CF%89%CE%BD%CE%AF%CE%B1",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66007,6 +66983,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.westparcel.com/",
     "trackingUrlTemplate": "https://track.westparcel.com/?trackNumber={trackingNumber}",
     "trackingSearchUrl": "https://track.westparcel.com/",
+    "helpUrl": "https://westparcel.com/contacts",
     "linkRules": [
       {
         "domains": [
@@ -66045,6 +67022,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.wpglb.com/",
     "trackingSearchUrl": "https://www.wpglb.com/",
+    "helpUrl": "https://www.wpglb.com/about/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66067,6 +67045,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
     "trackingUrlTemplate": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
     "trackingSearchUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://www.westjetcargo.com/en-ca/help-center/contact-us",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66184,6 +67163,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.whizdelivery.ca/track",
     "trackingUrlTemplate": "https://track.whizdelivery.ca/track/{trackingNumber}",
     "trackingSearchUrl": "https://track.whizdelivery.ca/track",
+    "helpUrl": "https://www.whizdelivery.ca/contact",
     "linkRules": [
       {
         "domains": [
@@ -66240,6 +67220,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.widect.com/shipment-tracking",
     "trackingSearchUrl": "https://www.widect.com/shipment-tracking",
+    "helpUrl": "https://www.widect.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66269,6 +67250,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://wiio.com/",
     "trackingSearchUrl": "https://wiio.com/",
+    "helpUrl": "https://wiio.com/contact-wiio/",
     "linkRules": [
       {
         "domains": [
@@ -66307,6 +67289,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://winionlogistics.com/home.html",
     "trackingUrlTemplate": "https://winionlogistics.com/home.html?num={trackingNumber}",
     "trackingSearchUrl": "https://winionlogistics.com/home.html",
+    "helpUrl": "https://winionlogistics.com/pages/cs/counsel.html",
     "linkRules": [
       {
         "domains": [
@@ -66359,6 +67342,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://track.winit.com/tracking/Mobile",
     "trackingUrlTemplate": "https://track.winit.com/tracking/Mobile/result?trackingNos={trackingNumber}",
     "trackingSearchUrl": "https://track.winit.com/tracking/Mobile",
+    "helpUrl": "https://www.winit.com/html/contact_us.html",
     "linkRules": [
       {
         "domains": [
@@ -66419,6 +67403,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.shwise.cn/home/",
     "trackingSearchUrl": "https://www.shwise.cn/home/",
+    "helpUrl": "https://www.shwise.cn/home/contact.html",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66445,6 +67430,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://shipwizmo.com/",
     "trackingUrlTemplate": "https://shipwizmo.com/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://shipwizmo.com/",
+    "helpUrl": "https://shipwizmo.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -66503,6 +67489,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.wmg-group.com/",
     "trackingSearchUrl": "https://www.wmg-group.com/",
+    "helpUrl": "https://www.wmg-group.com/contact",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66527,6 +67514,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://woolii.com/track",
     "trackingUrlTemplate": "https://woolii.com/track/{trackingNumber}",
     "trackingSearchUrl": "https://woolii.com/track",
+    "helpUrl": "https://woolii.com/contact",
     "linkRules": [
       {
         "domains": [
@@ -66556,6 +67544,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
     "trackingSearchUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "helpUrl": "https://www.worldcourier.com/contact-us-home",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66578,6 +67567,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.worldpackage.co.uk/",
     "trackingUrlTemplate": "https://wpl-uk.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
     "trackingSearchUrl": "https://wpl-uk.couriernavigator-secure.com/tracking.html",
+    "helpUrl": "https://www.worldpackage.co.uk/contact/",
     "linkRules": [
       {
         "domains": [
@@ -66612,6 +67602,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.wpglogis.com/tracking/",
     "trackingUrlTemplate": "https://www.wpglogis.com/tracking/?ext_trackingNumber={trackingNumber}",
     "trackingSearchUrl": "https://www.wpglogis.com/tracking/",
+    "helpUrl": "https://www.wpglogis.com/support/",
     "linkRules": [
       {
         "domains": [
@@ -66672,6 +67663,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://wyngs-my.com/trackingDetails",
     "trackingSearchUrl": "https://wyngs-my.com/trackingDetails",
+    "helpUrl": "https://wyngs-my.com/support",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66693,6 +67685,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.x-express.ba/korisnicki-panel/pracenje-posiljke",
     "trackingSearchUrl": "https://www.x-express.ba/korisnicki-panel/pracenje-posiljke",
+    "helpUrl": "https://www.x-express.ba/x-express/kontakt",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66736,6 +67729,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.xtrac-express.com/tracking",
     "trackingSearchUrl": "https://www.xtrac-express.com/tracking",
+    "helpUrl": "https://www.xtrac-express.com/contact",
     "linkRules": [],
     "detectionRules": [
       {
@@ -66783,6 +67777,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://x-cargo.co/",
     "trackingSearchUrl": "https://x-cargo.co/",
+    "helpUrl": "https://x-cargo.co/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66805,6 +67800,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.xdexpress.com.au/",
     "trackingSearchUrl": "https://www.xdexpress.com.au/Express.aspx",
+    "helpUrl": "https://www.xdexpress.com.au/contact.aspx",
     "linkRules": [],
     "detectionRules": []
   },
@@ -66935,6 +67931,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.xgsi.com/",
     "trackingUrlTemplate": "https://www.xgsi.com/#track-shipment={trackingNumber}",
     "trackingSearchUrl": "https://www.xgsi.com/",
+    "helpUrl": "https://www.xgsi.com/about-xgs/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -67060,6 +68057,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.xingyunyi.com/",
     "trackingUrlTemplate": "https://www.xingyunyi.com/tracking?nums={trackingNumber}",
     "trackingSearchUrl": "https://www.xingyunyi.com/tracking",
+    "helpUrl": "https://www.xingyunyi.com/contactus",
     "linkRules": [
       {
         "domains": [
@@ -67250,6 +68248,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.xpcourier.gr/track",
     "trackingUrlTemplate": "https://www.xpcourier.gr/track?identifier={trackingNumber}",
     "trackingSearchUrl": "https://www.xpcourier.gr/track",
+    "helpUrl": "https://www.xpcourier.gr/contact",
     "linkRules": [
       {
         "domains": [
@@ -67296,6 +68295,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.xpedist.ro/awb",
     "trackingUrlTemplate": "https://www.xpedist.ro/awb?awb={trackingNumber}",
     "trackingSearchUrl": "https://www.xpedist.ro/awb",
+    "helpUrl": "https://www.xpedist.ro/contact",
     "linkRules": [
       {
         "domains": [
@@ -67406,6 +68406,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://xpresscourierlink.com/tracking/",
     "trackingUrlTemplate": "https://xpresscourierlink.com/tracking/?txtstatus=International&search={trackingNumber}",
     "trackingSearchUrl": "https://xpresscourierlink.com/tracking/",
+    "helpUrl": "https://xpresscourierlink.com/contact-us/",
     "linkRules": [
       {
         "domains": [
@@ -67439,6 +68440,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://xfm.com.au/xpress-track/",
     "trackingUrlTemplate": "https://xfm.com.au/xpress-track/?consignmentNumber={trackingNumber}",
     "trackingSearchUrl": "https://xfm.com.au/xpress-track/",
+    "helpUrl": "https://xfm.com.au/get-started-with-us/",
     "linkRules": [
       {
         "domains": [
@@ -67467,6 +68469,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.xpress-logistics.lu/suivi-colis/",
     "trackingSearchUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "helpUrl": "https://www.xpress-logistics.lu/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -67531,6 +68534,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.xpressen.dk/",
     "trackingUrlTemplate": "https://track.xpressen.dk/Tracking?t={trackingNumber}",
     "trackingSearchUrl": "https://track.xpressen.dk/Tracking",
+    "helpUrl": "https://www.xpressen.dk/kontakt/",
     "linkRules": [
       {
         "domains": [
@@ -67626,6 +68630,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.816kf.com/",
     "trackingUrlTemplate": "https://816kf.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
     "trackingSearchUrl": "https://www.816kf.com/",
+    "helpUrl": "https://www.816kf.com/comtact.html",
     "linkRules": [
       {
         "domains": [
@@ -67716,6 +68721,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.yamatoamerica.com/tracking/",
     "trackingUrlTemplate": "https://www.yamatoamerica.com/tracking/?slipnumber={trackingNumber}",
     "trackingSearchUrl": "https://www.yamatoamerica.com/tracking/",
+    "helpUrl": "https://www.yamatoamerica.com/contact/",
     "linkRules": [
       {
         "domains": [
@@ -67784,6 +68790,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
     "trackingSearchUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
+    "helpUrl": "https://www.yangming.com/en/contact/headquarter",
     "linkRules": [
       {
         "domains": [
@@ -67917,6 +68924,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.yfhex.com/",
     "trackingUrlTemplate": "https://toms.yfhex.com:6055/track_query_c.aspx?track_number={trackingNumber}",
     "trackingSearchUrl": "https://www.yfhex.com/",
+    "helpUrl": "https://www.yfhex.com/tsjy/",
     "linkRules": [
       {
         "domains": [
@@ -67952,6 +68960,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.yha56.com/",
     "trackingUrlTemplate": "https://www.yha56.com/page/indexDetail/indexDetail2.html?manifestId={trackingNumber}",
     "trackingSearchUrl": "https://www.yha56.com/",
+    "helpUrl": "https://www.yha56.com/page/aboutYha/aboutYha6.html",
     "linkRules": [
       {
         "domains": [
@@ -68059,6 +69068,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.yingtu56.com/",
     "trackingUrlTemplate": "https://tms.yingtu56.com/trackIndex.htm?documentCode={trackingNumber}",
     "trackingSearchUrl": "https://tms.yingtu56.com/trackIndex.htm",
+    "helpUrl": "https://www.yingtu56.com/lianxifangshi/",
     "linkRules": [
       {
         "domains": [
@@ -68116,6 +69126,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://yolkargo.com.tr/",
     "trackingUrlTemplate": "https://yolkargo.com.tr/kargo.php?q={trackingNumber}",
     "trackingSearchUrl": "https://yolkargo.com.tr/",
+    "helpUrl": "https://yolkargo.com.tr/iletisim",
     "linkRules": [
       {
         "domains": [
@@ -68323,6 +69334,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.yue777.com/",
     "trackingSearchUrl": "https://www.yue777.com/genzong.php",
+    "helpUrl": "https://www.yue777.com/contact.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -68356,6 +69368,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.yxlg.com/track.html",
     "trackingUrlTemplate": "https://www.yxlg.com/track.html?no={trackingNumber}",
     "trackingSearchUrl": "https://www.yxlg.com/track.html",
+    "helpUrl": "https://www.yxlg.com/contact.html",
     "linkRules": [
       {
         "domains": [
@@ -68598,6 +69611,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://zajel.com/track",
     "trackingUrlTemplate": "https://zajel.com/trackresults?q={trackingNumber}&type=awb",
     "trackingSearchUrl": "https://zajel.com/track",
+    "helpUrl": "https://zajel.com/support",
     "linkRules": [
       {
         "domains": [
@@ -68751,6 +69765,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.zes-express.com/",
     "trackingSearchUrl": "https://www.zes-express.com/",
+    "helpUrl": "https://www.zes-express.com/language/en/contact-us-2/",
     "linkRules": [],
     "detectionRules": [
       {
@@ -68837,6 +69852,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.tzg-infocenter.com/easytrack/",
     "trackingSearchUrl": "https://www.tzg-infocenter.com/easytrack/",
+    "helpUrl": "https://www.zieglergroup.com/contact/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -68857,6 +69873,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.zim.com/tools/track-a-shipment",
     "trackingSearchUrl": "https://www.zim.com/tools/track-a-shipment",
+    "helpUrl": "https://www.zim.com/contact-us/customer-service-form",
     "linkRules": [
       {
         "domains": [
@@ -68913,6 +69930,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://zipasgo.com/lt/siuntimas",
     "trackingUrlTemplate": "https://zipasgo.com/lt/siuntimas?tid={trackingNumber}",
     "trackingSearchUrl": "https://zipasgo.com/lt/siuntimas",
+    "helpUrl": "https://zipasgo.com/lt/pagalba",
     "linkRules": [
       {
         "domains": [
@@ -69213,6 +70231,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://connect.zufall.de/Track/",
     "trackingSearchUrl": "https://connect.zufall.de/Track/",
+    "helpUrl": "https://www.zufall.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
   }

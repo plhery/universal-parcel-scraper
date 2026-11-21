@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://adex.al/gjurmo/",
+    "helpUrl": "https://adex.al/kontakto/",
     "canaryUrl": "https://adex.al/gjurmo/",
     "shows": [],
     "scraped": [],

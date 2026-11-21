@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://intigo.net/?nid={trackingNumber}",
     "searchUrl": "https://intigo.net/",
+    "helpUrl": "https://intigo.net/contact/",
     "canaryUrl": "https://intigo.net/",
     "shows": [],
     "scraped": [],

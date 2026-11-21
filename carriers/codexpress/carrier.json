@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://cbd-tracking.locate2u.com/",
+    "helpUrl": "https://www.codexpress.com.au/#/support",
     "canaryUrl": "https://cbd-tracking.locate2u.com/",
     "shows": [],
     "scraped": [],

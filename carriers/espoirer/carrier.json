@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.console.espoirer.com/express-tracking",
     "searchUrl": "https://www.console.espoirer.com/express-tracking",
+    "helpUrl": "https://espoirer.com/contact/index.html",
     "canaryUrl": "https://www.console.espoirer.com/express-tracking",
     "shows": [],
     "scraped": [],

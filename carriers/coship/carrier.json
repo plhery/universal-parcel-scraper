@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.coship.ca/tracking/?no={trackingNumber}",
     "searchUrl": "https://www.coship.ca/tracking/",
+    "helpUrl": "https://www.coship.ca/contact/",
     "canaryUrl": "https://www.coship.ca/tracking/",
     "shows": [],
     "scraped": [],

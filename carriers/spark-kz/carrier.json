@@ -31,6 +31,7 @@
   ],
   "portal": {
     "searchUrl": "https://spark.kz/",
+    "helpUrl": "https://spark.kz/en/contacts",
     "canaryUrl": "https://spark.kz/",
     "shows": [
       "status",

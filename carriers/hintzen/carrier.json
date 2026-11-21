@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.hintzen.de/orderx/aordata.aspx",
+    "helpUrl": "https://www.hintzen.de/kontakt/",
     "canaryUrl": "https://tracking.hintzen.de/orderx/aordata.aspx",
     "shows": [],
     "scraped": [],

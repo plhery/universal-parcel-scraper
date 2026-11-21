@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.shopiniworld.com/track-shipments",
+    "helpUrl": "https://www.shopiniworld.com/contact-us",
     "canaryUrl": "https://www.shopiniworld.com/track-shipments",
     "shows": [],
     "scraped": [],

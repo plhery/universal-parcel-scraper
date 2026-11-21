@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://aj-ex.com/shipment-status/{trackingNumber}",
     "searchUrl": "https://aj-ex.com/shipment-tracking",
+    "helpUrl": "https://aj-ex.com/help-and-support/contact-us-now",
     "canaryUrl": "https://aj-ex.com/shipment-tracking",
     "shows": [
       "status",

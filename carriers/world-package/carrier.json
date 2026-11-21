@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://wpl-uk.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
     "searchUrl": "https://wpl-uk.couriernavigator-secure.com/tracking.html",
+    "helpUrl": "https://www.worldpackage.co.uk/contact/",
     "canaryUrl": "https://www.worldpackage.co.uk/",
     "shows": [],
     "scraped": [],

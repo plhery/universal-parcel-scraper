@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://vestovoi.ru/monitoring_dostavki/",
+    "helpUrl": "https://vestovoi.ru/kontakti/",
     "canaryUrl": "https://vestovoi.ru/monitoring_dostavki/",
     "shows": [],
     "scraped": [],

@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://track.westparcel.com/?trackNumber={trackingNumber}",
     "searchUrl": "https://track.westparcel.com/",
+    "helpUrl": "https://westparcel.com/contacts",
     "canaryUrl": "https://track.westparcel.com/",
     "shows": [],
     "scraped": [],

@@ -35,6 +35,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.bestovernite.com/shipment-tracking/",
+    "helpUrl": "https://www.bestovernite.com/contact-us/",
     "canaryUrl": "https://www.bestovernite.com/shipment-tracking/",
     "shows": [
       "status",

@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://ambroexpress.pl/sledzenie-przesylek#{trackingNumber}",
     "searchUrl": "https://ambroexpress.pl/sledzenie-przesylek",
+    "helpUrl": "https://ambroexpress.pl/kontakt",
     "canaryUrl": "https://ambroexpress.pl/",
     "shows": [
       "status",

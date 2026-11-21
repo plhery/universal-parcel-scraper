@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.urbano.com.pe/tracking/{trackingNumber}",
     "searchUrl": "https://www.urbano.com.pe/tracking/",
+    "helpUrl": "https://www.urbano.com.pe/contactanos",
     "canaryUrl": "https://www.urbano.com.pe/tracking/",
     "shows": [
       "status",

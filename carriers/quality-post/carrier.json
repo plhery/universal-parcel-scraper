@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://wstracking.qualitypost.com.mx/portal_seguimiento?info={trackingNumber}",
     "searchUrl": "https://www.qualitypost.com.mx/",
+    "helpUrl": "https://www.qualitypost.com.mx/contactanos",
     "canaryUrl": "https://www.qualitypost.com.mx/",
     "shows": [],
     "scraped": [],

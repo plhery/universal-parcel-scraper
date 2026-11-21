@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.servex.com.tr/tracking?awbNumber={trackingNumber}",
     "searchUrl": "https://www.servex.com.tr/tracking",
+    "helpUrl": "https://www.servex.com.tr/servex-support",
     "canaryUrl": "https://www.servex.com.tr/tracking",
     "shows": [],
     "scraped": [],

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://bigpost.com.au/tracking/",
+    "helpUrl": "https://bigpost.com.au/contact-us/",
     "canaryUrl": "https://bigpost.com.au/tracking/",
     "shows": [],
     "scraped": [],

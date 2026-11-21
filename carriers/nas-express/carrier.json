@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://online.nasxpress.com/track/",
+    "helpUrl": "https://www.nasxpress.com/contact.php",
     "canaryUrl": "https://nasxpress.com/",
     "shows": [],
     "scraped": [],

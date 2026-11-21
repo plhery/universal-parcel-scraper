@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://tforce-solutions.com/quick-tracking/?tracking={trackingNumber}",
     "searchUrl": "https://tforce-solutions.com/",
+    "helpUrl": "https://tforce-solutions.com/contact-us/",
     "canaryUrl": "https://tforce-solutions.com/",
     "shows": [],
     "scraped": [],

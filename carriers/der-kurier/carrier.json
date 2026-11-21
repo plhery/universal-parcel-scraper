@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://derkurier.de/sendungsverfolgung/?d-pt-search={trackingNumber}",
     "searchUrl": "https://derkurier.de/sendungsverfolgung/",
+    "helpUrl": "https://derkurier.de/kontakt/",
     "canaryUrl": "https://derkurier.de/sendungsverfolgung/",
     "shows": [],
     "scraped": [],

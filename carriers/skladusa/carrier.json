@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://skladusa.com/en/tracking/{trackingNumber}/",
     "searchUrl": "https://skladusa.com/en/tracking/",
+    "helpUrl": "https://skladusa.com/en/contacts/",
     "canaryUrl": "https://skladusa.com/en/tracking/",
     "shows": [
       "status",

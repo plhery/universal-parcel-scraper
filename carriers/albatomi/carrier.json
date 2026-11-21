@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.albatomi.ro/",
+    "helpUrl": "https://www.albatomi.ro/contact",
     "canaryUrl": "https://www.albatomi.ro/",
     "shows": [],
     "scraped": [],

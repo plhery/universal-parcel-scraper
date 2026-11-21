@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.okaken.co.jp/refer/",
+    "helpUrl": "https://www.okaken.co.jp/inquiry/",
     "canaryUrl": "https://www.okaken.co.jp/refer/",
     "shows": [],
     "scraped": [],

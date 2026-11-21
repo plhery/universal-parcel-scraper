@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ctsgroup.nl/track-trace/",
+    "helpUrl": "https://www.ctsgroup.nl/contact/",
     "canaryUrl": "https://www.ctsgroup.nl/track-trace/",
     "shows": [],
     "scraped": [],

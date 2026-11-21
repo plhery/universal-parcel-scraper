@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://cp.hartmann-international.de/Track",
+    "helpUrl": "https://www.hartmann-international.de/kontakt/",
     "canaryUrl": "https://cp.hartmann-international.de/Track",
     "shows": [],
     "scraped": [],

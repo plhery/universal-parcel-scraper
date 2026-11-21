@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://track.northline.com.au/status/{trackingNumber}",
     "searchUrl": "https://track.northline.com.au/",
+    "helpUrl": "https://www.northline.com.au/contact-us/",
     "canaryUrl": "https://track.northline.com.au/",
     "shows": [
       "status",

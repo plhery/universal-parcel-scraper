@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tbl.com.br/RastreamentoCarga",
+    "helpUrl": "https://tbl.com.br/fale-conosco",
     "canaryUrl": "https://tbl.com.br/RastreamentoCarga",
     "shows": [],
     "scraped": [],

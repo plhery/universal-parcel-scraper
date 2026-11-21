@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.f2logistics.com/tnt/",
+    "helpUrl": "https://www.f2logistics.com/contact/",
     "canaryUrl": "https://tnt.f2logistics.com/second.php",
     "shows": [],
     "scraped": [],

@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://cptsngroen.dirextion.nl/",
+    "helpUrl": "https://tsngroen.nl/mijn-bezorging/",
     "canaryUrl": "https://cptsngroen.dirextion.nl/",
     "shows": [],
     "scraped": [],

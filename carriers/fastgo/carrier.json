@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.fastgo.com.au/WaybillQuery/?from=bs&bill={trackingNumber}",
     "searchUrl": "https://www.fastgo.com.au/WaybillQuery/",
+    "helpUrl": "https://www.fastgo.com.au/ContactUs/",
     "canaryUrl": "https://www.fastgo.com.au/",
     "shows": [],
     "scraped": [],

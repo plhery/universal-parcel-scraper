@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://apps.klineglobalroro.com/tracking/search?q={trackingNumber}",
     "searchUrl": "https://apps.klineglobalroro.com/tracking/search",
+    "helpUrl": "https://www.kline.co.jp/en/contact.html",
     "canaryUrl": "https://apps.klineglobalroro.com/tracking/search",
     "shows": [
       "status",

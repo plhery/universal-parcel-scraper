@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.junfengfast.com/tracking.html?no={trackingNumber}",
     "searchUrl": "https://www.junfengfast.com/tracking.html",
+    "helpUrl": "https://www.junfengfast.com/contact-us.html",
     "canaryUrl": "https://www.junfengfast.com/tracking.html",
     "shows": [
       "status",

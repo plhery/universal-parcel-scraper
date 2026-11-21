@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search?searchKey={trackingNumber}",
     "searchUrl": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search",
+    "helpUrl": "https://e-cargo.co.il/contact/",
     "canaryUrl": "https://e-cargo.co.il/",
     "shows": [],
     "scraped": [],

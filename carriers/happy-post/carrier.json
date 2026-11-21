@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://uk.happy-post.com/track/?id={trackingNumber}",
     "searchUrl": "https://uk.happy-post.com/track/",
+    "helpUrl": "https://happy-post.com/en/faq",
     "canaryUrl": "https://uk.happy-post.com/track/",
     "shows": [
       "status",

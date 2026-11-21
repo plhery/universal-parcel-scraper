@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://itideno.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://itideno.opter.cloud/tt",
+    "helpUrl": "https://itide.no/kontakt-oss/",
     "canaryUrl": "https://itideno.opter.cloud/tt",
     "shows": [],
     "scraped": [],

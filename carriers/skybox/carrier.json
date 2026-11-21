@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.skybox.net/TrackingInformation/IndexPublic?tracking={trackingNumber}",
     "searchUrl": "https://www.skybox.net/TrackingInformation/IndexPublic",
+    "helpUrl": "https://www.skybox.net/Contact-us",
     "canaryUrl": "https://www.skybox.net/",
     "shows": [
       "progress_rail",

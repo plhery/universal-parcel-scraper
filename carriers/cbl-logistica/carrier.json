@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://clientes.cbl-logistica.com/public/consultaenvio.aspx?id={trackingNumber}",
     "searchUrl": "https://clientes.cbl-logistica.com/public/consultaenvio.aspx",
+    "helpUrl": "https://www.cbl-logistica.com/formulario-de-contacto",
     "canaryUrl": "https://clientes.cbl-logistica.com/public/consultaenvio.aspx",
     "shows": [
       "status",

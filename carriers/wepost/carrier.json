@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.wepost.com.my/tracking?nums={trackingNumber}",
     "searchUrl": "https://www.wepost.com.my/tracking",
+    "helpUrl": "https://www.wepost.com.my/contact",
     "canaryUrl": "https://www.wepost.com.my/tracking",
     "shows": [],
     "scraped": [],

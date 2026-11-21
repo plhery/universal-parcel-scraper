@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://ctl-partner.net/CTL-Onlineplattform/Tracking/Default.aspx?snr={trackingNumber}",
     "searchUrl": "https://ctl-partner.net/CTL-Onlineplattform/Tracking/Default.aspx",
+    "helpUrl": "https://ctl-ag.de/kontakt/",
     "canaryUrl": "https://ctl-partner.net/CTL-Onlineplattform/Tracking/Default.aspx",
     "shows": [],
     "scraped": [],

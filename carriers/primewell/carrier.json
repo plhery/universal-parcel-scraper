@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.primewell.cy/OD_WEB_APP_EX/Track.aspx",
+    "helpUrl": "https://primewell.cy/epikoinonia/",
     "canaryUrl": "https://primewell.cy/",
     "shows": [],
     "scraped": [],

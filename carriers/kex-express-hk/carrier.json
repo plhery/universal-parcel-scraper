@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.kex.kln.com/en/track?track={trackingNumber}",
     "searchUrl": "https://www.kex.kln.com/en/track",
+    "helpUrl": "https://www.kex.kln.com/en/contact",
     "canaryUrl": "https://www.kex.kln.com/en/track",
     "shows": [
       "status",

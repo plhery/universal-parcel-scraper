@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://pflogistics.com.au/tracking-result?tracking={trackingNumber}",
     "searchUrl": "https://pflogistics.com.au/tracking",
+    "helpUrl": "https://pflogistics.com.au/contact",
     "canaryUrl": "https://pflogistics.com.au/",
     "shows": [
       "status",

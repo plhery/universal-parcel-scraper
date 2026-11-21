@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://clientes.esmlogistica.com/seguimiento?guia={trackingNumber}",
     "searchUrl": "https://clientes.esmlogistica.com/seguimiento",
+    "helpUrl": "https://esmlogistica.com/pqrs",
     "canaryUrl": "https://clientes.esmlogistica.com/seguimiento",
     "shows": [
       "status",

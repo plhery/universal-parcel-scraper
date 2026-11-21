@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://runnerexpress.co.il/track/?search_query={trackingNumber}",
     "searchUrl": "https://runnerexpress.co.il/track/",
+    "helpUrl": "https://runnerexpress.co.il/contact/",
     "canaryUrl": "https://runnerexpress.co.il/",
     "shows": [],
     "scraped": [],

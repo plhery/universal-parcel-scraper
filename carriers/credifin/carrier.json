@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://credifin.com.ar/seguimiento/{trackingNumber}",
     "searchUrl": "https://credifin.com.ar/seguimiento/",
+    "helpUrl": "https://credifin.com.ar/faqs",
     "canaryUrl": "https://credifin.com.ar/seguimiento/",
     "shows": [],
     "scraped": [],

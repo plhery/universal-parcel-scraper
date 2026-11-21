@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://my.crossflight.com/shipping/tracking/tracking.jsp?shipmentNumbers={trackingNumber}",
     "searchUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
+    "helpUrl": "https://www.crossflight.com/contact-us",
     "canaryUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
     "shows": [],
     "scraped": [],

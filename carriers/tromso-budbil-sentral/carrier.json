@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://tbsno.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://tbsno.opter.cloud/tt",
+    "helpUrl": "https://tbs.no/kontakt/",
     "canaryUrl": "https://tbsno.opter.cloud/tt",
     "shows": [],
     "scraped": [],

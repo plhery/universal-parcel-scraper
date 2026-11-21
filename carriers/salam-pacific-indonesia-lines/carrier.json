@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://myspil.com/",
     "searchUrl": "https://myspil.com/",
+    "helpUrl": "https://www.spil.co.id/id/kontak",
     "canaryUrl": "https://myspil.com/",
     "shows": [
       "status",

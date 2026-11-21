@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx",
+    "helpUrl": "https://www.oocl.com/eng/contactus/Pages/default.aspx",
     "canaryUrl": "https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx",
     "shows": [
       "status",

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://boxc.com/track/{trackingNumber}",
     "searchUrl": "https://boxc.com/track",
+    "helpUrl": "https://support.boxc.com/support/home",
     "canaryUrl": "https://boxc.com/track",
     "shows": [],
     "scraped": [],

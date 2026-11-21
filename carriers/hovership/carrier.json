@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.hovership.com/track/{trackingNumber}/",
     "searchUrl": "https://www.hovership.com/track/",
+    "helpUrl": "https://www.hovership.com/contact/",
     "canaryUrl": "https://www.hovership.com/track/",
     "shows": [
       "status",

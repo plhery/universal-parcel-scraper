@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://xpresscourierlink.com/tracking/?txtstatus=International&search={trackingNumber}",
     "searchUrl": "https://xpresscourierlink.com/tracking/",
+    "helpUrl": "https://xpresscourierlink.com/contact-us/",
     "canaryUrl": "https://xpresscourierlink.com/tracking/",
     "shows": [],
     "scraped": [],

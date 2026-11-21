@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://iel.co.th/tracking/?trackingNo={trackingNumber}",
     "searchUrl": "https://iel.co.th/tracking/",
+    "helpUrl": "https://iel.co.th/contact-us/",
     "canaryUrl": "https://iel.co.th/tracking/",
     "shows": [],
     "scraped": [],

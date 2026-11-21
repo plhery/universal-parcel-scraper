@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://movin.portal.shipsy.io/track/result?searchBy=referenceNumber&refNum={trackingNumber}",
     "searchUrl": "https://www.movin.in/shipment/track",
+    "helpUrl": "https://www.movin.in/contact-us",
     "canaryUrl": "https://www.movin.in/shipment/track",
     "shows": [],
     "scraped": [],

@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://yolkargo.com.tr/kargo.php?q={trackingNumber}",
     "searchUrl": "https://yolkargo.com.tr/",
+    "helpUrl": "https://yolkargo.com.tr/iletisim",
     "canaryUrl": "https://yolkargo.com.tr/",
     "shows": [
       "status",

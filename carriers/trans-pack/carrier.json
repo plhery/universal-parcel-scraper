@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://partner.trans-pack.hu/csomagkovetes?id={trackingNumber}",
     "searchUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "helpUrl": "https://trans-pack.hu/kapcsolat",
     "canaryUrl": "https://partner.trans-pack.hu/csomagkovetes",
     "shows": [],
     "scraped": [],

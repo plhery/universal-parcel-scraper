@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://plataforma.mensajerosurbanos.com/ext/seguimiento-domicilios/{trackingNumber}",
     "searchUrl": "https://mensajerosurbanos.com/",
+    "helpUrl": "https://pqrs.mensajerosurbanos.com/centro-de-ayuda",
     "canaryUrl": "https://mensajerosurbanos.com/",
     "shows": [],
     "scraped": [],

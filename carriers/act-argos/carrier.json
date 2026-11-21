@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.argoscom.gr/index.php?page=55",
+    "helpUrl": "https://www.argoscom.gr/index.php?page=18",
     "canaryUrl": "https://www.argoscom.gr/",
     "shows": [],
     "scraped": [],

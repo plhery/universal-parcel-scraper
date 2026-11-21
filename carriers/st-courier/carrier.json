@@ -33,6 +33,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.stcourier.com/",
+    "helpUrl": "https://stcourier.com/corporate-office",
     "canaryUrl": "https://www.stcourier.com/",
     "shows": [
       "status",

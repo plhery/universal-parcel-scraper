@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://tracking.nklogistic.pl/?awb={trackingNumber}",
     "searchUrl": "https://tracking.nklogistic.pl/",
+    "helpUrl": "https://tracking.nklogistic.pl/contact",
     "canaryUrl": "https://tracking.nklogistic.pl/",
     "shows": [],
     "scraped": [],

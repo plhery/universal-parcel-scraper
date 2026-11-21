@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.transexpress.lk/tracking",
+    "helpUrl": "https://transexpress.lk/about-us/our-company/contact/",
     "canaryUrl": "https://tracking.transexpress.lk/tracking",
     "shows": [],
     "scraped": [],

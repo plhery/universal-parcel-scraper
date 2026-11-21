@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416",
+    "helpUrl": "https://curiera.ro/contact/",
     "canaryUrl": "https://curiera.ro/",
     "shows": [],
     "scraped": [],

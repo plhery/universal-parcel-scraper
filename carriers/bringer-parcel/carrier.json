@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.bringerparcel.com/tracking/{trackingNumber}",
     "searchUrl": "https://www.bringerparcel.com/tracking",
+    "helpUrl": "https://www.bringerparcel.com/help",
     "canaryUrl": "https://www.bringerparcel.com/tracking",
     "shows": [
       "status",

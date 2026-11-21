@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.unipost.md/",
+    "helpUrl": "https://www.unipost.md/ru/contacts",
     "canaryUrl": "https://www.unipost.md/",
     "shows": [],
     "scraped": [],

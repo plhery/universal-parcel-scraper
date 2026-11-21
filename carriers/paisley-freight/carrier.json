@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.paisleyfreight.com/tracking",
+    "helpUrl": "https://www.paisleyfreight.com/contact-us",
     "canaryUrl": "https://www.paisleyfreight.com/tracking",
     "shows": [],
     "scraped": [],

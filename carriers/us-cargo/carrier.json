@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.us-cargo.com/track-your-shipment?checksrch=prodnumber&prodnumber={trackingNumber}",
     "searchUrl": "https://www.us-cargo.com/track-your-shipment",
+    "helpUrl": "https://www.us-cargo.com/contact/",
     "canaryUrl": "https://www.us-cargo.com/track-your-shipment",
     "shows": [],
     "scraped": [],

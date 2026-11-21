@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://run10.kexpress.co.il/RunCom.Server/www/pub/pub_random_form.htm",
+    "helpUrl": "https://kexpress.co.il/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8/",
     "canaryUrl": "https://run10.kexpress.co.il/RunCom.Server/www/pub/pub_random_form.htm",
     "shows": [],
     "scraped": [],

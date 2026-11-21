@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.intex-paketdienst.de/sendungsstatus/index.php?sdnr={trackingNumber}&mid=1",
     "searchUrl": "https://www.intex-paketdienst.de/sendungsstatus/index.php",
+    "helpUrl": "https://www.intex-paketdienst.de/websitewp/kontakt/",
     "canaryUrl": "https://www.intex-paketdienst.de/sendungsstatus/index.php",
     "shows": [
       "status",

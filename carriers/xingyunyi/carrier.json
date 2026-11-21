@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.xingyunyi.com/tracking?nums={trackingNumber}",
     "searchUrl": "https://www.xingyunyi.com/tracking",
+    "helpUrl": "https://www.xingyunyi.com/contactus",
     "canaryUrl": "https://www.xingyunyi.com/",
     "shows": [],
     "scraped": [],

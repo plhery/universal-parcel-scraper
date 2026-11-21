@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://jaskipin.co.id/tracking",
+    "helpUrl": "https://jaskipin.co.id/contact",
     "canaryUrl": "https://jaskipin.co.id/",
     "shows": [],
     "scraped": [],

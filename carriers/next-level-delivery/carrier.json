@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://nextlevel.delivery/track?awb={trackingNumber}",
     "searchUrl": "https://nextlevel.delivery/",
+    "helpUrl": "https://nextlevel.delivery/contacts",
     "canaryUrl": "https://nextlevel.delivery/",
     "shows": [
       "status",

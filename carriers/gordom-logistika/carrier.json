@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://gordomlogistika.hr/tracking/",
+    "helpUrl": "https://gordomlogistika.hr/kontakt/",
     "canaryUrl": "https://gordomlogistika.hr/tracking/",
     "shows": [],
     "scraped": [],

@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.smexpress.in/Home/track",
+    "helpUrl": "https://www.smexpress.in/home/contact",
     "canaryUrl": "https://www.smexpress.in/",
     "shows": [],
     "scraped": [],

@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://track.rxo.com/?trackingnumber={trackingNumber}",
     "searchUrl": "https://track.rxo.com/",
+    "helpUrl": "https://rxo.com/contact-us/",
     "canaryUrl": "https://rxo.com/",
     "shows": [],
     "scraped": [],

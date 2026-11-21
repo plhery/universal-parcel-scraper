@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.frontierforce.com/tracking.aspx?cn={trackingNumber}&stid=rr",
     "searchUrl": "https://www.rrexpress.com.sg/tracking.aspx",
+    "helpUrl": "https://www.rrexpress.com.sg/contacts.aspx",
     "canaryUrl": "https://www.rrexpress.com.sg/tracking.aspx",
     "shows": [],
     "scraped": [],

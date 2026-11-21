@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://track.whizdelivery.ca/track/{trackingNumber}",
     "searchUrl": "https://track.whizdelivery.ca/track",
+    "helpUrl": "https://www.whizdelivery.ca/contact",
     "canaryUrl": "https://track.whizdelivery.ca/track",
     "shows": [
       "status",

@@ -30,6 +30,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.800best.com/freight/track",
+    "helpUrl": "https://www.800best.com/best/tel",
     "canaryUrl": "https://www.800best.com/freight/track",
     "shows": [
       "status",

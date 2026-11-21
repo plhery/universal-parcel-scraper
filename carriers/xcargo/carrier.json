@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://x-cargo.co/",
+    "helpUrl": "https://x-cargo.co/contact/",
     "canaryUrl": "https://x-cargo.co/",
     "shows": [
       "status",

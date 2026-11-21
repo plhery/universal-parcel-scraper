@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://portal.suus.com/order-details/{trackingNumber}",
     "searchUrl": "https://portal.suus.com/visibility",
+    "helpUrl": "https://suus.com/pl/kontakt",
     "canaryUrl": "https://portal.suus.com/visibility",
     "shows": [
       "status",

@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://integraa.net/gestione/tracking.php",
+    "helpUrl": "https://www.integraaposta.it/supporto-integraa/",
     "canaryUrl": "https://integraa.net/gestione/tracking.php",
     "shows": [],
     "scraped": [],

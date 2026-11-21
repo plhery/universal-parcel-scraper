@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://booking.fastdrop.mt/package-tracking/{trackingNumber}",
     "searchUrl": "https://tracking.fastdrop.mt/",
+    "helpUrl": "https://fastdrop.mt/contact/",
     "canaryUrl": "https://tracking.fastdrop.mt/",
     "shows": [
       "status",

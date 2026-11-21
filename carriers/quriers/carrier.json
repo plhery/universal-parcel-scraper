@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.quriers.pl/sledz-przesylke",
+    "helpUrl": "https://www.quriers.pl/kontakt",
     "canaryUrl": "https://www.quriers.pl/sledz-przesylke",
     "shows": [],
     "scraped": [],

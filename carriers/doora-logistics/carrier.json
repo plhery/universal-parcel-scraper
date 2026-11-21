@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff&bl={trackingNumber}",
     "searchUrl": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff",
+    "helpUrl": "https://www.doora.co.kr/?p=331528ee-9145-4fc5-a4c2-5b54b585de76",
     "canaryUrl": "https://www.doora.co.kr/",
     "shows": [],
     "scraped": [],

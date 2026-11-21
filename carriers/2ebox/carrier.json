@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://2eboxcasilla.com/",
+    "helpUrl": "https://2eboxcasilla.com/contacto",
     "canaryUrl": "https://2eboxcasilla.com/",
     "shows": [],
     "scraped": [],

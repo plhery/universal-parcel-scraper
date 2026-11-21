@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://ancdelivers.com.au/track/{trackingNumber}",
     "searchUrl": "https://ancdelivers.com.au/receiving/track-your-item",
+    "helpUrl": "https://ancdelivers.com.au/help-support/contact-us",
     "canaryUrl": "https://ancdelivers.com.au/receiving/track-your-item",
     "shows": [
       "status",

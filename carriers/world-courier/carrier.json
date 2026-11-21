@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "helpUrl": "https://www.worldcourier.com/contact-us-home",
     "canaryUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
     "shows": [],
     "scraped": [],

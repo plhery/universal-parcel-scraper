@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://online.kargoturk.com.tr/tracking?har_kod={trackingNumber}",
     "searchUrl": "https://www.kargoturk.com.tr/kargo-takip",
+    "helpUrl": "https://www.kargoturk.com.tr/iletisim",
     "canaryUrl": "https://www.kargoturk.com.tr/kargo-takip",
     "shows": [
       "status",

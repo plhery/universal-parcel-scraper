@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.garudavega.com/track/{trackingNumber}",
     "searchUrl": "https://www.garudavega.com/track/",
+    "helpUrl": "https://www.garudavega.com/contact-us",
     "canaryUrl": "https://www.garudavega.com/track/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://major-express.ru/useful-services/track/?type=1&tracking-number={trackingNumber}",
     "searchUrl": "https://major-express.ru/useful-services/track/",
+    "helpUrl": "https://major-express.ru/about/contacts/",
     "canaryUrl": "https://major-express.ru/useful-services/track/",
     "shows": [],
     "scraped": [],

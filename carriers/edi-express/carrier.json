@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
+    "helpUrl": "https://www.ediexpressinc.com/contact-us",
     "canaryUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
     "shows": [],
     "scraped": [],

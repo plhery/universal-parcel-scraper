@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://icccourier.gr/voucher/search?voucher={trackingNumber}",
     "searchUrl": "https://icccourier.gr/voucher/search",
+    "helpUrl": "https://icccourier.gr/contact",
     "canaryUrl": "https://icccourier.gr/voucher/search",
     "shows": [],
     "scraped": [],

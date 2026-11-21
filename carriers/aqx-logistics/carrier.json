@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://aqxlogistics.com/track?id={trackingNumber}",
     "searchUrl": "https://aqxlogistics.com/track",
+    "helpUrl": "https://aqxlogistics.com/faqs",
     "canaryUrl": "https://aqxlogistics.com/",
     "shows": [],
     "scraped": [],

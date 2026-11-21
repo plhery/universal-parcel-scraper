@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://tracking.dd.express/?tracking_ids={trackingNumber}",
     "searchUrl": "https://tracking.dd.express/",
+    "helpUrl": "https://dd.express/contact/",
     "canaryUrl": "https://tracking.dd.express/",
     "shows": [],
     "scraped": [],

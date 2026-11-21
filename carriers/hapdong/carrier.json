@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://hdexp.co.kr/index.do",
+    "helpUrl": "https://hdexp.co.kr/cs/cs.do",
     "canaryUrl": "https://hdexp.co.kr/index.do",
     "shows": [],
     "scraped": [],

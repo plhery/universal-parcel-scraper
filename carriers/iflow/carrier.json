@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://tracking.iflow21.com/#/tracking/code/{trackingNumber}",
     "searchUrl": "https://tracking.iflow21.com/",
+    "helpUrl": "https://customer.iflow21.com/portal/es/home",
     "canaryUrl": "https://tracking.iflow21.com/",
     "shows": [],
     "scraped": [],

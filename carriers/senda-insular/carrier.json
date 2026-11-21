@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://clientes.sendainsular.com/DlWebTrackingVWE/",
+    "helpUrl": "https://sendainsular.com/contacto/",
     "canaryUrl": "https://clientes.sendainsular.com/DlWebTrackingVWE/",
     "shows": [],
     "scraped": [],

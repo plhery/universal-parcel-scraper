@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://fasttrack.com.ar/tracking/",
+    "helpUrl": "https://fasttrack.com.ar/contacto/",
     "canaryUrl": "https://fasttrack.com.ar/",
     "shows": [],
     "scraped": [],

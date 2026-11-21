@@ -26,6 +26,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.hiyes.com.tw/CargoTracking",
+    "helpUrl": "https://www.hiyes.com.tw/Contact",
     "canaryUrl": "https://www.hiyes.com.tw/",
     "shows": [],
     "scraped": [],

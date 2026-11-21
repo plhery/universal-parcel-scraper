@@ -33,6 +33,7 @@
   ],
   "portal": {
     "searchUrl": "https://amerijet.com/air-waybill-tracking/",
+    "helpUrl": "https://amerijet.com/help-and-support-center/",
     "canaryUrl": "https://amerijet.com/air-waybill-tracking/",
     "shows": [
       "status",

@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://my.schaeflein.de/Track/{trackingNumber}?language=en&culture=GB",
     "searchUrl": "https://my.schaeflein.de/Track",
+    "helpUrl": "https://www.schaeflein.de/kontakt",
     "canaryUrl": "https://my.schaeflein.de/Track",
     "shows": [],
     "scraped": [],

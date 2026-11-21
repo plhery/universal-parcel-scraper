@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://corporate.apxlog.com/trc/tracking.php?id={trackingNumber}",
     "searchUrl": "https://www.apxlog.com/index.php/en/",
+    "helpUrl": "https://www.apxlog.com/index.php/en/contact-us",
     "canaryUrl": "https://corporate.apxlog.com/trc/tracking.php",
     "shows": [],
     "scraped": [],

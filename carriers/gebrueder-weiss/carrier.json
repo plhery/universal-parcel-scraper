@@ -55,6 +55,7 @@
   ],
   "portal": {
     "searchUrl": "https://my.gw-world.com/trackntrace/-/search/",
+    "helpUrl": "https://www.gw-world.com/contact",
     "canaryUrl": "https://my.gw-world.com/trackntrace/-/search/",
     "shows": [
       "status",

@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.tmcargo.net/track.php?cn={trackingNumber}",
     "searchUrl": "https://www.tmcargo.net/track.php",
+    "helpUrl": "https://www.tmcargo.net/contact-us",
     "canaryUrl": "https://www.tmcargo.net/track.php",
     "shows": [],
     "scraped": [],

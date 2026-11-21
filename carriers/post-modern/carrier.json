@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.post-modern.de/tracking/",
+    "helpUrl": "https://www.post-modern.de/kontakt/",
     "canaryUrl": "https://paketversand.post-modern.de/index.php/tracking/search",
     "shows": [],
     "scraped": [],

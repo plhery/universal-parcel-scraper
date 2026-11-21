@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.topdelivery.ru/tracking/?order={trackingNumber}",
     "searchUrl": "https://www.topdelivery.ru/tracking/",
+    "helpUrl": "https://www.topdelivery.ru/contacts/",
     "canaryUrl": "https://www.topdelivery.ru/",
     "shows": [
       "status",

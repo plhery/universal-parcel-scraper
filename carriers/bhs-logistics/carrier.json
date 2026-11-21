@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://bhslogistics.dk/track-and-trace/",
+    "helpUrl": "https://bhslogistics.dk/kontakt-bhs-logistics/",
     "canaryUrl": "https://bhslogistics.dk/track-and-trace/",
     "shows": [],
     "scraped": [],

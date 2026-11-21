@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://lmtco.com/tracking-serices.html",
     "searchUrl": "https://lmtco.com/tracking-serices.html",
+    "helpUrl": "https://lmtco.com/contact.html",
     "canaryUrl": "https://lmtco.com/tracking-serices.html",
     "shows": [
       "status",

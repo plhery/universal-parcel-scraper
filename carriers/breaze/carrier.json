@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://portal.breaze.co.za/track-order/{trackingNumber}",
     "searchUrl": "https://portal.breaze.co.za/track-order",
+    "helpUrl": "https://www.breaze.co.za/contact/",
     "canaryUrl": "https://portal.breaze.co.za/track-order",
     "shows": [],
     "scraped": [],

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://winionlogistics.com/home.html?num={trackingNumber}",
     "searchUrl": "https://winionlogistics.com/home.html",
+    "helpUrl": "https://winionlogistics.com/pages/cs/counsel.html",
     "canaryUrl": "https://winionlogistics.com/home.html",
     "shows": [],
     "scraped": [],

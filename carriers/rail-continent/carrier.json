@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.railcontinent.ru/tracking/",
+    "helpUrl": "https://www.railcontinent.ru/contacts/",
     "canaryUrl": "https://www.railcontinent.ru/tracking/",
     "shows": [],
     "scraped": [],

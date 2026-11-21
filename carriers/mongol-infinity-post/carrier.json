@@ -38,6 +38,7 @@
   ],
   "portal": {
     "searchUrl": "https://mypost.mn/",
+    "helpUrl": "https://mypost.mn/contact",
     "canaryUrl": "https://mypost.mn/",
     "shows": [
       "status",

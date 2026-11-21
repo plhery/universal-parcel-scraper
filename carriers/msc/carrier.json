@@ -31,6 +31,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.msc.com/en/track-a-shipment",
+    "helpUrl": "https://www.msc.com/en/contact-us",
     "canaryUrl": "https://www.msc.com/en/track-a-shipment",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.energologistic.it/tracking/",
+    "helpUrl": "https://www.energologistic.it/contatti/",
     "canaryUrl": "https://www.energologistic.it/tracking/",
     "shows": [],
     "scraped": [],

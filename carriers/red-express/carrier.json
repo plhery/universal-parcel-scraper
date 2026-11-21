@@ -28,6 +28,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://redexpress.kg/",
+    "helpUrl": "https://redexpress.kg/support",
     "canaryUrl": "https://redexpress.kg/",
     "shows": [],
     "scraped": [],

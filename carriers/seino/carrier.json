@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://track.seino.co.jp/cgi-bin/gnpquery.pgm?GNPNO1={trackingNumber}",
     "searchUrl": "https://www.seino.co.jp/",
+    "helpUrl": "https://www.seino.co.jp/seino/contactus/",
     "canaryUrl": "https://track.seino.co.jp/cgi-bin/gnpquery.pgm",
     "shows": [
       "status",

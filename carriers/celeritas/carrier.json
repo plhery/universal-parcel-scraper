@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://celeritastransporte.com/seguimiento-paquete-pedidos/?refer={trackingNumber}&lang=es",
     "searchUrl": "https://celeritastransporte.com/seguimiento-paquete-pedidos/",
+    "helpUrl": "https://celeritastransporte.com/contacto/",
     "canaryUrl": "https://celeritastransporte.com/seguimiento-paquete-pedidos/",
     "shows": [
       "status",

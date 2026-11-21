@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.lbtxkd.com/search_kj.aspx",
+    "helpUrl": "https://www.lbtxkd.com/Contact.aspx?ClassID=23",
     "canaryUrl": "https://www.lbtxkd.com/",
     "shows": [],
     "scraped": [],

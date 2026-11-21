@@ -29,6 +29,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://jphome.eu/suivi-de-livraison/",
+    "helpUrl": "https://jphome.eu/faq-consommateur/",
     "canaryUrl": "https://jphome.eu/",
     "shows": [],
     "scraped": [],

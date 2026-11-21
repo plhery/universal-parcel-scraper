@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://my.amazing.today/track/{trackingNumber}",
     "searchUrl": "https://my.amazing.today/track",
+    "helpUrl": "https://amazing.today/help",
     "canaryUrl": "https://my.amazing.today/track",
     "shows": [
       "status",

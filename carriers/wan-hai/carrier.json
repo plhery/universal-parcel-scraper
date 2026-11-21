@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "helpUrl": "https://www.wanhai.com/views/faq/Faq.xhtml?file_num=67064&parent_id=67334&top_file_num=64735",
     "canaryUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
     "shows": [
       "status",

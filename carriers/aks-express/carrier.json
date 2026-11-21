@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.aks.rs/pracenje-posiljke/",
+    "helpUrl": "https://www.aks.rs/kontakt/",
     "canaryUrl": "https://www.aks.rs/pracenje-posiljke/",
     "shows": [],
     "scraped": [],

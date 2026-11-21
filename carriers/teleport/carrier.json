@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.teleport.asia/track?tracking_number={trackingNumber}",
     "searchUrl": "https://www.teleport.asia/track",
+    "helpUrl": "https://help.teleport.it/",
     "canaryUrl": "https://www.teleport.asia/track",
     "shows": [],
     "scraped": [],

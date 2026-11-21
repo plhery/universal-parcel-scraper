@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://actlogistics.pperfect.com/",
+    "helpUrl": "https://act-logistics.co.za/contact/",
     "canaryUrl": "https://actlogistics.pperfect.com/",
     "shows": [],
     "scraped": [],

@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://cathedis.ma/shipment/?track_number={trackingNumber}",
     "searchUrl": "https://cathedis.ma/shipment/",
+    "helpUrl": "https://cathedis.ma/contacts/",
     "canaryUrl": "https://cathedis.ma/",
     "shows": [],
     "scraped": [],

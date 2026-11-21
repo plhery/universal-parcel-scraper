@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://cliente.viapajucara.com.br/rastrear",
+    "helpUrl": "https://www.viapajucara.com.br/fale-conosco/",
     "canaryUrl": "https://cliente.viapajucara.com.br/rastrear",
     "shows": [],
     "scraped": [],

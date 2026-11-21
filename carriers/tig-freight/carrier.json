@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://tracking.open360.com/tracking/{trackingNumber}",
     "searchUrl": "https://tracking.open360.com/tracking/",
+    "helpUrl": "https://tigfreight.com/contact/",
     "canaryUrl": "https://tigfreight.com/",
     "shows": [
       "status",

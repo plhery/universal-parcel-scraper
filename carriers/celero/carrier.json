@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://celerogroup.com/",
     "searchUrl": "https://celerogroup.com/",
+    "helpUrl": "https://celerogroup.com/contact/",
     "canaryUrl": "https://celerogroup.com/",
     "shows": [
       "status",

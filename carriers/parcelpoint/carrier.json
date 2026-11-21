@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://parcelpoint.com.au/track-your-parcel/?trackingnumber={trackingNumber}",
     "searchUrl": "https://parcelpoint.com.au/track-your-parcel/",
+    "helpUrl": "https://parcelpoint.com.au/contact-us/",
     "canaryUrl": "https://parcelpoint.com.au/track-your-parcel/",
     "shows": [
       "status",

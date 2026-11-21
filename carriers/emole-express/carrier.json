@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.emole-express.com/pl/tracking?number={trackingNumber}&autoSearch=true",
     "searchUrl": "https://www.emole-express.com/pl/tracking",
+    "helpUrl": "https://www.emole-express.com/pl/contact",
     "canaryUrl": "https://www.emole-express.com/pl/tracking",
     "shows": [],
     "scraped": [],

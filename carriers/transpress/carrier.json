@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://transpress.bg/bg/prosledjavane?track-number={trackingNumber}",
     "searchUrl": "https://transpress.bg/bg/prosledjavane",
+    "helpUrl": "https://transpress.bg/bg/kontakti",
     "canaryUrl": "https://transpress.bg/bg/prosledjavane",
     "shows": [],
     "scraped": [],

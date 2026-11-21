@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://portal.transnatur.com/crm/track/{trackingNumber}/",
     "searchUrl": "https://www.transnatur.com/",
+    "helpUrl": "https://www.transnatur.com/contacto/",
     "canaryUrl": "https://www.transnatur.com/",
     "shows": [],
     "scraped": [],

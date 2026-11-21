@@ -44,6 +44,7 @@
   "portal": {
     "url": "https://tracking.dockethub.com/shipment/{trackingNumber}?style=TDG",
     "searchUrl": "https://tracking.dockethub.com/shipment/?style=TDG",
+    "helpUrl": "https://thedeliverygroup.co.uk/contact/",
     "canaryUrl": "https://tracking.dockethub.com/shipment/",
     "shows": [
       "Tracking reference",

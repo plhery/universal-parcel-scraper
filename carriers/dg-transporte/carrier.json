@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.dg-transporte.de/empfangen/sendungsverfolgung/",
+    "helpUrl": "https://www.dg-transporte.de/kontakt/",
     "canaryUrl": "https://www.dg-transporte.de/",
     "shows": [],
     "scraped": [],

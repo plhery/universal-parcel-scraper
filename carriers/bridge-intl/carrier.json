@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.bri-ems.com/query",
+    "helpUrl": "https://www.bri-ems.com/contact-us",
     "canaryUrl": "https://www.bri-ems.com/query",
     "shows": [],
     "scraped": [],

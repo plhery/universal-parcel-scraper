@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.yha56.com/page/indexDetail/indexDetail2.html?manifestId={trackingNumber}",
     "searchUrl": "https://www.yha56.com/",
+    "helpUrl": "https://www.yha56.com/page/aboutYha/aboutYha6.html",
     "canaryUrl": "https://www.yha56.com/",
     "shows": [],
     "scraped": [],

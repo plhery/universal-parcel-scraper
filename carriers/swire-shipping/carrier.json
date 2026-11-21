@@ -27,6 +27,7 @@
   ],
   "portal": {
     "searchUrl": "https://online.swireshipping.com/tracking",
+    "helpUrl": "https://www.swireshipping.com/information/offices/",
     "canaryUrl": "https://online.swireshipping.com/tracking",
     "shows": [
       "status",

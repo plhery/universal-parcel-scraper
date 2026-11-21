@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.taxydema.gr/entopismos/{trackingNumber}",
     "searchUrl": "https://www.taxydema.gr/track-and-trace.html",
+    "helpUrl": "https://www.taxydema.gr/epikoinonia.html",
     "canaryUrl": "https://www.taxydema.gr/track-and-trace.html",
     "shows": [
       "status",

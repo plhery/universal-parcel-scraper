@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://encomendas.princesadoscampos.com.br/rastreio/",
+    "helpUrl": "https://encomendas.princesadoscampos.com.br/contato/",
     "canaryUrl": "https://encomendas.princesadoscampos.com.br/rastreio/",
     "shows": [],
     "scraped": [],

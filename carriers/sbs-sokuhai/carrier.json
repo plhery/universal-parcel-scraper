@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.saqura-web.com/SBS_LTRC/KF_5020.aspx?IraNo={trackingNumber}",
     "searchUrl": "https://www.saqura-web.com/SBS_LTRC/",
+    "helpUrl": "https://www.sbs-sokuhai.com/sbsskhi/contact/",
     "canaryUrl": "https://www.saqura-web.com/SBS_LTRC/",
     "shows": [],
     "scraped": [],

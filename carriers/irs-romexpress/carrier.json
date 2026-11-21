@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.irs.ro/",
+    "helpUrl": "https://www.irs.ro/contact",
     "canaryUrl": "https://www.irs.ro/",
     "shows": [],
     "scraped": [],

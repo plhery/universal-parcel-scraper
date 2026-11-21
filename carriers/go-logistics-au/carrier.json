@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://services.gologistics.com.au/track/iframe2.php?item={trackingNumber}",
     "searchUrl": "https://gologistics.com.au/track-your-parcel/",
+    "helpUrl": "https://gologistics.com.au/company/contact/",
     "canaryUrl": "https://gologistics.com.au/track-your-parcel/",
     "shows": [
       "history",

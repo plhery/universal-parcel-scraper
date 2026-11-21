@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://fynexcourierdubai.com/tracking/",
+    "helpUrl": "https://fynexcourierdubai.com/contacts/",
     "canaryUrl": "https://fynexcourierdubai.com/tracking/",
     "shows": [],
     "scraped": [],

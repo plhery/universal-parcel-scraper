@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://my.rangel.com/track/search/{trackingNumber}",
     "searchUrl": "https://my.rangel.com/track/search",
+    "helpUrl": "https://www.rangel.com/pt/apoio-ao-cliente/",
     "canaryUrl": "https://www.rangel.com/",
     "shows": [],
     "scraped": [],

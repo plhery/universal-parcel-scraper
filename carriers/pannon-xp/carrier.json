@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://mypxp.pannonxp.hu/csomagkovetes",
+    "helpUrl": "https://mypxp.pannonxp.hu/kapcsolat",
     "canaryUrl": "https://mypxp.pannonxp.hu/csomagkovetes",
     "shows": [],
     "scraped": [],

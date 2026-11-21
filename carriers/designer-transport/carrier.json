@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://track.designertransport.com.au/",
+    "helpUrl": "https://designertransport.com.au/pages/contact",
     "canaryUrl": "https://track.designertransport.com.au/",
     "shows": [],
     "scraped": [],

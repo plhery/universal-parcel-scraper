@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.citycourier.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
     "searchUrl": "https://www.citycourier.gr/anazitisi-apostolis",
+    "helpUrl": "https://www.citycourier.gr/el/%CE%95%CF%80%CE%B9%CE%BA%CE%BF%CE%B9%CE%BD%CF%89%CE%BD%CE%AF%CE%B1.htm",
     "canaryUrl": "https://www.citycourier.gr/anazitisi-apostolis",
     "shows": [],
     "scraped": [],

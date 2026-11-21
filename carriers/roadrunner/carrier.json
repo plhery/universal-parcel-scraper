@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://tools.rrts.com/LTLTrack/?searchValues={trackingNumber}",
     "searchUrl": "https://freight.rrts.com/Tools/Tracking/Pages/default.aspx",
+    "helpUrl": "https://www.shiproadrunnerfreight.com/contact/",
     "canaryUrl": "https://tools.rrts.com/LTLTrack/",
     "shows": [
       "status",

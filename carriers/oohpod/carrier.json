@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://shipping.oohpod.com/tracking",
+    "helpUrl": "https://help.oohpod.com/",
     "canaryUrl": "https://shipping.oohpod.com/tracking",
     "shows": [],
     "scraped": [],

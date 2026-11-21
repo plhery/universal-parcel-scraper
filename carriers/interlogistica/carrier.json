@@ -31,6 +31,7 @@
   ],
   "portal": {
     "searchUrl": "https://tracking.interlogistica.bg/",
+    "helpUrl": "https://www.interlogistica.bg/bg/contacts/",
     "canaryUrl": "https://www.interlogistica.bg/bg/",
     "shows": [
       "status",

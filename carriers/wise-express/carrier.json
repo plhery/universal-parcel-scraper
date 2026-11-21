@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.shwise.cn/home/",
+    "helpUrl": "https://www.shwise.cn/home/contact.html",
     "canaryUrl": "https://www.shwise.cn/home/",
     "shows": [],
     "scraped": [],

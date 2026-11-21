@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://work.mymmtl.com/track/{trackingNumber}",
     "searchUrl": "https://work.mymmtl.com/track",
+    "helpUrl": "https://mymmtl.com/contact-us/",
     "canaryUrl": "https://work.mymmtl.com/track",
     "shows": [],
     "scraped": [],

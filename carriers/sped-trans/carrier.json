@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://amp.andmork.com/opter/tt?keyword={trackingNumber}",
     "searchUrl": "https://amp.andmork.com/opter/tt",
+    "helpUrl": "https://spedtrans.no/kontakt-oss/",
     "canaryUrl": "https://amp.andmork.com/opter/tt",
     "shows": [],
     "scraped": [],

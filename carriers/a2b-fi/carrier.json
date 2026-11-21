@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://a2bfi.opter.cloud/TT?keyword={trackingNumber}",
     "searchUrl": "https://a2bfi.opter.cloud/TT",
+    "helpUrl": "https://a2b.fi/yhteystiedot/",
     "canaryUrl": "https://a2bfi.opter.cloud/TT",
     "shows": [],
     "scraped": [],

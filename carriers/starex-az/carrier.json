@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://starexglobal.com/az/tracking/{trackingNumber}",
     "searchUrl": "https://starexglobal.com/az/",
+    "helpUrl": "https://starexglobal.com/az/contact",
     "canaryUrl": "https://starexglobal.com/az/",
     "shows": [
       "status",

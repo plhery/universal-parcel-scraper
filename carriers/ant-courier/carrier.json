@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ant-vl.com/%CE%B1%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7-%CE%B1%CF%80%CE%BF%CF%83%CF%84%CE%BF%CE%BB%CE%AE%CF%82/",
+    "helpUrl": "https://ant-vl.com/%ce%b5%cf%80%ce%b9%ce%ba%ce%bf%ce%b9%ce%bd%cf%89%ce%bd%ce%af%ce%b1/",
     "canaryUrl": "https://ant-vl.com/%CE%B1%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7-%CE%B1%CF%80%CE%BF%CF%83%CF%84%CE%BF%CE%BB%CE%AE%CF%82/",
     "shows": [],
     "scraped": [],

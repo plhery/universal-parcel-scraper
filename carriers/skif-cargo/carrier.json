@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.skif-cargo.ru/tracking/{trackingNumber}",
     "searchUrl": "https://www.skif-cargo.ru/tracking/",
+    "helpUrl": "https://www.skif-cargo.ru/contacts/",
     "canaryUrl": "https://www.skif-cargo.ru/tracking/",
     "shows": [
       "status",

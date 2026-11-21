@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.jiufanglogistics.cn/shipmentQueryList",
+    "helpUrl": "https://www.jiufanglogistics.cn/contact",
     "canaryUrl": "https://www.jiufanglogistics.cn/shipmentQueryList",
     "shows": [],
     "scraped": [],

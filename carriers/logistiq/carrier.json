@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://gecko.logistiq.io/#/order/tracking?awb={trackingNumber}",
     "searchUrl": "https://logistiq.io/track/",
+    "helpUrl": "https://logistiq.io/contact-us/",
     "canaryUrl": "https://logistiq.io/track/",
     "shows": [
       "status",

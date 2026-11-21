@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://uello.com.br/consulta-do-pedido/",
+    "helpUrl": "https://uello.com.br/canais/",
     "canaryUrl": "https://uello.com.br/consulta-do-pedido/",
     "shows": [],
     "scraped": [],

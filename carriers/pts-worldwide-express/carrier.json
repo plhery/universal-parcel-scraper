@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://tracking.pts.net/{trackingNumber}",
     "searchUrl": "https://wp.pts.net/gonderi-takip",
+    "helpUrl": "https://wp.pts.net/iletisim/destek",
     "canaryUrl": "https://wp.pts.net/gonderi-takip",
     "shows": [
       "status",

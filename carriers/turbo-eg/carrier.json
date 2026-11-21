@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://turbo.info/en/track/{trackingNumber}",
     "searchUrl": "https://turbo.info/en/track",
+    "helpUrl": "https://turbo.info/en/contact",
     "canaryUrl": "https://turbo.info/en/track",
     "shows": [],
     "scraped": [],

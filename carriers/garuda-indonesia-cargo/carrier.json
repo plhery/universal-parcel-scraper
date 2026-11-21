@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://cargo.garuda-indonesia.com/Search",
     "searchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "helpUrl": "https://cargo.garuda-indonesia.com/Contact-Us",
     "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
     "shows": [
       "status",

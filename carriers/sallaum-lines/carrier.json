@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://sallaumlines.com/track-shipment/",
     "searchUrl": "https://sallaumlines.com/track-shipment/",
+    "helpUrl": "https://sallaumlines.com/contact/",
     "canaryUrl": "https://sallaumlines.com/track-shipment/",
     "shows": [
       "status",

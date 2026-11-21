@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://arrow-express.eu/",
+    "helpUrl": "https://arrow-express.eu/contact-us",
     "canaryUrl": "https://arrow-express.eu/",
     "shows": [],
     "scraped": [],

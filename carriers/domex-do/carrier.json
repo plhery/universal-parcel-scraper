@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://domex.do/rastreo?guia={trackingNumber}",
     "searchUrl": "https://domex.do/rastreo",
+    "helpUrl": "https://domex.do/ayuda",
     "canaryUrl": "https://domex.do/rastreo",
     "shows": [],
     "scraped": [],

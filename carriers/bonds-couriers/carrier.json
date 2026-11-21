@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://appsrv.bondscouriers.com.au/bondsweb/track-job.htm",
+    "helpUrl": "https://bondscouriers.com.au/contact-us/",
     "canaryUrl": "https://bondscouriers.com.au/",
     "shows": [],
     "scraped": [],

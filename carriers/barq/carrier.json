@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://web.barqfleet.com/en/tracking-details?trackingId={trackingNumber}",
     "searchUrl": "https://web.barqfleet.com/en/tracking",
+    "helpUrl": "https://barqapp-help.freshdesk.com/en/support/home",
     "canaryUrl": "https://web.barqfleet.com/en/tracking",
     "shows": [],
     "scraped": [],

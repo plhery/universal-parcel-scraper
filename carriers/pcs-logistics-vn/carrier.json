@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://pcs-logistics.com/en/track-trace?code={trackingNumber}",
     "searchUrl": "https://pcs-logistics.com/en/track-trace",
+    "helpUrl": "https://pcs-logistics.com/en/contact",
     "canaryUrl": "https://pcs-logistics.com/en/track-trace",
     "shows": [
       "status",

@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.itcdelivery.com/track/",
+    "helpUrl": "https://www.itcdelivery.com/contact-us/",
     "canaryUrl": "https://www.itcdelivery.com/track/",
     "shows": [],
     "scraped": [],

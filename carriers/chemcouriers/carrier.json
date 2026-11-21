@@ -22,6 +22,7 @@
   "portal": {
     "url": "https://www.chemcouriers.com/tracking?trackingnumber={trackingNumber}",
     "searchUrl": "https://www.chemcouriers.com/tracking",
+    "helpUrl": "https://www.chemcouriers.com/company-directory",
     "canaryUrl": "https://www.chemcouriers.com/tracking",
     "shows": [],
     "scraped": [],

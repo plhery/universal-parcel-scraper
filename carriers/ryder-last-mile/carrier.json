@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
+    "helpUrl": "https://www.ryder.com/en-us/contact-us",
     "canaryUrl": "https://www.ryder.com/en-us/logistics/last-mile-delivery/tracking",
     "shows": [],
     "scraped": [],

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.tascourier.gr/track?v={trackingNumber}",
     "searchUrl": "https://www.tascourier.gr/track",
+    "helpUrl": "https://www.tascourier.gr/contact",
     "canaryUrl": "https://www.tascourier.gr/track",
     "shows": [],
     "scraped": [],

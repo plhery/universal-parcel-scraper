@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.aparcels.com/track/{trackingNumber}",
     "searchUrl": "https://www.aparcels.com/",
+    "helpUrl": "https://www.aparcels.com/contact.html",
     "canaryUrl": "https://www.aparcels.com/",
     "shows": [],
     "scraped": [],

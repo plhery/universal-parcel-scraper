@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://c3xpress.com/",
+    "helpUrl": "https://c3xpress.com/Contact",
     "canaryUrl": "https://c3xpress.com/",
     "shows": [
       "status",

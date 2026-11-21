@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://gorushbn.com/",
+    "helpUrl": "https://gorushbn.com/contact-us",
     "canaryUrl": "https://gorushbn.com/",
     "shows": [],
     "scraped": [],

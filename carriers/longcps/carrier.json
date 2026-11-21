@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.longcps.com/select.html?type=cnum&num={trackingNumber}",
     "searchUrl": "https://www.longcps.com/select.html",
+    "helpUrl": "https://www.longcps.com/content.html?ParendID=271&CategoryID=302&ID=0",
     "canaryUrl": "https://www.longcps.com/",
     "shows": [],
     "scraped": [],

@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://mms.intelink.net.cn/oms/#/logisticsTracking?companyId=10355&nos={trackingNumber}",
     "searchUrl": "https://www.11000miles.com/",
+    "helpUrl": "https://www.11000miles.com/detail.html?&backend_env=narongliebiao&backend_section=guanyuwomen&content_id=14",
     "canaryUrl": "https://mms.intelink.net.cn/oms/",
     "shows": [],
     "scraped": [],

@@ -42,6 +42,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.packlink.es/seguimiento-envios/",
+    "helpUrl": "https://support.packlink.com/hc/es-es",
     "canaryUrl": "https://www.packlink.es/seguimiento-envios/",
     "shows": [
       "status",

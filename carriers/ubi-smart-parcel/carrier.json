@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://shipper.ubismartparcel.com/#/ubi?trackingNos={trackingNumber}",
     "searchUrl": "https://shipper.ubismartparcel.com/#/ubi",
+    "helpUrl": "https://www.ubismartparcel.com/contact.html",
     "canaryUrl": "https://shipper.ubismartparcel.com/",
     "shows": [
       "status",

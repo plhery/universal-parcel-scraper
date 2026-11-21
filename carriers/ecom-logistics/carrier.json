@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://shipecom.com/track/{trackingNumber}",
     "searchUrl": "https://shipecom.com/track",
+    "helpUrl": "https://shipecom.com/support",
     "canaryUrl": "https://shipecom.com/track",
     "shows": [
       "status",

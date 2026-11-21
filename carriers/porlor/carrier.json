@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.porlor.co.th/Tracking?search={trackingNumber}",
     "searchUrl": "https://www.porlor.co.th/Tracking",
+    "helpUrl": "https://www.porlor.co.th/Contactus",
     "canaryUrl": "https://www.porlor.co.th/",
     "shows": [],
     "scraped": [],

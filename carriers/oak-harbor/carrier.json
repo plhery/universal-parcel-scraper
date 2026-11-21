@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.oakh.com/quicktrace&PRO={trackingNumber}",
     "searchUrl": "https://www.oakh.com/page/tracing",
+    "helpUrl": "https://www.oakh.com/page/contact",
     "canaryUrl": "https://www.oakh.com/page/tracing",
     "shows": [
       "status",

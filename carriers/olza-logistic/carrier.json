@@ -39,6 +39,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.olzalogistic.com/",
+    "helpUrl": "https://www.olzalogistic.com/kontakt/",
     "canaryUrl": "https://tracking.olzalogistic.com/",
     "shows": [],
     "scraped": [],

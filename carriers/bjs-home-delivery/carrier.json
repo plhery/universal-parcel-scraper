@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://track.bjshomedelivery.com/?parcel-id={trackingNumber}",
     "searchUrl": "https://track.bjshomedelivery.com/",
+    "helpUrl": "https://www.bjshomedelivery.com/en-gb/help",
     "canaryUrl": "https://track.bjshomedelivery.com/",
     "shows": [
       "status",

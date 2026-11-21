@@ -21,6 +21,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://iqpack.libertyexpress.com/SearchGuide",
+    "helpUrl": "https://libertyexpress.com/es-us/contacto/",
     "canaryUrl": "https://iqpack.libertyexpress.com/SearchGuide",
     "shows": [],
     "scraped": [],

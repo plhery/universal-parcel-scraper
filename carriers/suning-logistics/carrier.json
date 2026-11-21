@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://wuliu.suning.com/home/toLogisticsDetail.htm",
+    "helpUrl": "https://wuliu.suning.com/home/contact.htm",
     "canaryUrl": "https://wuliu.suning.com/home/toLogisticsDetail.htm",
     "shows": [],
     "scraped": [],

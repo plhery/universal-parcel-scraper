@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://track.tgroupspa.com/ttnet/traccia_spedizione/{trackingNumber}",
     "searchUrl": "https://www.tgroupspa.com/",
+    "helpUrl": "https://www.tgroupspa.com/contatti/",
     "canaryUrl": "https://www.tgroupspa.com/",
     "shows": [
       "status",

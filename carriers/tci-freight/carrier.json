@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://tcifreight.in/tracking-consignment/",
+    "helpUrl": "https://tcifreight.in/contact-us/",
     "canaryUrl": "https://tcifreight.in/tracking-consignment/",
     "shows": [
       "status",

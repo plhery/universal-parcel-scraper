@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://bergentsno.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://bergentsno.opter.cloud/tt",
+    "helpUrl": "https://bergentransportsentral.no/kontakt-oss/",
     "canaryUrl": "https://bergentsno.opter.cloud/tt",
     "shows": [],
     "scraped": [],

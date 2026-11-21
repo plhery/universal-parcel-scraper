@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://nordw.ru/tracking/?n={trackingNumber}",
     "searchUrl": "https://nordw.ru/tracking/",
+    "helpUrl": "https://nordw.ru/contacts/",
     "canaryUrl": "https://nordw.ru/tracking/",
     "shows": [],
     "scraped": [],

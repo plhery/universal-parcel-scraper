@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.logistaparcel.com/en/home/seguimiento-envios.html",
+    "helpUrl": "https://www.logistaparcel.com/en/home/contacto.html",
     "canaryUrl": "https://www.logistaparcel.com/en/home/seguimiento-envios.html",
     "shows": [],
     "scraped": [],

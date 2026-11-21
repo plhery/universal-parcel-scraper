@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://shipglobal.us/track.html?waybill={trackingNumber}",
     "searchUrl": "https://shipglobal.us/track.html",
+    "helpUrl": "https://shipglobal.us/contact-us.html",
     "canaryUrl": "https://shipglobal.us/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://post-int.com/",
+    "helpUrl": "https://post-int.com/home/kontakti/",
     "canaryUrl": "https://post-int.com/",
     "shows": [],
     "scraped": [],

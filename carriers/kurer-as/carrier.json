@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://opter.kurer.no/opter/tt?keyword={trackingNumber}",
     "searchUrl": "https://opter.kurer.no/opter/tt",
+    "helpUrl": "https://kurer.no/kontakt/",
     "canaryUrl": "https://opter.kurer.no/opter/tt",
     "shows": [],
     "scraped": [],

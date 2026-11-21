@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.maersk.com/tracking/{trackingNumber}",
     "searchUrl": "https://www.maersk.com/tracking/",
+    "helpUrl": "https://www.maersk.com/contact",
     "canaryUrl": "https://www.maersk.com/tracking/",
     "shows": [
       "status",

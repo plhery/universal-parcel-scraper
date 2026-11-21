@@ -48,6 +48,7 @@
   "portal": {
     "url": "https://track.winit.com/tracking/Mobile/result?trackingNos={trackingNumber}",
     "searchUrl": "https://track.winit.com/tracking/Mobile",
+    "helpUrl": "https://www.winit.com/html/contact_us.html",
     "canaryUrl": "https://track.winit.com/tracking/Mobile",
     "shows": [
       "status",

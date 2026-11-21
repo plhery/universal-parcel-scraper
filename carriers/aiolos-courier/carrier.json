@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://aioloscourier.gr/track-trace/?shipping_num={trackingNumber}",
     "searchUrl": "https://aioloscourier.gr/track-trace/",
+    "helpUrl": "https://aioloscourier.gr/network/",
     "canaryUrl": "https://aioloscourier.gr/track-trace/",
     "shows": [],
     "scraped": [],

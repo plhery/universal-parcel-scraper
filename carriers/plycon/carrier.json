@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://track.plyconvanlines.com/singletrack.php?trackingnum={trackingNumber}",
     "searchUrl": "https://track.plyconvanlines.com/",
+    "helpUrl": "https://plycongroup.com/contact",
     "canaryUrl": "https://track.plyconvanlines.com/",
     "shows": [],
     "scraped": [],

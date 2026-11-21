@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://spourgitis.gr/entopismos-apostolon/",
+    "helpUrl": "https://spourgitis.gr/contact/",
     "canaryUrl": "https://spourgitis.gr/entopismos-apostolon/",
     "shows": [],
     "scraped": [],

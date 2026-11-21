@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.wmg-group.com/",
+    "helpUrl": "https://www.wmg-group.com/contact",
     "canaryUrl": "https://www.wmg-group.com/",
     "shows": [],
     "scraped": [],

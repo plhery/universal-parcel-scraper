@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.portal.domesa.com.ve/",
+    "helpUrl": "https://www.portal.domesa.com.ve/contacto/",
     "canaryUrl": "https://www.portal.domesa.com.ve/",
     "shows": [],
     "scraped": [],

@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://portal.kuller.ee/opter/TT?keyword={trackingNumber}",
     "searchUrl": "https://portal.kuller.ee/opter/TT",
+    "helpUrl": "https://kuller.ee/kontakt/",
     "canaryUrl": "https://portal.kuller.ee/opter/TT",
     "shows": [],
     "scraped": [],

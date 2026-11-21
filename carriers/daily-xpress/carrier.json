@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.dailyxpress.in/searchAwb.php?awb={trackingNumber}",
     "searchUrl": "https://www.dailyxpress.in/",
+    "helpUrl": "https://www.dailyxpress.in/contact.php",
     "canaryUrl": "https://www.dailyxpress.in/",
     "shows": [],
     "scraped": [],

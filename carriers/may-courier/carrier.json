@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://maycouriermadrid.com/consulta-tu-envio/",
+    "helpUrl": "https://maycouriermadrid.com/contacto/",
     "canaryUrl": "https://maycouriermadrid.com/consulta-tu-envio/",
     "shows": [],
     "scraped": [],

@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://logistics.airspeed.com.ph/track/TrackingSearch.aspx?waybill={trackingNumber}",
     "searchUrl": "https://airspeed.ph/track-cargo/",
+    "helpUrl": "https://airspeed.ph/contact-us/",
     "canaryUrl": "https://airspeed.ph/track-cargo/",
     "shows": [
       "status",

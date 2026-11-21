@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://tms.yingtu56.com/trackIndex.htm?documentCode={trackingNumber}",
     "searchUrl": "https://tms.yingtu56.com/trackIndex.htm",
+    "helpUrl": "https://www.yingtu56.com/lianxifangshi/",
     "canaryUrl": "https://www.yingtu56.com/",
     "shows": [],
     "scraped": [],

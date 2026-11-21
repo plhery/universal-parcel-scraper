@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.agentgrid.net/progistics/?id={trackingNumber}",
     "searchUrl": "https://fragilepak.com/expecting-a-delivery/",
+    "helpUrl": "https://fragilepak.com/contact/",
     "canaryUrl": "https://fragilepak.com/expecting-a-delivery/",
     "shows": [],
     "scraped": [],

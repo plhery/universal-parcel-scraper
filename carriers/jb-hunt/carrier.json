@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.jbhunt.com/shippers/final-mile-services/track-shipments/?tracking={trackingNumber}",
     "searchUrl": "https://www.jbhunt.com/shippers/final-mile-services/track-shipments/",
+    "helpUrl": "https://www.jbhunt.com/contact-us",
     "canaryUrl": "https://www.jbhunt.com/shippers/final-mile-services/track-shipments/",
     "shows": [],
     "scraped": [],

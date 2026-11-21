@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://authorcodesoftware.in/airstarxpresscourier/newmastertracking.aspx",
+    "helpUrl": "https://www.airstarxpress.com/Home/contact",
     "canaryUrl": "https://authorcodesoftware.in/airstarxpresscourier/newmastertracking.aspx",
     "shows": [],
     "scraped": [],

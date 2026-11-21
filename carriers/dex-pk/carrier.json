@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.dex.com.pk/tracking",
+    "helpUrl": "https://www.dex.com.pk/contact-us",
     "canaryUrl": "https://www.dex.com.pk/",
     "shows": [
       "status",

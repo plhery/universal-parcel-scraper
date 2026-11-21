@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://fastex.pk/trackingDetail",
+    "helpUrl": "https://fastex.pk/contactUs/",
     "canaryUrl": "https://fastex.pk/trackingDetail",
     "shows": [],
     "scraped": [],

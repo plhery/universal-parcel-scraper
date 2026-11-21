@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://domex.lk/Order-Details.php?wbno={trackingNumber}",
     "searchUrl": "https://www.domex.lk/",
+    "helpUrl": "https://domex.lk/customer_support.php",
     "canaryUrl": "https://domex.lk/Order-Details.php",
     "shows": [
       "status",

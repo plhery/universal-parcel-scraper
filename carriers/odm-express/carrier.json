@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://odmexpress.com.mx/rastreo-2/?rastreo_fall={trackingNumber}",
     "searchUrl": "https://odmexpress.com.mx/rastreo/",
+    "helpUrl": "https://odmexpress.com.mx/contacto/",
     "canaryUrl": "https://odmexpress.com.mx/",
     "shows": [],
     "scraped": [],

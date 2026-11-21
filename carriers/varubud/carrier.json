@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://varubudse.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://varubudse.opter.cloud/tt",
+    "helpUrl": "https://varubud.se/kontakt/",
     "canaryUrl": "https://varubudse.opter.cloud/tt",
     "shows": [],
     "scraped": [],

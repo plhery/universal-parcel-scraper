@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://hssno.opter.cloud/TT?keyword={trackingNumber}",
     "searchUrl": "https://hssno.opter.cloud/TT",
+    "helpUrl": "https://hss.no/om-oss/",
     "canaryUrl": "https://hssno.opter.cloud/TT",
     "shows": [],
     "scraped": [],

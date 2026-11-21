@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.lightningexpressca.com/track.html?id={trackingNumber}",
     "searchUrl": "https://www.lightningexpressca.com/",
+    "helpUrl": "https://www.lightningexpressca.com/contact.html",
     "canaryUrl": "https://www.lightningexpressca.com/",
     "shows": [
       "status",

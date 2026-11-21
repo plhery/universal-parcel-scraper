@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.fimile.com/website/tracking?trackingNumber={trackingNumber}",
     "searchUrl": "https://www.fimile.com/website/tracking",
+    "helpUrl": "https://www.fimile.com/website/contact",
     "canaryUrl": "https://www.fimile.com/website/tracking",
     "shows": [],
     "scraped": [],

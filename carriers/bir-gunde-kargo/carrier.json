@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://takip.birgundekargo.com/intranet/Tracking_kargo.asp?bgk_barkod={trackingNumber}",
     "searchUrl": "https://www.birgundekargo.com/",
+    "helpUrl": "https://www.birgundekargo.com/iletisim",
     "canaryUrl": "https://www.birgundekargo.com/",
     "shows": [
       "status",

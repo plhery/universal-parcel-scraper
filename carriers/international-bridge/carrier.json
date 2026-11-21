@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.myib.com/?trackingnumber={trackingNumber}",
     "searchUrl": "https://tracking.myib.com/",
+    "helpUrl": "https://myib.com/contact-us",
     "canaryUrl": "https://tracking.myib.com/",
     "shows": [],
     "scraped": [],

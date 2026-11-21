@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.safewayxp.com/track.php?awb={trackingNumber}",
     "searchUrl": "https://www.safewayxp.com/en/track/",
+    "helpUrl": "https://www.safewayxp.com/en/contact/",
     "canaryUrl": "https://www.safewayxp.com/en/track/",
     "shows": [
       "status",

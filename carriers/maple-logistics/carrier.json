@@ -28,6 +28,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.25431010.tw/tracking",
+    "helpUrl": "https://www.25431010.tw/contact_us",
     "canaryUrl": "https://www.25431010.tw/",
     "shows": [],
     "scraped": [],

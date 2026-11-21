@@ -39,6 +39,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.zes-express.com/",
+    "helpUrl": "https://www.zes-express.com/language/en/contact-us-2/",
     "canaryUrl": "https://www.zes-express.com/",
     "shows": [
       "status",

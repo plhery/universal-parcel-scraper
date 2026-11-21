@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://maxexuae.com/tracking/",
+    "helpUrl": "https://maxexuae.com/contact/",
     "canaryUrl": "https://maxexuae.com/tracking/",
     "shows": [],
     "scraped": [],

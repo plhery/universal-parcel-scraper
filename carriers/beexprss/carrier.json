@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://beexprss.com/tracking?tracking_name={trackingNumber}",
     "searchUrl": "https://beexprss.com/tracking",
+    "helpUrl": "https://beexprss.com/contact-us",
     "canaryUrl": "https://beexprss.com/tracking",
     "shows": [],
     "scraped": [],

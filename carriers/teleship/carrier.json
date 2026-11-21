@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://teleship.com/tracking?number={trackingNumber}",
     "searchUrl": "https://teleship.com/tracking",
+    "helpUrl": "https://teleship.com/faqs",
     "canaryUrl": "https://teleship.com/tracking",
     "shows": [
       "status",

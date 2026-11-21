@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://track.precisiondeliveries.com/{trackingNumber}",
     "searchUrl": "https://track.precisiondeliveries.com/",
+    "helpUrl": "https://precisiondeliveries.com/contact/",
     "canaryUrl": "https://track.precisiondeliveries.com/",
     "shows": [
       "status",

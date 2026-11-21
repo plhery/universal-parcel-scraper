@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://mnpost.mn/tracking?nums={trackingNumber}",
     "searchUrl": "https://mnpost.mn/tracking",
+    "helpUrl": "https://mnpost.mn/contact",
     "canaryUrl": "https://mnpost.mn/tracking",
     "shows": [],
     "scraped": [],

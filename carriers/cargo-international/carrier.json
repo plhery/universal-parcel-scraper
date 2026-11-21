@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.cargointernational.de/versandrechner/tracking/{trackingNumber}",
     "searchUrl": "https://www.cargointernational.de/versandrechner/tracking",
+    "helpUrl": "https://hilfe.cargointernational.de/de/",
     "canaryUrl": "https://www.cargointernational.de/versandrechner/tracking",
     "shows": [],
     "scraped": [],

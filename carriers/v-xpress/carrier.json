@@ -30,6 +30,7 @@
   ],
   "portal": {
     "searchUrl": "https://vxpress.in/track-result-new/",
+    "helpUrl": "https://vxpress.in/customer-care/",
     "canaryUrl": "https://vxpress.in/",
     "shows": [
       "status",

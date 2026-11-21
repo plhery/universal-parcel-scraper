@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://flippost.com/instruments/online/?number={trackingNumber}",
     "searchUrl": "https://flippost.com/instruments/online/",
+    "helpUrl": "https://flippost.com/about/coordinates/",
     "canaryUrl": "https://flippost.com/instruments/online/",
     "shows": [
       "status",

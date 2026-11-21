@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.changjiangexpress.com/Home/Query",
+    "helpUrl": "https://www.changjiangexpress.com/Home/Contacts",
     "canaryUrl": "https://www.changjiangexpress.com/Home/Query",
     "shows": [],
     "scraped": [],

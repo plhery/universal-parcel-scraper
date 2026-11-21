@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://portal.travelexpress.com.cy/system/?page=track&awb={trackingNumber}",
     "searchUrl": "https://portal.travelexpress.com.cy/system/",
+    "helpUrl": "https://www.travelexpresscourier.com/support.html",
     "canaryUrl": "https://portal.travelexpress.com.cy/system/",
     "shows": [],
     "scraped": [],

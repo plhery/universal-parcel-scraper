@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://customer.night-star-express.de/tracking/{trackingNumber}",
     "searchUrl": "https://customer.night-star-express.de/",
+    "helpUrl": "https://www.night-star-express.de/de/kontakt.html",
     "canaryUrl": "https://customer.night-star-express.de/",
     "shows": [
       "status",

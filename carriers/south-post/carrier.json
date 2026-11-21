@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.southpost.com.ar/#/t/{trackingNumber}",
     "searchUrl": "https://www.southpost.com.ar/",
+    "helpUrl": "https://www.southpost.com.ar/#/Q&A",
     "canaryUrl": "https://www.southpost.com.ar/",
     "shows": [
       "status",

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://post.plus/?tracking={trackingNumber}",
     "searchUrl": "https://post.plus/",
+    "helpUrl": "https://post.plus/contact",
     "canaryUrl": "https://post.plus/",
     "shows": [],
     "scraped": [],

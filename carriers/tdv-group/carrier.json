@@ -22,6 +22,7 @@
   "portal": {
     "url": "https://portal.tdv-group.com/tracktrace/{trackingNumber}",
     "searchUrl": "https://portal.tdv-group.com/tracktrace",
+    "helpUrl": "https://tdv-group.com/contacts/",
     "canaryUrl": "https://portal.tdv-group.com/tracktrace",
     "shows": [],
     "scraped": [],

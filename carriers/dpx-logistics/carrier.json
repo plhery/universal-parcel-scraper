@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://dpxlogistics.com/en/track/index.html#{trackingNumber}",
     "searchUrl": "https://dpxlogistics.com/en/track/",
+    "helpUrl": "https://dpxlogistics.com/en/contact/",
     "canaryUrl": "https://dpxlogistics.com/en/",
     "shows": [],
     "scraped": [],

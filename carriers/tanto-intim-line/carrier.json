@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.tantonet.com/",
     "searchUrl": "https://www.tantonet.com/",
+    "helpUrl": "https://www.tantonet.com/contact.php",
     "canaryUrl": "https://www.tantonet.com/",
     "shows": [
       "status",

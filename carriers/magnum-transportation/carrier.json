@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://magnumlog.com/track-shipment",
+    "helpUrl": "https://magnumlog.com/contact",
     "canaryUrl": "https://magnumlog.com/track-shipment",
     "shows": [],
     "scraped": [],

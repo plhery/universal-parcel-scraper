@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.sol-track.com/{trackingNumber}",
     "searchUrl": "https://www.sol-track.com/",
+    "helpUrl": "https://www.sol-track.com/contact",
     "canaryUrl": "https://www.sol-track.com/",
     "shows": [],
     "scraped": [],

@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://conveyoruniexpress.com/shipment.php?hawbno2={trackingNumber}&route=1",
     "searchUrl": "https://conveyoruniexpress.com/shipment.php",
+    "helpUrl": "https://conveyoruniexpress.com/contact.php",
     "canaryUrl": "https://conveyoruniexpress.com/shipment.php",
     "shows": [],
     "scraped": [],

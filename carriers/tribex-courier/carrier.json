@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "helpUrl": "https://tribexcourier.al/kontakt/",
     "canaryUrl": "https://app.tribexcourier.al/apps/package-tracking",
     "shows": [],
     "scraped": [],

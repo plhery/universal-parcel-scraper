@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://dalli-service.com/tracking/",
+    "helpUrl": "https://dalli-service.com/support/",
     "canaryUrl": "https://dalli-service.com/tracking/",
     "shows": [],
     "scraped": [],

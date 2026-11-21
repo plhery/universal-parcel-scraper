@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.rpxonline.com/?trackNo={trackingNumber}",
     "searchUrl": "https://tracking.rpxonline.com/",
+    "helpUrl": "https://www.rpxonline.com/network/",
     "canaryUrl": "https://tracking.rpxonline.com/",
     "shows": [],
     "scraped": [],

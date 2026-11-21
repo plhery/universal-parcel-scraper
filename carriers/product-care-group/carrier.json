@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://myorder.productcaregroup.com/",
+    "helpUrl": "https://www.productcaregroup.com/contact-us",
     "canaryUrl": "https://myorder.productcaregroup.com/",
     "shows": [],
     "scraped": [],

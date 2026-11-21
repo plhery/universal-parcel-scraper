@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://elitpost.com/en/tracking",
+    "helpUrl": "https://elitpost.com/en/support",
     "canaryUrl": "https://elitpost.com/en/tracking",
     "shows": [],
     "scraped": [],

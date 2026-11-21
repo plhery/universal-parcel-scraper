@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://ntclog.me/?page=shipment-tracking&lang=me&shipment_code={trackingNumber}",
     "searchUrl": "https://ntclog.me/?page=shipment-tracking&lang=me",
+    "helpUrl": "https://ntclog.me/kontakt?lang=me",
     "canaryUrl": "https://ntclog.me/",
     "shows": [],
     "scraped": [],

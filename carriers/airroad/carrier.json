@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.airroad.com.au/quick-track/",
+    "helpUrl": "https://www.airroad.com.au/support/",
     "canaryUrl": "https://myclient.airroad.com.au/",
     "shows": [],
     "scraped": [],

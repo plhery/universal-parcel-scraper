@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://en.freja.com/online-services/track-and-trace-road/?{trackingNumber}",
     "searchUrl": "https://en.freja.com/online-services/track-and-trace-road/",
+    "helpUrl": "https://en.freja.com/contact-us/",
     "canaryUrl": "https://en.freja.com/online-services/track-and-trace-road/",
     "shows": [],
     "scraped": [],

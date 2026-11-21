@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://hk.pickupp.io/en/tracking?orderNumber={trackingNumber}",
     "searchUrl": "https://hk.pickupp.io/en/tracking",
+    "helpUrl": "https://hk.pickupp.io/en/contact-us",
     "canaryUrl": "https://hk.pickupp.io/en/tracking",
     "shows": [],
     "scraped": [],

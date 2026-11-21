@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://8256.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
     "searchUrl": "https://www.8256ru.com/",
+    "helpUrl": "https://www.8256ru.com/?Col8/",
     "canaryUrl": "https://www.8256ru.com/",
     "shows": [],
     "scraped": [],

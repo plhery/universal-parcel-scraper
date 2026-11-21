@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.eimskip.com/find-shipment/",
     "searchUrl": "https://www.eimskip.com/find-shipment/",
+    "helpUrl": "https://www.eimskip.com/contact-us/",
     "canaryUrl": "https://www.eimskip.com/find-shipment/",
     "shows": [
       "status",

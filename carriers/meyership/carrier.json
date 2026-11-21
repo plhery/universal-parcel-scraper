@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://kundeportal.meyership.no/ms/opter/TT?keyword={trackingNumber}",
     "searchUrl": "https://kundeportal.meyership.no/ms/opter/TT",
+    "helpUrl": "https://meyership.no/kontakt-oss",
     "canaryUrl": "https://kundeportal.meyership.no/ms/opter/TT",
     "shows": [],
     "scraped": [],

@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.cstitaliascarl.it/tracking/",
+    "helpUrl": "https://www.cstitaliascarl.it/servizio-clienti/",
     "canaryUrl": "https://www.cstitaliascarl.it/tracking/",
     "shows": [],
     "scraped": [],

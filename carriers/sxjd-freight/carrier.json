@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.sxjdfreight.com/service/waybillList.html",
+    "helpUrl": "https://www.sxjdfreight.com/about/contact.html",
     "canaryUrl": "https://www.sxjdfreight.com/service/waybillList.html",
     "shows": [],
     "scraped": [],

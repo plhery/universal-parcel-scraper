@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://client.ecohai.co.jp/tracking",
+    "helpUrl": "https://www.ecohai.co.jp/faq",
     "canaryUrl": "https://service.ecohai.co.jp/",
     "shows": [],
     "scraped": [],

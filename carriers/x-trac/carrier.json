@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.xtrac-express.com/tracking",
+    "helpUrl": "https://www.xtrac-express.com/contact",
     "canaryUrl": "https://www.xtrac-express.com/tracking",
     "shows": [],
     "scraped": [],

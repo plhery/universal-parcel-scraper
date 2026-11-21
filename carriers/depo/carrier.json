@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://depo.sk/sledovanie-zasielky/?number={trackingNumber}",
     "searchUrl": "https://depo.sk/sledovanie-zasielky/",
+    "helpUrl": "https://depo.sk/faq/",
     "canaryUrl": "https://depo.sk/",
     "shows": [],
     "scraped": [],

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://spfly.com.br/rastreamento/",
+    "helpUrl": "https://spfly.com.br/contato-2/",
     "canaryUrl": "https://spfly.com.br/",
     "shows": [],
     "scraped": [],

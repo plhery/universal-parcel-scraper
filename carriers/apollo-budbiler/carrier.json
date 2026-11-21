@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://apollono.opter.cloud/TT?keyword={trackingNumber}",
     "searchUrl": "https://apollono.opter.cloud/TT",
+    "helpUrl": "https://apollobud.no/om-oss/#kontakt",
     "canaryUrl": "https://apollono.opter.cloud/TT",
     "shows": [],
     "scraped": [],

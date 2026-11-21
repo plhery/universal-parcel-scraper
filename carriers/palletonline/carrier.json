@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://palletonline.co.uk/track?tn={trackingNumber}",
     "searchUrl": "https://palletonline.co.uk/track",
+    "helpUrl": "https://palletonline.co.uk/help/",
     "canaryUrl": "https://palletonline.co.uk/track",
     "shows": [],
     "scraped": [],

@@ -27,6 +27,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "helpUrl": "https://www.xpress-logistics.lu/contact/",
     "canaryUrl": "https://www.xpress-logistics.lu/suivi-colis/",
     "shows": [
       "status",

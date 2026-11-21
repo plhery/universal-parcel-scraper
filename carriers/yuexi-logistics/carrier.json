@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.yxlg.com/track.html?no={trackingNumber}",
     "searchUrl": "https://www.yxlg.com/track.html",
+    "helpUrl": "https://www.yxlg.com/contact.html",
     "canaryUrl": "https://www.yxlg.com/track.html",
     "shows": [],
     "scraped": [],

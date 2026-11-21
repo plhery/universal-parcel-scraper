@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://online.amaldist.com.au/track/?item={trackingNumber}",
     "searchUrl": "https://online.amaldist.com.au/track/",
+    "helpUrl": "https://www.amaldist.com.au/contact",
     "canaryUrl": "https://www.amaldist.com.au/",
     "shows": [],
     "scraped": [],

@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.btdair.com/",
+    "helpUrl": "https://www.btdair.com/Article/detailbytype?type=%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC&index=5",
     "canaryUrl": "https://www.btdair.com/",
     "shows": [],
     "scraped": [],

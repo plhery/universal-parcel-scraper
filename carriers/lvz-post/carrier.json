@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://lvz-post.de/privatkunden/sendungsverfolgung/",
+    "helpUrl": "https://lvz-post.de/privatkunden/kontakt/",
     "canaryUrl": "https://paketversand.lvz-post.de/index.php/tracking/search",
     "shows": [],
     "scraped": [],

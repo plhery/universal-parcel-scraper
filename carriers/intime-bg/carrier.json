@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://intime.bg/tracking/?track_number={trackingNumber}",
     "searchUrl": "https://intime.bg/tracking/",
+    "helpUrl": "https://intime.bg/contacts/",
     "canaryUrl": "https://intime.bg/",
     "shows": [],
     "scraped": [],

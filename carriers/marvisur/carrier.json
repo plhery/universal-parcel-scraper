@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.expresomarvisur.com/seccion/consulta-gret",
+    "helpUrl": "https://www.expresomarvisur.com/contacto",
     "canaryUrl": "https://www.expresomarvisur.com/seccion/consulta-gret",
     "shows": [],
     "scraped": [],

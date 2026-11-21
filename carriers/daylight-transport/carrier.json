@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://mydaylight.dylt.com/external/shipment?probill={trackingNumber}",
     "searchUrl": "https://www.dylt.com/",
+    "helpUrl": "https://www.dylt.com/contact-us/",
     "canaryUrl": "https://www.dylt.com/",
     "shows": [
       "status",

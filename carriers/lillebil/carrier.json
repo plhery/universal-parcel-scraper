@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://kundportal.lillebil.se/opter/TT?keyword={trackingNumber}",
     "searchUrl": "https://kundportal.lillebil.se/opter/TT",
+    "helpUrl": "https://www.lillebil.se/kontakt/",
     "canaryUrl": "https://kundportal.lillebil.se/opter/TT",
     "shows": [],
     "scraped": [],

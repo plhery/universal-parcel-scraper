@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://awest.freightgate.com/cgi-bin/tarifftrek5.1/itrek.cgi?database=awest&type=submit&interface=pltx&open_interface_search=Search+Now&open_text={trackingNumber}&SearchOn=open_billno",
     "searchUrl": "https://awest.freightgate.com/awestTrack.html",
+    "helpUrl": "https://www.awest.com/contact-us/",
     "canaryUrl": "https://awest.freightgate.com/awestTrack.html",
     "shows": [
       "status",

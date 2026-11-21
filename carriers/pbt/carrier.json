@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://www.pbt.nz/tracking-result/?consignmentNumber={trackingNumber}",
     "searchUrl": "https://www.pbt.nz/",
+    "helpUrl": "https://www.pbt.nz/contact/",
     "canaryUrl": "https://www.pbt.nz/",
     "shows": [
       "status",

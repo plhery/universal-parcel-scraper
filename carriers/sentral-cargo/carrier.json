@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://sentralcargo.co.id/cekresi?resi={trackingNumber}",
     "searchUrl": "https://sentralcargo.co.id/",
+    "helpUrl": "https://sentralcargo.co.id/hubungi-kami",
     "canaryUrl": "https://sentralcargo.co.id/",
     "shows": [
       "status",

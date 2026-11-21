@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://online.apdparcel.com.au/track",
+    "helpUrl": "https://apdparcel.com.au/contact-us/",
     "canaryUrl": "https://online.apdparcel.com.au/track",
     "shows": [
       "status",

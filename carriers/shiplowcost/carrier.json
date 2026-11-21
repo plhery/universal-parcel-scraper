@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.shiplowcost.com/",
+    "helpUrl": "https://www.shiplowcost.com/contact-us",
     "canaryUrl": "https://www.shiplowcost.com/",
     "shows": [],
     "scraped": [],

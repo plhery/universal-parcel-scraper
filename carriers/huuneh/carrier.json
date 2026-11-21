@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://huuneh.com/dashboard/track.php?order_track={trackingNumber}",
     "searchUrl": "https://huuneh.com/dashboard/tracking.php",
+    "helpUrl": "https://huuneh.com/contact/",
     "canaryUrl": "https://huuneh.com/dashboard/tracking.php",
     "shows": [
       "status",

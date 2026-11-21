@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://clientes.transaher.es/webclient/htracking/-5,0,{trackingNumber}",
     "searchUrl": "https://transaher.es/",
+    "helpUrl": "https://transaher.es/contacto/",
     "canaryUrl": "https://transaher.es/",
     "shows": [
       "status",

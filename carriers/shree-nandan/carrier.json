@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://connectingnandan.com/web-tracking/{trackingNumber}",
     "searchUrl": "https://www.shreenandancourier.com/",
+    "helpUrl": "https://www.shreenandancourier.com/contact-us",
     "canaryUrl": "https://www.shreenandancourier.com/",
     "shows": [
       "status",

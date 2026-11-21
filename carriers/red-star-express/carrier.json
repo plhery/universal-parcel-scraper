@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://redstarplc.com/tracker/",
+    "helpUrl": "https://redstarplc.com/contact-us/",
     "canaryUrl": "https://redstarplc.com/tracker/",
     "shows": [],
     "scraped": [],

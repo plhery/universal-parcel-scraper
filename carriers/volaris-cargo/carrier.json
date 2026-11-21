@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
     "searchUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://cms.volaris.com/es/informacion-util/carga-y-mensajeria/",
     "canaryUrl": "https://volarisy4.smartkargo.com/FrmAWBTracking.aspx",
     "shows": [
       "status",

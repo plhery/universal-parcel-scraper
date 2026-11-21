@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://t.bookurier.ro/?awb={trackingNumber}",
     "searchUrl": "https://t.bookurier.ro/",
+    "helpUrl": "https://app.grupall.ro/contact",
     "canaryUrl": "https://t.bookurier.ro/",
     "shows": [
       "status",

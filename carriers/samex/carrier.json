@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://mysamex.samex.cl/gts/pub/locNumSeguimiento.seam?tipo=L&localizador={trackingNumber}",
     "searchUrl": "https://www.samex.cl/wp-content/rastreo/rastreo/v1/rastreo_form.php",
+    "helpUrl": "https://www.samex.cl/contactanos/",
     "canaryUrl": "https://www.samex.cl/wp-content/rastreo/rastreo/v1/rastreo_form.php",
     "shows": [],
     "scraped": [],

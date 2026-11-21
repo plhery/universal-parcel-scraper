@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://expressgodo.com/track.php?order_track={trackingNumber}",
     "searchUrl": "https://expressgodo.com/track.php",
+    "helpUrl": "https://expressgodo.com/contact.html",
     "canaryUrl": "https://expressgodo.com/track.php",
     "shows": [],
     "scraped": [],

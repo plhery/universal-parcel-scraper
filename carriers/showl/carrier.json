@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://oms.showl.com/tracking",
+    "helpUrl": "https://www.showl.com/contact/",
     "canaryUrl": "https://oms.showl.com/tracking",
     "shows": [],
     "scraped": [],

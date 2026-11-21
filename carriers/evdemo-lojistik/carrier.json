@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.evdemolojistik.com/takip?kargo_kodu={trackingNumber}",
     "searchUrl": "https://www.evdemolojistik.com/takip",
+    "helpUrl": "https://www.evdemolojistik.com/iletisim",
     "canaryUrl": "https://www.evdemolojistik.com/takip",
     "shows": [
       "status",

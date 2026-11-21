@@ -31,6 +31,7 @@
   ],
   "portal": {
     "searchUrl": "https://royalx.net/tracking",
+    "helpUrl": "https://royalx.net/contact-us",
     "canaryUrl": "https://royalx.net/tracking",
     "shows": [
       "status",

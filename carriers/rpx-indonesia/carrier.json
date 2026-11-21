@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://rpx.co.id/tracking",
+    "helpUrl": "https://rpx.co.id/contact-us",
     "canaryUrl": "https://ke-api-admin-v2-x3ct6vzffa-et.a.run.app/",
     "shows": [
       "status",

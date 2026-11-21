@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://alfamensajes.com/consulta/{trackingNumber}",
     "searchUrl": "https://alfamensajes.com/",
+    "helpUrl": "https://alfamensajes.com/pqrs",
     "canaryUrl": "https://alfamensajes.com/",
     "shows": [
       "status",

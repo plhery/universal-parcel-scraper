@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
+    "helpUrl": "https://ctm-messagerie.ma/fr/contact",
     "canaryUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
     "shows": [],
     "scraped": [],

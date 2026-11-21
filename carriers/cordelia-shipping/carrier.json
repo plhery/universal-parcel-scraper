@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://cordelialine.com/",
     "searchUrl": "https://cordelialine.com/",
+    "helpUrl": "https://cordelialine.com/contact/",
     "canaryUrl": "https://cordelialine.com/",
     "shows": [
       "status",

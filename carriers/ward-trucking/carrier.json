@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://wardtlctools.com/wardtrucking/traceshipment/create?pro={trackingNumber}",
     "searchUrl": "https://wardtlctools.com/wardtrucking/traceshipment/create",
+    "helpUrl": "https://www.wardtlc.com/contact-ward-tlc/",
     "canaryUrl": "https://www.wardtlc.com/",
     "shows": [],
     "scraped": [],

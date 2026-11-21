@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.teamww.com/wp-content/tracking/teamTrac.php?hbl={trackingNumber}",
     "searchUrl": "https://www.teamww.com/tracking/team-trac/",
+    "helpUrl": "https://www.teamww.com/company/contact/",
     "canaryUrl": "https://www.teamww.com/tracking/team-trac/",
     "shows": [
       "status",

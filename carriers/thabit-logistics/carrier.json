@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://thabit-logistics.com/track-shipment/{trackingNumber}",
     "searchUrl": "https://thabit-logistics.com/track-shipment",
+    "helpUrl": "https://thabit-logistics.com/contact-us",
     "canaryUrl": "https://thabit-logistics.com/",
     "shows": [
       "Status",

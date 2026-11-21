@@ -45,6 +45,7 @@
   "portal": {
     "url": "https://www.cvsnet.co.kr/invoice/tracking.do?invoice_no={trackingNumber}",
     "searchUrl": "https://www.cvsnet.co.kr/reservation-inquiry/delivery/index.do",
+    "helpUrl": "https://www.cvsnet.co.kr/customer-center/communityid/faq/list.do",
     "canaryUrl": "https://www.cvsnet.co.kr/reservation-inquiry/delivery/index.do",
     "shows": [
       "status",

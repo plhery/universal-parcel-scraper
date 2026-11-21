@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://myg2.g2ocean.com/cargo-tracking",
     "searchUrl": "https://myg2.g2ocean.com/cargo-tracking",
+    "helpUrl": "https://www.g2ocean.com/offices/",
     "canaryUrl": "https://myg2.g2ocean.com/cargo-tracking",
     "shows": [
       "status",

@@ -35,6 +35,7 @@
   ],
   "portal": {
     "url": "https://tracking.torrestir.com/?id={trackingNumber}",
+    "helpUrl": "https://www.torrestir.com/en/send-us-a-message/",
     "canaryUrl": "https://tracking.torrestir.com/",
     "shows": [
       "status",

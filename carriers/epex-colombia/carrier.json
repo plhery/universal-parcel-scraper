@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://epex.com.co/rastrea/?id={trackingNumber}",
     "searchUrl": "https://epex.com.co/rastrea/",
+    "helpUrl": "https://epex.com.co/epex-soporte-al-cliente/",
     "canaryUrl": "https://epex.com.co/rastrea/",
     "shows": [
       "status",

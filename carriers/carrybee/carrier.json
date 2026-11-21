@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://carrybee.com/track?consignmentId={trackingNumber}",
     "searchUrl": "https://carrybee.com/track",
+    "helpUrl": "https://carrybee.com/contact-us",
     "canaryUrl": "https://carrybee.com/track",
     "shows": [
       "status",

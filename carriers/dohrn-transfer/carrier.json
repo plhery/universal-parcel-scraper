@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://facts.dohrn.com/scripts/cgiip.exe/protraceext.htm?wpro={trackingNumber}",
     "searchUrl": "https://facts.dohrn.com/scripts/cgiip.exe/protraceext.htm",
+    "helpUrl": "https://www.dohrn.com/about/contact-directory",
     "canaryUrl": "https://facts.dohrn.com/scripts/cgiip.exe/protraceext.htm",
     "shows": [
       "status",

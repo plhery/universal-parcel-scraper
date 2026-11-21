@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://brinkdk.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://brinkdk.opter.cloud/tt",
+    "helpUrl": "https://www.brinktransport.dk/kontakt.aspx",
     "canaryUrl": "https://brinkdk.opter.cloud/tt",
     "shows": [],
     "scraped": [],

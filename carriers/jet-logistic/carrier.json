@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://jetlogistic.kz/",
+    "helpUrl": "https://jetlogistic.kz/%D0%BA%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D1%8B.html",
     "canaryUrl": "https://jetlogistic.kz/",
     "shows": [
       "status",

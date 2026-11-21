@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://optimuscourier.ro/tracking/?awb_nr={trackingNumber}",
     "searchUrl": "https://optimuscourier.ro/tracking/",
+    "helpUrl": "https://optimuscourier.ro/contact/",
     "canaryUrl": "https://optimuscourier.ro/tracking/",
     "shows": [],
     "scraped": [],

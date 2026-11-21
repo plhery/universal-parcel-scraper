@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://rhenusmydelivery.com/de",
+    "helpUrl": "https://rhenusmydelivery.com/de/contact",
     "canaryUrl": "https://www.rhenus.group/de/de/",
     "shows": [],
     "scraped": [],

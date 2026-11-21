@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.fast-express.com/en/action/tracking/{trackingNumber}",
     "searchUrl": "https://www.fast-express.com/en/",
+    "helpUrl": "https://www.fast-express.com/en/pages/iletisim",
     "canaryUrl": "https://www.fast-express.com/en/",
     "shows": [],
     "scraped": [],

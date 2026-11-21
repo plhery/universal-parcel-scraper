@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.delnext.com/PT/track_your_parcel?tracking_code={trackingNumber}",
     "searchUrl": "https://www.delnext.com/PT/track_your_parcel",
+    "helpUrl": "https://www.delnext.com/PT/contact_us",
     "canaryUrl": "https://www.delnext.com/PT/track_your_parcel",
     "shows": [
       "status",

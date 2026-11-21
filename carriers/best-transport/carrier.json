@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://bst.nu/?search={trackingNumber}",
     "searchUrl": "https://bst.nu/",
+    "helpUrl": "https://www.besttransport.se/om-best/kontakta-best/",
     "canaryUrl": "https://bst.nu/",
     "shows": [],
     "scraped": [],

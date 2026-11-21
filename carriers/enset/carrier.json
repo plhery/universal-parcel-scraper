@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://ensetfi.opter.cloud/TT?keyword={trackingNumber}",
     "searchUrl": "https://ensetfi.opter.cloud/TT",
+    "helpUrl": "https://enset.fi/yhteystiedot",
     "canaryUrl": "https://ensetfi.opter.cloud/TT",
     "shows": [],
     "scraped": [],

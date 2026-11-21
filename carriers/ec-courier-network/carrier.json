@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.ecnetwork.co.uk/order-list/{trackingNumber}",
     "searchUrl": "https://www.ecnetwork.co.uk/order-tracking-shortcode",
+    "helpUrl": "https://www.ecnetwork.co.uk/contact",
     "canaryUrl": "https://www.ecnetwork.co.uk/order-tracking-shortcode",
     "shows": [],
     "scraped": [],

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://crm.kuz.ch/",
+    "helpUrl": "https://www.kurierzentrale.ch/uberuns",
     "canaryUrl": "https://www.kurierzentrale.ch/",
     "shows": [],
     "scraped": [],

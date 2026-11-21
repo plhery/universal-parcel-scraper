@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.sgxpress.com/query/?logic_num={trackingNumber}",
     "searchUrl": "https://www.sgxpress.com/query/",
+    "helpUrl": "https://www.sgxpress.com/contact/",
     "canaryUrl": "https://www.sgxpress.com/query/",
     "shows": [],
     "scraped": [],

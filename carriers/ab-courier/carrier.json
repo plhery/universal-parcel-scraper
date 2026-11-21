@@ -43,6 +43,7 @@
   "portal": {
     "url": "https://abcourier.com/CCWebClient/General/TrackingInfo/{trackingNumber}",
     "searchUrl": "https://abcourier.com/",
+    "helpUrl": "https://abcourier.com/Forms/ContactUs.aspx",
     "canaryUrl": "https://abcourier.com/",
     "shows": [
       "status",

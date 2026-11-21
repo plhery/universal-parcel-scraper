@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://sofexpost.md/",
+    "helpUrl": "https://sofexpost.md/ro/contacte/",
     "canaryUrl": "https://sofexpost.md/",
     "shows": [],
     "scraped": [],

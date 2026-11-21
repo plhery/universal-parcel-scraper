@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
+    "helpUrl": "https://kanga.gr/epikoinonia/",
     "canaryUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
     "shows": [],
     "scraped": [],

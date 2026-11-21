@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.daiichi-kamotsu.co.jp/chase/contact_num/",
+    "helpUrl": "https://www.daiichi-kamotsu.co.jp/inquiry/",
     "canaryUrl": "https://www.daiichi-kamotsu.co.jp/chase/contact_num/",
     "shows": [],
     "scraped": [],

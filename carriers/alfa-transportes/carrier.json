@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://alfatransportes.com.br/",
+    "helpUrl": "https://alfatransportes.com.br/central-de-duvidas/",
     "canaryUrl": "https://alfatransportes.com.br/",
     "shows": [],
     "scraped": [],

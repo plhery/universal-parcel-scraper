@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.rrswl.com/order/searchLishi",
+    "helpUrl": "https://www.rrswl.com/front/prob/list",
     "canaryUrl": "https://www.rrswl.com/order/searchLishi",
     "shows": [],
     "scraped": [],

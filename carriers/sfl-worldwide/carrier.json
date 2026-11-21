@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://track.sflworldwide.com/",
     "searchUrl": "https://track.sflworldwide.com/",
+    "helpUrl": "https://www.sflworldwide.com/contact-us",
     "canaryUrl": "https://track.sflworldwide.com/",
     "shows": [
       "status",

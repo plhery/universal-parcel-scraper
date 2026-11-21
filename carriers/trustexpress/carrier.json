@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://trustexpress.bg/tracking",
+    "helpUrl": "https://trustexpress.bg/kontakti",
     "canaryUrl": "https://trustexpress.bg/tracking",
     "shows": [],
     "scraped": [],

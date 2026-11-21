@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.fermopoint.it/prenotazione/{trackingNumber}",
     "searchUrl": "https://www.fermopoint.it/traccia-un-ritiro",
+    "helpUrl": "https://www.fermopoint.it/contatti",
     "canaryUrl": "https://www.fermopoint.it/traccia-un-ritiro",
     "shows": [
       "status",

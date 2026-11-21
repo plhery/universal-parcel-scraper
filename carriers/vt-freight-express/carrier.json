@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://portal.vtfe.com.au/Track/VTFE/{trackingNumber}",
     "searchUrl": "https://www.vtfe.com.au/",
+    "helpUrl": "https://www.vtfe.com.au/contact-us/",
     "canaryUrl": "https://www.vtfe.com.au/",
     "shows": [],
     "scraped": [],

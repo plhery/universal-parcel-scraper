@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://cliente.atualcargas.com.br/rastreamento",
+    "helpUrl": "https://www.atualcargas.com.br/fale-conosco/",
     "canaryUrl": "https://cliente.atualcargas.com.br/rastreamento",
     "shows": [],
     "scraped": [],

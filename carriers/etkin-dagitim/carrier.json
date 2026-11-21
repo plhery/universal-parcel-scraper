@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://musteri.etkindagitim.com/",
+    "helpUrl": "https://www.etkindagitim.com/iletisim/",
     "canaryUrl": "https://musteri.etkindagitim.com/",
     "shows": [],
     "scraped": [],

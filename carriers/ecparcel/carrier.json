@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://track.ec-parcel.com/track?trackingNumber={trackingNumber}",
     "searchUrl": "https://track.ec-parcel.com/",
+    "helpUrl": "https://www.ec-parcel.com/parcel-problem/",
     "canaryUrl": "https://track.ec-parcel.com/",
     "shows": [],
     "scraped": [],

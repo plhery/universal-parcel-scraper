@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://chintongex.com/#/track?number={trackingNumber}",
     "searchUrl": "https://chintongex.com/",
+    "helpUrl": "https://chintongex.com/#/help",
     "canaryUrl": "https://chintongex.com/",
     "shows": [],
     "scraped": [],

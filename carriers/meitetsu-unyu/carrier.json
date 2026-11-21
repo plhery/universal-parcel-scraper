@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
+    "helpUrl": "https://www.meitetsuunyu.co.jp/store/",
     "canaryUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
     "shows": [],
     "scraped": [],

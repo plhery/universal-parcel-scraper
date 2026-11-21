@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.diera.pl/",
+    "helpUrl": "https://diera.pl/kontakt/",
     "canaryUrl": "https://tracking.diera.pl/",
     "shows": [],
     "scraped": [],

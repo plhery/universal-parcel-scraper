@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.emiratescx.com/en/tracking-details?awb_number={trackingNumber}",
     "searchUrl": "https://www.emiratescx.com/en/tracking",
+    "helpUrl": "https://www.emiratescx.com/en/supportcenter",
     "canaryUrl": "https://www.emiratescx.com/en/tracking",
     "shows": [],
     "scraped": [],

@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
+    "helpUrl": "https://www.hmm21.com/company/faq.do",
     "canaryUrl": "https://www.hmm21.com/e-service/general/trackNTrace/TrackNTrace.do",
     "shows": [
       "status",

@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://topparcel.com/parcels/tracking",
     "searchUrl": "https://topparcel.com/parcels/tracking",
+    "helpUrl": "https://topparcel.com/contacts",
     "canaryUrl": "https://topparcel.com/parcels/tracking",
     "shows": [
       "status",

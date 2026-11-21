@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://my.kiwiexpress.co.nz/barcode/{trackingNumber}",
     "searchUrl": "https://www.kiwiexpress.co.nz/",
+    "helpUrl": "https://www.kiwiexpress.co.nz/contact-us/",
     "canaryUrl": "https://www.kiwiexpress.co.nz/",
     "shows": [],
     "scraped": [],

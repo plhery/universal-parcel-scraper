@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://track.citypak.lk/track?tracking_number={trackingNumber}",
     "searchUrl": "https://track.citypak.lk/",
+    "helpUrl": "https://www.citypak.lk/contact-us/",
     "canaryUrl": "https://track.citypak.lk/",
     "shows": [],
     "scraped": [],

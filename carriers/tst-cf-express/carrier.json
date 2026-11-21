@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.tst-cfexpress.com/tracing/by-url?lang=e&PRO={trackingNumber}",
     "searchUrl": "https://m.tst-cfexpress.com/tracing",
+    "helpUrl": "https://www.tst-cfexpress.com/contact-us",
     "canaryUrl": "https://m.tst-cfexpress.com/tracing",
     "shows": [
       "status",

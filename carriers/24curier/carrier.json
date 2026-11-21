@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13",
+    "helpUrl": "https://24curier.ro/contact/",
     "canaryUrl": "https://24curier.ro/",
     "shows": [],
     "scraped": [],

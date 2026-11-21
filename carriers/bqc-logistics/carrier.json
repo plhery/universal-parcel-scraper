@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.1001000.com/newwl/unLogin/track",
+    "helpUrl": "https://www.1001000.com/newwl/bulletin/nbqInfo?gmCode=881",
     "canaryUrl": "https://www.1001000.com/newwl/unLogin/track",
     "shows": [],
     "scraped": [],

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://papslogistics.com/tracking/?uid={trackingNumber}",
     "searchUrl": "https://papslogistics.com/tracking/",
+    "helpUrl": "https://papslogistics.com/contact/",
     "canaryUrl": "https://papslogistics.com/tracking/",
     "shows": [],
     "scraped": [],

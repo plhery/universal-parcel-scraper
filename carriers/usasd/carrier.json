@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.usasd.com/index.php?c=index&f=search&sn={trackingNumber}",
     "searchUrl": "https://www.usasd.com/",
+    "helpUrl": "https://www.usasd.com/index.php?id=contactus",
     "canaryUrl": "https://www.usasd.com/",
     "shows": [],
     "scraped": [],

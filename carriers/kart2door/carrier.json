@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.kart2door.com/EcomTracking?axb={trackingNumber}",
     "searchUrl": "https://www.kart2door.com/EcomTracking",
+    "helpUrl": "https://www.kart2door.com/contactus",
     "canaryUrl": "https://www.kart2door.com/",
     "shows": [],
     "scraped": [],

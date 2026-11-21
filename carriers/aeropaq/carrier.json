@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://aeropaq.com/",
+    "helpUrl": "https://aeropaq.com/contacto/",
     "canaryUrl": "https://aeropaq.com/",
     "shows": [],
     "scraped": [],

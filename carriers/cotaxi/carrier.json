@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.cotaxi.com.co/",
     "searchUrl": "https://www.cotaxi.com.co/",
+    "helpUrl": "https://www.cotaxi.com.co/servicio-al-cliente/",
     "canaryUrl": "https://www.cotaxi.com.co/",
     "shows": [
       "status",

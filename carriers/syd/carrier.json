@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://sud.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
     "searchUrl": "https://www.suyd56.com/Index.html",
+    "helpUrl": "https://www.suyd56.com/Contact/",
     "canaryUrl": "https://www.suyd56.com/Index.html",
     "shows": [],
     "scraped": [],

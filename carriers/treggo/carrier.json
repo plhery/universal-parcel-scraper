@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ar.treggo.co/tracking/",
+    "helpUrl": "https://ar.treggo.co/preguntas.html",
     "canaryUrl": "https://ar.treggo.co/tracking/",
     "shows": [],
     "scraped": [],

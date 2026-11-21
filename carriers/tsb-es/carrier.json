@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.tsbconnect.net/app/tracking/public?search=true",
+    "helpUrl": "https://www.tsbtrans.com/contacto/",
     "canaryUrl": "https://www.tsbconnect.net/app/tracking/public",
     "shows": [
       "status",

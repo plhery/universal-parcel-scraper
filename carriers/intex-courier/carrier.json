@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://app.intexcourier.al/packages/getByTrackingCode?tracking_number_list={trackingNumber}",
     "searchUrl": "https://intexcourier.al/gjurmo.html",
+    "helpUrl": "https://intexcourier.al/kontakt.html",
     "canaryUrl": "https://app.intexcourier.al/packages/getByTrackingCode",
     "shows": [],
     "scraped": [],

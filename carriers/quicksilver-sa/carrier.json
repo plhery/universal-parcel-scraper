@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://erp.quick-silver.express/v2/tracking/{trackingNumber}",
     "searchUrl": "https://quick-silver.express/Tracking",
+    "helpUrl": "https://quick-silver.express/ContactUs",
     "canaryUrl": "https://quick-silver.express/Tracking",
     "shows": [
       "status",

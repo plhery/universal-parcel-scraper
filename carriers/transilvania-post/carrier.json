@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.transilvaniapost.ro/awb/{trackingNumber}",
     "searchUrl": "https://www.transilvaniapost.ro/awb",
+    "helpUrl": "https://www.transilvaniapost.ro/pagini/contact.html",
     "canaryUrl": "https://www.transilvaniapost.ro/awb",
     "shows": [],
     "scraped": [],

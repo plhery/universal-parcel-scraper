@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://method-logistics.com/localizador-de-envios/",
+    "helpUrl": "https://method-logistics.com/contacto/",
     "canaryUrl": "https://method-logistics.com/localizador-de-envios/",
     "shows": [],
     "scraped": [],

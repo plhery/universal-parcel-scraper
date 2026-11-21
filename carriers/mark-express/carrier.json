@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://crm.markerp.in/Frm_DocTrackWeb.aspx?docno={trackingNumber}",
     "searchUrl": "https://markexpress.co.in/",
+    "helpUrl": "https://markexpress.co.in/contact-us",
     "canaryUrl": "https://markexpress.co.in/",
     "shows": [],
     "scraped": [],

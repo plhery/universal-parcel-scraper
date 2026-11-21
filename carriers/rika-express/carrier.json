@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://home.courierexe.ru/350/tracking?orderno={trackingNumber}&submit=1&lang=2",
     "searchUrl": "https://rika.kz/en/tracking/",
+    "helpUrl": "https://rika.kz/en/contact/",
     "canaryUrl": "https://rika.kz/en/tracking/",
     "shows": [],
     "scraped": [],

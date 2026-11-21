@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://mmcargoservices.co.za/track?number={trackingNumber}",
     "searchUrl": "https://mmcargoservices.co.za/track",
+    "helpUrl": "https://mmcargoservices.co.za/contact",
     "canaryUrl": "https://mmcargoservices.co.za/track",
     "shows": [],
     "scraped": [],

@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.slg-shipping.com/#/home/tracking",
     "searchUrl": "https://www.slg-shipping.com/#/home/tracking",
+    "helpUrl": "https://www.slg-shipping.com/#/home/contact",
     "canaryUrl": "https://www.slg-shipping.com/",
     "shows": [
       "status",

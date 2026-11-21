@@ -44,6 +44,7 @@
   "portal": {
     "url": "https://receiver.nowcouriers.co.nz/?track={trackingNumber}",
     "searchUrl": "https://receiver.nowcouriers.co.nz/",
+    "helpUrl": "https://nowcouriers.co.nz/contact/",
     "canaryUrl": "https://receiver.nowcouriers.co.nz/",
     "shows": [
       "status",

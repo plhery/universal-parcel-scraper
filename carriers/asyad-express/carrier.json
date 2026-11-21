@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.asyadexpress.om/track-trace/{trackingNumber}",
     "searchUrl": "https://www.asyadexpress.om/track-trace",
+    "helpUrl": "https://www.asyadexpress.om/contact/contact_us",
     "canaryUrl": "https://www.asyadexpress.om/track-trace",
     "shows": [],
     "scraped": [

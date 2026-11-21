@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.palletforce.com/en/track-my-pallet/",
+    "helpUrl": "https://www.palletforce.com/en/contact/",
     "canaryUrl": "https://www.palletforce.com/en/track-my-pallet/",
     "shows": [],
     "scraped": [],

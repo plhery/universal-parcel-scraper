@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://app.makesend.asia/tracking?t={trackingNumber}",
     "searchUrl": "https://app.makesend.asia/tracking",
+    "helpUrl": "https://www.makesend.asia/contact/",
     "canaryUrl": "https://app.makesend.asia/tracking",
     "shows": [],
     "scraped": [],

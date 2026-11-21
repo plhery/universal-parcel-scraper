@@ -21,6 +21,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://track.mikropakket.nl/",
+    "helpUrl": "https://www.mikropakket.nl/klantenservice/",
     "canaryUrl": "https://track.mikropakket.nl/",
     "shows": [],
     "scraped": [],

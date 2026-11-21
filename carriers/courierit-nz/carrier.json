@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.courierit.net.nz/Home/Track",
     "searchUrl": "https://www.courierit.net.nz/Home/Track",
+    "helpUrl": "https://www.courierit.co.nz/contact.html",
     "canaryUrl": "https://www.courierit.net.nz/Home/Track",
     "shows": [
       "status",

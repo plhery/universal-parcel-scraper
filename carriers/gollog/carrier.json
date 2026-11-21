@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://servicos.gollog.com.br/app/site/tracking?code={trackingNumber}",
     "searchUrl": "https://servicos.gollog.com.br/app/site/tracking",
+    "helpUrl": "https://www.gollog.com.br/atendimento/canais-de-atendimento",
     "canaryUrl": "https://servicos.gollog.com.br/app/site/tracking",
     "shows": [
       "status",

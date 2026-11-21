@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.firstdeliverygroup.com/suivi-de-colis/",
+    "helpUrl": "https://www.firstdeliverygroup.com/contact/",
     "canaryUrl": "https://www.firstdeliverygroup.com/suivi-de-colis/",
     "shows": [],
     "scraped": [],

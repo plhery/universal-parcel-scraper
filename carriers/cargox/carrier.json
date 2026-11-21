@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://t.cargox.com.tr/getlink.php?barcode={trackingNumber}",
     "searchUrl": "https://www.cargox.com.tr/",
+    "helpUrl": "https://www.cargox.com.tr/pages/contact",
     "canaryUrl": "https://www.cargox.com.tr/",
     "shows": [
       "status",

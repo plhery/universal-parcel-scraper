@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://tracking.scangl.com/{trackingNumber}",
     "searchUrl": "https://tracking.scangl.com/",
+    "helpUrl": "https://www.scangl.com/contact/",
     "canaryUrl": "https://tracking.scangl.com/",
     "shows": [],
     "scraped": [],

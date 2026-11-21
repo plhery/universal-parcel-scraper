@@ -11,6 +11,7 @@
   "portal": {
     "url": "https://astral.fr8booking.com/trackAndTrace",
     "searchUrl": "https://astral.fr8booking.com/trackAndTrace",
+    "helpUrl": "https://astral-aviation.com/contact",
     "canaryUrl": "https://astral.fr8booking.com/trackAndTrace",
     "shows": ["status", "history", "flight_and_routing", "goods_and_package_details"],
     "scraped": ["status", "history", "provider_code"],

@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://sacoshipping.com/track/",
     "searchUrl": "https://sacoshipping.com/track/",
+    "helpUrl": "https://sacoshipping.com/kontakt/",
     "canaryUrl": "https://sacoshipping.com/track/",
     "shows": [
       "status",

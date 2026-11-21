@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.atshealthcare.ca/quickTrackResult?ship={trackingNumber}",
     "searchUrl": "https://www.atshealthcare.ca/ShipTracking-en",
+    "helpUrl": "https://www.atshealthcare.ca/contact",
     "canaryUrl": "https://www.atshealthcare.ca/ShipTracking-en",
     "shows": [
       "status",

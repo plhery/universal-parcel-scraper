@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://acplcargo.com/tracking?gcNumber={trackingNumber}",
     "searchUrl": "https://acplcargo.com/tracking",
+    "helpUrl": "https://acplcargo.com/customer-care",
     "canaryUrl": "https://acplcargo.com/tracking",
     "shows": [
       "status",

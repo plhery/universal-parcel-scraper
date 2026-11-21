@@ -27,6 +27,7 @@
   ],
   "portal": {
     "searchUrl": "https://ttsecure.hartrodt.com/pserv/tt/open?sep=1",
+    "helpUrl": "https://www.hartrodt.com/contact",
     "canaryUrl": "https://ttsecure.hartrodt.com/pserv/tt/open",
     "shows": [
       "status",

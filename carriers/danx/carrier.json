@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://login.danx.com/",
     "searchUrl": "https://login.danx.com/",
+    "helpUrl": "https://danx.com/contact/",
     "canaryUrl": "https://login.danx.com/",
     "shows": [
       "status",

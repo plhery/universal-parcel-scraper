@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://api.customco.com/scripts/cgiip.exe/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}&seskey=&nav=top&language=",
     "searchUrl": "https://www.customco.com/",
+    "helpUrl": "https://www.customco.com/contact/",
     "canaryUrl": "https://www.customco.com/",
     "shows": [
       "status",

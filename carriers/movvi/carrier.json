@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://movvi.com.br/ferramentas/rastreio",
+    "helpUrl": "https://movvi.com.br/central-de-ajuda",
     "canaryUrl": "https://movvi.com.br/ferramentas/rastreio",
     "shows": [],
     "scraped": [],

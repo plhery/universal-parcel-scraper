@@ -26,6 +26,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://mynexus.pallex.com/tracking",
+    "helpUrl": "https://www.pallex.com/contact-us",
     "canaryUrl": "https://mynexus.pallex.com/tracking",
     "shows": [],
     "scraped": [],

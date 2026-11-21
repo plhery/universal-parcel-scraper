@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://bypost.no/spor/{trackingNumber}/",
     "searchUrl": "https://bypost.no/spor/",
+    "helpUrl": "https://bypost.no/kontakt/",
     "canaryUrl": "https://bypost.no/spor/",
     "shows": [
       "status",

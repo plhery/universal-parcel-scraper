@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://cliente.mira.com.br/rastreamento",
+    "helpUrl": "https://mira.com.br/faq/",
     "canaryUrl": "https://cliente.mira.com.br/rastreamento",
     "shows": [],
     "scraped": [],

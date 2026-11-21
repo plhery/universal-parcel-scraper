@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.qrcargo.com/s/track-your-shipment",
     "searchUrl": "https://www.qrcargo.com/s/track-your-shipment",
+    "helpUrl": "https://www.qrcargo.com/s/help-centre/contact-us",
     "canaryUrl": "https://www.qrcargo.com/s/track-your-shipment",
     "shows": [
       "status",

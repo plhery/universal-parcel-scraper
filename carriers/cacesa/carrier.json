@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.cacesa.com/en/tracking?busqueda={trackingNumber}",
     "searchUrl": "https://www.cacesa.com/en/tracking",
+    "helpUrl": "https://www.cacesa.com/en/faqs",
     "canaryUrl": "https://www.cacesa.com/en/tracking",
     "shows": [
       "status",

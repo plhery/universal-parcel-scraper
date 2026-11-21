@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://matyexpress.com/tracking/",
+    "helpUrl": "https://matyexpress.com/contact/",
     "canaryUrl": "https://matyexpress.com/tracking/",
     "shows": [],
     "scraped": [],

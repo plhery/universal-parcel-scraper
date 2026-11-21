@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://hurtigguttano.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://hurtigguttano.opter.cloud/tt",
+    "helpUrl": "https://hurtig-gutta.no/kontakt/",
     "canaryUrl": "https://hurtigguttano.opter.cloud/tt",
     "shows": [],
     "scraped": [],

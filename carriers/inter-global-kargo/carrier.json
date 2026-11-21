@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.globalkargo.com/tr/KargoDetay/{trackingNumber}/0000",
     "searchUrl": "https://www.globalkargo.com/tr",
+    "helpUrl": "https://www.globalkargo.com/tr/Kurumsal/Iletisim",
     "canaryUrl": "https://www.globalkargo.com/tr",
     "shows": [],
     "scraped": [],

@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://a.ctc-expresstms2.com.tw/",
+    "helpUrl": "https://www.ctc-express.com.tw/location.html",
     "canaryUrl": "https://a.ctc-expresstms2.com.tw/",
     "shows": [],
     "scraped": [],

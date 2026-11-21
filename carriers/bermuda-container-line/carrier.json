@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://neptunebermuda.com/track-shipment/",
     "searchUrl": "https://neptunebermuda.com/track-shipment/",
+    "helpUrl": "https://neptunebermuda.com/contact-us/",
     "canaryUrl": "https://neptunebermuda.com/track-shipment/",
     "shows": [
       "status",

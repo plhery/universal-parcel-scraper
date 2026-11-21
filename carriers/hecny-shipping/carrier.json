@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.hecny.com/en/track-and-trace",
     "searchUrl": "https://www.hecny.com/en/track-and-trace",
+    "helpUrl": "https://www.hecny.com/en/contact",
     "canaryUrl": "https://www.hecny.com/en/track-and-trace",
     "shows": [
       "status",

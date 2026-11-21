@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://dashboard-parner.dylo.com/rastreo",
+    "helpUrl": "https://dylo.com/overland-2/",
     "canaryUrl": "https://dashboard-parner.dylo.com/rastreo",
     "shows": [],
     "scraped": [],

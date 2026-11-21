@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://track.leman.com/",
+    "helpUrl": "https://leman.com/contact/",
     "canaryUrl": "https://track.leman.com/",
     "shows": [],
     "scraped": [],

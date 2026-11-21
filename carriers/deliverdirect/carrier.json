@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.deliverdirect.com/EcomTracking?axb={trackingNumber}",
     "searchUrl": "https://www.deliverdirect.com/EcomTracking",
+    "helpUrl": "https://www.deliverdirect.com/contactus",
     "canaryUrl": "https://www.deliverdirect.com/",
     "shows": [],
     "scraped": [],

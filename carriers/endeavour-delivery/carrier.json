@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://endeavourdelivery.com.au/track",
+    "helpUrl": "https://help.endeavourdelivery.com.au/hc/en-us/requests/new",
     "canaryUrl": "https://endeavourdelivery.com.au/",
     "shows": [],
     "scraped": [],

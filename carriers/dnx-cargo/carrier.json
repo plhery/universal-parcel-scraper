@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://dnxerp.in/NewPages/Tracking/Website_Tracking_New.aspx",
+    "helpUrl": "https://dnxindia.com/contact/",
     "canaryUrl": "https://dnxerp.in/NewPages/Tracking/Website_Tracking_New.aspx",
     "shows": [],
     "scraped": [],

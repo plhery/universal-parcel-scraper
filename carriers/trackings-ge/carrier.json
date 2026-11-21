@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://trackings.ge/en/track?track_num={trackingNumber}",
     "searchUrl": "https://trackings.ge/en/track",
+    "helpUrl": "https://trackings.ge/en/contacts",
     "canaryUrl": "https://trackings.ge/en/track",
     "shows": [
       "status",

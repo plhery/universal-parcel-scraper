@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://domestic-track.navlungo.com/en/check/{trackingNumber}/",
     "searchUrl": "https://domestic-track.navlungo.com/en/",
+    "helpUrl": "https://support.navlungo.com/support/home",
     "canaryUrl": "https://domestic-track.navlungo.com/en/",
     "shows": [
       "status",

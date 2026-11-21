@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://app.jetizz.com/gonderi-takip",
+    "helpUrl": "https://jetizz.com/iletisim",
     "canaryUrl": "https://jetizz.com/",
     "shows": [
       "status",

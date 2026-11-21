@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://value.co.za/track/index.php?wb={trackingNumber}",
     "searchUrl": "https://value.co.za/track/search.php",
+    "helpUrl": "https://value.co.za/contact-us/",
     "canaryUrl": "https://value.co.za/",
     "shows": [],
     "scraped": [],

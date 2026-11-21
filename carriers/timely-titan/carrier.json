@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://timelytitan.com/tracking.html?number={trackingNumber}",
     "searchUrl": "https://timelytitan.com/tracking.html",
+    "helpUrl": "https://timelytitan.com/contact.html",
     "canaryUrl": "https://timelytitan.com/tracking.html",
     "shows": [
       "history",

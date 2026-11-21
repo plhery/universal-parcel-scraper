@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
+    "helpUrl": "https://www.one-line.com/en/contact-us",
     "canaryUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
     "shows": [
       "status",

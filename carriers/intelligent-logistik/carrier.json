@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311",
+    "helpUrl": "https://intelligentlogistik.ro/contact/",
     "canaryUrl": "https://intelligentlogistik.ro/",
     "shows": [],
     "scraped": [],

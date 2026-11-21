@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://go.shipblu.com/en/{trackingNumber}",
     "searchUrl": "https://go.shipblu.com/en/",
+    "helpUrl": "https://support.shipblu.com/en",
     "canaryUrl": "https://go.shipblu.com/en/",
     "shows": [
       "status",

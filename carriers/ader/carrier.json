@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://aderonline.com/contacto/informacion-de-pedidos/",
+    "helpUrl": "https://aderonline.com/contacto/",
     "canaryUrl": "https://aderonline.com/contacto/informacion-de-pedidos/",
     "shows": [],
     "scraped": [],

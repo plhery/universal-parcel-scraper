@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://svennsno.opter.cloud/TT?keyword={trackingNumber}",
     "searchUrl": "https://svennsno.opter.cloud/TT",
+    "helpUrl": "https://www.svenns.no/ac/kontakt-oss",
     "canaryUrl": "https://svennsno.opter.cloud/TT",
     "shows": [],
     "scraped": [],

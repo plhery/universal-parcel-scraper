@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.tzg-infocenter.com/easytrack/",
+    "helpUrl": "https://www.zieglergroup.com/contact/",
     "canaryUrl": "https://www.tzg-infocenter.com/easytrack/",
     "shows": [],
     "scraped": [],

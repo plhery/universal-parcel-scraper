@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.drop2shop.ie/tracking?trackingnumber={trackingNumber}",
     "searchUrl": "https://www.drop2shop.ie/tracking",
+    "helpUrl": "https://www.coll-8.com/contact/",
     "canaryUrl": "https://www.drop2shop.ie/tracking",
     "shows": [
       "status",

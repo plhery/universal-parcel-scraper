@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://airwayscourier.co.in/Tracking_new.aspx?awb_no={trackingNumber}&type=w",
     "searchUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
+    "helpUrl": "https://airwayscourier.co.in/contact.aspx",
     "canaryUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
     "shows": [
       "status",

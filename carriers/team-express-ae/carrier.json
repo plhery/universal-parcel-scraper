@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://teamexpressme.com/tracking?trackno={trackingNumber}",
     "searchUrl": "https://teamexpressme.com/tracking",
+    "helpUrl": "https://teamexpressme.com/contact",
     "canaryUrl": "https://teamexpressme.com/tracking",
     "shows": [
       "status",

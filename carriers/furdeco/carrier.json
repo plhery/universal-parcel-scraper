@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://furdeco.co.uk/track-your-order",
+    "helpUrl": "https://furdeco.co.uk/contact-furdeco",
     "canaryUrl": "https://furdeco.co.uk/track-your-order",
     "shows": [],
     "scraped": [],

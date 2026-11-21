@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.grupovencedor.com/paqueteria",
     "searchUrl": "https://www.grupovencedor.com/paqueteria",
+    "helpUrl": "https://www.grupovencedor.com/contacto",
     "canaryUrl": "https://www.grupovencedor.com/paqueteria",
     "shows": [
       "status",

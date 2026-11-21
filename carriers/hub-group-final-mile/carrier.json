@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.hubgroup.com/logistics-management/final-mile/",
+    "helpUrl": "https://www.hubgroup.com/about-us/contact-us/",
     "canaryUrl": "https://www.hubgroup.com/logistics-management/final-mile/",
     "shows": [],
     "scraped": [],

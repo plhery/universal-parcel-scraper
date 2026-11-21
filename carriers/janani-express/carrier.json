@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://jananiexpress.com/tracking?cn={trackingNumber}",
     "searchUrl": "https://jananiexpress.com/tracking",
+    "helpUrl": "https://jananiexpress.com/contact",
     "canaryUrl": "https://jananiexpress.com/tracking",
     "shows": [],
     "scraped": [],

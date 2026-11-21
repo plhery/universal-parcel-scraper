@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://track.pigeonexpress.com/?tracking_number={trackingNumber}",
     "searchUrl": "https://track.pigeonexpress.com/",
+    "helpUrl": "https://pigeonexpress.com/contact",
     "canaryUrl": "https://track.pigeonexpress.com/",
     "shows": [],
     "scraped": [],

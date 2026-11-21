@@ -46,6 +46,7 @@
   "portal": {
     "url": "https://www.tracxlogis.com/tracking?trackingNo={trackingNumber}",
     "searchUrl": "https://www.tracxlogis.com/tracking",
+    "helpUrl": "https://www.tracxlogis.com/info/contact",
     "canaryUrl": "https://www.tracxlogis.com/tracking",
     "shows": [
       "status",

@@ -22,6 +22,7 @@
   "portal": {
     "url": "https://www.expressfreight.co.uk/track/view?number_txt={trackingNumber}",
     "searchUrl": "https://www.expressfreight.co.uk/track",
+    "helpUrl": "https://www.expressfreight.co.uk/contact",
     "canaryUrl": "https://www.expressfreight.co.uk/track",
     "shows": [],
     "scraped": [],

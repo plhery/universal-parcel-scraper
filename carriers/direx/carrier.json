@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://direx.bg/track/?code={trackingNumber}",
     "searchUrl": "https://direx.bg/track/",
+    "helpUrl": "https://direx.bg/contact/",
     "canaryUrl": "https://direx.bg/track/",
     "shows": [
       "status",

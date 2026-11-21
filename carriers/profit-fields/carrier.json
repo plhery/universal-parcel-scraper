@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://www.8dt.com/tracking?track={trackingNumber}",
     "searchUrl": "https://www.8dt.com/tracking",
+    "helpUrl": "https://www.8dt.com/faq",
     "canaryUrl": "https://www.8dt.com/",
     "shows": [
       "status",

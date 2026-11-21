@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://eushipments.com/tracking",
     "searchUrl": "https://eushipments.com/tracking",
+    "helpUrl": "https://eushipments.com/contact",
     "canaryUrl": "https://eushipments.com/tracking",
     "shows": [
       "status",

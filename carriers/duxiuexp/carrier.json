@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.duxiuexp.com/S/{trackingNumber}",
     "searchUrl": "https://www.duxiuexp.com/track/",
+    "helpUrl": "https://www.duxiuexp.com/contact.html",
     "canaryUrl": "https://www.duxiuexp.com/track/",
     "shows": [],
     "scraped": [],

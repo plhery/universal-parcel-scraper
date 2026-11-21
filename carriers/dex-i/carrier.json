@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.dex-i.com/site/tracking?trackingNums={trackingNumber}",
     "searchUrl": "https://www.dex-i.com/site/tracking",
+    "helpUrl": "https://www.dex-i.com/site/contact-us",
     "canaryUrl": "https://www.dex-i.com/",
     "shows": [],
     "scraped": [],

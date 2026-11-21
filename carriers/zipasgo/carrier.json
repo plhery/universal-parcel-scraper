@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://zipasgo.com/lt/siuntimas?tid={trackingNumber}",
     "searchUrl": "https://zipasgo.com/lt/siuntimas",
+    "helpUrl": "https://zipasgo.com/lt/pagalba",
     "canaryUrl": "https://zipasgo.com/lt/siuntimas",
     "shows": [],
     "scraped": [],

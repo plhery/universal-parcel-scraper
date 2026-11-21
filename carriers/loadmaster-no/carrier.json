@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://loadmasterno.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://loadmasterno.opter.cloud/tt",
+    "helpUrl": "https://www.loadmaster.no/kontakt-oss",
     "canaryUrl": "https://loadmasterno.opter.cloud/tt",
     "shows": [],
     "scraped": [],

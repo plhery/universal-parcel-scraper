@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://pda.gfedi.net/rcserver?o=900&SP=401{trackingNumber}",
     "searchUrl": "https://gfas.no/",
+    "helpUrl": "https://gfas.no/kontakt-oss/",
     "canaryUrl": "https://pda.gfedi.net/rcserver",
     "shows": [],
     "scraped": [],

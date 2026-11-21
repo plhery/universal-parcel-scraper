@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.carry-flap.com/#/home?invoiceNo={trackingNumber}",
     "searchUrl": "https://tracking.carry-flap.com/#/home",
+    "helpUrl": "https://www.carry-flap.com/contact",
     "canaryUrl": "https://www.carry-flap.com/",
     "shows": [],
     "scraped": [],

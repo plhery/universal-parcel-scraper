@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.szlhyt.com/package-inquiry",
+    "helpUrl": "https://www.szlhyt.com/contact",
     "canaryUrl": "https://www.szlhyt.com/",
     "shows": [],
     "scraped": [],

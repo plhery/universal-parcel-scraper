@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://pandulogistics.com/track/",
+    "helpUrl": "https://pandulogistics.com/contact/",
     "canaryUrl": "https://pandulogistics.com/track/",
     "shows": [
       "status",

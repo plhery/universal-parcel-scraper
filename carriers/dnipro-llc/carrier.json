@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://dniprollc.com/en/packages-tracking/?tracking={trackingNumber}",
     "searchUrl": "https://dniprollc.com/en/packages-tracking/",
+    "helpUrl": "https://dniprollc.com/en/contacts/",
     "canaryUrl": "https://dniprollc.com/en/packages-tracking/",
     "shows": [],
     "scraped": [],

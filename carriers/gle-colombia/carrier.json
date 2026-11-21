@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://agile.glecolombia.com/GLEWeb/Home/DetailsGuia?guia={trackingNumber}",
     "searchUrl": "https://www.glecolombia.com/es/rastreo",
+    "helpUrl": "https://www.glecolombia.com/es/contactanos",
     "canaryUrl": "https://www.glecolombia.com/es/rastreo",
     "shows": [],
     "scraped": [],

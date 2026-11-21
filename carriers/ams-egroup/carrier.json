@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.amsegroup.com.au/track-trace/",
+    "helpUrl": "https://www.amsegroup.com.au/contact/",
     "canaryUrl": "https://www.amsegroup.com.au/track-trace/",
     "shows": [],
     "scraped": [],

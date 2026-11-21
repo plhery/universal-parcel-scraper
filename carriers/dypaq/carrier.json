@@ -31,6 +31,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.dypaq.com/",
+    "helpUrl": "https://www.dypaq.com/dudas-frecuentes-2/",
     "canaryUrl": "https://www.dypaq.com/",
     "shows": [
       "status",

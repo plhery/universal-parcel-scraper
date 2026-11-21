@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.auexpress.com/tracking?OrderId={trackingNumber}",
     "searchUrl": "https://www.auexpress.com/tracking",
+    "helpUrl": "https://www.auexpress.com/support",
     "canaryUrl": "https://www.auexpress.com/tracking",
     "shows": [],
     "scraped": [],

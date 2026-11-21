@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.dpe.net.my/tracking.php",
+    "helpUrl": "https://www.dpe.net.my/content.php?type=5",
     "canaryUrl": "https://www.dpe.net.my/",
     "shows": [],
     "scraped": [],

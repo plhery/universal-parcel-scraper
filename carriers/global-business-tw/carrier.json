@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://vip.global-business.com.tw/tracking/",
+    "helpUrl": "https://www.global-business.com.tw/contact_us.php",
     "canaryUrl": "https://www.global-business.com.tw/",
     "shows": [],
     "scraped": [],

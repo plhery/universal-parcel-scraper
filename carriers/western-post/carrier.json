@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.wpglb.com/",
+    "helpUrl": "https://www.wpglb.com/about/contact/",
     "canaryUrl": "https://www.wpglb.com/",
     "shows": [],
     "scraped": [],

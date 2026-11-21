@@ -35,6 +35,7 @@
   ],
   "portal": {
     "searchUrl": "https://bigfootexpress.pperfect.com/",
+    "helpUrl": "https://www.bigfootexpress.co.za/contact/",
     "canaryUrl": "https://bigfootexpress.pperfect.com/",
     "shows": [
       "status",

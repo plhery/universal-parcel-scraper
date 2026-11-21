@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.kronosexpress.com/tracking_system_en.aspx?tracking_number={trackingNumber}",
     "searchUrl": "https://tracking.kronosexpress.com/tracking_system_en.aspx",
+    "helpUrl": "https://www.kronosexpress.com/en/contactus/",
     "canaryUrl": "https://tracking.kronosexpress.com/tracking_system_en.aspx",
     "shows": [],
     "scraped": [],

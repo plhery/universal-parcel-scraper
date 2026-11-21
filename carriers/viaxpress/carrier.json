@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://viaxpress.es/envios/",
+    "helpUrl": "https://viaxpressteam.freshdesk.com/support/tickets/new",
     "canaryUrl": "https://viaxpress.es/envios/",
     "shows": [],
     "scraped": [],

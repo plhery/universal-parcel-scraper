@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://netpost.vn/Home/tra_cuu_van_don?hawbNo={trackingNumber}",
     "searchUrl": "https://netpost.vn/Home/tra_cuu_van_don",
+    "helpUrl": "https://netpost.vn/Lien_He",
     "canaryUrl": "https://netpost.vn/Home/tra_cuu_van_don",
     "shows": [],
     "scraped": [],

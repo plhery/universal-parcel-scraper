@@ -32,6 +32,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://extranet.mazet.fr/suiviexpedition?lang=fr",
+    "helpUrl": "https://www.mazet.com/contact/",
     "canaryUrl": "https://extranet.mazet.fr/suiviexpedition",
     "shows": [],
     "scraped": [],

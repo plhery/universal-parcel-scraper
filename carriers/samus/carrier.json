@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.samus.lt/siuntu-sekimas/?id={trackingNumber}",
     "searchUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "helpUrl": "https://www.samus.lt/kontaktai/",
     "canaryUrl": "https://www.samus.lt/siuntu-sekimas/",
     "shows": [],
     "scraped": [],

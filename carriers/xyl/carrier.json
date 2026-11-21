@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://816kf.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
     "searchUrl": "https://www.816kf.com/",
+    "helpUrl": "https://www.816kf.com/comtact.html",
     "canaryUrl": "https://www.816kf.com/",
     "shows": [],
     "scraped": [],

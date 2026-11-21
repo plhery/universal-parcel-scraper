@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://iclexpress.in/tracking/",
+    "helpUrl": "https://iclexpress.in/contact/",
     "canaryUrl": "https://iclexpress.in/tracking/",
     "shows": [],
     "scraped": [],

@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.flechacarga.com/segui-tu-envio/",
+    "helpUrl": "https://www.flechacarga.com/asistencia/",
     "canaryUrl": "https://www.flechacarga.com/segui-tu-envio/",
     "shows": [
       "Legacy receipt reference",

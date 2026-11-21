@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://30584626.courier-bookings.com/trackit.aspx?AWB={trackingNumber}",
     "searchUrl": "https://www.transnetservices.co.uk/login.html",
+    "helpUrl": "https://www.transnetservices.co.uk/contact.html",
     "canaryUrl": "https://30584626.courier-bookings.com/trackit.aspx",
     "shows": [],
     "scraped": [],

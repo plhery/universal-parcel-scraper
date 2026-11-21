@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://tracking-ecom.orian.com/CargoTracking/public-tracking/search?searchKey={trackingNumber}",
     "searchUrl": "https://tracking-ecom.orian.com/CargoTracking/public-tracking/search",
+    "helpUrl": "https://www.orian.com/menu/TopMenu/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8/",
     "canaryUrl": "https://tracking-ecom.orian.com/CargoTracking/public-tracking/search",
     "shows": [],
     "scraped": [],

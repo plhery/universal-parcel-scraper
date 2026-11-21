@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://pcpexpress.com/lacak_detailv2.php?awb={trackingNumber}",
     "searchUrl": "https://www.pcpexpress.com/",
+    "helpUrl": "https://www.pcpexpress.com/hubungi",
     "canaryUrl": "https://www.pcpexpress.com/",
     "shows": [
       "status",

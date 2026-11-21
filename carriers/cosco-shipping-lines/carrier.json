@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://elines.coscoshipping.com/scct/public/ct",
+    "helpUrl": "https://lines.coscoshipping.com/home/Contact/global",
     "canaryUrl": "https://elines.coscoshipping.com/scct/public/ct",
     "shows": [
       "status",

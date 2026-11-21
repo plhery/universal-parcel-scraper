@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.rex.co.id/id/tracking/?airwaybill={trackingNumber}",
     "searchUrl": "https://www.rex.co.id/id",
+    "helpUrl": "https://www.rex.co.id/id/contact-us",
     "canaryUrl": "https://www.rex.co.id/id",
     "shows": [
       "status",

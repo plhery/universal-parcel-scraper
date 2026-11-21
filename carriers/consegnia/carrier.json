@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://clc-express.com/track-delivery?awb={trackingNumber}",
     "searchUrl": "https://clc-express.com/track-delivery",
+    "helpUrl": "https://clc-express.com/contact-us",
     "canaryUrl": "https://clc-express.com/",
     "shows": [
       "status",

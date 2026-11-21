@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.chunil.co.kr/HTrace/HTrace.jsp?transNo={trackingNumber}",
     "searchUrl": "https://www.chunil.co.kr/HTrace/HTrace.jsp",
+    "helpUrl": "https://www.chunil.co.kr/kor/mainsite/htmls/subPage.jsp?control=customer&pageNum=02",
     "canaryUrl": "https://www.chunil.co.kr/HTrace/HTrace.jsp",
     "shows": [
       "status",

@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.vaspexpresso.pt/pt/geral/track-and-trace/?search={trackingNumber}",
     "searchUrl": "https://www.vaspexpresso.pt/pt/geral/track-and-trace/",
+    "helpUrl": "https://www.vaspexpresso.pt/pt/particulares/ajuda/",
     "canaryUrl": "https://www.vaspexpresso.pt/pt/geral/track-and-trace/",
     "shows": [
       "status",

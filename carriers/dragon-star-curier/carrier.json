@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://dragonstarcurier.ro/tracking-awb?awb={trackingNumber}",
     "searchUrl": "https://dragonstarcurier.ro/tracking-awb",
+    "helpUrl": "https://dragonstarcurier.ro/contact",
     "canaryUrl": "https://dragonstarcurier.ro/tracking-awb",
     "shows": [
       "status",

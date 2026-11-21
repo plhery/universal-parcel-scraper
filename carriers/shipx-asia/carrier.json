@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://shipx.asia/toolkit/shipment-tracker?trackingNumber={trackingNumber}",
     "searchUrl": "https://shipx.asia/toolkit/shipment-tracker",
+    "helpUrl": "https://shipx.asia/contact-us",
     "canaryUrl": "https://shipx.asia/toolkit/shipment-tracker",
     "shows": [],
     "scraped": [],

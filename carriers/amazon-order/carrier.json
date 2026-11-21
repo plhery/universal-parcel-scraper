@@ -42,6 +42,7 @@
     "provider_code"
   ],
   "portal": {
+    "helpUrl": "https://www.amazon.com/gp/help/customer/contact-us",
     "canaryUrl": "https://www.amazon.com/progress-tracker/package/share/",
     "shows": [
       "status",

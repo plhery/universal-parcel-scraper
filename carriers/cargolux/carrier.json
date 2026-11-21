@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.cargolux.com/track-and-trace/",
+    "helpUrl": "https://www.cargolux.com/customer-service/",
     "canaryUrl": "https://www.cargolux.com/track-and-trace/",
     "shows": [
       "status",

@@ -29,6 +29,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.parcel2go.com/tracking",
+    "helpUrl": "https://www.parcel2go.com/help-centre",
     "canaryUrl": "https://www.parcel2go.com/tracking",
     "shows": [
       "status",

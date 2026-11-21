@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://tinypack.mx/rastreo?codigo={trackingNumber}",
     "searchUrl": "https://tinypack.mx/rastreo/",
+    "helpUrl": "https://tinypack.mx/contacto/",
     "canaryUrl": "https://tinypack.mx/rastreo/",
     "shows": [],
     "scraped": [],

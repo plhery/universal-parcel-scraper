@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmAtfDetay.aspx?Ptn={trackingNumber}",
     "searchUrl": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmGonderiTakip.aspx",
+    "helpUrl": "https://www.horoz.com.tr/iletisim",
     "canaryUrl": "https://app3.horoz.com.tr/wsKurumsal/_genel/frmGonderiTakip.aspx",
     "shows": [
       "status",

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://worldtrak.shipalliance.com/cvportal/shipinquiry/quicktrack.aspx",
+    "helpUrl": "https://shipalliance.com/contact",
     "canaryUrl": "https://worldtrak.shipalliance.com/cvportal/shipinquiry/quicktrack.aspx",
     "shows": [],
     "scraped": [],

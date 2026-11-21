@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://rayspeed.com/en/track",
+    "helpUrl": "https://rayspeed.com/en/faq",
     "canaryUrl": "https://rayspeed.com/en/track",
     "shows": [
       "status",

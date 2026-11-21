@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://app.conexionesempresariales.com/rastreo/?txtguia={trackingNumber}",
     "searchUrl": "https://app.conexionesempresariales.com/rastreo/",
+    "helpUrl": "https://conexionesempresariales.com/Contactenos",
     "canaryUrl": "https://app.conexionesempresariales.com/rastreo/",
     "shows": [
       "status",

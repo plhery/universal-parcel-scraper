@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.jiayingex.com/track-help/",
+    "helpUrl": "https://www.jiayingex.com/contact-us/",
     "canaryUrl": "https://www.jiayingex.com/",
     "shows": [],
     "scraped": [],

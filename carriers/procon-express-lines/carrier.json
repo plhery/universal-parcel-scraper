@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://cmsfreight.com/tracking/public-tracking/",
     "searchUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "helpUrl": "https://cmsfreight.com/contact/",
     "canaryUrl": "https://cmsfreight.com/tracking/public-tracking/",
     "shows": [
       "status",

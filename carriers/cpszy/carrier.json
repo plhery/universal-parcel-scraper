@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.cpszy.com/trace.html?sn={trackingNumber}",
     "searchUrl": "https://www.cpszy.com/trace.html",
+    "helpUrl": "https://www.cpszy.com/contact.html",
     "canaryUrl": "https://www.cpszy.com/trace.html",
     "shows": [],
     "scraped": [],

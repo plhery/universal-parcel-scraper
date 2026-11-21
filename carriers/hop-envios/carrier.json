@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://hopenvios.com.ar/segui-tu-envio?c={trackingNumber}",
     "searchUrl": "https://hopenvios.com.ar/segui-tu-envio",
+    "helpUrl": "https://hopenvios.com.ar/contacto",
     "canaryUrl": "https://hopenvios.com.ar/segui-tu-envio",
     "shows": [
       "status",

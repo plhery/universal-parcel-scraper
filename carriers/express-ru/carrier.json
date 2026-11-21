@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.express.ru/office/tracking",
+    "helpUrl": "https://www.express.ru/contacts",
     "canaryUrl": "https://www.express.ru/",
     "shows": [],
     "scraped": [],

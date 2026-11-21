@@ -30,6 +30,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.zim.com/tools/track-a-shipment",
+    "helpUrl": "https://www.zim.com/contact-us/customer-service-form",
     "canaryUrl": "https://www.zim.com/tools/track-a-shipment",
     "shows": [
       "status",

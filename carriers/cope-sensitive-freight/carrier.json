@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.cope.com.au/",
+    "helpUrl": "https://www.cope.com.au/contact-us",
     "canaryUrl": "https://www.cope.com.au/",
     "shows": [],
     "scraped": [],

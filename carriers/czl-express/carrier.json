@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://exp.czl.net/track?query={trackingNumber}",
     "searchUrl": "https://exp.czl.net/track",
+    "helpUrl": "https://exp.czl.net/contact",
     "canaryUrl": "https://exp.czl.net/",
     "shows": [],
     "scraped": [],

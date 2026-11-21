@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.weworldexpress.com/wwe/track",
+    "helpUrl": "https://www.weworldexpress.com/contact.html",
     "canaryUrl": "https://www.weworldexpress.com/",
     "shows": [
       "history",

@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.uparcel.sg/track?tracking-code={trackingNumber}",
     "searchUrl": "https://www.uparcel.sg/track",
+    "helpUrl": "https://www.uparcel.sg/contact-us",
     "canaryUrl": "https://www.uparcel.sg/track",
     "shows": [],
     "scraped": [],

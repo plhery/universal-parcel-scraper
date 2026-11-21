@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.transgo.mx/",
+    "helpUrl": "https://www.transgo.mx/contacto.html",
     "canaryUrl": "https://www.transgo.mx/",
     "shows": [],
     "scraped": [],

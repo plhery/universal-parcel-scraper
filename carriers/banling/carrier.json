@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://banlingwuliu.com/detail/track/transLogistic.html",
+    "helpUrl": "https://banlingwuliu.com/detail/Join/contact.html",
     "canaryUrl": "https://banlingwuliu.com/detail/track/transLogistic.html",
     "shows": [],
     "scraped": [],

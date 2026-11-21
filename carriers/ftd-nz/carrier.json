@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.ftd.nz/query/?code={trackingNumber}",
     "searchUrl": "https://www.ftd.nz/query/",
+    "helpUrl": "https://www.ftd.nz/public/contact/",
     "canaryUrl": "https://www.ftd.nz/",
     "shows": [
       "status",

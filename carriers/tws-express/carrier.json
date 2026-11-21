@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.mytws.it/tracking-status;ldv={trackingNumber}",
     "searchUrl": "https://twsexpresscourier.it/traccia-spedizione/",
+    "helpUrl": "https://twsexpresscourier.it/contatti/",
     "canaryUrl": "https://twsexpresscourier.it/traccia-spedizione/",
     "shows": [
       "status",

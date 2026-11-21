@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://apps.fastfrate.com/fastnet/FastNet.aspx?ProbillNo={trackingNumber}",
     "searchUrl": "https://tracker.fastfrate.com/quick-track",
+    "helpUrl": "https://www.fastfrate.com/contact/",
     "canaryUrl": "https://tracker.fastfrate.com/quick-track",
     "shows": [
       "status",

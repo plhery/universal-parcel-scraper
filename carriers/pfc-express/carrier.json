@@ -58,6 +58,7 @@
   "portal": {
     "url": "https://www.pfctrack.com/?nums={trackingNumber}",
     "searchUrl": "https://www.pfctrack.com/",
+    "helpUrl": "https://www.pfcexpress.com/abouts/lianxiwomen.html",
     "canaryUrl": "https://www.pfctrack.com/",
     "shows": [
       "status",

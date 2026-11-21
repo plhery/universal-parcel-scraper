@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://valls.factapp.es/IRIS/Seguimiento",
+    "helpUrl": "https://www.altcampexpress.com/contacto/",
     "canaryUrl": "https://valls.factapp.es/IRIS/Seguimiento",
     "shows": [],
     "scraped": [],

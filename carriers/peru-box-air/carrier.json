@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.peruboxair.pe/seguimiento-de-envios/",
+    "helpUrl": "https://www.peruboxair.pe/contacto/",
     "canaryUrl": "https://www.peruboxair.pe/seguimiento-de-envios/",
     "shows": [],
     "scraped": [],

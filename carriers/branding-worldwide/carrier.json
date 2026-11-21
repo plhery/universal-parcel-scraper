@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://brandingworldwide.com.au/track.html?key={trackingNumber}",
     "searchUrl": "https://brandingworldwide.com.au/track.html",
+    "helpUrl": "https://brandingworldwide.com.au/contact.html",
     "canaryUrl": "https://brandingworldwide.com.au/",
     "shows": [],
     "scraped": [],

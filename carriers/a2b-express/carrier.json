@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://a2b.ba/pracenje/?tracking_number={trackingNumber}",
     "searchUrl": "https://a2b.ba/pracenje/",
+    "helpUrl": "https://a2b.ba/kontakt/",
     "canaryUrl": "https://a2b.ba/pracenje/",
     "shows": [],
     "scraped": [],

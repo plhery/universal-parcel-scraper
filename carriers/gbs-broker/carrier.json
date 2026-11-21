@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://gbs.ru/track/?numbers={trackingNumber}",
     "searchUrl": "https://gbs.ru/track/",
+    "helpUrl": "https://gbs.ru/help/",
     "canaryUrl": "https://gbs.ru/track/",
     "shows": [
       "status",

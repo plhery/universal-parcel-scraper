@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://tptrack.info/ecom/dtrack.php?id={trackingNumber}&type=a1",
     "searchUrl": "https://tptrack.info/ecom/dtrack.php",
+    "helpUrl": "https://thaiparcels.com/contact/",
     "canaryUrl": "https://tptrack.info/ecom/dtrack.php",
     "shows": [
       "status",

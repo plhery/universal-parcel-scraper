@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://saharaexpress.com/showDetails1.php?taTrackNumber={trackingNumber}",
     "searchUrl": "https://saharaexpress.com/",
+    "helpUrl": "https://saharaexpress.com/contact.php",
     "canaryUrl": "https://saharaexpress.com/",
     "shows": [],
     "scraped": [],

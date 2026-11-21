@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://ace2.trumpcardinc.com/searchairbill?SearchByAirbill={trackingNumber}&SearchByRefPO=",
     "searchUrl": "https://ace2.trumpcardinc.com/searchairbill",
+    "helpUrl": "https://trumpcardinc.com/contact-us/",
     "canaryUrl": "https://ace2.trumpcardinc.com/searchairbill",
     "shows": [],
     "scraped": [],

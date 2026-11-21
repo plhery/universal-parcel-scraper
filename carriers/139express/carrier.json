@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.139express.com/Home/vipsearch?keyword={trackingNumber}",
     "searchUrl": "https://www.139express.com/Home/Search_Tracking",
+    "helpUrl": "https://www.139express.com/home/sef/146",
     "canaryUrl": "https://www.139express.com/Home/Search_Tracking",
     "shows": [],
     "scraped": [],

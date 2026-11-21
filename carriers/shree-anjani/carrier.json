@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://shreeanjani.co.in/tracking?awb={trackingNumber}",
     "searchUrl": "https://shreeanjani.co.in/tracking",
+    "helpUrl": "https://shreeanjani.co.in/contact/",
     "canaryUrl": "https://shreeanjani.co.in/tracking",
     "shows": [
       "status",

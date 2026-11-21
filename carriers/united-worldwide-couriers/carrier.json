@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.unitedcouriers.biz/tracking",
+    "helpUrl": "https://unitedcouriers.biz/contact-us",
     "canaryUrl": "https://www.unitedcouriers.biz/tracking",
     "shows": [],
     "scraped": [],

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://ncskurir.com/ncskurir/track?awb={trackingNumber}",
     "searchUrl": "https://ncskurir.com/ncskurir/track",
+    "helpUrl": "https://ncskurir.com/ncskurir/contact_us",
     "canaryUrl": "https://ncskurir.com/ncskurir/track",
     "shows": [],
     "scraped": [],

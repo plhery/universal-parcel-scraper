@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.royaleinternational.com/tracking?waybillno={trackingNumber}",
     "searchUrl": "https://www.royaleinternational.com/tracking",
+    "helpUrl": "https://www.royaleinternational.com/help-center",
     "canaryUrl": "https://www.royaleinternational.com/tracking",
     "shows": [
       "status",

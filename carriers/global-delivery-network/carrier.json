@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://pds.gdnparcel.com/pds_tracking.asp?track={trackingNumber}",
     "searchUrl": "https://gdnparcel.com/",
+    "helpUrl": "https://gdnparcel.com/contactus",
     "canaryUrl": "https://gdnparcel.com/",
     "shows": [
       "status",

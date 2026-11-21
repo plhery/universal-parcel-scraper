@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.aex.com.py/web/tracking.php?guia={trackingNumber}",
     "searchUrl": "https://www.aex.com.py/web/tracking.php",
+    "helpUrl": "https://www.aex.com.py/web/contactenos.php",
     "canaryUrl": "https://www.aex.com.py/web/tracking.php",
     "shows": [
       "status",

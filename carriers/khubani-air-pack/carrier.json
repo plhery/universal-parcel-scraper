@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.khubaniairpack.com/tracking.html?awbno={trackingNumber}",
     "searchUrl": "https://www.khubaniairpack.com/tracking.html",
+    "helpUrl": "https://www.khubaniairpack.com/contactus.html",
     "canaryUrl": "https://www.khubaniairpack.com/tracking.html",
     "shows": [],
     "scraped": [],

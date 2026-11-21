@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.walleniuswilhelmsen.com/track-trace",
     "searchUrl": "https://www.walleniuswilhelmsen.com/track-trace",
+    "helpUrl": "https://www.walleniuswilhelmsen.com/ocean-support/customer-service",
     "canaryUrl": "https://www.walleniuswilhelmsen.com/track-trace",
     "shows": [
       "status",

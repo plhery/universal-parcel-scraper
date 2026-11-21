@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.ky-express.com/88.html?tab=3&orders={trackingNumber}",
     "searchUrl": "https://www.ky-express.com/88.html",
+    "helpUrl": "https://www.ky-express.com/101.html",
     "canaryUrl": "https://www.ky-express.com/88.html",
     "shows": [],
     "scraped": [],

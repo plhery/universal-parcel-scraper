@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html?search={trackingNumber}",
     "searchUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
+    "helpUrl": "https://www.hubdelivery.com/HubDelivery/contacts.html",
     "canaryUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
     "shows": [],
     "scraped": [],

@@ -27,6 +27,7 @@
   ],
   "portal": {
     "searchUrl": "https://curier.altex.ro/",
+    "helpUrl": "https://altex.ro/contacts",
     "canaryUrl": "https://curier.altex.ro/",
     "shows": [
       "AWB reference",

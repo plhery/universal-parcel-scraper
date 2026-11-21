@@ -51,6 +51,7 @@
   "portal": {
     "url": "https://expedico.eu/tracking?code={trackingNumber}",
     "searchUrl": "https://expedico.eu/tracking",
+    "helpUrl": "https://expedico.eu/contact",
     "canaryUrl": "https://expedico.eu/tracking",
     "shows": [
       "status",

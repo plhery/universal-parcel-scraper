@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://stallion.ca/track/?tracking={trackingNumber}",
     "searchUrl": "https://stallion.ca/track/",
+    "helpUrl": "https://stallion.ca/contact-us/",
     "canaryUrl": "https://stallion.ca/track/",
     "shows": [
       "status",

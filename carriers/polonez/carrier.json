@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://tracking-iframe.meest.com/t/en/{trackingNumber}",
     "searchUrl": "https://polonez.express/us-en/parcel-track",
+    "helpUrl": "https://polonez.express/us-en/contact",
     "canaryUrl": "https://polonez.express/us-en/parcel-track",
     "shows": [
       "status",

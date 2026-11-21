@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://pullmancargo.cl/seguimiento/{trackingNumber}",
     "searchUrl": "https://pullmancargo.cl/seguimiento",
+    "helpUrl": "https://pullmancargo.cl/contacto",
     "canaryUrl": "https://pullmancargo.cl/seguimiento",
     "shows": [
       "status",

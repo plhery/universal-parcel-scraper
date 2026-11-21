@@ -35,6 +35,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.vrlgroup.in/Tracking/TrackShipment",
+    "helpUrl": "https://www.vrlgroup.in/ContactUs",
     "canaryUrl": "https://www.vrlgroup.in/Tracking/TrackShipment",
     "shows": [
       "status",

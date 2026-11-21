@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://status.millerdeliveries.co.il/?shipment_id={trackingNumber}",
     "searchUrl": "https://status.millerdeliveries.co.il/",
+    "helpUrl": "https://millerdeliveries.co.il/%d7%a6%d7%a8%d7%95-%d7%a7%d7%a9%d7%a8/",
     "canaryUrl": "https://status.millerdeliveries.co.il/",
     "shows": [],
     "scraped": [],

@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.islandwide.com/tracking?TrackingNumber={trackingNumber}",
     "searchUrl": "https://www.islandwide.com/tracking",
+    "helpUrl": "https://www.islandwide.com/contact",
     "canaryUrl": "https://www.islandwide.com/tracking",
     "shows": [],
     "scraped": [],

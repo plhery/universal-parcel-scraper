@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://zona.go4.eu/status/?parcelId={trackingNumber}",
     "searchUrl": "https://zona.go4.eu/status/",
+    "helpUrl": "https://www.go4.sk/kontakt/",
     "canaryUrl": "https://zona.go4.eu/status/",
     "shows": [
       "status",

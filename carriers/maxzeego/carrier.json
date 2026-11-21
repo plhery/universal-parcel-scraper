@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://maxzeego.com/",
+    "helpUrl": "https://maxzeego.com/contact-us",
     "canaryUrl": "https://maxzeego.com/",
     "shows": [],
     "scraped": [],

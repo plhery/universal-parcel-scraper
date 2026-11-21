@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.kurlynextmile.com/information/invoice?invoice_no={trackingNumber}",
     "searchUrl": "https://www.kurlynextmile.com/information/invoice",
+    "helpUrl": "https://www.kurlynextmile.com/customer/inquiry_write",
     "canaryUrl": "https://www.kurlynextmile.com/information/invoice",
     "shows": [],
     "scraped": [],

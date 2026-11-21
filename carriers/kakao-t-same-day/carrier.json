@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://todaypickup-partners.kakaomobility.com/front/delivery/list/{trackingNumber}",
     "searchUrl": "https://todaypickup-partners.kakaomobility.com/front/delivery/list",
+    "helpUrl": "https://www.kakaomobility.com/customer-support",
     "canaryUrl": "https://todaypickup-partners.kakaomobility.com/front/delivery/list",
     "shows": [],
     "scraped": [],

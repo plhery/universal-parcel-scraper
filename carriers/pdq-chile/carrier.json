@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.pdq.cl/tracking?q={trackingNumber}",
     "searchUrl": "https://www.pdq.cl/tracking",
+    "helpUrl": "https://www.pdq.cl/contacto",
     "canaryUrl": "https://www.pdq.cl/tracking",
     "shows": [
       "status",

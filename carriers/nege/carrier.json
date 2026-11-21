@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://sst.lt/sekti/{trackingNumber}",
     "searchUrl": "https://sst.lt/",
+    "helpUrl": "https://sst.lt/kontaktai",
     "canaryUrl": "https://sst.lt/",
     "shows": [],
     "scraped": [],

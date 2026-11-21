@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php?codigo={trackingNumber}&tipo-codigo=cod-principal",
     "searchUrl": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php",
+    "helpUrl": "https://www.enviamoscym.com/pqr-crear.php",
     "canaryUrl": "https://www.enviamoscym.com/rastreo-envios-mensajeria.php",
     "shows": [
       "status",

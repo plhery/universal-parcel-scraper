@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://ntlogistics.vn/tra-van-don.html?bill={trackingNumber}",
     "searchUrl": "https://ntlogistics.vn/tra-van-don.html",
+    "helpUrl": "https://ntlogistics.vn/lien-he.html",
     "canaryUrl": "https://ntlogistics.vn/tra-van-don.html",
     "shows": [
       "status",

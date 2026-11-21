@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://app.kuljetusvelho.fi/webtrack.php?env=froad&lang=fi",
+    "helpUrl": "https://fennoroad.fi/yhteystiedot/",
     "canaryUrl": "https://fennoroad.fi/",
     "shows": [],
     "scraped": [],

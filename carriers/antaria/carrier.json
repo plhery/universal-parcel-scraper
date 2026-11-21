@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.antariaclientes.com/seguimiento.php",
+    "helpUrl": "https://antariaservices.es/contacto/",
     "canaryUrl": "https://www.antariaclientes.com/seguimiento.php",
     "shows": [],
     "scraped": [],

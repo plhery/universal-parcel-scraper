@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr?shipment_num={trackingNumber}",
     "searchUrl": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr",
+    "helpUrl": "https://www.fofrcz.cz/kontakt",
     "canaryUrl": "https://objednavky.fofrcz.cz/sledovani-zasilek-fofr",
     "shows": [],
     "scraped": [],

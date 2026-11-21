@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.upn.co.uk/",
+    "helpUrl": "https://www.upn.co.uk/get-in-touch",
     "canaryUrl": "https://www.upn.co.uk/",
     "shows": [],
     "scraped": [],

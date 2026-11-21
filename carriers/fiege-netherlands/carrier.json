@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://websped-netherlands.fiege.com/TrackAndTrace/Search?SearchExpression={trackingNumber}",
     "searchUrl": "https://websped-netherlands.fiege.com/",
+    "helpUrl": "https://www.fiege.com/en/contact",
     "canaryUrl": "https://websped-netherlands.fiege.com/",
     "shows": [],
     "scraped": [],

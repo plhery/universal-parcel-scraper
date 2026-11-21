@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://delivro.dsapp.io/customer/{trackingNumber}",
     "searchUrl": "https://delivro.dsapp.io/customer",
+    "helpUrl": "https://delivro.ca/page/contact",
     "canaryUrl": "https://delivro.com/",
     "shows": [],
     "scraped": [],

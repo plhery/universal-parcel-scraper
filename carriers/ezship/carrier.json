@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ezship.com.tw/receiver_query/ezship_query_shipstatus_2017.jsp",
+    "helpUrl": "https://www.ezship.com.tw/service_message/service_message_main.jsp",
     "canaryUrl": "https://www.ezship.com.tw/index.jsp",
     "shows": [],
     "scraped": [],

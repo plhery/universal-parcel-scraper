@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://tracking.enviopack.com.mx/{trackingNumber}",
     "searchUrl": "https://tracking.enviopack.com.mx/",
+    "helpUrl": "https://ayuda.enviopack.com/es/articles/10581745-soy-consumidor-final",
     "canaryUrl": "https://tracking.enviopack.com.mx/",
     "shows": [],
     "scraped": [],

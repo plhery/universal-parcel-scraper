@@ -51,6 +51,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.copacourier.com/",
+    "helpUrl": "https://www.copacourier.com/AtencionCliente",
     "canaryUrl": "https://www.copacourier.com/",
     "shows": [
       "status",

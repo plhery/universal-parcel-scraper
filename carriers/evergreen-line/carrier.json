@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
     "searchUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "helpUrl": "https://www.shipmentlink.com/tcc1/jsp/TCC1_Contact.jsp",
     "canaryUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
     "shows": [
       "status",

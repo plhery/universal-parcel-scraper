@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://gtaairskip.com/tracking/?trackingid={trackingNumber}",
     "searchUrl": "https://gtaairskip.com/tracking/",
+    "helpUrl": "https://gtaairskip.com/contact/",
     "canaryUrl": "https://gtaairskip.com/tracking/",
     "shows": [
       "status",

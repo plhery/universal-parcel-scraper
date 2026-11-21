@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://ddu-express.com/track-shipment/?trackno={trackingNumber}",
     "searchUrl": "https://ddu-express.com/track-shipment/",
+    "helpUrl": "https://ddu-express.com/contact/",
     "canaryUrl": "https://ddu-express.com/",
     "shows": [],
     "scraped": [],

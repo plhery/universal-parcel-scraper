@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://cargobusee.opter.cloud/TT?keyword={trackingNumber}",
     "searchUrl": "https://cargobusee.opter.cloud/tt",
+    "helpUrl": "https://cargobus.ee/kontakt/",
     "canaryUrl": "https://cargobusee.opter.cloud/tt",
     "shows": [],
     "scraped": [],

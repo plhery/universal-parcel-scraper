@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.azems.az/az/gonderis-izle?package_id={trackingNumber}",
     "searchUrl": "https://www.azems.az/az/gonderis-izle",
+    "helpUrl": "https://www.azems.az/az/elaqe",
     "canaryUrl": "https://www.azems.az/az/gonderis-izle",
     "shows": [],
     "scraped": [],

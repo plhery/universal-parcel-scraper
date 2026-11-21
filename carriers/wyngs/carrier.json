@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://wyngs-my.com/trackingDetails",
+    "helpUrl": "https://wyngs-my.com/support",
     "canaryUrl": "https://wyngs-my.com/trackingDetails",
     "shows": [],
     "scraped": [],

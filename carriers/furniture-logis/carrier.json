@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
+    "helpUrl": "https://furniturelogis.es/contacto/",
     "canaryUrl": "https://furniturelogis.es/acceso-seguimiento-clientes/",
     "shows": [],
     "scraped": [],

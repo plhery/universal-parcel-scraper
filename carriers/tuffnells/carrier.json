@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.tuffnells.co.uk/track/{trackingNumber}",
     "searchUrl": "https://www.tuffnells.co.uk/track",
+    "helpUrl": "https://www.tuffnells.co.uk/contact",
     "canaryUrl": "https://www.tuffnells.co.uk/track",
     "shows": [],
     "scraped": [],

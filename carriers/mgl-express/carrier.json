@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.mglexpress.com.mm/waybills?waybill={trackingNumber}",
     "searchUrl": "https://www.mglexpress.com.mm/tracking",
+    "helpUrl": "https://www.mglexpress.com.mm/complain-form",
     "canaryUrl": "https://www.mglexpress.com.mm/tracking",
     "shows": [],
     "scraped": [],

@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.jetspeed-express.com/search_kuai_di/search/orderid/{trackingNumber}",
     "searchUrl": "https://www.jetspeed-express.com/",
+    "helpUrl": "https://www.jetspeed-express.com/cms/c/contactus",
     "canaryUrl": "https://www.jetspeed-express.com/",
     "shows": [],
     "scraped": [],

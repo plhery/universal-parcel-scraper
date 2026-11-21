@@ -30,6 +30,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://system.goodmaji.com/web/shipmenthistory.aspx",
+    "helpUrl": "https://www.goodmaji.com/question/",
     "canaryUrl": "https://www.goodmaji.com/",
     "shows": [],
     "scraped": [],

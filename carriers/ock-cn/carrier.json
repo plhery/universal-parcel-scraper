@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ock56.com/track.php",
+    "helpUrl": "https://www.ock56.com/contact.php",
     "canaryUrl": "https://www.ock56.com/track.php",
     "shows": [],
     "scraped": [],

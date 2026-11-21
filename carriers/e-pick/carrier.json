@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://app.e-pick.com.ar/seguimiento?codigo={trackingNumber}",
     "searchUrl": "https://app.e-pick.com.ar/seguimiento",
+    "helpUrl": "https://app.e-pick.com.ar/faq",
     "canaryUrl": "https://app.e-pick.com.ar/seguimiento",
     "shows": [],
     "scraped": [],

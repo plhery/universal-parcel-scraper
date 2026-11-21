@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.derkurier.sk/",
+    "helpUrl": "https://derkurier.sk/kontakt.html",
     "canaryUrl": "https://derkurier.sk/",
     "shows": [],
     "scraped": [],

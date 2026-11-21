@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://book.bombax.in/booking/Tracking?OrderNo={trackingNumber}",
     "searchUrl": "https://book.bombax.in/Booking/Track",
+    "helpUrl": "https://bombax.in/support/",
     "canaryUrl": "https://bombax.in/",
     "shows": [],
     "scraped": [],

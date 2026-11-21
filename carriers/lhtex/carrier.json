@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.lhtex.com.cn/",
+    "helpUrl": "https://www.lhtex.com.cn/abouts_36/",
     "canaryUrl": "https://www.lhtex.com.cn/",
     "shows": [
       "status",

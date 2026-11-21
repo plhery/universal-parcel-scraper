@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://track.wjdrop.com/tracking/index?nums={trackingNumber}",
     "searchUrl": "https://track.wjdrop.com/tracking/index",
+    "helpUrl": "https://wjdrop.com/contact/",
     "canaryUrl": "https://track.wjdrop.com/tracking/index",
     "shows": [
       "status",

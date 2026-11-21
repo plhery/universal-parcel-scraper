@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://aithomedelivery.com/en-gb/",
+    "helpUrl": "https://aithomedelivery.com/en-gb/contact-us/",
     "canaryUrl": "https://aithomedelivery.com/en-gb/",
     "shows": [],
     "scraped": [],

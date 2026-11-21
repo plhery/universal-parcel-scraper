@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.jtlexpress.co.id/Tracking",
     "searchUrl": "https://www.jtlexpress.co.id/Tracking",
+    "helpUrl": "https://www.jtlexpress.co.id/contact_us",
     "canaryUrl": "https://www.jtlexpress.co.id/Tracking",
     "shows": [
       "status",

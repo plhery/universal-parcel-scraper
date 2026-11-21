@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.x-express.ba/korisnicki-panel/pracenje-posiljke",
+    "helpUrl": "https://www.x-express.ba/x-express/kontakt",
     "canaryUrl": "https://www.x-express.ba/korisnicki-panel/pracenje-posiljke",
     "shows": [],
     "scraped": [],

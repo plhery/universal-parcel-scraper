@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://emu.uz/en/tracking?id={trackingNumber}",
     "searchUrl": "https://emu.uz/en/tracking",
+    "helpUrl": "https://emu.uz/en/contact",
     "canaryUrl": "https://emu.uz/en/tracking",
     "shows": [],
     "scraped": [],

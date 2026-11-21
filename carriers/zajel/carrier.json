@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://zajel.com/trackresults?q={trackingNumber}&type=awb",
     "searchUrl": "https://zajel.com/track",
+    "helpUrl": "https://zajel.com/support",
     "canaryUrl": "https://zajel.com/track",
     "shows": [],
     "scraped": [],

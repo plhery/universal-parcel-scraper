@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
     "searchUrl": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "helpUrl": "https://www.thaicargo.com/en/contact",
     "canaryUrl": "https://chorus.thaicargo.com/skychain/app",
     "shows": [
       "status",

@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://toplogistics.com.au/?s={trackingNumber}",
     "searchUrl": "https://toplogistics.com.au/",
+    "helpUrl": "https://toplogistics.com.au/contact-us",
     "canaryUrl": "https://toplogistics.com.au/",
     "shows": [],
     "scraped": [],

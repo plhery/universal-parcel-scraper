@@ -26,6 +26,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://eutracking.seabournelogistics.com/UK-EN-1",
+    "helpUrl": "https://seabournelogistics.com/uk/contact-us/",
     "canaryUrl": "https://eutracking.seabournelogistics.com/UK-EN-1",
     "shows": [],
     "scraped": [],

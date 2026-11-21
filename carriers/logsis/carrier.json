@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://logsis.ru/traking",
+    "helpUrl": "https://logsis.ru/contacts",
     "canaryUrl": "https://logsis.ru/traking",
     "shows": [],
     "scraped": [],

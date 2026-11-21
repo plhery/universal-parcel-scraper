@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.tejcouriers.com/shipment-tracking.php",
+    "helpUrl": "https://www.tejcouriers.com/contact.php",
     "canaryUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "shows": [
       "status",

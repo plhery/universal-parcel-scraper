@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://operation.sundarbancourierltd.com/?cnnumber={trackingNumber}",
     "searchUrl": "https://operation.sundarbancourierltd.com/",
+    "helpUrl": "https://www.sundarbancourierltd.com/Support",
     "canaryUrl": "https://operation.sundarbancourierltd.com/",
     "shows": [
       "status",

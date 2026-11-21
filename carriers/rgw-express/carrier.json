@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://trace.rgw-express.pl/search2/tracking.php?reference_no={trackingNumber}&language=polish",
     "searchUrl": "https://trace.rgw-express.pl/search2/",
+    "helpUrl": "https://rgw-express.pl/kontakt/",
     "canaryUrl": "https://trace.rgw-express.pl/search2/",
     "shows": [],
     "scraped": [],

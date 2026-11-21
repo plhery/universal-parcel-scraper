@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.goworldexpress.cn/track.html",
+    "helpUrl": "https://www.goworldexpress.cn/about/contact",
     "canaryUrl": "https://www.goworldexpress.cn/track.html",
     "shows": [],
     "scraped": [],

@@ -39,6 +39,7 @@
   ],
   "portal": {
     "url": "https://zoom.rivigo.com/#/trackconsignment/{trackingNumber}",
+    "helpUrl": "https://mahindralogistics.com/contact-us/",
     "canaryUrl": "https://zoom.rivigo.com/",
     "shows": [
       "status",

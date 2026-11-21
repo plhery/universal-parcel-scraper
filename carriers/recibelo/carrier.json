@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.recibelo.cl/seguimiento/?codigo={trackingNumber}",
     "searchUrl": "https://www.recibelo.cl/seguimiento/",
+    "helpUrl": "https://www.recibelo.cl/contacto/",
     "canaryUrl": "https://www.recibelo.cl/seguimiento/",
     "shows": [],
     "scraped": [],

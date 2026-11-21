@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "helpUrl": "https://mrcourier.al/kontakt/",
     "canaryUrl": "https://mrcourier.al/gjurmo-dergesen/",
     "shows": [],
     "scraped": [],

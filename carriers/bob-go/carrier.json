@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://track.bobgo.co.za/{trackingNumber}",
     "searchUrl": "https://track.bobgo.co.za/",
+    "helpUrl": "https://help.bobgo.co.za/portal/en/home",
     "canaryUrl": "https://track.bobgo.co.za/",
     "shows": [
       "status",

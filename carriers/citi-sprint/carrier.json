@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://portal.citisprint.co.za/track?ref={trackingNumber}",
     "searchUrl": "https://www.citisprint.co.za/tracking/",
+    "helpUrl": "https://www.citisprint.co.za/contact/",
     "canaryUrl": "https://www.citisprint.co.za/",
     "shows": [],
     "scraped": [],

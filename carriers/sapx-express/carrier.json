@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://www.sapx.id/id/cek-awb/{trackingNumber}",
     "searchUrl": "https://www.sapx.id/id/cek-awb",
+    "helpUrl": "https://www.sapx.id/id/kontak-kami",
     "canaryUrl": "https://www.sapx.id/id/cek-awb",
     "shows": [
       "status",

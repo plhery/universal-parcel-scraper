@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://europoshta.com.ua/tracking/?track_input={trackingNumber}&go_button=OK",
     "searchUrl": "https://europoshta.com.ua/tracking/",
+    "helpUrl": "https://europoshta.com.ua/kontakty/",
     "canaryUrl": "https://europoshta.com.ua/tracking/",
     "shows": [],
     "scraped": [],

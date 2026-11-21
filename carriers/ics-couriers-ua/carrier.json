@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
+    "helpUrl": "https://ics-couriers.com/info/kontakty/",
     "canaryUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
     "shows": [],
     "scraped": [],

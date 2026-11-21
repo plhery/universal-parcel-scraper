@@ -41,6 +41,7 @@
   "portal": {
     "url": "https://chinzlogistics.com/en/consult?keywords={trackingNumber}",
     "searchUrl": "https://chinzlogistics.com/en/consult",
+    "helpUrl": "https://chinzlogistics.com/en/contact",
     "canaryUrl": "https://chinzlogistics.com/",
     "shows": [
       "status",

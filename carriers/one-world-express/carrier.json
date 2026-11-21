@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.smarttrack.co/tracking.php?tracking_number={trackingNumber}",
     "searchUrl": "https://www.oneworldexpress.com/tracking",
+    "helpUrl": "https://www.oneworldexpress.com/contact-us",
     "canaryUrl": "https://www.oneworldexpress.com/tracking",
     "shows": [
       "status",

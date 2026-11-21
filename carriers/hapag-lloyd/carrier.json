@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.hapag-lloyd.com/solutions/tracking/#/{trackingNumber}",
     "searchUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
+    "helpUrl": "https://www.hapag-lloyd.com/en/services-information/offices-localinfo/europe/germany/local-info/customer-service.html",
     "canaryUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
     "shows": [
       "status",

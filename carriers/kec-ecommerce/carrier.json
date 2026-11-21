@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://kec.kln.com/en/logistics-tracking/?tracking={trackingNumber}",
     "searchUrl": "https://kec.kln.com/en/logistics-tracking/",
+    "helpUrl": "https://kec.kln.com/en/contact-us/",
     "canaryUrl": "https://kec.kln.com/en/logistics-tracking/",
     "shows": [
       "status",

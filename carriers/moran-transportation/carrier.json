@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://tracking.carrierlogistics.com/scripts/mor.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "searchUrl": "https://tracking.carrierlogistics.com/scripts/mor.pol/facts.htm",
+    "helpUrl": "https://www.moranltl.com/contact_main/",
     "canaryUrl": "https://tracking.carrierlogistics.com/scripts/mor.pol/facts.htm",
     "shows": [
       "status",

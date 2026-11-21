@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://redcourier.gr/track-and-trace/?voucher={trackingNumber}",
     "searchUrl": "https://redcourier.gr/track-and-trace/",
+    "helpUrl": "https://redcourier.gr/epikoinonia/",
     "canaryUrl": "https://redcourier.gr/track-and-trace/",
     "shows": [],
     "scraped": [],

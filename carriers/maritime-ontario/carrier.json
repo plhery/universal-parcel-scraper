@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.m-o.com/track/?t={trackingNumber}",
     "searchUrl": "https://www.m-o.com/track/",
+    "helpUrl": "https://www.m-o.com/contact",
     "canaryUrl": "https://cp.m-o.com/trace/external.msw",
     "shows": [
       "status",

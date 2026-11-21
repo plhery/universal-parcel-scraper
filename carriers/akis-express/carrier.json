@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://gapakisexpress.com/track-your-packages/?tracking_num={trackingNumber}",
     "searchUrl": "https://gapakisexpress.com/track-your-packages/",
+    "helpUrl": "https://gapakisexpress.com/contact-us/",
     "canaryUrl": "https://gapakisexpress.com/track-your-packages/",
     "shows": [
       "status",

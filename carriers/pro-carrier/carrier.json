@@ -42,6 +42,7 @@
   "portal": {
     "url": "https://tracking.weareprocarrier.com/?tn={trackingNumber}",
     "searchUrl": "https://tracking.weareprocarrier.com/",
+    "helpUrl": "https://www.weareprocarrier.com/contact-us",
     "canaryUrl": "https://tracking.weareprocarrier.com/",
     "shows": [
       "status",

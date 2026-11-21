@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://track.expluslogistics.com/tracking-result.html?trackings={trackingNumber}",
     "searchUrl": "https://track.expluslogistics.com/",
+    "helpUrl": "https://expluslogistics.com/contact/",
     "canaryUrl": "https://expluslogistics.com/",
     "shows": [],
     "scraped": [],

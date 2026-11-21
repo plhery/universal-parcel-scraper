@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://newaytransport.com.au/track/",
+    "helpUrl": "https://newaytransport.com.au/contact/",
     "canaryUrl": "https://newaytransport.com.au/track/",
     "shows": [],
     "scraped": [],

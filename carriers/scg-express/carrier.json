@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.scgexpress.co.th/tracking/detail/{trackingNumber}/",
     "searchUrl": "https://www.scgexpress.co.th/tracking/",
+    "helpUrl": "https://www.scgexpress.co.th/contact-us/",
     "canaryUrl": "https://www.scgexpress.co.th/tracking/",
     "shows": [],
     "scraped": [],

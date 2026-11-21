@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://webpostman.novakargo.com/tracking?har_kod={trackingNumber}",
+    "helpUrl": "https://novakargo.com/iletisim/",
     "canaryUrl": "https://webpostman.novakargo.com/tracking",
     "shows": [],
     "scraped": [],

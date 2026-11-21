@@ -47,6 +47,7 @@
   ],
   "portal": {
     "searchUrl": "https://postmediaparcelservices.com/",
+    "helpUrl": "https://postmediaparcelservices.com/#/support",
     "canaryUrl": "https://postmediaparcelservices.com/",
     "shows": [
       "status",

@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://www.wwwexpress.com.ph/track-and-trace/?trackingNo={trackingNumber}",
     "searchUrl": "https://www.wwwexpress.com.ph/track-and-trace/",
+    "helpUrl": "https://www.wwwexpress.com.ph/contact-us/",
     "canaryUrl": "https://www.wwwexpress.com.ph/track-and-trace/",
     "shows": [],
     "scraped": [],

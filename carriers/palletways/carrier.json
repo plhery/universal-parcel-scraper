@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://track2.palletways.com/",
+    "helpUrl": "https://www.palletways.com/contact/",
     "canaryUrl": "https://track2.palletways.com/",
     "shows": [
       "status",

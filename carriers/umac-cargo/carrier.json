@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.umaccargo.net/track-your-box-new.html",
     "searchUrl": "https://www.umaccargo.net/track-your-box-new.html",
+    "helpUrl": "https://www.umaccargo.net/contact-us.html",
     "canaryUrl": "https://www.umaccargo.net/track-your-box-new.html",
     "shows": [
       "status",

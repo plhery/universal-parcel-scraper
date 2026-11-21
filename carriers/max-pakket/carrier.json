@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://emens.mendrix.cloud/TrackAndTrace",
+    "helpUrl": "https://maxpakket.nl/contact/",
     "canaryUrl": "https://emens.mendrix.cloud/TrackAndTrace",
     "shows": [],
     "scraped": [],

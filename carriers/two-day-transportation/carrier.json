@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.2daytranspo.com/admin/code/PopUp/PopUp_ShippingTrackingItem.aspx?ProNumber={trackingNumber}",
     "searchUrl": "https://www.2daytranspo.com/",
+    "helpUrl": "https://www.2daytranspo.com/contactus",
     "canaryUrl": "https://www.2daytranspo.com/",
     "shows": [],
     "scraped": [],

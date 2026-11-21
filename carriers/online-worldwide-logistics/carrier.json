@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.online56.com.cn/cargo-tracking/?sn={trackingNumber}",
     "searchUrl": "https://www.online56.com.cn/cargo-tracking/",
+    "helpUrl": "https://www.online56.com.cn/contact-us/",
     "canaryUrl": "https://www.online56.com.cn/",
     "shows": [],
     "scraped": [],

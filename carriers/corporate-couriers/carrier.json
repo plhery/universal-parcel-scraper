@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://corporatecouriers.net/pages/online-order-login/?tracking-number={trackingNumber}",
     "searchUrl": "https://corporatecouriers.net/pages/online-order-login/",
+    "helpUrl": "https://corporatecouriers.net/pages/contact-us/",
     "canaryUrl": "https://corporatecouriers.net/pages/online-order-login/",
     "shows": [],
     "scraped": [],

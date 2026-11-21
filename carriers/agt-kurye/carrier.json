@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://takip.agtkurye.com/",
+    "helpUrl": "https://www.agtkurye.com.tr/bize-ulasin",
     "canaryUrl": "https://www.agtkurye.com.tr/",
     "shows": [],
     "scraped": [],

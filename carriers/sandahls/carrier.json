@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://portal.sandahlsbolagen.se/opter/TT?keyword={trackingNumber}",
     "searchUrl": "https://portal.sandahlsbolagen.se/opter/TT",
+    "helpUrl": "https://sandahls.com/kontakta-oss/",
     "canaryUrl": "https://portal.sandahlsbolagen.se/opter/TT",
     "shows": [],
     "scraped": [],

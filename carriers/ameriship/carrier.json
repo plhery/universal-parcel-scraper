@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://ameriship.com/track/?n={trackingNumber}",
     "searchUrl": "https://ameriship.com/track/",
+    "helpUrl": "https://ameriship.com/contact/",
     "canaryUrl": "https://ameriship.com/",
     "shows": [],
     "scraped": [],

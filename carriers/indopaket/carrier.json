@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.indopaket.co.id/multi-tracking",
+    "helpUrl": "https://www.indopaket.co.id/faq",
     "canaryUrl": "https://www.indopaket.co.id/",
     "shows": [],
     "scraped": [],

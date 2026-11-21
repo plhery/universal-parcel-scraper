@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://my.cargoboard.com/tracking",
+    "helpUrl": "https://cargoboard.com/contact/customer-support",
     "canaryUrl": "https://my.cargoboard.com/tracking",
     "shows": [],
     "scraped": [],

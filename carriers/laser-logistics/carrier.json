@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://www.laserlogistics.co.za/parcel-tracking/?waybillnumber={trackingNumber}",
     "searchUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
+    "helpUrl": "https://www.laserlogistics.co.za/contact/",
     "canaryUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
     "shows": [
       "status",

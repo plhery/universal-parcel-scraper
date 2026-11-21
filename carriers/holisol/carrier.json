@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.holisoldelivery.com/api/tracking/TrackAwb?awb={trackingNumber}",
     "searchUrl": "https://holisollogistics.com/track-shipment/",
+    "helpUrl": "https://holisollogistics.com/contact-us/",
     "canaryUrl": "https://holisollogistics.com/",
     "shows": [],
     "scraped": [],

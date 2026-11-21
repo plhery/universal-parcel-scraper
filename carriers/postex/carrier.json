@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://postex.pk/tracking?cn={trackingNumber}",
     "searchUrl": "https://postex.pk/tracking",
+    "helpUrl": "https://postex.pk/contact-us",
     "canaryUrl": "https://postex.pk/tracking",
     "shows": [
       "status",

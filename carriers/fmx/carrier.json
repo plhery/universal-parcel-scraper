@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.fmx.asia/result_detail.php?p=1&conno={trackingNumber}",
     "searchUrl": "https://www.fmx.asia/",
+    "helpUrl": "https://www.fmx.asia/contact_us.php",
     "canaryUrl": "https://www.fmx.asia/",
     "shows": [
       "progress_rail",

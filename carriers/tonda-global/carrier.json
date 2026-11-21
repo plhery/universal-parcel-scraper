@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.tarrive.com/track?q={trackingNumber}",
     "searchUrl": "https://www.tarrive.com/track",
+    "helpUrl": "https://www.tarrive.com/contact",
     "canaryUrl": "https://www.tarrive.com/",
     "shows": [],
     "scraped": [],

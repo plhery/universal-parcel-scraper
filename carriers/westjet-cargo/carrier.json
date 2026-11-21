@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
     "searchUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://www.westjetcargo.com/en-ca/help-center/contact-us",
     "canaryUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
     "shows": [
       "status",

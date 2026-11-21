@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://www.fargocourier.co.ke/waybill-viewer/?wayBill={trackingNumber}",
     "searchUrl": "https://www.fargocourier.co.ke/",
+    "helpUrl": "https://www.fargocourier.co.ke/contact-fargo-courier/",
     "canaryUrl": "https://www.fargocourier.co.ke/",
     "shows": [
       "status",

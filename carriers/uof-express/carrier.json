@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.uofexp.com/search_order.aspx?trackNumber={trackingNumber}",
     "searchUrl": "https://www.uofexp.com/search_order.aspx",
+    "helpUrl": "https://www.uofexp.com/company_show.aspx?id=194",
     "canaryUrl": "https://www.uofexp.com/",
     "shows": [
       "status",

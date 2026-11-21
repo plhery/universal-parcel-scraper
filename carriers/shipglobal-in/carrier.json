@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://shipglobal.in/tracking/?awb={trackingNumber}",
     "searchUrl": "https://shipglobal.in/tracking/",
+    "helpUrl": "https://shipglobal.in/contact/",
     "canaryUrl": "https://shipglobal.in/",
     "shows": [
       "status",

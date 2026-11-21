@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.gel-express.de/sendungsverfolgung/?snr={trackingNumber}",
     "searchUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
+    "helpUrl": "https://www.gel-express.de/de/kontakt/",
     "canaryUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
     "shows": [],
     "scraped": [],

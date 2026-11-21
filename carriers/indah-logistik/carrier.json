@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://indahonline.com/services/view?NO_RESI={trackingNumber}",
     "searchUrl": "https://indahonline.com/tracking/cek-resi",
+    "helpUrl": "https://indahonline.com/company/contact",
     "canaryUrl": "https://indahonline.com/tracking/cek-resi",
     "shows": [
       "status",

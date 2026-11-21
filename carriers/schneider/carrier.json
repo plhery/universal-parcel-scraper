@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://schneider.com/track",
+    "helpUrl": "https://schneider.com/contact-us",
     "canaryUrl": "https://schneider.com/track",
     "shows": [],
     "scraped": [],

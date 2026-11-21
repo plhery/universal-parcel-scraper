@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://pakettipisteseuranta.r2web.fi/?tid={trackingNumber}",
     "searchUrl": "https://pakettipisteseuranta.r2web.fi/",
+    "helpUrl": "https://www.pakettipiste.fi/tuki/",
     "canaryUrl": "https://pakettipisteseuranta.r2web.fi/",
     "shows": [],
     "scraped": [],

@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://tracking.transfera.com/package/{trackingNumber}",
     "searchUrl": "https://tracking.transfera.com/",
+    "helpUrl": "https://transfera.com/kontakt/",
     "canaryUrl": "https://tracking.transfera.com/",
     "shows": [],
     "scraped": [],

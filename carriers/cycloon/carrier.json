@@ -26,6 +26,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracktrace.cycloon.eu/",
+    "helpUrl": "https://www.cycloon.eu/klantenservice/ontvangen",
     "canaryUrl": "https://tracktrace.cycloon.eu/",
     "shows": [],
     "scraped": [],

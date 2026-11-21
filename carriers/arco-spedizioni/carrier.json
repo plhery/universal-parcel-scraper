@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.arcospedizioni.it/",
+    "helpUrl": "https://www.arcospedizioni.it/contatti/",
     "canaryUrl": "https://www.arcospedizioni.it/",
     "shows": [],
     "scraped": [],

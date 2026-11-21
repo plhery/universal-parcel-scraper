@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.alohafreight.com/portal/",
+    "helpUrl": "https://www.alohafreight.com/company-directory",
     "canaryUrl": "https://www.alohafreight.com/portal/",
     "shows": [],
     "scraped": [],

@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.hrparcel.com/traccia-spedizioni/?barcode={trackingNumber}",
     "searchUrl": "https://www.hrparcel.com/traccia-spedizioni/",
+    "helpUrl": "https://www.hrparcel.com/contatti/",
     "canaryUrl": "https://www.hrparcel.com/traccia-spedizioni/",
     "shows": [
       "status",

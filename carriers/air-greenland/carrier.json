@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://airgreenland.com/cargo/tracking-awb/",
     "searchUrl": "https://airgreenland.com/cargo/tracking-awb/",
+    "helpUrl": "https://airgreenland.com/cargo/contact-air-greenland-cargo/",
     "canaryUrl": "https://airgreenland.com/cargo/tracking-awb/",
     "shows": [
       "history",

@@ -44,6 +44,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.packs.nl/track-trace/",
+    "helpUrl": "https://www.packs.nl/contact/",
     "canaryUrl": "https://www.packs.nl/track-trace/",
     "shows": [
       "status",

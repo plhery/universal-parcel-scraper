@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.skyexpressinternational.com/Home/Tracking?trackingType=AWB&tid={trackingNumber}",
     "searchUrl": "https://skyexpressinternational.com/Home/Tracking",
+    "helpUrl": "https://skyexpressinternational.com/Home/Contact",
     "canaryUrl": "https://skyexpressinternational.com/Home/Tracking",
     "shows": [],
     "scraped": [],

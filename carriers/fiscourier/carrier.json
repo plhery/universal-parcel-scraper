@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
+    "helpUrl": "https://fiscourier.com/contacto/",
     "canaryUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
     "shows": [],
     "scraped": [],

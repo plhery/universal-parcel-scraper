@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://pavancourierservice.com/Home/Tracking?TrackingNo={trackingNumber}",
     "searchUrl": "https://pavancourierservice.com/Home/Tracking",
+    "helpUrl": "https://pavancourierservice.com/Home/Contact",
     "canaryUrl": "https://pavancourierservice.com/Home/Tracking",
     "shows": [],
     "scraped": [],

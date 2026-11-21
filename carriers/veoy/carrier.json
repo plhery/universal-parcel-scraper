@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://login.smartsys.no/smartTrackAndTrace/PublicTrackAndTrace?TenantGUID=ad936210-03b6-4ca7-9776-a491c03d4ba6&SearchFor={trackingNumber}",
     "searchUrl": "https://login.smartsys.no/smartTrackAndTrace/PublicTrackAndTrace?TenantGUID=ad936210-03b6-4ca7-9776-a491c03d4ba6",
+    "helpUrl": "https://www.veoy.no/kontakt",
     "canaryUrl": "https://login.smartsys.no/smartTrackAndTrace/PublicTrackAndTrace",
     "shows": [],
     "scraped": [],

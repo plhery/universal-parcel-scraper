@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://logistics.qwintry.com/track?tracking={trackingNumber}",
     "searchUrl": "https://logistics.qwintry.com/",
+    "helpUrl": "https://logistics.qwintry.com/contact",
     "canaryUrl": "https://logistics.qwintry.com/",
     "shows": [
       "status",

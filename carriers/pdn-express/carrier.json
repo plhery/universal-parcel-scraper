@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://pdn.express/en/track/{trackingNumber}",
     "searchUrl": "https://pdn.express/en/track/",
+    "helpUrl": "https://pdn.express/en/support/",
     "canaryUrl": "https://pdn.express/en/track/",
     "shows": [
       "status",

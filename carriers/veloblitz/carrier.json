@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://veloblitz.kuz.ch/",
+    "helpUrl": "https://www.veloblitz.ch/faq",
     "canaryUrl": "https://www.veloblitz.ch/",
     "shows": [],
     "scraped": [],

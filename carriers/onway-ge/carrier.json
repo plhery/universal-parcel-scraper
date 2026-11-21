@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://onway.ge/",
+    "helpUrl": "https://onway.ge/contact",
     "canaryUrl": "https://onway.ge/",
     "shows": [],
     "scraped": [],

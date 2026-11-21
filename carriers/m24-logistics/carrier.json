@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://lms.m24logistics.com/track-my-order/{trackingNumber}",
     "searchUrl": "https://lms.m24logistics.com/track-order",
+    "helpUrl": "https://m24logistics.com/contact/",
     "canaryUrl": "https://lms.m24logistics.com/track-order",
     "shows": [
       "status",

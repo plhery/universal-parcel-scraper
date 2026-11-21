@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://go.exelot.com/tracking?barcodes={trackingNumber}",
     "searchUrl": "https://www.exelot.com/",
+    "helpUrl": "https://www.exelot.com/contact",
     "canaryUrl": "https://www.exelot.com/",
     "shows": [
       "status",

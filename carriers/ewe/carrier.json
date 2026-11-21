@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.ewe.com.au/pages/tracking-order?cno={trackingNumber}#track-results",
     "searchUrl": "https://www.ewe.com.au/pages/tracking-order",
+    "helpUrl": "https://www.ewe.com.au/pages/contact",
     "canaryUrl": "https://www.ewe.com.au/pages/tracking-order",
     "shows": [
       "status",

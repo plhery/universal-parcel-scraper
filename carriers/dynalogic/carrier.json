@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://track.mydynalogic.eu/track/login?ordernumber={trackingNumber}",
     "searchUrl": "https://track.mydynalogic.eu/track/login",
+    "helpUrl": "https://www.dynalogic.eu/consumenten-contact/",
     "canaryUrl": "https://track.mydynalogic.eu/track/login",
     "shows": [
       "status",

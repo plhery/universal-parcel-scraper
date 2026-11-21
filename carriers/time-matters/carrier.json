@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://booking.time-matters.com/en-US/tracking/{trackingNumber}",
     "searchUrl": "https://booking.time-matters.com/en-US/tracking",
+    "helpUrl": "https://www.time-matters.com/customer-service/",
     "canaryUrl": "https://booking.time-matters.com/en-US/tracking",
     "shows": [
       "status",

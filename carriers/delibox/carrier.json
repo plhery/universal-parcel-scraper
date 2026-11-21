@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.dbox.co.kr/delivery.php?laasInvcNo={trackingNumber}",
     "searchUrl": "https://www.dbox.co.kr/delivery.php",
+    "helpUrl": "https://www.dbox.co.kr/shipping/shipping.php",
     "canaryUrl": "https://www.dbox.co.kr/delivery.php",
     "shows": [
       "status",

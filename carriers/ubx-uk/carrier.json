@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.ubx.uk.net/tracking/?consign_note={trackingNumber}",
     "searchUrl": "https://www.ubx.uk.net/tracking/",
+    "helpUrl": "https://www.ubx.uk.net/contact-ubx/",
     "canaryUrl": "https://www.ubx.uk.net/",
     "shows": [],
     "scraped": [],

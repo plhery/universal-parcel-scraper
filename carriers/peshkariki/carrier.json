@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://peshkariki.ru/tracking",
+    "helpUrl": "https://peshkariki.ru/kontakty",
     "canaryUrl": "https://peshkariki.ru/tracking",
     "shows": [],
     "scraped": [],

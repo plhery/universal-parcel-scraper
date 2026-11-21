@@ -16,6 +16,7 @@
   "portal": {
     "url": "https://www.flowpl.com/order-tracking/",
     "searchUrl": "https://www.flowpl.com/order-tracking/",
+    "helpUrl": "https://www.flowpl.com/contact-us/",
     "canaryUrl": "https://www.flowpl.com/order-tracking/",
     "shows": ["status", "history", "event_locations", "summary_route"],
     "scraped": ["status", "history"],

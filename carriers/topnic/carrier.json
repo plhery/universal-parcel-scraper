@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://topnic.com.hk/order-tracking/{trackingNumber}",
     "searchUrl": "https://topnic.com.hk/order-tracking",
+    "helpUrl": "https://topnic.com.hk/contact-us",
     "canaryUrl": "https://topnic.com.hk/order-tracking",
     "shows": [],
     "scraped": [],

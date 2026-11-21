@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.fastwl.com/suivre-un-colis/?trackingNumber={trackingNumber}",
     "searchUrl": "https://www.fastwl.com/suivre-un-colis/",
+    "helpUrl": "https://www.fastwl.com/contact/",
     "canaryUrl": "https://www.fastwl.com/suivre-un-colis/",
     "shows": [],
     "scraped": [],

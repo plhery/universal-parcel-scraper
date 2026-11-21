@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.paeckli-punkt.ch/paket-verfolgen/?packet={trackingNumber}",
     "searchUrl": "https://www.paeckli-punkt.ch/paket-verfolgen/",
+    "helpUrl": "https://www.paeckli-punkt.ch/kontakt/",
     "canaryUrl": "https://www.paeckli-punkt.ch/paket-verfolgen/",
     "shows": [],
     "scraped": [],

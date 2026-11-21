@@ -45,6 +45,7 @@
   "portal": {
     "url": "https://delivers.maersk.com/tracking/{trackingNumber}",
     "searchUrl": "https://delivers.maersk.com/tracking/",
+    "helpUrl": "https://delivers.maersk.com/contact/",
     "canaryUrl": "https://delivers.maersk.com/tracking/",
     "shows": [
       "status",

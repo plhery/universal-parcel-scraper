@@ -27,6 +27,7 @@
   ],
   "portal": {
     "searchUrl": "https://tracking.heronaexpress.co.id/lacak.php",
+    "helpUrl": "https://heronaexpress.co.id/kontak.php",
     "canaryUrl": "https://www.heronaexpress.co.id/",
     "shows": [
       "status",

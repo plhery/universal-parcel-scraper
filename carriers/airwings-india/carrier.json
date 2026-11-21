@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://airwingsindia.com/tracking.html?awbno={trackingNumber}",
     "searchUrl": "https://airwingsindia.com/tracking.html",
+    "helpUrl": "https://airwingsindia.com/contact.html",
     "canaryUrl": "https://airwingsindia.com/",
     "shows": [],
     "scraped": [],

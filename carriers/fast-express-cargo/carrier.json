@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://lms.fastexpresscargo.com/WebTracking/WebTracking.aspx?AwbNo={trackingNumber}",
     "searchUrl": "https://www.fastexpresscargo.com/tracking.html",
+    "helpUrl": "https://www.fastexpresscargo.com/contact.html",
     "canaryUrl": "https://lms.fastexpresscargo.com/WebTracking/WebTracking.aspx",
     "shows": [],
     "scraped": [],

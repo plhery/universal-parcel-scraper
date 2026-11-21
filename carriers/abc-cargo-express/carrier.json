@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://abccargoxpress.com/",
+    "helpUrl": "https://abccargoxpress.com/contact",
     "canaryUrl": "https://abccargoxpress.com/",
     "shows": [],
     "scraped": [],

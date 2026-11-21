@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.braunsexpress.com/tracking/?tracking_number={trackingNumber}",
     "searchUrl": "https://www.braunsexpress.com/tracking/",
+    "helpUrl": "https://www.braunsexpress.com/contact-us/",
     "canaryUrl": "https://www.braunsexpress.com/tracking/",
     "shows": [],
     "scraped": [],

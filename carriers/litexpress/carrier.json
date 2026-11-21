@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://litexpress.com.ph/track-and-trace/",
+    "helpUrl": "https://www.litexpress.com.ph/contactus",
     "canaryUrl": "https://litexpress.com.ph/track-and-trace/",
     "shows": [],
     "scraped": [],

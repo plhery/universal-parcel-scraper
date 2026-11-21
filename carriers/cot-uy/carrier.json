@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.cot.com.uy/encomiendas",
+    "helpUrl": "https://www.cot.com.uy/contacto",
     "canaryUrl": "https://www.cot.com.uy/encomiendas",
     "shows": [],
     "scraped": [],

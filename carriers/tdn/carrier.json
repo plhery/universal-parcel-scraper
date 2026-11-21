@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://www.tdn.es/tracking?envio={trackingNumber}&autoredir=1",
     "searchUrl": "https://www.tdn.es/tracking/",
+    "helpUrl": "https://www.tdn.es/contacto",
     "canaryUrl": "https://www.tdn.es/tracking/",
     "shows": [
       "status",

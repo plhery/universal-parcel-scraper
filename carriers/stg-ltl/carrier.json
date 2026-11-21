@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://tracking.carrierlogistics.com/scripts/fro.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "searchUrl": "https://tracking.carrierlogistics.com/scripts/fro.pol/facts.htm",
+    "helpUrl": "https://www.stgltl.com/contact/",
     "canaryUrl": "https://tracking.carrierlogistics.com/scripts/fro.pol/facts.htm",
     "shows": [],
     "scraped": [],

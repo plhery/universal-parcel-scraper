@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://flickpost.com/tracking/?trackingNumber={trackingNumber}",
     "searchUrl": "https://flickpost.com/tracking/",
+    "helpUrl": "https://flickpost.com/contact-us/",
     "canaryUrl": "https://flickpost.com/tracking/",
     "shows": [
       "status",

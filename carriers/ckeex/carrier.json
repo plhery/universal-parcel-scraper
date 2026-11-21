@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.ckeex.com/track.html?nos={trackingNumber}",
     "searchUrl": "https://www.ckeex.com/track.html",
+    "helpUrl": "https://www.ckeex.com/contact.html",
     "canaryUrl": "https://www.ckeex.com/",
     "shows": [],
     "scraped": [],

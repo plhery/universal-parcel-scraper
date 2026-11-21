@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://smafraktse.opter.cloud/TT?keyword={trackingNumber}",
     "searchUrl": "https://smafraktse.opter.cloud/TT",
+    "helpUrl": "https://www.smafrakt.se/web/kontakta-oss/",
     "canaryUrl": "https://smafraktse.opter.cloud/TT",
     "shows": [],
     "scraped": [],

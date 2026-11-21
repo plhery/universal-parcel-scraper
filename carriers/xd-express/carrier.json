@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.xdexpress.com.au/Express.aspx",
+    "helpUrl": "https://www.xdexpress.com.au/contact.aspx",
     "canaryUrl": "https://www.xdexpress.com.au/",
     "shows": [],
     "scraped": [],

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://maystro-delivery.com/trackingSD.html",
+    "helpUrl": "https://maystro-delivery.com/ContactUS.html",
     "canaryUrl": "https://maystro-delivery.com/trackingSD.html",
     "shows": [],
     "scraped": [],

@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.xpcourier.gr/track?identifier={trackingNumber}",
     "searchUrl": "https://www.xpcourier.gr/track",
+    "helpUrl": "https://www.xpcourier.gr/contact",
     "canaryUrl": "https://www.xpcourier.gr/track",
     "shows": [],
     "scraped": [],

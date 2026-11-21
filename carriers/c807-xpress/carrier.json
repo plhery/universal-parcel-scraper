@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://c807xpress.com/tracking/",
+    "helpUrl": "https://c807xpress.com/sv/contacto/",
     "canaryUrl": "https://c807xpress.com/tracking/",
     "shows": [],
     "scraped": [],

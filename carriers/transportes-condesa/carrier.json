@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.tcondesa.com.mx/Home/Support",
+    "helpUrl": "https://www.tcondesa.com.mx/Home/Contact",
     "canaryUrl": "https://www.tcondesa.com.mx/Home/Support",
     "shows": [],
     "scraped": [],

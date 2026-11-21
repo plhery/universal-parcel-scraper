@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://korex.by/",
+    "helpUrl": "https://korex.by/contacts",
     "canaryUrl": "https://korex.by/",
     "shows": [],
     "scraped": [],

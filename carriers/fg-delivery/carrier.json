@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://fgdelivery.it/tracciabilita/?barcode={trackingNumber}",
     "searchUrl": "https://fgdelivery.it/tracciabilita/",
+    "helpUrl": "https://fgdelivery.it/contatti/",
     "canaryUrl": "https://fgdelivery.it/tracciabilita/",
     "shows": [
       "status"

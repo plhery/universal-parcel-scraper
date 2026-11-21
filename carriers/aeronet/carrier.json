@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.aeronet.com/tracking/",
+    "helpUrl": "https://www.aeronet.com/national-control-center-24-7-customer-support/",
     "canaryUrl": "https://www.aeronet.com/tracking/",
     "shows": [],
     "scraped": [],

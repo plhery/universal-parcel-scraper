@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://tracking.jumppoint.io/?q={trackingNumber}",
     "searchUrl": "https://tracking.jumppoint.io/",
+    "helpUrl": "https://www.jumppoint.io/contact-us",
     "canaryUrl": "https://tracking.jumppoint.io/",
     "shows": [
       "status",

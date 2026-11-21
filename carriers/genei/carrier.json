@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.genei.es/seguimiento-envios/?tracking={trackingNumber}",
     "searchUrl": "https://www.genei.es/seguimiento-envios/",
+    "helpUrl": "https://soporte.genei.es/",
     "canaryUrl": "https://www.genei.es/seguimiento-envios/",
     "shows": [
       "status",

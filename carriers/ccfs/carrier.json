@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://auth.ccfs.com/track/detail/{trackingNumber}",
     "searchUrl": "https://auth.ccfs.com/track/search",
+    "helpUrl": "https://www.ccfs.com/contact.html",
     "canaryUrl": "https://auth.ccfs.com/track/search",
     "shows": [
       "status",

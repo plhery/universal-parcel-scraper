@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.penguinbox.cz/sledovani-zasilky?track={trackingNumber}",
     "searchUrl": "https://www.penguinbox.cz/sledovani-zasilky",
+    "helpUrl": "https://www.penguinbox.cz/faq",
     "canaryUrl": "https://www.penguinbox.cz/",
     "shows": [],
     "scraped": [],

@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.cootranstame.com/rastreo-envios",
     "searchUrl": "https://www.cootranstame.com/rastreo-envios",
+    "helpUrl": "https://www.cootranstame.com/Medios-de-contacto",
     "canaryUrl": "https://www.cootranstame.com/rastreo-envios",
     "shows": [
       "status",

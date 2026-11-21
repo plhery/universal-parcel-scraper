@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.yamatoamerica.com/tracking/?slipnumber={trackingNumber}",
     "searchUrl": "https://www.yamatoamerica.com/tracking/",
+    "helpUrl": "https://www.yamatoamerica.com/contact/",
     "canaryUrl": "https://www.yamatoamerica.com/tracking/",
     "shows": [],
     "scraped": [],

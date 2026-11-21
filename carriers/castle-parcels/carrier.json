@@ -44,6 +44,7 @@
   "portal": {
     "url": "https://receiver.castleparcels.co.nz/?track={trackingNumber}",
     "searchUrl": "https://receiver.castleparcels.co.nz/",
+    "helpUrl": "https://posthaste.co.nz/about-us/contact/",
     "canaryUrl": "https://receiver.castleparcels.co.nz/",
     "shows": [
       "status",

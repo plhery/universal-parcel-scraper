@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.shreemahavircourier.com/",
+    "helpUrl": "https://www.shreemahavircourier.com/contact-us.aspx",
     "canaryUrl": "https://www.shreemahavircourier.com/",
     "shows": [
       "status",

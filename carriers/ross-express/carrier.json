@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "searchUrl": "https://www.rossexpress.com/",
+    "helpUrl": "https://www.rossexpress.com/contact/",
     "canaryUrl": "https://www.rossexpress.com/",
     "shows": [],
     "scraped": [],

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.domina.com.co/",
+    "helpUrl": "https://domina.com.co/contactanos/",
     "canaryUrl": "https://tracking.domina.com.co/",
     "shows": [],
     "scraped": [],

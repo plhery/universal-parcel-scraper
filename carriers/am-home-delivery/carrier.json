@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.amtrucking.com/track-number.php?cnumber={trackingNumber}",
     "searchUrl": "https://www.amtrucking.com/tracking.php",
+    "helpUrl": "https://www.amtrucking.com/contact.php",
     "canaryUrl": "https://www.amtrucking.com/tracking.php",
     "shows": [
       "status",

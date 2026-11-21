@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://track.fleetopticsinc.com/?tracking_number={trackingNumber}",
     "searchUrl": "https://track.fleetopticsinc.com/",
+    "helpUrl": "https://fleetopticsinc.com/faq/",
     "canaryUrl": "https://track.fleetopticsinc.com/",
     "shows": [
       "status",

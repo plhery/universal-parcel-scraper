@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "helpUrl": "https://www.baikalsr.ru/company/feedback/",
     "canaryUrl": "https://www.baikalsr.ru/tools/tracking/",
     "shows": [],
     "scraped": [],

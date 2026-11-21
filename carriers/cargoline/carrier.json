@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://trackandtrace.cepra.de/Track/{trackingNumber}",
     "searchUrl": "https://trackandtrace.cepra.de/Track",
+    "helpUrl": "https://www.cargoline.de/kontakt/",
     "canaryUrl": "https://www.cargoline.de/",
     "shows": [],
     "scraped": [],

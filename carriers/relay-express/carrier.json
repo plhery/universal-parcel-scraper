@@ -26,6 +26,7 @@
   ],
   "portal": {
     "searchUrl": "https://scm.relayexpress.in/DocketTrack",
+    "helpUrl": "https://www.relayexpress.in/contact.html",
     "canaryUrl": "https://scm.relayexpress.in/DocketTrack",
     "shows": [
       "status",

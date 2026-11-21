@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.connectcouriers.eu/tracking/?tracking_number={trackingNumber}",
     "searchUrl": "https://www.connectcouriers.eu/tracking/",
+    "helpUrl": "https://www.connectcouriers.eu/contact-us/",
     "canaryUrl": "https://www.connectcouriers.eu/tracking/",
     "shows": [
       "status",

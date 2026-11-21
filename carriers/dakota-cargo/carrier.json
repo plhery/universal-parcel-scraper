@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://dakotacargo.co.id/#lacak-kiriman",
+    "helpUrl": "https://dakotacargo.co.id/hubungi-kami.html",
     "canaryUrl": "https://dakotacargo.co.id/",
     "shows": [],
     "scraped": [],

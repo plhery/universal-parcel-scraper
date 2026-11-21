@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.goforgps.com/tracking?search={trackingNumber}",
     "searchUrl": "https://www.goforgps.com/tracking",
+    "helpUrl": "https://www.goforgps.com/faq",
     "canaryUrl": "https://www.goforgps.com/tracking",
     "shows": [],
     "scraped": [],

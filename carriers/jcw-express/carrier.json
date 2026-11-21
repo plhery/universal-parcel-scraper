@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://jcwexpress.com/tracking?codes={trackingNumber}",
     "searchUrl": "https://jcwexpress.com/tracking",
+    "helpUrl": "https://jcwexpress.com/contact",
     "canaryUrl": "https://jcwexpress.com/",
     "shows": [],
     "scraped": [],

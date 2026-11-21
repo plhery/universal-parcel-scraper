@@ -35,6 +35,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.parcelabc.com/content/tracking",
+    "helpUrl": "https://www.parcelabc.com/page/faqs/1",
     "canaryUrl": "https://www.parcelabc.com/content/tracking",
     "shows": [
       "history",

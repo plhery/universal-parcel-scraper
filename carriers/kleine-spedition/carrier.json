@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://tt.kleine.eu/tracking/anon/anondetail.seam?colliScanNumber={trackingNumber}",
     "searchUrl": "https://tt.kleine.eu/tracking/home.jsf",
+    "helpUrl": "https://kleine.eu/kontakt",
     "canaryUrl": "https://tt.kleine.eu/tracking/home.jsf",
     "shows": [],
     "scraped": [],

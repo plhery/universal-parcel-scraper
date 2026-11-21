@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://sfydexpress.com/tracking.html?c={trackingNumber}",
     "searchUrl": "https://sfydexpress.com/tracking.html",
+    "helpUrl": "https://sfydexpress.com/support/faq.html",
     "canaryUrl": "https://sfydexpress.com/tracking.html",
     "shows": [
       "status",

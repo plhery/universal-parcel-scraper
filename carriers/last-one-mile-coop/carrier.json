@@ -34,6 +34,7 @@
   ],
   "portal": {
     "url": "https://y-track.jp/ytrack/inqservlet?cd=81118&id=02116&number01={trackingNumber}",
+    "helpUrl": "https://lastonemile.org/contact-informations/",
     "canaryUrl": "https://lastonemile.org/",
     "shows": [
       "status",

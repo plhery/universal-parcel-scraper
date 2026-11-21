@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.logoix.com/cgi-bin/tnt.pl?q={trackingNumber}",
     "searchUrl": "https://www.logoix.com/cgi-bin/tnt.pl",
+    "helpUrl": "https://www.logoix.com/cgi-bin/kontakt.pl",
     "canaryUrl": "https://www.logoix.com/cgi-bin/tnt.pl",
     "shows": [
       "status",

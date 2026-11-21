@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://trackit.bizcourier.eu/app/en/{trackingNumber}",
     "searchUrl": "https://trackit.bizcourier.eu/app/en",
+    "helpUrl": "https://www.bizcourier.eu/en/ContactUs.htm",
     "canaryUrl": "https://trackit.bizcourier.eu/app/en",
     "shows": [
       "status",

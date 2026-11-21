@@ -20,6 +20,7 @@
   "portal": {
     "url": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
     "searchUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://www.akasaair.com/quick-links/cargo",
     "canaryUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
     "shows": ["status", "history", "location", "weight", "flight_and_routing", "goods_and_package_details"],
     "scraped": ["status", "history", "location", "weight"],

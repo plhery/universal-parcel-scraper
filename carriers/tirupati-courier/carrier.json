@@ -36,6 +36,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.shreetirupaticourier.net/",
+    "helpUrl": "https://www.shreetirupaticourier.net/contactUs.aspx",
     "canaryUrl": "https://www.shreetirupaticourier.net/",
     "shows": [
       "status",

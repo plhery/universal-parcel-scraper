@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.pointpack.pl/sledz-przesylke/{trackingNumber}",
     "searchUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "helpUrl": "https://www.pointpack.pl/pomoc",
     "canaryUrl": "https://www.pointpack.pl/sledz-przesylke",
     "shows": [],
     "scraped": [],

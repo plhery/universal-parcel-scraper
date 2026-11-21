@@ -34,6 +34,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.matson.com/shipment-tracking.html",
+    "helpUrl": "https://www.matson.com/corporate/contactus",
     "canaryUrl": "https://www.matson.com/shipment-tracking.html",
     "shows": [
       "status",

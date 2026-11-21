@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://web.efs.asia/script/users/tracking.php?search_no={trackingNumber}&mode=search&lang=",
     "searchUrl": "https://web.efs.asia/script/users/tracking.php",
+    "helpUrl": "https://efs.asia/customer_form.php",
     "canaryUrl": "https://efs.asia/",
     "shows": [],
     "scraped": [],

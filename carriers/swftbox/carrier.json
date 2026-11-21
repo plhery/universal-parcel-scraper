@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://t.swftbox.com/",
+    "helpUrl": "https://www.swftbox.com/contactus",
     "canaryUrl": "https://www.swftbox.com/",
     "shows": [],
     "scraped": [],

@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://wassel.ps/en/tracking?awb={trackingNumber}",
     "searchUrl": "https://wassel.ps/en/tracking",
+    "helpUrl": "https://wassel.ps/en/contact",
     "canaryUrl": "https://wassel.ps/en/tracking",
     "shows": [],
     "scraped": [],

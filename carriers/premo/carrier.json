@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://www.premo.se/paketsparning?id={trackingNumber}",
     "searchUrl": "https://www.premo.se/paketsparning",
+    "helpUrl": "https://www.premo.se/fragor-svar",
     "canaryUrl": "https://www.premo.se/paketsparning",
     "shows": [],
     "scraped": [],

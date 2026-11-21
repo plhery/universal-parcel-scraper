@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.flightlg.com/myflight-shipment-tracking/?method=tracking&consign_note={trackingNumber}",
     "searchUrl": "https://www.flightlg.com/myflight-shipment-tracking/?method=tracking",
+    "helpUrl": "https://www.flightlg.com/contact-us/",
     "canaryUrl": "https://www.flightlg.com/myflight-shipment-tracking/",
     "shows": [],
     "scraped": [],

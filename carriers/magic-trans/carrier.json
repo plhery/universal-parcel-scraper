@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://magic-trans.ru/otsledit-gruz/?id={trackingNumber}",
     "searchUrl": "https://magic-trans.ru/otsledit-gruz/",
+    "helpUrl": "https://magic-trans.ru/kontakty/",
     "canaryUrl": "https://magic-trans.ru/otsledit-gruz/",
     "shows": [
       "status",

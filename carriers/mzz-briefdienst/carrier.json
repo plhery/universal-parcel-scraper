@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://portal.sent24.de/index.php/tracking/search",
+    "helpUrl": "https://mzz-briefdienst.de/kontakt-37",
     "canaryUrl": "https://portal.sent24.de/index.php/tracking/search",
     "shows": [],
     "scraped": [],

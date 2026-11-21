@@ -34,6 +34,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://spt-logistics.eu/#sledzenie-przesylek",
+    "helpUrl": "https://spt-logistics.eu/kontakt",
     "canaryUrl": "https://spt-logistics.eu/",
     "shows": [],
     "scraped": [],

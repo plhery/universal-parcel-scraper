@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://l-post.ru/tracking?id={trackingNumber}",
     "searchUrl": "https://l-post.ru/tracking",
+    "helpUrl": "https://l-post.ru/support",
     "canaryUrl": "https://l-post.ru/tracking",
     "shows": [
       "status",

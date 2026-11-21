@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://tracking.apc-pli.com/{trackingNumber}",
     "searchUrl": "https://tracking.apc-pli.com/",
+    "helpUrl": "https://www.apc-pli.com/consumer-tracking-support",
     "canaryUrl": "https://tracking.apc-pli.com/",
     "shows": [
       "status",

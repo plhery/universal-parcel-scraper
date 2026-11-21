@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://hitch.com.ph/tracking?no={trackingNumber}",
     "searchUrl": "https://hitch.com.ph/tracking",
+    "helpUrl": "https://hitch.com.ph/contact-us",
     "canaryUrl": "https://hitch.com.ph/",
     "shows": [
       "status",

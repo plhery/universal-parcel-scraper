@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://koombiyodelivery.lk/track?id={trackingNumber}",
     "searchUrl": "https://koombiyodelivery.lk/track",
+    "helpUrl": "https://koombiyodelivery.lk/contact",
     "canaryUrl": "https://koombiyodelivery.lk/track",
     "shows": [],
     "scraped": [],

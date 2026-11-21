@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.shivaicl.net/track.html",
+    "helpUrl": "https://www.shivaicl.net/contact.html",
     "canaryUrl": "https://www.shivaicl.net/track.html",
     "shows": [],
     "scraped": [],

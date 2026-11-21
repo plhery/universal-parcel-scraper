@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://velexp.com/home-tracking/{trackingNumber}?type=awb",
     "searchUrl": "https://velexp.com/home-tracking",
+    "helpUrl": "https://velexp.com/contact-us",
     "canaryUrl": "https://velexp.com/home-tracking",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.reseaubesson.com/",
+    "helpUrl": "https://www.reseaubesson.com/Lug?controller=Contacts",
     "canaryUrl": "https://www.reseaubesson.com/",
     "shows": [],
     "scraped": [],

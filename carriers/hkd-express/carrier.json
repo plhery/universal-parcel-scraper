@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.hkdexpress.net/track",
+    "helpUrl": "https://www.hkdexpress.net/contact",
     "canaryUrl": "https://www.hkdexpress.net/track",
     "shows": [],
     "scraped": [],

@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://u-envios.com/ue-tracking?orden={trackingNumber}",
     "searchUrl": "https://u-envios.com/ue-tracking",
+    "helpUrl": "https://u-envios.com/contact",
     "canaryUrl": "https://u-envios.com/ue-tracking",
     "shows": [],
     "scraped": [],

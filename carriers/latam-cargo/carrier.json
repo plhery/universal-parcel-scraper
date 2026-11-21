@@ -29,6 +29,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.latamcargo.com/en/trackshipment",
+    "helpUrl": "https://www.latamcargo.com/en/customercare",
     "canaryUrl": "https://www.latamcargo.com/en/trackshipment",
     "shows": [],
     "scraped": [],

@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://tracking.qtlogistics.eu/hu/{trackingNumber}",
     "searchUrl": "https://tracking.qtlogistics.eu/hu",
+    "helpUrl": "https://qtlogistics.eu/contact/",
     "canaryUrl": "https://tracking.qtlogistics.eu/hu",
     "shows": [
       "status",

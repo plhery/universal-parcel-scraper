@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://firstflyexpress.com/track.asp",
+    "helpUrl": "https://firstflyexpress.com/cntactus.html",
     "canaryUrl": "https://firstflyexpress.com/track.asp",
     "shows": [],
     "scraped": [],

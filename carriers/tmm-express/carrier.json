@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://ukr.tmm-express.com/en/trackparcels?num={trackingNumber}&mark=is_code",
     "searchUrl": "https://ukr.tmm-express.com/en/callback",
+    "helpUrl": "https://ukr.tmm-express.com/uk/content/kontakty-ukr",
     "canaryUrl": "https://ukr.tmm-express.com/en/callback",
     "shows": [
       "status",

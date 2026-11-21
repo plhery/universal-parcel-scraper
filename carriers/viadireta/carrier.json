@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.viadireta.pt/pt/tracking?codigo={trackingNumber}",
     "searchUrl": "https://www.viadireta.pt/pt/tracking",
+    "helpUrl": "https://www.viadireta.pt/pt/contactos",
     "canaryUrl": "https://www.viadireta.pt/pt/tracking",
     "shows": [
       "status",

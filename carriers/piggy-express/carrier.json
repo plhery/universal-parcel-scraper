@@ -27,6 +27,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://piggyexp.com/track",
+    "helpUrl": "https://piggyexp.com/contact",
     "canaryUrl": "https://piggyexp.com/track",
     "shows": [],
     "scraped": [],

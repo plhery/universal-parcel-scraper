@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://ozonexpress.ma/tracking-colis/{trackingNumber}",
     "searchUrl": "https://ozonexpress.ma/",
+    "helpUrl": "https://ozonexpress.ma/contact",
     "canaryUrl": "https://ozonexpress.ma/",
     "shows": [],
     "scraped": [],

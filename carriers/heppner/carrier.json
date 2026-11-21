@@ -46,6 +46,7 @@
   "portal": {
     "url": "https://www.heppner-group.com/destinataire-suivez-votre-marchandise/",
     "searchUrl": "https://www.heppner-group.com/destinataire-suivez-votre-marchandise/",
+    "helpUrl": "https://www.heppner-group.com/contactez-nous/",
     "canaryUrl": "https://myportal.heppner-group.com/tracking",
     "shows": [
       "status",

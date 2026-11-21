@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://visible.leschaco.com/?forwarderRef={trackingNumber}",
     "searchUrl": "https://visible.leschaco.com/",
+    "helpUrl": "https://www.leschaco.com/en/service/contact.html",
     "canaryUrl": "https://visible.leschaco.com/",
     "shows": [
       "status",

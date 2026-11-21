@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://nomex.kg/?iShip_Invoice={trackingNumber}",
     "searchUrl": "https://nomex.kg/",
+    "helpUrl": "https://nomex.kg/contact.html",
     "canaryUrl": "https://nomex.kg/",
     "shows": [],
     "scraped": [],

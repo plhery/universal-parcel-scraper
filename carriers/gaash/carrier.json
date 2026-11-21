@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://gaashwd.com/track-parcel/?TrackingNumber={trackingNumber}",
     "searchUrl": "https://gaashwd.com/track-parcel/",
+    "helpUrl": "https://gaashwd.com/contact-us/",
     "canaryUrl": "https://gaashwd.com/track-parcel/",
     "shows": [
       "status",

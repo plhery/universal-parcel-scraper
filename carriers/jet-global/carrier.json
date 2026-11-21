@@ -27,6 +27,7 @@
   "portal": {
     "url": "https://www.jetft.com/tracking.html?order={trackingNumber}",
     "searchUrl": "https://www.jetft.com/tracking.html",
+    "helpUrl": "https://www.jetft.com/contact.html",
     "canaryUrl": "https://www.jetft.com/tracking.html",
     "shows": [],
     "scraped": [],

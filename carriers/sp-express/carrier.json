@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://en.sp.express/tt/{trackingNumber}",
     "searchUrl": "https://sp.express/tt",
+    "helpUrl": "https://sp.express/w2/site/contact",
     "canaryUrl": "https://sp.express/tt",
     "shows": [
       "status",

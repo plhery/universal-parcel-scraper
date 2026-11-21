@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://famafutar.hu/tracking/#{trackingNumber}",
     "searchUrl": "https://famafutar.hu/tracking/",
+    "helpUrl": "https://famafutar.hu/kapcsolat/",
     "canaryUrl": "https://famafutar.hu/tracking/",
     "shows": [],
     "scraped": [],

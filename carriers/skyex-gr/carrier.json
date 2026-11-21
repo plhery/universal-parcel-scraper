@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://skyex.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
     "searchUrl": "https://skyex.gr/el/entopismos",
+    "helpUrl": "https://skyex.gr/el/epikoinonia",
     "canaryUrl": "https://skyex.gr/el/entopismos",
     "shows": [],
     "scraped": [],

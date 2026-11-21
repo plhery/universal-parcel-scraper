@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.kwick-box.com/",
+    "helpUrl": "https://www.kwick-box.com/en/contactUs/",
     "canaryUrl": "https://www.kwick-box.com/",
     "shows": [],
     "scraped": [],

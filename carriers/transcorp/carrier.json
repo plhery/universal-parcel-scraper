@@ -48,6 +48,7 @@
   "portal": {
     "url": "https://app.elite-co.com/shipments/track?references={trackingNumber}",
     "searchUrl": "https://app.elite-co.com/shipments/track",
+    "helpUrl": "https://transcorp-intl.com/contact-us/",
     "canaryUrl": "https://app.elite-co.com/shipments/track",
     "shows": [
       "status",

@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://caebfs.netcourier.net/online/tracking/trackinginfo/{trackingNumber}",
     "searchUrl": "https://www.cityairexpress.com/track-my-parcel",
+    "helpUrl": "https://www.cityairexpress.com/contact",
     "canaryUrl": "https://www.cityairexpress.com/",
     "shows": [
       "status",

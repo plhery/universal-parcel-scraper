@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://cargo.civa.com.pe/",
+    "helpUrl": "https://civa.com.pe/es/contact",
     "canaryUrl": "https://cargo.civa.com.pe/",
     "shows": [],
     "scraped": [],

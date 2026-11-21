@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://xt.jiehang.net/WebTrack",
+    "helpUrl": "https://www.jiehang.net/index.php/about/11",
     "canaryUrl": "https://www.jiehang.net/",
     "shows": [],
     "scraped": [],

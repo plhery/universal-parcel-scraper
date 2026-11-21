@@ -32,6 +32,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.jetlinecouriers.in/",
+    "helpUrl": "https://www.jetlinecouriers.in/customercare.aspx",
     "canaryUrl": "https://www.jetlinecouriers.in/",
     "shows": [
       "status",

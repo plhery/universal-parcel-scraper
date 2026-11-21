@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://track.jancoexpress.com/cargotracking_xp/itxp/xpop/xpordertrack?as_order_no={trackingNumber}",
     "searchUrl": "https://www.jancoexpress.com/track-trace-2/",
+    "helpUrl": "https://www.jancoexpress.com/contact/",
     "canaryUrl": "https://track.jancoexpress.com/cargotracking_xp/itxp/xpop/xpordertrack",
     "shows": [],
     "scraped": [],

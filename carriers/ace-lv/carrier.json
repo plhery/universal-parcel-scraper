@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.acelogistics.eu/tracker/tracker_en.php?office=LV&cc=LV&ref={trackingNumber}",
     "searchUrl": "https://www.acelogistics.eu/lv/en/service/cargo-tracking/",
+    "helpUrl": "https://www.acelogistics.eu/lv/en/contacts/",
     "canaryUrl": "https://www.acelogistics.eu/lv/en/service/cargo-tracking/",
     "shows": [],
     "scraped": [],

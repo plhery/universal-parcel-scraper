@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi?reference={trackingNumber}",
     "searchUrl": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi",
+    "helpUrl": "https://help.boxtal.com/fr/fr/",
     "canaryUrl": "https://shipping.boxtal.com/fr/fr/suivi/suivre-mon-envoi",
     "shows": [
       "status",

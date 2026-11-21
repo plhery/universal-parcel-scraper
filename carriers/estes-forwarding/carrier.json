@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://efwtrack.com/track/{trackingNumber}",
     "searchUrl": "https://efwtrack.com/",
+    "helpUrl": "https://efwnow.com/services/get-the-efw-experience/",
     "canaryUrl": "https://efwtrack.com/",
     "shows": [
       "status",

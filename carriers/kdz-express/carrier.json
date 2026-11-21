@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://kdz.com/track-trace/?nr={trackingNumber}",
     "searchUrl": "https://kdz.com/track-trace/",
+    "helpUrl": "https://kdz.com/contact/",
     "canaryUrl": "https://kdz.com/track-trace/",
     "shows": [],
     "scraped": [],

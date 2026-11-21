@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "helpUrl": "https://www.hopexpress.rs/kontakt",
     "canaryUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
     "shows": [],
     "scraped": [],

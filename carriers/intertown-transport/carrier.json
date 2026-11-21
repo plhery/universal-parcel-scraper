@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://intertown.pperfect.com/",
+    "helpUrl": "https://www.intertown.co.za/contact/",
     "canaryUrl": "https://intertown.pperfect.com/",
     "shows": [
       "status",

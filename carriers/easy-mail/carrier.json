@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://trackntrace.easymail.gr/{trackingNumber}",
     "searchUrl": "https://trackntrace.easymail.gr/",
+    "helpUrl": "https://www.easymail.gr/contact-us",
     "canaryUrl": "https://trackntrace.easymail.gr/",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://erp.szendex.com/DlWebTrackingVWE/?seg={trackingNumber}",
     "searchUrl": "https://erp.szendex.com/DlWebTrackingVWE/",
+    "helpUrl": "https://www.szendex.com/contacto",
     "canaryUrl": "https://erp.szendex.com/DlWebTrackingVWE/",
     "shows": [],
     "scraped": [],

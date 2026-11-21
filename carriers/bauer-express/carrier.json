@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.bauerexpress.com.br/area-do-cliente/rastreamento-de-encomenda/",
+    "helpUrl": "https://www.bauerexpress.com.br/sac",
     "canaryUrl": "https://www.bauerexpress.com.br/area-do-cliente/rastreamento-de-encomenda/",
     "shows": [],
     "scraped": [],

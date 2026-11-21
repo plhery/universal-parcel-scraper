@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://mixpakk.hu/nyomkovetes/?package={trackingNumber}",
     "searchUrl": "https://mixpakk.hu/nyomkovetes/",
+    "helpUrl": "https://mixpakk.hu/kapcsolat/",
     "canaryUrl": "https://mixpakk.hu/nyomkovetes/",
     "shows": [],
     "scraped": [],

@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.interfjord.dk/?track={trackingNumber}",
     "searchUrl": "https://tracking.interfjord.dk/",
+    "helpUrl": "https://www.interfjord.dk/kontakt/",
     "canaryUrl": "https://tracking.interfjord.dk/",
     "shows": [],
     "scraped": [],

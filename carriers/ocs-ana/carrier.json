@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do?cwbno={trackingNumber}",
     "searchUrl": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do",
+    "helpUrl": "https://www.ocs.co.jp/contact",
     "canaryUrl": "https://webcsw.ocs.co.jp/csw/ECSWG0201R00003P.do",
     "shows": [
       "status",

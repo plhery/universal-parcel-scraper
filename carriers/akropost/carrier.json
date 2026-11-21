@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://intranet.akropost.com/tracking",
+    "helpUrl": "https://akropost.com/es/contacto/",
     "canaryUrl": "https://intranet.akropost.com/tracking",
     "shows": [],
     "scraped": [],

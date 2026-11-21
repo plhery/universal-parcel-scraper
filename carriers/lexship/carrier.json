@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://track.lexship.biz/?tracking={trackingNumber}",
     "searchUrl": "https://track.lexship.biz/",
+    "helpUrl": "https://www.lexship.com/contact",
     "canaryUrl": "https://track.lexship.biz/",
     "shows": [],
     "scraped": [],

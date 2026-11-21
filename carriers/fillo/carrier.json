@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://takip.fillo.com.tr/",
+    "helpUrl": "https://www.fillo.com.tr/iletisim.html",
     "canaryUrl": "https://takip.fillo.com.tr/",
     "shows": [],
     "scraped": [],

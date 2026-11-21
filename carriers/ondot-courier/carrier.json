@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://www.ondotcourier.in/tracking?awb={trackingNumber}",
     "searchUrl": "https://www.ondotcourier.in/tracking",
+    "helpUrl": "https://www.ondotcourier.in/contact",
     "canaryUrl": "https://www.ondotcourier.in/tracking",
     "shows": [],
     "scraped": [],

@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://c.lafasta.sa.com/Track/{trackingNumber}",
     "searchUrl": "https://c.lafasta.sa.com/Track/",
+    "helpUrl": "https://lafasta.sa.com/Contact",
     "canaryUrl": "https://c.lafasta.sa.com/Track/",
     "shows": [
       "status",

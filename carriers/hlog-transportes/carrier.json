@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://hlogtransportes.com.br/buscar",
+    "helpUrl": "https://hlogtransportes.com.br/faleconosco",
     "canaryUrl": "https://hlogtransportes.com.br/buscar",
     "shows": [],
     "scraped": [],

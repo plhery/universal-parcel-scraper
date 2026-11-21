@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://glapptracking.gruber-logistics.com/?trackingId={trackingNumber}",
     "searchUrl": "https://glapptracking.gruber-logistics.com/search-tracking-number",
+    "helpUrl": "https://www.gruber-logistics.com/contatti/",
     "canaryUrl": "https://glapptracking.gruber-logistics.com/search-tracking-number",
     "shows": [
       "status",

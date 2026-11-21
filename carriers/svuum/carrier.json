@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://live.svuum.com/track.html?com_code=svm&pm_Id=5630&track_page_version=v1&only_latest=true&tracking_number={trackingNumber}",
     "searchUrl": "https://svuum.gr/",
+    "helpUrl": "https://svuum.gr/contact_form/",
     "canaryUrl": "https://svuum.gr/",
     "shows": [],
     "scraped": [],

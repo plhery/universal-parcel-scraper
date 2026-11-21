@@ -35,6 +35,7 @@
   ],
   "portal": {
     "url": "https://www.blue-ex.com/tracking?trackno={trackingNumber}",
+    "helpUrl": "https://www.blue-ex.com/contact",
     "canaryUrl": "https://www.blue-ex.com/",
     "shows": [
       "status",

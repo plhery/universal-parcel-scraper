@@ -40,6 +40,7 @@
   "portal": {
     "url": "https://dealer-send.com/en-US/track-my-shipment?trackingNumber={trackingNumber}",
     "searchUrl": "https://dealer-send.com/en-US/track-my-shipment",
+    "helpUrl": "https://dealer-send.com/en-US/contact",
     "canaryUrl": "https://dealer-send.com/en-US/track-my-shipment",
     "shows": [
       "status",

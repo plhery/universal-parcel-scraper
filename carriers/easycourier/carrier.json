@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.easycourier.com.cy/Home/LiveTracking?TrackingId={trackingNumber}",
     "searchUrl": "https://www.easycourier.com.cy/",
+    "helpUrl": "https://support.easycourier.com.cy/",
     "canaryUrl": "https://www.easycourier.com.cy/",
     "shows": [],
     "scraped": [],

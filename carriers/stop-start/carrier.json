@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://track-my-order.co.uk/?s={trackingNumber}",
     "searchUrl": "https://track-my-order.co.uk/",
+    "helpUrl": "https://www.stop-start.co.uk/contact-us/",
     "canaryUrl": "https://track-my-order.co.uk/",
     "shows": [],
     "scraped": [],

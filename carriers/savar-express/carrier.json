@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
+    "helpUrl": "https://www.savarexpress.com.pe/contactanos/",
     "canaryUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
     "shows": [],
     "scraped": [],

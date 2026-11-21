@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://track.fastship.co/{trackingNumber}",
     "searchUrl": "https://track.fastship.co/",
+    "helpUrl": "https://fastship.co/help",
     "canaryUrl": "https://track.fastship.co/",
     "shows": [],
     "scraped": [],

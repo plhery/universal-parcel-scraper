@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://upaya.com.np/track/?tracking={trackingNumber}",
     "searchUrl": "https://upaya.com.np/track/",
+    "helpUrl": "https://upaya.com.np/contact/",
     "canaryUrl": "https://upaya.com.np/track/",
     "shows": [
       "status",

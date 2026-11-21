@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://express.shipgce.com/postcheck.htm?checkvalue={trackingNumber}&type=identity",
     "searchUrl": "https://express.shipgce.com/postcheck.htm",
+    "helpUrl": "https://express.shipgce.com/news.htm?key=help17",
     "canaryUrl": "https://express.shipgce.com/postcheck.htm",
     "shows": [
       "status",

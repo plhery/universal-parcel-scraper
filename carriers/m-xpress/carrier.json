@@ -26,6 +26,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://goldv2.mxpress2u.net/goldv2webtracking/",
+    "helpUrl": "https://www.mxpress2u.com/EnquiryPage",
     "canaryUrl": "https://www.mxpress2u.com/",
     "shows": [],
     "scraped": [],

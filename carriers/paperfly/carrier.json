@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://go.paperfly.com.bd/track/order/{trackingNumber}",
     "searchUrl": "https://paperfly.com.bd/",
+    "helpUrl": "https://paperfly.com.bd/contact",
     "canaryUrl": "https://paperfly.com.bd/",
     "shows": [
       "status",

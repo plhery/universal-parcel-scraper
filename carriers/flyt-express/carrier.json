@@ -24,6 +24,7 @@
   },
   "capabilities": [],
   "portal": {
+    "helpUrl": "https://www.flytexpress.com/Home/Content?id=3a1341cb-42dd-e075-3b62-555dea451b2d&item=ContactUs&language=0",
     "canaryUrl": "https://t.17track.net/",
     "shows": [],
     "scraped": [],

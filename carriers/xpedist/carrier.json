@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://www.xpedist.ro/awb?awb={trackingNumber}",
     "searchUrl": "https://www.xpedist.ro/awb",
+    "helpUrl": "https://www.xpedist.ro/contact",
     "canaryUrl": "https://www.xpedist.ro/awb",
     "shows": [],
     "scraped": [],

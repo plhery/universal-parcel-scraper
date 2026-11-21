@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://selfservice.courierplus-ng.com/track-shipment",
+    "helpUrl": "https://www.courierplus-ng.com/contact-us/",
     "canaryUrl": "https://selfservice.courierplus-ng.com/track-shipment",
     "shows": [],
     "scraped": [],

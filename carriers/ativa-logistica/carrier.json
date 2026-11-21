@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ativalog.com.br/",
+    "helpUrl": "https://ativalog.com.br/contato/",
     "canaryUrl": "https://ativalog.com.br/",
     "shows": [],
     "scraped": [],

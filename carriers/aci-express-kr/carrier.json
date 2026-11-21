@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.acieshop.com/pod.php?OrderNo={trackingNumber}",
     "searchUrl": "https://www.aciexpress.net/delivery/",
+    "helpUrl": "https://www.aciexpress.net/customer/board_list.html",
     "canaryUrl": "https://www.aciexpress.net/delivery/",
     "shows": [
       "status",

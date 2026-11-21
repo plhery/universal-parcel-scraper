@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://www.shenghanggj.com/checkexpress?act=cx&order_tracking_search={trackingNumber}",
     "searchUrl": "https://www.shenghanggj.com/checkexpress",
+    "helpUrl": "https://www.shenghanggj.com/help-20.html",
     "canaryUrl": "https://www.shenghanggj.com/checkexpress",
     "shows": [],
     "scraped": [],

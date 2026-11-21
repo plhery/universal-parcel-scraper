@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://booking.milesxp.com/tracking?tracking_no={trackingNumber}",
     "searchUrl": "https://booking.milesxp.com/tracking",
+    "helpUrl": "https://www.milesxp.com/contact/",
     "canaryUrl": "https://booking.milesxp.com/tracking",
     "shows": [],
     "scraped": [],

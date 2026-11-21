@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://app.deliveright.com/gh-lite/tracking/{trackingNumber}",
     "searchUrl": "https://deliveright.com/track-orders/",
+    "helpUrl": "https://deliveright.com/contact-us/",
     "canaryUrl": "https://deliveright.com/track-orders/",
     "shows": [],
     "scraped": [],

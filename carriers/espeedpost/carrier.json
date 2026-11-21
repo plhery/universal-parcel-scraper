@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.espeedpost.com/html-tracking.html?trackingnumber={trackingNumber}",
     "searchUrl": "https://www.espeedpost.com/html-tracking.html",
+    "helpUrl": "https://www.espeedpost.com/html-company-contact.html",
     "canaryUrl": "https://www.espeedpost.com/html-tracking.html",
     "shows": [],
     "scraped": [],

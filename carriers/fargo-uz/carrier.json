@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://fargo.uz/track?id={trackingNumber}",
     "searchUrl": "https://fargo.uz/track",
+    "helpUrl": "https://fargo.uz/uz/contact",
     "canaryUrl": "https://fargo.uz/track",
     "shows": [
       "status",

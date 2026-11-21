@@ -31,6 +31,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.kke.com.hk/home/index/que",
+    "helpUrl": "https://www.kke.com.hk/home/index/contact",
     "canaryUrl": "https://www.kke.com.hk/home/index/que",
     "shows": [
       "status",

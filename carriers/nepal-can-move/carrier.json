@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://portal.nepalcanmove.com/track/",
+    "helpUrl": "https://nepalcanmove.com/contact",
     "canaryUrl": "https://portal.nepalcanmove.com/track/",
     "shows": [],
     "scraped": [],

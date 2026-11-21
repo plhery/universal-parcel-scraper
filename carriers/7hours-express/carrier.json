@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://api.7hoursexpress.com/tracking/?objectId={trackingNumber}&language=en",
     "searchUrl": "https://api.7hoursexpress.com/tracking/",
+    "helpUrl": "https://7hoursexpress.com/contact.html",
     "canaryUrl": "https://api.7hoursexpress.com/tracking/",
     "shows": [],
     "scraped": [],

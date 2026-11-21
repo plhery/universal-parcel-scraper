@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=12",
+    "helpUrl": "https://www.bestcourier.ro/contact.php",
     "canaryUrl": "https://www.bestcourier.ro/",
     "shows": [],
     "scraped": [],

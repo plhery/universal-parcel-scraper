@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://customer.tfmex.com/Skybill/TrackSkybill?awb={trackingNumber}",
     "searchUrl": "https://customer.tfmex.com/Skybill/TrackSkybill",
+    "helpUrl": "https://tfmex.com/contact-us/",
     "canaryUrl": "https://customer.tfmex.com/Skybill/TrackSkybill",
     "shows": [
       "status",

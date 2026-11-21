@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.xgsi.com/#track-shipment={trackingNumber}",
     "searchUrl": "https://www.xgsi.com/",
+    "helpUrl": "https://www.xgsi.com/about-xgs/contact-us/",
     "canaryUrl": "https://www.xgsi.com/",
     "shows": [
       "status",

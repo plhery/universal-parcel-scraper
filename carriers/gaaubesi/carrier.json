@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://delivery.gaaubesi.com/orders/track-order/?track_id={trackingNumber}",
     "searchUrl": "https://delivery.gaaubesi.com/orders/track-order/",
+    "helpUrl": "https://gaaubesi.com/contact",
     "canaryUrl": "https://delivery.gaaubesi.com/orders/track-order/",
     "shows": [],
     "scraped": [],

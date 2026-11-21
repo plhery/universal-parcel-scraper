@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://dpex.com/track-and-trace/?cn={trackingNumber}",
     "searchUrl": "https://dpex.com/track-and-trace/",
+    "helpUrl": "https://dpex.com/contact/",
     "canaryUrl": "https://dpex.com/track-and-trace/",
     "shows": [
       "status",

@@ -28,6 +28,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.tuodatong56.com/tms/trackIndex.htm",
+    "helpUrl": "https://www.tuodatong56.com/lxwm.html",
     "canaryUrl": "https://www.tuodatong56.com/",
     "shows": [],
     "scraped": [],

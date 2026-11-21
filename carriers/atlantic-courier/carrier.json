@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://atlanticcourier.net/track/{trackingNumber}/",
     "searchUrl": "https://atlanticcourier.net/track/",
+    "helpUrl": "https://atlanticcourier.net/contact/",
     "canaryUrl": "https://atlanticcourier.net/track/",
     "shows": [
       "status",

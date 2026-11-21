@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://fastrak.aitworldwide.com/?trackingnumber={trackingNumber}",
     "searchUrl": "https://fastrak.aitworldwide.com/",
+    "helpUrl": "https://www.aitworldwide.com/contact-us/",
     "canaryUrl": "https://fastrak.aitworldwide.com/",
     "shows": [
       "status",

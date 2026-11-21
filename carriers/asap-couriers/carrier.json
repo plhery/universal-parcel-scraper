@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://asapcouriers.gr/tracking?number={trackingNumber}",
     "searchUrl": "https://asapcouriers.gr/tracking",
+    "helpUrl": "https://asapcouriers.gr/contact",
     "canaryUrl": "https://asapcouriers.gr/tracking",
     "shows": [],
     "scraped": [],

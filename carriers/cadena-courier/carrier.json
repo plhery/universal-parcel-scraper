@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://guias.cadena.com.co/tracking/consulta.aspx",
     "searchUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "helpUrl": "https://www.cadena.com.co/contacto/",
     "canaryUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
     "shows": [
       "status",

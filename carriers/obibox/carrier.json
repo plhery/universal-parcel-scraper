@@ -25,6 +25,7 @@
   "portal": {
     "url": "https://tracking.obibox.io/{trackingNumber}",
     "searchUrl": "https://tracking.obibox.io/",
+    "helpUrl": "https://obibox.co/faq/",
     "canaryUrl": "https://obibox.co/",
     "shows": [],
     "scraped": [],

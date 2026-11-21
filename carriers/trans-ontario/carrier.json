@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://trace.transontario.com/",
+    "helpUrl": "https://trans-ontario.com/contact-us/",
     "canaryUrl": "https://trace.transontario.com/",
     "shows": [],
     "scraped": [],

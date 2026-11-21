@@ -49,6 +49,7 @@
   ],
   "portal": {
     "searchUrl": "https://api.trans-mission.nl/Search-shipment",
+    "helpUrl": "https://www.trans-mission.nl/nl/onze-vestigingen",
     "canaryUrl": "https://api.trans-mission.nl/Search-shipment",
     "shows": [
       "status",

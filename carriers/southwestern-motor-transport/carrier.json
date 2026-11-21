@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://profoundui.smtl.com/profoundui/start?pgm=profoundui/mwp705c&p1=0&l1=1&p2=none&l2=4&p3=none&l3=4",
+    "helpUrl": "https://www.smtl.com/contact-smt",
     "canaryUrl": "https://www.smtl.com/",
     "shows": [],
     "scraped": [],

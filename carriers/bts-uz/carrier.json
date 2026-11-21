@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://bts.uz/uz/search-form",
+    "helpUrl": "https://bts.uz/uz/contact",
     "canaryUrl": "https://bts.uz/uz/search-form",
     "shows": [],
     "scraped": [],

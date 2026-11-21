@@ -24,6 +24,7 @@
   "portal": {
     "url": "https://www.airtransgroup.com/results/?param={trackingNumber}",
     "searchUrl": "https://www.airtransgroup.com/",
+    "helpUrl": "https://www.airtransgroup.com/contact/",
     "canaryUrl": "https://www.airtransgroup.com/results/",
     "shows": [],
     "scraped": [],

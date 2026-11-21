@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
+    "helpUrl": "https://www.airinuit.com/en/about-air-inuit/contact-us",
     "canaryUrl": "https://www.airinuit.com/en/cargo/follow-up/shipment-tracking",
     "shows": [
       "status",

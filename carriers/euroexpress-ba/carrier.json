@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://www.euroexpress.ba/pracenje-posiljke/{trackingNumber}",
     "searchUrl": "https://www.euroexpress.ba/pracenje-posiljke",
+    "helpUrl": "https://www.euroexpress.ba/kontakt",
     "canaryUrl": "https://www.euroexpress.ba/pracenje-posiljke",
     "shows": [
       "status",

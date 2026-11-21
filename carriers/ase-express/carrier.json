@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://tracking.ase.com.tr/cwb/trackshipment?lang=en&Id={trackingNumber}",
     "searchUrl": "https://tracking.ase.com.tr/cwb/trackshipment?lang=en",
+    "helpUrl": "https://online.ase.com.tr/contact?lang=en",
     "canaryUrl": "https://tracking.ase.com.tr/cwb/trackshipment",
     "shows": [],
     "scraped": [],

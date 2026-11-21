@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tnt.partsexpress.nl/",
+    "helpUrl": "https://partsexpress.eu/contact/",
     "canaryUrl": "https://tnt.partsexpress.nl/",
     "shows": [],
     "scraped": [],

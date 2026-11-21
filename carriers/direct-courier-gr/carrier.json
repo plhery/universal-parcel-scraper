@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.directcourier.gr/",
+    "helpUrl": "https://www.directcourier.gr/contact.php",
     "canaryUrl": "https://www.directcourier.gr/",
     "shows": [],
     "scraped": [],

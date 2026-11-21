@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://grupoampm.com/rastreador/?tracking-id={trackingNumber}",
     "searchUrl": "https://grupoampm.com/rastreador/",
+    "helpUrl": "https://grupoampm.com/consulta-el-estatus-de-tus-envios-y-guias-2-2/",
     "canaryUrl": "https://grupoampm.com/rastreador/",
     "shows": [
       "status",

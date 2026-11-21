@@ -25,6 +25,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://tracking.myemons.de/public.html",
+    "helpUrl": "https://www.emons.de/kontakt",
     "canaryUrl": "https://www.emons.de/",
     "shows": [],
     "scraped": [],

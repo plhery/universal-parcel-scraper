@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://myturkonline.turkon.com/tracking",
     "searchUrl": "https://myturkonline.turkon.com/tracking",
+    "helpUrl": "https://turkon.com/en/contact",
     "canaryUrl": "https://myturkonline.turkon.com/tracking",
     "shows": [
       "status",

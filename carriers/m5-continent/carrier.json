@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://m5clogs.com/track.aspx",
+    "helpUrl": "https://m5clogs.com/contact.aspx",
     "canaryUrl": "https://m5clogs.com/track.aspx",
     "shows": [],
     "scraped": [],

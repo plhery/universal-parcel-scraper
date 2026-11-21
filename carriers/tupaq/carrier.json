@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://app.iplus.com.do/tupaq/fe/lg-es/ut/Estatus.aspx?id={trackingNumber}",
     "searchUrl": "https://app.iplus.com.do/tupaq/fe/lg-es/ut/Estatus.aspx",
+    "helpUrl": "https://www.tupaq.com.do/contacto",
     "canaryUrl": "https://app.iplus.com.do/tupaq/fe/lg-es/ut/Estatus.aspx",
     "shows": [],
     "scraped": [],

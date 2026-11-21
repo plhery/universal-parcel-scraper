@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.spedire.com/tracking/{trackingNumber}",
     "searchUrl": "https://www.spedire.com/traccia-spedizione",
+    "helpUrl": "https://www.spedire.com/serve-aiuto",
     "canaryUrl": "https://www.spedire.com/traccia-spedizione",
     "shows": [
       "status",

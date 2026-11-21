@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://sporing.toten-transport.no/?gsin={trackingNumber}",
     "searchUrl": "https://sporing.toten-transport.no/",
+    "helpUrl": "https://www.toten-transport.no/finn-naermeste-kontor/",
     "canaryUrl": "https://sporing.toten-transport.no/",
     "shows": [],
     "scraped": [],

@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://ship.midlandtransport.com/Tracking/TrackClientTrackings?TrackingNumber={trackingNumber}&Lang=0",
     "searchUrl": "https://ship.midlandtransport.com/Tracking/TrackClientTrackings",
+    "helpUrl": "https://www.midlandtransport.com/en/help-center/contact-us/",
     "canaryUrl": "https://ship.midlandtransport.com/Tracking/TrackClientTrackings",
     "shows": [
       "status",

@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://tracking.webrinq.com/{trackingNumber}",
     "searchUrl": "https://tracking.webrinq.com/",
+    "helpUrl": "https://webrinq.com/faq/",
     "canaryUrl": "https://tracking.webrinq.com/",
     "shows": [],
     "scraped": [],

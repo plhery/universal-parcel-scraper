@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://public.tracking.hellmann.net/search/{trackingNumber}",
     "searchUrl": "https://www.hellmann.com/en/track-trace",
+    "helpUrl": "https://www.hellmann.com/en/contact",
     "canaryUrl": "https://www.hellmann.com/en/track-trace",
     "shows": [
       "Current road package status",

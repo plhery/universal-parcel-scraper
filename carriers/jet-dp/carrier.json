@@ -21,6 +21,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "helpUrl": "https://jet-dp.pl/pl/skontaktuj-si%C4%99-z-nami",
     "canaryUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
     "shows": [],
     "scraped": [],

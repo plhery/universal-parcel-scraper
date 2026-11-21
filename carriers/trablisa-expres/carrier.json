@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
+    "helpUrl": "https://www.trablisa.es/area-negocio/trablisa-expres#datos-de-contacto",
     "canaryUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
     "shows": [],
     "scraped": [],

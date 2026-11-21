@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://grguweb.tmwcloud.com/trace/external.msw",
+    "helpUrl": "https://www.groupeguilbault.com/nous-joindre",
     "canaryUrl": "https://grguweb.tmwcloud.com/trace/external.msw",
     "shows": [],
     "scraped": [],

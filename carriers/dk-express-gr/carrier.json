@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://dkexpresscourier.gr/anazitisi-apostolis/?voucher={trackingNumber}",
     "searchUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
+    "helpUrl": "https://dkexpresscourier.gr/epikoinonia/",
     "canaryUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
     "shows": [],
     "scraped": [],

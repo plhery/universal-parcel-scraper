@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "helpUrl": "https://www.szamigroup.hu/kapcsolat/",
     "canaryUrl": "https://www.szamigroup.hu/nyomonkovetes/",
     "shows": [],
     "scraped": [],

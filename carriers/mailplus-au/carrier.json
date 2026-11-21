@@ -44,6 +44,7 @@
   "portal": {
     "url": "https://track.mailplus.com.au/{trackingNumber}",
     "searchUrl": "https://track.mailplus.com.au/",
+    "helpUrl": "https://mailplus.com.au/support-ticket",
     "canaryUrl": "https://track.mailplus.com.au/",
     "shows": [
       "status",

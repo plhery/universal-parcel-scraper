@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://www.sailpost.it/traccia-il-pacco/?codice={trackingNumber}",
     "searchUrl": "https://www.sailpost.it/traccia-il-pacco/",
+    "helpUrl": "https://www.sailpost.it/contattaci/informazioni-spedizioni/",
     "canaryUrl": "https://www.sailpost.it/traccia-il-pacco/",
     "shows": [
       "status",

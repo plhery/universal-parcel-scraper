@@ -28,6 +28,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.ets-express.com/inquiry.html",
+    "helpUrl": "https://www.ets-express.com/contact.html",
     "canaryUrl": "https://www.ets-express.com/",
     "shows": [
       "status",

@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://fmec.famiport.com.tw/FP_Entrance/QueryBox?orderno={trackingNumber}",
     "searchUrl": "https://fmec.famiport.com.tw/FP_Entrance/QueryBox",
+    "helpUrl": "https://www.family.com.tw/Marketing/zh/ContactUs",
     "canaryUrl": "https://fmec.famiport.com.tw/FP_Entrance/QueryBox",
     "shows": [],
     "scraped": [],

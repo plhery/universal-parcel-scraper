@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://eek.driftcentral.net/opter/tt?keyword={trackingNumber}",
     "searchUrl": "https://eek.driftcentral.net/opter/tt",
+    "helpUrl": "https://eeklogistikk.no/web-agency-gb-contact-us/",
     "canaryUrl": "https://eek.driftcentral.net/opter/tt",
     "shows": [],
     "scraped": [],

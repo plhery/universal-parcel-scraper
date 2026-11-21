@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://utec.ua/tracking/{trackingNumber}",
     "searchUrl": "https://utec.ua/",
+    "helpUrl": "https://utec.ua/kontakty",
     "canaryUrl": "https://utec.ua/",
     "shows": [],
     "scraped": [],

@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
+    "helpUrl": "https://national-delivery.com/Contact_Us",
     "canaryUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
     "shows": [],
     "scraped": [],

@@ -11,6 +11,7 @@
   "portal": {
     "url": "https://portal.spedition-moeller.com/tracking.html",
     "searchUrl": "https://portal.spedition-moeller.com/tracking.html",
+    "helpUrl": "https://portal.spedition-moeller.com/tickets.html",
     "canaryUrl": "https://portal.spedition-moeller.com/tracking.html",
     "shows": ["status", "history"],
     "scraped": ["status", "history", "location", "provider_code", "offset_timestamps", "delivered_at"],

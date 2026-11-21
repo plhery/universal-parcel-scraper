@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://apps.cdldelivers.com/Tracking-Page/track?id={trackingNumber}",
     "searchUrl": "https://apps.cdldelivers.com/Tracking-Page/track",
+    "helpUrl": "https://cdldelivers.com/contact",
     "canaryUrl": "https://apps.cdldelivers.com/Tracking-Page/track",
     "shows": [
       "status",

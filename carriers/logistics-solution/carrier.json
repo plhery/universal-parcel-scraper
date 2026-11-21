@@ -37,6 +37,7 @@
   ],
   "portal": {
     "searchUrl": "https://logistics-solution.eu/de/",
+    "helpUrl": "https://logistics-solution.eu/de/contact",
     "canaryUrl": "https://logistics-solution.eu/de/",
     "shows": [
       "status",

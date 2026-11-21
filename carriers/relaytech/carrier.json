@@ -51,6 +51,7 @@
   ],
   "portal": {
     "searchUrl": "https://relaytech.co/track-order",
+    "helpUrl": "https://www.relaytech.co/track-order-contact-form",
     "canaryUrl": "https://relaytech.co/track-order",
     "shows": [
       "status",

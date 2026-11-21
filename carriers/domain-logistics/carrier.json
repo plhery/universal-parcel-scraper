@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://domainlogistics.ca/tracking/?tracking={trackingNumber}",
     "searchUrl": "https://domainlogistics.ca/tracking/",
+    "helpUrl": "https://domainlogistics.ca/contact/",
     "canaryUrl": "https://domainlogistics.ca/tracking/",
     "shows": [
       "status",

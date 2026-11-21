@@ -34,6 +34,7 @@
   "portal": {
     "url": "https://skyking.co/track?cno={trackingNumber}",
     "searchUrl": "https://skyking.co/track",
+    "helpUrl": "https://skyking.co/contact-us",
     "canaryUrl": "https://skyking.co/track",
     "shows": [
       "status",

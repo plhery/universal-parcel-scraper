@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
     "searchUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
+    "helpUrl": "https://esvc.smlines.com/smline/CUP_HOM_1614.do?sessLocale=en",
     "canaryUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do",
     "shows": [
       "status",

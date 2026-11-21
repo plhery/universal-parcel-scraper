@@ -20,6 +20,7 @@
   "portal": {
     "url": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
     "searchUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
+    "helpUrl": "https://www.goindigo.in/cargo/frequently-asked-questions.html",
     "canaryUrl": "https://6ecargo.goindigo.in/FrmAWBTracking.aspx",
     "shows": ["status", "history", "location", "weight", "flight_and_routing", "goods_and_package_details"],
     "scraped": ["status", "history", "location", "weight"],

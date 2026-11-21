@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx?id={trackingNumber}",
     "searchUrl": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx",
+    "helpUrl": "https://www.bmcargo.com/contacto",
     "canaryUrl": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx",
     "shows": [
       "status",

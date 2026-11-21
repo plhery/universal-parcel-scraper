@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://web.promptxpress.lk/PublicTracking/TrackingStatus?trackingNo={trackingNumber}",
     "searchUrl": "https://promptxpress.lk/TrackItem.aspx",
+    "helpUrl": "https://promptxpress.lk/ContactUs.aspx",
     "canaryUrl": "https://promptxpress.lk/TrackItem.aspx",
     "shows": [
       "status",

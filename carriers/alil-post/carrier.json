@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://alilpost.com/en/tracking/",
+    "helpUrl": "https://alilpost.com/en/contacts/",
     "canaryUrl": "https://alilpost.com/en/tracking/",
     "shows": [],
     "scraped": [],

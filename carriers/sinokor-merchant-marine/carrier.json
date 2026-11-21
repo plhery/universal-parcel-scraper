@@ -32,6 +32,7 @@
   "portal": {
     "url": "https://ebiz.sinokor.co.kr/Tracking",
     "searchUrl": "https://ebiz.sinokor.co.kr/Tracking",
+    "helpUrl": "https://www.sinokor.co.kr/en/net_01kr.html",
     "canaryUrl": "https://ebiz.sinokor.co.kr/Tracking",
     "shows": [
       "status",

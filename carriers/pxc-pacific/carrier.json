@@ -36,6 +36,7 @@
   "portal": {
     "url": "https://pacificexp.net/tracking-details.html?awbno={trackingNumber}",
     "searchUrl": "https://pacificexp.net/tracking-details.html",
+    "helpUrl": "https://pacificexp.net/contact-us.html",
     "canaryUrl": "https://pacificexp.net/tracking-details.html",
     "shows": [
       "status",

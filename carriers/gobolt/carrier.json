@@ -38,6 +38,7 @@
   "portal": {
     "url": "https://track.gobolt.com/tracking/{trackingNumber}",
     "searchUrl": "https://track.gobolt.com/tracking",
+    "helpUrl": "https://help.gobolt.com/",
     "canaryUrl": "https://track.gobolt.com/tracking",
     "shows": [
       "status",

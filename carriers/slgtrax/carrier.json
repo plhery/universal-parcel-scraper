@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://sonic.pk/tracking?tracking_number={trackingNumber}",
     "searchUrl": "https://sonic.pk/tracking",
+    "helpUrl": "https://slgtrax.com/contact",
     "canaryUrl": "https://sonic.pk/tracking",
     "shows": [
       "status",

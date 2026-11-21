@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://pushpakcourier.net/query.php",
+    "helpUrl": "https://pushpakcourier.net/contact-us.html",
     "canaryUrl": "https://pushpakcourier.net/query.php",
     "shows": [],
     "scraped": [],

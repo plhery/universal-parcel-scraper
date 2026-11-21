@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://ebiz.heungaline.com/Tracking",
     "searchUrl": "https://ebiz.heungaline.com/Tracking",
+    "helpUrl": "https://www.heungaline.com/en/contact_01.html",
     "canaryUrl": "https://ebiz.heungaline.com/Tracking",
     "shows": [
       "status",

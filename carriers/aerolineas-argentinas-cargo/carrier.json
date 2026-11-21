@@ -31,6 +31,7 @@
   "portal": {
     "url": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
     "searchUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "helpUrl": "https://cargo.aerolineas.com.ar/es-ar/contactenos",
     "canaryUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
     "shows": [
       "status",

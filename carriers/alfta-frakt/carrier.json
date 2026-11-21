@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://alftafraktse.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://alftafraktse.opter.cloud/tt",
+    "helpUrl": "https://www.alftafrakt.se/kontakta-oss/",
     "canaryUrl": "https://alftafraktse.opter.cloud/tt",
     "shows": [],
     "scraped": [],

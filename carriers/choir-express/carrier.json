@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://choirexpress.co.id/id/tracking",
+    "helpUrl": "https://choirexpress.co.id/id/contact",
     "canaryUrl": "https://choirexpress.co.id/id",
     "shows": [],
     "scraped": [],

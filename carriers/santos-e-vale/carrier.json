@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://santosevale.pt/track/",
+    "helpUrl": "https://santosevale.pt/contatos/",
     "canaryUrl": "https://santosevale.pt/track/",
     "shows": [],
     "scraped": [],

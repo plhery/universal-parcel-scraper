@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://consignee.starlinks-me.com/tracking/{trackingNumber}",
     "searchUrl": "https://www.starlinks-me.com/tracking",
+    "helpUrl": "https://www.starlinks-me.com/support",
     "canaryUrl": "https://www.starlinks-me.com/tracking",
     "shows": [],
     "scraped": [],

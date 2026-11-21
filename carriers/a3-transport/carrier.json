@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://a3transportno.opter.cloud/tt?keyword={trackingNumber}",
     "searchUrl": "https://a3transportno.opter.cloud/tt",
+    "helpUrl": "https://a3transport.no/kontakt-oss/",
     "canaryUrl": "https://a3transportno.opter.cloud/tt",
     "shows": [],
     "scraped": [],

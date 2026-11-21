@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://www.globkurier.pl/tracking",
     "searchUrl": "https://www.globkurier.pl/tracking",
+    "helpUrl": "https://www.globkurier.pl/kontakt",
     "canaryUrl": "https://www.globkurier.pl/tracking",
     "shows": [
       "status",

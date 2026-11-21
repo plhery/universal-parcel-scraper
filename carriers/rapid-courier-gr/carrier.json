@@ -21,6 +21,7 @@
   "portal": {
     "url": "https://rapidcourier.gr/anazhthsh-apostolhs/?voucher={trackingNumber}",
     "searchUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
+    "helpUrl": "https://rapidcourier.gr/epikoinonia/",
     "canaryUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
     "shows": [],
     "scraped": [],

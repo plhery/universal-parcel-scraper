@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.tmacompanies.com/Tracking/default.aspx",
+    "helpUrl": "https://www.tmacompanies.com/ContactUs.aspx",
     "canaryUrl": "https://www.tmacompanies.com/Tracking/default.aspx",
     "shows": [],
     "scraped": [],

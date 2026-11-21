@@ -35,6 +35,7 @@
   "portal": {
     "url": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137&key={trackingNumber}",
     "searchUrl": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137",
+    "helpUrl": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=107",
     "canaryUrl": "https://www.runforint.com/",
     "shows": [
       "status",

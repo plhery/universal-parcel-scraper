@@ -37,6 +37,7 @@
   "portal": {
     "url": "https://woolii.com/track/{trackingNumber}",
     "searchUrl": "https://woolii.com/track",
+    "helpUrl": "https://woolii.com/contact",
     "canaryUrl": "https://woolii.com/track",
     "shows": [
       "status",

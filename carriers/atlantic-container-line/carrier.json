@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.aclcargo.com/track-trace/",
     "searchUrl": "https://www.aclcargo.com/track-trace/",
+    "helpUrl": "https://www.aclcargo.com/contacts/",
     "canaryUrl": "https://www.aclcargo.com/track-trace/",
     "shows": [
       "status",

@@ -29,6 +29,7 @@
   "portal": {
     "url": "https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s={trackingNumber}",
     "searchUrl": "https://tracking.rhenusitalia.it/rhenus/track.jsf",
+    "helpUrl": "https://tracking.rhenusitalia.it/rhenus/faq.jsf",
     "canaryUrl": "https://www.rhenus.group/it/it/",
     "shows": [
       "status",

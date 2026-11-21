@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://proships.com/tracking?tracking={trackingNumber}",
     "searchUrl": "https://proships.com/tracking/",
+    "helpUrl": "https://proships.com/ayuda/",
     "canaryUrl": "https://proships.com/tracking/",
     "shows": [
       "status",

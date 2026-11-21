@@ -39,6 +39,7 @@
   "portal": {
     "url": "https://www.ukpworldwide.com/tracking/?x={trackingNumber}",
     "searchUrl": "https://www.ukpworldwide.com/tracking/",
+    "helpUrl": "https://www.ukpworldwide.com/contact-us/",
     "canaryUrl": "https://www.ukpworldwide.com/",
     "shows": [
       "history",

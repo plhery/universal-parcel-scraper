@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://logistics.costco.com/tracking?id={trackingNumber}",
     "searchUrl": "https://logistics.costco.com/tracking",
+    "helpUrl": "https://customerservice.costco.com/",
     "canaryUrl": "https://logistics.costco.com/",
     "shows": [
       "status",

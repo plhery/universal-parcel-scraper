@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://herculesfreight.com/Forms/TrackShipment",
+    "helpUrl": "https://herculesfreight.com/Pages/ContactUs",
     "canaryUrl": "https://herculesfreight.com/Forms/TrackShipment",
     "shows": [],
     "scraped": [],

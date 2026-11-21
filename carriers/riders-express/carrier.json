@@ -20,6 +20,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "helpUrl": "https://www.riders.com.pl/kontakt/",
     "canaryUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
     "shows": [],
     "scraped": [],

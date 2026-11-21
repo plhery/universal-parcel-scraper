@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://megacitycourier.in/Track.aspx",
+    "helpUrl": "https://megacitycourier.in/Contactus.aspx",
     "canaryUrl": "https://megacitycourier.in/Track.aspx",
     "shows": [],
     "scraped": [],

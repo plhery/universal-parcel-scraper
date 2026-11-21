@@ -24,6 +24,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.vichareloginext.com/track-shipment",
+    "helpUrl": "https://www.vichareloginext.com/contact",
     "canaryUrl": "https://www.vichareloginext.com/track-shipment",
     "shows": [],
     "scraped": [],

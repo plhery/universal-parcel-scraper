@@ -28,6 +28,7 @@
   "portal": {
     "url": "https://borzodelivery.com/in/track/{trackingNumber}",
     "searchUrl": "https://borzodelivery.com/in/track",
+    "helpUrl": "https://borzodelivery.com/in/contacts",
     "canaryUrl": "https://borzodelivery.com/in/track",
     "shows": [],
     "scraped": [],

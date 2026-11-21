@@ -11,6 +11,7 @@
   "portal": {
     "url": "https://www.marken.com/track-shipment?jobNumber={trackingNumber}",
     "searchUrl": "https://www.marken.com/track-shipment",
+    "helpUrl": "https://www.marken.com/contact",
     "canaryUrl": "https://www.marken.com/track-shipment",
     "shows": ["status", "history", "weight", "parcel_count", "destination_country", "eta", "signature"],
     "scraped": ["status", "history", "provider_code", "weight"],

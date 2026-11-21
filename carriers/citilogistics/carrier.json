@@ -31,6 +31,7 @@
   ],
   "portal": {
     "searchUrl": "https://tracking.citilogistics.ca/",
+    "helpUrl": "https://citilogistics.ca/contact/",
     "canaryUrl": "https://tracking.citilogistics.ca/",
     "shows": [
       "status",

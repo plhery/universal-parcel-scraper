@@ -28,6 +28,7 @@
   ],
   "portal": {
     "searchUrl": "https://pod.diakinisis.gr/tnt.php",
+    "helpUrl": "https://www.diakinisis.gr/epikoinonia-diakinisis.html",
     "canaryUrl": "https://pod.diakinisis.gr/tnt.php",
     "shows": [
       "status",

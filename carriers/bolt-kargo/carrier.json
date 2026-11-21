@@ -22,6 +22,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://panelv2.boltkargo.com.tr/takip/",
+    "helpUrl": "https://www.boltkargo.com.tr/iletisim.html",
     "canaryUrl": "https://www.boltkargo.com.tr/",
     "shows": [],
     "scraped": [],

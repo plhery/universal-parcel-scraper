@@ -26,6 +26,7 @@
   "portal": {
     "url": "https://www.elog-luxembourg.com/tracking?q={trackingNumber}",
     "searchUrl": "https://www.elog-luxembourg.com/",
+    "helpUrl": "https://www.elog-luxembourg.com/contact-us",
     "canaryUrl": "https://www.elog-luxembourg.com/",
     "shows": [],
     "scraped": [],

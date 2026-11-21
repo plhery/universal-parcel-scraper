@@ -23,6 +23,7 @@
   "capabilities": [],
   "portal": {
     "searchUrl": "https://www.wps.com.gr/trackshipment",
+    "helpUrl": "https://www.wps.com.gr/%CE%B5%CF%80%CE%B9%CE%BA%CE%BF%CE%B9%CE%BD%CF%89%CE%BD%CE%AF%CE%B1",
     "canaryUrl": "https://www.wps.com.gr/trackshipment",
     "shows": [],
     "scraped": [],

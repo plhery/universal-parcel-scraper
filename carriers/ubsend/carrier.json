@@ -23,6 +23,7 @@
   "portal": {
     "url": "https://ui.ubsend.io/track-and-trace?search={trackingNumber}",
     "searchUrl": "https://ui.ubsend.io/track-and-trace",
+    "helpUrl": "https://ubsend.com/contact-us/",
     "canaryUrl": "https://ui.ubsend.io/track-and-trace",
     "shows": [],
     "scraped": [],

@@ -30,6 +30,7 @@
   "portal": {
     "url": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
     "searchUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "helpUrl": "https://cargo.ethiopianairlines.com/customer-care/contact-us",
     "canaryUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
     "shows": [
       "status",
