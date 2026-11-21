@@ -170,6 +170,11 @@
       "confidence": "low"
     },
     {
+      "id": "dhlink-lib",
+      "pattern": "^LIB\\d{9}YN$",
+      "confidence": "low"
+    },
+    {
       "id": "dhlink-jxc",
       "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
       "confidence": "low",

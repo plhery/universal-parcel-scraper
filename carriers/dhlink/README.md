@@ -27,13 +27,15 @@ page makes.
   YLE beside DHLink, `AUS`, two letters, ten digits and `YQ`, on a US line GOFO delivers, which
   it names Asus International beside DHLink, `QYE`, two letters, ten digits and `YQ`, on a US line
   17TRACK names QYEXP beside DHLink, `CYS` and eleven digits, on a US line UniUni delivers, which it names
-  beside DHLink and UniUni, `JAS`, eight digits and `CN`, on a US line, and `XYL`, nine digits and `CH`, on a
-  line to Switzerland. Juxi Express's waybills on four of its lines, `JXC`, `YI`, `ZO`, `US` or `ZI`,
+  beside DHLink and UniUni, `JAS`, eight digits and `CN`, on a US line, `XYL`, nine digits and `CH`, on a
+  line to Switzerland, and `LIB`, nine digits and `YN`, LiBaoTongXu's numbers on a US line, which ParcelsApp
+  names LIB beside DHLink. Juxi Express's waybills on four of its lines, `JXC`, `YI`, `ZO`, `US` or `ZI`,
   ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel, so that rule is preferred and DHLink
   is asked and named first; the tracker does not know Juxi's other lines. Their rules are low confidence, so
   DHLink is asked before it is named. Providers name XZG, QYEXP, Asus International and YLE for their
   numbers, so they are aliases and their hint asks DHLink. The two letters `YF` are too thin a mark of a
-  company to be one.
+  company to be one. LIB is not one either: LiBaoTongXu (莆田市利葆通旭供应链有限公司) is a Putian forwarder
+  with its own tracker on the Hualei platform, and DHLink carries only some of its lines.
 - The parcel counts only when the number asked is its tracking number or its DHLink number:
   the search can find a parcel by its other numbers.
 - An empty parcel with state 1 is the unknown-number answer. For a DHLink number or a last
