@@ -102373,6 +102373,17 @@
     "candidates": []
   },
   {
+    "input": "NSASOH73352158685",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
     "input": "NT4ZRJRUXZHJ",
     "carrier": "unknown",
     "confidence": "low",
@@ -109814,6 +109825,18 @@
     "asked": [
       "nova-poshta"
     ]
+  },
+  {
+    "input": "SJKU4520620",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "SJKU5403932",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "SK0SCZD9999999980N",

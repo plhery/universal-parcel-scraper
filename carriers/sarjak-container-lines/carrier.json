@@ -1,0 +1,70 @@
+{
+  "id": "sarjak-container-lines",
+  "displayName": "Sarjak Container Lines",
+  "aliases": [
+    "Sarjak",
+    "SCL",
+    "Sarjak Container Lines Pvt Ltd"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#0b3b6f"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sarjak-container-lines",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.sarjak.com/",
+    "helpUrl": "https://www.sarjak.com/",
+    "canaryUrl": "https://www.sarjak.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta",
+      "vessel",
+      "planned_route"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "planned_route"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta",
+      "vessel"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name",
+      "weight"
+    ],
+    "siteName": "iTrack"
+  },
+  "links": [],
+  "detection": []
+}

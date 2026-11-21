@@ -1,0 +1,10 @@
+{
+  "carrier": "sarjak-container-lines",
+  "entries": [
+    {"wording": "Container Pickup", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects the empty container from a depot or terminal to load it; the cargo is not with Sarjak yet."},
+    {"wording": "Gate In", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the port of loading."},
+    {"wording": "Sailing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel leaves the port of loading with the container."},
+    {"wording": "Reached Destination", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel reaches the port of discharge; the container is not with the consignee yet."},
+    {"wording": "Return Empty", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee unloaded the container and returned it empty."}
+  ]
+}

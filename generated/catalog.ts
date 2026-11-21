@@ -52713,6 +52713,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "sarjak-container-lines": {
+    "displayName": "Sarjak Container Lines",
+    "color": "#0b3b6f",
+    "aliases": [
+      "Sarjak",
+      "SCL",
+      "Sarjak Container Lines Pvt Ltd"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sarjak-container-lines",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://www.sarjak.com/",
+    "trackingSearchUrl": "https://www.sarjak.com/",
+    "trackingSiteName": "iTrack",
+    "helpUrl": "https://www.sarjak.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sat-ukraine": {
     "displayName": "SAT",
     "color": "#1f49b6",
@@ -69241,6 +69267,7 @@ export const CARRIER_IDS = [
   "sandahls",
   "santos-e-vale",
   "sapx-express",
+  "sarjak-container-lines",
   "sat-ukraine",
   "saudi-post",
   "savar-express",
@@ -71202,6 +71229,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sandahls": [],
   "santos-e-vale": [],
   "sapx-express": [],
+  "sarjak-container-lines": [],
   "sat-ukraine": [],
   "saudi-post": ["saudi-post-1","saudi-post-s10"],
   "savar-express": [],
