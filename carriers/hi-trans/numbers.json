@@ -12,13 +12,13 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Hi-Trans Express's Freight API documentation looks it up as the consignment number in its status and POD examples, with a 2020 delivered history in the sample reply."
+      "note": "Hi-Trans Express's Freight API documentation looks it up as the consignment number in its status and POD examples. The consignment summary answers it with a delivered history from Brisbane to Melbourne; a parser fixture is its page."
     },
     {
       "number": "MTX833",
@@ -30,15 +30,14 @@
         "dateKind": "capture",
         "access": "indexed_excerpt"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "An archived lookup on Hi-Trans Express's own consignment summary page; the capture was not opened and the tracker answered it with HTTP 404, so no history was visible and the lookup may have failed."
+      "note": "An archived lookup on Hi-Trans Express's own consignment summary page; the capture was not opened. The summary answers it with a history from Melbourne's pickup to Brisbane's delivery truck; a parser fixture is its page."
     }
   ]
 }
