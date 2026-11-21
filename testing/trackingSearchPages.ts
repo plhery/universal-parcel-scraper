@@ -96,4 +96,5 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'trans-o-flex': 'www.trans-o-flex.com answers the burst of script requests its tracking app makes with HTTP 429, so the form often stays empty past the render window',
   veloblitz: 'veloblitz.kuz.ch keeps its Sendungsnummer field in a hidden pop-up that its "Track Auftrag" button opens, so the check finds no field on load',
   'ward-trucking': 'wardtlctools.com refuses connections from many networks; an archived copy shows its PRO number fields',
+  'yc-delivery': 'www.e1.yc-otodoke.com answers 403 or 503 to many networks outside Japan; an archived copy shows its inquiry-number fields',
 };

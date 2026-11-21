@@ -16,6 +16,11 @@ export interface TrackingLinkCase {
   /** Extra hydration time for a tracker whose form loads in a separate client chunk. */
   renderTimeoutMs?: number;
   /**
+   * Reads, a second apart, before a passing page counts (three by default). A tracker whose
+   * not-found notice navigates away within three seconds needs fewer.
+   */
+  reads?: number;
+  /**
    * How the page proves it received the number. By default the number must be
    * looked up, displayed or prefilled. `notFound` is the carrier's specific
    * answer to an unknown number when that answer clears the number from the
@@ -296,13 +301,14 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /Nosso sistema não localizou a encomenda/i },
   { carrier: 'flash-courier', number: 'SYNTHETIC123',
     route: /^https:\/\/www\.flashcourier\.com\.br\/rastreio\/SYNTHETIC123$/,
-    marker: /Consulte sua\s+entrega|Digite o código de rastreio/i },
+    marker: /C[óo]digo consultado|Confirme o c[óo]digo da imagem/i },
   { carrier: 'whatsship', number: 'WS10293847561029384DL',
     route: /^https:\/\/www\.whatsship\.com\/#tracking$/,
     marker: /Enter Tracking Number \(e\.g\.,/i, forwarding: 'none' },
+  // The page asks its lookup behind AWS WAF, which can fail an automated browser; its error notice names the number.
   { carrier: 'mandae', number: 'ZZZZ000000199',
     route: /^https:\/\/rastreae\.com\.br\/resultado\/ZZZZ000000199$/,
-    marker: /Encomenda não encontrada|Não encontramos resultados para/ },
+    marker: /Encomenda não encontrada|Não encontramos resultados para|Ocorreu um erro na busca para/ },
   { carrier: 'bypost', number: 'BYP000000199',
     route: /^https:\/\/bypost\.no\/spor\/BYP000000199\/$/,
     marker: /Ingen sporingsoppdateringer ennå|Sendingsnummer/ },
@@ -337,20 +343,20 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /Where is my order\?/ },
   { carrier: 'western-bid', number: 'WBX000000000199',
     route: /^https:\/\/track\.westparcel\.com\/\?trackNumber=WBX000000000199$/,
-    marker: /Enter your tracking number|We did not find a parcel with this number/ },
+    marker: /Have some troubles in tracking\?|We did not find a parcel with this number/ },
   { carrier: 'libanpost', number: 'RR000000005LB',
     route: /^https:\/\/www\.libanpost\.com\/TrackandTraceMobile\.aspx\?sn=RR000000005LB&lang=2$/,
     marker: /No results matching your tracking number|Track.*Trace|Shipment number/,
     forwarding: { notFound: /No results matching your tracking number/ } },
   { carrier: 'aeropost', number: 'CR0000000199',
     route: /^https:\/\/aeropost\.com\/en\/tracking\/CR0000000199$/,
-    marker: /Tracking|Tracking information not found/ },
+    marker: /has not yet received information on your package|Track your package/ },
   { carrier: 'paxel', number: 'EM.ABCDEFGHJK-20261107-1-ZZZZZZ',
     route: /^https:\/\/paxel\.co\/id\/lacak-pengiriman(?:\?awb_req=EM\.ABCDEFGHJK-20261107-1-ZZZZZZ)?$/,
     marker: /Lacak Pengiriman|AWB Tidak Valid/ },
   { carrier: 'costco-logistics', number: '1I20261001999999999',
-    route: /^https:\/\/logistics\.costco\.com\/tracking\?id=1I20261001999999999$/,
-    marker: /Track My Delivery/ },
+    route: /^https:\/\/logistics\.costco\.com\/tracking\?id=1I20261001999999999(?:#norecords)?$/,
+    marker: /was not received by Costco Logistics|Track My Delivery/ },
   { carrier: 'city-air-express', number: 'MN846291',
     route: /^https:\/\/caebfs\.netcourier\.net\/online\/tracking\/trackinginfo\/MN846291$/,
     marker: /Sorry, we could not find job MN846291\./ },
@@ -377,9 +383,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'profit-fields', number: 'EWSXY974682510369YQ',
     route: /^https:\/\/www\.8dt\.com\/tracking\?track=EWSXY974682510369YQ$/,
     marker: /全球包裏|Global Logistics Track and Trace|Track Package/ },
+  // The server answers an unknown number with a notice that leaves it out. The page shows nothing until a slow
+  // script loads.
   { carrier: 'ftd-nz', number: 'NZF974682',
     route: /^https:\/\/www\.ftd\.nz\/query\/\?code=NZF974682$/,
-    marker: /物流查询|单号不存在|FTD/ },
+    marker: /您查询的单号不存在|物流查询/, forwarding: { notFound: /您查询的单号不存在/ }, renderTimeoutMs: 20_000 },
   { carrier: 'topdelivery', number: '97468251',
     route: /^https:\/\/www\.topdelivery\.ru\/tracking\/\?order=97468251$/,
     marker: /Ваш заказ не найден/ },
@@ -740,7 +748,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/htm\.sf-express\.com\/tw\/en\/dynamic_function\/waybill\/#search\/bill-number\//,
     marker: /Track.*Trace|Shipment|Waybill/i },
   { carrier: 'swiss-post', number: '989999999999999999',
-    route: /^https:\/\/service\.post\.ch\/ekp-web\/ui\//,
+    route: /^https:\/\/mys\.post\.ch\/my-consignments\/deeplink-search(?:[?#]|$)/,
     marker: /Meine Sendungen|My consignments|Mes envois|Sendungsnummer/ },
   { carrier: 'postlogistics', number: '099999999999999980',
     route: /^https:\/\/apv\.swisspost-cargo\.com\/public\/trackandtrace\//,
@@ -1177,9 +1185,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/shipa\.com\/track\/\?trackingno=SD000000003$/,
     marker: /Results for Your Shipment Search|TRACK IT ON SHIPA DELIVERY/i },
   // The site adds the slash; the page then posts the number in its address to its lookup and names an unknown one.
+  // An unknown code gets the tracker's notice with HTTP 404.
   { carrier: 'proships', number: '0000000000000',
     route: /^https:\/\/proships\.com\/tracking\/\?tracking=0000000000000$/,
-    marker: /No se encontraron paquetes para el c[óo]digo|Seguimiento de Env[íi]o/i },
+    marker: /No encontramos paquetes para el c[óo]digo/i,
+    shipmentNotFound: { status: 404, marker: /No encontramos paquetes para el c[óo]digo/i } },
   // The page puts the number in its address in its form and asks its lookup on load; an unknown one gets a notice.
   { carrier: 'pts-worldwide-express', number: '1000000000',
     route: /^https:\/\/tracking\.pts\.net\/1000000000$/,
@@ -1428,10 +1438,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'blitznow', number: 'ZZ0000000000',
     route: /^https:\/\/track\.blitznow\.in\/ZZ0000000000$/,
     marker: /We couldn.t load your order|Track your parcel, every step of the way/ },
-  // The tracker's script sends an unknown number on to its search page, which names the number it could not find.
+  // The tracker looks the number in its address up and heads its not-found notice with it.
   { carrier: 'nationex', number: '900000009',
     route: /^https:\/\/nationex\.com\/reperage(?:\/900000009|\?error=true&searchId=900000009)$/,
-    marker: /Aucun résultat trouvé pour le numéro de suivi|Numéro d’envoi \(9 chiffres\)/ },
+    marker: /Aucun résultat n.a été retourné pour ce numéro|Nº de colis ou d.envoi/i },
   { carrier: 'navex', number: '000000000000',
     route: /^https:\/\/app\.navex\.tn\/track\.php\?track=000000000000$/,
     marker: /Aucun colis trouvé pour ce numéro de suivi/ },
@@ -1455,10 +1465,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'cdl', number: 'CDL99999999999',
     route: /^https:\/\/apps\.cdldelivers\.com\/Tracking-Page\/track\?id=CDL99999999999$/,
     marker: /Enter your CDL Tracking ID|Unable To Find Tracking Details/i },
-  // The tracking component looks the number up when the page opens and shows its notice for an unknown one.
+  // The tracking component fills its field in from the address; the reader starts the search.
   { carrier: 'osm-worldwide', number: 'OSM000000ZZ9999ZZ',
     route: /^https:\/\/www\.osmworldwide\.com\/tracking\/\?trackingIds=OSM000000ZZ9999ZZ$/,
-    marker: /Tracking is not available for this item/, shadowHost: 'tracking-component' },
+    marker: /Please enter your tracking numbers to view the status|Tracking is not available for this item/,
+    shadowHost: 'tracking-component' },
   // The page reads the number from its path and posts it to the site's lookup on load.
   { carrier: 'epost-global', number: 'EPG999999999999999',
     route: /^https:\/\/epgtrack\.com\/EPG999999999999999$/,
@@ -1806,10 +1817,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'zecheng', number: 'ZCGJ0000000002CN',
     route: /^https:\/\/api\.zecwl\.com\/index\/tracknumber\/track\?nos=ZCGJ0000000002CN$/,
     marker: /快件跟踪|跟踪\(Track\)/ },
-  // The tracker renders the number's scans on the server and prefills its form with the number.
+  // The tracker renders the number's scans on the server. An unknown number gets a notice without it, which goes
+  // back to the previous page after three seconds.
   { carrier: 'jetspeed', number: 'JSD000000000199',
     route: /^https:\/\/www\.jetspeed-express\.com\/search_kuai_di\/search\/orderid\/JSD000000000199$/,
-    marker: /订单查询|订单号/ },
+    marker: /未查询到对应订单/, forwarding: { notFound: /未查询到对应订单/ }, reads: 1 },
   // The tracking page carries the waybill form and reads no number from its address.
   { carrier: 'pdu', number: 'CO00000001PD',
     route: /^https:\/\/www\.pduni\.com\/MV\/en\/customer-services\/waybill-inquiry$/,
@@ -1900,10 +1912,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'belpost', number: 'ZZ000000014BY',
     route: /^https:\/\/(?:www\.)?belpost\.by\/Otsleditotpravleniye\?number=ZZ000000014BY$/,
     marker: /Введите номер отправления|Где мое отправление|У нас пока нет данных об этом трек-номере|Where is my postal item|any data on this tracking number/i },
-  // The page looks the code up and heads its answer with it, here the notice for service letters the post does not use.
+  // The page fills its field in from the address, looks the code up and heads its answer with it, here the notice
+  // for service letters the post does not use.
   { carrier: 'correo-uruguayo', number: 'ZZ000000014UY',
-    route: /^https:\/\/ahiva\.correo\.com\.uy\/servicioConsultaTntIps-web\/SeguimientoJSNuevo\?codigoPieza=ZZ000000014UY$/,
-    marker: /Consultas para el env[ií]o con c[óo]digo|Producto inv[áa]lido/i },
+    route: /^https:\/\/ahiva\.correo\.com\.uy\/servicioConsultaTntIps-web\/\?codigoPieza=ZZ000000014UY$/,
+    marker: /Producto inv[áa]lido|No se registraron eventos|C[óo]digo\(s\) de seguimiento/i },
   // The page fills its field in from the address and looks the code up.
   { carrier: 'uzbekistan-post', number: 'ZZ000000014UZ',
     route: /^https:\/\/uz\.post\/ru\/tracking\/ZZ000000014UZ\/?$/,
@@ -2441,9 +2454,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'midland-transport', number: '0000000000000000',
     route: /^https:\/\/ship\.midlandtransport\.com\/Tracking\/TrackClientTrackings\?TrackingNumber=0000000000000000&Lang=0$/,
     marker: /The shipment number does not exist|Travel History/ },
-  // The quick track looks the number in its address up and answers an unknown one with a notice naming it.
+  // The track page looks the number in its address up and answers an unknown one with a notice naming it.
   { carrier: 'maritime-ontario', number: 'F0000000',
-    route: /^https:\/\/www\.m-o\.com\/quick-track-form\/\?t=F0000000$/,
+    route: /^https:\/\/www\.m-o\.com\/track\/\?t=F0000000$/,
     marker: /We couldn.t find a shipment matching|Track Your Shipment/ },
   // The FastNet page looks the probill in its address up on the server and answers an unknown one
   // with its notice, without the number.

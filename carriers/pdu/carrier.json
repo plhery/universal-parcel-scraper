@@ -32,7 +32,7 @@
     "delivered_at"
   ],
   "portal": {
-    "url": "https://www.pduni.com/",
+    "url": "https://www.pduni.com/MV/en/customer-services/waybill-inquiry",
     "searchUrl": "https://www.pduni.com/MV/en/customer-services/waybill-inquiry",
     "canaryUrl": "https://www.pduni.com/",
     "shows": [

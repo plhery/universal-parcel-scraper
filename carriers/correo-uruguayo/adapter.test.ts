@@ -267,8 +267,12 @@ describe('Correo Uruguayo tracking adapter', () => {
   it('leaves Uruguayan S10 codes with the postal fallback, which asks it first, and opens its tracking links', () => {
     expect(detectCarrierMatch(DELIVERED)).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     expect(recognitionAskedCarriers(DELIVERED)[0]).toBe('correo-uruguayo');
-    const link = `https://ahiva.correo.com.uy/servicioConsultaTntIps-web/SeguimientoJSNuevo?codigoPieza=${DELIVERED}`;
-    expect(parseTrackingInput(link)).toMatchObject({ trackingNumber: DELIVERED, carrier: 'correo-uruguayo', source: 'link' });
+    for (const page of ['', 'SeguimientoJSNuevo']) {
+      const link = `https://ahiva.correo.com.uy/servicioConsultaTntIps-web/${page}?codigoPieza=${DELIVERED}`;
+      expect(parseTrackingInput(link)).toMatchObject({ trackingNumber: DELIVERED, carrier: 'correo-uruguayo', source: 'link' });
+    }
+    // The lookup's own address is no tracking page: the code alone goes to the postal fallback.
+    expect(parseTrackingInput(`https://ahiva.correo.com.uy/servicioConsultaTntIps-ws/seguimientoEnvios/eventosweb?codigoPieza=${DELIVERED}`).carrier).toBe('intl-post');
   });
 });
 

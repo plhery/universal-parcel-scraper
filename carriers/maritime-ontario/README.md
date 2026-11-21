@@ -49,7 +49,7 @@ through the TM4Web trace of its customer portal.
   user who entered the order and the freight's pallets, weight and volume. None is kept. The
   trace hides the parties, the images and the carriers section, so there is no proof of
   delivery or hand-off.
-- The quick-track form on `m-o.com` asks `api2.m-o.com/external/public/trackandtrace` for a
+- The track page on `m-o.com` asks `api2.m-o.com/external/public/trackandtrace` for a
   summary: the current status and the truck's arrival at and departure from the shipper and the
   consignee, with no history. It takes bills of lading and purchase orders as well and is rate
   limited, so the adapter does not use it.
@@ -70,9 +70,9 @@ source are in [`numbers.json`](numbers.json).
 
 ## Links
 
-The quick-track form takes the number in its address at
-`www.m-o.com/quick-track-form/?t={number}` and looks it up on load. The form also takes bills of
-lading and purchase orders, so the library reads no number from a link. The `/di/` portal needs
+The track page takes the number in its address at `www.m-o.com/track/?t={number}` and looks it
+up on load. The page also takes bills of lading and purchase orders, so the library reads no
+number from a link. The `/di/` portal needs
 a login.
 
 ## Testing

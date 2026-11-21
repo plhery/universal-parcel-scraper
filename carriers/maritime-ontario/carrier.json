@@ -32,8 +32,8 @@
     "eta_window"
   ],
   "portal": {
-    "url": "https://www.m-o.com/quick-track-form/?t={trackingNumber}",
-    "searchUrl": "https://www.m-o.com/quick-track-form/",
+    "url": "https://www.m-o.com/track/?t={trackingNumber}",
+    "searchUrl": "https://www.m-o.com/track/",
     "canaryUrl": "https://cp.m-o.com/trace/external.msw",
     "shows": [
       "status",

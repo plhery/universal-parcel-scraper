@@ -28,8 +28,8 @@
     "history"
   ],
   "portal": {
-    "searchUrl": "https://x-cargo.co/tracking/",
-    "canaryUrl": "https://x-cargo.co/tracking/",
+    "searchUrl": "https://x-cargo.co/",
+    "canaryUrl": "https://x-cargo.co/",
     "shows": [
       "status",
       "history"

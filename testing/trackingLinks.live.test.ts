@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, it } from 'vitest';
 import { chromium, type Browser } from 'playwright-core';
 import { parcelTrackingLinks } from '../core/catalog/parcel.js';
+import { awsWafAction } from '../core/transport/awsWaf.js';
 import { trackingLinkCases } from './trackingLinkCases.js';
 import { landedAddress, trackingPageVerdict } from './trackingLinkProbe.js';
 
@@ -32,9 +33,12 @@ describe('UI tracking links (rendered public pages)', () => {
     const page = await browser.newPage({ locale: 'en-US', userAgent });
     let lookupObserved = false;
     let documentStatus: number | undefined;
+    let wafAction: string | null = null;
     page.on('response', (response) => {
       if (response.request().isNavigationRequest() && response.frame() === page.mainFrame()) {
         documentStatus = response.status();
+        // AWS WAF answers its check in place of the page, often with HTTP 202 and an empty document.
+        wafAction = awsWafAction(response.headers());
       }
     });
     page.on('request', (request) => {
@@ -103,10 +107,12 @@ describe('UI tracking links (rendered public pages)', () => {
           const status = documentStatus ?? response!.status();
           verdict = trackingPageVerdict({ status, url: page.url(), title: await page.title(), text },
             testCase.route, testCase.marker, testCase.shipmentNotFound);
+          if (wafAction !== null && verdict !== 'tracking-page') verdict = 'blocked';
           // A tracker that serves its route with its not-found status can show the
           // notice only after its lookup answers, so keep reading until it does.
           const noticePending = testCase.shipmentNotFound?.status === status && testCase.route.test(page.url());
-          if ((verdict === 'broken' && !noticePending) || (attempt >= 2 && verdict === 'tracking-page' && inputBound)) break;
+          if ((verdict === 'broken' && !noticePending)
+            || (attempt >= (testCase.reads ?? 3) - 1 && verdict === 'tracking-page' && inputBound)) break;
         } catch (error) {
           // A tracker that submits its own search on load replaces the document
           // mid-read: the next pass reads the new one.

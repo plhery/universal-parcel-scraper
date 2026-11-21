@@ -65,8 +65,8 @@ describe('Maritime-Ontario TM4Web adapter', () => {
     }
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'maritime-ontario', step: 'direct', outcome: 'ok' }));
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
-    // The link the catalog offers is M-O's quick track, which looks the number in its address up.
-    expect(catalog.portal.url.replace('{trackingNumber}', DELIVERED)).toBe(`https://www.m-o.com/quick-track-form/?t=${DELIVERED}`);
+    // The link the catalog offers is M-O's track page, which looks the number in its address up.
+    expect(catalog.portal.url.replace('{trackingNumber}', DELIVERED)).toBe(`https://www.m-o.com/track/?t=${DELIVERED}`);
   });
 
   it('reads a delivered history newest first, by its codes and descriptions, each once, with wall clocks kept local', () => {

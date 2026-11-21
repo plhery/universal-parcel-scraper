@@ -35,7 +35,7 @@
     "signed_by"
   ],
   "portal": {
-    "url": "https://ahiva.correo.com.uy/servicioConsultaTntIps-web/SeguimientoJSNuevo?codigoPieza={trackingNumber}",
+    "url": "https://ahiva.correo.com.uy/servicioConsultaTntIps-web/?codigoPieza={trackingNumber}",
     "searchUrl": "https://www.correo.com.uy/seguimientodeenvios",
     "canaryUrl": "https://www.correo.com.uy/seguimientodeenvios",
     "shows": [
@@ -71,7 +71,7 @@
       "domains": [
         "ahiva.correo.com.uy"
       ],
-      "pathPattern": "^/servicioConsultaTntIps-web/SeguimientoJSNuevo/?$",
+      "pathPattern": "^/servicioConsultaTntIps-web(?:/|/SeguimientoJSNuevo/?)?$",
       "params": [
         "codigoPieza"
       ]

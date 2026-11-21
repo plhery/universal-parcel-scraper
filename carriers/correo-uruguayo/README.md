@@ -65,8 +65,8 @@ result gives Uruguay as the destination of an S10 item. The samples and their so
 ## Links
 
 The tracking page reads `codigoPieza` and looks the item up at once, so
-`ahiva.correo.com.uy/servicioConsultaTntIps-web/SeguimientoJSNuevo?codigoPieza={number}` opens
-one item. Several codes can be given, separated by commas. The page on `correo.com.uy` embeds
+`ahiva.correo.com.uy/servicioConsultaTntIps-web/?codigoPieza={number}` opens one item. Links to the
+former `SeguimientoJSNuevo` page are still read. Several codes can be given, separated by commas. The page on `correo.com.uy` embeds
 it.
 
 ## Testing

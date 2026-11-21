@@ -17028,14 +17028,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://www.correo.com.uy/seguimientodeenvios",
-    "trackingUrlTemplate": "https://ahiva.correo.com.uy/servicioConsultaTntIps-web/SeguimientoJSNuevo?codigoPieza={trackingNumber}",
+    "trackingUrlTemplate": "https://ahiva.correo.com.uy/servicioConsultaTntIps-web/?codigoPieza={trackingNumber}",
     "trackingSearchUrl": "https://www.correo.com.uy/seguimientodeenvios",
     "linkRules": [
       {
         "domains": [
           "ahiva.correo.com.uy"
         ],
-        "pathPattern": "^/servicioConsultaTntIps-web/SeguimientoJSNuevo/?$",
+        "pathPattern": "^/servicioConsultaTntIps-web(?:/|/SeguimientoJSNuevo/?)?$",
         "params": [
           "codigoPieza"
         ]
@@ -41118,8 +41118,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://cp.m-o.com/trace/external.msw",
-    "trackingUrlTemplate": "https://www.m-o.com/quick-track-form/?t={trackingNumber}",
-    "trackingSearchUrl": "https://www.m-o.com/quick-track-form/",
+    "trackingUrlTemplate": "https://www.m-o.com/track/?t={trackingNumber}",
+    "trackingSearchUrl": "https://www.m-o.com/track/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -47549,7 +47549,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "recognitionRank": 734
     },
     "canaryUrl": "https://www.pduni.com/",
-    "trackingUrlTemplate": "https://www.pduni.com/",
+    "trackingUrlTemplate": "https://www.pduni.com/MV/en/customer-services/waybill-inquiry",
     "trackingSearchUrl": "https://www.pduni.com/MV/en/customer-services/waybill-inquiry",
     "linkRules": [],
     "detectionRules": [
@@ -66387,8 +66387,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "xcargo"
     },
-    "canaryUrl": "https://x-cargo.co/tracking/",
-    "trackingSearchUrl": "https://x-cargo.co/tracking/",
+    "canaryUrl": "https://x-cargo.co/",
+    "trackingSearchUrl": "https://x-cargo.co/",
     "linkRules": [],
     "detectionRules": []
   },
