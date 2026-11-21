@@ -7,7 +7,7 @@ import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { HoldKind, serviceTag } from '../../core/runner/holds.js';
-import { recoverableByDefault, runSteps, type StepContext } from '../../core/runner/index.js';
+import { recoverableByDefault, runSteps, type StepContext, type StepSpec } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecord, type StepRecorder } from '../../core/telemetry/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
@@ -23,7 +23,8 @@ import { isUspsRedeliveryReminder, uspsStage, uspsStatus } from './status.js';
  * in its HTML. The legacy query route can return only the global header,
  * so load the package path directly. The browser handles verification;
  * nothing is replayed over plain HTTP. A private Chrome with a window reads
- * first when one is configured, and the browser service after it.
+ * first when one is configured, and the browser service after it, except while USPS keeps
+ * refusing the Chrome.
  */
 const TRACKING_BASE = 'https://tools.usps.com/tracking/';
 const OUTAGE = USPS_OUTAGE_URL;
@@ -81,6 +82,27 @@ function pauseRun(run: OutageRun, until: number): void {
   if (until <= run.pausedUntil) return;
   run.pausedUntil = until;
   outageHolds.save(run.key, until);
+}
+
+/**
+ * USPS also turns new sessions away on every address for hours at a time, the private Chrome's
+ * included, which then ends each lookup on the wrapper after about fifteen seconds. Once the Chrome
+ * ends on it three lookups in a row, lookups read through the browser service first for fifteen
+ * minutes and through the Chrome only when the service fails, so no lookup loses the Chrome. The
+ * service answers within seconds through a session USPS let through, and fails within a second
+ * when it holds none. A page the Chrome loads ends the run; after the rest, the next lookup asks
+ * the Chrome first again, and one more wrapper starts another rest.
+ */
+const CHROME_REFUSALS = 3;
+const CHROME_REST_MS = 15 * 60_000;
+interface ChromeRun { refusals: number; restingUntil: number }
+const chromeRuns = new Map<string, ChromeRun>();
+
+function chromeRunOf(endpoint: string): ChromeRun {
+  const key = serviceTag(endpoint);
+  let run = chromeRuns.get(key);
+  if (!run) chromeRuns.set(key, run = { refusals: 0, restingUntil: 0 });
+  return run;
 }
 
 type Route = NonNullable<StepRecord['networkRoute']>;
@@ -470,7 +492,7 @@ export class USPSTracker {
     // Each read's record names the route it took; a lookup paused before reading names none.
     const read: ReadRoute = { route: null, reads: 0, history: false };
     const recorder: StepRecorder = {
-      step: record => this.#recorder.step(read.route ? { ...record, networkRoute: read.route,
+      step: record => this.#recorder.step(read.route && record.step === 'trawl' ? { ...record, networkRoute: read.route,
         networkAttempt: read.reads > 1 ? 'retry' : 'initial', historyAvailable: read.history } : record),
       lookup: record => this.#recorder.lookup(record),
     };
@@ -478,16 +500,21 @@ export class USPSTracker {
       Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs))), signal, read);
     // Only a read the browser service made is read there again.
     const again = (error: unknown) => read.reads > 0 && this.#readsAgain(error, read, trawl!);
+    const browser: StepSpec<CarrierResult> = { id: 'browser', enabled: !!endpoint, run: ({ remainingMs, signal }) =>
+      this.#browserResult(endpoint!, number,
+        Math.max(1, Math.floor(Math.min(trawl ? BROWSER_SHARE_MS : this.timeoutMs, remainingMs, 60_000))), signal) };
+    const chromeLast = !!endpoint && !!trawl && chromeRunOf(endpoint).restingUntil > Date.now();
     const result = await runSteps<CarrierResult>({
       // Without a caller's budget the lookup leaves the service its own time and
       // the request the allowance to bring the answer back.
       carrier: 'usps', budgetMs: context.budgetMs ?? this.timeoutMs + TRAWL_TRANSPORT_ALLOWANCE_MS, signal: context.signal,
       recorder,
     }, [
-      { id: 'browser', enabled: !!endpoint, run: ({ remainingMs, signal }) => this.#browserResult(endpoint!, number,
-        Math.max(1, Math.floor(Math.min(trawl ? BROWSER_SHARE_MS : this.timeoutMs, remainingMs, 60_000))), signal) },
+      ...(chromeLast ? [] : [browser]),
       // The private Chrome's share running out leaves the browser service the rest of the lookup.
       { id: 'trawl', enabled: !!trawl, recovers: error => recoverableByDefault(error) || error instanceof BudgetExceededError, run },
+      // While the Chrome rests it reads every lookup the service could not, paused ones included.
+      ...(chromeLast ? [{ ...browser, recovers: (error: unknown) => recoverableByDefault(error) || error instanceof RateLimitedError }] : []),
       // A read straight after a redirect loads tracking more often than not, and one after two still
       // about half the time, within seconds. So a redirect on the service's own route is read again
       // there, up to three reads, until three redirects in a row pause it; a redirect is never read
@@ -522,7 +549,17 @@ export class USPSTracker {
     if (page.redirected) {
       throw new IndeterminateError('USPS', 'USPS sent the lookup to its service outage page', { reason: 'maintenance_page' });
     }
-    const result = parseUSPSTrackingHtml(page.html, number);
+    const run = chromeRunOf(endpoint);
+    let result: CarrierResult;
+    try { result = parseUSPSTrackingHtml(page.html, number); }
+    catch (error) {
+      // The wrapper or a challenged page is a refusal; a partial page, after USPS let the session
+      // through, counts neither way; any other page loaded.
+      if (!(error instanceof ChallengeError)) Object.assign(run, { refusals: 0, restingUntil: 0 });
+      else if (error.reason !== 'incomplete_page' && ++run.refusals >= CHROME_REFUSALS) run.restingUntil = Date.now() + CHROME_REST_MS;
+      throw error;
+    }
+    Object.assign(run, { refusals: 0, restingUntil: 0 });
     result.tracking_url = uspsTrackingUrl(number);
     result.tracking_source = 'rendered-page';
     return result;

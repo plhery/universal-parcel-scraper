@@ -43,7 +43,12 @@ FLARESOLVERR_URL for browser fallback')`.
    are. The endpoint is a [private browser worker](../royal-mail/README.md) started with
    `ROYAL_MAIL_BROWSER_HEADED=1`. With a browser service too, this step has twenty seconds, and
    a wrapper, an outage redirect, an unavailable worker or that time running out hands the
-   lookup to `trawl`.
+   lookup to `trawl`. USPS also turns new sessions away on every address for hours at a time,
+   this browser's included, which then spends about fifteen seconds on the wrapper. Once three
+   lookups in a row end on it, lookups read through `trawl` first for fifteen minutes and
+   through this browser only when `trawl` fails or is paused, so the wait goes only where it
+   can still help. A page this browser loads ends the rest; after it, the next lookup asks this
+   browser first again.
 2. `trawl`: the browser service loads
    `https://tools.usps.com/tracking/…`, runs the interstitial check, and
    waits for the visible tracking number before the rendered DOM is parsed. The verification

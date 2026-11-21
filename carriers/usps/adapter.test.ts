@@ -675,6 +675,113 @@ describe('USPS lookup steps', () => {
       expect(fetcher).toHaveBeenCalledTimes(1);
     });
 
+    describe('while USPS refuses it', () => {
+      let chromes = 0;
+      const ownEndpoint = () => `ws://chrome-${++chromes}.internal:3001/` + 's'.repeat(40);
+      function routes(): { recorder: StepRecorder; records: string[] } {
+        const records: string[] = [];
+        return { records, recorder: { step: (record) => records.push(`${record.step}:${record.outcome}:${record.networkRoute ?? '-'}`),
+          lookup: (record) => records.push(`lookup:${record.finalStep}:${record.outcome}`) } };
+      }
+      async function refuse(tracker: () => USPSTracker, times: number): Promise<void> {
+        for (let lookup = 0; lookup < times; lookup += 1) {
+          vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(trawlReply(DELIVERED_PAGE));
+          await expect(tracker().fetch(DELIVERED_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+        }
+      }
+
+      it('reads through the browser service first after three wrappers in a row, and through the Chrome when the service fails', async () => {
+        const trawl = ownTrawl();
+        const endpoint = ownEndpoint();
+        const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+        const tracker = (recorder?: StepRecorder) => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage, recorder });
+        await refuse(tracker, 3);
+        expect(readBrowserPage).toHaveBeenCalledTimes(3);
+
+        vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(trawlReply(DELIVERED_PAGE));
+        let { recorder, records } = routes();
+        await expect(tracker(recorder).fetch(DELIVERED_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+        expect(records).toEqual(['trawl:ok:default', 'lookup:trawl:ok']);
+        expect(readBrowserPage).toHaveBeenCalledTimes(3);
+
+        // The service holding no session USPS let through: the Chrome still reads, and its page ends the rest.
+        vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response('no session', { status: 500 }));
+        readBrowserPage.mockResolvedValueOnce({ html: DELIVERED_PAGE, redirected: false });
+        ({ recorder, records } = routes());
+        await expect(tracker(recorder).fetch(DELIVERED_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+        expect(records.slice(1)).toEqual(['browser:ok:-', 'lookup:browser:ok']);
+        expect(records[0]).toMatch(/^trawl:\w+:default$/);
+
+        readBrowserPage.mockResolvedValueOnce({ html: DELIVERED_PAGE, redirected: false });
+        ({ recorder, records } = routes());
+        await expect(tracker(recorder).fetch(DELIVERED_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+        expect(records).toEqual(['browser:ok:-', 'lookup:browser:ok']);
+      });
+
+      it('asks the Chrome first again after fifteen minutes, and rests it again after one more wrapper', async () => {
+        vi.useFakeTimers({ toFake: ['Date'] });
+        try {
+          const trawl = ownTrawl();
+          const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+          const endpoint = ownEndpoint();
+          const tracker = () => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage });
+          await refuse(tracker, 3);
+          vi.setSystemTime(Date.now() + 14 * 60_000);
+          await refuse(tracker, 1);
+          expect(readBrowserPage).toHaveBeenCalledTimes(3);
+          vi.setSystemTime(Date.now() + 60_000 + 1);
+          await refuse(tracker, 1);
+          expect(readBrowserPage).toHaveBeenCalledTimes(4);
+          await refuse(tracker, 1);
+          expect(readBrowserPage).toHaveBeenCalledTimes(4);
+        } finally {
+          vi.useRealTimers();
+        }
+      });
+
+      it('counts neither a partial page nor an outage redirect, and lets any loaded page end the run', async () => {
+        const trawl = ownTrawl();
+        const endpoint = ownEndpoint();
+        const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+        const tracker = () => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage });
+        await refuse(tracker, 2);
+        for (const reply of [{ html: HEADER_ONLY_PAGE, redirected: false }, { html: '', redirected: true }]) {
+          readBrowserPage.mockResolvedValueOnce(reply);
+          await refuse(tracker, 1);
+        }
+        // Another parcel's page loaded: USPS let the Chrome through.
+        readBrowserPage.mockResolvedValueOnce({ html: IN_TRANSIT_PAGE, redirected: false });
+        await expect(tracker().fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ name: 'SchemaError' });
+        await refuse(tracker, 2);
+        expect(readBrowserPage).toHaveBeenCalledTimes(7);
+        await refuse(tracker, 1);
+        expect(readBrowserPage).toHaveBeenCalledTimes(8);
+        await refuse(tracker, 1);
+        expect(readBrowserPage).toHaveBeenCalledTimes(8);
+      });
+
+      it('reads through the Chrome while the browser service\'s reads are paused', async () => {
+        const trawl = ownTrawl();
+        const endpoint = ownEndpoint();
+        const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+        const tracker = (recorder?: StepRecorder) => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage, recorder });
+        await refuse(tracker, 3);
+        await keepAdapterHolds({ load: async () => [{ key: `usps-outage/${serviceTag(trawl.endpoint.href)}`, until: Date.now() + 60_000 }],
+          save: async () => undefined });
+        try {
+          const fetcher = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('must not fetch'));
+          fetcher.mockClear();
+          readBrowserPage.mockResolvedValueOnce({ html: DELIVERED_PAGE, redirected: false });
+          const { recorder, records } = routes();
+          await expect(tracker(recorder).fetch(DELIVERED_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+          expect(records).toEqual(['trawl:rate_limited:-', 'browser:ok:-', 'lookup:browser:ok']);
+          expect(fetcher).not.toHaveBeenCalled();
+        } finally {
+          resetAdapterHolds();
+        }
+      });
+    });
+
     it('takes the endpoint from USPS_BROWSER_WS_ENDPOINT', () => {
       expect(adapter({ env: { USPS_BROWSER_WS_ENDPOINT: ENDPOINT }, fetcher: globalThis.fetch, trawl: null, recorder: NOOP_RECORDER } as never))
         .toMatchObject({ steps: ['browser', 'trawl'] });
