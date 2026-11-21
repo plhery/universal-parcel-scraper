@@ -195,10 +195,10 @@ carrier's evidence shows its history.
 <!-- GENERATED:lookup-order -->
 | Source | Carriers with history | Full | Partial | Only source |
 | --- | ---: | ---: | ---: | ---: |
-| Ship24 | 62 | 24 | 38 | 0 |
+| Ship24 | 64 | 23 | 41 | 0 |
 | ParcelsApp | 80 | 52 | 28 | 6 |
-| 17TRACK | 76 | 49 | 27 | 4 |
-| Postal Ninja | 58 | 19 | 39 | 0 |
+| 17TRACK | 76 | 50 | 26 | 4 |
+| Postal Ninja | 58 | 20 | 38 | 0 |
 
 Providers joined by a dot have equally full history for the carrier and share its numbers; an arrow leads to those asked when they have none. With Postal Ninja enabled, a number no carrier is named for uses Ship24 · ParcelsApp · 17TRACK → Postal Ninja. A carrier without its own order uses Ship24 · ParcelsApp · 17TRACK. These carriers have their own:
 
@@ -239,7 +239,7 @@ Providers joined by a dot have equally full history for the carrier and share it
 | YunExpress | Ship24 · ParcelsApp · 17TRACK · Track123 → Postal Ninja |
 | 4PX | ParcelsApp · 17TRACK → Ship24 → Postal Ninja |
 | Yanwen | ParcelsApp · 17TRACK → Ship24 |
-| YTO Express | ParcelsApp → 17TRACK → Ship24 |
+| YTO Express | ParcelsApp → Ship24 · 17TRACK |
 | Yamato Transport | 17TRACK → Ship24 |
 | Correios Brazil | Ship24 · ParcelsApp · 17TRACK → Postal Ninja |
 | Singapore Post | 17TRACK → Ship24 · ParcelsApp → Postal Ninja |
@@ -257,14 +257,14 @@ Providers joined by a dot have equally full history for the carrier and share it
 | An Post | Ship24 · ParcelsApp → 17TRACK → Postal Ninja |
 | CTT Portugal | Ship24 · ParcelsApp · 17TRACK → Postal Ninja |
 | CTT Express | ParcelsApp → Ship24 · 17TRACK → Postal Ninja |
-| BRT | ParcelsApp · 17TRACK → Ship24 → Postal Ninja |
+| BRT | Ship24 · ParcelsApp · 17TRACK → Postal Ninja |
 | SEUR | ParcelsApp · 17TRACK → Ship24 → Postal Ninja |
 | Correos Express | Ship24 · ParcelsApp → 17TRACK |
 | MRW | Ship24 · ParcelsApp · 17TRACK → Postal Ninja |
 | Relais Colis | ParcelsApp → 17TRACK → Ship24 |
 | Paack | ParcelsApp → Ship24 · 17TRACK |
 | Asendia | ParcelsApp · 17TRACK → Ship24 → Postal Ninja |
-| Landmark Global | Ship24 · ParcelsApp → 17TRACK → Postal Ninja |
+| Landmark Global | ParcelsApp → Ship24 · 17TRACK → Postal Ninja |
 | NZ Post | 17TRACK → Ship24 · ParcelsApp → Postal Ninja |
 | Pos Malaysia | ParcelsApp · 17TRACK → Ship24 |
 | Thailand Post | Ship24 · ParcelsApp → 17TRACK → Postal Ninja |
@@ -281,7 +281,7 @@ Providers joined by a dot have equally full history for the carrier and share it
 | Canpar | ParcelsApp → Ship24 · 17TRACK → Postal Ninja |
 | DPD Germany | Track123 → Ship24 · ParcelsApp · 17TRACK → Postal Ninja |
 | DPD UK | Ship24 · Track123 → ParcelsApp · 17TRACK → Postal Ninja |
-| Evri UK | ParcelsApp → Ship24 · 17TRACK |
+| Evri UK | ParcelsApp · 17TRACK → Ship24 |
 | SpeedPAK | ParcelsApp → Ship24 · 17TRACK |
 | Intelcom / Dragonfly | ParcelsApp · 17TRACK → Ship24 → Postal Ninja |
 | Nova Poshta (Ukraine) | ParcelsApp · 17TRACK → Ship24 → Postal Ninja |

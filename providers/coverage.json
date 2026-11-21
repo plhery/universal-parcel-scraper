@@ -1036,7 +1036,7 @@
           "note": "Benchmark number 8565131824",
           "results": {
             "Ship24": "no_history",
-            "ParcelsApp": "postcode_prompt",
+            "ParcelsApp": "no_history",
             "17TRACK": "no_history",
             "Ordertracker": "n/a",
             "Postal Ninja": "no_history",
@@ -1933,7 +1933,10 @@
         {
           "note": "Benchmark number YT8879092508074",
           "results": {
-            "Ship24": "no_history",
+            "Ship24": {
+              "rows": 2,
+              "partial": "a third of the rows or fewer"
+            },
             "ParcelsApp": 30,
             "17TRACK": "no_history",
             "Ordertracker": "n/a",
@@ -2087,13 +2090,10 @@
               "rows": 4,
               "partial": "a third of the rows or fewer, stops early"
             },
-            "ParcelsApp": {
-              "rows": 4,
-              "partial": "a third of the rows or fewer, stops early"
-            },
+            "ParcelsApp": 7,
             "17TRACK": 18,
             "Ordertracker": "n/a",
-            "Postal Ninja": 11,
+            "Postal Ninja": 15,
             "UPU": 4
           }
         },
@@ -2105,16 +2105,13 @@
               "partial": "a third of the rows or fewer, stops early"
             },
             "ParcelsApp": {
-              "rows": 9,
-              "partial": "a third of the rows or fewer, stops early"
-            },
-            "17TRACK": 31,
-            "Ordertracker": "n/a",
-            "Postal Ninja": {
               "rows": 13,
-              "partial": "stops early"
+              "partial": "a third of the rows or fewer"
             },
-            "UPU": "no_history"
+            "17TRACK": 54,
+            "Ordertracker": "n/a",
+            "Postal Ninja": 25,
+            "UPU": 2
           }
         }
       ]
@@ -2144,7 +2141,10 @@
             "ParcelsApp": 34,
             "17TRACK": 17,
             "Ordertracker": "n/a",
-            "Postal Ninja": "undated",
+            "Postal Ninja": {
+              "rows": 34,
+              "partial": "undated rows, stops early"
+            },
             "UPU": "no_history"
           }
         },
@@ -2915,7 +2915,10 @@
         {
           "note": "Benchmark number 04503190170072",
           "results": {
-            "Ship24": "no_history",
+            "Ship24": {
+              "rows": 7,
+              "partial": "a third of the rows or fewer"
+            },
             "ParcelsApp": 23,
             "17TRACK": 9,
             "Ordertracker": "n/a",
@@ -2929,7 +2932,7 @@
         {
           "note": "Benchmark number 107180064942",
           "results": {
-            "Ship24": "no_history",
+            "Ship24": 7,
             "ParcelsApp": "no_history",
             "17TRACK": 7,
             "Ordertracker": "n/a",
@@ -3005,7 +3008,6 @@
         },
         {
           "note": "Benchmark number 7983000739053141",
-          "stale": true,
           "results": {
             "Ship24": "no_history",
             "ParcelsApp": "no_history",
@@ -3323,9 +3325,12 @@
         {
           "note": "Benchmark number LTN480634985",
           "results": {
-            "Ship24": 22,
-            "ParcelsApp": 21,
-            "17TRACK": 14,
+            "Ship24": {
+              "rows": 23,
+              "partial": "stops early"
+            },
+            "ParcelsApp": 27,
+            "17TRACK": 19,
             "Ordertracker": "n/a",
             "Postal Ninja": "undated",
             "UPU": "n/a"
@@ -3759,9 +3764,9 @@
         {
           "note": "Benchmark number UUS69P8620998875588",
           "results": {
-            "Ship24": 11,
-            "ParcelsApp": 11,
-            "17TRACK": 11,
+            "Ship24": 26,
+            "ParcelsApp": 20,
+            "17TRACK": 20,
             "Ordertracker": "n/a",
             "Postal Ninja": "undated",
             "UPU": "n/a"
@@ -3961,7 +3966,7 @@
           "note": "Benchmark number 09446323296905",
           "results": {
             "Ship24": "no_history",
-            "ParcelsApp": 5,
+            "ParcelsApp": "undated",
             "17TRACK": 5,
             "Ordertracker": "n/a",
             "Postal Ninja": 5,
@@ -4060,8 +4065,8 @@
               "rows": 16,
               "partial": "stops early"
             },
-            "ParcelsApp": 7,
-            "17TRACK": 7,
+            "ParcelsApp": 8,
+            "17TRACK": 10,
             "Ordertracker": "n/a",
             "Postal Ninja": "no_history",
             "UPU": "n/a"
@@ -4070,15 +4075,9 @@
         {
           "note": "Benchmark number H01SVA0063090608",
           "results": {
-            "Ship24": {
-              "rows": 1,
-              "partial": "a third of the rows or fewer, stops early"
-            },
+            "Ship24": 7,
             "ParcelsApp": 14,
-            "17TRACK": {
-              "rows": 1,
-              "partial": "a third of the rows or fewer, stops early"
-            },
+            "17TRACK": 7,
             "Ordertracker": "n/a",
             "Postal Ninja": "no_history",
             "UPU": "n/a"
@@ -4510,7 +4509,10 @@
         {
           "note": "Benchmark number 36570542917",
           "results": {
-            "Ship24": "no_history",
+            "Ship24": {
+              "rows": 2,
+              "partial": "a third of the rows or fewer"
+            },
             "ParcelsApp": "no_history",
             "17TRACK": 24,
             "Ordertracker": "n/a",

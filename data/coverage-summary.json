@@ -5,12 +5,12 @@
   "referenceCarriers": 100,
   "comparison": {
     "combined": 95,
-    "direct": 91,
+    "direct": 92,
     "providers": {
       "ParcelsApp": 72,
-      "Postal Ninja": 32,
+      "Postal Ninja": 34,
       "17TRACK": 73,
-      "Ship24": 57,
+      "Ship24": 59,
       "UPU": 11
     }
   }

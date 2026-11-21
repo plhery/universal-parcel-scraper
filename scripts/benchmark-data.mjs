@@ -1,6 +1,6 @@
 /*
  * The carrier benchmark: benchmark/carriers.json names the carriers and their public
- * numbers, benchmark/results.jsonl holds the last answer of every source for every
+ * numbers, benchmark/results.jsonl holds the kept answer of every source for every
  * number. This module grades them and renders benchmark/README.md's tables.
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -12,6 +12,8 @@ export const PROVIDERS = SOURCES.slice(1);
 export const COMPARED = PROVIDERS.filter((source) => source !== 'Ordertracker');
 /** Outcomes that say nothing about the source: a failed lookup keeps the answer it would replace. */
 export const INCONCLUSIVE = new Set(['error', 'blocked']);
+/** What a source answers once the carrier has deleted a parcel's history: an earlier history stands. */
+export const FORGOTTEN = new Set(['no_history', 'summary_only', 'postcode_prompt']);
 const DAY = 86_400_000;
 const WORDS = { no_history: 'No history', undated: 'Undated', summary_only: 'Summary only', postcode_prompt: 'Postcode prompt',
   wrong_carrier: 'Wrong carrier', refused: 'Refused', error: 'Error', blocked: 'Blocked', unrun: 'Not run',
@@ -38,14 +40,19 @@ export function loadBenchmark(root) {
     const tracker = own ? entry.carrier : entry.aliasOf ?? null;
     const catalog = tracker !== null && existsSync(path.join(root, 'carriers', tracker, 'carrier.json'));
     const corpus = own && existsSync(path.join(folder, 'numbers.json')) ? read(`carriers/${entry.carrier}/numbers.json`).records : [];
+    const definition = catalog ? read(`carriers/${tracker}/carrier.json`) : null;
+    const adapter = definition?.tracking?.adapter ?? null;
     const numbers = entry.numbers.map((item) => {
       const record = corpus.find((candidate) => candidate.number === item.number);
-      const answers = Object.fromEntries(SOURCES.map((source) => [source, results.get(keyOf({ carrier: entry.carrier, number: item.number, source }))]));
+      const answers = Object.fromEntries(SOURCES.map((source) => {
+        const answer = results.get(keyOf({ carrier: entry.carrier, number: item.number, source }));
+        // A kept answer of an adapter since removed no longer counts.
+        return [source, source === 'direct' && answer && !adapter ? { ...answer, outcome: 'no_adapter' } : answer];
+      }));
       return { ...item, source: item.source ?? record?.source ?? null, record: record ?? null, answers };
     });
-    const definition = catalog ? read(`carriers/${tracker}/carrier.json`) : null;
     const name = entry.name ?? definition?.displayName ?? entry.carrier;
-    return { ...entry, name, catalog, tracker: catalog ? tracker : null, adapter: definition?.tracking?.adapter ?? null, numbers };
+    return { ...entry, name, catalog, tracker: catalog ? tracker : null, adapter, numbers };
   });
 }
 

@@ -28,7 +28,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { benchmarkReferences, BENCHMARK_NOTE, cellText, COMPARED, grade, INCONCLUSIVE, keyOf, loadBenchmark, readResults, SOURCES } from './benchmark-data.mjs';
+import { benchmarkReferences, BENCHMARK_NOTE, cellText, COMPARED, FORGOTTEN, grade, INCONCLUSIVE, keyOf, loadBenchmark, readResults, SOURCES } from './benchmark-data.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const resultsPath = path.join(root, 'benchmark', 'results.jsonl');
@@ -48,7 +48,10 @@ function merge(file) {
   for (const record of readResults(file)) {
     if (record.number === undefined) continue;
     const key = keyOf(record), previous = stored.get(key);
-    if (INCONCLUSIVE.has(record.outcome) && previous && !INCONCLUSIVE.has(previous.outcome)) {
+    // A failed lookup says nothing, and a parcel the carrier has since forgotten keeps the history found before.
+    const forgotten = previous?.outcome === 'history'
+      && (FORGOTTEN.has(record.outcome) || (record.outcome === 'history' && record.rows < previous.rows));
+    if ((INCONCLUSIVE.has(record.outcome) && previous && !INCONCLUSIVE.has(previous.outcome)) || forgotten) {
       console.log(`kept ${key}: ${previous.outcome} (${previous.checked}) over ${record.outcome}`);
       continue;
     }

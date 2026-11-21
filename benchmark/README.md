@@ -74,7 +74,9 @@ Answers merge into [results.jsonl](results.jsonl), one line per number and sourc
 outcome, the scan count, the scans without an instant and how many of those keep a wall
 clock, the newest scan's time and stage, the carrier names the source reported, the time
 taken and the date checked. No event text is kept. A failed lookup does not replace an
-earlier answer.
+earlier answer, and neither does one with fewer scans than an earlier history, no history,
+a summary alone or a postcode prompt: carriers delete a parcel's history some weeks after
+delivery. An adapter's answer counts while the carrier still has the adapter.
 
 ParcelsApp's lookups start a minute apart, in a lane of their own: asked faster, it blocks
 the address and then answers `NO_DATA` to every number (see its
@@ -96,12 +98,12 @@ source follows any more is marked stale there.
 | Source | Carriers with history | Full | Partial | Undated only | Median answer |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | This project, all fallbacks enabled | 95 | | | | |
-| This project, dedicated adapters alone | 91 | 87 | 4 | 0 | 0.5 s |
-| Ship24 | 57 | 47 | 10 | 3 | 0.9 s |
-| ParcelsApp | 72 | 70 | 2 | 0 | 1.6 s |
-| 17TRACK | 73 | 70 | 3 | 0 | 6.1 s |
+| This project, dedicated adapters alone | 92 | 88 | 4 | 0 | 0.4 s |
+| Ship24 | 59 | 49 | 10 | 3 | 0.9 s |
+| ParcelsApp | 72 | 70 | 2 | 0 | 1.7 s |
+| 17TRACK | 73 | 70 | 3 | 0 | 6.3 s |
 | Ordertracker | 5 | 5 | 0 | 0 | 0.1 s |
-| Postal Ninja | 32 | 28 | 4 | 28 | 6.8 s |
+| Postal Ninja | 34 | 28 | 6 | 26 | 6.9 s |
 | UPU | 11 | 11 | 0 | 0 | 0.0 s |
 
 5 carriers have no number any source still follows.
@@ -116,7 +118,7 @@ source follows any more is marked stale there.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [La Poste / Colissimo](../carriers/la-poste/README.md) | ✓ 7 | ✓ 7 | ✓ 7 | ✓ 7 | ✓ 6 | No history | N/A |
 | [Chronopost](../carriers/chronopost/README.md) | ✓ 20 | No history | ✓ 25 | ✓ 20 | ✓ 10 | No history | No history |
-| [Mondial Relay](../carriers/mondial-relay/README.md) | ✓ 15 | No history | Postcode prompt | No history | N/A | No history | N/A |
+| [Mondial Relay](../carriers/mondial-relay/README.md) | ✓ 15 | No history | No history | No history | N/A | No history | N/A |
 | [Colis Privé](../carriers/colis-prive/README.md) | ✓ 11 | No history | No history | No history | N/A | No history | N/A |
 | [DPD France](../carriers/dpd-fr/README.md) | ✓ 10 | ✓ 10 | ✓ 5 | ✓ 5 | N/A | No history | N/A |
 | [GLS France](../carriers/gls-fr/README.md) | ✓ 15 | No history | ✓ 31 | ✓ 15 | N/A | ✓ 8 | N/A |
@@ -131,8 +133,8 @@ source follows any more is marked stale there.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [DHL](../carriers/dhl/README.md) | ✓ 67 | ✓ 67 | ✓ 67 | ✓ 67 | N/A | No history | N/A |
 | [Hermes Germany](../carriers/hermes-de/README.md) | ✓ 4, partial | ✓ 4, partial | ✓ 12 | ✓ 4, partial | N/A | ✓ 4, partial | N/A |
-| [DPD Germany](../carriers/dpd-de/README.md) | ✓ 14 | ✓ 12 | ✓ 5 | ✓ 5 | N/A | ✓ 5 | N/A |
-| [GLS Germany](../carriers/gls-de/README.md) | Postcode prompt | Refused | ✓ 3 | Refused | N/A | ✓ 4 | N/A |
+| [DPD Germany](../carriers/dpd-de/README.md) | ✓ 14 | ✓ 12 | ✓ 3, partial | ✓ 5 | N/A | ✓ 5 | N/A |
+| [GLS Germany](../carriers/gls-de/README.md) | Summary only | Refused | ✓ 3 | Refused | N/A | ✓ 4 | N/A |
 | [DHL eCommerce](../carriers/dhl-ecommerce/README.md) | ✓ 11 | No history | ✓ 11 | ✓ 11 | N/A | Blocked | N/A |
 
 ### United Kingdom and Ireland
@@ -140,11 +142,11 @@ source follows any more is marked stale there.
 | Carrier | Direct | Ship24 | ParcelsApp | 17TRACK | Ordertracker | Postal Ninja | UPU |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [Royal Mail](../carriers/royal-mail/README.md) | ✓ 5 | No history | No history | No history | N/A | No history | No history |
-| [Evri UK](../carriers/evri-uk/README.md) | ✓ 8 | ✓ 16, partial | ✓ 14 | ✓ 7 | N/A | No history | N/A |
+| [Evri UK](../carriers/evri-uk/README.md) | ✓ 10 | ✓ 7 | ✓ 14 | ✓ 10 | N/A | No history | N/A |
 | [DPD UK](../carriers/dpd-uk/README.md) | ✓ 8 | ✓ 8 | ✓ 5 | ✓ 8 | N/A | ✓ 8 | N/A |
 | [Parcelforce Worldwide](../carriers/parcelforce/README.md) | ✓ 10 | Undated | ✓ 6 | No history | N/A | Undated | No history |
 | [DHL eCommerce UK](../carriers/dhl-ecommerce-uk/README.md) | ✓ 5 | ✓ 5 | No history | ✓ 5 | N/A | No history | N/A |
-| [Yodel](../carriers/inpost/README.md) | ✓ 8 | ✓ 8 | No history | ✓ 9 | N/A | Undated | N/A |
+| [Yodel](../carriers/inpost/README.md) | ✓ 8 | ✓ 8 | No history | ✓ 9 | N/A | ✓ 19, partial | N/A |
 | [An Post](../carriers/an-post/README.md) | ✓ 6 | ✓ 6 | ✓ 6 | ✓ 4 | N/A | ✓ 6 | No history |
 
 ### Benelux
@@ -154,7 +156,7 @@ source follows any more is marked stale there.
 | [PostNL](../carriers/spring-gds/README.md) | ✓ 17 | ✓ 17 | ✓ 17 | No history | N/A | ✓ 27 | No history |
 | [bpost](../carriers/bpost/README.md) | ✓ 14 | No history | ✓ 20 | ✓ 14 | N/A | Undated | No history |
 | [DHL eCommerce Netherlands](../carriers/dhl-ecommerce-nl/README.md) | ✓ 50 | ✓ 39 | ✓ 50 | ✓ 49 | N/A | ✓ 49 | N/A |
-| [Landmark Global](../carriers/landmark-global/README.md) | ✓ 16 | ✓ 27 | ✓ 24 | ✓ 16 | N/A | Undated | N/A |
+| [Landmark Global](../carriers/landmark-global/README.md) | ✓ 20 | ✓ 27 | ✓ 27 | ✓ 19 | N/A | Undated | N/A |
 
 ### Across Europe
 
@@ -186,7 +188,7 @@ source follows any more is marked stale there.
 | Carrier | Direct | Ship24 | ParcelsApp | 17TRACK | Ordertracker | Postal Ninja | UPU |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [Poste Italiane](../carriers/poste-italiane/README.md) | ✓ 11 | ✓ 10 | ✓ 10 | ✓ 10 | N/A | ✓ 9 | N/A |
-| [BRT](../carriers/brt/README.md) | ✓ 9 | No history | ✓ 23 | ✓ 9 | N/A | ✓ 5, partial | N/A |
+| [BRT](../carriers/brt/README.md) | ✓ 12 | ✓ 7 | ✓ 23 | ✓ 9 | N/A | ✓ 5, partial | N/A |
 | [SDA](../carriers/poste-italiane/README.md) | ✓ 3 | ✓ 3 | ✓ 28 | ✓ 6, partial | N/A | ✓ 3 | N/A |
 | [GLS Italy](../carriers/gls-it/README.md) | ✓ 14 | ✓ 12 | ✓ 12 | ✓ 12 | N/A | ✓ 12 | N/A |
 
@@ -198,7 +200,7 @@ source follows any more is marked stale there.
 | [SEUR](../carriers/seur/README.md) | ✓ 4 | ✓ 4 | ✓ 5 | ✓ 5 | N/A | ✓ 5 | N/A |
 | [Correos Express](../carriers/correos-express/README.md) | ✓ 9 | ✓ 17 | ✓ 9 | ✓ 9 | N/A | No history | N/A |
 | [MRW](../carriers/mrw/README.md) | ✓ 14 | ✓ 14 | ✓ 14 | ✓ 14 | N/A | ✓ 14 | N/A |
-| [NACEX](../carriers/nacex/README.md) | ✓ 13, partial | Refused | Refused | Refused | N/A | Refused | N/A |
+| [NACEX](../carriers/nacex/README.md) | ✓ 13 | Refused | Refused | Refused | N/A | Refused | N/A |
 | [TIPSA](../carriers/tipsa/README.md) | ✓ 13 | No history | Postcode prompt | No history | N/A | No history | N/A |
 | [CTT Portugal](../carriers/ctt/README.md) | ✓ 9 | ✓ 9 | ✓ 9 | ✓ 9 | N/A | Undated | ✓ 2 |
 | [CTT Express](../carriers/ctt-express/README.md) | ✓ 11 | ✓ 8 | ✓ 32 | ✓ 4 | N/A | Undated | N/A |
@@ -251,8 +253,8 @@ source follows any more is marked stale there.
 | [SpeedPAK](../carriers/speedpak/README.md) | ✓ 14 | No history | ✓ 14 | No history | N/A | No history | N/A |
 | [SunYou](../carriers/sunyou/README.md) | ✓ 8 | No history | ✓ 8 | ✓ 8 | N/A | No history | N/A |
 | [SF Express](../carriers/sf-express/README.md) | ✓ 22 | No history | ✓ 26 | ✓ 27 | N/A | Undated | N/A |
-| [JD Logistics](../carriers/jd-logistics/README.md) | Blocked | No history | No history | No history | N/A | No history | N/A |
-| [YTO Express](../carriers/yto/README.md) | ✓ 30 | No history | ✓ 30 | No history | N/A | No history | N/A |
+| [JD Logistics](../carriers/jd-logistics/README.md) | No history | No history | No history | No history | N/A | No history | N/A |
+| [YTO Express](../carriers/yto/README.md) | ✓ 30 | ✓ 2, partial | ✓ 30 | No history | N/A | No history | N/A |
 
 ### Rest of the world
 
@@ -261,7 +263,7 @@ source follows any more is marked stale there.
 | [USPS](../carriers/usps/README.md) | ✓ 18 | No history | ✓ 18 | ✓ 18 | No history | Blocked | No history |
 | [OnTrac](../carriers/ontrac/README.md) | ✓ 7 | ✓ 7 | ✓ 7 | ✓ 7 | N/A | ✓ 7 | N/A |
 | [GOFO Express](../carriers/gofo/README.md) | ✓ 12 | ✓ 12 | ✓ 27 | ✓ 12 | N/A | ✓ 8 | N/A |
-| [UniUni](../carriers/uniuni/README.md) | ✓ 11 | ✓ 11 | ✓ 11 | ✓ 11 | N/A | Undated | N/A |
+| [UniUni](../carriers/uniuni/README.md) | ✓ 20 | ✓ 26 | ✓ 20 | ✓ 20 | N/A | Undated | N/A |
 | [Canada Post](../carriers/canada-post/README.md) | ✓ 12 | ✓ 2, partial | ✓ 12 | ✓ 30 | ✓ 12 | Undated | ✓ 1 |
 | [Purolator](../carriers/purolator/README.md) | ✓ 17 | ✓ 17 | ✓ 12 | ✓ 17 | N/A | No history | N/A |
 | [Intelcom / Dragonfly](../carriers/intelcom/README.md) | ✓ 6 | ✓ 5 | ✓ 10 | ✓ 6 | N/A | ✓ 5 | N/A |
@@ -270,8 +272,8 @@ source follows any more is marked stale there.
 | [Japan Post](../carriers/japan-post/README.md) | ✓ 10 | No history | Postcode prompt | ✓ 4 | N/A | Undated | N/A |
 | [Yamato Transport](../carriers/yamato/README.md) | ✓ 7, partial | No history | Postcode prompt | ✓ 7 | N/A | No history | N/A |
 | [Korea Post](../carriers/korea-post/README.md) | ✓ 10 | No history | ✓ 9 | ✓ 10 | N/A | No history | N/A |
-| [Hongkong Post](../carriers/hongkong-post/README.md) | Summary only | ✓ 32 | ✓ 34 | ✓ 17 | N/A | Undated | No history |
-| [Singapore Post](../carriers/singapore-post/README.md) | ✓ 7 | ✓ 4, partial | ✓ 9, partial | ✓ 31 | N/A | ✓ 11 | ✓ 4 |
+| [Hongkong Post](../carriers/hongkong-post/README.md) | ✓ 8, partial | ✓ 32 | ✓ 34 | ✓ 17 | N/A | ✓ 34, partial | No history |
+| [Singapore Post](../carriers/singapore-post/README.md) | ✓ 7 | ✓ 4, partial | ✓ 7 | ✓ 54 | N/A | ✓ 25 | ✓ 4 |
 | [India Post](../carriers/india-post/README.md) | ✓ 27 | ✓ 27 | No history | ✓ 27 | N/A | No history | No history |
 | [Delhivery](../carriers/delhivery/README.md) | ✓ 2 | No history | Postcode prompt | No history | N/A | No history | N/A |
 | [Correios Brazil](../carriers/correios-br/README.md) | ✓ 8 | Undated | ✓ 3 | ✓ 8 | N/A | Undated | No history |
@@ -290,7 +292,7 @@ source follows any more is marked stale there.
 | La Poste / Colissimo | `6H14479158377` | [2026-09-28](https://web.archive.org/web/20260928081320/https://www.laposte.fr/outils/suivre-vos-envois?code=6H14479158377) | 2026-11-21 | ✓ 6 | ✓ 6 | ✓ 6 | ✓ 6 | ✓ 6 | No history | N/A |
 | Chronopost | `PZ282567966EE` | [2026-09-14](https://web.archive.org/web/20260914161153/https://www.chronopost.fr/tracking-no-cms/suivi-page?listeNumerosLT=PZ282567966EE) | 2026-11-21 | ✓ 1 | No history | No history | ✓ 1 | ✓ 1 | No history | No history |
 | Chronopost | `015750676972097` | [2026-07-17](https://web.archive.org/web/20260717114015/https://www.chronopost.fr/tracking-no-cms/suivi-page?listeNumerosLT=015750676972097&langue=en) | 2026-11-21 | ✓ 20 | No history | ✓ 25 | ✓ 20 | ✓ 10 | No history | N/A |
-| Mondial Relay | `8565131824` | [2026-05-26](https://web.archive.org/web/20260526110712/https://www.mondialrelay.fr/suivi-de-colis?codeMarque=M1&numeroExpedition=8565131824&language=FR) | 2026-11-21 | ✓ 15 | No history | Postcode prompt | No history | N/A | No history | N/A |
+| Mondial Relay | `8565131824` | [2026-05-26](https://web.archive.org/web/20260526110712/https://www.mondialrelay.fr/suivi-de-colis?codeMarque=M1&numeroExpedition=8565131824&language=FR) | 2026-11-21 | ✓ 15 | No history | No history | No history | N/A | No history | N/A |
 | Mondial Relay | `89112087` | [2026-07-27](https://web.archive.org/web/20260727103710/https://www.mondialrelay.fr/suivi-de-colis?codeMarque=MR&numeroExpedition=89112087&language=FR) | 2026-11-21 | Postcode prompt | No history | No history | No history | N/A | No history | N/A |
 | Colis Privé | `DG0013200753` | [2026-10-17](https://web.archive.org/web/20261017213329/https://www.colisprive.com/moncolis/pages/DetailColis.aspx?numColis=DG001320075369007) | 2026-11-21 | ✓ 5 | No history | No history | No history | N/A | No history | N/A |
 | Colis Privé | `P50019442050` | [2026-10-14](https://web.archive.org/web/20261014185049/https://www.colisprive.com/moncolis/pages/DetailColis.aspx?numColis=P5001944205075019) | 2026-11-21 | ✓ 11 | No history | No history | No history | N/A | No history | N/A |
@@ -310,17 +312,17 @@ source follows any more is marked stale there.
 | DHL | `232908780543` | [2026-09-27](https://www.paketda.de/fragen-antworten.php) | 2026-11-21 | ✓ 5 | No history | ✓ 5 | ✓ 5 | N/A | No history | N/A |
 | Hermes Germany | `H1028030626845901017` | [2026-10-05](https://www.paketda.de/fragen-antworten.php?suche=H1028030626845901017) | 2026-11-21 | ✓ 4, partial (a third of the rows or fewer) | ✓ 4, partial (a third of the rows or fewer) | ✓ 12 | ✓ 4, partial (a third of the rows or fewer) | N/A | ✓ 4, partial (a third of the rows or fewer) | N/A |
 | Hermes Germany | `02027150020212` | [2026-01-31](https://www.paketda.de/fragen-antworten.php?suche=02027150020212) | 2026-11-21 | No history | No history | No history | No history | N/A | No history | N/A |
-| DPD Germany | `09446323296905` | [2026-10-05](https://www.paketda.de/fragen-antworten.php?suche=09446323296905) | 2026-11-21 | ✓ 14 | No history | ✓ 5 | ✓ 5 | N/A | ✓ 5 | N/A |
+| DPD Germany | `09446323296905` | [2026-10-05](https://www.paketda.de/fragen-antworten.php?suche=09446323296905) | 2026-11-21 | ✓ 14 | No history | Undated | ✓ 5 | N/A | ✓ 5 | N/A |
 | DPD Germany | `01415130681967` | [2026-10-05](https://www.paketda.de/fragen-antworten.php?suche=01415130681967) | 2026-11-21 | ✓ 12 | ✓ 12 | ✓ 3, partial (a third of the rows or fewer) | ✓ 3, partial (a third of the rows or fewer) | N/A | ✓ 5 | N/A |
-| GLS Germany | `37390065090` | [2026-08-24](https://de.reclabox.com/beschwerde/254878-gls-neuenstein-paket-ohne-zustellversuch-im-paketshop-abgekippt) | 2026-11-21 | Postcode prompt | No history | ✓ 3 | No history | N/A | ✓ 4 | N/A |
-| GLS Germany | `AALZJR` | [2026-08-05](https://www.paketda.de/fragen-antworten.php?suche=AALZJR) | 2026-11-21 | Postcode prompt | Refused | Refused | Refused | N/A | Refused | N/A |
+| GLS Germany | `37390065090` | [2026-08-24](https://de.reclabox.com/beschwerde/254878-gls-neuenstein-paket-ohne-zustellversuch-im-paketshop-abgekippt) | 2026-11-21 | Summary only | No history | ✓ 3 | No history | N/A | ✓ 4 | N/A |
+| GLS Germany | `AALZJR` | [2026-08-05](https://www.paketda.de/fragen-antworten.php?suche=AALZJR) | 2026-11-21 | Summary only | Refused | Refused | Refused | N/A | Refused | N/A |
 | DHL eCommerce | `420127019261290376171425385106` | [undated](https://webtrack.dhlglobalmail.com/?trackingnumber=420127019261290376171425385106) | 2026-11-21 | ✓ 11 | No history | ✓ 11 | ✓ 11 | N/A | Blocked | N/A |
 | DHL eCommerce | `9261290316844317469885` | [undated](https://webtrack.dhlglobalmail.com/?trackingnumber=9261290316844317469885) | 2026-11-21 | ✓ 1 | No history | ✓ 1 | No history | N/A | Blocked | N/A |
 | DHL eCommerce | `9261290357482657956985` | [2026-09-27](https://web.archive.org/web/20260927160405/https://webtrack.dhlecs.com/?trackingnumber=9261290357482657956985) | 2026-11-21 | ✓ 9 | No history | ✓ 9 | ✓ 7 | N/A | Blocked | N/A |
 | Royal Mail | `MZ465962009GB` | [2026-03-16](https://web.archive.org/web/20260316193534/https://www.royalmail.com/portal/rm/track?trackNumber=MZ465962009GB) | 2026-11-21 | ✓ 5 | No history | No history | No history | N/A | No history | No history |
 | Royal Mail | `IV745750017GB` | [2026-03-11](https://web.archive.org/web/20260311233047/https://www.royalmail.com/portal/rm/track?trackNumber=IV745750017GB) | 2026-11-21 | ✓ 5 | No history | No history | No history | N/A | No history | No history |
-| Evri UK | `H00RVD0551541466` | [2026-10-06](https://web.archive.org/web/20261006223411/https://www.evri.com/track/parcel/H00RVD0551541466/details) | 2026-11-21 | ✓ 8 | ✓ 16, partial (stops early) | ✓ 7 | ✓ 7 | N/A | No history | N/A |
-| Evri UK | `H01SVA0063090608` | [2026-10-04](https://web.archive.org/web/20261004063946/https://www.evri.com/track/parcel/H01SVA0063090608/details) | 2026-11-21 | ✓ 7 | ✓ 1, partial (a third of the rows or fewer, stops early) | ✓ 14 | ✓ 1, partial (a third of the rows or fewer, stops early) | N/A | No history | N/A |
+| Evri UK | `H00RVD0551541466` | [2026-10-06](https://web.archive.org/web/20261006223411/https://www.evri.com/track/parcel/H00RVD0551541466/details) | 2026-11-21 | ✓ 10 | ✓ 16, partial (stops early) | ✓ 8 | ✓ 10 | N/A | No history | N/A |
+| Evri UK | `H01SVA0063090608` | [2026-10-04](https://web.archive.org/web/20261004063946/https://www.evri.com/track/parcel/H01SVA0063090608/details) | 2026-11-21 | ✓ 7 | ✓ 7 | ✓ 14 | ✓ 7 | N/A | No history | N/A |
 | DPD UK | `15505780046243` | [2026-08-01](https://web.archive.org/web/20260801031820/https://www.dpd.co.uk/apps/tracking/?reference=15505780046243) | 2026-11-21 | ✓ 7 | ✓ 7 | ✓ 1, partial (a third of the rows or fewer) | ✓ 1, partial (a third of the rows or fewer) | N/A | ✓ 7 | N/A |
 | DPD UK | `15502604121963` | [2026-07-21](https://web.archive.org/web/20260721060115/https://track.dpd.co.uk/search?reference=15502604121963) | 2026-11-21 | ✓ 8 | ✓ 8 | ✓ 5 | ✓ 8 | N/A | ✓ 8 | N/A |
 | Parcelforce Worldwide | `GI049170518GB` | [2026-09-21](https://www.trustpilot.com/reviews/6ab10ab55824d015aa93bd4c) | 2026-11-21 | ✓ 3 | No history | ✓ 3 | No history | N/A | Undated | No history |
@@ -328,16 +330,16 @@ source follows any more is marked stale there.
 | DHL eCommerce UK | `60120261600869` | [2026-10-01](https://uk.trustpilot.com/reviews/6ac3cdda8e6383efe7f1ef5d) | 2026-11-21 | ✓ 4 | ✓ 4 | No history | ✓ 4 | N/A | No history | N/A |
 | DHL eCommerce UK | `60120261424801` | [2026-10-01](https://uk.trustpilot.com/reviews/6abe414cdd8489abedbc0f2a) | 2026-11-21 | ✓ 5 | ✓ 5 | No history | ✓ 5 | N/A | No history | N/A |
 | Yodel | `JJD0002233056208513` | [2026-07-21](https://uk.trustpilot.com/reviews/6a5f74addae5e57a5b7a80f6) | 2026-11-21 | ✓ 5 | ✓ 6 | No history | ✓ 6 | N/A | No history | N/A |
-| Yodel | `JJD0002234785911878` | [2026-07-11](https://uk.trustpilot.com/reviews/6a523cd283fc2addfafca1e5) | 2026-11-21 | ✓ 8 | ✓ 8 | No history | ✓ 9 | N/A | Undated | N/A |
+| Yodel | `JJD0002234785911878` | [2026-07-11](https://uk.trustpilot.com/reviews/6a523cd283fc2addfafca1e5) | 2026-11-21 | ✓ 8 | ✓ 8 | No history | ✓ 9 | N/A | ✓ 19, partial (stops early) | N/A |
 | An Post | `CD009466316IE` | [2026-09-24](https://www.trustpilot.com/reviews/6ab509af46eee3df19b6496d) | 2026-11-21 | ✓ 4 | ✓ 4 | ✓ 4 | ✓ 4 | N/A | ✓ 4 | No history |
 | An Post | `AY063253261IE` | [2026-09-21](https://web.archive.org/web/20260921201835/https://www.anpost.com/Post-Parcels/Track/History?item=AY063253261IE) | 2026-11-21 | ✓ 6 | ✓ 6 | ✓ 6 | No history | N/A | ✓ 6 | No history |
-| PostNL | `3SINHW532911189` | [2026-10-03](https://www.klacht.nl/postnl/klacht/pakket-niet-aangekomen-bij-klant/) | 2026-11-21 | No history | No history | Postcode prompt | No history | N/A | No history | N/A |
+| PostNL | `3SINHW532911189` | [2026-10-03](https://www.klacht.nl/postnl/klacht/pakket-niet-aangekomen-bij-klant/) | 2026-11-21 | Postcode prompt | No history | Postcode prompt | No history | N/A | No history | N/A |
 | PostNL | `LX038154718NL` | [2026-08-05](https://web.archive.org/web/20260805154833/https://postnl.post/track?barcodes=LX038154718NL) | 2026-11-21 | ✓ 17 | ✓ 17 | ✓ 17 | No history | N/A | ✓ 27 | No history |
 | bpost | `323299903171288510995037` | [2026-09-18](https://www.trustpilot.com/reviews/6aad4fb49a4ec9a1f36c3a6c) | 2026-11-21 | ✓ 11 | No history | Postcode prompt | ✓ 11 | N/A | No history | N/A |
 | bpost | `LD737351137BE` | [2026-09-18](https://www.trustpilot.com/reviews/6aad494aa36ef0697f60cd4d) | 2026-11-21 | ✓ 14 | No history | ✓ 20 | ✓ 14 | N/A | Undated | No history |
 | DHL eCommerce Netherlands | `JVGL08035717002011328118` | [2026-09-21](https://ie.trustpilot.com/review/dhlecommerce.nl) | 2026-11-21 | ✓ 50 | ✓ 39 | ✓ 50 | ✓ 49 | N/A | ✓ 49 | N/A |
 | DHL eCommerce Netherlands | `3SMOP10072829` | [2026-03-27](https://web.archive.org/web/20260327101353/https://api-gw.dhlparcel.nl/track-trace?key=3SMOP10072829&withView=true) | 2026-11-21 | ✓ 5 | No history | Postcode prompt | No history | N/A | No history | N/A |
-| Landmark Global | `LTN480634985` | [2026-09-23](https://www.trustpilot.com/reviews/6ab3ef95f2b298d50182689a) | 2026-11-21 | ✓ 14 | ✓ 22 | ✓ 21 | ✓ 14 | N/A | Undated | N/A |
+| Landmark Global | `LTN480634985` | [2026-09-23](https://www.trustpilot.com/reviews/6ab3ef95f2b298d50182689a) | 2026-11-21 | ✓ 20 | ✓ 23, partial (stops early) | ✓ 27 | ✓ 19 | N/A | Undated | N/A |
 | Landmark Global | `LTN461901299` | [2026-06-30](https://www.trustpilot.com/review/landmarkglobal.com) | 2026-11-21 | ✓ 16 | ✓ 27 | ✓ 24 | ✓ 16 | N/A | Undated | N/A |
 | Amazon Logistics | `TBA334610324555` | [2026-09-22](https://web.archive.org/web/20260922192236/https://track.amazon.com/tracking/TBA334610324555) | 2026-11-21 | No adapter | No history | Error | No history | N/A | No history | N/A |
 | Amazon Logistics | `DE5679225276` | [2026-08-05](https://www.paketda.de/fragen-antworten.php?suche=DE5679225276) | 2026-11-21 | No adapter | No history | No history | No history | N/A | No history | N/A |
@@ -359,8 +361,8 @@ source follows any more is marked stale there.
 | Omniva | `RL714436355EE` | [2026-05-13](https://www.sudzibas.lv/omniva/omniva-pakalpjomu-sanemsanas-neiespejamiba-c2656532) | 2026-11-21 | ✓ 1 | ✓ 1 | ✓ 1 | No history | N/A | Undated | No history |
 | Poste Italiane | `3UW1QJ9006998` | [2026-09-23](https://it.trustpilot.com/reviews/6ab90c6ff003fb5850dcfa17) | 2026-11-21 | ✓ 9 | ✓ 9 | ✓ 9 | ✓ 9 | N/A | ✓ 9 | N/A |
 | Poste Italiane | `RA 00032528599` | [2026-09-02](https://it.trustpilot.com/reviews/6a97ee2da1cdc686b65e69ab) | 2026-11-21 | ✓ 11 | ✓ 10 | ✓ 10 | ✓ 10 | N/A | No history | N/A |
-| BRT | `04503190170072` | [2026-09-28](https://www.trustpilot.com/reviews/6aba3931d3ae76dee1ac45cf) | 2026-11-21 | ✓ 9 | No history | ✓ 23 | ✓ 9 | N/A | ✓ 5, partial (a third of the rows or fewer) | N/A |
-| BRT | `107180064942` | [2026-07-09](https://web.archive.org/web/20260709102539/https://vas.brt.it/vas/sped_det_show.hsm?reqid=&pagina=&ksu=&chiamante=&nspediz=107180064942&keygiac=&npr=&norm=) | 2026-11-21 | ✓ 7 | No history | No history | ✓ 7 | N/A | No history | N/A |
+| BRT | `04503190170072` | [2026-09-28](https://www.trustpilot.com/reviews/6aba3931d3ae76dee1ac45cf) | 2026-11-21 | ✓ 12 | ✓ 7, partial (a third of the rows or fewer) | ✓ 23 | ✓ 9 | N/A | ✓ 5, partial (a third of the rows or fewer) | N/A |
+| BRT | `107180064942` | [2026-07-09](https://web.archive.org/web/20260709102539/https://vas.brt.it/vas/sped_det_show.hsm?reqid=&pagina=&ksu=&chiamante=&nspediz=107180064942&keygiac=&npr=&norm=) | 2026-11-21 | ✓ 7 | ✓ 7 | No history | ✓ 7 | N/A | No history | N/A |
 | SDA | `974D81042885F` | [2026-10-03](https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/x/b0fc621d40cde1ea8f) | 2026-11-21 | ✓ 3 | ✓ 3 | No history | No history | N/A | ✓ 3 | N/A |
 | SDA | `964D80079157F` | [2026-08-12](https://www.altroconsumo.it/reclamare/bacheca-dei-reclami/pacco-dichiarato-consegnato-ma/8c0de968cf63956b3d) | 2026-11-21 | No history | ✓ 6, partial (a third of the rows or fewer, stops early) | ✓ 28 | ✓ 6, partial (a third of the rows or fewer, stops early) | N/A | Undated | N/A |
 | GLS Italy | `CL 660213461` | [2026-10-02](https://it.trustpilot.com/review/gls-italy.com?sort=recency) | 2026-11-21 | ✓ 14 | ✓ 10 | ✓ 11 | ✓ 11 | N/A | No history | N/A |
@@ -370,14 +372,14 @@ source follows any more is marked stale there.
 | SEUR | `88380161263793` | [2026-09-30](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/no-realizan-intento-de-entrega/addd747044249526a6) | 2026-11-21 | Error | No history | No history | No history | N/A | No history | N/A |
 | SEUR | `07474002501967` | [2026-09-23](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/han-ignorado-el-punto-de-entre/1626552520d044c1b1) | 2026-11-21 | ✓ 4 | ✓ 4 | ✓ 5 | ✓ 5 | N/A | ✓ 5 | N/A |
 | Correos Express | `3230003401602989` | [2026-09-24](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/error-al-visualizar-pin-probl/e22821af1ce1efd269) | 2026-11-21 | ✓ 9 | ✓ 17 | ✓ 9 | ✓ 9 | N/A | No history | N/A |
-| Correos Express | `7983000739053141` | [2025-09-30](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/incidencia-env-C3-ADo-imposible-h/0052eb4a8375da7128) | 2026-11-21 | No history | No history | No history | No history | N/A | No history | N/A |
+| Correos Express | `7983000739053141` | [2025-09-30](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/incidencia-env-C3-ADo-imposible-h/0052eb4a8375da7128) | 2026-11-21 | ✓ 4 | No history | No history | No history | N/A | No history | N/A |
 | MRW | `02692S094204` | [2026-09-25](https://www.trustpilot.com/reviews/6ab63070e0b0b4688bf95e67) | 2026-11-21 | Summary only | No history | No history | ✓ 1 | N/A | No history | N/A |
 | MRW | `04319F171575` | [2026-09-10](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/demora-del-env-C3-ADo-sumado-a-malt/635ef0c643dc08ba3e) | 2026-11-21 | ✓ 14 | ✓ 14 | ✓ 14 | ✓ 14 | N/A | ✓ 14 | N/A |
-| NACEX | `9999/16070306` | [2026-10-07](https://portaldaqueixa.com/brands/nacex/complaints/nacex-encomenda-marcada-como-entregue-nao-foi-recebida-163919126) | 2026-11-21 | ✓ 6, partial (undated rows) | Refused | Refused | Refused | N/A | Refused | N/A |
-| NACEX | `0833/11354347` | [2026-09-25](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/desconocimiento-falta-de-info/f097c972cba9d3c984) | 2026-11-21 | ✓ 13, partial (undated rows) | Refused | Refused | Refused | N/A | Refused | N/A |
+| NACEX | `9999/16070306` | [2026-10-07](https://portaldaqueixa.com/brands/nacex/complaints/nacex-encomenda-marcada-como-entregue-nao-foi-recebida-163919126) | 2026-11-21 | ✓ 6 | Refused | Refused | Refused | N/A | Refused | N/A |
+| NACEX | `0833/11354347` | [2026-09-25](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/desconocimiento-falta-de-info/f097c972cba9d3c984) | 2026-11-21 | ✓ 13 | Refused | Refused | Refused | N/A | Refused | N/A |
 | TIPSA | `0280010280017024953690` | [2026-08-25](https://www.deco.proteste.pt/reclamar/todas-as-reclamacoes/encomenda-n-C3-A3o-recebida/0e56c354319eb7d720) | 2026-11-21 | ✓ 13 | No history | Postcode prompt | No history | N/A | No history | N/A |
 | TIPSA | `0000100000104002537106` | [2026-04-20](https://web.archive.org/web/20260420103951/https://aplicaciones.tip-sa.com/cliente/datos_env.php?id=0000100000104002537106) | 2026-11-21 | ✓ 11 | No history | Postcode prompt | No history | N/A | No history | N/A |
-| CTT Portugal | `LA136353435PT` | [2026-09-28](https://portaldaqueixa.com/brands/ctt/complaints/ctt-atraso-na-entrega-377-163329926) | 2026-11-21 | ✓ 4 | ✓ 4 | ✓ 5 | ✓ 5 | N/A | Undated | ✓ 2 |
+| CTT Portugal | `LA136353435PT` | [2026-09-28](https://portaldaqueixa.com/brands/ctt/complaints/ctt-atraso-na-entrega-377-163329926) | 2026-11-21 | ✓ 8 | ✓ 4 | ✓ 5 | ✓ 5 | N/A | Undated | ✓ 2 |
 | CTT Portugal | `RL 2811 7996 5 PT` | [2026-05-16](https://portaldaqueixa.com/brands/ctt/complaints/ctt-nao-entrega-de-carta-registada-com-aviso-de-recepcao-1-155401326) | 2026-11-21 | ✓ 9 | ✓ 9 | ✓ 9 | ✓ 9 | N/A | No history | No history |
 | CTT Express | `0082800082808877471638001` | [2026-10-07](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/no-entrega-paquete-perdido-/62d22c49cc409fd333) | 2026-11-21 | ✓ 11 | No history | ✓ 32 | ✓ 4, partial (a third of the rows or fewer) | N/A | Undated | N/A |
 | CTT Express | `0008180008189706230861` | [2026-09-29](https://www.ocu.org/reclamar/lista-reclamaciones-publicas/pedido-rechazado-/50f816f3d235552efe) | 2026-11-21 | ✓ 8 | ✓ 8 | ✓ 8 | ✓ 4 | N/A | Undated | N/A |
@@ -396,7 +398,7 @@ source follows any more is marked stale there.
 | DPD Poland | `13649547289291` | [2026-10-03](https://web.archive.org/web/20261003044720/https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1=13649547289291) | 2026-11-21 | ✓ 8 | ✓ 1, partial (a third of the rows or fewer) | ✓ 12 | ✓ 8 | N/A | ✓ 5 | N/A |
 | DPD Poland | `1050174241169U` | [2026-09-02](https://web.archive.org/web/20260902211513/https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1=1050174241169U&p2=&p3=&p4=&p5=&p6=&p7=&p8=&p9=&p10=) | 2026-11-21 | ✓ 11 | No history | ✓ 11 | ✓ 11 | N/A | ✓ 11 | N/A |
 | DHL eCommerce Poland | `30411776824` | [2026-08-14](https://pl.trustpilot.com/reviews/6a7e188f93d3f2755f36c638) | 2026-11-21 | ✓ 12 | ✓ 12 | No history | ✓ 12 | N/A | No history | N/A |
-| DHL eCommerce Poland | `36570542917` | [2026-08-04](https://pl.trustpilot.com/reviews/6a7209a965171728817bef2d) | 2026-11-21 | ✓ 26 | No history | No history | ✓ 24 | N/A | No history | N/A |
+| DHL eCommerce Poland | `36570542917` | [2026-08-04](https://pl.trustpilot.com/reviews/6a7209a965171728817bef2d) | 2026-11-21 | ✓ 26 | ✓ 2, partial (a third of the rows or fewer) | No history | ✓ 24 | N/A | No history | N/A |
 | Packeta | `4651896715` | [2026-07-29](https://www.globkurier.pl/opinie-packeta) | 2026-11-21 | ✓ 3 | No history | No history | ✓ 3 | N/A | No history | N/A |
 | Packeta | `Z3682567828` | [2026-07-02](https://www.globkurier.pl/opinie-packeta) | 2026-11-21 | ✓ 6 | ✓ 16, partial (undated rows) | No history | ✓ 10 | N/A | Undated | N/A |
 | Nova Poshta (Ukraine) | `20451513915086` | [2026-08-21](https://www.vidhuk.ua/novaya-pochta-nova-poshta/review-2369305) | 2026-11-21 | ✓ 13 | No history | ✓ 26 | ✓ 13 | N/A | ✓ 13 | N/A |
@@ -436,15 +438,15 @@ source follows any more is marked stale there.
 | SF Express | `SF6047789135544` | [2026-08-27](https://www.trustpilot.com/reviews/6a8f6e8514e24c45061779b6) | 2026-11-21 | ✓ 22 | No history | ✓ 26 | ✓ 27 | N/A | Undated | N/A |
 | SF Express | `SF6047227701780` | [2026-01-16](https://www.trustpilot.com/reviews/696a4853722b4cb98b6e70ce) | 2026-11-21 | Error | No history | Error | No history | N/A | No history | N/A |
 | JD Logistics | `JDJ002238017252` | [2025-11-29](https://web.archive.org/web/20251129093534/https://www.jdl.com/orderSearch/?waybillCodes=JDJ002238017252) | 2026-11-21 | Blocked | No history | No history | No history | N/A | No history | N/A |
-| JD Logistics | `JDVA34246758676` | [2025-04-14](https://web.archive.org/web/20250414033943/https://www.jdl.com/orderSearch/?waybillCodes=JDVA34246758676) | 2026-11-21 | Error | No history | No history | No history | N/A | No history | N/A |
-| YTO Express | `YT8879092508074` | [2026-06-20](https://www.ptt.cc/bbs/e-shopping/M.1781927397.A.39F.html) | 2026-11-21 | ✓ 30 | No history | ✓ 30 | No history | N/A | No history | N/A |
+| JD Logistics | `JDVA34246758676` | [2025-04-14](https://web.archive.org/web/20250414033943/https://www.jdl.com/orderSearch/?waybillCodes=JDVA34246758676) | 2026-11-21 | No history | No history | No history | No history | N/A | No history | N/A |
+| YTO Express | `YT8879092508074` | [2026-06-20](https://www.ptt.cc/bbs/e-shopping/M.1781927397.A.39F.html) | 2026-11-21 | ✓ 30 | ✓ 2, partial (a third of the rows or fewer) | ✓ 30 | No history | N/A | No history | N/A |
 | USPS | `LS020782045US` | [2026-10-02](https://www.trustpilot.com/reviews/6abf5f856239213645935414) | 2026-11-21 | ✓ 18 | No history | ✓ 18 | ✓ 18 | No history | Blocked | No history |
 | USPS | `LH194723189US` | [2023-04-28](https://www.chinapostaltracking.com/qa/is-the-package-being-held-by-china-customs-15637/2/) | 2026-11-21 | Summary only | No history | Error | No history | No history | Blocked | No history |
 | OnTrac | `C12042142509047` | [2026-10-03](https://web.archive.org/web/20261003194516/https://www.ontrac.com/tracking/?number=C12042142509047) | 2026-11-21 | ✓ 7 | ✓ 7 | No history | ✓ 7 | N/A | ✓ 7 | N/A |
 | OnTrac | `D10017744663378` | [2026-09-30](https://web.archive.org/web/20260930172042/https://www.ontrac.com/tracking/?number=D10017744663378) | 2026-11-21 | ✓ 7 | ✓ 7 | ✓ 7 | ✓ 7 | N/A | ✓ 7 | N/A |
 | GOFO Express | `GFUS01075228958339` | [2026-10-01](https://web.archive.org/web/20261001232118/https://www.gofo.com/us/track?searchID=GFUS01075228958339) | 2026-11-21 | ✓ 12 | ✓ 12 | ✓ 27 | ✓ 12 | N/A | ✓ 35, partial (undated rows) | N/A |
 | GOFO Express | `GFUS01074503026309` | [2026-09-27](https://web.archive.org/web/20260927185120/https://www.gofo.com/us/track?searchID=GFUS01074503026309) | 2026-11-21 | ✓ 8 | ✓ 8 | ✓ 21 | ✓ 8 | N/A | ✓ 8 | N/A |
-| UniUni | `UUS69P8620998875588` | [2026-10-02](https://web.archive.org/web/20261002135332/https://www.uniuni.com/tracking/?no=UUS69P8620998875588) | 2026-11-21 | ✓ 11 | ✓ 11 | ✓ 11 | ✓ 11 | N/A | Undated | N/A |
+| UniUni | `UUS69P8620998875588` | [2026-10-02](https://web.archive.org/web/20261002135332/https://www.uniuni.com/tracking/?no=UUS69P8620998875588) | 2026-11-21 | ✓ 20 | ✓ 26 | ✓ 20 | ✓ 20 | N/A | Undated | N/A |
 | UniUni | `U000302706915066` | [2026-10-01](https://web.archive.org/web/20261001073755/https://www.uniuni.com/tracking/?no=U000302706915066) | 2026-11-21 | ✓ 5 | ✓ 5 | ✓ 5 | ✓ 5 | N/A | No history | N/A |
 | Canada Post | `2010505799436494` | [2026-10-05](https://web.archive.org/web/20261005194842/https://www.canadapost-postescanada.ca/track-reperage/en/search?searchFor=2010505799436494) | 2026-11-21 | ✓ 12 | ✓ 2, partial (a third of the rows or fewer) | No history | ✓ 1, partial (a third of the rows or fewer, stops early) | ✓ 9 | No history | N/A |
 | Canada Post | `LA586492541CA` | [2026-10-05](https://web.archive.org/web/20261005164912/https://www.canadapost-postescanada.ca/track-reperage/en/search?searchFor=LA586492541CA) | 2026-11-21 | ✓ 12 | ✓ 13, partial (undated rows, stops early) | ✓ 12 | ✓ 30 | ✓ 12 | Undated | ✓ 1 |
@@ -454,7 +456,7 @@ source follows any more is marked stale there.
 | Intelcom / Dragonfly | `SE260924QUM3` | [2026-09-25](https://web.archive.org/web/20260925173219/https://intelcom.ca/en/track-your-package/?tracking-id=SE260924QUM3) | 2026-11-21 | ✓ 6 | No history | ✓ 10 | ✓ 6 | N/A | No history | N/A |
 | Australia Post | `LK286032428AU` | [2026-10-03](https://web.archive.org/web/20261003172322/https://auspost.com.au/mypost/track/details/LK286032428AU) | 2026-11-21 | ✓ 27 | ✓ 11 | ✓ 1, partial (a third of the rows or fewer, stops early) | No history | N/A | Undated | ✓ 1 |
 | Australia Post | `99722999536301000830908` | [2026-10-02](https://web.archive.org/web/20261002002322/https://auspost.com.au/mypost/track/details/99722999536301000830908) | 2026-11-21 | ✓ 12 | No history | No history | No history | N/A | No history | N/A |
-| NZ Post | `LX072774186NZ` | [2026-08-31](https://www.chinapostaltracking.com/qa/package-stuck-160626/) | 2026-11-21 | ✓ 16, partial (stops early) | ✓ 20, partial (undated rows, stops early) | ✓ 20, partial (stops early) | ✓ 28 | N/A | Undated | ✓ 4 |
+| NZ Post | `LX072774186NZ` | [2026-08-31](https://www.chinapostaltracking.com/qa/package-stuck-160626/) | 2026-11-21 | ✓ 16 | ✓ 20, partial (undated rows, stops early) | ✓ 20, partial (stops early) | ✓ 28 | N/A | Undated | ✓ 4 |
 | NZ Post | `EP559083729NZ` | [2026-01-07](https://www.chinapostaltracking.com/qa/parcel-not-delivered-yet-156048/) | 2026-11-21 | ✓ 29 | No history | ✓ 40 | ✓ 29 | N/A | No history | No history |
 | Japan Post | `372-67-53094-1` | [2026-10-02](https://www.ktr.mlit.go.jp/ktr_content/content/000959754.pdf) | 2026-11-21 | ✓ 10 | No history | Postcode prompt | ✓ 4 | N/A | Undated | N/A |
 | Japan Post | `152515917783` | [2026-09-02](https://web.archive.org/web/20260902182854/https://trackings.post.japanpost.jp/services/srv/search/direct?&reqCodeNo1=152515917783&locale=jp) | 2026-11-21 | ✓ 4 | No history | Postcode prompt | ✓ 4 | N/A | No history | N/A |
@@ -462,15 +464,15 @@ source follows any more is marked stale there.
 | Yamato Transport | `292803085481` | [2026-09-26](https://web.archive.org/web/20260926232440/https://member.kms.kuronekoyamato.co.jp/parcel/detail?pno=292803085481) | 2026-11-21 | ✓ 7, partial (undated rows) | No history | Postcode prompt | ✓ 7 | N/A | No history | N/A |
 | Korea Post | `6892014190693` | [2026-09-29](https://web.archive.org/web/20260929154932/https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=6892014190693&displayHeader=N) | 2026-11-21 | ✓ 9 | No history | ✓ 9 | ✓ 9 | N/A | No history | N/A |
 | Korea Post | `6097542557191` | [2026-09-24](https://kin.naver.com/qna/detail.naver?dirId=81302&docId=495290455) | 2026-11-21 | ✓ 10 | No history | No history | ✓ 10 | N/A | No history | N/A |
-| Hongkong Post | `LP157079155HK` | [2026-06-20](https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q12329081017) | 2026-11-21 | Summary only | ✓ 32 | ✓ 34 | ✓ 17 | N/A | Undated | No history |
+| Hongkong Post | `LP157079155HK` | [2026-06-20](https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q12329081017) | 2026-11-21 | ✓ 8, partial (a third of the rows or fewer) | ✓ 32 | ✓ 34 | ✓ 17 | N/A | ✓ 34, partial (undated rows, stops early) | No history |
 | Hongkong Post | `ZH755966962HK` | [2026-04-22](https://web.archive.org/web/20260422022709/https://global.cainiao.com/detail.htm?mailNoList=ZH755966962HK) | 2026-11-21 | No history | Error | No history | No history | N/A | No history | No history |
-| Singapore Post | `CZ003411963SG` | [2026-09-04](https://www.chinapostaltracking.com/qa/cz003411963sg-pending-customs-declaration-materials-160765/) | 2026-11-21 | ✓ 7 | ✓ 4, partial (a third of the rows or fewer, stops early) | ✓ 4, partial (a third of the rows or fewer, stops early) | ✓ 18 | N/A | ✓ 11 | ✓ 4 |
-| Singapore Post | `LT144740666SG` | [2026-09-01](https://www.chinapostaltracking.com/qa/item-lt144740666sg-held-by-the-customs-for-screening-160675/) | 2026-11-21 | ✓ 10, partial (a third of the rows or fewer) | ✓ 4, partial (a third of the rows or fewer, stops early) | ✓ 9, partial (a third of the rows or fewer, stops early) | ✓ 31 | N/A | ✓ 13, partial (stops early) | No history |
+| Singapore Post | `CZ003411963SG` | [2026-09-04](https://www.chinapostaltracking.com/qa/cz003411963sg-pending-customs-declaration-materials-160765/) | 2026-11-21 | ✓ 7 | ✓ 4, partial (a third of the rows or fewer, stops early) | ✓ 7 | ✓ 18 | N/A | ✓ 15 | ✓ 4 |
+| Singapore Post | `LT144740666SG` | [2026-09-01](https://www.chinapostaltracking.com/qa/item-lt144740666sg-held-by-the-customs-for-screening-160675/) | 2026-11-21 | ✓ 13, partial (a third of the rows or fewer) | ✓ 4, partial (a third of the rows or fewer, stops early) | ✓ 13, partial (a third of the rows or fewer) | ✓ 54 | N/A | ✓ 25 | ✓ 2 |
 | India Post | `ED307210090IN` | [2026-08-15](https://www.trustpilot.com/reviews/6a8055756fed445cc4c4efc5) | 2026-11-21 | ✓ 27 | ✓ 27 | No history | ✓ 27 | N/A | No history | No history |
 | India Post | `JM218901045IN` | [2025-10-07](https://ie.trustpilot.com/review/pvccardprinting.in) | 2026-11-21 | No history | No history | No history | No history | N/A | No history | No history |
 | Delhivery | `28449706147373` | [2026-10-06](https://web.archive.org/web/20261006083725/https://www.delhivery.com/track-v2/package/28449706147373) | 2026-11-21 | ✓ 2 | No history | Postcode prompt | No history | N/A | No history | N/A |
 | Delhivery | `9958110038695` | [2026-10-06](https://web.archive.org/web/20261006014444/https://www.delhivery.com/track-v2/package/9958110038695) | 2026-11-21 | ✓ 2 | No history | Postcode prompt | No history | N/A | No history | N/A |
-| Correios Brazil | `NN376766183BR` | [2026-09-26](https://www.trustpilot.com/reviews/6ab708ba54e925ea877fb1b1) | 2026-11-21 | Error | No history | ✓ 3 | No history | N/A | Undated | No history |
+| Correios Brazil | `NN376766183BR` | [2026-09-26](https://www.trustpilot.com/reviews/6ab708ba54e925ea877fb1b1) | 2026-11-21 | No history | No history | ✓ 3 | No history | N/A | Undated | No history |
 | Correios Brazil | `AD803652820BR` | [2026-08-20](https://github.com/universidadedeterapias/meDIZ/pull/86) | 2026-11-21 | ✓ 8 | Undated | No history | ✓ 8 | N/A | Undated | No history |
 | Aramex | `52594815954` | [2026-09-22](https://www.trustpilot.com/reviews/6ab224d5d826a3a9645a808f) | 2026-11-21 | ✓ 16 | No history | Postcode prompt | ✓ 16 | N/A | Undated | N/A |
 | Aramex | `34913932303` | [2026-09-11](https://www.trustpilot.com/reviews/6aa34217e4eabf7830d01a11) | 2026-11-21 | ✓ 26 | ✓ 26 | ✓ 26 | ✓ 26 | N/A | Undated | N/A |
