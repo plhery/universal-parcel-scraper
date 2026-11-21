@@ -372,6 +372,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "pfc-express": 856,
   "pflogistics": 775,
   "phlpost": 903,
+  "pigeonship": 22,
   "pilot-freight": 572,
   "pin-ag": 121,
   "pitt-ohio": 737,

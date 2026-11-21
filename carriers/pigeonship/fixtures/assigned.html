@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PigeonAdmin</title>
+</head>
+<body class="">
+<div class="wrapper">
+  <header id="page-header">
+    <nav class="navbar navbar-expand-lg navbar-light" style="padding: 0.5rem 1rem; background-color: #F7F7F8;">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="/reports/today/due/">
+          <img src="https://s3.amazonaws.com:443/pigeonship-prod/static/images/logo.png" alt="PigeonShip" height="40" class="d-inline-block align-top">
+        </a>
+        <div class="d-flex align-items-center rs-con" style="flex: 1; justify-content: flex-end;">
+          <a class="btn btn-outline-primary" href="/accounts/login/">Login</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>
+<div class="container-fluid" id="root">
+  <div id='live-tracking'>
+    <div class="title text-center pt-2 pb-2">
+      Thank you for choosing PigeonShip. Your delivery is currently on route.
+      Tracking number 9P8P765H432H10H9PP
+    </div>
+    <div id='map' style='width: 100%'></div>
+    <div class='d-flex py-4'>
+      <div class='d-flex justify-content-center align-items-center flex-grow-1'>
+        <div>
+          <p class='text-secondary mb-1'>Status</p>
+          <p class='font-weight-bolder m-0'>
+            <span v-if='order.status === 64'>Delivered</span>
+            <span v-else>In transit</span>
+          </p>
+        </div>
+      </div>
+      <div class='d-flex justify-content-center align-items-center flex-grow-1'>
+        <div>
+          <p class='text-secondary mb-1'>Deliver By</p>
+          <p class='font-weight-bolder m-0'>
+            <span v-if='order.delivered'>Delivered</span>
+            <span v-else>${order.dueDate.toLocaleString()}</span>
+          </p>
+        </div>
+      </div>
+      <div class='d-flex justify-content-center align-items-center flex-grow-1'>
+        <div>
+          <p class='text-secondary mb-1'>Customer</p>
+          <p class='font-weight-bolder m-0'>
+            ${order.receiver}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center" v-if='images.length'>
+      <a :href='image' data-lightbox='pickup' v-for='(image, index) in images'> View Delivery Picture </a>
+    </div>
+  </div>
+</div>
+<script>
+    new Vue({
+      delimiters: ['${', '}'],
+      el: '#live-tracking',
+      data: {
+        endPoint: {
+          lat: parseFloat("40.000000"),
+          lng: parseFloat("-111.000000")
+        },
+        deliveryPointLiteral: { lat: 40.000000, lng: -111.000000 },
+        sliderValue: 0,
+        alertDistance: 0,
+        currentDistance: 0,
+        deliveryid: 0,
+        timelineProgress: 0,
+
+        order: {
+          delivered: false,
+          status: 16,
+          statusDisplay: 'Assigned',
+          dueDate: new Date('2026-03-05T03:00:00+00:00'),
+          readyForPickup: new Date('2026-03-04T00:00:00+00:00'),
+          receiver: 'SAMPLE RECIPIENT',
+        },
+
+        intermediateOrders: [
+
+            {
+              dueDate: new Date('2026-03-05T03:00:00+00:00'),
+              // delivered: false,
+              delivered: false,
+            },
+
+            {
+              dueDate: new Date('2026-03-05T03:00:00+00:00'),
+              // delivered: false,
+              delivered: false,
+            },
+        ].sort((a, b) => b.delivered - a.delivered),
+
+        images: [
+        ]
+      },
+      methods: {
+        getLiveTracking(callback) {
+          $.ajax({
+            url: "/shipping/getlivetracking/",
+            type: 'GET',
+            traditional: true,
+            data: {
+              trackingcode: "9P8P765H432H10H9PP",
+              alertusermeters: this.alertDistance,
+            },
+            success: callback,
+          })
+        },
+        loadTracking() {
+          if ([2, 16, 32].includes(this.order.status) ) {
+            this.getLiveTracking(() => {})
+          }
+        },
+      },
+    })
+</script>
+</body>
+</html>

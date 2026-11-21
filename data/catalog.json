@@ -47606,6 +47606,37 @@
     ],
     "detectionRules": []
   },
+  "pigeonship": {
+    "displayName": "PigeonShip",
+    "color": "#f2b02c",
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Denver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pigeonship",
+      "recognitionRank": 22
+    },
+    "canaryUrl": "https://admin.pigeonship.com/accounts/login/",
+    "trackingUrlTemplate": "https://admin.pigeonship.com/shipping/tracking/package/{trackingNumber}/",
+    "linkRules": [
+      {
+        "domains": [
+          "admin.pigeonship.com"
+        ],
+        "path": "^/shipping/tracking/package/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^\\d[A-Z]\\d[A-Z]\\d{3}[A-Z]\\d{3}[A-Z]\\d{2}[A-Z]\\d[A-Z]{2}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "piggy-express": {
     "displayName": "Piggy Express",
     "color": "#fe4646",

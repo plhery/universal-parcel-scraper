@@ -541,6 +541,7 @@ import { statusMap as mauritiusPost } from '../../carriers/mauritius-post/status
 import { statusMap as mayiyinfu } from '../../carriers/mayiyinfu/status.js';
 import { statusMap as mdsCollivery } from '../../carriers/mds-collivery/status.js';
 import { statusMap as polonez } from '../../carriers/polonez/status.js';
+import { statusMap as pigeonship } from '../../carriers/pigeonship/status.js';
 import { statusMap as meest } from '../../carriers/meest/status.js';
 import { statusMap as meihooPegasus } from '../../carriers/meihoo-pegasus/status.js';
 import { statusMap as mesoGlobal } from '../../carriers/meso-global/status.js';
@@ -1070,7 +1071,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'one-world-express': oneWorldExpress, onex, ontrac, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'overseas-express': overseasExpress, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress, peddler,
-  'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
+  'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, pigeonship, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
   'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
   'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-moldovei': postaMoldovei, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,

@@ -1,0 +1,23 @@
+{
+  "carrier": "pigeonship",
+  "entries": [
+    {
+      "code": "16",
+      "wording": "Assigned",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The order is on a driver's route; the page shows it as \"In transit\" and follows the driver on its map."
+    },
+    {
+      "code": "64",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "source",
+      "firstSeen": "2026-11-21",
+      "note": "The page's script shows \"Delivered\" for this code alone."
+    }
+  ]
+}
