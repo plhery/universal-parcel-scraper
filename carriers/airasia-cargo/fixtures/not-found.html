@@ -1,0 +1,65 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+    <title>
+	SmartKargo - AWB Tracking
+</title>
+    </head>
+<body style="background: #fff;">
+    <form name="FrmAWBTracking" method="post" action="./FrmAWBTracking.aspx" id="FrmAWBTracking">
+<div>
+<input type="hidden" name="ToolkitScriptManager1_HiddenField" id="ToolkitScriptManager1_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+</div>
+<div>
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+        <div id="contentarea_responsive" style="width: 99% !important; padding-top: 5px !important;">
+            <div class="msg">
+                <span id="LabelStatus" style="color:Red;">AWB Details not available</span>
+            </div>
+            <h1 class="responsive">Track Air Waybill
+            </h1>
+            <div class="botline_responsive" style="background-color: #cfdded;">
+                <table>
+                    <tr>
+                        <td valign="top">Prefix</td>
+                        <td valign="top">
+                            <input name="txtPrefix" type="text" value="807" maxlength="4" id="txtPrefix" title="Enter AWB Prefix ex: " class="inputbg60" style="width:50px;" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td valign="top">AWB No's
+                        </td>
+                        <td valign="top">
+                            <textarea name="TextBoxAWBno" rows="2" cols="20" maxlength="179" id="TextBoxAWBno" title="Enter AWB no(S). If multiple AWBs, enter comma separated. eg:98989898,98989899" style="height:30px;width:250px;">
+48271635</textarea>
+                        </td>
+                        <td valign="top">
+                            <input type="submit" name="ButtonGO" value="Track" id="ButtonGO" class="button" style="width:60px;" />
+                        </td>
+                        <td style="vertical-align: top; color: black; padding-left: 15px;"><b>NOTE:</b> To track multiple AWB Numbers, you can enter up to <span id="AWBMaxLimit">10</span>AWB Numbers separated by comma.</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="contentarea_tracking" style="float: left; width: 80%">
+            </div>
+        </div>
+        <input type="hidden" name="hdnIsAlaska" id="hdnIsAlaska" value="false" />
+        <div id="uldlistpopup" class="uldlistpopup">
+            <span onclick="CloseULDPopup();" class="uldlistpopupclose">
+                <img src="Images/Tracking/closepopup.png" width="13" height="13" align="right" style="margin: 3px;" /></span>
+            <div class="uldpopupinfo"><span id="uldNos"></span></div>
+        </div>
+        <div class="msg">
+            <span>
+                <span style="margin-top: 5px;"><b>Powered By</b></span>
+                <img src="Images/smartcargo_logoLogin.png" style="vertical-align: middle; margin-top: -4px;" alt="SmartKargo Logo" height="20px" />
+            </span>
+        </div>
+</form>
+</body>
+</html>

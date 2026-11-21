@@ -1,0 +1,11 @@
+{
+  "carrier": "airasia-cargo",
+  "entries": [
+    { "wording": "Booked", "stage": "registered", "language": "en", "confirmedBy": "live" },
+    { "wording": "Accepted", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "wording": "Manifested", "stage": null, "language": "en", "confirmedBy": "live", "note": "The carrier lists the cargo on the flight manifest before the separate departure scan." },
+    { "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Milestone of the shared SmartKargo tracker, seen live on the Akasa, IndiGo and Copa tenants." },
+    { "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "source", "note": "Milestone of the shared SmartKargo tracker, seen live on the Akasa, IndiGo and Copa tenants." }
+  ]
+}

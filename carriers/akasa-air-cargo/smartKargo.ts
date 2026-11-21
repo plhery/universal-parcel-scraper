@@ -8,7 +8,8 @@ import { clean } from '../../core/transport/text.js';
 export interface SmartKargoPortal {
   provider: string;
   tracker: string;
-  prefix: string;
+  /** The airline prefix, or each airline prefix a shared tenant answers. */
+  prefix: string | readonly string[];
   stageForWording: (wording: string) => Stage | undefined;
   /**
    * `link` opens the waybill from the tracker's `AWBPrefix` and `AWBNo` query, following one
@@ -18,11 +19,12 @@ export interface SmartKargoPortal {
 }
 
 export function normalizeSmartKargoNumber(raw: string, { provider, prefix }: SmartKargoPortal): string {
-  const match = /^(\d{3})[- ]?(\d{7})(\d)$/.exec(raw.trim());
-  if (match?.[1] !== prefix || Number(match[2]) % 7 !== Number(match[3])) {
-    throw new InvalidInputError(provider, `Enter a valid master air waybill beginning with ${prefix}`);
+  const prefixes: readonly string[] = typeof prefix === 'string' ? [prefix] : prefix;
+  const [, airline = '', serial = '', check = ''] = /^(\d{3})[- ]?(\d{7})(\d)$/.exec(raw.trim()) ?? [];
+  if (!prefixes.includes(airline) || Number(serial) % 7 !== Number(check)) {
+    throw new InvalidInputError(provider, `Enter a valid master air waybill beginning with ${prefixes.join(' or ')}`);
   }
-  return prefix + match[2] + match[3];
+  return airline + serial + check;
 }
 
 function document(html: string, provider: string) {

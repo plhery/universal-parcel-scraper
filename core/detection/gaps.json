@@ -136,6 +136,11 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to Air Star Xpress."
   },
   {
+    "carrier": "airasia-cargo",
+    "kind": "by_design",
+    "reason": "AirAsia's master air waybills share the eleven-digit airline format with every airline; only the 807 and 975 prefixes name the AirAsia airlines. Select AirAsia Cargo explicitly."
+  },
+  {
     "carrier": "airpak-express",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

@@ -1,0 +1,61 @@
+{
+  "id": "airasia-cargo",
+  "displayName": "AirAsia Cargo",
+  "aliases": [
+    "Air Asia Cargo"
+  ],
+  "region": {
+    "countries": [
+      "MY",
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#ff0000"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "airasia-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "weight"
+  ],
+  "portal": {
+    "url": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "searchUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "canaryUrl": "https://airasia.smartkargo.com/FrmAWBTracking.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "origin",
+      "destination",
+      "parcel_count",
+      "flight_and_routing"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "flight_and_routing"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

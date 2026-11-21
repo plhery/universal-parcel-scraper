@@ -1,0 +1,214 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+    <title>
+	SmartKargo - AWB Tracking
+</title>
+    </head>
+<body style="background: #fff;">
+    <form name="FrmAWBTracking" method="post" action="./FrmAWBTracking.aspx" id="FrmAWBTracking">
+<div>
+<input type="hidden" name="ToolkitScriptManager1_HiddenField" id="ToolkitScriptManager1_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+</div>
+<div>
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+</div>
+        <div id="pnlMultipleAWBs" class="multiple-awb-wrapper" style="top: 80px !important; overflow: scroll;">
+                    <div class="awb-list-wrapper">
+                        <div class="awb-number-wrapper">
+                            <input type="submit" name="rptTrackAWBs$ctl00$btnAWBNumber" value="975-21467692" id="rptTrackAWBs_ctl00_btnAWBNumber" class="awb-number-2" style="color:#075A7F;" />
+                        </div>
+                        <div class="lastest-activity-wrapper">
+                            <span id="rptTrackAWBs_ctl00_lblLatestActivity" class="latest-activity" style="color:#075A7F;">Departed at DPS</span>
+                        </div>
+                    </div>
+</div>
+        <div id="contentarea_responsive" style="width: 99% !important; padding-top: 5px !important;">
+            <div class="msg">
+                <span id="LabelStatus" style="color:Red;"></span>
+            </div>
+            <h1 class="responsive">Track Air Waybill
+            </h1>
+            <div class="botline_responsive" style="background-color: #cfdded;">
+                <table>
+                    <tr>
+                        <td valign="top">Prefix</td>
+                        <td valign="top">
+                            <input name="txtPrefix" type="text" value="975" maxlength="4" id="txtPrefix" title="Enter AWB Prefix ex: " class="inputbg60" style="width:50px;" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td valign="top">AWB No's
+                        </td>
+                        <td valign="top">
+                            <textarea name="TextBoxAWBno" rows="2" cols="20" maxlength="179" id="TextBoxAWBno" title="Enter AWB no(S). If multiple AWBs, enter comma separated. eg:98989898,98989899" style="height:30px;width:250px;">
+21467692</textarea>
+                        </td>
+                        <td valign="top">
+                            <input type="submit" name="ButtonGO" value="Track" id="ButtonGO" class="button" style="width:60px;" />
+                        </td>
+                        <td style="vertical-align: top; color: black; padding-left: 15px;"><b>NOTE:</b> To track multiple AWB Numbers, you can enter up to <span id="AWBMaxLimit">10</span>AWB Numbers separated by comma.</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="contentarea_tracking" style="float: left; width: 80%">
+                <div id="pnlShowData" style="width:100%;">
+                    <div style="overflow-y: hidden; overflow-x: auto;">
+                        <table class="table no-bg" width="100%"><tr><td align="center" style="height:77.7778px"><table class="table" width="100%"><tr><th colspan="3">DPS</th></tr><tr><td colspan="3"><strong>NGURAH RAI</strong></td></tr><tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td align="center"><table class="table"><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="valign-top">
+          <img src="Images/Tracking/icon-accepted.png" />
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="flt-info">
+          11/08/2023 06:08
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td><strong>
+            15 P / 212.00 Kgs
+          </strong></td><td>&nbsp;&nbsp;&nbsp;</td></tr></table></td><td align="center"></td><td align="center"><table class="table"><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="valign-top">
+          <img src="Images/Tracking/icon-dep.png" />
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td class="flt-info">
+          QZ780 / 11/08/2023 11:20
+        </td><td>&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;</td><td><strong>
+            15 P / 212.00 Kgs
+          </strong></td><td>&nbsp;&nbsp;&nbsp;</td></tr></table></td></tr>
+      <tr><td colspan="3">&nbsp;</td></tr></table></td><td align="center" class="con-width-2"><table class="separator" width="100%"><tr><th>&nbsp;</th></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr>
+      <tr><td class="valign-top"><table width="100%"><tr><td align="center" style="background:url(Images/Tracking/dot.png) scroll center left repeat-x; height:77.7778px">
+              <img src="Images/Tracking/icon-aircraft.png" />
+            </td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></table></td></tr>
+      <tr><td>&nbsp;</td></tr></table></td><td align="center" style="height:77.7778px"><table class="table" width="100%"><tr><th colspan="3">BPN</th></tr><tr><td colspan="3"><strong>SEPINGAN</strong></td></tr><tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td align="center"><table width="150px"><tr><td style="height:77.7778px">
+          &nbsp;
+        </td></tr></table></td><td align="center"></td><td align="center"><table width="150px"><tr><td style="height:77.7778px">
+          &nbsp;
+        </td></tr></table></td></tr>
+      <tr><td colspan="3">&nbsp;</td></tr></table></td></tr></table>
+                    </div>
+                    <br />
+                    <div class="scrollbar">
+                        <div class="awb-status">
+                            <div class="awb-info">
+                                <table width="100%" cellpadding="3" cellspacing="6">
+                                    <tr style="border-bottom: 1px solid #ccc;">
+                                        <td>AWB :</td>
+                                        <td style="border-bottom: 1px dotted #dedede;">
+                                            <span id="lblAWBNo" class="awb-number">975-21467692</span>
+                                            &nbsp;
+                                        <strong>(<span id="lblOrigin">DPS</span>-<span id="lblDestination">BPN</span>)
+                                        </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td id="tdPcsGrossWt">
+                                            <strong>
+                                                <span id="lblPcs">15 P</span>&nbsp;/&nbsp;<span id="lblGrossWt">212.00 Kgs</span>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="last-activity">
+                                <table width="100%">
+                                    <tr>
+                                        <td><strong>Last Activity</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="highlight-last-activity">
+                                                <img src="Images/Tracking/last-activity.png" width="25" height="20" style="margin-right: 12px;" />
+                                                <span id="lblLatestActivity">Departed at DPS</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <span id="lblLastActivityDescription">15 P / 212.00 Kgs</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div style="float: left; margin-top: 18px; width: 34%;" class="col-12">
+                        <strong>Booking and Acceptance Information</strong>
+                        <div style="margin-top: 10px;">
+                            <div>
+		<table class="newstyle" cellspacing="0" rules="all" border="1" id="gvBkAcInfo" style="width:99%;border-collapse:collapse;">
+			<tr class="titlecolr" align="center">
+				<th scope="col">Status</th><th scope="col">Station</th><th scope="col">Dest</th><th scope="col">Pcs</th><th scope="col">Weight</th><th scope="col">Flight#</th><th scope="col">Event Date-Time</th>
+			</tr><tr class="newstyle-tr" align="center">
+				<td>Booked</td><td>DPS</td><td>BPN</td><td>15</td><td>212.00 Kgs</td><td>QZ780 11/08/2023</td><td>10/08/2023 06:38</td>
+			</tr><tr class="newstyle-tr" align="center">
+				<td>Accepted</td><td>DPS</td><td>BPN</td><td>15</td><td>212.00 Kgs</td><td>&nbsp;</td><td>11/08/2023 06:08</td>
+			</tr>
+		</table>
+	</div>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                    <div style="float: left; margin-top: 18px; width: 65%; border-left: 1px dotted; padding-left: 3px;" class="col-12">
+                        <strong>Status History</strong>
+                        <div style="margin-top: 10px;">
+                            <div>
+		<table class="newstyle" cellspacing="0" rules="all" border="1" id="GridViewAwbTracking" style="width:100%;border-collapse:collapse;">
+			<tr class="titlecolr" align="center">
+				<th scope="col">Station</th><th scope="col">Milestone</th><th scope="col">Pcs</th><th scope="col">Weight</th><th scope="col">Flight#</th><th scope="col">Flight Date</th><th scope="col">Org</th><th scope="col">Dest</th><th scope="col">ULD</th>
+			</tr><tr class="newstyle-tr" align="center" valign="middle">
+				<td align="center">
+                                            <span id="GridViewAwbTracking_ctl02_lblStation" style="color:Brown;">DPS</span>
+                                        </td><td align="center">Manifested</td><td>
+                                            <span id="GridViewAwbTracking_ctl02_lblPcs">15</span>
+                                        </td><td>212.00 Kgs</td><td align="center">QZ780</td><td>
+                                            <span id="GridViewAwbTracking_ctl02_lblFltDate">11/08/2023 11:20</span>
+                                        </td><td align="center">DPS</td><td align="center">BPN</td><td align="center">
+                                            <span id="GridViewAwbTracking_ctl02_lblULDNo"></span>
+                                            <input name="GridViewAwbTracking$ctl02$HidULDNo" type="text" id="GridViewAwbTracking_ctl02_HidULDNo" style="display: none" />
+                                        </td>
+			</tr><tr class="newstyle-tr" align="center" valign="middle">
+				<td align="center">
+                                            <span id="GridViewAwbTracking_ctl03_lblStation" style="color:Brown;">DPS</span>
+                                        </td><td align="center">Departed</td><td>
+                                            <span id="GridViewAwbTracking_ctl03_lblPcs">15</span>
+                                        </td><td>212.00 Kgs</td><td align="center">QZ780</td><td>
+                                            <span id="GridViewAwbTracking_ctl03_lblFltDate">11/08/2023 11:20</span>
+                                        </td><td align="center">DPS</td><td align="center">BPN</td><td align="center">
+                                            <span id="GridViewAwbTracking_ctl03_lblULDNo"></span>
+                                            <input name="GridViewAwbTracking$ctl03$HidULDNo" type="text" id="GridViewAwbTracking_ctl03_HidULDNo" style="display: none" />
+                                        </td>
+			</tr>
+		</table>
+	</div>
+                        </div>
+                    </div>
+                    <br />
+                    <div style="float: left; margin-top: 18px; width: 99%; padding-left: 3px;">
+                        <strong>
+                            </strong>
+                        <div style="margin-top: 10px;">
+                        </div>
+                    </div>
+</div>
+            </div>
+        </div>
+        <input type="hidden" name="hdnIsAlaska" id="hdnIsAlaska" value="false" />
+        <div id="uldlistpopup" class="uldlistpopup">
+            <span onclick="CloseULDPopup();" class="uldlistpopupclose">
+                <img src="Images/Tracking/closepopup.png" width="13" height="13" align="right" style="margin: 3px;" /></span>
+            <div class="uldpopupinfo"><span id="uldNos"></span></div>
+        </div>
+        <div class="msg">
+            <span>
+                <span style="margin-top: 5px;"><b>Powered By</b></span>
+                <img src="Images/smartcargo_logoLogin.png" style="vertical-align: middle; margin-top: -4px;" alt="SmartKargo Logo" height="20px" />
+            </span>
+        </div>
+</form>
+</body>
+</html>
