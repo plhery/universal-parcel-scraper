@@ -36,6 +36,14 @@ export function roundCodeOnLineHaul(code: string, description = ''): boolean {
 }
 
 /**
+ * Whether a scan 17TRACK files under the return's code is worded as a leg in transit: a leg of the return, such
+ * as DHL's arrival at a parcel centre on the parcel's way back, which 17TRACK files under the code of the return.
+ */
+export function returnLeg(code: string, worded: Stage | undefined): boolean {
+  return code === 'Exception_Returning' && worded === 'in_transit';
+}
+
+/**
  * The stage a scan's `sub_status` gives it over the stage its wording got
  * (`pending` when no rule read it), or undefined when the code does not
  * outrank the wording. The specific code supplies semantics that Chinese

@@ -546,7 +546,8 @@ the reading the providers give a scan ([providers/status.ts](providers/status.ts
 sub-status where it outranks the wording, else the wording rules every provider applies,
 which put their own vocabulary around the shared language rules. A scan neither its code
 nor a rule stages is `unknown`, except notices that are no scan, such as Chronopost's notice
-to the recipient or SEUR's delay, which are left out on purpose. After a release the app can ask it about every open review entry and close
+to the recipient or SEUR's delay, which are left out on purpose, and a leg 17TRACK files under a
+return's code, whose stage depends on the answer, which is a gap. After a release the app can ask it about every open review entry and close
 those the map now stages or leaves out on purpose, under the version it runs.
 A provider that names the service behind each scan, as Postal Ninja does (`reporting_carrier`),
 stages the scan by that carrier's map when the map declares that it reads wording without a code

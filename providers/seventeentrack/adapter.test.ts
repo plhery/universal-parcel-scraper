@@ -117,6 +117,28 @@ describe('17TRACK result parsing', () => {
       .toMatchObject({ stage: 'out_for_delivery' });
   });
 
+  it("reads a leg after the return began, which 17TRACK files under the return's code, in transit once a scan told the return", () => {
+    const scan = (utc: string, description: string) => ({ time_iso: utc.replace('Z', '+00:00'), time_utc: utc,
+      time_raw: { date: utc.slice(0, 10), time: utc.slice(11, 19), timezone: '+00:00' }, description, stage: null, sub_status: 'Exception_Returning' });
+    const returning = (events: Record<string, unknown>[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'Exception', sub_status: 'Exception_Returning' },
+      tracking: { providers: [{ provider: { key: 100001, name: 'Example Post' }, events }] } } }] });
+    const arrived = 'The shipment has arrived at the parcel center';
+    const result = parse17TrackResponse(returning([
+      scan('2026-11-20T19:04:00Z', arrived),
+      scan('2026-11-14T09:25:00Z', 'Due to an address error, the shipment could not be delivered. The shipment is being returned to sender.'),
+      scan('2026-11-11T19:48:00Z', arrived),
+    ]), number);
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'exception', 'exception']);
+    expect(result.events?.[0]).toMatchObject({ stage_source: 'wording:language', provider_code: 'Exception_Returning' });
+    // Without a scan that tells the return, the code is the only sign of it.
+    expect(parse17TrackResponse(returning([scan('2026-11-20T19:04:00Z', arrived)]), number).events?.[0]).toMatchObject({ stage: 'exception' });
+    // The app's map sees one scan, not the rest of the answer, so it leaves the leg's stage to the answer.
+    expect(statusMapAnswer({ carrier: 'unknown', providerCode: 'Exception_Returning', description: arrived })).toMatchObject({ kind: 'intentional_gap' });
+    expect(statusMapAnswer({ carrier: 'unknown', providerCode: 'Exception_Returning', description: 'The shipment is being returned to sender.' }))
+      .toEqual({ kind: 'mapped', stage: 'exception' });
+  });
+
   it("reads Deppon's handing to the courier who delivers today, filed under generic transit, as out for delivery", () => {
     const description = '快件交给示例（电话:***********），今日将为您派送，可联系快递员将包裹放置指定地点';
     expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other', description)]), number)).toMatchObject({

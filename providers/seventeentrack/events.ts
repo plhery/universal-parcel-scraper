@@ -3,9 +3,9 @@ import type { CarrierEvent } from '../../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN } from '../../core/time/index.js';
 import type { Stage } from '../../generated/catalog.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { event, isMessageRow, place, text } from '../shared/result.js';
-import { roundCodeOnLineHaul, SUB_STAGES, subStatusStage } from './status.js';
-import { chineseFinalStage } from '../../core/status/language.js';
+import { classifyEvent, event, eventStage, isMessageRow, place, text } from '../shared/result.js';
+import { returnLeg, roundCodeOnLineHaul, SUB_STAGES, subStatusStage } from './status.js';
+import { chineseFinalStage, nonterminalEnglishReturn } from '../../core/status/language.js';
 import { chinaPostRelayedStage } from '../../carriers/china-post/status.js';
 
 /**
@@ -83,4 +83,28 @@ export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, place
     time_provenance: timeRaw?.timezone === null ? 'provider_inferred'
       : typeof timeRaw?.timezone === 'string' ? 'carrier_reported' : 'unspecified',
   };
+}
+
+const RETURNING = 'Exception_Returning';
+const instant = (scan: CarrierEvent): number => (scan.time ? Date.parse(scan.time) : Number.NaN);
+
+/**
+ * 17TRACK files the scans after a return began under `Exception_Returning`, routine legs included, as DHL's
+ * arrival at a parcel centre on the parcel's way back. Once a scan has told the return, in its own words or as
+ * an exception the code and its wording agree on, a later scan its wording reads in transit is a leg in transit,
+ * as the carrier's own answer reads it: the return is already told.
+ */
+export function returnLegsInTransit(events: CarrierEvent[]): CarrierEvent[] {
+  const told = events.filter((scan) => {
+    const wording = scan.description ?? '';
+    return nonterminalEnglishReturn(wording) || (scan.provider_code === RETURNING && eventStage(wording) === 'exception');
+  }).map(instant).filter(Number.isFinite);
+  if (told.length === 0) return events;
+  const start = Math.min(...told);
+  return events.map((scan) => {
+    const read = classifyEvent(scan.description ?? '');
+    const worded = read.stage_source === 'none' ? undefined : read.stage;
+    return scan.stage === 'exception' && instant(scan) > start && returnLeg(scan.provider_code ?? '', worded)
+      ? { ...scan, stage: read.stage, stage_source: read.stage_source } : scan;
+  });
 }

@@ -13,8 +13,8 @@
  */
 import { CHRONOPOST_NOTIFICATION } from '../carriers/chronopost/status.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../core/status/statusMap.js';
-import { subStatusStage } from './seventeentrack/status.js';
-import { classifyEvent, relayedRowLeftOut } from './shared/result.js';
+import { returnLeg, subStatusStage } from './seventeentrack/status.js';
+import { classifyEvent, eventStage, relayedRowLeftOut } from './shared/result.js';
 
 /** Relayed wording that names no step of its own, and why: the app's review closes it as left out. */
 const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
@@ -78,10 +78,14 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['udostępnienie epo', "Poczta Polska making its electronic proof of delivery available, beside the delivery scan: not a scan of its own."],
 ];
 
+/** Why a leg of a return is a gap (`returnLegsInTransit`). */
+const RETURN_LEG = "A leg of a return 17TRACK files under the return's code, such as DHL's arrival at a parcel centre on the way back: in transit once a scan of the answer told the return, else the return itself, so its stage depends on the rest of the answer.";
+
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
-    const read = classifyEvent(wording);
-    return (code ? subStatusStage(code, read.stage, wording) : undefined) ?? (read.stage_source === 'none' ? undefined : read.stage);
+    const worded = eventStage(wording);
+    if (code && returnLeg(code, worded)) return undefined;
+    return (code ? subStatusStage(code, classifyEvent(wording).stage, wording) : undefined) ?? worded;
   },
   gaps: [{
     wording: normalizeStatusWording(CHRONOPOST_NOTIFICATION),
@@ -149,7 +153,7 @@ export const statusMap: CarrierStatusMap = {
   }, ...NO_STEP.map(([wording, note]) => ({ wording, note }))],
   // USPS's closing of a customer's missing-mail search, which ParcelsApp follows with the place of the scan.
   gapNote: (code, wording) => {
-    if (code !== null) return undefined;
+    if (code !== null) return returnLeg(code, eventStage(wording)) ? RETURN_LEG : undefined;
     if (/^package research case closed(?:, [^,]{1,60}){0,2}$/.test(wording)) {
       return "USPS's closing of a customer's missing-mail search, as ParcelsApp relays it with a place: not a scan, so it keeps the stage the parcel already had.";
     }

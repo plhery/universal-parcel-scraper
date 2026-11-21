@@ -41,7 +41,7 @@ import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '.
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { numberOf, place, result, text, trailingPlace, type UniversalSource } from '../shared/result.js';
 import { seventeenTrackCarrierKeys, seventeenTrackLegName } from './carriers.js';
-import { seventeenTrackEvent, undatedScan } from './events.js';
+import { returnLegsInTransit, seventeenTrackEvent, undatedScan } from './events.js';
 
 const SOURCE: UniversalSource = '17TRACK';
 const API_URL = 'https://t.17track.net/track/restapi';
@@ -927,7 +927,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
   if (count === 0 && isRecord(shipment.latest_status) && shipment.latest_status.status === 'NotFound') {
     throw new NotFoundError(SOURCE);
   }
-  const answer = result(events, SOURCE);
+  const answer = result(returnLegsInTransit(events), SOURCE);
   return { ...answer, ...carrierEstimate(shipment, answer.current_stage), ...(undated ? { undated_event_count: undated } : {}),
     ...universalCarrierHints(tracking.providers.map((provider) =>
     isRecord(provider) && isRecord(provider.provider) ? seventeenTrackLegName(provider.provider) : undefined), number) };

@@ -90,6 +90,8 @@ carrier.
 - Stages come from the exact `sub_status` map in [status.ts](status.ts) first. It works
   when `stage` is null or the description is Chinese, and a stage it gives is credited to
   the map (`carrier_map`). Then come the declared stage and the shared wording rules. `Exception_Returning` is not a completed return.
+  Once a scan has told the return, a later scan filed under it that its wording reads in transit, such as DHL's
+  arrival at a parcel centre on the way back, is a leg in transit.
   `InfoReceived` yields to scans 17TRACK files under it: Correios Brazil's posting ("Objeto
   postado") and its export unit abroad receiving the item, and a USPS shipping partner picking
   the item up or arriving at or leaving its facility before USPS has it.
