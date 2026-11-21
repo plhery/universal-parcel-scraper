@@ -6,7 +6,7 @@ import { carrierTakesPhoneDigits, carrierTakesPostcode, MissingCarrierInputError
 import { deliveryHandoff, noHistoryHandoff, type DeliveryHandoff } from '../core/catalog/handoff.js';
 import { directTrackingNumber } from '../core/adapter/track.js';
 import { detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput, validTrackingNumber } from '../core/detection/index.js';
-import { BudgetExceededError, IndeterminateError, InputRequiredError, NoHistoryError, plannedEventsOf, writtenAheadClocks, type CarrierErrorKind } from '../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, InputRequiredError, NoHistoryError, plannedEventsOf, stillReadingMs, writtenAheadClocks, type CarrierErrorKind } from '../core/errors/index.js';
 import { failureHint, type FailureHint } from '../core/errors/hint.js';
 import { MAX_RECOGNITIONS, recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from '../core/recognition/index.js';
 import { fillPartialAnswer, isPartialAnswer, withoutWrittenAhead } from '../core/result/partial.js';
@@ -16,7 +16,7 @@ import { TrawlClient } from '../core/transport/trawl.js';
 import { sendsThrough } from '../core/transport/transportOf.js';
 import { userAgentOf } from '../core/transport/userAgent.js';
 import { REGISTRY } from '../generated/registry.js';
-import { universalPlan, universalSourceBudget } from '../providers/plan.js';
+import { universalPlan, universalSourceBudget, universalSourcePatience } from '../providers/plan.js';
 import type { UniversalSource } from '../providers/types.js';
 import { UniversalTracker } from '../providers/universal.js';
 import { checkParcelFields } from './input.js';
@@ -365,14 +365,27 @@ export function createTracker(options: TrackerOptions = {}) {
     if (!result || partial) {
       const plan = universalPlan({ carriers: [carrier], trackingNumber: number, enablePostalNinja: enabled.includes('Postal Ninja'), enableTrack123: enabled.includes('Track123') });
       const zone = carrierTimezone(carrier) === 'UTC' ? null : carrierTimezone(carrier);
-      for (const candidate of input.source ? [input.source] : plan.sources.filter(source => enabled.includes(source))) {
+      const candidates: UniversalSource[] = input.source ? [input.source] : plan.sources.filter(source => enabled.includes(source));
+      // A provider left while it still read the carriers is asked again after the others, with its whole
+      // budget: its first failure then gives way to what that ask finds.
+      const reading = new Map<UniversalSource, FailureHint>();
+      for (let index = 0; index < candidates.length; index += 1) {
+        const candidate = candidates[index]!;
         const left = remaining();
         if (signal.aborted || left <= reserve) break;
         const share = left - reserve;
         const timer = reserve ? AbortSignal.timeout(share) : null;
         const cut = timer ? AbortSignal.any([signal, timer]) : signal;
+        const first = reading.get(candidate);
+        if (first) failures.splice(failures.indexOf(first), 1);
+        const others = !first && index < candidates.length - 1;
         const answer = await attempt(candidate, () => provider(candidate, async () => scansOf(candidate, resolveResult(await universal.fetchSource(candidate,
-          number, Math.min(share + DEADLINE_SLACK_MS, universalSourceBudget(candidate)), providerPostcode, zone, cut, input.countryHint, carrier))), cut), cut);
+          number, Math.min(share + DEADLINE_SLACK_MS, others ? universalSourcePatience(candidate) : universalSourceBudget(candidate)),
+          providerPostcode, zone, cut, input.countryHint, carrier))), cut), cut);
+        if (!answer && others && !cut.aborted && stillReadingMs(lastError) !== undefined) {
+          reading.set(candidate, failures.at(-1)!);
+          candidates.push(candidate);
+        }
         const filled = answer && partial ? fillPartialAnswer(carrier, number, partial, answer) : answer;
         if (answer && filled) {
           relayed = answer;

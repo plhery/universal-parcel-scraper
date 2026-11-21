@@ -15,10 +15,22 @@ Ordertracker answers at once from its own copy of a parcel. Without one it reads
 while the request waits, so the plan asks it after the fast HTTP providers when someone is
 waiting ([COMPARISON.md](../COMPARISON.md)). For a number the carriers don't know, it answers
 "No information" only after up to 45 s, and keeps that answer for later asks. The 50 s budget
-waits for it: cut off at 30 s, those numbers came back as provider failures. A request that
-hangs up does not stop the read, and the next ask gets its result at once. "No information"
-and a reply with no feed for the number are `NoHistoryError`; a failed request stays a
-provider failure. The reply does not repeat the number.
+waits for it: cut off at 30 s, those numbers came back as provider failures.
+
+A request that hangs up does not stop the read. Until the read ends, another request for the
+number gets "No information" at once, and after it the result. The adapter therefore takes
+"No information" for the answer only from the request that started the read, or once the read's
+47 s are over. Before that it waits for the read to end and asks again when the budget allows.
+Otherwise the lookup fails with reason `still_reading` and the time left as `retryAfterMs`, as
+it does when the budget ends during the first request. A retry after a failed request is
+read the same way.
+
+The parcels Ordertracker finds come within 13 s. A lookup with other providers left to ask
+gives the first ask 15 s (`patienceMs` in [plan.ts](../plan.ts)), asks them, and comes back
+with the whole budget. The adapter remembers its reads, so both asks go through one tracker.
+
+"No information" and a reply with no feed for the number are `NoHistoryError`; a failed
+request stays a provider failure. The reply does not repeat the number.
 
 ## Feeds and clocks
 

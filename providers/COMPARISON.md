@@ -50,7 +50,10 @@ many of its histories have no scan a consumer can place; for a named carrier it 
 when that carrier's evidence shows its history. UPU needs a valid S10 number and stays
 last, because its exchange-office history is sparse.
 
-A provider is called at most once per lookup, with a bounded budget. The aggregators run only
+A provider is called at most once per lookup, with a bounded budget. Ordertracker is the
+exception: its read goes on after a request hangs up, and the parcels it finds come within
+13 s. So a lookup with other providers left to ask leaves it after 15 s, asks them, and asks
+it once more for what it read. The aggregators run only
 when the consumer selects them, and the facade's default is UPU alone.
 
 [universalPlan](plan.ts) is safe for browsers. Protocol implementations live in each provider

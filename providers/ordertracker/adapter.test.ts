@@ -1,8 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { stillReadingMs } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { universalSourceBudget } from '../plan.js';
-import { adapter, ORDERTRACKER_API, ORDERTRACKER_BUDGET_MS, parseOrdertrackerResponse } from './adapter.js';
+import { fakeBudgetClock } from '../../testing/budgetClock.js';
+import { universalSourceBudget, universalSourcePatience } from '../plan.js';
+import { adapter, ORDERTRACKER_API, ORDERTRACKER_BUDGET_MS, ORDERTRACKER_READ_MS, parseOrdertrackerResponse } from './adapter.js';
 
 const fixture = (name: string) => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8')) as {
   status: { code: string }; events: Array<{ time: string; lines: Array<{ original: string }>; carrier: { name: string } | null }>; carriers: unknown[];
@@ -108,5 +110,104 @@ describe('Ordertracker lookups', () => {
   it('keeps a failing reply a provider failure, not a missing parcel', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('error code: 522', { status: 522 }));
     await expect(tracker(fetcher).track({ number: '6H14479158377', carrier: 'la-poste' })).rejects.not.toMatchObject({ name: 'NoHistoryError' });
+  });
+});
+
+describe('Ordertracker reads that outlast a lookup', () => {
+  const tracker = (fetcher: typeof fetch) => adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+  const parcel = { number: 'LA586492541CA', carrier: 'canada-post' };
+  const history = () => new Response(JSON.stringify(fixture('canada-post-LA586492541CA')));
+  const noInformation = () => new Response(JSON.stringify(fixture('no-information')));
+  /** A request whose reply comes after `ms` on the test's clock, unless its signal ends it first. */
+  const after = (ms: number, reply: () => Response): typeof fetch => (_url, init) => new Promise<Response>((resolve, reject) => {
+    const timer = setTimeout(() => resolve(reply()), ms);
+    init?.signal?.addEventListener('abort', () => { clearTimeout(timer); reject(init.signal!.reason as Error); }, { once: true });
+  });
+  const failure = (pending: Promise<unknown>) => pending.then(() => { throw new Error('answered'); }, (error: unknown) => error);
+
+  it('gives a lookup someone waits for less time than its reads take, and a parcel it finds enough', () => {
+    expect(universalSourcePatience('Ordertracker')).toBeGreaterThan(13_000);
+    expect(universalSourcePatience('Ordertracker')).toBeLessThan(ORDERTRACKER_READ_MS);
+    expect(ORDERTRACKER_READ_MS).toBeLessThan(ORDERTRACKER_BUDGET_MS);
+    expect(universalSourcePatience('Ship24')).toBe(universalSourceBudget('Ship24'));
+  });
+
+  it('says it is still reading when the budget ends first, with the wait until the read does', async () => {
+    const clock = fakeBudgetClock();
+    const fetcher = vi.fn<typeof fetch>(after(45_000, noInformation));
+    const error = await failure(clock.settle(tracker(fetcher).track(parcel, { budgetMs: 15_000 })));
+    expect(error).toMatchObject({ kind: 'indeterminate', reason: 'still_reading' });
+    expect(stillReadingMs(error)).toBeGreaterThan(ORDERTRACKER_READ_MS - 15_100);
+    expect(stillReadingMs(error)).toBeLessThanOrEqual(ORDERTRACKER_READ_MS - 15_000);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('takes the history a second ask finds once the read is over', async () => {
+    const clock = fakeBudgetClock();
+    const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(after(45_000, noInformation)).mockImplementation(async () => history());
+    const source = tracker(fetcher);
+    await failure(clock.settle(source.track(parcel, { budgetMs: 15_000 })));
+    await expect(clock.settle(source.track(parcel, { budgetMs: 30_000 }))).resolves.toMatchObject({ current_stage: 'out_for_delivery' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('reads the "No information" of a read under way as no answer, and asks again when it ends', async () => {
+    const clock = fakeBudgetClock();
+    const asked: number[] = [];
+    const started = performance.now();
+    const fetcher = vi.fn<typeof fetch>((...request) => {
+      asked.push(Math.round(performance.now() - started));
+      return asked.length === 1 ? after(45_000, noInformation)(...request) : Promise.resolve(asked.length === 2 ? noInformation() : history());
+    });
+    const source = tracker(fetcher);
+    await failure(clock.settle(source.track(parcel, { budgetMs: 15_000 })));
+    await expect(clock.settle(source.track(parcel, { budgetMs: 40_000 }))).resolves.toMatchObject({ tracking_provider: 'Ordertracker' });
+    expect(asked[1]).toBe(15_000);
+    expect(asked[2]).toBeGreaterThanOrEqual(ORDERTRACKER_READ_MS);
+    expect(asked).toHaveLength(3);
+  });
+
+  it('stays still reading when the budget ends before the read does', async () => {
+    const clock = fakeBudgetClock();
+    const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(after(45_000, noInformation)).mockImplementation(async () => noInformation());
+    const source = tracker(fetcher);
+    await failure(clock.settle(source.track(parcel, { budgetMs: 15_000 })));
+    const error = await failure(clock.settle(source.track(parcel, { budgetMs: 10_000 })));
+    expect(error).toMatchObject({ reason: 'still_reading' });
+    expect(stillReadingMs(error)).toBeGreaterThan(31_000);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('takes "No information" for the answer from the request that waited for the read, and after the read', async () => {
+    const clock = fakeBudgetClock();
+    const waited = vi.fn<typeof fetch>(after(45_000, noInformation));
+    await expect(clock.settle(tracker(waited).track(parcel))).rejects.toMatchObject({ name: 'NoHistoryError' });
+    const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(after(45_000, noInformation)).mockImplementation(async () => noInformation());
+    const source = tracker(fetcher);
+    await failure(clock.settle(source.track(parcel, { budgetMs: 15_000 })));
+    const error = await failure(clock.settle(source.track(parcel, { budgetMs: 40_000 })));
+    expect(error).toMatchObject({ name: 'NoHistoryError' });
+    expect(stillReadingMs(error)).toBeUndefined();
+    expect(fetcher).toHaveBeenCalledTimes(3);
+  });
+
+  it('does not take the "No information" a retry gets for the answer', async () => {
+    const clock = fakeBudgetClock();
+    const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(after(20_000, () => new Response('', { status: 503 })))
+      .mockImplementationOnce(async () => noInformation()).mockImplementation(async () => history());
+    await expect(clock.settle(tracker(fetcher).track(parcel))).resolves.toMatchObject({ current_stage: 'out_for_delivery' });
+    expect(fetcher).toHaveBeenCalledTimes(3);
+  });
+
+  it('keeps a request that outlasts the read itself a provider failure, and a cancelled one cancelled', async () => {
+    const clock = fakeBudgetClock();
+    const silent = vi.fn<typeof fetch>(after(120_000, noInformation));
+    const late = await failure(clock.settle(tracker(silent).track(parcel)));
+    expect(late).toMatchObject({ kind: 'transport' });
+    expect(stillReadingMs(late)).toBeUndefined();
+    const controller = new AbortController();
+    const lookup = failure(tracker(vi.fn<typeof fetch>(after(45_000, noInformation))).track(parcel, { budgetMs: 15_000, signal: controller.signal }));
+    controller.abort(new Error('cancelled'));
+    expect(stillReadingMs(await clock.settle(lookup))).toBeUndefined();
   });
 });

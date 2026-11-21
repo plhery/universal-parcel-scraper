@@ -545,6 +545,58 @@ describe('standalone tracker', () => {
     });
   });
 
+  describe('with a provider left while it reads the carriers', () => {
+    // A Canada Post number, whose order starts with Ordertracker; no adapter is registered for it here.
+    const postal = 'LA586492541CA';
+    const fixture = (name: string) => new Response(readFileSync(new URL(`../providers/ordertracker/fixtures/${name}.json`, import.meta.url)));
+    /** Ordertracker reading for 45 s, with "No information" for a second request until then; ParcelsApp fails at once. */
+    function reading(found: string) {
+      const started = Date.now();
+      let requests = 0;
+      const fetcher = vi.fn<typeof fetch>((url, init) => {
+        if (!String(url).startsWith('https://api.ordertracker.com/')) return Promise.resolve(new Response('', { status: 503 }));
+        const at = Date.now() - started;
+        requests += 1;
+        if (at >= 45_000) return Promise.resolve(fixture(found));
+        if (requests > 1) return Promise.resolve(fixture('no-information'));
+        return new Promise<Response>((resolve, reject) => {
+          const timer = setTimeout(() => resolve(fixture(found)), 45_000 - at);
+          init?.signal?.addEventListener('abort', () => { clearTimeout(timer); reject(init.signal!.reason as Error); }, { once: true });
+        });
+      });
+      return createTracker({ registry: new AdapterRegistry({ factories: {}, carriers: {} }, environment), fetcher, providers: ['Ordertracker', 'ParcelsApp'] });
+    }
+
+    it('asks the others meanwhile and takes the history it comes back for', async () => {
+      const clock = fakeBudgetClock();
+      const response = await clock.settle(reading('canada-post-LA586492541CA').track({ number: postal, carrier: 'canada-post' }));
+      expect(response).toMatchObject({ source: 'Ordertracker', result: { current_stage: 'out_for_delivery' }, attempts: [
+        { source: 'Ordertracker', kind: 'indeterminate', durationMs: 15_000 }, { source: 'ParcelsApp', kind: 'maintenance' }, { source: 'Ordertracker', kind: 'ok' }] });
+      expect(response.attempts[0]!.retryAfterMs).toBeGreaterThan(31_000);
+    });
+
+    it('reports what it comes back to, not that it was reading', async () => {
+      const clock = fakeBudgetClock();
+      const failure = await clock.settle(reading('no-information').track({ number: postal, carrier: 'canada-post' })).catch((error: unknown) => error as TrackingError);
+      expect(failure).toBeInstanceOf(TrackingError);
+      // ParcelsApp's failure stands; the wait Ordertracker asked for went with its first attempt.
+      expect((failure as TrackingError).hint).toEqual({ kind: 'maintenance' });
+      expect((failure as TrackingError).attempts.map(({ source, kind, retryAfterMs }) => [source, kind, retryAfterMs]))
+        .toEqual([['Ordertracker', 'indeterminate', 32_000], ['ParcelsApp', 'maintenance', undefined], ['Ordertracker', 'indeterminate', undefined]]);
+    });
+
+    it('keeps the wait when the lookup ends before its read does', async () => {
+      const clock = fakeBudgetClock();
+      const started = Date.now();
+      const failure = await clock.settle(reading('canada-post-LA586492541CA').track({ number: postal, carrier: 'canada-post' }, { budgetMs: 20_000 }))
+        .catch((error: unknown) => error as TrackingError);
+      // The second ask learns at once that the read is not over: the lookup does not sit out its budget.
+      expect(Date.now() - started).toBeLessThan(16_000);
+      expect((failure as TrackingError).hint).toEqual({ kind: 'maintenance', retryAfterMs: 32_000 });
+      expect((failure as TrackingError).attempts.map(({ source }) => source)).toEqual(['Ordertracker', 'ParcelsApp', 'Ordertracker']);
+    });
+  });
+
   it('tells a rejected number and a malformed reply apart from a transport failure', async () => {
     const hintOf = async (error: Error) => createTracker({ registry: registry(vi.fn().mockRejectedValue(error)), providers: [] })
       .track({ number }).then(() => null, (failure: TrackingError) => ({ hint: failure.hint.kind, attempt: failure.attempts[0]?.kind }));

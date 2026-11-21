@@ -55,7 +55,16 @@ holds no lookup of it.
 [COMPARISON.md](COMPARISON.md) explains the order, and [COVERAGE.md](COVERAGE.md) compares
 results carrier by carrier.
 
-Each provider is asked once per lookup. Remembering which one answered for a parcel, resting
+Each provider is asked once per lookup, with one exception. A provider that goes on reading
+the carriers after a request hangs up has a `patienceMs` in [plan.ts](plan.ts), as Ordertracker
+does. While other providers are left to ask, a lookup leaves it after that long, asks them and
+comes back for its answer. The provider's first ask then fails with reason `still_reading` and
+the time its read still takes as `retryAfterMs`, which `stillReadingMs(error)` reads. A
+consumer with its own router gives the first ask `universalSourcePatience(source)`, keeps that
+failure out of the provider's failures, and asks again through the same tracker with
+`universalSourceBudget(source)`.
+
+Remembering which provider answered for a parcel, resting
 one that failed and capping how many lookups one receives in an hour are the consumer's job.
 Peek's [routing notes](https://github.com/plhery/delivery-tracker/blob/main/docs/ROUTING.md)
 show one way to do it.
@@ -220,8 +229,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 - Add the name to `UniversalSource` in `types.ts` and `shared/result.ts` and to
   `COVERAGE_SOURCES` in `coverage.ts`, or to `GRADED_SOURCES` for a provider asked about some
   carriers only. Register the factory in `universal.ts`, and give it a row in
-  `UNIVERSAL_PROVIDERS` in `plan.ts`: its transport, its lookup budget, its share, and `slow`
-  for an HTTP one that answers seconds later. A new name is a minor release, and consumers
+  `UNIVERSAL_PROVIDERS` in `plan.ts`: its transport, its lookup budget, its share, `slow`
+  for an HTTP one that answers seconds later, and `patienceMs` for one that reads on after a
+  request hangs up and reports it as `still_reading`. A new name is a minor release, and consumers
   that store names have to accept it.
 - Change a share only with evidence, and record the reason in
   [COMPARISON.md](COMPARISON.md).

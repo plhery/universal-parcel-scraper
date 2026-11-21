@@ -290,6 +290,27 @@ export function retryAfterMsOf(error: unknown): number | undefined {
   return undefined;
 }
 
+/** The reason of a provider left while it read the carriers for the number. */
+export const STILL_READING = 'still_reading';
+
+/**
+ * The wait until a provider left while it read the carriers has its answer, or undefined for any
+ * other failure. Such a provider goes on reading after the request hangs up, and until then it
+ * answers a second ask as it does for a number no carrier knows: asked again after the wait, it
+ * gives the history or its real answer without one. The failure describes neither the number
+ * nor the provider's health.
+ */
+export function stillReadingMs(error: unknown): number | undefined {
+  const seen = new Set<unknown>();
+  let current = error;
+  for (let depth = 0; depth < MAX_CAUSE_DEPTH && current instanceof Error && !seen.has(current); depth += 1) {
+    seen.add(current);
+    if (current instanceof CarrierError) return current.reason === STILL_READING ? current.retryAfterMs ?? 0 : undefined;
+    current = current.cause;
+  }
+  return undefined;
+}
+
 /** The clocks of rows a carrier wrote ahead of them, when any error in the chain lists some. */
 export function writtenAheadClocks(error: unknown): readonly string[] {
   const seen = new Set<unknown>();

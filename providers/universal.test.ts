@@ -1,4 +1,5 @@
 // @vitest-environment node
+import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { carrierErrorKind } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
@@ -6,6 +7,7 @@ import { parcelOwners } from '../core/result/partial.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
 import { parseTrackingInput } from '../core/detection/index.js';
+import { fakeBudgetClock } from '../testing/budgetClock.js';
 import { UniversalTracker, UniversalTrackingError, orderUniversalSources, universalPlan, universalSources, UNIVERSAL_SOURCES, type UniversalTrackerOptions } from './universal.js';
 import type { UniversalSource } from './types.js';
 
@@ -462,6 +464,61 @@ describe('universal discovery chain', () => {
     // An answer without scans is not an undated history.
     const bare = new UniversalTracker({ providers: ['Ship24'], browserLookup: vi.fn().mockResolvedValue({ tracking_provider: 'Ship24', current_stage: 'pending', events: [] }) });
     await expect(bare.fetchSource('Ship24', number)).resolves.toMatchObject({ tracking_provider: 'Ship24' });
+  });
+});
+
+describe('a provider left while it reads the carriers', () => {
+  // A Canada Post number, whose order starts with Ordertracker, then Ship24 and ParcelsApp.
+  const postal = 'LA586492541CA';
+  const fixture = (name: string) => new Response(readFileSync(new URL(`./ordertracker/fixtures/${name}.json`, import.meta.url)));
+  /**
+   * Ordertracker reading for 45 s: the request that waits gets `found` then, another one "No
+   * information" until then and `found` after. Every other provider fails at once.
+   */
+  function reading(found: string) {
+    const asked: Array<[host: string, second: number]> = [];
+    const started = performance.now();
+    const fetcher = vi.fn<typeof fetch>((url, init) => {
+      const host = new URL(String(url)).hostname;
+      const at = performance.now() - started;
+      asked.push([host, Math.round(at / 1000)]);
+      if (host !== 'api.ordertracker.com') return Promise.resolve(new Response('', { status: 503 }));
+      if (at >= 45_000) return Promise.resolve(fixture(found));
+      if (asked.filter(([name]) => name === host).length > 1) return Promise.resolve(fixture('no-information'));
+      return new Promise<Response>((resolve, reject) => {
+        const timer = setTimeout(() => resolve(fixture(found)), 45_000 - at);
+        init?.signal?.addEventListener('abort', () => { clearTimeout(timer); reject(init.signal!.reason as Error); }, { once: true });
+      });
+    });
+    const browserLookup = vi.fn().mockRejectedValue(new Error('Unavailable'));
+    return { asked, tracker: new UniversalTracker({ providers: ['Ordertracker', 'Ship24', 'ParcelsApp'], trawlUrl: '', fetcher, browserLookup }) };
+  }
+
+  it('asks the next providers meanwhile and comes back for its answer', async () => {
+    const clock = fakeBudgetClock();
+    const { asked, tracker } = reading('canada-post-LA586492541CA');
+    await expect(clock.settle(tracker.fetch(postal, null, {}, null, 'canada-post')))
+      .resolves.toMatchObject({ tracking_provider: 'Ordertracker', current_stage: 'out_for_delivery' });
+    // Left after its patience, asked again once ParcelsApp failed, then when its read ended.
+    expect(asked).toEqual([['api.ordertracker.com', 0], ['parcelsapp.com', 15], ['api.ordertracker.com', 15], ['api.ordertracker.com', 47]]);
+  });
+
+  it('reports it once, as still reading, when the lookup ends before its read does', async () => {
+    const clock = fakeBudgetClock();
+    const { asked, tracker } = reading('canada-post-LA586492541CA');
+    const failed = await clock.settle(tracker.fetch(postal, null, { budgetMs: 20_000 }, null, 'canada-post')).catch((error: unknown) => error);
+    expect((failed as UniversalTrackingError).failures.map(({ source, error }) => [source, (error as { reason?: string }).reason]))
+      .toEqual([['Ship24', undefined], ['ParcelsApp', undefined], ['Ordertracker', 'still_reading']]);
+    expect(asked.map(([host]) => host)).toEqual(['api.ordertracker.com', 'parcelsapp.com', 'api.ordertracker.com']);
+  });
+
+  it('waits for the read itself when no other provider is left to ask', async () => {
+    const clock = fakeBudgetClock();
+    const { asked, tracker } = reading('no-information');
+    const alone = new UniversalTracker({ ...tracker.options, providers: ['Ordertracker'] });
+    const failed = await clock.settle(alone.fetch(postal, null, {}, null, 'canada-post')).catch((error: unknown) => error);
+    expect((failed as UniversalTrackingError).failures).toMatchObject([{ source: 'Ordertracker', error: { name: 'NoHistoryError' } }]);
+    expect(asked).toEqual([['api.ordertracker.com', 0]]);
   });
 });
 

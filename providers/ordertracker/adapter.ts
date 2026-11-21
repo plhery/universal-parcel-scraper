@@ -1,7 +1,8 @@
 import type { AdapterFactory } from '../../core/adapter/index.js';
-import { IndeterminateError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, NoHistoryError, SchemaError, STILL_READING } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
+import { paused } from '../../core/runner/pause.js';
 import { countryCode } from '../../core/time/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -13,6 +14,14 @@ import { ordertrackerFeeds, type OrdertrackerFeed } from './feeds.js';
 const SOURCE = 'Ordertracker';
 export const ORDERTRACKER_API = 'https://api.ordertracker.com/public/mobile-tracking/data';
 export const ORDERTRACKER_BUDGET_MS = 50_000;
+/**
+ * How long Ordertracker reads the carriers for a number it has no copy of, at most: its "No
+ * information" for a number they don't know comes after 45 s. A request that hangs up does not
+ * stop the read, and until the read ends a second ask gets that same "No information" at once.
+ */
+export const ORDERTRACKER_READ_MS = 47_000;
+/** The time kept for the ask that follows a wait for the read's end: it answers from Ordertracker's copy. */
+const COLLECT_MS = 2_000;
 /** The header Ordertracker's Android app sends with every lookup, the same for every install. */
 const MOBILE_SECRET = 'pr?GGSV}XRkVz>{/~v3~("s"&KJ`FP>J'; // gitleaks:allow
 const MAX_EVENTS = 500;
@@ -37,6 +46,30 @@ const TRAILING_WORD = /^(.+?) ((?!FedEx\b)\p{Lu}[\p{Ll}.'’-]+) ([A-Z]{2})(?: (
 const TRAILING_COUNTRY = /^(.+) ([A-Z]{2})$/;
 
 interface Scan { wording: string; location: string }
+
+/**
+ * Ordertracker's answer for a number no feed knows: no carrier, and a notice asking to try again
+ * later. It gives the same answer while it still reads the carriers for a request that hung up.
+ */
+function noInformation(payload: unknown): boolean {
+  return isRecord(payload) && isRecord(payload.status) && payload.status.code === 'unknown'
+    && Array.isArray(payload.carriers) && !payload.carriers.length;
+}
+
+/** Whether a request ended on a timer: the lookup's budget, not a failure on the way. */
+function timedOut(error: unknown): boolean {
+  let current = error;
+  for (let depth = 0; depth < 8 && current instanceof Error; depth += 1, current = current.cause) {
+    if (current.name === 'TimeoutError') return true;
+  }
+  return false;
+}
+
+/** The lookup left Ordertracker reading: it has its answer `waitMs` from now. */
+function stillReading(waitMs: number, cause?: unknown): IndeterminateError {
+  return new IndeterminateError(SOURCE, 'Ordertracker is still reading the carriers for the number',
+    { reason: STILL_READING, retryAfterMs: Math.max(0, Math.ceil(waitMs)), ...(cause === undefined ? {} : { cause }) });
+}
 
 /** The wording and place of a scan, as its feed writes them; empty wording when the feed lost it. */
 function readLines(lines: string[], feed: OrdertrackerFeed): Scan {
@@ -98,8 +131,7 @@ export function parseOrdertrackerResponse(payload: unknown, carrier: string, rea
   if (!feeds) throw new IndeterminateError(SOURCE, 'Ordertracker is not asked about this carrier', { reason: 'unsupported_scope' });
   if (!isRecord(payload) || !isRecord(payload.status) || !Array.isArray(payload.events) || !Array.isArray(payload.carriers)
     || payload.events.length > MAX_EVENTS) throw new SchemaError(SOURCE, 'Unreadable tracking reply');
-  // Its answer for a number no feed knows: no carrier, and a notice asking to try again later.
-  if (payload.status.code === 'unknown' && !payload.carriers.length) throw new NoHistoryError(SOURCE, 'Ordertracker has no history for the number');
+  if (noInformation(payload)) throw new NoHistoryError(SOURCE, 'Ordertracker has no history for the number');
   const scans: Copy[][] = [];
   const numbered = new Map<string, Copy[][]>();
   for (const raw of payload.events) {
@@ -155,29 +187,61 @@ export function parseOrdertrackerResponse(payload: unknown, carrier: string, rea
   return { ...result(events, SOURCE), tracking_source: 'structured-web-response' };
 }
 
-export const adapter: AdapterFactory = (environment) => ({
-  id: SOURCE,
-  steps: ['direct'],
-  async track(input, context) {
-    const number = numberOf(input.number);
-    const carrier = input.carrier;
-    if (!carrier || !ordertrackerFeeds(carrier)) {
-      throw new IndeterminateError(SOURCE, 'Ordertracker answers only for a named carrier whose feed was checked', { reason: 'unsupported_scope' });
-    }
-    return runSteps({ carrier: SOURCE, budgetMs: context?.budgetMs ?? ORDERTRACKER_BUDGET_MS, signal: context?.signal,
-      recorder: environment.recorder }, [{
-      id: 'direct',
-      run: async ({ remainingMs, signal }) => {
-        const deadline = performance.now() + remainingMs;
-        const url = `${ORDERTRACKER_API}?${new URLSearchParams({ trackingNumber: number, lang: 'en' })}`;
-        const { bytes } = await fetchBounded(url, {
-          signal,
-          // The app's HTTP client.
-          headers: { Accept: 'application/json, text/plain, */*', 'User-Agent': 'okhttp/4.9.2', 'X-Mobile-Secret': MOBILE_SECRET },
-        }, { provider: SOURCE, timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 2_000_000, fetcher: environment.fetcher,
-          retryTransient: true, deadline });
-        return { ...parseOrdertrackerResponse(parseJsonBytes(bytes, SOURCE), carrier), tracking_url: pageOf(number) };
-      },
-    }]);
-  },
-});
+export const adapter: AdapterFactory = (environment) => {
+  // When the read behind a request of this adapter that got no reply ends at the latest, by number.
+  const reading = new Map<string, number>();
+  return {
+    id: SOURCE,
+    steps: ['direct'],
+    async track(input, context) {
+      const number = numberOf(input.number);
+      const carrier = input.carrier;
+      if (!carrier || !ordertrackerFeeds(carrier)) {
+        throw new IndeterminateError(SOURCE, 'Ordertracker answers only for a named carrier whose feed was checked', { reason: 'unsupported_scope' });
+      }
+      return runSteps({ carrier: SOURCE, budgetMs: context?.budgetMs ?? ORDERTRACKER_BUDGET_MS, signal: context?.signal,
+        recorder: environment.recorder }, [{
+        id: 'direct',
+        run: async ({ remainingMs, signal }) => {
+          const deadline = performance.now() + remainingMs;
+          const url = `${ORDERTRACKER_API}?${new URLSearchParams({ trackingNumber: number, lang: 'en' })}`;
+          for (;;) {
+            for (const [asked, until] of reading) if (until <= performance.now()) reading.delete(asked);
+            // An earlier request may have started the read this one finds under way.
+            const pending = reading.has(number);
+            let requests = 0;
+            const fetcher: typeof fetch = (...request) => {
+              requests += 1;
+              if (!reading.has(number)) reading.set(number, performance.now() + ORDERTRACKER_READ_MS);
+              return (environment.fetcher ?? fetch)(...request);
+            };
+            const left = () => (reading.get(number) ?? 0) - performance.now();
+            let payload: unknown;
+            try {
+              const { bytes } = await fetchBounded(url, {
+                signal,
+                // The app's HTTP client.
+                headers: { Accept: 'application/json, text/plain, */*', 'User-Agent': 'okhttp/4.9.2', 'X-Mobile-Secret': MOBILE_SECRET },
+              }, { provider: SOURCE, timeoutMs: Math.max(1, Math.floor(deadline - performance.now())), maxBytes: 2_000_000, fetcher,
+                retryTransient: true, deadline });
+              payload = parseJsonBytes(bytes, SOURCE);
+            } catch (error) {
+              // The lookup's budget ended before the read did: Ordertracker reads on, and the next ask finds its answer.
+              if (timedOut(error) && !context?.signal?.aborted && left() > 0) throw stillReading(left(), error);
+              throw error;
+            }
+            // "No information" is Ordertracker's answer only to the request that started the read, or once the read is over.
+            if (!noInformation(payload) || !(pending || requests > 1) || left() <= 0) {
+              reading.delete(number);
+              return { ...parseOrdertrackerResponse(payload, carrier), tracking_url: pageOf(number) };
+            }
+            // Wait for the read's end when the budget covers it and the ask after it.
+            const wait = Math.ceil(left()) + 25;
+            if (performance.now() + wait + COLLECT_MS > deadline) throw stillReading(left());
+            if (!await paused(wait, signal)) signal.throwIfAborted();
+          }
+        },
+      }]);
+    },
+  };
+};

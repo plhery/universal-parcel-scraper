@@ -9,7 +9,8 @@
  * refused the format or keep the carrier for their subscribers left out, Postal
  * Ninja still after the other aggregators and only if the evidence shows its history. Validated China Post C/L numbers put
  * 17TRACK first and ten-digit numbers Ship24, unless the carrier left it out.
- * Each provider is asked once per lookup and the first usable history wins; the
+ * Each provider is asked once per lookup and the first usable history wins; one left while it
+ * still read the carriers (Ordertracker, after its patience) is asked again after the others. The
  * per-parcel router remembers which provider answered, except UPU stays last
  * and requires a postal S10. The source names are persisted in routing state and must not change.
  *
@@ -21,7 +22,7 @@ import { carrierIdFromName } from '../core/catalog/hints.js';
 import { normalizeTrackingNumber } from '../core/detection/normalize.js';
 import { isPlaceholderNumber } from '../core/detection/placeholder.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../core/detection/usps.js';
-import { BudgetExceededError, IndeterminateError, InvalidInputError, NoHistoryError } from '../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, InvalidInputError, NoHistoryError, stillReadingMs } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { namesOneOf, parcelOwners } from '../core/result/partial.js';
 import { readLateRegistrations } from '../core/result/registration.js';
@@ -50,7 +51,7 @@ export type { UniversalSource } from './shared/result.js';
 
 export * from './plan.js';
 import { linkTokenKept } from './linkToken.js';
-import { universalPlan, universalSourceBudget } from './plan.js';
+import { universalPlan, universalSourceBudget, universalSourcePatience } from './plan.js';
 
 /**
  * A source is asked only with this much budget left. A provider that runs out
@@ -146,18 +147,23 @@ export class UniversalTracker {
     const failures: SourceFailure[] = [];
     const sources = universalPlan({ carriers: [carrier], trackingNumber, enablePostalNinja: this.options.enablePostalNinja,
       enableTrack123: this.options.providers?.includes('Track123') }).sources.filter(source => (this.options.providers ?? ['UPU']).includes(source));
-    for (const source of sources) {
+    // A provider left while it still read the carriers is asked again after the others, with its whole budget.
+    const visits: Array<{ source: Source; again?: true }> = sources.map((source) => ({ source }));
+    for (const [index, { source, again }] of visits.entries()) {
       const remaining = deadline - performance.now();
       if (remaining < MIN_SOURCE_BUDGET_MS) {
         failures.push({ source, reason: 'the lookup budget was spent first', error: new BudgetExceededError(source, context.budgetMs!) });
         continue;
       }
+      const others = !again && index < visits.length - 1;
       try {
-        return await this.fetchSource(source, trackingNumber, Math.min(remaining, this.options.timeoutMs ?? universalSourceBudget(source)),
+        return await this.fetchSource(source, trackingNumber,
+          Math.min(remaining, this.options.timeoutMs ?? (others ? universalSourcePatience(source) : universalSourceBudget(source))),
           postcode, null, context.signal, countryHint, carrier);
       } catch (error) {
         if (context.signal?.aborted) throw context.signal.reason;
-        failures.push({ source, reason: 'history unavailable; try again later or open the tracking website', error });
+        if (others && stillReadingMs(error) !== undefined) visits.push({ source, again: true });
+        else failures.push({ source, reason: 'history unavailable; try again later or open the tracking website', error });
       }
     }
     throw new UniversalTrackingError(failures);

@@ -18,6 +18,12 @@ export interface UniversalProvider {
   /** Lookup time reserved by the chain and host router, before transport allowance. */
   budgetMs: number;
   /**
+   * How long a lookup someone waits for stays on its first ask while other providers are left
+   * to ask. Set for a provider that goes on reading the carriers after the request hangs up
+   * and has its answer for a second ask (`stillReadingMs`).
+   */
+  patienceMs?: number;
+  /**
    * Its part of a carrier's numbers among the providers whose history for the carrier is
    * equally full. Larger for a provider whose loss would cost little, smaller for one that
    * several carriers have as their only source or whose every lookup costs a browser read.
@@ -32,14 +38,16 @@ export interface UniversalProvider {
  * 17TRACK are each the only source of several carriers. Ordertracker serves a few carriers
  * that ParcelsApp or 17TRACK also have, so it takes more than ParcelsApp, but it reads the
  * carrier while the lookup waits unless it has a copy of the parcel, and takes up to 45 s to
- * say it has nothing: its budget waits for that answer. 17TRACK, Track123 and
+ * say it has nothing: its budget waits for that answer. A parcel it finds comes within 13 s,
+ * and it reads on after a request hangs up, so a lookup someone waits for leaves it after
+ * 15 s, asks the next providers meanwhile and comes back for its answer. 17TRACK, Track123 and
  * Track718 cost a browser read, Track123's the longest. Postal Ninja's histories rarely have
  * a scan whose clock a consumer can place, and UPU's feed is sparse: both are asked after
  * the others.
  */
 export const UNIVERSAL_PROVIDERS: Readonly<Record<Source, UniversalProvider>> = {
   Ship24: { transport: 'http', budgetMs: 30_000, share: 4 },
-  Ordertracker: { transport: 'http', slow: true, budgetMs: 50_000, share: 3 },
+  Ordertracker: { transport: 'http', slow: true, budgetMs: 50_000, patienceMs: 15_000, share: 3 },
   ParcelsApp: { transport: 'http', budgetMs: 45_000, share: 2 },
   '17TRACK': { transport: 'browser', budgetMs: 30_000, share: 1 },
   Track123: { transport: 'browser', budgetMs: 30_000, share: 1 },
@@ -57,6 +65,15 @@ export const BROWSER_SOURCES: ReadonlySet<Source> = new Set(SOURCES.filter((sour
 /** Lookup time reserved by the chain and host router, before transport allowance. */
 export function universalSourceBudget(source: Source): number {
   return UNIVERSAL_PROVIDERS[source].budgetMs;
+}
+
+/**
+ * The time `source` gets on the first ask of a lookup someone waits for, while other providers
+ * are left to ask: its patience, or its whole budget when it has none. A provider left that
+ * early fails with `stillReadingMs`, and the lookup asks it again after the others.
+ */
+export function universalSourcePatience(source: Source): number {
+  return UNIVERSAL_PROVIDERS[source].patienceMs ?? UNIVERSAL_PROVIDERS[source].budgetMs;
 }
 
 /** Evidence-based exception to affinity/rotation, shared by discovery and routing. */
