@@ -1,0 +1,82 @@
+{
+  "id": "swiss-universal-express",
+  "displayName": "Swiss Universal Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "CH",
+      "FR",
+      "DE",
+      "IT",
+      "AT",
+      "BE",
+      "NL",
+      "LU",
+      "ES",
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#75b7e1"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "swiss-universal-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 29
+    },
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://swiss-universal-express.ch/tracking/{trackingNumber}?lang=en",
+    "searchUrl": "https://swiss-universal-express.ch/tracking/?lang=en",
+    "canaryUrl": "https://swiss-universal-express.ch/tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "progress_rail"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "destination_country",
+      "delivery_partner",
+      "proof_of_delivery",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "swiss-universal-express.ch"
+      ],
+      "path": "^/tracking/(SUE\\d{13}[A-Z]{2})/?$"
+    }
+  ],
+  "detection": [
+    {
+      "id": "swiss-universal-express-sue",
+      "pattern": "^SUE\\d{13}FR$",
+      "confidence": "low"
+    }
+  ]
+}

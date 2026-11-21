@@ -1,0 +1,25 @@
+{
+  "carrier": "swiss-universal-express",
+  "records": [
+    {
+      "number": "SUE8910020752265FR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.aftership.com/es/carriers/swiss-universal-express",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "swiss-universal-express"
+        ]
+      },
+      "note": "AfterShip's example on its Swiss Universal Express page, as search engines quote it; the page refuses automated reads. SUE's tracker answers it with a parcel prepared and taken in at its Amsterdam center, on its way in the shipping country."
+    }
+  ]
+}

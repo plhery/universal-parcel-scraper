@@ -1,0 +1,8 @@
+{
+  "carrier": "swiss-universal-express",
+  "entries": [
+    {"wording": "Your package is being prepared at the sender's warehouse.", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The sender is preparing the parcel; SUE does not hold it yet. The French page says Votre colis est en cours de préparation chez l'expéditeur."},
+    {"wording": "Your package arrived at the SUE center in Amsterdam.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The town of SUE's center follows the wording; the progress bar then shows the parcel in transit in the shipping country."},
+    {"wording": "Your package is in our hands", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The summary's status above the rows, not a row: SUE holds the parcel. The French page says Votre colis a été pris en charge."}
+  ]
+}

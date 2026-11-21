@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<meta charset="UTF-8">
+
+	<head>
+		<title>Swiss Universal Express - International shipping</title>
+		<link rel="icon" href="/static/images/sue/logo.png">
+
+		
+		<link rel="stylesheet" type="text/css" href="/static/styles/sue_v2.css" />
+		
+
+		
+		<script type="text/javascript" src="/static/scripts/sue.js"></script>
+		
+	</head>
+
+	<body>
+		<div class="sue-wrapper">
+			
+				<div class="sue-header">
+	<div class="sue-corner-right">
+		<div>
+		  <select id="language">
+		    <option value="fr">Français</option>
+		    <option value="en">English</option>
+		    <option value="it">Italiano</option>
+		    <option value="de">Deutsch</option>
+		  </select>
+		</div>
+		<div class="sue-register" id="register-popup-opener">Log in/Register</div>
+	</div>
+	<div class="sue-logo">
+		Swiss Universal Express
+	</div>
+	<div class="sue-menu">
+		<table>
+			<tr>
+				<td></td>
+				<td ><a href="/sue/?lang=en">SUE</a></td>
+				<td ><a href="/send_package/?lang=en">Send package</a></td>
+				<td class="sue-selected-menu"><a href="/tracking/?lang=en">Track package</a></td>
+				<!-- <td ><a href="/office/?lang=en">Our offices</a></td> -->
+				<td ><a href="/quotation/?lang=en">Request for a quotation</a></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+			
+
+			<input type='hidden' name='csrfmiddlewaretoken' value='SYNTHETICTOKEN' />
+			<div class="sue-body" id="body">
+				
+<div class="sue-tracking-search">
+	<div class="sue-title">Track order</div>
+	<div>
+		Input here the tracking number corresponding to your package<br>
+		<div class="sue-tracking-subblock">
+			<input type="text" class="sue-tracking-input" value="SUE9999000000017FR" id="tracking">
+			<div class="sue-tracking-button" id="submit">Track</div>
+		</div>
+	</div>
+</div>
+
+<div class="sue-block">
+	
+		<div class="sue-result-title" id="result-title">Tracking information for <b>SUE9999000000017FR</b></div>
+
+		
+
+			<div class="sue-error">
+			
+				The number you entered is incorrect. <br> Please double-check your tracking information.
+			
+		</div>
+
+		
+	
+</div>
+
+			</div>
+		</div>
+	</body>
+
+</html>
