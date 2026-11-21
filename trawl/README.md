@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, DPD UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -90,6 +90,14 @@ lookup-day history URN in a fresh guest context. It reads decoded tracking
 responses even when their content length is absent, preserving bounded retries
 and final refusals. Only selected history leaves the context, without page
 HTML, cookies, rotating keys or ownership details.
+
+DPD UK opens its public tracker for the whole number in a fresh context. The page searches
+the reference, then runs an invisible reCAPTCHA before it opens the parcel, and uses the
+token only to log in with a postcode. The helper opens the page's parcel route for the code
+the search issued instead, which reads the detail and events without a token. It keeps those
+reads alone, decoded, and stops at the first refusal or 404. Responses for codes the search
+did not issue for the number are dropped. Only the JSON, its status, content type and
+`Retry-After` leave the context.
 
 SiCepat's helper reproduces its official app's inline guest WebView, at the app's configured
 origin, rather than fetching the challenged homepage. It returns one fresh reCAPTCHA v3

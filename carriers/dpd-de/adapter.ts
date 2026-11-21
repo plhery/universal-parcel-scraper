@@ -10,7 +10,7 @@ import { DPDFranceTracker } from '../dpd-fr/adapter.js';
 import { adapter as dpdIe, type DpdGroupLookup } from '../dpd-ie/adapter.js';
 import { adapter as dpdPl } from '../dpd-pl/adapter.js';
 import { DpdPtTracker } from '../dpd-pt/adapter.js';
-import { adapter as dpdUk } from '../dpd-uk/adapter.js';
+import { DpdUkTracker } from '../dpd-uk/adapter.js';
 import { adapter as seur } from '../seur/adapter.js';
 import { DpdDeAppClient } from './app.js';
 import { DpdOtherCountryError, sharedDpdAppService } from './service.js';
@@ -32,7 +32,12 @@ const adapterUnit = (factory: AdapterFactory): Unit => (environment) => {
  * DPD gives. Belgium's, the Netherlands' and Switzerland's read the group's guest service.
  */
 const UNITS: Readonly<Record<string, Unit>> = {
-  AT: adapterUnit(dpdAt), GB: adapterUnit(dpdUk), IE: adapterUnit(dpdIe), PL: adapterUnit(dpdPl),
+  AT: adapterUnit(dpdAt), IE: adapterUnit(dpdIe), PL: adapterUnit(dpdPl),
+  // DPD UK's API by direct requests, without the browser recovery its adapter can use.
+  GB: ({ fetcher, userAgent }) => {
+    const tracker = new DpdUkTracker({ fetcher, userAgent });
+    return async (number, context) => dateLocalClocks('dpd-uk', await tracker.fetch(number, context));
+  },
   // Keep the foreign-unit handoff HTTP-only even when Portugal's adapter can recover in a browser.
   PT: ({ fetcher, userAgent }) => {
     const tracker = new DpdPtTracker({ fetcher, userAgent });

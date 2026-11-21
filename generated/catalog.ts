@@ -21204,7 +21204,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "dpd-uk",
       "recognitionRank": 858,
-      "localClocks": true
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://track.dpd.co.uk/",
     "trackingUrlTemplate": "https://track.dpd.co.uk/?reference={trackingNumber}",

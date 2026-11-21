@@ -87,6 +87,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && ozonBrowserRequest(url, capture)) return await runOzonBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && dhlExpressBrowserNumber(url, capture)) return await runDhlExpressBrowser(carrierRun)
   if (carrierPage && evriUkBrowserNumber(url, capture)) return await runEvriUkBrowser({ ...carrierRun, signal: budget.signal })
+  if (carrierPage && dpdUkBrowserNumber(url, capture)) return await runDpdUkBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && lbcBrowserNumber(url, capture)) return await runLbcBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && aeropostBrowserNumber(url, capture)) return await runAeropostBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && mailamericasBrowserNumber(url, capture)) return await runMailamericasBrowser({ ...carrierRun, signal: budget.signal })
@@ -171,6 +172,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { ozonBrowserRequest, runOzonBrowser } from "../utils/ozon-browser.mjs"\n'
     + 'import { dhlExpressBrowserNumber, runDhlExpressBrowser } from "../utils/dhl-express-browser.mjs"\n'
     + 'import { evriUkBrowserNumber, runEvriUkBrowser } from "../utils/evri-uk-browser.mjs"\n'
+    + 'import { dpdUkBrowserNumber, runDpdUkBrowser } from "../utils/dpd-uk-browser.mjs"\n'
     + 'import { lbcBrowserNumber, runLbcBrowser } from "../utils/lbc-browser.mjs"\n'
     + 'import { aeropostBrowserNumber, runAeropostBrowser } from "../utils/aeropost-browser.mjs"\n'
     + 'import { mailamericasBrowserNumber, runMailamericasBrowser } from "../utils/mailamericas-browser.mjs"\n'
