@@ -61,6 +61,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   // Yanwen sending the parcel on to InPost after its outbound scan.
   ['Despatched and en route to Inpost', { status: 'in_transit', stage: 'in_transit' }],
   ['Your shipment has arrived at sorting center', { status: 'in_transit', stage: 'in_transit' }],
+  ['Your shipment is in process at sorting center', { status: 'in_transit', stage: 'in_transit' }],
   // A partner's manifest as the parcel leaves Yanwen's facility, then the destination leg's
   // release from customs, intake and arrival at the delivery office.
   ['Manifest created', { status: 'in_transit', stage: 'in_transit' }],

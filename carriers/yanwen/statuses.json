@@ -365,6 +365,14 @@
       "note": "The last-mile carrier's sorting scan, after Yanwen's batch handover."
     },
     {
+      "wording": "Your shipment is in process at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The last-mile carrier's sorting scan between its arrival one and its acceptance for delivery."
+    },
+    {
       "wording": "Your shipment has been processed at sorting center and ready for shipping",
       "language": "en",
       "stage": "in_transit",
