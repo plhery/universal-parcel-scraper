@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { parseTrackingInput } from '../../core/detection/index.js';
+import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { carrierScan } from '../../providers/shared/scans.js';
@@ -820,6 +820,16 @@ describe('Paack links', () => {
       const match = parseTrackingInput(`${page}?tracking_number=${LABEL_BARCODE}&postal_code=${LABEL_POSTCODE}`);
       expect(match, page).toMatchObject({ trackingNumber: LABEL_BARCODE, carrier: 'paack', source: 'link' });
       expect(JSON.stringify(match), page).not.toContain(LABEL_POSTCODE);
+    }
+  });
+
+  it('only suggests Paack for El Corte Inglés’s dated twenty-nine-digit numbers', () => {
+    // Synthetic: El Corte Inglés's prefix, seven digits and an order time.
+    const eci = '00100909000000120261120101010';
+    expect(detectCarrierMatch(eci)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['paack'] });
+    for (const other of ['00100909000000120261320101010', '00100909000000120261120246010', '00100908000000120261120101010',
+      '0010090900000012026112010101', '001009090000001202611201010100', '2692310000001']) {
+      expect(detectCarrierMatch(other).candidates, other).not.toContain('paack');
     }
   });
 

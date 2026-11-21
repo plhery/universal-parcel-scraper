@@ -49,9 +49,29 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "paack"
+        ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack; no rule matches this shape."
+      "note": "A complaint to Paack quotes it as the tracking number of an El Corte Inglés order Paack was to deliver; the number ends with the order's date and time."
+    },
+    {
+      "number": "00100909229042620241231104651",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.ocu.org/reclamar/lista-reclamaciones-publicas/problema-en-la-entrega/2455027c929725c2b7",
+        "date": "2025-01-03"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "paack"
+        ]
+      },
+      "note": "A complaint to Paack quotes it as an El Corte Inglés order Paack was to deliver; the number ends with the order's date and time."
     },
     {
       "number": "437650784",
