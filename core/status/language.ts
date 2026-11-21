@@ -420,6 +420,10 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^your parcel is in the air and is heading your way$|^your parcel's left the transfer country and is back on the move$|^touchdown! your parcel has landed$|^collected from the airline for processing$|^your parcel's on an interstate journey\. we'll keep you updated as it travels$/.test(text)) return 'in_transit';
   if (/^it's happening, your parcel will be delivered today\. get ready$|^parcel out for final mile carrier delivery$/.test(text)) return 'out_for_delivery';
   if (/^parcel unsafe to leave at address$/.test(text)) return 'failed_attempt';
+  // InPost's lines on a UK parcel, as universal providers relay them without their codes: the parcel on its way to
+  // InPost, before InPost or the sender's first carrier has it, then the parcel in InPost's hands.
+  if (/^your parcel is on its way to inpost\. please check back for updates$/.test(text)) return 'registered';
+  if (/^we have your parcel(?:\. please check back for updates)?$/.test(text)) return 'accepted';
   // Royal Mail's delivery-round scans (EVGPD, EVKPD), as universal providers relay them, Postal
   // Ninja as "Due for delivery today": the delivery today is its out-for-delivery scan, not a forecast.
   if (/^due (?:to be delivered|for delivery) today(?: by\b.*)?$/.test(text)) return 'out_for_delivery';

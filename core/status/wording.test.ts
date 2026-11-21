@@ -1170,6 +1170,9 @@ describe('classifyWording', () => {
       ['The shipment has been taken over at the post office point', 'accepted'],
       ['The shipment has been taken over at the Post-Locker point.', 'accepted'],
       ["We've received your parcel at the ParcelShop and will be collecting it shortly", 'accepted'],
+      // InPost's UK lines, relayed without their codes.
+      ['Your parcel is on its way to InPost. Please check back for updates', 'registered'],
+      ['We have your parcel. Please check back for updates', 'accepted'], ['We have your parcel', 'accepted'],
       ['已入库,到达收货点', 'accepted'], ['国内清关中', 'customs'],
       ['Cross docked. Crossdock', 'in_transit'], ['Flight 202 is taking off and is expected to land on the 9th', 'in_transit'],
       ['The second leg is taking off, expected to land on the 9th', 'in_transit'],
