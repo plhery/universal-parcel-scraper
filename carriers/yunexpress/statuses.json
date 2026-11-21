@@ -171,6 +171,14 @@
       "firstSeen": "2026-10-04"
     },
     {
+      "wording": "Driver enroute",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "A British last mile's driver on the way to the recipient, at the same minute as its Out for delivery."
+    },
+    {
       "wording": "Arrived at GOFO Regional Hub",
       "stage": "in_transit",
       "language": "en",
