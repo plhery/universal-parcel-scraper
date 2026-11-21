@@ -1,0 +1,20 @@
+{
+  "carrier": "good-express-us",
+  "entries": [
+    {"wording": "商家已拣货打包，待发往GOOD快递站点【Label created】", "stage": "registered", "language": "zh", "confirmedBy": "live", "note": "The sender has packed the parcel for a GOOD station; GOOD does not hold it yet. The row opens with 【美国US】, which becomes the location."},
+    {"wording": "请【 上传身份证 】【Please uploade identification】", "unmapped": true, "language": "zh", "confirmedBy": "live", "note": "GOOD's request, written beside the label, that the recipient upload their identity card for Chinese customs; the parcel keeps the stage of the scan before. The page links the upload form from it."},
+    {"wording": "包裹已送达美国GOOD快递集散中心，等待发货【Package arrived at GOOD Express dispatch center,awaiting for departure】", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "GOOD's first scan of the parcel, at its US dispatch center."},
+    {"wording": "包裹已出GOOD快递海外集散中心，送往机场仓库 【Package departure from GOOD Express dispatch center to US airport airline dispatch center】", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "国际干线揽收【Package has arrived at the airline】", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "包裹已安排航班，飞往国内口岸【Airline departures from US airport to CHN】", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "【航空Air Transit】航班中转中【Flight transfer】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Its 【】 names the flight, not a country, so it stays in the wording."},
+    {"wording": "航班到达国内口岸，等待提货至监管仓【Package arrived at CHN,awaiting for customs clearance】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The flight has landed in China and the parcel waits to be taken to the bonded warehouse; clearance has not started."},
+    {"wording": "包裹信息审核完毕，等待安排通关【Package cleared from customs,awaiting for release】", "stage": "customs", "language": "zh", "confirmedBy": "live", "note": "The Chinese says the parcel's data has been checked and it waits for clearance, which the next row ends; the English says cleared."},
+    {"wording": "包裹通关完毕，等待国内快递揽收派送【Package released,awaiting for CHN local courier service for final delivery】", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "快递公司Dispatching delivery：顺丰速运,单号： 587056104998", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The hand-off to the courier that delivers in China, with its name and number; the page links the number to the courier's site. Any courier and number."},
+    {"wording": "顺丰速运 已收取快件，您的期待，我们定竭诚守护，不负所托。", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "SF Express takes the parcel from GOOD, mid-journey for the parcel. SF's rows follow in Chinese only."},
+    {"wording": "快件在【咸阳市渭城区咸阳机场店】完成分拣，准备发往 【西安咸阳转运中心】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "SF's depots fill the 【】, as in the two rows below."},
+    {"wording": "快件离开 【咸阳市渭城区咸阳机场店】，已在发往 【西安咸阳转运中心】 的路上", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "快件到达 【西安咸阳转运中心】", "stage": "in_transit", "language": "zh", "confirmedBy": "live"}
+  ]
+}

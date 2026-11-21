@@ -1,0 +1,89 @@
+{
+  "carrier": "good-express-us",
+  "records": [
+    {
+      "number": "GD66102101222US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/goodkuaidi.shtml",
+        "date": "2026-11-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "good-express-us"
+        ]
+      },
+      "note": "Kuaidi100's example in its GOOD Express search box. GOOD's tracker answers it with a parcel flown from the United States and handed to SF Express in China."
+    },
+    {
+      "number": "GD64110500516US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/goodkuaidi.shtml",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "good-express-us"
+        ]
+      },
+      "note": "Kuaidi100's earlier example on the same page, as search engines quote it. GOOD's tracker no longer knows it."
+    },
+    {
+      "number": "GD16112381234US",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "http://www.goodkuaidi.com/UploadIDPic",
+        "date": "2026-11-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "good-express-us"
+        ]
+      },
+      "note": "The example of a waybill number on GOOD's identity-card upload form. The tracker does not know it."
+    },
+    {
+      "number": "gd60032500427us",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "http://www.goodkuaidi.com/trackinginfo?trackginno=gd60032500427us",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "good-express-us"
+        ]
+      },
+      "note": "A tracking link to GOOD's tracker that a search engine indexed, in lower case. The tracker no longer knows it."
+    }
+  ]
+}
