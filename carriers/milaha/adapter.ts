@@ -87,12 +87,17 @@ export class MilahaTracker {
       const rest = containers.slice(MOVE_PANELS).map((container): CarrierEvent[] => (container.latest ? [container.latest] : []));
       return milahaResult([...moves, ...rest], rest.length > 0);
     };
+    // A failed container read ends the others still running, so none outlives its attempt.
+    const ending = (signal: AbortSignal, timeoutMs: number) => {
+      const sibling = new AbortController();
+      return attempt(AbortSignal.any([signal, sibling.signal]), timeoutMs).finally(() => sibling.abort());
+    };
     // An attempt that fails to reach the tracker, or hangs, gets one more in a new session:
     // the first gets half of the budget, so the retry fits in the rest.
     return runSteps({ carrier: 'milaha', budgetMs: context.budgetMs ?? 30_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => attempt(signal, firstAttemptMs(remainingMs)) },
-      networkRetryStep(({ signal, remainingMs }) => attempt(signal, remainingMs)),
+      { id: 'direct', run: ({ signal, remainingMs }) => ending(signal, firstAttemptMs(remainingMs)) },
+      networkRetryStep(({ signal, remainingMs }) => ending(signal, remainingMs)),
     ]);
   }
 }

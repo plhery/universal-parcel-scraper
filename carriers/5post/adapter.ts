@@ -50,7 +50,11 @@ export class FivePostTracker {
       if (list.status === 404) throw new TransportError(PROVIDER, '5Post no longer serves its order list');
       const orderId = fivePostOrderId(list.body, number);
       const urls = fivePostUrls(number, orderId);
-      const [details, history] = await Promise.all([this.#get(urls.details, signal, left()), this.#get(urls.history, signal, left())]);
+      // A failed request ends the other, so neither outlives the attempt.
+      const sibling = new AbortController();
+      const both = AbortSignal.any([signal, sibling.signal]);
+      const [details, history] = await Promise.all([this.#get(urls.details, both, left()), this.#get(urls.history, both, left())])
+        .finally(() => sibling.abort());
       // The order was just listed, so losing it now is no answer either way.
       if (details.status === 404 || history.status === 404) throw new IndeterminateError(PROVIDER, '5Post did not return the order it listed');
       return parseFivePost(details.body, history.body, orderId, number);

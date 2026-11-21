@@ -52,10 +52,15 @@ export class OceanNetworkExpressTracker {
       }
       return oneResult(search, read);
     };
+    // A failed container read ends the others still running, so none outlives its attempt.
+    const ending = (signal: AbortSignal, timeoutMs: number) => {
+      const sibling = new AbortController();
+      return read(AbortSignal.any([signal, sibling.signal]), timeoutMs).finally(() => sibling.abort());
+    };
     return runSteps({ carrier: 'ocean-network-express', budgetMs: context.budgetMs ?? 25_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => read(signal, firstAttemptMs(remainingMs)) },
-      networkRetryStep(({ signal, remainingMs }) => read(signal, remainingMs)),
+      { id: 'direct', run: ({ signal, remainingMs }) => ending(signal, firstAttemptMs(remainingMs)) },
+      networkRetryStep(({ signal, remainingMs }) => ending(signal, remainingMs)),
     ]);
   }
 }

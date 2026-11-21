@@ -51,11 +51,14 @@ export class KuehneNagelTracker {
     const left = () => Math.max(1, Math.floor(deadline - performance.now()));
     const match = await this.search(number, signal, left());
     const shipment = `${SHIPMENTS_URL}/${encodeURIComponent(match.id)}`;
-    // The page asks for the route and the notices together.
+    // The page asks for the route and the notices together. A failed request ends the other, so
+    // neither outlives the attempt.
+    const sibling = new AbortController();
+    const both = AbortSignal.any([signal, sibling.signal]);
     const [routing, information] = await Promise.all([
-      this.json(`${shipment}/shipment-routing`, signal, left()),
-      this.json(`${shipment}/information-milestones`, signal, left()),
-    ]);
+      this.json(`${shipment}/shipment-routing`, both, left()),
+      this.json(`${shipment}/information-milestones`, both, left()),
+    ]).finally(() => sibling.abort());
     return parseKuehneNagel(routing, information, match, number);
   }
 
