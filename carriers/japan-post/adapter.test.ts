@@ -84,6 +84,18 @@ describe('Japan Post result projection', () => {
     expect(result.delivered_at ?? null).toBe(stage === 'delivered' ? '2026-09-03T06:02:00Z' : null);
   });
 
+  it('reads the arrival at a collection point as ready for pickup and clears the estimate', () => {
+    const $ = load(fixture('domestic'));
+    const history = $('table[summary="履歴情報"]');
+    const pair = history.find('tr').slice(-2).clone();
+    pair.first().children('td').eq(0).text('09/03/2026 15:02');
+    pair.first().children('td').eq(1).text('Item arrival at collection point for pick-up');
+    history.append(pair);
+    const result = parse($.html(), '000000000005');
+    expect(result.current_stage).toBe('ready_for_pickup');
+    expect(result.expected_delivery).toBeNull();
+  });
+
   it.each(['missing-value-row', 'uneven-pair', 'second-item-number', 'value-in-heading-row'])('rejects a %s details table', (mode) => {
     const $ = load(fixture('domestic'));
     const rows = $('table[summary="配達状況詳細"] tr');

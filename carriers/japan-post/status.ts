@@ -20,6 +20,8 @@ const STATUS = new Map<string, ClassifiedStatus>([
   ['Item held at delivery depot/delivery office', { status: 'in_transit', stage: 'in_transit' }],
   ['Processing at delivery Post Office', { status: 'in_transit', stage: 'in_transit' }],
   ['Item out for physical delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  // The destination post's counter or pickup point has the item for the recipient to collect.
+  ['Item arrival at collection point for pick-up', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
   ['Final delivery', { status: 'delivered', stage: 'delivered' }],
   ['Final delivery - Collected at counter', { status: 'delivered', stage: 'delivered' }],
   // Held at the delivery office: after a missed delivery, for counter

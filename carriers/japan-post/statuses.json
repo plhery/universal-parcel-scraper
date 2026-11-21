@@ -109,6 +109,14 @@
       "firstSeen": "2026-09-26"
     },
     {
+      "wording": "Item arrival at collection point for pick-up",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The destination post's collection point has the item for the recipient, between its delivery office's processing and the final delivery."
+    },
+    {
       "wording": "Final delivery - Collected at counter",
       "language": "en",
       "stage": "delivered",
