@@ -231,6 +231,9 @@ const RELAYED_STAGES: ReadonlyArray<readonly [RegExp, Stage]> = [
   // Track123 can give the landing twice, the second time with where it landed: "飞机进港，飞机进港（到达中转地）".
   [/^飞机进港(?:，飞机进港[（(][^()（）]{1,20}[)）])?$/u, 'in_transit'],
   [/^到达(?:寄达地|境外经转局)$/u, 'in_transit'],
+  // A transfer on the way, which China Post's own English gives as In transit: on the trunk route, within the
+  // country, or at the destination with where ("目的地转运【…】", as Track123 relays it).
+  [/^(?:干线中转|邮件在该国内转运中|目的地转运(?:【[^【】]+】)?)$/u, 'in_transit'],
   [/^(?:承运商接收|抵达)$/u, 'in_transit'],
   [/^送交出口海关$/u, 'customs'],
   [/^出口海关\/放行$/u, 'in_transit'],

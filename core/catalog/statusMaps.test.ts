@@ -1936,7 +1936,7 @@ describe("universal providers' answers", () => {
       ['Shipment handover by sender', 'accepted'],
       ['Received at terminal', 'in_transit'], ['Shipment in warehouse - awaiting delivery appointment', 'in_transit'],
       ['International shipment release - Import', 'in_transit'], ['International shipment release - Export', 'in_transit'],
-      ['Restricted item - Battery item', 'in_transit'],
+      ['Restricted item - Battery item', 'in_transit'], ['Cross-solution reroute', 'in_transit'],
       ['Package information is created in the system', 'registered'],
       ['Package Received with Origin Scan warehouse (Exampleton, ON)', 'accepted'],
       ['Package is received at a Straightship station (Exampleton, ON)', 'in_transit'],

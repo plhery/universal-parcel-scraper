@@ -308,4 +308,12 @@ describe('China Post adapter', () => {
     // Its English is the landing's, as China Post's own row at the same minute shows it.
     expect(chinaPostEnglish('飞机进港，飞机进港（到达中转地）')).toBe('Plane has landed');
   });
+
+  it('reads a transfer on the way relayed in Chinese in transit, with or without where', () => {
+    for (const wording of ['目的地转运【示例】', '目的地转运', '干线中转', '邮件在该国内转运中']) {
+      expect(chinaPostRelayedStage(wording), wording).toBe('in_transit');
+    }
+    expect(chinaPostEnglish('目的地转运【示例】')).toBe('In transit');
+    expect(chinaPostRelayedStage('目的地转运失败')).toBeUndefined();
+  });
 });
