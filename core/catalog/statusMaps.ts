@@ -1,4 +1,3 @@
-import { statusMap as milaha } from '../../carriers/milaha/status.js';
 import { statusMap as cescoLogistics } from '../../carriers/cesco-logistics/status.js';
 import { statusMap as rosaliaExpress } from '../../carriers/rosalia-express/status.js';
 import { statusMap as icasaCargo } from '../../carriers/icasa-cargo/status.js';
@@ -246,7 +245,6 @@ import { statusMap as cyprusPost } from '../../carriers/cyprus-post/status.js';
 import { statusMap as dExpress } from '../../carriers/d-express/status.js';
 import { statusMap as daiPost } from '../../carriers/dai-post/status.js';
 import { statusMap as danskeFragtmaend } from '../../carriers/danske-fragtmaend/status.js';
-import { statusMap as danx } from '../../carriers/danx/status.js';
 import { statusMap as dayone } from '../../carriers/dayone/status.js';
 import { statusMap as daylightTransport } from '../../carriers/daylight-transport/status.js';
 import { statusMap as dayRoss } from '../../carriers/day-ross/status.js';
@@ -371,7 +369,6 @@ import { statusMap as foxpost } from '../../carriers/foxpost/status.js';
 import { statusMap as franchExpress } from '../../carriers/franch-express/status.js';
 import { statusMap as fukuyama } from '../../carriers/fukuyama/status.js';
 import { statusMap as gaash } from '../../carriers/gaash/status.js';
-import { statusMap as gaintLogistic } from '../../carriers/gaint-logistic/status.js';
 import { statusMap as garudavega } from '../../carriers/garudavega/status.js';
 import { statusMap as gati } from '../../carriers/gati/status.js';
 import { statusMap as gdex } from '../../carriers/gdex/status.js';
@@ -959,6 +956,12 @@ import { statusMap as acplCargo } from '../../carriers/acpl-cargo/status.js';
 import { statusMap as jtlExpressId } from '../../carriers/jtl-express-id/status.js';
 import { statusMap as twentyOneExpress } from '../../carriers/21-express-id/status.js';
 import { statusMap as spedire } from '../../carriers/spedire/status.js';
+import { statusMap as danx } from '../../carriers/danx/status.js';
+import { statusMap as topparcel } from '../../carriers/topparcel/status.js';
+import { statusMap as usendChile } from '../../carriers/usend-chile/status.js';
+import { statusMap as phantomCouriers } from '../../carriers/phantom-couriers/status.js';
+import { statusMap as gaintLogistic } from '../../carriers/gaint-logistic/status.js';
+import { statusMap as milaha } from '../../carriers/milaha/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -966,6 +969,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  danx, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
   'wan-hai': wanHai, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,
   'ocean-network-express': oceanNetworkExpress, 'cosco-shipping-lines': coscoShippingLines, oocl, maersk, msc, hmm, zim, 'yang-ming': yangMing,
   'bir-gunde-kargo': birGundeKargo, golilla, 'yol-kargo': yolKargo, matson, 'skif-cargo': skifCargo, 'hi-trans': hiTrans,
@@ -1009,7 +1013,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'time-matters': timeMatters,
   'tsb-es': tsbEs,
   '360lion': lion360,
-  'memphis-courier': memphisCourier, milaha,
+  'memphis-courier': memphisCourier,
   'xpress-logistics-lu': xpressLogisticsLu,
   'zes-express': zesExpress,
   whwdt,
@@ -1060,7 +1064,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'copa-courier': copaCourier, corre,
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain,
   'courier-center': courierCenter, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
-  'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, danx, dao, 'day-ross': dayRoss,
+  'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'day-ross': dayRoss,
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, dellin, delnext, deppon, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
   'dhl-freight': dhlFreight, dhlink, direx, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, dongdu, dpd,
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
@@ -1074,7 +1078,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'flash-express': flashExpress,
   'flash-express-ph': flashExpressPh,
   'flashbird-ca': flashbirdCa,
-  fleetex, fleetoptics, flippost, fmx, followmont, 'fm-transportes': fmTransportes, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, gaash, 'gaint-logistic': gaintLogistic, garudavega, gati, gdex,
+  fleetex, fleetoptics, flippost, fmx, followmont, 'fm-transportes': fmTransportes, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, gaash, garudavega, gati, gdex,
   'gebrueder-weiss': gebruederWeiss, geis, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-nl': glsNl, 'gls-us': glsUs,
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
