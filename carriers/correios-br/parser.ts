@@ -115,7 +115,11 @@ export function parseCorreios(payload: unknown, number: string, requestBound = f
     if (isCorreiosCaptchaError(payload)) throw new ChallengeError('Correios', detail);
     // An echoed identity takes precedence; otherwise only the bound single-object query can prove absence.
     const bound = payload.codObjeto === undefined ? requestBound : payload.codObjeto === requested;
-    if (bound && /^objeto não encontrado\.?$/i.test(message)) throw new NotFoundError('Correios', detail);
+    // "Objeto não encontrado." and "Não localizamos informações para o código informado. Verifique se o código foi
+    // digitado corretamente. Se o objeto foi postado recentemente…" both say the portal knows no such object.
+    if (bound && /^(?:objeto não encontrado\.?$|não localizamos informações para o código informado\.)/i.test(message)) {
+      throw new NotFoundError('Correios', detail);
+    }
     throw new IndeterminateError('Correios', detail);
   }
   if (payload.codObjeto !== requested) throw new SchemaError('Correios', 'Correios returned a different tracking object');

@@ -333,6 +333,14 @@ describe('Correios session and transport', () => {
     await expect(missing.tracker.fetch(NUMBER)).rejects.toMatchObject({
       kind: 'not_found', message: 'Correios: Objeto não encontrado.',
     });
+    const unknown = 'Não localizamos informações para o código informado. Verifique se o código foi digitado corretamente. '
+      + 'Se o objeto foi postado recentemente, as informações podem estar em processamento e ficarão disponíveis em breve.';
+    const unlisted = portal({ erro: true, mensagem: unknown });
+    await expect(unlisted.tracker.fetch(NUMBER)).rejects.toMatchObject({
+      kind: 'not_found', message: expect.stringMatching(/^Correios: Não localizamos informações para o código informado\./),
+    });
+    const elsewhere = portal({ erro: true, codObjeto: 'different-object', mensagem: unknown });
+    await expect(elsewhere.tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
     const recorder = { step: vi.fn(), lookup: vi.fn() };
     const other = portal({ erro: 'true', mensagem: `Período inválido: ${NUMBER}` }, recorder);
     await expect(other.tracker.fetch(NUMBER)).rejects.toMatchObject({
