@@ -223,6 +223,14 @@
       "note": "Status 3178 in the Transit category: the item bagged for its line after the sorting centre; a universal provider relays it without the category."
     },
     {
+      "wording": "The item has arrived in the country of destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Status 134 in the Arrived category: the item in its destination country, before the post there receives it; a universal provider relays it without the category."
+    },
+    {
       "wording": "The shipment is handed over in bulk final acceptance of the item to be confirmed",
       "language": "en",
       "stage": "accepted",

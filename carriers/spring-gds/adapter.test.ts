@@ -800,6 +800,8 @@ describe('PostNL domestic tracker', () => {
     expect(statusMap.stage('3116/transit', 'Arrive at transit country or district')).toBe('accepted');
     expect(statusMap.stage('173/transit', 'Synthetic relayed wording')).toBe('accepted');
     expect(statusMap.stage('301/transit', 'Arrive at transit country or district')).toBe('in_transit');
+    // The destination country's arrival (status 134) relayed without its category.
+    expect(statusMap.stage(null, 'The item has arrived in the country of destination.')).toBe('in_transit');
     expect(postNLStatus('Transit', 'Synthetic relayed wording', '3116')).toEqual({ status: 'in_transit', stage: 'accepted' });
   });
 

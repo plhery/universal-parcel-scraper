@@ -116,7 +116,8 @@ export function postNLDomesticStage(description: string): Stage | undefined {
 
 /**
  * International item scans a universal provider relays without their category, lowercase without
- * final punctuation: statuses 3070, 8, 101 and 3178, which the Transit category stages.
+ * final punctuation: statuses 3070, 8, 101 and 3178, which the Transit category stages, and 134,
+ * which the Arrived category stages.
  */
 const RELAYED_STAGE = new Map<string, Stage>([
   ['the item is received by postnl', 'in_transit'],
@@ -124,6 +125,8 @@ const RELAYED_STAGE = new Map<string, Stage>([
   ['the item is processed at the postnl sorting center', 'in_transit'],
   // The item bagged for its line after the sorting centre (status 3178).
   ['item is nested to commercial bag', 'in_transit'],
+  // The item in its destination country, before the post there receives it (status 134).
+  ['the item has arrived in the country of destination', 'in_transit'],
   // FedEx International Connect's scans on the line it carries, as its own map reads its codes 198, 200 and 222.
   ['accepted at fedex processing centre', 'accepted'],
   ['shipment manifested for departure', 'in_transit'],
