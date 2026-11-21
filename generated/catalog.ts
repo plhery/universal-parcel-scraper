@@ -8532,6 +8532,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "amass": {
+    "displayName": "AMASS",
+    "color": "#182689",
+    "aliases": [
+      "AMASS Freight",
+      "美设国际",
+      "美设国际物流集团股份有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "amass"
+    },
+    "canaryUrl": "https://www.amassfreight.com/trace/",
+    "trackingSearchUrl": "https://www.amassfreight.com/trace/",
+    "trackingSiteName": "订单状态跟踪",
+    "helpUrl": "https://www.amassfreight.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "amazon-order": {
     "displayName": "Amazon order",
     "displayNames": {
@@ -67939,6 +67963,7 @@ export const CARRIER_IDS = [
   "altex-curier",
   "am-home-delivery",
   "amalgamated-distribution",
+  "amass",
   "amazon-order",
   "ambro-express",
   "ameex",
@@ -69900,6 +69925,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "altex-curier": [],
   "am-home-delivery": [],
   "amalgamated-distribution": [],
+  "amass": [],
   "amazon-order": [],
   "ambro-express": [],
   "ameex": [],

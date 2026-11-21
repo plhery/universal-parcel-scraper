@@ -1,0 +1,25 @@
+{
+  "carrier": "amass",
+  "entries": [
+    {"wording": "Received order", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "AMASS accepted the booking; the cargo is not with it yet."},
+    {"wording": "Paperwork Received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper's export customs documents are complete."},
+    {"wording": "Declaration Information Key-in In Advance", "stage": null, "language": "en", "confirmedBy": "live", "note": "The export declaration was entered ahead of the cargo; a document step."},
+    {"wording": "B/L Confirming", "stage": null, "language": "en", "confirmedBy": "live", "note": "The house bill's draft is with the shipper; a document step."},
+    {"wording": "HBL Confirmed", "stage": null, "language": "en", "confirmedBy": "live", "note": "The house bill's content is settled; a document step."},
+    {"wording": "HBL Released", "stage": null, "language": "en", "confirmedBy": "live", "note": "The house bill was approved; a document step."},
+    {"wording": "Locked (LCL)", "stage": null, "language": "en", "confirmedBy": "live", "note": "The consolidated house bill was locked; a document step."},
+    {"wording": "HBL Sent", "stage": null, "language": "en", "confirmedBy": "live", "note": "The house bill was issued or posted; a document step."},
+    {"wording": "Goods Received in Warehouse", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The cargo entered AMASS's warehouse at origin."},
+    {"wording": "Container Loading Completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The cargo was packed into its container."},
+    {"wording": "Release declaration form", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Export customs released the declaration."},
+    {"wording": "Released By Customs", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Export customs released the cargo."},
+    {"wording": "Container Transferred to Port Completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The container reached the port of loading."},
+    {"wording": "Loaded On Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The container was loaded on the vessel."},
+    {"wording": "Vessel Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel left the port of loading."},
+    {"wording": "Vessel Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel reached the port of discharge."},
+    {"wording": "Unloaded From Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The container was discharged at the port of discharge."},
+    {"wording": "D/O released", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivery order was issued against the bill; a document step at destination that does not say the cargo can be collected."},
+    {"wording": "Picked up", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee collected the cargo at destination."},
+    {"wording": "Have taken delivery", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The step list's name for the consignee's collection."}
+  ]
+}
