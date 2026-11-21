@@ -816,6 +816,11 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
       shipment.trackInfos = [row('2026-05-19 08:00:00', 1002, 'Your order has arrived at Sample DS'), receipt, order];
     }), DELIVERED);
     expect(received.events!.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+    // A store sending the parcel out, without a code, moves nothing before the receipt.
+    const stored = parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos = [receipt, { ...row('2026-05-17 23:01:00', 0, 'Out of stores'), trackStage: null }, order];
+    }), DELIVERED);
+    expect(stored.events!.map((event) => event.stage)).toEqual(['accepted', undefined, 'registered']);
     // After a flight it is the first centre in the destination country.
     const flown = parseImile(changed('delivered', (shipment) => {
       shipment.trackInfos = [receipt, row('2026-05-17 06:40:00', 1002, '【HKG】The flight has taken off.'), order];

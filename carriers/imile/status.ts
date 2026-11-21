@@ -44,6 +44,9 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['your order has been picked up', 'accepted'],
   // The courier's collection from the sender called off, before a driver is assigned again: still with the sender.
   ['the pick-up task has been cancelled', null],
+  // A store sending the parcel out, logged without a code before iMile's first centre receives it: whose store, the
+  // reply does not say, so the receipt that follows is the acceptance.
+  ['out of stores', null],
   ['your order has been received', 'in_transit'],
   ['received', 'in_transit'],
   ['your order has arrived at', 'in_transit'],
@@ -220,6 +223,7 @@ export const statusMap: CarrierStatusMap = {
     : imileMappedStage(code ?? '', wording) ?? undefined),
   gaps: [
     { wording: 'the pick-up task has been cancelled.', note: 'The courier\'s collection from the sender called off, before a pickup driver is assigned again: the parcel is still with the sender, so it keeps the stage of the scan before it.' },
+    { wording: 'out of stores', note: 'A store sending the parcel out, logged without a code before iMile\'s first centre receives it; the reply does not say the store is iMile\'s, so the parcel keeps its order record\'s stage and the receipt that follows is its acceptance.' },
     { code: DELIVERY, wording: 'lost order', note: 'A driver\'s reason during a delivery run, followed by the attempt\'s end; the parcel it was seen on went out again and was delivered, so it does not establish a loss.' },
     { code: DELIVERY, wording: 'the delivery method has been confirmed with the recipient as self-pickup.', note: 'The recipient chose to collect the parcel after a failed attempt; it keeps the stage of the scan before it until the pickup point has the parcel.' },
     { code: DELIVERY, wording: 'scheduled delivery', note: 'A delivery booked again, without its day, between a round out for delivery and the attempt\'s end or the next round: it moves nothing, so it keeps the stage of the scan before it.' },
