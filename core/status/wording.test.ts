@@ -1094,6 +1094,8 @@ describe('classifyWording', () => {
       ['Manifest received', 'registered'], ['Scanned to Container', 'in_transit'], ['Misroute', 'in_transit'], ['Mis-routed', 'in_transit'],
       // YunExpress's export declaration in China, as its own map reads it.
       ['The country of origin commences customs declaration.', 'in_transit'],
+      // The destination's cargo terminal done with a post line's parcel after its clearance, as Ship24 relays TopYou's line.
+      ['Cargo handling completed, awaiting final delivery', 'in_transit'], ['Cargo handling completed', 'in_transit'],
       // An export clearance started or under way is a routine step before the flight; a hold there is customs.
       ['Export customs clearance started', 'in_transit'], ['Export declaration in progress.', 'in_transit'],
       ['Export Custom Clearance Processing and Flight Booking', 'in_transit'],

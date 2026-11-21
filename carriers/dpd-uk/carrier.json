@@ -19,8 +19,10 @@
   "tracking": {
     "mode": "automatic",
     "adapter": "dpd-uk",
+    "browser": true,
     "steps": [
-      "direct"
+      "direct",
+      "trawl"
     ],
     "recognition": {
       "rank": 858

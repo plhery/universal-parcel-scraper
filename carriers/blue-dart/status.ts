@@ -14,6 +14,8 @@ const vocabulary: Record<string, ClassifiedStatus> = {
   'clubbed canvas bag scan': { status: 'in_transit', stage: 'in_transit' },
   // Between a hub's arrival and its onward connection.
   'paper work inscan': { status: 'in_transit', stage: 'in_transit' },
+  // The hub's paperwork done, at the minute of that inscan, before the onward connection.
+  'process completed, ready to despatch': { status: 'in_transit', stage: 'in_transit' },
   // At the delivery office after its cut-off, before the next day's round.
   'delivery scheduled for next working day': { status: 'in_transit', stage: 'in_transit' },
   'delivery delayed': { status: 'exception', stage: 'exception' },

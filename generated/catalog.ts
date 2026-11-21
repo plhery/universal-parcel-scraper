@@ -4872,6 +4872,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "australia-post",
       "recognitionRank": 500,
+      "browserRecognitionRank": 500,
+      "browserRecognitionPattern": "^(?:\\d{2}(?!\\d{3})[A-Z0-9]{3}\\d{7}|(?=[A-Z0-9]{0,2}[A-Z])[A-Z0-9]{3}Z\\d{8}|R\\d{24})$",
       "localClocks": true,
       "browser": true
     },
@@ -21205,7 +21207,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "dpd-uk",
       "recognitionRank": 858,
-      "localClocks": true
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://track.dpd.co.uk/",
     "trackingUrlTemplate": "https://track.dpd.co.uk/?reference={trackingNumber}",

@@ -47,6 +47,9 @@ browser is needed, and no portal link is published.
   return, the refusal included, are returned: the delivery that follows is the one back to the
   sender. Its notes of the recipient's preferred location and of another address the recipient
   chose move nothing: the newest row that moves the parcel leads it.
+- The line into Spain ends with CTT Express. The tracker copies CTT's pre-advice ("Pendiente de
+  recepción en CTT Express") and the record's tracking number becomes CTT's reference; the parcel
+  goes to CTT Express when CTT's own high-confidence rule claims it whole.
 - The line into the United States ends with UPS. The tracker copies UPS's rows in Chinese, and
   they show UPS's English. They come on UPS's wall clock at the scan's place: a delivery read on
   Beijing time would fall before dawn there. Rows in UPS's words, its note that the parcel goes to

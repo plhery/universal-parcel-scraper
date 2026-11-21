@@ -546,6 +546,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^lm carrier ?: ?\[[^[\]]{1,60}\] ?, ?lm tracking no\.? ?: ?\[[a-z0-9]{4,40}\]$/.test(text)) return 'in_transit';
   // Cleared to leave the country of origin, whoever then carries it on.
   if (/\bready to leave (?:the )?foreign territory\b/.test(text)) return 'in_transit';
+  // The destination's cargo terminal done with a post line's parcel after its import clearance, as Ship24 relays
+  // TopYou's line: "Cargo handling completed, awaiting final delivery".
+  if (/^cargo handling completed(?:, awaiting final delivery)?\.?$/.test(text)) return 'in_transit';
   // YunExpress's export declaration in China, read as its own map reads it wherever a provider relays it: the
   // parcel goes on its way, held by no customs, as the release that follows reads.
   if (/^the country of origin commences customs declaration\.?$/.test(text)) return 'in_transit';

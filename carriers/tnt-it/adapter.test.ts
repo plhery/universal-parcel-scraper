@@ -110,7 +110,7 @@ describe('TNT Italy HTTP adapter', () => {
   it('rejects a changed reply', () => {
     const transit = fixture('in-transit');
     for (const xml of [
-      '', 'not xml', transit.slice(0, 2000), transit.replace('traOU.dtd', 'other.dtd'),
+      'not xml', transit.slice(0, 2000), transit.replace('traOU.dtd', 'other.dtd'),
       transit.replaceAll('ResultSet>', 'Results>'),
       withConsignments(), fixture('not-found').replace('</ResultSet>', `${/<RuntimeError>[\s\S]*<\/RuntimeError>/.exec(fixture('not-found'))![0]}</ResultSet>`),
       withConsignments(...Array.from({ length: 21 }, () => consignment(transit))),
@@ -136,6 +136,8 @@ describe('TNT Italy HTTP adapter', () => {
     await expect(lookup(DENIED, { status: 403 })).rejects.toMatchObject({ kind: 'challenge' });
     await expect(lookup(DENIED)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(lookup('<html><title>TNT - Tracking</title></html>')).rejects.toMatchObject({ kind: 'schema' });
+    // A blank reply is the tracker down, not a changed reply.
+    await expect(lookup('')).rejects.toMatchObject({ kind: 'indeterminate', message: 'TNT Italy returned an empty reply' });
   });
 
   it.each([[429, 'rate_limited'], [500, 'indeterminate'], [503, 'maintenance']] as const)(

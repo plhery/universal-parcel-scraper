@@ -21,6 +21,7 @@ COPY helper-context.mjs /app/packages/tiers/src/utils/helper-context.mjs
 COPY lbc-browser.mjs /app/packages/tiers/src/utils/lbc-browser.mjs
 COPY aeropost-browser.mjs /app/packages/tiers/src/utils/aeropost-browser.mjs
 COPY evri-uk-browser.mjs /app/packages/tiers/src/utils/evri-uk-browser.mjs
+COPY dpd-uk-browser.mjs /app/packages/tiers/src/utils/dpd-uk-browser.mjs
 COPY usps-tracking.mjs /app/packages/tiers/src/utils/usps-tracking.mjs
 COPY swiftx-slider.mjs /app/packages/tiers/src/utils/swiftx-slider.mjs
 COPY swiftx-slider.py /app/packages/tiers/src/utils/swiftx-slider.py

@@ -223,6 +223,13 @@ describe('TopYou HTTP adapter', () => {
       { time: '2026-04-19T07:23:31+08:00', local_time: '2026-04-19T07:23:31', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier', stage: 'in_transit' },
       { time: '2026-04-18T07:23:31+08:00', local_time: '2026-04-18T07:23:31', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier', stage: 'in_transit' },
     ]);
+    // And its "Parcel in transit" two days after the scan before it: read on Israel's clock, it came after the lookup that found it.
+    const waited = changed('in-transit', (track) => {
+      track.trackInfo!.push({ ...track.trackInfo!.at(-1)!, id: '900040', changeDate: '2026/04/20 06:04:07', timeZone: null, location: null,
+        record: 'Parcel in transit', status: '20' });
+    });
+    expect(parseTopyou(waited, IN_TRANSIT).events![0]).toMatchObject({ time: '2026-04-20T06:04:07+08:00', local_time: '2026-04-20T06:04:07',
+      time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier', stage: 'in_transit' });
     // The delivery carrier's scans without an offset keep their wall clock.
     const relayed = changed('in-transit', (track) => {
       track.trackInfo!.push({ ...track.trackInfo!.at(-1)!, id: '900010', changeDate: '2026/04/18 08:00:00', timeZone: null, record: 'Arrived at USPS Regional Facility', status: '15' });

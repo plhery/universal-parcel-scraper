@@ -1,5 +1,5 @@
 
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
@@ -587,5 +587,10 @@ export const adapter: AdapterFactory = (environment) => {
   const gateway = new AustraliaPostTracker({ trawl: null, fetcher: environment.fetcher, recorder: environment.recorder });
   return { id: 'australia-post', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => gateway.fetch(number, { ...context, budgetMs: Math.min(context?.budgetMs ?? 45_000, 60_000) }),
-      () => accepted(() => normalizeAustraliaPostNumber(number))) };
+      () => accepted(() => normalizeAustraliaPostNumber(number))),
+    // The gateway refuses plain HTTP from many networks, so the opt-in browser phase reads the parcel as a lookup
+    // does: only a dated record confirms the number.
+    recognizeWithBrowser: (number, context) => (accepted(() => normalizeAustraliaPostNumber(number))
+      ? recognizeFromBrowserLookup(() => tracker.fetch(number, { ...context, budgetMs: Math.min(context?.budgetMs ?? 45_000, 60_000) }))
+      : Promise.resolve({ known: false, lastActivityAt: null })) };
 };

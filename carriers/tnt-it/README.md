@@ -47,6 +47,9 @@ consignments belong to [TNT](../tnt/README.md). Tracked through the lookup its t
   waybills from TNT Italy branches with those letters reach this adapter only when filed under
   TNT Italy.
 - Older shipments drop out of the tracker, which then answers `00015` as for an unknown waybill.
+- While the tracker is down, as in its night maintenance, the lookup answers HTTP 200 with an empty
+  body for every waybill, the official page included; that is an indeterminate failure, not a
+  changed reply.
 
 ## Numbers
 

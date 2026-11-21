@@ -49,7 +49,7 @@ const OWN_WITHOUT_OFFSET = new RegExp(`^(?:${[
   'shipment completed the customs clearance process at destination',
   'airline arrived at (?:destination|transit) country(?: or district)?', 'airline departed from transit or district country',
   '(?:export|import) clearance success', 'arrive at destination country', 'arrived in destination country/region',
-  'the destination port cargo terminal notifies the delivery',
+  'the destination port cargo terminal notifies the delivery', 'parcel in transit',
 ].join('|')})\\.?$`, 'i');
 const OWN_ZONE = 'Asia/Shanghai';
 

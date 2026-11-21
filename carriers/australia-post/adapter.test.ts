@@ -6,6 +6,7 @@ import { NoHistoryError } from '../../core/errors/index.js';
 import { DIRECT_REST_MS } from '../../core/runner/directRest.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { australiaPostStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -541,6 +542,25 @@ describe('Australia Post recognition', () => {
     fetcher.mockClear();
     await expect(instance.recognize!('ABC123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('confirms a number in the opt-in browser phase through the lookup the gateway refuses, for its own shapes', async () => {
+    const browser = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(service()));
+    const instance = adapter({ trawl: browserService(browser), fetcher: refused(), recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
+    await expect(instance.recognizeWithBrowser!(NUMBER)).resolves.toMatchObject({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z',
+      result: { status: 'delivered' } });
+    expect(browser).toHaveBeenCalled();
+    const unknown = empty(); unknown[0].trackingIds = [NUMBER];
+    browser.mockImplementation(async () => Response.json(service([capture(unknown)])));
+    await expect(instance.recognizeWithBrowser!(NUMBER)).resolves.toEqual({ known: false, lastActivityAt: null });
+    browser.mockClear();
+    await expect(instance.recognizeWithBrowser!('ABC123')).resolves.toEqual({ known: false, lastActivityAt: null });
+    expect(browser).not.toHaveBeenCalled();
+    // Consignments with a lettered location ID, StarTrack consignments and R with 24 digits; not the ten-character
+    // consignment or the prepaid barcode, whose shapes other carriers' numbers share.
+    const asked = (number: string) => recognitionCandidates(number, { phase: 'browser' }).some(({ carrier }) => carrier === 'australia-post');
+    for (const number of ['33ZZZ0000001', '331ZZ0000001', 'ZZZZ00000001', 'R987654321098765432109876']) expect(asked(number), number).toBe(true);
+    for (const number of ['ZZZ0000001', '0100000000000000000000', '331230000001']) expect(asked(number), number).toBe(false);
   });
 
   it('names itself for any number in its tracking links, including the search route in the fragment', () => {

@@ -12,6 +12,19 @@ postcode to obtain a parcel handle, then reads `/parcels/{handle}` and
 CAPTCHA token. The adapter validates the parcel number in both lookup replies
 before reading history under the returned handle.
 
+The API sometimes refuses a read with HTTP 401 or 403 while it answers others.
+A refusal names the read it stopped and DPD UK's notice, or an HTML page in its
+place. With a browser service configured, the `trawl` step then opens the public
+tracker for the whole number and keeps the page's own three reads, through
+[a TRAWL helper](../../trawl/dpd-uk-browser.mjs): the browser decodes their
+compressed replies and the page reads detail and events one after the other,
+which TRAWL's stock capture does not keep. The page opens the parcel only after
+an invisible reCAPTCHA, which can turn into an image challenge, and uses its
+token only for a postcode login, so the helper opens the page's parcel route for
+the issued code itself. The adapter checks those replies as over HTTP. A 429 from the API blocks the address for up to an hour and the
+browser service shares it, so a rate limit opens no browser. Recognition stays
+on HTTP.
+
 ## Notes
 
 - A number typed with the label's check character is looked up by its
@@ -83,3 +96,7 @@ replacement for the public tracking reads above.
 ```sh
 DPD_UK_TRACKING_NUMBER=... DPD_UK_UNKNOWN_NUMBER=... npm run test:carriers:live -- carriers/dpd-uk
 ```
+
+With `FLARESOLVERR_URL` set to a TRAWL built from [trawl](../../trawl), the
+live test also reads the tracking number through the browser after refusing the
+direct reads.

@@ -1081,6 +1081,7 @@
     {"wording": "Votre colis est en transit sur nos plateformes logistiques.", "language": "fr", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Votre Colissimo est en transit sur nos plateformes logistiques.", "language": "fr", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Arrived at Pickup Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "Delegación de tránsito", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "CTT Express's transit branch, relayed for a parcel it delivers, at the minute of CTT Express's own \"Enviado\"."}
+    {"wording": "Delegación de tránsito", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "CTT Express's transit branch, relayed for a parcel it delivers, at the minute of CTT Express's own \"Enviado\"."},
+    {"wording": "Arrived at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The first scan after the label, hours before the departure scan."}
   ]
 }
