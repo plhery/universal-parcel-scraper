@@ -3,8 +3,11 @@
 Australia Post articles and consignments (10–34 alphanumeric characters), tracked through the
 anonymous shipments API behind the official [tracking app](https://auspost.com.au/mypost/track/).
 Plain HTTP answers when the request looks like the official Android app's; the TRAWL browser
-service takes over when it is refused. Recognition asks the same API over plain HTTP only, so a
-refusal there leaves the number unchecked instead of starting the browser.
+service takes over when it is refused. HTTP recognition asks the same API over plain HTTP only, so a
+refusal there starts no browser. The gateway refuses plain HTTP from many networks, so the opt-in
+browser recognition reads the parcel as a lookup does, for the consignment shapes its rules suggest
+Australia Post for first (a location ID with a letter after two digits, StarTrack's) and `R` and
+twenty-four digits. Only a dated record confirms the number.
 
 ## How it works
 
