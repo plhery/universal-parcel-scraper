@@ -1,0 +1,146 @@
+{
+  "carrier": "daytona-express",
+  "records": [
+    {
+      "number": "572764710",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/daytona-express/demora-de-entrega_CkjL7EyIG-pxaArm/",
+        "date": "2024-10-28",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "protocol (HAWB)",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "A customer in Salvador gives it as the number of Daytona Express's pickup of their computer for a shop. The tracker holds it from the pickup request through the delivery in Joinville; the parser fixture is its reply."
+    },
+    {
+      "number": "572517660",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/daytona-express/sumiram-com-minha-encomenda_-VL-UdfP4wCK8cxS/",
+        "date": "2024-03-11",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "protocol (HAWB)",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A customer in Rio de Janeiro quotes it as the tracking code, written as HAWB and the number. The tracker lists two delivery scans for it; the parser fixture is its reply."
+    },
+    {
+      "number": "572496211",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/daytona-express/atraso-na-entrega_j67e6HZEma4o0vQ7/",
+        "date": "2024-02-19",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A customer in Guarulhos calls it the order number. The tracker answers it as a HAWB delivered after a booked delivery day."
+    },
+    {
+      "number": "572473116",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/daytona-express/atraso-na-entrega_YeaEoTUQ8VdHAOAe/",
+        "date": "2024-02-13",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "protocol (HAWB)",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A customer in Maceió says the parcel was collected under this HAWB. The tracker holds it from the pickup request to its delivery."
+    },
+    {
+      "number": "572474086",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/daytona-express/entrega-de-pedido-em-outra-numeracao_3AaUJ_1IkAoBrTyY/",
+        "date": "2024-02-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "protocol (HAWB)",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A customer in Joinville complains that the parcel under this number went to the wrong house number. The tracker holds it from the pickup request to its delivery."
+    },
+    {
+      "number": "571954006",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/daytona-express/mentira-na-tentstiva-de-entrega_S065YDHwZAN_HDzL/",
+        "date": "2022-10-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "protocol (HAWB)",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A customer in Campinas disputes the failed deliveries recorded under this number. The tracker shows two absent recipients before the delivery; the parser fixture is its reply."
+    }
+  ]
+}

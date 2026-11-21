@@ -1,0 +1,20 @@
+{
+  "carrier": "daytona-express",
+  "entries": [
+    { "wording": "COLETA SOLICITADA", "stage": "registered", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The sender asked for a pickup; the first scan of every sample." },
+    { "wording": "AGUARDANDO AGENDAMENTO DO CLIENTE", "stage": "registered", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The pickup waits for the sender to book a day; seen between the pickup request and its booking." },
+    { "wording": "COLETA AGENDADA", "stage": "registered", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "A pickup day is booked." },
+    { "wording": "COLETA EFETUADA - EM TRANSITO", "stage": "accepted", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Collected from the sender." },
+    { "wording": "TRANSFERENCIA EFETUADA", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Sent on from a base to the next one." },
+    { "wording": "AGUARDANDO TRANSFERÊNCIA", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21" },
+    { "wording": "AGUARDANDO CHEGADA DA CARGA PARA TRANSFERÊNCIA", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Repeated daily at the hub while the parcel waits for its onward load." },
+    { "wording": "RECEBIDO NA BASE", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21" },
+    { "wording": "EM TRANSITO PARA O DESTINO FINAL", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21" },
+    { "wording": "AGUARDANDO CHEGADA DA CARGA PARA ENTREGA", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "At the delivering base, before a delivery round." },
+    { "wording": "ENTREGA AGENDADA PARA PRÓXIMO DIA ÚTIL", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Delivery booked for the next working day; the parcel stays at the base." },
+    { "wording": "ROTA DE ENTREGA", "stage": "out_for_delivery", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21" },
+    { "wording": "AUSENTE", "stage": "failed_attempt", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Nobody was home on the delivery round; the sample's complaint describes these attempts." },
+    { "wording": "ENCOMENDA RETIDA NA BASE, AGUARDANDO INFORMAÇÕES.", "stage": "exception", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Held at the base after a failed delivery until the recipient or sender answers." },
+    { "wording": "ENTREGA EFETUADA - FINALIZADA", "stage": "delivered", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The page shows who signed for it above the scans; the adapter leaves the name out." }
+  ]
+}

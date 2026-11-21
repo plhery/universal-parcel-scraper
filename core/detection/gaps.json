@@ -1001,6 +1001,12 @@
     "reason": "Eleven digits, the zero-padded barcode form of a Dayton Freight PRO, are shared by several carriers and nothing else in the number points to Dayton Freight."
   },
   {
+    "carrier": "daytona-express",
+    "pattern": "^57\\d{7}$",
+    "kind": "by_design",
+    "reason": "Daytona Express protocols are nine sequential digits with no check digit, a shape many carriers' numeric references share."
+  },
+  {
     "carrier": "delivery-auto",
     "pattern": "^\\d{10}$",
     "kind": "collision",

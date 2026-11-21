@@ -290,6 +290,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'apg-ecommerce', number: '99999999999999',
     route: /^https:\/\/apgecommerce\.com\/track-result\/\?track_sequenceNo=99999999999999$/,
     marker: /Sorry, order not found/i },
+  { carrier: 'daytona-express', number: '579999999',
+    // The page sets an empty hash once it loads.
+    route: /^https:\/\/daytonaonline\.daytonaexpress\.com\.br\/Conhecimento_daytona\/Index\?txtcto=579999999(?:#.*)?$/,
+    marker: /Nosso sistema não localizou a encomenda/i },
   { carrier: 'flash-courier', number: 'SYNTHETIC123',
     route: /^https:\/\/www\.flashcourier\.com\.br\/rastreio\/SYNTHETIC123$/,
     marker: /Consulte sua\s+entrega|Digite o código de rastreio/i },

@@ -1,0 +1,67 @@
+{
+  "id": "daytona-express",
+  "displayName": "Daytona Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "BR"
+    ]
+  },
+  "brand": {
+    "color": "#005BAB"
+  },
+  "selectable": true,
+  "timezone": "America/Sao_Paulo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "daytona-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://daytonaonline.daytonaexpress.com.br/Conhecimento_daytona/Index?txtcto={trackingNumber}",
+    "searchUrl": "https://www.daytonaexpress.com.br/rastreamento",
+    "helpUrl": "https://www.daytonaexpress.com.br/fale-conosco",
+    "canaryUrl": "https://www.daytonaexpress.com.br/rastreamento",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "signatory"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "origin",
+      "destination"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "daytonaonline.daytonaexpress.com.br"
+      ],
+      "pathPattern": "^/Conhecimento_daytona/Index/?$",
+      "params": [
+        "txtcto"
+      ]
+    }
+  ],
+  "detection": []
+}
