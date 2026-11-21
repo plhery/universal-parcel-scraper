@@ -1,26 +1,19 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, MaintenanceError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { normalizeSekoNumber, parseSeko, PROVIDER, SEKO_MAX_BYTES } from './parser.js';
+import { normalizeSekoNumber, parseSekoPage, PROVIDER, SEKO_MAX_BYTES, SEKO_SECTION } from './parser.js';
 
-/** The lookup SEKO's tracking page on sekologistics.com makes for each number typed in. */
-export const SEKO_API = 'https://mysekoapi.sekologistics.io/tracking-service/track/';
+/** SEKO's tracking page, which its server renders for the numbers in the query. */
+export const SEKO_PAGE = 'https://www.sekologistics.com/en/track/?trackingNumbers=';
 const REDIRECTS = [301, 302, 303, 307, 308];
-// Bot checks Cloudflare, in front of the service, could put in place of the reply.
+// Bot checks Cloudflare, in front of the site, could put in place of the page.
 const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*(?:Just a moment|Attention Required)/i;
-
-function json(body: string): unknown {
-  try {
-    return JSON.parse(body);
-  } catch (cause) {
-    if (CHALLENGE.test(body.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'SEKO answered with a browser check', { cause });
-    throw new SchemaError(PROVIDER, 'SEKO returned a reply that is not JSON', { cause });
-  }
-}
+// The hosting's own page for a site its owner stopped, sent as HTTP 403.
+const STOPPED = /<title>\s*Web App - Unavailable\s*<\/title>/i;
 
 export class SekoTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -28,22 +21,23 @@ export class SekoTracker {
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeSekoNumber(raw);
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
-      const { response, bytes } = await fetchBounded(`${SEKO_API}${encodeURIComponent(number)}`, { method: 'GET', signal, headers: {
-        Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent),
+      const { response, bytes } = await fetchBounded(`${SEKO_PAGE}${encodeURIComponent(number)}`, { method: 'GET', signal, headers: {
+        Accept: 'text/html', 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: SEKO_MAX_BYTES, redirect: 'manual',
-        fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, 404, 410] });
-      if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'SEKO redirected its tracking lookup');
+        fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, 403, 404, 410] });
+      if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'SEKO redirected its tracking page');
       const body = decodeText(bytes);
-      if (response.status === 404 || response.status === 410) {
-        // An unknown number is a 404 without a body; the gateway answers a
-        // missing route with its own JSON, and Cloudflare with a page.
-        if (response.status === 404 && !body.trim()) throw new NotFoundError(PROVIDER);
-        if (CHALLENGE.test(body.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'SEKO answered with a browser check');
-        throw new TransportError(PROVIDER, 'SEKO tracking lookup is unavailable');
+      const head = body.slice(0, 64_000);
+      if (CHALLENGE.test(head) && !body.includes(SEKO_SECTION)) throw new ChallengeError(PROVIDER, 'SEKO answered with a browser check');
+      if (response.status === 403) {
+        if (STOPPED.test(head)) throw new MaintenanceError(PROVIDER, 'SEKO stopped its tracking site');
+        throw new UpstreamHttpError(PROVIDER, 403);
       }
-      return parseSeko(json(body), number);
+      // An unknown number is a page that says so; a missing page is a moved route.
+      if (response.status !== 200) throw new TransportError(PROVIDER, 'SEKO tracking page is unavailable');
+      return parseSekoPage(body, number);
     };
-    // A request that fails to reach the service, or hangs, gets one more try: the
+    // A request that fails to reach the site, or hangs, gets one more try: the
     // first gets half of the budget, so the retry fits in the rest.
     return runSteps({ carrier: 'seko', budgetMs: context.budgetMs ?? 20_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [

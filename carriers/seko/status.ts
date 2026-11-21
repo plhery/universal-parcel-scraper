@@ -2,10 +2,10 @@ import { classifyWording, type ClassifiedWording, type Stage } from '../../core/
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /**
- * SEKO's shipment statuses, in `normalizeStatusWording` form. The reply's
- * `shipmentStatus` takes one, and a milestone names the one it moved to as
- * "Status Changed to [At Pickup Terminal]". SEKO's tracking page files them
- * under five steps; the vendor's list of those steps names most of them.
+ * SEKO's shipment statuses, in `normalizeStatusWording` form. A milestone
+ * names the one it moved to as "Status Changed to [At Pickup Terminal]".
+ * SEKO's tracking page files them under five steps; the vendor's list of
+ * those steps names most of them.
  */
 const STATUSES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['shipment data received', 'registered'],
