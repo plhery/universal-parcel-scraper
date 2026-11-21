@@ -1,6 +1,7 @@
 {
   "carrier": "feima",
   "entries": [
-    {"wording": "Shipping by courier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The tracker's last row at the destination before any delivery: the parcel goes on with a courier, whom the tracker names neither with its number. It does not say the parcel is out for delivery."}
+    {"wording": "Shipping by courier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The tracker's last row at the destination before any delivery: the parcel goes on with a courier, whom the tracker names neither with its number. It does not say the parcel is out for delivery."},
+    {"wording": "Shipment picked up", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The first scan, in the United States, days before the processing there."}
   ]
 }

@@ -33,6 +33,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['In clearance processing - Import', { status: 'in_transit', stage: 'customs' }],
   ['Arrived at the warehouse of Customs Broker', { status: 'in_transit', stage: 'customs' }],
   ['Arrived at sort facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment is ready for outbound', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed from facility', { status: 'in_transit', stage: 'in_transit' }],
   // The hand-over to the destination's last-mile carrier, not to the recipient.
