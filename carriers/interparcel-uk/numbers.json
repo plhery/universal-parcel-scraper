@@ -1,0 +1,62 @@
+{
+  "carrier": "interparcel-uk",
+  "records": [
+    {
+      "number": "GB6234015339",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/reviews/69204e370c78914c1259961f",
+        "date": "2025-11-21",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "A review on Interparcel's Trustpilot page gives it as the tracking number of a parcel for France. Interparcel UK's tracker answers it with its booking and FedEx's scans from Leeds to a signed delivery in Brittany."
+    },
+    {
+      "number": "GB9221006391",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/reviews/64e721a9f9084cfd8b260c24",
+        "date": "2023-08-24",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "A review on Interparcel's Trustpilot page gives it as a UPS UK Standard tracking number, as Interparcel's page labels its references. Interparcel UK's tracker answers it with its booking and UPS's scans to a delivery in Oxford."
+    },
+    {
+      "number": "GB5206570633",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220327034118/https://uk.interparcel.com/tracking/GB5206570633/nocache",
+        "date": "2022-03-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An archived page of Interparcel UK's tracker shows this reference with Parcelforce's scans. The tracker still answers it, from a failed collection to a delivery in Guernsey, without the booking in its summary."
+    }
+  ]
+}

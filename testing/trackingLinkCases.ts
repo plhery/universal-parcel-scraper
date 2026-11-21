@@ -2797,4 +2797,6 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'xpo-ltl': 'the shipment page asks for a reCAPTCHA checkbox before it shows a result, so number forwarding cannot be verified',
   'quick-fort': 'An unknown number gets a notice that sends the browser back to the home page after three seconds, and no public number opens an order page.',
   pigeonship: 'An unknown number gets the site\'s general "Page not found" page, and no public number opens an order page.',
+  'interparcel-uk': 'uk.interparcel.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
+  'interparcel-au': 'au.interparcel.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
 };

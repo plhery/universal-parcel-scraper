@@ -445,6 +445,8 @@ import { adapter as intelValley } from '../carriers/intel-valley/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
 import { adapter as interlogistica } from '../carriers/interlogistica/adapter.js';
 import { adapter as internetExpress } from '../carriers/internet-express/adapter.js';
+import { adapter as interparcelAu } from '../carriers/interparcel-au/adapter.js';
+import { adapter as interparcelUk } from '../carriers/interparcel-uk/adapter.js';
 import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.js';
 import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
 import { adapter as intexPaketdienst } from '../carriers/intex-paketdienst/adapter.js';
@@ -1445,6 +1447,8 @@ export const REGISTRY: RegistryDefinition = {
     "intelcom": intelcom,
     "interlogistica": interlogistica,
     "internet-express": internetExpress,
+    "interparcel-au": interparcelAu,
+    "interparcel-uk": interparcelUk,
     "interrapidisimo": interrapidisimo,
     "intertown-transport": intertownTransport,
     "intex-paketdienst": intexPaketdienst,
@@ -2866,6 +2870,8 @@ export const REGISTRY: RegistryDefinition = {
     "interlogistica": "interlogistica",
     "international-bridge": "universal",
     "internet-express": "internet-express",
+    "interparcel-au": "interparcel-au",
+    "interparcel-uk": "interparcel-uk",
     "interrapidisimo": "interrapidisimo",
     "intertown-transport": "intertown-transport",
     "intex-courier": "universal",

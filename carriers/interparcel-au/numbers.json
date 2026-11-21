@@ -1,0 +1,53 @@
+{
+  "carrier": "interparcel-au",
+  "records": [
+    {
+      "number": "AU4046552724",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250514014559/https://au.interparcel.com/tracking/AU4046552724",
+        "date": "2025-05-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived page of Interparcel Australia's tracker shows this reference out for delivery with Couriers Please. The tracker still answers it, to a delivery in Sydney."
+    },
+    {
+      "number": "AU8046336296",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250428031337/https://au.interparcel.com/tracking/AU8046336296",
+        "date": "2025-04-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "An archived page of Interparcel Australia's tracker shows this reference in transit with StarTrack. The tracker still answers it, to a signed delivery in Victoria."
+    }
+  ]
+}

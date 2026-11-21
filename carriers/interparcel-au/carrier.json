@@ -1,0 +1,84 @@
+{
+  "id": "interparcel-au",
+  "displayName": "Interparcel Australia",
+  "aliases": [
+    "Interparcel",
+    "Interparcel AU",
+    "au.interparcel.com"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#4579B2"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "interparcel-au",
+    "steps": [
+      "direct",
+      "retry",
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "destination_country",
+    "signed_by"
+  ],
+  "portal": {
+    "url": "https://au.interparcel.com/tracking/{trackingNumber}",
+    "searchUrl": "https://au.interparcel.com/tracking/",
+    "canaryUrl": "https://au.interparcel.com/tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination",
+      "signatory",
+      "delivery_partner",
+      "customer_reference",
+      "coordinates"
+    ],
+    "scraped": [
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination",
+      "signatory"
+    ],
+    "discarded": [
+      "status",
+      "delivery_partner",
+      "customer_reference",
+      "coordinates"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "recipient_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "au.interparcel.com"
+      ],
+      "path": "^/tracking/(AU\\d{10})(?:/nocache)?/?$"
+    }
+  ],
+  "detection": []
+}

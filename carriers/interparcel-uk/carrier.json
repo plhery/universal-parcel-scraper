@@ -1,0 +1,83 @@
+{
+  "id": "interparcel-uk",
+  "displayName": "Interparcel UK",
+  "aliases": [
+    "Interparcel",
+    "uk.interparcel.com"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#4579B2"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "interparcel-uk",
+    "steps": [
+      "direct",
+      "retry",
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "destination_country",
+    "signed_by"
+  ],
+  "portal": {
+    "url": "https://uk.interparcel.com/tracking/{trackingNumber}",
+    "searchUrl": "https://uk.interparcel.com/tracking/",
+    "canaryUrl": "https://uk.interparcel.com/tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination",
+      "signatory",
+      "delivery_partner",
+      "customer_reference",
+      "coordinates"
+    ],
+    "scraped": [
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination",
+      "signatory"
+    ],
+    "discarded": [
+      "status",
+      "delivery_partner",
+      "customer_reference",
+      "coordinates"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "recipient_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "uk.interparcel.com"
+      ],
+      "path": "^/tracking/(GB\\d{10})(?:/nocache)?/?$"
+    }
+  ],
+  "detection": []
+}

@@ -55,8 +55,8 @@ context. Only selected identity and scan fields leave it; keys, tokens, contacts
 pages stay out of the result. Audio cooldowns remain shared, with a checkbox-only attempt
 while audio is unavailable.
 
-Pro Carrier, Delnext, MRL Global, AIT Worldwide, Hitch, PBT and Celeritas also use the
-ordinary browser tiers after a challenged HTTP lookup. Their adapters read the rendered
+Pro Carrier, Delnext, MRL Global, AIT Worldwide, Hitch, PBT, Celeritas and Interparcel also
+use the ordinary browser tiers after a challenged HTTP lookup. Their adapters read the rendered
 page through the same identity checks as HTTP; no carrier helper or image rebuild is needed.
 Trendyol Express uses those tiers for its public shipment page and reads the complete
 collapsed timeline without recipient details or delivery controls.

@@ -33320,6 +33320,69 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "interparcel-au": {
+    "displayName": "Interparcel Australia",
+    "color": "#4579B2",
+    "aliases": [
+      "Interparcel",
+      "Interparcel AU",
+      "au.interparcel.com"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "interparcel-au",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://au.interparcel.com/tracking/",
+    "trackingUrlTemplate": "https://au.interparcel.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://au.interparcel.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "au.interparcel.com"
+        ],
+        "path": "^/tracking/(AU\\d{10})(?:/nocache)?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "interparcel-uk": {
+    "displayName": "Interparcel UK",
+    "color": "#4579B2",
+    "aliases": [
+      "Interparcel",
+      "uk.interparcel.com"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "interparcel-uk",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://uk.interparcel.com/tracking/",
+    "trackingUrlTemplate": "https://uk.interparcel.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://uk.interparcel.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "uk.interparcel.com"
+        ],
+        "path": "^/tracking/(GB\\d{10})(?:/nocache)?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "interrapidisimo": {
     "displayName": "Inter Rapidísimo",
     "color": "#18191a",
@@ -68700,6 +68763,8 @@ export const CARRIER_IDS = [
   "interlogistica",
   "international-bridge",
   "internet-express",
+  "interparcel-au",
+  "interparcel-uk",
   "interrapidisimo",
   "intertown-transport",
   "intex-courier",
@@ -70662,6 +70727,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "interlogistica": [],
   "international-bridge": [],
   "internet-express": [],
+  "interparcel-au": [],
+  "interparcel-uk": [],
   "interrapidisimo": [],
   "intertown-transport": [],
   "intex-courier": [],

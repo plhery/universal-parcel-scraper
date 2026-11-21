@@ -1,0 +1,10 @@
+{
+  "carrier": "interparcel-au",
+  "entries": [
+    {"code": "B", "wording": "Shipment has been booked", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Letter B of Interparcel's summary: the steps before the courier collects the parcel, from the booking on."},
+    {"code": "T", "wording": "Parcel is in transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Letter T of Interparcel's summary: the parcel moves between the courier's facilities."},
+    {"code": "O", "wording": "Out for delivery today", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Letter O of Interparcel's summary: the courier's driver has the parcel for delivery that day."},
+    {"code": "D", "wording": "Parcel has been delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Letter D of Interparcel's summary: the courier delivered the parcel."},
+    {"code": "D", "wording": "Delivered with signature", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Letter D of Interparcel's summary: the courier delivered the parcel."}
+  ]
+}

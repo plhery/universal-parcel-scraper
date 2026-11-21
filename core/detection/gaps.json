@@ -6004,5 +6004,17 @@
     "carrier": "yitu",
     "kind": "open",
     "reason": "One public waybill, Y, twelve digits and T: too few to tell the series from other carriers' numbers."
+  },
+  {
+    "carrier": "interparcel-uk",
+    "pattern": "^GB\\d{10}$",
+    "kind": "collision",
+    "reason": "Interparcel UK's references, GB and ten digits, take the shape of Amazon's British shipment ids, which Amazon's rule names. Select Interparcel UK explicitly."
+  },
+  {
+    "carrier": "interparcel-au",
+    "pattern": "^AU\\d{10}$",
+    "kind": "collision",
+    "reason": "Interparcel Australia's references, AU and ten digits, share their shape with other carriers' two letters and ten digits, and a prefix that names a country does not name Interparcel. Select Interparcel Australia explicitly."
   }
 ]
