@@ -181,7 +181,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
  * and its delivery round.
  */
 const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
-  [/^in transit \([a-z0-9-]{1,12}\)$/, { status: 'in_transit', stage: 'in_transit' }],
+  // In transit with a count or a partner's reference in brackets, such as four letters and fourteen digits.
+  [/^in transit \([a-z0-9-]{1,24}\)$/, { status: 'in_transit', stage: 'in_transit' }],
   [/^delivery failed, type: ?recipient absent or delivery location inaccessible\b/, FAILED_ATTEMPT],
   [/^your shipment delivery attempt failed(?: \[[^\]]{1,200}\])?$/, FAILED_ATTEMPT],
   [/^your item has been accepted in \S.* depot$/, { status: 'in_transit', stage: 'in_transit' }],

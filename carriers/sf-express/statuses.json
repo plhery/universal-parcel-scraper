@@ -359,6 +359,13 @@
       "note": "Official Taiwan routes opCode, worded like 1105 at the same places."
     },
     {
+      "code": "1635",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "Official Taiwan routes opCode; the remark, after \"[Security check passed.]\", says the shipment passed a distribution centre's security check, or the several it needed, beside the centre's loading scan (30)."
+    },
+    {
       "code": "8000 / stayWhyCode 1",
       "stage": "delivered",
       "confirmedBy": "bundle",
