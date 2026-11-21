@@ -2683,6 +2683,11 @@
     "reason": "Sixteen digits are shared by many carriers and nothing in a Midland Courier number points to Midland."
   },
   {
+    "carrier": "milaha",
+    "kind": "open",
+    "reason": "Milaha's guest tracker confirms its MIL and QNL bookings and the containers it carries, including other owners' equipment. Detection has no rule for either. Select Milaha explicitly."
+  },
+  {
     "carrier": "mng-kargo",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

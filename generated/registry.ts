@@ -567,6 +567,7 @@ import { adapter as metropolitanWarehouse } from '../carriers/metropolitan-wareh
 import { adapter as mhi } from '../carriers/mhi/adapter.js';
 import { adapter as microExpress } from '../carriers/micro-express/adapter.js';
 import { adapter as midlandTransport } from '../carriers/midland-transport/adapter.js';
+import { adapter as milaha } from '../carriers/milaha/adapter.js';
 import { adapter as mngKargo } from '../carriers/mng-kargo/adapter.js';
 import { adapter as molAce } from '../carriers/mol-ace/adapter.js';
 import { adapter as mondialRelay } from '../carriers/mondial-relay/adapter.js';
@@ -1558,6 +1559,7 @@ export const REGISTRY: RegistryDefinition = {
     "mhi": mhi,
     "micro-express": microExpress,
     "midland-transport": midlandTransport,
+    "milaha": milaha,
     "mng-kargo": mngKargo,
     "mol-ace": molAce,
     "mondial-relay": mondialRelay,
@@ -3104,6 +3106,7 @@ export const REGISTRY: RegistryDefinition = {
     "micro-express": "micro-express",
     "midland-transport": "midland-transport",
     "mikropakket": "universal",
+    "milaha": "milaha",
     "miles-express": "universal",
     "miller-deliveries": "universal",
     "mira-transportes": "universal",

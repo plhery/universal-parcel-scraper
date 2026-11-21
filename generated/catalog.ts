@@ -41548,6 +41548,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "milaha": {
+    "displayName": "Milaha",
+    "color": "#00467f",
+    "aliases": [
+      "Qatar Navigation",
+      "Qatar Navigation Lines",
+      "QNL",
+      "Milaha Container Shipping"
+    ],
+    "countries": [
+      "QA"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Qatar",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "milaha",
+      "localClocks": true
+    },
+    "canaryUrl": "https://erp-qnl.solverminds.net/ecomonline/",
+    "trackingSearchUrl": "https://erp-qnl.solverminds.net/ecomonline/",
+    "helpUrl": "https://www.milaha.com/en/business-area/container-shipping",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "miles-express": {
     "displayName": "Miles Express",
     "color": "#2a394b",
@@ -68911,6 +68936,7 @@ export const CARRIER_IDS = [
   "micro-express",
   "midland-transport",
   "mikropakket",
+  "milaha",
   "miles-express",
   "miller-deliveries",
   "mira-transportes",
@@ -70872,6 +70898,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "micro-express": ["micro-express-1"],
   "midland-transport": [],
   "mikropakket": [],
+  "milaha": [],
   "miles-express": [],
   "miller-deliveries": [],
   "mira-transportes": [],

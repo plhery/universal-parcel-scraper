@@ -1,0 +1,21 @@
+    <div class="table-responsive" id="referenceinvalid" style="display:none">
+            <div class="alert alert-danger" role="danger">Invalid reference Numbers/No Movement is Available : <label id="invalidrefnum" style="font-weight:bold"></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="table-responsive" id="referenceid" style="display:none">
+                <table>
+                    <tr>
+                        <th style="color:#FF0000"><label>Invalid reference Numbers/No Movement is Available : </label></th>
+                        <td style="color:#0033CC"><label id="invalidrefno"></label><input type="hidden" id="searchtype" name="searchtype" value="containernos"/><input type="hidden" id="searchnumbers" name="searchnumbers"/></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+<script type="text/javascript">
+        var invalidid = "ZZZZ0000000";
+        document.getElementById("referenceinvalid").style.display = "block";
+        document.getElementById("invalidrefno").innerHTML = invalidid;
+        document.getElementById("invalidrefnum").innerHTML = invalidid;
+    </script>
