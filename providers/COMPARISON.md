@@ -11,8 +11,10 @@ comparison table.
 
 Providers in one tier have equally full history, so the choice between them is about speed
 and load. Speed comes first when someone may be waiting: plain HTTP answers within a second
-and a browser read takes several, so the HTTP providers are asked first. A lookup in the
-background (`background: true`) has no one waiting and skips that.
+and a browser read takes several, so the HTTP providers are asked first. Ordertracker is
+plain HTTP, but it reads the carrier while the lookup waits unless it already holds the
+parcel, so it is asked with the browser providers. A lookup in the background
+(`background: true`) has no one waiting and skips that.
 
 Load decides the rest. One provider asked about every number is the provider most likely to
 refuse the lookups, and the one whose refusal would cost the most. So the providers of a tier
@@ -26,8 +28,11 @@ The shares say which providers to spare. ParcelsApp and 17TRACK are each the onl
 several carriers ([COVERAGE.md](COVERAGE.md) counts them), so losing either would leave
 those carriers without history: they get the smaller shares, and 17TRACK the smallest, since
 each of its lookups also costs a browser read. Ship24 is fast and no carrier depends on it
-alone, so it takes the largest. Track123 could be lost as easily, but each of its lookups holds
-a browser longer than any other provider's, so its share is 17TRACK's.
+alone, so it takes the largest. Ordertracker is asked only about a few large carriers, each
+also followed by ParcelsApp or 17TRACK, and needs no browser: its share is larger than
+ParcelsApp's, so lookups nobody waits for move part of those carriers' numbers off
+ParcelsApp. Track123 could be lost as easily, but each of its lookups holds a browser longer
+than any other provider's, so its share is 17TRACK's.
 
 References are few, and one old number can misgrade a provider in either direction. A
 consumer that follows many parcels knows more, and passes what it counted as `observed`: per

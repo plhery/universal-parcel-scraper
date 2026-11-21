@@ -88,7 +88,7 @@ export class TrackingError extends Error {
   }
 }
 
-const sources: readonly UniversalSource[] = ['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'Track718', 'Track123', 'UPU'];
+const sources: readonly UniversalSource[] = ['Ship24', 'ParcelsApp', '17TRACK', 'Ordertracker', 'Postal Ninja', 'Track718', 'Track123', 'UPU'];
 
 /**
  * Which failure a lookup reports when its sources fail differently, first to last: the input a

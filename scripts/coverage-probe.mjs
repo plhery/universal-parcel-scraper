@@ -78,7 +78,8 @@ function summarize([results, flag]) {
   const coverage = JSON.parse(readFileSync(coveragePath, 'utf8'));
   for (const [key, records] of groups) {
     const [carrier, reference] = key.split('|');
-    const cells = Object.fromEntries(records.filter((record) => record.source !== 'direct').map((record) => [record.source, cell(record, records)]));
+    // A comparison reference states the comparison's providers; the benchmark holds Ordertracker's answers.
+    const cells = Object.fromEntries(records.filter((record) => PROVIDERS.includes(record.source)).map((record) => [record.source, cell(record, records)]));
     const direct = records.find((record) => record.source === 'direct');
     const reported = [...new Set(records.flatMap((record) => record.reported ?? []))];
     console.log(`${carrier} #${reference}: direct ${direct ? text(cell(direct, [direct])) : '·'} | ${PROVIDERS.map((source) =>

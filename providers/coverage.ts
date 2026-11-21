@@ -63,8 +63,8 @@ export interface ObservedCoverage {
 
 /** The providers every carrier's comparison reference states, COVERAGE.md's columns. */
 export const COVERAGE_SOURCES: readonly UniversalSource[] = ['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU'];
-/** Those, and Track123: references name it only for the carriers whose courier page was asked. */
-const GRADED_SOURCES: readonly UniversalSource[] = [...COVERAGE_SOURCES, 'Track123'];
+/** Those, Track123 and Ordertracker: references name them only for the carriers they are asked about. */
+const GRADED_SOURCES: readonly UniversalSource[] = [...COVERAGE_SOURCES, 'Track123', 'Ordertracker'];
 const ANSWERS = new Set<string>(['history', 'no_history', 'summary_only', 'undated', 'sign_in', 'postcode_prompt',
   'wrong_carrier', 'refused', 'subscriber_only', 'error', 'blocked', 'unverified', 'n/a']);
 const EMPTY = new Set<CoverageCell>(['no_history', 'summary_only', 'undated', 'sign_in', 'postcode_prompt']);

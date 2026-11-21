@@ -1,0 +1,266 @@
+{
+  "timezone": "Europe/Paris",
+  "language": "en",
+  "status": {
+    "code": "delivered",
+    "subcode": "delivered",
+    "incidents": [],
+    "heading": "Delivered",
+    "label": "Jul 27, 2026",
+    "sublabel": "Your shipment has been delivered."
+  },
+  "transit": {
+    "shippingDate": "2026-07-20T23:44:00.001Z",
+    "shippingDateHumanReadable": "Jul 21, 2026",
+    "deliveryDate": "2026-07-27T14:12:00.011Z",
+    "deliveryDateHumanReadable": "Jul 27, 2026",
+    "daysInTransit": 7,
+    "daysInTransitHumanReadable": "7 days",
+    "lastmileTrackingNumber": null,
+    "originCountryCode": null,
+    "originCountryHumanReadable": null,
+    "destinationCountryCode": null,
+    "destinationCountryHumanReadable": null
+  },
+  "forecast": {
+    "estimatedDeliveryDateMin": null,
+    "estimatedDeliveryDateMax": null,
+    "estimatedDeliveryDateMinHumanReadable": null,
+    "estimatedDeliveryDateMaxHumanReadable": null,
+    "confidenceScore": 0
+  },
+  "events": [
+    {
+      "time": "2026-07-27T14:12:00.011Z",
+      "lines": [
+        {
+          "original": "Delivered, In/At Mailbox",
+          "english": "The package has been delivered and is in or at the mailbox.",
+          "translated": "The package has been delivered and is in or at the mailbox."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "delivered",
+      "timeHumanReadable": "Jul 27, 2026",
+      "statusHumanReadable": "Your shipment has been delivered."
+    },
+    {
+      "time": "2026-07-24T13:35:00.010Z",
+      "lines": [
+        {
+          "original": "Held at Post Office, At Customer Request",
+          "english": "The package was held at the post office at the customer's request.",
+          "translated": "The package was held at the post office at the customer's request."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "readyForPickup",
+      "timeHumanReadable": "Jul 24, 2026",
+      "statusHumanReadable": "Your shipment is ready for collection at a pick-up point."
+    },
+    {
+      "time": "2026-07-24T07:14:00.009Z",
+      "lines": [
+        {
+          "original": "Out for Delivery",
+          "english": "The package is currently out for delivery.",
+          "translated": "The package is currently out for delivery."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "outForDelivery",
+      "timeHumanReadable": "Jul 24, 2026",
+      "statusHumanReadable": "The final delivery of your shipment is scheduled today."
+    },
+    {
+      "time": "2026-07-24T07:03:00.008Z",
+      "lines": [
+        {
+          "original": "Arrived at Post Office",
+          "english": "The package arrived at the post office.",
+          "translated": "The package arrived at the post office."
+        },
+        {
+          "original": "SAN FRANCISCO, CA",
+          "english": "The shipment is currently in San Francisco, California.",
+          "translated": "The shipment is currently in San Francisco, California."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Jul 24, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-07-24T04:59:00.007Z",
+      "lines": [
+        {
+          "original": "Departed Post Office",
+          "english": "The package has departed from the post office.",
+          "translated": "The package has departed from the post office."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inBetweenFacilities",
+      "timeHumanReadable": "Jul 24, 2026",
+      "statusHumanReadable": "Your shipment has arrived at a transit center, it is on its way."
+    },
+    {
+      "time": "2026-07-24T03:30:00.006Z",
+      "lines": [
+        {
+          "original": "SAN FRANCISCO CA DISTRIBUTION CENTER",
+          "english": "Your item is at the San Francisco CA Distribution Center.",
+          "translated": "Your item is at the San Francisco CA Distribution Center."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inBetweenFacilities",
+      "timeHumanReadable": "Jul 24, 2026",
+      "statusHumanReadable": "Your shipment has arrived at a transit center, it is on its way."
+    },
+    {
+      "time": "2026-07-24T01:14:00.005Z",
+      "lines": [
+        {
+          "original": "Departed USPS Facility",
+          "english": "The package has departed from the USPS facility.",
+          "translated": "The package has departed from the USPS facility."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Jul 24, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-07-23T19:46:00.004Z",
+      "lines": [
+        {
+          "original": "OAKLAND CA DISTRIBUTION CENTER",
+          "english": "The item was at the Oakland, California Distribution Center.",
+          "translated": "The item was at the Oakland, California Distribution Center."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Jul 23, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-07-22T07:52:00.003Z",
+      "lines": [
+        {
+          "original": "Processed through USPS Facility",
+          "english": "The package was processed through a USPS facility.",
+          "translated": "The package was processed through a USPS facility."
+        },
+        {
+          "original": "PHILADELPHIA PA DISTRIBUTION CENTER",
+          "english": "The package was at the Philadelphia PA Distribution Center.",
+          "translated": "The package was at the Philadelphia PA Distribution Center."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inBetweenFacilities",
+      "timeHumanReadable": "Jul 22, 2026",
+      "statusHumanReadable": "Your shipment has arrived at a transit center, it is on its way."
+    },
+    {
+      "time": "2026-07-22T06:37:00.002Z",
+      "lines": [
+        {
+          "original": "Accepted at USPS Origin Facility",
+          "english": "The package was accepted at the USPS origin facility.",
+          "translated": "The package was accepted at the USPS origin facility."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Jul 22, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-07-20T23:44:00.001Z",
+      "lines": [
+        {
+          "original": "Shipping Label Created, USPS Awaiting Item",
+          "english": "The shipping label was created, and USPS is awaiting the item.",
+          "translated": "The shipping label was created, and USPS is awaiting the item."
+        },
+        {
+          "original": "FOLCROFT, PA",
+          "english": "FOLCROFT, PA.",
+          "translated": "FOLCROFT, PA."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "labelCreated",
+      "timeHumanReadable": "Jul 21, 2026",
+      "statusHumanReadable": "The carrier has been informed and will soon collect your shipment."
+    }
+  ],
+  "carriers": [
+    {
+      "name": "PITNEY BOWES",
+      "slug": "pitney-bowes-newgistics",
+      "websiteUrl": "https://www.pitneybowes.com",
+      "websiteAnchor": "Get in touch with PITNEY BOWES"
+    }
+  ]
+}

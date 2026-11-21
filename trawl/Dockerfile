@@ -9,6 +9,9 @@ LABEL org.opencontainers.image.source="https://github.com/plhery/universal-parce
       org.opencontainers.image.licenses="AGPL-3.0-only"
 # TRAWL's request log includes the page path, where some carriers put the parcel number.
 ENV LOG_LEVEL=warn
+# The bundled uBlock Origin compiles and updates its filter lists in every browser the pool
+# starts, and page requests wait behind it; carrier pages weigh the same with or without it.
+ENV BROWSER_BLOCK_ADS=false
 COPY --from=zto-ocr /usr/local /usr/local
 COPY --from=zto-ocr /opt/zto-ocr /opt/zto-ocr
 RUN /opt/zto-ocr/bin/python -c 'import ddddocr, rapidocr_onnxruntime, cv2'

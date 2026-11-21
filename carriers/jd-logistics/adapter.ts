@@ -1,5 +1,5 @@
 import { recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, NotFoundError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { fetchBounded, parseJsonBytes, userAgentOf, type TrawlClient } from '../../core/transport/index.js';
@@ -13,47 +13,6 @@ const HEADERS = {
   ClientInfo: '{"appName":"intl_cms","client":"m"}',
   AppParams: '{"appid":"intl-cms-interface-web","ticket_type":"pc"}',
 };
-
-/**
- * How long the domestic page is not opened for a waybill after its verification declined: 6 hours
- * after the first decline in a row, twice as long after each next one, up to a day. The matcher
- * declines most puzzles, so a waybill it keeps declining is left to the providers most of the
- * time. A bound answer clears it. Every tracker in the process shares this; a restart forgets it.
- */
-export const DECLINE_HOLD_MS = 6 * 60 * 60_000;
-export const MAX_DECLINE_HOLD_MS = 24 * 60 * 60_000;
-const MAX_DECLINED = 1_000;
-const declined = new Map<string, { at: number; count: number }>();
-
-function declineHeldMs(number: string, now: number): number {
-  const decline = declined.get(number);
-  return decline ? Math.max(0, decline.at + Math.min(MAX_DECLINE_HOLD_MS, DECLINE_HOLD_MS * 2 ** (decline.count - 1)) - now) : 0;
-}
-
-function noteDecline(number: string, now: number): void {
-  const count = (declined.get(number)?.count ?? 0) + 1;
-  declined.delete(number);
-  declined.set(number, { at: now, count });
-  for (const oldest of declined.keys()) {
-    if (declined.size <= MAX_DECLINED) break;
-    declined.delete(oldest);
-  }
-}
-
-async function domesticHistory(trawl: TrawlClient, number: string, signal: AbortSignal, remainingMs: number) {
-  if (declineHeldMs(number, Date.now()) > 0) {
-    throw new ChallengeError('JD Logistics', 'JD domestic verification declined this waybill recently', { reason: 'verification_unreadable' });
-  }
-  try {
-    const result = await jdDomesticBrowser(trawl, number, signal, remainingMs);
-    declined.delete(number);
-    return result;
-  } catch (error) {
-    if (error instanceof NotFoundError) declined.delete(number);
-    else if (error instanceof ChallengeError && error.reason === 'verification_unreadable') noteDecline(number, Date.now());
-    throw error;
-  }
-}
 
 export class JdLogisticsTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
@@ -78,7 +37,7 @@ export class JdLogisticsTracker {
       }
     } }, { id: 'trawl', enabled: domestic,
       recovers: error => error instanceof IndeterminateError && error.reason === 'portal_not_found',
-      run: ({ signal, remainingMs }) => domesticHistory(this.options.trawl!, number, signal, remainingMs),
+      run: ({ signal, remainingMs }) => jdDomesticBrowser(this.options.trawl!, number, signal, remainingMs),
     }]);
   }
 }

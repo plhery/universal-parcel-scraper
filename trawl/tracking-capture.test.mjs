@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
-import { attachTrackingCapture, australiaPostClientKnown, requestAustraliaPostInPage, requestAustraliaPostMainWorld, reserveDeadline } from './tracking-capture.mjs';
+import { attachTrackingCapture, australiaPostClientKnown, requestAustraliaPostInPage, requestAustraliaPostMainWorld, reserveDeadline, unreadByLookup, untilPageReady } from './tracking-capture.mjs';
 import { swiftxDropPhoneFragment, swiftxEnterPhoneDigits } from './swiftx-slider.mjs';
 const api = 'https://t.17track.net/track/restapi';
 const number = 'ZZ12345678900';
@@ -21,7 +21,9 @@ async function fixture(url = `https://t.17track.net/en#nums=${number}`, endpoint
   const listeners = new Map();
   let detached = false;
   const detachedEvents = [];
-  const page = { addInitScript: async () => {}, context: () => ({addCookies: async () => {}}), on: (event, fn) => {
+  const routes = [];
+  const page = { addInitScript: async () => {}, route: async (pattern, handler) => { routes.push([pattern, handler]); },
+    context: () => ({addCookies: async () => {}}), on: (event, fn) => {
     if (!listeners.has(event)) listeners.set(event, new Set());
     listeners.get(event).add(fn);
     handlers[event] = value => Promise.all([...listeners.get(event)].map(listener => listener(value)));
@@ -33,7 +35,7 @@ async function fixture(url = `https://t.17track.net/en#nums=${number}`, endpoint
     headers: () => ({ 'content-type': 'application/json', 'content-length': String(body.length), 'content-encoding': 'gzip', ...headers }),
     body: read ?? (async () => Buffer.from(body)),
   });
-  return { page, capture, respond, handlers, detachedEvents, detached: () => detached };
+  return { page, capture, respond, handlers, routes, detachedEvents, detached: () => detached };
 }
 
 const yunApi = 'https://services.yuntrack.com/Track/Query';
@@ -1273,4 +1275,100 @@ test('Australia Post main-world bridge uses the page realm and removes its ephem
   await assert.rejects(run(undefined, 'async()=>new Promise(()=>{})', 10), /deadline exceeded/);
   assert.equal(document.querySelectorAll('meta[name^="au-request-"]').length, 0);
   assert.equal(document.querySelectorAll('script').length, 1);
+});
+
+// Whether the wait ended within a few turns, without waiting for it.
+const ended = async wait => Promise.race([wait.then(() => true), new Promise(resolve => setTimeout(resolve, 20, false))]);
+const pending = () => new Promise(() => {});
+const sent = (num, url = api, method = 'POST') => ({ url: () => url, method: () => method, postDataJSON: () => ({ data: [{ num }] }) });
+
+test('a page without a capture that names its readiness keeps the whole wait', async () => {
+  const { page } = await fixture(upsUrl, upsApi);
+  assert.equal(await ended(untilPageReady(pending(), page)), false);
+  assert.equal(await ended(untilPageReady(pending(), false)), false);
+  assert.equal(await ended(untilPageReady(pending(), {})), false);
+  assert.equal(await untilPageReady(Promise.resolve('waited'), page), 'waited');
+  await assert.rejects(untilPageReady(Promise.reject(new Error('aborted')), false), /aborted/);
+});
+
+test('17TRACK ends the wait for a quiet page once the page asks for the number', async () => {
+  const { page, capture, handlers } = await fixture();
+  const wait = untilPageReady(pending(), page);
+  await handlers.request(sent('OTHER12345'));
+  await handlers.request(sent(number, api, 'GET'));
+  await handlers.request(sent(number, 'https://t.17track.net/track/other'));
+  assert.equal(await ended(wait), false);
+  await handlers.request(sent(number));
+  assert.equal(await ended(wait), true);
+  assert.equal(await ended(untilPageReady(pending(), page)), true);
+  // A wait that fails first still fails, and one that fails later is not left unhandled.
+  await assert.rejects(untilPageReady(Promise.reject(new Error('aborted')), page), /aborted/);
+  await untilPageReady(new Promise((_, reject) => setTimeout(reject, 5, new Error('late'))), page);
+  await new Promise(resolve => setTimeout(resolve, 10));
+  await capture.drain().catch(() => {});
+  assert.equal(await ended(untilPageReady(pending(), page)), false);
+});
+
+test('17TRACK ends the wait when a final reply arrives without an observed request', async () => {
+  const { page, respond } = await fixture();
+  const wait = untilPageReady(pending(), page);
+  assert.equal(await ended(wait), false);
+  await respond('', { status: 429 });
+  assert.equal(await ended(wait), true);
+});
+
+test('Postal Ninja ends the wait once its widget shows the form, and keeps it when the widget never does', async () => {
+  for (const [mounts, expected] of [[true, true], [false, false]]) {
+    const { page } = await fixture(ninjaUrl, ninjaGet, [ninjaCheck]);
+    const asked = [];
+    page.frameLocator = frame => ({ locator: selector => ({ waitFor: async options => {
+      asked.push([frame, selector, options.state]);
+      if (!mounts) throw new Error('Timeout');
+    } }) });
+    assert.equal(await ended(untilPageReady(pending(), page)), expected);
+    assert.equal(await ended(untilPageReady(pending(), page)), expected);
+    assert.deepEqual(asked, [['iframe[title="Package tracking widget"]', 'form.tracker button[type="submit"]', 'visible']]);
+  }
+});
+
+test('names pictures, fonts, advertising and measurement as unread, never navigations or Cloudflare checks', () => {
+  const request = (url, type = 'script', navigation = false) => ({ url: () => url, resourceType: () => type, isNavigationRequest: () => navigation });
+  for (const [url, type] of [['https://t.17track.net/assets/banner.png', 'image'], ['https://static.17track.net/font.woff2', 'font'],
+    ['https://postal.ninja/intro.mp4', 'media'], ['https://securepubads.g.doubleclick.net/tag/js/gpt.js'],
+    ['https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'], ['https://www.googletagmanager.com/gtag/js'],
+    ['https://www.google-analytics.com/g/collect', 'fetch'], ['https://fundingchoicesmessages.google.com/i/pub'],
+    ['https://ep2.adtrafficquality.google/sodar/sodar2.js'], ['https://mc.yandex.ru/metrika/tag.js'], ['http://doubleclick.net/x']]) {
+    assert.equal(unreadByLookup(request(url, type)), true, url);
+  }
+  for (const [url, type, navigation] of [[api, 'fetch'], ['https://static.17track.net/app.js'], ['https://static.17track.net/app.css', 'stylesheet'],
+    ['https://postal.ninja/widget/tracker', 'document', true], ['https://cdn.jsdelivr.net/npm/vue.js'],
+    ['https://challenges.cloudflare.com/turnstile/v0/api.js'], ['https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/pat/1', 'image'],
+    ['https://postal.ninja/cdn-cgi/challenge-platform/h/b/img/1', 'image'], ['https://t.17track.net/cdn-cgi/rum', 'font'],
+    ['https://www.googletagmanager.com/ns.html', 'document', true], ['https://notdoubleclick.net/x.js'],
+    ['https://doubleclick.net.example.test/x.js'], ['https://www.google.com/recaptcha/api.js'],
+    ['data:image/png;base64,AAAA', 'image'], ['blob:https://t.17track.net/1', 'image'], ['not a url', 'image']]) {
+    assert.equal(unreadByLookup(request(url, type, navigation)), false, url);
+  }
+});
+
+test('17TRACK and Postal Ninja pages drop what no lookup reads and pass the rest on; other pages are not routed', async () => {
+  for (const [url, endpoint, additional] of [[undefined, undefined, undefined], [ninjaUrl, ninjaGet, [ninjaCheck]]]) {
+    const { routes } = await fixture(url, endpoint, additional);
+    assert.equal(routes.length, 1);
+    assert.equal(routes[0][0], '**/*');
+    const outcome = async (address, type) => {
+      const calls = [];
+      await routes[0][1]({ request: () => ({ url: () => address, resourceType: () => type, isNavigationRequest: () => false }),
+        abort: reason => { calls.push(['abort', reason]); }, fallback: () => { calls.push(['fallback']); },
+        continue: () => { calls.push(['continue']); } });
+      return calls;
+    };
+    assert.deepEqual(await outcome('https://www.googletagmanager.com/gtag/js', 'script'), [['abort', 'blockedbyclient']]);
+    assert.deepEqual(await outcome('https://static.17track.net/logo.svg', 'image'), [['abort', 'blockedbyclient']]);
+    // TRAWL's outbound policy still decides what passes here.
+    assert.deepEqual(await outcome('https://static.17track.net/app.js', 'script'), [['fallback']]);
+    assert.deepEqual(await outcome('https://challenges.cloudflare.com/turnstile/v0/api.js', 'script'), [['fallback']]);
+  }
+  assert.equal((await fixture(upsUrl, upsApi)).routes.length, 0);
+  assert.equal((await fixture(fedexUrl, fedexApi)).routes.length, 0);
 });

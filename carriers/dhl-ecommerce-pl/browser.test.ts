@@ -87,6 +87,41 @@ describe('DHL Poland browser history', () => {
     payload.events[0]!.description = 'The recipient was informed about something new.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]).not.toHaveProperty('stage');
   });
+  it('reads each scan of the page in Polish as its English wording', () => {
+    const pairs: [string, string, string][] = [
+      ['The shipment has reached DHL terminal in Example. Planned date of delivery to: 04-03-2026.',
+        'Przesyłka dotarła do oddziału nadawczego DHL Parcel Example. Przewidywana data doręczenia do: 04-03-2026.', 'in_transit'],
+      ['The shipment has reached DHL Terminal Example (branch in Sample)', 'Przesyłka dotarła do oddziału DHL eCommerce Example (z siedzibą w Samplu).', 'in_transit'],
+      ['The shipment has reached DHL Terminal. Delivery to the Recipient is expected on the next working day.',
+        'Przesyłka dotarła do oddziału DHL eCommerce. Doręczenie do Odbiorcy planowane jest w kolejnym dniu roboczym.', 'in_transit'],
+      ['The shipment has reached DHL Terminal Example. Delivery to the Recipient is expected today. Delivery hours: from 17:00 to 22:00.',
+        'Przesyłka dotarła do Terminala DHL Parcel Example. W dniu dzisiejszym zostanie przekazana Kurierowi DHL Parcel do doręczenia. Planowane godziny doręczenia: od 17:00 do 22:00.', 'in_transit'],
+      ['The shipment is handled in Sorting Center', 'Przesyłka jest obsługiwana w Centrum Sortowania', 'in_transit'],
+      ['The shipment is processed at sorting center.', 'Przesyłka jest obsługiwana w centrum sortowania.', 'in_transit'],
+      ['The shipment has arrives at sorting center.', 'Przesyłka została przyjęta w centrum sortowania.', 'in_transit'],
+      ['The shipment has arrived at delivery depot.', 'Przesyłka przyjęta w oddziale doręczającym.', 'in_transit'],
+      ['With delivery courier.', 'Przesyłka przekazana kurierowi do doręczenia.', 'out_for_delivery'],
+      ['According to consignee request the parcel will be delivered to the safe place.',
+        'Odbiorca złożył dyspozycję dot. doręczenia przesyłki do bezpiecznego miejsca doręczenia.', 'pending'],
+      ['DHL Courier did not reach the Recipient at the indicated delivery address. The shipment will be waiting for collection in DHL POP in the nearest area.',
+        'Kurier DHL nie zastał Odbiorcy pod wskazanym adresem doręczenia. Przesyłka będzie oczekiwać na odbiór w Punkcie DHL POP / Automacie DHL POP BOX w najbliższej okolicy.', 'failed_attempt'],
+      ['Shipment is waiting in Automat DHL BOX 24/7:Przykładowa 1 00-001 Miasto Opening hours: Mon.00:00 - 23:59',
+        'Przesyłka oczekuje na odbiór w Automat DHL BOX 24/7:Przykładowa 1 00-001 Miasto Godziny otwarcia: Pon.00:00 - 23:59', 'ready_for_pickup'],
+      ['The shipment has been delivered to the recipient.', 'Przesyłka została doręczona do odbiorcy.', 'delivered'],
+      ['The Recipient has refused to accept the shipment and it will be returned to the Sender',
+        'Odbiorca odmówił przyjęcia przesyłki i zostanie ona zwrócona do Nadawcy', 'exception'],
+      ['Shipment returned do sender. Time for receipt has passed', 'Zwrot przesyłki do nadawcy - minął termin odbioru', 'exception'],
+      ['Delivery in the way to the Sender', 'Przesyłka w trakcie zwrotu do Nadawcy', 'exception'],
+      ['The shipment was returned to the Sender.', 'Przesyłka została zwrócona do nadawcy.', 'returned'],
+    ];
+    for (const [english, polish, stage] of pairs) {
+      const payload = history();
+      payload.events[0]!.description = english;
+      payload.events[1]!.description = polish;
+      const events = parseDhlPolandHistory(payload, WAYBILL).events;
+      expect([events?.[0]?.stage, events?.[1]?.stage], english).toEqual([stage, stage]);
+    }
+  });
   it('opens the page in the language it is asked for, English by default', async () => {
     const urls: string[] = [];
     const client = new TrawlClient('https://browser.example.test', async (_url, init) => {

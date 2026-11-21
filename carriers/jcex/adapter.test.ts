@@ -299,6 +299,41 @@ describe('JCEX HTTP adapter', () => {
     expect(descriptions).toContain('Arrived at Facility');
   });
 
+  it("orders a row filed under the United States alone on the clock the reply's US places keep, not on China's", () => {
+    const reply = (extra: unknown[] = []) => parseJcex(changed('delivered', (content) => {
+      const template = content.trackDetails[0]!;
+      const row = (eventTime: string, timeZone: string, platformEventCode: string, eventDetailEn: string, countryCode: string, location: string) => ({
+        ...template, eventTime, timeZone, platformEventCode, eventDetailEn, eventDetailCn: eventDetailEn, countryCode, location });
+      content.trackDetails = [
+        ...extra.map((fields) => row(...(fields as Parameters<typeof row>))),
+        row('2026-04-14 11:30:26', '-05:00', 'InTransit_CustomsProcessing', 'In clearance process', 'US', ''),
+        // A landing in California under the offset JCEX gives every US row: the wall clock is California's.
+        row('2026-04-14 09:43:26', '-05:00', 'InTransit_Arrival', 'Arrive at destination airport', 'US', 'EXAMPLE TOWN,CA,US'),
+        row('2026-04-13 16:42:06', '+08:00', 'InTransit_Departure', 'Depart from origin airport', 'CN', 'EXAMPLE,CN'),
+      ];
+    }), NUMBER, READ);
+    const parsed = reply();
+    expect(parsed.events!.map((event) => event.description)).toEqual(['In clearance process', 'Arrive at destination airport', 'Depart from origin airport']);
+    // The clearance then takes California's clock from the landing before it, two hours after it, not Beijing's from the departure.
+    expect(dateLocalClocks('jcex', parsed, READ).events![0]).toMatchObject({ time: '2026-04-14T11:30:26-07:00', time_zone: 'America/Los_Angeles' });
+    // With places on two clocks, the reply does not say which is the row's: it stays on Beijing's.
+    expect(reply([['2026-04-15 08:00:00', '-05:00', 'InTransit_Other', 'Arrive at sorting center', 'US', 'EXAMPLE TOWN,NY,US']]).events!.map((event) => event.description))
+      .toEqual(['Arrive at sorting center', 'Arrive at destination airport', 'In clearance process', 'Depart from origin airport']);
+  });
+
+  it('keeps one order notice JCEX lists twice at one second in two wordings', () => {
+    const parsed = parseJcex(changed('delivered', (content) => {
+      const notice = content.trackDetails.at(-1)!;
+      content.trackDetails.push({ ...notice, eventDetailEn: 'The order information has been sent', eventDetailCn: null });
+      // A notice at another second is another notice.
+      content.trackDetails.push({ ...notice, eventTime: '2026-04-08 12:01:26', eventDetailEn: 'The order information has been sent', eventDetailCn: null });
+    }), NUMBER, READ);
+    expect(parsed.events!.filter((event) => event.provider_code === 'InfoReceived').map((event) => [event.time, event.description])).toEqual([
+      ['2026-04-08T12:01:26+08:00', 'The order information has been sent'],
+      ['2026-04-08T12:01:25+08:00', 'Shipment order info received'],
+    ]);
+  });
+
   it("drops JCEX's placeless copy to the minute of a partner's scan to the second, under its code or in its words without a code", () => {
     const result = parseJcex(changed('relayed', (content) => {
       const delivered = content.trackDetails.find((row) => row.eventDetailEn === 'Delivered')!;

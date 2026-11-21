@@ -14,6 +14,7 @@ number. [universal.ts](universal.ts) owns the factories, the order and the provi
 | [Ship24](ship24/README.md) | Signed anonymous JSON POST, local Chromium recovery | `direct`, `browser` | Fast, broad, carrier hints |
 | [ParcelsApp](parcelsapp/README.md) | Anonymous form POST with postcode, TRAWL recovery | `direct`, `retry`, `trawl` | Fuller histories, destination legs |
 | [17TRACK](seventeentrack/README.md) | TRAWL capture (compatibility build) | `trawl` | Per-leg multi-operator histories |
+| [Ordertracker](ordertracker/README.md) | Anonymous JSON GET with the Android app's header | `direct` | Second HTTP source for a few large carriers |
 | [Postal Ninja](postal-ninja/README.md) | TRAWL widget, then results page. Local Chromium is compact-only | `trawl` or `browser` | Alternative full histories (opt-in) |
 | [UPU](upu/README.md) | Anonymous JSON GET | `direct` | Cheap last-resort postal history |
 
@@ -25,8 +26,9 @@ number. [universal.ts](universal.ts) owns the factories, the order and the provi
    with fuller history for it first, graded by [coverage.ts](coverage.ts). Neither speed nor
    load moves a provider ahead of one with fuller history.
 2. **Speed.** Someone may be waiting for the answer, so among providers with equally full
-   history the HTTP ones are asked before the browser ones. A lookup nobody waits for says
-   so with `background: true` and skips this step.
+   history the fast HTTP ones are asked before the browser ones and Ordertracker, which
+   answer seconds later. A lookup nobody waits for says so with `background: true` and
+   skips this step.
 3. **Load.** Providers that are still equal share the numbers. Each number draws its own
    order, the same at every lookup, and a provider leads a part of the numbers in proportion
    to its `share` in `UNIVERSAL_PROVIDERS` ([plan.ts](plan.ts)). The share is large for a
@@ -37,7 +39,8 @@ number. [universal.ts](universal.ts) owns the factories, the order and the provi
 Selecting `Postal Ninja` adds it after the other aggregators, for a number no carrier is
 named for and for a carrier whose evidence shows Postal Ninja history. Selecting `Track123`
 adds it for the carrier a lookup is for, when it has a verified courier page for that carrier,
-at the place its history there gives it. UPU needs a
+at the place its history there gives it. Ordertracker is asked only about the carrier a lookup
+is for, when that carrier's feeds were checked ([feeds.ts](ordertracker/feeds.ts)). UPU needs a
 checksum-valid S10 number and always stays last. Checksum-valid China Post `C…CN` and
 `L…CN` numbers start with 17TRACK.
 
@@ -190,8 +193,8 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 - A carrier whose name providers also write for a sister company names the sister whose rule
   fits a number its own rules do not: Postal Ninja's "FAN Courier" is FAN Courier International
   for that tracker's numbers.
-- The names `Ship24`, `ParcelsApp`, `17TRACK`, `Postal Ninja`, `Track718` and `UPU` are public, and
-  consumers store them. Don't rename them.
+- The names `Ship24`, `ParcelsApp`, `17TRACK`, `Ordertracker`, `Postal Ninja`, `Track718`, `Track123`
+  and `UPU` are public, and consumers store them. Don't rename them.
 
 ## Shared implementation
 
@@ -215,16 +218,19 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 
 - Keep the adapter, parser tests, fixtures and one README in its folder.
 - Add the name to `UniversalSource` in `types.ts` and `shared/result.ts` and to
-  `COVERAGE_SOURCES` in `coverage.ts`. Register the factory in `universal.ts`, and give it a
-  row in `UNIVERSAL_PROVIDERS` in `plan.ts`: its transport, its lookup budget and its share. A
-  new name is a minor release, and consumers that store names have to accept it.
+  `COVERAGE_SOURCES` in `coverage.ts`, or to `GRADED_SOURCES` for a provider asked about some
+  carriers only. Register the factory in `universal.ts`, and give it a row in
+  `UNIVERSAL_PROVIDERS` in `plan.ts`: its transport, its lookup budget, its share, and `slow`
+  for an HTTP one that answers seconds later. A new name is a minor release, and consumers
+  that store names have to accept it.
 - Change a share only with evidence, and record the reason in
   [COMPARISON.md](COMPARISON.md).
 - Add the provider's results to [coverage.json](coverage.json) with
   `scripts/coverage-probe.mjs`, then run `npm run generate` to rebuild the COVERAGE.md
   tables.
-- Add the name to `SOURCES` in `scripts/benchmark-data.mjs` and run the
-  [benchmark](../benchmark/README.md) for it: `node scripts/benchmark.mjs probe --sources <name>`.
+- Add the name to `SOURCES` in `scripts/benchmark-data.mjs`, and in `scripts/coverage-probe.run.ts`
+  when it is not a comparison provider, and run the [benchmark](../benchmark/README.md) for it:
+  `node scripts/benchmark.mjs probe --sources <name>`.
 - Run the package checks.
 
 Track718 is an opt-in source restricted to Juxi Express. The provider plan leaves it out, so it
@@ -234,3 +240,8 @@ answers only an explicit request. See [the scoped integration](track718/README.m
 only about the carrier a lookup is for, and only when that page returned history for the
 carrier's public numbers ([couriers.ts](track123/couriers.ts)). Its guest flow uses no paid
 API credentials.
+
+[Ordertracker](ordertracker/README.md) is asked through the endpoint of its Android app, with the
+header every install of the app sends. It merges the feeds that relay a carrier's scans, each on
+its own clock, so it is asked only about the carriers whose feeds were compared with the
+carrier's own tracking ([feeds.ts](ordertracker/feeds.ts)).

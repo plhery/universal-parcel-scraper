@@ -13,7 +13,7 @@ const root = path.join(directory, '..');
 const { carriers } = JSON.parse(readFileSync(path.join(directory, 'carriers.json'), 'utf8')) as { carriers: BenchmarkCarrier[] };
 const results = readFileSync(path.join(directory, 'results.jsonl'), 'utf8').split('\n').filter(Boolean)
   .map((line) => JSON.parse(line) as { carrier: string; number: string; source: string; outcome: string; checked: string; rows?: number });
-const SOURCES = ['direct', 'Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU'];
+const SOURCES = ['direct', 'Ship24', 'ParcelsApp', '17TRACK', 'Ordertracker', 'Postal Ninja', 'UPU'];
 const OUTCOMES = ['history', 'summary_only', 'no_history', 'undated', 'postcode_prompt', 'refused', 'blocked', 'error', 'no_adapter', 'n/a'];
 const REVIEWS = ['wrong_carrier', 'refused', 'no_history'];
 const inCatalog = (carrier: string) => existsSync(path.join(root, 'carriers', carrier, 'carrier.json'));

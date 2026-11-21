@@ -28,7 +28,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { benchmarkReferences, BENCHMARK_NOTE, cellText, grade, INCONCLUSIVE, keyOf, loadBenchmark, PROVIDERS, readResults, SOURCES } from './benchmark-data.mjs';
+import { benchmarkReferences, BENCHMARK_NOTE, cellText, COMPARED, grade, INCONCLUSIVE, keyOf, loadBenchmark, readResults, SOURCES } from './benchmark-data.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const resultsPath = path.join(root, 'benchmark', 'results.jsonl');
@@ -80,7 +80,7 @@ function routing(check) {
     }
     const own = item.references.filter((reference) => !reference.note?.startsWith(BENCHMARK_NOTE));
     // The comparison reference stays first: one written by hand that states every provider, else the benchmark's first number.
-    const compares = own.length > 0 && PROVIDERS.every((source) => source in own[0].results);
+    const compares = own.length > 0 && COMPARED.every((source) => source in own[0].results);
     item.references = compares ? [...own, ...references] : [...references, ...own];
     written += references.length;
   }

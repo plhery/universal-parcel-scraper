@@ -51,7 +51,8 @@ Tracked through the lookup its tracking page makes.
   place. A scan relayed on Beijing's clock comes twice too, once in JCEX's own words under the
   bare place `CN`, sometimes under another code; that row is dropped and the source's words
   stay. The order data, filed under neither a country nor a place, is on Beijing's clock
-  whatever offset it carries. A delivering partner's scan can also come in its short words and
+  whatever offset it carries; its notice, listed twice at one second in two wordings, is kept
+  once, in the first. A delivering partner's scan can also come in its short words and
   again with its sentence after " -> ", at one clock and place, each under the code JCEX gives
   its words: the fuller row stays.
 - Other rows are read on the clock their place keeps: its country's when the country has one,
@@ -66,7 +67,10 @@ Tracked through the lookup its tracking page makes.
   would name a country. A row whose place is a bare country code keeps that country's
   clock: JCEX files its Hong Kong hub's rows under the destination with the destination's
   offset. An offset the place does not keep at that time, and a place without one clock, keep
-  the wall clock: Colissimo's rows come on France's clock with China's offset.
+  the wall clock: Colissimo's rows come on France's clock with China's offset. A row filed
+  under the United States without a place keeps its wall clock too, ordered on the clock the
+  reply's US places keep when they all keep one: an import clearance after a landing in
+  California comes after the landing, not before it on China's clock.
 - The newest scan's instant, when it has one, is the last update, and a delivered scan's is the
   delivery time. Rows dated after the read are dropped.
 - Seconds after it takes a parcel in, JCEX writes a timeline up to the delivering partner: rows

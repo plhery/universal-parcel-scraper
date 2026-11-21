@@ -1,0 +1,570 @@
+{
+  "timezone": "Europe/Paris",
+  "language": "en",
+  "status": {
+    "code": "delivered",
+    "subcode": "delivered",
+    "incidents": [],
+    "heading": "Delivered",
+    "label": "Sep 25, 2026",
+    "sublabel": "Your shipment has been delivered."
+  },
+  "transit": {
+    "shippingDate": "2026-09-16T10:26:00.001Z",
+    "shippingDateHumanReadable": "Sep 16, 2026",
+    "deliveryDate": "2026-09-25T12:59:53.016Z",
+    "deliveryDateHumanReadable": "Sep 25, 2026",
+    "daysInTransit": 9,
+    "daysInTransitHumanReadable": "9 days",
+    "lastmileTrackingNumber": null,
+    "originCountryCode": null,
+    "originCountryHumanReadable": null,
+    "destinationCountryCode": null,
+    "destinationCountryHumanReadable": null
+  },
+  "forecast": {
+    "estimatedDeliveryDateMin": null,
+    "estimatedDeliveryDateMax": null,
+    "estimatedDeliveryDateMinHumanReadable": null,
+    "estimatedDeliveryDateMaxHumanReadable": null,
+    "confidenceScore": 0
+  },
+  "events": [
+    {
+      "time": "2026-09-25T12:59:53.016Z",
+      "lines": [
+        {
+          "original": "DUBOIS, WY",
+          "english": "The shipment is currently at Dubois, WY.",
+          "translated": "The shipment is currently at Dubois, WY."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "delivered",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment has been delivered."
+    },
+    {
+      "time": "2026-09-25T12:59:00.016Z",
+      "lines": [
+        {
+          "original": "【DUBOIS,WY,US】",
+          "english": "The shipment is at DUBOIS, WY, US.",
+          "translated": "The shipment is at DUBOIS, WY, US."
+        },
+        {
+          "original": "DELIVERED",
+          "english": "The package has been delivered.",
+          "translated": "The package has been delivered."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "delivered",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment has been delivered."
+    },
+    {
+      "time": "2026-09-25T09:17:00.015Z",
+      "lines": [
+        {
+          "original": "Out For Delivery Today",
+          "english": "The package is out for delivery today.",
+          "translated": "The package is out for delivery today."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "outForDelivery",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "The final delivery of your shipment is scheduled today."
+    },
+    {
+      "time": "2026-09-25T06:16:00.014Z",
+      "lines": [
+        {
+          "original": "Loaded on Delivery Vehicle",
+          "english": "The package has been loaded onto the delivery vehicle.",
+          "translated": "The package has been loaded onto the delivery vehicle."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "outForDelivery",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "The final delivery of your shipment is scheduled today."
+    },
+    {
+      "time": "2026-09-25T06:06:57.013Z",
+      "lines": [
+        {
+          "original": "Riverton, WY",
+          "english": "The shipment is currently at RIVERTON, WY.",
+          "translated": "The shipment is currently at RIVERTON, WY."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-25T06:06:00.013Z",
+      "lines": [
+        {
+          "original": "Processing at UPS Facility",
+          "english": "The package is being processed at the UPS facility.",
+          "translated": "The package is being processed at the UPS facility."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-25T04:56:00.012Z",
+      "lines": [
+        {
+          "original": "【Riverton,WY,US】",
+          "english": "The shipment is currently in Riverton, Wyoming, United States.",
+          "translated": "The shipment is currently in Riverton, Wyoming, United States."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-25T04:56:00.012Z",
+      "lines": [
+        {
+          "original": "Arrived at Facility",
+          "english": "The shipment has arrived at the facility.",
+          "translated": "The shipment has arrived at the facility."
+        },
+        {
+          "original": "Riverton, WY",
+          "english": "The shipment is currently at RIVERTON, WY.",
+          "translated": "The shipment is currently at RIVERTON, WY."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-25T02:35:00.011Z",
+      "lines": [],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-25T02:35:00.011Z",
+      "lines": [
+        {
+          "original": "Departed from Facility",
+          "english": "The package has departed from the facility.",
+          "translated": "The package has departed from the facility."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 25, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-24T12:55:00.010Z",
+      "lines": [
+        {
+          "original": "【Casper,WY,US】",
+          "english": "Shipment is currently at Casper, Wyoming, United States.",
+          "translated": "Shipment is currently at Casper, Wyoming, United States."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 24, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-24T12:55:00.010Z",
+      "lines": [
+        {
+          "original": "Arrived at Facility",
+          "english": "The shipment has arrived at the facility.",
+          "translated": "The shipment has arrived at the facility."
+        },
+        {
+          "original": "Casper, WY",
+          "english": "The shipment is currently in Casper, WY.",
+          "translated": "The shipment is currently in Casper, WY."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 24, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-24T06:35:00.009Z",
+      "lines": [
+        {
+          "original": "Departed from Facility",
+          "english": "The package has departed from the facility.",
+          "translated": "The package has departed from the facility."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 24, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-23T11:43:00.008Z",
+      "lines": [
+        {
+          "original": "【Aurora,CO,US】",
+          "english": "The shipment is currently in Aurora, Colorado, United States.",
+          "translated": "The shipment is currently in Aurora, Colorado, United States."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 23, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-23T11:43:00.008Z",
+      "lines": [
+        {
+          "original": "Arrived at Facility",
+          "english": "The shipment has arrived at the facility.",
+          "translated": "The shipment has arrived at the facility."
+        },
+        {
+          "original": "Aurora, CO",
+          "english": "The shipment is in Aurora, Colorado.",
+          "translated": "The shipment is in Aurora, Colorado."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 23, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-23T03:34:00.007Z",
+      "lines": [
+        {
+          "original": "Departed from Facility",
+          "english": "The package has departed from the facility.",
+          "translated": "The package has departed from the facility."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 23, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-23T00:25:00.006Z",
+      "lines": [
+        {
+          "original": "【Lenexa,KS,US】",
+          "english": "The shipment is currently in Lenexa, Kansas, United States.",
+          "translated": "The shipment is currently in Lenexa, Kansas, United States."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 23, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-23T00:25:00.006Z",
+      "lines": [
+        {
+          "original": "Arrived at Facility",
+          "english": "The shipment has arrived at the facility.",
+          "translated": "The shipment has arrived at the facility."
+        },
+        {
+          "original": "Lenexa, KS",
+          "english": "The package is in Lenexa, Kansas.",
+          "translated": "The package is in Lenexa, Kansas."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 23, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-22T12:18:00.005Z",
+      "lines": [
+        {
+          "original": "Departed from Facility",
+          "english": "The package has departed from the facility.",
+          "translated": "The package has departed from the facility."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 22, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-22T12:07:00.004Z",
+      "lines": [
+        {
+          "original": "【Nashville,TN,US】",
+          "english": "The shipment is currently in Nashville, Tennessee, United States.",
+          "translated": "The shipment is currently in Nashville, Tennessee, United States."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 22, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-22T12:07:00.004Z",
+      "lines": [
+        {
+          "original": "Arrived at Facility",
+          "english": "The shipment has arrived at the facility.",
+          "translated": "The shipment has arrived at the facility."
+        },
+        {
+          "original": "Nashville, TN",
+          "english": "Nashville, TN.",
+          "translated": "Nashville, TN."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 22, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-22T08:57:00.003Z",
+      "lines": [
+        {
+          "original": "【Atlanta,GA,US】",
+          "english": "The shipment is currently in Atlanta, Georgia, United States.",
+          "translated": "The shipment is currently in Atlanta, Georgia, United States."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 22, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-22T08:57:00.003Z",
+      "lines": [
+        {
+          "original": "Departed from Facility",
+          "english": "The package has departed from the facility.",
+          "translated": "The package has departed from the facility."
+        }
+      ],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 22, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-22T01:51:00.002Z",
+      "lines": [
+        {
+          "original": "【Atlanta,GA,US】",
+          "english": "The shipment is currently in Atlanta, Georgia, United States.",
+          "translated": "The shipment is currently in Atlanta, Georgia, United States."
+        },
+        {
+          "original": "Arrived at Facility",
+          "english": "The shipment has arrived at the facility.",
+          "translated": "The shipment has arrived at the facility."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "inCustoms",
+      "timeHumanReadable": "Sep 22, 2026",
+      "statusHumanReadable": "Your shipment is being cleared through customs."
+    },
+    {
+      "time": "2026-09-16T10:26:36.001Z",
+      "lines": [],
+      "carrier": {
+        "name": "PITNEY BOWES",
+        "slug": "pitney-bowes-newgistics",
+        "websiteUrl": "https://www.pitneybowes.com",
+        "websiteAnchor": "Get in touch with PITNEY BOWES"
+      },
+      "status": "transit",
+      "timeHumanReadable": "Sep 16, 2026",
+      "statusHumanReadable": "Your shipment is in transit with the carrier."
+    },
+    {
+      "time": "2026-09-16T10:26:00.001Z",
+      "lines": [
+        {
+          "original": "【US】",
+          "english": "The package was in the United States.",
+          "translated": "The package was in the United States."
+        },
+        {
+          "original": "Shipper created a label, UPS has not received the package yet.",
+          "english": "The shipper created a label; UPS has not received the package yet.",
+          "translated": "The shipper created a label; UPS has not received the package yet."
+        }
+      ],
+      "carrier": {
+        "name": "FAR",
+        "slug": null,
+        "websiteUrl": "http://www.far800.com",
+        "websiteAnchor": "Get in touch with FAR"
+      },
+      "status": "labelCreated",
+      "timeHumanReadable": "Sep 16, 2026",
+      "statusHumanReadable": "The carrier has been informed and will soon collect your shipment."
+    }
+  ],
+  "carriers": [
+    {
+      "name": "PITNEY BOWES",
+      "slug": "pitney-bowes-newgistics",
+      "websiteUrl": "https://www.pitneybowes.com",
+      "websiteAnchor": "Get in touch with PITNEY BOWES"
+    },
+    {
+      "name": "FAR",
+      "slug": null,
+      "websiteUrl": "http://www.far800.com",
+      "websiteAnchor": "Get in touch with FAR"
+    }
+  ]
+}

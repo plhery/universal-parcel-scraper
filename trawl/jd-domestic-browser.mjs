@@ -9,6 +9,10 @@ const SESSION = 'https://www.jdl.com/ecology/getSession';
 const NUMBER = /^JD(?:\d{13}|[A-Z]\d{12}|[A-Z]{2}\d{11})$/, INTERNATIONAL = /^JD(?:W\d{12}|AP\d{11})$/;
 const MAX_BODY = 1_000_000;
 const MAX_RESPONSES = 3;
+// Each puzzle is a fresh chance: the matcher declines about a third of them, independently of the waybill.
+const MAX_PUZZLES = 4;
+// JD's widget ignores a refresh clicked right after its previous puzzle appeared.
+const REFRESH_DWELL_MS = 1000;
 const reportVerification = fields => console.warn(JSON.stringify({ level: 'warn', event: 'jd.verification', ...fields }));
 
 export function jdDomesticNumber(raw, capture = {}) {
@@ -108,9 +112,9 @@ async function within(operation, ms, fallback = null, signal) {
   } finally { clearTimeout(timer); if (aborted) signal.removeEventListener('abort', aborted); }
 }
 
-/** At most two official puzzles in the original session and caller deadline. */
+/** At most four official puzzles in the original session and caller deadline. */
 export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, signal, installPolicy,
-  locate = locateJdIcon, onVerification = reportVerification }) {
+  locate = locateJdIcon, onVerification = reportVerification, refreshDwellMs = REFRESH_DWELL_MS }) {
   const number = jdDomesticNumber(url, capture);
   if (!number) return undefined;
   const started = Date.now(), ending = new AbortController();
@@ -226,8 +230,8 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
         await pause(80, combined);
       }
       if (!puzzle || sessionCount !== 1) { outcome = 'unreadable'; return result(); }
-      let point;
-      for (let attempt = 0; attempt < 2; attempt++) {
+      let point, shownAt = Date.now();
+      for (let attempt = 0; attempt < MAX_PUZZLES; attempt++) {
         analysis = 'not_started'; foregroundPixels = undefined;
         point = await locate(puzzle, combined, Math.max(0, Math.min(3000, left() - 1500)), (value, count) => {
           if (['planned', 'cancelled', 'capacity', 'input_or_budget', 'timeout', 'output_limit', 'worker_error', 'unreadable',
@@ -244,7 +248,9 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
         if (point) break;
         // Refresh only a visual abstention, never a submitted refusal or a worker failure.
         // Leave time for image loading, a second analysis, tracking and context cleanup.
-        if (attempt || left() < 14000 || !['foreground', 'matching', 'ambiguous'].includes(analysis)) break;
+        if (attempt + 1 >= MAX_PUZZLES || left() < 14000 || !['foreground', 'matching', 'ambiguous'].includes(analysis)) break;
+        await pause(Math.max(0, shownAt + refreshDwellMs - Date.now()), combined);
+        if (combined.aborted) { outcome = 'budget'; return result(); }
         const refresh = await during(() => page.evaluate(jdRefreshGeometry, puzzle), Math.min(1000, left()));
         if (combined.aborted) { outcome = 'budget'; return result(); }
         if (sessionCount !== 1) { outcome = 'guest_session_changed'; return result(); }
@@ -265,7 +271,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
         if (combined.aborted) { outcome = 'budget'; return result(); }
         if (blocked) { outcome = 'verification_refused'; return result(); }
         if (!fresh) { outcome = 'stale_puzzle'; return result(); }
-        puzzle = fresh;
+        puzzle = fresh; shownAt = Date.now();
       }
       if (!point) { outcome = 'unreadable'; return result(); }
       const geometry = await during(() => page.evaluate(jdIconGeometry, { challenge: puzzle, point }), Math.min(1000, left()));

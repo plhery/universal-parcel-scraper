@@ -28,6 +28,8 @@ const labels: Record<string, ClassifiedStatus> = {
   TURMOIL: { status: 'exception', stage: 'exception' },
   // The patron saint's holiday where the parcel is going holds it for the day, before the delivery depot.
   'PATRONAL HOLIDAY': { status: 'in_transit', stage: 'in_transit' },
+  // Bad weather holds the parcel up at a depot, which BRT words in lower case; the next scans move it on.
+  'METEOROLOGICAL EVENT': { status: 'in_transit', stage: 'in_transit' },
   'RETURNED TO SENDER': { status: 'exception', stage: 'returned' },
   DELIVERED: { status: 'delivered', stage: 'delivered' },
 };

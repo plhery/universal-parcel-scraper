@@ -78,7 +78,7 @@ is the service's network, and no browser is launched. MTCaptcha (Hongkong Post)
 needs handling that this image's solvers do not provide; its
 [documentation](../carriers/hongkong-post/README.md) describes the verification flow.
 
-Track123 uses a fresh context for the public form of the courier page the request names. The page owns guest verification and polling; only history whose query names that courier and the whole number is captured. It adds no challenge attempts or retained verification state.
+Track123 runs Tencent's invisible check on a blank document served at the address of the courier page the request names, in a fresh context, then sends the page's query for that courier and the whole number, with the check's ticket, and its polls from that document. The courier page itself takes longer to load than the lookup. Only history fields leave the context and the ticket is used once. The service keeps Tencent's script and style files between lookups, for as long as their cache headers allow and a day at most, as a browser that came before would: reading them takes longer than the rest of the lookup, and the network that serves them drops connections from the server in bursts. A check that asks for a visitor's answer ends the lookup as a challenge.
 
 LBC Express binds the public page's main-frame tracking POST to the whole label and
 decodes its compressed response. Its bounded capture retains automatic verification
@@ -215,8 +215,10 @@ It declines ambiguous images and layouts outside its supported geometry, and its
 displayed images. Readiness and clicks identify the unique image pair inside JD’s
 verification modal, so changing inner widget classes does not break the helper.
 Its official page retains the original guest session and submits tracking only after
-accepted verification. After a visual abstention, the helper may refresh once in the same session when
-the remaining lookup budget permits it. Both new images must load and settle before analysis;
+accepted verification. After a visual abstention, the helper may refresh up to three times in the same
+session while the remaining lookup budget permits it: the matcher declines puzzles, not waybills, so a
+fresh puzzle is a fresh chance. It waits a second after a puzzle appears before refreshing it, since
+JD's widget ignores a refresh clicked sooner. Both new images must load and settle before analysis;
 worker failures and submitted refusals are not retried. Diagnostics retain only the bounded
 attempt reasons and refresh count. Both the request and response bind the whole
 waybill. A planned click alone is not accepted verification.
@@ -250,6 +252,11 @@ DHL Express waits for the public
 page to complete verification and repeat tracking after an intermediate HTTP 428.
 17TRACK submits a supplied postcode through the site's form and binds the capture to
 the number and postcode in its outgoing request.
+TRAWL waits for a page's load event and a quiet network before it asks a capture anything. 17TRACK's
+capture ends those waits once the page asks for the number, and Postal Ninja's once its widget shows
+the form: both pages keep loading long after their tracker works. Their pages also drop pictures,
+fonts, media and the advertising and measurement hosts they load, which no lookup reads; navigations
+and Cloudflare's checks always pass, and a Cloudflare wall keeps TRAWL's waits.
 UPS binds the browser POST to one tracking ID and retains the latest bounded
 response sequence, including refusals after the body extraction budget is spent.
 SwiftX's page clears Cloudflare's managed challenge and offers a slider when Turnstile
@@ -302,6 +309,11 @@ everything, and `FFMPEG_PATH` selects SF Express's PNG decoder.
 TRAWL interrupts them. It exits by force 30 seconds after the drain, so give the container a
 stop timeout of the drain plus 30 seconds, or the supervisor kills it mid-drain. `GET /metrics`
 reports the browser pool to Prometheus.
+
+The image sets `BROWSER_BLOCK_ADS=false`. TRAWL's bundled uBlock Origin compiles its filter lists
+in every browser the pool starts and updates them soon after, and page requests wait behind that
+work for seconds. Carrier pages weigh the same with or without it. FedEx's browsers, which stay
+open between lookups, keep it. `BROWSER_BLOCK_ADS=true` turns it back on.
 
 The image sets `LOG_LEVEL=warn`. TRAWL's request log includes the page path, where some
 carriers put the parcel number; `LOG_LEVEL=info` turns that log on. Each tier that fails, is

@@ -614,6 +614,12 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...english, description: 'Przesyłka doręczona do Odbiorcy.' }, english)).toBe(true);
     expect(policy?.matches?.({ ...english, description: 'Przesyłka w transporcie do oddziału doręczającego.' }, english)).toBe(false);
     expect(policy?.matches?.({ ...english, description: 'Unread wording' }, { ...english, description: 'Other unread wording' })).toBe(false);
+    // The page translates some places too: the same scan at the place in the other language takes the row over.
+    const named = { stage: 'in_transit', description: 'The shipment has reached DHL Terminal Example (branch in Sample)', location: 'Example (branch in Sample)', providerCode: '' };
+    const polish = { ...named, description: 'Przesyłka dotarła do oddziału DHL eCommerce Example (z siedzibą w Samplu).', location: 'Example (z siedzibą w Samplu)' };
+    expect(policy?.matches?.(polish, named)).toBe(true);
+    expect(policy?.matches?.({ ...polish, description: 'Przesyłka jest obsługiwana w Centrum Sortowania' }, named)).toBe(false);
+    expect(policy?.matches?.({ ...polish, description: 'Unread wording' }, { ...named, description: 'Unread wording' })).toBe(false);
   });
 
   it('lets a DHL Express record take over the row the other feed stored, by wall clock, place and wording', () => {

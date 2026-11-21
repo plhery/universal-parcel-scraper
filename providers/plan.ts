@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../core/detection/normalize.js';
 import { CARRIER_IDS } from '../generated/catalog.js';
 import { coverageTiers, type CoverageTier, type ObservedCoverage } from './coverage.js';
 import { linkTokenKept, numberIsLinkToken } from './linkToken.js';
+import { ordertrackerFeeds } from './ordertracker/feeds.js';
 import { track123CourierCode } from './track123/couriers.js';
 import type { UniversalSource as Source } from './types.js';
 
@@ -12,6 +13,8 @@ export type { ObservedCoverage } from './coverage.js';
 export interface UniversalProvider {
   /** `browser` lookups go through the browser service: slower, and sharing one TRAWL. */
   transport: 'http' | 'browser';
+  /** An HTTP provider that answers seconds later, as the browser ones do. */
+  slow?: boolean;
   /** Lookup time reserved by the chain and host router, before transport allowance. */
   budgetMs: number;
   /**
@@ -26,12 +29,16 @@ export interface UniversalProvider {
 
 /**
  * The providers, largest share first. Ship24 could be lost with little harm; ParcelsApp and
- * 17TRACK are each the only source of several carriers. 17TRACK, Track123 and Track718 cost
- * a browser read, Track123's the longest. Postal Ninja's histories rarely have a scan whose
- * clock a consumer can place, and UPU's feed is sparse: both are asked after the others.
+ * 17TRACK are each the only source of several carriers. Ordertracker serves a few carriers
+ * that ParcelsApp or 17TRACK also have, so it takes more than ParcelsApp, but it reads the
+ * carrier while the lookup waits unless it has a copy of the parcel. 17TRACK, Track123 and
+ * Track718 cost a browser read, Track123's the longest. Postal Ninja's histories rarely have
+ * a scan whose clock a consumer can place, and UPU's feed is sparse: both are asked after
+ * the others.
  */
 export const UNIVERSAL_PROVIDERS: Readonly<Record<Source, UniversalProvider>> = {
   Ship24: { transport: 'http', budgetMs: 30_000, share: 4 },
+  Ordertracker: { transport: 'http', slow: true, budgetMs: 30_000, share: 3 },
   ParcelsApp: { transport: 'http', budgetMs: 45_000, share: 2 },
   '17TRACK': { transport: 'browser', budgetMs: 30_000, share: 1 },
   Track123: { transport: 'browser', budgetMs: 30_000, share: 1 },
@@ -42,7 +49,7 @@ export const UNIVERSAL_PROVIDERS: Readonly<Record<Source, UniversalProvider>> = 
 const SOURCES = Object.keys(UNIVERSAL_PROVIDERS) as Source[];
 
 /** The providers a consumer enables to get the plan of a number no option widens. */
-export const UNIVERSAL_SOURCES: Source[] = ['ParcelsApp', 'Ship24', '17TRACK', 'Track718', 'UPU'];
+export const UNIVERSAL_SOURCES: Source[] = ['ParcelsApp', 'Ship24', '17TRACK', 'Track718', 'Ordertracker', 'UPU'];
 /** Providers reached only through the browser service. */
 export const BROWSER_SOURCES: ReadonlySet<Source> = new Set(SOURCES.filter((source) => UNIVERSAL_PROVIDERS[source].transport === 'browser'));
 
@@ -111,15 +118,15 @@ export interface UniversalOrder {
   trackingNumber?: string;
   /**
    * Nobody waits for the answer. Providers with equally full history then share the
-   * numbers whatever their transport; otherwise the HTTP ones are asked before the browser
-   * ones, which answer seconds later.
+   * numbers whatever their speed; otherwise the fast HTTP ones are asked before Ordertracker
+   * and the browser ones, which answer seconds later.
    */
   background?: boolean;
 }
 
 /**
  * Orders providers by a carrier's coverage tiers: fuller history first, never traded for
- * speed or load. Providers of one tier share the numbers by their `share`, the HTTP ones
+ * speed or load. Providers of one tier share the numbers by their `share`, the fast ones
  * first unless the lookup runs in the background. Excluded providers are left out unless
  * nothing else would remain. Postal Ninja and then UPU stay last whatever their evidence.
  */
@@ -127,10 +134,11 @@ export function orderUniversalSources(eligible: readonly Source[], tiers: Tiers,
   const excluded = (source: Source) => source !== 'UPU' && tiers?.[source] === 'excluded';
   const usable = eligible.some((source) => source !== 'UPU' && !excluded(source)) ? eligible.filter((source) => !excluded(source)) : [...eligible];
   const draws = new Map(usable.map((source) => [source, draw(source, order.trackingNumber)]));
-  const browser = (source: Source) => order.background ? 0 : Number(UNIVERSAL_PROVIDERS[source].transport === 'browser');
+  const slow = (source: Source) => order.background ? 0
+    : Number(UNIVERSAL_PROVIDERS[source].transport === 'browser' || !!UNIVERSAL_PROVIDERS[source].slow);
   const after = (source: Source) => UNIVERSAL_PROVIDERS[source].after ?? 0;
   return usable.sort((a, b) => after(a) - after(b) || tierRank(tiers, a) - tierRank(tiers, b)
-    || browser(a) - browser(b) || draws.get(a)! - draws.get(b)!);
+    || slow(a) - slow(b) || draws.get(a)! - draws.get(b)!);
 }
 
 /** Catalog carriers other than the catalog's own `unknown`. */
@@ -161,7 +169,9 @@ export { numberIsLinkToken } from './linkToken.js';
  * history, and about any number no carrier is named for, where it is often the only
  * provider with the parcel. Track123 is asked through a courier's own page, so only about
  * the carrier the lookup is for, when that page answered the carrier's public numbers
- * (track123/couriers.ts). Track718 found none of the parcels it was asked about, and each
+ * (track123/couriers.ts). Ordertracker relays each carrier through feeds whose clocks differ, so
+ * it too is asked only about the lookup's carrier, when that carrier's feeds were checked
+ * (ordertracker/feeds.ts). Track718 found none of the parcels it was asked about, and each
  * try costs a browser read: the plan leaves it out, and only an explicit request asks it.
  */
 export function universalPlan(options: UniversalOrder & {
@@ -188,6 +198,7 @@ export function universalPlan(options: UniversalOrder & {
     if (unanswered.includes(source)) return false;
     if (source === 'Track718') return false;
     if (source === 'Track123') return !!options.enableTrack123 && !!track123CourierCode(carriers[0]);
+    if (source === 'Ordertracker') return !!ordertrackerFeeds(carriers[0]);
     if (source === 'Postal Ninja') return !!options.enablePostalNinja && (!first || ['full', 'partial'].includes(tiers?.[source] ?? 'unknown'));
     return source !== 'UPU' || trackingNumber === undefined || isValidS10TrackingNumber(trackingNumber);
   };

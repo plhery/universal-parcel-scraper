@@ -30751,7 +30751,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://hede.orcapayments.app/container-tracking/",
-    "trackingUrlTemplate": "http://elines.hedehk.com/cargoDynamicEN",
+    "trackingUrlTemplate": "https://hede.orcapayments.app/container-tracking/",
     "trackingSearchUrl": "https://hede.orcapayments.app/container-tracking/",
     "trackingSiteName": "Hede Cargo Tracking",
     "linkRules": [],

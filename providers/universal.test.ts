@@ -44,14 +44,14 @@ describe('universal discovery chain', () => {
   });
 
   it('keeps the persisted provider names and the opt-in position of Postal Ninja', () => {
-    expect(UNIVERSAL_SOURCES).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Track718', 'UPU']);
+    expect(UNIVERSAL_SOURCES).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Track718', 'Ordertracker', 'UPU']);
     // Without a number, the largest share leads.
     expect(universalSources()).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'UPU']);
     expect(universalSources(true)).toEqual(['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'UPU']);
     expect(universalSources(false, number)).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
     expect(universalSources(false, 'EB999999987CN').at(-1)).toBe('UPU');
     // A carrier's coverage evidence reorders them.
-    expect(universalPlan({ carriers: ['usps'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
+    expect(universalPlan({ carriers: ['usps'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ordertracker', 'Ship24']);
   });
 
   it('shares the numbers among equal providers by their share, each number keeping its order', () => {
@@ -90,7 +90,7 @@ describe('universal discovery chain', () => {
     }
     // Providers are the only route for a carrier without an adapter.
     expect(universalPlan({ carriers: ['azul-cargo'], trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
-    expect(universalPlan({ carriers: ['usps', 'j-and-t-de'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
+    expect(universalPlan({ carriers: ['usps', 'j-and-t-de'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ordertracker', 'Ship24']);
   });
 
   it('leaves out only the provider that has not answered for a carrier', () => {

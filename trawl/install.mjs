@@ -42,6 +42,13 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   // The helpers open their own context, so they run before the tier opens one.
   const entry = 'if (!budget) throw new Error("Browser task requires an operation budget")';
   if (source.split(entry).length !== 2) throw new Error('TRAWL tier entry changed');
+  // A capture that knows when its page can be used ends the tier's waits for a
+  // loaded, quiet page there. A Cloudflare wall keeps them.
+  const usable = fresh ? '!cloudflareWall && page' : 'page';
+  const quiet = `waitForBrowserLoad(page, capture, budget, ${fresh ? '10_000' : '8000'})`;
+  if (source.split(`await ${quiet}`).length !== 2) throw new Error('TRAWL page wait changed');
+  const pause = 'sleep(PAGE_SETTLE_MS, budget.signal)';
+  if (fresh && source.split(`await ${pause}`).length !== 2) throw new Error('TRAWL page pause changed');
   const carrierRunners = `${entry}
   const carrierRequest = ${fresh ? '!capture.sessionContext && ' : ''}!screenshot && (!method || method === "GET")
     && !body && !Object.keys(extraHeaders ?? {}).length
@@ -105,7 +112,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
           requestReplacement: handle.requestBrowserReplacement, ignoreHttpsErrors: ${fresh ? 'ignoreCertificateErrors' : 'false'} })
       } } : {}) })
   }
-  if (carrierPage && track123Number(url, capture)) return await runTrack123Browser(carrierRun)
+  if (carrierPage && track123Number(url, capture)) return await runTrack123Browser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && fedexSessionNumber(url, capture)) return await fedexSessions.run(carrierRun)
   // Through a proxy WanbExpress's helper opens its context there and solves nothing.
   if (carrierRequest && wanbBrowserNumber(url, capture)) {
@@ -132,7 +139,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     return await runMagyarPostaApp({ ...carrierRun, signal: budget.signal,
       transcribe: (address, signal, page, timeout) => transcribeMagyarPostaAudio(address, AbortSignal.any([budget.signal, signal]), page, timeout) })
   }`;
-  writeFileSync(path, 'import { attachTrackingCapture, reserveDeadline } from "../utils/tracking-capture.mjs"\n'
+  writeFileSync(path, 'import { attachTrackingCapture, reserveDeadline, untilPageReady } from "../utils/tracking-capture.mjs"\n'
     + 'import { solveRecaptchaV2 } from "../solvers/recaptcha"\n'
     + 'import { wanbBrowserNumber, runWanbBrowser } from "../utils/wanbexpress-browser.mjs"\n'
     + 'import { newFreshContext as newWanbContext } from "@trawl/browser"\n'
@@ -178,6 +185,8 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { track123Number, runTrack123Browser } from "../utils/track123-browser.mjs"\n'
     + 'import { fedexSessions, fedexSessionNumber } from "../utils/fedex-session.mjs"\n'
     + source.replace(entry, carrierRunners)
+      .replace(`await ${quiet}`, `await untilPageReady(${quiet}, ${usable})`)
+      .replace(`await ${pause}`, `await untilPageReady(${pause}, ${usable})`)
       .replace(documentCapture, 'captureBrowserDocument(page, pageCapture.contentOptions?.(capture) ?? capture, pageCapture, budget, screenshot)')
       .replace(needle, 'const pageCapture = reserveDeadline(await attachTrackingCapture(page, url, capture)'
         + ` ?? attachPageCapture(page, capture), ${reserveMs})`)
@@ -186,6 +195,14 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
       .replace(beforeSolve, 'await pageCapture.prepare?.(budget.remaining())\n    '
         + `const solveRemaining = Math.max(0, budget.remaining() - ${reserveMs})`));
 }
+
+// The wait for a challenged page's load event ends the same way.
+const challengeWaitPath = '/app/packages/tiers/src/utils/challengeWait.ts';
+const challengeWait = readFileSync(challengeWaitPath, 'utf8');
+const loaded = 'page\n          .waitForLoadState("load", { timeout: Math.max(1, Math.min(5000, deadline - Date.now())) })\n          .catch(() => {})';
+if (challengeWait.split(`await ${loaded}`).length !== 2) throw new Error('TRAWL challenge wait changed');
+writeFileSync(challengeWaitPath, 'import { untilPageReady } from "./tracking-capture.mjs"\n'
+  + challengeWait.replace(`await ${loaded}`, `await untilPageReady(${loaded}, page)`));
 
 // Each call replays its session in its own context and returns only its site's cookies.
 const sitePaths = { tier2: '/app/packages/tiers/src/tiers/2.ts', browser: '/app/packages/tiers/src/tiers/browser.ts' };
