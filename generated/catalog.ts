@@ -63120,6 +63120,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "vasco-maritime": {
+    "displayName": "Vasco Maritime",
+    "color": "#2f2483",
+    "aliases": [
+      "VASCO",
+      "Vasco Maritime Pte Ltd"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Singapore",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "vasco-maritime",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.vascomaritime.com/track",
+    "trackingSearchUrl": "https://www.vascomaritime.com/track",
+    "trackingSiteName": "Vasco Maritime Track",
+    "helpUrl": "https://www.vascomaritime.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "vasp-expresso": {
     "displayName": "Vasp Expresso",
     "color": "#02518a",
@@ -69553,6 +69577,7 @@ export const CARRIER_IDS = [
   "value-logistics",
   "valueway",
   "varubud",
+  "vasco-maritime",
   "vasp-expresso",
   "vatican-post",
   "veho",
@@ -71514,6 +71539,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "value-logistics": [],
   "valueway": [],
   "varubud": [],
+  "vasco-maritime": [],
   "vasp-expresso": [],
   "vatican-post": [],
   "veho": ["veho-1","veho-2"],

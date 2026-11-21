@@ -114101,6 +114101,18 @@
     ]
   },
   {
+    "input": "VASJKTJEA001850",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "VASKLFCOK000238",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "VCQ0041299001",
     "carrier": "unknown",
     "confidence": "none",
@@ -114355,6 +114367,12 @@
     "candidates": [
       "valmo"
     ]
+  },
+  {
+    "input": "VMLU3201205",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "VN2515371695665",

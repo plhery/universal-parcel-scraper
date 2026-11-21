@@ -1,0 +1,62 @@
+{
+  "carrier": "vasco-maritime",
+  "records": [
+    {
+      "number": "VASKLFCOK000238",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/vasco-maritime/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Vasco Maritime tracking directory. The tracker holds it as a bill from Khorfakkan to Cochin through Mundra with two containers, both returned empty; the parser fixtures are its replies."
+    },
+    {
+      "number": "VASJKTJEA001850",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/vasco-maritime/bl",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "carrier bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Vasco Maritime tracking directory. The tracker holds it as a bill from Jakarta to Jebel Ali through Port Klang with five containers in different states; fixtures are its replies."
+    },
+    {
+      "number": "VMLU3201205",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://traqocontainer.com/shipping-lines/vasco-maritime/VMLU",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Listed in the public Vasco Maritime container directory. The tracker answers it with a bill from Qingdao to Khorfakkan; fixtures are its replies."
+    }
+  ]
+}

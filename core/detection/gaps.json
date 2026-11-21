@@ -4377,6 +4377,11 @@
     "reason": "Two examples in the number field of USEA's own tracker; the family is not established."
   },
   {
+    "carrier": "vasco-maritime",
+    "kind": "open",
+    "reason": "The tracker confirms Vasco Maritime's bills and containers; no rule claims their shapes, and its containers carry other lines' prefixes too. Select Vasco Maritime explicitly."
+  },
+  {
     "carrier": "vasp-expresso",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

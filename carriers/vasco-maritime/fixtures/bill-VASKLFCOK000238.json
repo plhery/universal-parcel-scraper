@@ -1,0 +1,29 @@
+[
+  {
+    "CONTAINER": "VMLU3812061<BR> VMLU4210855",
+    "CUSTOMER_NAME": "ORIENT CARGO AGENCY",
+    "POL": "KHORFAKKAN",
+    "POL_COUNTRY": "UNITED-ARAB-EMIRATES",
+    "POD": "MUNDRA",
+    "POD_COUNTRY": "INDIA",
+    "FPOD": "COCHIN",
+    "POO": "KHORFAKKAN",
+    "VESSEL_NAME": "GUO FU MIN QIANG",
+    "VOYAGE_NUMBER": "2621",
+    "POL_ETA": "19/AUG/2026 00:00:00",
+    "POL_ATA": null,
+    "POL_ETD": "24/AUG/2026 00:00:00",
+    "POL_ATD": "24/AUG/2026 00:00:00",
+    "TDR_NO": null,
+    "BL_ID": "VASKLFCOK000238",
+    "BL_DATE": "AUG 24TH 2026",
+    "BL_SURRENDERED": "SEAWAY",
+    "COLLECT": "P",
+    "DO_ID": null,
+    "POO_ETA": "19/AUG/2026 00:00:00",
+    "POD_ETA": "31/AUG/2026 00:00:00",
+    "FPOD_ETA": null,
+    "VOYAGE_ID": 235850,
+    "EXP_IMP": "E"
+  }
+]
