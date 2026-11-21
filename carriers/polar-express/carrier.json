@@ -1,0 +1,95 @@
+{
+  "id": "polar-express",
+  "displayName": "Polar Express",
+  "aliases": [
+    "PolExp",
+    "Полярный Экспресс"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CA",
+      "RU",
+      "UZ"
+    ]
+  },
+  "brand": {
+    "color": "#10233D"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "polar-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "weight"
+  ],
+  "portal": {
+    "url": "https://the-tracking.com/{trackingNumber}/",
+    "searchUrl": "https://the-tracking.com/",
+    "helpUrl": "https://polexp.com/contacts.html",
+    "canaryUrl": "https://the-tracking.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "destination_town",
+      "weight",
+      "service",
+      "ship_date",
+      "partner_tracking_number",
+      "receiver"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "weight",
+      "service"
+    ],
+    "discarded": [
+      "destination_town",
+      "ship_date",
+      "partner_tracking_number",
+      "receiver"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "the-tracking.com"
+      ],
+      "path": "^/([A-Za-z]{2}\\d{9}[A-Za-z]{2})/?$"
+    },
+    {
+      "domains": [
+        "the-tracking.com"
+      ],
+      "pathPattern": "^/?$",
+      "query": "(?:^|&)track_number=([A-Za-z]{2}\\d{9}[A-Za-z]{2})(?=&|$)"
+    }
+  ],
+  "detection": [
+    {
+      "id": "polar-express-pe",
+      "pattern": "^PE\\d{9}(?:US|CA)$",
+      "confidence": "low"
+    }
+  ]
+}

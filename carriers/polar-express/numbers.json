@@ -1,0 +1,200 @@
+{
+  "carrier": "polar-express",
+  "records": [
+    {
+      "number": "PE912472376US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260807121516/https://the-tracking.com/PE912472376US/",
+        "date": "2026-08-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (USA) parcel for Voronezh, last seen arriving in Helsinki."
+    },
+    {
+      "number": "PE259451929CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260616205246/https://the-tracking.com/PE259451929CA/",
+        "date": "2026-06-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (Canada) parcel that bpost's international service delivered in Jerusalem."
+    },
+    {
+      "number": "PE967067300US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260115030920/https://the-tracking.com/PE967067300US/",
+        "date": "2026-01-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (USA) parcel that Emirates Post's EMS carried through Dubai and delivered in Moscow."
+    },
+    {
+      "number": "PE924935636US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260312034216/https://the-tracking.com/PE924935636US/",
+        "date": "2026-03-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (USA) parcel collected at a Boxberry pickup point in Saint Petersburg."
+    },
+    {
+      "number": "PE441451443CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260207015745/https://the-tracking.com/PE441451443CA/",
+        "date": "2026-02-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (Canada) parcel that Emirates Post's EMS delivered in Georgia."
+    },
+    {
+      "number": "PE576504012CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260616212450/https://the-tracking.com/PE576504012CA/",
+        "date": "2026-06-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (Canada) parcel that Emirates Post's EMS delivered in Kazakhstan."
+    },
+    {
+      "number": "PE322659775US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260807112135/https://the-tracking.com/PE322659775US/",
+        "date": "2026-08-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (USA) pickup-point parcel for Saint Petersburg, last at customs in Moscow."
+    },
+    {
+      "number": "PE398196050US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260115013603/https://the-tracking.com/PE398196050US/",
+        "date": "2026-01-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "polar-express"
+        ]
+      },
+      "note": "An archived lookup on Polar Express's tracker. It answers it live as a Polar Express (USA) parcel whose flight was delayed twice before it reached customs in Moscow."
+    },
+    {
+      "number": "CT311228110UZ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260616220137/https://the-tracking.com/CT311228110UZ/",
+        "date": "2026-06-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An archived lookup on Polar Express's tracker, on a number in the layout of Uzbekistan's post. It answers it live as a Polar Express (USA) parcel handed to the delivering network in Russia."
+    }
+  ]
+}

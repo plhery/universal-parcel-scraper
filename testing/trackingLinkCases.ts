@@ -2699,6 +2699,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'cmt-express', number: 'CMT000000000017',
     route: /^https:\/\/tms\.cmtexpress\.com\.cn\/en\/trackIndex\.htm\?documentCode=CMT000000000017$/,
     marker: /waybill information/i },
+  // The tracker renders the number's page on the server, with the number in its box. An unknown number gets the
+  // "Not Found" notice on its first look and the blank parcel table after it.
+  { carrier: 'polar-express', number: 'PE000000017US',
+    route: /^https:\/\/the-tracking\.com\/PE000000017US\/$/,
+    marker: /There is no any tracking information by such tracking number|Parcel information:\s*Track number:/ },
 ];
 
 /**
