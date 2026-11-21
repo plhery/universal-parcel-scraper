@@ -1,0 +1,77 @@
+{
+  "id": "cargolux",
+  "displayName": "Cargolux",
+  "aliases": [
+    "Cargolux Airlines",
+    "Cargolux Airlines International",
+    "Cargolux Italia"
+  ],
+  "region": {
+    "countries": [
+      "LU",
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#CC0033"
+  },
+  "selectable": true,
+  "timezone": "Europe/Luxembourg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cargolux",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "provider_code",
+    "destination_country"
+  ],
+  "portal": {
+    "searchUrl": "https://www.cargolux.com/track-and-trace/",
+    "canaryUrl": "https://www.cargolux.com/track-and-trace/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "origin",
+      "destination",
+      "flight",
+      "parcel_count",
+      "weight",
+      "volume",
+      "order_contents",
+      "future_milestones"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "flight",
+      "future_milestones"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "volume",
+      "order_contents"
+    ],
+    "unavailable": [
+      "eta",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

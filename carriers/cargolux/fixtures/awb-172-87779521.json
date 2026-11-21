@@ -1,0 +1,173 @@
+{
+  "trackings": [
+    {
+      "awbNumber": "172-87779521",
+      "shipmentSummary": {
+        "awb": "172-87779521",
+        "origin": "LUX",
+        "destination": "JNB",
+        "statedPieces": 37,
+        "statedWeight": 3777.8,
+        "statedVolume": 31.951,
+        "shipmentDescription": "CONSOLIDATION AS PERATTACHED LISTCONTAINING DGR GOODS",
+        "handlingCodes": "ECC,EAW,SPX,CAO,RMD,BUP,PAX,DGR,BSA,GEN",
+        "product": "STANDARD",
+        "agent": "DSV AIR AND SEA S.A."
+      },
+      "airportEvents": [
+        {
+          "airportCode": "LUX",
+          "cityName": "Luxembourg",
+          "countryIso": "LU",
+          "allEventsFinished": true,
+          "events": [
+            {
+              "airportCode": "LUX",
+              "eventType": "CPT",
+              "flightNumber": null,
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T02:27:39+02:00",
+              "timeUtc": "2026-06-29T00:27:39+00:00",
+              "timeFormatted": "29 June 2026 - 02:27",
+              "timeUtcFormatted": "29 June 2026 - 00:27",
+              "pieces": 37,
+              "weight": 3777.8
+            },
+            {
+              "airportCode": "LUX",
+              "eventType": "FOH",
+              "flightNumber": null,
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T02:32:45+02:00",
+              "timeUtc": "2026-06-29T00:32:45+00:00",
+              "timeFormatted": "29 June 2026 - 02:32",
+              "timeUtcFormatted": "29 June 2026 - 00:32",
+              "pieces": 37,
+              "weight": 3777.8
+            },
+            {
+              "airportCode": "LUX",
+              "eventType": "RCS",
+              "flightNumber": null,
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T02:32:52+02:00",
+              "timeUtc": "2026-06-29T00:32:52+00:00",
+              "timeFormatted": "29 June 2026 - 02:32",
+              "timeUtcFormatted": "29 June 2026 - 00:32",
+              "pieces": 37,
+              "weight": 3777.8
+            },
+            {
+              "airportCode": "LUX",
+              "eventType": "DEP",
+              "flightNumber": "CV2601",
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T06:31:00+02:00",
+              "timeUtc": "2026-06-29T04:31:00+00:00",
+              "timeFormatted": "29 June 2026 - 06:31",
+              "timeUtcFormatted": "29 June 2026 - 04:31",
+              "pieces": 37,
+              "weight": 3777.8
+            }
+          ]
+        },
+        {
+          "airportCode": "JNB",
+          "cityName": "Johannesburg",
+          "countryIso": "ZA",
+          "allEventsFinished": true,
+          "events": [
+            {
+              "airportCode": "JNB",
+              "eventType": "ARR",
+              "flightNumber": "CV2601",
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T16:57:00+02:00",
+              "timeUtc": "2026-06-29T14:57:00+00:00",
+              "timeFormatted": "29 June 2026 - 16:57",
+              "timeUtcFormatted": "29 June 2026 - 14:57",
+              "pieces": 37,
+              "weight": 3777.8
+            },
+            {
+              "airportCode": "JNB",
+              "eventType": "RCF",
+              "flightNumber": "CV2601",
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-28T07:32:00+02:00",
+              "timeUtc": "2026-06-28T05:32:00+00:00",
+              "timeFormatted": "28 June 2026 - 07:32",
+              "timeUtcFormatted": "28 June 2026 - 05:32",
+              "pieces": 25,
+              "weight": 2456
+            },
+            {
+              "airportCode": "JNB",
+              "eventType": "RCF",
+              "flightNumber": "CV2601",
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T17:37:00+02:00",
+              "timeUtc": "2026-06-29T15:37:00+00:00",
+              "timeFormatted": "29 June 2026 - 17:37",
+              "timeUtcFormatted": "29 June 2026 - 15:37",
+              "pieces": 12,
+              "weight": 1321.8
+            },
+            {
+              "airportCode": "JNB",
+              "eventType": "NFD",
+              "flightNumber": null,
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T17:33:00+02:00",
+              "timeUtc": "2026-06-29T15:33:00+00:00",
+              "timeFormatted": "29 June 2026 - 17:33",
+              "timeUtcFormatted": "29 June 2026 - 15:33",
+              "pieces": 25,
+              "weight": 2456
+            },
+            {
+              "airportCode": "JNB",
+              "eventType": "AWD",
+              "flightNumber": null,
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-29T17:33:00+02:00",
+              "timeUtc": "2026-06-29T15:33:00+00:00",
+              "timeFormatted": "29 June 2026 - 17:33",
+              "timeUtcFormatted": "29 June 2026 - 15:33",
+              "pieces": 0,
+              "weight": 0
+            },
+            {
+              "airportCode": "JNB",
+              "eventType": "DLV",
+              "flightNumber": null,
+              "isTruck": false,
+              "isProcessed": true,
+              "time": "2026-06-30T13:34:00+02:00",
+              "timeUtc": "2026-06-30T11:34:00+00:00",
+              "timeFormatted": "30 June 2026 - 13:34",
+              "timeUtcFormatted": "30 June 2026 - 11:34",
+              "pieces": 37,
+              "weight": 3777.8
+            }
+          ]
+        }
+      ],
+      "unitOfMeasures": {
+        "weight": "kg",
+        "volume": "cbm",
+        "length": "cm"
+      }
+    }
+  ],
+  "invalidAwbNumbers": []
+}

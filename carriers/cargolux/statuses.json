@@ -1,0 +1,19 @@
+{
+  "carrier": "cargolux",
+  "entries": [
+    {"code": "BKD", "wording": "Booked", "stage": "registered", "language": "en", "confirmedBy": "portal"},
+    {"code": "CPT", "wording": "FWB Data Capture", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The forwarder's electronic air waybill reached Cargolux; the goods are not handed over yet."},
+    {"code": "FOH", "wording": "on hand", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The goods are in Cargolux's warehouse at origin."},
+    {"code": "RCS", "wording": "Ready for carriage", "stage": "accepted", "language": "en", "confirmedBy": "live"},
+    {"code": "MAN", "wording": "Manifested for the flight", "stage": null, "language": "en", "confirmedBy": "portal", "note": "A flight manifest records an assignment before the departure, so it keeps the stage before it."},
+    {"code": "DEP", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "ARR", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "RCF", "wording": "Received from flight", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "RCT", "wording": "Received from carrier", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Taken over from another airline at a transfer."},
+    {"code": "TFD", "wording": "Transferred to carrier", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Handed to another airline at a transfer."},
+    {"code": "AWR", "wording": "Arrival documents delivered", "stage": null, "language": "en", "confirmedBy": "portal", "note": "The waybill's papers reached the destination, which can precede the goods, so it keeps the stage before it."},
+    {"code": "NFD", "wording": "Ready for pickup", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The consignee or its agent collects the goods from the cargo terminal. Away from the waybill's destination the parser files it in transit."},
+    {"code": "AWD", "wording": "Documents delivered", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The papers are handed to the consignee or its agent; the goods wait for collection. Away from the waybill's destination the parser files it in transit."},
+    {"code": "DLV", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "A delivery of part of the pieces delivers the waybill only once all its pieces are delivered."}
+  ]
+}

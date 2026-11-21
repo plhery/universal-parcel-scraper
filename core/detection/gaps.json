@@ -5960,6 +5960,12 @@
     "reason": "Nine-digit Cargobus numbers share their shape with other carriers' numeric numbers, so the shape cannot name Cargobus."
   },
   {
+    "carrier": "cargolux",
+    "pattern": "^(?:172|356)\\d{8}$",
+    "kind": "by_design",
+    "reason": "Cargolux's air waybills are its prefix 172, or 356 for Cargolux Italia, and eight digits ending in a mod-7 check digit, the format every airline's waybills share; the prefix names the airline but detection keeps no air waybill rule. Cargolux's tracker returns the sample's events."
+  },
+  {
     "carrier": "cheetah-delivery",
     "pattern": "^\\d{14}$",
     "kind": "collision",

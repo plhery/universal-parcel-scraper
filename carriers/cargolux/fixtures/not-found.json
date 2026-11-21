@@ -1,0 +1,11 @@
+{
+  "trackings": [
+    {
+      "awbNumber": "172-12345675",
+      "shipmentSummary": null,
+      "airportEvents": null,
+      "unitOfMeasures": null
+    }
+  ],
+  "invalidAwbNumbers": []
+}
