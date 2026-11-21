@@ -40,10 +40,17 @@ export const adapter: AdapterFactory = (environment) => {
 
   async function read(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
     // The page asks for the travel rows, the booking and the delivery records at once.
-    const [travel, booking, delivery] = await Promise.all((['travel', 'booking', 'delivery'] as const)
-      .map((which) => part(number, which, signal, timeoutMs)));
-    const replies: Replies = { travel, booking, delivery };
-    return parseTracking(replies, number);
+    // A part that fails ends the other two, so no request outlives the read.
+    const sibling = new AbortController();
+    const both = AbortSignal.any([signal, sibling.signal]);
+    try {
+      const [travel, booking, delivery] = await Promise.all((['travel', 'booking', 'delivery'] as const)
+        .map((which) => part(number, which, both, timeoutMs)));
+      const replies: Replies = { travel, booking, delivery };
+      return parseTracking(replies, number);
+    } finally {
+      sibling.abort();
+    }
   }
 
   return {
