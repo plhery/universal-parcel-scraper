@@ -132,6 +132,10 @@ describe('JRT tracking adapter', () => {
     const other = parseJrtTrack(handed('000000000012'), 'JRT0000000002ZZ', readAt)!;
     expect(other).toMatchObject({ delivery_tracking_number: '000000000012' });
     expect(other).not.toHaveProperty('delivery_carrier');
+    // The line into Spain ends with CTT Express, which takes a reference its own high-confidence rule claims whole.
+    expect(parseJrtTrack(handed('0082800082801234567890', [], { consigneeCountry: 'ES' }), 'JRT0000000002ZZ', readAt))
+      .toMatchObject({ delivery_carrier: 'ctt-express', delivery_tracking_number: '0082800082801234567890' });
+    expect(parseJrtTrack(handed('0082800000001234567890', [], { consigneeCountry: 'ES' }), 'JRT0000000002ZZ', readAt)).not.toHaveProperty('delivery_carrier');
     // The line to Ireland names FedEx in its product: FedEx takes a number its detection offers it.
     const ireland = { productKindName: '爱尔兰合成FEDEX-A', consigneeCountry: 'IE' };
     expect(parseJrtTrack(handed('000000000011', [], ireland), 'JRT0000000002ZZ', readAt))
