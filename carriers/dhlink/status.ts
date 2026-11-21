@@ -118,6 +118,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['master airway bill number received', 'in_transit'],
   ['leave the warehouse', 'in_transit'],
   ['departed from airport of origin', 'in_transit'],
+  ['departed from origin airport', 'in_transit'],
   ['dismantling the board', 'in_transit'],
   // A European partner's linehaul after the flight.
   ['linehaul transit; parcel has entered the linehaul network.', 'in_transit'],
@@ -139,6 +140,10 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['flight arrived, pallet breakdown in progress', 'in_transit'],
   ['item outbound in sorting center.', 'in_transit'],
   ['picked up at destination airport', 'in_transit'],
+  // After the pickup at the destination airport, the consolidation broken down for import clearance: a delay at
+  // that step holds the parcel in customs, while the pallets' breakdown itself is handling before clearance.
+  ['customs deconsolidation delay', 'customs'],
+  ['pallet deconsolidation in progress', 'in_transit'],
 ]);
 
 /** DHLink's and China Post's scans in Chinese, and a relayed USPS notice. */

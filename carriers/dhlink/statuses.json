@@ -128,6 +128,9 @@
     {"wording": "Customs released", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Flight arrived, pallet breakdown in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Item outbound in sorting center.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "Picked up at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
+    {"wording": "Picked up at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed from origin airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The flight's departure from China, worded like Departed from airport of origin."},
+    {"wording": "Customs deconsolidation delay", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "After the pickup at the destination airport: the consolidation's breakdown for import clearance running late, like 拆板清关中."},
+    {"wording": "Pallet deconsolidation in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The pallets broken down after the airport pickup, before clearance, like Flight arrived, pallet breakdown in progress."}
   ]
 }

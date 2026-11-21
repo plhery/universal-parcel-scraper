@@ -47,6 +47,9 @@ it.each([
   ['Flight arrived, pallet breakdown in progress', 'in_transit'],
   ['Item outbound in sorting center.', 'in_transit'],
   ['Picked up at destination airport', 'in_transit'],
+  ['Departed from origin airport', 'in_transit'],
+  ['Customs deconsolidation delay', 'customs'],
+  ['Pallet deconsolidation in progress', 'in_transit'],
 ] as const)('maps the DHLink scan %s to %s', (wording, stage) => {
   const payload = changed('swiftx-at-warehouse', (parcel) => {
     parcel.trackinfoList.push({ trackTime: '2026-03-03 14:00:00', createDate: null, place: null, info: wording, nodeCode: null, nodeName: null });
