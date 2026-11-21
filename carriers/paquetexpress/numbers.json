@@ -497,7 +497,8 @@
           "lbc-express",
           "metropolitan-warehouse",
           "paquetexpress",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Looked up through Paquetexpress's own history service, as an archived reply shows: a parcel collected and on its way."

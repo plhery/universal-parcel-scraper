@@ -57472,6 +57472,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "smsa-express",
       "recognitionRank": 448,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.smsaexpress.com/",
@@ -57501,7 +57502,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^2[1239]\\d{10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "sofex-post": {
     "displayName": "SofEx Post",
@@ -73857,7 +73863,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sm-express": [],
   "sm-line": [],
   "smafrakt": [],
-  "smsa-express": [],
+  "smsa-express": ["smsa-express-1"],
   "sofex-post": [],
   "sol-express": [],
   "sorthub": [],

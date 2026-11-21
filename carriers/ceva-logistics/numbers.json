@@ -118,7 +118,8 @@
           "lbc-express",
           "metropolitan-warehouse",
           "paquetexpress",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Ship24's page on CEVA Logistics tracking numbers lists it among its examples."

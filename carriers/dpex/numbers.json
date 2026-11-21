@@ -232,7 +232,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Archived lookup on DPEX Worldwide's own track-and-trace page; capture not opened, as the page is a shell that loads results in an iframe, so no history is visible there. DPEX Worldwide's tracking knew it."
@@ -268,7 +269,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Archived lookup on DPEX Worldwide's own track-and-trace page; capture not opened, as the page is a shell that loads results in an iframe, so no history is visible there. DPEX Worldwide's tracking knew it."
@@ -341,7 +343,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Archived lookup on DPEX Worldwide's tracking page (station id dpexwwe) on the FrontierForce platform, which dpex.com embeds; the opened capture holds only the script-driven template, so the history was not visible. DPEX Worldwide's tracking knew it."
@@ -457,7 +460,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Archived lookup on DPEX Worldwide's tracking page (station id dpexwwe) on the FrontierForce platform, which dpex.com embeds; the opened capture holds only the script-driven template, so the history was not visible. DPEX Worldwide's tracking knew it."
@@ -494,7 +498,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Archived lookup on DPEX China's own trace-and-track page; the opened capture shows only the script-driven template, so the history was not visible. DPEX China's tracker knew it."
@@ -530,7 +535,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "An open-source project's integration test opens it on DPEX's trace-and-track page. DPEX Worldwide's tracking knew it."

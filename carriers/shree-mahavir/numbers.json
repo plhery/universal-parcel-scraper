@@ -29,7 +29,8 @@
           "lbc-express",
           "metropolitan-warehouse",
           "paquetexpress",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "An archived lookup on Shree Mahavir's own tracker shows this consignment from Mumbai to Indore through its regional offices, a failed delivery attempt and RETURN TO ORIGIN."
@@ -68,7 +69,8 @@
           "lbc-express",
           "metropolitan-warehouse",
           "paquetexpress",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "An archived lookup on Shree Mahavir's own tracker; the capture was opened but shows only the page shell, not the history. Its live lookup shows the booking office and \"Booked By\" without scans."
@@ -135,7 +137,8 @@
           "lbc-express",
           "metropolitan-warehouse",
           "paquetexpress",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "An archived lookup on Shree Mahavir's own tracker; the capture was opened but shows only the page shell, not the history."

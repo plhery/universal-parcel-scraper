@@ -3929,12 +3929,6 @@
     "reason": "The bare bill format is shared. SM Line confirms ownership through its guest bill search."
   },
   {
-    "carrier": "smsa-express",
-    "pattern": "^\\d{12}$",
-    "kind": "by_design",
-    "reason": "Twelve-digit airway bills share their shape with FedEx and many other carriers, and SMSA documents no prefix."
-  },
-  {
     "carrier": "southeastern-freight-lines",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

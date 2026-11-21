@@ -317,7 +317,8 @@
           "lbc-express",
           "metropolitan-warehouse",
           "paquetexpress",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Looked up on PEC's own tracker, as an archived address shows; the capture was not opened."

@@ -30589,7 +30589,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -30774,7 +30775,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -31168,7 +31170,8 @@
       "paquetexpress",
       "sagawa",
       "saia",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "gls-fr",
@@ -31243,7 +31246,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -31477,7 +31481,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "gls-fr",
@@ -31637,7 +31642,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -31682,7 +31688,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -31816,7 +31823,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "preferred": [
       "fedex"
@@ -31844,7 +31852,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "preferred": [
       "fedex",
@@ -31872,7 +31881,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -31896,7 +31906,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -31923,7 +31934,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "japan-post",
@@ -31957,7 +31969,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "gls-fr",
@@ -31987,7 +32000,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "dhl",
@@ -32042,7 +32056,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -32239,7 +32254,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "japan-post",
@@ -32423,7 +32439,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -32538,7 +32555,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -33058,7 +33076,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "japan-post",
@@ -33087,7 +33106,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "dhl",
@@ -33116,7 +33136,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "japan-post",
@@ -33283,7 +33304,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "purolator",
@@ -33351,7 +33373,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "preferred": [
       "sf-express"
@@ -33538,7 +33561,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "gls-fr",
@@ -33567,7 +33591,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "japan-post",
@@ -33613,7 +33638,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "dhl",
@@ -33644,7 +33670,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "dhl",
@@ -33810,7 +33837,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -33883,7 +33911,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "preferred": [
       "fedex"
@@ -33996,7 +34025,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "japan-post",
@@ -38542,7 +38572,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "preferred": [
       "fedex"
@@ -38570,7 +38601,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "purolator",
@@ -38615,7 +38647,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -38691,7 +38724,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "preferred": [
       "fedex"
@@ -38738,7 +38772,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -38762,7 +38797,8 @@
       "lbc-express",
       "metropolitan-warehouse",
       "paquetexpress",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "brt",
@@ -38797,7 +38833,8 @@
       "metropolitan-warehouse",
       "paquetexpress",
       "sagawa",
-      "sending"
+      "sending",
+      "smsa-express"
     ],
     "asked": [
       "japan-post",

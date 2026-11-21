@@ -395,7 +395,8 @@
           "lbc-express",
           "metropolitan-warehouse",
           "paquetexpress",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "The shipment BRT's archived parcel-ID page shows, with its history."

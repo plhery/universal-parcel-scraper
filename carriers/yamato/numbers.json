@@ -140,7 +140,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "A Yamato tracking link archived by the Wayback Machine. Yamato's tracker returns its history, with two returns to the depot before delivery."

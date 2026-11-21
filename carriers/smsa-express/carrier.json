@@ -25,7 +25,8 @@
       "direct"
     ],
     "recognition": {
-      "rank": 448
+      "rank": 448,
+      "servedCountriesOnly": true
     },
     "localClocks": true
   },
@@ -102,5 +103,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "smsa-express-1",
+      "pattern": "^2[1239]\\d{10}$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -3535,6 +3535,29 @@
     "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits that pass the FedEx and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "smsa-express"
+    ],
+    "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "Twelve digits that pass the FedEx, mod 7 and Poste Italiane checks",
     "carriers": [
       "brt",
@@ -3615,6 +3638,25 @@
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits that pass none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "smsa-express"
+    ],
+    "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "Twelve digits that pass the Poste Italiane check and none of the FedEx, GLS, Identcode, Purolator and mod 7 checks",
     "carriers": [
       "brt",
@@ -3651,6 +3693,28 @@
       "zto",
       "sending",
       "paquetexpress"
+    ],
+    "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the mod 7 check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "smsa-express"
     ],
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3794,6 +3858,34 @@
     "reason": "Passing check digits add GLS, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits that pass the GLS and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "gls-at",
+      "gls-pl",
+      "paquetexpress",
+      "gls-nl",
+      "smsa-express"
+    ],
+    "reason": "Passing check digits add GLS, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "Twelve digits that pass the GLS, mod 7 and Poste Italiane checks",
     "carriers": [
       "brt",
@@ -3840,6 +3932,29 @@
       "zto",
       "sending",
       "paquetexpress"
+    ],
+    "reason": "Passing check digits add Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Purolator and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "smsa-express"
     ],
     "reason": "Passing check digits add Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4080,6 +4195,26 @@
     "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits that pass the FedEx check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "smsa-express"
+    ],
+    "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "Twelve digits starting 311 that pass the FedEx check",
     "carriers": [
       "brt",
@@ -4306,6 +4441,31 @@
       "gls-pl",
       "paquetexpress",
       "gls-nl"
+    ],
+    "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the GLS check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "gls-at",
+      "gls-pl",
+      "paquetexpress",
+      "gls-nl",
+      "smsa-express"
     ],
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4864,7 +5024,8 @@
       "sto",
       "zto",
       "sending",
-      "paquetexpress"
+      "paquetexpress",
+      "smsa-express"
     ],
     "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4884,6 +5045,26 @@
       "zto",
       "sending",
       "paquetexpress"
+    ],
+    "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits that pass the Purolator check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "smsa-express"
     ],
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -5227,6 +5408,29 @@
     "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits that pass the Identcode and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "smsa-express"
+    ],
+    "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "Twelve digits that pass the Identcode, mod 7 and Poste Italiane checks",
     "carriers": [
       "brt",
@@ -5245,7 +5449,8 @@
       "yamato",
       "zto",
       "sending",
-      "paquetexpress"
+      "paquetexpress",
+      "smsa-express"
     ],
     "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -6553,7 +6758,8 @@
       "gls-at",
       "gls-pl",
       "paquetexpress",
-      "gls-nl"
+      "gls-nl",
+      "smsa-express"
     ],
     "reason": "gs-postbox numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },

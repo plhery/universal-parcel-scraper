@@ -57468,6 +57468,7 @@
       "mode": "automatic",
       "adapter": "smsa-express",
       "recognitionRank": 448,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://www.smsaexpress.com/",
@@ -57497,7 +57498,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^2[1239]\\d{10}$",
+        "confidence": "low"
+      }
+    ]
   },
   "sofex-post": {
     "displayName": "SofEx Post",

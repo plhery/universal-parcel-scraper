@@ -270,7 +270,8 @@
           "metropolitan-warehouse",
           "paquetexpress",
           "sagawa",
-          "sending"
+          "sending",
+          "smsa-express"
         ]
       },
       "note": "Twelve-digit DHL parcel number given by a Paketda editor. Its last digit is the Identcode check (weights 4 and 9 from the left, mod 10), and DHL's recipient page returned its delivery to a business customer."
