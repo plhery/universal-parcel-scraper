@@ -50,7 +50,7 @@ describe('Track718 for Juxi only', () => {
   it('waits for a completed reply and never calls a queued lookup missing', () => {
     const empty = { ...row(), result: 0, from: [], to: [], origin: '04' };
     expect(() => parseTrack718([{ status: { code: 3 }, data: [empty], pending: true }], number))
-      .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+      .toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'lookup_pending' }));
     expect(() => parseTrack718([{ status: { code: 0 }, data: [empty], pending: false }], number))
       .toThrow(expect.objectContaining({ kind: 'not_found' }));
     const other = found(); other.data[0]!.track += '0';
@@ -60,6 +60,8 @@ describe('Track718 for Juxi only', () => {
     for (const [code, kind] of [[2, 'challenge'], [5, 'rate_limited'], [6, 'indeterminate'], [8, 'challenge']] as const) {
       expect(() => parseTrack718([{ status: { code } }], number)).toThrow(expect.objectContaining({ kind }));
     }
+    // A busy service says so in its reason, as an unfinished lookup does.
+    expect(() => parseTrack718([{ status: { code: 6 } }], number)).toThrow(expect.objectContaining({ reason: 'provider_busy' }));
     expect(parseTrack718([{ ...found(), pending: true }], number).history_truncated).toBe(true);
     expect(() => parseTrack718([found(), { status: { code: 2 } }], number)).toThrow(expect.objectContaining({ kind: 'challenge' }));
   });

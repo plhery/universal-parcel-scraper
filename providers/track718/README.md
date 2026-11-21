@@ -15,7 +15,7 @@ Repeated snapshots share a single scan history. The result flags truncation when
 
 The initial “Grabbing” response is a pending lookup. Only a completed matching response can
 report no available history. A challenge, rate limit, busy service or unfinished lookup stays
-a failure. Explicit scan offsets are preserved; clocks without an offset stay local and do
+a failure; the last two are inconclusive with the reasons `provider_busy` and `lookup_pending`. Explicit scan offsets are preserved; clocks without an offset stay local and do
 not acquire the carrier's default zone. An undated history can therefore need another provider.
 
 The provider plan leaves Track718 out: ParcelsApp and 17TRACK answer for most Juxi parcels,
