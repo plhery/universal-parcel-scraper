@@ -357,6 +357,8 @@ const ZH_END = String.raw` ?(?:$|[，,。;；:：（(【!！])`;
 const ZH_SIGNER = String.raw`(?:本人|收件人|家人|他人|同事|门卫|門衛|前台|物业|物業|保安|邻居|鄰居|收发室|收發室)`;
 // A locker or a pickup point that keeps the parcel for the recipient.
 const ZH_PICKUP_PLACE = String.raw`(?:快[递遞]柜|快[递遞]櫃|智能柜|智能櫃|快件箱|快[递遞]箱|包裹柜|包裹櫃|自提柜|自提櫃|丰巢|豐巢|[驿驛]站|自提点|自提點|代收点|代收點|服[务務]站)`;
+// An arrival at the place the brackets name, "抵达【…】", unless that place is a pickup point.
+const ZH_ARRIVED_AT = new RegExp(String.raw`^抵[达達] ?【(?![^【】]*${ZH_PICKUP_PLACE})[^【】]{1,80}】$`);
 // Signed for, by the recipient or someone for them: "已签收", "已由本人签收", "已在【…】签收", "他人代收".
 const ZH_SIGNED = String.raw`(?:已[经經]?被?|已由|已在【[^【】]{0,80}】)?(?:${ZH_SIGNER}代?)?(?:成功)?(?:妥投|妥收|[签簽]收|代[签簽]收?|代收)(?:成功)?`;
 // Sent back to the sender's side: the sender, its office or the seller, with or without "处".
@@ -732,6 +734,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // pickup point is read above.
   if (/^(?:[您你]的)?快件已到[达達](?:【[^【】]{1,80}】)?(?:[，,] ?准[备備]装[车車])?$/.test(text)) return 'in_transit';
   if (/^(?:[您你]的)?快件已[离離][开開](?:【[^【】]{1,80}】)?的?路上$/.test(text)) return 'in_transit';
+  // China Post's arrival in the destination country, as 17TRACK relays it in Chinese with the country in
+  // brackets: in transit, as China Post's own "Arrived in the destination country". A pickup point there is left unread.
+  if (ZH_ARRIVED_AT.test(text)) return 'in_transit';
   // JD Express starting a long haul, with the distance to its next site, or under way on it, with the distance
   // covered, as providers relay them with no carrier: in transit, like its departures on the road.
   if (/^开始长途运[输輸](?:[，,] ?距[离離]下一站 ?\d+(?:\.\d+)? ?(?:km|公里))?[。.]?$/.test(text)) return 'in_transit';
