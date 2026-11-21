@@ -14,7 +14,9 @@ The portal now puts its query behind Cloudflare Turnstile: the page posts the nu
 form token and the Turnstile answer, refuses the old query with HTTP 405 and a refused token
 with HTTP 403. The direct step stops at a page showing Turnstile, and the `trawl` step asks the
 browser service. It opens the portal's share link, `index.php?objetos=`, which fills in the
-number, waits for Turnstile's token, interacting with its checkbox when shown, and searches.
+number, waits for Turnstile's token, clicking its checkbox once the widget has a size, and
+searches with Enter, which needs no cursor. The tracker's versioned scripts and styles are kept
+between lookups, as a browser cache would keep them.
 The service keeps only the reply whose request carried the whole number, the same
 JSON the direct query read. After a page showing Turnstile, lookups go straight to the
 `trawl` step for a few hours, then the direct step looks again; an unreadable or rejected text

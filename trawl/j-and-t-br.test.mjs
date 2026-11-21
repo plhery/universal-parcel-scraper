@@ -142,8 +142,8 @@ function browserHarness({staleAt=Infinity,cancelAt=Infinity,replies,lateContext=
     requestBrowserReplacement:()=>{replacement++;}};
   return{handle,controller,state:()=>({moves,ups,closed,guardCalls,replacement,listeners:listeners.size})};
 }
-test('a refresh during calibration, mid-drag or immediately before release never submits stale input', async()=>{
-  for(const staleAt of [2,12,31]){
+test('a refresh during calibration, before the drag or immediately before release never submits stale input', async()=>{
+  for(const staleAt of [2,3,4]){
     const h=browserHarness({staleAt});const proof=await runJtGuest({handle:h.handle,number:TEST_NUMBER,maxTimeout:8000});
     assert.equal(proof.abstention,'stale_generation');assert.equal(h.state().ups,0);
     assert.equal(h.state().closed,1);assert.equal(proof.mouseWasHeldAtCleanup,true);

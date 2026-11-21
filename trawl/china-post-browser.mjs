@@ -1,9 +1,13 @@
+import { keptFiles } from './kept-files.mjs';
 import { solveChinaPostCharacters } from './china-post-ocr.mjs';
 
 const ORIGIN = 'https://www.ems.com.cn';
 const FLAG = `${ORIGIN}/ems-web/trackTestQuery/getLogisticsTestFlag`;
 const API = `${ORIGIN}/ems-web/mailTrack/queryTrack`;
 const MAX_BODY = 1_000_000;
+// The tracker's scripts and styles, about seventy files from China that a fresh context would read
+// again before the form appears.
+const kept = keptFiles({ match: /^https:\/\/(?:www|ump)\.ems\.com\.cn\/[\w./~-]{1,200}\.(?:js|css)$/, maxBytes: 3_000_000, maxFiles: 100 });
 // Where each lookup's time goes: fixed phase labels, counts and offsets from its start, nothing else.
 const reportTiming = fields => console.warn(JSON.stringify({ level: 'warn', event: 'china-post.timing', host: 'www.ems.com.cn', ...fields }));
 const endpointOf = raw => {
@@ -139,6 +143,8 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
           }).catch(() => { if (accepting) { entry.error = 'response-read'; finish(); } }));
         };
         requestObserver = request => { if (accepting && boundEndpoint(request)) trackingStarted = true; };
+        await kept.install(page);
+        if (expired) throw new Error('Late browser setup');
         page.on('request', requestObserver);
         page.on('response', observer);
         phase = 'navigation';

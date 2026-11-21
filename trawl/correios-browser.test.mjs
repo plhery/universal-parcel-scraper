@@ -16,14 +16,14 @@ const response = (status = 200, value = body, sent = form()) => ({ url: () => en
   request: () => ({ method: () => 'POST', postData: () => sent }),
   headers: () => ({ 'content-type': 'application/json', 'set-cookie': 'PRIVATE' }), body: async () => Buffer.from(value) });
 function fixture() {
-  const handlers = {}, state = { closed: 0, clicked: 0, filled: [], policy: 0, token: 'PRIVATE', field: number, widget: 1, diagnostics: [], waits: [] };
-  const page = { on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; },
+  const handlers = {}, state = { closed: 0, searches: 0, filled: [], policy: 0, token: 'PRIVATE', field: number, widget: 1, diagnostics: [], waits: [] };
+  const page = { on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; }, route: async () => {},
     goto: async () => ({ status: () => 200 }),
     locator: selector => ({
       count: async () => selector.includes('cf-turnstile') ? state.widget : 1,
       inputValue: async () => selector === '#objeto' ? state.field : typeof state.token === 'function' ? state.token() : state.token,
       fill: async value => { state.filled.push(value); state.field = value; },
-      click: async () => { state.clicked++; handlers.response(response()); },
+      press: async () => { state.searches++; handlers.response(response()); },
     }),
     frames: () => [], waitForTimeout: async ms => { state.waits.push(ms); },
   };
@@ -58,7 +58,7 @@ test('searches once the token is there, binds the request and keeps only the fie
       unidade: { endereco: { cidade: 'Sampletown', uf: 'SP' } } }] });
   assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
   assert.equal(result.html, ''); assert.equal(result.cookies.length, 0);
-  assert.equal(active.state.clicked, 1); assert.deepEqual(active.state.filled, []);
+  assert.equal(active.state.searches, 1); assert.deepEqual(active.state.filled, []);
   assert.equal(active.state.closed, 1); assert.equal(active.state.policy, 1);
   assert.deepEqual(active.handlers, {});
   assert.equal(active.state.diagnostics.length, 1);
@@ -85,11 +85,42 @@ test('times the widget\'s clicks and token without waiting on a fixed schedule a
   assert.equal(active.state.waits.length, 20);
 });
 
+test('a widget frame without a size yet is tried again at the next poll, not after a click\'s wait', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: 1_000_000 });
+  const active = fixture();
+  active.options.maxTimeout = 60_000;
+  const clicks = [];
+  active.state.token = () => clicks.length && Date.now() >= clicks[0] + 1000 ? 'PRIVATE' : '';
+  const checkbox = { isVisible: async () => false };
+  const element = { boundingBox: async () => Date.now() >= 1_002_000 ? { x: 10, y: 10, width: 300, height: 65 } : { x: 0, y: 0, width: 1, height: 1 } };
+  active.page.frames = () => [{ url: () => 'https://challenges.cloudflare.com/turnstile', locator: () => ({ first: () => checkbox }), frameElement: async () => element }];
+  active.page.mouse = { click: async () => { clicks.push(Date.now()); } };
+  active.page.waitForTimeout = async ms => { active.state.waits.push(ms); t.mock.timers.tick(ms); };
+  const result = await runCorreiosBrowser(active.options);
+  assert.equal(result.capturedResponses.length, 1);
+  assert.deepEqual(clicks, [1_002_000]);
+  assert.equal(active.state.diagnostics[0].clicks, 1);
+  assert.equal(active.state.diagnostics[0].tokenMs, 3000);
+});
+
+test('serves only the tracker\'s versioned scripts and styles from earlier lookups', async () => {
+  const routes = [];
+  const active = fixture();
+  active.page.route = async match => { routes.push(match); };
+  await runCorreiosBrowser(active.options);
+  assert.equal(routes.length, 1);
+  for (const path of ['static/css/global.css?v2.12.8', 'lib/jquery/jquery.js', 'app/index.js?v2.12.8', 'app/parceiros/index.css?v2.12.8',
+    'core/templates/bunker/js/bunker.js?3']) assert.equal(routes[0].test(`https://rastreamento.correios.com.br/${path}`), true, path);
+  for (const path of ['app/index.php', 'app/resultado.php', 'app/controle.php', 'app/index.js?v=1&x=2', 'ruxitagentjs_ICA7NVfgqrux_1.js',
+    'app/index.js#x']) assert.equal(routes[0].test(`https://rastreamento.correios.com.br/${path}`), false, path);
+  assert.equal(routes[0].test('https://example.test/static/css/global.css'), false);
+});
+
 test('fills the field when the page did not, and ignores replies for another number', async () => {
   const active = fixture();
   active.state.field = '';
-  active.page.locator = (locator => selector => ({ ...locator(selector), click: async () => {
-    active.state.clicked++;
+  active.page.locator = (locator => selector => ({ ...locator(selector), press: async () => {
+    active.state.searches++;
     active.handlers.response(response(200, body, form('BB000000005BR')));
     active.handlers.response(response(200, body, `${form()}&objeto=BB000000005BR`));
     active.handlers.response(response());
@@ -102,7 +133,7 @@ test('fills the field when the page did not, and ignores replies for another num
 
 test('keeps a refused check as its status and never searches without a token', async () => {
   const refused = fixture();
-  refused.page.locator = (locator => selector => ({ ...locator(selector), click: async () => {
+  refused.page.locator = (locator => selector => ({ ...locator(selector), press: async () => {
     refused.handlers.response(response(403, '{"erro":true,"mensagem":"PRIVATE"}'));
   } }))(refused.page.locator);
   const result = await runCorreiosBrowser(refused.options);
@@ -117,7 +148,7 @@ test('keeps a refused check as its status and never searches without a token', a
   waiting.page.waitForTimeout = ms => new Promise(resolve => setTimeout(resolve, ms));
   const unresolved = await runCorreiosBrowser(waiting.options);
   assert.equal(unresolved.status, 'success'); assert.deepEqual(unresolved.capturedResponses, []);
-  assert.equal(waiting.state.clicked, 0); assert.equal(waiting.state.closed, 1);
+  assert.equal(waiting.state.searches, 0); assert.equal(waiting.state.closed, 1);
   assert.equal(waiting.state.diagnostics[0].nativeOutcome, 'waiting');
   assert.equal(waiting.state.diagnostics[0].searched, false);
   assert.equal(waiting.state.diagnostics[0].outcome, 'timeout');
@@ -130,19 +161,19 @@ test('returns a refused page at once and fails without a widget', async () => {
   const blocked = fixture();
   blocked.page.goto = async () => ({ status: () => 403 });
   const result = await runCorreiosBrowser(blocked.options);
-  assert.equal(result.statusCode, 403); assert.equal(blocked.state.clicked, 0);
+  assert.equal(result.statusCode, 403); assert.equal(blocked.state.searches, 0);
 
   const changed = fixture();
   changed.state.widget = 0; changed.options.maxTimeout = 20;
   changed.page.waitForTimeout = ms => new Promise(resolve => setTimeout(resolve, ms));
   assert.equal((await runCorreiosBrowser(changed.options)).status, 'error');
-  assert.equal(changed.state.clicked, 0);
+  assert.equal(changed.state.searches, 0);
 });
 
 test('bounds bodies, malformed JSON and repeated requests', async () => {
   for (const [value, truncated, kept] of [['x'.repeat(1_000_001), true, null], ['invalid json PRIVATE', false, 'null']]) {
     const active = fixture();
-    active.page.locator = (locator => selector => ({ ...locator(selector), click: async () => {
+    active.page.locator = (locator => selector => ({ ...locator(selector), press: async () => {
       active.handlers.response(response(200, value));
     } }))(active.page.locator);
     const result = await runCorreiosBrowser(active.options);
@@ -150,7 +181,7 @@ test('bounds bodies, malformed JSON and repeated requests', async () => {
     assert.equal(result.capturedResponses[0].body, kept);
   }
   const many = fixture();
-  many.page.locator = (locator => selector => ({ ...locator(selector), click: async () => {
+  many.page.locator = (locator => selector => ({ ...locator(selector), press: async () => {
     for (let i = 0; i < 12; i++) many.handlers.response(response(403));
   } }))(many.page.locator);
   const result = await runCorreiosBrowser(many.options);
@@ -166,7 +197,7 @@ test('ignores other URLs and lookups it does not own', async () => {
 test('reports throttles and unreadable captures without claiming a verified history', async () => {
   for (const [status, value, outcome] of [[429, body, 'rate_limited'], [200, 'not JSON PRIVATE', 'incomplete']]) {
     const active = fixture();
-    active.page.locator = (locator => selector => ({ ...locator(selector), click: async () => {
+    active.page.locator = (locator => selector => ({ ...locator(selector), press: async () => {
       active.handlers.response(response(status, value));
     } }))(active.page.locator);
     await runCorreiosBrowser(active.options);

@@ -163,7 +163,10 @@ export async function runJtGuest({handle,number,maxTimeout=90000,signal,installP
       const row={elapsedMs:Date.now()-start,plannedDistance:plan.distance};proof.actions.push(row);
       await guard();await page.mouse.move(plan.start.x,plan.start.y);left();await page.mouse.down();mouseDown=true;
       const calibration=Math.min(12,plan.distance/3);
-      await page.mouse.move(plan.start.x+calibration,plan.start.y,{steps:5});await pause(120);
+      // The service's browser moves the cursor along a human path at human speed for each move
+      // it is given, taking most of a second however short the move is. One move is a whole
+      // gesture, so the calibration and the drag are one move each.
+      await page.mouse.move(plan.start.x+calibration,plan.start.y);await pause(120);
       const moved=await guard();
       const ratio=moved?(moved.pieceX-base.piece.x)/calibration:NaN;
       const knobDelta=moved?moved.knobX-base.knob.x:NaN;
@@ -171,9 +174,7 @@ export async function runJtGuest({handle,number,maxTimeout=90000,signal,installP
       if(!Number.isFinite(ratio)||ratio<.7||ratio>1.5||Math.abs(knobDelta-calibration)>2){proof.abstention='unsupported_drag_geometry';break;}
       const distance=plan.distance/ratio;
       if(distance>plan.remaining||distance<calibration){proof.abstention='drag_outside_track';break;}
-      for(let step=1;step<=28;step++){
-        await guard();await page.mouse.move(plan.start.x+calibration+(distance-calibration)*step/28,plan.start.y);await pause(25);
-      }
+      await guard();await page.mouse.move(plan.start.x+distance,plan.start.y);
       await guard();await page.mouse.up();mouseDown=false;
       row.submitted=true;row.actualDistance=distance;
       // Await a verification result or a distinct refreshed generation.

@@ -6,12 +6,14 @@ TRAWL. The page owns request signing, Tencent verification and the final trackin
 
 The scoped browser helper matches the jigsaw's native-image texture and silhouette, measures
 the piece's movement against the knob, and keeps generation checks through the held drag.
+The drag is one cursor move: the service's browser takes most of a second over each move,
+however short.
 An ambiguous image abstains. It permits at most two drags and two bound tracking requests,
 within the caller's deadline, and closes its fresh context. The helper abstains often, within
 seconds and before any drag, so the adapter asks it once more when the budget left still holds
-a solved run of about half a minute: the new context draws another image. No provider
+another solved run: the new context draws another image. No provider
 is asked about a J&T Brazil parcel ([COVERAGE.md](../../providers/COVERAGE.md)). Every answer
-costs a solved puzzle, about half a minute of browser time, so the catalog asks for a refresh
+costs a solved puzzle, so the catalog asks for a refresh
 at most every half hour, and an hour after a failed one, out for delivery included.
 Challenge diagnostics distinguish an uncertain image or a changed drag from verification
 that did not finish, using the final helper attempt's result.

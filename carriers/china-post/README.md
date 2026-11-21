@@ -38,7 +38,9 @@ the check and tracking requests to the whole number, then checks every returned
 scan's number. It retains only state labels, scan codes and local clocks. The
 web preview always sets `history_truncated`; phone and account dialogs are not
 completed. A form that fails to initialise ends the lookup; reloading the page
-rarely brought it back. HTTP recognition continues to use the app alone.
+rarely brought it back. The tracker's scripts and styles, which a fresh context
+reads from China before the form appears, are kept between lookups as a browser
+cache would keep them. HTTP recognition continues to use the app alone.
 
 The character prompt is read one glyph at a time after removing coloured
 interference lines; a whole-line read can omit required clicks. Other prompt

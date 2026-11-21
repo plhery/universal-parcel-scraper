@@ -17,7 +17,7 @@ function fixture() {
   const handlers = {}, state = { closed: 0, counted: 0, navigated: 0, reloads: 0, timings: [] };
   let submitted = number;
   const page = {
-    on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; },
+    on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; }, route: async () => {},
     goto: async () => { state.navigated++; return { status: () => 200 }; },
     url: () => 'https://www.ems.com.cn/queryList',
     reload: async () => { state.reloads++; return { status: () => 200 }; },

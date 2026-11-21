@@ -1,9 +1,14 @@
 import { withHelperContext } from './helper-context.mjs';
+import { keptFiles } from './kept-files.mjs';
 
 const ORIGIN = 'https://rastreamento.correios.com.br';
 const PAGE = `${ORIGIN}/app/index.php`;
 const API = `${ORIGIN}/app/resultado.php`;
 const MAX_BODY = 1_000_000;
+// The tracker's versioned scripts and styles: its server takes over a second for each, and a
+// fresh context would read them all again before the page can show its form.
+const kept = keptFiles({ match: /^https:\/\/rastreamento\.correios\.com\.br\/(?:static|lib|core\/templates|app)\/[\w./-]{1,200}\.(?:js|css)(?:\?[\w.]{1,20})?$/,
+  maxFiles: 40 });
 const reportVerification = fields => console.warn(JSON.stringify({ level: 'warn', event: 'correios.verification', ...fields }));
 
 const isObject = value => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -72,18 +77,22 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
       const terminal = new Promise(resolve => { finish = resolve; });
       // The widget only shows itself when Cloudflare wants an interaction, as it does in the service's
       // Firefox: the token follows a click on its checkbox, which may need a few tries while it renders.
+      // Its frame is attached a few seconds before it has a size; until then nothing is clicked, and the
+      // next poll tries again instead of waiting as after a click.
       const nudge = async () => {
         const frame = page.frames().find(frame => frame.url().startsWith('https://challenges.cloudflare.com/'));
         if (!frame) return;
-        lastClick = Date.now();
-        clicks++;
         const checkbox = frame.locator('[role="checkbox"], input[type="checkbox"], .ctp-checkbox-label').first();
         if (await checkbox.isVisible().catch(() => false)) {
+          lastClick = Date.now();
+          clicks++;
           await checkbox.click({ timeout: Math.min(2000, remaining()) }).catch(() => {});
         } else {
           const element = await frame.frameElement().catch(() => null);
           const box = await element?.boundingBox().catch(() => null);
           if (box && box.width > 20 && box.height > 20) {
+            lastClick = Date.now();
+            clicks++;
             await page.mouse.click(box.x + Math.min(24, box.width * 0.12), box.y + box.height / 2);
           }
         }
@@ -119,6 +128,7 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
         }).catch(() => { if (accepting) { entry.error = 'Correios tracking response could not be read'; finish(); } })
           .finally(() => { pendingBodies--; });
       };
+      await kept.install(page);
       page.on('response', onResponse);
       const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
       statusCode = navigation?.status() ?? 0;
@@ -132,7 +142,9 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
           tokenReceived = true;
           mark('tokenMs');
           if (await field.inputValue().catch(() => '') !== number) await field.fill(number, { timeout: Math.min(5000, remaining()) });
-          await page.locator('#b-pesquisar').click({ timeout: Math.min(5000, remaining()) });
+          // The page searches on Enter as on its button. A key needs no cursor, which the service's
+          // browser moves at human speed.
+          await field.press('Enter', { timeout: Math.min(5000, remaining()) });
           searched = true;
           break;
         }

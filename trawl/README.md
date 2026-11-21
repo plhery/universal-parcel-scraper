@@ -360,6 +360,16 @@ in every browser the pool starts and updates them soon after, and page requests 
 work for seconds. Carrier pages weigh the same with or without it. FedEx's browsers, which stay
 open between lookups, keep it. `BROWSER_BLOCK_ADS=true` turns it back on.
 
+The pool's browsers move the cursor along a human path at human speed: each mouse move or click
+takes most of a second, however short. Helpers give a gesture the page checks one move, and
+otherwise use a key or the element's own click handler.
+
+Track123, Correios and China Post load many static files from far away. Their helpers keep them
+with `kept-files.mjs` and serve them again in later lookups' fresh contexts, as a browser cache
+would. The lifetime comes from the file's cache headers, or a tenth of the time since it changed when they
+state none, and is one day at most. Files marked private or uncacheable stay on the network, as do
+files that vary by cookie or by a header their request sent.
+
 The image sets `LOG_LEVEL=warn`. TRAWL's request log includes the page path, where some
 carriers put the parcel number; `LOG_LEVEL=info` turns that log on. Each tier that fails, is
 blocked or times out logs a `tier.failure` warning with the page's host, its status, the page's HTTP status and
