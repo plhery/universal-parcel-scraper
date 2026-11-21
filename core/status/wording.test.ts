@@ -1096,6 +1096,8 @@ describe('classifyWording', () => {
       ['The country of origin commences customs declaration.', 'in_transit'],
       // The destination's cargo terminal done with a post line's parcel after its clearance, as Ship24 relays TopYou's line.
       ['Cargo handling completed, awaiting final delivery', 'in_transit'], ['Cargo handling completed', 'in_transit'],
+      // SEKO's order created but not dispatched, as SEKO's map reads it and as ParcelsApp relays it.
+      ['Tracking number allocated & order ready', 'registered'], ['Tracking Number Allocated Order Ready', 'registered'],
       // An export clearance started or under way is a routine step before the flight; a hold there is customs.
       ['Export customs clearance started', 'in_transit'], ['Export declaration in progress.', 'in_transit'],
       ['Export Custom Clearance Processing and Flight Booking', 'in_transit'],
