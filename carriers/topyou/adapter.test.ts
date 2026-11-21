@@ -402,6 +402,7 @@ describe('TopYou status vocabulary', () => {
     expect(topyouStage('20', 'Import customs clearance and customs release')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     // Taken into the clearance warehouse after that release.
     expect(topyouStage('20', 'Customs clearance warehouse entry')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(topyouStage('20', 'Customs clearance warehouse outbound')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 
   it('lets a delivered or returned code settle a scan, then the shared rules, then the code', () => {
