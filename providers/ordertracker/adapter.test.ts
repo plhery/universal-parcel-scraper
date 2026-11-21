@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { adapter, ORDERTRACKER_API, parseOrdertrackerResponse } from './adapter.js';
+import { universalSourceBudget } from '../plan.js';
+import { adapter, ORDERTRACKER_API, ORDERTRACKER_BUDGET_MS, parseOrdertrackerResponse } from './adapter.js';
 
 const fixture = (name: string) => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8')) as {
   status: { code: string }; events: Array<{ time: string; lines: Array<{ original: string }>; carrier: { name: string } | null }>; carriers: unknown[];
@@ -97,6 +98,11 @@ describe('Ordertracker lookups', () => {
     await expect(tracker(fetcher).track({ number: '6H14479158377' })).rejects.toMatchObject({ reason: 'unsupported_scope' });
     await expect(tracker(fetcher).track({ number: '6H14479158377', carrier: 'dhl' })).rejects.toMatchObject({ reason: 'unsupported_scope' });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('waits for the "No information" Ordertracker gives after up to 45 s', () => {
+    expect(ORDERTRACKER_BUDGET_MS).toBeGreaterThan(45_000);
+    expect(universalSourceBudget('Ordertracker')).toBe(ORDERTRACKER_BUDGET_MS);
   });
 
   it('keeps a failing reply a provider failure, not a missing parcel', async () => {

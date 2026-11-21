@@ -12,7 +12,7 @@ import { ordertrackerFeeds, type OrdertrackerFeed } from './feeds.js';
 
 const SOURCE = 'Ordertracker';
 export const ORDERTRACKER_API = 'https://api.ordertracker.com/public/mobile-tracking/data';
-export const ORDERTRACKER_BUDGET_MS = 30_000;
+export const ORDERTRACKER_BUDGET_MS = 50_000;
 /** The header Ordertracker's Android app sends with every lookup, the same for every install. */
 const MOBILE_SECRET = 'pr?GGSV}XRkVz>{/~v3~("s"&KJ`FP>J'; // gitleaks:allow
 const MAX_EVENTS = 500;

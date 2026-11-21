@@ -12,11 +12,13 @@ the same for every install, so the adapter carries it and consumers configure no
 labelled `tracking_source: structured-web-response`.
 
 Ordertracker answers at once from its own copy of a parcel. Without one it reads the carriers
-while the request waits, which can take most of the 30 s budget, so the plan asks it after the
-fast HTTP providers when someone is waiting ([COMPARISON.md](../COMPARISON.md)). When that read
-fails, Ordertracker keeps a "No information" answer for the number for some hours. That answer
-and one with no feed for the number are `NoHistoryError`; a failed request stays a provider
-failure. The reply does not repeat the number.
+while the request waits, so the plan asks it after the fast HTTP providers when someone is
+waiting ([COMPARISON.md](../COMPARISON.md)). For a number the carriers don't know, it answers
+"No information" only after up to 45 s, and keeps that answer for later asks. The 50 s budget
+waits for it: cut off at 30 s, those numbers came back as provider failures. A request that
+hangs up does not stop the read, and the next ask gets its result at once. "No information"
+and a reply with no feed for the number are `NoHistoryError`; a failed request stays a
+provider failure. The reply does not repeat the number.
 
 ## Feeds and clocks
 

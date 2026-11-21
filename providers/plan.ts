@@ -31,14 +31,15 @@ export interface UniversalProvider {
  * The providers, largest share first. Ship24 could be lost with little harm; ParcelsApp and
  * 17TRACK are each the only source of several carriers. Ordertracker serves a few carriers
  * that ParcelsApp or 17TRACK also have, so it takes more than ParcelsApp, but it reads the
- * carrier while the lookup waits unless it has a copy of the parcel. 17TRACK, Track123 and
+ * carrier while the lookup waits unless it has a copy of the parcel, and takes up to 45 s to
+ * say it has nothing: its budget waits for that answer. 17TRACK, Track123 and
  * Track718 cost a browser read, Track123's the longest. Postal Ninja's histories rarely have
  * a scan whose clock a consumer can place, and UPU's feed is sparse: both are asked after
  * the others.
  */
 export const UNIVERSAL_PROVIDERS: Readonly<Record<Source, UniversalProvider>> = {
   Ship24: { transport: 'http', budgetMs: 30_000, share: 4 },
-  Ordertracker: { transport: 'http', slow: true, budgetMs: 30_000, share: 3 },
+  Ordertracker: { transport: 'http', slow: true, budgetMs: 50_000, share: 3 },
   ParcelsApp: { transport: 'http', budgetMs: 45_000, share: 2 },
   '17TRACK': { transport: 'browser', budgetMs: 30_000, share: 1 },
   Track123: { transport: 'browser', budgetMs: 30_000, share: 1 },
