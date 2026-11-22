@@ -2727,7 +2727,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   // The share link restores the hyphen the tracker needs, and an unknown number gets its message.
   { carrier: 'x-express-rs', number: '26-9999999999',
     route: /^https:\/\/www\.x-express\.rs\/korisnicki-panel\/pracenje-posiljke\/26-9999999999$/,
-    marker: /Pošiljka sa kodom <b>26-9999999999<\/b> nije pronađena/ },
+    marker: /Pošiljka sa kodom\s+26-9999999999\s+nije pronađena/ },
   // The page looks the awb parameter up as it loads and answers an unknown AWB with its notice.
   { carrier: 'cautcurier', number: '999999999',
     route: /^https:\/\/tracking\.cautcurier\.ro\/\?awb=999999999$/,
