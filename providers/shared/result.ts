@@ -516,6 +516,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // A forwarder's pallet broken down after the flight's arrival, as ParcelsApp relays HuaHan's "拆板中。—Dismantling in
   // progress" with or without its Chinese, and HuaHan's transfer to the last-mile carrier's number ("转单:"), relayed in English.
   if (/^(?:拆板中。—)?dismantling in progress[.!]?$|^re-?route: ?[a-z0-9]{8,35}$/iu.test(value)) return 'in_transit';
+  // A forwarder's parcel waiting at the airport for its flight, and that flight taking off, as aggregators relay
+  // its English ("Wait for a flight", "The airline has taken off."): on the way, as Lion Parcel's map reads the wait.
+  if (/^wait(?:ing)? for (?:a |the )?flight[.!]?$|^the airline has taken off[.!]?$/i.test(value)) return 'in_transit';
   // A forwarder's arrival at the destination port, worded as a delivery, also after its Chinese
   // ("picked up at the destination port"), and its order data sent to the last-mile carrier.
   if (/^(?:目的港已提货\s*)?delivery has been made at the destination port[.!]?$|^目的港已提货$/iu.test(value)) return 'in_transit';
