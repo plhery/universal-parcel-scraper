@@ -25,7 +25,10 @@ export const unreachableFrontDoors: Partial<Record<CarrierId, string>> = {
   jcex: 'track.jcex.com\'s CDN refuses connections from Europe, the Americas and most of Asia',
   'kerry-tj': 'www.kerrytj.com answers only Taiwanese networks',
   'la-poste-tunisienne': 'www.poste.tn answers only Tunisian networks',
+  pakettipiste: 'pakettipisteseuranta.r2web.fi does not answer connections from the United States; European networks get its tracking page',
+  'pink-post': 'trackawb.izzygo.ro does not answer connections from the United States; European networks get its tracking page',
   slgtrax: 'sonic.pk drops connections from the runner\'s network and some others; European and other American networks get its tracking page',
+  't-cat': 'www.t-cat.com.tw answers only Taiwanese networks',
 };
 
 function unreachableReason(carrierId: string): string | undefined {

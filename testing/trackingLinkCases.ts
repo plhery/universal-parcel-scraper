@@ -1664,10 +1664,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/siguetuenvio\.interrapidisimo\.com\/999999999999$/,
     marker: /Consulta el estado de tu envío/, renderTimeoutMs: 30_000,
     forwarding: { notFound: /No se encontraron guías con la información ingresada/ } },
-  // The server renders the lookup; its answer to an unknown number shows the number.
-  { carrier: 't-cat', number: '900000000099',
-    route: /^https:\/\/www\.t-cat\.com\.tw\/Inquire\/TraceDetail\.aspx\?BillID=900000000099$/,
-    marker: /一般包裹查詢|目前資料庫尚未能查詢到該筆貨物追蹤查詢號碼狀態/ },
   { carrier: 'tcs-pakistan', number: '10999999980',
     route: /^https:\/\/www\.tcsexpress\.com\/track\/10999999980$/,
     marker: /Enter any combination of TCS tracking Reference number/ },
@@ -2813,6 +2809,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'algerie-poste': 'The tracker answers only Algerian networks; the rendered-link check has no country-specific browser transport.',
   jcex: 'track.jcex.com\'s CDN refuses connections from Europe, the Americas and most of Asia; the adapter asks the origin server behind it, which no public address reaches.',
   'surat-kargo': 'The public tracker requires Turkish network access; the rendered-link check has no country-specific browser transport.',
+  't-cat': 'The tracker answers only Taiwanese networks; the rendered-link check has no country-specific browser transport.',
   'nhat-tin': 'The tracking page searches only after its reCAPTCHA, and its lookup service requires Vietnamese network access; the rendered-link check has neither.',
   eushipments: 'euShipments\' tracking page takes the number only in its form, which posts it to a handler, so no address opens one order',
   'no-limit': 'No Limit\'s tracking page takes the number only in its form, which it posts back to itself with the page\'s state, so no address opens one shipment',

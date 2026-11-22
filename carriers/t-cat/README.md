@@ -39,6 +39,7 @@ Tracked through the page its tracker opens for one number.
 
 - No estimate, weight, service, recipient or proof of delivery.
 - Scans older than three months are gone.
+- `www.t-cat.com.tw` answers only Taiwanese networks; elsewhere every lookup times out.
 
 ## Numbers
 
