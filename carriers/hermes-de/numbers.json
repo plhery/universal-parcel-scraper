@@ -675,6 +675,264 @@
         ]
       },
       "note": "Fifteen digits from a public Paketda question about a Hermes parcel. Hermes's recipient service answers it with the parcel whose fourteen-digit number lacks the first zero, which tracking takes under that number."
+    },
+    {
+      "number": "62215165320638",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260806060804/https://api.my-deliveries.de/tnt/v2/shipments/search/62215165320638",
+        "date": "2026-08-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "mondial-relay",
+          "chronopost",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "An archived reply of Hermes Germany's tracking API answers under this barcode: announced, then dropped off at a ParcelShop in Trier."
+    },
+    {
+      "number": "62348144320661",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251215032139/https://api.my-deliveries.de/tnt/v2/shipments/search/62348144320661",
+        "date": "2025-12-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "mondial-relay",
+          "chronopost",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "An archived reply of Hermes Germany's tracking API answers under this barcode: announced, then dropped off at a ParcelShop in Breitengüßbach."
+    },
+    {
+      "number": "64265104040002",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230922064417/https://api.my-deliveries.de/tnt/parcelservice/parceldetails/64265104040002",
+        "date": "2023-09-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "An archived reply of Hermes Germany's former parcel details API answers under this barcode with a delivered history."
+    },
+    {
+      "number": "67017189116335",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240119124439/https://api.my-deliveries.de/tnt/parcelservice/parceldetails/67017189116335",
+        "date": "2024-01-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "An archived reply of Hermes Germany's former parcel details API answers under this barcode with a delivered history."
+    },
+    {
+      "number": "68329181039314",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231130134933/https://api.my-deliveries.de/tnt/parcelservice/parceldetails/68329181039314",
+        "date": "2023-11-30",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "hermes-de",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "An archived reply of Hermes Germany's former parcel details API answers under this barcode with a delivered history."
+    },
+    {
+      "number": "61526800118472",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251201235638/https://api.my-deliveries.de/tnt/v2/shipments/search/61526800118472",
+        "date": "2025-12-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "Fails the barcode check digit. An archived reply of Hermes Germany's tracking API resolves it to one parcel under another barcode, which passes it: a reference, which detection leaves out."
+    },
+    {
+      "number": "82100085452006",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260613091357/https://api.my-deliveries.de/tnt/v2/shipments/search/82100085452006",
+        "date": "2026-06-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "Fails the barcode check digit. An archived reply of Hermes Germany's tracking API resolves it to three luggage pieces under their own barcodes: a luggage order number, which detection leaves out."
     }
   ]
 }

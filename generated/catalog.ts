@@ -5479,7 +5479,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       },
       {
-        "pattern": "^\\d{16}$",
+        "pattern": "^(?!1[78])\\d{16}$",
         "confidence": "low"
       }
     ]

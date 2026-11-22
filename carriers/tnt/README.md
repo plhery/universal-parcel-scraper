@@ -58,6 +58,11 @@ postcode or account is required.
   more than five minutes after the lookup is held back until it is due (`plannedScans`).
 - A shipment either site lists without scans is a `NoHistoryError`: TNT knows the label
   but has not scanned it yet, which is an answer about the parcel, not an outage.
+- A TNT France national consignment opens with its destination's département, as the
+  archived consignments in [numbers.json](numbers.json) show, and carries no check digit.
+  Detection leaves out those opening 17 or 18, where Vinted Go's Luhn-checked parcel numbers
+  sit, so a TNT France parcel for Charente-Maritime or Cher is tracked only when the reader
+  picks TNT.
 - On tnt.fr, the returned detail header and item identity must match. History comes only
   from the shipment's event rows; the progress rail includes future delivery labels.
   The selected milestone determines current status. National scan times are read in the

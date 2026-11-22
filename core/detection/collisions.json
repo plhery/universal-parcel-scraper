@@ -5997,10 +5997,19 @@
     "shape": "Sixteen digits starting 17 or 18 that pass the Luhn check",
     "carriers": [
       "dhl-ecommerce",
-      "tnt",
       "vinted-go"
     ],
-    "reason": "DHL eCommerce and TNT accept any sixteen digits, so they also take Vinted Go's parcel numbers; all are low-confidence, so the number stays a suggestion."
+    "reason": "DHL eCommerce accepts any sixteen digits, so it also takes Vinted Go's parcel numbers; both are low-confidence, so the number stays a suggestion. TNT leaves 17 and 18 to Vinted Go."
+  },
+  {
+    "shape": "Sixteen digits starting 17 or 18 whose last digit is the GS1 check",
+    "carriers": [
+      "canada-post",
+      "correos-express",
+      "dhl-ecommerce",
+      "evri-uk"
+    ],
+    "reason": "Sixteen digits with a GS1 check digit is a low rule for Canada Post, Correos Express, DHL eCommerce and Evri UK. TNT leaves 17 and 18 to Vinted Go, and none claims the length with high confidence, so the number stays a low-confidence suggestion."
   },
   {
     "shape": "Twenty-two digits starting with a 20YYMMDD date",

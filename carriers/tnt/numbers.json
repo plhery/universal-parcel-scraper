@@ -304,6 +304,144 @@
         ]
       },
       "note": "Looked up on TNT's tracking API from its Australian site, as an archived reply shows; TNT answers that it is a TNT Australia domestic consignment and sends the lookup to TNT Australia's own tracker."
+    },
+    {
+      "number": "5723194821645717",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261023101244/https://www.tnt.fr/public/suivi_colis/recherche/index.do?bonTransport=5723194821645717",
+        "date": "2026-10-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "An archived capture of TNT France's national tracking page shows this consignment picked up in Wissous and out for delivery in Sarreguemines, Moselle (57); tnt.fr still knows it."
+    },
+    {
+      "number": "7918482008818817",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260807070813/https://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?bonTransport=7918482008818817&bonTransportTemp=&radiochoixrecherche=BT&radiochoixtypeexpedition=NAT&refInterneInt=",
+        "date": "2026-08-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "An archived capture of TNT France's national tracking page shows the label printed in Oyonnax for Allonne, Deux-Sèvres (79), before the parcel was handed over; tnt.fr still knows it."
+    },
+    {
+      "number": "7643807655856551",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260210093106/https://www.tnt.fr/public/suivi_colis/recherche/index.do?bonTransport=7643807655856551",
+        "date": "2026-02-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "An archived capture of TNT France's national tracking page shows this consignment going out for delivery in Rouen, Seine-Maritime (76)."
+    },
+    {
+      "number": "9319570003042763",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251031171538/https://www.tnt.fr/public/suivi_colis/recherche/index.do?bonTransport=9319570003042763",
+        "date": "2025-10-31",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "An archived capture of TNT France's national tracking page shows this consignment from Saint-Avold left at a partner shop in Bobigny, Seine-Saint-Denis (93)."
+    },
+    {
+      "number": "7518422001036679",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251128091412/https://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?bonTransport=7518422001036679",
+        "date": "2025-11-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "An archived capture of TNT France's national tracking page shows this consignment from Bordeaux going out for delivery in Paris (75)."
+    },
+    {
+      "number": "1345002597163697",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240106201642/https://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?bonTransport=1345002597163697",
+        "date": "2024-01-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "An archived capture of TNT France's national tracking page shows this consignment from Gérardmer left at a partner shop in Marseille, Bouches-du-Rhône (13)."
     }
   ]
 }

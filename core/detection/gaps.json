@@ -2071,6 +2071,12 @@
     "reason": "Hermes Austria prints Hermes's fourteen-digit parcel number, which Hermes Germany's checksum rule and the DPD networks' rules already suggest, and nothing in the number names the Austrian network."
   },
   {
+    "carrier": "hermes-de",
+    "pattern": "^\\d{14}$",
+    "kind": "by_design",
+    "reason": "Fourteen digits that fail Hermes's barcode check digit are a reference, such as an order or luggage order number, which Hermes's search resolves to a parcel under another barcode. A reference proves no ownership of the number, so detection leaves it out."
+  },
+  {
     "carrier": "heung-a-line",
     "kind": "open",
     "reason": "The e-service confirms the full bill of lading. Select Heung-A Line explicitly."
