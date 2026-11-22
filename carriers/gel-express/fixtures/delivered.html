@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+<meta charset="UTF-8">
+<title>Sendungsverfolgung - GEL Express Logistik - Ihr Partner für Express Lieferungen in ganz Deutschland</title>
+</head>
+<body>
+<main>
+<div class="gird-container simpleresullt">
+  <div class="leftBox grid-item grid-item1">
+<div class="kza receivedFully">
+  <img decoding="async" src="/wp-content/uploads/2024/07/close-btn-gray.svg" id="close-btn" />
+  <h4>Ihre Sendung wurde bereits zugestellt!</h4>
+  <p>
+    Klicken Sie <a href="/bewertung/?sendungsnummer=2387595308" target="_blank">hier</a> und     teilen Sie uns Ihre Erfahrung mit!
+  </p>
+</div>
+<table class="svf">
+      <tr>
+        <td>
+          <h4>Sendung</h4>
+        </td>
+        <td>
+          <h4 id="tsnr" class="red">2387595308</h4>
+        </td>
+      </tr>
+      <tr>
+        <td class="table-titel">Referenz</td>
+        <td>25686</td>
+      </tr>
+      <tr>
+        <td class="table-titel">Versanddatum</td>
+        <td>2026-04-30</td>
+      </tr>
+      <tr>
+        <td class="table-titel">Packstücke</td>
+        <td>1</td>
+      </tr>
+    </table>
+    <p class="table-text">
+      Um weitere Sendungsdetails und die Abstellgenehmigung (sofern verfügbar) einzusehen, geben Sie bitte die Empfangs Postleitzahl ein:
+    </p>
+    <form id="svv" method="post" action="/de/sendungsverfolgung">
+      <input id="snr" type="hidden" name="snr" value="2387595308" />
+      <input id="plz" type="text" name="plz" placeholder="PLZ" />
+      <button id="sbt" type="submit">Senden</button>
+    </form>
+  </div>
+  <div class="rightBox grid-item grid-item2">
+    <table class="svf">
+      <tr>
+        <td>
+          <h4>Aktueller Status</h4>
+        </td>
+        <td>
+          <h4 class="red">Sendung zugestellt</h4>
+        </td>
+      </tr>
+      <tr>
+        <td class="table-titel">Status vom</td>
+        <td>21.05.2026 um 14:10 Uhr</td>
+      </tr>
+    </table>
+    <h4 class="red" style="margin-top: 50px">Wichtiger Hinweis</h4>
+    <p>
+      Bei Sendungen mit einer Avisierung (zu erkennen am Avis-Symbol i )
+      erhalten Sie von uns immer vorab einen Liefertermin per Email/SMS oder
+      einen Telefonanruf zur Terminbestätigung!
+    </p>
+  </div>
+  <!-- <div class="clear grid-item3"></div> -->
+  <div class="full grid-item grid-item3">
+    <h2 style="margin-bottom: 1.8em">Ihr Sendungsstatus</h2>
+    <div class="sStatRow">
+      <div class="sStatCol">
+        <img decoding="async" class="Active" id="sStatusIconAbgeholt" title="Sendung abgeholt" alt="Sendung abgeholt"
+          src="/wp-content/uploads/2024/06/icn-status-abgeholt.png" />
+        <h5 class="sStatusLabel">Sendung wird abgeholt</h5>
+      </div>
+      <div class="sStatCol">
+        <img decoding="async" class="Active" id="sStatusIconInLC" title="Sendung im Nachtumschlag" alt="Sendung im Nachtumschlag"
+          src="/wp-content/uploads/2024/06/icn-status-inlc.png" />
+        <h5 class="sStatusLabel">Sendung im Nachtumschlag</h5>
+      </div>
+      <div class="sStatCol">
+        <img decoding="async" class="Active" id="sStatusIconInEDepot" title="Sendung im Zustelldepot" alt="Sendung im Zustelldepot"
+          src="/wp-content/uploads/2024/06/icn-status-indepot.png" />
+        <h5 class="sStatusLabel">Sendung im Zustelldepot</h5>
+      </div>
+      <div class="sStatCol">
+        <img decoding="async" class="hide" id="imgStatus04Avisiert" title="Im Avisierungsprozess"
+          src="/wp-content/uploads/2024/06/04_Avisiert_Fon.png" alt="Im Avisierungsprozess" />
+        <h5 class="sStatusLabel">Avisierung</h5>
+      </div>
+      <div class="sStatCol">
+        <img decoding="async" class="Active" id="sStatusIconInZustellung" title="Sendung in Zustellung" alt="Sendung in Zustellung"
+          src="/wp-content/uploads/2024/06/icn-status-inzustellung.png" />
+        <h5 class="sStatusLabel">Sendung in Zustellung</h5>
+      </div>
+      <div class="sStatCol">
+        <img decoding="async" class="Active" id="sStatusIconZugestellt" title="Sendung zugestellt" alt="Sendung zugestellt"
+          src="/wp-content/uploads/2024/06/icn-status-zugestellt.png" />
+        <h5 class="sStatusLabel">Sendung zugestellt</h5>
+      </div>
+      <!-- <div class="clear"></div> -->
+    </div>
+  </div>
+</div>
+</main>
+</body>
+</html>

@@ -75,6 +75,37 @@
         ]
       },
       "note": "The same capture lists this number as the 'Retoure' of the outbound parcel; its own history was not shown."
+    },
+    {
+      "number": "2387595308",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a0300557355a8f4521c05fb",
+        "date": "2026-05-12",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "parcel ID",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "A review on GEL Express's Trustpilot page gives the parcel's ID and says it was stuck at the depot. GEL's tracker shows it shipped on 30 April 2026 and delivered on 21 May."
     }
   ]
 }

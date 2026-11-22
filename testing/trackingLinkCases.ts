@@ -2729,6 +2729,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'callcourier', number: '10000000000000',
     route: /^https:\/\/callcourier\.com\.pk\/tracking\/\?tc=10000000000000$/,
     marker: /Track your order status with your consignment number/ },
+  // The page reads the number from its address and answers an unknown one with a notice whose search field holds it.
+  { carrier: 'gel-express', number: '9999999990',
+    route: /^https:\/\/www\.gel-express\.de\/de\/sendungsverfolgung\/\?snr=9999999990$/,
+    marker: /Ihre Sendungsnummer konnte leider nicht gefunden werden/ },
 ];
 
 /**

@@ -17,19 +17,50 @@
   "timezone": "Europe/Berlin",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "gel-express",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "delivered_at"
+  ],
   "portal": {
-    "url": "https://www.gel-express.de/sendungsverfolgung/?snr={trackingNumber}",
+    "url": "https://www.gel-express.de/de/sendungsverfolgung/?snr={trackingNumber}",
     "searchUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
     "helpUrl": "https://www.gel-express.de/de/kontakt/",
     "canaryUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "scan_times",
+      "ship_date",
+      "piece_count",
+      "shipper_reference",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "scan_times",
+      "delivered_at"
+    ],
+    "discarded": [
+      "ship_date",
+      "piece_count",
+      "shipper_reference",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "signatory"
+    ]
   },
   "links": [
     {

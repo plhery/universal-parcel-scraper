@@ -387,6 +387,7 @@ import { adapter as gbsBroker } from '../carriers/gbs-broker/adapter.js';
 import { adapter as gdex } from '../carriers/gdex/adapter.js';
 import { adapter as gebruederWeiss } from '../carriers/gebrueder-weiss/adapter.js';
 import { adapter as geis } from '../carriers/geis/adapter.js';
+import { adapter as gelExpress } from '../carriers/gel-express/adapter.js';
 import { adapter as genei } from '../carriers/genei/adapter.js';
 import { adapter as genikiTaxydromiki } from '../carriers/geniki-taxydromiki/adapter.js';
 import { adapter as geodis } from '../carriers/geodis/adapter.js';
@@ -1487,6 +1488,7 @@ export const REGISTRY: RegistryDefinition = {
     "gdex": gdex,
     "gebrueder-weiss": gebruederWeiss,
     "geis": geis,
+    "gel-express": gelExpress,
     "genei": genei,
     "geniki-taxydromiki": genikiTaxydromiki,
     "geodis": geodis,
@@ -2930,7 +2932,7 @@ export const REGISTRY: RegistryDefinition = {
     "gdex": "gdex",
     "gebrueder-weiss": "gebrueder-weiss",
     "geis": "geis",
-    "gel-express": "universal",
+    "gel-express": "gel-express",
     "genei": "genei",
     "geniki-taxydromiki": "geniki-taxydromiki",
     "geodis": "geodis",

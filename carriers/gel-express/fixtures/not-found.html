@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+<meta charset="UTF-8">
+<title>Sendungsverfolgung - GEL Express Logistik - Ihr Partner für Express Lieferungen in ganz Deutschland</title>
+</head>
+<body>
+<main>
+<div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 30px;
+  " class="leftBox">
+  <p>
+    <b>Lieber Kunde,</b><br>
+    <br>
+    Ihre Sendungsnummer konnte leider nicht gefunden werden.<br>
+    <br>
+    Das kann folgende Gründe haben:
+  </p>
+  <ul style="margin-top: 0px;">
+    <li style="margin-bottom: 15px;"><b>Die Sendungsdaten sind noch nicht verfügbar:</b><br style="margin-bottom: 15px;">Wenn Sie die Sendungsnummer per E-Mail erhalten<br> haben, versuchen Sie es bitte später noch einmal. In<br> der Regel ist die Sendungsverfolgung ab 21:00 Uhr<br> am Versandtag verfügbar.</li>
+    <li><b>Fehlerhafte Sendungsnummer:</b><br style="margin-bottom: 15px;">Bitte prüfen Sie, ob Ihre Sendungsnummer 10 Stellen<br> hat (Beispiel: 1234567890) und korrekt eingegeben<br> wurde.</li>
+  </ul>
+  <br>
+  <p>
+    Vielen Dank für Ihre Geduld &#8211; wir helfen Ihnen gerne weiter!<br>
+    Ihre GEL Express Logistik GmbH
+  </p>
+  <form id="svv" method="post" action="/de/sendungsverfolgung">
+    <input id="snr" type="text" name="snr" placeholder="Sendungsnummer" value="9999999990" />
+    <button id="sbt" type="submit">
+      <span class="elementor-align-icon-left elementor-button-icon form-icon">
+        <span class="elementor-screen-only">Submit</span>
+      </span>
+    </button>
+  </form>
+</div>
+</main>
+</body>
+</html>
