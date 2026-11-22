@@ -348,6 +348,22 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-03",
       "note": "Ukrposhta's Ukrainian wording; universal providers relay it without the code, and the map reads it by wording."
+    },
+    {
+      "wording": "Відправлення прийняте",
+      "language": "uk",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "Ukrposhta's copy of the origin post's posting on an item from abroad, relayed by universal providers without the code beside UPU's \"Posting/Collection\" at the same minute (17100)."
+    },
+    {
+      "wording": "Прибуло до Сортувального депо",
+      "language": "uk",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "Ukrposhta's arrival at a sorting depot after leaving a logistics centre, relayed by universal providers without the code."
     }
   ]
 }

@@ -223,7 +223,8 @@ describe('status map answers', () => {
   it("reads Ukrposhta's Ukrainian wording as providers relay it without a code", () => {
     for (const carrier of ['ukrposhta', 'unknown']) {
       expect(answer(carrier, null, 'Прийнято')).toEqual(mapped('accepted'));
-      for (const wording of ['Прибуло до логістичного центру', 'Виїхало з логістичного центру', 'Виїхало з відділення',
+      expect(answer(carrier, null, 'Відправлення прийняте')).toEqual(mapped('accepted'));
+      for (const wording of ['Прибуло до логістичного центру', 'Виїхало з логістичного центру', 'Виїхало з відділення', 'Прибуло до Сортувального депо',
         'Прибуло до міжнародного терміналу', 'Випущено з митного контролю для подальшої доставки',
         'Оброблено на міжнародному терміналі та прямує до країни призначення']) {
         expect(answer(carrier, null, wording), `${carrier} ${wording}`).toEqual(mapped('in_transit'));
