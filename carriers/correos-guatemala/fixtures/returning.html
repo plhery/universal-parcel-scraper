@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/estiloIndex.css">
+    <link rel="stylesheet" href="estilos/bootstrap-5.3.3-dist/css/bootstrap.css">
+    <title>Rastreo de Paquetes</title>
+</head>
+<body>
+
+
+<!-- Fila principal con 2 columnas -->
+<div class="row g-0 main-row">
+
+    <!-- Columna 1: Contenido principal -->
+    <div class="col-12 col-lg-10 col-principal">
+
+        <!-- Header con imagen de fondo: camión + título sobre overlay azul transparente -->
+        <div class="col1-header">
+            <div class="hero-overlay">
+                <img src="estilos/img/icono camion.png" class="hero-truck" alt="Camión">
+                <h1 class="hero-title">RASTREO Y SEGUIMIENTO</h1>
+            </div>
+        </div>
+
+        <!-- Cuerpo: formulario + resultados + info -->
+        <div class="col1-body">
+
+            <!-- Formulario -->
+            <div class="form-card shadow">
+                <h4 class="form-card-title">Ejemplo EE123456789GT (sin espacios)</h4>
+                <form action="index.php" method="post" id="trackingForm">
+                    <h6 class="form-label-tracking">Tracking</h6>
+                    <div class="form-row-custom">
+                        <input placeholder="Ejemplo EE123456789GT (sin espacios)"
+                            name="tracking"
+                            id="tracking"
+                            class="form-control form-control-lg"
+                            type="text"
+                            pattern="[A-Za-z]{2}[0-9]{9}[A-Za-z]{2}"
+                            value=""
+                            required>
+                        <button id="btnConsultarTracking" class="btn-buscar" type="submit">Buscar</button>
+                    </div>
+                </form>
+
+                            </div>
+
+            <!-- Resultados -->
+            <div id="resultados-rastreo">
+                                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>TRACKING</th>
+                            <th>País de Origen</th>
+                            <th>País de Destino</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CH220800969US</td>
+                            <td>United States of America (the)</td>
+                            <td>United States of America (the)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                                <div class="text-center">
+                    <img style="width: 200px;" src="estilos/img/Devuelto a fardos.gif"><br>
+                    <div class="alert alert-primary mt-3">
+                        Tu Paquete se encuentra en proceso de devolución.                    </div>
+                </div>
+                <div class="d-flex justify-content-center gap-3 mb-3">
+                    <button style="background-color:#0f306d" class="btn btn-lg btn-primary"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#historialEventos"
+                            aria-expanded="false" aria-controls="historialEventos">
+                        Ver historial
+                    </button>
+                    <a href="index.php" class="btn btn-lg btn-secondary">
+                        Nueva búsqueda
+                    </a>
+                </div>
+
+                <div class="collapse" id="historialEventos">
+                    <div class="timeline" id="contenedorHistorial">
+                                                    <div class="timeline-item mb-3">
+                                <div class="card">
+                                    <div class="card-body p-2">
+                                        <h6 class="mb-1"><b>Fecha: </b>31/10/2024</h6>
+                                        <p class="mt-1 mb-0 text-primary"><i>Paquete ingreso a Guatemala</i></p>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="timeline-item mb-3">
+                                <div class="card">
+                                    <div class="card-body p-2">
+                                        <h6 class="mb-1"><b>Fecha: </b>13/12/2024</h6>
+                                        <p class="mt-1 mb-0 text-primary"><i>Paquete devuelto a su país de origen.</i></p>
+                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+
+                <!--
+                <h2>Historial Completo:</h2>
+                <div style="overflow-x: auto;">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th>Fecha</th>
+                                <th>Descripción</th>
+                                <th>Ubicación</th>
+                                <th>Tipo</th>
+                                <th>Fuente</th>
+                                                                                                    <th>Siguiente Ubicacion</th>
+                                                            </tr>
+                        </thead>
+                        <tbody>
+                                                            <tr>
+                                    <td>30</td>
+                                    <td>2024-10-31 09:14:37.917</td>
+                                    <td>Recibe artículo en la oficina de cambio (Inb)</td>
+                                    <td>GUATEMALA CITY AVION</td>
+                                    <td>NACIONAL</td>
+                                                                        <td>
+                                                                                    <span class="badge bg-secondary">SQL</span>
+                                                                            </td>
+                                                                                                                <td></td>
+                                                                    </tr>
+                                                            <tr>
+                                    <td>8</td>
+                                    <td>2024-12-13 10:17:20.320</td>
+                                    <td>Insert item into bag (Otb)</td>
+                                    <td>GUATEMALA CA COLIS</td>
+                                    <td>NACIONAL</td>
+                                                                        <td>
+                                                                                    <span class="badge bg-secondary">SQL</span>
+                                                                            </td>
+                                                                                                                <td></td>
+                                                                    </tr>
+                                                    </tbody>
+                    </table>
+                </div>
+                                                    -->     
+                            </div>
+
+        </div><!-- /col1-body -->
+    </div><!-- /col-principal -->
+
+</div><!-- /main-row -->
+
+
+<script src="scripts/scripts.js"></script>
+<script src="estilos/bootstrap-5.3.3-dist/js/bootstrap.js"></script>
+</body>
+</html>

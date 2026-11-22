@@ -238,6 +238,7 @@ import { statusMap as correosCuba } from '../../carriers/correos-cuba/status.js'
 import { statusMap as correosDeMexico } from '../../carriers/correos-de-mexico/status.js';
 import { statusMap as correosElSalvador } from '../../carriers/correos-el-salvador/status.js';
 import { statusMap as correosExpress } from '../../carriers/correos-express/status.js';
+import { statusMap as correosGuatemala } from '../../carriers/correos-guatemala/status.js';
 import { statusMap as correosSpain } from '../../carriers/correos-spain/status.js';
 import { statusMap as courierCenter } from '../../carriers/courier-center/status.js';
 import { statusMap as couriersPlease } from '../../carriers/couriersplease/status.js';
@@ -1129,7 +1130,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'chit-chats': chitChats, chronodiali, chronopost, 'chronopost-ma': chronopostMa, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, citilogistics, 'city-air-express': cityAirExpress, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail,
   'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, 'cmt-express': cmtExpress, cne, 'colis-prive': colisPrive, colisweb, 'connect-couriers': connectCouriers, consegnia, coordinadora,
   'copa-courier': copaCourier, corre, coretrails,
-  'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain,
+  'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-guatemala': correosGuatemala, 'correos-spain': correosSpain,
   'courier-center': courierCenter, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
   'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'datian-logistics': datianLogistics, 'day-ross': dayRoss,
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, dellin, delnext, deppon, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,

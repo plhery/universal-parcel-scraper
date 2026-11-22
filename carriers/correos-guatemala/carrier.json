@@ -1,0 +1,68 @@
+{
+  "id": "correos-guatemala",
+  "displayName": "Correos de Guatemala",
+  "aliases": [
+    "Correo de Guatemala",
+    "Dirección General de Correos y Telégrafos",
+    "Guatemala Post"
+  ],
+  "region": {
+    "countries": [
+      "GT"
+    ]
+  },
+  "brand": {
+    "color": "#0f306d"
+  },
+  "selectable": true,
+  "timezone": "America/Guatemala",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "correos-guatemala",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country"
+  ],
+  "portal": {
+    "canaryUrl": "https://correos.gob.gt/",
+    "shows": [
+      "status",
+      "history",
+      "origin_country",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "scan_times",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin_country",
+      "next_office"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

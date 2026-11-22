@@ -1,0 +1,119 @@
+{
+  "carrier": "correos-guatemala",
+  "records": [
+    {
+      "number": "RT631347091DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://correos.gob.gt/LAIP-2021/articulo-10/inciso-29/2026/octubre/art%2010%20inciso%2029%20internacional%20octubre%202026.pdf",
+        "date": "2026-10-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "Listed in the international claims (CN08) report Correos de Guatemala publishes for October 2026 under the access-to-information law. Its tracker answers it with an item from Germany received at the office of exchange, cleared and delivered, with the office scans."
+    },
+    {
+      "number": "CH259243263US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://correos.gob.gt/LAIP-2021/articulo-10/inciso-29/2026/octubre/art%2010%20inciso%2029%20internacional%20octubre%202026.pdf",
+        "date": "2026-10-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "Listed in the international claims (CN08) report Correos de Guatemala publishes for October 2026 under the access-to-information law. Its tracker answers it with an item from the United States held by customs."
+    },
+    {
+      "number": "RN106781740JP",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://correos.gob.gt/LAIP-2021/articulo-10/inciso-29/2026/octubre/art%2010%20inciso%2029%20internacional%20octubre%202026.pdf",
+        "date": "2026-10-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "Listed in the international claims (CN08) report Correos de Guatemala publishes for October 2026 under the access-to-information law. Its tracker answers it with correspondence from Japan held by customs."
+    },
+    {
+      "number": "CH220800969US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://correos.gob.gt/LAIP-2021/articulo-10/inciso-29/2025/enero/art%2010%20inciso%2029%20internacional%20enero%202025.pdf",
+        "date": "2025-01-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "Listed in the international claims (CN08) report Correos de Guatemala publishes for January 2025 under the access-to-information law. Its tracker answers it with an item from the United States stopped at import and sent back."
+    },
+    {
+      "number": "RR658556014PL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://correos.gob.gt/LAIP-2021/articulo-10/inciso-29/2025/enero/art%2010%20inciso%2029%20internacional%20enero%202025.pdf",
+        "date": "2025-01-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "poczta-polska",
+        "confidence": "high"
+      },
+      "note": "Listed in the international claims (CN08) report Correos de Guatemala publishes for January 2025 under the access-to-information law. Its tracker answers it with an item from Poland delivered."
+    },
+    {
+      "number": "RV253887486ES",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://correos.gob.gt/LAIP-2021/articulo-10/inciso-29/2025/enero/art%2010%20inciso%2029%20internacional%20enero%202025.pdf",
+        "date": "2025-01-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "correos-spain",
+        "confidence": "high"
+      },
+      "note": "Listed in the international claims (CN08) report Correos de Guatemala publishes for January 2025 under the access-to-information law. Its tracker answers it with an item from Spain delivered."
+    }
+  ]
+}

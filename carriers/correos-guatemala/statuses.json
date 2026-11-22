@@ -1,0 +1,28 @@
+{
+  "carrier": "correos-guatemala",
+  "entries": [
+    {"code": "30", "wording": "Recibe artículo en la oficina de cambio (Inb)", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Arrived at the office of exchange at Guatemala City's airport."},
+    {"code": "31", "wording": "Enviar el artículo a la aduana (Inb)", "stage": "customs", "language": "es", "confirmedBy": "live"},
+    {"code": "32", "wording": "Recibe artículo en la oficina de entrega (Inb)", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Received at the office that delivers it or holds it for collection; the page calls this step in process of delivery."},
+    {"code": "1106", "wording": "Transferencia entre Oficinas", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Moved between two Guatemalan offices; the full history names the next one, which the adapter does not read."},
+    {"code": "36", "wording": "Unsuccessful item delivery attempt (Inb)", "stage": "failed_attempt", "language": "en", "confirmedBy": "live"},
+    {"code": "37", "wording": "Envio Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live"},
+    {"code": "76", "wording": "Stop item import (Inb)", "stage": "returned", "language": "en", "confirmedBy": "live", "note": "The import is stopped and the item goes back; the page calls it the start of the return."},
+    {"code": "8", "wording": "Insert item into bag (Otb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Bagged for dispatch abroad. On an incoming item it carries the return, which the page's status line names."},
+    {"wording": "Paquete ingreso a Guatemala", "stage": "in_transit", "language": "es", "confirmedBy": "live"},
+    {"wording": "Correspondencia ingreso a Guatemala", "stage": "in_transit", "language": "es", "confirmedBy": "live"},
+    {"wording": "Paquete ingreso a revisión aduanera.", "stage": "customs", "language": "es", "confirmedBy": "live"},
+    {"wording": "Correspondencia ingreso a revisión aduanera.", "stage": "customs", "language": "es", "confirmedBy": "live"},
+    {"wording": "Paquete retenido en Aduana.", "stage": "customs", "language": "es", "confirmedBy": "live", "note": "Held by customs, also the page's status line while it lasts."},
+    {"wording": "Correspondencia retenido en Aduana.", "stage": "customs", "language": "es", "confirmedBy": "live"},
+    {"wording": "Paquete en proceso de entrega.", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The page's step for a receipt at the delivering office."},
+    {"wording": "Correspondencia en proceso de entrega.", "stage": "in_transit", "language": "es", "confirmedBy": "live"},
+    {"wording": "Intento fallido de entrega.", "stage": "failed_attempt", "language": "es", "confirmedBy": "live"},
+    {"wording": "Paquete entregado.", "stage": "delivered", "language": "es", "confirmedBy": "live"},
+    {"wording": "Correspondencia entregado.", "stage": "delivered", "language": "es", "confirmedBy": "live"},
+    {"wording": "Inicio del proceso de devolución", "stage": "returned", "language": "es", "confirmedBy": "live"},
+    {"wording": "Paquete devuelto a su país de origen.", "stage": "returned", "language": "es", "confirmedBy": "live"},
+    {"wording": "Tu Paquete se encuentra en proceso de devolución.", "stage": "returned", "language": "es", "confirmedBy": "live", "note": "The page's status line for an item on its way back."},
+    {"wording": "Entregado el 30/10/2026, gracias por tu confianza.", "stage": "delivered", "language": "es", "confirmedBy": "live", "note": "The page's status line for a delivered item, with the day of delivery."}
+  ]
+}
