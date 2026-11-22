@@ -1,0 +1,101 @@
+{
+  "carrier": "lindao-express",
+  "entries": [
+    {
+      "code": "已揽件",
+      "wording": "已揽件",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Taken in by Lindao in China."
+    },
+    {
+      "code": "抵达操作中心",
+      "wording": "抵达…操作中心",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached one of Lindao's Chinese operations centres, which the adapter keeps as the location."
+    },
+    {
+      "code": "订单已发出",
+      "wording": "订单已发出；预计起飞-到达时间:…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Dispatched to the airport, with the planned flight times."
+    },
+    {
+      "code": "空港から出発",
+      "wording": "…空港から出発",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "live",
+      "note": "Left the Chinese airport named."
+    },
+    {
+      "code": "空港に到着予定",
+      "wording": "…空港に到着予定",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "live",
+      "note": "Due at the Japanese airport named."
+    },
+    {
+      "code": "货物抵达日本清关中/フライト到着（輸入通関手続き中）",
+      "wording": "货物抵达日本清关中/フライト到着（輸入通関手続き中）",
+      "stage": "customs",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Landed in Japan and in import clearance."
+    },
+    {
+      "code": "进口清关完成/輸入通関許可",
+      "wording": "进口清关完成/輸入通関許可",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Released by Japanese customs."
+    },
+    {
+      "code": "通関完了",
+      "wording": "通関完了",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "live",
+      "note": "Released by Japanese customs."
+    },
+    {
+      "code": "集荷",
+      "wording": "集荷",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "live",
+      "note": "Collected by the Japanese carrier for the last leg."
+    },
+    {
+      "code": "輸送中",
+      "wording": "輸送中",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "live",
+      "note": "With the Japanese carrier."
+    },
+    {
+      "code": "配達中",
+      "wording": "配達中",
+      "stage": "out_for_delivery",
+      "language": "ja",
+      "confirmedBy": "live",
+      "note": "Out for delivery in Japan."
+    },
+    {
+      "code": "配達完了",
+      "wording": "配達完了",
+      "stage": "delivered",
+      "language": "ja",
+      "confirmedBy": "live",
+      "note": "Delivered."
+    }
+  ]
+}

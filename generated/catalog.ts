@@ -40317,6 +40317,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "lindao-express": {
+    "displayName": "Lindao Express",
+    "color": "#1f5fa8",
+    "aliases": [
+      "林道货运",
+      "林道国际货运",
+      "上海林道国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN",
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lindao-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "line-1-logistics": {
     "displayName": "Line-1 Logistics",
     "color": "#e3302c",
@@ -71988,6 +72011,7 @@ export const CARRIER_IDS = [
   "liftit",
   "lightning-express",
   "lillebil",
+  "lindao-express",
   "line-1-logistics",
   "line-clear",
   "linear-logistics",
@@ -74008,6 +74032,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "liftit": [],
   "lightning-express": [],
   "lillebil": [],
+  "lindao-express": [],
   "line-1-logistics": [],
   "line-clear": [],
   "linear-logistics": [],

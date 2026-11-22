@@ -1,0 +1,68 @@
+{
+  "id": "lindao-express",
+  "displayName": "Lindao Express",
+  "aliases": [
+    "林道货运",
+    "林道国际货运",
+    "上海林道国际货运代理有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "JP"
+    ]
+  },
+  "brand": {
+    "color": "#1f5fa8"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "lindao-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "delivery_tracking_number"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "pieces",
+      "origin",
+      "destination",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>跳转提示</title>
+</head>
+<style>
+    .wrap{
+        height: 440px;
+        width: 400px;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -220px;
+        margin-left: -200px;
+
+    }
+    .logo{
+        text-align: center;
+    }
+    .back-panel{
+        width: 400px;
+        text-align: center;
+    }
+    .back-btn{
+        background-color: #407bdf;
+        border: none;
+        border-radius: 20px;
+        height: 30px;
+        width: 120px;
+        color: white;
+        font-size: 16px;
+        display: inline-block;
+        text-decoration: none;
+        line-height: 30px;
+    }
+    h3{
+        color: #1f1e1e;
+        margin-top: 26px;
+    }
+    h5{
+        color: #4b4b4b;
+    }
+</style>
+<body>
+
+<div class="wrap">
+    <div class="logo">
+        <img width="262" src="/public/images/photo.png">
+    </div>
+        <!-- <h1>:(</h1> -->
+    <h3>该订单不存在</h3>
+        <h5><b id="wait">3</b>秒后将自动关闭该界面</h5>
+    <div class="back-panel"><a id="href" class="back-btn" href="javascript:history.back(-1);">返 回</a></div>
+</div>
+<script type="text/javascript">
+    (function(){
+        var wait = document.getElementById('wait'),
+            href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;
+            if(time <= 0) {
+                location.href = href;
+                clearInterval(interval);
+            };
+        }, 1000);
+    })();
+</script>
+</body>
+</html>

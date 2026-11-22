@@ -437,6 +437,7 @@ import { statusMap as hunterExpress } from '../../carriers/hunter-express/status
 import { statusMap as huahan } from '../../carriers/huahan/status.js';
 import { statusMap as huayaExpress } from '../../carriers/huaya-express/status.js';
 import { statusMap as huaqiExpress } from '../../carriers/huaqi-express/status.js';
+import { statusMap as lindaoExpress } from '../../carriers/lindao-express/status.js';
 import { statusMap as wanjiaLogistics } from '../../carriers/wanjia-logistics/status.js';
 import { statusMap as huiyu } from '../../carriers/huiyu/status.js';
 import { statusMap as hywl } from '../../carriers/hywl/status.js';
@@ -1142,7 +1143,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'la-poste-burkina-faso': laPosteBurkinaFaso, 'la-poste-senegal': laPosteSenegal, 'laar-courier': laarCourier, labaih,
   'landmark-global': landmarkGlobal, 'last-one-mile-coop': lastOneMileCoop, 'latvijas-pasts': latvijasPasts, 'lbc-express': lbcExpress, 'lex-id': lexId, 'lex-my': lexMy, 'leopards-courier': leopardsCourier, liccardi, 'linear-logistics': linearLogistics,
   'lietuvos-pastas': lietuvosPastas, 'lightning-express': lightningExpress,
-  'line-clear': lineClear, lingdong, linhan, liuchen, 'lion-parcel': lionParcel, logen, loggi, logisimple, logistiq, logoix, 'loomis-express': loomisExpress,
+  'lindao-express': lindaoExpress, 'line-clear': lineClear, lingdong, linhan, liuchen, 'lion-parcel': lionParcel, logen, loggi, logisimple, logistiq, logoix, 'loomis-express': loomisExpress,
   'lotte-global': lotteGlobal, 'lx-pantos': lxPantos, 'm-and-p': mAndP, 'm-one': mOne, 'madhur-courier': madhurCourier, 'magic-trans': magicTrans, 'magyar-posta': magyarPosta, mailamericas, 'mailplus-au': mailplusAu, mainfreight,
   'maersk-ecommerce': maerskEcommerce, 'makati-express': makatiExpress, maltapost, mandae, 'maritime-ontario': maritimeOntario, 'maruti-air': marutiAir, matkahuolto, 'mauritius-post': mauritiusPost, mayiyinfu,
   'mds-collivery': mdsCollivery, meest, 'meihoo-pegasus': meihooPegasus, 'meso-global': mesoGlobal, 'messenger-cz': messengerCz, 'metropolitan-warehouse': metropolitanWarehouse, mhi, 'micro-express': microExpress,

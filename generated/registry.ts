@@ -559,6 +559,7 @@ import { adapter as libanpost } from '../carriers/libanpost/adapter.js';
 import { adapter as liccardi } from '../carriers/liccardi/adapter.js';
 import { adapter as lietuvosPastas } from '../carriers/lietuvos-pastas/adapter.js';
 import { adapter as lightningExpress } from '../carriers/lightning-express/adapter.js';
+import { adapter as lindaoExpress } from '../carriers/lindao-express/adapter.js';
 import { adapter as lineClear } from '../carriers/line-clear/adapter.js';
 import { adapter as linearLogistics } from '../carriers/linear-logistics/adapter.js';
 import { adapter as lingdong } from '../carriers/lingdong/adapter.js';
@@ -1624,6 +1625,7 @@ export const REGISTRY: RegistryDefinition = {
     "liccardi": liccardi,
     "lietuvos-pastas": lietuvosPastas,
     "lightning-express": lightningExpress,
+    "lindao-express": lindaoExpress,
     "line-clear": lineClear,
     "linear-logistics": linearLogistics,
     "lingdong": lingdong,
@@ -3192,6 +3194,7 @@ export const REGISTRY: RegistryDefinition = {
     "liftit": "universal",
     "lightning-express": "lightning-express",
     "lillebil": "universal",
+    "lindao-express": "lindao-express",
     "line-1-logistics": "universal",
     "line-clear": "line-clear",
     "linear-logistics": "linear-logistics",
