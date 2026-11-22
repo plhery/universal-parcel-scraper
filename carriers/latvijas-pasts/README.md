@@ -51,6 +51,11 @@ its country's when the country keeps one zone; other events, and a clock that su
 ambiguous, stay local times. Scans at the same second follow the tracker's progress groups, from created to delivered,
 then the reply's order. A repeated foreign event counts once.
 
+Items Latvijas Pasts carries for shops through a transit location, such as its `S` series, name
+their events (`EVENT_TRANSIT_ASN`, `EVENT_LAST_MILE_CUSTOMS`) and give neither an office nor a
+country, so their clocks stay local times. The arrival at the transit location is the acceptance,
+as the tracker's progress groups say, and passing the last mile's customs is the release.
+
 An unsuccessful delivery (36) at the second of a redirection's relabelling (1127) records the
 redirection, not a round, so it is in transit: the item goes on to its new address.
 

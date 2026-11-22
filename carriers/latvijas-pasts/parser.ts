@@ -16,7 +16,8 @@ export const LATVIJAS_PASTS_MAX_BYTES = 256_000;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 const HOME_ZONE = 'Europe/Riga';
-const CODE = /^\d{1,6}$/;
+// Its own offices number their events; items it carries for shops through a transit location name them.
+const CODE = /^(?:\d{1,6}|EVENT_[A-Z][A-Z_]{0,58})$/;
 const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})(?:\.\d{1,6})?$/;
 // The notices the English tracker gives instead of a history.
 const NOT_FOUND = 'No information received on the tracking of the postal item. Please, try again!';
@@ -89,7 +90,7 @@ export function parseLatvijasPasts(payload: unknown, rawNumber: string): Carrier
   const seen = new Set<string>();
   rows.forEach((row, index) => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Latvijas Pasts returned an invalid scan');
-    const code = cleanScalar(row.event_code, 16);
+    const code = cleanScalar(row.event_code, 64);
     const time = wallClock(row.event_timestamp);
     if (!CODE.test(code) || !time) throw new SchemaError(PROVIDER, 'Latvijas Pasts returned a scan without a code or clock');
     const place = placeOf(row);

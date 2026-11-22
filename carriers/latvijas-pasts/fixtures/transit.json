@@ -1,0 +1,13 @@
+{
+  "status": 1,
+  "data": [
+    { "office_code": 0, "office": "", "event_timestamp": "2026-03-09 18:40:00", "event_code": "EVENT_LAST_MILE_CUSTOMS", "event": "Parcel has gone thought last mile customs", "event_group_sequence_number": 4, "event_group_name": "Out for delivery" },
+    { "office_code": 0, "office": "", "event_timestamp": "2026-03-09 17:55:00", "event_code": "EVENT_LAST_MILE_ARRIVAL", "event": "Parcel has arrived in last mile", "event_group_sequence_number": 4, "event_group_name": "Out for delivery" },
+    { "office_code": 0, "office": "", "event_timestamp": "2026-03-04 11:20:15", "event_code": "EVENT_TRANSIT_ARRIVAL", "event": "Parcel has arrived at transit location", "event_group_sequence_number": 2, "event_group_name": "Accepted" },
+    { "office_code": 0, "office": "", "event_timestamp": "2026-03-04 11:20:15", "event_code": "EVENT_TRANSIT_DEPARTURE", "event": "Parcel sent to destination country", "event_group_sequence_number": 4, "event_group_name": "Out for delivery" },
+    { "office_code": 0, "office": "", "event_timestamp": "2026-03-04 11:20:15", "event_code": "EVENT_TRANSIT_POST_COLLECTION", "event": "Parcel collected at transit location", "event_group_sequence_number": 3, "event_group_name": "In transit" },
+    { "office_code": 0, "office": "", "event_timestamp": "2026-02-28 06:12:40", "event_code": "EVENT_TRANSIT_NOTIFY", "event": "Parcel notify received", "event_group_sequence_number": 1, "event_group_name": "Preadvice" },
+    { "office_code": 0, "office": "", "event_timestamp": "2026-02-27 21:03:10", "event_code": "EVENT_TRANSIT_ASN", "event": "Parcel data received", "event_group_sequence_number": 1, "event_group_name": "Preadvice" },
+    { "office_code": 0, "office": "", "event_timestamp": "2026-02-27 20:58:02", "event_code": "EVENT_TRANSIT_NOTIFY", "event": "Parcel notify received", "event_group_sequence_number": 1, "event_group_name": "Preadvice" }
+  ]
+}

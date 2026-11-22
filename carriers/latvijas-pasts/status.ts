@@ -4,7 +4,8 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 /**
  * Latvijas Pasts names each scan with a numeric event code and words it in the
  * requested language. Its own offices and the foreign posts' events it relays
- * share one code list. Several codes read as the wrong milestone to the shared
+ * share one code list; items it carries for shops through a transit location
+ * have named codes of their own. Several codes read as the wrong milestone to the shared
  * classifier: "Item returned from Customs" is a release, not a return.
  */
 const EVENTS: Readonly<Record<string, Stage>> = {
@@ -45,6 +46,15 @@ const EVENTS: Readonly<Record<string, Stage>> = {
   // A foreign post's item waiting at its collection point, UPU's EDH.
   75: 'ready_for_pickup',
   37: 'delivered',
+  // Items carried for shops through a transit location: announced, received there, sent on to the
+  // destination country, then its last mile. Passing the last mile's customs is the release.
+  EVENT_TRANSIT_NOTIFY: 'registered',
+  EVENT_TRANSIT_ASN: 'registered',
+  EVENT_TRANSIT_ARRIVAL: 'accepted',
+  EVENT_TRANSIT_POST_COLLECTION: 'in_transit',
+  EVENT_TRANSIT_DEPARTURE: 'in_transit',
+  EVENT_LAST_MILE_ARRIVAL: 'in_transit',
+  EVENT_LAST_MILE_CUSTOMS: 'in_transit',
 };
 
 /** The stage Latvijas Pasts' event code gives a scan, if the map knows it. */

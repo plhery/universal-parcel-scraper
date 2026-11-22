@@ -13,6 +13,7 @@ import statuses from './statuses.json' with { type: 'json' };
 const COLLECTED = 'ZZ000000014DE';
 const ABROAD = 'ZZ000000014LV';
 const ABSENT = 'ZZ000000028LV';
+const TRANSIT = 'SA000000014LV';
 const text = (name: string) => readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8');
 const reply = (body: string, status = 200) => new Response(body, { status, headers: { 'Content-Type': 'application/json; charset=UTF-8' } });
 const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
@@ -103,6 +104,29 @@ describe('Latvijas Pasts tracking adapter', () => {
     expect(rows(parseLatvijasPasts(shuffled, ABROAD))).toEqual(rows(result));
   });
 
+  it("reads a shop's item carried through a transit location by its named codes, on local clocks without a place", () => {
+    const result = parseLatvijasPasts(JSON.parse(text('transit')), TRANSIT);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
+      last_status_text: 'Parcel has gone thought last mile customs', last_update: null, last_update_local: '2026-03-09T18:40:00' });
+    expect(rows(result)).toEqual([
+      // Passing the last mile's customs is the release.
+      ['2026-03-09T18:40:00', 'EVENT_LAST_MILE_CUSTOMS', 'in_transit', null],
+      ['2026-03-09T17:55:00', 'EVENT_LAST_MILE_ARRIVAL', 'in_transit', null],
+      // At the same second, the later progress group first.
+      ['2026-03-04T11:20:15', 'EVENT_TRANSIT_DEPARTURE', 'in_transit', null],
+      ['2026-03-04T11:20:15', 'EVENT_TRANSIT_POST_COLLECTION', 'in_transit', null],
+      ['2026-03-04T11:20:15', 'EVENT_TRANSIT_ARRIVAL', 'accepted', null],
+      ['2026-02-28T06:12:40', 'EVENT_TRANSIT_NOTIFY', 'registered', null],
+      ['2026-02-27T21:03:10', 'EVENT_TRANSIT_ASN', 'registered', null],
+      ['2026-02-27T20:58:02', 'EVENT_TRANSIT_NOTIFY', 'registered', null],
+    ]);
+    // A named code the map does not know goes to the shared wording rules.
+    const delivered = edited('transit', payload => {
+      payload.data!.unshift({ ...payload.data![0]!, event_timestamp: '2026-03-10 12:00:00', event_code: 'EVENT_LAST_MILE_DELIVERED', event: 'Parcel delivered' });
+    });
+    expect(parseLatvijasPasts(delivered, TRANSIT)).toMatchObject({ current_stage: 'delivered', current_stage_source: 'wording:language' });
+  });
+
   it('reads an unsuccessful delivery at the second of a redirection\'s relabelling as the item going on', () => {
     const office = { office_code: 'LV9001', office: 'Customer centre: Example' };
     const redirected = edited('collected', payload => {
@@ -158,6 +182,7 @@ describe('Latvijas Pasts tracking adapter', () => {
       edited('abroad', reply => { reply.data![2]!.event_timestamp = '2026-02-30 18:37:00'; }),
       edited('abroad', reply => { reply.data![2]!.event_timestamp = undefined; }),
       edited('abroad', reply => { reply.data![2]!.event_code = 'EMD'; }),
+      edited('abroad', reply => { reply.data![2]!.event_code = 'EVENT_transit'; }),
       edited('abroad', reply => { reply.data![2]!.event_code = { code: '30' }; }),
       edited('abroad', reply => { (reply.data as unknown[])[2] = 'scan'; })]) {
       expect(() => parseLatvijasPasts(payload, ABROAD), JSON.stringify(payload).slice(0, 80)).toThrow(expect.objectContaining({ kind: 'schema' }));
