@@ -69834,6 +69834,28 @@
       }
     ]
   },
+  "yuxin-logistics": {
+    "displayName": "Yuxin Logistics",
+    "color": "#f08300",
+    "aliases": [
+      "宇鑫物流",
+      "宇鑫物流集团",
+      "Shandong Yuxin Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yuxin-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ywbz": {
     "displayName": "YWBZ Express",
     "color": "#2fa4e7",

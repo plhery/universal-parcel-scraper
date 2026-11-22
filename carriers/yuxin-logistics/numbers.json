@@ -1,0 +1,68 @@
+{
+  "carrier": "yuxin-logistics",
+  "records": [
+    {
+      "number": "3228340140",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/yuxinwuliu.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Yuxin page lists. Yuxin's tracker answers it with freight collected in Changle, through the Jinan, Zhengzhou and Chengdu sorting centres and signed for in Wanzhou."
+    },
+    {
+      "number": "3228514575",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/yuxinwuliu.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Yuxin page lists. Yuxin's tracker answers it with freight collected in Qinhuangdao, through the Shijiazhuang sorting centre and signed for in Xinji."
+    }
+  ]
+}

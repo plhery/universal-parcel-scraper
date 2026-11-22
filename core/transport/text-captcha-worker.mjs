@@ -11,8 +11,9 @@ const profiles = {
   'ecms-express': { width: 200, height: 45, format: 'png', crop: { left: 0, top: 0, width: 145, height: 45 }, characters: arithmeticCharacters },
   // DTDC's letters reach the picture's sides, where the model drops them without a margin.
   dtdc: { width: 180, height: 60, format: 'png', margin: 20 },
-  // PAD's small pictures read best kept to their own proportions, as ddddocr feeds the model.
+  // PAD's and Yuxin's small pictures read best kept to their own proportions, as ddddocr feeds the model.
   padtf: { width: 70, height: 25, format: 'png', keepAspect: true },
+  'yuxin-logistics': { width: 70, height: 26, format: 'jpeg', keepAspect: true },
   // MTCaptcha's photographic pictures run to tens of kilobytes. The text keeps to the middle, and the
   // model reads it best cut from the margins and stretched to its input.
   mtcaptcha: { width: 350, height: 100, format: 'gif', maxBytes: 200_000, crop: { left: 30, top: 10, width: 300, height: 80 }, fit: 'fill' },

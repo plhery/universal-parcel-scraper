@@ -69838,6 +69838,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "yuxin-logistics": {
+    "displayName": "Yuxin Logistics",
+    "color": "#f08300",
+    "aliases": [
+      "宇鑫物流",
+      "宇鑫物流集团",
+      "Shandong Yuxin Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yuxin-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ywbz": {
     "displayName": "YWBZ Express",
     "color": "#2fa4e7",
@@ -72642,6 +72664,7 @@ export const CARRIER_IDS = [
   "yuexi-logistics",
   "yurtici-kargo",
   "yusuda",
+  "yuxin-logistics",
   "ywbz",
   "ywd",
   "ywe",
@@ -74653,6 +74676,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yuexi-logistics": [],
   "yurtici-kargo": [],
   "yusuda": ["yusuda-1"],
+  "yuxin-logistics": [],
   "ywbz": ["ywbz-1"],
   "ywd": [],
   "ywe": ["ywe-1"],

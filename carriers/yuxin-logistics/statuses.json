@@ -1,0 +1,37 @@
+{
+  "carrier": "yuxin-logistics",
+  "entries": [
+    {
+      "code": "已揽收",
+      "wording": "已揽收【…】下一站【…】",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The collecting branch took the freight in; the page names the hub it goes to next."
+    },
+    {
+      "code": "已离开",
+      "wording": "已离开【…】发往【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left a branch or sorting centre for the next one."
+    },
+    {
+      "code": "落地",
+      "wording": "已到达【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Unloaded at a sorting centre or the delivering branch; the page writes it as 已到达 with the branch it reached."
+    },
+    {
+      "code": "已签收",
+      "wording": "已签收【…】",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for at the delivering branch; the order's status then reads 签收."
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "yuxin-logistics",
+  "displayName": "Yuxin Logistics",
+  "aliases": [
+    "宇鑫物流",
+    "宇鑫物流集团",
+    "Shandong Yuxin Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#f08300"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "yuxin-logistics",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "weight",
+      "pieces",
+      "volume",
+      "customer_card_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "weight",
+      "pieces",
+      "volume",
+      "customer_card_number"
+    ],
+    "unavailable": [
+      "service_name",
+      "eta",
+      "offset_timestamps",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
