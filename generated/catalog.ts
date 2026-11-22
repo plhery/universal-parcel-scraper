@@ -46271,7 +46271,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#e5007e",
     "aliases": [
       "ONE",
-      "ONE Line"
+      "ONE Line",
+      "ONE Ocean Network Express"
     ],
     "selectable": true,
     "timezone": "UTC",
