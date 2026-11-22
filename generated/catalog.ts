@@ -67871,6 +67871,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "woori-taekbae": {
+    "displayName": "Woori Taekbae",
+    "color": "#013974",
+    "aliases": [
+      "우리택배",
+      "우리택배 주식회사",
+      "호남택배",
+      "호남로지스",
+      "Honam Logis",
+      "Woori"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "woori-taekbae",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "world-courier": {
     "displayName": "World Courier",
     "color": "#461e96",
@@ -72499,6 +72524,7 @@ export const CARRIER_IDS = [
   "wld-express",
   "wmg-group",
   "wooliiporter",
+  "woori-taekbae",
   "world-courier",
   "world-package",
   "wp-ground",
@@ -74507,6 +74533,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wld-express": [],
   "wmg-group": [],
   "wooliiporter": ["wooliiporter-1"],
+  "woori-taekbae": [],
   "world-courier": [],
   "world-package": [],
   "wp-ground": [],

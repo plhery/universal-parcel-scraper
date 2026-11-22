@@ -4653,6 +4653,12 @@
     "reason": "WINIT order numbers, WO and ten or eleven digits, share their shape with Colis Privé, Aramex and La Poste references; a WINIT rule needs those overlaps declared first. The package numbers that add a letter are detected."
   },
   {
+    "carrier": "woori-taekbae",
+    "pattern": "^50\\d{8}$",
+    "kind": "collision",
+    "reason": "Woori Taekbae waybills, ten digits starting with 50, share their shape with DHL Express waybills and other carriers' ten-digit numbers, so the shape cannot name Woori Taekbae."
+  },
+  {
     "carrier": "x-express-ba",
     "pattern": "^A\\d{9}$",
     "kind": "collision",

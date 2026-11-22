@@ -1006,6 +1006,7 @@ import { adapter as whwdt } from '../carriers/whwdt/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
+import { adapter as wooriTaekbae } from '../carriers/woori-taekbae/adapter.js';
 import { adapter as wpGround } from '../carriers/wp-ground/adapter.js';
 import { adapter as xcargo } from '../carriers/xcargo/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
@@ -2059,6 +2060,7 @@ export const REGISTRY: RegistryDefinition = {
     "wiio": wiio,
     "winit": winit,
     "wooliiporter": wooliiporter,
+    "woori-taekbae": wooriTaekbae,
     "wp-ground": wpGround,
     "xcargo": xcargo,
     "xde-logistics": xdeLogistics,
@@ -4019,6 +4021,7 @@ export const REGISTRY: RegistryDefinition = {
     "wld-express": "universal",
     "wmg-group": "universal",
     "wooliiporter": "wooliiporter",
+    "woori-taekbae": "woori-taekbae",
     "world-courier": "universal",
     "world-package": "universal",
     "wp-ground": "wp-ground",

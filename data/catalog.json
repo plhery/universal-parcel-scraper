@@ -67867,6 +67867,31 @@
       }
     ]
   },
+  "woori-taekbae": {
+    "displayName": "Woori Taekbae",
+    "color": "#013974",
+    "aliases": [
+      "우리택배",
+      "우리택배 주식회사",
+      "호남택배",
+      "호남로지스",
+      "Honam Logis",
+      "Woori"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "woori-taekbae",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "world-courier": {
     "displayName": "World Courier",
     "color": "#461e96",
