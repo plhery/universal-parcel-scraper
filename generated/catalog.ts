@@ -17168,6 +17168,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "coretrails": {
+    "displayName": "Coretrails",
+    "color": "#100B37",
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "coretrails",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.coretrails.com/",
+    "trackingUrlTemplate": "https://www.coretrails.com/home/{trackingNumber}",
+    "trackingSearchUrl": "https://www.coretrails.com/",
+    "helpUrl": "https://www.coretrails.com/contact-us",
+    "linkRules": [
+      {
+        "domains": [
+          "www.coretrails.com",
+          "coretrails.com"
+        ],
+        "path": "^/home/(CRT\\d+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "corlan-post-express": {
     "displayName": "Corlan Post Express",
     "color": "#2b52b6",
@@ -67452,6 +67480,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "warp": {
+    "displayName": "WARP",
+    "color": "#4ADE80",
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "warp"
+    },
+    "canaryUrl": "https://tracking.wearewarp.com/",
+    "trackingUrlTemplate": "https://tracking.wearewarp.com/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.wearewarp.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.wearewarp.com"
+        ],
+        "path": "^/([SP]-?\\d{3,9}-?\\d{4})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "wassel": {
     "displayName": "Wassel",
     "color": "#112c45",
@@ -71541,6 +71594,7 @@ export const CARRIER_IDS = [
   "copa-courier",
   "cope-sensitive-freight",
   "cordelia-shipping",
+  "coretrails",
   "corlan-post-express",
   "corporate-couriers",
   "corre",
@@ -73012,6 +73066,7 @@ export const CARRIER_IDS = [
   "wangjing-3cq",
   "wanjia-logistics",
   "ward-trucking",
+  "warp",
   "wassel",
   "we-world-express",
   "webrinq",
@@ -73569,6 +73624,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "copa-courier": ["copa-courier-1"],
   "cope-sensitive-freight": [],
   "cordelia-shipping": [],
+  "coretrails": [],
   "corlan-post-express": [],
   "corporate-couriers": [],
   "corre": ["corre-s10"],
@@ -75040,6 +75096,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wangjing-3cq": [],
   "wanjia-logistics": [],
   "ward-trucking": [],
+  "warp": [],
   "wassel": [],
   "we-world-express": ["we-world-express-1"],
   "webrinq": [],

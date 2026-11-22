@@ -182,6 +182,7 @@ import { adapter as cootranstame } from '../carriers/cootranstame/adapter.js';
 import { adapter as copaAirlinesCargo } from '../carriers/copa-airlines-cargo/adapter.js';
 import { adapter as copaCourier } from '../carriers/copa-courier/adapter.js';
 import { adapter as cordeliaShipping } from '../carriers/cordelia-shipping/adapter.js';
+import { adapter as coretrails } from '../carriers/coretrails/adapter.js';
 import { adapter as corre } from '../carriers/corre/adapter.js';
 import { adapter as correiosBr } from '../carriers/correios-br/adapter.js';
 import { adapter as correoArgentino } from '../carriers/correo-argentino/adapter.js';
@@ -1017,6 +1018,7 @@ import { adapter as wanHai } from '../carriers/wan-hai/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as wangjing3cq } from '../carriers/wangjing-3cq/adapter.js';
 import { adapter as wanjiaLogistics } from '../carriers/wanjia-logistics/adapter.js';
+import { adapter as warp } from '../carriers/warp/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
 import { adapter as westernBid } from '../carriers/western-bid/adapter.js';
@@ -1262,6 +1264,7 @@ export const REGISTRY: RegistryDefinition = {
     "copa-airlines-cargo": copaAirlinesCargo,
     "copa-courier": copaCourier,
     "cordelia-shipping": cordeliaShipping,
+    "coretrails": coretrails,
     "corre": corre,
     "correios-br": correiosBr,
     "correo-argentino": correoArgentino,
@@ -2097,6 +2100,7 @@ export const REGISTRY: RegistryDefinition = {
     "wanbexpress": wanbexpress,
     "wangjing-3cq": wangjing3cq,
     "wanjia-logistics": wanjiaLogistics,
+    "warp": warp,
     "we-world-express": weWorldExpress,
     "wedo": wedo,
     "western-bid": westernBid,
@@ -2515,6 +2519,7 @@ export const REGISTRY: RegistryDefinition = {
     "copa-courier": "copa-courier",
     "cope-sensitive-freight": "universal",
     "cordelia-shipping": "cordelia-shipping",
+    "coretrails": "coretrails",
     "corlan-post-express": "universal",
     "corporate-couriers": "universal",
     "corre": "corre",
@@ -4065,6 +4070,7 @@ export const REGISTRY: RegistryDefinition = {
     "wangjing-3cq": "wangjing-3cq",
     "wanjia-logistics": "wanjia-logistics",
     "ward-trucking": "universal",
+    "warp": "warp",
     "wassel": "universal",
     "we-world-express": "we-world-express",
     "webrinq": "universal",

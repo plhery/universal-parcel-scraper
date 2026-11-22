@@ -17164,6 +17164,34 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "coretrails": {
+    "displayName": "Coretrails",
+    "color": "#100B37",
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "coretrails",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.coretrails.com/",
+    "trackingUrlTemplate": "https://www.coretrails.com/home/{trackingNumber}",
+    "trackingSearchUrl": "https://www.coretrails.com/",
+    "helpUrl": "https://www.coretrails.com/contact-us",
+    "linkRules": [
+      {
+        "domains": [
+          "www.coretrails.com",
+          "coretrails.com"
+        ],
+        "path": "^/home/(CRT\\d+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "corlan-post-express": {
     "displayName": "Corlan Post Express",
     "color": "#2b52b6",
@@ -67444,6 +67472,31 @@
         "params": [
           "pro"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "warp": {
+    "displayName": "WARP",
+    "color": "#4ADE80",
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "warp"
+    },
+    "canaryUrl": "https://tracking.wearewarp.com/",
+    "trackingUrlTemplate": "https://tracking.wearewarp.com/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.wearewarp.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.wearewarp.com"
+        ],
+        "path": "^/([SP]-?\\d{3,9}-?\\d{4})/?$"
       }
     ],
     "detectionRules": []
