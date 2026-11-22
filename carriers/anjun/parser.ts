@@ -8,7 +8,7 @@ import { isoTime } from '../../core/time/index.js';
 import { clean, cleanScalar, textFromHtml } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { regionZone } from '../../places/zones.js';
-import { anjunStage } from './status.js';
+import { anjunCodeKey, anjunStage } from './status.js';
 
 export const PROVIDER = 'Anjun';
 // A long history is under thirty kilobytes.
@@ -106,6 +106,32 @@ function wallClock(wall: string): string {
 /** A scan as either lookup gives it, before it is worded and staged. */
 interface Scan { code: string; status: string; details: string[]; remark: string; local: string; location: string }
 
+/**
+ * The Brazilian line's clearance, from the courier terminal's receipt to the release to the last mile, which the
+ * tracker words in Portuguese and places nowhere. It is on Brazil's clock: dated on Anjun's in China, the terminal's
+ * receipt fell hours before the flight's arrival in Brazil. Later scans place the parcel in Brazil and lend their
+ * clock; a history that ends in clearance has none, so its clearance is dated here.
+ */
+const BRAZIL_CLEARANCE: ReadonlySet<string> = new Set(['custody_receipt', 'tfk_has_been_scanned', 'customs_detention',
+  'in_customs_clearance', 'customs_clearance_completed_and_released', 'clearance_successful', 'released_for_collection']);
+const PORTUGUESE = /\b(?:recebimento|armaz[ée]m|alf[âa]ndeg|pacote|liberad|coleta|entrada|desembara[çc])/i;
+const BRAZIL_CLOCK = 'America/Sao_Paulo';
+
+function brazilianClearance({ event }: { event: CarrierEvent }): boolean {
+  return !event.location && BRAZIL_CLEARANCE.has(anjunCodeKey(event.provider_code ?? '')) && PORTUGUESE.test(event.description ?? '');
+}
+
+/** The clearance scans after every other scan, dated on Brazil's clock. */
+function clearanceOnBrazilClock(scans: { key: string; event: CarrierEvent }[]): { key: string; event: CarrierEvent }[] {
+  const others = scans.filter((scan) => !brazilianClearance(scan)).map(({ event }) => event.local_time as string);
+  const last = others.reduce((latest, local) => (local > latest ? local : latest), '');
+  return scans.map((scan) => {
+    const local = scan.event.local_time as string;
+    const time = brazilianClearance(scan) && local > last ? isoTime(local, BRAZIL_CLOCK)?.iso : undefined;
+    return time ? { ...scan, event: { ...scan.event, time, time_zone: BRAZIL_CLOCK, time_zone_basis: 'destination' } } : scan;
+  });
+}
+
 function projectRow(row: Record<string, unknown>): { key: string; event: CarrierEvent } {
   const extra = row.extraData;
   if (extra !== null && extra !== undefined && !isRecord(extra)) throw new SchemaError(PROVIDER, 'Anjun returned invalid scan details');
@@ -173,10 +199,11 @@ export function parseAnjun(payload: unknown, raw: string): CarrierResult {
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Anjun returned a history with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Anjun returned an oversized history');
 
-  return history(rows.map((row) => {
+  const scans = rows.map((row) => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Anjun returned an invalid scan');
     return projectRow(row);
-  }), country);
+  });
+  return history(!country || country === 'BR' ? clearanceOnBrazilClock(scans) : scans, country);
 }
 
 /**

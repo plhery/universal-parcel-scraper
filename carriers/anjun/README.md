@@ -36,7 +36,12 @@ sent within Brazil. Tracked through the lookups its two tracking pages make.
 ## Notes
 
 - Each scan's `date` is the scanning site's wall clock to the second, with no zone. One history
-  goes from China's clocks to Brazil's, so the clocks stay `local_time`. Anjun Express writes the
+  goes from China's clocks to Brazil's, so the clocks stay `local_time`. The Brazilian line's
+  clearance, from the courier terminal's receipt to the release to the last mile, is worded in
+  Portuguese and placed nowhere. Later scans place the parcel in Brazil and lend it their clock;
+  when the history ends in clearance it is dated on São Paulo's clock here, as on Anjun's in China
+  the terminal's receipt fell before the flight's arrival in Brazil. A reply naming another
+  destination country leaves it local. Anjun Express writes the
   day first (`dd-MM-yyyy HH:mm:ss`), also on the site's clock, and Brazil has several zones.
 - Anjun Express spells its codes apart (`statusCode`, as `transfer_in_storage`); the same map
   reads them. Its `collected` is the collection from the sender, the first scan of a parcel sent

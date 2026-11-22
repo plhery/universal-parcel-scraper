@@ -66,8 +66,7 @@ describe('Anjun HTTP adapter', () => {
   it('keeps each scan’s wall clock and stages it by its code', () => {
     const result = parseAnjun(fixture('in-transit'), IN_TRANSIT);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'customs', current_stage_source: 'carrier_map',
-      last_status_text: 'Entrada no armazém alfândegado de TFK', last_update: null, last_update_local: '2026-05-21T09:14:27',
-      expected_delivery: null });
+      last_status_text: 'Entrada no armazém alfândegado de TFK', last_update: '2026-05-21T09:14:27-03:00', expected_delivery: null });
     expect(result.events!.map((event) => [event.local_time, event.provider_code, event.stage ?? null, event.location ?? null])).toEqual([
       ['2026-05-21T09:14:27', 'TFK _has_ been_ scanned', 'customs', null],
       ['2026-05-21T06:02:00', 'custody_receipt', 'in_transit', null],
@@ -78,8 +77,32 @@ describe('Anjun HTTP adapter', () => {
       ['2026-05-16T17:45:02', 'leave_warehouse', 'in_transit', 'Sample Origin'],
       ['2026-05-15T23:55:57', 'arrive_at_warehouse', 'accepted', 'Sample Origin'],
     ]);
-    expect(result.events!.every((event) => event.time === undefined && event.stage_source === 'carrier_map')).toBe(true);
+    // The clearance the history ends in is on Brazil's clock; the scans before it keep their wall clocks.
+    expect(result.events!.map((event) => event.time ?? null)).toEqual(['2026-05-21T09:14:27-03:00', '2026-05-21T06:02:00-03:00',
+      null, null, null, null, null, null]);
+    expect(result.events!.every((event) => event.stage_source === 'carrier_map')).toBe(true);
     expect(result).not.toHaveProperty('destination_country');
+  });
+
+  it('dates the Brazilian clearance a history ends in on Brazil\'s clock, not on Anjun\'s in China', () => {
+    // Dated on Shanghai's clock, the courier terminal's receipt came before the flight's arrival in Brazil.
+    const dated = (change: (rows: Row[], body: Reply) => void = () => {}) => dateLocalClocks('anjun', parseAnjun(changed('in-transit', change), IN_TRANSIT))
+      .events!.map((event) => [event.provider_code, event.time ?? null, event.time_zone_basis ?? null]);
+    expect(dated().slice(0, 3)).toEqual([
+      ['TFK _has_ been_ scanned', '2026-05-21T09:14:27-03:00', 'destination'],
+      ['custody_receipt', '2026-05-21T06:02:00-03:00', 'destination'],
+      ['arrival_at_destination_airport', '2026-05-20T23:48:00-03:00', 'place'],
+    ]);
+    expect(dated().at(-1)).toEqual(['arrive_at_warehouse', '2026-05-15T23:55:57+08:00', 'carrier']);
+    // A history of the clearance alone too.
+    expect(dated((rows, body) => { body.data = rows.slice(0, 2); })).toEqual([
+      ['TFK _has_ been_ scanned', '2026-05-21T09:14:27-03:00', 'destination'], ['custody_receipt', '2026-05-21T06:02:00-03:00', 'destination']]);
+    // Not a line to another country, nor clearance worded otherwise or followed by a later scan, which lends its clock.
+    expect(parseAnjun(changed('in-transit', (_rows, body) => { body.extra.countryCode = 'MX'; }), IN_TRANSIT).events![0]).not.toHaveProperty('time');
+    expect(dated((rows) => { rows[0]!.status = 'Customs scan'; })[0]).toEqual(['TFK _has_ been_ scanned', '2026-05-21T09:14:27+08:00', 'carrier']);
+    expect(parseAnjun(changed('in-transit', (rows) => {
+      rows.unshift({ ...rows[0], date: '2026-05-22 10:00:00', stateCode: 'LM _has _collected', status: 'Objeto coletado' });
+    }), IN_TRANSIT).events!.slice(0, 3).map((event) => event.time ?? null)).toEqual([null, null, null]);
   });
 
   it('keeps the delivery without the recipient, the courier, the proof of delivery, contacts or the repeated scan', () => {
@@ -117,7 +140,7 @@ describe('Anjun HTTP adapter', () => {
 
   it('reads a history listed oldest first newest first, as the page shows it', () => {
     const result = parseAnjun(changed('in-transit', (rows) => { rows.reverse(); }), IN_TRANSIT);
-    expect(result).toMatchObject({ last_update_local: '2026-05-21T09:14:27', current_stage: 'customs' });
+    expect(result).toMatchObject({ last_update: '2026-05-21T09:14:27-03:00', current_stage: 'customs' });
     expect(result.events!.at(-1)).toMatchObject({ provider_code: 'arrive_at_warehouse' });
   });
 
