@@ -72616,6 +72616,14 @@
     ]
   },
   {
+    "input": "814449681",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-ie"
+    ]
+  },
+  {
     "input": "81459151",
     "carrier": "unknown",
     "confidence": "low",
@@ -110758,6 +110766,18 @@
     "candidates": [
       "postnord"
     ]
+  },
+  {
+    "input": "RE4F7P1H-362320-99847414",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "RE4H7Z2K-314050-74642170",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "RE924000013UY",

@@ -1,5 +1,45 @@
 {
   "carrier": "zippd",
-  "gap": "No public page shows a Zippd tracking code.",
-  "records": []
+  "records": [
+    {
+      "number": "RE4F7P1H-362320-99847414",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a97554197133631ee2e9d78",
+        "date": "2026-09-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "delivery number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A review on Zippd's Trustpilot page gives this delivery number for a Myprotein order. Zippd's tracking page finds the delivery, from Myprotein, but cannot get its status."
+    },
+    {
+      "number": "RE4H7Z2K-314050-74642170",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6a779539ad3cbd5b89262699",
+        "date": "2026-08-08",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "order",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A review on Zippd's Trustpilot page gives this code for a Myprotein order. Zippd's tracking page finds the delivery, from Myprotein, but cannot get its status."
+    }
+  ]
 }
