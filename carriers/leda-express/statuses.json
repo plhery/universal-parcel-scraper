@@ -1,0 +1,21 @@
+{
+  "carrier": "leda-express",
+  "entries": [
+    {"wording": "樂達全球速遞 已攬收", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "Leda takes the parcel in at Hong Kong. The row opens with 【中国香港】, which becomes the location."},
+    {"wording": "貨物到達樂達全球速遞香港倉", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "At Leda's Hong Kong warehouse."},
+    {"wording": "貨物離開香港倉", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Left the Hong Kong warehouse for Shenzhen."},
+    {"wording": "货物到达海关，等待清关", "stage": "customs", "language": "zh", "confirmedBy": "live", "note": "At customs in Shenzhen, waiting for clearance. The row opens with 【中国深圳】."},
+    {"wording": "清关中", "stage": "customs", "language": "zh", "confirmedBy": "live", "note": "Being cleared."},
+    {"wording": "海关已放行。待交付当地承运方（顺丰：SF…）。", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Released by customs, waiting for the courier in China, named with its waybill. Any courier and number."},
+    {"wording": "顺丰速运 已收取快件，您的期待，我们定竭诚守护，不负所托。", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "SF Express takes the parcel from Leda, mid-journey for the parcel. SF's rows follow in Chinese, each opening with its city in [], which becomes the location."},
+    {"wording": "快件在【…】完成分拣，准备发往 【…】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "SF's depots and service points fill the 【】, as in the rows below."},
+    {"wording": "快件离开 【…】，已在发往 【…】 的路上", "stage": "in_transit", "language": "zh", "confirmedBy": "live"},
+    {"wording": "快件到达 【…】", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "A service point's brackets can hold its street address after its name."},
+    {"wording": "快件开始长途运输，两站距离…KM", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "A truck leaves on a long haul, with the distance between the two depots."},
+    {"wording": "车辆正在长途运输中，车辆临近【…】，请您放心", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The truck is near the city named; some rows add the distance left to the next depot. The rows open with no city."},
+    {"wording": "快件交给【…，联系电话：…】，正在派送途中（…）", "stage": "out_for_delivery", "language": "zh", "confirmedBy": "live", "note": "On a delivery round with the courier, named with their phone, as SF words it."},
+    {"wording": "快件已交接给顺丰合作点(…，联系电话：…，地址：…），请凭取货信息前往合作点领取您的快递。", "stage": "ready_for_pickup", "language": "zh", "confirmedBy": "live", "note": "Left at an SF partner point, named with its phone and address, for the recipient to collect; the shared wording rules read it."},
+    {"wording": "快件领取成功", "stage": "delivered", "language": "zh", "confirmedBy": "live", "note": "Collected from the partner point."},
+    {"wording": "您的快件已派送至本人，如有疑问请电联快递员【…，电话：…】。…", "stage": "delivered", "language": "zh", "confirmedBy": "live", "note": "Delivered to the recipient in person, at the same minute as the collection, naming the courier with their phone."}
+  ]
+}

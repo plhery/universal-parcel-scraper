@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>乐达全球速递_乐达全球速运 - www.leda-express.com</title>
+</head>
+<body>
+<h1 class="entry-title">Tracking Tool</h1>
+<div class="entry-content">
+							<div id="ship200apiResponse" style="padding-top:10px;">
+							
+								<!----失败--->
+								<p class="apiError">错误: Tracking#: LD00000000000000 - Not Found</p>
+								<div class="kuaid100_tracking"><a target="_blank" href="https://www.kuaidi100.com/chaxun?nu="></a>&nbsp;点击单号继续查询/Click tracking number to continue tracking</div>
+								
+								<p>您可以查询其他跟踪单号:</p>
+							</div>
+							<div id="ship200_trackingtool_container" class="trackingMain">
+								<form id="trackingtool" action="http://www.leda-express.com/queryexpress.html" method="post" name="trackingtool">
+									<div class="field">
+										<label for="Tracking">包裹查询:<span class="required">*</span></label>
+										<textarea id="express" name="express" value="LD00000000000000" placeholder="Insert Tracking Numbers Here" required class="form-control" rows="3"></textarea>
+									</div>
+									<div class="field theCount"></div>
+									<div class="field">
+										<input type="submit" id="Submit" name="Submit">
+									</div>
+								</form>
+							</div>
+							<br>
+							
+						</div>
+					</div>
+</body>
+</html>

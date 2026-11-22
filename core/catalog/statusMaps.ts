@@ -518,6 +518,7 @@ import { statusMap as landmarkGlobal } from '../../carriers/landmark-global/stat
 import { statusMap as lastOneMileCoop } from '../../carriers/last-one-mile-coop/status.js';
 import { statusMap as latvijasPasts } from '../../carriers/latvijas-pasts/status.js';
 import { statusMap as lbcExpress } from '../../carriers/lbc-express/status.js';
+import { statusMap as ledaExpress } from '../../carriers/leda-express/status.js';
 import { statusMap as leopardsCourier } from '../../carriers/leopards-courier/status.js';
 import { statusMap as liccardi } from '../../carriers/liccardi/status.js';
 import { statusMap as linearLogistics } from '../../carriers/linear-logistics/status.js';
@@ -1151,7 +1152,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   jhgj, jiayang, jifan, 'jingguang-logistics': jingguangLogistics, jitsu, jne, 'jordan-post': jordanPost, jrt, 'js-express': jsExpress, jumppoint, 'jumppoint-international': jumppointInternational, 'flash-courier': flashCourier, kazpost, 'kec-ecommerce': kecEcommerce, kex, 'kex-express-hk': kexExpressHk,
   'kit-tk': kitTk, 'komon-express': komonExpress, 'korea-post': koreaPost, 'kolay-gelsin': kolayGelsin, 'kuayuan-express': kuayuanExpress, 'kuehne-nagel': kuehneNagel, 'kun-express': kunExpress, kunyoung, kyoungdong, 'kyrgyz-post': kyrgyzPost, 'l-post': lPost, 'la-poste': laPoste,
   'la-poste-burkina-faso': laPosteBurkinaFaso, 'la-poste-senegal': laPosteSenegal, 'laar-courier': laarCourier, labaih,
-  'landmark-global': landmarkGlobal, 'last-one-mile-coop': lastOneMileCoop, 'latvijas-pasts': latvijasPasts, 'lbc-express': lbcExpress, 'lex-id': lexId, 'lex-my': lexMy, 'leopards-courier': leopardsCourier, liccardi, 'linear-logistics': linearLogistics,
+  'landmark-global': landmarkGlobal, 'last-one-mile-coop': lastOneMileCoop, 'latvijas-pasts': latvijasPasts, 'lbc-express': lbcExpress, 'leda-express': ledaExpress, 'lex-id': lexId, 'lex-my': lexMy, 'leopards-courier': leopardsCourier, liccardi, 'linear-logistics': linearLogistics,
   'lietuvos-pastas': lietuvosPastas, 'lightning-express': lightningExpress,
   'lindao-express': lindaoExpress, 'line-clear': lineClear, lingdong, linhan, liuchen, 'lion-parcel': lionParcel, logen, loggi, logisimple, logistiq, logoix, 'loomis-express': loomisExpress,
   'lotte-global': lotteGlobal, 'lx-pantos': lxPantos, 'm-and-p': mAndP, 'm-one': mOne, 'madhur-courier': madhurCourier, 'magic-trans': magicTrans, 'magyar-posta': magyarPosta, mailamericas, 'mailplus-au': mailplusAu, mainfreight,

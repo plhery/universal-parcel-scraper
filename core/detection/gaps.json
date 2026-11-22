@@ -6400,5 +6400,11 @@
     "pattern": "^\\d{4,12}$",
     "kind": "by_design",
     "reason": "Viapost's order ids are short bare digits without a prefix or check digit, so no rule can name Viapost; use explicit selection."
+  },
+  {
+    "carrier": "leda-express",
+    "pattern": "^LD\\d{14}$",
+    "kind": "open",
+    "reason": "Leda Express waybills are LD and fourteen digits with no known check digit, and one public sample is too few to give the shape a rule; select Leda Express explicitly."
   }
 ]

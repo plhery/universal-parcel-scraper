@@ -1,0 +1,24 @@
+{
+  "carrier": "leda-express",
+  "records": [
+    {
+      "number": "LD89581317335286",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/ledaexpress.shtml",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example in the input box of kuaidi100's Leda page. Leda's tracker answers it with a parcel taken in at Hong Kong, cleared in Shenzhen and delivered by SF Express under the waybill it names."
+    }
+  ]
+}

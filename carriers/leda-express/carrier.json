@@ -1,0 +1,72 @@
+{
+  "id": "leda-express",
+  "displayName": "Leda Express",
+  "aliases": [
+    "乐达全球速递",
+    "樂達全球速遞",
+    "乐达全球速运"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CN",
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#138ac8"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "leda-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://www.kuaidi100.com/all/ledaexpress.shtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "courier_name",
+      "driver_phone"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "provider_code",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
