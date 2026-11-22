@@ -468,6 +468,11 @@ step exists for future protocol changes.
   there. Such a scan takes the clock of the town, state or province its place names, or the
   single clock of its country, and keeps its wall clock in a country of several. Juxi's own
   rows, in China or with no place, keep Beijing's.
+- Muser's copies of the delivering network's scans in the US follow the wording with the town
+  and ZIP Code past a run of spaces, at the town's wall clock. As in Muser's own adapter, the
+  town becomes the place, in the state the ZIP Code is in, and the scan takes that state's clock:
+  on Muser's Chinese clock a delivery round went out thirteen hours before Muser's own row of it.
+  Its other rows keep Beijing's.
 - Home clocks: some networks are named their own way, and their dates are their own
   instants or labels shown on their home clock wherever the scan was (checked
   2026-10-10). "Italy Post" has Poste Italiane's epoch milliseconds on Rome time. "New
@@ -698,7 +703,9 @@ step exists for future protocol changes.
   supplies the zone. A country alone leaves the time local. PostNL's scans in the
   Netherlands or with no place keep Amsterdam's clock, except its customs stamps ("Item is cleared
   by customs"), which PostNL's own feed states in UTC: read on Amsterdam's clock, a clearance came
-  an hour before Cainiao's copy of it.
+  an hour before Cainiao's copy of it. Its acceptance and bagging stamps ("Consignment received at
+  the PostNL Acceptance Centre") are UTC too when they keep their seconds, as in PostNL's own feed;
+  those dated to the minute are on the local clock.
 - So do a mailer's labels filed under USPS, whose wording repeats their place ("Shipping Label
   Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label Created, USPS Awaiting
   Item" and keep its wall clock. Read on their place's clock, three such labels came eight hours

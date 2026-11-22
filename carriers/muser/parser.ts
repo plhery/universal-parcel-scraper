@@ -25,19 +25,30 @@ export function normalizeMuserNumber(raw: string): string {
   return number;
 }
 
-/** A delivering network's scan with its town as the place, in its state when the parcel goes to the United States. */
+/** The wording of a delivering network's scan and the town and ZIP Code that follow it past a run of spaces. */
+export function muserTrailingPlace(text: string): { wording: string; place: string } | null {
+  const split = TRAILING_PLACE.exec(text.trim());
+  return split ? { wording: split[1]!, place: split[2]! } : null;
+}
+
+/** That town as the place, in the ZIP Code's state when the parcel goes to the United States, without the ZIP Code. */
+export function muserTown(place: string, country: string | null): string {
+  const town = country === 'US' ? TOWN_ZIP.exec(place) : null;
+  const state = town ? usZipState(town[2]!) : null;
+  return state ? `${town![1]}, ${state}` : place;
+}
+
+/** A delivering network's scan with its town as the place. */
 function placedScan(row: unknown, country: string | null): unknown {
   if (!isRecord(row) || rtb56Text(row, 'track_location', PROVIDER, 120)) return row;
-  const text = (key: string) => typeof row[key] === 'string' ? row[key].trim() : '';
-  const place = (TRAILING_PLACE.exec(text('track_description_en')) ?? TRAILING_PLACE.exec(text('track_description')))?.[2];
+  const text = (key: string) => typeof row[key] === 'string' ? row[key] : '';
+  const place = (muserTrailingPlace(text('track_description_en')) ?? muserTrailingPlace(text('track_description')))?.place;
   if (!place) return row;
   const wording = (key: string) => {
-    const own = TRAILING_PLACE.exec(text(key));
-    return own?.[2] === place ? own[1] : row[key];
+    const own = muserTrailingPlace(text(key));
+    return own?.place === place ? own.wording : row[key];
   };
-  const town = country === 'US' ? TOWN_ZIP.exec(place) : null;
-  const state = town ? usZipState(town[2]) : null;
-  return { ...row, track_location: state ? `${town![1]}, ${state}` : place,
+  return { ...row, track_location: muserTown(place, country),
     track_description_en: wording('track_description_en'), track_description: wording('track_description') };
 }
 

@@ -1151,6 +1151,31 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual(['2026-03-05T10:15:42.000Z', '2026-03-05T09:10:00.000Z', '2026-03-03T09:31:18.000Z']);
   });
 
+  it('keeps the UTC instants of PostNL\'s acceptance and bagging stamps that keep their seconds', () => {
+    // PostNL's own feed dates these stamps in UTC to the fraction of a second, and ParcelsApp keeps the seconds;
+    // read on Dutch time they came an hour early. The sorting scan, dated to the minute, stays Dutch.
+    const result = parseParcelsAppResponse({ carriers: ['PostNL - Netherlands Post'], states: [
+      { date: '2026-03-06T07:46:00Z', status: 'The item is processed at the PostNL sorting center', carrier: 0, location: 'Netherlands' },
+      { date: '2026-03-05T16:22:49Z', status: 'Item is nested to commercial bag', carrier: 0, location: 'Netherlands' },
+      { date: '2026-03-05T16:22:40Z', status: 'Item is being processed', carrier: 0 },
+      { date: '2026-03-05T07:53:24Z', status: 'Consignment received at the PostNL Acceptance Centre', carrier: 0, location: 'Netherlands' },
+    ] }, number, identity(), 'Europe/Amsterdam');
+    expect(result.events?.map((scan) => scan.time)).toEqual([
+      '2026-03-06T06:46:00.000Z', '2026-03-05T16:22:49.000Z', '2026-03-05T16:22:40.000Z', '2026-03-05T07:53:24.000Z']);
+  });
+
+  it('places Muser\'s copies of the delivering network\'s scans in the US by their town, as Muser\'s tracker does', () => {
+    // ParcelsApp keeps the town and ZIP Code after the wording, at the town's wall clock; read on Muser's Chinese
+    // clock the delivery round went out at night. Muser's own scans in China keep its clock.
+    const result = parseParcelsAppResponse({ carriers: ['Muser'], destinationCode: 'US', states: [
+      { date: '2026-11-17T11:09:00Z', status: 'Out for Delivery     EXAMPLE CITY 10001', carrier: 0 },
+      { date: '2026-11-10T11:52:48Z', status: 'Customs clearance completed', carrier: 0 },
+    ] }, number, identity(), 'Asia/Shanghai');
+    expect(result.events?.map((scan) => [scan.time, scan.description, scan.location, scan.time_zone, scan.time_zone_basis])).toEqual([
+      ['2026-11-17T16:09:00.000Z', 'Out for Delivery', 'EXAMPLE CITY, NY', 'America/New_York', 'place'],
+      ['2026-11-10T03:52:48.000Z', 'Customs clearance completed', undefined, 'Asia/Shanghai', 'carrier']]);
+  });
+
   it('reads PostNL\'s scans in the destination country on that country\'s clock', () => {
     // PostNL's own feed dates its scans in Chile at the same digits on Chile's clock; read on
     // PostNL's Amsterdam clock they came out four hours early. Its own records, with no place, stay Dutch.

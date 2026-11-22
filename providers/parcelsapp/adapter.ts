@@ -35,7 +35,8 @@ import { countryName, militaryPostOffice } from '../../places/trackingLocation.j
 import { countryZones, hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { captureFailure, capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { CAINIAO_CHINA_LEG, CAINIAO_CHINA_ZONE } from '../../carriers/aliexpress/clock.js';
-import { POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
+import { POSTNL_ACCEPTANCE_STAMP, POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
+import { muserTown, muserTrailingPlace } from '../../carriers/muser/parser.js';
 import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { correosDeMexicoForeignClock } from '../../carriers/correos-de-mexico/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
@@ -1494,6 +1495,10 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // So do its customs stamps, whose own feed states a real UTC instant to the fraction of a second (carriers/spring-gds):
   // read on Dutch time, the clearance came an hour before Cainiao's copy of it, stated +01:00.
   if (carrier === 'spring-gds' && POSTNL_CUSTOMS_STAMP.test(status.trim())) return null;
+  // And so do its acceptance and bagging stamps that keep their seconds: read on Dutch time, they came an hour
+  // before PostNL's own UTC stamps of them. Those dated to the minute are on the local clock.
+  if (carrier === 'spring-gds' && POSTNL_ACCEPTANCE_STAMP.test(status.trim())
+    && /T\d{2}:\d{2}:(?!00)\d{2}/.test(typeof state.date === 'string' ? state.date : '')) return null;
   const postnlPlace = carrier === 'spring-gds' ? lastPlace(scanLocation(name, state.location)) : undefined;
   const postnlCountry = countryCode(postnlPlace);
   if (postnlCountry === 'GB') return null;
@@ -1522,6 +1527,7 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   }
   if (carrier === 'swiftx' && SWIFTX_LABEL.test(status.trim())) return SWIFTX_LABEL_CLOCK;
   if (carrier === 'swiftx' && swiftxSiteZone(payload, state, scanLocation(name, state.location))) return undefined;
+  if (carrier === 'muser' && muserTownZone(scanLocation(name, state.location), destination)) return undefined;
   if (ROYAL_MAIL_NAMES.has(key) && royalMailRelay(scanLocation(name, state.location), status, destination)) return royalMailRelayClock(mislabeledWallTime(state.date) ?? '');
   if (key === '1st') {
     const location = scanLocation(name, state.location);
@@ -1608,6 +1614,28 @@ function destinationOffice(name: unknown, location: string, destination: string 
 }
 
 /**
+ * Muser's copy of the delivering network's scan, placed as Muser's own tracker places it (carriers/muser): ParcelsApp
+ * keeps the town and ZIP Code that follow the wording past a run of spaces, which become the place, in the ZIP Code's
+ * state on a parcel to the US.
+ */
+function muserPlacedRow(payload: Record<string, unknown>, raw: Record<string, unknown>, destination: string | null): Record<string, unknown> {
+  const name = stateCarrierName(payload, raw);
+  if (typeof name !== 'string' || carrierIdFromName(name) !== 'muser' || scanLocation(name, raw.location)) return raw;
+  const placed = muserTrailingPlace(typeof raw.status === 'string' ? raw.status : '');
+  return placed ? { ...raw, status: placed.wording, location: muserTown(placed.place, destination) } : raw;
+}
+
+/**
+ * That scan's town clock in the US. Muser's tracker states China's offset on it, at the town's wall clock, and
+ * ParcelsApp has those digits: read on Muser's Chinese clock, a delivery round went out thirteen hours before
+ * Muser's own row of it.
+ */
+function muserTownZone(location: string, destination: string | null): string | null {
+  const town = destination === 'US' ? /^(.+), ([A-Z]{2})$/.exec(location) : null;
+  return town ? splitRegionTownZone('US', town[2]!, town[1]!) ?? usStateTimeZone(town[2]!) : null;
+}
+
+/**
  * The zone a scan's place gives it: null for a wall clock no rule can place (a DHL
  * Express facility the rule cannot place, the US post's copy of a scan in Russia at a
  * place outside Moscow's and Kaliningrad's zones), and undefined for a scan only a guess can place (`guessedZone`).
@@ -1624,6 +1652,8 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   if (russianPostCopy(carrier, status)) return russianPostCopyZone(location, status);
   if (carrier === 'ctt') return cttZone(payload, location, state.date, number, destination);
   if (carrier === 'swiftx') return swiftxSiteZone(payload, state, location) ?? undefined;
+  const muser = carrier === 'muser' ? muserTownZone(location, destination) : null;
+  if (muser) return muser;
   const relayed = carrier === 'dhlink' && swiftxRelayed(number, destination) ? usStateClock(location) : null;
   if (relayed) return relayed;
   if (carrier === 'spring-gds') {
@@ -2477,9 +2507,10 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     || (kinds.includes('region') && ((!kinds.includes('abroad') && !boundElsewhere) || destination === 'US' || destination === 'CA'));
   const entries: (ReturnType<typeof readState> & { raw: Record<string, unknown>; scan: CarrierScan | undefined; wording: string })[] = [];
   const placeholders = placeholderDates(payload.states.flatMap((raw: unknown) => isRecord(raw) && !raw.require_fields && !raw.error ? [raw.date] : []));
-  for (const raw of payload.states) {
-    if (!isRecord(raw)) throw new SchemaError(SOURCE, 'ParcelsApp returned an invalid event');
-    if (raw.require_fields || raw.error) continue;
+  for (const row of payload.states) {
+    if (!isRecord(row)) throw new SchemaError(SOURCE, 'ParcelsApp returned an invalid event');
+    if (row.require_fields || row.error) continue;
+    const raw = muserPlacedRow(payload, row, destination);
     // A state can come without a date (an Asendia Spain leg), or with a
     // placeholder for one. It has no place among the dated scans, so it is
     // counted instead of read as the latest.
