@@ -709,6 +709,36 @@ describe('DHL sessions and browser fallback', () => {
     expect(String(fetcher.mock.calls[0]![0])).toBe(CONFIG);
   });
 
+  it('reads the booked day from the English reply when the German one names the booking without a date', async () => {
+    const reply = (language: string | null) => {
+      const payload = shipment({ zustellung: {} });
+      payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push({ datum: '2026-08-10T05:47:25+02:00', status: language === 'de'
+        ? 'Für diese Sendung wurde ein Liefertag als Empfangsoption vorgemerkt.' : 'The preferred day delivery on 12.08.2026 was ordered by Recipient..' });
+      return payload;
+    };
+    let english = (language: string | null) => Response.json(reply(language));
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => {
+      if (String(url).startsWith(CONFIG)) return config();
+      const language = new URL(String(url)).searchParams.get('language');
+      return language === 'en' ? english(language) : Response.json(reply(language));
+    });
+    const carrier = adapter({ fetcher: fetch, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+    const languages = () => fetcher.mock.calls.filter(([url]) => !String(url).startsWith(CONFIG))
+      .map(([url]) => new URL(String(url)).searchParams.get('language'));
+    const german = await carrier.track({ number: NUMBER, language: 'de' }, { budgetMs: 10_000 });
+    expect(german).toMatchObject({ current_stage: 'in_transit', expected_delivery: '2026-08-12' });
+    expect(german.events).toHaveLength(2);
+    expect(languages()).toEqual(['de', 'en']);
+    // English names the day itself, and a failed English read keeps the German answer without it.
+    fetcher.mockClear();
+    expect(await carrier.track({ number: NUMBER, language: 'fr' }, { budgetMs: 10_000 })).toMatchObject({ expected_delivery: '2026-08-12' });
+    expect(languages()).toEqual(['en']);
+    english = () => new Response('busy', { status: 503 });
+    fetcher.mockClear();
+    expect(await carrier.track({ number: NUMBER, language: 'de' }, { budgetMs: 10_000 })).toMatchObject({ current_stage: 'in_transit', expected_delivery: null });
+    expect(languages()).toEqual(['de', 'en']);
+  });
+
   it('uses the configured private browser for a rejected session', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')
       .mockResolvedValueOnce(new Response('<html>Challenge</html>', { headers: { 'Content-Type': 'text/html' } }))

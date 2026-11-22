@@ -246,6 +246,19 @@ function refusedPostcode(value: unknown): InputRequiredError | null {
   return /\bincorrect\b/i.test(clean(value.error)) ? postcodeMismatch() : null;
 }
 
+/** The newest day DHL's booked receiving option names, which DHL keeps the parcel until. */
+function newestBookedDay(rows: readonly JsonObject[]): string | null {
+  return rows.map((event) => ({ time: date(event.datum), day: bookedDay(clean(event.status)) }))
+    .filter((option) => option.day).sort((left, right) => millis(right.time) - millis(left.time))[0]?.day ?? null;
+}
+
+/** The rows of a shipment's history. */
+function historyRows(shipment: JsonObject): JsonObject[] {
+  const details = isRecord(shipment.sendungsdetails) ? shipment.sendungsdetails : {};
+  const timeline = isRecord(details.sendungsverlauf) ? details.sendungsverlauf : {};
+  return (Array.isArray(timeline.events) ? timeline.events : []).filter(isRecord);
+}
+
 /** Parse only public status fields: never persist recipient, address, signature or service data. */
 export function parseDHLTrackingResponse(payload: unknown, trackingNumber: string): CarrierResult {
   const shipment = matchingShipment(payload, trackingNumber);
@@ -274,9 +287,7 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   // identity; the host still confirms progress through that operator's adapter.
   // The reader sees the notice without the link.
   const deliveryCarrier = carrierIdFromPartnerLinks(rows.map((event) => clean(event.status)), 'dhl');
-  // The newest booked day DHL names, which it keeps the parcel until.
-  const booked = rows.map((event) => ({ time: date(event.datum), day: bookedDay(clean(event.status)) }))
-    .filter((option) => option.day).sort((left, right) => millis(right.time) - millis(left.time))[0]?.day ?? null;
+  const booked = newestBookedDay(rows);
   const scans = rows.flatMap((event) => {
     const description = withoutPartnerLink(clean(event.status));
     if (!description || BOOKED_OPTION.test(description)) return [];
@@ -396,6 +407,13 @@ function over(signal: AbortSignal | undefined, deadline: number): boolean {
   return signal?.aborted === true || deadline - performance.now() < 1;
 }
 
+/** DHL's search for one number, worded in the language asked. */
+function searchUrl(number: string, language: DHLLanguage): URL {
+  const url = new URL(`${ORIGIN}${DATA_PATH}/search`);
+  url.search = new URLSearchParams({ piececode: number, noRedirect: 'true', language }).toString();
+  return url;
+}
+
 class DHLSession {
   readonly jar = new CookieJar();
   readonly fetcher: typeof fetch;
@@ -431,14 +449,30 @@ class DHLSession {
       this.token = config.verfolgenCsrfToken;
       this.wg = typeof config.initialWG === 'number' ? String(config.initialWG) : '0';
     }
-    const url = new URL(`${ORIGIN}${DATA_PATH}/search`);
-    url.search = new URLSearchParams({ piececode: number, noRedirect: 'true', language }).toString();
-    const payload = await this.request(url, limits);
+    const payload = await this.request(searchUrl(number, language), limits);
     const asked = postcode ? recipientPostcodeAsked(payload, number) : null;
-    if (!asked) return parseDHLTrackingResponse(payload, number);
+    if (!asked) return this.withBookedDay(parseDHLTrackingResponse(payload, number), payload, number, limits, language);
     const answer = await this.request(SHIPMENT_URL, limits, { piececode: number, zip: postcode, international: asked.international });
     if (recipientPostcodeAsked(answer, number)) throw postcodeMismatch();
-    return parseDHLTrackingResponse(answer, number);
+    return this.withBookedDay(parseDHLTrackingResponse(answer, number), answer, number, limits, language);
+  }
+
+  /**
+   * German names the recipient's booked delivery day without its date ("Für diese Sendung wurde ein Liefertag als
+   * Empfangsoption vorgemerkt."), English with it. A German reply with that booking and no other expected delivery
+   * reads the day from the English reply while the parcel is on its way; a failed read keeps the German answer.
+   */
+  private async withBookedDay(result: CarrierResult, reply: unknown, number: string, limits: Limits, language: DHLLanguage): Promise<CarrierResult> {
+    if (language !== 'de' || result.expected_delivery || result.current_stage === 'delivered' || result.current_stage === 'returned'
+      || !historyRows(matchingShipment(reply, number)).some((row) => BOOKED_OPTION.test(clean(row.status)) && !bookedDay(clean(row.status)))
+      || limits.deadline - performance.now() < 2_000) return result;
+    try {
+      const day = newestBookedDay(historyRows(matchingShipment(await this.request(searchUrl(number, 'en'), limits), number)));
+      return day ? { ...result, expected_delivery: day } : result;
+    } catch (error) {
+      if (limits.signal?.aborted) throw error;
+      return result;
+    }
   }
 
   /** A read, or with a body the JSON POST DHL's page sends, which carries no `verfolgen-wg`. */
