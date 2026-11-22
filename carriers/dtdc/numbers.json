@@ -608,8 +608,27 @@
       "note": "Waybill from a review of DTDC. DTDC's tracking page no longer finds it."
     },
     {
+      "number": "W15757019",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/882404462/DTDC",
+        "date": "2025-06-30",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A public printout of DTDC's tracking page shows this waybill booked in Jaipur for Vijayawada and set for return; DTDC's tracker still returns its history."
+    },
+    {
       "number": "W17514447",
-      "role": "quarantined",
+      "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
         "url": "https://web.archive.org/web/20260420064654/https://www.dtdc.com/track-your-shipment/?awb=W17514447",
@@ -617,15 +636,14 @@
         "dateKind": "capture",
         "access": "full_page"
       },
-      "quarantine": true,
       "context": {
-        "assessment": "review"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "Archived DTDC tracking link with a W reference of eight digits. A tracking link holds whatever was entered, so it does not show that DTDC issued the number, and no DTDC reply shows a W waybill of this shape, so detection does not know it."
+      "note": "An archived DTDC tracking link with a W waybill of eight digits; DTDC's tracker shows it delivered in April 2026."
     },
     {
       "number": "Z73449105",
