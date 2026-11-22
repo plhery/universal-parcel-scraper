@@ -1,0 +1,45 @@
+{
+  "carrier": "jingguang-logistics",
+  "entries": [
+    {
+      "code": "已承运",
+      "wording": "已承运【…】",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The origin branch took the freight in."
+    },
+    {
+      "code": "已发往",
+      "wording": "已发往【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sent on to an operations centre or branch."
+    },
+    {
+      "code": "已到达",
+      "wording": "已到达【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached a hub or the delivering branch."
+    },
+    {
+      "code": "已派件",
+      "wording": "【…】已派件,如有疑问请联系终端网点，电话：…",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Out for delivery from the delivering branch; the adapter leaves the branch's phone numbers out."
+    },
+    {
+      "code": "已签收",
+      "wording": "已签收【…】",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for; the bracket names the signatory, which the adapter leaves out."
+    }
+  ]
+}

@@ -476,6 +476,7 @@ import { statusMap as jetizz } from '../../carriers/jetizz/status.js';
 import { statusMap as jhgj } from '../../carriers/jhgj/status.js';
 import { statusMap as jiayang } from '../../carriers/jiayang/status.js';
 import { statusMap as jifan } from '../../carriers/jifan/status.js';
+import { statusMap as jingguangLogistics } from '../../carriers/jingguang-logistics/status.js';
 import { statusMap as jordanPost } from '../../carriers/jordan-post/status.js';
 import { statusMap as jitsu } from '../../carriers/jitsu/status.js';
 import { statusMap as jne } from '../../carriers/jne/status.js';
@@ -1133,7 +1134,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
   'intex-paketdienst': intexPaketdienst, 'israel-post': israelPost, 'j-and-t': jAndT, 'j-and-t-au': jAndTAu, 'j-and-t-de': jAndTDe, 'j-and-t-uk': jAndTUk, 'j-and-t-cargo': jntCargo,
   'j-and-t-middle-east': jAndTMiddleEast, 'j-and-t-mx': jAndTMx, 'j-and-t-cn': jAndTCn, jadlog, janio, 'japan-post': japanPost, jcex, jch, 'jd-logistics': jdLogistics, jeebly, 'jersey-post': jerseyPost, 'jet-logistic': jetLogistic, 'jetline-couriers': jetlineCouriers, jetizz,
-  jhgj, jiayang, jifan, jitsu, jne, 'jordan-post': jordanPost, jrt, 'js-express': jsExpress, jumppoint, 'jumppoint-international': jumppointInternational, 'flash-courier': flashCourier, kazpost, 'kec-ecommerce': kecEcommerce, kex, 'kex-express-hk': kexExpressHk,
+  jhgj, jiayang, jifan, 'jingguang-logistics': jingguangLogistics, jitsu, jne, 'jordan-post': jordanPost, jrt, 'js-express': jsExpress, jumppoint, 'jumppoint-international': jumppointInternational, 'flash-courier': flashCourier, kazpost, 'kec-ecommerce': kecEcommerce, kex, 'kex-express-hk': kexExpressHk,
   'kit-tk': kitTk, 'komon-express': komonExpress, 'korea-post': koreaPost, 'kolay-gelsin': kolayGelsin, 'kuayuan-express': kuayuanExpress, 'kuehne-nagel': kuehneNagel, 'kun-express': kunExpress, kunyoung, kyoungdong, 'kyrgyz-post': kyrgyzPost, 'l-post': lPost, 'la-poste': laPoste,
   'la-poste-burkina-faso': laPosteBurkinaFaso, 'la-poste-senegal': laPosteSenegal, 'laar-courier': laarCourier, labaih,
   'landmark-global': landmarkGlobal, 'last-one-mile-coop': lastOneMileCoop, 'latvijas-pasts': latvijasPasts, 'lbc-express': lbcExpress, 'lex-id': lexId, 'lex-my': lexMy, 'leopards-courier': leopardsCourier, liccardi, 'linear-logistics': linearLogistics,

@@ -1,0 +1,55 @@
+{
+  "carrier": "jingguang-logistics",
+  "records": [
+    {
+      "number": "19811573",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/jgwl.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Jingguang page lists. Jingguang's search answers it with freight taken in at its Chenghai branch in Shantou, through its South China operations centre and Dongguan hub, and signed for at its Shajing branch in Shenzhen."
+    },
+    {
+      "number": "19810291",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/jgwl.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Jingguang page lists. Jingguang's search answers it with freight through its Zhongshan and Dongguan hubs to a signature."
+    }
+  ]
+}

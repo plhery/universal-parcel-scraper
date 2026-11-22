@@ -36853,6 +36853,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "jingguang-logistics": {
+    "displayName": "Jingguang Logistics",
+    "color": "#3b1d86",
+    "aliases": [
+      "JGWL",
+      "景光物流",
+      "景光快运"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jingguang-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jgwl.cn/",
+    "trackingSearchUrl": "https://www.jgwl.cn/service/querybill",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jitsu": {
     "displayName": "Jitsu",
     "color": "#4dc480",
@@ -71761,6 +71784,7 @@ export const CARRIER_IDS = [
   "jiehang",
   "jifan",
   "jikuaida",
+  "jingguang-logistics",
   "jitsu",
   "jiufang",
   "jlog",
@@ -73776,6 +73800,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jiehang": [],
   "jifan": ["jifan-1"],
   "jikuaida": [],
+  "jingguang-logistics": [],
   "jitsu": [],
   "jiufang": [],
   "jlog": [],

@@ -36849,6 +36849,29 @@
     ],
     "detectionRules": []
   },
+  "jingguang-logistics": {
+    "displayName": "Jingguang Logistics",
+    "color": "#3b1d86",
+    "aliases": [
+      "JGWL",
+      "景光物流",
+      "景光快运"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jingguang-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jgwl.cn/",
+    "trackingSearchUrl": "https://www.jgwl.cn/service/querybill",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jitsu": {
     "displayName": "Jitsu",
     "color": "#4dc480",
