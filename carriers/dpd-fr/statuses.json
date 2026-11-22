@@ -442,6 +442,14 @@
       "note": "\"Votre livraison n'a pas pu être réalisée ce jour, elle est reprogrammée au prochain jour ouvré\", hours after the round's scan: the round did not deliver. The result status becomes exception."
     },
     {
+      "wording": "pas pu livrer",
+      "language": "fr",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "\"Nous n'avons pas pu livrer votre colis\", just before \"Votre livraison n'a pas pu être réalisée ce jour…\": the round did not deliver. Substring match on the accent-free wording; the result status becomes exception."
+    },
+    {
       "wording": "de la nécessité de reprogrammer sa livraison",
       "language": "fr",
       "stage": null,

@@ -108,6 +108,8 @@ export function classifyStatus(description: string): ClassifiedStatus {
     // "Votre livraison n'a pas pu être réalisée ce jour, elle est reprogrammée au prochain jour ouvré", hours after
     // the round's scan: the round did not deliver.
     'n a pas pu etre realisee',
+    // "Nous n'avons pas pu livrer votre colis", just before that row: the same round that did not deliver.
+    'pas pu livrer',
     // "Le destinataire était absent lors du passage de notre livreur, nous avons déposé votre colis en point Pickup":
     // the round did not deliver, and the Pickup point's own row follows.
     'etait absent lors du passage',

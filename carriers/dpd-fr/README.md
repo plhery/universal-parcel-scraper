@@ -65,9 +65,9 @@ non-2xx statuses are indeterminate.
 - Rule order matters: returns, then incidents, then delivery. "votre colis sera
   retourné à l'expéditeur" would otherwise match a delivery rule, and "nous
   avons reçu une réclamation" would look like movement.
-- "retard" maps to `failed_attempt`, as does a round that did not deliver ("Votre livraison n'a
-  pas pu être réalisée ce jour, elle est reprogrammée au prochain jour ouvré"); "réclamation" and
-  "enquête est ouverte" to `exception`.
+- "retard" maps to `failed_attempt`, as does a round that did not deliver ("Nous n'avons pas pu
+  livrer votre colis", "Votre livraison n'a pas pu être réalisée ce jour, elle est reprogrammée au
+  prochain jour ouvré"); "réclamation" and "enquête est ouverte" to `exception`.
 - The notice that the recipient was told of the acceptance ("Le destinataire est informé par SMS
   de la prise en charge…") can come hours after a sort centre's scan, so it keeps the stage of the
   scan before it (`stage_source: 'none'`) and gives no result status; the acceptance's own row is

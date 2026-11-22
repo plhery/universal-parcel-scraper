@@ -508,6 +508,13 @@ describe('DPD France status vocabulary', () => {
       .toEqual({ status: 'out_for_delivery', stage: 'ready_for_pickup' });
   });
 
+  it('reads a round that could not deliver as a failed attempt', () => {
+    expect(classifyStatus("Nous n'avons pas pu livrer votre colis"))
+      .toEqual({ status: 'exception', stage: 'failed_attempt' });
+    expect(classifyStatus("Votre livraison n'a pas pu être réalisée ce jour, elle est reprogrammée au prochain jour ouvré"))
+      .toEqual({ status: 'exception', stage: 'failed_attempt' });
+  });
+
   it('keeps the same-day delivery notices on the delivery round and gives acceptance notices no stage', () => {
     for (const channel of ['SMS', 'e-mail']) {
       expect(classifyStatus(`Le destinataire est informé par ${channel} de la livraison de son colis ce jour`))
