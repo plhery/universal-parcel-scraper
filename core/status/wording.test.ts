@@ -777,9 +777,10 @@ describe('classifyWording', () => {
       ['Received at warehouse', 'in_transit'], ['Received at the warehouse', 'in_transit'],
       ['Received at warehouse of the sender', 'registered'],
       ['Delivered to the warehouse of the recipient', 'delivered'], ['Delivered to recipient', 'delivered'], ['Delivered to the mailbox', 'delivered'], ['Delivered', 'delivered'],
-      // A forwarder's warehouse steps and its collection from the destination airport.
+      // A forwarder's warehouse steps, its collection from the destination airport and the pallets broken down after it.
       ['Weighed at Warehouse', 'in_transit'], ['Consolidation Completed', 'in_transit'],
       ['Picked up at destination airport', 'in_transit'],
+      ['Pallet deconsolidation in progress', 'in_transit'], ['Flight arrived, pallet breakdown in progress', 'in_transit'],
       // UniUni's local warehouse and driver, as Ship24 relays them before the round goes out.
       ['Parcel sent to local UniUni warehouse for delivery', 'in_transit'], ['Your parcel has been assigned to a delivery driver', 'in_transit'],
       // The sender's hand-in at a shop, as ParcelsApp relays a Nordic carrier's.

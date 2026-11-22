@@ -882,6 +882,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // A forwarder or its last-mile partner collecting a flight's parcels from the destination airport: "Picked up at
   // destination airport", as ParcelsApp relays Juxi Express's line after the flight landed.
   if (/^picked up (?:at|from) (?:the )?destination airport$/.test(text)) return 'in_transit';
+  // The pallets broken down after that pickup, before clearance, as DHLink's map reads its own and ParcelsApp relays them
+  // for a Juxi Express parcel on that US line: "Pallet deconsolidation in progress".
+  if (/^(?:flight arrived, )?pallet (?:breakdown|deconsolidation) in progress\.?$/.test(text)) return 'in_transit';
   // A forwarder's warehouse weighing and consolidating a parcel it holds, or giving it another last-mile carrier for
   // its weight, as ParcelsApp relays it: "Weighed at Warehouse", "Consolidation Completed".
   if (/^weighed at (?:the )?warehouse\.?$|^consolidation completed\.?$|^the warehouse changed the last mile vendor\b/.test(text)) return 'in_transit';
