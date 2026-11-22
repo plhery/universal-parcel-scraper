@@ -1,26 +1,36 @@
 # Unipost-Express
 
-Unipost-Express parcels use enabled universal providers. There is no dedicated adapter.
+Tracks Unipost-Express, Unipost-Expres SRL of Chișinău, a Moldovan private express postal
+operator that carries documents and parcels in Chișinău and across Moldova and sends international
+ones through partner express services, through the tracking form on its site.
 
-Unipost-Express, Unipost-Expres SRL of Chișinău, is a Moldovan private express postal operator: a
-courier for documents and parcels in Chișinău and across Moldova, which sends international
-documents and parcels through partner express services.
+## How it works
 
-## Numbers
+`direct` posts the waybill to `https://www.unipost.md/ru/track/{number}` as the home page's form
+does, with no session, captcha or account. The reply names the waybill after the form's fixed
+`373` label, which must be the whole number asked, then lists the history newest first; a notice
+that the waybill does not exist, naming the number, is one Unipost does not know. A request that
+fails to reach the server gets one `retry` in the rest of the budget.
 
-Its tracking form asks for the HAWB (waybill) number after a fixed `373` label, in up to 15
-characters. No public page shows a whole number, so there is no rule.
+Rows give an English status, a place written as a three-letter city code and a country (`LED/RU`),
+and a clock with no zone, kept as the row's wall clock. Every row shows the destination's code,
+the first scans included, so only the delivery takes it as its place, written `LED, RU` so the
+code can be placed. A row at midnight keeps its day alone: the page writes that clock for rows
+it dates by their day. The recipient's line gives the destination's country, and the page the
+weight. The sender's and recipient's names and the rows' comments, which name who signed, are
+never read.
 
-## Why there is no adapter
+## Limitations
 
-The home page's form posts the number back to the page, which shows the waybill's delivery status.
-With no public number to check its replies against, there is no adapter.
+The waybill is the digits after the form's `373` label; `373-` before them is dropped. Seven
+digits, the shape public waybills take, fit other carriers' numbers, so the carrier is never
+detected and needs explicit selection. Rows before the delivery have no place of their own.
 
 ## Links
 
-Its tracker takes numbers only through a form that posts them, so no address opens one shipment.
+The form posts the waybill, and a plain GET of the page it posts to is the site's 404, so no
+address opens one shipment.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`UNIPOST_EXPRESS_TRACKING_NUMBER=… UNIPOST_EXPRESS_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/unipost-express`

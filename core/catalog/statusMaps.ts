@@ -828,6 +828,7 @@ import { statusMap as ukpWorldwide } from '../../carriers/ukp-worldwide/status.j
 import { statusMap as ukrposhta } from '../../carriers/ukrposhta/status.js';
 import { statusMap as unitedDeliveryService } from '../../carriers/united-delivery-service/status.js';
 import { statusMap as uniuni } from '../../carriers/uniuni/status.js';
+import { statusMap as unipostExpress } from '../../carriers/unipost-express/status.js';
 import { statusMap as upaya } from '../../carriers/upaya/status.js';
 import { statusMap as ups } from '../../carriers/ups/status.js';
 import { statusMap as urbano } from '../../carriers/urbano/status.js';
@@ -1180,7 +1181,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'thailand-post': thailandPost, 'the-courier-guy': theCourierGuy, thhy, tiki, 'timely-titan': timelyTitan, tipsa, 'tirupati-courier': tirupatiCourier, 'tmm-express': tmmExpress, tnt, 'tnt-au': tntAu, 'tnt-it': tntIt, 'today-kr': todayKr, tonami, toptrans, topyou, 'tp-logistics-th': tpLogisticsTh, torrestir, 'total-express': totalExpress, toyou,
   'trackings-ge': trackingsGe, trackon, 'tracx-logis': tracxLogis, transaher, transcorp, transmission, 'trendyol-express': trendyolExpress, tsjy, 'tst-cf-express': tstCfExpress, tufesa, 'tws-express': twsExpress,
   'ubi-smart-parcel': ubiSmartParcel, 'ukp-worldwide': ukpWorldwide, ukrposhta,
-  'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,
+  'united-delivery-service': unitedDeliveryService, uniuni, 'unipost-express': unipostExpress, upaya, ups, urbano, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
   yalidine, yamato, yanwen, 'yaoqi-logistics': yaoqiLogistics, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, 'yuxin-logistics': yuxinLogistics, ywbz, ywe, yypost, zto, 'zto-freight': ztoFreight, 'zto-international': ztoInternational,

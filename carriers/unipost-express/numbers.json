@@ -1,5 +1,93 @@
 {
   "carrier": "unipost-express",
-  "gap": "No public page shows a whole Unipost-Express HAWB number.",
-  "records": []
+  "records": [
+    {
+      "number": "1001419",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170808160648/http://www.unipost.md:80/en/track/1001419",
+        "date": "2017-08-08",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "A tracking link on Unipost's site that the Internet Archive indexed; the capture is the site's error page. Unipost's tracker answers the waybill with a parcel from Chișinău delivered in St Petersburg."
+    },
+    {
+      "number": "1001228",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170307223336/http://unipost.md:80/en/track/1001228",
+        "date": "2017-03-07",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "A tracking link on Unipost's site that the Internet Archive indexed; the capture is the site's error page. Unipost's tracker answers the waybill with documents from Chișinău delivered in St Petersburg."
+    },
+    {
+      "number": "1000814",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20160529030858/http://unipost.md:80/en/track/1000814",
+        "date": "2016-05-29",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "A tracking link on Unipost's site that the Internet Archive indexed; the capture is the site's error page. Unipost's tracker answers the waybill with documents from Chișinău delivered in Dubai."
+    },
+    {
+      "number": "1001427",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170825051342/http://www.unipost.md:80/ro/track/1001427",
+        "date": "2017-08-25",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "A tracking link on Unipost's site that the Internet Archive indexed; the capture is the site's error page. Unipost's tracker answers the waybill with documents within Chișinău, manifested and never scanned as delivered."
+    }
+  ]
 }

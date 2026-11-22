@@ -17,18 +17,60 @@
   "timezone": "Europe/Chisinau",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "unipost-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "weight",
+    "destination_country"
+  ],
   "portal": {
     "searchUrl": "https://www.unipost.md/",
     "helpUrl": "https://www.unipost.md/ru/contacts",
     "canaryUrl": "https://www.unipost.md/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "destination_country",
+      "origin",
+      "parcel_count",
+      "item_category",
+      "sender_name",
+      "recipient_name",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin",
+      "parcel_count",
+      "item_category",
+      "sender_name",
+      "recipient_name",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "provider_code",
+      "service_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "delivery_tracking_number"
+    ]
   },
   "links": [],
   "detection": []

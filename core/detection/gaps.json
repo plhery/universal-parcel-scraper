@@ -6366,5 +6366,10 @@
     "carrier": "feibao-logistics",
     "kind": "by_design",
     "reason": "Feibao waybills, F and eleven digits or twelve digits, share their shapes with other carriers' numbers; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "unipost-express",
+    "kind": "by_design",
+    "reason": "Unipost-Express waybills are bare digits, a shape other carriers share; use explicit selection or a named handoff."
   }
 ]

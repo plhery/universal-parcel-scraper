@@ -1,4 +1,25 @@
 {
   "carrier": "unipost-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Shipment received in destination country and scanned",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The first row of each history, on the destination's code, before the manifest and the delivery."
+    },
+    {
+      "wording": "Shipment manifested",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The row's comment names who signed, which the adapter does not read."
+    }
+  ]
 }
