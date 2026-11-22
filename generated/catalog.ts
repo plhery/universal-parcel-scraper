@@ -17685,7 +17685,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Panama",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "correos-panama",
+      "recognitionRank": 641,
+      "localClocks": true
     },
     "canaryUrl": "https://operaciones.correospanama.gob.pa/IPSWebTracking/",
     "trackingUrlTemplate": "https://operaciones.correospanama.gob.pa/IPSWebTracking/IPSWeb_item_events.aspx?itemid={trackingNumber}",
@@ -17702,7 +17704,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^[A-Z]{2}\\d{9}PA$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
+      }
+    ]
   },
   "cosco-shipping-lines": {
     "displayName": "COSCO SHIPPING Lines",
@@ -73593,7 +73602,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "correos-ecuador": [],
   "correos-el-salvador": [],
   "correos-nicaragua": [],
-  "correos-panama": [],
+  "correos-panama": ["correos-panama-s10"],
   "cosco-shipping-lines": [],
   "coship": [],
   "costco-logistics": ["costco-logistics-1"],

@@ -1,4 +1,18 @@
 {
   "carrier": "correos-panama",
-  "entries": []
+  "entries": [
+    {"wording": "Recibe elemento de cliente (Otb)", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "A Panamanian office accepted the item from the sender."},
+    {"wording": "Send item to domestic location (Otb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Sent on inside Panama, toward the office of exchange."},
+    {"wording": "recibir el artículo en la oficina de cambio (Otb)", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Panama's office of exchange received the item."},
+    {"wording": "Enviado a Destino (Otb)", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Dispatched abroad from Panama's office of exchange."},
+    {"wording": "Receive item at office of exchange (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination's office of exchange received the item."},
+    {"wording": "Send item to customs (Inb)", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Presented to the destination's customs."},
+    {"wording": "Return item from customs (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Customs handed the item back."},
+    {"wording": "Send item to domestic location (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Sent on inside the destination country."},
+    {"wording": "Receive item at sorting centre (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A sorting centre in the destination country received it."},
+    {"wording": "Send item out of sorting centre (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "It left that sorting centre."},
+    {"wording": "Receive item at delivery office (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivery office received it."},
+    {"wording": "Send item out for physical delivery (Inb)", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "Out with the carrier."},
+    {"wording": "Deliver item (Inb)", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Delivered; the extra information names who signed, which the adapter drops."}
+  ]
 }

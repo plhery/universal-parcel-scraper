@@ -1,5 +1,24 @@
 {
   "carrier": "correos-panama",
-  "gap": "No public page shows a Correos Panamá number.",
-  "records": []
+  "records": [
+    {
+      "number": "ED100265337PA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.justanswer.es/informatica-es/vhy2s-est-ah-le-est-n-llegando-mis-mensajes.html",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A customer in a JustAnswer chat gives it as the number of a parcel sent to Canada; the expert calls it an EMS item of Correos de Panamá. Correos Panamá's tracker shows it accepted in Los Pueblos, sent abroad and delivered in Canada."
+    }
+  ]
 }

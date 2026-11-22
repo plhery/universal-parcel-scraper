@@ -193,6 +193,7 @@ import { adapter as correosCuba } from '../carriers/correos-cuba/adapter.js';
 import { adapter as correosDeMexico } from '../carriers/correos-de-mexico/adapter.js';
 import { adapter as correosElSalvador } from '../carriers/correos-el-salvador/adapter.js';
 import { adapter as correosExpress } from '../carriers/correos-express/adapter.js';
+import { adapter as correosPanama } from '../carriers/correos-panama/adapter.js';
 import { adapter as correosSpain } from '../carriers/correos-spain/adapter.js';
 import { adapter as coscoShippingLines } from '../carriers/cosco-shipping-lines/adapter.js';
 import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter.js';
@@ -1273,6 +1274,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-de-mexico": correosDeMexico,
     "correos-el-salvador": correosElSalvador,
     "correos-express": correosExpress,
+    "correos-panama": correosPanama,
     "correos-spain": correosSpain,
     "cosco-shipping-lines": coscoShippingLines,
     "costco-logistics": costcoLogistics,
@@ -2533,7 +2535,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-el-salvador": "correos-el-salvador",
     "correos-express": "correos-express",
     "correos-nicaragua": "universal",
-    "correos-panama": "universal",
+    "correos-panama": "correos-panama",
     "correos-spain": "correos-spain",
     "cosco-shipping-lines": "cosco-shipping-lines",
     "coship": "universal",
