@@ -28620,6 +28620,37 @@
     ],
     "detectionRules": []
   },
+  "fsqh": {
+    "displayName": "Foshan Qianhe",
+    "color": "#083870",
+    "aliases": [
+      "FSQH",
+      "Qianhe",
+      "乾和",
+      "佛山乾和",
+      "佛山乾和国际供应链有限公司",
+      "Foshan Qianhe International Supply Chain Co., Ltd."
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fsqh",
+      "recognitionRank": 31
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^QH\\d{12}FS$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "ftd-nz": {
     "displayName": "FTD New Zealand",
     "color": "#00a54f",

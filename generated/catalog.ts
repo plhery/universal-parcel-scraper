@@ -28624,6 +28624,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "fsqh": {
+    "displayName": "Foshan Qianhe",
+    "color": "#083870",
+    "aliases": [
+      "FSQH",
+      "Qianhe",
+      "乾和",
+      "佛山乾和",
+      "佛山乾和国际供应链有限公司",
+      "Foshan Qianhe International Supply Chain Co., Ltd."
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fsqh",
+      "recognitionRank": 31
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^QH\\d{12}FS$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
+  },
   "ftd-nz": {
     "displayName": "FTD New Zealand",
     "color": "#00a54f",
@@ -71802,6 +71833,7 @@ export const CARRIER_IDS = [
   "freja",
   "frontdoor-collective",
   "frontier-ca",
+  "fsqh",
   "ftd-nz",
   "fudu-logistics",
   "fukuyama",
@@ -73828,6 +73860,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "freja": [],
   "frontdoor-collective": [],
   "frontier-ca": [],
+  "fsqh": ["fsqh-1"],
   "ftd-nz": [],
   "fudu-logistics": [],
   "fukuyama": [],

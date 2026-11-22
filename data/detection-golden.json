@@ -108279,13 +108279,34 @@
     "candidates": []
   },
   {
+    "input": "QH000000271828FS",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fsqh",
+      "dhlink"
+    ],
+    "preferred": [
+      "fsqh"
+    ],
+    "asked": [
+      "fsqh",
+      "dhlink"
+    ]
+  },
+  {
     "input": "QH999999999980FS",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "fsqh",
       "dhlink"
     ],
+    "preferred": [
+      "fsqh"
+    ],
     "asked": [
+      "fsqh",
       "dhlink"
     ]
   },

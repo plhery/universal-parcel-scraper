@@ -204,6 +204,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "forza-delivery": 633,
   "four-px": 570,
   "foxpost": 200,
+  "fsqh": 31,
   "fukuyama": 939,
   "gaash": 769,
   "gati": 43,

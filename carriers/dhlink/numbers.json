@@ -116,6 +116,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "fsqh",
           "dhlink"
         ]
       },

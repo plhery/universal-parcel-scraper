@@ -8920,6 +8920,14 @@
     "reason": "JCHSG and thirteen digits are JCH's references: JCH's own tracker holds the parcels on its own lines, and JS Express's lookup answers those JCH books with it, on the waybill it gives them. Both rules are low, and the carrier that knows the number decides."
   },
   {
+    "shape": "QH, twelve digits and FS",
+    "carriers": [
+      "fsqh",
+      "dhlink"
+    ],
+    "reason": "QH, twelve digits and FS are Foshan Qianhe's numbers: its own tracker holds every parcel, and DHLink's lookup finds those on DHLink's lines, where the number is the parcel's tracking number. Both rules are low; Foshan Qianhe's is preferred, and the carrier that knows the number decides."
+  },
+  {
     "shape": "P and eleven digits",
     "carriers": [
       "5post",

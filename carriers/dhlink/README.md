@@ -18,8 +18,9 @@ page makes.
   finds it only when it is also the tracking number, as on DHLink's own line; the last leg's
   number finds nothing unless the parcel carries it as its tracking number, as parcels under
   SwiftX's own number do. A line provider's number can be the tracking number: `XZG`, nine
-  digits and `WL` is one; `YLUS` and ten digits, `QH`, twelve digits and `FS`, and `YF`, ten
-  digits and `CN`, on US lines GOFO delivers, `EYT`, ten digits and `HZ`, and KTD's `KTDWE`
+  digits and `WL` is one; `YLUS` and ten digits, `QH`, twelve digits and `FS` (Foshan Qianhe's,
+  which [its own tracker](../fsqh/README.md) knows first), and `YF`, ten digits and `CN`, on US
+  lines GOFO delivers, `EYT`, ten digits and `HZ`, and KTD's `KTDWE`
   and ten digits, on lines SwiftX delivers, and `YHKJ` and ten digits, on a line to Britain,
   are others. Boyuan's `BY`, fourteen digits and `CN`, which ParcelsApp attributes to DHLink
   on a US line, and Tuodatong's `TDT`, ten digits and `CN`, which it attributes to DHLink on an

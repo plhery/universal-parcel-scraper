@@ -263,9 +263,9 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
-  it('asks DHLink about QH tracking numbers on its GOFO line without naming it from the shape', () => {
-    expect(detectCarrierMatch('QH999999999980FS')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
-    expect(recognitionAskedCarriers('QH999999999980FS')).toEqual(['dhlink']);
+  it('asks Foshan Qianhe, then DHLink, about QH tracking numbers on DHLink\'s GOFO line without naming either from the shape', () => {
+    expect(detectCarrierMatch('QH999999999980FS')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['fsqh', 'dhlink'] });
+    expect(recognitionAskedCarriers('QH999999999980FS')).toEqual(['fsqh', 'dhlink']);
     for (const number of ['QH00000000001FS', 'QH0000000000001FS', 'QH000000000001FX', 'QX000000000001FS', 'QH000000000001']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
     }

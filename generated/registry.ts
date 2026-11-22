@@ -365,6 +365,7 @@ import { adapter as franchExpress } from '../carriers/franch-express/adapter.js'
 import { adapter as freightClub } from '../carriers/freight-club/adapter.js';
 import { adapter as freightwaysGlobal } from '../carriers/freightways-global/adapter.js';
 import { adapter as frontierCa } from '../carriers/frontier-ca/adapter.js';
+import { adapter as fsqh } from '../carriers/fsqh/adapter.js';
 import { adapter as ftdNz } from '../carriers/ftd-nz/adapter.js';
 import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
@@ -1442,6 +1443,7 @@ export const REGISTRY: RegistryDefinition = {
     "freight-club": freightClub,
     "freightways-global": freightwaysGlobal,
     "frontier-ca": frontierCa,
+    "fsqh": fsqh,
     "ftd-nz": ftdNz,
     "fukuyama": fukuyama,
     "fxdc-post": fxdcPost,
@@ -2853,6 +2855,7 @@ export const REGISTRY: RegistryDefinition = {
     "freja": "universal",
     "frontdoor-collective": "universal",
     "frontier-ca": "frontier-ca",
+    "fsqh": "fsqh",
     "ftd-nz": "ftd-nz",
     "fudu-logistics": "universal",
     "fukuyama": "fukuyama",
