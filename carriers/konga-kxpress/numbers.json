@@ -1,0 +1,28 @@
+{
+  "carrier": "konga-kxpress",
+  "gap": "Konga's shipment numbers, F and twelve digits, are a generic shape that La Poste's rule also takes, so there is no rule.",
+  "records": [
+    {
+      "number": "F568440379001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.complaintsboard.com/konga-b143448",
+        "date": "2023-06-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "A Konga customer's complaint about the wrong tea, quoting the shipment's number. Konga Logistics's tracker shows it collected from a Konga store in Port Harcourt four days before the complaint."
+    }
+  ]
+}

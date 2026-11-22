@@ -1,0 +1,12 @@
+{
+  "carrier": "konga-kxpress",
+  "entries": [
+    {"wording": "Shipment Created Kxpress Surulere, Surulere", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipment is booked at the station named after it, a facility and its town. Any station."},
+    {"wording": "Shipment received at Kxpress Surulere, Surulere", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The station takes the parcel in. Any station."},
+    {"wording": "Order has left Kxpress Surulere, Surulere to KXPRESS Central Distribution Center, Ogba, Ogba", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A move from one facility to the next; the first becomes the location. Any two facilities."},
+    {"wording": "Order has arrived at KXPRESS Central Distribution Center, Ogba, Ogba", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Arrival at a station, distribution centre or store, which becomes the location. Any facility."},
+    {"wording": "Your order is ready for collection", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "Written once the parcel has arrived at the Konga store the recipient collects it from."},
+    {"wording": "Delivered to Customer", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The page's status tag over the history; the adapter reads it only when no row has a stage."}
+  ]
+}

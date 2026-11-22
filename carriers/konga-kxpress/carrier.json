@@ -1,0 +1,69 @@
+{
+  "id": "konga-kxpress",
+  "displayName": "Konga Logistics",
+  "aliases": [
+    "KXpress",
+    "KXpress Logistics"
+  ],
+  "region": {
+    "countries": [
+      "NG"
+    ]
+  },
+  "brand": {
+    "color": "#ed017f"
+  },
+  "selectable": true,
+  "timezone": "Africa/Lagos",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "konga-kxpress",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://logistics.konga.com/track?order_number={trackingNumber}",
+    "searchUrl": "https://logistics.konga.com/",
+    "canaryUrl": "https://logistics.konga.com/",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "provider_code",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "logistics.konga.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "order_number"
+      ]
+    }
+  ],
+  "detection": []
+}

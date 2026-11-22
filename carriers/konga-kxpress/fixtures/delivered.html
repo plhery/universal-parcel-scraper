@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>KExpress</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/track.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/footer.css" media="all" />        
+    <link rel="stylesheet" type="text/css" href="css/index.css" media="all" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Heebo" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.ico" type="image/png" sizes="32x32">
+
+
+    <script src="lib/moment.min.js"></script>
+</header>
+<body>
+    <div class="contain">
+        <div class="container-fluid nav-index">
+            <div class="nav-top">
+  <div class="nav-head nav-header">
+    <div class="nav-img">
+      <a href="/"><img class="kexpress-img"
+          src="https://www-konga-com-res.cloudinary.com/image/upload/q_100/v1670848335/Konga%20Logistics/Rectangle_1.webp"
+          alt="img-logo" /></a>
+    </div>
+    <div class="nav-links">
+      <a class="nav-tag" id="nav-link-stn">
+        <a class="nav-tag" href="/" id="return-home">Home</a>
+        <a class="nav-tag" id="services-link" href="#">Our Services</a>
+        <a class="dropdown-content">
+          <li class="dropdown-link" id="dropdown-link-one">Nationwide Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-two">Payment on Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-three">Reverse Logistics</li>
+          <li class="dropdown-link" id="dropdown-link-four">Warehousing Support</li>
+        </a>
+      </a>
+      <a class="nav-tag" href="/api-integration">API Integration</a>
+      <a class="nav-tag" id="location-link" href="/location">Our Locations</a>
+      <a class="nav-tag" id="partner-link" href="#kb-section">Become a Partner</a>
+    </div>
+    <div class="auth-links">
+      <button class="btn sign-up-form">
+        <a class="login-link" href="https://my.kos.ng/login" class="sign-in">Login</a>
+      </button>
+      <button class="btn sign-up-form sidebar-collapse top-sidebar" id="sign-up-btn-id">
+        Sign Up
+      </button>
+    </div>
+    <div class="mobile-header">
+      <img src="img/hamburger.svg" alt="icon" class="show-mobile-nav" />
+    </div>
+  </div>
+  <div class="mobile-links">
+    <div class="mobile-head">
+      <div class="nav-img">
+        <a href="/"><img class="kexpress-img kexpress-nav-img"
+            src="https://track.konga.com/img/group-2@2x.png"
+            alt="img-logo" /></a>
+      </div>
+      <button class="mobile-nav-dismiss btn">x</button>
+    </div>
+    <div class="mobile-links-inner">
+      <div class="mobile-link" id="mobile-link-special">
+        <a id="deliv-sec" href="#">Our Services</a>
+        <a class="dropdown-content">
+          <li class="dropdown-link" id="dropdown-link-one-mobile">Nation Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-two-mobile">Payment on Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-three-mobile">Reverse Logistics</li>
+          <li class="dropdown-link" id="dropdown-link-four-mobile">Warehousing Support</li>
+        </a>
+      </div>
+      <div class="mobile-link" id="home-link" class>
+        <a id="deliv-sec-2" href="#">Our Services</a>
+        <a class="dropdown-content">
+          <li class="dropdown-link other-tabs-link" id="">Nationwide Delivery</li>
+          <li class="dropdown-link other-tabs-link" id="">Payment on Delivery</li>
+          <li class="dropdown-link other-tabs-link" id="">Reverse Logistics</li>
+          <li class="dropdown-link other-tabs-link" id="">Warehousing Support</li>
+        </a>
+      </div>
+    </div>
+    <div class="mobile-link">
+      <a href="/api-integration">API Integration</a>
+    </div>
+
+    <div class="mobile-link">
+      <a id="location-link" href="/location">Our Locations</a>
+    </div>
+
+    <div class="mobile-link" id="mobile-partner-link">
+      <a class="dropdown-link special-bc" href="#kb-section">Become A Partner</a>
+    </div>
+    <div class="mobile-auth-link">
+      <button class="btn sign-up-form">
+        <a class="login-link" href="https://my.kos.ng/login" class="sign-in">Login</a>
+      </button>
+    </div>
+    <div class="mobile-auth-link">
+      <button class="btn sign-up-form sidebar-collapse top-sidebar">
+        Sign Up
+      </button>
+    </div>
+  </div>
+</div>
+
+</div>
+            <div class="search-area">
+                <div class="search" id="track-search">
+                    <form action="/track" id="track-form">
+                        <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.17171 13.6566C11.9746 12.7428 14 10.1079 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.1079 2.02542 12.7428 4.82829 13.6566L7 18L9.17171 13.6566ZM7 9C8.10457 9 9 8.10457 9 7C9 5.89543 8.10457 5 7 5C5.89543 5 5 5.89543 5 7C5 8.10457 5.89543 9 7 9Z" fill="#979797"/>
+                            </svg>
+                        <input type="text" id="trk-bars" class="search-bar"  placeholder="Enter tracking details" />
+                        <button type="submit" id="trk-btn" class="track-Btn trk" ><span id="trk-val">Track </span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid main-wrapper">
+            <div class="order-num">
+                <label id="order-label">Package Number: <b id="order">
+                     
+                        F568440379001</b></label> 
+                    
+            </div>
+            <div class="track-banners">
+                <div class="col-md-6 track-details">
+                    <div id="order-detail">
+                             
+                            <ul id="order-tree" style="width: 90%;">
+                                
+                                    <li class="active">
+                                        <b>Delivered to Customer </b>
+                                        <p>Sat, Jun 03, 2023, 04:08 PM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Your order is ready for collection </b>
+                                        <p>Sat, Jun 03, 2023, 01:17 PM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Order has arrived at KONGA PORT HARCOURT STORE, Port Harcourt</b>
+                                        <p>Sat, Jun 03, 2023, 01:16 PM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Order has left KXPRESS PORT HACOURT XC, Port Harcourt to KONGA PORT HARCOURT STORE, Port Harcourt</b>
+                                        <p>Sat, Jun 03, 2023, 11:51 AM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Order has arrived at KXPRESS PORT HACOURT XC, Port Harcourt</b>
+                                        <p>Sat, Jun 03, 2023, 11:50 AM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Order has left KXPRESS Central Distribution Center, Ogba, Ogba to KXPRESS PORT HACOURT XC, Port Harcourt</b>
+                                        <p>Thu, Jun 01, 2023, 08:54 PM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Order has arrived at KXPRESS Central Distribution Center, Ogba, Ogba</b>
+                                        <p>Wed, May 31, 2023, 06:41 PM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Order has left Kxpress Surulere, Surulere to KXPRESS Central Distribution Center, Ogba, Ogba</b>
+                                        <p>Wed, May 31, 2023, 03:50 PM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Shipment received at Kxpress Surulere, Surulere</b>
+                                        <p>Wed, May 31, 2023, 12:21 PM</p>
+                                    </li>
+                                
+                                    <li class="">
+                                        <b>Shipment Created Kxpress Surulere, Surulere</b>
+                                        <p>Wed, May 31, 2023, 12:21 PM</p>
+                                    </li>
+                                
+                            </ul>
+                            
+                    </div>
+                </div>
+                <div class="col-md-6 track-image-box">
+                    <div class="kexpress-image-box">
+                        <div class="side-img-container">
+                            <img class="side-img" src="img/group-7.svg" alt="">
+                            <img class="courier-icon" src="img/courier-logo.svg" id="courier-logo">
+                        </div>
+                        <div class="trk-status">
+                            <span class="trk-text">Tracking Number</span>
+                             
+                                <div class="tag-bar">
+                                    <button class="tag btn">Delivered</button>
+                                </div>
+                            
+                        </div>
+                        <span class="track-no">F568440379001</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay"></div>
+        <div class="container-fluid footer">
+    <div class="row footer-inner footer-details">
+        <div class="col-sm">
+            <img class="footer-img" src="https://www-konga-com-res.cloudinary.com/image/upload/q_100/v1670848335/Konga%20Logistics/Rectangle_1.webp" alt="img-logo"/>
+        </div>
+        <div class="col-sm">
+
+            <div class="f-tag-div">
+                <a class=" f-tag" href="/contact"><b>Contact Us</b></a></b>
+            </div>
+            <div class="f-tag-div">
+                <a href="" class=" f-tag">logistics-support@konga.com</a>
+            </div>
+            <div class="f-tag-div">
+                <a href="" class=" f-tag">07080635706</a>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <div class="">
+                <div class="f-tag-div"> <a class=" f-tag" href="/location">Locations</a></div>
+                <div class="f-tag-div"> <a class=" f-tag" href="/api-integration">API integration</a></div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="">
+                <div class="f-tag-div"> <a class=" f-tag" href="/privacy">Privacy</a></div>
+                <div class="f-tag-div"> <a class=" f-tag" href="/terms">Terms and Conditions</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg footer-nav footer-copyright">
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/ejs.js"></script>
+        <script src="js/requestClient.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/events.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+        <a class="">Keep on shipping | Copyright © <b onload="getCurrentYear()" id="current-year"></b> KXpress Logistics</a> 
+    </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

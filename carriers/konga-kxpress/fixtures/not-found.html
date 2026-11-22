@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>KExpress</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/footer.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/track.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" media="all" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Heebo" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.ico" type="image/png" sizes="32x32">
+
+</header>
+
+<body>
+    <div class="contain">
+        <div class="nav-top">
+  <div class="nav-head nav-header">
+    <div class="nav-img">
+      <a href="/"><img class="kexpress-img"
+          src="https://www-konga-com-res.cloudinary.com/image/upload/q_100/v1670848335/Konga%20Logistics/Rectangle_1.webp"
+          alt="img-logo" /></a>
+    </div>
+    <div class="nav-links">
+      <a class="nav-tag" id="nav-link-stn">
+        <a class="nav-tag" href="/" id="return-home">Home</a>
+        <a class="nav-tag" id="services-link" href="#">Our Services</a>
+        <a class="dropdown-content">
+          <li class="dropdown-link" id="dropdown-link-one">Nationwide Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-two">Payment on Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-three">Reverse Logistics</li>
+          <li class="dropdown-link" id="dropdown-link-four">Warehousing Support</li>
+        </a>
+      </a>
+      <a class="nav-tag" href="/api-integration">API Integration</a>
+      <a class="nav-tag" id="location-link" href="/location">Our Locations</a>
+      <a class="nav-tag" id="partner-link" href="#kb-section">Become a Partner</a>
+    </div>
+    <div class="auth-links">
+      <button class="btn sign-up-form">
+        <a class="login-link" href="https://my.kos.ng/login" class="sign-in">Login</a>
+      </button>
+      <button class="btn sign-up-form sidebar-collapse top-sidebar" id="sign-up-btn-id">
+        Sign Up
+      </button>
+    </div>
+    <div class="mobile-header">
+      <img src="img/hamburger.svg" alt="icon" class="show-mobile-nav" />
+    </div>
+  </div>
+  <div class="mobile-links">
+    <div class="mobile-head">
+      <div class="nav-img">
+        <a href="/"><img class="kexpress-img kexpress-nav-img"
+            src="https://track.konga.com/img/group-2@2x.png"
+            alt="img-logo" /></a>
+      </div>
+      <button class="mobile-nav-dismiss btn">x</button>
+    </div>
+    <div class="mobile-links-inner">
+      <div class="mobile-link" id="mobile-link-special">
+        <a id="deliv-sec" href="#">Our Services</a>
+        <a class="dropdown-content">
+          <li class="dropdown-link" id="dropdown-link-one-mobile">Nation Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-two-mobile">Payment on Delivery</li>
+          <li class="dropdown-link" id="dropdown-link-three-mobile">Reverse Logistics</li>
+          <li class="dropdown-link" id="dropdown-link-four-mobile">Warehousing Support</li>
+        </a>
+      </div>
+      <div class="mobile-link" id="home-link" class>
+        <a id="deliv-sec-2" href="#">Our Services</a>
+        <a class="dropdown-content">
+          <li class="dropdown-link other-tabs-link" id="">Nationwide Delivery</li>
+          <li class="dropdown-link other-tabs-link" id="">Payment on Delivery</li>
+          <li class="dropdown-link other-tabs-link" id="">Reverse Logistics</li>
+          <li class="dropdown-link other-tabs-link" id="">Warehousing Support</li>
+        </a>
+      </div>
+    </div>
+    <div class="mobile-link">
+      <a href="/api-integration">API Integration</a>
+    </div>
+
+    <div class="mobile-link">
+      <a id="location-link" href="/location">Our Locations</a>
+    </div>
+
+    <div class="mobile-link" id="mobile-partner-link">
+      <a class="dropdown-link special-bc" href="#kb-section">Become A Partner</a>
+    </div>
+    <div class="mobile-auth-link">
+      <button class="btn sign-up-form">
+        <a class="login-link" href="https://my.kos.ng/login" class="sign-in">Login</a>
+      </button>
+    </div>
+    <div class="mobile-auth-link">
+      <button class="btn sign-up-form sidebar-collapse top-sidebar">
+        Sign Up
+      </button>
+    </div>
+  </div>
+</div>
+
+</div>
+            <div class="main-track-container">
+                <div class="container-fluid nav-index">
+                    <div class="search-area">
+                        <div class="search">
+                            <form action="/track" id="track-form">
+                                <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.17171 13.6566C11.9746 12.7428 14 10.1079 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.1079 2.02542 12.7428 4.82829 13.6566L7 18L9.17171 13.6566ZM7 9C8.10457 9 9 8.10457 9 7C9 5.89543 8.10457 5 7 5C5.89543 5 5 5.89543 5 7C5 8.10457 5.89543 9 7 9Z" fill="#979797"/>
+                                    </svg>
+                                <input type="text" id="trk-bars" class="search-bar"  placeholder="Enter tracking details" />
+                                <button type="submit" id="trk-btn" class="track-Btn trk" ><span id="trk-val">Track </span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-wrapper">
+                  
+                    <div class="order-no">
+                        <span class="order-number">
+                            <h5 id="order-num">
+                                F123456789001
+                            </h5>
+                            <svg width="134" height="85" viewBox="0 0 134 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.20131 33.7827C4.57359 33.7827 5.68778 34.8848 5.68778 36.2421C5.68778 37.5994 4.57359 38.7015 3.20131 38.7015C1.82903 38.7015 0.714844 37.5994 0.714844 36.2421C0.714844 34.8848 1.82903 33.7827 3.20131 33.7827Z" fill="#B3C3C6"/>
+                                <path d="M117.579 53.4578C118.952 53.4578 120.066 54.5598 120.066 55.9171C120.066 57.2745 118.952 58.3765 117.579 58.3765C116.207 58.3765 115.093 57.2745 115.093 55.9171C115.093 54.5598 116.207 53.4578 117.579 53.4578Z" fill="#B3C3C6"/>
+                                <path d="M95.8224 1.19604C97.1947 1.19604 98.3089 2.29809 98.3089 3.65542C98.3089 5.01275 97.1947 6.11479 95.8224 6.11479C94.4501 6.11479 93.3359 5.01275 93.3359 3.65542C93.3359 2.29809 94.4501 1.19604 95.8224 1.19604Z" stroke="#B3C1C6" stroke-width="1.76539"/>
+                                <path d="M25.1379 14.9037C23.4531 16.0241 21.1607 15.576 20.0219 13.9037C18.883 12.2315 19.3263 9.96397 21.011 8.84353C22.6957 7.7231 24.9882 8.17117 26.127 9.84346C27.2658 11.5158 26.8226 13.7832 25.1379 14.9037Z" stroke="#B3C1C6" stroke-width="1.74471"/>
+                                <path d="M12.5504 63.745L9.15538 59.4198L9.64006 59.0478L13.0351 63.3731L12.5504 63.745ZM9.34509 63.1245L8.96787 62.6439L12.8453 59.6684L13.2226 60.149L9.34509 63.1245Z" fill="#CAD4D6"/>
+                                <path d="M132.428 35.6209L127.287 33.6607L127.51 33.0922L132.652 35.0524L132.428 35.6209ZM129.36 36.7394L128.789 36.5215L130.578 31.9737L131.149 32.1915L129.36 36.7394Z" fill="#CAD4D6"/>
+                                <path d="M68.188 10.5808L62.6864 10.1273L62.7393 9.52084L68.2409 9.97434L68.188 10.5808ZM65.558 12.5021L64.9467 12.4517L65.3693 7.59962L65.9806 7.65001L65.558 12.5021Z" fill="#CAD4D6"/>
+                                <path d="M73.6017 49.5309L84.739 60.5469L78.6598 66.5599L67.5225 55.5439L73.6017 49.5309Z" fill="#D7D7D7"/>
+                                <path d="M84.817 56.4929L98.3974 69.9252C99.7724 71.2853 99.7745 73.4918 98.4021 74.8493L92.9077 80.2839C91.5352 81.6414 89.3044 81.6394 87.9294 80.2793L74.3489 66.8469C72.9739 65.4868 72.9718 63.2804 74.3442 61.9228L79.8386 56.4883C81.2111 55.1307 83.4419 55.1328 84.817 56.4929Z" fill="#FF7851"/>
+                                <path d="M75.3981 54.6287C84.0804 45.9693 84.0468 31.8995 75.3281 23.2014C66.6095 14.5033 52.5019 14.475 43.823 23.1341C35.1407 31.7936 35.1708 45.8637 43.8927 54.558C52.6114 63.2561 66.7158 63.2882 75.3981 54.6287Z" fill="#FFD7CB"/>
+                                <path d="M46.4659 26.544C53.3297 19.755 64.4913 19.7707 71.3746 26.579C78.258 33.3873 78.2739 44.4273 71.4101 51.2163C64.5463 58.0053 53.3847 57.9896 46.5014 51.1813C39.618 44.373 39.6021 33.3331 46.4659 26.544Z" fill="white"/>
+                                <g opacity="0.92">
+                                <path d="M53.8111 34.1414C54.6748 34.1414 55.3761 35.4633 55.3761 37.0916C55.3761 38.7198 54.6748 40.0418 53.8111 40.0418C52.9474 40.0418 52.2461 38.7198 52.2461 37.0916C52.2461 35.4633 52.9474 34.1414 53.8111 34.1414Z" fill="black"/>
+                                </g>
+                                <g opacity="0.92">
+                                <path d="M63.6832 34.1414C64.5469 34.1414 65.2482 35.4633 65.2482 37.0916C65.2482 38.7198 64.5469 40.0418 63.6832 40.0418C62.8194 40.0418 62.1182 38.7198 62.1182 37.0916C62.1182 35.4633 62.8194 34.1414 63.6832 34.1414Z" fill="black"/>
+                                </g>
+                                <path d="M79.3234 39.0067C82.8234 39.0067 85.6614 36.9554 85.6614 34.4234C85.6614 31.8914 79.3234 25.7722 79.3234 25.7722C79.3234 25.7722 72.9854 31.8914 72.9854 34.4234C72.9854 36.9554 75.8234 39.0067 79.3234 39.0067Z" fill="url(#paint0_linear_8346_25457)"/>
+                                <path d="M62.598 45.7206C57.7825 43.3393 53.9226 45.9938 54.5567 45.8578C57.3296 45.2635 62.7829 45.812 62.598 45.7206Z" fill="#748394"/>
+                                <path d="M57.0105 81.8154C60.6467 81.8154 63.599 82.3329 63.599 82.9701C63.599 83.6074 60.6467 84.1248 57.0105 84.1248C53.3742 84.1248 50.4219 83.6074 50.4219 82.9701C50.4219 82.3329 53.3742 81.8154 57.0105 81.8154Z" fill="#D8DBDF"/>
+                                <defs>
+                                <linearGradient id="paint0_linear_8346_25457" x1="79.3301" y1="29.1728" x2="82.8488" y2="39.0313" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#B0F9FF"/>
+                                <stop offset="0.5" stop-color="#B6F3FE"/>
+                                <stop offset="1" stop-color="#BCEEFD"/>
+                                </linearGradient>
+                                </defs>
+                                </svg>
+                                
+                        </span>
+                    </div>
+                    <div class="error-message">
+                        <div class="msg-box">
+                            <span class="error-msg">
+                                <h3>Oops!!!</h3>
+                                <p>We could not find this tracking number.</p>
+                                Check again, you might have missed a digit. <br> Alternatively, could you get in touch  with customer service?
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid footer">
+    <div class="row footer-inner footer-details">
+        <div class="col-sm">
+            <img class="footer-img" src="https://www-konga-com-res.cloudinary.com/image/upload/q_100/v1670848335/Konga%20Logistics/Rectangle_1.webp" alt="img-logo"/>
+        </div>
+        <div class="col-sm">
+
+            <div class="f-tag-div">
+                <a class=" f-tag" href="/contact"><b>Contact Us</b></a></b>
+            </div>
+            <div class="f-tag-div">
+                <a href="" class=" f-tag">logistics-support@konga.com</a>
+            </div>
+            <div class="f-tag-div">
+                <a href="" class=" f-tag">07080635706</a>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <div class="">
+                <div class="f-tag-div"> <a class=" f-tag" href="/location">Locations</a></div>
+                <div class="f-tag-div"> <a class=" f-tag" href="/api-integration">API integration</a></div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="">
+                <div class="f-tag-div"> <a class=" f-tag" href="/privacy">Privacy</a></div>
+                <div class="f-tag-div"> <a class=" f-tag" href="/terms">Terms and Conditions</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg footer-nav footer-copyright">
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/ejs.js"></script>
+        <script src="js/requestClient.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/events.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+        <a class="">Keep on shipping | Copyright © <b onload="getCurrentYear()" id="current-year"></b> KXpress Logistics</a> 
+    </div>
+</div>
+
+    </div>
+</body>
+
+</html>
