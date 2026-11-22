@@ -1,5 +1,24 @@
 {
   "carrier": "correo-paraguayo",
-  "gap": "No public page shows a Correo Paraguayo number.",
-  "records": []
+  "records": [
+    {
+      "number": "RN219954910MY",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.justanswer.es/informatica-es/qsb3v-hola-asistente-del-experto-hola-dime-en-qu-puedo.html",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "pos-malaysia",
+        "confidence": "high"
+      },
+      "note": "A customer in a JustAnswer chat gives it as a parcel that tracking shows with Correo Paraguayo, bound for Salto del Guairá; the expert reads it as collected by Correo Paraguayo. Correo Paraguayo's tracker shows it entered and put on a dispatch sheet to Salto del Guairá's office."
+    }
+  ]
 }

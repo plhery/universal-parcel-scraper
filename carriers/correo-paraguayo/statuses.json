@@ -1,4 +1,26 @@
 {
   "carrier": "correo-paraguayo",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Ingreso",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The item entered Correo Paraguayo's network; for an item from abroad, its arrival in Paraguay."
+    },
+    {
+      "wording": "Planillado: SALTOS DEL GUAIRA",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The item went on a dispatch sheet to the office in charge of it, here Salto del Guairá's."
+    },
+    {
+      "wording": "PLANILLADO",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The record's status while the item is on a dispatch sheet to the office in charge of it."
+    }
+  ]
 }

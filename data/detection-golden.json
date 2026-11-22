@@ -111619,6 +111619,14 @@
     ]
   },
   {
+    "input": "RN219954910MY",
+    "carrier": "pos-malaysia",
+    "confidence": "high",
+    "candidates": [
+      "pos-malaysia"
+    ]
+  },
+  {
     "input": "RN700062106IT",
     "carrier": "poste-italiane",
     "confidence": "high",

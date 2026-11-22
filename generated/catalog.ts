@@ -17595,7 +17595,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Asuncion",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "correo-paraguayo"
     },
     "canaryUrl": "https://apps.correoparaguayo.gov.py:444/seguimiento.html",
     "trackingSearchUrl": "https://apps.correoparaguayo.gov.py:444/seguimiento.html",

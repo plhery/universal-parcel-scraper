@@ -19,18 +19,50 @@
   "timezone": "America/Asuncion",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "correo-paraguayo",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "weight"
+  ],
   "portal": {
     "searchUrl": "https://apps.correoparaguayo.gov.py:444/seguimiento.html",
     "helpUrl": "https://correoparaguayo.gov.py/sitio/contacto/",
     "canaryUrl": "https://apps.correoparaguayo.gov.py:444/seguimiento.html",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "weight",
+      "recipient_name",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "weight",
+      "destination"
+    ],
+    "discarded": [
+      "recipient_name"
+    ],
+    "unavailable": [
+      "eta",
+      "service_name",
+      "sender_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "signatory",
+      "origin"
+    ]
   },
   "links": [],
   "detection": []
