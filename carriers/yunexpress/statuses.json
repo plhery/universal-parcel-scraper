@@ -357,6 +357,14 @@
       "note": "Relayed from DHL in Germany: the sender's data record, as DHL files it."
     },
     {
+      "wording": "The instruction data for this shipment have been provided by the sender to Carrier electronically",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "DHL's data record in Germany with DHL's name replaced by \"Carrier\", a day before the line on the way to the carrier."
+    },
+    {
       "wording": "Pick-up was successful.",
       "stage": "in_transit",
       "language": "en",
@@ -411,6 +419,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-20",
       "note": "On the way to the last-mile carrier, as in the line that names DHL."
+    },
+    {
+      "wording": "The shipment is in transit to Carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "The same step worded with an article, after DHL's data record that names the carrier the same way."
     },
     {
       "wording": "Sender goods issue",

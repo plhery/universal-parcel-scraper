@@ -310,10 +310,11 @@ describe('China Post adapter', () => {
   });
 
   it('reads a transfer on the way relayed in Chinese in transit, with or without where', () => {
-    for (const wording of ['目的地转运【示例】', '目的地转运', '干线中转', '邮件在该国内转运中']) {
+    for (const wording of ['目的地转运【示例】', '目的地转运', '干线中转', '中转站转运中', '邮件在该国内转运中']) {
       expect(chinaPostRelayedStage(wording), wording).toBe('in_transit');
     }
     expect(chinaPostEnglish('目的地转运【示例】')).toBe('In transit');
+    expect(chinaPostEnglish('中转站转运中')).toBe('In transit');
     expect(chinaPostRelayedStage('目的地转运失败')).toBeUndefined();
   });
 });

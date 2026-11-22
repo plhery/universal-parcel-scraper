@@ -71,6 +71,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // DHL's own lines once it has the parcel in Germany: its data record, its collection after the
   // hand-over, which is no first acceptance, its parcel centres and its vehicles between them.
   ['The instruction data for this shipment have been provided by the sender to DHL electronically', { status: 'pending', stage: 'registered' }],
+  // The same record with the carrier's name replaced by "Carrier", as the feed words some DHL lines.
+  ['The instruction data for this shipment have been provided by the sender to Carrier electronically', { status: 'pending', stage: 'registered' }],
   ['Pick-up was successful.', { status: 'in_transit', stage: 'in_transit' }],
   ['The shipment has been processed in the parcel center of origin', { status: 'in_transit', stage: 'in_transit' }],
   ['The shipment has been processed in the destination parcel center', { status: 'in_transit', stage: 'in_transit' }],
@@ -79,6 +81,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Movement / tour vehicle arrived', { status: 'in_transit', stage: 'in_transit' }],
   ['Not delivered-Consignee could not be reached', FAILED_ATTEMPT],
   ['Shipment is in transit to carrier', { status: 'in_transit', stage: 'in_transit' }],
+  ['The shipment is in transit to Carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Preparing for delivery', { status: 'in_transit', stage: 'in_transit' }],
   // Last-mile wording the feed relays without codes. DPD files its data
   // record before the parcel leaves China and its proof of delivery after the
