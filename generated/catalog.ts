@@ -10622,6 +10622,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "atc-logistical": {
+    "displayName": "ATC Logistical Solutions",
+    "color": "#46ADA2",
+    "aliases": [
+      "ATC Logistical Solutions Pvt. Ltd.",
+      "ATCsure",
+      "ATCLS"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "atc-logistical",
+      "localClocks": true
+    },
+    "canaryUrl": "https://atcsure.com/",
+    "trackingUrlTemplate": "https://atcsure.com/",
+    "trackingSearchUrl": "https://atcsure.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "athinaiki": {
     "displayName": "Athinaiki",
     "color": "#160b8b",
@@ -17674,6 +17698,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/rastrear-paquete/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "correos-guatemala": {
+    "displayName": "Correos de Guatemala",
+    "color": "#0f306d",
+    "aliases": [
+      "Correo de Guatemala",
+      "Dirección General de Correos y Telégrafos",
+      "Guatemala Post"
+    ],
+    "countries": [
+      "GT"
+    ],
+    "selectable": true,
+    "timezone": "America/Guatemala",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "correos-guatemala",
+      "localClocks": true
+    },
+    "canaryUrl": "https://correos.gob.gt/",
+    "linkRules": [],
     "detectionRules": []
   },
   "correos-nicaragua": {
@@ -37593,6 +37639,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/tracking\\.html$",
         "params": [
           "no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "just-ship-sg": {
+    "displayName": "JustShip",
+    "color": "#6211CB",
+    "aliases": [
+      "Just Ship",
+      "JustShip Singapore"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Singapore",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "just-ship-sg"
+    },
+    "canaryUrl": "https://www.justship.sg/tracking",
+    "trackingUrlTemplate": "https://www.justship.sg/tracking?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.justship.sg/tracking",
+    "helpUrl": "https://www.justship.sg/contact-us",
+    "linkRules": [
+      {
+        "domains": [
+          "justship.sg"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "trackingNumber"
         ]
       }
     ],
@@ -71400,6 +71479,7 @@ export const CARRIER_IDS = [
   "astral-aviation",
   "asyad-express",
   "atc-express",
+  "atc-logistical",
   "athinaiki",
   "ativa-logistica",
   "atlantic-container-line",
@@ -71607,6 +71687,7 @@ export const CARRIER_IDS = [
   "correos-de-mexico",
   "correos-ecuador",
   "correos-el-salvador",
+  "correos-guatemala",
   "correos-nicaragua",
   "correos-panama",
   "cosco-shipping-lines",
@@ -72179,6 +72260,7 @@ export const CARRIER_IDS = [
   "jumppoint",
   "jumppoint-international",
   "junfeng-international",
+  "just-ship-sg",
   "juxi-express",
   "jy-express",
   "k-line-roro",
@@ -73430,6 +73512,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "astral-aviation": [],
   "asyad-express": [],
   "atc-express": [],
+  "atc-logistical": [],
   "athinaiki": [],
   "ativa-logistica": [],
   "atlantic-container-line": [],
@@ -73637,6 +73720,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "correos-de-mexico": ["correos-de-mexico-s10"],
   "correos-ecuador": [],
   "correos-el-salvador": [],
+  "correos-guatemala": [],
   "correos-nicaragua": [],
   "correos-panama": [],
   "cosco-shipping-lines": [],
@@ -74209,6 +74293,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jumppoint": ["jumppoint-1"],
   "jumppoint-international": ["jumppoint-international-1"],
   "junfeng-international": [],
+  "just-ship-sg": [],
   "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
   "k-line-roro": [],

@@ -73,6 +73,7 @@ import { adapter as arubaPost } from '../carriers/aruba-post/adapter.js';
 import { adapter as asendia } from '../carriers/asendia/adapter.js';
 import { adapter as astralAviation } from '../carriers/astral-aviation/adapter.js';
 import { adapter as asyadExpress } from '../carriers/asyad-express/adapter.js';
+import { adapter as atcLogistical } from '../carriers/atc-logistical/adapter.js';
 import { adapter as atlanticContainerLine } from '../carriers/atlantic-container-line/adapter.js';
 import { adapter as atlanticCourier } from '../carriers/atlantic-courier/adapter.js';
 import { adapter as atsHealthcare } from '../carriers/ats-healthcare/adapter.js';
@@ -194,6 +195,7 @@ import { adapter as correosCuba } from '../carriers/correos-cuba/adapter.js';
 import { adapter as correosDeMexico } from '../carriers/correos-de-mexico/adapter.js';
 import { adapter as correosElSalvador } from '../carriers/correos-el-salvador/adapter.js';
 import { adapter as correosExpress } from '../carriers/correos-express/adapter.js';
+import { adapter as correosGuatemala } from '../carriers/correos-guatemala/adapter.js';
 import { adapter as correosSpain } from '../carriers/correos-spain/adapter.js';
 import { adapter as coscoShippingLines } from '../carriers/cosco-shipping-lines/adapter.js';
 import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter.js';
@@ -522,6 +524,7 @@ import { adapter as jtlExpressId } from '../carriers/jtl-express-id/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
 import { adapter as jumppointInternational } from '../carriers/jumppoint-international/adapter.js';
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
+import { adapter as justShipSg } from '../carriers/just-ship-sg/adapter.js';
 import { adapter as kLineRoro } from '../carriers/k-line-roro/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
@@ -1155,6 +1158,7 @@ export const REGISTRY: RegistryDefinition = {
     "asendia": asendia,
     "astral-aviation": astralAviation,
     "asyad-express": asyadExpress,
+    "atc-logistical": atcLogistical,
     "atlantic-container-line": atlanticContainerLine,
     "atlantic-courier": atlanticCourier,
     "ats-healthcare": atsHealthcare,
@@ -1276,6 +1280,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-de-mexico": correosDeMexico,
     "correos-el-salvador": correosElSalvador,
     "correos-express": correosExpress,
+    "correos-guatemala": correosGuatemala,
     "correos-spain": correosSpain,
     "cosco-shipping-lines": coscoShippingLines,
     "costco-logistics": costcoLogistics,
@@ -1604,6 +1609,7 @@ export const REGISTRY: RegistryDefinition = {
     "jumppoint": jumppoint,
     "jumppoint-international": jumppointInternational,
     "junfeng-international": junfengInternational,
+    "just-ship-sg": justShipSg,
     "k-line-roro": kLineRoro,
     "kargoturk": kargoturk,
     "kazpost": kazpost,
@@ -2313,6 +2319,7 @@ export const REGISTRY: RegistryDefinition = {
     "astral-aviation": "astral-aviation",
     "asyad-express": "asyad-express",
     "atc-express": "universal",
+    "atc-logistical": "atc-logistical",
     "athinaiki": "universal",
     "ativa-logistica": "universal",
     "atlantic-container-line": "atlantic-container-line",
@@ -2537,6 +2544,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-ecuador": "universal",
     "correos-el-salvador": "correos-el-salvador",
     "correos-express": "correos-express",
+    "correos-guatemala": "correos-guatemala",
     "correos-nicaragua": "universal",
     "correos-panama": "universal",
     "correos-spain": "correos-spain",
@@ -3141,6 +3149,7 @@ export const REGISTRY: RegistryDefinition = {
     "jumppoint": "jumppoint",
     "jumppoint-international": "jumppoint-international",
     "junfeng-international": "junfeng-international",
+    "just-ship-sg": "just-ship-sg",
     "juxi-express": "universal",
     "jy-express": "universal",
     "k-line-roro": "k-line-roro",
