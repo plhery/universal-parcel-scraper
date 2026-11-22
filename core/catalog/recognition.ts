@@ -151,10 +151,18 @@ export function recognitionCandidates(
   // A carrier whose numbers are bare runs of digits that carriers elsewhere print too is
   // only asked about such a run for its own countries: Coordinadora's eleven digits are GLS's
   // abroad. Paquetexpress's guías, letters and digits, are asked whatever the country.
+  // A rule can keep its carrier to its countries too: SHEIN prints its package number on
+  // parcels Paack and Ecoscooting deliver in Spain and on parcels carriers elsewhere deliver.
   const bareRun = /^\d+$/.test(normalized);
+  const servedOnly = (carrier: string) => {
+    const fitting = (CARRIER_DEFINITIONS[carrier as CarrierId]?.detectionRules ?? [])
+      .filter((rule) => ruleFits(rule, normalized, printed));
+    return fitting.length > 0 && fitting.every((rule) => rule.servedCountriesOnly === true);
+  };
   const answers = (carrier: string) => {
     const tracking = CARRIER_DEFINITIONS[carrier as CarrierId]?.tracking;
     if (tracking?.recognitionServedCountriesOnly && bareRun && countryScore(carrier) === 0) return false;
+    if (country && /^[A-Z]{2}$/.test(country) && countryScore(carrier) === 0 && servedOnly(carrier)) return false;
     // A browser lookup is costly: a carrier names the numbers worth one (DPD France its own layouts, not every run of digits).
     return patterns.get(carrier)?.test(normalized) ?? true;
   };

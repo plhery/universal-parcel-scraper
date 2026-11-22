@@ -430,7 +430,9 @@ by the country (home before other served countries), aggregate scores, a passing
 and catalog rank. These signals do not add candidates or confirm ownership. A carrier whose
 `recognition` sets `servedCountriesOnly` prints bare runs of digits that carriers elsewhere
 print too, so HTTP recognition asks it about such a run only when the country hint is one it
-serves.
+serves. A low-confidence rule can set `servedCountriesOnly` for a shape printed elsewhere too,
+such as a shop's own number: recognition then does not ask the carrier about a number only
+such rules offer when the country hint names a country it does not serve.
 `recognitionAskedCarriers` is the first `MAX_RECOGNITIONS` of that order. `createTracker()`
 asks those first, and the next `MAX_RECOGNITIONS` only while none asked so far knows the
 number and the budget lasts.

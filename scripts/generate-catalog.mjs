@@ -156,6 +156,9 @@ function validateCarrierSemantics(carrier, adapterFolders) {
     if (rule.standalone !== undefined && (rule.standalone !== true || rule.confidence !== 'low')) {
       throw new Error(`${where} detection rule ${rule.id} may only keep a low-confidence match out of text`);
     }
+    if (rule.servedCountriesOnly !== undefined && (rule.servedCountriesOnly !== true || rule.confidence !== 'low')) {
+      throw new Error(`${where} detection rule ${rule.id} may only keep a low-confidence match to its countries`);
+    }
   }
   for (const rule of carrier.links) {
     for (const field of ['query', 'path', 'pathPattern', 'fragment']) {
@@ -206,6 +209,7 @@ function contractDetectionRule(rule) {
   if (rule.checksum !== undefined) contractRule.checksum = rule.checksum;
   if (rule.preferred !== undefined) contractRule.preferred = rule.preferred;
   if (rule.standalone !== undefined) contractRule.standalone = rule.standalone;
+  if (rule.servedCountriesOnly !== undefined) contractRule.servedCountriesOnly = rule.servedCountriesOnly;
   return contractRule;
 }
 

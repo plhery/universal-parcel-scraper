@@ -414,6 +414,12 @@ describe('SHEIN package numbers Paack and Ecoscooting deliver in Spain', () => {
       expect(CARRIER_DEFINITIONS[carrier].detectionRules.map((rule) => rule.pattern), carrier).toContain(SHEIN_PACKAGE_NUMBER.source);
     }
   });
+
+  it.each([['ES', ['ecoscooting']], ['PT', ['ecoscooting']], ['US', []], ['CA', []], ['', ['ecoscooting']]] as const)(
+    'asks Ecoscooting about one with the country hint %j only where it delivers', (countryHint, asked) => {
+      expect(recognitionAskedCarriers('C26010100000001', { countryHint })).toEqual(asked);
+    },
+  );
 });
 
 describe('Paack label numbers of eighteen digits', () => {

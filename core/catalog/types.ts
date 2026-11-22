@@ -112,6 +112,11 @@ export interface DetectionRule {
   preferred?: boolean;
   /** Low confidence only: a shape prose shares, offered for a number given on its own, never one read out of a text. */
   standalone?: boolean;
+  /**
+   * Low confidence only: a shape printed elsewhere too, such as a shop's own number. Recognition does not ask
+   * the carrier about a number only such rules offer when the country hint names a country it does not serve.
+   */
+  servedCountriesOnly?: boolean;
 }
 
 /** A link rule as it is written in the catalog, before its regexes compile. */
