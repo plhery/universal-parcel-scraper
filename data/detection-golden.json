@@ -39758,6 +39758,35 @@
     ]
   },
   {
+    "input": "302364189245",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "poste-italiane",
+      "brt",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sagawa",
+      "sending"
+    ],
+    "asked": [
+      "poste-italiane",
+      "japan-post",
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "3024338844",
     "carrier": "unknown",
     "confidence": "low",
@@ -41288,6 +41317,29 @@
     "confidence": "low",
     "candidates": [
       "royal-mail"
+    ]
+  },
+  {
+    "input": "320104477919",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
     ]
   },
   {
@@ -69964,6 +70016,33 @@
   },
   {
     "input": "800221108621",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "japan-post",
+      "sf-express",
+      "sto",
+      "zto",
+      "yamato",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sagawa",
+      "sending"
+    ],
+    "asked": [
+      "japan-post",
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "800225895921",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -119857,6 +119936,22 @@
     "confidence": "high",
     "candidates": [
       "lso"
+    ]
+  },
+  {
+    "input": "ZY202471580728",
+    "carrier": "zto-freight",
+    "confidence": "high",
+    "candidates": [
+      "zto-freight"
+    ]
+  },
+  {
+    "input": "ZY202472654496",
+    "carrier": "zto-freight",
+    "confidence": "high",
+    "candidates": [
+      "zto-freight"
     ]
   },
   {

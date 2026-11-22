@@ -862,6 +862,7 @@ import { statusMap as ywbz } from '../../carriers/ywbz/status.js';
 import { statusMap as ycsLogistics } from '../../carriers/ycs-logistics/status.js';
 import { statusMap as ydh } from '../../carriers/ydh/status.js';
 import { statusMap as zto } from '../../carriers/zto/status.js';
+import { statusMap as ztoFreight } from '../../carriers/zto-freight/status.js';
 import { statusMap as ztoInternational } from '../../carriers/zto-international/status.js';
 import { statusMap as yto } from '../../carriers/yto/status.js';
 import { statusMap as yunexpress } from '../../carriers/yunexpress/status.js';
@@ -1168,7 +1169,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
-  yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-international': ztoInternational,
+  yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-freight': ztoFreight, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
   'bob-go': bobGo, dypaq, navex,
   'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ots-astracon': otsAstracon,

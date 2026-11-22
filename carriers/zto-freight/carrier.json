@@ -1,0 +1,84 @@
+{
+  "id": "zto-freight",
+  "displayName": "ZTO Freight",
+  "aliases": [
+    "ZTO Freight Express",
+    "ZTO Kuaiyun",
+    "中通快运",
+    "中通快运股份有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1e50a2"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "zto-freight",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta"
+  ],
+  "portal": {
+    "searchUrl": "https://www.zto56.com/billsearch.html",
+    "canaryUrl": "https://www.zto56.com/billsearch.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "origin",
+      "destination",
+      "office_contact_details",
+      "driver_name",
+      "signatory",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "office_contact_details",
+      "driver_name",
+      "signatory",
+      "remarks"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "delivered_at",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "zto-freight-1",
+      "pattern": "^ZY\\d{12}$",
+      "confidence": "high"
+    }
+  ]
+}

@@ -70536,6 +70536,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "zto-freight": {
+    "displayName": "ZTO Freight",
+    "color": "#1e50a2",
+    "aliases": [
+      "ZTO Freight Express",
+      "ZTO Kuaiyun",
+      "中通快运",
+      "中通快运股份有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zto-freight",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.zto56.com/billsearch.html",
+    "trackingSearchUrl": "https://www.zto56.com/billsearch.html",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^ZY\\d{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "zto-international": {
     "displayName": "ZTO International",
     "color": "#3a8eff",
@@ -72610,6 +72639,7 @@ export const CARRIER_IDS = [
   "znlogic",
   "zoom-ve",
   "zr-express",
+  "zto-freight",
   "zto-international",
   "zufall"
 ] as const;
@@ -74619,6 +74649,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "znlogic": ["znlogic-1"],
   "zoom-ve": [],
   "zr-express": ["zr-express-1"],
+  "zto-freight": ["zto-freight-1"],
   "zto-international": ["zto-international-1"],
   "zufall": [],
 };

@@ -6288,5 +6288,11 @@
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "NuMark's nine-digit PRO numbers share their shape with many carriers' numbers, and nothing in the number points to NuMark."
+  },
+  {
+    "carrier": "zto-freight",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve-digit ZTO Freight waybills share their shape with many carriers' numeric waybills, so the shape cannot name ZTO Freight; its ZY waybills are detected."
   }
 ]

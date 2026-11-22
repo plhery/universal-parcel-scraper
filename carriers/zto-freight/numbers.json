@@ -1,0 +1,149 @@
+{
+  "carrier": "zto-freight",
+  "records": [
+    {
+      "number": "320104477919",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/zhongtongkuaiyun.shtml",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The example waybill kuaidi100's ZTO Freight page gives. ZTO Freight's tracker answers it with freight collected in Xuchang and signed for in Lu'an."
+    },
+    {
+      "number": "ZY202472654496",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/zhongtong56.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "zto-freight",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's ZTO Freight page lists among recent lookups. ZTO Freight's tracker answers it with freight from Xingtai that the recipient asked to collect, then signed for in Xuzhou."
+    },
+    {
+      "number": "ZY202471580728",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/zhongtong56.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "zto-freight",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's ZTO Freight page lists among recent lookups. ZTO Freight's tracker answers it with freight from Hanzhong signed for in Dongguan."
+    },
+    {
+      "number": "800225895921",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/zhongtong56.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's ZTO Freight page lists among recent lookups. ZTO Freight's tracker answers it with freight from Shenzhen signed for in Qidong."
+    },
+    {
+      "number": "302364189245",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/zhongtong56.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "poste-italiane",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's ZTO Freight page lists among recent lookups. ZTO Freight's tracker answers it with freight from Dongguan signed for in Shizuishan."
+    }
+  ]
+}

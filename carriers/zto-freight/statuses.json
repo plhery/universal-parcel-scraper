@@ -1,0 +1,77 @@
+{
+  "carrier": "zto-freight",
+  "entries": [
+    {
+      "code": "揽收",
+      "wording": "揽收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The collecting branch took the freight in."
+    },
+    {
+      "code": "收件",
+      "wording": "收件",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The collecting branch's courier recorded the freight, seconds after its collection scan."
+    },
+    {
+      "code": "发件",
+      "wording": "发件",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Loaded at a branch or hub for the next one."
+    },
+    {
+      "code": "发车",
+      "wording": "发车",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The vehicle carrying it left for the next branch or hub."
+    },
+    {
+      "code": "到车",
+      "wording": "到车",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The vehicle carrying it reached a hub."
+    },
+    {
+      "code": "到件",
+      "wording": "到件",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Unloaded at a hub or the delivering branch."
+    },
+    {
+      "code": "派件",
+      "wording": "派件",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A courier of the delivering branch is out with it."
+    },
+    {
+      "code": "签收",
+      "wording": "签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for. The tracker's page also reads this scan as the delivery."
+    },
+    {
+      "code": "问题件",
+      "wording": "问题件",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A problem scan; its wording gives the reason, such as the recipient asking to collect it."
+    }
+  ]
+}

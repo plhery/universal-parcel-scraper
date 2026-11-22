@@ -1051,6 +1051,7 @@ import { adapter as znlogic } from '../carriers/znlogic/adapter.js';
 import { adapter as zoomVe } from '../carriers/zoom-ve/adapter.js';
 import { adapter as zrExpress } from '../carriers/zr-express/adapter.js';
 import { adapter as zto } from '../carriers/zto/adapter.js';
+import { adapter as ztoFreight } from '../carriers/zto-freight/adapter.js';
 import { adapter as ztoInternational } from '../carriers/zto-international/adapter.js';
 
 export const REGISTRY: RegistryDefinition = {
@@ -2105,6 +2106,7 @@ export const REGISTRY: RegistryDefinition = {
     "zoom-ve": zoomVe,
     "zr-express": zrExpress,
     "zto": zto,
+    "zto-freight": ztoFreight,
     "zto-international": ztoInternational,
   },
   carriers: {
@@ -4110,6 +4112,7 @@ export const REGISTRY: RegistryDefinition = {
     "zoom-ve": "zoom-ve",
     "zr-express": "zr-express",
     "zto": "zto",
+    "zto-freight": "zto-freight",
     "zto-international": "zto-international",
     "zufall": "universal",
   },
