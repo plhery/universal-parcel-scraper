@@ -79,7 +79,9 @@ the app's scan-identity policy lets a milestone and the page's scan less than a 
 same stage, share one row. The portal archives a parcel after thirty days. Any other
 answer leaves the outage, so enabled providers answer. A BRTcode is asked the same way while
 BRT's gateway answers HTTP 502, 503 or 504 for the server behind it, as it does for a while
-most nights. Shipment numbers and parcel IDs have no such route.
+most nights, or while BRT cannot be reached. The gateway can hold a request for fifteen seconds
+before answering, so for a BRTcode each of BRT's pages gets at most eight seconds; BRT otherwise
+answers in a couple. Shipment numbers and parcel IDs have no such route.
 
 BRT's page gives no delivery estimate for its own shipments either. While a BRTcode no
 partner brought is on its way (accepted, in transit, in customs or out for delivery) and no

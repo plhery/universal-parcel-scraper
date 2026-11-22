@@ -1,5 +1,5 @@
 import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, IndeterminateError, MaintenanceError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, MaintenanceError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -16,6 +16,12 @@ const ORIGIN_RESERVE_MS = 500;
 const ON_THE_WAY = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
 /** The statuses BRT's gateway answers while the server behind it is down, as it is for a while most nights. */
 const GATEWAY_FAILURES = new Set([502, 503, 504]);
+/**
+ * The time a page of BRT's gets while the DPD group's service can stand in for it. BRT answers in a couple of
+ * seconds; on those nights its gateway can also hold a request for fifteen before answering, which would spend the
+ * whole lookup.
+ */
+const PAGE_BEFORE_GROUP_MS = 8_000;
 
 /** A partner's lookup of the number BRT tracks a parcel under. */
 export type BrtOriginLookup = (number: string, context: TrackingContext) => Promise<CarrierResult>;
@@ -37,6 +43,7 @@ export class BrtTracker {
   fetch(raw: string, context: TrackingContext = {}, language: BrtLanguage = 'en') {
     const number = normalizeBrtNumber(raw);
     const budgetMs = context.budgetMs ?? 15_000;
+    const groupRoute = number.length === 14 && Boolean(this.options.group);
     return runSteps({ carrier: 'brt', budgetMs, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       signal.throwIfAborted();
@@ -47,7 +54,7 @@ export class BrtTracker {
         const { response, bytes } = await fetchBounded(url,
           { signal, headers: { 'User-Agent': userAgentOf(this.options.userAgent), ...(form ? { 'Content-Type': 'application/x-www-form-urlencoded' } : {}) },
             ...(form ? { method: 'POST', body: new URLSearchParams(form).toString() } : {}) },
-          { provider: 'BRT', timeoutMs: Math.max(1, Math.floor(left)), maxBytes: 1_000_000,
+          { provider: 'BRT', timeoutMs: Math.max(1, Math.floor(groupRoute ? Math.min(left, PAGE_BEFORE_GROUP_MS) : left)), maxBytes: 1_000_000,
             redirect: 'manual', allowHttpStatuses: [302, 404, 410], fetcher: this.options.fetcher });
         if (performance.now() >= deadline) throw new BudgetExceededError('BRT', budgetMs);
         signal.throwIfAborted();
@@ -131,12 +138,13 @@ export class BrtTracker {
       },
     }, {
       id: 'group',
-      // While BRT's tracker is down, for maintenance or behind its gateway, the DPD group's guest service
-      // reads a BRTcode DPD places in Italy, each milestone once and without places. Any other answer
+      // While BRT's tracker is down, for maintenance, behind its gateway or out of reach, the DPD group's guest
+      // service reads a BRTcode DPD places in Italy, each milestone once and without places. Any other answer
       // leaves the outage.
-      enabled: number.length === 14 && Boolean(this.options.group),
+      enabled: groupRoute,
       recovers: (error) => error instanceof MaintenanceError
-        || (error instanceof UpstreamHttpError && error.provider === 'BRT' && GATEWAY_FAILURES.has(error.status)),
+        || (error instanceof UpstreamHttpError && error.provider === 'BRT' && GATEWAY_FAILURES.has(error.status))
+        || (error instanceof UpstreamNetworkError && error.provider === 'BRT'),
       run: async ({ signal, remainingMs, previousError }) => {
         const answer = await this.options.group!(number, { signal, budgetMs: remainingMs }).catch(() => {
           context.signal?.throwIfAborted();

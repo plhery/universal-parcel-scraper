@@ -10,7 +10,7 @@ import { groupShipment, normalizeBrtNumber, parseBrt, partnerShipment, readBrt, 
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { classifyBrtStatus, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
-import { IndeterminateError, InvalidInputError, MaintenanceError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, MaintenanceError, UpstreamNetworkError } from '../../core/errors/index.js';
 
 const NUMBER = '99000000000002';
 const OTHER = '99000000000003';
@@ -874,6 +874,22 @@ describe('BRT through the DPD group while its tracker is down', () => {
     group.mockClear();
     await expect(gateway(500).fetch(NUMBER)).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 500 });
     await expect(gateway(502).fetch(SHIPMENT)).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 502 });
+    expect(group).not.toHaveBeenCalled();
+  });
+
+  it('asks the group while BRT cannot be reached, after giving BRT\'s page part of the budget', async () => {
+    const group = vi.fn<BrtOriginLookup>(async () => answer(milestone('IN_TRANSIT', 'Your parcel is on its way', '2026-01-12T22:56:06+01:00')));
+    const unreachable = () => new BrtTracker({ group, fetcher: vi.fn<typeof fetch>(async () => { throw new TypeError('fetch failed'); }) });
+    expect((await unreachable().fetch(NUMBER, { budgetMs: 15_000 })).events!.map(event => event.description)).toEqual(['Your parcel is on its way']);
+    expect(group.mock.calls[0]![1].budgetMs).toBeGreaterThan(14_000);
+    // BRT's page gets eight seconds of a fifteen-second lookup, and the failure stands when the group cannot answer.
+    group.mockRejectedValueOnce(new IndeterminateError('BRT', 'DPD returned no Italian country evidence'));
+    await expect(unreachable().fetch(NUMBER, { budgetMs: 15_000 })).rejects.toMatchObject({ name: 'UpstreamNetworkError', request: { timeout_ms: 8_000 } });
+    // A shipment number keeps the whole budget for BRT and asks no one.
+    group.mockClear();
+    const shipment = await unreachable().fetch(SHIPMENT, { budgetMs: 15_000 }).catch((error: unknown) => error);
+    expect(shipment).toMatchObject({ name: 'UpstreamNetworkError', request: { timeout_ms: expect.any(Number) } });
+    expect((shipment as UpstreamNetworkError).request!.timeout_ms).toBeGreaterThan(14_000);
     expect(group).not.toHaveBeenCalled();
   });
 
