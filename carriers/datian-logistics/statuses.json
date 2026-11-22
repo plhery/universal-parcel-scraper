@@ -1,0 +1,45 @@
+{
+  "carrier": "datian-logistics",
+  "entries": [
+    {
+      "code": "货物受理",
+      "wording": "货物受理",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The origin station took the freight in."
+    },
+    {
+      "code": "货物进站",
+      "wording": "货物进站",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at a station."
+    },
+    {
+      "code": "货物出站",
+      "wording": "货物出站",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left a station."
+    },
+    {
+      "code": "货物在途",
+      "wording": "货物在途",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A position of the truck on the road, about hourly; the station column names the city and the remark the nearest landmark, which the adapter leaves out."
+    },
+    {
+      "code": "派送完成",
+      "wording": "派送完成",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Delivered; the row names the signatory, which the adapter leaves out."
+    }
+  ]
+}

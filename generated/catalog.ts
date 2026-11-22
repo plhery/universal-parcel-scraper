@@ -19244,6 +19244,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "datian-logistics": {
+    "displayName": "DTW Logistics",
+    "color": "#f39626",
+    "aliases": [
+      "Datian Logistics",
+      "Datian W. Logistics",
+      "大田物流",
+      "大田"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "datian-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://owtrack.dtw.com.cn/",
+    "trackingSearchUrl": "https://owtrack.dtw.com.cn/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^DTW\\d{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "day-ross": {
     "displayName": "Day & Ross",
     "color": "#ff5f14",
@@ -71210,6 +71239,7 @@ export const CARRIER_IDS = [
   "danske-fragtmaend",
   "danx",
   "dao",
+  "datian-logistics",
   "day-ross",
   "daylight-transport",
   "dayone",
@@ -73223,6 +73253,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "danske-fragtmaend": ["danske-fragtmaend-1"],
   "danx": [],
   "dao": ["dao-1"],
+  "datian-logistics": ["datian-logistics-1"],
   "day-ross": ["day-ross-1"],
   "daylight-transport": [],
   "dayone": ["dayone-1"],

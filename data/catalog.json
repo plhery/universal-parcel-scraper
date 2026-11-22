@@ -19240,6 +19240,35 @@
       }
     ]
   },
+  "datian-logistics": {
+    "displayName": "DTW Logistics",
+    "color": "#f39626",
+    "aliases": [
+      "Datian Logistics",
+      "Datian W. Logistics",
+      "大田物流",
+      "大田"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "datian-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://owtrack.dtw.com.cn/",
+    "trackingSearchUrl": "https://owtrack.dtw.com.cn/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^DTW\\d{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "day-ross": {
     "displayName": "Day & Ross",
     "color": "#ff5f14",

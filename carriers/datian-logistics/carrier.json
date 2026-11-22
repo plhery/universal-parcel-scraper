@@ -1,0 +1,81 @@
+{
+  "id": "datian-logistics",
+  "displayName": "DTW Logistics",
+  "aliases": [
+    "Datian Logistics",
+    "Datian W. Logistics",
+    "大田物流",
+    "大田"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#f39626"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "datian-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://owtrack.dtw.com.cn/",
+    "canaryUrl": "https://owtrack.dtw.com.cn/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "pieces",
+      "weight",
+      "sender_name",
+      "recipient_address",
+      "office_contact_details",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "pieces",
+      "weight",
+      "sender_name",
+      "recipient_address",
+      "office_contact_details",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "service_name",
+      "eta",
+      "offset_timestamps",
+      "recipient_name",
+      "driver_name",
+      "driver_phone"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "datian-logistics-1",
+      "pattern": "^DTW\\d{12}$",
+      "confidence": "high"
+    }
+  ]
+}

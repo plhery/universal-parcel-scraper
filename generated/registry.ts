@@ -211,6 +211,7 @@ import { adapter as daiPost } from '../carriers/dai-post/adapter.js';
 import { adapter as danskeFragtmaend } from '../carriers/danske-fragtmaend/adapter.js';
 import { adapter as danx } from '../carriers/danx/adapter.js';
 import { adapter as dao } from '../carriers/dao/adapter.js';
+import { adapter as datianLogistics } from '../carriers/datian-logistics/adapter.js';
 import { adapter as dayRoss } from '../carriers/day-ross/adapter.js';
 import { adapter as daylightTransport } from '../carriers/daylight-transport/adapter.js';
 import { adapter as dayone } from '../carriers/dayone/adapter.js';
@@ -1269,6 +1270,7 @@ export const REGISTRY: RegistryDefinition = {
     "danske-fragtmaend": danskeFragtmaend,
     "danx": danx,
     "dao": dao,
+    "datian-logistics": datianLogistics,
     "day-ross": dayRoss,
     "daylight-transport": daylightTransport,
     "dayone": dayone,
@@ -2541,6 +2543,7 @@ export const REGISTRY: RegistryDefinition = {
     "danske-fragtmaend": "danske-fragtmaend",
     "danx": "danx",
     "dao": "dao",
+    "datian-logistics": "datian-logistics",
     "day-ross": "day-ross",
     "daylight-transport": "daylight-transport",
     "dayone": "dayone",

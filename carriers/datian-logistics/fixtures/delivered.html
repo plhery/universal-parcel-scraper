@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate" />
+	<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<meta content="telephone=no,email=no" name="format-detection" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="css/Tables.css" />
+    <style type="text/css">
+		.Title1{background-color:#F0F0F0;font-size:12px;font-weight:bold;color:#79a4ae;padding:6px 6px;margin:0 1px 0 1px;}
+		*{margin:0;padding:0;outline:none;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;}
+		html,body{background-color:#fff;}
+		li{list-style-type:none;}
+		.tab_list{font-size:0;padding:10px;padding-bottom:0;}
+		.tab_list li{float:left;background-color:#fff;color:#024ea2;text-align:left;font-size:13px;padding:7px 15px;border-top-left-radius:4px;
+					 border-top-right-radius:4px;position:relative;top:0;left:0;cursor:pointer;}
+		.tab_list .current{background-color:#024ea2!important;color:#fff!important;}
+		.tab_con{display:block;position:relative;top:0;left:0;border:1px solid #d9d9d9;background:#fff;margin:10px;margin-top:0;padding:15px;
+				-webkit-box-shadow:0 0 5px #a4a4a4;-moz-box-shadow:0 0 5px #a4a4a4;-o-box-shadow:0 0 5px #a4a4a4;box-shadow:0 0 5px #a4a4a4;clear:both;}
+		.item{display:none;}
+		.kong{display:block;font-size:16px;height:100px;line-height:100px;color:#79a4ae;font-weight:bold;text-align:center;letter-spacing:2px;}
+	</style>
+	<title>大田物流</title>
+</head>
+<body>
+    <form method="post" action="./CustomerScanQuery2023.aspx?w=DTW016528697471" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="298FE279" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAOhw2kZMglg7835jo7UuBIoNzenk0qUCAzfUn54AZUI1KDIJfBaj3pyZc6lbVRN/Ts63g7dHdFTlu5jYHzsI/DLCrKxCCiAcYHPTVHUC7YrVg==" />
+</div>
+		<div class="tab_list"><ul><li class="current">运单一</li></ul></div>
+		
+				<div class="tab_con">
+			
+				<div class="item" style='display:block;'>
+					<table style="width:100%;">
+						<tbody>
+							<tr>
+								<td width="40%">
+									<div class="Title1">运单列表：</div>
+								</td>
+								<td>
+									<div class="Title1">
+										<a id="rWaybill_linkGPS_0" href="https://tmsedi.dtw.com.cn/iTMS/TMSMap/geocoder/?WaybillNO=DTW016528697471" target="_blank">GPS</a>
+									</div>
+								</td>
+								<td>
+									<div class="Title1">
+										<span id="rWaybill_lblWaybill_0">大田客服：马慧萍 0532-87051017</span>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table id="wblist" class="NoticeTable" style="width:100%;">
+						<thead>
+							<tr>
+								<th>运单号码</th>
+								<th>发件人单位</th>
+								<th>揽收时间</th>
+								<th>件数</th>
+								<th>重量</th>
+								<th>查看图像</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<input type="hidden" name="rWaybill$ctl01$hd_ID" id="rWaybill_hd_ID_0" value="DTW016528697471" />
+									<a id="rWaybill_LinkButton1_0" href="javascript:__doPostBack(&#39;rWaybill$ctl01$LinkButton1&#39;,&#39;&#39;)">DTW016528697471</a>
+								</td>
+								<td>青岛明月海藻集团有限公司</td>
+								<td>2026/11/10 16:00:00</td>
+								<td>1件</td>
+								<td>300.000KG</td>
+								<td>
+									<a href='CustomerScanQueryImage.aspx?w=DTW016528697471' target="_blank">查看图像</a>
+								</td>
+							</tr>
+							<tr>
+								<td>收货人地址：</td>
+								<td colspan="5" style="text-align: left;">云南省昆明市五华区西翥街道厂口社区昆明德和食品智造基地工会驿站</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="Title1">详细扫描列表:<span id="rWaybill_lblScan_1"></span></div>
+						
+                            <table class="NoticeTable" style="width:100%;">
+						<tbody>
+							<tr>
+								<th>运单号码</th>
+								<th>时间</th>
+								<th>操作站点</th>
+								<th>扫描过程</th>
+								<th>签收人</th>
+								<th>备注</th>
+							</tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/17 13:59:53</td>
+                                <td>昆明</td>
+                                <td>派送完成</td>
+                                <td>张新浩</td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/14 11:35:14</td>
+                                <td>昆明</td>
+                                <td>货物出站</td>
+                                <td></td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/14 11:35:14</td>
+                                <td>昆明</td>
+                                <td>货物进站</td>
+                                <td></td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 20:16:39</td>
+                                <td>昆明市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)云南省昆明市寻甸回族彝族自治县窑上湾,东南方向,88.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 18:16:43</td>
+                                <td>曲靖市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">云南省曲靖市富源县升官坪出口(G60沪昆高速公路出口东南向),北方向,14.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 17:16:45</td>
+                                <td>六盘水市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">贵州省六盘水市盘州市朝阳寺,西南方向,102.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 16:17:11</td>
+                                <td>黔西南布依族苗族自治州</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">贵州省黔西南布依族苗族自治州晴隆县戈么,东南方向,71.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 12:56:34</td>
+                                <td>安顺市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)贵州省安顺市西秀区国储石油国储石油(贵州交建东屯服务区加油站),东北方向,5.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 8:14:48</td>
+                                <td>贵阳市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)贵州省贵阳市南明区龙洞堡服务区内龙洞堡服务区玖e充电动汽车充电站,东南方向,25.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 6:45:31</td>
+                                <td>黔南布依族苗族自治州</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)贵州省黔南布依族苗族自治州福泉市螺蛳冲,东南方向,722.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 3:56:06</td>
+                                <td>黔东南苗族侗族自治州</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)贵州省黔东南苗族侗族自治州岑巩县岑巩出口(G60沪昆高速公路出口东北向),北方向,23.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 3:36:04</td>
+                                <td>铜仁市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">贵州省铜仁市玉屏侗族自治县大环西路144号汇彩广告传媒,西南方向,297.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/13 1:16:04</td>
+                                <td>怀化市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)湖南省怀化市洪江市羊皮洞,东南方向,27.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 22:56:32</td>
+                                <td>邵阳市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)湖南省邵阳市邵东市沪昆高速公路(邵东服务区)湖南高速能源邵东服务区加油站,西北方向,53.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 22:16:31</td>
+                                <td>娄底市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">湖南省娄底市娄星区羊角冲,东南方向,279.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 20:56:42</td>
+                                <td>湘潭市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)湖南省湘潭市岳塘区黄家湖,北方向,42.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 20:07:18</td>
+                                <td>株洲市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)湖南省株洲市醴陵市G60沪昆高速公路入口(上海方向),东北方向,43.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 19:26:38</td>
+                                <td>萍乡市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江西省萍乡市芦溪县毛安里,西方向,269.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 17:07:49</td>
+                                <td>宜春市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江西省宜春市高安市高安东出口(S38昌栗高速公路出口东向),东方向,213.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 15:47:44</td>
+                                <td>南昌市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江西省南昌市进贤县山里高家村,西南方向,925.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 15:27:53</td>
+                                <td>抚州市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江西省抚州市东乡区鸭塘,东南方向,460.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 14:57:15</td>
+                                <td>鹰潭市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江西省鹰潭市贵溪市红石童家,东北方向,342.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 12:56:55</td>
+                                <td>上饶市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江西省上饶市玉山县麻地,南方向,432.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 11:46:51</td>
+                                <td>衢州市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">浙江省衢州市龙游县龙游出口(龙游互通出口东向),东北方向,62.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 10:27:16</td>
+                                <td>金华市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">浙江省金华市浦江县小水龙,东南方向,257.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 9:38:40</td>
+                                <td>绍兴市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">浙江省绍兴市诸暨市楼家桥村,西南方向,153.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 8:56:38</td>
+                                <td>杭州市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)浙江省杭州市钱塘区栋梁路16-1号杭州下沙中通快递,西方向,258.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 7:56:34</td>
+                                <td>嘉兴市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)浙江省嘉兴市嘉善县河洋浜,西北方向,57.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/12 1:22:46</td>
+                                <td>上海</td>
+                                <td>货物出站</td>
+                                <td></td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 19:28:07</td>
+                                <td>上海</td>
+                                <td>货物进站</td>
+                                <td></td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 16:39:45</td>
+                                <td>上海市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)上海市嘉定区徐行镇汇旺路277号上海梦华建筑基础工程有限公司对面上海光通信,东北方向,226.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 15:58:15</td>
+                                <td>苏州市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江苏省苏州市常熟市横浜河中桥,东北方向,52.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 14:07:36</td>
+                                <td>南通市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">江苏省南通市海安市关洋河中桥,西北方向,505.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 10:26:54</td>
+                                <td>盐城市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江苏省盐城市响水县灌河大桥,东南方向,14.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 8:46:43</td>
+                                <td>连云港市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)江苏省连云港市赣榆区G15沈海高速公路入口(连云港方向),东北方向,179.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 7:56:43</td>
+                                <td>日照市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)山东省日照市东港区神童幼儿园,东南方向,456.0米</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/11 4:56:26</td>
+                                <td>青岛市</td>
+                                <td>货物在途</td>
+                                <td></td>
+                                <td class="TextLeft">(GF)山东省青岛市城阳区锦盛二路与宏祥一路交叉口北180米青岛长丰国际储运有限公司-东门,东南方向,81.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/10 22:22:14</td>
+                                <td>青岛</td>
+                                <td>货物出站</td>
+                                <td></td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/10 20:53:06</td>
+                                <td>青岛</td>
+                                <td>货物进站</td>
+                                <td></td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>DTW016528697471</td>
+                                <td>2026/11/10 15:17:08</td>
+                                <td>青岛</td>
+                                <td>货物受理</td>
+                                <td></td>
+                                <td class="TextLeft"></td>
+                            </tr>
+                        
+                            </tbody>
+						</table>
+                        
+				</div>
+			
+				</div>
+			
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.tab_list li').click(function(){
+				$(this).addClass("current").siblings().removeClass("current");
+				var index = $(this).index();
+				$("div.item").eq(index).show().siblings().hide();
+			});
+		});
+    </script>
+    </form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "carrier": "datian-logistics",
+  "records": [
+    {
+      "number": "DTW016528697471",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/datianwuliu.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "datian-logistics",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's DTW page lists. DTW's tracker answers it with freight taken in at Qingdao, trucked through Shanghai and delivered in Kunming."
+    },
+    {
+      "number": "DTW006301648614",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/datianwuliu.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "datian-logistics",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's DTW page lists. DTW's tracker answers it with freight taken in at Shanghai and delivered in Jiangyin."
+    }
+  ]
+}
