@@ -6371,5 +6371,10 @@
     "carrier": "unipost-express",
     "kind": "by_design",
     "reason": "Unipost-Express waybills are bare digits, a shape other carriers share; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "post-international",
+    "kind": "by_design",
+    "reason": "Post-International publishes no layout for its numbers, and its tracker also takes partners' references; use explicit selection or a named handoff."
   }
 ]

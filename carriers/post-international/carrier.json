@@ -17,18 +17,49 @@
   "timezone": "Europe/Kyiv",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "post-international",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "searchUrl": "https://post-int.com/",
     "helpUrl": "https://post-int.com/home/kontakti/",
     "canaryUrl": "https://post-int.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "recipient_address"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "provider_code",
+      "offset_timestamps",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

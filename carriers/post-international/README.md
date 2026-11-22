@@ -1,33 +1,41 @@
 # Post-International
 
-Post-International parcels use enabled universal providers. There is no dedicated adapter.
+Tracks Post-International, ТОВ «ПОСТ-ІНТЕРНЕЙШНЛ» of Kyiv, a Ukrainian international express
+carrier for parcels and mail, imports, exports and shopping abroad, through the tracking form on its
+home page. Its partners include Ukrposhta and Nova Poshta.
 
-Post-International, ТОВ «ПОСТ-ІНТЕРНЕЙШНЛ» of Kyiv, is a Ukrainian international express carrier
-for parcels and mail: imports, exports and shopping abroad. Its partners include Ukrposhta and
-Nova Poshta.
+## How it works
 
-## Numbers
+`direct` reads the nonce the home page gives its form, keeps it for an hour, and posts the number,
+the action `post_int_home_tracking_action` and the nonce to the site's WordPress handler,
+`/wp-admin/admin-ajax.php`, with no session or account. When WordPress refuses a kept nonce, the
+adapter reads the page again once. A request that fails to reach the site gets one `retry` in the
+rest of the budget.
 
-Its tracking form takes a parcel number. No public page shows a whole number or its layout, so
-there is no rule.
+The handler writes blank lines before its JSON, whose `orderStatus` is the HTML the form shows:
+a heading with the number, the current status with the delivery service, the onward carrier's
+waybill (ТТН) and the status history, oldest first, as a date and a time with no zone, kept as
+Kyiv's wall clock. An empty `orderStatus` is a number the tracker does not know. The tracker also
+answers with shipments it finds under other numbers, so a reply counts only when its heading
+repeats the whole number asked; another shipment's reply is indeterminate.
 
-## Why there is no adapter
+The system writes rows it dates by their day alone at midnight with a count of seconds, 00:00:01
+and on; the adapter keeps their day. A ТТН the reply names is the result's
+`delivery_tracking_number`, with Nova Poshta or Ukrposhta as `delivery_carrier` when the delivery
+service names one. The delivery address is never read.
 
-The home page's form asks the site for the parcel and shows its status. With no public number to
-check its replies against, there is no adapter.
+## Limitations
 
-## Leads
-
-The form posts `trackingID`, the action `post_int_home_tracking_action` and a nonce from the page
-to the site's WordPress handler, `/wp-admin/admin-ajax.php`. The reply holds the order's status as
-HTML and the waybill (ТТН) of the carrier that takes the parcel on, a hand-off an adapter could
-follow.
+The history names no places beyond the EU terminal and the Ukrainian sorting centre in its
+wording. Its own numbers, such as two letters, thirteen digits and `UA`, have no documented layout,
+so the carrier is never detected and needs explicit selection. A partner's reference the tracker
+finds a shipment by, such as a Boxberry number, is indeterminate, since the heading names
+Post-International's own number.
 
 ## Links
 
-Its tracker takes numbers only through a form, so no address opens one shipment.
+The form posts the number, so no address opens one shipment.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`POST_INTERNATIONAL_TRACKING_NUMBER=… POST_INTERNATIONAL_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/post-international`

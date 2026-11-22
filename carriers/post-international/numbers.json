@@ -1,5 +1,24 @@
 {
   "carrier": "post-international",
-  "gap": "No public page shows a Post-International number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "DE2142001481122UA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://shu.com.ua/posts/5586152/",
+        "date": "2024-05-31",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A forum post about the Pokupka forwarder says its site lists each parcel's Post-International number and shows it in a screenshot. Post-International's tracker answers it with a parcel from its EU terminal collected at its sorting centre in Ukraine."
+    }
+  ]
 }

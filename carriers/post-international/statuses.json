@@ -1,4 +1,65 @@
 {
   "carrier": "post-international",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Надійшло на термінал EU",
+      "stage": "accepted",
+      "language": "uk",
+      "confirmedBy": "live",
+      "note": "Reached Post-International's terminal in the EU, its first scan of a parcel bought abroad."
+    },
+    {
+      "wording": "Відвантажено з терміналу EU",
+      "stage": "in_transit",
+      "language": "uk",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Сформовано партію",
+      "stage": "in_transit",
+      "language": "uk",
+      "confirmedBy": "live",
+      "note": "Consolidated into a batch."
+    },
+    {
+      "wording": "Відправлення зареєстровано",
+      "stage": "registered",
+      "language": "uk",
+      "confirmedBy": "live",
+      "note": "Written after the EU terminal's scans, as the shipment's record for Ukraine; a registration after a movement reads as one."
+    },
+    {
+      "wording": "Заплановано відвантаження з терміналу EU",
+      "stage": "in_transit",
+      "language": "uk",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Сформовано рейс",
+      "stage": "in_transit",
+      "language": "uk",
+      "confirmedBy": "live",
+      "note": "The batch is put on a trip to Ukraine."
+    },
+    {
+      "wording": "Очікується надходження на сортувальний центр UA",
+      "stage": "in_transit",
+      "language": "uk",
+      "confirmedBy": "live",
+      "note": "On its way to the sorting centre in Ukraine."
+    },
+    {
+      "wording": "Прийнято на сортувальний центр UA",
+      "stage": "in_transit",
+      "language": "uk",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Самостійно забране клієнтом з сортувального центру",
+      "stage": "delivered",
+      "language": "uk",
+      "confirmedBy": "live",
+      "note": "Collected by the customer at the sorting centre."
+    }
+  ]
 }
