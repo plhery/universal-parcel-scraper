@@ -94,6 +94,30 @@ describe('DHL public tracking normalization', () => {
     expect(result.current_stage).toBe('in_transit');
   });
 
+  it('leaves out the English booked option too, and gives the newest day it names as the expected delivery', () => {
+    const read = (options: [string, string][], change: (details: Record<string, unknown>) => void = () => {}) => {
+      const payload = shipment({ zustellung: {} });
+      for (const [datum, day] of options) {
+        payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push({ datum, status: `The preferred day delivery on ${day} was ordered by Recipient..` });
+      }
+      change(payload.sendungen[0]!.sendungsdetails);
+      return parseDHLTrackingResponse(payload, NUMBER);
+    };
+    const booked = read([['2026-08-10T05:47:25+02:00', '12.08.2026'], ['2026-08-10T19:00:00+02:00', '13.08.2026']]);
+    expect(booked.events?.map((event) => event.time)).toEqual(['2026-08-10T18:30:00+02:00', '2026-08-09T20:00:00+02:00']);
+    expect(booked).toMatchObject({ current_stage: 'in_transit', expected_delivery: '2026-08-13' });
+    // A day that does not exist is no date, DHL's own window wins, and a finished parcel expects nothing.
+    expect(read([['2026-08-10T05:47:25+02:00', '31.02.2026']])).toMatchObject({ events: [{}, {}], expected_delivery: null });
+    expect(read([['2026-08-10T05:47:25+02:00', '12.08.2026']], (details) => {
+      details.zustellung = { zustellzeitfensterVon: '2026-08-14T10:00:00+02:00', zustellzeitfensterBis: '2026-08-14T12:00:00+02:00' };
+    }).expected_delivery).toMatch(/^2026-08-14/);
+    expect(read([['2026-08-10T05:47:25+02:00', '12.08.2026']], (details) => {
+      const timeline = details.sendungsverlauf as { status: string; events: Record<string, unknown>[] };
+      timeline.status = 'Die Sendung wurde erfolgreich zugestellt.';
+      timeline.events.push({ datum: '2026-08-11T12:00:00+02:00', status: timeline.status });
+    })).toMatchObject({ current_stage: 'delivered', expected_delivery: null });
+  });
+
   it('leaves out a pre-advice dated after a scan that moved the parcel, and keeps one dated first', () => {
     const late = 'Die Sendung wurde elektronisch angekündigt. Sobald die Sendung von uns bearbeitet wurde, erhalten Sie weitere Informationen.';
     const read = (datum: string, status?: string) => {

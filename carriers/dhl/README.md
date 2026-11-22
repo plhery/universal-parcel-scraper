@@ -134,8 +134,10 @@ how a consumer learns that DHL holds one behind a postcode.
   be collected. The providers' shared rules read these lines the same way when
   they relay DHL.
 - A receiving option the recipient booked ("Liefertag als Empfangsoption
-  vorgemerkt") is left out: it is a wish, not a movement, as Hermes Germany's
-  booked delivery day is. So is a pre-advice ("elektronisch angekündigt") dated
+  vorgemerkt", "The preferred day delivery on … was ordered") is left out: it is a
+  wish, not a movement, as Hermes Germany's booked delivery day is. The English line
+  names the day, which DHL keeps the parcel until, so the newest one is the expected
+  delivery while DHL gives no window; the German one names none. So is a pre-advice ("elektronisch angekündigt") dated
   after a scan that moved the parcel, and as the summary it gives way to the
   newest scan: it is a notice, and the stage must not move back. One dated
   first, or with the first move, stays registered.

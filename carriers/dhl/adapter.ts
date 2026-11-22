@@ -43,7 +43,7 @@ import {
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { withoutPartnerLink } from './identity.js';
-import { announcesRound, BOOKED_OPTION, keepsStage, movedParcel, preAdvice, returnTrip, stageForText, statusForStage } from './status.js';
+import { announcesRound, BOOKED_OPTION, bookedDay, keepsStage, movedParcel, preAdvice, returnTrip, stageForText, statusForStage } from './status.js';
 
 const PROVIDER = 'DHL';
 const TIMEZONE = 'Europe/Berlin';
@@ -274,6 +274,9 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   // identity; the host still confirms progress through that operator's adapter.
   // The reader sees the notice without the link.
   const deliveryCarrier = carrierIdFromPartnerLinks(rows.map((event) => clean(event.status)), 'dhl');
+  // The newest booked day DHL names, which it keeps the parcel until.
+  const booked = rows.map((event) => ({ time: date(event.datum), day: bookedDay(clean(event.status)) }))
+    .filter((option) => option.day).sort((left, right) => millis(right.time) - millis(left.time))[0]?.day ?? null;
   const scans = rows.flatMap((event) => {
     const description = withoutPartnerLink(clean(event.status));
     if (!description || BOOKED_OPTION.test(description)) return [];
@@ -333,7 +336,8 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
     // Nor does a second acceptance DHL sums up after the parcel moved on.
     || (reported === 'accepted' && latest === 'in_transit' && moved) ? latest : reported;
   const delivery = isRecord(details.zustellung) ? details.zustellung : {};
-  const window = ['delivered', 'returned'].includes(stage) ? {} : deliveryWindow(delivery);
+  const finished = ['delivered', 'returned'].includes(stage);
+  const window = finished ? {} : deliveryWindow(delivery);
   const stated = date(timeline.datumAktuellerStatus);
   const newest = events[0];
   // The status DHL dates as its newest scan abroad keeps that scan's wall clock, and in a history dated
@@ -346,7 +350,7 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
     last_status_text: currentText,
     last_update: local ? null : stated || newest?.time || null,
     ...(local ? { last_update_local: local } : {}),
-    expected_delivery: window.expected_delivery ?? null,
+    expected_delivery: window.expected_delivery ?? (finished ? null : booked),
     ...(window.expected_delivery_from ? { expected_delivery_from: window.expected_delivery_from } : {}),
     timezone: TIMEZONE, events,
     ...(deliveryCarrier ? { delivery_carrier: deliveryCarrier } : {}),

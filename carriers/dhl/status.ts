@@ -18,10 +18,20 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /**
  * The recipient's booked receiving option ("Für diese Sendung wurde ein Liefertag als
- * Empfangsoption vorgemerkt."): a wish, not a movement. The parser leaves it out, as Hermes
- * Germany's booked delivery day; read as unmapped wording, it came as transit.
+ * Empfangsoption vorgemerkt.", in English "The preferred day delivery on <date> was ordered by
+ * Recipient."): a wish, not a movement. The parser leaves it out, as Hermes Germany's booked
+ * delivery day; read as unmapped wording, it came as transit.
  */
-export const BOOKED_OPTION = /\bals empfangsoption vorgemerkt\b/i;
+export const BOOKED_OPTION = /\bals empfangsoption vorgemerkt\b|\bpreferred day delivery on \d{2}\.\d{2}\.\d{4} was ordered by\b/i;
+
+/** The day the English booked option names, as an ISO date: DHL keeps the parcel until then. */
+export function bookedDay(text: string): string | null {
+  const match = /\bpreferred day delivery on (\d{2})\.(\d{2})\.(\d{4}) was ordered by\b/i.exec(text);
+  if (!match) return null;
+  const day = `${match[3]}-${match[2]}-${match[1]}`;
+  const parsed = Date.parse(`${day}T00:00:00Z`);
+  return Number.isFinite(parsed) && new Date(parsed).toISOString().startsWith(day) ? day : null;
+}
 
 /**
  * A redirect DHL refused ("Die Paketumleitung wurde aufgrund Produkt/Service-Kombination nicht
