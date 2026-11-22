@@ -136,6 +136,7 @@ import { adapter as cargus } from '../carriers/cargus/adapter.js';
 import { adapter as carrybee } from '../carriers/carrybee/adapter.js';
 import { adapter as castleParcels } from '../carriers/castle-parcels/adapter.js';
 import { adapter as castores } from '../carriers/castores/adapter.js';
+import { adapter as cautcurier } from '../carriers/cautcurier/adapter.js';
 import { adapter as cblLogistica } from '../carriers/cbl-logistica/adapter.js';
 import { adapter as ccfs } from '../carriers/ccfs/adapter.js';
 import { adapter as cdek } from '../carriers/cdek/adapter.js';
@@ -440,6 +441,7 @@ import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as hmm } from '../carriers/hmm/adapter.js';
 import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter.js';
+import { adapter as homeDeliveryTeam } from '../carriers/home-delivery-team/adapter.js';
 import { adapter as homexpress } from '../carriers/homexpress/adapter.js';
 import { adapter as honducor } from '../carriers/honducor/adapter.js';
 import { adapter as hongkongPost } from '../carriers/hongkong-post/adapter.js';
@@ -551,6 +553,7 @@ import { adapter as laserLogistics } from '../carriers/laser-logistics/adapter.j
 import { adapter as lastOneMileCoop } from '../carriers/last-one-mile-coop/adapter.js';
 import { adapter as latvijasPasts } from '../carriers/latvijas-pasts/adapter.js';
 import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
+import { adapter as ledaExpress } from '../carriers/leda-express/adapter.js';
 import { adapter as leopardsCourier } from '../carriers/leopards-courier/adapter.js';
 import { adapter as lerdex } from '../carriers/lerdex/adapter.js';
 import { adapter as leschaco } from '../carriers/leschaco/adapter.js';
@@ -719,6 +722,7 @@ import { adapter as polonez } from '../carriers/polonez/adapter.js';
 import { adapter as posIndonesia } from '../carriers/pos-indonesia/adapter.js';
 import { adapter as posMalaysia } from '../carriers/pos-malaysia/adapter.js';
 import { adapter as postHaste } from '../carriers/post-haste/adapter.js';
+import { adapter as postInternational } from '../carriers/post-international/adapter.js';
 import { adapter as postLuxembourg } from '../carriers/post-luxembourg/adapter.js';
 import { adapter as postOne } from '../carriers/post-one/adapter.js';
 import { adapter as postaFaroe } from '../carriers/posta-faroe/adapter.js';
@@ -971,6 +975,7 @@ import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.
 import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
 import { adapter as umacCargo } from '../carriers/umac-cargo/adapter.js';
+import { adapter as unipostExpress } from '../carriers/unipost-express/adapter.js';
 import { adapter as unitedAfricaFeederLine } from '../carriers/united-africa-feeder-line/adapter.js';
 import { adapter as unitedDeliveryService } from '../carriers/united-delivery-service/adapter.js';
 import { adapter as uniuni } from '../carriers/uniuni/adapter.js';
@@ -993,6 +998,7 @@ import { adapter as velocityExpressIn } from '../carriers/velocity-express-in/ad
 import { adapter as venipak } from '../carriers/venipak/adapter.js';
 import { adapter as viaCargo } from '../carriers/via-cargo/adapter.js';
 import { adapter as viadireta } from '../carriers/viadireta/adapter.js';
+import { adapter as viapost } from '../carriers/viapost/adapter.js';
 import { adapter as viettelPost } from '../carriers/viettel-post/adapter.js';
 import { adapter as vimenpaq } from '../carriers/vimenpaq/adapter.js';
 import { adapter as vintedGo } from '../carriers/vinted-go/adapter.js';
@@ -1021,6 +1027,7 @@ import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
 import { adapter as wooriTaekbae } from '../carriers/woori-taekbae/adapter.js';
 import { adapter as wpGround } from '../carriers/wp-ground/adapter.js';
+import { adapter as xExpressRs } from '../carriers/x-express-rs/adapter.js';
 import { adapter as xcargo } from '../carriers/xcargo/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
@@ -1206,6 +1213,7 @@ export const REGISTRY: RegistryDefinition = {
     "carrybee": carrybee,
     "castle-parcels": castleParcels,
     "castores": castores,
+    "cautcurier": cautcurier,
     "cbl-logistica": cblLogistica,
     "ccfs": ccfs,
     "cdek": cdek,
@@ -1510,6 +1518,7 @@ export const REGISTRY: RegistryDefinition = {
     "hitch": hitch,
     "hmm": hmm,
     "hoegh-autoliners": hoeghAutoliners,
+    "home-delivery-team": homeDeliveryTeam,
     "homexpress": homexpress,
     "honducor": honducor,
     "hongkong-post": hongkongPost,
@@ -1621,6 +1630,7 @@ export const REGISTRY: RegistryDefinition = {
     "last-one-mile-coop": lastOneMileCoop,
     "latvijas-pasts": latvijasPasts,
     "lbc-express": lbcExpress,
+    "leda-express": ledaExpress,
     "leopards-courier": leopardsCourier,
     "lerdex": lerdex,
     "leschaco": leschaco,
@@ -1789,6 +1799,7 @@ export const REGISTRY: RegistryDefinition = {
     "pos-indonesia": posIndonesia,
     "pos-malaysia": posMalaysia,
     "post-haste": postHaste,
+    "post-international": postInternational,
     "post-luxembourg": postLuxembourg,
     "post-one": postOne,
     "posta-faroe": postaFaroe,
@@ -2041,6 +2052,7 @@ export const REGISTRY: RegistryDefinition = {
     "ukp-worldwide": ukpWorldwide,
     "ukrposhta": ukrposhta,
     "umac-cargo": umacCargo,
+    "unipost-express": unipostExpress,
     "united-africa-feeder-line": unitedAfricaFeederLine,
     "united-delivery-service": unitedDeliveryService,
     "uniuni": uniuni,
@@ -2063,6 +2075,7 @@ export const REGISTRY: RegistryDefinition = {
     "venipak": venipak,
     "via-cargo": viaCargo,
     "viadireta": viadireta,
+    "viapost": viapost,
     "viettel-post": viettelPost,
     "vimenpaq": vimenpaq,
     "vinted-go": vintedGo,
@@ -2091,6 +2104,7 @@ export const REGISTRY: RegistryDefinition = {
     "wooliiporter": wooliiporter,
     "woori-taekbae": wooriTaekbae,
     "wp-ground": wpGround,
+    "x-express-rs": xExpressRs,
     "xcargo": xcargo,
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
@@ -2421,7 +2435,7 @@ export const REGISTRY: RegistryDefinition = {
     "castle-parcels": "castle-parcels",
     "castores": "castores",
     "cathedis": "universal",
-    "cautcurier": "universal",
+    "cautcurier": "cautcurier",
     "cbl-logistica": "cbl-logistica",
     "ccfs": "ccfs",
     "cdek": "cdek",
@@ -2968,7 +2982,7 @@ export const REGISTRY: RegistryDefinition = {
     "hmm": "hmm",
     "hoegh-autoliners": "hoegh-autoliners",
     "holisol": "universal",
-    "home-delivery-team": "universal",
+    "home-delivery-team": "home-delivery-team",
     "homexpress": "homexpress",
     "honducor": "honducor",
     "hongkong-post": "hongkong-post",
@@ -3185,6 +3199,7 @@ export const REGISTRY: RegistryDefinition = {
     "latvijas-pasts": "latvijas-pasts",
     "lbc-express": "lbc-express",
     "lbtx": "universal",
+    "leda-express": "leda-express",
     "leman": "universal",
     "leopards-courier": "leopards-courier",
     "lerdex": "lerdex",
@@ -3515,7 +3530,7 @@ export const REGISTRY: RegistryDefinition = {
     "pos-malaysia": "pos-malaysia",
     "post-anatolia": "universal",
     "post-haste": "post-haste",
-    "post-international": "universal",
+    "post-international": "post-international",
     "post-luxembourg": "post-luxembourg",
     "post-modern": "universal",
     "post-one": "post-one",
@@ -3971,7 +3986,7 @@ export const REGISTRY: RegistryDefinition = {
     "ukrposhta": "ukrposhta",
     "umac-cargo": "umac-cargo",
     "union-express": "universal",
-    "unipost-express": "universal",
+    "unipost-express": "unipost-express",
     "united-africa-feeder-line": "united-africa-feeder-line",
     "united-az": "universal",
     "united-delivery-service": "united-delivery-service",
@@ -4015,7 +4030,7 @@ export const REGISTRY: RegistryDefinition = {
     "via-cargo": "via-cargo",
     "via-pajucara": "universal",
     "viadireta": "viadireta",
-    "viapost": "universal",
+    "viapost": "viapost",
     "viaxpress": "universal",
     "vichare": "universal",
     "victorian-freight-specialists": "universal",
@@ -4073,7 +4088,7 @@ export const REGISTRY: RegistryDefinition = {
     "wpx": "universal",
     "wyngs": "universal",
     "x-express-ba": "universal",
-    "x-express-rs": "universal",
+    "x-express-rs": "x-express-rs",
     "x-trac": "universal",
     "xalq-global": "universal",
     "xcargo": "xcargo",

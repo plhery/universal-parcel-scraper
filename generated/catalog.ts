@@ -14772,7 +14772,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Bucharest",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cautcurier"
     },
     "canaryUrl": "https://tracking.cautcurier.ro/",
     "trackingUrlTemplate": "https://tracking.cautcurier.ro/?awb={trackingNumber}",
@@ -32769,7 +32769,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Budapest",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "home-delivery-team",
+      "localClocks": true
     },
     "canaryUrl": "https://homedt.hu/nyomonkovetes",
     "trackingUrlTemplate": "https://homedt.hu/nyomonkovetes?track_number={trackingNumber}",
@@ -32781,7 +32782,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "homedt.hu",
           "www.homedt.hu"
         ],
-        "pathPattern": "^/nyomonkovetes/?$",
+        "pathPattern": "^/(?:nyomonkovetes|track)/?$",
         "params": [
           "track_number"
         ]
@@ -39721,6 +39722,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.lbtxkd.com/",
     "trackingSearchUrl": "https://www.lbtxkd.com/search_kj.aspx",
     "helpUrl": "https://www.lbtxkd.com/Contact.aspx?ClassID=23",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "leda-express": {
+    "displayName": "Leda Express",
+    "color": "#138ac8",
+    "aliases": [
+      "乐达全球速递",
+      "樂達全球速遞",
+      "乐达全球速运"
+    ],
+    "countries": [
+      "US",
+      "CN",
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "leda-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.kuaidi100.com/all/ledaexpress.shtml",
     "linkRules": [],
     "detectionRules": []
   },
@@ -50575,7 +50600,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Kyiv",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "post-international",
+      "localClocks": true
     },
     "canaryUrl": "https://post-int.com/",
     "trackingSearchUrl": "https://post-int.com/",
@@ -65222,7 +65248,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Chisinau",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "unipost-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.unipost.md/",
     "trackingSearchUrl": "https://www.unipost.md/",
@@ -66499,7 +66526,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Skopje",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "viapost",
+      "localClocks": true
     },
     "canaryUrl": "https://viapost.com.mk/",
     "trackingUrlTemplate": "https://www.viapost.solutions/Order/Track/{trackingNumber}",
@@ -68391,12 +68419,22 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Belgrade",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "x-express-rs",
+      "localClocks": true
     },
     "canaryUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
+    "trackingUrlTemplate": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke/{trackingNumber}",
     "trackingSearchUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
     "helpUrl": "https://www.x-express.rs/kontakt",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "www.x-express.rs",
+          "x-express.rs"
+        ],
+        "path": "^/korisnicki-panel/pracenje-posiljke/(\\d{2}-\\d{10})/?$"
+      }
+    ],
     "detectionRules": []
   },
   "x-trac": {
@@ -72092,6 +72130,7 @@ export const CARRIER_IDS = [
   "latvijas-pasts",
   "lbc-express",
   "lbtx",
+  "leda-express",
   "leman",
   "leopards-courier",
   "lerdex",
@@ -74117,6 +74156,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "latvijas-pasts": ["latvijas-pasts-own","latvijas-pasts-s10"],
   "lbc-express": ["lbc-domestic"],
   "lbtx": [],
+  "leda-express": [],
   "leman": [],
   "leopards-courier": [],
   "lerdex": [],
