@@ -1,5 +1,5 @@
 import { languageStageStatus, type ClassifiedStatus, type Stage } from '../../core/status/index.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['ORDER_CREATION', 'registered'],
@@ -17,9 +17,17 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['TRANSITHUB_ARRIVE', 'in_transit'],
 ]);
 
-/** The scan code, with explicit delivery wording where the code is ambiguous. */
+// The partner feed WhatsShip relays without node codes, such as YunExpress's, by its wording. Its own status
+// number agrees: 10 for the order data, 20 for the rows that move the parcel.
+const CODELESS: ReadonlyMap<string, Stage> = new Map([
+  ['shipment information received', 'registered'],
+  ['shipment arrived at facility', 'in_transit'],
+  ['sent to next destination', 'in_transit'],
+]);
+
+/** The scan code, with explicit delivery wording where the code is ambiguous; a code-less scan by its wording. */
 export function whatsShipStage(code: string | null, wording: string): Stage | undefined {
-  if (!code) return undefined;
+  if (!code) return CODELESS.get(normalizeStatusWording(wording));
   const text = wording.trim();
   if (code === 'DELIVERY_ATTEMPT') {
     if (/^out for delivery[.!]?$/i.test(text)) return 'out_for_delivery';

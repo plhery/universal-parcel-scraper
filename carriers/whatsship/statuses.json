@@ -128,6 +128,30 @@
       "language": "en",
       "stage": "delivered",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The order data in the partner feed WhatsShip relays without node codes, such as YunExpress's; its status number is 10."
+    },
+    {
+      "wording": "Shipment arrived at facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "A facility receipt in the code-less partner feed, the day after the order data; its status number is 20, the feed's movement."
+    },
+    {
+      "wording": "Sent to next destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The departure after that receipt in the code-less partner feed; its status number is 20."
     }
   ]
 }

@@ -371,6 +371,22 @@
       "firstSeen": "2026-11-17"
     },
     {
+      "wording": "Hand over to airline.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The same hand-over closed with a full stop, on a line whose next row is the arrival at the destination airport."
+    },
+    {
+      "wording": "Arrived at destination airport.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The flight's arrival abroad, the day after the hand-over to the airline; customs has not started on the parcel."
+    },
+    {
       "wording": "Shipment is in transit to next facility",
       "stage": "in_transit",
       "language": "en",

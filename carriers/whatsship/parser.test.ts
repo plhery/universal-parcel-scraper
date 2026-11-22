@@ -132,8 +132,14 @@ describe('WhatsShip public order-reference parser', () => {
     expect(result).not.toHaveProperty('provider_code');
     expect(result.events).toEqual([
       { local_time: '2026-01-11T19:10:00', description: 'Shipment arrived at sorting center', stage: 'in_transit', stage_source: 'wording:language' },
-      { local_time: '2026-01-10T01:27:00', description: 'Shipment information received', stage: 'registered', stage_source: 'wording:language' },
+      { local_time: '2026-01-10T01:27:00', description: 'Shipment information received', stage: 'registered', stage_source: 'carrier_map' },
     ]);
+    // The feed's wording the map records, as its status number reads it: 10 for the order data, 20 for movement.
+    const moved = parseWhatsShip(reply([raw({}), raw({ ProcessDate: '2026-01-11T19:10:00', ProcessContent: 'Shipment arrived at facility', TrackingStatus: 20 }),
+      raw({ ProcessDate: '2026-01-12T19:10:00', ProcessContent: 'Sent to next destination', TrackingStatus: 20 })]), NUMBER);
+    expect(moved).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(moved.events!.map(event => [event.stage, event.stage_source])).toEqual([
+      ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['registered', 'carrier_map']]);
     // A delivery in wording alone stays on the scan's wall clock.
     const delivered = parseWhatsShip(reply([raw({ ProcessContent: 'Delivered' })]), NUMBER);
     expect(delivered).toMatchObject({ status: 'delivered', last_update_local: '2026-01-10T01:27:00' });
@@ -232,8 +238,8 @@ describe('WhatsShip public order-reference parser', () => {
 
   it('maps all catalogued public wording by the same conservative status function', () => {
     for (const entry of statuses.entries) {
-      expect(whatsShipStage(entry.code, entry.wording)).toBe(entry.stage);
-      expect(statusMap.stage(entry.code, entry.wording.toLowerCase())).toBe(entry.stage);
+      expect(whatsShipStage(entry.code ?? null, entry.wording)).toBe(entry.stage);
+      expect(statusMap.stage(entry.code ?? null, entry.wording.toLowerCase())).toBe(entry.stage);
     }
     expect(statusMap.stage('UNSEEN_CODE', 'Delivered')).toBeUndefined();
     expect(statusMap.stage(null, 'Delivered')).toBeUndefined();

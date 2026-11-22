@@ -42,12 +42,10 @@ function offset(value: string): string {
   return result;
 }
 
-/** The scan code's step, or for a scan without one the step its wording names. */
+/** The scan code's step, or for a scan without one the step the map or its wording names. */
 function scanStatus(code: string, description: string): (ClassifiedStatus & { source: 'carrier_map' | 'wording:language' }) | undefined {
-  if (code) {
-    const mapped = whatsShipStatus(code, description);
-    return mapped && { ...mapped, source: 'carrier_map' };
-  }
+  const mapped = whatsShipStatus(code || null, description);
+  if (code || mapped) return mapped && { ...mapped, source: 'carrier_map' };
   const stage = trackingLanguageStage(description);
   return stage && { stage, status: languageStageStatus(stage), source: 'wording:language' };
 }
