@@ -4924,7 +4924,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       },
       {
-        "pattern": "^[BDHPTUV]\\d{10}$",
+        "pattern": "^[BCDHPRTUV]\\d{10}$",
         "confidence": "low"
       },
       {

@@ -8397,7 +8397,8 @@
     "shape": "^R\\d{10}$",
     "carriers": [
       "gls-it",
-      "post-one"
+      "post-one",
+      "dtdc"
     ],
     "reason": "GLS Italy's low-confidence rule takes any letter and ten digits, so it overlaps Post One's R and ten digits; both stay suggestions."
   },

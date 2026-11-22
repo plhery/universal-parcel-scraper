@@ -87570,6 +87570,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dtdc",
       "gls-it"
     ],
     "asked": [
@@ -87581,6 +87582,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dtdc",
       "gls-it"
     ],
     "asked": [
@@ -87785,6 +87787,18 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "C5000892520",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dtdc",
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
   },
   {
     "input": "C619269",
@@ -111072,6 +111086,21 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dtdc",
+      "gls-it",
+      "post-one"
+    ],
+    "asked": [
+      "gls-it",
+      "post-one"
+    ]
+  },
+  {
+    "input": "R5002220418",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dtdc",
       "gls-it",
       "post-one"
     ],
@@ -111085,6 +111114,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dtdc",
       "gls-it",
       "post-one"
     ],
@@ -111098,6 +111128,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dtdc",
       "gls-it",
       "post-one"
     ],
@@ -111111,6 +111142,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dtdc",
       "gls-it",
       "post-one"
     ],
@@ -111124,6 +111156,7 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "dtdc",
       "gls-it",
       "post-one"
     ],
