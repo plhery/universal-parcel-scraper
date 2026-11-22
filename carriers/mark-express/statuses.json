@@ -1,4 +1,10 @@
 {
   "carrier": "mark-express",
-  "entries": []
+  "entries": [
+    {"code": "OUT-SCAN", "wording": "Out To … From: …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A transit row, typed \"OUT-Scan\": the air waybill left the office named last for the one named first. The adapter words it \"Out To …\"."},
+    {"code": "IN-SCAN", "wording": "From: … To: …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A transit row, typed \"IN-Scan\": the office named last received the air waybill, the delivering hub included. The adapter words it \"Inward At …\"."},
+    {"wording": "DELIVERED ON … BY …", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The status line once the delivery is recorded, with the day and the delivering branch."},
+    {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The delivery table's status."},
+    {"wording": "Booked By …", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The adapter's wording for the booking, from the booking office, day and clock above the tables."}
+  ]
 }

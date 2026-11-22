@@ -19,19 +19,63 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "mark-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "receiver_name"
+  ],
   "portal": {
     "url": "https://crm.markerp.in/Frm_DocTrackWeb.aspx?docno={trackingNumber}",
     "searchUrl": "https://markexpress.co.in/",
     "helpUrl": "https://markexpress.co.in/contact-us",
     "canaryUrl": "https://markexpress.co.in/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "destination",
+      "awb_date",
+      "recipient_name",
+      "scan_times",
+      "signatory",
+      "office_addresses",
+      "office_contact_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "awb_date",
+      "recipient_name",
+      "scan_times"
+    ],
+    "discarded": [
+      "destination",
+      "signatory",
+      "office_addresses",
+      "office_contact_details"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html>
+<head><title>
+	Tracking
+</title><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap Css -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" /><link href="css/bootstrap.min.css" rel="stylesheet" /><link href="css/style.css" rel="stylesheet" /><link rel="stylesheet" href="css/responsive.css" />
+    <script src="js/jquery-2.2.4.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<style type="text/css">
+        a {
+	        color: #F47F22;
+	        text-decoration: none;
+	        -webkit-transition: all 0.3s;
+	        -moz-transition: all 0.3s;
+	        transition: all 0.3s;
+            }
+        #tip
+        {
+            position: absolute;
+            z-index: 1000;
+            display: none;
+            padding: 5px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            word-wrap: break-word;
+        }
+        
+        .redTip
+        {
+            color: #fff;
+            background: #1C1F67;
+        }
+        
+    </style>
+	<script type="text/javascript">
+
+        $(function() {
+            $('.showTip').tip();
+        });
+
+        /* Tooltip plug-in */
+        (function($) {
+            $.fn.extend({
+                tip: function(options) {
+                    var defaults = {
+                        maxWidth: '400px',
+                        offset: 20,
+                        theme: 'redTip'
+                    };
+
+                    /*
+                    extend the options
+                    */
+                    var options = $.extend(defaults, options);
+
+                    return this.each(function() {
+                        var o = options;
+                        var instance = $(this);
+                        var theme = o.theme;
+
+                        instance.hover(function() {
+                            var item = $(this);
+                            tip = $('<div id=\'tip\'><p>' + item.attr('alt') + '</p></div>');
+                            tip.addClass(o.theme).appendTo('body');
+                            tip.show();
+                        },
+
+				function() {
+				    tip.hide();
+				}).mousemove(function(e) {
+
+				    var offset = 20;
+				    var xCord = e.pageX + offset; //Get X coodrinates
+				    var yCord = e.pageY + offset; //Get Y coordinates
+				    if (typeof tip != 'undefined') {
+				        var tipWidth = tip.width(); //Find width of tooltip
+				        if (tip.width() > parseInt(o.maxWidth, 10)) {
+				            tip.width(o.maxWidth);
+				        }
+
+				        var tipHeight = tip.height(); //Find height of tooltip
+				        var distFromRight = $(window).width() - (xCord + tipWidth);
+				        var disFromBottom = $(window).height() - (yCord + tipHeight);
+
+				        //If there is not enough space on the right or bottom side just flip it
+				        if (distFromRight < offset) {
+				            xCord = e.pageX - tipWidth - offset;
+				        } if (disFromBottom < offset) {
+				            yCord = e.pageY - tipHeight - offset;
+				        }
+				        tip.css({ left: xCord, top: yCord });
+				    }
+				});
+                    });
+                }
+            });
+        })(jQuery);
+    
+    </script>
+    
+</head>
+<body id="home">
+    <form name="Form1" method="post" action="Frm_DocTrackWeb.aspx?docno=999999990" id="Form1">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE4NjMyNDU1NjMPZBYCAgMPZBYEAgUPDxYCHgRUZXh0BQk5OTk5OTk5OTBkZAIPDw8WAh8ABTJPbmxpbmUgQm9va2luZyBPZiBTcGVjaWZpZWQgQS5XLkIuIElzIE5vdCBGb3VuZC4uLmRkZPMA4r+Hg0gDsHKdijvdJxh3nJ8+" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="DD5CB15E" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWAgKB2rL+CwLf75rwDCDE9yqgJMkE1V4LZiWHgWgc32Mi" />
+</div>
+    <input name="AD" type="hidden" id="AD" />
+    <section class="we_manage_area blue_manage">
+        <div class="container">	
+            <div class="row careers_table">
+                <div class="col-md-6 col-sm-6">
+                <div>
+                    <img id="MarkLogo" src="Images/Logo.png" style="border-width:0px;" />
+                    </div>
+                    <h2 class="title">AWB No - <span id="lblDocNumber">999999990</span></h2>
+                    <div class="compare-table-are table-responsive">
+                        <table class="table">                                
+                             <tbody class="t_body">
+                                  <tr>
+                                      <td>From Center :</td>
+                                      <td><span id="txtFromCenter"></span></td>                                        
+                                  </tr>
+                                  <tr>
+                                      <td>To Center :</td>
+                                      <td><span id="txtToCenter"></span></td>                                        
+                                  </tr>
+								  <tr>
+                                      <td>Date / Time :</td>
+                                      <td><span id="txtDate"></span></td>                                        
+                                  </tr>
+								  <tr>
+                                      <td>Consignee :</td>
+                                      <td><span id="txtReceiver"></span></td>                                        
+                                  </tr>
+                             </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <h2 class="title">Current Status</h2>
+                    <div class="compare-table-are table-responsive">
+                        <table class="table">                                
+                           <tbody class="t_body">
+                              <tr>
+                                 <td><span id="lblStatus">Online Booking Of Specified A.W.B. Is Not Found...</span></td>                                    
+                              </tr>
+                           </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12" style="margin-top:30px;">
+                    <h2 class="title">Transit Detail</h2>
+                    <div class="compare-table-are table-responsive">
+                        <table id="tblTrack1" class="table">
+	<tr>
+		<th class="col-sm-3">T.Type</th>
+		<th class="col-sm-3">Date</th>
+		<th class="col-sm-3">Time</th>
+		<th class="col-sm-3">Transit Route</th>
+	</tr>
+</table>
+
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12" style="margin-top:30px;">
+                    <h2 class="title">Delivery Detail</h2>
+                    <div class="compare-table-are table-responsive">
+                        <table id="tblDelivery" class="table">
+	<tr>
+		<th class="col-sm-3">Date/Time</th>
+		<th class="col-sm-3">Delivery Branch</th>
+		<th class="col-sm-3">Receiver</th>
+		<th class="col-sm-3">Status</th>
+		<th class="col-sm-3">Scan</th>
+	</tr>
+</table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>        
+    </form>
+</body>
+</html> 

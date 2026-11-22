@@ -42416,7 +42416,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "mark-express",
+      "localClocks": true
     },
     "canaryUrl": "https://markexpress.co.in/",
     "trackingUrlTemplate": "https://crm.markerp.in/Frm_DocTrackWeb.aspx?docno={trackingNumber}",

@@ -597,6 +597,7 @@ import { adapter as makatiExpress } from '../carriers/makati-express/adapter.js'
 import { adapter as maltapost } from '../carriers/maltapost/adapter.js';
 import { adapter as mandae } from '../carriers/mandae/adapter.js';
 import { adapter as maritimeOntario } from '../carriers/maritime-ontario/adapter.js';
+import { adapter as markExpress } from '../carriers/mark-express/adapter.js';
 import { adapter as marken } from '../carriers/marken/adapter.js';
 import { adapter as marutiAir } from '../carriers/maruti-air/adapter.js';
 import { adapter as matkahuolto } from '../carriers/matkahuolto/adapter.js';
@@ -1674,6 +1675,7 @@ export const REGISTRY: RegistryDefinition = {
     "maltapost": maltapost,
     "mandae": mandae,
     "maritime-ontario": maritimeOntario,
+    "mark-express": markExpress,
     "marken": marken,
     "maruti-air": marutiAir,
     "matkahuolto": matkahuolto,
@@ -3278,7 +3280,7 @@ export const REGISTRY: RegistryDefinition = {
     "maple-logistics": "universal",
     "maraton": "universal",
     "maritime-ontario": "maritime-ontario",
-    "mark-express": "universal",
+    "mark-express": "mark-express",
     "marken": "marken",
     "maruti-air": "maruti-air",
     "marvisur": "universal",
