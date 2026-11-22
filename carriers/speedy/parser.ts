@@ -39,6 +39,8 @@ export function parseSpeedyReply(status: number, body: string, rawNumber: string
     if (MISSING_PAGE.test(body)) throw new NotFoundError(PROVIDER);
     throw new TransportError(PROVIDER, 'Speedy tracking endpoint is unavailable');
   }
+  // A token the Turnstile check did not issue.
+  if (status === 406) throw new ChallengeError(PROVIDER, 'Speedy refused its Turnstile check', { status });
   let payload: unknown;
   try {
     payload = JSON.parse(body.replace(/^\uFEFF/, ''));
@@ -46,6 +48,8 @@ export function parseSpeedyReply(status: number, body: string, rawNumber: string
     if (CHALLENGE_PAGE.test(body.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'Speedy answered with a browser challenge', { cause });
     throw new SchemaError(PROVIDER, 'Speedy returned invalid tracking JSON', { cause });
   }
+  // Without a Turnstile token the endpoint answers every number with an empty object.
+  if (isRecord(payload) && Object.keys(payload).length === 0) throw new ChallengeError(PROVIDER, 'Speedy answers only its tracker page once its Turnstile check passes');
   return parseSpeedy(payload, rawNumber);
 }
 

@@ -1,21 +1,28 @@
 # Speedy
 
 Tracks Speedy shipments in Bulgaria, including legs Speedy hands to partners abroad, through
-the anonymous endpoint behind MySpeedy's public tracker.
+the endpoint behind MySpeedy's public tracker.
 
 ## How it works
 
-The [MySpeedy tracker](https://myspeedy.speedy.bg/pub/tracking/) reads a shipment with
-`GET https://myspeedy.speedy.bg/rest/public/track?id=...&language=en`, and the adapter sends
-that one request. No account, cookie, key or browser is needed. The Speedy app points at the
-same host. www.speedy.bg sits behind a Cloudflare challenge, and Speedy's REST API at
-api.speedy.bg needs a customer account, so neither is used.
+1. `direct`: `GET https://myspeedy.speedy.bg/rest/public/track?id=...&language=en`, the
+   endpoint the [MySpeedy tracker](https://myspeedy.speedy.bg/pub/tracking/) reads a shipment
+   from. It answers only a request carrying the token of the tracker's Cloudflare Turnstile
+   check: without one it answers every number with an empty object, and it refuses a token it
+   did not issue with HTTP 406. Both are a challenge.
+2. `trawl`: the private browser service opens the tracker page for the number, in English.
+   The page passes its Turnstile check and asks the endpoint for the number with its token,
+   and the service's capture helper keeps that one reply for the whole number. The token stays in the
+   browser. A page that sends no request did not pass its check.
+
+www.speedy.bg sits behind a Cloudflare challenge, and Speedy's REST API at api.speedy.bg needs
+a customer account, so neither is used.
 
 The reply must name the whole requested number. For a number it does not know, the endpoint
 answers HTTP 404 with MySpeedy's "the requested resource does not exist" page, which the
 tracker shows as an invalid number, so that page is not found. Other 404s, blocked pages,
-HTTP errors and malformed replies keep their own failure kinds. Recognition uses the same
-lookup.
+HTTP errors and malformed replies keep their own failure kinds. Recognition makes the `direct`
+request alone, so it cannot confirm a number while the check stands.
 
 ## Numbers
 
@@ -58,6 +65,6 @@ from its path at `myspeedy.speedy.bg/pub/tracking/{number}`. Such links name Spe
 
 ## Live test
 
-Set `SPEEDY_TRACKING_NUMBER` outside the repository and run
+Set `SPEEDY_TRACKING_NUMBER`, and optionally `SPEEDY_UNKNOWN_NUMBER` for a not-found shipment
+number, outside the repository, with `FLARESOLVERR_URL` for the browser checks, and run
 `npm run test:carriers:live -- carriers/speedy/adapter.live.test.ts`.
-Optionally set `SPEEDY_UNKNOWN_NUMBER` to check a not-found shipment number.

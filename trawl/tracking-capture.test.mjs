@@ -423,6 +423,48 @@ test('SwiftX reports a page that never asked for the number and a failed query',
   await assert.rejects(capture.drain(), { message: 'SwiftX tracking request failed: network failure' });
 });
 
+const speedyApi = 'https://myspeedy.speedy.bg/rest/public/track';
+// A made-up number in Speedy's eleven-digit layout, the same one the adapter's tests use.
+const speedyNumber = '69000000001';
+const speedyUrl = `https://myspeedy.speedy.bg/pub/tracking/${speedyNumber}?language=en`;
+const speedyRequest = `${speedyApi}?id=${speedyNumber}&language=en&mobile=N`;
+
+test('Speedy captures only its tracker page for one whole number and the page\'s exact request', async () => {
+  for (const url of [speedyUrl.replace('myspeedy.speedy.bg', 'other.test'), speedyUrl.replace('?language=en', ''),
+    speedyUrl.replace('en', 'bg'), speedyUrl + '#x', speedyUrl.replace(speedyNumber, '6900000000'), speedyUrl.replace('/pub/', '/pub/x/')]) {
+    assert.equal(await attachTrackingCapture({}, url, { captureResponses: [speedyApi] }), undefined);
+  }
+  assert.equal(await attachTrackingCapture({}, speedyUrl, { captureResponses: [`${speedyApi}?id=${speedyNumber}`] }), undefined);
+  const { capture, respond } = await fixture(speedyUrl, speedyApi);
+  await respond(JSON.stringify({ barcode: '69000000009', events: [] }), { url: speedyRequest.replace(speedyNumber, '69000000009') });
+  await respond(JSON.stringify({ barcode: speedyNumber, events: [] }), { url: speedyRequest.replace('mobile=N', 'mobile=Y') });
+  await respond(JSON.stringify({ barcode: speedyNumber, events: [] }), { url: speedyRequest, method: 'POST' });
+  assert.equal(capture.hasResponse(), false);
+  await respond(JSON.stringify({ barcode: speedyNumber, events: [{ operationCode: 1 }] }), { url: speedyRequest });
+  await capture.settle(100);
+  assert.equal(capture.hasResponse(), true);
+  const rows = (await capture.drain()).capturedResponses;
+  assert.deepEqual(rows.map(row => [row.url, row.status, JSON.parse(row.body).barcode]), [[speedyRequest, 200, speedyNumber]]);
+});
+
+test('Speedy keeps the missing-resource page and a refused Turnstile token, and other refusals without their bodies', async () => {
+  const page = '<!DOCTYPE html><html><h4>Заявеният ресурс не съществува.</h4></html>';
+  const refusal = JSON.stringify([{ context: 'turnstile-failure' }]);
+  for (const [status, body, type, kept] of [[404, page, 'text/html;charset=UTF-8', page], [406, refusal, 'application/json', refusal],
+    [403, 'blocked', 'text/html', null], [429, 'slow down', 'text/html', null]]) {
+    const { capture, respond } = await fixture(speedyUrl, speedyApi);
+    await respond(body, { url: speedyRequest, status, headers: { 'content-type': type, 'content-length': undefined, 'retry-after': '60' },
+      ...(kept === null ? { read: () => { throw new Error('must not read a refused body'); } } : {}) });
+    await capture.settle(100);
+    assert.equal(capture.hasResponse(), true);
+    const [row] = (await capture.drain()).capturedResponses;
+    assert.deepEqual([row.status, row.body, row.error], [status, kept, undefined]);
+  }
+  const silent = await fixture(speedyUrl, speedyApi);
+  await silent.capture.settle(1);
+  await assert.rejects(silent.capture.drain(), { message: 'Speedy produced no tracking response after submission' });
+});
+
 const australiaNumber = '7T0000000000000000001';
 const australiaUrl = `https://auspost.com.au/mypost/track/details/${australiaNumber}`;
 const australiaApi = `https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments?trackingIds=${australiaNumber}`;

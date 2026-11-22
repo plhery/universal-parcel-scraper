@@ -2,8 +2,9 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { createTracker } from '../../facade/index.js';
-import { adapter, SPEEDY_ENDPOINT, SpeedyTracker } from './adapter.js';
+import { adapter, SPEEDY_ENDPOINT, speedyPageRequest, SpeedyTracker } from './adapter.js';
 import { parseSpeedy, parseSpeedyReply } from './parser.js';
 import { speedyOperation, speedyPhase, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -114,6 +115,9 @@ describe('Speedy HTTP adapter', () => {
     expect(() => parseSpeedyReply(404, '<html>Not Found</html>', COLLECTED)).toThrow(expect.objectContaining({ kind: 'transport' }));
     expect(() => parseSpeedyReply(200, '<html><title>Just a moment...</title></html>', COLLECTED)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     expect(() => parseSpeedyReply(200, '<html><title>MySpeedy - Login</title></html>', COLLECTED)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    // Without the tracker page's Turnstile token every number gets an empty object; a refused token gets 406.
+    expect(() => parseSpeedyReply(200, '{}', COLLECTED)).toThrow(expect.objectContaining({ kind: 'challenge' }));
+    expect(() => parseSpeedyReply(406, '[{"context":"turnstile-failure"}]', COLLECTED)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     expect(parseSpeedyReply(200, `\uFEFF${text('collected.json')}`, COLLECTED)).toMatchObject({ current_stage: 'delivered' });
   });
 
@@ -166,6 +170,64 @@ describe('Speedy HTTP adapter', () => {
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: COLLECTED, carrier: 'speedy' }, { budgetMs: 3000 });
     expect(answer).toMatchObject({ carrier: 'speedy', source: 'speedy', result: { current_stage: 'delivered' } });
     expect(fetcher.mock.calls.every(([url]) => String(url).startsWith(`${SPEEDY_ENDPOINT}?`))).toBe(true);
+  });
+});
+
+const page = (captures: Partial<TrawlScrapeResponse['capturedResponses'][number]>[], extra: Partial<TrawlScrapeResponse> = {}): TrawlScrapeResponse => ({
+  url: '', html: '', cookies: [], userAgent: null, tier: 2, statusCode: 200, raw: {}, ...extra,
+  capturedResponses: captures.map(capture => ({ url: speedyPageRequest(COLLECTED), status: 200, headers: {}, body: text('collected.json'),
+    truncated: false, base64Encoded: false, error: null, ...capture })),
+});
+const browser = (answer: TrawlScrapeResponse) => {
+  const scrape = vi.fn<TrawlClient['scrape']>().mockResolvedValue(answer);
+  const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}', { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }));
+  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: { scrape } as unknown as TrawlClient, browserExecutablePath: null }) };
+};
+
+describe('Speedy through its tracker page', () => {
+  it('opens the tracker page when the endpoint wants its Turnstile token, and reads the page\'s own reply', async () => {
+    const { scrape, fetcher, instance } = browser(page([{}]));
+    expect(instance.steps).toEqual(['direct', 'trawl']);
+    await expect(instance.track({ number: COLLECTED })).resolves.toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(scrape).toHaveBeenCalledTimes(1);
+    const [request, options] = scrape.mock.calls[0]!;
+    expect(request).toMatchObject({ url: `https://myspeedy.speedy.bg/pub/tracking/${COLLECTED}?language=en`, skipHttp: true,
+      captureResponses: [SPEEDY_ENDPOINT] });
+    expect(options).toMatchObject({ requireSolved: false, signal: expect.any(AbortSignal) });
+    expect(speedyPageRequest(COLLECTED)).toBe(`${SPEEDY_ENDPOINT}?id=${COLLECTED}&language=en&mobile=N`);
+  });
+
+  it('reads the missing-resource page as not found and keeps refusals, other numbers and partial replies apart', async () => {
+    for (const [answer, kind] of [
+      [page([{ status: 404, body: text('not-found.html') }]), 'not_found'],
+      [page([{ status: 404, body: null, error: 'body was not read' }]), 'transport'],
+      [page([{ status: 200, body: null, error: 'body was not read' }]), 'transport'],
+      [page([{ status: 406, body: null }]), 'challenge'],
+      [page([{ status: 403, body: null }]), 'challenge'],
+      [page([{ status: 429, body: null, headers: { 'retry-after': '60' } }]), 'rate_limited'],
+      [page([{ status: 400, body: null }]), 'transport'],
+      [page([]), 'challenge'],
+      [page([{ url: speedyPageRequest(PARTNER) }]), 'challenge'],
+      [page([{ url: `${SPEEDY_ENDPOINT}?id=${COLLECTED}&language=en` }]), 'challenge'],
+      [page([{ body: text('collected.json').replace(COLLECTED, PARTNER) }]), 'schema'],
+      [page([{}], { tier: 1 }), 'transport'],
+    ] as const) {
+      await expect(browser(answer).instance.track({ number: COLLECTED })).rejects.toMatchObject({ kind });
+    }
+  });
+
+  it('keeps recognition on HTTP', async () => {
+    const { scrape, instance } = browser(page([{}]));
+    await expect(instance.recognize!(COLLECTED)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(scrape).not.toHaveBeenCalled();
+  });
+
+  it('answers a found parcel over HTTP without the browser', async () => {
+    const { scrape, fetcher, instance } = browser(page([{}]));
+    fetcher.mockResolvedValue(reply('collected'));
+    await expect(instance.track({ number: COLLECTED })).resolves.toMatchObject({ status: 'delivered' });
+    expect(scrape).not.toHaveBeenCalled();
   });
 });
 

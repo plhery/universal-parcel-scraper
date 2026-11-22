@@ -72,6 +72,9 @@ the page's search box and presses Enter. The page then asks for the booking's mi
 each container's moves, as a guest. The helper lets only those two lookups for the whole number
 out, captures the containers' moves, and passes on the events and ports without weights,
 dangerous goods, reefer settings, vessels or voyages.
+Speedy opens MySpeedy's English tracker for the number. The page passes its Turnstile check and
+asks the tracking endpoint for the number with its token. The helper keeps that one reply, the
+missing-resource page of a number Speedy does not know, or the 406 of a refused token.
 Hapag-Lloyd opens its tracking page with the whole reference in the page's route. Cloudflare's
 check and then the page's own Turnstile may each show their checkbox; the helper clicks one only
 when nothing covers it, at most three times. The page then asks the tracking service for the

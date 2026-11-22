@@ -503,6 +503,26 @@ const SITES = [
     },
   },
   {
+    // MySpeedy's tracker passes its Turnstile check, then asks for the number
+    // in its route once, with the check's token. A number it does not know
+    // gets its 404 page and a refused token gets 406; both are kept.
+    api: 'https://myspeedy.speedy.bg/rest/public/track',
+    provider: 'Speedy',
+    requestMethod: 'GET',
+    allowTextResponse: true,
+    readStatuses: [404, 406],
+    readyOnRequest: true,
+    apiForNumber(number) {
+      return `${this.api}?id=${number}&language=en&mobile=N`;
+    },
+    number(page) {
+      if (page.origin !== 'https://myspeedy.speedy.bg' || page.search !== '?language=en' || page.hash) return null;
+      return /^\/pub\/tracking\/(\d{11})$/.exec(page.pathname)?.[1] ?? null;
+    },
+    // One request, one final reply. The adapter binds the barcode it names.
+    settled() { return true; },
+  },
+  {
     // FedEx answers once. The edge accepts this call only from the session
     // the page established, which is why the reply is read here and never
     // replayed. The page redirects its canonical /fedextrack/ URL to the
@@ -632,7 +652,7 @@ export async function attachTrackingCapture(page, url, options) {
     // UPS retries can arrive after the old capture limit. Keep their arrival
     // order and latest metadata, including refusals whose bodies are private.
     if (site.keepLatestCaptures && entries.length > 20) entries.shift();
-    if (entry.status !== 200 && !site.perNumber) {
+    if (entry.status !== 200 && !site.perNumber && !site.readStatuses?.includes(entry.status)) {
       if (!site.protectionRetry || ![401, 403].includes(entry.status)) finish();
       return;
     }

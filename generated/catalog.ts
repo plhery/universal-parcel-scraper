@@ -58352,7 +58352,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "speedy",
-      "recognitionRank": 280
+      "recognitionRank": 280,
+      "browser": true
     },
     "canaryUrl": "https://myspeedy.speedy.bg/pub/tracking/",
     "trackingUrlTemplate": "https://myspeedy.speedy.bg/pub/tracking/{trackingNumber}",

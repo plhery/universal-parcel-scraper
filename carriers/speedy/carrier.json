@@ -21,8 +21,10 @@
     "mode": "automatic",
     "adapter": "speedy",
     "steps": [
-      "direct"
+      "direct",
+      "trawl"
     ],
+    "browser": true,
     "recognition": {
       "rank": 280
     }
