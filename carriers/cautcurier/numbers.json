@@ -1,5 +1,24 @@
 {
   "carrier": "cautcurier",
-  "gap": "No public page shows a CautCurier number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "489581",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://tracking.cautcurier.ro/assets/index-ByOHLPK7.js",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The AWB the tracking page's script keys a sample timeline to. The lookup answers it with an order CautCurier's office cancelled."
+    }
+  ]
 }

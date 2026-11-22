@@ -2728,6 +2728,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'x-express-rs', number: '26-9999999999',
     route: /^https:\/\/www\.x-express\.rs\/korisnicki-panel\/pracenje-posiljke\/26-9999999999$/,
     marker: /Pošiljka sa kodom <b>26-9999999999<\/b> nije pronađena/ },
+  // The page looks the awb parameter up as it loads and answers an unknown AWB with its notice.
+  { carrier: 'cautcurier', number: '999999999',
+    route: /^https:\/\/tracking\.cautcurier\.ro\/\?awb=999999999$/,
+    marker: /AWB negăsit|AWB not found/i, forwarding: { notFound: /AWB negăsit|AWB not found/i } },
 ];
 
 /**

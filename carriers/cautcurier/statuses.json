@@ -1,4 +1,117 @@
 {
   "carrier": "cautcurier",
-  "entries": []
+  "entries": [
+    {
+      "code": "Created",
+      "wording": "Order Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The sender booked the order."
+    },
+    {
+      "code": "Allocated",
+      "wording": "Order Allocated",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The order was given to a courier, who has not collected it yet."
+    },
+    {
+      "code": "Picked",
+      "wording": "Order Picked Up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The courier collected the parcel from the sender."
+    },
+    {
+      "code": "InTransit",
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "On its way; the tracker's summary groups it with the collection."
+    },
+    {
+      "code": "InWarehouse",
+      "wording": "Order In Warehouse",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "At CautCurier's warehouse between collection and delivery."
+    },
+    {
+      "code": "Delivery",
+      "wording": "Order Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Delivered to the recipient."
+    },
+    {
+      "code": "NotHome",
+      "wording": "Not Home",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "Nobody was at the address to take the parcel."
+    },
+    {
+      "code": "InitialOrderDelivered",
+      "wording": "Initial Order Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The order a return comes from was delivered; the tracker shows it with the delivery's icon and colour."
+    },
+    {
+      "code": "ReturnPickedUp",
+      "wording": "Return Picked Up",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The courier collected the parcel the recipient sends back; the tracker groups it with Returned."
+    },
+    {
+      "code": "Returned",
+      "wording": "Returned",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The parcel went back to the sender."
+    },
+    {
+      "code": "Declined",
+      "wording": "Order Cancelled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The order was cancelled."
+    },
+    {
+      "code": "CanceledByHQAdmin",
+      "wording": "Order Cancelled By Admin",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "CautCurier's office cancelled the order."
+    },
+    {
+      "code": "CanceledBySender",
+      "wording": "Order Cancelled By Sender",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The sender cancelled the order."
+    },
+    {
+      "code": "CanceledByUser",
+      "wording": "Order Cancelled By User",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The customer cancelled the order."
+    }
+  ]
 }

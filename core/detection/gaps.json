@@ -6388,5 +6388,11 @@
     "pattern": "^\\d{12}$",
     "kind": "collision",
     "reason": "X Express Serbia numbers, two digits, a hyphen and ten digits, lose their hyphen in the twelve-digit shape many carriers' numbers share, so the shape cannot name X Express Serbia; use explicit selection or its share link."
+  },
+  {
+    "carrier": "cautcurier",
+    "pattern": "^\\d{6}$",
+    "kind": "collision",
+    "reason": "CautCurier AWBs are its order ids, six digits today, a shape many carriers' numbers share, so the shape cannot name CautCurier; use explicit selection or its tracking link."
   }
 ]

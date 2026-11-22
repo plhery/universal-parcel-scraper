@@ -16,18 +16,47 @@
   "timezone": "Europe/Bucharest",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "cautcurier",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "provider_code",
+    "weight"
+  ],
   "portal": {
     "url": "https://tracking.cautcurier.ro/?awb={trackingNumber}",
     "searchUrl": "https://tracking.cautcurier.ro/",
     "canaryUrl": "https://tracking.cautcurier.ro/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "weight",
+      "sender_name",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "provider_code",
+      "weight"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "service_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
