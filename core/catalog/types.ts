@@ -118,6 +118,12 @@ export interface DetectionRule {
    * candidates have all missed it (`outsideCountry`).
    */
   servedCountriesOnly?: boolean;
+  /**
+   * Low confidence only: a shape too weak to ask the carrier about beside the others, such as a range another
+   * carrier's numbers fill. Recognition asks the carrier about a number only such rules offer only once every other
+   * candidate has missed it (`lastResort`).
+   */
+  lastResort?: boolean;
 }
 
 /** A link rule as it is written in the catalog, before its regexes compile. */

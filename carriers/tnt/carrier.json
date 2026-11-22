@@ -95,6 +95,12 @@
       "id": "tnt-2",
       "pattern": "^(?!1[78])\\d{16}$",
       "confidence": "low"
+    },
+    {
+      "id": "tnt-3",
+      "pattern": "^1[78]\\d{14}$",
+      "confidence": "low",
+      "lastResort": true
     }
   ]
 }

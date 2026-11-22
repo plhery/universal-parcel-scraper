@@ -1,6 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch } from '../../core/detection/detect.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { askedLast } from '../../core/testing/recognition.js';
 import { adapter, normalizeTntExpressNumber, normalizeTntFranceNumber, parseTntExpressResponse, parseTntFranceResponse, TntExpressTracker, TntFranceTracker } from './adapter.js';
 import { tntExpressStatus } from './status.js';
 
@@ -73,6 +76,25 @@ describe('TNT France public tracking', () => {
       .mockResolvedValueOnce(new Response('', { status: 404 }));
     expect((await new TntFranceTracker({ fetcher }).fetch(NUMBER)).status).toBe('pending');
     await expect(new TntFranceTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+  });
+});
+
+describe('TNT France recognition', () => {
+  it('asks TNT about sixteen digits from 17 or 18 only once every other candidate has missed them', () => {
+    // Synthetic. A TNT France consignment for Charente-Maritime or Cher opens 17 or 18, where Vinted Go's
+    // Luhn-checked parcel numbers sit: the first passes Luhn's check, the second fails it.
+    for (const number of ['1700000000000001', '1800000000000001']) {
+      expect(detectCarrierMatch(number).candidates, number).toContain('tnt');
+      for (const countryHint of [undefined, 'FR', 'GB']) {
+        expect(askedLast(number, 'tnt', { countryHint }), `${number} ${countryHint}`).toBe(true);
+        expect(recognitionCandidates(number, { countryHint }).find(({ carrier }) => carrier === 'tnt')?.outsideCountry).toBeUndefined();
+        expect(recognitionAskedCarriers(number, { countryHint }), `${number} ${countryHint}`).not.toContain('tnt');
+      }
+    }
+    expect(recognitionAskedCarriers('1700000000000001')[0]).toBe('vinted-go');
+    // Another département's consignment is asked with the others.
+    expect(recognitionAskedCarriers(NUMBER)).toContain('tnt');
+    expect(recognitionCandidates(NUMBER).find(({ carrier }) => carrier === 'tnt')?.lastResort).toBeUndefined();
   });
 });
 

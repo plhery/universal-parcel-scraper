@@ -531,6 +531,10 @@
         "servedCountriesOnly": {
           "description": "Low-confidence rules only: the shape is printed elsewhere too, such as a shop's own number, so when the caller's country hint names a country the carrier does not serve, recognition asks it about a number only such rules offer only once the other candidates have all missed it.",
           "const": true
+        },
+        "lastResort": {
+          "description": "Low-confidence rules only: the shape is too weak to ask the carrier about beside the others, such as a range another carrier's numbers fill, so recognition asks it about a number only such rules offer only once every other candidate has missed it.",
+          "const": true
         }
       }
     }

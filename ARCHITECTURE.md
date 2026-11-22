@@ -433,13 +433,16 @@ print too, so for such a run, when the country hint is none it serves or there i
 candidate outside the country (`outsideCountry`). A low-confidence rule can set
 `servedCountriesOnly` for a shape printed elsewhere too, such as a shop's own number: a carrier
 only such rules offer the number is outside the country when the hint names one it does not
-serve. Candidates outside the country come after all others, whatever the hint, and are asked
-only once every other candidate has missed the number, never beside them: a carrier knowing
-another carrier's number for a parcel of its own stays unlikely to settle it.
-`recognitionAskedCarriers` is the first `MAX_RECOGNITIONS` of that order outside the country
-apart. `createTracker()` asks those first, the next `MAX_RECOGNITIONS` only while none asked so
-far knows the number and the budget lasts, and those outside the country in rounds of their own
-after them.
+serve. A low-confidence rule can set `lastResort` for a shape too weak to ask its carrier
+beside the others, wherever the lookup comes from, such as a range another carrier's numbers
+fill: TNT France's sixteen digits from 17 or 18 sit among Vinted Go's. A candidate outside the
+country, or one only `lastResort` rules offer the number, is a last resort (`lastResort`): last
+resorts come after all others, whatever the hint, and are asked only once every other candidate
+has missed the number, never beside them, as a carrier knowing another carrier's number for a
+parcel of its own stays unlikely to settle it.
+`recognitionAskedCarriers` is the first `MAX_RECOGNITIONS` of that order, last resorts apart.
+`createTracker()` asks those first, the next `MAX_RECOGNITIONS` only while none asked so far
+knows the number and the budget lasts, and last resorts in rounds of their own after them.
 `settleRecognition` sets aside an answer quiet for 60 days, taken for an older parcel that
 reused the number. An answer without an instant is dated by its local clock
 (`lastActivityLocal`); one without any clock counts only when no dated answer is recent.

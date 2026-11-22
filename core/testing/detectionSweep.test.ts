@@ -236,9 +236,9 @@ describe('swift golden file', { timeout: 180_000 }, () => {
     expect(readDetectionGolden(), 'Rewrite it with npm run generate:golden once the change is deliberate').toEqual(buildDetectionGolden());
   });
 
-  it('records the carriers the app asks: the first recognition candidates, those outside the country apart', () => {
+  it('records the carriers the app asks: the first recognition candidates, last resorts apart', () => {
     for (const { input, asked } of readDetectionGolden()) {
-      const first = recognitionCandidates(input).filter((candidate) => !candidate.outsideCountry)
+      const first = recognitionCandidates(input).filter((candidate) => !candidate.lastResort)
         .slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
       expect(recognitionAskedCarriers(input)).toEqual(first);
       expect(asked ?? []).toEqual(first);

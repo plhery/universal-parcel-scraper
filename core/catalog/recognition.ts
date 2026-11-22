@@ -39,10 +39,14 @@ export interface RecognitionCandidate {
   countryMatch?: 'home' | 'served';
   /**
    * The carrier's numbers are runs other carriers print elsewhere, and the country hint
-   * names no country it serves, or there is none: ask it only once every other candidate
-   * has missed the number, never beside them. These candidates come last.
+   * names no country it serves, or there is none: one reason a candidate is `lastResort`.
    */
   outsideCountry?: true;
+  /**
+   * Ask it only once every other candidate has missed the number, never beside them: it is
+   * `outsideCountry`, or only `lastResort` rules offer it the number. These candidates come last.
+   */
+  lastResort?: true;
 }
 
 export interface RecognitionOptions {
@@ -160,28 +164,31 @@ export function recognitionCandidates(
   // Paquetexpress's guías, letters and digits, are asked whatever the country.
   // A rule can keep its carrier to its countries too: SHEIN prints its package number on
   // parcels Paack and Ecoscooting deliver in Spain and on parcels carriers elsewhere deliver.
+  // A rule too weak to ask its carrier beside the others makes it a last resort wherever the
+  // lookup comes from: TNT France's sixteen digits from 17 or 18 sit among Vinted Go's.
   const bareRun = /^\d+$/.test(normalized);
-  const servedOnly = (carrier: string) => {
+  const offeredOnlyBy = (carrier: string, flag: 'servedCountriesOnly' | 'lastResort') => {
     const fitting = (CARRIER_DEFINITIONS[carrier as CarrierId]?.detectionRules ?? [])
       .filter((rule) => ruleFits(rule, normalized, printed));
-    return fitting.length > 0 && fitting.every((rule) => rule.servedCountriesOnly === true);
+    return fitting.length > 0 && fitting.every((rule) => rule[flag] === true);
   };
   const outside = (carrier: string) => {
     if (countryScore(carrier) > 0) return false;
     if (CARRIER_DEFINITIONS[carrier as CarrierId]?.tracking.recognitionServedCountriesOnly && bareRun) return true;
-    return Boolean(country && /^[A-Z]{2}$/.test(country) && servedOnly(carrier));
+    return Boolean(country && /^[A-Z]{2}$/.test(country) && offeredOnlyBy(carrier, 'servedCountriesOnly'));
   };
   // A browser lookup is costly: a carrier names the numbers worth one (DPD France its own layouts, not every run of digits).
   const answers = (carrier: string) => patterns.get(carrier)?.test(normalized) ?? true;
   const asked = candidates.filter((carrier) => ranks[carrier] !== undefined && AUTOMATIC_CARRIER_IDS.has(carrier)
     && carrierAdapter(carrier) !== 'universal' && answers(carrier) && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier));
   const outsiders = new Set(asked.filter(outside));
+  const lastResort = new Set(asked.filter((carrier) => outsiders.has(carrier) || offeredOnlyBy(carrier, 'lastResort')));
   const checks = new Map(asked.map((carrier) => [carrier, checkDigit(carrier, normalized, printed)]));
   // A check digit other candidates' numbers pass too tells them apart from the rest, not from each other.
   const peers = (carrier: string) => checks.get(carrier) === 'backs'
     ? asked.filter((other) => other !== carrier && checks.get(other)) : [];
   const score = (carrier: string) => [
-    outsiders.has(carrier) ? 0 : 1,
+    lastResort.has(carrier) ? 0 : 1,
     carrier === options.hint ? 1 : 0,
     preferred.includes(carrier) ? 1 : 0,
     countryScore(carrier),
@@ -208,15 +215,16 @@ export function recognitionCandidates(
         ...(shared.length ? { checkDigitPeers: shared } : {}),
         ...(match ? { countryMatch: match === 2 ? 'home' : 'served' } : {}),
         ...(outsiders.has(carrier) ? { outsideCountry: true as const } : {}),
+        ...(lastResort.has(carrier) ? { lastResort: true as const } : {}),
       };
     }).filter((candidate) => options.phase !== 'browser' || !candidate.needsInput);
 }
 
 /**
  * The carriers the detect route asks first about a number, best first; empty when none can
- * answer. Those outside the country never are: they come once everything else has missed.
+ * answer. Last resorts never are: they come once everything else has missed.
  */
 export function recognitionAskedCarriers(number: string, options: RecognitionOptions = {}): string[] {
-  return recognitionCandidates(number, options).filter((candidate) => !candidate.outsideCountry)
+  return recognitionCandidates(number, options).filter((candidate) => !candidate.lastResort)
     .slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
 }

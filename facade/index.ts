@@ -210,10 +210,10 @@ export function createTracker(options: TrackerOptions = {}) {
     // Candidates come from the number as printed: a rule can need its separators.
     const candidates = recognitionCandidates(raw).filter(candidate => typeof registry.for(candidate.carrier)?.recognize === 'function');
     // The carriers `recognitionAskedCarriers` names are asked first; the next MAX_RECOGNITIONS
-    // only while none asked so far knows the number and the budget lasts. Those outside the
-    // country come in rounds of their own, after the others.
-    const rounds = [false, true].flatMap(outside => {
-      const group = candidates.filter(candidate => Boolean(candidate.outsideCountry) === outside);
+    // only while none asked so far knows the number and the budget lasts. Last resorts come
+    // in rounds of their own, after the others.
+    const rounds = [false, true].flatMap(last => {
+      const group = candidates.filter(candidate => Boolean(candidate.lastResort) === last);
       return Array.from({ length: Math.ceil(group.length / MAX_RECOGNITIONS) },
         (_, index) => group.slice(index * MAX_RECOGNITIONS, (index + 1) * MAX_RECOGNITIONS));
     });

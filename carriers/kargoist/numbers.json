@@ -18,7 +18,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "dhl-ecommerce"
+          "dhl-ecommerce",
+          "tnt"
         ]
       },
       "note": "Archived lookup on Kargoist's own tracker; the opened capture shows the parcel under this customer barcode with its history up to delivery."

@@ -158,7 +158,7 @@ describe('recognition candidates', () => {
     const brazil = recognitionCandidates('12345678901231', { countryHint: 'BR', hint: 'delhivery' });
     expect(brazil.find((candidate) => candidate.carrier === 'jadlog')).toMatchObject({ countryMatch: 'home' });
     expect(brazil.find((candidate) => candidate.carrier === 'jadlog')?.outsideCountry).toBeUndefined();
-    expect(brazil.at(-1)).toEqual({ carrier: 'delhivery', needsInput: null, preferred: false, outsideCountry: true });
+    expect(brazil.at(-1)).toEqual({ carrier: 'delhivery', needsInput: null, preferred: false, outsideCountry: true, lastResort: true });
     expect(recognitionCandidates('06080000000002')).toEqual([
       { carrier: 'dpd', needsInput: null, preferred: true },
       { carrier: 'dpd-be', needsInput: null, preferred: false },
@@ -172,9 +172,9 @@ describe('recognition candidates', () => {
       { carrier: 'dpd-hu', needsInput: null, preferred: false },
       { carrier: 'dpd-fr', needsInput: null, preferred: false },
       { carrier: 'ciblex', needsInput: null, preferred: false },
-      { carrier: 'jadlog', needsInput: null, preferred: false, outsideCountry: true },
+      { carrier: 'jadlog', needsInput: null, preferred: false, outsideCountry: true, lastResort: true },
     ]);
-    const inside = (number: string, options = {}) => recognitionCandidates(number, options).filter(({ outsideCountry }) => !outsideCountry);
+    const inside = (number: string, options = {}) => recognitionCandidates(number, options).filter(({ lastResort }) => !lastResort);
     expect(inside('12345678901', { hint: 'gls-de' })).toEqual([
       { carrier: 'gls-de', needsInput: 'postcode', preferred: false },
       { carrier: 'gls-fr', needsInput: null, preferred: false },
@@ -301,7 +301,7 @@ describe('asking carriers', () => {
   });
   it('asks all at once and treats a failure or a late answer as no answer', async () => {
     const started: string[] = [];
-    const outcomes = await recognizeAll(recognitionCandidates('12345678901231').filter(({ outsideCountry }) => !outsideCountry), async (carrier) => {
+    const outcomes = await recognizeAll(recognitionCandidates('12345678901231').filter(({ lastResort }) => !lastResort), async (carrier) => {
       started.push(carrier);
       if (carrier === 'dpd') return { known: true, lastActivityAt: '2026-09-09T08:00:00Z' };
       if (carrier === 'hermes-de') throw new Error('upstream down');

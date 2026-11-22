@@ -5479,6 +5479,11 @@
       {
         "pattern": "^(?!1[78])\\d{16}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^1[78]\\d{14}$",
+        "confidence": "low",
+        "lastResort": true
       }
     ]
   },

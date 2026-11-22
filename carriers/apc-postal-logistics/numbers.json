@@ -197,7 +197,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "dhl-ecommerce"
+          "dhl-ecommerce",
+          "tnt"
         ]
       },
       "note": "A review on APC Postal Logistics' Trustpilot page gives it with the ParcelConnect Priority DDU service."
