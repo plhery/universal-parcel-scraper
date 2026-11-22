@@ -16,8 +16,12 @@ Recognition asks the same lookup.
 
 - Rows carry wall clocks without a zone, written where the parcel was: at its origin, which can be
   abroad, and at its destination. Each keeps its wall clock.
-- Some rows name a place, the origin warehouse's address or the area of the delivery station, in
-  the wording itself; they are shown as written.
+- Some rows name a place in the wording itself: the origin's town, the origin hub, the country of
+  the airport or facility the parcel reached, the town the delivery station serves. The adapter
+  reads it as the row's place, so a lookup dates the rows on that place's clock rather than the
+  carrier's home clock, and the destination facility's country as the destination.
+- The site fails with HTTP 500 when a request accepts any language (`Accept-Language: *`, Node's
+  default), so the adapter names Chinese and English.
 - Universal providers do not always know these parcels, so the tracker is read directly.
 
 ## Numbers

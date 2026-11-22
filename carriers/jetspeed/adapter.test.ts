@@ -26,6 +26,8 @@ describe('JETSPEED tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(own('track.html')));
     const result = await new JetspeedTracker({ fetcher, recorder: NOOP_RECORDER }).fetch(NUMBER.toLowerCase());
     expect(String(fetcher.mock.calls[0]![0])).toBe(`https://www.jetspeed-express.com/search_kuai_di/search/orderid/${NUMBER}`);
+    // The site fails on `Accept-Language: *`, Node's default.
+    expect(new Headers(fetcher.mock.calls[0]![1]?.headers).get('Accept-Language')).toBe('zh-CN,zh;q=0.9,en;q=0.8');
     expect(result).toMatchObject({
       status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_update: null,
       last_status_text: 'Parcel arrived at the local delivery station, serving Lyon,69007.', last_update_local: '2026-05-23T01:16:57',
@@ -34,9 +36,12 @@ describe('JETSPEED tracking adapter', () => {
     expect(result.events?.every((event) => event.local_time && !event.time && event.stage)).toBe(true);
     expect(result.events?.at(-1)).toEqual({
       local_time: '2026-05-04T11:20:18', description: 'Mississauga,ON,CA,L5T 0A1,Order information received by the carrier.',
-      stage: 'registered', stage_source: 'carrier_map',
+      location: 'Mississauga, ON, CA', stage: 'registered', stage_source: 'carrier_map',
     });
-    expect(result.events?.at(-2)).toMatchObject({ stage: 'accepted' });
+    expect(result.events?.at(-2)).toMatchObject({ stage: 'accepted', location: 'Mississauga, ON, CA' });
+    // The places the wordings name, and the destination facility's country.
+    expect(result.destination_country).toBe('FR');
+    expect(result.events?.map((event) => event.location).filter(Boolean)).toEqual(['Lyon', 'FR', 'FR', 'Toronto', 'Mississauga, ON, CA', 'Mississauga, ON, CA']);
   });
 
   it('settles the site’s no-order page as not found, and recognition with it', async () => {

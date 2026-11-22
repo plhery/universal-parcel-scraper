@@ -11,8 +11,9 @@ describe('JETSPEED live retrieval', () => {
     expect(answer).toMatchObject({ carrier: 'jetspeed', source: 'jetspeed' });
     expect(answer.attempts[0]).toMatchObject({ source: 'jetspeed', kind: 'ok' });
     expect(answer.result.events.length).toBeGreaterThan(0);
-    // Every row keeps its wall clock: the tracker states no zone.
-    expect(answer.result.events.every((event) => event.description && event.local_time && !event.time)).toBe(true);
+    // Every row keeps its wall clock, the tracker stating no zone; an instant deduced for it says how and is not ahead of the lookup.
+    expect(answer.result.events.every((event) => event.description && event.local_time
+      && (!event.time || (event.time_zone_basis && Date.parse(event.time) <= Date.now())))).toBe(true);
   });
 
   it.skipIf(!process.env.JETSPEED_UNKNOWN_NUMBER)('reads an unknown number as not found', async () => {

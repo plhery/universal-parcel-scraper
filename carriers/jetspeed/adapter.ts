@@ -8,6 +8,8 @@ import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/inde
 import { JETSPEED_MAX_BYTES, JETSPEED_NUMBER, jetspeedUrl, parseJetspeedPage, PROVIDER } from './parser.js';
 
 const REDIRECTS = [301, 302, 303, 307, 308];
+// The site fails with HTTP 500 on `Accept-Language: *`, which Node's fetch sends by default.
+const LANGUAGES = 'zh-CN,zh;q=0.9,en;q=0.8';
 
 export class JetspeedTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -17,7 +19,7 @@ export class JetspeedTracker {
     if (!JETSPEED_NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'Enter one JETSPEED tracking number');
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
       const { response, bytes } = await fetchBounded(jetspeedUrl(number), { signal, headers: {
-        Accept: 'text/html', 'User-Agent': userAgentOf(this.options.userAgent),
+        Accept: 'text/html', 'Accept-Language': LANGUAGES, 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: JETSPEED_MAX_BYTES,
         redirect: 'manual', fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, 403] })
         .catch((error: unknown) => { signal.throwIfAborted(); throw error; });

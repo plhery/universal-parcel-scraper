@@ -30,7 +30,9 @@
     }
   },
   "capabilities": [
-    "history"
+    "history",
+    "location",
+    "destination_country"
   ],
   "portal": {
     "url": "https://www.jetspeed-express.com/search_kuai_di/search/orderid/{trackingNumber}",
@@ -39,16 +41,19 @@
     "canaryUrl": "https://www.jetspeed-express.com/",
     "shows": [
       "status",
-      "history"
+      "history",
+      "location",
+      "destination_country"
     ],
     "scraped": [
       "status",
-      "history"
+      "history",
+      "location",
+      "destination_country"
     ],
     "discarded": [],
     "unavailable": [
       "eta",
-      "location",
       "offset_timestamps"
     ]
   },
