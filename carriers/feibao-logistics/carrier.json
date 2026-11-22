@@ -1,0 +1,74 @@
+{
+  "id": "feibao-logistics",
+  "displayName": "Feibao Logistics",
+  "aliases": [
+    "飞豹快运",
+    "中铁飞豹快运",
+    "飞豹物流",
+    "飞豹物流集团",
+    "飞豹智行供应链"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1d4f91"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "feibao-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "driver_name",
+      "driver_phone",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "driver_name",
+      "driver_phone",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "pieces",
+      "origin",
+      "destination",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

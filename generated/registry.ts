@@ -335,6 +335,7 @@ import { adapter as fedex } from '../carriers/fedex/adapter.js';
 import { adapter as fedexFreight } from '../carriers/fedex-freight/adapter.js';
 import { adapter as fedexInternationalConnect } from '../carriers/fedex-international-connect/adapter.js';
 import { adapter as fedexPl } from '../carriers/fedex-pl/adapter.js';
+import { adapter as feibaoLogistics } from '../carriers/feibao-logistics/adapter.js';
 import { adapter as feima } from '../carriers/feima/adapter.js';
 import { adapter as fermopoint } from '../carriers/fermopoint/adapter.js';
 import { adapter as fezDelivery } from '../carriers/fez-delivery/adapter.js';
@@ -1404,6 +1405,7 @@ export const REGISTRY: RegistryDefinition = {
     "fedex-freight": fedexFreight,
     "fedex-international-connect": fedexInternationalConnect,
     "fedex-pl": fedexPl,
+    "feibao-logistics": feibaoLogistics,
     "feima": feima,
     "fermopoint": fermopoint,
     "fez-delivery": fezDelivery,
@@ -2786,6 +2788,7 @@ export const REGISTRY: RegistryDefinition = {
     "fedex-freight": "fedex-freight",
     "fedex-international-connect": "fedex-international-connect",
     "fedex-pl": "fedex-pl",
+    "feibao-logistics": "feibao-logistics",
     "feima": "feima",
     "fennoroad": "universal",
     "fercam": "universal",

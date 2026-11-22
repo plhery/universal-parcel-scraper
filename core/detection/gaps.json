@@ -6361,5 +6361,10 @@
     "carrier": "disu-logistics",
     "kind": "by_design",
     "reason": "Disu waybills are twelve digits, a shape other carriers share; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "feibao-logistics",
+    "kind": "by_design",
+    "reason": "Feibao waybills, F and eleven digits or twelve digits, share their shapes with other carriers' numbers; use explicit selection or a named handoff."
   }
 ]

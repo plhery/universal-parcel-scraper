@@ -26976,6 +26976,29 @@
       }
     ]
   },
+  "feibao-logistics": {
+    "displayName": "Feibao Logistics",
+    "color": "#1d4f91",
+    "aliases": [
+      "飞豹快运",
+      "中铁飞豹快运",
+      "飞豹物流",
+      "飞豹物流集团",
+      "飞豹智行供应链"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "feibao-logistics"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "feima": {
     "displayName": "Feima",
     "color": "#fe5624",

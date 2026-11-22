@@ -1,0 +1,173 @@
+{
+  "carrier": "feibao-logistics",
+  "records": [
+    {
+      "number": "F00002866447",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ztky.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Feibao page lists. Feibao's endpoint answers it with freight from Shenzhen through the Dongguan and Haikou hubs, out for delivery at Baisha."
+    },
+    {
+      "number": "119033244150",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ztky.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Feibao page lists. Feibao's endpoint answers it with freight from a Beijing branch through the Beijing hub to Xinyi, signed for."
+    },
+    {
+      "number": "119033303959",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ztky.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Feibao page lists. Feibao's endpoint answers it with freight from Tongzhou through the Beijing hub to Chengdu, signed for."
+    },
+    {
+      "number": "F00002864814",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ztky.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Feibao page lists. Feibao's endpoint answers it with freight from Guangzhou to Chongqing, signed for."
+    },
+    {
+      "number": "119033213799",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ztky.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Feibao page lists. Feibao's endpoint answers it with freight from Harbin through the Guangzhou hub to Nanhai, signed for."
+    },
+    {
+      "number": "F00002866297",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ztky.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Feibao page lists. Feibao's endpoint answers it with freight from Dachang through the Beijing and Harbin hubs to Hailar, signed for."
+    }
+  ]
+}

@@ -18191,6 +18191,78 @@
     ]
   },
   {
+    "input": "119033213799",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "119033244150",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "119033303959",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "1190344374",
     "carrier": "unknown",
     "confidence": "low",
@@ -93606,6 +93678,39 @@
     ],
     "asked": [
       "aliexpress"
+    ]
+  },
+  {
+    "input": "F00002864814",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "F00002866297",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
+    ]
+  },
+  {
+    "input": "F00002866447",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "colis-prive"
+    ],
+    "asked": [
+      "colis-prive"
     ]
   },
   {

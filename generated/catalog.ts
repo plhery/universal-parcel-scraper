@@ -26980,6 +26980,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "feibao-logistics": {
+    "displayName": "Feibao Logistics",
+    "color": "#1d4f91",
+    "aliases": [
+      "飞豹快运",
+      "中铁飞豹快运",
+      "飞豹物流",
+      "飞豹物流集团",
+      "飞豹智行供应链"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "feibao-logistics"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "feima": {
     "displayName": "Feima",
     "color": "#fe5624",
@@ -71689,6 +71712,7 @@ export const CARRIER_IDS = [
   "fedex-freight",
   "fedex-international-connect",
   "fedex-pl",
+  "feibao-logistics",
   "feima",
   "fennoroad",
   "fercam",
@@ -73713,6 +73737,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fedex-freight": [],
   "fedex-international-connect": ["fedex-international-connect-1"],
   "fedex-pl": ["fedex-pl-2","fedex-pl-1"],
+  "feibao-logistics": [],
   "feima": ["feima-1","feima-2"],
   "fennoroad": [],
   "fercam": ["fercam-1"],

@@ -1,0 +1,45 @@
+{
+  "carrier": "feibao-logistics",
+  "entries": [
+    {
+      "code": "1",
+      "wording": "快件已到达【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Status 1: arrived at a branch or hub, the origin branch's first scan included."
+    },
+    {
+      "code": "2",
+      "wording": "由【…】发往【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Status 2: sent from a branch or hub to the next one."
+    },
+    {
+      "code": "3",
+      "wording": "正在送货",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Status 3: out for delivery; the adapter leaves the driver and the driver's phone out."
+    },
+    {
+      "code": "4",
+      "wording": "签收人：…",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Status 4: signed for; the row's station column holds the masked signatory, which the adapter leaves out."
+    },
+    {
+      "code": "5",
+      "wording": "已拒签",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "bundle",
+      "note": "Status 5: the recipient refused the delivery, as the search page's script words it."
+    }
+  ]
+}
