@@ -403,6 +403,20 @@ describe('shared provider result', () => {
     }
   });
 
+  it("reads iMile's sentences with its centre in 【】 or its driver's notice, as providers relay them", () => {
+    for (const [wording, stage] of [
+      ['【Milan center】Your order has been received.', 'in_transit'],
+      ['Your order has been shipped from 【Milan center】.', 'in_transit'],
+      ['Your order has assigned delivery drvier.', 'in_transit'],
+      ['【Milan center】Delivered, Receiver Type:【Self】.', 'delivered'],
+    ] as const) {
+      expect(event('2026-11-21T14:42:00+01:00', wording), wording).toMatchObject({ stage, stage_source: 'wording:provider' });
+    }
+    // A sentence iMile's map does not know, and another carrier's place in 【】, stay unread.
+    expect(event('2026-11-21T14:42:00+01:00', '【Milan center】Something else.')).toMatchObject({ stage: 'pending', stage_source: 'none' });
+    expect(event('2026-11-21T14:42:00+08:00', '【广州市】快件已在仓库')).toMatchObject({ stage_source: 'none' });
+  });
+
   it("reads DHLink's export declaration and its warehouse in China, as providers relay them", () => {
     for (const wording of ['出口申报完成', '您的物品已到达华东仓', '您的物品已离开华东仓']) {
       expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });

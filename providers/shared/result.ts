@@ -26,6 +26,7 @@ import { CHRONOPOST_NOTIFICATION } from '../../carriers/chronopost/status.js';
 import { chinaPostRelayedStage } from '../../carriers/china-post/status.js';
 import { postaShqiptareScanStage } from '../../carriers/posta-shqiptare/status.js';
 import { ukrposhtaWordingStage } from '../../carriers/ukrposhta/status.js';
+import { imileSentenceStage } from '../../carriers/imile/status.js';
 import { sunYouWording } from '../../carriers/sunyou/identity.js';
 import { withoutCarrierNote } from '../../carriers/aliexpress/status.js';
 import { isUspsRedeliveryReminder } from '../../carriers/usps/status.js';
@@ -762,7 +763,16 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^出口申报完成$|^您的物品已(?:到达|离开).{1,30}仓$/u.test(value)) return 'in_transit';
   // Posta Shqiptare's Albanian rows, its own and those it relays from the foreign post, and Ukrposhta's Ukrainian
   // ones, as their own maps read them.
-  return chinaPostRelayedStage(value) ?? postaShqiptareScanStage(value) ?? ukrposhtaWordingStage(value);
+  return chinaPostRelayedStage(value) ?? postaShqiptareScanStage(value) ?? ukrposhtaWordingStage(value) ?? imileRelayed(value);
+}
+
+/**
+ * iMile's own sentences as providers relay them, read as iMile's map reads them: with its centre in 【】 before or
+ * inside the sentence ("【Milan center】Your order has been received.", "Your order has been shipped from 【Milan
+ * center】."), or naming its driver in iMile's own misspelling ("Your order has assigned delivery drvier.").
+ */
+function imileRelayed(value: string): Stage | undefined {
+  return /【[^】]+】|\bdrvier\b/iu.test(value) ? imileSentenceStage('', value) ?? undefined : undefined;
 }
 
 export function eventStage(description: string): Stage | undefined {
