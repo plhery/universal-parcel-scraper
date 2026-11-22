@@ -33298,6 +33298,29 @@
       }
     ]
   },
+  "huaqi-express": {
+    "displayName": "Huaqi Express",
+    "color": "#e7851a",
+    "aliases": [
+      "华企快运",
+      "华企物流",
+      "上海华企物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huaqi-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.huaqiex.com/",
+    "trackingSearchUrl": "https://www.huaqiex.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "huaya-express": {
     "displayName": "Huaya Express",
     "color": "#e60013",

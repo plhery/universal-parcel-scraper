@@ -33302,6 +33302,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "huaqi-express": {
+    "displayName": "Huaqi Express",
+    "color": "#e7851a",
+    "aliases": [
+      "华企快运",
+      "华企物流",
+      "上海华企物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "huaqi-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.huaqiex.com/",
+    "trackingSearchUrl": "https://www.huaqiex.com/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "huaya-express": {
     "displayName": "Huaya Express",
     "color": "#e60013",
@@ -71736,6 +71759,7 @@ export const CARRIER_IDS = [
   "htt-logistics",
   "hua-express",
   "huahan",
+  "huaqi-express",
   "huaya-express",
   "hub-delivery",
   "hub-group-final-mile",
@@ -73754,6 +73778,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "htt-logistics": [],
   "hua-express": [],
   "huahan": ["huahan-1"],
+  "huaqi-express": [],
   "huaya-express": ["huaya-express-1"],
   "hub-delivery": [],
   "hub-group-final-mile": [],

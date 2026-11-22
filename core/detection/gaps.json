@@ -6336,5 +6336,10 @@
     "carrier": "yaoqi-logistics",
     "kind": "by_design",
     "reason": "The supported numeric form is shared by other carriers; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "huaqi-express",
+    "kind": "by_design",
+    "reason": "The supported numeric form is shared by other carriers; use explicit selection or a named handoff."
   }
 ]

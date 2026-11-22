@@ -1,0 +1,1597 @@
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <title>运单追踪-华企快运</title>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="code-55Y4n7wbbg" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="专业的服饰|服装|箱包|化妆品|快运|物流|快递|速运|仓储|配送" />
+    <meta name="description" content="" />
+    
+    <link rel="icon" href="https://www.huaqiex.com/resources/private/images/af307d72292c4adf9c182a66377625f9.png" type="images/x-ico" />
+    <link rel="stylesheet" href="/static/extensions/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/stylesheets/style.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2566159_hp2yankv2jq.css">
+    
+    <style>
+      @charset "UTF-8";
+.order-tracking .query-form {
+  /* overflow: auto;
+        width: 80%; */
+  width: 100%;
+  /* margin: 0 auto; */
+  margin-top: 20px;
+}
+
+.order-tracking .query-form .kuaijian {
+  float: left;
+  /* width: 400px; */
+  width: calc( 100% - 200px);
+  height: 100px;
+  resize: none;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 8px;
+  /* border: 1px solid rgb(233, 128, 17); */
+  background-color: #FAFAFA;
+  border-radius: 5px;
+}
+
+.order-tracking .query-form input[type="submit"] {
+  /* float: right; */
+  margin: 2px auto 0;
+  display: block;
+  padding: 7px 24px;
+  border: 0;
+  border-radius: 5px;
+  color: #e58011;
+  background: #fff;
+  font-size: 18px;
+  font-family: "微软雅黑";
+  cursor: pointer;
+  position: relative;
+  top: 50%;
+  /*偏移*/
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.order-tracking .query-form .tracking-qrcode .qrcodeimg {
+  width: 74px;
+}
+
+.order-tracking .query-form #search-btn {
+  width: 128px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  background: #1E2C5B;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 15px;
+}
+
+.order-tracking .query-form #search-btn .iconfont {
+  margin-right: 8px;
+  color: #fff;
+}
+
+.order-tracking .query-result .timeline-list {
+  width: 100%;
+  position: relative;
+  background: url(/static/images/v-line.png) repeat-y 7px 0;
+  overflow: hidden;
+}
+
+.order-tracking .query-result .timeline-list .timline-item {
+  overflow: hidden;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.order-tracking .query-result .timeline-list .timline-item > .timeline {
+  background: url(/static/images/time_normal.png) no-repeat 0 2px;
+  width: 6px;
+  height: 55px;
+  left: 5px;
+  position: absolute;
+}
+
+.order-tracking .query-result .timeline-list .timline-item > .timeline.active {
+  background: url(/static/images/time_active.png) no-repeat 0 2px;
+  width: 6px;
+  height: 55px;
+  left: 5px;
+  position: absolute;
+  /* font-style: normal;
+                        margin: 0;
+                        padding: 0; */
+}
+
+.order-tracking .query-result .timeline-list .timline-item > .order-content {
+  width: calc( 100% - 80px);
+  float: right;
+  border: #eeeeee 1px solid;
+  position: relative;
+  border-radius: 3px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.order-tracking .query-result .timeline-list .timline-item > .order-content > .arrow {
+  background: url(/static/images/jtou_gray.png) no-repeat 3px 0;
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 15px;
+  left: -10px;
+}
+
+.order-tracking .query-result .timeline-list .timline-item > .order-content > .time {
+  display: block;
+  float: left;
+  font-family: "microsoft yahei";
+  margin-right: 30px;
+}
+
+.order-tracking .query-result .timeline-list .timline-item > .order-content > .desc {
+  display: block;
+  float: left;
+  width: calc( 100% - 200px);
+  color: #7b90b4;
+  font-weight: bold;
+}
+
+.content-container {
+  width: 1180px;
+  margin: -75px auto 70px;
+  position: relative;
+  z-index: 1;
+}
+
+.content-container .sidebar {
+  float: left;
+  width: 240px;
+  -webkit-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.15);
+}
+
+.content-container .main-content {
+  margin-left: 260px;
+  padding-left: 40px;
+  padding-bottom: 70px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.15);
+}
+
+.content-container .main-content > .head {
+  margin-right: 40px;
+  height: 60px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.content-container .main-content > .head .title {
+  line-height: 60px;
+  font-size: 23px;
+}
+
+.content-container .main-content > .body {
+  padding-right: 40px;
+  padding-top: 10px;
+}
+
+.banner {
+  min-height: 200px;
+}
+
+.banner .layui-carousel > [carousel-item] a img {
+  width: 100%;
+}
+
+.side-navbar {
+  width: 240px;
+  font-size: 14px;
+  color: #666;
+  background: #fff;
+}
+
+.side-navbar .nav-list {
+  list-style: none;
+}
+
+.side-navbar .nav-list .nav-item .nav-tag, .side-navbar .nav-list .sub-nav-item a {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.side-navbar .nav-list .nav-item .nav-tag {
+  cursor: pointer;
+  margin-right: 20px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+  margin-left: 20px;
+  border-bottom: 1px solid #e8e8e8;
+  font-weight: 500;
+}
+
+.side-navbar .nav-list .nav-item .nav-tag i.upward {
+  -webkit-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
+.side-navbar .nav-list .nav-item .nav-tag .icon-chevron-up {
+  float: right;
+}
+
+.side-navbar .nav-list .nav-item .nav-tag .icon-chevron-up {
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  -o-transition: transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+  font-size: 16px;
+  color: #909399;
+  -webkit-transform: rotate(-180deg);
+      -ms-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list {
+  display: none;
+  padding-top: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list .sub-nav-item a {
+  color: #666;
+  text-decoration: none;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  position: relative;
+  padding-left: 30px;
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list .sub-nav-item a:hover {
+  background: #f7f8fa;
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list .sub-nav-item a::before {
+  content: '';
+  display: none;
+  width: 3px;
+  height: 14px;
+  position: absolute;
+  left: 20px;
+  top: 8px;
+  background: #ffc233;
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list .sub-nav-item a.active {
+  color: #333333;
+  background: #f7f8fa;
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list .sub-nav-item a.active::before {
+  display: block;
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list.active {
+  display: block;
+}
+
+.side-navbar .nav-list .nav-item .sub-nav-list::after {
+  content: '';
+  width: 200px;
+  margin-left: 20px;
+  display: inline-block;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+@charset "UTF-8";
+/*页眉*/
+#header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 1000;
+  -webkit-box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+#header .header-content {
+  height: 80px;
+  width: 1200px;
+  margin: 0 auto;
+  padding-left: 143px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#header .header-content .logo {
+  width: 132.95px;
+  height: 50px;
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  background: url(https://www.huaqiex.com/resources/private/images/37fa9cce09654c96b052a13f35c74435.svg) no-repeat center;
+  background-size: 100% 100%;
+}
+
+#header .header-content .navbar-container {
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 30px;
+}
+
+#header .header-content .hotline {
+  float: right;
+  height: 80px;
+  line-height: 80px;
+  margin-right: 25px;
+  font-size: 16px;
+}
+
+#header .header-content .hotline .title, #header .header-content .hotline .iconfont, #header .header-content .hotline .tel-number {
+  float: left;
+}
+
+#header .header-content .hotline .tel-number {
+  margin-right: 25px;
+  font-weight: bolder;
+  color: #1F2958;
+}
+
+#header .header-content .hotline .iconfont {
+  font-size: 25px;
+  color: #e7851a;
+  margin-right: 6px;
+}
+
+@charset "UTF-8";
+.header-navbar a, .header-navbar p {
+  color: #333333;
+  text-decoration: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.header-navbar .main-nav-item {
+  float: left;
+  padding: 0 16px;
+  position: relative;
+  list-style: none;
+}
+
+.header-navbar .main-nav-item .main-nav-tag {
+  height: 80px;
+  line-height: 80px;
+  display: inline-block;
+  position: relative;
+  font-size: 16px;
+}
+
+.header-navbar .main-nav-item .popper-container {
+  display: none;
+  position: absolute;
+  left: -50px;
+  top: 45px;
+  z-index: 10;
+  color: #999999;
+  font-size: 14px;
+  padding-top: 15px;
+}
+
+.header-navbar .main-nav-item .popper-container .popper {
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #ebeef5;
+  -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  /* 滚动条宽度 */
+  /* 滚动条的滑块的颜色 和 形状 */
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-arrow {
+  position: absolute;
+  display: block;
+  top: 9px;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 6px;
+  -webkit-filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
+          filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03));
+  margin-right: 3px;
+  border-top-width: 0;
+  border-bottom-color: #ebeef5;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  content: " ";
+  border-width: 6px;
+  top: 2px;
+  margin-left: -6px;
+  border-top-width: 0;
+  border-bottom-color: #fff;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content {
+  max-height: 475px;
+  overflow: auto;
+  padding: 30px 0 0 0;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 872px;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row .popper-content-col {
+  float: left;
+  width: 218px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row .popper-content-col .popper-content-col-title {
+  font-size: 16px;
+  color: #333333;
+  padding-bottom: 10px;
+  padding-left: 70px;
+  position: relative;
+  cursor: pointer;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row .popper-content-col .popper-content-col-title .iconfont {
+  position: absolute;
+  left: 40px;
+  /* top: -2px; */
+  font-size: 16px;
+  color: #e7851a;
+  width: 16px;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row .popper-content-col .three-level-nav-item {
+  padding: 20px 0 0 70px;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row .popper-content-col .three-level-nav-item a {
+  color: #666;
+  cursor: pointer;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row .popper-content-col .three-level-nav-item:hover a {
+  color: #e7851a;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content .popper-content-row .popper-content-col .popper-content-line {
+  position: absolute;
+  top: 46px;
+  height: 100%;
+  display: inline-block;
+  border-right: 1px solid #e9e8e8;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+.header-navbar .main-nav-item .popper-container .popper .popper-content::-webkit-scrollbar-thumb {
+  background-color: #e2e2e2;
+  border-radius: 1px;
+}
+
+.header-navbar .main-nav-item.active .main-nav-tag {
+  color: #e7851a;
+  font-weight: 600;
+}
+
+.header-navbar .main-nav-item.active .main-nav-tag:after {
+  content: "";
+  width: 100%;
+  display: block;
+  position: absolute;
+  bottom: 18px;
+  border-bottom: 2px solid #e7851a;
+}
+
+.header-navbar .main-nav-item.expanding .main-nav-tag {
+  color: #e7851a;
+  position: relative;
+}
+
+.header-navbar .main-nav-item.expanding .main-nav-tag[href] {
+  cursor: pointer;
+}
+
+.header-navbar .main-nav-item.expanding .popper-container {
+  display: block;
+}
+
+/* No CSS */
+@charset "UTF-8";
+/*内容中部*/
+#content-center {
+  width: 100%;
+  min-height: 100%;
+  background-color: white;
+}
+
+@charset "UTF-8";
+/*内容*/
+#content {
+  width: 100%;
+  margin-top: 80px;
+  min-height: calc( 100% - 315px);
+  background-color: white;
+}
+
+@charset "UTF-8";
+/*页脚*/
+#footer {
+  width: 100%;
+  margin-top: 120px;
+  padding: 20px 0 70px 0;
+  padding-bottom: 70px;
+  overflow: hidden;
+  background-color: #011c3a;
+}
+
+#footer .footer-content {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+#footer .footer-content .footer-top {
+  margin-top: 73px;
+  padding-bottom: 46px;
+  font-size: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#footer .footer-content .footer-top .top-left {
+  display: inline-block;
+}
+
+#footer .footer-content .footer-top .top-right {
+  position: relative;
+  float: right;
+  /* width: 201px; */
+  width: 360px;
+}
+
+#footer .footer-content .footer-top .top-right .fnumber {
+  float: right;
+  margin-right: 160px;
+  margin-top: 25px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+}
+
+#footer .footer-content .footer-top .top-right .fnumber .iconfont {
+  font-size: 80px;
+}
+
+#footer .footer-content .footer-top .top-right .fnumber img {
+  display: block;
+  position: relative;
+  width: 60px;
+  left: 28px;
+  top: -6px;
+}
+
+#footer .footer-content .footer-top .top-right .fnumber p.title {
+  display: block;
+  margin-top: 6px;
+  font-size: 15px;
+  text-align-last: justify;
+}
+
+#footer .footer-content .footer-top .top-right .fnumber p.number {
+  display: block;
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+#footer .footer-content .footer-top .top-right .qrcode {
+  position: absolute;
+  float: right;
+  right: 30px;
+  top: 20px;
+}
+
+#footer .footer-content .footer-top .top-right .qrcode .qrcodeimg {
+  width: 74px;
+}
+
+#footer .footer-content .footer-top .top-right .qrcode p.title {
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+#footer .footer-content .footer-top .top-right:after {
+  content: '';
+  clear: both;
+}
+
+#footer .footer-content .footer-bottom {
+  padding-top: 10px;
+  color: #AAAAAA;
+  font-size: 15px;
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+}
+
+#footer .footer-content .footer-bottom .bottom-left {
+  float: left;
+}
+
+#footer .footer-content .footer-bottom .bottom-left p.info {
+  padding-top: 10px;
+}
+
+#footer .footer-content .footer-bottom .bottom-left p.info .copyright, #footer .footer-content .footer-bottom .bottom-left p.info .record_no {
+  color: #AAAAAA;
+  font-size: 15px;
+}
+
+#footer .footer-content .footer-bottom .bottom-left p.info .copyright {
+  margin-right: 10px;
+}
+
+#footer .footer-content .footer-bottom .bottom-left p.info .record_no:hover {
+  color: white;
+}
+
+#footer .footer-content .footer-bottom .bottom-right {
+  float: right;
+}
+
+#footer .footer-content .footer-bottom .bottom-right a {
+  margin-right: 5px;
+}
+
+.footer-navbar ul {
+  list-style-type: none;
+}
+
+.footer-navbar .nav-list .nav-item {
+  display: inline-block;
+  vertical-align: top;
+  width: 130px;
+}
+
+.footer-navbar .nav-list .nav-item .sub-nav-list li {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #AAAAAA;
+}
+
+.footer-navbar .nav-list .nav-item .sub-nav-list li a {
+  color: #AAAAAA;
+}
+
+.footer-navbar .nav-list .nav-item .sub-nav-list li:first-child {
+  margin-bottom: 26px;
+  font-size: 20px;
+  color: #FFFFFF;
+}
+
+    </style>
+    <script src="/static/extensions/layui/layui.js"></script>
+    <script src="/static/javascripts/jquery.min.js"></script>
+    <script> var apiUrl = "https://www.huaqiex.com/api"; </script>
+    <script src="/static/javascripts/common.js"></script>
+    <!-- <script src="/static/javascripts/jquery.maphilight.js"></script> -->
+    <script>
+      // 页面初始化
+      $(document).ready(function(){
+      });
+    </script>
+    
+    
+  </head>
+  
+  <body>
+    
+    
+<!--  -->
+
+
+<div id="header">
+    
+    <div class="header-content">
+        <a class="logo" href="/"></a>
+        <div class="navbar-container">
+            
+<!-- 顶部导航栏 -->
+<div class="header-navbar">
+  <ul class="main-nav-list">
+    
+      <li class="main-nav-item ">
+        <h1><a class="main-nav-tag" href="javascript:void(0);"  ondragstart="return false;">产品服务</a></h1>
+        
+        <div class="popper-container">
+          <div class="popper">
+            <div class="popper-arrow" style="left: 90px"></div>
+            <div class="popper-content second-level-nav-list">
+            
+            <div class="popper-content-row clearfix">
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      城市商圈配送（服务）</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/255" title="仓库配送到门店"  ondragstart="return false;">仓库配送到门店</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/182" title="门店与门店调拨"  ondragstart="return false;">门店与门店调拨</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/253" title="门店退回到仓库"  ondragstart="return false;">门店退回到仓库</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/181" title="新店开业/特卖"  ondragstart="return false;">新店开业/特卖</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/180" title="闭店撤柜"  ondragstart="return false;">闭店撤柜</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/179" title="道具配送"  ondragstart="return false;">道具配送</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: none;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      城市商圈配送（时效）</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/174?from_menu=125" title="标准配送"  ondragstart="return false;">标准配送</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/175?from_menu=126" title="预约配送"  ondragstart="return false;">预约配送</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/176?from_menu=128" title="定时配送"  ondragstart="return false;">定时配送</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      空运</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/183" title="航空定日达"  ondragstart="return false;">航空定日达</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/184" title="航空限时达"  ondragstart="return false;">航空限时达</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      陆运</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/186" title="标准汽运"  ondragstart="return false;">标准汽运</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/185" title="精准卡班"  ondragstart="return false;">精准卡班</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/187" title="精准专车"  ondragstart="return false;">精准专车</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+                                          
+            </div>
+            
+            <div class="popper-content-row clearfix">
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      辅料仓储</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/188" title="定制化解决方案"  ondragstart="return false;">定制化解决方案</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/189" title="定制化系统服务"  ondragstart="return false;">定制化系统服务</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/190" title="精细化仓储管理"  ondragstart="return false;">精细化仓储管理</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/191" title="专业化仓运配服务"  ondragstart="return false;">专业化仓运配服务</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      增值服务</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/194" title="保价服务"  ondragstart="return false;">保价服务</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/195" title="签收回单"  ondragstart="return false;">签收回单</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/196" title="包装定制"  ondragstart="return false;">包装定制</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/211" title="夜间服务"  ondragstart="return false;">夜间服务</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      行业解决方案</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/197" title="服饰全品类"  ondragstart="return false;">服饰全品类</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/199" title="道具全品类"  ondragstart="return false;">道具全品类</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+                                          
+            </div>
+            
+          </div>
+          </div>
+        </div>
+        
+      </li>
+      
+      <li class="main-nav-item active">
+        <h1><a class="main-nav-tag" href="javascript:void(0);"  ondragstart="return false;">客户服务</a></h1>
+        
+        <div class="popper-container">
+          <div class="popper">
+            <div class="popper-arrow" style="left: 90px"></div>
+            <div class="popper-content second-level-nav-list">
+            
+            <div class="popper-content-row clearfix">
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      自助服务</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/tracking?from_menu=105" title="运单追踪"  ondragstart="return false;">运单追踪</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/201" title="预约下单"  ondragstart="return false;">预约下单</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/fwnet?from_menu=107" title="配送网络"  ondragstart="return false;">配送网络</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: none;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      寄件须知</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/202" title="航空违禁品"  ondragstart="return false;">航空违禁品</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/203" title="陆运违禁品"  ondragstart="return false;">陆运违禁品</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/204" title="运单填写须知"  ondragstart="return false;">运单填写须知</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      常见问题</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="https://cc.rrx.cn/v/jrzzzo?v=1" title="意见反馈"  ondragstart="return false;">意见反馈</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/206" title="问题答疑"  ondragstart="return false;">问题答疑</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+                                          
+            </div>
+            
+          </div>
+          </div>
+        </div>
+        
+      </li>
+      
+      <li class="main-nav-item ">
+        <h1><a class="main-nav-tag" href="javascript:void(0);"  ondragstart="return false;">新闻资讯</a></h1>
+        
+        <div class="popper-container">
+          <div class="popper">
+            <div class="popper-arrow" style="left: 90px"></div>
+            <div class="popper-content second-level-nav-list">
+            
+            <div class="popper-content-row clearfix">
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      新闻资讯</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/news_list/38" title="公司新闻"  ondragstart="return false;">公司新闻</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/news_list/39" title="行业动态"  ondragstart="return false;">行业动态</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: none;"></i>
+                  </div>
+                                          
+            </div>
+            
+          </div>
+          </div>
+        </div>
+        
+      </li>
+      
+      <li class="main-nav-item ">
+        <h1><a class="main-nav-tag" href="javascript:void(0);"  ondragstart="return false;">招贤纳才</a></h1>
+        
+        <div class="popper-container">
+          <div class="popper">
+            <div class="popper-arrow" style="left: 90px"></div>
+            <div class="popper-content second-level-nav-list">
+            
+            <div class="popper-content-row clearfix">
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      招贤纳才</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/job_list" title="人才招聘"  ondragstart="return false;">人才招聘</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/job_apply" title="在线应聘"  ondragstart="return false;">在线应聘</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: none;"></i>
+                  </div>
+                                          
+            </div>
+            
+          </div>
+          </div>
+        </div>
+        
+      </li>
+      
+      <li class="main-nav-item ">
+        <h1><a class="main-nav-tag" href="javascript:void(0);"  ondragstart="return false;">走进华企</a></h1>
+        
+        <div class="popper-container">
+          <div class="popper">
+            <div class="popper-arrow" style="left: 90px"></div>
+            <div class="popper-content second-level-nav-list">
+            
+            <div class="popper-content-row clearfix">
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      企业介绍</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/207" title="关于华企"  ondragstart="return false;">关于华企</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/208" title="发展历程"  ondragstart="return false;">发展历程</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/209" title="文化理念"  ondragstart="return false;">文化理念</a>
+                          </li>
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/210" title="华企荣誉"  ondragstart="return false;">华企荣誉</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: none;"></i>
+                  </div>
+              
+                  <div class="popper-content-col second-level-nav-item">
+                      <p class="popper-content-col-title">
+                      
+                        <i class="iconfont icon-circular"></i>
+                      
+                      联系我们</p>
+                      
+                      <ul class="three-level-nav-list">
+                          
+                          <li class="three-level-nav-item">
+                          <a href="/page/46?from_menu=116" title="联系我们"  ondragstart="return false;">联系我们</a>
+                          </li>
+                          
+                      </ul>
+                      
+                      <i class="popper-content-line" style="display: block;"></i>
+                  </div>
+                                          
+            </div>
+            
+          </div>
+          </div>
+        </div>
+        
+      </li>
+      
+  </ul>
+</div>
+
+<script>
+  $(".main-nav-list .main-nav-item").mouseenter(function(){
+      $(this).addClass("expanding")
+      // 遮罩出来后让body不可滚动
+      // $('body,html').addClass('non-scrollable');
+      let k = $(this).find(".popper-content");
+      $($(this).find(".popper-content")[0]).scrollTop(0)
+   }).mouseleave(function(){
+      $(this).removeClass("expanding")
+      // 遮罩去掉之后body 可滚动
+      // $('body,html').removeClass('non-scrollable');
+   });
+  //  $($(".main-nav-list main-nav-item")[2]).addClass("expanding")
+</script>
+        </div>
+        <div class="hotline">
+            <div class="title">全国统一客服热线：</div>
+            <i class="iconfont icon-hotline"  ></i>
+            <div class="tel-number">400 806 8111</div>
+        </div>
+    </div>
+    
+</div>
+
+
+    
+
+
+
+
+<!-- 内容 -->
+<div id="content">
+    
+    
+<!-- 内容顶部 -->
+
+<div id="content-top">
+    
+<div class="banner">
+
+    
+        <!-- 如果是图片 -->
+        <div style="width: 100%;display: block;" >
+            
+            <a href="javascript:void(0)" target="_blank">
+                <img src="https://www.huaqiex.com/resources/private/images/2cbafa54ce6b4d548f028226e89280ea.jpg" style="width:100%;">
+            </a>
+            
+        </div>
+    
+
+</div>
+
+<script>
+    // 首页横幅轮播图尺寸：1920x670px
+    // 详情页面横幅横幅尺寸：1920x460px
+    var ins;
+    var b = 1920/670
+    var W = document.body.clientWidth
+    var H = (W/b);
+    // console.log("SW:"+document.body.clientWidth)
+    // console.log("W:"+W)
+    // console.log("H:"+H)
+    layui.use('carousel', function(){           //轮播图
+        var carousel = layui.carousel;
+        ins = carousel.render({
+        elem: '#slideshow',
+        width: '100%', //设置容器宽度
+        height:(W/b).toString()+"px",
+        // height: 'auto',
+        arrow: 'always', //始终显示箭头
+        indicator: 'inside',
+        });
+    });
+    $("#slideshow").on("touchstart", function (e) {
+        var startX = e.originalEvent.targetTouches[0].pageX;//开始坐标X
+        $(this).on('touchmove', function (e) {
+            arguments[0].preventDefault();//阻止手机浏览器默认事件
+        });
+        $(this).on('touchend', function (e) {
+            var endX = e.originalEvent.changedTouches[0].pageX;//结束坐标X
+            e.stopPropagation();//停止DOM事件逐层往上传播
+            if (endX - startX > 30) {
+                ins.slide("sub"); 
+            }
+            else if (startX - endX > 30) {
+                ins.slide("add"); 
+            }
+            $(this).off('touchmove touchend');
+        });
+    });
+</script>
+      
+</div>
+
+    
+    
+<!-- 内容中部 -->
+
+<div id="content-center">
+    
+    
+
+
+
+  <div class="content-container">
+    <div class="sidebar">
+        
+<!-- 侧边导航栏 -->
+<div class="side-navbar">
+    <ul class="nav-list">
+        
+        <li class="nav-item active">
+            <p class="nav-tag">自助服务<i class="iconfont icon-chevron-up upward"></i></p>
+            <ul class="sub-nav-list active">
+            
+                <li class="sub-nav-item"><a class="active" href="/tracking?from_menu=105"  ondragstart="return false;">运单追踪</a>
+            
+                <li class="sub-nav-item"><a class="" href="/page/201"  ondragstart="return false;">预约下单</a>
+            
+                <li class="sub-nav-item"><a class="" href="/fwnet?from_menu=107"  ondragstart="return false;">配送网络</a>
+            
+            </ul>
+        </li>
+        
+        <li class="nav-item ">
+            <p class="nav-tag">寄件须知<i class="iconfont icon-chevron-up "></i></p>
+            <ul class="sub-nav-list ">
+            
+                <li class="sub-nav-item"><a class="" href="/page/202"  ondragstart="return false;">航空违禁品</a>
+            
+                <li class="sub-nav-item"><a class="" href="/page/203"  ondragstart="return false;">陆运违禁品</a>
+            
+                <li class="sub-nav-item"><a class="" href="/page/204"  ondragstart="return false;">运单填写须知</a>
+            
+            </ul>
+        </li>
+        
+        <li class="nav-item ">
+            <p class="nav-tag">常见问题<i class="iconfont icon-chevron-up "></i></p>
+            <ul class="sub-nav-list ">
+            
+                <li class="sub-nav-item"><a class="" href="https://cc.rrx.cn/v/jrzzzo?v=1"  ondragstart="return false;">意见反馈</a>
+            
+                <li class="sub-nav-item"><a class="" href="/page/206"  ondragstart="return false;">问题答疑</a>
+            
+            </ul>
+        </li>
+        
+    </ul>
+</div>
+
+<script>
+    $(".side-navbar .nav-list .nav-tag").click(function(){
+        $(this).find(".iconfont").toggleClass("upward");
+        $(this).siblings('.sub-nav-list').animate({
+            opacity: "toggle",
+            height: "toggle" 
+        }, 'fast');
+    });
+</script>
+    </div>
+    <div class="main-content">
+      <div class="head">
+        <span class="title">运单追踪</span>
+      </div>
+      <div class="body">
+        
+
+
+<div class="order-tracking">
+    <div class="query-form">
+        <div style="height: 140px;">
+            <textarea type="text" name="orderNumbers" id="orderNumbers" class="kuaijian" placeholder="请输入快运单号（最多可同时查询20条单号，请以空格隔开）">999999999990</textarea>
+            <div class="tracking-qrcode" style="float: right;width: 200px;text-align: center;">
+                <img class="qrcodeimg" src="/static/images/qrcode.png" />
+                <p class="title" style="padding: 10px;">扫一扫微信公众号</p>
+                <p class="title">下单查件一键搞定</p>
+            </div>
+        </div>
+        <div>
+            <a id="search-btn"> <i class="iconfont icon-search"></i>查询</a>
+        </div>
+    </div>
+    <div class="query-result" style="margin-top: 20px;">
+        
+        <div class="query-success layui-collapse"  style="margin-top:10px;" lay-accordion="" lay-filter="test">
+            
+                
+                        <div class="layui-colla-item" style="overflow: auto;">
+                            <h2 class="layui-colla-title">运单号：999999999990<i class="layui-icon layui-colla-icon"></i></h2>
+                            <div class="layui-colla-content layui-show">
+                                
+                                <ul class="timeline-list">
+                                    
+                                </ul>
+                                                            
+                            </div>
+                        </div>
+                
+            
+        </div>
+         
+    </div> 
+</div>
+
+<script>
+    $("#search-btn").click(function(){
+        let orderNumbers = $("#orderNumbers").val();
+        window.location.href="/tracking?orderNumbers="+orderNumbers;
+    })
+
+
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+
+    layui.use(['element', 'layer'], function(){
+        var element = layui.element;
+        var layer = layui.layer;
+        
+        //监听折叠
+        element.on('collapse(test)', function(data){
+            // layer.msg('展开状态：'+ data.show);
+            // alert("展开")
+            console.log("展开数据："+JSON.stringify(data))
+        });
+    });
+
+    // function clean() {
+    //     var url = window.location.href;
+    //     url = url.split('?')[0];
+    //     window.history.pushState({}, 0, url);
+    // }
+    // clean();
+</script>      </div>
+    </div>
+  </div>
+
+      
+</div>
+
+    
+    
+    
+</div>
+
+    
+
+<div id="footer">
+  
+  <div class="footer-content">
+    <div class="footer-top">
+      <div class="top-left">
+        
+<!-- 底部导航栏 -->
+<div class="footer-navbar">
+    <ul class="nav-list">
+    
+      
+        
+        
+          <li class="nav-item">
+            <ul class="sub-nav-list">
+              <li>产品服务</li>
+              
+              <li><a href="/page/255">城市商圈配送（服务）</a></li>
+              
+              <li><a href="/page/174?from_menu=124">城市商圈配送（时效）</a></li>
+              
+              <li><a href="/page/183">空运</a></li>
+              
+              <li><a href="/page/186">陆运</a></li>
+              
+              <li><a href="/page/188">辅料仓储</a></li>
+              
+              <li><a href="/page/194">增值服务</a></li>
+              
+              <li><a href="/page/197">行业解决方案</a></li>
+              
+            </ul>
+          </li>  
+        
+      
+    
+      
+        
+        
+          <li class="nav-item">
+            <ul class="sub-nav-list">
+              <li>客户服务</li>
+              
+              <li><a href="/tracking?from_menu=105">自助服务</a></li>
+              
+              <li><a href="/page/202">寄件须知</a></li>
+              
+              <li><a href="https://cc.rrx.cn/v/jrzzzo?v=1">常见问题</a></li>
+              
+            </ul>
+          </li>  
+        
+      
+    
+      
+        
+        <li class="nav-item">
+          <ul class="sub-nav-list">
+            <li>新闻资讯</li>
+            
+            <li><a href="/news_list/38">公司新闻</a></li>
+            
+            <li><a href="/news_list/39">行业动态</a></li>
+            
+          </ul>
+        </li>
+        
+        
+      
+    
+      
+        
+        <li class="nav-item">
+          <ul class="sub-nav-list">
+            <li>招贤纳才</li>
+            
+            <li><a href="/job_list">人才招聘</a></li>
+            
+            <li><a href="/job_apply">在线应聘</a></li>
+            
+          </ul>
+        </li>
+        
+        
+      
+    
+      
+        
+        
+          <li class="nav-item">
+            <ul class="sub-nav-list">
+              <li>走进华企</li>
+              
+              <li><a href="/page/207">企业介绍</a></li>
+              
+              <li><a href="/page/46?from_menu=116">联系我们</a></li>
+              
+            </ul>
+          </li>  
+        
+      
+    
+  </ul>
+</div>
+      </div>
+      <div class="top-right">
+        <!-- <div class="fnumber"><img src="/static/images/fnumber.png"><p class="title">全国客服服务热线</p><p class="number">400-806-8111</p></div> -->
+        <div class="fnumber">
+          <p style="height: 100px;line-height: 100px;"><i class="iconfont icon-hotline"></i></p>
+          <p class="title">全国客服服务热线</p>
+          <p class="number">400 806 8111</p></div>
+
+        <div class="qrcode">
+          <p style="height: 100px;line-height: 100px;"><img class="qrcodeimg" src="https://www.huaqiex.com/resources/private/images/8bf2918857034b13aa73b6a1c6c0d983.png"></p>
+          <p class="title">官方微信号</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="bottom-left">
+        <p class="address">总部地址：上海市青浦区华新镇华腾路1699号2幢</p>
+        <p class="info"><span class="copyright">Copyright © 2022 上海华企物流有限公司 All Rights Reserved.</span><a class="record_no" href="https://beian.miit.gov.cn/" target="_blank">沪ICP备17055677号-1</a></p>
+      </div>
+      <div class="bottom-right">
+        
+          <a target="_blank" href="http://wap.scjgj.sh.gov.cn/businessCheck/verifKey.do?showType=extShow&amp;serial=9031000020160509092810000000767483-SAIC_SHOW_310000-20190429194341395077&amp;signData=MEYCIQDzRi261slo3Uk5oRrOFy1zV3MJbZmm0Df0wb2YBW3aUAIhAP7Z6ukJ6FTwTlJSxm47E0EEOLlqUZEqNcvyU4WVau2+">
+            <img style="height:45px;" src="/static/images/lz2.jpg">
+          </a>
+        
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+    
+  </body>
+  
+</html>

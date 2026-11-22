@@ -1,0 +1,77 @@
+{
+  "carrier": "huaqi-express",
+  "entries": [
+    {
+      "code": "已收件",
+      "wording": "已收件,收件网点【…】,扫描员是【…】",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Huaqi took the freight in at its branch; the adapter leaves out the scanner."
+    },
+    {
+      "code": "已入库",
+      "wording": "已入库,到达【…】,扫描员是【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Booked into Huaqi's warehouse."
+    },
+    {
+      "code": "离开",
+      "wording": "离开【…】,发往【…】 or 快件离开【…】，已在发往【…】的路上",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left a branch or hub for the next one."
+    },
+    {
+      "code": "完成分拣",
+      "wording": "快件在【…】完成分拣，准备发往【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sorted at a hub of the partner network carrying the long-distance leg."
+    },
+    {
+      "code": "快件到达",
+      "wording": "快件到达【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached a hub or the delivering store."
+    },
+    {
+      "code": "长途运输",
+      "wording": "快件开始长途运输… or 车辆正在长途运输中…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "On the long-distance truck; the row names a city it is near or the expected arrival."
+    },
+    {
+      "code": "派送途中",
+      "wording": "快件交给【…】，正在派送途中（…）",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Handed to the courier; the adapter leaves out the courier's name, phone and closing note."
+    },
+    {
+      "code": "已派送",
+      "wording": "您的快件已派送至本人，如有疑问请电联快递员【…】…",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Delivered to the recipient; the adapter leaves out the courier and the courtesy text."
+    },
+    {
+      "code": "已签收",
+      "wording": "快件已签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for."
+    }
+  ]
+}

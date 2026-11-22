@@ -1,0 +1,39 @@
+{
+  "carrier": "huaqi-express",
+  "records": [
+    {
+      "number": "400800901904",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/huaqikuaiyun.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Huaqi page lists. Huaqi's tracker answers it with freight taken in at its Shanghai branch, carried through partner hubs in Shanghai and Guangzhou and signed for in Guangzhou."
+    }
+  ]
+}

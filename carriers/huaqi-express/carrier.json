@@ -1,0 +1,72 @@
+{
+  "id": "huaqi-express",
+  "displayName": "Huaqi Express",
+  "aliases": [
+    "华企快运",
+    "华企物流",
+    "上海华企物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#e7851a"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "huaqi-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.huaqiex.com/tracking",
+    "canaryUrl": "https://www.huaqiex.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "driver_name",
+      "driver_phone",
+      "scanner_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "driver_name",
+      "driver_phone",
+      "scanner_name"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "pieces",
+      "origin",
+      "destination",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
