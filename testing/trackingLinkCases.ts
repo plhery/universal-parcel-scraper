@@ -2712,6 +2712,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'swiss-universal-express', number: 'SUE9999000000017FR',
     route: /^https:\/\/swiss-universal-express\.ch\/tracking\/SUE9999000000017FR\?lang=en$/,
     marker: /Tracking information for\s*SUE9999000000017FR/ },
+  // The tracker renders the shipment's rows on the server under its number; an unknown one gets its notice.
+  { carrier: 'konga-kxpress', number: 'F123456789001',
+    route: /^https:\/\/logistics\.konga\.com\/track\?order_number=F123456789001$/,
+    marker: /We could not find this tracking number\.|Package Number:\s*F123456789001/ },
 ];
 
 /**

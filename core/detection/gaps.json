@@ -2436,6 +2436,12 @@
     "reason": "Fourteen digits are shared by several carriers and the same shape is quoted for HepsiJET."
   },
   {
+    "carrier": "konga-kxpress",
+    "pattern": "^F\\d{12}$",
+    "kind": "collision",
+    "reason": "Konga Logistics shipment numbers of F and twelve digits fit La Poste's thirteen-character rule and say nothing of Konga, so the shape cannot name Konga Logistics."
+  },
+  {
     "carrier": "kronos-express",
     "pattern": "^[A-Z]{6}\\d{7}$",
     "kind": "by_design",

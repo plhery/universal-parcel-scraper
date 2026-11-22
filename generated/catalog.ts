@@ -38278,6 +38278,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "konga-kxpress": {
+    "displayName": "Konga Logistics",
+    "color": "#ed017f",
+    "aliases": [
+      "KXpress",
+      "KXpress Logistics"
+    ],
+    "countries": [
+      "NG"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Lagos",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "konga-kxpress",
+      "localClocks": true
+    },
+    "canaryUrl": "https://logistics.konga.com/",
+    "trackingUrlTemplate": "https://logistics.konga.com/track?order_number={trackingNumber}",
+    "trackingSearchUrl": "https://logistics.konga.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "logistics.konga.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "order_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "koombiyo": {
     "displayName": "Koombiyo Delivery",
     "color": "#00aeef",
@@ -71594,6 +71627,7 @@ export const CARRIER_IDS = [
   "kmtc",
   "kolay-gelsin",
   "komon-express",
+  "konga-kxpress",
   "koombiyo",
   "korexgarant",
   "kronos-express",
@@ -73601,6 +73635,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kmtc": [],
   "kolay-gelsin": [],
   "komon-express": ["komon-express-1"],
+  "konga-kxpress": [],
   "koombiyo": [],
   "korexgarant": [],
   "kronos-express": [],
