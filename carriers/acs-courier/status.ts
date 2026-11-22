@@ -69,7 +69,10 @@ interface AcsSummary {
  * returns and a delivered parcel settle the parcel's stage. An in-transit
  * summary leaves it to the scans, which say whether the parcel is out for
  * delivery or waiting at a SmartPoint. The list words status 5 "In Transit"
- * and describes it as damage or any other cause.
+ * and describes it as damage or any other cause. Status 9, "Pending" in
+ * English and "awaiting resolution" in Greek, follows a scan that already
+ * says what went wrong, such as a failed delivery to a wrong address, so the
+ * scans decide it too.
  */
 const SUMMARIES = new Map<number, AcsSummary>([
   [1, { wording: 'Denial of delivery', stage: 'exception' }],
@@ -80,7 +83,7 @@ const SUMMARIES = new Map<number, AcsSummary>([
   [6, { wording: 'Return in transit to sender', stage: 'exception' }],
   [7, { wording: 'Returned to sender', stage: 'returned' }],
   [8, { wording: 'In Transit', stage: 'in_transit', scansDecide: true }],
-  [9, { wording: 'Pending', stage: 'exception' }],
+  [9, { wording: 'Pending', stage: 'exception', scansDecide: true }],
 ]);
 
 export function acsSummary(id: number): AcsSummary | undefined {

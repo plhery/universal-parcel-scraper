@@ -160,6 +160,15 @@ describe('ACS Courier HTTP adapter', () => {
     expect(parseAcs(refused, ATTEMPTED)).toMatchObject({ current_stage: 'exception', last_status_text: 'Denial of delivery' });
   });
 
+  it('leaves a summary awaiting resolution to the scan that says what went wrong', () => {
+    const pending = fixture('failed-attempt');
+    pending.items[0]!.shipmentStatusId = 9;
+    expect(parseAcs(pending, ATTEMPTED)).toMatchObject({ current_stage: 'failed_attempt',
+      last_status_text: 'Not delivered (DIFFICULT TO ACCESS AREA)' });
+    pending.items[0]!.statusHistory = [];
+    expect(parseAcs(pending, ATTEMPTED)).toMatchObject({ current_stage: 'exception', last_status_text: 'Pending', summary_only: true });
+  });
+
   it('keeps a scan it cannot stage visible without moving the parcel', () => {
     const payload = fixture('failed-attempt');
     payload.items[0]!.statusHistory = [...payload.items[0]!.statusHistory.slice(0, 4),

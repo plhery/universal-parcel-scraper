@@ -29,6 +29,6 @@
     {"code": "6", "wording": "Return in transit to sender", "language": "en", "stage": "exception", "confirmedBy": "portal", "note": "A parcel summary status: the parcel is going back to the sender."},
     {"code": "7", "wording": "Returned to sender", "language": "en", "stage": "returned", "confirmedBy": "portal", "note": "A parcel summary status."},
     {"code": "8", "wording": "In Transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A parcel summary status; the newest scan gives the stage, such as out for delivery or waiting at a SmartPoint."},
-    {"code": "9", "wording": "Pending", "language": "en", "stage": "exception", "confirmedBy": "portal", "note": "A parcel summary status: a problem awaiting resolution."}
+    {"code": "9", "wording": "Pending", "language": "en", "stage": "exception", "confirmedBy": "portal", "note": "A parcel summary status: awaiting resolution. The newest scan gives the stage, such as a failed delivery to a wrong address."}
   ]
 }

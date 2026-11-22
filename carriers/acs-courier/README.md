@@ -42,8 +42,8 @@ only. `Accept-Language: en-US` gives English wording and Latin place names. The 
 reads the shortened history, staging its milestones by their ids.
 
 The parcel's summary status settles a delivery, a return or a delivery problem. While it says
-the parcel is on its way, the newest scan gives the stage, such as out for delivery or waiting
-at a SmartPoint locker. Messages to the recipient keep the stage of the scan before them.
+the parcel is on its way or awaiting resolution, the newest scan gives the stage, such as out for
+delivery, waiting at a SmartPoint locker or a failed delivery. Messages to the recipient keep the stage of the scan before them.
 
 Scan clocks are wall clocks without an offset; the tracker shows them in the viewer's own zone.
 They stay local times. A pickup or delivery dated midnight exactly is a day without a clock.
