@@ -4,8 +4,10 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { furtherAlong } from '../../core/status/progress.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { courierItEventName } from '../courier-it/status.js';
 import { postNetStage } from './status.js';
 
 export const PROVIDER = 'PostNet';
@@ -96,7 +98,7 @@ export function parsePostNetEvents(body: string, network: PostNetNetwork): Carri
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new SchemaError(PROVIDER, 'PostNet returned an invalid event');
     const event = value as Record<string, unknown>;
     const said = text(event, 'description', 200);
-    const description = network === 'cit' ? said.split(' - ')[0]!.trim() : said;
+    const description = network === 'cit' ? courierItEventName(said) : said;
     if (!description) throw new SchemaError(PROVIDER, 'PostNet returned an event without a description');
     const location = text(event, 'location', 80);
     const stage = postNetStage(description);
@@ -106,7 +108,8 @@ export function parsePostNetEvents(body: string, network: PostNetNetwork): Carri
       description,
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
     };
-  });
+  // A Courier IT comment is only its staff's note, which the event leaves out.
+  }).filter((event) => !(network === 'cit' && /^comment$/i.test(event.description!)));
 }
 
 /**
@@ -118,7 +121,10 @@ export function postNetResult(events: CarrierEvent[]): CarrierResult {
   const ordered = events.map((event, index) => ({ event, index }))
     .sort((left, right) => Date.parse(right.event.time!) - Date.parse(left.event.time!) || left.index - right.index)
     .map(({ event }) => event);
-  const stage = ordered.find((event) => event.stage)?.stage as Stage | undefined;
+  const staged = ordered.filter((event) => event.stage);
+  // Courier IT captures a waybill's details after it takes the parcel, which does not set it back.
+  const stage = (staged[0]?.stage === 'registered' ? staged.find((event) => furtherAlong('registered', event.stage)) ?? staged[0]
+    : staged[0])?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),

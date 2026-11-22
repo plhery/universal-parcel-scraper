@@ -201,11 +201,13 @@ import { adapter as correosDeMexico } from '../carriers/correos-de-mexico/adapte
 import { adapter as correosElSalvador } from '../carriers/correos-el-salvador/adapter.js';
 import { adapter as correosExpress } from '../carriers/correos-express/adapter.js';
 import { adapter as correosGuatemala } from '../carriers/correos-guatemala/adapter.js';
+import { adapter as correosPanama } from '../carriers/correos-panama/adapter.js';
 import { adapter as correosSpain } from '../carriers/correos-spain/adapter.js';
 import { adapter as coscoShippingLines } from '../carriers/cosco-shipping-lines/adapter.js';
 import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter.js';
 import { adapter as cotaxi } from '../carriers/cotaxi/adapter.js';
 import { adapter as courierCenter } from '../carriers/courier-center/adapter.js';
+import { adapter as courierIt } from '../carriers/courier-it/adapter.js';
 import { adapter as courieritNz } from '../carriers/courierit-nz/adapter.js';
 import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js';
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
@@ -1306,11 +1308,13 @@ export const REGISTRY: RegistryDefinition = {
     "correos-el-salvador": correosElSalvador,
     "correos-express": correosExpress,
     "correos-guatemala": correosGuatemala,
+    "correos-panama": correosPanama,
     "correos-spain": correosSpain,
     "cosco-shipping-lines": coscoShippingLines,
     "costco-logistics": costcoLogistics,
     "cotaxi": cotaxi,
     "courier-center": courierCenter,
+    "courier-it": courierIt,
     "courierit-nz": courieritNz,
     "couriersplease": couriersplease,
     "cruz-del-sur": cruzDelSur,
@@ -2591,7 +2595,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-express": "correos-express",
     "correos-guatemala": "correos-guatemala",
     "correos-nicaragua": "universal",
-    "correos-panama": "universal",
+    "correos-panama": "correos-panama",
     "correos-spain": "correos-spain",
     "cosco-shipping-lines": "cosco-shipping-lines",
     "coship": "universal",
@@ -2601,7 +2605,7 @@ export const REGISTRY: RegistryDefinition = {
     "coupang-logistics": "universal",
     "courier-center": "courier-center",
     "courier-express-malta": "universal",
-    "courier-it": "universal",
+    "courier-it": "courier-it",
     "courier-plus-ng": "universal",
     "courierit-nz": "courierit-nz",
     "couriersplease": "couriersplease",
