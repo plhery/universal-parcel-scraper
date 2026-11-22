@@ -7133,6 +7133,14 @@
     "reason": "Magyar Posta's low-confidence domestic rule takes any P, a letter, three characters and eight digits; Pargo's PAR waybills fall inside it and pargo-1 decides."
   },
   {
+    "shape": "PNA and ten digits with a valid Magyar Posta check digit",
+    "carriers": [
+      "magyar-posta",
+      "postnet-za"
+    ],
+    "reason": "Magyar Posta's low-confidence domestic rule takes any P, a letter, three characters and eight digits; PostNet's PNA waybills whose check digit happens to fit it fall inside it and postnet-za-1 decides."
+  },
+  {
     "shape": "OS, eight digits and KS",
     "carriers": [
       "colis-prive",

@@ -2737,6 +2737,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gel-express', number: '9999999990',
     route: /^https:\/\/www\.gel-express\.de\/de\/sendungsverfolgung\/\?snr=9999999990$/,
     marker: /Ihre Sendungsnummer konnte leider nicht gefunden werden/ },
+  // The page fills its field from the pnpp parameter, looks the waybill up as it loads and answers an unknown one with its notice.
+  { carrier: 'postnet-za', number: 'PPA99999999990',
+    route: /^https:\/\/www\.postnet\.co\.za\/tracker\?pnpp=PPA99999999990$/,
+    marker: /enter your PN or PP tracking number/i },
 ];
 
 /**

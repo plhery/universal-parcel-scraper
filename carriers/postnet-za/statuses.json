@@ -1,4 +1,33 @@
 {
   "carrier": "postnet-za",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Shipment Created (Shipment Created at PostNet - Ben Fleur)",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The waybill is created at the PostNet the sender hands the parcel in at."
+    },
+    {
+      "wording": "Ready For Collection (Received at PostNet - Robertson)",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel waits at the PostNet the recipient collects it from."
+    },
+    {
+      "wording": "Customer Collection (Collected from PostNet - Robertson)",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The recipient collected the parcel at that PostNet."
+    },
+    {
+      "wording": "Proof Of Delivery",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Courier IT's proof of delivery for an older waybill it carried, kept without its detail."
+    }
+  ]
 }

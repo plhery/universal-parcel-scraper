@@ -661,6 +661,7 @@ import { statusMap as posIndonesia } from '../../carriers/pos-indonesia/status.j
 import { statusMap as posMalaysia } from '../../carriers/pos-malaysia/status.js';
 import { statusMap as postHaste } from '../../carriers/post-haste/status.js';
 import { statusMap as postLuxembourg } from '../../carriers/post-luxembourg/status.js';
+import { statusMap as postnetZa } from '../../carriers/postnet-za/status.js';
 import { statusMap as postaFaroe } from '../../carriers/posta-faroe/status.js';
 import { statusMap as postaKenya } from '../../carriers/posta-kenya/status.js';
 import { statusMap as postaMoldovei } from '../../carriers/posta-moldovei/status.js';
@@ -1212,7 +1213,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress, peddler,
   'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, pigeonship, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
   'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
-  'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-moldovei': postaMoldovei, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
+  'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'postnet-za': postnetZa, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-moldovei': postaMoldovei, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,
   xcargo, skladusa, 'seino-super-express': seinoSuperExpress, 'post-one': postOne, 'post-international': postInternational, 'posta-slovenije': postaSlovenije, 'posta-srbije': postaSrbije, 'poste-italiane': posteItaliane, postex, posti, postlogistics, 'postmedia-parcel-services': postmediaParcelServices,
   postnord, posturinn, ppl, prd, 'precision-deliveries': precisionDeliveries,

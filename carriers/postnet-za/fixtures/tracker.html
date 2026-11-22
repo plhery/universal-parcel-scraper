@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Track Your Parcel with PostNet | PostNet</title>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="mt-2"><div class="row bg-body-secondary">
+	<div class="col-12 py-4">
+		<div class="row">
+			<div class="col-12 col-md-9 m-auto">
+				<h3 class="text-center">TRACK YOUR POSTNET SHIPMENT NOW</h3>
+				<div>
+					<p>Please enter your PN or PP tracking number into the text box and click submit to track your shipment. Do not include any spaces.</p>
+					<input id="track-token" type="hidden" value="0123456789abcdef0123456789abcdef">
+					<div class="pb-3">
+						<div class="input-group">
+							<input id="tracking-number" class="form-control" type="text" placeholder="Tracking Number">
+							<button class="btn btn-primary" type="button" id="submit-track">Track Shipment <i id="loader" class="fa fa-magnifying-glass"></i></button>
+						</div>
+					</div>
+				</div>
+				<div id="results" class="small"></div>
+			</div>
+		</div>
+	</div>
+</div></div>
+</div>
+<script src="https://www.postnet.co.za/sites/postnet/script/ContentPage.ShipmentTracker.js?v=1.35"></script>
+</body>
+</html>

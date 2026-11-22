@@ -17,19 +17,47 @@
   "timezone": "Africa/Johannesburg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "postnet-za",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 642
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://www.postnet.co.za/tracker?pnpp={trackingNumber}",
     "searchUrl": "https://www.postnet.co.za/tracker",
     "helpUrl": "https://www.postnet.co.za/contact-postnet",
     "canaryUrl": "https://www.postnet.co.za/tracker",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "signatory"
+    ]
   },
   "links": [
     {
@@ -43,5 +71,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "postnet-za-1",
+      "pattern": "^(?:PNA\\d{10}|PPA\\d{11})$",
+      "confidence": "high"
+    }
+  ]
 }

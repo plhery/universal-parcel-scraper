@@ -108802,13 +108802,10 @@
   },
   {
     "input": "PNA5937988669",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "postnet-za",
+    "confidence": "high",
     "candidates": [
-      "magyar-posta"
-    ],
-    "preferred": [
-      "magyar-posta"
+      "postnet-za"
     ]
   },
   {
@@ -108923,9 +108920,19 @@
   },
   {
     "input": "PPA78181363215",
-    "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "carrier": "postnet-za",
+    "confidence": "high",
+    "candidates": [
+      "postnet-za"
+    ]
+  },
+  {
+    "input": "PPA81910065407",
+    "carrier": "postnet-za",
+    "confidence": "high",
+    "candidates": [
+      "postnet-za"
+    ]
   },
   {
     "input": "PQ0DK20000034530151002K",

@@ -14,16 +14,13 @@
       "context": {
         "service": "South Africa overnight delivery",
         "reportedRole": "reference number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "magyar-posta"
-        ]
+        "carrier": "postnet-za",
+        "confidence": "high"
       },
-      "note": "The customer publishes the PostNet reference for the overnight shipment. The carrier’s public tracking URL returned the form without a matching shipment history."
+      "note": "The customer publishes the PostNet reference for the overnight shipment. PostNet's tracker answers it through Aramex with the waybill's creation at PostNet Melville."
     },
     {
       "number": "PPA78181363215",
@@ -38,13 +35,34 @@
       "context": {
         "service": "PostNet branch collection",
         "reportedRole": "parcel number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
+        "carrier": "postnet-za",
+        "confidence": "high"
       },
-      "note": "A recipient reproduces a PostNet collection notification that prints this exact uppercase parcel number. Its current result remains unverified."
+      "note": "A recipient reproduces a PostNet collection notification that prints this exact uppercase parcel number. PostNet's tracker answers it through Aramex, created at one PostNet and ready for collection at another."
+    },
+    {
+      "number": "PPA81910065407",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/69bd403ce479bcc33acd3252",
+        "date": "2026-03-20",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "PostNet to PostNet",
+        "reportedRole": "waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "postnet-za",
+        "confidence": "high"
+      },
+      "note": "A review on PostNet's Trustpilot page thanks two PostNet stores and gives the waybill. PostNet's tracker answers it through Aramex: created at one PostNet, then ready for collection and collected at another."
     }
   ]
 }

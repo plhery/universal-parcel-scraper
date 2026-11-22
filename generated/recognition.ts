@@ -397,6 +397,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "postex": 745,
   "posti": 710,
   "postlogistics": 700,
+  "postnet-za": 642,
   "postnord": 510,
   "posturinn": 875,
   "ppl": 608,
