@@ -73,6 +73,7 @@ import { statusMap as xpressLogisticsLu } from '../../carriers/xpress-logistics-
 import { statusMap as aeropost } from '../../carriers/aeropost/status.js';
 import { statusMap as westernBid } from '../../carriers/western-bid/status.js';
 import { statusMap as libanpost } from '../../carriers/libanpost/status.js';
+import { statusMap as libertyExpress } from '../../carriers/liberty-express/status.js';
 import { statusMap as omLogistics } from '../../carriers/om-logistics/status.js';
 import { statusMap as zesExpress } from '../../carriers/zes-express/status.js';
 import { statusMap as whwdt } from '../../carriers/whwdt/status.js';
@@ -1084,6 +1085,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   aeropost,
   'western-bid': westernBid,
   libanpost,
+  'liberty-express': libertyExpress,
   'om-logistics': omLogistics,
   'ap-cargo': apCargo, 'apd-parcel': apdParcel,
   'carrybee': carrybee,

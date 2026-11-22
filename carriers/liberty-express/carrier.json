@@ -15,19 +15,53 @@
   "timezone": "America/Caracas",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "liberty-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "searchUrl": "https://iqpack.libertyexpress.com/SearchGuide",
     "helpUrl": "https://libertyexpress.com/es-us/contacto/",
     "canaryUrl": "https://iqpack.libertyexpress.com/SearchGuide",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "scan_times"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "offset_timestamps",
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "iqpack.libertyexpress.com"
+      ],
+      "pathPattern": "^/Tracking$",
+      "params": [
+        "nGuia"
+      ]
+    }
+  ],
   "detection": []
 }

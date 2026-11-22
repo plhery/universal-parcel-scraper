@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es-ve">
+<head>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TX35G6M9');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="iQPack sistema para el control de guias de los usuarios de Liberty Express" />
+    <meta name="author" content="Rucor Group LLC para Liberty Express" />
+    <meta name="theme-color" content="#ad0000">
+    <title>Buscar Gu&#xED;a - iQPack - Liberty Express</title>
+
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="/content/images/Logo.svg" />
+    <link href="/css/site.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="/js/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+
+    <script src="/js/scripts.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/css/basic/critical.css?ver=2405011" />
+        <link rel="stylesheet" type="text/css" href="/css/index/critical.css?ver=240501" />
+
+</head>
+
+<body class="liberty-mobile-refresh">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TX35G6M9"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!--if (Global.EsPruebas != true)
+        {
+            <p align="center" style="color: #f00000; font-size: 20px; font-weight: bold; margin-top: 10px;">AMBIENTE DE PRODUCCIÓN</p>
+        }
+    }-->
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<link rel="stylesheet" href="/css/search-guide.css?v=FjOPpsACgQEQBZh8Hue6yuQrCCpz9qe8N7yrAkL7bcE" />
+
+<div class="search-guide">
+    <section class="rt-product" aria-labelledby="search-guide-title">
+        <header class="rt-header">
+                <a href="/" class="rt-brand" aria-label="Liberty Express">
+                    <img src="/content/images/Logo-LibertyExpress.jpg" width="130" height="60" alt="Liberty Express" />
+                </a>
+        </header>
+        <div class="rt-main">
+                <button type="button" class="rt-back" onclick="window.history.back()">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7" /></svg>
+                    Regresar
+                </button>
+            <div class="rt-layout">
+                <div class="rt-intro">
+                    <span class="rt-eyebrow">Rastreo de env&#xED;os</span>
+                    <h1 id="search-guide-title">&#xBF;D&#xF3;nde est&#xE1; tu env&#xED;o?</h1>
+                    <p>Consulta el estado de tu paquete con su n&#xFA;mero de gu&#xED;a o tracking.</p>
+                    <span class="rt-brand-line" aria-hidden="true"></span>
+                    <img class="rt-shipment-photo" src="/content/images/shipment-tracking.webp?v=Z_KNGbki-wTlBdOHXjK9PAmAjgQyj9TsM5Z_WamWuxQ" width="840" height="560" alt="" decoding="async" />
+                </div>
+                <section class="rt-form-card" aria-labelledby="search-guide-form-title">
+                    <div class="rt-symbol" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3M7 8v8m4-8v8m3-8v8m3-8v8" /></svg>
+                    </div>
+                    <h2 id="search-guide-form-title">Rastrear Gu&#xED;a</h2>
+                    <p id="search-guide-help" class="rt-helper">Indica el n&#xFA;mero de la gu&#xED;a &#xF3; tracking que deseas rastrear</p>
+                    <form method="post" action="/SearchGuide">
+                        <input type="hidden" id="hreflang" name="hreflang" value="" />
+                        <input type="hidden" data-val="true" data-val-required="The FromMobileApp field is required." id="FromMobileApp" name="FromMobileApp" value="False" />
+                        <input type="hidden" data-val="true" data-val-required="The FromReactApp field is required." id="FromReactApp" name="FromReactApp" value="False" />
+                        <label for="NGuia">N&#xFA;mero de gu&#xED;a o tracking</label>
+                        <input type="text" class="rt-input" placeholder="Gu&#xED;a &#xF3; Tracking" aria-describedby="search-guide-help msgError" aria-invalid="true" spellcheck="false" autocapitalize="off" enterkeyhint="search" id="NGuia" name="NGuia" value="WR01-999999990" />
+                        <p id="msgError" class="rt-error" role="alert">El n&#xFA;mero de la gu&#xED;a no existe, por favor ingrese otro n&#xFA;mero</p>
+                        <button type="submit" class="rt-primary">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
+                            Rastrear Gu&#xED;a
+                        </button>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8SYNTHETICTRACKINGFORMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_bbbbbbbbbbbb-cccc" /></form>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
+
+        </main>
+    </div>
+
+
+    
+        <link rel="stylesheet" href="/css/liberty-mobile.css?v=TLurpF_yujUFTVj2Nbm-vt_4d_RrNxPjwMLIsNWSPNo" />
+
+
+    <!-- Debe ir en esta ubicaion para que se muestren los graficos feather -->
+    <script>
+        feather.replace()
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
