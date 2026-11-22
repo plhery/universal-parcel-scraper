@@ -9,6 +9,8 @@ const carrierSpellings = new Map([
   ['united states of america', 'US'], ['great britain', 'GB'], ['great britain and northern ireland', 'GB'],
   ['united kingdom of great britain and northern ireland', 'GB'], ['czech republic', 'CZ'], ['holland', 'NL'],
   ['mainland china', 'CN'], ["people's republic of china", 'CN'],
+  // German "Volksrepublik China", which DHL writes "China VR".
+  ['volksrepublik china', 'CN'], ['vr china', 'CN'], ['china vr', 'CN'],
   ['hong kong', 'HK'], ['macau', 'MO'], ['macao', 'MO'], ['turkey', 'TR'], ['russian federation', 'RU'],
   ['korea', 'KR'], ['republic of korea', 'KR'],
 ]);

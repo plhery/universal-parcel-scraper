@@ -30,7 +30,7 @@ describe('tracking places', () => {
 
   it.each([
     ['France', 'FR'], ['DE', 'DE'], ['CH ', 'CH'], ['THE NETHERLANDS', 'NL'], ['Czech Republic', 'CZ'], ['Hong Kong', 'HK'],
-    ['DHL Netherlands', 'NL'], ['КИТАЙ', 'CN'], ['Україна', 'UA'], ['日本', 'JP'], ['美國', 'US'],
+    ['DHL Netherlands', 'NL'], ['КИТАЙ', 'CN'], ['Україна', 'UA'], ['日本', 'JP'], ['美國', 'US'], ['China VR', 'CN'], ['VR China', 'CN'],
     // Between empty fields, and a partner's depot abroad by its number.
     [',,,DE', 'DE'], ['FR,', 'FR'], ['SPAIN (12)', 'ES'], ['Republic of Moldova', 'MD'], ['Kingdom of the Netherlands', 'NL'],
   ])('leaves no place when %s is only a country', (location, country) => {

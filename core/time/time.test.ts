@@ -192,6 +192,7 @@ describe('time policies', () => {
       expect(countryCode(name), name).toBe('GB');
     }
     for (const name of ['États-Unis', 'ETATS-UNIS', 'Stati Uniti', 'Estados  Unidos', 'Verenigde Staten']) expect(countryCode(name), name).toBe('US');
+    for (const name of ['China VR', 'VR China', 'Volksrepublik China']) expect(countryCode(name), name).toBe('CN');
     expect(countryCode('Südafrika')).toBe('ZA');
     expect(countryCode('Afrique du Sud')).toBe('ZA');
     expect(countryCode('Nederland')).toBe('NL');

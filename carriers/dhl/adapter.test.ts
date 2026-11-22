@@ -293,6 +293,22 @@ describe('DHL public tracking normalization', () => {
     ]);
   });
 
+  it('reads an export scan DHL places in "China VR" on China’s clock', () => {
+    // Live shape: China Post's export customs scan, which DHL's German history repeats at China's wall clock under Germany's offset.
+    const payload = shipment({ zielland: 'Deutschland' });
+    const timeline = payload.sendungen[0]!.sendungsdetails.sendungsverlauf;
+    timeline.datumAktuellerStatus = '2026-11-22T07:55:00+01:00';
+    timeline.events.push(
+      { datum: '2026-11-22T07:54:00+01:00', ort: 'China VR', status: 'Die Sendung ist im Exportland abgangsbereit.' },
+      { datum: '2026-11-22T07:55:00+01:00', ort: 'China VR', status: 'Die Sendung wurde zur Verzollung im Exportland angemeldet.' },
+    );
+    const dated = dateLocalClocks('dhl', parseDHLTrackingResponse(payload, NUMBER));
+    expect(dated.events?.slice(0, 2)).toEqual([
+      expect.objectContaining({ location: 'China VR', time: '2026-11-22T07:55:00+08:00', time_zone: 'Asia/Shanghai' }),
+      expect.objectContaining({ location: 'China VR', time: '2026-11-22T07:54:00+08:00', time_zone: 'Asia/Shanghai' }),
+    ]);
+  });
+
   it('reads DHL’s German wording and country names as it reads its English', () => {
     const payload = shipment({ zielland: 'Vereinigtes Königreich' });
     const timeline = payload.sendungen[0]!.sendungsdetails.sendungsverlauf;

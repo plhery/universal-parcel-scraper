@@ -240,9 +240,11 @@ for (const language of ['en', 'de', 'fr', 'it', 'es', 'nl', 'pt', 'pt-PT']) {
   }
 }
 // Full, former or abbreviated names carriers print, which Intl writes otherwise: Cainiao names
-// the United States "USA", DHL's German scans name the United Kingdom "Großbritannien", USPS's
-// scans abroad name it in full, and the posts' IPS scans name Russia as ISO does.
+// the United States "USA", DHL's German scans name the United Kingdom "Großbritannien" and the
+// People's Republic of China "China VR", USPS's scans abroad name the United Kingdom in full, and
+// the posts' IPS scans name Russia as ISO does.
 for (const [name, code] of [['United States of America', 'US'], ['USA', 'US'], ['Czech Republic', 'CZ'], ['Großbritannien', 'GB'],
+  ['China VR', 'CN'], ['VR China', 'CN'], ['Volksrepublik China', 'CN'],
   ['United Kingdom of Great Britain and Northern Ireland', 'GB'], ['Russian Federation', 'RU']] as const) {
   REGION_BY_NAME.set(regionKey(name), code);
 }
