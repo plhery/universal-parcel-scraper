@@ -22,6 +22,9 @@ const labels: Record<string, ClassifiedStatus> = {
   'NON-EXISTENT/INCOMPLETE ADDRES': { status: 'exception', stage: 'failed_attempt' },
   // The courier found no one in and left a notice.
   'NOTICE OF ATTEMPTED DELIVERY': { status: 'exception', stage: 'failed_attempt' },
+  // After a missed delivery, the parcel sent on to a BRT-fermopoint for its recipient to collect: its round there
+  // and its arrival follow.
+  'REDIRECT TO BRT-FERMOPOINT': { status: 'in_transit', stage: 'in_transit' },
   // The partner abroad found no one in on its round; the next round or a return follows.
   'ABSENT AFTER ATTEMPT.DELIVERY': { status: 'exception', stage: 'failed_attempt' },
   // A public demonstration holds the parcel up.
@@ -52,7 +55,6 @@ const ITALIAN: Readonly<Record<string, string>> = {
   'RESO MITTENTE': 'RETURNED TO SENDER',
   CONSEGNATA: 'DELIVERED',
   'DESTIN.ASSENTE:LASCIATO AVVISO': 'NOTICE OF ATTEMPTED DELIVERY',
-  // The map stages neither label.
   'REINDIRIZZATA A BRT-FERMOPOINT': 'REDIRECT TO BRT-FERMOPOINT',
 };
 

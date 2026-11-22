@@ -113,6 +113,20 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Refusal Confirmation Code Verified",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The code the receiver gives to confirm refusing the shipment at the door, a minute before the refusal itself. Another round or the return follows."
+    },
+    {
+      "wording": "Consignee Refused To Accept",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The receiver refused the shipment at the door. Another round or the return follows."
+    },
+    {
       "wording": "Shipment Returned Back To Shipper",
       "language": "en",
       "stage": "returned",

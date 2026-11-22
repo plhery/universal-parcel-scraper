@@ -99,6 +99,13 @@
       "note": "The courier found no one in and left a notice."
     },
     {
+      "wording": "Redirect to BRT-fermopoint",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "After a missed delivery, the parcel sent on to a BRT-fermopoint for its recipient to collect. Its round there and its arrival follow."
+    },
+    {
       "wording": "ABSENT AFTER ATTEMPT.DELIVERY",
       "language": "en",
       "stage": "failed_attempt",
@@ -167,6 +174,13 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "note": "The Italian page's label for COLLECTED AT BRT-fermopoint."
+    },
+    {
+      "wording": "REINDIRIZZATA A BRT-fermopoint",
+      "language": "it",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The Italian page's label for Redirect to BRT-fermopoint."
     },
     {
       "wording": "DESTINATAR.SCONOSC./INCOMPLETO",

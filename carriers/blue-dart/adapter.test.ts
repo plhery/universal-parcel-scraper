@@ -32,6 +32,16 @@ describe('Blue Dart direct tracking', () => {
     // The booked pickup comes before Blue Dart has the parcel.
     expect(statusMapAnswer({ carrier: 'blue-dart', providerCode: null, description: 'Pickup Has Been Registered' })).toEqual({ kind: 'mapped', stage: 'registered' });
   });
+  it('reads a refusal at the door, with the code that confirms it, as a missed round', () => {
+    const value = html
+      .replace('<th>Status</th><td>Shipment Delivered</td>', '<th>Status</th><td>Consignee Refused To Accept</td>')
+      .replace('<td>Example Facility</td><td>Shipment Delivered</td>', '<td>Example Facility</td><td>Consignee Refused To Accept</td>')
+      .replace('Shipment Out For Delivery', 'Refusal Confirmation Code Verified');
+    const result = parseBlueDart(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Consignee Refused To Accept' });
+    expect(result.events?.map(e => e.stage)).toEqual(['failed_attempt', 'failed_attempt', 'in_transit']);
+    expect(result).not.toHaveProperty('delivered_at');
+  });
   it('rejects wrong and duplicate summaries and treats an empty shell as schema failure', () => {
     for (const value of [html.replace(NUMBER, '00000000002'), html + html, '<html>Unavailable</html>']) {
       expect(() => parseBlueDart(value, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));

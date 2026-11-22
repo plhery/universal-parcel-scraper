@@ -485,6 +485,14 @@ describe('BRT in Italian', () => {
     expect(returned).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Consegnata' });
   });
 
+  it('reads a redirect to a BRT-fermopoint after a missed delivery as in transit, in either language', () => {
+    for (const redirect of ['Redirect to BRT-fermopoint', 'REINDIRIZZATA A BRT-fermopoint']) {
+      const result = parseBrt(labelled(redirect, 'NOTICE OF ATTEMPTED DELIVERY', ...ENGLISH.slice(2)), NUMBER);
+      expect(result, redirect).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+      expect(result.events!.slice(0, 2).map(event => event.stage), redirect).toEqual(['in_transit', 'failed_attempt']);
+    }
+  });
+
   it('asks for the Italian page for an Italian reader and for the English one otherwise', async () => {
     const fetcher = vi.fn<typeof fetch>(async (url, init) => response(languageOf(url, init) === 'it' ? italian : english));
     const instance = adapter(environment(fetcher));

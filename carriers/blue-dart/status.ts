@@ -24,6 +24,10 @@ const vocabulary: Record<string, ClassifiedStatus> = {
   'network issues': { status: 'exception', stage: 'exception' },
   'contact customer service': { status: 'exception', stage: 'exception' },
   'cnee refused id/otp not shared-incorrect': { status: 'exception', stage: 'failed_attempt' },
+  // The receiver refusing the shipment at the door, which Blue Dart confirms with a code the receiver gives: the
+  // round fails, and another round or the return follows.
+  'refusal confirmation code verified': { status: 'exception', stage: 'failed_attempt' },
+  'consignee refused to accept': { status: 'exception', stage: 'failed_attempt' },
   'shipment returned back to shipper': { status: 'exception', stage: 'returned' },
 };
 
