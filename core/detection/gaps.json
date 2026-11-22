@@ -6351,5 +6351,10 @@
     "carrier": "lindao-express",
     "kind": "by_design",
     "reason": "The supported numeric form is shared by other carriers; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "riyu-logistics",
+    "kind": "by_design",
+    "reason": "Riyu waybills, a letter and ten digits, share their shape with other carriers' numbers; use explicit selection or a named handoff."
   }
 ]

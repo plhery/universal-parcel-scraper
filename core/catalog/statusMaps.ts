@@ -437,6 +437,7 @@ import { statusMap as hunterExpress } from '../../carriers/hunter-express/status
 import { statusMap as huahan } from '../../carriers/huahan/status.js';
 import { statusMap as huayaExpress } from '../../carriers/huaya-express/status.js';
 import { statusMap as huaqiExpress } from '../../carriers/huaqi-express/status.js';
+import { statusMap as riyuLogistics } from '../../carriers/riyu-logistics/status.js';
 import { statusMap as lindaoExpress } from '../../carriers/lindao-express/status.js';
 import { statusMap as wanjiaLogistics } from '../../carriers/wanjia-logistics/status.js';
 import { statusMap as huiyu } from '../../carriers/huiyu/status.js';
@@ -1162,7 +1163,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   postnord, posturinn, ppl, 'precision-deliveries': precisionDeliveries,
   'pro-carrier': proCarrier, 'prompt-xpress': promptXpress, proships, 'pts-worldwide-express': ptsWorldwideExpress, ptt, 'pullman-cargo': pullmanCargo, purolator, pwb, 'quantium-solutions': quantiumSolutions,
   'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
-  rincos, rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rohlig-suus': rohligSuus, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
+  rincos, 'riyu-logistics': riyuLogistics, rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rohlig-suus': rohligSuus, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
   'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shipter, shouwu,
   'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skroutz-last-mile': skroutzLastMile,

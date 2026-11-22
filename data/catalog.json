@@ -53513,6 +53513,28 @@
     ],
     "detectionRules": []
   },
+  "riyu-logistics": {
+    "displayName": "Riyu Logistics",
+    "color": "#e60012",
+    "aliases": [
+      "日昱物流",
+      "日昱物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "riyu-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.rywl.cn/",
+    "trackingSearchUrl": "https://www.rywl.cn/cargoTracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rl-carriers": {
     "displayName": "R+L Carriers",
     "color": "#006647",

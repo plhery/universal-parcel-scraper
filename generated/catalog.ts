@@ -53517,6 +53517,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "riyu-logistics": {
+    "displayName": "Riyu Logistics",
+    "color": "#e60012",
+    "aliases": [
+      "日昱物流",
+      "日昱物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "riyu-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.rywl.cn/",
+    "trackingSearchUrl": "https://www.rywl.cn/cargoTracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rl-carriers": {
     "displayName": "R+L Carriers",
     "color": "#006647",
@@ -72400,6 +72422,7 @@ export const CARRIER_IDS = [
   "rika-express",
   "rincos",
   "rivigo",
+  "riyu-logistics",
   "rl-carriers",
   "rm-logistics",
   "roadie",
@@ -74421,6 +74444,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rika-express": [],
   "rincos": [],
   "rivigo": [],
+  "riyu-logistics": [],
   "rl-carriers": ["rl-carriers-1","rl-carriers-2","rl-carriers-3"],
   "rm-logistics": [],
   "roadie": ["roadie-1","roadie-2"],

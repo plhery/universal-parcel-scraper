@@ -1,0 +1,70 @@
+{
+  "id": "riyu-logistics",
+  "displayName": "Riyu Logistics",
+  "aliases": [
+    "日昱物流",
+    "日昱物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#e60012"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "riyu-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.rywl.cn/cargoTracking.html",
+    "canaryUrl": "https://www.rywl.cn/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "branch_phone",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "branch_phone",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "pieces",
+      "origin",
+      "destination",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

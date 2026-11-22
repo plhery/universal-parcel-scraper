@@ -1,0 +1,71 @@
+{
+  "carrier": "riyu-logistics",
+  "records": [
+    {
+      "number": "G0480119226",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/riyuwuliu.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Riyu page lists. Riyu's tracker answers it with freight collected in Panyu, carried through Guangzhou and Wuhan and signed for in Huangpi."
+    },
+    {
+      "number": "G1170005421",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/riyuwuliu.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Riyu page lists. Riyu's tracker answers it with freight collected in Foshan, carried through Guangzhou and collected from Changshu's pickup desk."
+    },
+    {
+      "number": "G1260043114",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/riyuwuliu.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Riyu page lists. Riyu's tracker answers it with freight collected in Panyu, carried through Guangzhou and Shanghai and signed for in Minhang, with a dispatch row dated after the delivery."
+    }
+  ]
+}

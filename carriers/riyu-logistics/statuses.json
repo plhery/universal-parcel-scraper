@@ -1,0 +1,69 @@
+{
+  "carrier": "riyu-logistics",
+  "entries": [
+    {
+      "code": "010",
+      "wording": "您的货物已揽收：<网点>",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Collected by the origin branch."
+    },
+    {
+      "code": "020",
+      "wording": "已发出：<网点>",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left the origin branch."
+    },
+    {
+      "code": "030",
+      "wording": "已到达：<出港组>",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached the outbound hub."
+    },
+    {
+      "code": "040",
+      "wording": "已发出：<出港组>",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left the outbound hub."
+    },
+    {
+      "code": "050",
+      "wording": "已到达：<进港仓 / 理货管理部 / 进港自提组>",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached the destination hub or warehouse."
+    },
+    {
+      "code": "070",
+      "wording": "已发出：<理货管理部 / 营业部>",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left the destination hub for the delivering branch."
+    },
+    {
+      "code": "080",
+      "wording": "已到达：<营业部>",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached the delivering branch."
+    },
+    {
+      "code": "150",
+      "wording": "已签收：<营业部 / 自提组>",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for, at the door or collected from the branch."
+    }
+  ]
+}

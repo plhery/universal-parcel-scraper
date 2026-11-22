@@ -94295,6 +94295,17 @@
     ]
   },
   {
+    "input": "G0480119226",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "G10424204828",
     "carrier": "unknown",
     "confidence": "low",
@@ -94312,6 +94323,28 @@
     "confidence": "low",
     "candidates": [
       "urbano"
+    ]
+  },
+  {
+    "input": "G1170005421",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
+    "input": "G1260043114",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
     ]
   },
   {
