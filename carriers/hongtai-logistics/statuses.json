@@ -1,0 +1,77 @@
+{
+  "carrier": "hongtai-logistics",
+  "entries": [
+    {
+      "code": "收货开单",
+      "wording": "货物已由【…】揽收，信息已录入系统",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 16101: the origin branch took the freight in and opened the waybill."
+    },
+    {
+      "code": "货物配载",
+      "wording": "下一站网点【…】装车，…下一站网点【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 16107: loaded for the next branch; the adapter leaves the load number out."
+    },
+    {
+      "code": "网点发车",
+      "wording": "货物已由【…】发往【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 16109: the truck left the origin branch; the adapter leaves the plate and driver out."
+    },
+    {
+      "code": "分拨发车",
+      "wording": "货物已由【…】发往【…】【…】车",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 16110: the truck left a Zhengzhou hub warehouse for the destination branch."
+    },
+    {
+      "code": "卸货入库",
+      "wording": "货物已由【…】【…】卸货入库",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 16113: unloaded into a hub warehouse or the destination branch."
+    },
+    {
+      "code": "整车签收",
+      "wording": "运单整车签收-【…】【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 48506: the destination branch signed for the whole truck, not the recipient for the freight."
+    },
+    {
+      "code": "申请转出",
+      "wording": "【…】部门【…】申请转出货物",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 48502: the destination branch asked to hand the freight to a partner carrier."
+    },
+    {
+      "code": "货物转出",
+      "wording": "货物已转出，承运商单号【…】承运商【…】承运到站【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 16114: handed to a partner carrier, with its waybill and station; the adapter leaves the partner's phone out."
+    },
+    {
+      "code": "客户签收",
+      "wording": "货物已由【…】签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Node 16118: signed for; the adapter leaves the signatory out."
+    }
+  ]
+}

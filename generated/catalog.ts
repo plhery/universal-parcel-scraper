@@ -32761,6 +32761,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hongtai-logistics": {
+    "displayName": "Hongtai Logistics",
+    "color": "#f08200",
+    "aliases": [
+      "鸿泰物流",
+      "河南省鸿泰物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hongtai-logistics"
+    },
+    "canaryUrl": "https://www.ht56.com/",
+    "trackingSearchUrl": "https://www.ht56.com/orderSearch.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "honour-lane-shipping": {
     "displayName": "Honour Lane Shipping",
     "color": "#17417c",
@@ -71621,6 +71642,7 @@ export const CARRIER_IDS = [
   "homexpress",
   "honducor",
   "hongsuda",
+  "hongtai-logistics",
   "honour-lane-shipping",
   "hop-envios",
   "hopexpress",
@@ -73635,6 +73657,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "homexpress": [],
   "honducor": [],
   "hongsuda": [],
+  "hongtai-logistics": [],
   "honour-lane-shipping": [],
   "hop-envios": [],
   "hopexpress": [],

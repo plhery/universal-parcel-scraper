@@ -6309,5 +6309,10 @@
     "carrier": "suteng-express",
     "kind": "by_design",
     "reason": "The supported numeric form is shared by other carriers; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "hongtai-logistics",
+    "kind": "by_design",
+    "reason": "The supported numeric form is shared by other carriers; use explicit selection or a named handoff."
   }
 ]

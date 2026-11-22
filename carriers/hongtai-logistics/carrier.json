@@ -1,0 +1,72 @@
+{
+  "id": "hongtai-logistics",
+  "displayName": "Hongtai Logistics",
+  "aliases": [
+    "鸿泰物流",
+    "河南省鸿泰物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#f08200"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hongtai-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.ht56.com/orderSearch.html",
+    "canaryUrl": "https://www.ht56.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "office_contact_details",
+      "driver_name",
+      "vehicle",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "office_contact_details",
+      "driver_name",
+      "vehicle",
+      "signatory"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "pieces",
+      "origin",
+      "destination",
+      "proof_of_delivery",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "driver_phone"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

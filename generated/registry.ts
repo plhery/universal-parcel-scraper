@@ -439,6 +439,7 @@ import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter
 import { adapter as homexpress } from '../carriers/homexpress/adapter.js';
 import { adapter as honducor } from '../carriers/honducor/adapter.js';
 import { adapter as hongkongPost } from '../carriers/hongkong-post/adapter.js';
+import { adapter as hongtaiLogistics } from '../carriers/hongtai-logistics/adapter.js';
 import { adapter as honourLaneShipping } from '../carriers/honour-lane-shipping/adapter.js';
 import { adapter as hopEnvios } from '../carriers/hop-envios/adapter.js';
 import { adapter as horoz } from '../carriers/horoz/adapter.js';
@@ -1498,6 +1499,7 @@ export const REGISTRY: RegistryDefinition = {
     "homexpress": homexpress,
     "honducor": honducor,
     "hongkong-post": hongkongPost,
+    "hongtai-logistics": hongtaiLogistics,
     "honour-lane-shipping": honourLaneShipping,
     "hop-envios": hopEnvios,
     "horoz": horoz,
@@ -2947,6 +2949,7 @@ export const REGISTRY: RegistryDefinition = {
     "honducor": "honducor",
     "hongkong-post": "hongkong-post",
     "hongsuda": "universal",
+    "hongtai-logistics": "hongtai-logistics",
     "honour-lane-shipping": "honour-lane-shipping",
     "hop-envios": "hop-envios",
     "hopexpress": "universal",

@@ -1,0 +1,49 @@
+{
+  "carrier": "hongtai-logistics",
+  "records": [
+    {
+      "number": "262776663",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ht56.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Hongtai page lists. Hongtai's endpoint answers it with freight taken in at Dingluan, through the Zhengzhou hub and signed for in Changzhi."
+    },
+    {
+      "number": "262753872",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/ht56.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A waybill kuaidi.com's Hongtai page lists. Hongtai's endpoint answers it with freight through the Zhengzhou hub to Changsha, handed to a partner carrier for Longshan and signed for."
+    }
+  ]
+}
