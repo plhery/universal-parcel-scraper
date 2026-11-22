@@ -1,8 +1,7 @@
 import { EventEmitter } from 'node:events';
 import type { Page, Request } from 'playwright-core';
 import { describe, expect, it, vi } from 'vitest';
-import { captureRoyalMailReply, ROYAL_MAIL_FUNCTIONAL_CONSENT, royalMailBrowserUserAgent, royalMailCaptchaAllowed,
-  royalMailTrackingForm } from './browser.js';
+import { captureRoyalMailReply, royalMailBrowserUserAgent, royalMailTrackingForm } from './browser.js';
 import { royalMailEventsApiUrl, royalMailSummaryApiUrl } from './parser.js';
 import { ChallengeError } from '../../core/errors/index.js';
 
@@ -275,37 +274,4 @@ describe('Royal Mail tracking form', () => {
       message: 'Royal Mail tracking is temporarily unavailable' });
     await expect(royalMailTrackingForm(page(false), 1000)).resolves.toBeDefined();
   });
-});
-
-describe('Royal Mail cookie consent', () => {
-  it('presets the functional category alone for the whole site', () => {
-    const cookies = Object.fromEntries(ROYAL_MAIL_FUNCTIONAL_CONSENT.map(cookie => [cookie.name, cookie.value]));
-    expect(cookies).toMatchObject({ notice_preferences: '1:', cmapi_cookie_privacy: 'permit 1,2 functional' });
-    expect(new Set(ROYAL_MAIL_FUNCTIONAL_CONSENT.map(cookie => `${cookie.domain} ${cookie.path} ${cookie.secure}`)))
-      .toEqual(new Set(['.royalmail.com / true']));
-  });
-
-  // A page whose hCaptcha frame is missing, withheld or loaded, with or without the consent banner.
-  const page = (frame: 'missing' | 'withheld' | 'loaded', banner = false) => {
-    const waits: number[] = [];
-    const count = (selector: string) => selector.includes('data-ta-src') ? Number(frame === 'withheld')
-      : selector.includes('hcaptcha') ? Number(frame !== 'missing') : 0;
-    const locator = (selector: string) => ({ count: async () => count(selector), isVisible: async () => banner && selector === '#truste-show-consent',
-      first: () => ({ waitFor: async ({ timeout }: { timeout: number }) => {
-        waits.push(timeout);
-        if (!count(selector)) throw new Error('timeout');
-      } }) });
-    return { page: { locator } as unknown as Page, waits };
-  };
-
-  it('skips the dialog once the consent manager lets hCaptcha load', async () => {
-    const loaded = page('loaded');
-    await expect(royalMailCaptchaAllowed(loaded.page, 3000)).resolves.toBe(true);
-    expect(loaded.waits).toEqual([3000]);
-  });
-
-  it.each([['missing', false], ['withheld', false], ['loaded', true]] as const)(
-    'falls back to the dialog when the frame is %s (banner shown: %s)', async (frame, banner) => {
-      await expect(royalMailCaptchaAllowed(page(frame, banner).page, 3000)).resolves.toBe(false);
-    });
 });
