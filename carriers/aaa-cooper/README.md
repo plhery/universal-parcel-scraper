@@ -4,9 +4,9 @@ Tracks AAA Cooper Transportation's less-than-truckload freight in the United Sta
 number through its server-rendered results page. The host supplies a fetcher routed through
 the Americas; the adapter owns no proxy credentials.
 
-Midwest Motor Express ships under the AAA Cooper brand and tracker
+Midwest Motor Express and DHE Transportation ship under the AAA Cooper brand and tracker
 ([Trucking Dive](https://www.truckingdive.com/news/aaa-cooper-transportation-act-rebrand-mme-dhe-unify/803126/)),
-so its name is an alias here.
+so their names are aliases here.
 
 The page reads an eight-digit PRO. For a nine-digit PRO, the adapter validates its Luhn check
 digit before requesting the first eight digits. These numeric shapes overlap other carriers,

@@ -6574,6 +6574,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "AAA Cooper Transportation",
       "ACT",
+      "DHE Transportation",
       "Midwest Motor Express"
     ],
     "countries": [
