@@ -1,5 +1,6 @@
 import { DateTime, FixedOffsetZone } from 'luxon';
 import { isValidUspsPackageBarcode, normalizeTrackingNumber } from '../../core/detection/index.js';
+import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { hasGs1CheckDigitInDigits, isValidGofoEuropeWaybill } from '../../core/detection/prefixedChecksums.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -64,6 +65,7 @@ const CONTACT = /(?:投递员|快递员|派送员|联系电话|电话[:：]|手�
  * DHLink's last-leg partners. The reply gives the last leg's number
  * (`lastTurnNo`) but names no partner, so the partner is read from the
  * number's whole layout, and its check digit where `valid` checks one. A number no layout fits gives no hand-off.
+ * `countries` keeps a layout other carriers share to the parcels bound where it is the partner's.
  * `beijingClock` marks a partner whose scans DHLink relays on its own
  * Beijing clock rather than the scan's, and `hubClockPickup` one whose pickup
  * DHLink's node copies from the partner's first scan, on its hub's clock.
@@ -71,7 +73,8 @@ const CONTACT = /(?:投递员|快递员|派送员|联系电话|电话[:：]|手�
  * place and wording, which wins over Beijing's.
  */
 export const DHLINK_LAST_LEGS: readonly {
-  readonly carrier: string; readonly number: RegExp; readonly valid?: (number: string) => boolean; readonly beijingClock?: true; readonly hubClockPickup?: true;
+  readonly carrier: string; readonly number: RegExp; readonly valid?: (number: string) => boolean; readonly countries?: readonly string[];
+  readonly beijingClock?: true; readonly hubClockPickup?: true;
   readonly scanZone?: (place: string, description: string) => string | null;
 }[] = [
   // SwiftX's own numbers: SWX and eighteen digits, the layout `swiftx-1` claims. Its
@@ -94,6 +97,8 @@ export const DHLINK_LAST_LEGS: readonly {
   { carrier: 'gofo-nl', number: /^GFNL\d{14}$/, valid: isValidGofoEuropeWaybill },
   // Sameday's `1XL` and eleven digits, the layout `sameday-3` claims, as a line to Bulgaria gives it.
   { carrier: 'sameday', number: /^1XL\d{11}$/ },
+  // Canada Post's sixteen-digit parcel PINs with their GS1 digit, a length other carriers share, on a parcel bound for Canada.
+  { carrier: 'canada-post', number: /^\d{16}$/, valid: hasGs1CheckDigit, countries: ['CA'] },
 ];
 
 /** A number DHLink's tracker can be asked for; anything else is not sent. */
@@ -279,15 +284,22 @@ function roundDelivery(event: CarrierEvent): string | null {
 
 type Leg = { leg: (typeof DHLINK_LAST_LEGS)[number]; number: string };
 
-/** The partner whose layout the whole number has. */
-function legOf(number: string): Leg | null {
-  const leg = number ? DHLINK_LAST_LEGS.find((candidate) => candidate.number.test(number) && (candidate.valid?.(number) ?? true)) : undefined;
+/** The parcel's destination country; DHLink writes Britain's code as UK. */
+function destinationOf(entry: Record<string, unknown>): string {
+  const code = text(entry, 'destCountryCode', 8).toUpperCase();
+  return code === 'UK' ? 'GB' : code;
+}
+
+/** The partner whose layout the whole number has, for a parcel bound there. */
+function legOf(number: string, destination: string): Leg | null {
+  const leg = number ? DHLINK_LAST_LEGS.find((candidate) => candidate.number.test(number) && (candidate.valid?.(number) ?? true)
+    && (candidate.countries?.includes(destination) ?? true)) : undefined;
   return leg ? { leg, number } : null;
 }
 
 /** The last leg, when its number's whole layout is one the table maps. */
 function lastLeg(entry: Record<string, unknown>): Leg | null {
-  return legOf(normalizeTrackingNumber(text(entry, 'lastTurnNo', 64)));
+  return legOf(normalizeTrackingNumber(text(entry, 'lastTurnNo', 64)), destinationOf(entry));
 }
 
 /**
@@ -296,7 +308,7 @@ function lastLeg(entry: Record<string, unknown>): Leg | null {
  * SwiftX's do: DHLink relays them under it.
  */
 function partnerOf(entry: Record<string, unknown>, tracking: string): Leg | null {
-  return text(entry, 'lastTurnNo', 64) ? lastLeg(entry) : legOf(tracking);
+  return text(entry, 'lastTurnNo', 64) ? lastLeg(entry) : legOf(tracking, destinationOf(entry));
 }
 
 /**
@@ -359,9 +371,7 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
     scans.set(scan.stamp, held ? { ...kept, china: held.china || scan.china, state: held.state ?? scan.state,
       hub: held.hub || scan.hub, recorded: Math.min(held.recorded, scan.recorded) } : kept);
   }
-  const code = text(entry, 'destCountryCode', 8).toUpperCase();
-  // DHLink writes Britain's code as UK.
-  const destination = code === 'UK' ? 'GB' : code;
+  const destination = destinationOf(entry);
   const last = lastLeg(entry);
   // A parcel whose tracking number is the partner's own keeps the clock a parcel with no known last leg has.
   const partner = partnerOf(entry, tracking);
