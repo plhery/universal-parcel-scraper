@@ -66,6 +66,11 @@ test('keeps the record of a job that said nothing about its checks', () => {
   const flood = Array.from({ length: 81 }, (_, index) => [link(`carrier-${index}`), timeout]);
   const network = nextState(weekly, linksFailing(...flood), '2026-11-04');
   assert.deepEqual(Object.keys(network.checks['tracking-links']), ['The job']);
+  // The weekly search pages keep each of as many failures, and flood only past 250.
+  const pages = count => needsWith({ 'search-pages': { result: 'failure', outputs: { failures: lines(Array.from({ length: count },
+    (_, index) => [`carrier search pages (rendered at phone size) > carrier-${index} shows a field for the number`, changed])) } } });
+  assert.equal(Object.keys(nextState(empty, pages(81), '2026-11-09').checks['search-pages']).length, 81);
+  assert.deepEqual(Object.keys(nextState(empty, pages(251), '2026-11-09').checks['search-pages']), ['The job']);
 });
 
 test('asks for a look at a check failing two days running, and at a carrier down for two weeks', () => {

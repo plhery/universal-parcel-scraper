@@ -21,7 +21,8 @@ export const TITLE = 'Daily carrier canary failures';
 /** A carrier down this many days is asked about: keep checking it or not. */
 export const LONG_DOWN_DAYS = 14;
 // More failures than this in one job is the runner's network, not the carriers.
-const MASS_FAILURE = 80;
+// The weekly search pages, nearly 1,900 a week apart, drift more between looks.
+const MASS_FAILURE = { default: 80, 'search-pages': 250 };
 // GitHub refuses an issue body over 65,536 characters.
 const BODY_LIMIT = 65_000;
 const STATE = /<!-- canary-state\n([\s\S]*?)\n-->/;
@@ -89,7 +90,7 @@ export function nextState(previous, needs, today, timedOut = new Set()) {
     let jobFailure;
     if (result === 'cancelled' && timedOut.has(job)) jobFailure = 'Ran out of time before reporting checks; see the run log.';
     else if (result === 'failure' && !failures.length) jobFailure = 'Failed before reporting checks; see the run log.';
-    else if (failures.length > MASS_FAILURE) jobFailure = `${failures.length} checks failed at once, which points at the runner's network; see the run log.`;
+    else if (failures.length > (MASS_FAILURE[job] ?? MASS_FAILURE.default)) jobFailure = `${failures.length} checks failed at once, which points at the runner's network; see the run log.`;
     if (jobFailure || !['success', 'failure'].includes(result)) {
       checks[job] = { ...recorded };
       delete checks[job]['The job'];
