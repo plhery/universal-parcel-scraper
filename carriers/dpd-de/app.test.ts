@@ -459,7 +459,8 @@ describe('DPD Germany app projection', () => {
       ['Pick-up from the Pickup parcelshop by DPD driver', 'exception'],
       ['The consignee did not collect the parcel.', 'exception'],
     ]);
-    for (const wording of ['the consignee did not collect the parcel.', 'pick-up from the pickup parcelshop by dpd driver']) {
+    for (const wording of ['the consignee did not collect the parcel.', 'pick-up from the pickup parcelshop by dpd driver',
+      'The data of your delivery specifications has been transmitted']) {
       expect(statusMapAnswer({ carrier: 'dpd-de', description: wording })).toMatchObject({ kind: 'intentional_gap' });
     }
     // DPD Portugal's notices, relayed on a parcel it delivers, keep their code and wording.

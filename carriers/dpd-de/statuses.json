@@ -97,6 +97,13 @@
       "note": "A driver collects the parcel from a Pickup shop: after the parcel waited there for its recipient it starts the way back, otherwise the driver takes on the parcel the sender dropped there."
     },
     {
+      "wording": "The data of your delivery specifications has been transmitted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-21",
+      "note": "DPD's English for \"Die Daten Ihrer Wunschzustellung wurden übermittelt\": the recipient moved the delivery to another day, address or Pickup shop by phone or online (https://www.paketda.de/status-daten-wunschzustellung-uebermittelt.html). The parcel does not move, so the scans around it give the stage."
+    },
+    {
       "wording": "Transfer to DPD Pickup station by DPD driver.",
       "language": "en",
       "stage": "in_transit",

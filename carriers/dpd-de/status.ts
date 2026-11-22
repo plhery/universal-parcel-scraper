@@ -45,6 +45,9 @@ export const dpdDeScanKey = (wording: string) => wording.replace(/^(Pickup order
 const NOT_COLLECTED = 'The consignee did not collect the parcel.';
 const DRIVER_PICKUP = 'Pick-up from the Pickup parcelshop by DPD driver';
 const SHOP_COLLECTION_NOTE = 'Its stage depends on the scans before it. DPD writes it both when a driver collects a parcel the sender dropped at a Pickup shop and when the recipient left one there uncollected: after the parcel waited at the shop for its recipient it starts the way back.';
+// The recipient changed the delivery by phone or online ("Die Daten Ihrer Wunschzustellung wurden übermittelt").
+const DELIVERY_CHANGE = 'The data of your delivery specifications has been transmitted';
+const DELIVERY_CHANGE_NOTE = 'The recipient moved the delivery to another day, address or Pickup shop by phone or online. The parcel does not move, so the scans around it give the stage.';
 
 /**
  * A Pickup shop's scans as DPD collects a parcel from it. After the parcel waited
@@ -96,6 +99,7 @@ export const statusMap: CarrierStatusMap = {
     ...dpd.gaps.filter(gap => gap.code !== undefined),
     ...AUSTRIAN_GAPS,
     ...[NOT_COLLECTED, DRIVER_PICKUP].map(wording => ({ wording: normalizeStatusWording(wording), note: SHOP_COLLECTION_NOTE })),
+    { wording: normalizeStatusWording(DELIVERY_CHANGE), note: DELIVERY_CHANGE_NOTE },
     ...PORTUGUESE_NOTICES,
   ],
 };
