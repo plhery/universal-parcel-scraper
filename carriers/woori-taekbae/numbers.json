@@ -1,0 +1,204 @@
+{
+  "carrier": "woori-taekbae",
+  "gap": "Woori Taekbae waybills, ten digits starting with 50, share their shape with DHL Express and other carriers' ten-digit numbers, so there is no rule: the carrier is chosen by hand.",
+  "records": [
+    {
+      "number": "5026148326",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://kin.naver.com/qna/detail.naver?d1id=8&dirId=81302&docId=484582164",
+        "date": "2025-04-25",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A Naver 지식iN question titled 우리택배 배송 언제? giving its waybill. The tracker names it and shows eight scans, from the sending branch through the hub terminal to the delivery the day after the question."
+    },
+    {
+      "number": "5023253955",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://kin.naver.com/qna/detail.naver?d1id=8&dirId=81302&docId=480452549",
+        "date": "2025-01-15",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A Naver 지식iN question giving its 우리택배 waybill, held at the terminal since the day before. The tracker names it and shows six scans, from collection to the delivery two days after the question."
+    },
+    {
+      "number": "5024202293",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://kin.naver.com/qna/detail.naver?d1id=8&dirId=81302&docId=482505952",
+        "date": "2025-02-28",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A Naver 지식iN question tagged 우리택배 and 호남택배, giving the waybill of a customs-cleared parcel with no news since it left the terminal. The tracker names it and shows six scans, from collection at the port to the delivery days after the question."
+    },
+    {
+      "number": "5020389636",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://kin.naver.com/qna/detail.naver?d1id=8&dirId=81302&docId=476981153",
+        "date": "2024-10-23",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A Naver 지식iN question titled with 호남택배 and the waybill. The tracker still names the shipment, with its sending date, but no longer lists a scan."
+    },
+    {
+      "number": "5012202753",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://kin.naver.com/qna/detail.naver?d1id=8&dirId=813&docId=463355640",
+        "date": "2024-01-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A Naver 지식iN question titled with 우리택배 and the waybill. The tracker still names the shipment, with its sending date, but no longer lists a scan."
+    },
+    {
+      "number": "5009576202",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://kin.naver.com/qna/detail.naver?d1id=8&dirId=81302&docId=458334260",
+        "date": "2023-11-11",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A Naver 지식iN question about a 호남택배 parcel shown as arrived at the terminal, giving the waybill. The tracker still names the shipment, with its sending date, but no longer lists a scan."
+    }
+  ]
+}

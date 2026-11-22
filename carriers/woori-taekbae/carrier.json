@@ -1,0 +1,81 @@
+{
+  "id": "woori-taekbae",
+  "displayName": "Woori Taekbae",
+  "aliases": [
+    "우리택배",
+    "우리택배 주식회사",
+    "호남택배",
+    "호남로지스",
+    "Honam Logis",
+    "Woori"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#013974"
+  },
+  "selectable": true,
+  "timezone": "Asia/Seoul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "woori-taekbae",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "office_contact_details",
+      "order_contents",
+      "parcel_count",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "staff_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "office_contact_details",
+      "order_contents",
+      "parcel_count",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "staff_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "signatory",
+      "proof_of_delivery",
+      "pickup_point",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

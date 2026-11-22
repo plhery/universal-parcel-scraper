@@ -1,0 +1,19 @@
+{
+  "carrier": "woori-taekbae",
+  "entries": [
+    {"code": "05", "wording": "상품준비중", "language": "ko", "stage": "registered", "confirmedBy": "live", "note": "Goods being prepared: the shipper has booked the waybill at its branch before the parcel is collected."},
+    {"code": "10", "wording": "집하상차", "language": "ko", "stage": "accepted", "confirmedBy": "live", "note": "Collected and loaded at the sending branch."},
+    {"code": "30", "wording": "T/M출고", "language": "ko", "stage": "in_transit", "confirmedBy": "live", "note": "Left the terminal."},
+    {"code": "40", "wording": "HUB T/M도착", "language": "ko", "stage": "in_transit", "confirmedBy": "live", "note": "Arrived at the hub terminal."},
+    {"code": "80", "wording": "영업소입고", "language": "ko", "stage": "in_transit", "confirmedBy": "live", "note": "Taken in at the delivering branch."},
+    {"code": "50", "wording": "영업소출고", "language": "ko", "stage": "in_transit", "confirmedBy": "live", "note": "Left the branch for its delivery round. The next scan, 배송중, is the driver on the way."},
+    {"code": "60", "wording": "배송중", "language": "ko", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Out for delivery, not delivered."},
+    {"code": "90", "wording": "배송완료", "language": "ko", "stage": "delivered", "confirmedBy": "live", "note": "Delivered. The tracking page words it 물품을 배송완료 하였습니다."},
+    {"wording": "집하입고", "language": "ko", "stage": "accepted", "confirmedBy": "portal", "note": "The tracking page's script words it 고객님의 물품을 전달 받았습니다: the parcel was handed over."},
+    {"wording": "노선상차", "language": "ko", "stage": "in_transit", "confirmedBy": "portal", "note": "Loaded for the line haul; the script words it 물품을 배송지로 보내기 위해 발송하였습니다."},
+    {"wording": "터미널출고", "language": "ko", "stage": "in_transit", "confirmedBy": "portal", "note": "Left a terminal; the script words it 물품을 배송하기위해 이동중입니다."},
+    {"wording": "터미널입고", "language": "ko", "stage": "in_transit", "confirmedBy": "portal", "note": "Taken in at a terminal; the script words it 물품을 배송하기위해 이동중입니다."},
+    {"wording": "노선하차", "language": "ko", "stage": "in_transit", "confirmedBy": "portal", "note": "Unloaded from the line haul at the delivering end. The script words it 물품이 배송지에 도착하였습니다, arrived at the delivery area, which is not a delivery."},
+    {"wording": "배송출발", "language": "ko", "stage": "out_for_delivery", "confirmedBy": "portal", "note": "Left for delivery; the script words it 물품을 배송하기위해 출발하였습니다."}
+  ]
+}

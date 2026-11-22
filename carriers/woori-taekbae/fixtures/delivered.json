@@ -1,0 +1,119 @@
+{
+ "MSG_ID": "0000",
+ "ODS0_TOTAL": 1,
+ "ODS0": [
+  {
+   "R_ZIP_CD": "[redacted: 6 chars]",
+   "PRICE": 20000,
+   "R_TEL_NO": "[redacted: 11 chars]",
+   "R_ZIP_ADDR": "[redacted: 48 chars]",
+   "SEND_DT": "20250424",
+   "S_TEL_NO": "[redacted: 12 chars]",
+   "S_AGY_TEL_NO": "01000000001",
+   "PRICE_NM": "현택",
+   "GOODS_CNT": 2,
+   "SLIP_PK_SEQ": 6103825,
+   "COMPLETE": "true",
+   "SLIP_BARCD": "5026148326",
+   "R_AGY_NM": "김해",
+   "S_AGY_NM": "동일산",
+   "S_CUST_NM": "[redacted: 6 chars]",
+   "R_AGY_ID": "6009",
+   "R_AGY_TEL_NO": "01000000002",
+   "GOODS_NM": "16랭베 / 16랭베",
+   "R_HP_NO": "[redacted: 11 chars]",
+   "TRACKING_DTL": [
+    {
+     "SCAN_AGY_TEL_NO": "01000000001",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "상품준비중",
+     "SCAN_USER_ID": "019502",
+     "SCAN_USER_NM": "(주)자출사",
+     "SCANGB": "05",
+     "SCAN_DM": "20250424131503",
+     "SCAN_AGY_NM": "동일산",
+     "SCAN_AGY_ID": "0195"
+    },
+    {
+     "SCAN_AGY_TEL_NO": "01000000001",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "집하상차",
+     "SCAN_USER_ID": "0195",
+     "SCAN_USER_NM": "동일산",
+     "SCANGB": "10",
+     "SCAN_DM": "20250424154144",
+     "SCAN_AGY_NM": "동일산",
+     "SCAN_AGY_ID": "0195"
+    },
+    {
+     "SCAN_AGY_TEL_NO": "0313766070",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "T/M출고",
+     "SCAN_USER_ID": "PDA06",
+     "SCAN_USER_NM": "신갈터미널06",
+     "SCANGB": "30",
+     "SCAN_DM": "20250425000745",
+     "SCAN_AGY_NM": "터미널",
+     "SCAN_AGY_ID": "0100"
+    },
+    {
+     "SCAN_AGY_TEL_NO": "031",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "HUB T/M도착",
+     "SCAN_USER_ID": "0004",
+     "SCAN_USER_NM": "허브",
+     "SCANGB": "40",
+     "SCAN_DM": "20250426060928",
+     "SCAN_AGY_NM": "허브터미널",
+     "SCAN_AGY_ID": "0004"
+    },
+    {
+     "SCAN_AGY_TEL_NO": "01000000002",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "영업소입고",
+     "SCAN_USER_ID": "6009",
+     "SCAN_USER_NM": "김해",
+     "SCANGB": "80",
+     "SCAN_DM": "20250426080928",
+     "SCAN_AGY_NM": "김해",
+     "SCAN_AGY_ID": "6009"
+    },
+    {
+     "SCAN_AGY_TEL_NO": "01000000002",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "영업소출고",
+     "SCAN_USER_ID": "6009",
+     "SCAN_USER_NM": "김해",
+     "SCANGB": "50",
+     "SCAN_DM": "20250426090726",
+     "SCAN_AGY_NM": "김해",
+     "SCAN_AGY_ID": "6009"
+    },
+    {
+     "SCAN_AGY_TEL_NO": "01000000002",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "배송중",
+     "SCAN_USER_ID": "6009",
+     "SCAN_USER_NM": "김해",
+     "SCANGB": "60",
+     "SCAN_DM": "20250426110726",
+     "SCAN_AGY_NM": "김해",
+     "SCAN_AGY_ID": "6009"
+    },
+    {
+     "SCAN_AGY_TEL_NO": "01000000002",
+     "SCAN_NO": "502614832601",
+     "SCANGB_NM": "배송완료",
+     "SCAN_USER_ID": "6009",
+     "SCAN_USER_NM": "김해",
+     "SCANGB": "90",
+     "SCAN_DM": "20250426130726",
+     "SCAN_AGY_NM": "김해",
+     "SCAN_AGY_ID": "6009"
+    }
+   ],
+   "S_AGY_ID": "0195",
+   "R_CUST_NM": "[redacted: 5 chars]"
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "MSG_ID": "0000",
+ "ODS0_TOTAL": 1,
+ "ODS0": [
+  {
+   "R_ZIP_CD": "[redacted: 5 chars]",
+   "PRICE": 10000,
+   "R_TEL_NO": "[redacted: 10 chars]",
+   "R_ZIP_ADDR": "[redacted: 53 chars]",
+   "SEND_DT": "20241022",
+   "S_TEL_NO": "[redacted: 11 chars]",
+   "S_AGY_TEL_NO": "01000000002",
+   "PRICE_NM": "현택",
+   "GOODS_CNT": 2,
+   "SLIP_PK_SEQ": 5527786,
+   "COMPLETE": "true",
+   "SLIP_BARCD": "5020389636",
+   "R_AGY_NM": "신갈",
+   "S_AGY_NM": "북천안",
+   "S_CUST_NM": "[redacted: 9 chars]",
+   "R_AGY_ID": "0119",
+   "R_AGY_TEL_NO": "01000000001",
+   "GOODS_NM": "타이어",
+   "R_HP_NO": "",
+   "TRACKING_DTL": [],
+   "S_AGY_ID": "3095",
+   "R_CUST_NM": "[redacted: 11 chars]"
+  }
+ ]
+}
