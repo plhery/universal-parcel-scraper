@@ -2,7 +2,7 @@ import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { isWhatsShipReference } from '../../core/detection/whatsShip.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus } from '../../core/status/index.js';
+import { languageStageStatus, trackingLanguageStage, type ClassifiedStatus, type Stage } from '../../core/status/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { calendarDay, countryCode, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
@@ -105,6 +105,27 @@ function newestFirst(scans: Scan[]): Scan[] {
   return ordered;
 }
 
+/** Stages that show the parcel has moved. A customs filing or a problem can come before it has. */
+const MOVED: ReadonlySet<string> = new Set(['accepted', 'in_transit', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'delivered', 'returned']);
+/** How long after the first movement an arrival is still that moment's record. */
+const SAME_MOMENT_MS = 60_000;
+
+/**
+ * WhatsShip's arrival at its origin facility (`FIRST_MILE_ARRIVE`) after a scan that moved the parcel, such as the
+ * partner feed's "Shipment arrived at facility" and "Sent to next destination" before it, is a hand-over on the way
+ * rather than the parcel's intake: in transit, as the feed's sequence reads it. Scans newest first.
+ */
+function readLateArrivals(scans: Scan[]): Scan[] {
+  let first: Scan | undefined;
+  for (const scan of [...scans].reverse()) {
+    const { event } = scan;
+    if (first && event.provider_code === 'FIRST_MILE_ARRIVE' && event.stage === 'accepted'
+      && !(scan.local === first.local && scan.at - first.at <= SAME_MOMENT_MS)) event.stage = 'in_transit';
+    if (!first && event.stage && MOVED.has(event.stage)) first = scan;
+  }
+  return scans;
+}
+
 /** The official guest read binds WhatsShip's order reference, not a partner's alias. */
 export function parseWhatsShip(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeWhatsShipNumber(rawNumber);
@@ -125,7 +146,7 @@ export function parseWhatsShip(payload: unknown, rawNumber: string): CarrierResu
   }
   if (!item.OrderTrackingDetails.length) throw new NoHistoryError(PROVIDER, 'WhatsShip lists the order without scans', { reason: 'listed' });
   const seen = new Set<string>();
-  const events = newestFirst(item.OrderTrackingDetails.map(scan)).map(({ event }) => event).filter(event => {
+  const events = readLateArrivals(newestFirst(item.OrderTrackingDetails.map(scan))).map(({ event }) => event).filter(event => {
     const key = JSON.stringify(event);
     if (seen.has(key)) return false;
     seen.add(key);
@@ -133,7 +154,8 @@ export function parseWhatsShip(payload: unknown, rawNumber: string): CarrierResu
   });
   const latest = events[0]!;
   // Neither the envelope's TimeStamp nor an older delivery advances the latest scan.
-  const current = scanStatus(latest.provider_code ?? '', String(latest.description));
+  const stage = latest.stage as Stage | undefined;
+  const current = stage ? { stage, status: languageStageStatus(stage), source: latest.stage_source } : undefined;
   const destination = countryCode(item.CountryCode);
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage, current_stage_source: current.source } : {}),
     ...(latest.provider_code ? { provider_code: latest.provider_code } : {}), last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,

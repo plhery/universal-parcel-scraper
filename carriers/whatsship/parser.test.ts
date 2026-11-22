@@ -140,6 +140,14 @@ describe('WhatsShip public order-reference parser', () => {
     expect(moved).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map' });
     expect(moved.events!.map(event => [event.stage, event.stage_source])).toEqual([
       ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['registered', 'carrier_map']]);
+    // WhatsShip's own arrival at its origin facility after the partner feed moved the parcel is a hand-over on the way.
+    const handed = parseWhatsShip(reply([raw({ ProcessTimezone: 'UTC+08:00' }),
+      raw({ ProcessDate: '2026-01-11T19:10:00', ProcessTimezone: 'UTC+08:00', ProcessContent: 'Shipment arrived at facility', TrackingStatus: 20 }),
+      raw({ ProcessDate: '2026-01-12T19:10:00', ProcessTimezone: 'UTC+08:00', ProcessContent: 'Sent to next destination', TrackingStatus: 20 }),
+      scan({ ProcessDate: '2026-01-13T09:00:00', TrackNodeCode: 'FIRST_MILE_ARRIVE', ProcessContent: 'Arrived at origin facility' })]), NUMBER);
+    expect(handed).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', provider_code: 'FIRST_MILE_ARRIVE' });
+    expect(handed.events!.map(event => [event.provider_code ?? null, event.stage])).toEqual([
+      ['FIRST_MILE_ARRIVE', 'in_transit'], [null, 'in_transit'], [null, 'in_transit'], [null, 'registered']]);
     // A delivery in wording alone stays on the scan's wall clock.
     const delivered = parseWhatsShip(reply([raw({ ProcessContent: 'Delivered' })]), NUMBER);
     expect(delivered).toMatchObject({ status: 'delivered', last_update_local: '2026-01-10T01:27:00' });
