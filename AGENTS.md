@@ -1,6 +1,6 @@
 # Project instructions
 
-- This is open source. Whatever a public source shows may go in the repository with the source's URL: a tracking number, its postcode, a tracking link, the carrier's reply. Everything from production and other private environments stays out of repository files, comments, commit messages and issues: users' numbers, postcodes and links, database rows, logs, internal hosts and secrets. Sentry, Loki and the other debugging tools may receive production data. Live tests read private inputs from outside Git.
+- This repository is public. Whatever a public source shows may go in the repository with the source's URL: a tracking number, its postcode, a tracking link, the carrier's reply. Everything from production and other private environments stays out of repository files, comments, commit messages and issues: users' numbers, postcodes and links, database rows, logs, internal hosts and secrets. Sentry, Loki and the other debugging tools may receive production data. Live tests read private inputs from outside Git.
 - After a requested change, validate, stage the relevant files, commit and push directly to `main`. Do not create a branch or pull request unless explicitly requested. A commit made for a GitHub issue names it in its message, as `#20`, so the issue lists the commit.
 - Before pushing, confirm no secrets or unrelated generated artifacts are included.
 - Never import from an app or framework. Browser exports must remain free of Node runtime imports. Resolve assets against their module, not the consumer's working directory.

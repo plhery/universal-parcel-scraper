@@ -112,6 +112,12 @@ Leave the version alone; it is raised after the merge. [Peek](https://github.com
 the app built on this package, needs a database migration for a release that adds a carrier
 id or input. The maintainers write it when they merge, so a carrier needs no pull request there.
 
+By sending a contribution, you license it under the [PolyForm Noncommercial License 1.0.0](LICENSE)
+like the rest of the code, and you grant Paul-Louis Hery a perpetual, worldwide, non-exclusive,
+royalty-free, irrevocable licence to use, copy, modify and distribute it, and to license it to
+others under other terms, commercial ones included. You keep your copyright. Send only work you
+have the right to license this way.
+
 ## Public and private data
 
 This repository is public. What a public page shows can go in, cited by that page's URL: a

@@ -7,7 +7,7 @@ RUN npm run build
 
 FROM node:26.12.1-trixie-slim
 LABEL org.opencontainers.image.source="https://github.com/plhery/universal-parcel-scraper" \
-      org.opencontainers.image.licenses="Apache-2.0"
+      org.opencontainers.image.licenses="PolyForm-Noncommercial-1.0.0"
 RUN apt-get update && apt-get install -y --no-install-recommends chromium ca-certificates tini \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
@@ -19,6 +19,7 @@ RUN npm ci --ignore-scripts --omit=dev \
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/data ./data
 COPY LICENSE NOTICE ./
+COPY LICENSES ./LICENSES
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=8080 TRACKING_CHROMIUM_PATH=/usr/bin/chromium
 USER node
 EXPOSE 8080

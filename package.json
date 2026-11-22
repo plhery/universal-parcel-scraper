@@ -1,9 +1,9 @@
 {
   "name": "universal-parcel-scraper",
-  "version": "0.1293.2",
+  "version": "0.1294.0",
   "description": "Self-hosted parcel tracking: carrier detection, dedicated scrapers and optional universal providers.",
   "type": "module",
-  "license": "Apache-2.0",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "author": "Paul-Louis HERY",
   "repository": {
     "type": "git",
@@ -52,6 +52,7 @@
     "data",
     "README.md",
     "LICENSE",
+    "LICENSES",
     "NOTICE"
   ],
   "scripts": {

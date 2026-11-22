@@ -10,7 +10,7 @@ The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/p
 
 [![npm](https://img.shields.io/npm/v/universal-parcel-scraper)](https://www.npmjs.com/package/universal-parcel-scraper)
 [![CI](https://github.com/plhery/universal-parcel-scraper/actions/workflows/ci.yml/badge.svg)](https://github.com/plhery/universal-parcel-scraper/actions/workflows/ci.yml)
-[![License: Apache-2.0](https://img.shields.io/badge/core-Apache--2.0-blue.svg)](LICENSE)
+[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg)](LICENSE)
 
 <!-- GENERATED:summary -->
 **4,500+ carriers** through **1082 dedicated adapters** and **5 universal fallbacks**
@@ -198,5 +198,13 @@ Each carrier lives in its own folder with synthetic fixtures and offline tests.
 
 ## License
 
-[Apache-2.0](LICENSE). The optional TRAWL image is [AGPL-3.0](trawl/LICENSE). Credits are in
-[NOTICE](NOTICE).
+From version 0.1294.0, [PolyForm Noncommercial 1.0.0](LICENSE): any noncommercial use, as the
+licence defines it, is allowed. A copy, changed or not, keeps the `Required Notice:` line at
+the top of LICENSE.
+
+Versions up to 0.1293.2, and their `-main` prereleases, were released under
+[Apache-2.0](LICENSES/Apache-2.0.txt) and stay under it: the change is not retroactive. The
+parts that bo0tzz, bkoroglu1 and Lewis Carter contributed under Apache-2.0 also stay available
+under it; [NOTICE](NOTICE) lists them.
+
+The optional TRAWL image is [AGPL-3.0](trawl/LICENSE). Credits are in [NOTICE](NOTICE).

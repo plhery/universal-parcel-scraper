@@ -1,5 +1,18 @@
-Universal Parcel Scraper contains code extracted from plhery/delivery-tracker.
-Core code is distributed under Apache-2.0; see LICENSE.
+Universal Parcel Scraper
+Copyright (c) 2026 Paul-Louis Hery (https://github.com/plhery/universal-parcel-scraper)
+
+It contains code extracted from Peek (https://github.com/plhery/peek-delivery-tracker).
+From version 0.1294.0, the core code is distributed under the PolyForm Noncommercial
+License 1.0.0; see LICENSE. Versions up to 0.1293.2 were distributed under the Apache
+License 2.0 (LICENSES/Apache-2.0.txt) and remain so.
+
+These contributions were made under the Apache License 2.0 and remain available under it:
+- bo0tzz: PostNL's 3S barcodes, the Dutch network's MDP codes and JJD plates, and items
+  from abroad and delivery slots on PostNL's domestic tracker (bb613f47f, 876d2b81c,
+  fab7e99ac, 1aaaf0f83, cca569f29)
+- bkoroglu1: Sürat Kargo's scan dates without zero padding (bc715774a)
+- Lewis Carter: Stone3PL tracking and recognition (28338d441), co-author of TNT
+  Australia's depot collection (455008fb9)
 
 The optional trawl/ derivative and image are distributed under AGPL-3.0,
 including modifications to germondai/trawl. See trawl/LICENSE and trawl/SOURCE.md.
