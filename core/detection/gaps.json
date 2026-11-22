@@ -6382,5 +6382,11 @@
     "pattern": "^\\d{7}$",
     "kind": "collision",
     "reason": "HDT order numbers are seven digits, a shape many carriers' numbers share, so the shape cannot name HDT; use explicit selection or its tracking link."
+  },
+  {
+    "carrier": "x-express-rs",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "X Express Serbia numbers, two digits, a hyphen and ten digits, lose their hyphen in the twelve-digit shape many carriers' numbers share, so the shape cannot name X Express Serbia; use explicit selection or its share link."
   }
 ]

@@ -27,6 +27,7 @@ import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js'
 import { normalizeNumber as rhenusItalyNumber, RHENUS_IT_HOME_LAYOUT } from '../../carriers/rhenus-it/number.js';
 import { normalizeNumber as swayNumber, SWAY_RESTORED_LAYOUT } from '../../carriers/sway/number.js';
 import { normalizeUpayaNumber, UPAYA_LAYOUT } from '../../carriers/upaya/number.js';
+import { X_EXPRESS_RS_LAYOUT, xExpressRsRequestNumber } from '../../carriers/x-express-rs/number.js';
 import { YANDEX_DELIVERY_LAYOUT, yandexDeliveryRequestNumber } from '../../carriers/yandex-delivery/number.js';
 import type { CarrierId } from '../../generated/catalog.js';
 import { regionalGofoRequestNumber } from '../detection/gofo.js';
@@ -100,6 +101,8 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
   if (carrierId === 'rhenus-it' && RHENUS_IT_HOME_LAYOUT.test(normalized)) return rhenusItalyNumber(normalized);
   // Sway's tracker finds an SWY number only with its hyphen, and an older Swyft id only in lowercase.
   if (carrierId === 'sway' && SWAY_RESTORED_LAYOUT.test(normalized)) return swayNumber(normalized);
+  // X Express Serbia's tracker finds a shipment number only with the hyphen after its first two digits.
+  if (carrierId === 'x-express-rs' && X_EXPRESS_RS_LAYOUT.test(normalized)) return xExpressRsRequestNumber(normalized);
   return raw;
 }
 

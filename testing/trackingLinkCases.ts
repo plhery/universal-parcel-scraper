@@ -2724,6 +2724,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/homedt\.hu\/nyomonkovetes\?track_number=9999999$/,
     marker: /Sajnos a keresett megrendelés nem szerepel rendszerünkben!/,
     forwarding: { notFound: /Sajnos a keresett megrendelés nem szerepel rendszerünkben!/ } },
+  // The share link restores the hyphen the tracker needs, and an unknown number gets its message.
+  { carrier: 'x-express-rs', number: '26-9999999999',
+    route: /^https:\/\/www\.x-express\.rs\/korisnicki-panel\/pracenje-posiljke\/26-9999999999$/,
+    marker: /Pošiljka sa kodom <b>26-9999999999<\/b> nije pronađena/ },
 ];
 
 /**

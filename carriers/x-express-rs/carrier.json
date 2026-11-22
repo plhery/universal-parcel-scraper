@@ -16,19 +16,54 @@
   "timezone": "Europe/Belgrade",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "x-express-rs",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
+    "url": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke/{trackingNumber}",
     "searchUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
     "helpUrl": "https://www.x-express.rs/kontakt",
     "canaryUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "unavailable": [
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "service_name",
+      "proof_of_delivery"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "www.x-express.rs",
+        "x-express.rs"
+      ],
+      "path": "^/korisnicki-panel/pracenje-posiljke/(\\d{2}-\\d{10})/?$"
+    }
+  ],
   "detection": []
 }

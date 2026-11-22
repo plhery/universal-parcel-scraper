@@ -1,4 +1,39 @@
 {
   "carrier": "x-express-rs",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Nalog kreiran",
+      "stage": "registered",
+      "language": "sr",
+      "confirmedBy": "live",
+      "note": "Order created: the sender booked the shipment."
+    },
+    {
+      "wording": "Usluga - Primalac preusmerio na PUDO",
+      "language": "sr",
+      "confirmedBy": "live",
+      "note": "Service: the recipient sent the shipment to a pickup point. A request about the delivery that moves nothing, so the scan keeps the stage of the one before it."
+    },
+    {
+      "wording": "Preuzeta od pošiljaoca",
+      "stage": "accepted",
+      "language": "sr",
+      "confirmedBy": "live",
+      "note": "Collected from the sender."
+    },
+    {
+      "wording": "PUDO - deponovana na isporuku",
+      "stage": "ready_for_pickup",
+      "language": "sr",
+      "confirmedBy": "live",
+      "note": "Left at the pickup point for the recipient to collect."
+    },
+    {
+      "wording": "PUDO - isporučena",
+      "stage": "delivered",
+      "language": "sr",
+      "confirmedBy": "live",
+      "note": "Handed over at the pickup point."
+    }
+  ]
 }
