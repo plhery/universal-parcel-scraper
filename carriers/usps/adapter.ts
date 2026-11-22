@@ -86,23 +86,69 @@ function pauseRun(run: OutageRun, until: number): void {
 
 /**
  * USPS also turns new sessions away on every address for hours at a time, the private Chrome's
- * included, which then ends each lookup on the wrapper after about fifteen seconds. Once the Chrome
- * ends on it three lookups in a row, lookups read through the browser service first for fifteen
- * minutes and through the Chrome only when the service fails, so no lookup loses the Chrome. The
- * service answers within seconds through a session USPS let through, and fails within a second
- * when it holds none. A page the Chrome loads ends the run; after the rest, the next lookup asks
- * the Chrome first again, and one more wrapper starts another rest.
+ * included, which then ends a lookup on the wrapper after about fifteen seconds; in some spells it
+ * refuses one read in three and loads the others. Once the Chrome ends on it twice within fifteen
+ * minutes, lookups read through the browser service first and through the Chrome only when the
+ * service fails, so no lookup loses the Chrome. The service answers within seconds through a
+ * session USPS let through, and fails within a second when it holds none. The rest lasts fifteen
+ * minutes. The next lookup then asks the Chrome first again; a wrapper within fifteen minutes of
+ * the rest's end starts one twice as long, up to an hour. A page the Chrome loads during a rest,
+ * which it reads only when the service failed, ends it. A host that keeps adapters' holds keeps
+ * the rest across restarts, which come every few minutes while a host deploys.
  */
-const CHROME_REFUSALS = 3;
+const CHROME_REFUSALS = 2;
+const CHROME_WINDOW_MS = 15 * 60_000;
 const CHROME_REST_MS = 15 * 60_000;
-interface ChromeRun { refusals: number; restingUntil: number }
+const CHROME_LONGEST_REST_MS = 60 * 60_000;
+interface ChromeRun { key: string; refusals: number[]; restingUntil: number; restMs: number }
 const chromeRuns = new Map<string, ChromeRun>();
+const finite = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
+const chromeHolds = new HoldKind('usps-chrome', (key, _until, value) => {
+  const saved = (value ?? {}) as { refusals?: unknown; restingUntil?: unknown; restMs?: unknown };
+  const now = Date.now();
+  const run = chromeRunByKey(key);
+  const restMs = finite(saved.restMs) ? Math.min(Math.max(saved.restMs, CHROME_REST_MS), CHROME_LONGEST_REST_MS) : CHROME_REST_MS;
+  const restingUntil = finite(saved.restingUntil) ? Math.min(saved.restingUntil, now + restMs) : 0;
+  const refusals = Array.isArray(saved.refusals) ? saved.refusals.filter(finite) : [];
+  run.refusals = [...run.refusals, ...refusals].filter(at => at <= now && now - at < CHROME_WINDOW_MS)
+    .sort((a, b) => a - b).slice(-CHROME_REFUSALS);
+  if (restingUntil > run.restingUntil) Object.assign(run, { restingUntil, restMs });
+});
+
+function chromeRunByKey(key: string): ChromeRun {
+  let run = chromeRuns.get(key);
+  if (!run) chromeRuns.set(key, run = { key, refusals: [], restingUntil: 0, restMs: CHROME_REST_MS });
+  return run;
+}
 
 function chromeRunOf(endpoint: string): ChromeRun {
-  const key = serviceTag(endpoint);
-  let run = chromeRuns.get(key);
-  if (!run) chromeRuns.set(key, run = { refusals: 0, restingUntil: 0 });
-  return run;
+  return chromeRunByKey(serviceTag(endpoint));
+}
+
+/** Saves the Chrome's run for as long as it can still start or lengthen a rest. */
+function saveChromeRun(run: ChromeRun): void {
+  chromeHolds.save(run.key, Math.max(run.restingUntil, ...run.refusals) + CHROME_WINDOW_MS,
+    { refusals: run.refusals, restingUntil: run.restingUntil, restMs: run.restMs });
+}
+
+/** The Chrome ended on the wrapper: a rest starts when it is the second within the window, or follows a rest. */
+function chromeRefused(run: ChromeRun): void {
+  const now = Date.now();
+  run.refusals = [...run.refusals.filter(at => now - at < CHROME_WINDOW_MS), now].slice(-CHROME_REFUSALS);
+  if (now < run.restingUntil) return;
+  const follows = run.restingUntil > 0 && now - run.restingUntil < CHROME_WINDOW_MS;
+  if (follows || run.refusals.length >= CHROME_REFUSALS) {
+    run.restMs = follows ? Math.min(run.restMs * 2, CHROME_LONGEST_REST_MS) : CHROME_REST_MS;
+    run.restingUntil = now + run.restMs;
+  }
+  saveChromeRun(run);
+}
+
+/** The Chrome loaded a page: during a rest, the service had failed and the rest ends. */
+function chromeLoaded(run: ChromeRun): void {
+  if (Date.now() >= run.restingUntil) return;
+  Object.assign(run, { refusals: [], restingUntil: 0, restMs: CHROME_REST_MS });
+  saveChromeRun(run);
 }
 
 type Route = NonNullable<StepRecord['networkRoute']>;
@@ -555,11 +601,11 @@ export class USPSTracker {
     catch (error) {
       // The wrapper or a challenged page is a refusal; a partial page, after USPS let the session
       // through, counts neither way; any other page loaded.
-      if (!(error instanceof ChallengeError)) Object.assign(run, { refusals: 0, restingUntil: 0 });
-      else if (error.reason !== 'incomplete_page' && ++run.refusals >= CHROME_REFUSALS) run.restingUntil = Date.now() + CHROME_REST_MS;
+      if (!(error instanceof ChallengeError)) chromeLoaded(run);
+      else if (error.reason !== 'incomplete_page') chromeRefused(run);
       throw error;
     }
-    Object.assign(run, { refusals: 0, restingUntil: 0 });
+    chromeLoaded(run);
     result.tracking_url = uspsTrackingUrl(number);
     result.tracking_source = 'rendered-page';
     return result;

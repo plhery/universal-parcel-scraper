@@ -690,19 +690,19 @@ describe('USPS lookup steps', () => {
         }
       }
 
-      it('reads through the browser service first after three wrappers in a row, and through the Chrome when the service fails', async () => {
+      it('reads through the browser service first after two wrappers within fifteen minutes, and through the Chrome when the service fails', async () => {
         const trawl = ownTrawl();
         const endpoint = ownEndpoint();
         const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
         const tracker = (recorder?: StepRecorder) => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage, recorder });
-        await refuse(tracker, 3);
-        expect(readBrowserPage).toHaveBeenCalledTimes(3);
+        await refuse(tracker, 2);
+        expect(readBrowserPage).toHaveBeenCalledTimes(2);
 
         vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(trawlReply(DELIVERED_PAGE));
         let { recorder, records } = routes();
         await expect(tracker(recorder).fetch(DELIVERED_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
         expect(records).toEqual(['trawl:ok:default', 'lookup:trawl:ok']);
-        expect(readBrowserPage).toHaveBeenCalledTimes(3);
+        expect(readBrowserPage).toHaveBeenCalledTimes(2);
 
         // The service holding no session USPS let through: the Chrome still reads, and its page ends the rest.
         vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response('no session', { status: 500 }));
@@ -718,54 +718,121 @@ describe('USPS lookup steps', () => {
         expect(records).toEqual(['browser:ok:-', 'lookup:browser:ok']);
       });
 
-      it('asks the Chrome first again after fifteen minutes, and rests it again after one more wrapper', async () => {
+      it('rests the Chrome when it refuses one read in three, and not for wrappers further apart', async () => {
+        vi.useFakeTimers({ toFake: ['Date'] });
+        try {
+          const trawl = ownTrawl();
+          const endpoint = ownEndpoint();
+          const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+          const tracker = () => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage });
+          await refuse(tracker, 1);
+          vi.setSystemTime(Date.now() + 15 * 60_000);
+          await refuse(tracker, 1);
+          expect(readBrowserPage).toHaveBeenCalledTimes(2);
+          // Pages loaded between two wrappers leave the second one to start the rest.
+          for (let loaded = 0; loaded < 2; loaded += 1) {
+            readBrowserPage.mockResolvedValueOnce({ html: DELIVERED_PAGE, redirected: false });
+            await expect(tracker().fetch(DELIVERED_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+          }
+          vi.setSystemTime(Date.now() + 10 * 60_000);
+          await refuse(tracker, 2);
+          expect(readBrowserPage).toHaveBeenCalledTimes(5);
+        } finally {
+          vi.useRealTimers();
+        }
+      });
+
+      it('asks the Chrome first again after the rest, and doubles the rest up to an hour while it keeps refusing', async () => {
         vi.useFakeTimers({ toFake: ['Date'] });
         try {
           const trawl = ownTrawl();
           const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
           const endpoint = ownEndpoint();
           const tracker = () => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage });
+          await refuse(tracker, 2);
+          let reads = 2;
+          for (const restMinutes of [15, 30, 60, 60]) {
+            vi.setSystemTime(Date.now() + restMinutes * 60_000 - 1_000);
+            await refuse(tracker, 1);
+            expect(readBrowserPage).toHaveBeenCalledTimes(reads);
+            vi.setSystemTime(Date.now() + 1_001);
+            await refuse(tracker, 2);
+            expect(readBrowserPage).toHaveBeenCalledTimes(reads += 1);
+          }
+          // Once a rest has been over for fifteen minutes, a single wrapper starts none, and the next
+          // one starts a rest of fifteen minutes again.
+          vi.setSystemTime(Date.now() + 75 * 60_000 + 1);
           await refuse(tracker, 3);
-          vi.setSystemTime(Date.now() + 14 * 60_000);
+          expect(readBrowserPage).toHaveBeenCalledTimes(reads += 2);
+          vi.setSystemTime(Date.now() + 15 * 60_000 - 1_000);
           await refuse(tracker, 1);
-          expect(readBrowserPage).toHaveBeenCalledTimes(3);
-          vi.setSystemTime(Date.now() + 60_000 + 1);
+          expect(readBrowserPage).toHaveBeenCalledTimes(reads);
+          vi.setSystemTime(Date.now() + 1_001);
           await refuse(tracker, 1);
-          expect(readBrowserPage).toHaveBeenCalledTimes(4);
-          await refuse(tracker, 1);
-          expect(readBrowserPage).toHaveBeenCalledTimes(4);
+          expect(readBrowserPage).toHaveBeenCalledTimes(reads + 1);
         } finally {
           vi.useRealTimers();
         }
       });
 
-      it('counts neither a partial page nor an outage redirect, and lets any loaded page end the run', async () => {
+      it('counts neither a partial page nor an outage redirect', async () => {
         const trawl = ownTrawl();
         const endpoint = ownEndpoint();
         const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
         const tracker = () => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage });
-        await refuse(tracker, 2);
+        await refuse(tracker, 1);
         for (const reply of [{ html: HEADER_ONLY_PAGE, redirected: false }, { html: '', redirected: true }]) {
           readBrowserPage.mockResolvedValueOnce(reply);
           await refuse(tracker, 1);
         }
-        // Another parcel's page loaded: USPS let the Chrome through.
-        readBrowserPage.mockResolvedValueOnce({ html: IN_TRANSIT_PAGE, redirected: false });
-        await expect(tracker().fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ name: 'SchemaError' });
-        await refuse(tracker, 2);
-        expect(readBrowserPage).toHaveBeenCalledTimes(7);
         await refuse(tracker, 1);
-        expect(readBrowserPage).toHaveBeenCalledTimes(8);
+        expect(readBrowserPage).toHaveBeenCalledTimes(4);
         await refuse(tracker, 1);
-        expect(readBrowserPage).toHaveBeenCalledTimes(8);
+        expect(readBrowserPage).toHaveBeenCalledTimes(4);
       });
 
+      it('saves the rest to the host\'s holds, without the Chrome\'s address, and takes it up after a restart', async () => {
+        const saved: AdapterHold[] = [];
+        await keepAdapterHolds({ load: async () => [], save: async (hold) => { saved.push(hold); } });
+        try {
+          const trawl = ownTrawl();
+          const endpoint = ownEndpoint();
+          const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+          await refuse(() => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage }), 2);
+          const key = `usps-chrome/${serviceTag(endpoint)}`;
+          expect(saved).toHaveLength(2);
+          expect(saved[1]).toEqual({ key, until: expect.any(Number),
+            value: { refusals: [expect.any(Number), expect.any(Number)], restingUntil: expect.any(Number), restMs: 15 * 60_000 } });
+          const rest = saved[1]!.value as { restingUntil: number };
+          expect(saved[1]!.until).toBe(rest.restingUntil + 15 * 60_000);
+          expect(JSON.stringify(saved)).not.toContain('internal');
+
+          // A process that starts during a rest reads through the service first; one that kept a
+          // single recent wrapper rests the Chrome after the next one. Other Chromes stand in for the restarted one.
+          const resting = ownEndpoint();
+          const refused = ownEndpoint();
+          await keepAdapterHolds({ load: async () => [
+            { key: `usps-chrome/${serviceTag(resting)}`, until: Date.now() + 20 * 60_000,
+              value: { refusals: [Date.now() - 60_000], restingUntil: Date.now() + 5 * 60_000, restMs: 30 * 60_000 } },
+            { key: `usps-chrome/${serviceTag(refused)}`, until: Date.now() + 10 * 60_000,
+              value: { refusals: [Date.now() - 5 * 60_000], restingUntil: 0, restMs: 15 * 60_000 } },
+          ], save: async () => undefined });
+          const restingPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+          await refuse(() => new USPSTracker({ trawl, browserEndpoint: resting, readBrowserPage: restingPage }), 1);
+          expect(restingPage).not.toHaveBeenCalled();
+          const refusedPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
+          await refuse(() => new USPSTracker({ trawl, browserEndpoint: refused, readBrowserPage: refusedPage }), 2);
+          expect(refusedPage).toHaveBeenCalledTimes(1);
+        } finally {
+          resetAdapterHolds();
+        }
+      });
       it('reads through the Chrome while the browser service\'s reads are paused', async () => {
         const trawl = ownTrawl();
         const endpoint = ownEndpoint();
         const readBrowserPage = vi.fn(async () => ({ html: INTERSTITIAL_PAGE, redirected: false }));
         const tracker = (recorder?: StepRecorder) => new USPSTracker({ trawl, browserEndpoint: endpoint, readBrowserPage, recorder });
-        await refuse(tracker, 3);
+        await refuse(tracker, 2);
         await keepAdapterHolds({ load: async () => [{ key: `usps-outage/${serviceTag(trawl.endpoint.href)}`, until: Date.now() + 60_000 }],
           save: async () => undefined });
         try {
