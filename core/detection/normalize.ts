@@ -53,7 +53,10 @@ function hasCheckedShape(number: string): boolean {
  * with a zero, so a letter O there is that zero: no carrier issues GFUS or GFCA,
  * a letter O and thirteen digits, and GOFO's tracker knows the number with the
  * zero. Allegro One's AD0 numbers hold no vowel after AD0, so a letter O in one
- * is a zero typed as a letter. A NO
+ * is a zero typed as a letter. SPX Brazil's BR numbers hold twelve digits
+ * before their last character, so a letter O among them is a zero typed as a
+ * letter: no carrier issues such a number, and SPX's tracker knows it with the
+ * zero. A NO
  * LIMIT shipment number, P/1234/LABC/2026, reads the same without its slashes,
  * which are dropped. MRW's receipts print a slash after the office's five
  * digits, 01234/A567890, and its tracker knows the twelve characters without it.
@@ -85,6 +88,8 @@ export function normalizeTrackingNumber(raw: string): string {
   }
   const wanb = /^(WNB[A-Z]{2})([\dO]{10})YQ$/.exec(value);
   if (wanb?.[2]!.includes('O')) return `${wanb[1]}${wanb[2]!.replace(/O/g, '0')}YQ`;
+  const spxBrazil = /^BR([\dO]{12})([0-9A-Z])$/.exec(value);
+  if (spxBrazil?.[1]!.includes('O')) return `BR${spxBrazil[1]!.replace(/O/g, '0')}${spxBrazil[2]}`;
   const serial = /^([A-Z]{2})([\dO]{9})([A-Z]{2})$/.exec(value);
   if (!serial?.[2]!.includes('O')) return value;
   const digits = serial[2]!.replace(/O/g, '0');

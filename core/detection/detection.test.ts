@@ -637,6 +637,17 @@ describe('the detection engine', () => {
     }
   });
 
+  it('reads a letter O among SPX Express Brazil\'s twelve digits as a zero', () => {
+    for (const [typed, number] of [['BR2613579246O8A', 'BR261357924608A'], ['br 26135792468o u', 'BR261357924680U'], ['BRO61357924680O', 'BR061357924680O']] as const) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(number);
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'spx-br', confidence: 'high' });
+    }
+    // Only between BR and the last character, at SPX's own length: anything else stays as typed.
+    for (const typed of ['BR261357924680O', 'BR2613579246O8', 'BR2613579246O8AB', 'RB2613579246O8A']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(typed);
+    }
+  });
+
   it('reads a link printed without its scheme only on a host a link rule names', () => {
     expect(parseTrackingInput('(spx.ph/track?PH407182635901)')).toMatchObject({
       trackingNumber: 'PH407182635901', carrier: 'spx-ph', source: 'link',
