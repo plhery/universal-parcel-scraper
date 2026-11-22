@@ -2727,6 +2727,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'postnet-za', number: 'PPA99999999990',
     route: /^https:\/\/www\.postnet\.co\.za\/tracker\?pnpp=PPA99999999990$/,
     marker: /enter your PN or PP tracking number/i },
+  // The Blazor tracker fills its field from SearchString and looks the waybill up over its live connection.
+  { carrier: 'courier-it', number: 'CDM999999990',
+    route: /^https:\/\/intellitrack\.courierit\.co\.za\/\?SearchString=CDM999999990$/,
+    marker: /Enter a waybill to view the latest status/i },
 ];
 
 /**

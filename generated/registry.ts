@@ -198,6 +198,7 @@ import { adapter as coscoShippingLines } from '../carriers/cosco-shipping-lines/
 import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter.js';
 import { adapter as cotaxi } from '../carriers/cotaxi/adapter.js';
 import { adapter as courierCenter } from '../carriers/courier-center/adapter.js';
+import { adapter as courierIt } from '../carriers/courier-it/adapter.js';
 import { adapter as courieritNz } from '../carriers/courierit-nz/adapter.js';
 import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js';
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
@@ -1279,6 +1280,7 @@ export const REGISTRY: RegistryDefinition = {
     "costco-logistics": costcoLogistics,
     "cotaxi": cotaxi,
     "courier-center": courierCenter,
+    "courier-it": courierIt,
     "courierit-nz": courieritNz,
     "couriersplease": couriersplease,
     "cruz-del-sur": cruzDelSur,
@@ -2545,7 +2547,7 @@ export const REGISTRY: RegistryDefinition = {
     "coupang-logistics": "universal",
     "courier-center": "courier-center",
     "courier-express-malta": "universal",
-    "courier-it": "universal",
+    "courier-it": "courier-it",
     "courier-plus-ng": "universal",
     "courierit-nz": "courierit-nz",
     "couriersplease": "couriersplease",

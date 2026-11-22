@@ -29,7 +29,8 @@ The answer does not repeat the waybill; the lookup names the whole of it.
 
 An event of PostNet's own names the PostNet in brackets after the event, such as where the waybill was created or
 where it waits for collection. That detail is kept. Courier IT's events name a detail after a dash, such as who
-signed or which driver loaded the parcel, so only the event is kept. Courier IT's places are branch codes.
+signed or which driver loaded the parcel, so only the event is kept, and Courier IT's status map reads it. Courier
+IT's places are branch codes. Courier IT's adapter makes the same lookup for Courier IT's network alone.
 
 ## Clocks
 

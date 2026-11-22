@@ -17948,7 +17948,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "courier-it"
     },
     "canaryUrl": "https://intellitrack.courierit.co.za/",
     "trackingUrlTemplate": "https://intellitrack.courierit.co.za/?SearchString={trackingNumber}",

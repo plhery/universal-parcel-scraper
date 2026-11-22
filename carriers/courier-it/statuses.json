@@ -1,14 +1,20 @@
 {
   "carrier": "courier-it",
   "entries": [
-    {"wording": "Captured Ops", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture. Detail: Waybill Information Received InTo System."},
+    {"wording": "Captured Ops", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Waybill details captured, after Courier IT takes the parcel."},
     {"wording": "Collected", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture."},
-    {"wording": "Depot checkout", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture. Detail: goods checked out for despatch."},
-    {"wording": "Depot checkin", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture. Detail: waybill received into branch."},
-    {"wording": "Loaded Into Vehicle", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture. Detail names the delivery schedule and route."},
-    {"wording": "Delivery Details", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture. Detail holds the receiver's name, which is not kept."},
-    {"wording": "Text POD", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture."},
-    {"wording": "POD Rec. In Branch", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture. The proof of delivery came back to the branch."},
-    {"wording": "Proof Of Delivery", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "The movement column of Courier IT's Trackit page in an opened capture. Detail: Waybill Scanned."}
+    {"wording": "Depot checkout", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Goods checked out of a branch for despatch."},
+    {"wording": "Depot checkin", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The waybill received into a branch."},
+    {"wording": "Loaded Into Vehicle", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "Loaded for a delivery round; the detail names the schedule, route and driver, which is not kept."},
+    {"wording": "Delivery Details", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The detail holds the receiver's name, which is not kept."},
+    {"wording": "Text POD", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The detail holds the receiver's name, which is not kept."},
+    {"wording": "POD Rec. In Branch", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The proof of delivery came back to the branch."},
+    {"wording": "Proof Of Delivery", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The proof of delivery scanned."},
+    {"wording": "Handed Over", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Received from the sender, whose name the detail gives and which is not kept."},
+    {"wording": "Collection Booked", "stage": null, "language": "en", "confirmedBy": "live", "note": "Booked at the time of the handover; it does not move the parcel."},
+    {"wording": "Courier Pick-Up Number", "stage": null, "language": "en", "confirmedBy": "live", "note": "The collection's reference, given at the handover; it does not move the parcel."},
+    {"wording": "Accepted At Branch", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Back in the branch after a delivery exception."},
+    {"wording": "Parcel Handover (Cage)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Handed over to the branch's operations after a round, before it goes out again."},
+    {"wording": "Delivery Exception (Manual)", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "A round that did not deliver; the detail gives the reason, such as an unknown contact."}
   ]
 }

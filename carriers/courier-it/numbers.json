@@ -32,13 +32,13 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "ParcelPanel's Courier IT page offers it as a sample to try; it is not described as a live shipment."
+      "note": "ParcelPanel's Courier IT page offers it as a sample to try. Courier IT's history for it, through PostNet's tracker, runs from August 2022 through two delivery exceptions to a proof of delivery."
     },
     {
       "number": "PP1039303",
@@ -61,6 +61,31 @@
         ]
       },
       "note": "The opened capture of Courier IT's tracker shows this PostNet waybill carried from one PostNet counter to another, from collection to proof of delivery."
+    },
+    {
+      "number": "CDM132108761",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/69ec71502c3764cae249ccc3",
+        "date": "2026-04-25",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "A review on Courier IT's Trustpilot page, updated after Courier IT's reply, gives the waybill and says the parcel was delivered on the 28th. Courier IT's history for it, through PostNet's tracker, runs from a handover in Johannesburg in April 2026 to a proof of delivery in Durban on the 28th."
     }
   ]
 }

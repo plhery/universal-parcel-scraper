@@ -866,9 +866,9 @@
   },
   {
     "carrier": "courier-it",
-    "pattern": "^[A-Z]{2,3}\\d{6,7}$",
+    "pattern": "^[A-Z]{2,3}\\d{6,9}$",
     "kind": "by_design",
-    "reason": "Courier IT waybills seen so far are a short letter prefix and six or seven digits, a shape shared by many carriers and by PostNet's own waybills."
+    "reason": "Courier IT waybills seen so far are a short letter prefix and six to nine digits, a shape shared by many carriers and by PostNet's own waybills."
   },
   {
     "carrier": "courier-plus-ng",
