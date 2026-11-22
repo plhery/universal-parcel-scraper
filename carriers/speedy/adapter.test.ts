@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { createTracker } from '../../facade/index.js';
@@ -221,6 +222,29 @@ describe('Speedy through its tracker page', () => {
     const { scrape, instance } = browser(page([{}]));
     await expect(instance.recognize!(COLLECTED)).rejects.toMatchObject({ kind: 'challenge' });
     expect(scrape).not.toHaveBeenCalled();
+  });
+
+  it('confirms a number through the tracker page alone once HTTP met the Turnstile check, and returns its history', async () => {
+    const { scrape, fetcher, instance } = browser(page([{}]));
+    const previous = await instance.recognize!(COLLECTED).catch((error: unknown) => error);
+    fetcher.mockClear();
+    await expect(instance.recognizeWithBrowser!(COLLECTED, { budgetMs: 60_000 }, previous)).resolves.toMatchObject({
+      known: true, lastActivityAt: expect.any(String), result: { current_stage: 'delivered' } });
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(scrape).toHaveBeenCalledTimes(1);
+    await expect(browser(page([{ status: 404, body: text('not-found.html') }])).instance.recognizeWithBrowser!(COLLECTED))
+      .resolves.toEqual({ known: false, lastActivityAt: null });
+  });
+
+  it('leaves the page unasked after a throttle or a malformed reply, for another number, and without the browser service', async () => {
+    const { scrape, instance } = browser(page([{}]));
+    for (const previous of [new RateLimitedError('Speedy', 60_000), new SchemaError('Speedy')]) {
+      await expect(instance.recognizeWithBrowser!(COLLECTED, {}, previous)).rejects.toBe(previous);
+    }
+    await expect(instance.recognizeWithBrowser!('SP690000001')).resolves.toEqual({ known: false, lastActivityAt: null });
+    expect(scrape).not.toHaveBeenCalled();
+    const http = adapter({ fetcher: vi.fn<typeof fetch>(), recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+    await expect(http.recognizeWithBrowser!(COLLECTED)).rejects.toMatchObject({ kind: 'challenge' });
   });
 
   it('answers a found parcel over HTTP without the browser', async () => {

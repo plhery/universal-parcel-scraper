@@ -17,6 +17,12 @@ describe('Speedy live retrieval', () => {
     expect(result.events!.every(event => event.time)).toBe(true);
   }, 70_000);
 
+  it.skipIf(!trawl || !process.env.SPEEDY_TRACKING_NUMBER)('confirms the shipment through the tracker page in browser recognition', async () => {
+    const instance = adapter({ recorder: NOOP_RECORDER, env: {}, trawl, browserExecutablePath: null });
+    await expect(instance.recognizeWithBrowser!(process.env.SPEEDY_TRACKING_NUMBER!, { budgetMs: 60_000 }))
+      .resolves.toMatchObject({ known: true, lastActivityAt: expect.any(String) });
+  }, 70_000);
+
   it.skipIf(!trawl || !process.env.SPEEDY_UNKNOWN_NUMBER)('reads the missing-resource page for an unknown number as not found', async () => {
     await expect(new SpeedyTracker({ trawl }).fetch(process.env.SPEEDY_UNKNOWN_NUMBER!, { budgetMs: 60_000 }))
       .rejects.toMatchObject({ kind: 'not_found' });

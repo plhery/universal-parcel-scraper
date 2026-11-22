@@ -22,7 +22,9 @@ The reply must name the whole requested number. For a number it does not know, t
 answers HTTP 404 with MySpeedy's "the requested resource does not exist" page, which the
 tracker shows as an invalid number, so that page is not found. Other 404s, blocked pages,
 HTTP errors and malformed replies keep their own failure kinds. Recognition makes the `direct`
-request alone, so it cannot confirm a number while the check stands.
+request alone, so it cannot confirm a number while the check stands. Opt-in browser recognition
+then opens the tracker page alone for the 63 series, unless the `direct` request was throttled
+or malformed, and needs dated shipment activity.
 
 ## Numbers
 

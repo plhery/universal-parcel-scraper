@@ -1,9 +1,9 @@
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromBrowserLookup, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import {
   BudgetExceededError, carrierErrorKind, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError,
 } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { runSteps } from '../../core/runner/index.js';
+import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
@@ -53,17 +53,29 @@ export class SpeedyTracker {
         allowHttpStatuses: [404, 406], fetcher: this.options.fetcher,
       });
       return parseSpeedyReply(response.status, decodeText(bytes), number);
-    } }, { id: 'trawl', enabled: Boolean(trawl), recovers: (error) => carrierErrorKind(error) === 'challenge',
-      run: async ({ signal, remainingMs }) => {
-        const timeoutMs = Math.floor(Math.min(45_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
-        if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
-        // The page gets its own Turnstile token and asks for the number in its route; the token stays in the browser.
-        const page = await trawl!.scrape({ url: speedyTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
-          captureResponses: [SPEEDY_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),
-        }, { provider: 'TRAWL while fetching Speedy', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
-        signal.throwIfAborted();
-        return parseSpeedyPage(page, number);
-      } }]);
+    } }, { ...this.#page(number, trawl), recovers: (error) => carrierErrorKind(error) === 'challenge' }]);
+  }
+
+  /** The tracker page alone, for a number whose direct read has already met the Turnstile check. */
+  async browse(raw: string, context: TrackingContext = {}) {
+    const number = normalizeSpeedyNumber(raw);
+    const trawl = this.options.trawl ?? null;
+    if (!trawl) throw new ChallengeError(PROVIDER, 'Speedy\'s tracker needs the browser service');
+    return runSteps({ carrier: 'speedy', budgetMs: context.budgetMs ?? 60_000, signal: context.signal,
+      recorder: this.options.recorder ?? NOOP_RECORDER }, [this.#page(number, trawl)]);
+  }
+
+  #page(number: string, trawl: TrawlClient | null): StepSpec<CarrierResult> {
+    return { id: 'trawl', enabled: Boolean(trawl), run: async ({ signal, remainingMs }) => {
+      const timeoutMs = Math.floor(Math.min(45_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
+      if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
+      // The page gets its own Turnstile token and asks for the number in its route; the token stays in the browser.
+      const page = await trawl!.scrape({ url: speedyTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
+        captureResponses: [SPEEDY_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),
+      }, { provider: 'TRAWL while fetching Speedy', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
+      signal.throwIfAborted();
+      return parseSpeedyPage(page, number);
+    } };
   }
 }
 
@@ -74,5 +86,11 @@ export const adapter: AdapterFactory = environment => {
   const http = new SpeedyTracker(options);
   return { id: 'speedy', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => http.fetch(number, context),
-      () => accepted(() => normalizeSpeedyNumber(number))) };
+      () => accepted(() => normalizeSpeedyNumber(number))),
+    // After the HTTP read: a throttle, a malformed reply or a refused number stands; the page is not asked.
+    recognizeWithBrowser: (number, context, previous) => {
+      if (['rate_limited', 'schema', 'invalid_input'].includes(carrierErrorKind(previous) ?? '')) return Promise.reject(previous);
+      if (!accepted(() => normalizeSpeedyNumber(number))) return Promise.resolve({ known: false, lastActivityAt: null });
+      return recognizeFromBrowserLookup(() => tracker.browse(number, context));
+    } };
 };
