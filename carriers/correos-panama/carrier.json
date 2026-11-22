@@ -18,19 +18,56 @@
   "timezone": "America/Panama",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "correos-panama",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 641
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://operaciones.correospanama.gob.pa/IPSWebTracking/IPSWeb_item_events.aspx?itemid={trackingNumber}",
     "searchUrl": "https://operaciones.correospanama.gob.pa/IPSWebTracking/",
     "helpUrl": "https://www.correospanama.gob.pa/preguntas-frecuentes/",
     "canaryUrl": "https://operaciones.correospanama.gob.pa/IPSWebTracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "destination_country",
+      "next_office",
+      "signatory",
+      "failed_delivery_reason"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "destination_country",
+      "failed_delivery_reason"
+    ],
+    "discarded": [
+      "next_office",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
@@ -43,5 +80,13 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "correos-panama-s10",
+      "pattern": "^[A-Z]{2}\\d{9}PA$",
+      "confidence": "low",
+      "checksum": "s10",
+      "preferred": true
+    }
+  ]
 }

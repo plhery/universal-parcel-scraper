@@ -106,6 +106,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "correos-de-mexico": 30,
   "correos-el-salvador": 577,
   "correos-express": 800,
+  "correos-panama": 641,
   "courier-center": 914,
   "couriersplease": 961,
   "cruz-del-sur": 722,

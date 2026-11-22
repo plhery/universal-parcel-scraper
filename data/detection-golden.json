@@ -92417,6 +92417,18 @@
     ]
   },
   {
+    "input": "ED100265337PA",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "correos-panama",
+      "chronopost"
+    ]
+  },
+  {
     "input": "ED307210090IN",
     "carrier": "india-post",
     "confidence": "high",
@@ -93011,6 +93023,7 @@
       "intl-post"
     ],
     "asked": [
+      "correos-panama",
       "chronopost"
     ]
   },
