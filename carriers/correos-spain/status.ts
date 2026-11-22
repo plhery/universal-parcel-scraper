@@ -95,11 +95,13 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'E040000V': { status: 'in_transit', stage: 'customs' },
   'E050000V': { status: 'in_transit', stage: 'in_transit' },
   'E020000V': { status: 'in_transit', stage: 'in_transit' },
-  // An import under customs transit: procedures started, transit authorised, transit cleared, all
-  // in customs; then the procedures finished, which puts the parcel back in transit.
+  // An import under customs transit: procedures started, transit authorised, transit cleared, in
+  // processing at the same minute, all in customs; then the procedures finished, which puts the
+  // parcel back in transit.
   'E819300V': { status: 'in_transit', stage: 'customs' },
   'E508700V': { status: 'in_transit', stage: 'customs' },
   'E134630V': { status: 'in_transit', stage: 'customs' },
+  'E314004V': { status: 'in_transit', stage: 'customs' },
   'E190000V': { status: 'in_transit', stage: 'in_transit' },
   // Handed back to the sender, or on the way back: never a delivery to the recipient.
   'I020000V': { status: 'exception', stage: 'returned' },
