@@ -1,4 +1,12 @@
 {
   "carrier": "jamaica-post",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Next Location: HALF WAY TREE PO",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A row without a status of its own: the item was handed on inside Jamaica Post, here to the Half Way Tree post office."
+    }
+  ]
 }

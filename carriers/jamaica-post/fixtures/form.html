@@ -1,0 +1,56 @@
+<!doctype html>
+  <html lang="en">
+  <head>
+    <title>Track Mail - Ja Mail Tracker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">	
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+  </head>
+
+  <body>
+  
+  <!--matching the two closing divs in the footer --> 
+    <div>   
+      
+      <div id="content" class="p-2 p-md-3 pt-3">
+
+        <div class="float-right">					
+            <img src="images/JaMailTrackerLogo.png">
+        </div>
+        <h2 class="mb-4 text-danger">Track Mail</h2>
+
+        
+        <div class="clearfix p-2 border-bottom border-primary">&nbsp;</div>	
+  <table cellpadding="2" cellspacing="2">
+      <tr>
+        <td class="text-primary text-center" valign="top"><h4>TRACK MAIL</h4></td>
+      </tr>
+      <tr>
+        <td valign="top" class="alert alert-warning border-info text-center">Enter Tracking (Barcode) Number</td>
+      </tr>
+      <tr>
+        <td valign="top" align="right">   
+          <br/>         
+          <form action="track-result.php" method="post" name="form" id="form" ><input type="hidden" name="csrf_token" value="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef">                <input name="Consignment" id="Consignment" required maxlength="50" size="50" type="text">               
+                <button class="btn btn-primary text-nowrap" value="Track Now" name="submit">
+                  <i class="fa fa-globe" aria-hidden="true"></i> Track Now
+              </button>
+          </form>
+          <span class="text-danger font-italic">Eg.: ZL53533553 or CSN6754 </span>
+        </td>
+      </tr>        
+  </table>
+
+                </div>
+            </div>
+
+        <!--<script src="js/jquery.min.js"></script> -->
+        <script src="js/popper.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

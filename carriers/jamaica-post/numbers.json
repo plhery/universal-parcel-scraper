@@ -2,6 +2,25 @@
   "carrier": "jamaica-post",
   "records": [
     {
+      "number": "RR014310824JM",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://packyapp.com/en/carriers/jamaica-post",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Packy's Jamaica Post page gives it as the number format. Jamaica Post's Ja Mail tracker answers it as registered mail handed on to the Half Way Tree post office."
+    },
+    {
       "number": "ZL53533553",
       "role": "shipment",
       "evidence": "official_documentation_example",

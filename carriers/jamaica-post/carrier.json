@@ -16,18 +16,52 @@
   "timezone": "America/Jamaica",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "jamaica-post",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "service_name"
+  ],
   "portal": {
     "searchUrl": "https://jamailtracker.jamaicapost.gov.jm/track-status.php",
     "helpUrl": "https://jamaicapost.gov.jm/contact/",
     "canaryUrl": "https://jamailtracker.jamaicapost.gov.jm/track-status.php",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "destination",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "weight",
+      "service_name"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "destination",
+      "remarks"
+    ],
+    "unavailable": [
+      "eta",
+      "location",
+      "recipient_address",
+      "proof_of_delivery",
+      "signatory",
+      "origin"
+    ]
   },
   "links": [],
   "detection": []
