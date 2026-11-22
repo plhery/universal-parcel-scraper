@@ -8,6 +8,7 @@ import { isValidUspsPackageBarcode, uspsPackageIdentifier } from './usps.js';
 import { normalizeUSPSNumber, parseUSPSTrackingHtml, uspsTrackingUrl } from '../../carriers/usps/adapter.js';
 import { normalizeRoyalMailNumber, parseRoyalMailTrackingResponse, royalMailSummaryApiUrl } from '../../carriers/royal-mail/parser.js';
 import { normalizeIntelcomNumber } from '../../carriers/intelcom/parser.js';
+import { outsideCountryLast } from '../testing/recognition.js';
 
 // Synthetic identifiers; the PIC check digit is calculated independently.
 const PIC = '9210090000000012345679';
@@ -327,14 +328,14 @@ describe('Metropolitan Warehouse twelve-digit numbers', () => {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low',
         candidates: expect.arrayContaining(['metropolitan-warehouse']) });
       expect(recognitionCandidates(number, { countryHint: 'US' }).map(({ carrier }) => carrier), number).toContain('metropolitan-warehouse');
-      // Elsewhere twelve digits are other carriers'.
-      expect(recognitionCandidates(number).map(({ carrier }) => carrier), number).not.toContain('metropolitan-warehouse');
+      // Elsewhere twelve digits are other carriers': Metropolitan comes after them.
+      expect(outsideCountryLast(number, 'metropolitan-warehouse'), number).toBe(true);
       // The check is HTTP; the browser phase does not ask it.
       expect(recognitionCandidates(number, { phase: 'browser' }).map(({ carrier }) => carrier), number).not.toContain('metropolitan-warehouse');
     }
-    // A US caller asks Metropolitan first; a lookup elsewhere does not ask it.
+    // A US caller asks Metropolitan first; a lookup elsewhere asks it after the others.
     expect(recognitionCandidates('599999999980', { countryHint: 'US' })[0]).toMatchObject({ carrier: 'metropolitan-warehouse', countryMatch: 'home' });
-    expect(recognitionCandidates('599999999980', { countryHint: 'ES' }).map(({ carrier }) => carrier)).not.toContain('metropolitan-warehouse');
+    expect(outsideCountryLast('599999999980', 'metropolitan-warehouse', { countryHint: 'ES' })).toBe(true);
   });
 
   it('leaves Metropolitan out for other lengths and for letters', () => {

@@ -40,10 +40,11 @@ and [gls-ch](../gls-ch/README.md)'s explain the requests, identity checks and st
   `Europe/Berlin` label, so only the label differs from this carrier's zone.
 - The scans' wording is the English of the GROUP path, which the shared GLS map reads.
   `statuses.json` also keeps the Austrian page's German wording of the same steps.
-- Recognition asks the same overview, which names no owner, so it cannot tell an Austrian
-  parcel from a German or Swiss one. The network is asked about eleven digits only for a caller
-  in Austria: its rank sits below the other carriers that take the layout, and the caller's
-  country then settles between the GLS networks that know the number.
+- Recognition asks the same overview, which names no owner, so it cannot tell an Austrian parcel
+  from a German or Swiss one. The network is asked about eleven digits beside the other carriers
+  only for a caller in Austria, and for any other caller once they have all missed the number: its
+  rank sits below the other carriers that take the layout, and the caller's country then settles
+  between the GLS networks that know the number.
 
 ## Limitations
 
@@ -56,8 +57,9 @@ Parcels carry the GLS group's eleven-digit parcel number, printed on labels with
 check digit, and an eight-character Track ID. Every GLS network issues the same layouts, and
 their first digits name no network. Low rules offer GLS Austria for eleven digits and for the
 twelve-digit form whose GLS check digit passes, beside the GLS Germany, Switzerland and France
-entries. Recognition asks GLS Austria only for a caller in Austria (`servedCountriesOnly`), so
-callers elsewhere are asked the same carriers as before. The Track ID has no rule here.
+entries. Recognition asks GLS Austria beside them only for a caller in Austria
+(`servedCountriesOnly`), so callers elsewhere are asked the same carriers first, and GLS Austria
+only once they have all missed the number. The Track ID has no rule here.
 
 ## Links
 

@@ -113,8 +113,9 @@ export interface DetectionRule {
   /** Low confidence only: a shape prose shares, offered for a number given on its own, never one read out of a text. */
   standalone?: boolean;
   /**
-   * Low confidence only: a shape printed elsewhere too, such as a shop's own number. Recognition does not ask
-   * the carrier about a number only such rules offer when the country hint names a country it does not serve.
+   * Low confidence only: a shape printed elsewhere too, such as a shop's own number. When the country hint names a
+   * country the carrier does not serve, recognition asks it about a number only such rules offer only once the other
+   * candidates have all missed it (`outsideCountry`).
    */
   servedCountriesOnly?: boolean;
 }
@@ -159,7 +160,10 @@ export interface CarrierDefinition {
     recognitionRank?: number;
     /** The normalized numbers recognition can answer; others the carrier's rules offer are not asked. */
     recognitionPattern?: string;
-    /** Recognition asks the carrier only when the caller's country hint is one of its countries. */
+    /**
+     * Recognition asks the carrier about a bare run of digits with the others only when the caller's country hint is
+     * one of its countries; otherwise, or without a hint, only once they have all missed it (`outsideCountry`).
+     */
     recognitionServedCountriesOnly?: boolean;
     /** Opt-in browser confirmation; higher is asked first after HTTP is inconclusive. */
     browserRecognitionRank?: number;

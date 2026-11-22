@@ -51,7 +51,8 @@ the consignment note, besides a fourteen-character shipment id and a shorter req
 Archived lookups on Jadlog's tracking form show fourteen-digit `cte` values, which the guest
 service takes as the parcel number. Fourteen digits are also DPD's parcel layout and are
 printed by several other carriers, so Jadlog's rule is low and recognition asks Jadlog about
-such a number only for a lookup in Brazil. The same tracking field takes the sender's CNPJ.
+such a number beside the other carriers only for a lookup in Brazil, and for any other once they
+have all missed the number. The same tracking field takes the sender's CNPJ.
 
 ## Links
 

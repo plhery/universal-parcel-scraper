@@ -21,10 +21,10 @@ status and malformed replies keep their own failure kinds. Recognition uses the 
 
 ## Numbers
 
-Every shipment number seen on the tracker is thirteen digits, and the trace service reads it as
-an integer, so other inputs are invalid without a request. Thirteen digits are shared by
-several carriers, so `econt-1` only suggests Econt, and recognition asks it only for a parcel
-looked up from Bulgaria.
+Every shipment number seen on the tracker is thirteen digits, and the trace service reads it as an
+integer, so other inputs are invalid without a request. Thirteen digits are shared by several
+carriers, so `econt-1` only suggests Econt, and recognition asks it beside the other carriers only
+for a parcel looked up from Bulgaria, and for any other once they have all missed the number.
 
 ## Notes
 

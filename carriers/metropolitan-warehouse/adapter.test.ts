@@ -1,10 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { UpstreamNetworkError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, METROPOLITAN_WAREHOUSE_CHECK, METROPOLITAN_WAREHOUSE_LINK, MetropolitanWarehouseTracker } from './adapter.js';
 import {
@@ -302,12 +303,13 @@ describe('Metropolitan Warehouse status vocabulary', () => {
 });
 
 describe('Metropolitan Warehouse numbers', () => {
-  it('stays a twelve-digit suggestion and is asked about it only for a lookup in the United States', () => {
+  it('stays a twelve-digit suggestion, asked first for a lookup in the United States and after the others elsewhere', () => {
     const number = '599999999980';
     expect(detectCarrierMatch(number).candidates).toContain('metropolitan-warehouse');
     expect(recognitionAskedCarriers(number, { countryHint: 'US' })).toContain('metropolitan-warehouse');
     for (const countryHint of [undefined, 'FR', 'ES', 'DE', 'CO', 'CN']) {
-      expect(recognitionCandidates(number, { countryHint }).map(({ carrier }) => carrier), `${countryHint}`).not.toContain('metropolitan-warehouse');
+      expect(outsideCountryLast(number, 'metropolitan-warehouse', { countryHint }), `${countryHint}`).toBe(true);
+      expect(recognitionAskedCarriers(number, { countryHint }), `${countryHint}`).not.toContain('metropolitan-warehouse');
     }
   });
 });

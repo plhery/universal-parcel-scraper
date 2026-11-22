@@ -41,7 +41,8 @@ number together with the sender's five-digit company code. The adapter takes par
 twenty-four digits, whose last four usually repeat the destination postcode, and thirteen
 digits, which the tracker shows on some parcels. Both are bare digit runs that other carriers
 share. `express-one-1` only suggests Express One for twenty-four digits, and recognition asks it
-only for a parcel looked up from Hungary. No rule claims thirteen digits.
+beside the other carriers only for a parcel looked up from Hungary, and for any other once they
+have all missed the number. No rule claims thirteen digits.
 
 ## Links
 

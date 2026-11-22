@@ -4,10 +4,11 @@ import { adapter, DelhiveryTracker } from './adapter.js';
 import { parseDelhivery } from './parser.js';
 import statuses from './statuses.json' with { type: 'json' };
 import { classifyDelhiveryStatus, statusMap } from './status.js';
-import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 
 const NUMBER = '0000000000001';
 const fixture = JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -308,13 +309,13 @@ describe('Delhivery direct tracking', () => {
 });
 
 describe('Delhivery numbers', () => {
-  it('stays a suggestion for shared runs of digits and is asked about them only for a lookup in India', () => {
+  it('stays a suggestion for shared runs of digits, asked first for a lookup in India and after the others elsewhere', () => {
     // Synthetic: a DPD-shaped fourteen-digit run and a FAN Courier-shaped thirteen-digit one.
     for (const number of ['12345678901234', '2345678901234']) {
       expect(detectCarrierMatch(number).candidates, number).toContain('delhivery');
       expect(recognitionAskedCarriers(number, { countryHint: 'IN' })[0], number).toBe('delhivery');
       for (const countryHint of [undefined, 'FR', 'ES', 'RO', 'US', 'GB']) {
-        expect(recognitionCandidates(number, { countryHint }).map(({ carrier }) => carrier), `${number} ${countryHint}`).not.toContain('delhivery');
+        expect(outsideCountryLast(number, 'delhivery', { countryHint }), `${number} ${countryHint}`).toBe(true);
       }
     }
   });

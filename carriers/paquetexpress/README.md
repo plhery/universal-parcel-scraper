@@ -25,7 +25,8 @@ the history alone, as the adapter does, since its rows carry the same fields.
 Tracking codes are eleven to thirteen digits, and the adapter takes ten to fourteen. Paquetexpress
 publishes no layout or check digit for them, and other carriers share each of those lengths, GLS
 and PostLogistics among them, so `paquetexpress-2` only suggests Paquetexpress for a code, and
-recognition asks it about one only for a parcel looked up from Mexico. A guía is the issuing
+recognition asks it about one beside the other carriers only for a parcel looked up from Mexico,
+and for any other once they have all missed the number. A guía is the issuing
 branch's code, three letters and two digits as the service names its branches, then two letters and
 a sequence. `paquetexpress-1` offers Paquetexpress for a guía at low confidence, so preflight asks
 recognition, from any country. The rule takes the five to seven digits seen in sequences, the

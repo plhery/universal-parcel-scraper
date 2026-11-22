@@ -50,7 +50,8 @@ points. Tracked through the lookup its tracker at `rastreo.coordinadora.com` mak
 Coordinadora tracks a shipment by its guide number (número de guía), which its tracker accepts
 as eleven digits. Eleven bare digits are printed by many carriers and nothing in the number
 points to Coordinadora, so `coordinadora-1` only suggests it, and recognition asks Coordinadora
-only when the lookup's country is Colombia: abroad, GLS prints the same eleven digits.
+beside the other carriers only when the lookup's country is Colombia: abroad, GLS prints the
+same eleven digits, and Coordinadora is asked once the others have all missed the number.
 
 ## Links
 

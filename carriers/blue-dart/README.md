@@ -3,8 +3,9 @@
 Tracks domestic waybills through the official server-rendered third-party tracking page.
 Detection offers an 11-digit waybill only when the first ten digits, divided by seven,
 leave the last digit. Aramex numbers pass the same check, so the shape stays shared, and
-recognition asks Blue Dart only when the lookup's country is India: GLS and Mainfreight print
-eleven digits elsewhere.
+recognition asks Blue Dart beside the other carriers only when the lookup's country is India:
+GLS and Mainfreight print eleven digits elsewhere, where Blue Dart is asked once the others have
+all missed the number.
 
 ## How it works
 

@@ -26,8 +26,8 @@ tracking page calls.
   track, such as a standard letter: inconclusive with the reason `tracking_withheld`. Any other
   refusal, including a generic HTTP 410, and an empty status list are inconclusive too.
 - Recognition makes the same request. `pin-ag-1` offers PIN AG for sixteen digits opening `0100`
-  next to DHL eCommerce and TNT, and preflight asks it only for a German country hint, since
-  other carriers print such runs too.
+  next to DHL eCommerce and TNT, and preflight asks it beside them only for a German country hint,
+  and otherwise once they have all missed the number, since other carriers print such runs too.
 
 ## Notes
 

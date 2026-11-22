@@ -46,8 +46,9 @@ method of its e-Pak web service, which shop integrations call.
 OCA parcel numbers are nineteen digits: five digits, four zeros and ten more digits. Lookups
 archived from OCA's current tracker, its older parcel and e-Pak pages and the tracking service
 behind its search show them. Its rule is low: the run is all digits, and Early Bird's older
-numbers share the layout. Recognition asks OCA about such a number only for a lookup in
-Argentina. A piece of a parcel adds a dash and a digit, which stays unclaimed.
+numbers share the layout. Recognition asks OCA about such a number beside the other carriers only
+for a lookup in Argentina, and for any other once they have all missed the number. A piece of a
+parcel adds a dash and a digit, which stays unclaimed.
 
 ## Links
 

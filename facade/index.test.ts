@@ -334,7 +334,7 @@ describe('standalone tracker', () => {
   });
 
   it('asks the next five carriers only when none of the first five knows the number', async () => {
-    // A 14-digit number six carriers can be asked about, best first; Delhivery is asked only in India.
+    // A 14-digit number six carriers can be asked about, best first; Delhivery, outside India, only after them.
     const number = '12340678901250';
     const carriers = ['hermes-de', 'dpd', 'dpd-de', 'seur', 'brt', 'ciblex'];
     const unknown = async () => ({ known: false });
@@ -365,6 +365,25 @@ describe('standalone tracker', () => {
       clock.mockRestore();
     }
     expect(rest).not.toHaveBeenCalled();
+  });
+
+  it('asks a carrier outside its countries in a round of its own, once every other carrier has missed the number', async () => {
+    // Delhivery's fourteen digits are DPD's and Hermes's elsewhere: asked after the six, never beside them.
+    const number = '12340678901250';
+    const carriers = ['hermes-de', 'dpd', 'dpd-de', 'seur', 'brt', 'ciblex'];
+    const unknown = async () => ({ known: false });
+    const knows = async () => ({ known: true });
+    const delhivery = vi.fn<NonNullable<CarrierAdapter['recognize']>>().mockImplementation(knows);
+    let tracker = createTracker({ providers: [], registry: recognizers({
+      ...Object.fromEntries(carriers.map(id => [id, unknown])), delhivery,
+    }) });
+    await expect(tracker.recognize(number)).resolves.toEqual({ carrier: 'delhivery', choices: [], asked: [...carriers, 'delhivery'], unanswered: [] });
+    delhivery.mockClear();
+    tracker = createTracker({ providers: [], registry: recognizers({
+      ...Object.fromEntries(carriers.map(id => [id, unknown])), ciblex: knows, delhivery,
+    }) });
+    await expect(tracker.recognize(number)).resolves.toEqual({ carrier: 'ciblex', choices: [], asked: carriers, unanswered: [] });
+    expect(delhivery).not.toHaveBeenCalled();
   });
 
   it('tracks with the carrier that answered once recognition has waited long enough for the others', async () => {

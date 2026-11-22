@@ -210,17 +210,23 @@ export function createTracker(options: TrackerOptions = {}) {
     // Candidates come from the number as printed: a rule can need its separators.
     const candidates = recognitionCandidates(raw).filter(candidate => typeof registry.for(candidate.carrier)?.recognize === 'function');
     // The carriers `recognitionAskedCarriers` names are asked first; the next MAX_RECOGNITIONS
-    // only while none asked so far knows the number and the budget lasts.
+    // only while none asked so far knows the number and the budget lasts. Those outside the
+    // country come in rounds of their own, after the others.
+    const rounds = [false, true].flatMap(outside => {
+      const group = candidates.filter(candidate => Boolean(candidate.outsideCountry) === outside);
+      return Array.from({ length: Math.ceil(group.length / MAX_RECOGNITIONS) },
+        (_, index) => group.slice(index * MAX_RECOGNITIONS, (index + 1) * MAX_RECOGNITIONS));
+    });
     const ask = () => lookupSignals.run(signal, async () => {
       const outcomes: RecognitionOutcome[] = [];
       // A round's timer runs on the event loop's cached clock and can end it a little before
       // `end`; a lookup still in flight when a round ends shows the budget is spent.
       let inFlight = 0;
-      for (let start = 0; start < candidates.length; start += MAX_RECOGNITIONS) {
+      for (const [index, round] of rounds.entries()) {
         const left = Math.ceil(end - performance.now());
         const settled = settleRecognition(outcomes);
-        if (start > 0 && (inFlight > 0 || left <= 0 || settled.carrier || settled.choices.length)) break;
-        outcomes.push(...await recognizeAll(candidates.slice(start, start + MAX_RECOGNITIONS), async carrier => {
+        if (index > 0 && (inFlight > 0 || left <= 0 || settled.carrier || settled.choices.length)) break;
+        outcomes.push(...await recognizeAll(round, async carrier => {
           inFlight += 1;
           try {
             return await registry.for(carrier)!.recognize!(number, { signal, budgetMs: left });

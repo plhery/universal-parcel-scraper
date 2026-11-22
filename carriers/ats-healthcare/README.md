@@ -16,7 +16,8 @@ atshealthcare.ca.
   as not found. A redirect or a 404 is a moved route, a firewall page is a challenge and a 429 is
   a rate limit.
 - The row and the detail must carry the whole number asked.
-- Recognition makes the same request, and only for a caller in Canada.
+- Recognition makes the same request: beside the other carriers for a caller in Canada, and for
+  any other caller only once they have all missed the number.
 
 ## Notes
 

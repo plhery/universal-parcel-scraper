@@ -11,6 +11,7 @@ import { DpdIeTracker, adapter, type DpdGroupLookup } from './adapter.js';
 import { normalizeDpdIeNumber, parseDpdIe, parseDpdIeAbsence } from './parser.js';
 import { DPD_IE_DRIVER_COLLECTION, DPD_IE_POINT_COLLECTION, dpdIeScanStage, isDpdIeNotice } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
+import { outsideCountryLast } from '../../core/testing/recognition.js';
 
 const NUMBER = '999000001';
 const VAN_NUMBER = '999000002';
@@ -133,13 +134,13 @@ describe('DPD Ireland direct tracking', () => {
     }
   });
 
-  it('offers nine- and ten-digit consignments and is asked about them for a reader in Ireland alone', () => {
+  it('offers nine- and ten-digit consignments, asked first for a reader in Ireland and after the others elsewhere', () => {
     for (const number of [NUMBER, '9990000010']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
       expect(detectCarrierMatch(number).candidates).toContain('dpd-ie');
       expect(recognitionCandidates(number, { countryHint: 'IE' }).map(row => row.carrier)[0]).toBe('dpd-ie');
       for (const countryHint of [undefined, 'IT', 'GB']) {
-        expect(recognitionCandidates(number, { countryHint }).map(row => row.carrier), countryHint).not.toContain('dpd-ie');
+        expect(outsideCountryLast(number, 'dpd-ie', { countryHint }), countryHint).toBe(true);
       }
     }
     for (const number of ['99900000', '99900000101']) expect(detectCarrierMatch(number).candidates).not.toContain('dpd-ie');

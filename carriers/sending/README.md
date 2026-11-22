@@ -43,12 +43,12 @@ Tracks Sending shipments through the lookup the search page on sending.es makes.
 
 ## Numbers
 
-Customers quote twelve-digit shipment numbers (número de expedición or de seguimiento) in
-public complaints addressed to Sending, leading zeros included. Twelve digits are shared by
-many carriers and nothing in the number points to Sending, so a low rule only offers them:
-recognition asks Sending about them for a lookup from a country it delivers in, Spain,
-Portugal or Andorra. The adapter takes twelve digits and refuses anything else without a
-request.
+Customers quote twelve-digit shipment numbers (número de expedición or de seguimiento) in public
+complaints addressed to Sending, leading zeros included. Twelve digits are shared by many carriers
+and nothing in the number points to Sending, so a low rule only offers them: recognition asks
+Sending about them beside the other carriers for a lookup from a country it delivers in, Spain,
+Portugal or Andorra, and for any other once they have all missed the number. The adapter takes
+twelve digits and refuses anything else without a request.
 
 ## Links
 

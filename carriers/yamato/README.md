@@ -6,7 +6,8 @@ heading must identify the requested number; an input echo is insufficient.
 After return dispatch, subsequent scans belong to the return to the sender.
 Detection offers a 12-digit number only when the first eleven digits, divided by
 seven, leave the last digit. Japan Post and Sagawa print numbers with the same check
-digit, so recognition asks Yamato only for parcels looked up from Japan. Its scan dates
+digit, so recognition asks Yamato beside the other carriers only for parcels looked up
+from Japan, and for others once they have all missed the number. Its scan dates
 usually lack a year, so a recognized parcel's activity keeps no instant.
 
 The page answers 伝票番号未登録 or 伝票番号誤り for a number it does not hold: not found.

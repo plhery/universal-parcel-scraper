@@ -69,10 +69,11 @@ senders' references. Transport consignments in New Zealand, Australia, the Unite
 Europe are eleven digits; air and ocean jobs are `S` and eight digits, and customs declarations
 `B` and eight digits; container jobs are `CJ` and nine digits. Some senders' consignment
 references are three letters and eight digits. Eleven digits are shared by many carriers, so
-`mainfreight-1` only suggests Mainfreight, and recognition asks it only when the lookup's country
-is New Zealand, Australia or the United States: in Europe, GLS prints the same eleven digits. The
-job layout is common to freight forwarders on the same software, so no rule claims it. The
-samples and their sources are in [`numbers.json`](numbers.json).
+`mainfreight-1` only suggests Mainfreight, and recognition asks it beside the other carriers only
+when the lookup's country is New Zealand, Australia or the United States: in Europe, GLS prints
+the same eleven digits, and Mainfreight is asked once the others have all missed the number. The
+job layout is common to freight forwarders on the same software, so no rule claims it. The samples
+and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

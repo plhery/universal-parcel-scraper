@@ -68,7 +68,8 @@ SHEIN's package number, `C` or `E`, the order date and eight digits, is the shop
 gateway lists it beside the label Ecoscooting gave the parcel, 18 digits in Spain or a
 `CN` reference in Portugal, and the parcel is tracked under that label without naming it,
 since the label starts with the delivery postcode. Paack delivers other SHEIN parcels in Spain, so the shape only suggests Ecoscooting,
-and recognition asks it when the reader is in Spain or Portugal or gives no country; the
+and recognition asks it beside the other carriers when the reader is in Spain or Portugal or
+gives no country, and for a reader elsewhere once they have all missed the number; the
 query error for a package number it never received settles nothing.
 ICP references use a separate client normalization and are not supported.
 Cainiao's other `CN` families, such as `CNUSUP`, belong to other networks.

@@ -59,9 +59,10 @@ its tracking page as a fallback.
 
 SMSA airway bills are twelve digits. Those in public reports and on parcels SMSA's service
 answered open with 21, 22, 23 or 29, and a low rule offers SMSA for them. Twelve-digit runs are
-printed by many carriers and SMSA documents no prefix, so recognition asks SMSA about them only
-for a reader in Saudi Arabia, and only its answer confirms the airway bill. The samples and their
-sources are in [`numbers.json`](numbers.json).
+printed by many carriers and SMSA documents no prefix, so recognition asks SMSA about them beside
+the other carriers only for a reader in Saudi Arabia, and for any other reader once they have all
+missed the number. Only its answer confirms the airway bill. The samples and their sources are in
+[`numbers.json`](numbers.json).
 
 ## Links
 

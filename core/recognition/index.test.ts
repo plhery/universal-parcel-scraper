@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { detectCarrierMatch } from '../detection/detect.js';
 import { recognitionCandidates, recognitionNumberShape, recognizeAll, settleRecognition, type RecognitionOutcome } from './index.js';
 import { recognitionAskedCarriers } from '../catalog/recognition.js';
+import { outsideCountryLast } from '../testing/recognition.js';
 import { IndeterminateError, NoHistoryError, UpstreamHttpError } from '../errors/index.js';
 
 const outcome = (carrier: string, status: RecognitionOutcome['status'], extra: Partial<RecognitionOutcome> = {}): RecognitionOutcome => ({
@@ -31,7 +32,7 @@ describe('recognition candidates', () => {
     expect(recognitionCandidates('1Z999AA10123456784', { countryHint: 'GB', priorities: { dpd: 1e6 } })).toEqual([]);
   });
 
-  it('asks GLS Poland and GLS Austria about 11 digits only for a caller in their country', () => {
+  it('asks GLS Poland and GLS Austria about 11 digits with the others only for a caller in their country', () => {
     // Synthetic: the GLS group's 11-digit layout names no network. The number also passes DHL
     // eCommerce Poland's check, which puts it first.
     const number = '12345678900';
@@ -40,14 +41,13 @@ describe('recognition candidates', () => {
     expect(recognitionAskedCarriers(number)).toEqual(['dhl-ecommerce-pl', 'gls-fr', 'gls-de', 'gls-ch', 'postlogistics']);
     expect(recognitionAskedCarriers(number, { countryHint: 'PL' })).toContain('gls-pl');
     expect(recognitionAskedCarriers(number, { countryHint: 'AT' })[0]).toBe('gls-at');
+    // Elsewhere they come after every other candidate, never beside them.
     for (const country of [undefined, 'DE', 'CH', 'FR', 'CZ', 'GB']) {
-      const asked = recognitionCandidates(number, { countryHint: country }).map(({ carrier }) => carrier);
-      expect(asked, country).not.toContain('gls-pl');
-      expect(asked, country).not.toContain('gls-at');
+      for (const network of ['gls-pl', 'gls-at']) expect(outsideCountryLast(number, network, { countryHint: country }), country).toBe(true);
     }
   });
 
-  it('asks GLS Poland and GLS Austria about the 12-digit form only for a caller in their country', () => {
+  it('asks GLS Poland and GLS Austria about the 12-digit form with the others only for a caller in their country', () => {
     // Synthetic: the same parcel number printed with its GLS check digit. A Polish or Austrian
     // caller's network is asked first and tracks without the postcode GLS Germany requires.
     const number = '123459999981';
@@ -59,23 +59,21 @@ describe('recognition candidates', () => {
     const elsewhere = recognitionAskedCarriers(number);
     expect(elsewhere.slice(0, 3)).toEqual(['gls-fr', 'gls-de', 'gls-ch']);
     for (const country of ['DE', 'CH', 'FR', 'CZ', 'GB']) {
-      const asked = recognitionCandidates(number, { countryHint: country }).map(({ carrier }) => carrier);
-      expect(asked, country).not.toContain('gls-pl');
-      expect(asked, country).not.toContain('gls-at');
+      for (const network of ['gls-pl', 'gls-at']) expect(outsideCountryLast(number, network, { countryHint: country }), country).toBe(true);
     }
     // A twelfth digit that fails the GLS check is no GLS number.
     for (const network of ['gls-at', 'gls-pl']) expect(detectCarrierMatch('123456789012').candidates).not.toContain(network);
   });
 
-  it('asks Econt about 13 digits only for a caller in Bulgaria', () => {
+  it('asks Econt about 13 digits with the others only for a caller in Bulgaria', () => {
     // Synthetic: every Econt shipment number is thirteen digits, a run carriers elsewhere print too.
     const number = '2000000000001';
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch(number).candidates).toContain('econt');
     expect(recognitionAskedCarriers(number, { countryHint: 'BG' })[0]).toBe('econt');
     for (const country of [undefined, 'RO', 'ES', 'KR', 'CL', 'UA']) {
-      const asked = recognitionCandidates(number, { countryHint: country }).map(({ carrier }) => carrier);
-      expect(asked, country).not.toContain('econt');
+      expect(outsideCountryLast(number, 'econt', { countryHint: country }), country).toBe(true);
+      expect(recognitionAskedCarriers(number, { countryHint: country }), country).not.toContain('econt');
     }
     for (const nearMiss of ['200000000001', '20000000000012', 'A200000000001']) {
       expect(detectCarrierMatch(nearMiss).candidates ?? [], nearMiss).not.toContain('econt');
@@ -151,8 +149,16 @@ describe('recognition candidates', () => {
   });
 
   it('keeps the carriers that can answer, hint first, then number evidence, then popularity', () => {
-    // Hermes's check digit passes, which puts Hermes ahead of popularity alone.
-    expect(recognitionCandidates('12345678901231').map((candidate) => candidate.carrier)).toEqual(['hermes-de', 'dpd-be', 'dpd', 'dpd-nl', 'dpd-de', 'chronopost', 'seur', 'brt', 'dpd-uk', 'dpd-pt', 'dpd-hu', 'dpd-fr', 'ciblex']);
+    // Hermes's check digit passes, which puts Hermes ahead of popularity alone. Jadlog's and Delhivery's runs of
+    // digits are other carriers' outside Brazil and India: they come last, flagged.
+    const candidates = recognitionCandidates('12345678901231');
+    expect(candidates.map((candidate) => candidate.carrier)).toEqual(['hermes-de', 'dpd-be', 'dpd', 'dpd-nl', 'dpd-de', 'chronopost', 'seur', 'brt', 'dpd-uk', 'dpd-pt', 'dpd-hu', 'dpd-fr', 'ciblex', 'jadlog', 'delhivery']);
+    expect(candidates.filter((candidate) => candidate.outsideCountry).map((candidate) => candidate.carrier)).toEqual(['jadlog', 'delhivery']);
+    // In Brazil, Jadlog is asked with the others; Delhivery stays last, even named by the hint.
+    const brazil = recognitionCandidates('12345678901231', { countryHint: 'BR', hint: 'delhivery' });
+    expect(brazil.find((candidate) => candidate.carrier === 'jadlog')).toMatchObject({ countryMatch: 'home' });
+    expect(brazil.find((candidate) => candidate.carrier === 'jadlog')?.outsideCountry).toBeUndefined();
+    expect(brazil.at(-1)).toEqual({ carrier: 'delhivery', needsInput: null, preferred: false, outsideCountry: true });
     expect(recognitionCandidates('06080000000002')).toEqual([
       { carrier: 'dpd', needsInput: null, preferred: true },
       { carrier: 'dpd-be', needsInput: null, preferred: false },
@@ -166,20 +172,22 @@ describe('recognition candidates', () => {
       { carrier: 'dpd-hu', needsInput: null, preferred: false },
       { carrier: 'dpd-fr', needsInput: null, preferred: false },
       { carrier: 'ciblex', needsInput: null, preferred: false },
+      { carrier: 'jadlog', needsInput: null, preferred: false, outsideCountry: true },
     ]);
-    expect(recognitionCandidates('12345678901', { hint: 'gls-de' })).toEqual([
+    const inside = (number: string, options = {}) => recognitionCandidates(number, options).filter(({ outsideCountry }) => !outsideCountry);
+    expect(inside('12345678901', { hint: 'gls-de' })).toEqual([
       { carrier: 'gls-de', needsInput: 'postcode', preferred: false },
       { carrier: 'gls-fr', needsInput: null, preferred: false },
       { carrier: 'gls-ch', needsInput: 'postcode', preferred: false },
       { carrier: 'postlogistics', needsInput: null, preferred: false },
     ]);
-    expect(recognitionCandidates('06080000000002', { skip: (carrier) => carrier === 'dpd' }).map((candidate) => candidate.carrier))
+    expect(inside('06080000000002', { skip: (carrier: string) => carrier === 'dpd' }).map((candidate) => candidate.carrier))
       .toEqual(['dpd-be', 'dpd-nl', 'dpd-de', 'chronopost', 'seur', 'brt', 'dpd-uk', 'dpd-pt', 'dpd-hu', 'dpd-fr', 'ciblex']);
     // A selected carrier needs no recognition.
     expect(recognitionCandidates('1Z999AA10123456784')).toEqual([]);
     // A DPD France depot: DPD France cannot be asked, and DPD Switzerland's or
     // DPD Germany's group-wide answer would file its parcel under the wrong network.
-    expect(recognitionCandidates('10009999999980').map((candidate) => candidate.carrier)).toEqual(['seur', 'brt', 'anteraja', 'ciblex']);
+    expect(inside('10009999999980').map((candidate) => candidate.carrier)).toEqual(['seur', 'brt', 'anteraja', 'ciblex']);
   });
 
   it('asks GLS France, then GLS Germany, then GLS Switzerland about a GLS number', () => {
@@ -293,7 +301,7 @@ describe('asking carriers', () => {
   });
   it('asks all at once and treats a failure or a late answer as no answer', async () => {
     const started: string[] = [];
-    const outcomes = await recognizeAll(recognitionCandidates('12345678901231'), async (carrier) => {
+    const outcomes = await recognizeAll(recognitionCandidates('12345678901231').filter(({ outsideCountry }) => !outsideCountry), async (carrier) => {
       started.push(carrier);
       if (carrier === 'dpd') return { known: true, lastActivityAt: '2026-09-09T08:00:00Z' };
       if (carrier === 'hermes-de') throw new Error('upstream down');
@@ -430,16 +438,16 @@ describe('settling on a carrier', () => {
 });
 
 describe('Ozon unseparated postings', () => {
-  it.each(['4827163520481', '014827163520481'])('offers %s without claiming ownership and only asks Ozon in its markets', number => {
+  it.each(['4827163520481', '014827163520481'])('offers %s without claiming ownership and asks Ozon first only in its markets', number => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch(number).candidates).toContain('ozon-logistics');
     for (const phase of ['http', 'browser'] as const) {
       for (const countryHint of ['RU', 'BY', 'KZ']) {
         expect(recognitionAskedCarriers(number, { phase, countryHint })[0]).toBe('ozon-logistics');
       }
+      // Elsewhere, even named by a hint, it comes after every other candidate.
       for (const countryHint of [undefined, 'GB', 'US', 'XX']) {
-        expect(recognitionCandidates(number, { phase, countryHint, hint: 'ozon-logistics' }).map(c => c.carrier))
-          .not.toContain('ozon-logistics');
+        expect(outsideCountryLast(number, 'ozon-logistics', { phase, countryHint, hint: 'ozon-logistics' }), countryHint).toBe(true);
       }
     }
   });

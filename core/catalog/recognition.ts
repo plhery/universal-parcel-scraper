@@ -37,6 +37,12 @@ export interface RecognitionCandidate {
    * serves. Absent without a hint or a match.
    */
   countryMatch?: 'home' | 'served';
+  /**
+   * The carrier's numbers are runs other carriers print elsewhere, and the country hint
+   * names no country it serves, or there is none: ask it only once every other candidate
+   * has missed the number, never beside them. These candidates come last.
+   */
+  outsideCountry?: true;
 }
 
 export interface RecognitionOptions {
@@ -149,8 +155,9 @@ export function recognitionCandidates(
   // A carrier whose recognition answers fewer numbers than its rules offer is
   // only suggested for the rest: Saia's reply cannot bind a twelfth digit.
   // A carrier whose numbers are bare runs of digits that carriers elsewhere print too is
-  // only asked about such a run for its own countries: Coordinadora's eleven digits are GLS's
-  // abroad. Paquetexpress's guías, letters and digits, are asked whatever the country.
+  // asked about such a run outside its own countries, or without a country hint, only once the
+  // others have missed it (`outsideCountry`): Coordinadora's eleven digits are GLS's abroad.
+  // Paquetexpress's guías, letters and digits, are asked whatever the country.
   // A rule can keep its carrier to its countries too: SHEIN prints its package number on
   // parcels Paack and Ecoscooting deliver in Spain and on parcels carriers elsewhere deliver.
   const bareRun = /^\d+$/.test(normalized);
@@ -159,20 +166,22 @@ export function recognitionCandidates(
       .filter((rule) => ruleFits(rule, normalized, printed));
     return fitting.length > 0 && fitting.every((rule) => rule.servedCountriesOnly === true);
   };
-  const answers = (carrier: string) => {
-    const tracking = CARRIER_DEFINITIONS[carrier as CarrierId]?.tracking;
-    if (tracking?.recognitionServedCountriesOnly && bareRun && countryScore(carrier) === 0) return false;
-    if (country && /^[A-Z]{2}$/.test(country) && countryScore(carrier) === 0 && servedOnly(carrier)) return false;
-    // A browser lookup is costly: a carrier names the numbers worth one (DPD France its own layouts, not every run of digits).
-    return patterns.get(carrier)?.test(normalized) ?? true;
+  const outside = (carrier: string) => {
+    if (countryScore(carrier) > 0) return false;
+    if (CARRIER_DEFINITIONS[carrier as CarrierId]?.tracking.recognitionServedCountriesOnly && bareRun) return true;
+    return Boolean(country && /^[A-Z]{2}$/.test(country) && servedOnly(carrier));
   };
+  // A browser lookup is costly: a carrier names the numbers worth one (DPD France its own layouts, not every run of digits).
+  const answers = (carrier: string) => patterns.get(carrier)?.test(normalized) ?? true;
   const asked = candidates.filter((carrier) => ranks[carrier] !== undefined && AUTOMATIC_CARRIER_IDS.has(carrier)
     && carrierAdapter(carrier) !== 'universal' && answers(carrier) && !shadowed.has(carrierBrand(carrier)) && !options.skip?.(carrier));
+  const outsiders = new Set(asked.filter(outside));
   const checks = new Map(asked.map((carrier) => [carrier, checkDigit(carrier, normalized, printed)]));
   // A check digit other candidates' numbers pass too tells them apart from the rest, not from each other.
   const peers = (carrier: string) => checks.get(carrier) === 'backs'
     ? asked.filter((other) => other !== carrier && checks.get(other)) : [];
   const score = (carrier: string) => [
+    outsiders.has(carrier) ? 0 : 1,
     carrier === options.hint ? 1 : 0,
     preferred.includes(carrier) ? 1 : 0,
     countryScore(carrier),
@@ -190,7 +199,7 @@ export function recognitionCandidates(
       }
       return 0;
     })
-    .map(({ carrier, score: [, , match] }): RecognitionCandidate => {
+    .map(({ carrier, score: [, , , match] }): RecognitionCandidate => {
       const shared = peers(carrier);
       return {
         carrier,
@@ -198,11 +207,16 @@ export function recognitionCandidates(
         preferred: preferred.includes(carrier),
         ...(shared.length ? { checkDigitPeers: shared } : {}),
         ...(match ? { countryMatch: match === 2 ? 'home' : 'served' } : {}),
+        ...(outsiders.has(carrier) ? { outsideCountry: true as const } : {}),
       };
     }).filter((candidate) => options.phase !== 'browser' || !candidate.needsInput);
 }
 
-/** The carriers the detect route asks about a number, best first; empty when none can answer. */
+/**
+ * The carriers the detect route asks first about a number, best first; empty when none can
+ * answer. Those outside the country never are: they come once everything else has missed.
+ */
 export function recognitionAskedCarriers(number: string, options: RecognitionOptions = {}): string[] {
-  return recognitionCandidates(number, options).slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
+  return recognitionCandidates(number, options).filter((candidate) => !candidate.outsideCountry)
+    .slice(0, MAX_RECOGNITIONS).map(({ carrier }) => carrier);
 }

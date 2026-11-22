@@ -54,12 +54,13 @@ parcel is in the guest service.
 
 DPD Ireland's tracker takes a consignment number. Lookups archived from it show nine digits in
 nearly every case, and ten digits twice, once on the former QuickTrack page; the adapter takes
-both. DPD Ireland publishes no check digit, and nine and ten digits are shared with TNT, DHL
-and several other carriers, so a low rule only offers DPD Ireland and recognition asks it about
-them for a reader in Ireland alone. Only the tracker's answer confirms the consignment. A parcel
-DPD Ireland collects for another network also carries DPD's fourteen-digit parcel number, which
-the networks abroad show. Every DPD network's parcels have that shape, so it does not point to
-DPD Ireland either.
+both. DPD Ireland publishes no check digit, and nine and ten digits are shared with TNT, DHL and
+several other carriers, so a low rule only offers DPD Ireland and recognition asks it about them
+beside the other carriers for a reader in Ireland alone, and for any other reader once they have
+all missed the number. Only the tracker's answer confirms the consignment. A parcel DPD Ireland
+collects for another network also carries DPD's fourteen-digit parcel number, which the networks
+abroad show. Every DPD network's parcels have that shape, so it does not point to DPD Ireland
+either.
 
 ## Links
 
