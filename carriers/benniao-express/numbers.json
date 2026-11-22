@@ -1,0 +1,119 @@
+{
+  "carrier": "benniao-express",
+  "records": [
+    {
+      "number": "BN55400024097008",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/benniaosuyun.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "benniao-express",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's Benniao page lists. Benniao's endpoint answers it with a parcel taken in at Yingshang, through the Fuyang and Zhengzhou hubs and signed for in Jia County."
+    },
+    {
+      "number": "BN55400024239491",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/benniaosuyun.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "benniao-express",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's Benniao page lists. Benniao's endpoint answers it with a parcel taken in at Yingshang, stopped on the way and signed for in Hangzhou."
+    },
+    {
+      "number": "BN55400024000525",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/benniaosuyun.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "benniao-express",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's Benniao page lists. Benniao's endpoint answers it with a parcel taken in at Ningjin, sent through Shijiazhuang and Zhengzhou to Chongqing, stopped and signed for in Hangzhou."
+    },
+    {
+      "number": "BN55400024405207",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/benniaosuyun.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "benniao-express",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's Benniao page lists. Benniao's endpoint answers it with a parcel taken in at Anxi, stopped at the Zhengzhou hub and brought back to Quanzhou."
+    },
+    {
+      "number": "BN55100094737324",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/benniaosuyun.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "benniao-express",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's Benniao page lists. Benniao's endpoint answers it with a parcel taken in at Dongguan, out for delivery in Xi'an, stopped and brought back to Dongguan, where it was signed for."
+    },
+    {
+      "number": "BN55400024779801",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/benniaosuyun.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "benniao-express",
+        "confidence": "high"
+      },
+      "note": "A waybill kuaidi.com's Benniao page lists. Benniao's endpoint answers it with a parcel taken in at Zhongshan, held at the Guangzhou hub for a late trunk truck and signed for in Shantou."
+    }
+  ]
+}

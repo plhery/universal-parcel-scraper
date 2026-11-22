@@ -85026,6 +85026,54 @@
     "candidates": []
   },
   {
+    "input": "BN55100094737324",
+    "carrier": "benniao-express",
+    "confidence": "high",
+    "candidates": [
+      "benniao-express"
+    ]
+  },
+  {
+    "input": "BN55400024000525",
+    "carrier": "benniao-express",
+    "confidence": "high",
+    "candidates": [
+      "benniao-express"
+    ]
+  },
+  {
+    "input": "BN55400024097008",
+    "carrier": "benniao-express",
+    "confidence": "high",
+    "candidates": [
+      "benniao-express"
+    ]
+  },
+  {
+    "input": "BN55400024239491",
+    "carrier": "benniao-express",
+    "confidence": "high",
+    "candidates": [
+      "benniao-express"
+    ]
+  },
+  {
+    "input": "BN55400024405207",
+    "carrier": "benniao-express",
+    "confidence": "high",
+    "candidates": [
+      "benniao-express"
+    ]
+  },
+  {
+    "input": "BN55400024779801",
+    "carrier": "benniao-express",
+    "confidence": "high",
+    "candidates": [
+      "benniao-express"
+    ]
+  },
+  {
     "input": "BNI999999980",
     "carrier": "unknown",
     "confidence": "low",

@@ -437,6 +437,7 @@ import { statusMap as hunterExpress } from '../../carriers/hunter-express/status
 import { statusMap as huahan } from '../../carriers/huahan/status.js';
 import { statusMap as huayaExpress } from '../../carriers/huaya-express/status.js';
 import { statusMap as huaqiExpress } from '../../carriers/huaqi-express/status.js';
+import { statusMap as benniaoExpress } from '../../carriers/benniao-express/status.js';
 import { statusMap as riyuLogistics } from '../../carriers/riyu-logistics/status.js';
 import { statusMap as lindaoExpress } from '../../carriers/lindao-express/status.js';
 import { statusMap as wanjiaLogistics } from '../../carriers/wanjia-logistics/status.js';
@@ -1085,7 +1086,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,
-  'ftd-nz': ftdNz, 'best-freight-cn': bestFreightCn, lhtex, polonez, 'v-xpress': vXpress, airspeed, topdelivery, kargoturk, expedico, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa, pdu,
+  'ftd-nz': ftdNz, 'benniao-express': benniaoExpress, 'best-freight-cn': bestFreightCn, lhtex, polonez, 'v-xpress': vXpress, airspeed, topdelivery, kargoturk, expedico, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa, pdu,
   'airways-courier-in': airwaysCourierIn, 'akis-express': akisExpress, 'ambro-express': ambroExpress, 'apg-ecommerce': apgEcommerce, 'bigfoot-express': bigfootExpress, 'biz-courier': bizCourier, cvc,
   diakinisis, 'faster-shipe': fasterShipe, 'first-flight-me': firstFlightMe, 'gbs-broker': gbsBroker, 'herona-express': heronaExpress, 'hop-envios': hopEnvios, interlogistica,
   'intertown-transport': intertownTransport, 'intras-jp': intrasJp, 'jas-worldwide': jasWorldwide, 'king-kong-express': kingKongExpress, lafasta, 'm24-logistics': m24Logistics,

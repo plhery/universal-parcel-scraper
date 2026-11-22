@@ -11515,6 +11515,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "benniao-express": {
+    "displayName": "Benniao Express",
+    "color": "#e00000",
+    "aliases": [
+      "笨鸟速运",
+      "笨鸟快递",
+      "Benniao Suyun"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "benniao-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.benniaosuyun.com/",
+    "trackingSearchUrl": "https://www.benniaosuyun.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^BN\\d{14}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "bergen-transport-sentral": {
     "displayName": "Bergen Transport Sentral",
     "color": "#ff230f",
@@ -71199,6 +71227,7 @@ export const CARRIER_IDS = [
   "bel",
   "belpost",
   "benben",
+  "benniao-express",
   "bergen-transport-sentral",
   "bermuda-container-line",
   "best-courier-ro",
@@ -73221,6 +73250,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bel": [],
   "belpost": ["belpost-s10"],
   "benben": [],
+  "benniao-express": ["benniao-express-1"],
   "bergen-transport-sentral": [],
   "bermuda-container-line": [],
   "best-courier-ro": [],

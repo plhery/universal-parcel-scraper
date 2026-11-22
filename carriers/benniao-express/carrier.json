@@ -1,0 +1,79 @@
+{
+  "id": "benniao-express",
+  "displayName": "Benniao Express",
+  "aliases": [
+    "笨鸟速运",
+    "笨鸟快递",
+    "Benniao Suyun"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#e00000"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "benniao-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.benniaosuyun.com/",
+    "canaryUrl": "https://www.benniaosuyun.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "office_contact_details",
+      "driver_name",
+      "driver_phone",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "office_contact_details",
+      "driver_name",
+      "driver_phone",
+      "signatory"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "pieces",
+      "origin",
+      "destination",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "benniao-express-1",
+      "pattern": "^BN\\d{14}$",
+      "confidence": "high"
+    }
+  ]
+}

@@ -85,6 +85,7 @@ import { adapter as bangladeshPost } from '../carriers/bangladesh-post/adapter.j
 import { adapter as baridAlMaghrib } from '../carriers/barid-al-maghrib/adapter.js';
 import { adapter as belpost } from '../carriers/belpost/adapter.js';
 import { adapter as benben } from '../carriers/benben/adapter.js';
+import { adapter as benniaoExpress } from '../carriers/benniao-express/adapter.js';
 import { adapter as bermudaContainerLine } from '../carriers/bermuda-container-line/adapter.js';
 import { adapter as bestExpressTh } from '../carriers/best-express-th/adapter.js';
 import { adapter as bestExpressVn } from '../carriers/best-express-vn/adapter.js';
@@ -1152,6 +1153,7 @@ export const REGISTRY: RegistryDefinition = {
     "barid-al-maghrib": baridAlMaghrib,
     "belpost": belpost,
     "benben": benben,
+    "benniao-express": benniaoExpress,
     "bermuda-container-line": bermudaContainerLine,
     "best-express-th": bestExpressTh,
     "best-express-vn": bestExpressVn,
@@ -2312,6 +2314,7 @@ export const REGISTRY: RegistryDefinition = {
     "bel": "universal",
     "belpost": "belpost",
     "benben": "benben",
+    "benniao-express": "benniao-express",
     "bergen-transport-sentral": "universal",
     "bermuda-container-line": "bermuda-container-line",
     "best-courier-ro": "universal",

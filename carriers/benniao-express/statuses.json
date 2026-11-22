@@ -1,0 +1,61 @@
+{
+  "carrier": "benniao-express",
+  "entries": [
+    {
+      "code": "已揽收",
+      "wording": "【…】已揽收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The origin branch took the parcel in."
+    },
+    {
+      "code": "已发件",
+      "wording": "【…】已发件，发往下一站【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sent from a branch or hub to the next one."
+    },
+    {
+      "code": "已到达",
+      "wording": "已到达【…】，上一站是【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at a hub or the delivering branch."
+    },
+    {
+      "code": "已派件",
+      "wording": "【…】已派件，派件员是【…】",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Out with a courier; the adapter leaves the courier's name and phone out."
+    },
+    {
+      "code": "已签收",
+      "wording": "已签收，签收人是【…】",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for; the adapter leaves the signatory out."
+    },
+    {
+      "code": "已操作拦截扫描",
+      "wording": "【…】已操作拦截扫描，原因【拦截】",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The parcel was stopped on the sender's request, usually to come back."
+    },
+    {
+      "code": "已操作问题件扫描",
+      "wording": "【…】已操作问题件扫描，原因【…】",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A hub recorded a problem with the parcel, such as a late trunk truck."
+    }
+  ]
+}
