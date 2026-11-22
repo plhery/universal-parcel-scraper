@@ -107,7 +107,9 @@ page makes.
   the number's whole layout in an explicit table: `SWX` and eighteen digits is SwiftX, `GFUS`
   and fourteen digits is GOFO, fourteen digits from depots 0600 to 0619 is DPD
   Switzerland, and a USPS package barcode that passes its check digit is USPS, as on
-  LiBaoTongXu's US line. Other numbers give no hand-off. A post's parcels, and USPS's on
+  LiBaoTongXu's US line. `YWE` and fourteen digits with their check digit is YWE, `GFNL` and
+  fourteen digits with theirs is GOFO Netherlands, and `1XL` and eleven digits is Sameday, as
+  lines to the US, the Netherlands and Bulgaria give them. Other numbers give no hand-off. A post's parcels, and USPS's on
   DHLink's own line, give no last-leg number. The partner is named under its number even when that is the number asked,
   so a host that filed the parcel under the partner reads DHLink's answer as an earlier leg.
   A parcel with no last-leg number whose tracking number has a partner's layout names that

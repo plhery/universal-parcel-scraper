@@ -480,7 +480,7 @@ describe('DHLink HTTP adapter', () => {
 
   it('hands over only through the table, with the whole number in the partner’s layout', () => {
     expect(DHLINK_LAST_LEGS.map((leg) => [leg.carrier, leg.number.source])).toEqual([['swiftx', '^SWX\\d{18}$'], ['gofo', '^GFUS\\d{14}$'], ['dpd', '^06[01]\\d{11}$'],
-      ['usps', '^(?:9[1-5]\\d{20}|9[2-4]\\d{24})$']]);
+      ['usps', '^(?:9[1-5]\\d{20}|9[2-4]\\d{24})$'], ['ywe', '^YWE\\d{14}$'], ['gofo-nl', '^GFNL\\d{14}$'], ['sameday', '^1XL\\d{11}$']]);
     const handoff = (number: unknown) => {
       const result = parseDhlink(changed('swiftx-at-warehouse', (parcel) => { parcel.lastTurnNo = number; }), WAREHOUSE, LATER);
       return [result.delivery_carrier ?? null, result.delivery_tracking_number ?? null];
@@ -492,9 +492,14 @@ describe('DHLink HTTP adapter', () => {
     expect(handoff('9200 1900 0000 0000 0000 09')).toEqual(['usps', '9200190000000000000009']);
     const usps = parseDhlink(changed('swiftx-at-warehouse', (parcel) => { parcel.lastTurnNo = '9200190000000000000009'; }), WAREHOUSE, LATER);
     expect(deliveryHandoff('dhlink', WAREHOUSE, usps)).toEqual({ carrier: 'usps', number: '9200190000000000000009', basis: 'partner' });
+    // So do YWE's and GOFO's Dutch numbers; Sameday's `1XL` ones carry none.
+    expect(handoff('ywe 1000 0000 0000 07')).toEqual(['ywe', 'YWE10000000000007']);
+    expect(handoff('gfnl 2632 1000 0000 07')).toEqual(['gofo-nl', 'GFNL26321000000007']);
+    expect(handoff('1xl 1000 0000 001')).toEqual(['sameday', '1XL10000000001']);
     for (const number of ['06200000000001', '0600000000001', '060000000000001', 'SWX99000000000000001', 'SWX9900000000000000011', 'XSWX990000000000000001', '9400100000000000000001', '9200190000000000000008',
       '4201000192001900000000000000000009',
-      'GFUS9900000000001', 'GFUS990000000000011', 'GF9900000000001', 'GFFR99000000000001', WAREHOUSE, '', null]) {
+      'GFUS9900000000001', 'GFUS990000000000011', 'GF9900000000001', 'GFFR99000000000001', 'YWE10000000000008', 'GFNL26321000000008',
+      'GFNL2632100000007', '1XL1000000001', '1XL100000000001', '1XA10000000001', WAREHOUSE, '', null]) {
       expect(handoff(number), String(number)).toEqual([null, null]);
     }
   });

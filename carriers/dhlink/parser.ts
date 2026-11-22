@@ -1,5 +1,6 @@
 import { DateTime, FixedOffsetZone } from 'luxon';
 import { isValidUspsPackageBarcode, normalizeTrackingNumber } from '../../core/detection/index.js';
+import { hasGs1CheckDigitInDigits, isValidGofoEuropeWaybill } from '../../core/detection/prefixedChecksums.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { uspsRoundDelivery } from '../../core/result/round.js';
@@ -87,6 +88,12 @@ export const DHLINK_LAST_LEGS: readonly {
   { carrier: 'dpd', number: /^06[01]\d{11}$/ },
   // USPS's package barcodes (IMpb) with their check digit, as LiBaoTongXu's US line gives the last leg.
   { carrier: 'usps', number: /^(?:9[1-5]\d{20}|9[2-4]\d{24})$/, valid: isValidUspsPackageBarcode },
+  // YWE's numbers with their check digit, the layout `ywe-1` claims, as a line to the US gives the last leg.
+  { carrier: 'ywe', number: /^YWE\d{14}$/, valid: hasGs1CheckDigitInDigits },
+  // GOFO's Dutch waybills with their check digit, the layout `gofo-nl-1` claims, as a line to the Netherlands gives it.
+  { carrier: 'gofo-nl', number: /^GFNL\d{14}$/, valid: isValidGofoEuropeWaybill },
+  // Sameday's `1XL` and eleven digits, the layout `sameday-3` claims, as a line to Bulgaria gives it.
+  { carrier: 'sameday', number: /^1XL\d{11}$/ },
 ];
 
 /** A number DHLink's tracker can be asked for; anything else is not sent. */
