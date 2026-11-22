@@ -44,7 +44,9 @@ current feed retains their history. Detection keeps that distinction for legacy
 waybills of one letter and eight digits: `N` waybills are selected, and the
 other letters DTDC's former tracker is known to have answered are only
 suggested. `A` waybills are left out: one DTDC reply shows one, and a Day & Ross
-sample shares the shape.
+sample shares the shape. Consignments of one letter and ten digits are suggested
+only for the letters public samples show DTDC answering; `Z` ones share Packeta's
+shape and stay with Packeta.
 
 DTDC's international consignments, `N` and eight digits, get the feed's generic
 failure. DTDC Australia's open tracker, `GET www.dtdcaustralia.com.au/track_order/{number}`,

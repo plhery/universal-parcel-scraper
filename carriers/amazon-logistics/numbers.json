@@ -278,6 +278,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dtdc",
           "gls-it"
         ]
       },
@@ -298,6 +299,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dtdc",
           "gls-it"
         ]
       },

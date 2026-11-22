@@ -692,6 +692,49 @@
         "confidence": "none"
       },
       "note": "Archived DTDC tracking link with a US-to-India reference. A tracking link holds whatever was entered, so it does not show that DTDC issued the number, and detection does not know the shape."
+    },
+    {
+      "number": "C5000892520",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6af84aa9125f207180513c63",
+        "date": "2026-11-14"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc",
+          "gls-it"
+        ]
+      },
+      "note": "C consignment number from a review of DTDC. DTDC's tracking page returns its history."
+    },
+    {
+      "number": "R5002220418",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6ad1a7fd3c8988a319288a84",
+        "date": "2026-10-16"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc",
+          "gls-it",
+          "post-one"
+        ]
+      },
+      "note": "R consignment number from a review of DTDC. DTDC's tracking page returns its history."
     }
   ]
 }
