@@ -1,0 +1,37 @@
+{
+  "carrier": "yaoqi-logistics",
+  "entries": [
+    {
+      "code": "已发出",
+      "wording": "快件 已从 … 发出",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left a branch or hub for the site the place column brackets."
+    },
+    {
+      "code": "已到达",
+      "wording": "快件 已到达 …",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached a hub or the delivering branch."
+    },
+    {
+      "code": "正在派件",
+      "wording": "… 的【…】（…）正在派件",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Out for delivery; the adapter leaves out the courier's name and phone number."
+    },
+    {
+      "code": "已签收",
+      "wording": "… 的派件已签收，如有疑问请电联：（…）",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for at the delivering branch; the adapter leaves out the branch's phone number."
+    }
+  ]
+}

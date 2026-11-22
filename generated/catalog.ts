@@ -69295,6 +69295,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "yaoqi-logistics": {
+    "displayName": "Yaoqi Logistics",
+    "color": "#d7000f",
+    "aliases": [
+      "耀奇物流",
+      "深圳市耀奇物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yaoqi-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yc-delivery": {
     "displayName": "YC Delivery",
     "color": "#004092",
@@ -72745,6 +72766,7 @@ export const CARRIER_IDS = [
   "yamato-america",
   "yandex-delivery",
   "yang-ming",
+  "yaoqi-logistics",
   "yc-delivery",
   "ycs-logistics",
   "ydh",
@@ -74761,6 +74783,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yamato-america": [],
   "yandex-delivery": [],
   "yang-ming": [],
+  "yaoqi-logistics": [],
   "yc-delivery": [],
   "ycs-logistics": [],
   "ydh": ["ydh-1"],

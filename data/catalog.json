@@ -69291,6 +69291,27 @@
     ],
     "detectionRules": []
   },
+  "yaoqi-logistics": {
+    "displayName": "Yaoqi Logistics",
+    "color": "#d7000f",
+    "aliases": [
+      "耀奇物流",
+      "深圳市耀奇物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yaoqi-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yc-delivery": {
     "displayName": "YC Delivery",
     "color": "#004092",

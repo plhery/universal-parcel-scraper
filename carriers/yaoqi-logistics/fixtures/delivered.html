@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>820161769316 - 耀奇物流::运单跟踪</title>
+<base href="http://www.yaoqi56.com" />
+<link href="http://www.yaoqi56.com/css/main.css" rel="stylesheet" type="text/css" />
+<link href="http://www.yaoqi56.com/css/exCSS.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" src="http://www.yaoqi56.com/js/info.js" type="text/javascript"></script>
+<script language="JavaScript" src="http://www.yaoqi56.com/js/destination.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://www.yaoqi56.com/js/tab.js"></script>
+
+<script type="text/javascript" src="http://www.yaoqi56.com/js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="http://www.yaoqi56.com/js/jquery.jslides.js"></script>
+<script src="js/MSClass.js"></script>
+<script type="text/JavaScript">
+<!--
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+function MM_showHideLayers1() { //v9.0
+  var i,p,v,obj,args=MM_showHideLayers1.arguments;
+  for (i=0; i<(args.length-2); i+=3) 
+  with (document) if (getElementById && ((obj=getElementById(args[i]))!=null)) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'':(v=='hide')?'none':v; }
+    obj.display=v; }
+}
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_swapImage1() { //v3.0
+  var i,j=0,x,a=MM_swapImage1.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<Script language=JavaScript>
+
+var request = false;
+try 
+{
+    request = new XMLHttpRequest();
+} 
+catch (trymicrosoft) 
+{
+    try 
+    {
+        request = new ActiveXObject("Msxml2.XMLHTTP");
+    } 
+    catch (othermicrosoft) 
+    {
+        try 
+        {
+            request = new ActiveXObject("Microsoft.XMLHTTP");
+        } 
+        catch (failed) 
+        {
+            request = false;
+        }
+    }
+}
+
+function DoEmsGInfoIP(strWcid)
+{
+    if(!request) return;
+    var url = "/cgi-bin/GInfo.dll?EmsGInfoIP&w="+strWcid;  
+    request.open("GET", url, true);  
+    request.onreadystatechange = DoEmsGInfoIPOK;  
+    request.send(null); 
+}
+
+
+function DoEmsGInfoIPOK()  
+{  
+    if (request.readyState != 4)  return ;
+    if (request.status != 200)  return ;  
+    var strIP=request.responseText;
+    if(strIP.length < 7) return ;
+    //进行相关的域名替换操作！...
+    theForm.action = 'http://'+strIP+':8888/cgi-bin/GInfo.dll?MemberApply';
+    return ;
+}
+</Script>
+<Script language=JavaScript type=text/javascript src=#cgi-bin/GInfo.dll?jsWebPic&w=express360&b=0&e=2></Script>
+</head>
+<body >
+<div id="page">
+  <div id="daohang">
+    <ul id="nav">
+      <li><a href="http://www.yaoqi56.com/" >首页</a></li>
+      <li style="background:url(images/spot.jpg) no-repeat  105px center;"> <a href="#">公司简介</a>
+        <ul>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=406">> 公司简介</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3726">> 荣誉资质</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3727">> 企业文化</a></li>
+        </ul>
+      </li>
+      <li style="background:url(images/spot.jpg) no-repeat  120px center;"> <a href="#">产品与服务</a>
+
+        <ul>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3728">> 定时达</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3729">> 零担快运</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3730">> 空运速达</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3731">> 整车运输</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3732">> 同城配送</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3733">> 仓储服务</a></li>
+        </ul>
+      </li>
+      <li style="background:url(images/spot.jpg) no-repeat  105px center;"> <a href="#">增值服务</a>
+
+        <ul>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3734">> 代收货款</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3735">> 保价服务</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3736">> 包装服务</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3737">> 回单签收</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3738">> 等通知放货</a></li>
+        </ul>
+      </li>
+      <li style="background:url(images/spot.jpg) no-repeat  120px center;"> <a href="#">耀奇优势</a>
+        <ul>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3739">> 车辆优势</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3740">> 仓储优势</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3741">> 信息优势</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3742">> 团队优势</a></li>
+        </ul>
+      </li>
+      <li style="background:url(images/spot.jpg) no-repeat  105px center;"> <a href="#">新闻资讯</a>
+       <ul>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispKind&w=szyqi&nkind=公司动态">> 公司动态</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispKind&w=szyqi&nkind=行业动态">> 行业新闻</a></li>
+        </ul>
+      </li>
+      
+      <li style="background:url(images/spot.jpg) no-repeat  105px center;"> <a href="#">加入我们</a>
+
+        <ul>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3743">> 耀奇会员</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3744">> 人才招骋</a></li>
+        </ul>
+      </li> 
+    </ul>
+  </div>
+  <script type="text/javascript">
+$(function(){
+	$('#nav>li').mouseover(function(){
+		var $width=$(this).outerWidth(true);
+	$(this).siblings().find("ul").hide()
+		$(this).find("ul").width($width).show();
+
+	})
+	$('#nav>li').mouseout(function(){
+		$(this).find("ul").hide();
+	})
+})
+</script>
+  <table width="1025" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="408"><img src="images/xyt_05.jpg" width="427" height="106" /></td>
+      <td width="615" align="right" valign="top"><table width="100" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="18"><table width="300" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+              <td width="244" height="34" align="right"><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=380" class="b2_32">登陆</a> | <a href="javascript:window.external.AddFavorite('http://www.yaoqi56.com/', '耀奇物流-专业物流整合服务商！')" class="b2_32">收藏我们</a> | <a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=410" class="b2_32">联系我们</a></td>
+            </tr>
+          </table></td>
+        </tr>
+      </table>
+        <table width="200" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+  
+  <table width="100" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td height="44"></td>
+    </tr>
+  </table>
+</div>
+<!--slider-->
+<div style="background-image:url(images/ny_18.jpg); background-position:center; height:135px; margin-top:20px;">
+ 
+</div>
+<!--slider-->
+
+<div id="page">
+    <table width="100" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td height="40"></td>
+    </tr>
+  </table>
+    <table width="1025" border="0" cellpadding="0" cellspacing="20" class="border000">
+      <tr>
+        <td width="213" height="531" valign="top"><table width="200" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="images/ny_03.png" width="213" height="35" /></td>
+          </tr>
+        </table>
+          <table width="213" height="224" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+            <tr>
+              <td valign="top"><div class="sidebar">
+                 <ul>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3728"> 定时达</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3729"> 零担快运</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3730"> 空运速达</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3731"> 整车运输</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3732"> 同城配送</a></li>
+          <li><a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3733"> 仓储服务</a></li>
+        </ul>
+
+              </div></td>
+            </tr>
+          </table></td>
+        <td width="782" valign="top"><table width="754" height="662" border="0" cellpadding="0" cellspacing="10">
+          <tr>
+            <td width="734" height="530" align="left" valign="top" style="font-weight:normal">
+			  
+              <div class='kindc' id='ot_kindc'>运单跟踪 &gt;&gt; 820161769316</div><br><table width='99%' border='0' cellpadding='1' cellspacing='0' bgcolor='#F3F3F3' class='trackListTable'><tr><td align='center' valign='top'><table width='98%' border='0' cellpadding='1' cellspacing='0' class='trackHead'><tr><td id='theTrackInfo'><strong><span id='HeaderNum'>运 单 号：820161769316</span><span id='HeaderFrom'> <br>出 发 地：深圳</span><span id='HeaderDes'> <br>目 的 地：安徽合肥</span><span id='HeaderItem'> <br>件    数：2</span><span id='HeaderState'> <br>状    态：送达！</span><span id='HeaderADate'><br>送达时间：2026.10.30 11:13</span><DIV id='HeaderExtra'> </DIV></strong></td></tr></table>
+
+<div id='oDetail'><table width='98%' border='1' align='center' cellpadding='1' cellspacing=0 class='trackContentTable' id='oTHtable'><tr class='TH_tr'><td  width='130' height='25' align='center' bgcolor='#E6E6E6' class='trackListTitle' id='oHDateTime'><strong>日期时间</strong></td><td width='150' align='center' bgcolor='#E6E6E6' class='trackListTitle' id='oHPlace'><strong>服务地点</strong></td><td align='center' bgcolor='#E6E6E6' class='trackListTitle' id='oHDetail'><strong>详细内容</strong></td></tr><tr align='center' bgcolor='#F5F9FA'><td align='center' bgcolor='#F5F9FA' class='trackListOdd'>2026-10-27 23:04</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>大旺三公塘[广州分拨中心]　</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>快件 已从 大旺三公塘 发出　</td></tr><tr align='center' bgcolor='#FFFFFF'><td align='center' bgcolor='#FFFFFF' class='trackListEven'>2026-10-27 23:09</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>广州分拨中心[四会大沙镇]　</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>快件 已到达 广州分拨中心　</td></tr><tr align='center' bgcolor='#F5F9FA'><td align='center' bgcolor='#F5F9FA' class='trackListOdd'>2026-10-28 01:19</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>广州分拨中心[合肥分拨中心]　</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>快件 已从 广州分拨中心 发出　</td></tr><tr align='center' bgcolor='#FFFFFF'><td align='center' bgcolor='#FFFFFF' class='trackListEven'>2026-10-29 03:39</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>合肥分拨中心[广州分拨中心]　</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>快件 已到达 合肥分拨中心　</td></tr><tr align='center' bgcolor='#F5F9FA'><td align='center' bgcolor='#F5F9FA' class='trackListOdd'>2026-10-29 07:45</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>合肥分拨中心[长丰]　</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>快件 已从 合肥分拨中心 发出　</td></tr><tr align='center' bgcolor='#FFFFFF'><td align='center' bgcolor='#FFFFFF' class='trackListEven'>2026-10-30 10:56</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>长丰万科[合肥分拨中心]　</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>快件 已到达 长丰万科　</td></tr><tr align='center' bgcolor='#F5F9FA'><td align='center' bgcolor='#F5F9FA' class='trackListOdd'>2026-10-30 10:56</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>长丰万科　</td><td align='left' bgcolor='#F5F9FA' class='trackListOdd'>长丰万科 的【陈祥冉】（15152127730）正在派件　</td></tr><tr align='center' bgcolor='#FFFFFF'><td align='center' bgcolor='#FFFFFF' class='trackListEven'>2026-10-30 11:13</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>长丰万科　</td><td align='left' bgcolor='#FFFFFF' class='trackListEven'>长丰万科 的派件已签收，如有疑问请电联：（15152127730）　</td></tr></table>
+</div>
+
+<div id='oTrackM1'><form id='theTrackForm' action='/cgi-bin/GInfo.dll?EmmisTrack' method='post'><table width='98%' height='40' border='0' cellpadding='0' cellspacing='5' class='trackGoOnTable'><tr><td width='130' height='30' align='right'>继续查询其它运单：</td><td align='left'><input name='w' type='hidden' value='szyqi'><input name='cmodel' type='hidden' value=''><input name='cno' type='text' size='20' class='txt_no'><input name='ntype' type='hidden' value=0><button type='submit' value='查询'  class='btn_go'>查询</button></td></tr></table></form></div><div id='oTrackM2'><table width='97%' border='0' cellpadding='0' cellspacing='0' class='trackIntroTable'><tr><td height='25' colspan='2' valign='top'>■通过输入您的运单号能够查询从接到货物到货物到达接货人的所有环节状态。</tr></table></div></td></tr></table><br>
+			
+			</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table>
+</div>
+<table width="100" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="50"></td>
+  </tr>
+</table>
+<div>
+  <div id="page1" style="height:200px;">
+    <table width="100" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="20"></td>
+      </tr>
+    </table>
+    <table width="1025" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="764" height="145" valign="top"><table width="628" height="31" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td height="20"><a href="http://www.yaoqi56.com/" class="b2_32">首页</a> | <a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=406" class="b2_32">公司简介</a> | <a href="#" class="b2_32">产品与服务</a> | <a href="#" class="b2_32">增值服务</a> | <a href="#" class="b2_32">耀奇优势</a> | <a href="#" class="b2_32">新闻资讯</a> | <a href="#" class="b2_32">加入我们</a></td>
+            </tr>
+          </table>
+          <table width="428" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="392" valign="top"><table width="426" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="214" height="35" class="b2_32">■<a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3745" class="b2_32">服务条款</a> ■<a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispInfo&w=szyqi&nid=3746" class="b2_32">隐私声明</a> ■<a href="http://www.yaoqi56.com/cgi-bin/GInfo.dll?DispAdvice&w=szyqi" class="b2_32">留言反馈</a> <br /></td>
+                    <td width="150" align="right" class="b1_32">&nbsp;</td>
+                  </tr>
+                </table>
+                  <table width="552" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="552" valign="top" class="b2_32">Copyright @ 2010-2022  版权所有深圳市耀奇物流有限公司 粤ICP备22024794号-1</td>
+                    </tr>
+                    <tr>
+                      <td valign="top" class="b2_32">地址：深圳市宝安区沙井街道坣岗社区立岗南路2号B18-11层 　电话：0755-88888888</td>
+                    </tr>
+                </table></td>
+            </tr>
+          </table></td>
+        <td width="261" align="right" valign="top">&nbsp;</td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="js/Contact.js"></script>
+</html>
+
+<Script Language=JavaScript>
+</Script>
+
