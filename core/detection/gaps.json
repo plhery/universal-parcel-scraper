@@ -6294,5 +6294,10 @@
     "pattern": "^\\d{12}$",
     "kind": "collision",
     "reason": "Twelve-digit ZTO Freight waybills share their shape with many carriers' numeric waybills, so the shape cannot name ZTO Freight; its ZY waybills are detected."
+  },
+  {
+    "carrier": "padtf",
+    "kind": "by_design",
+    "reason": "The supported numeric form is shared by other carriers; use explicit selection or a named handoff."
   }
 ]

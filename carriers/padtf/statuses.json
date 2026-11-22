@@ -1,0 +1,45 @@
+{
+  "carrier": "padtf",
+  "entries": [
+    {
+      "code": "已揽件",
+      "wording": "已揽件，揽件网点【…】",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The collecting branch took the parcel in."
+    },
+    {
+      "code": "离开",
+      "wording": "离开【…】发往【…】站",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left a branch or the Dongguan hub for the next one."
+    },
+    {
+      "code": "快件到达",
+      "wording": "快件到达【…】站",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached the delivering branch."
+    },
+    {
+      "code": "快件派件中",
+      "wording": "快件派件中，【…】站正在为你派送",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A courier of the delivering branch is out with it; the carrier names the courier and their phone, which the adapter leaves out."
+    },
+    {
+      "code": "快件已送达",
+      "wording": "快件已送达，派送站点【…】",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Delivered; the page's header then reads 快件已验收 with the time and a photo of the handover."
+    }
+  ]
+}

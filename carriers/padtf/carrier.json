@@ -1,0 +1,77 @@
+{
+  "id": "padtf",
+  "displayName": "PAD Express",
+  "aliases": [
+    "Pingan Da Tengfei Express",
+    "平安达腾飞",
+    "平安达腾飞快递",
+    "深圳市平安达腾飞快递有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#d7000f"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "padtf",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.padtf.com/express-tracking.html",
+    "canaryUrl": "https://www.padtf.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "pieces",
+      "office_contact_details",
+      "driver_name",
+      "driver_phone",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "pieces",
+      "office_contact_details",
+      "driver_name",
+      "driver_phone",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

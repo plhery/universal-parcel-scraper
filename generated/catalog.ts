@@ -47272,6 +47272,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "padtf": {
+    "displayName": "PAD Express",
+    "color": "#d7000f",
+    "aliases": [
+      "Pingan Da Tengfei Express",
+      "平安达腾飞",
+      "平安达腾飞快递",
+      "深圳市平安达腾飞快递有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "padtf",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.padtf.com/",
+    "trackingSearchUrl": "https://www.padtf.com/express-tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pago": {
     "displayName": "PAGO Logistics",
     "color": "#d8242b",
@@ -71952,6 +71976,7 @@ export const CARRIER_IDS = [
   "packlink",
   "packs",
   "pactic",
+  "padtf",
   "pago",
   "paisley-freight",
   "paket-cl",
@@ -73962,6 +73987,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "packlink": ["packlink-1"],
   "packs": [],
   "pactic": ["pactic-1"],
+  "padtf": [],
   "pago": [],
   "paisley-freight": [],
   "paket-cl": [],

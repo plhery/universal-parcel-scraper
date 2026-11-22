@@ -668,6 +668,7 @@ import { adapter as packeta } from '../carriers/packeta/adapter.js';
 import { adapter as packlink } from '../carriers/packlink/adapter.js';
 import { adapter as packs } from '../carriers/packs/adapter.js';
 import { adapter as pactic } from '../carriers/pactic/adapter.js';
+import { adapter as padtf } from '../carriers/padtf/adapter.js';
 import { adapter as pakistanPost } from '../carriers/pakistan-post/adapter.js';
 import { adapter as palletways } from '../carriers/palletways/adapter.js';
 import { adapter as panduLogistics } from '../carriers/pandu-logistics/adapter.js';
@@ -1723,6 +1724,7 @@ export const REGISTRY: RegistryDefinition = {
     "packlink": packlink,
     "packs": packs,
     "pactic": pactic,
+    "padtf": padtf,
     "pakistan-post": pakistanPost,
     "palletways": palletways,
     "pandu-logistics": panduLogistics,
@@ -3387,6 +3389,7 @@ export const REGISTRY: RegistryDefinition = {
     "packlink": "packlink",
     "packs": "packs",
     "pactic": "pactic",
+    "padtf": "padtf",
     "pago": "universal",
     "paisley-freight": "universal",
     "paket-cl": "universal",
