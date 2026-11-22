@@ -130,6 +130,11 @@ describe('YunExpress captured response projection', () => {
     expect(['Pick-up was successful.', 'Loaded to movement / tour vehicle', 'The shipment has been processed in the parcel center of origin',
       'The shipment has been processed in the destination parcel center', 'The instruction data for this shipment have been provided by the sender to DHL electronically']
       .map((wording) => statusMap.stage(null, normalizeStatusWording(wording)))).toEqual(['in_transit', 'in_transit', 'in_transit', 'in_transit', 'registered']);
+    // The feed can name DHL "Carrier" in the same lines.
+    expect(yunExpressStatus('Shipment is in transit to carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(yunExpressStatus('The shipment is in transit to Carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(yunExpressStatus('The instruction data for this shipment have been provided by the sender to Carrier electronically'))
+      .toEqual({ status: 'pending', stage: 'registered' });
     expect(statusMap.stage(null, normalizeStatusWording('Departed from AIRPORT'))).toBe('in_transit');
     expect(yunExpressStatus('Arrived at GOFO Regional Destination Facility')?.stage).toBe('in_transit');
     expect(yunExpressStatus('The driver is out for delivery')?.stage).toBe('out_for_delivery');
@@ -146,10 +151,6 @@ describe('YunExpress captured response projection', () => {
   });
 
   it("reads partners' missed deliveries by their fixed words, whatever place or reason follows", () => {
-    expect(yunExpressStatus('Shipment is in transit to carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
-    expect(yunExpressStatus('The shipment is in transit to Carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
-    expect(yunExpressStatus('The instruction data for this shipment have been provided by the sender to Carrier electronically'))
-      .toEqual({ status: 'pending', stage: 'registered' });
     const missed = { status: 'exception', stage: 'failed_attempt' };
     expect(yunExpressStatus('Delivery failed, type: Recipient absent or delivery location inaccessible. We will attempt redelivery soon.')).toEqual(missed);
     expect(yunExpressStatus('The parcel is being stored in the GLS parcel center. It could not be delivered as the parcel box was occupied.')).toEqual(missed);
