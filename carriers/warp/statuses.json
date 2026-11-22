@@ -1,0 +1,369 @@
+{
+  "carrier": "warp",
+  "entries": [
+    {
+      "code": "create",
+      "wording": "Order received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The first event of every shipment: WARP has the order, before a driver takes it."
+    },
+    {
+      "code": "booked",
+      "wording": "Driver Assigned",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "A driver has taken the load. Also a shipment status, which WARP's apps label Booked."
+    },
+    {
+      "code": "inRouteToPickup",
+      "wording": "Driver en-route to pickup location",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The driver is on the way to collect the freight, which the sender still holds."
+    },
+    {
+      "code": "arrivedAtPickup",
+      "wording": "Driver arrived at pickup location",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The driver is at the sender's dock; the freight is not loaded yet. Also a shipment status, labelled Arrived at Pickup."
+    },
+    {
+      "code": "outForDelivery",
+      "wording": "En Route to dropoff",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The loaded truck has left for the consignee; the tracking page files it under Out for Delivery."
+    },
+    {
+      "code": "arrivedAtDropoff",
+      "wording": "Arrived at Dropoff Location",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The truck is at the consignee, before the delivery is confirmed. Also a shipment status, labelled Arrived at Dropoff."
+    },
+    {
+      "code": "delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "code": "complete",
+      "wording": "Complete",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The shipment status of a delivered shipment; the tracking page shows it as Delivered."
+    },
+    {
+      "code": "canceled",
+      "wording": "Shipment Canceled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The event of a canceled shipment, and its shipment status."
+    },
+    {
+      "code": "pickedUp",
+      "stage": "accepted",
+      "confirmedBy": "bundle",
+      "note": "An event the tracking page files under pickup, after the driver's arrival: the freight is loaded."
+    },
+    {
+      "code": "inTransit",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "An event the tracking page files under transit."
+    },
+    {
+      "code": "arrivedAtFacility",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "An event the tracking page files under facility: the freight is at one of WARP's cross-docks."
+    },
+    {
+      "code": "receivedAtFacility",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "An event the tracking page files under facility."
+    },
+    {
+      "code": "departedFacility",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "An event the tracking page files under facility, unless its title is Out for delivery."
+    },
+    {
+      "code": "departedFacility",
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The tracking page files a departure under this title as out for delivery: the last leg has left the cross-dock."
+    },
+    {
+      "code": "failed",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "note": "An event the tracking page files under exception."
+    },
+    {
+      "code": "pickupFailed",
+      "wording": "Pickup Failed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The driver could not collect the freight. An event and a shipment status; the label is the status's."
+    },
+    {
+      "code": "failedDropoff",
+      "stage": "failed_attempt",
+      "confirmedBy": "bundle",
+      "note": "The driver could not deliver; the tracking page shows it among the delivery events."
+    },
+    {
+      "code": "failedAtFacility",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "note": "An event the tracking page files under exception."
+    },
+    {
+      "code": "returned",
+      "wording": "Returned",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "An event and a shipment status: the freight went back to the sender."
+    },
+    {
+      "code": "disposed",
+      "wording": "Disposed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "An event and a shipment status: the freight was disposed of."
+    },
+    {
+      "code": "needCarrier",
+      "wording": "Pending",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The shipment status of a new order before a driver takes it; the tracking page shows Order created."
+    },
+    {
+      "code": "dispatched",
+      "wording": "In route to Pickup",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status; the tracking page shows Pickup Scheduled."
+    },
+    {
+      "code": "pickupSuccessful",
+      "wording": "Pickup Successful",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status; the tracking page shows Picked Up."
+    },
+    {
+      "code": "inRouteToDropoff",
+      "wording": "In Route to Dropoff",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status; the tracking page shows Out for Delivery."
+    },
+    {
+      "code": "inRouteToWareHouse",
+      "wording": "In Route To Warehouse",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status, on the way to a cross-dock."
+    },
+    {
+      "code": "arrivedAtWareHouse",
+      "wording": "Arrived at Warehouse",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status, at a cross-dock."
+    },
+    {
+      "code": "departedFromWarehouse",
+      "wording": "Departed From Warehouse",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status, after a cross-dock."
+    },
+    {
+      "code": "dropoffSuccessful",
+      "wording": "Dropoff Successful",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status of a delivery made."
+    },
+    {
+      "code": "dropoffFailed",
+      "wording": "Dropoff Failed",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status of a delivery not made."
+    },
+    {
+      "code": "returnInitiated",
+      "wording": "Return Initiated",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status: the freight is going back to the sender."
+    },
+    {
+      "code": "inRouteToReturn",
+      "wording": "In Route to Return",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status; the tracking page shows Return Initiated."
+    },
+    {
+      "code": "arrivedAtReturn",
+      "wording": "Arrived at Return",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status; the tracking page shows Return Initiated."
+    },
+    {
+      "code": "lost",
+      "wording": "Lost",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status."
+    },
+    {
+      "code": "issue",
+      "wording": "Issue",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status."
+    },
+    {
+      "code": "removed",
+      "wording": "Removed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A shipment status taken off the order; the tracking page shows Canceled."
+    },
+    {
+      "code": "pickupRequested",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "pickupConfirmed",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "deliveryRequested",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "deliveryConfirmed",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "pickupConfirmationSent",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "deliveryConfirmationSent",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "pickupCanceled",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "A canceled pickup appointment, which the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "deliveryCanceled",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "A canceled delivery appointment, which the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "pickupCancellationSent",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "deliveryCancellationSent",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment notice the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "pickupRequestFailed",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment request that failed, which the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "deliveryRequestFailed",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment request that failed, which the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "pickupRequestSendFailed",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment request WARP could not send, which the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    },
+    {
+      "code": "deliveryRequestSendFailed",
+      "stage": null,
+      "confirmedBy": "bundle",
+      "note": "An appointment request WARP could not send, which the tracking page files apart from the shipment's progress; it keeps the stage of the event before it."
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "carrier": "warp",
+  "gap": "WARP's S- and P- numbers lose their hyphens in a shape of a letter and digits that other carriers' numbers share.",
+  "records": [
+    {
+      "number": "P-0044-2639",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.wearewarp.com/freight-tracking-api",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dtdc"
+        ]
+      },
+      "note": "WARP's freight tracking API page uses it in its example replies. WARP's tracker answers it as a delivered order of one pallet shipment from New Hampshire to Massachusetts."
+    },
+    {
+      "number": "S-80215-2616",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.wearewarp.com/agents/docs/track",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "WARP's agent tracking guide uses it in its examples. WARP's tracker answers it as a test shipment in Los Angeles, canceled after its order."
+    },
+    {
+      "number": "S-199806-2617",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.wearewarp.com/freight-tracking-api",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "WARP's freight tracking API page uses it in its examples. WARP's tracker answers it as a canceled test shipment."
+    }
+  ]
+}

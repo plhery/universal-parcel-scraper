@@ -1,0 +1,95 @@
+{
+  "shipments": [
+    {
+      "pickup": {
+        "type": "PICKUP",
+        "addr": {
+          "city": "Los Angeles",
+          "state": "CA",
+          "zipcode": "90007",
+          "timezone": "America/Los_Angeles",
+          "countryAlpha2Code": "US"
+        },
+        "windows": [
+          {
+            "from": "2026-04-22T08:00:00Z",
+            "to": "2026-04-22T17:00:00Z"
+          }
+        ],
+        "requiresAppointment": false
+      },
+      "dropoff": {
+        "type": "DROPOFF",
+        "addr": {
+          "city": "Los Angeles",
+          "state": "CA",
+          "zipcode": "90038",
+          "timezone": "America/Los_Angeles"
+        },
+        "windows": [
+          {
+            "from": "2026-04-22T08:00:00Z",
+            "to": "2026-04-22T17:00:00Z"
+          }
+        ],
+        "requiresAppointment": false
+      },
+      "quantities": [
+        {
+          "value": 2.0,
+          "unit": "PALLET"
+        }
+      ],
+      "weight": {
+        "value": 1200.0,
+        "unit": "lbs"
+      },
+      "status": "canceled",
+      "etas": [
+        {
+          "window": {
+            "from": "2026-04-22T08:00:00Z",
+            "to": "2026-04-22T17:00:00Z"
+          },
+          "type": "scheduled",
+          "timezone": "America/Los_Angeles",
+          "destinationType": "PICKUP"
+        },
+        {
+          "window": {
+            "from": "2026-04-22T08:00:00Z",
+            "to": "2026-04-22T17:00:00Z"
+          },
+          "type": "scheduled",
+          "timezone": "America/Los_Angeles",
+          "destinationType": "DROPOFF"
+        }
+      ],
+      "pods": [],
+      "id": "SHIPMENT_01KPME6NPGKS05CJZYNN5QWD85",
+      "proNumber": "S-80215-2616"
+    }
+  ],
+  "order": {
+    "id": "ORDER_01KPME6NVEQ9W961KC3PGFAT97",
+    "proNumber": "P-80202-2616"
+  },
+  "events": [
+    {
+      "object": "SHIPMENT_01KPME6NPGKS05CJZYNN5QWD85",
+      "timeline": "info",
+      "ts": 1776654964717,
+      "status": "create",
+      "title": "Order received",
+      "id": "01KPME6P7C1WWJ6V5ACYCD5HK9"
+    },
+    {
+      "object": "SHIPMENT_01KPME6NPGKS05CJZYNN5QWD85",
+      "timeline": "info",
+      "ts": 1776655384747,
+      "status": "canceled",
+      "title": "Shipment Canceled",
+      "id": "01KPMEKH4JXT83NKZ6JG4EW5FM"
+    }
+  ]
+}

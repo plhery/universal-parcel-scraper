@@ -4649,6 +4649,12 @@
     "reason": "Three digits, a dash and seven digits are a shape Meest shares, and nothing in the number points to Ward."
   },
   {
+    "carrier": "warp",
+    "pattern": "^[SP]\\d{7,13}$",
+    "kind": "open",
+    "reason": "WARP's shipment and order numbers, S or P, a serial and four digits for the year and week, lose their hyphens in a shape other carriers' numbers share, and three public samples are too few to give the shape a rule; select WARP explicitly or use its tracking link."
+  },
+  {
     "carrier": "westjet-cargo",
     "kind": "by_design",
     "reason": "WestJet Cargo is selectable explicitly. The air waybill prefix and check digit have not been assessed against other carriers."

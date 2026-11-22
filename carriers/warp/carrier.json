@@ -1,0 +1,79 @@
+{
+  "id": "warp",
+  "displayName": "WARP",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#4ADE80"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "warp",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta",
+    "eta_window",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://tracking.wearewarp.com/{trackingNumber}",
+    "searchUrl": "https://tracking.wearewarp.com/",
+    "canaryUrl": "https://tracking.wearewarp.com/",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "eta_window",
+      "offset_timestamps",
+      "origin",
+      "destination",
+      "coordinates",
+      "weight",
+      "parcel_count",
+      "proof_of_delivery",
+      "sender_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta_window",
+      "offset_timestamps",
+      "provider_code"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "coordinates",
+      "weight",
+      "parcel_count",
+      "proof_of_delivery",
+      "sender_name"
+    ],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.wearewarp.com"
+      ],
+      "path": "^/([SP]-?\\d{3,9}-?\\d{4})/?$"
+    }
+  ],
+  "detection": []
+}

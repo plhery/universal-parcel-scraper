@@ -2723,6 +2723,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'cautcurier', number: '999999999',
     route: /^https:\/\/tracking\.cautcurier\.ro\/\?awb=999999999$/,
     marker: /AWB negăsit|AWB not found/i, forwarding: { notFound: /AWB negăsit|AWB not found/i } },
+  // The page looks the code in its address up as it loads, answers HTTP 404 for an unknown one and keeps it in its search box.
+  { carrier: 'warp', number: 'S-00000-0000',
+    route: /^https:\/\/tracking\.wearewarp\.com\/S-00000-0000$/,
+    marker: /We couldn.t find a shipment with that code/,
+    shipmentNotFound: { status: 404, marker: /We couldn.t find a shipment with that code/ } },
 ];
 
 /**
