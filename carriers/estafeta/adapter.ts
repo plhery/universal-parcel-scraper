@@ -1,4 +1,4 @@
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -43,5 +43,17 @@ export class EstafetaTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new EstafetaTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'estafeta', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'estafeta', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+    // A number Estafeta does not hold gets its generic page, which proves nothing: recognition can only confirm.
+    recognize: async (number, context) => {
+      let registered = false;
+      const answer = await recognizeFromLookup(async () => {
+        const result = await tracker.fetch(number, context);
+        registered = result.current_stage === 'registered';
+        return result;
+      });
+      // A label Estafeta has not yet received is a notice bound to the parcel's own guide, unlike the
+      // pending answer some carriers give any number: Estafeta holds the number.
+      return registered && !answer.known ? { known: true, lastActivityAt: null } : answer;
+    } };
 };

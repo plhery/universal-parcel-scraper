@@ -675,6 +675,7 @@ import { statusMap as postmediaParcelServices } from '../../carriers/postmedia-p
 import { statusMap as postnord } from '../../carriers/postnord/status.js';
 import { statusMap as posturinn } from '../../carriers/posturinn/status.js';
 import { statusMap as ppl } from '../../carriers/ppl/status.js';
+import { statusMap as prd } from '../../carriers/prd/status.js';
 import { statusMap as precisionDeliveries } from '../../carriers/precision-deliveries/status.js';
 import { statusMap as proCarrier } from '../../carriers/pro-carrier/status.js';
 import { statusMap as promptXpress } from '../../carriers/prompt-xpress/status.js';
@@ -1180,7 +1181,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-moldovei': postaMoldovei, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,
   xcargo, skladusa, 'seino-super-express': seinoSuperExpress, 'post-one': postOne, 'post-international': postInternational, 'posta-slovenije': postaSlovenije, 'posta-srbije': postaSrbije, 'poste-italiane': posteItaliane, postex, posti, postlogistics, 'postmedia-parcel-services': postmediaParcelServices,
-  postnord, posturinn, ppl, 'precision-deliveries': precisionDeliveries,
+  postnord, posturinn, ppl, prd, 'precision-deliveries': precisionDeliveries,
   'pro-carrier': proCarrier, 'prompt-xpress': promptXpress, proships, 'pts-worldwide-express': ptsWorldwideExpress, ptt, 'pullman-cargo': pullmanCargo, purolator, pwb, 'quantium-solutions': quantiumSolutions,
   'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
   rincos, 'riyu-logistics': riyuLogistics, rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rohlig-suus': rohligSuus, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,

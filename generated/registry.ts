@@ -747,6 +747,7 @@ import { adapter as postmediaParcelServices } from '../carriers/postmedia-parcel
 import { adapter as postnord } from '../carriers/postnord/adapter.js';
 import { adapter as posturinn } from '../carriers/posturinn/adapter.js';
 import { adapter as ppl } from '../carriers/ppl/adapter.js';
+import { adapter as prd } from '../carriers/prd/adapter.js';
 import { adapter as precisionDeliveries } from '../carriers/precision-deliveries/adapter.js';
 import { adapter as proCarrier } from '../carriers/pro-carrier/adapter.js';
 import { adapter as proconExpressLines } from '../carriers/procon-express-lines/adapter.js';
@@ -1832,6 +1833,7 @@ export const REGISTRY: RegistryDefinition = {
     "postnord": postnord,
     "posturinn": posturinn,
     "ppl": ppl,
+    "prd": prd,
     "precision-deliveries": precisionDeliveries,
     "pro-carrier": proCarrier,
     "procon-express-lines": proconExpressLines,
@@ -3578,6 +3580,7 @@ export const REGISTRY: RegistryDefinition = {
     "postplus": "universal",
     "posturinn": "posturinn",
     "ppl": "ppl",
+    "prd": "prd",
     "precision-deliveries": "precision-deliveries",
     "premier-deliveries-uk": "universal",
     "premo": "universal",

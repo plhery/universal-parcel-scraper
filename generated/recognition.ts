@@ -172,6 +172,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "eparcel-kr": 624,
   "epost-global": 65,
   "equick": 853,
+  "estafeta": 36,
   "estes": 20,
   "estes-forwarding": 754,
   "etomars": 99,

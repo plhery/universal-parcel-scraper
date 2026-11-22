@@ -1,0 +1,95 @@
+{
+  "id": "prd",
+  "displayName": "Prime Express",
+  "aliases": [
+    "Prime",
+    "PRD",
+    "Prime Express Logistics",
+    "普瑞达国际",
+    "普瑞达国际物流",
+    "普瑞達國際",
+    "Puruida"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#10264a"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "prd",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.primexpslogistics.com/",
+    "searchUrl": "https://szprd.rtb56.com/track_query.aspx",
+    "canaryUrl": "https://szprd.rtb56.com/track_query.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number",
+      "customer_reference",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "pickup_point"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "szprd.rtb56.com"
+      ],
+      "pathPattern": "^/track_query\\.aspx$",
+      "params": [
+        "track_number"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "prd-1",
+      "pattern": "^PRD\\d{13}$",
+      "confidence": "high"
+    }
+  ]
+}

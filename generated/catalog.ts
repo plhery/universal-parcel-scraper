@@ -4064,6 +4064,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "estafeta",
+      "recognitionRank": 36,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://cs.estafeta.com/",
@@ -51608,6 +51610,49 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "prd": {
+    "displayName": "Prime Express",
+    "color": "#10264a",
+    "aliases": [
+      "Prime",
+      "PRD",
+      "Prime Express Logistics",
+      "普瑞达国际",
+      "普瑞达国际物流",
+      "普瑞達國際",
+      "Puruida"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "prd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://szprd.rtb56.com/track_query.aspx",
+    "trackingUrlTemplate": "https://www.primexpslogistics.com/",
+    "trackingSearchUrl": "https://szprd.rtb56.com/track_query.aspx",
+    "linkRules": [
+      {
+        "domains": [
+          "szprd.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^PRD\\d{13}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "precision-deliveries": {
     "displayName": "Precision Deliveries",
     "color": "#0000fe",
@@ -72669,6 +72714,7 @@ export const CARRIER_IDS = [
   "postplus",
   "posturinn",
   "ppl",
+  "prd",
   "precision-deliveries",
   "premier-deliveries-uk",
   "premo",
@@ -74702,6 +74748,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "postplus": [],
   "posturinn": ["posturinn-s10"],
   "ppl": ["ppl-1"],
+  "prd": ["prd-1"],
   "precision-deliveries": ["precision-deliveries-1"],
   "premier-deliveries-uk": [],
   "premo": [],

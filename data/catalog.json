@@ -4060,6 +4060,8 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "estafeta",
+      "recognitionRank": 36,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://cs.estafeta.com/",
@@ -51601,6 +51603,49 @@
       {
         "pattern": "^[2-9]\\d{10}$",
         "confidence": "low"
+      }
+    ]
+  },
+  "prd": {
+    "displayName": "Prime Express",
+    "color": "#10264a",
+    "aliases": [
+      "Prime",
+      "PRD",
+      "Prime Express Logistics",
+      "普瑞达国际",
+      "普瑞达国际物流",
+      "普瑞達國際",
+      "Puruida"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "prd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://szprd.rtb56.com/track_query.aspx",
+    "trackingUrlTemplate": "https://www.primexpslogistics.com/",
+    "trackingSearchUrl": "https://szprd.rtb56.com/track_query.aspx",
+    "linkRules": [
+      {
+        "domains": [
+          "szprd.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^PRD\\d{13}$",
+        "confidence": "high"
       }
     ]
   },

@@ -8,6 +8,7 @@ import { adapter, EstafetaTracker } from './adapter.js';
 import { normalizeEstafetaNumber, parseEstafetaHistory, parseEstafetaLookup } from './parser.js';
 import { estafetaStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
+import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
 
 const NUMBER = '9000000001';
 const GUIDE = '100000000000000A00TEST';
@@ -172,6 +173,19 @@ describe('Estafeta direct retrieval', () => {
     const other = load($.html()); other('#i09').text('Aviso desconocido');
     const twice = load($.html()); twice('.shipmentInfoDiv').append('<div id="i09">Otro aviso</div>');
     for (const html of [other.html(), twice.html()]) expect(() => parseEstafetaLookup(html, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+  it('confirms a number it holds in recognition, leaves its generic page unknown, and is asked first only for a Mexican parcel', async () => {
+    const $ = load(lookupHtml());
+    $('.stateDescription.fontColorCurrentProcess').removeClass('fontColorCurrentProcess').addClass('fontColorPending');
+    $('.fontColorCurrentProcessMessage').remove();
+    $('.shipmentInfoDiv').append('<div class="fontBold" id="i09">La guía ha sido generada sin embargo el envío aún no es depositado en Estafeta</div>');
+    const recognize = (html: string) => adapter({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(new Response(html)), recorder: NOOP_RECORDER,
+      env: {}, trawl: null, browserExecutablePath: null }).recognize!(NUMBER);
+    await expect(recognize($.html())).resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(recognize(negative)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(recognitionAskedCarriers(NUMBER, { countryHint: 'MX' })[0]).toBe('estafeta');
+    expect(recognitionAskedCarriers(NUMBER, { countryHint: 'ES' })).not.toContain('estafeta');
+    expect(recognitionCandidates(NUMBER, {}).find(({ carrier }) => carrier === 'estafeta')).toMatchObject({ outsideCountry: true });
   });
   it('stops after one request for collision, piece and generic unknown responses', async () => {
     const pieces = `${lookupHtml()}<ul class="multiplesWaybillList"></ul>`;

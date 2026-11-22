@@ -1,0 +1,107 @@
+{
+  "carrier": "prd",
+  "entries": [
+    {
+      "wording": "Electronic notification of order creation received.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The line has the order; the parcel is not yet in its hands."
+    },
+    {
+      "wording": "Die Auftragsdaten für diese Sendung wurden elektronisch an J&T Express übermittelt",
+      "language": "de",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "J&T Express Germany's own notice that it has the order data, before the parcel leaves China."
+    },
+    {
+      "wording": "Item has been collected",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item inbound in sorting center.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item outbound in sorting center.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item departed from origin.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrive at international airport to abroad",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Released From Export Customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item Flight departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Initial landing",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The first flight's landing, before a connecting flight."
+    },
+    {
+      "wording": "Connecting flights flight takeoff",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item Flight landing",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "NOA-Notification of arrival from GHA",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The ground handling agent's notice that the flight's cargo arrived."
+    },
+    {
+      "wording": "Inbound to customs temporary warehouse",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Held in the customs warehouse until import clearance."
+    },
+    {
+      "wording": "Released From Import Customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Prepared for last mile handover",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Ready to be handed to the delivering carrier."
+    }
+  ]
+}
