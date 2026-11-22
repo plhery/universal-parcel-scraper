@@ -1,0 +1,53 @@
+{
+  "carrier": "qlgj",
+  "entries": [
+    {
+      "wording": "Inbound in sorting center",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The sorting centre's first scan of the parcel, in Shenzhen."
+    },
+    {
+      "wording": "SZX, START SITE TRANSPORT SHIPMENT",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The parcel leaves the Shenzhen site for the airport."
+    },
+    {
+      "wording": "exit customs clearance complete",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "Export clearance in China."
+    },
+    {
+      "wording": "Wait for a flight",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "抵达航司已起飞",
+      "language": "zh",
+      "english": "Handed to the airline, flight departed",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "航班已抵达",
+      "language": "zh",
+      "english": "Flight arrived",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "Placed at the destination airport (AMS)."
+    }
+  ]
+}

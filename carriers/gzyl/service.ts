@@ -10,7 +10,7 @@ const TERMS: ReadonlyArray<readonly [RegExp, string]> = ([
   ['西班牙', 'Spain'], ['波兰', 'Poland'], ['墨西哥', 'Mexico'], ['荷兰', 'Netherlands'],
   // How it travels: a dedicated line, a fast or an economy one, a small parcel, air freight, bulk cargo
   // and road freight run on a timetable (卡航, "truck flights").
-  ['专线', 'Line'], ['快线', 'Express Line'], ['慢线', 'Economy Line'], ['小包', 'Small Parcel'], ['空派', 'Air Freight'],
+  ['专线', 'Line'], ['快线', 'Express Line'], ['慢线', 'Economy Line'], ['经济', 'Economy'], ['小包', 'Small Parcel'], ['空派', 'Air Freight'],
   ['大货', 'Bulk Cargo'], ['卡航', 'Road Freight'], ['邮政', 'Post'],
   // What it carries and how it is priced: batteries, sensitive or special goods, general goods,
   // shoe boxes, apparel, a saver or standard tier and duties paid.

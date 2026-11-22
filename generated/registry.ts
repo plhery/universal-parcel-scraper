@@ -758,6 +758,7 @@ import { adapter as pwb } from '../carriers/pwb/adapter.js';
 import { adapter as pxcPacific } from '../carriers/pxc-pacific/adapter.js';
 import { adapter as qatarAirwaysCargo } from '../carriers/qatar-airways-cargo/adapter.js';
 import { adapter as qatarPost } from '../carriers/qatar-post/adapter.js';
+import { adapter as qlgj } from '../carriers/qlgj/adapter.js';
 import { adapter as qtExpress } from '../carriers/qt-express/adapter.js';
 import { adapter as quantiumSolutions } from '../carriers/quantium-solutions/adapter.js';
 import { adapter as quickFort } from '../carriers/quick-fort/adapter.js';
@@ -1836,6 +1837,7 @@ export const REGISTRY: RegistryDefinition = {
     "pxc-pacific": pxcPacific,
     "qatar-airways-cargo": qatarAirwaysCargo,
     "qatar-post": qatarPost,
+    "qlgj": qlgj,
     "qt-express": qtExpress,
     "quantium-solutions": quantiumSolutions,
     "quick-fort": quickFort,
@@ -3587,6 +3589,7 @@ export const REGISTRY: RegistryDefinition = {
     "qatar-airways-cargo": "qatar-airways-cargo",
     "qatar-post": "qatar-post",
     "qiantong-hk": "universal",
+    "qlgj": "qlgj",
     "qls-quince": "universal",
     "qt-express": "qt-express",
     "quality-post": "universal",

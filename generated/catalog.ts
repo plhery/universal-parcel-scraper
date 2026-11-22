@@ -52294,6 +52294,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "qlgj": {
+    "displayName": "Qilin International",
+    "color": "#1F6BD6",
+    "aliases": [
+      "QLGJ",
+      "Qi Lin Guo ji",
+      "琪林国际",
+      "琪林国际物流",
+      "广州市琪林国际物流有限公司",
+      "Qilin International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "qlgj",
+      "recognitionRank": 32
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^QL\\d{13}YQ$",
+        "confidence": "high"
+      }
+    ]
+  },
   "qls-quince": {
     "displayName": "QLS",
     "color": "#0a1e3d",
@@ -72529,6 +72559,7 @@ export const CARRIER_IDS = [
   "qatar-airways-cargo",
   "qatar-post",
   "qiantong-hk",
+  "qlgj",
   "qls-quince",
   "qt-express",
   "quality-post",
@@ -74556,6 +74587,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "qatar-airways-cargo": [],
   "qatar-post": ["qatar-post-ems-s10"],
   "qiantong-hk": [],
+  "qlgj": ["qlgj-1"],
   "qls-quince": [],
   "qt-express": [],
   "quality-post": [],

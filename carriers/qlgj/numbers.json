@@ -1,0 +1,17 @@
+{
+  "carrier": "qlgj",
+  "records": [
+    {
+      "number": "QL0000000271828YQ",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-22",
+      "expect": {
+        "carrier": "qlgj",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of parcels the app tracked, which universal providers filed under Qilin International and its tracker answered."
+    }
+  ]
+}

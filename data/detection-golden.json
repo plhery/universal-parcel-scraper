@@ -108319,6 +108319,14 @@
     ]
   },
   {
+    "input": "QL0000000271828YQ",
+    "carrier": "qlgj",
+    "confidence": "high",
+    "candidates": [
+      "qlgj"
+    ]
+  },
+  {
     "input": "QLR22183032U",
     "carrier": "unknown",
     "confidence": "low",
