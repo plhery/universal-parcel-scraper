@@ -863,10 +863,14 @@ const SCHEDULE = /^(?:estimated vessel (?:departure|arrival)|cfs\/cy cut-off dat
 const BARE_TIME = /^[(（]\s*\d{1,2}\s*[:：.．]\s*\d{1,2}\s*[)）]$/;
 // A language's label with nothing after it, as 17TRACK relayed a JCEX row beside the warehouse's receipt.
 const EMPTY_LABEL = /^[(（]\s*(?:中文|英文|chinese|english)\s*[:：]\s*[)）]$/i;
+// A label with no letter or digit, as ParcelsApp relayed a lone "@" beside a place on a Juxi Express parcel: like
+// an empty one, it names nothing.
+const WORDLESS = /^[^\p{L}\p{N}]+$/u;
 
-// A label the providers leave out of a history: a notice, a flight or schedule still to come, a bare time or an empty language label.
+// A label the providers leave out of a history: a notice, a flight or schedule still to come, a bare time, an empty
+// language label or one without words.
 const leftOut = (label: string): boolean => isNotice(label) || flightToCome(label) || SCHEDULE.test(label) || BARE_TIME.test(label)
-  || EMPTY_LABEL.test(label);
+  || EMPTY_LABEL.test(label) || WORDLESS.test(label);
 
 /** A relayed row's wording before the providers' own changes to it: SunYou's departure without the last-mile number, as SunYou's own result has it. */
 const relayedText = (description: unknown): string => sunYouWording(relayedNotice(text(description)).replace(CLEARANCE_STATUS, ''));

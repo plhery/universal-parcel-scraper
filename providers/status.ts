@@ -159,7 +159,7 @@ export const statusMap: CarrierStatusMap = {
     }
     // Rows recorded before the providers left them out.
     return relayedRowLeftOut(wording)
-      ? 'A notice, a flight or schedule still to come, or a bare time, which the providers leave out of a history: not a scan, so it keeps the stage the parcel already had.'
+      ? 'A notice, a flight or schedule still to come, a bare time or a label without words, which the providers leave out of a history: not a scan, so it keeps the stage the parcel already had.'
       : undefined;
   },
 };

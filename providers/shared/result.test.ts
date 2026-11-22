@@ -322,6 +322,13 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T16:17:00+08:00', '(中文:已出库)', 'InTransit')).not.toBeNull();
   });
 
+  it('leaves out a label without a letter or a digit', () => {
+    expect(event('2026-11-22T09:08:00+01:00', '@')).toBeNull();
+    expect(localEvent('2026-11-22T09:08:00', ' - ')).toBeNull();
+    expect(event('2026-11-22T09:08:00+01:00', '@ Paris')).not.toBeNull();
+    expect(event('2026-11-22T09:08:00+01:00', '已出库')).not.toBeNull();
+  });
+
   it("reads Sameday's Bulgarian steps before it has the parcel, as ParcelsApp relays them", () => {
     expect(event('2026-01-07T12:45:00+02:00', 'Скоро ще вземем пратката Ви от подателя.'))
       .toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
