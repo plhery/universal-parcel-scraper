@@ -1,0 +1,64 @@
+{
+  "carrier": "atc-logistical",
+  "entries": [
+    {
+      "code": "BOOKED",
+      "wording": "Consignment booked",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "source",
+      "note": "The tracking page's script shows this status as its first step, dated by the consignment note: the booking branch has taken the goods in."
+    },
+    {
+      "code": "DISPATCHED",
+      "wording": "In transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The page writes IN TRANSIT for this status, beside the leg the consignment is on."
+    },
+    {
+      "code": "AT DELIVERY BRANCH",
+      "wording": "Reached at delivery branch",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "source",
+      "note": "The page's third step, dated when the delivery branch takes the consignment in."
+    },
+    {
+      "code": "LEFT FOR DELIVERY",
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "source",
+      "note": "The page's fourth step, dated by the delivery run sheet."
+    },
+    {
+      "code": "DELIVERED",
+      "wording": "Consignment delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "source",
+      "note": "The page's last step, which opens the proof of delivery."
+    },
+    {
+      "code": "OUTWARD",
+      "wording": "Dispatched",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "A manifest taking the consignment from one branch or hub to the next, by the reply's outward caption."
+    },
+    {
+      "code": "AUS",
+      "wording": "Unloaded",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The arrival unloading sheet of a manifest, at the hub or branch it reached."
+    }
+  ]
+}

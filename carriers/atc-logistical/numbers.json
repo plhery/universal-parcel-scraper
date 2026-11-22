@@ -1,0 +1,24 @@
+{
+  "carrier": "atc-logistical",
+  "records": [
+    {
+      "number": "R432490",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230709115041/http://123.108.34.253/ATCLive/TrackNTrace/frmTrackNTraceExternal.aspx?GCNo=R432490",
+        "date": "2023-07-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived lookup on the external tracker that atcls.net's Track Shipment button opened; atcsure.com's tracker answers the same consignment note with its booking at Naraina and the manifests it travelled on to Lucknow."
+    }
+  ]
+}

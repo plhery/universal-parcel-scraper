@@ -1016,6 +1016,7 @@ import { statusMap as swissUniversalExpress } from '../../carriers/swiss-univers
 import { statusMap as kongaKxpress } from '../../carriers/konga-kxpress/status.js';
 import { statusMap as wooriTaekbae } from '../../carriers/woori-taekbae/status.js';
 import { statusMap as warp } from '../../carriers/warp/status.js';
+import { statusMap as atcLogistical } from '../../carriers/atc-logistical/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1035,6 +1036,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'konga-kxpress': kongaKxpress,
   'woori-taekbae': wooriTaekbae,
   warp,
+  'atc-logistical': atcLogistical,
   'sarjak-container-lines': sarjakContainerLines, 'ck-line': ckLine, 'vasco-maritime': vascoMaritime, romocean, amass,
   danx, 'emo-trans': emoTrans, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
   'wan-hai': wanHai, 'wanjia-logistics': wanjiaLogistics, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,

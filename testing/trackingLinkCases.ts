@@ -2899,5 +2899,6 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'quick-fort': 'An unknown number gets a notice that sends the browser back to the home page after three seconds, and no public number opens an order page.',
   pigeonship: 'An unknown number gets the site\'s general "Page not found" page, and no public number opens an order page.',
   danx: 'the portal takes the number only in its form, and the tracker page the form opens names it in base64, so the link opens the portal alone; native retrieval asks the service behind the tracker page',
+  'atc-logistical': 'the tracking page takes a token the form\'s lookup builds from the number, not the number, so the link opens the home page and its Track Shipment form alone; native retrieval asks the lookup, then reads the page it names',
   viapost: 'An unknown number gets the site\'s generic HTTP 500 error page, which neither names the number nor words anything only Viapost shows, and its order ids run in sequence, so only a known order reaches its page.',
 };

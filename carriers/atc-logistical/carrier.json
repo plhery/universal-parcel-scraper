@@ -1,0 +1,83 @@
+{
+  "id": "atc-logistical",
+  "displayName": "ATC Logistical Solutions",
+  "aliases": [
+    "ATC Logistical Solutions Pvt. Ltd.",
+    "ATCsure",
+    "ATCLS"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#46ADA2"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "atc-logistical",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://atcsure.com/",
+    "searchUrl": "https://atcsure.com/",
+    "canaryUrl": "https://atcsure.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "weight",
+      "parcel_count",
+      "customer_reference",
+      "payment_details",
+      "vehicle",
+      "driver_name",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "weight",
+      "parcel_count",
+      "customer_reference",
+      "payment_details",
+      "vehicle",
+      "driver_name",
+      "office_contact_details",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

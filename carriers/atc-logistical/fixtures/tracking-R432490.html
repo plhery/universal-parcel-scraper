@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ATCsure - Tracking</title>
+<script>
+    $(document).ready(function() {
+
+ var url_string = window.location.href;
+var url = new URL(url_string);
+var x = url.searchParams.get("gc");
+// console.log(x+" hhjhjkhfc")
+var responsetext = '{"Status":"1","Message":"LRs found.","Result":{"general_details":[{"GC_ID":"4163522","GC_No":"R432490","Status_ID":"40","CurrentStatus":"DISPATCHED","GC_Date":"2023-07-03 00:00:00.000","BkgBranch":"NARAINA","DlyBranch":"SHAMBHAVI ROAD LINES","BkgBrContactNo":"9000000001","FromLocation":"NARAINA","ToLocation":"AKBAR PUR","Consignor_Name":"SAMPLE CONSIGNOR","Consignee_Name":"SAMPLE CONSIGNEE","Parcls":"2","Invoice_No":"INV-0001","DispachDate":"2023-07-07 00:00:00.000","InwardDate":null,"PDSDate":null,"DlyDate":null,"POD_Photo1":"","POD_Photo2":"","DeliveryArea":null,"DlyType":"Godown","InvoiceValue":"5293","PaymentType":"To Pay","TotalGCAmount":"710","ConsignorMobileNo":"9000000002","ConsigneeMobileNo":"9000000003","ConsigneeAddress":"SAMPLE ADDRESS","IsShowPaymentLink":"0","PaymentDoneDescription":"PAID-By Consignee","DlyBrContactPerson":"SAMPLE CONTACT","DlyBrContactNo":"","DlyBrAddress":" ","DlyBrGoogleLink":"","DlyTempNo":null,"TempoDriver":null,"TempoDriverMobileNo":null,"GC_PDF_Link":null,"Booking_Type":"PTL","CurrentVehicle":"UP32KN6405","Vehicle_Tracking_URL":"","Actual_Wt":"40.00","Charged_Wt":"50.00","InTransitDetails":"LUCKNOW To SHAMBHAVI ROAD LINES"}],"crossing_details":[{"Memo_Id":"592673","Manifest No":"NRY-23-00087","Memo Date":"04 Jul 2023","Memo Type Id":"1","DDC Type ID":"0","Memo Type":"General","Manifest From":"NARAINA","Manifest To":"JAMALPUR HUB","Loaded Articles":"2","Vehicle No":"DL01LAC7940","Memo Updated By":"BO0011","Memo_UpdatedBy_id":"364","LHPO_Id":"510483","LHPO No":"1544876","AUS_DDC_Id":"363127","AUS\/DDC No":"JAML-23-04551","Unloaded\/Deliverd At":"JAMALPUR HUB","AUS\/DDC Date":"05 Jul 2023","Recived\/Deliverd Articles":"2","AUS\/DDC Updated By":"BO0086","AUS_DDC_UpdatedBy_id":"441","AUSCaption":"AUS","OutwardCaption":"OUTWARD","InwardCaption":"INWARD","Vehicle_Tracking_URL":""},{"Memo_Id":"592768","Manifest No":"JAML-23-05987","Memo Date":"05 Jul 2023","Memo Type Id":"1","DDC Type ID":"0","Memo Type":"General","Manifest From":"JAMALPUR HUB","Manifest To":"LUCKNOW","Loaded Articles":"2","Vehicle No":"HR47C7427","Memo Updated By":"BO0491","Memo_UpdatedBy_id":"887","LHPO_Id":"510640","LHPO No":"1576576","AUS_DDC_Id":"363503","AUS\/DDC No":"LKO-23-00081","Unloaded\/Deliverd At":"LUCKNOW","AUS\/DDC Date":"07 Jul 2023","Recived\/Deliverd Articles":"2","AUS\/DDC Updated By":"BO0434","AUS_DDC_UpdatedBy_id":"823","AUSCaption":"AUS","OutwardCaption":"OUTWARD","InwardCaption":"INWARD","Vehicle_Tracking_URL":""},{"Memo_Id":"593762","Manifest No":"LKO-23-00475","Memo Date":"07 Jul 2023","Memo Type Id":"1","DDC Type ID":"0","Memo Type":"General","Manifest From":"LUCKNOW","Manifest To":"SHAMBHAVI ROAD LINES","Loaded Articles":"2","Vehicle No":"UP32KN6405","Memo Updated By":"BO0434","Memo_UpdatedBy_id":"823","LHPO_Id":"511462","LHPO No":"1560651","AUS_DDC_Id":"0","AUS\/DDC No":"","Unloaded\/Deliverd At":"","AUS\/DDC Date":"","Recived\/Deliverd Articles":"0","AUS\/DDC Updated By":null,"AUS_DDC_UpdatedBy_id":null,"AUSCaption":"AUS","OutwardCaption":"OUTWARD","InwardCaption":"INWARD","Vehicle_Tracking_URL":""}]}}';
+  var jsonObj = JSON.parse(responsetext);
+	console.log("Response => "+responsetext);
+});
+</script>
+</head>
+<body>
+<h4 class="ord">LR No - <span class="lrno"></span></h4>
+<h4 class="status status_font">Current Status - <span class="deliverystatus"></span></h4>
+</body>
+</html>

@@ -6424,5 +6424,11 @@
     "pattern": "^CRT\\d{12}$",
     "kind": "open",
     "reason": "Coretrails numbers are CRT and twelve digits, and one public sample is too few to give the shape a rule; select Coretrails explicitly."
+  },
+  {
+    "carrier": "atc-logistical",
+    "pattern": "^[A-Z]\\d{6}$",
+    "kind": "collision",
+    "reason": "ATC Logistical Solutions' LR numbers are a series letter and six digits, a short shape many carriers' references share, and they carry no check digit, so the shape cannot name ATC; select it explicitly."
   }
 ]
