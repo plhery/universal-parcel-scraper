@@ -512,6 +512,8 @@ const SITES = [
     allowTextResponse: true,
     readStatuses: [404, 406],
     readyOnRequest: true,
+    // The page fills no token field, so TRAWL's solver would wait out its budget after the reply.
+    endsSolver: true,
     apiForNumber(number) {
       return `${this.api}?id=${number}&language=en&mobile=N`;
     },
@@ -607,9 +609,10 @@ export async function attachTrackingCapture(page, url, options) {
   let bodyReads = 0;
   let bytes = 0;
   let finish;
+  const replied = new AbortController();
   const restart = () => {
     terminal = false;
-    return new Promise(resolve => { finish = () => { terminal = true; resolve(); }; });
+    return new Promise(resolve => { finish = () => { terminal = true; replied.abort(); resolve(); }; });
   };
   let ready = restart();
   const settle = async budgetMs => {
@@ -782,6 +785,9 @@ export async function attachTrackingCapture(page, url, options) {
       // sends the API request and resets the widget; do not click it again.
       await awaitReply();
     } } : {}),
+    // TRAWL's Turnstile solver waits for a token field some pages never fill;
+    // their final reply already says the check passed.
+    ...(site.endsSolver ? { solverSignal: signal => AbortSignal.any([signal, replied.signal]) } : {}),
     hasResponse() { return Boolean(((site.checkApi || site.queryNumber || site.requestMethod) && terminal) || (site.perNumber && entries.some(entry => entry.body !== null || entry.status !== 200))); },
     // Royal Mail can use an existing API session or a fresh CAPTCHA token.
     // Once the lookup starts, let its own refresh callback handle E0015.

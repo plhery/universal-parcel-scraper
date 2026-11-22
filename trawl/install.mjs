@@ -37,6 +37,9 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (source.split(solverGuard).length !== 2) throw new Error('TRAWL solver guard changed');
   const beforeSolve = 'const solveRemaining = Math.max(0, budget.remaining() - 2000)';
   if (source.split(beforeSolve).length !== 2) throw new Error('TRAWL solver integration changed');
+  // A capture that already holds its final reply can end an embedded widget's solver there.
+  const solverSignal = 'solveRemaining,\n        budget.signal,';
+  if (source.split(solverSignal).length !== 2) throw new Error('TRAWL solver signal changed');
   const documentCapture = 'captureBrowserDocument(page, capture, pageCapture, budget, screenshot)';
   if (source.split(documentCapture).length !== 2) throw new Error('TRAWL document capture integration changed');
   // The helpers open their own context, so they run before the tier opens one.
@@ -207,6 +210,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
       .replace(needle, 'const pageCapture = reserveDeadline(await attachTrackingCapture(page, url, capture)'
         + ` ?? attachPageCapture(page, capture), ${reserveMs})`)
       .replace(solverGuard, solverGuard.slice(0, -1) + ' && !pageCapture.hasResponse?.() && !pageCapture.hasTrackingRequest?.())')
+      .replace(solverSignal, 'solveRemaining,\n        pageCapture.solverSignal?.(budget.signal) ?? budget.signal,')
       // A widget the solver cannot pass must not cost the page behind it.
       .replace(beforeSolve, 'await pageCapture.prepare?.(budget.remaining())\n    '
         + `const solveRemaining = Math.max(0, budget.remaining() - ${reserveMs})`));

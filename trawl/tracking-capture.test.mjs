@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import { attachTrackingCapture, australiaPostClientKnown, requestAustraliaPostInPage, requestAustraliaPostMainWorld, reserveDeadline, unreadByLookup, untilPageReady } from './tracking-capture.mjs';
 import { swiftxDropPhoneFragment, swiftxEnterPhoneDigits } from './swiftx-slider.mjs';
@@ -51,6 +52,7 @@ test('DHL Express captures only its own page and exact waybill request, includin
     assert.equal(await attachTrackingCapture({}, url, { captureResponses: [expressApi] }), undefined);
   }
   const { capture, respond } = await fixture(expressUrl, expressApi);
+  assert.equal(capture.solverSignal, undefined);
   await respond(JSON.stringify({ results: [{ id: expressNumber }] }), { url: expressRequest.replace(expressNumber, '0000000000') });
   assert.equal(capture.hasResponse(), false);
   await respond(JSON.stringify({ results: [{ id: expressNumber, checkpoints: [] }] }), { url: expressRequest });
@@ -436,11 +438,17 @@ test('Speedy captures only its tracker page for one whole number and the page\'s
   }
   assert.equal(await attachTrackingCapture({}, speedyUrl, { captureResponses: [`${speedyApi}?id=${speedyNumber}`] }), undefined);
   const { capture, respond } = await fixture(speedyUrl, speedyApi);
+  const budget = new AbortController();
+  const solver = capture.solverSignal(budget.signal);
   await respond(JSON.stringify({ barcode: '69000000009', events: [] }), { url: speedyRequest.replace(speedyNumber, '69000000009') });
   await respond(JSON.stringify({ barcode: speedyNumber, events: [] }), { url: speedyRequest.replace('mobile=N', 'mobile=Y') });
   await respond(JSON.stringify({ barcode: speedyNumber, events: [] }), { url: speedyRequest, method: 'POST' });
   assert.equal(capture.hasResponse(), false);
+  assert.equal(solver.aborted, false);
   await respond(JSON.stringify({ barcode: speedyNumber, events: [{ operationCode: 1 }] }), { url: speedyRequest });
+  // The page's reply ends TRAWL's Turnstile solver, which waits for a token field this page never fills.
+  assert.equal(solver.aborted, true);
+  assert.equal(budget.signal.aborted, false);
   await capture.settle(100);
   assert.equal(capture.hasResponse(), true);
   const rows = (await capture.drain()).capturedResponses;
@@ -463,6 +471,9 @@ test('Speedy keeps the missing-resource page and a refused Turnstile token, and 
   const silent = await fixture(speedyUrl, speedyApi);
   await silent.capture.settle(1);
   await assert.rejects(silent.capture.drain(), { message: 'Speedy produced no tracking response after submission' });
+  // The installer hands both browser tiers' solvers the capture's signal when it offers one.
+  assert.match(readFileSync(new URL('./install.mjs', import.meta.url), 'utf8'),
+    /\.replace\(solverSignal, 'solveRemaining,\\n {8}pageCapture\.solverSignal\?\.\(budget\.signal\) \?\? budget\.signal,'\)/);
 });
 
 const australiaNumber = '7T0000000000000000001';
