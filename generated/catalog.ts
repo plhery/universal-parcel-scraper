@@ -7071,6 +7071,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "activos24": {
+    "displayName": "Activos24",
+    "color": "#ff7400",
+    "aliases": [
+      "Activos 24",
+      "Activos 24 - Distribuição, Eventos e Logística Lda"
+    ],
+    "countries": [
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Lisbon",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "activos24",
+      "localClocks": true
+    },
+    "canaryUrl": "https://activos24.com/pt/seguir-encomenda",
+    "trackingUrlTemplate": "https://activos24.com/pt/seguir-encomenda?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://activos24.com/pt/seguir-encomenda",
+    "linkRules": [
+      {
+        "domains": [
+          "activos24.com"
+        ],
+        "pathPattern": "^/pt/seguir-encomenda/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ader": {
     "displayName": "ADER",
     "color": "#24a740",
@@ -70943,6 +70976,7 @@ export const CARRIER_IDS = [
   "acs-courier",
   "act-argos",
   "act-logistics",
+  "activos24",
   "ader",
   "adex-al",
   "ads-intl",
@@ -72960,6 +72994,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "acs-courier": ["acs-courier-1"],
   "act-argos": [],
   "act-logistics": [],
+  "activos24": [],
   "ader": [],
   "adex-al": [],
   "ads-intl": [],

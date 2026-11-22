@@ -2163,6 +2163,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'transportes-rapex', number: '000000000000',
     route: /^https:\/\/transportes-rapex\.pt\/pt\/tracking\?tracking=000000000000$/,
     marker: /Não encontrámos correspondências para o código de envio/ },
+  { carrier: 'activos24', number: '000000000000',
+    route: /^https:\/\/activos24\.com\/pt\/seguir-encomenda\?tracking=000000000000$/,
+    marker: /Envio não encontrado/ },
   // The page checks the device, moves a desktop to its `tracking` route and renders over Blazor's
   // connection; an unknown number gets the sentence in place of the shipment.
   { carrier: 'transaher', number: '103000000000000000000000000',

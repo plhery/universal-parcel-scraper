@@ -5,7 +5,10 @@
  * several numbers separated by commas and shows a card for each one it finds,
  * headed `TRK#{number}`, with the sender's reference, the expected delivery and
  * a table of scans, newest first. A number it does not know gets "Não
- * encontrámos correspondências para o código de envio", with HTTP 200. Each
+ * encontrámos correspondências para o código de envio", with HTTP 200. An
+ * older version, Activos24's, serves the page at `/pt/seguir-encomenda`, puts
+ * the table's headings in its first row, and answers an unknown number with
+ * "Envio não encontrado." under the search form, which echoes the number. Each
  * carrier keeps its own host, numbers and status map; this module holds the
  * request and parser they share.
  */
@@ -32,6 +35,8 @@ export interface CourierPortalTenant {
   readonly provider: string;
   /** The portal's origin, such as `https://portal.example.pt`. */
   readonly origin: string;
+  /** The Portuguese tracking page's path, when its portal version moved it from `/pt/tracking`. */
+  readonly path?: string;
   /** The tenant's numbers, as normalization leaves them. */
   readonly layout: RegExp;
   /** What a number of another layout is told. */
@@ -47,6 +52,8 @@ const REDIRECTS = [301, 302, 303, 307, 308];
 // The page answers an unknown number with HTTP 200: a missing route is not a missing shipment.
 const GONE = [404, 405, 410];
 const NOT_FOUND = /^Não encontrámos correspondências para o código de envio\b/;
+// The older version's notice, under the form that echoes the number.
+const FORM_NOT_FOUND = /^Envio não encontrado\.?$/;
 const CODE = /^TRK#\s*(\S{1,64})$/;
 // "2025-08-25" and "11:19"
 const DAY = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -69,7 +76,7 @@ export function normalizeCourierPortalNumber(raw: string, tenant: CourierPortalT
 
 /** The Portuguese tracking page for one number, as the portal's search form submits it. */
 export function courierPortalTrackingUrl(tenant: CourierPortalTenant, number: string): string {
-  return `${tenant.origin}/pt/tracking?${new URLSearchParams({ tracking: number }).toString()}`;
+  return `${tenant.origin}${tenant.path ?? '/pt/tracking'}?${new URLSearchParams({ tracking: number }).toString()}`;
 }
 
 function text($: CheerioAPI, element: Cheerio<AnyNode> | AnyNode, maxLength = 300): string {
@@ -98,9 +105,15 @@ function estimateDay(card: Cheerio<AnyNode>, $: CheerioAPI, newest: string): str
   return day && day >= newest.slice(0, 10) ? day : null;
 }
 
-/** The column of each heading the scan table must have. */
+/** The table's own rows, in a head or a body; the older version has no head. */
+function tableRows(table: Cheerio<AnyNode>): AnyNode[] {
+  return table.children('thead, tbody').children('tr').add(table.children('tr')).toArray();
+}
+
+/** The column of each heading the scan table must have, from its first row of headings. */
 function columns($: CheerioAPI, table: Cheerio<AnyNode>, provider: string): Record<keyof typeof COLUMNS, number> {
-  const headings = table.find('thead th').toArray().map((element) => text($, element, 60).toLocaleLowerCase('pt-PT'));
+  const heading = tableRows(table).find((row) => $(row).children('th').length);
+  const headings = (heading ? $(heading).children('th').toArray() : []).map((element) => text($, element, 60).toLocaleLowerCase('pt-PT'));
   return Object.fromEntries(Object.entries(COLUMNS).map(([key, heading]) => {
     const index = headings.indexOf(heading);
     if (index < 0 || headings.lastIndexOf(heading) !== index) throw new SchemaError(provider, `${provider} returned an unexpected scan table`);
@@ -121,12 +134,18 @@ export function parseCourierPortal(html: string, raw: string, tenant: CourierPor
   const $ = load(html);
   $('.modal').remove();
 
-  const cards = $('.card-tracking[data-tracking]').toArray()
-    .filter((element) => echoed(CODE.exec(text($, $(element).find('.details-box h4').first(), 80))?.[1] ?? '') === number);
+  // A shipment's card, headed by its code; the search form can sit in a card of the same class.
+  const code = (element: AnyNode) => CODE.exec(text($, $(element).find('.details-box h4').first(), 80))?.[1];
+  const shipments = $('.card-tracking').toArray().filter((element) => code(element) !== undefined);
+  const cards = shipments.filter((element) => echoed(code(element)!) === number);
   if (!cards.length) {
     const notices = $('h4').toArray().filter((element) => NOT_FOUND.test(text($, element)));
     if (notices.some((element) => echoed(text($, $(element).find('b'), 80)) === number)) throw new NotFoundError(provider);
-    if (notices.length || $('.card-tracking[data-tracking]').length) throw new IndeterminateError(provider, `${provider} answered for another shipment`);
+    const forms = $('form').toArray().filter((form) => $(form).find('p').toArray().some((element) => FORM_NOT_FOUND.test(text($, element))));
+    if (forms.some((form) => echoed(String($(form).find('input[name="tracking"]').first().val() ?? '').slice(0, 80)) === number)) {
+      throw new NotFoundError(provider);
+    }
+    if (notices.length || forms.length || shipments.length) throw new IndeterminateError(provider, `${provider} answered for another shipment`);
     if (BLOCKED.test(html.slice(0, 64_000))) throw new ChallengeError(provider, `${provider} answered with a bot check`);
     throw new SchemaError(provider, `${provider} returned an unexpected page`);
   }
@@ -136,7 +155,7 @@ export function parseCourierPortal(html: string, raw: string, tenant: CourierPor
   if (tables.length > 1) throw new SchemaError(provider, `${provider} returned several scan tables`);
   if (!tables.length) throw new NoHistoryError(provider);
   const column = columns($, tables, provider);
-  const rows = tables.find('tbody > tr').toArray();
+  const rows = tableRows(tables).filter((row) => $(row).children('td').length);
   if (!rows.length) throw new NoHistoryError(provider);
   if (rows.length > MAX_ROWS) throw new SchemaError(provider, `${provider} returned an oversized history`);
 

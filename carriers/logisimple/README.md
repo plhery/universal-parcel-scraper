@@ -22,8 +22,9 @@ customer portal.
 
 ## Notes
 
-- The page is a customer portal Intercourier's tracking page also runs on, so the request and
-  parser live in [portal.ts](portal.ts), with the host, number layout and status map passed in.
+- The page is a customer portal Intercourier's and Transportes Rapex's tracking pages also run
+  on, and Activos24's in an older version, so the request and parser live in
+  [portal.ts](portal.ts), with the host, path, number layout and status map passed in.
 - Portuguese is asked for because the English page leaves some states blank and drops their
   explanations.
 - A scan has a day, a minute, a state, a warehouse, the state's explanation and remarks. The

@@ -102,6 +102,12 @@
     "reason": "ACI hands e-commerce parcels to Korea Post for delivery in Korea, whose rule suggests these thirteen-digit registered numbers."
   },
   {
+    "carrier": "activos24",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Activos24 numbers of twelve digits share their shape with other carriers' numbers, so the shape cannot name Activos24."
+  },
+  {
     "carrier": "aerolineas-argentinas-cargo",
     "kind": "open",
     "reason": "The airline-issued AWB begins with 044, while existing generic rules offer other candidates. Select Aerolíneas Argentinas Cargo explicitly."

@@ -1,0 +1,41 @@
+{
+  "carrier": "activos24",
+  "entries": [
+    {
+      "wording": "Pendente",
+      "stage": "registered",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Aceite",
+      "stage": "registered",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entrada em Rede",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Aguarda Expedição",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Em distribuição",
+      "stage": "out_for_delivery",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entregue",
+      "stage": "delivered",
+      "language": "pt",
+      "confirmedBy": "live"
+    }
+  ]
+}

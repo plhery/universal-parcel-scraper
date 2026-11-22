@@ -123,7 +123,7 @@ describe('Logisimple HTTP adapter', () => {
     for (const [index, body] of [
       '',
       '<html><body><main>Sample maintenance page</main></body></html>',
-      delivered.replace('data-tracking="100017"', ''),
+      delivered.replace('TRK#', ''),
       delivered.replace(/<th class="w-60px">Hora/, '<th class="w-60px">Sample'),
       delivered.replace('<th>Observações</th>', '<th>Data</th>'),
       newest((row) => row.replace('2026-03-16', '16-03-2026')),

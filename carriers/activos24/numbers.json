@@ -1,0 +1,40 @@
+{
+  "carrier": "activos24",
+  "gap": "Twelve bare digits fit many carriers' numbers.",
+  "records": [
+    {
+      "number": "035065897641",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portaldaqueixa.com/brands/activos24/complaints/activos24-reclamacao-por-nao-recepcao-da-encomenda-156277726",
+        "date": "2026-06-01",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A Portal da Queixa complaint about Activos24 gives it beside the order, and Activos24's tracking page shows the shipment with that order as its reference."
+    }
+  ]
+}
