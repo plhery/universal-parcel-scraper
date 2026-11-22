@@ -29422,10 +29422,10 @@
     "timezone": "Europe/Berlin",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gel-express"
     },
     "canaryUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
-    "trackingUrlTemplate": "https://www.gel-express.de/sendungsverfolgung/?snr={trackingNumber}",
+    "trackingUrlTemplate": "https://www.gel-express.de/de/sendungsverfolgung/?snr={trackingNumber}",
     "trackingSearchUrl": "https://www.gel-express.de/de/sendungsverfolgung/",
     "helpUrl": "https://www.gel-express.de/de/kontakt/",
     "linkRules": [

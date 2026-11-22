@@ -1,8 +1,14 @@
 {
   "carrier": "gel-express",
   "entries": [
+    {"wording": "Sendung wird abgeholt", "stage": "registered", "language": "de", "confirmedBy": "portal", "note": "The progress rail's first step: a collection is booked."},
+    {"wording": "Sendung abgeholt", "stage": "accepted", "language": "de", "confirmedBy": "portal", "note": "The title of the progress rail's first icon once GEL has collected the parcel."},
+    {"wording": "Sendung im Nachtumschlag", "stage": "in_transit", "language": "de", "confirmedBy": "portal", "note": "The progress rail's overnight sorting step."},
     {"wording": "Sendung im Logistik-Center Kassel eingetroffen", "stage": "in_transit", "language": "de", "confirmedBy": "portal", "note": "Arrived at the Kassel logistics centre; the wording names the hub."},
+    {"wording": "Sendung im Zustelldepot", "stage": "in_transit", "language": "de", "confirmedBy": "portal", "note": "The progress rail's step at the delivering depot."},
     {"wording": "Sendung lagernd im Empfangsdepot", "stage": "in_transit", "language": "de", "confirmedBy": "portal", "note": "Held at the receiving depot; in the capture delivery followed five days later."},
-    {"wording": "Sendung zugestellt", "stage": "delivered", "language": "de", "confirmedBy": "portal"}
+    {"wording": "Im Avisierungsprozess", "stage": "in_transit", "language": "de", "confirmedBy": "portal", "note": "The progress rail's appointment step, shown only for a parcel whose delivery GEL agrees with the recipient first."},
+    {"wording": "Sendung in Zustellung", "stage": "out_for_delivery", "language": "de", "confirmedBy": "portal", "note": "The progress rail's delivery round step."},
+    {"wording": "Sendung zugestellt", "stage": "delivered", "language": "de", "confirmedBy": "live", "note": "The current status of a delivered parcel, and the progress rail's last step."}
   ]
 }

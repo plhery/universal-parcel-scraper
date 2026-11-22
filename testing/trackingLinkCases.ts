@@ -2727,6 +2727,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'just-ship-sg', number: '000000A000R00',
     route: /^https:\/\/www\.justship\.sg\/tracking\?trackingNumber=000000A000R00$/,
     marker: /No shipment found with tracking number 000000A000R00/ },
+  // The page reads the number from its address and answers an unknown one with a notice whose search field holds it.
+  { carrier: 'gel-express', number: '9999999990',
+    route: /^https:\/\/www\.gel-express\.de\/de\/sendungsverfolgung\/\?snr=9999999990$/,
+    marker: /Ihre Sendungsnummer konnte leider nicht gefunden werden/ },
 ];
 
 /**
