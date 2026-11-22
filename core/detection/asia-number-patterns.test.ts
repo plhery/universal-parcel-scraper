@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
+import { CHECKSUMS } from './checksums.js';
 import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
 
 describe('prefixed Asian shipment references and shared numeric formats', () => {
@@ -332,17 +333,26 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
-  it('asks DHLink first about Juxi Express waybills on the lines its tracker knows, and no other', () => {
+  it('names Juxi Express for its waybills and asks DHLink about those on the lines its tracker knows, and no other', () => {
     for (const number of ['JXCYI0000000001YQ', 'JXCZO0000000001YQ', 'JXCUS0000000001YQ', 'JXCZI0000000001YQ']) {
       expect(detectCarrierMatch(number), number).toMatchObject({
-        carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'juxi-express'], preferred: ['dhlink'],
+        carrier: 'juxi-express', confidence: 'high', candidates: ['juxi-express'],
       });
       expect(recognitionAskedCarriers(number), number).toEqual(['dhlink']);
+      expect(recognitionCandidates(number)[0], number).toMatchObject({ carrier: 'dhlink', preferred: true });
     }
-    expect(detectCarrierMatch('jxczo 0000 0000 01 yq').candidates).toEqual(['dhlink', 'juxi-express']);
-    // Juxi's other lines are its own: DHLink's tracker does not know them.
+    expect(recognitionAskedCarriers('jxczo 0000 0000 01 yq')).toEqual(['dhlink']);
+    // Juxi's other lines are its own: DHLink's tracker does not know them, and nobody is asked.
     for (const number of ['JXCYT0000000001YQ', 'JXCYQ0000000001YQ', 'JXCYG0000000001YQ', 'JXCNI0000000001YQ', 'JXCOZ0000000001YQ', 'JXCSU0000000001YQ']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'juxi-express', confidence: 'high', candidates: ['juxi-express'] });
+      expect(recognitionAskedCarriers(number), number).toEqual([]);
+    }
+    // A carrier whose check a number passes by chance is not asked beside a carrier without a tracker.
+    const pargo = Array.from({ length: 10 }, (_, digit) => `PAR428605173${digit}`);
+    expect(pargo.some((number) => CHECKSUMS['magyar-posta'](number))).toBe(true);
+    for (const number of pargo) {
+      expect(detectCarrierMatch(number).carrier, number).toBe('pargo');
+      expect([...recognitionCandidates(number), ...recognitionCandidates(number, { phase: 'browser' })], number).toEqual([]);
     }
     for (const number of ['JXCZO000000001YQ', 'JXCZ0000000001YQ', 'JXCZO0000000001Y', 'JXDZO0000000001YQ', 'JXC1T0000000001YQ']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');

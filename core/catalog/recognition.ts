@@ -85,7 +85,8 @@ const BROWSER_RECOGNITION_PATTERNS: ReadonlyMap<string, RegExp> = new Map(Object
  * country hint, caller-owned priorities, a passing check digit and the
  * catalog's popularity rank. These hints only order existing candidates. HTTP is the default; `phase: 'browser'` selects
  * the separate opt-in browser catalog. A high-confidence dedicated carrier needs no recognition; the
- * unknown postal carrier still needs a direct carrier to confirm it. A carrier whose catalog
+ * unknown postal carrier still needs a direct carrier to confirm it, and so does a carrier
+ * without a tracker of its own beside one whose preferred rule fits the number. A carrier whose catalog
  * entry names the numbers its HTTP recognition answers is asked only about those.
  */
 export function recognitionCandidates(
@@ -96,24 +97,35 @@ export function recognitionCandidates(
   if (isPhoneNumber(number, options.countryHint)) return [];
   const detected = detectCarrierMatch(number);
   const unknownPostalCarrier = detected.carrier === 'intl-post';
-  if (detected.confidence !== 'low' && !unknownPostalCarrier) return [];
+  // A carrier that only universal providers track names its own numbers, but
+  // a carrier carrying some of them under that number can still know one:
+  // DHLink, on four of Juxi Express's lines.
+  const untrackedIssuer = detected.confidence === 'high' && !unknownPostalCarrier
+    && carrierAdapter(detected.carrier) === 'universal';
+  if (detected.confidence !== 'low' && !unknownPostalCarrier && !untrackedIssuer) return [];
   // The high-confidence S10 fallback hides low-confidence carrier rules from
   // detection. Recover those candidates without assigning the issuer's
   // postal carrier as the deliverer: each candidate must confirm this number.
   // intl-post already checked the S10 checksum, so only S10 or shape-only rules
-  // can contribute here.
+  // can contribute here. Beside an untracked issuer, only a preferred rule
+  // that names the layout without a check digit does: a carrier that carries
+  // such parcels, not one whose check a number passes by chance (Magyar
+  // Posta's domestic parcels beside Pargo's PAR numbers).
   const normalized = normalizeTrackingNumber(number);
   const printed = number.trim().toUpperCase();
-  const postalMatches = unknownPostalCarrier ? Object.entries(CARRIER_DEFINITIONS)
+  const hiddenMatches = unknownPostalCarrier || untrackedIssuer ? Object.entries(CARRIER_DEFINITIONS)
     .flatMap(([carrier, definition]) => {
+      if (carrier === detected.carrier) return [];
       const rule = definition.detectionRules.find((candidate) => candidate.confidence === 'low'
-        && (!candidate.checksum || candidate.checksum === 's10')
+        && (unknownPostalCarrier ? !candidate.checksum || candidate.checksum === 's10'
+          : candidate.preferred === true && !candidate.checksum)
         && ruleFits(candidate, normalized, printed));
       return rule ? [{ carrier, preferred: rule.preferred === true }] : [];
     }) : [];
-  const candidates: readonly string[] = unknownPostalCarrier ? postalMatches.map(({ carrier }) => carrier) : detected.candidates;
-  const preferred: readonly string[] = unknownPostalCarrier
-    ? postalMatches.filter((match) => match.preferred).map(({ carrier }) => carrier) : detected.preferred;
+  const recovered = unknownPostalCarrier || untrackedIssuer;
+  const candidates: readonly string[] = recovered ? hiddenMatches.map(({ carrier }) => carrier) : detected.candidates;
+  const preferred: readonly string[] = recovered
+    ? hiddenMatches.filter((match) => match.preferred).map(({ carrier }) => carrier) : detected.preferred;
   const ranks = options.phase === 'browser' ? BROWSER_RECOGNITION_RANKS : CARRIER_RECOGNITION_RANKS;
   const patterns = options.phase === 'browser' ? BROWSER_RECOGNITION_PATTERNS : RECOGNITION_PATTERNS;
   // A carrier the number points to but that cannot be asked about it keeps its

@@ -8653,7 +8653,7 @@
       "dhlink",
       "juxi-express"
     ],
-    "reason": "Juxi Express's waybills carry its code; DHLink's tracker knows those it carries on the lines coded YI, ZO, US and ZI and not those on its other lines. Both rules are low-confidence and DHLink's is preferred: recognition asks DHLink, and a provider names Juxi Express alone for the parcels DHLink does not know."
+    "reason": "Juxi Express's waybills carry its code, and its high-confidence rule names it. DHLink's tracker knows those it carries on the lines coded YI, ZO, US and ZI and not those on its other lines. Only universal providers track Juxi Express, so DHLink's preferred rule still has recognition ask DHLink, and a parcel DHLink knows is DHLink's."
   },
   {
     "shape": "TDT, ten digits and CN",

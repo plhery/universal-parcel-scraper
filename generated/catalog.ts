@@ -37433,7 +37433,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
-        "confidence": "low"
+        "confidence": "high"
       }
     ]
   },

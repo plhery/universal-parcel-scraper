@@ -1145,6 +1145,12 @@
     "reason": "International numbers in the UPU S10 layout that DHLink's line providers issue belong to postal detection even when the check digit fails, and do not point to DHLink."
   },
   {
+    "carrier": "dhlink",
+    "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
+    "kind": "by_design",
+    "reason": "Juxi Express issues these waybills, so they name it. DHLink carries some of them on four Juxi lines under that number, and recognition still asks DHLink, because only universal providers track Juxi Express."
+  },
+  {
     "carrier": "dialogo-logistica",
     "pattern": "^\\d{12}$",
     "kind": "collision",

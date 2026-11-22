@@ -30,8 +30,9 @@ page makes.
   beside DHLink and UniUni, `JAS`, eight digits and `CN`, on a US line, `XYL`, nine digits and `CH`, on a
   line to Switzerland, and `LIB`, nine digits and `YN`, LiBaoTongXu's numbers on a US line, which ParcelsApp
   names LIB beside DHLink. Juxi Express's waybills on four of its lines, `JXC`, `YI`, `ZO`, `US` or `ZI`,
-  ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel, so that rule is preferred and DHLink
-  is asked and named first; the tracker does not know Juxi's other lines. Their rules are low confidence, so
+  ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel. Juxi issues them and detection
+  names it, but only universal providers track Juxi, so DHLink's preferred rule still has recognition ask DHLink; the
+  tracker does not know Juxi's other lines. Their rules are low confidence, so
   DHLink is asked before it is named. Providers name XZG, QYEXP, Asus International and YLE for their
   numbers, so they are aliases and their hint asks DHLink. The two letters `YF` are too thin a mark of a
   company to be one. LIB is not one either: LiBaoTongXu (莆田市利葆通旭供应链有限公司) is a Putian forwarder

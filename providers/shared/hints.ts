@@ -9,6 +9,7 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import { carrierTimezone } from '../../core/catalog/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { followsPartnerNumbers, partnerNumberOwner, tracksPartnerNumbers } from '../../core/catalog/partners.js';
 import { brandCarrierIds, brandNameCountry, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone, isAmbiguousBrandName } from '../../core/catalog/hints.js';
 import { checksumFailures } from '../../core/detection/detect.js';
@@ -177,7 +178,7 @@ export function universalCarrierHints(raw: unknown[], trackingNumber?: string): 
  * its own leg, and the one carrier left is the hint.
  */
 function journeyOwner(carriers: readonly string[], trackingNumber: string, inFull: ReadonlySet<string>): string | undefined {
-  const { candidates, preferred } = detectCarrierMatch(trackingNumber);
+  const { carrier: issuer, confidence, candidates, preferred } = detectCarrierMatch(trackingNumber);
   const fitting = carriers.filter((carrier) => candidates.includes(carrier as CarrierId));
   if (fitting.length === 1) return fitting[0];
   if (fitting.length > 1) {
@@ -186,6 +187,11 @@ function journeyOwner(carriers: readonly string[], trackingNumber: string, inFul
     const named = (backed.length ? backed : fitting).filter((carrier) => inFull.has(carrier));
     return named.length === 1 && named.length < fitting.length ? named[0] : undefined;
   }
+  // A number only universal providers track for its issuer leaves the carrier recognition asks
+  // about it: DHLink, named beside the carrier it hands a Juxi Express parcel to.
+  const asked = confidence === 'high' && issuer !== 'intl-post'
+    ? recognitionCandidates(trackingNumber).filter(({ carrier }) => carriers.includes(carrier)) : [];
+  if (asked.length === 1) return asked[0]!.carrier;
   const delivering = carriers.filter((carrier) => !followsPartnerNumbers(carrier));
   if (delivering.length === 1 && delivering.length < carriers.length) return delivering[0];
   const open = carriers.filter((carrier) => {

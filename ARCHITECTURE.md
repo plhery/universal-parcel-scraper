@@ -183,6 +183,9 @@ never a fallback, and its adapter's errors never repeat them.
 A number whose shape fits several carriers, or only
 identifies an international postal item, is settled by asking the carriers that can recognize
 it cheaply. A postal issuer is a lookup candidate, not proof of the delivery carrier.
+So is a number whose issuer only universal providers track when another carrier's preferred
+rule, with no check digit, fits it: Juxi Express's waybills name Juxi, and DHLink, which carries
+some of them under that number, is asked.
 The tracker then tries the carrier's
 dedicated adapter, and after that the fallbacks the caller enabled, in the coverage order.
 Detection can list `origins` beside the carrier its high-confidence rule names: carriers that

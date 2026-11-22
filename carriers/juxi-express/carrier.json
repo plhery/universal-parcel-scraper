@@ -42,7 +42,7 @@
     {
       "id": "juxi-express-2",
       "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
-      "confidence": "low"
+      "confidence": "high"
     }
   ]
 }

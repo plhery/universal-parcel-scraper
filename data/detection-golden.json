@@ -99099,14 +99099,10 @@
   },
   {
     "input": "JXCZO9999999990YQ",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "juxi-express",
+    "confidence": "high",
     "candidates": [
-      "dhlink",
       "juxi-express"
-    ],
-    "preferred": [
-      "dhlink"
     ],
     "asked": [
       "dhlink"
