@@ -67180,6 +67180,28 @@
     ],
     "detectionRules": []
   },
+  "wanjia-logistics": {
+    "displayName": "Wanjia Logistics",
+    "color": "#d7261e",
+    "aliases": [
+      "万家物流",
+      "Manco Logistics",
+      "万家物流（上海）有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wanjia-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ward-trucking": {
     "displayName": "Ward Transport & Logistics",
     "color": "#185640",

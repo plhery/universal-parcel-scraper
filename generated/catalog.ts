@@ -67184,6 +67184,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "wanjia-logistics": {
+    "displayName": "Wanjia Logistics",
+    "color": "#d7261e",
+    "aliases": [
+      "万家物流",
+      "Manco Logistics",
+      "万家物流（上海）有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wanjia-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ward-trucking": {
     "displayName": "Ward Transport & Logistics",
     "color": "#185640",
@@ -72758,6 +72780,7 @@ export const CARRIER_IDS = [
   "wan-hai",
   "wanbexpress",
   "wangjing-3cq",
+  "wanjia-logistics",
   "ward-trucking",
   "wassel",
   "we-world-express",
@@ -74777,6 +74800,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wan-hai": [],
   "wanbexpress": ["wanbexpress-1"],
   "wangjing-3cq": [],
+  "wanjia-logistics": [],
   "ward-trucking": [],
   "wassel": [],
   "we-world-express": ["we-world-express-1"],

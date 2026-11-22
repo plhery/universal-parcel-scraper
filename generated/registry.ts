@@ -1002,6 +1002,7 @@ import { adapter as walleniusWilhelmsen } from '../carriers/wallenius-wilhelmsen
 import { adapter as wanHai } from '../carriers/wan-hai/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as wangjing3cq } from '../carriers/wangjing-3cq/adapter.js';
+import { adapter as wanjiaLogistics } from '../carriers/wanjia-logistics/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
 import { adapter as westernBid } from '../carriers/western-bid/adapter.js';
@@ -2066,6 +2067,7 @@ export const REGISTRY: RegistryDefinition = {
     "wan-hai": wanHai,
     "wanbexpress": wanbexpress,
     "wangjing-3cq": wangjing3cq,
+    "wanjia-logistics": wanjiaLogistics,
     "we-world-express": weWorldExpress,
     "wedo": wedo,
     "western-bid": westernBid,
@@ -4023,6 +4025,7 @@ export const REGISTRY: RegistryDefinition = {
     "wan-hai": "wan-hai",
     "wanbexpress": "wanbexpress",
     "wangjing-3cq": "wangjing-3cq",
+    "wanjia-logistics": "wanjia-logistics",
     "ward-trucking": "universal",
     "wassel": "universal",
     "we-world-express": "we-world-express",

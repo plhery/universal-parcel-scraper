@@ -1,0 +1,77 @@
+{
+  "carrier": "wanjia-logistics",
+  "entries": [
+    {
+      "code": "已揽收",
+      "wording": "…已揽收",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Collected by the partner network's branch; the adapter leaves out the collector."
+    },
+    {
+      "code": "经转",
+      "wording": "（经转）…您的包裹已抵达…，即将由中转仓换单发往目的地",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached a transfer warehouse that relabels the parcel for the network delivering it."
+    },
+    {
+      "code": "发往",
+      "wording": "包裹已发往… / 已离开…发往…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left a branch or hub for the next one."
+    },
+    {
+      "code": "到达",
+      "wording": "包裹已到达… / 已到达…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached a branch or hub."
+    },
+    {
+      "code": "派件",
+      "wording": "…正在为您派件 / 的快递员正在为您派送",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "With the courier; the adapter leaves out the courier's name and phone."
+    },
+    {
+      "code": "待取件",
+      "wording": "您的包裹已到达[代收点]…，请及时取件",
+      "stage": "ready_for_pickup",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Waiting at a pickup point."
+    },
+    {
+      "code": "暂存",
+      "wording": "包裹已由快递员…送达…暂存,取件地址:…",
+      "stage": "ready_for_pickup",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left in a locker or store; the adapter leaves out the pickup code and the courier."
+    },
+    {
+      "code": "已领取",
+      "wording": "您的包裹已领取，收件人在[代收点]…取件",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Collected by the recipient at the pickup point."
+    },
+    {
+      "code": "已签收",
+      "wording": "您的包裹已签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for."
+    }
+  ]
+}
