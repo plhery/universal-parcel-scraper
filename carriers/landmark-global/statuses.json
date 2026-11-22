@@ -110,6 +110,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Outgoing scan at facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The parcel leaving one of the network's facilities, the counterpart of its incoming scan."
+    },
+    {
       "wording": "Shipment has departed from airport",
       "language": "en",
       "stage": "in_transit",
@@ -181,7 +189,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-11-02",
-      "note": "At Landmark's hub the parcel joins a pallet for the crossing to the destination country, before customs and the crossing scans. The row names the crossing and the pallet's number, read as \"…\": \"(DDU #1234)\", \"(SLC INTERPOST #1)\"."
+      "note": "At Landmark's hub the parcel joins a pallet for the crossing to the destination country, before customs and the crossing scans. The row names the crossing and the pallet's number, read as \"…\": \"(DDU #1234)\", \"(SLC INTERPOST #1)\", or a crossing named by a word and its duty terms, \"(EXAMPLE DDP #77)\"."
     },
     {
       "wording": "Departure from office of exchange",

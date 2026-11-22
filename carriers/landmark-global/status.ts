@@ -2,9 +2,10 @@ import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 // The pallet a parcel joins names its crossing and number: "Grouped when pallet scanned to crossing (DDU #1234)",
-// "(SLC INTERPOST #1)". The map holds them as "(… #…)".
+// "(SLC INTERPOST #1)", or a crossing named by a word and its duty terms, "(EXAMPLE DDP #77)". The map holds them
+// as "(… #…)".
 const PALLET = 'Grouped when pallet scanned to crossing (… #…)';
-const PALLET_NUMBER = /^(grouped when pallet scanned to crossing \()[a-z]{3}(?: interpost)?( #)\d{1,10}(\))$/i;
+const PALLET_NUMBER = /^(grouped when pallet scanned to crossing \()(?:[a-z]{3}(?: interpost)?|[a-z]{3,12} dd[pu])( #)\d{1,10}(\))$/i;
 const palletKey = (wording: string): string => wording.replace(PALLET_NUMBER, '$1…$2…$3');
 
 const WORDINGS = new Map<string, ClassifiedStatus>([
@@ -18,7 +19,8 @@ const WORDINGS = new Map<string, ClassifiedStatus>([
   ...['Customs cleared', 'Item processed at facility', 'Item processed', 'Received in destination country',
     'Crossing border and in transit to carrier hub', 'Scanned at Landmark crossdock facility', 'Processed',
     'Shipment received at originating postal facility', 'Departure to country of destination', 'Shipment has arrived at depot',
-    'Received at international processing center', 'Incoming scan at facility', 'Shipment has departed from airport',
+    'Received at international processing center', 'Incoming scan at facility', 'Outgoing scan at facility',
+    'Shipment has departed from airport',
     'Shipment has departed from depot',
     // A delivery partner's hub after Landmark's export, not the parcel's acceptance.
     'Parcel received at HUB', 'Received at Hermes hub',
