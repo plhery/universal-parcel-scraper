@@ -6573,7 +6573,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#113c77",
     "aliases": [
       "AAA Cooper Transportation",
-      "ACT"
+      "ACT",
+      "Midwest Motor Express"
     ],
     "countries": [
       "US"
