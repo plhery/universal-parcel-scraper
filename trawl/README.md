@@ -449,8 +449,8 @@ proxy that sends every tunnel through its gateway, to checked public addresses, 
 direct fallback. A tunnel opens only under the running lookup's lease: the request's `lease` id,
 used once, and its `byteAllowance` (at most, and by default, 64 MiB). Each chunk is counted
 against the allowance before it is relayed; the one that would pass it is dropped with every
-tunnel of the lease. The lease closes when the lookup ends, or two seconds after its budget,
-and between lookups the proxy refuses every tunnel, so a retained session carries nothing
+tunnel of the lease. The lease closes when the lookup ends, when its caller goes away, or two
+seconds after its budget, and between lookups the proxy refuses every tunnel, so a retained session carries nothing
 while idle. The response reports the lease's page and API tunnel counts, tunnel bytes,
 allowance and whether it was cut; DNS answers, URLs, cookies, gateways and the rendered page
 never leave the worker. Each browser's tunnels open only under the lease of the lookup it

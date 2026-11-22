@@ -119,7 +119,9 @@ const server = Bun.serve({
         const binding = await bind(handle.browser);
         const remaining = budget - (Date.now() - started);
         if (remaining <= 0 || request.signal.aborted) return new Response(null, { status: 504 });
-        const cancel = () => { lease.close(); handle.requestBrowserReplacement?.('FedEx retry request cancelled'); };
+        // A caller that goes away, as when the consumer's worker restarts, closes the lease and with it the
+        // lookup's tunnels. The browser stays: the session code keeps the context only if the lookup was accepted.
+        const cancel = () => { lease.close(); };
         request.signal.addEventListener('abort', cancel, { once: true });
         binding.lease = lease; binding.refused = { tunnels: 0, page: 0, api: 0, status: null, reason: null };
         const before = binding.bytes;
