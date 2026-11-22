@@ -1,0 +1,208 @@
+{
+  "carrier": "disu-logistics",
+  "records": [
+    {
+      "number": "516058158759",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/dexp.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "poste-italiane",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's D速 page lists. Disu's tracker answers it with a parcel taken in, through the Tianjin and Zhengzhou hubs and on its way from Xi'an."
+    },
+    {
+      "number": "516058647321",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/dexp.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's D速 page lists. Disu's tracker answers it with a parcel taken in and sorted through Tianjin, Zhengzhou and Xi'an."
+    },
+    {
+      "number": "516057854686",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/dexp.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's D速 page lists. Disu's tracker answers it with a parcel taken in for a Shandong account, through Jining, Zhongshan and Zhanjiang, left at a pickup station in Maoming and collected."
+    },
+    {
+      "number": "516057968162",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/dexp.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's D速 page lists. Disu's tracker answers it with a parcel through Jiaxing, Zhengzhou and Hebi, left at a pickup point in Xinxiang and collected."
+    },
+    {
+      "number": "516050955481",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/dexp.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's D速 page lists. Disu's tracker answers it with a parcel through Jiaxing, Tianjin and Shenyang, left with a gatekeeper and delivered."
+    },
+    {
+      "number": "516050936706",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi.com/all/dexp.html",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "saia",
+          "sending"
+        ]
+      },
+      "note": "A waybill kuaidi.com's D速 page lists. Disu's tracker answers it with a parcel through Guangzhou and Dongguan, redelivered at the recipient's request and delivered in Shenzhen."
+    }
+  ]
+}

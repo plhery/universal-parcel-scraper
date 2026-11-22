@@ -239,6 +239,7 @@ import { adapter as dhlink } from '../carriers/dhlink/adapter.js';
 import { adapter as diakinisis } from '../carriers/diakinisis/adapter.js';
 import { adapter as directFreightExpress } from '../carriers/direct-freight-express/adapter.js';
 import { adapter as direx } from '../carriers/direx/adapter.js';
+import { adapter as disuLogistics } from '../carriers/disu-logistics/adapter.js';
 import { adapter as dobropost } from '../carriers/dobropost/adapter.js';
 import { adapter as dohrnTransfer } from '../carriers/dohrn-transfer/adapter.js';
 import { adapter as domainLogistics } from '../carriers/domain-logistics/adapter.js';
@@ -1307,6 +1308,7 @@ export const REGISTRY: RegistryDefinition = {
     "diakinisis": diakinisis,
     "direct-freight-express": directFreightExpress,
     "direx": direx,
+    "disu-logistics": disuLogistics,
     "dobropost": dobropost,
     "dohrn-transfer": dohrnTransfer,
     "domain-logistics": domainLogistics,
@@ -2610,6 +2612,7 @@ export const REGISTRY: RegistryDefinition = {
     "direct-couriers": "universal",
     "direct-freight-express": "direct-freight-express",
     "direx": "direx",
+    "disu-logistics": "disu-logistics",
     "dk-express-gr": "universal",
     "dk-logistics-ee": "universal",
     "dm-express-me": "universal",

@@ -1,0 +1,77 @@
+{
+  "carrier": "disu-logistics",
+  "entries": [
+    {
+      "code": "揽收",
+      "wording": "您的包裹已揽收完成 or 您的包裹在【…】收货",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Taken in at the origin."
+    },
+    {
+      "code": "分拣",
+      "wording": "您的包裹在【…】开始分拣",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sorted at a hub."
+    },
+    {
+      "code": "发出",
+      "wording": "您的包裹已出【…】，正在发往【…】 or 即将发往下一节点",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left a hub or station for the next one."
+    },
+    {
+      "code": "预计到达",
+      "wording": "预计…到达【…】，两地距离…",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A transfer centre's estimate for the next hub."
+    },
+    {
+      "code": "到达站点",
+      "wording": "您的包裹已经进入【…】准备分配快递员",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Arrived at the delivering station."
+    },
+    {
+      "code": "派送",
+      "wording": "快递员【…】正在为您派送",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Out with a courier; the adapter leaves the courier's name and phones out."
+    },
+    {
+      "code": "再次派送",
+      "wording": "包裹将在收件人要求的时间内再次派送，请耐心等待",
+      "stage": "failed_attempt",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Not delivered on this round; delivery is tried again at the time the recipient asked."
+    },
+    {
+      "code": "暂存",
+      "wording": "您的快件已暂存至 … or 快件已由…暂存，可凭取件码到站取件",
+      "stage": "ready_for_pickup",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Left at a pickup point or a gatekeeper for collection; the row may name the delivering partner's waybill."
+    },
+    {
+      "code": "签收",
+      "wording": "您的包裹已送达签收… or 已签收，签收人凭取件码签收",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Delivered or collected; the adapter leaves the signatory and the courier out."
+    }
+  ]
+}

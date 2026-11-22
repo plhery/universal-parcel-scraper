@@ -6356,5 +6356,10 @@
     "carrier": "riyu-logistics",
     "kind": "by_design",
     "reason": "Riyu waybills, a letter and ten digits, share their shape with other carriers' numbers; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "disu-logistics",
+    "kind": "by_design",
+    "reason": "Disu waybills are twelve digits, a shape other carriers share; use explicit selection or a named handoff."
   }
 ]

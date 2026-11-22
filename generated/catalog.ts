@@ -20903,6 +20903,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "disu-logistics": {
+    "displayName": "Disu Logistics",
+    "color": "#e4393c",
+    "aliases": [
+      "D速物流",
+      "D速快递",
+      "山东递速物流有限公司",
+      "D-exp"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "disu-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dk-express-gr": {
     "displayName": "DK Express Courier",
     "color": "#34c3d1",
@@ -71500,6 +71523,7 @@ export const CARRIER_IDS = [
   "direct-couriers",
   "direct-freight-express",
   "direx",
+  "disu-logistics",
   "dk-express-gr",
   "dk-logistics-ee",
   "dm-express-me",
@@ -73523,6 +73547,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "direct-couriers": [],
   "direct-freight-express": [],
   "direx": [],
+  "disu-logistics": [],
   "dk-express-gr": [],
   "dk-logistics-ee": [],
   "dm-express-me": [],

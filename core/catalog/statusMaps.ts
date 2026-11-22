@@ -437,6 +437,7 @@ import { statusMap as hunterExpress } from '../../carriers/hunter-express/status
 import { statusMap as huahan } from '../../carriers/huahan/status.js';
 import { statusMap as huayaExpress } from '../../carriers/huaya-express/status.js';
 import { statusMap as huaqiExpress } from '../../carriers/huaqi-express/status.js';
+import { statusMap as disuLogistics } from '../../carriers/disu-logistics/status.js';
 import { statusMap as benniaoExpress } from '../../carriers/benniao-express/status.js';
 import { statusMap as riyuLogistics } from '../../carriers/riyu-logistics/status.js';
 import { statusMap as lindaoExpress } from '../../carriers/lindao-express/status.js';
@@ -1098,7 +1099,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'shipglobal-us': shipglobalUs,
   'royale-international': royaleInternational,
 
-  'direct-freight-express': directFreightExpress,
+  'direct-freight-express': directFreightExpress, 'disu-logistics': disuLogistics,
   'qatar-post': qatarPost, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, pasarex, 'russian-post': russianPost, 'surat-kargo': suratKargo,
   '17feia': seventeenFeia, '2go': twoGo, '4-72': fourSeventyTwo, '4sides': fourSides, '5post': fivePost, '99minutos': ninetynineMinutos,
   'aaa-cooper': aaaCooper, 'a-duie-pyle': aDuiePyle, 'a-tu-hora-express': aTuHoraExpress, 'a1-post': a1Post, 'ab-courier': abCourier, 'abf-freight': abfFreight, 'aci-express-kr': aciExpressKr,

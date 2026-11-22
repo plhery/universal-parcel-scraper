@@ -1,0 +1,76 @@
+{
+  "id": "disu-logistics",
+  "displayName": "Disu Logistics",
+  "aliases": [
+    "D速物流",
+    "D速快递",
+    "山东递速物流有限公司",
+    "D-exp"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#e4393c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "disu-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "driver_name",
+      "driver_phone",
+      "signatory",
+      "pickup_point",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "pickup_point",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "driver_name",
+      "driver_phone",
+      "signatory"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "eta",
+      "pieces",
+      "origin",
+      "destination",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
