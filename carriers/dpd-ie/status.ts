@@ -20,6 +20,8 @@ export const DPD_IE_SCANS: Readonly<Record<string, Stage>> = {
   'Scanned out of HUB': 'in_transit',
   'Security Scan': 'in_transit',
   'Parcel going through Customs process': 'customs',
+  // The delivery depot's word that the parcel is on the day's round, which comes before the van's scan.
+  'Your parcel is due for delivery later today': 'in_transit',
   // The page cuts the delivery window after this wording; the parser removes it.
   'Your parcel is on a van and due for delivery': 'out_for_delivery',
   "We tried to deliver but you weren't home": 'failed_attempt',

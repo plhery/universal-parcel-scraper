@@ -197,6 +197,17 @@ describe('DPD Ireland direct tracking', () => {
     expect(() => parseDpdIe(history([RESCHEDULED, 'Web', '03/3/2026 at 9:30']), NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
+  it('reads the day\'s round as in transit until the van\'s scan, also after a missed delivery', () => {
+    const TODAY = 'Your parcel is due for delivery later today';
+    const planned = parseDpdIe(history([NETWORK, 'Head Office', '01/3/2026 at 22:00'], [TODAY, 'Dpd Example North', '02/3/2026 at 7:24']), NUMBER);
+    expect(planned).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: TODAY, expected_delivery: null });
+    expect(planned.events?.[0]).toMatchObject({ description: TODAY, stage: 'in_transit', stage_source: 'carrier_map' });
+    const missed = parseDpdIe(history([NETWORK, 'Head Office', '01/3/2026 at 22:00'], ["We tried to deliver but you weren't home", 'Dpd Example North', '02/3/2026 at 13:00'],
+      [TODAY, 'Dpd Example North', '03/3/2026 at 7:24'], [VAN, 'Dpd Example North', '03/3/2026 at 7:29']), NUMBER);
+    expect(missed).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: VAN });
+    expect(missed.events?.[1]).toMatchObject({ description: TODAY, stage: 'in_transit', stage_source: 'carrier_map' });
+  });
+
   it('keeps new wording unstaged and dedupes only identical scans', () => {
     const unknown = parseDpdIe(history([NETWORK, 'Head Office', '01/3/2026 at 22:00'], ['Your parcel is ready for dispatch', 'Head Office', '02/3/2026 at 9:30']), NUMBER);
     expect(unknown).toMatchObject({ status: 'unknown', last_status_text: 'Your parcel is ready for dispatch' });
