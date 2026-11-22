@@ -105,9 +105,10 @@ page makes.
   before the flight and is no scan.
 - The reply gives the last leg's number (`lastTurnNo`) but no partner, so the partner comes from
   the number's whole layout in an explicit table: `SWX` and eighteen digits is SwiftX, `GFUS`
-  and fourteen digits is GOFO, and fourteen digits from depots 0600 to 0619 is DPD
-  Switzerland. Other numbers give no hand-off; parcels USPS or a post delivers give no
-  last-leg number. The partner is named under its number even when that is the number asked,
+  and fourteen digits is GOFO, fourteen digits from depots 0600 to 0619 is DPD
+  Switzerland, and a USPS package barcode that passes its check digit is USPS, as on
+  LiBaoTongXu's US line. Other numbers give no hand-off. A post's parcels, and USPS's on
+  DHLink's own line, give no last-leg number. The partner is named under its number even when that is the number asked,
   so a host that filed the parcel under the partner reads DHLink's answer as an earlier leg.
   A parcel with no last-leg number whose tracking number has a partner's layout names that
   partner under it. SwiftX's own numbers come so, and DHLink records their scans after a US

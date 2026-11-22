@@ -1,5 +1,5 @@
 import { DateTime, FixedOffsetZone } from 'luxon';
-import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { isValidUspsPackageBarcode, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { uspsRoundDelivery } from '../../core/result/round.js';
@@ -62,7 +62,7 @@ const CONTACT = /(?:投递员|快递员|派送员|联系电话|电话[:：]|手�
 /**
  * DHLink's last-leg partners. The reply gives the last leg's number
  * (`lastTurnNo`) but names no partner, so the partner is read from the
- * number's whole layout. A number no layout fits gives no hand-off.
+ * number's whole layout, and its check digit where `valid` checks one. A number no layout fits gives no hand-off.
  * `beijingClock` marks a partner whose scans DHLink relays on its own
  * Beijing clock rather than the scan's, and `hubClockPickup` one whose pickup
  * DHLink's node copies from the partner's first scan, on its hub's clock.
@@ -70,7 +70,7 @@ const CONTACT = /(?:投递员|快递员|派送员|联系电话|电话[:：]|手�
  * place and wording, which wins over Beijing's.
  */
 export const DHLINK_LAST_LEGS: readonly {
-  readonly carrier: string; readonly number: RegExp; readonly beijingClock?: true; readonly hubClockPickup?: true;
+  readonly carrier: string; readonly number: RegExp; readonly valid?: (number: string) => boolean; readonly beijingClock?: true; readonly hubClockPickup?: true;
   readonly scanZone?: (place: string, description: string) => string | null;
 }[] = [
   // SwiftX's own numbers: SWX and eighteen digits, the layout `swiftx-1` claims. Its
@@ -85,6 +85,8 @@ export const DHLINK_LAST_LEGS: readonly {
     scanZone: (place, description) => gofoScanZone(place.split(',')[0] ?? '', description) },
   // DPD Switzerland's parcel numbers: fourteen digits from its depots 0600 to 0619.
   { carrier: 'dpd', number: /^06[01]\d{11}$/ },
+  // USPS's package barcodes (IMpb) with their check digit, as LiBaoTongXu's US line gives the last leg.
+  { carrier: 'usps', number: /^(?:9[1-5]\d{20}|9[2-4]\d{24})$/, valid: isValidUspsPackageBarcode },
 ];
 
 /** A number DHLink's tracker can be asked for; anything else is not sent. */
@@ -272,7 +274,7 @@ type Leg = { leg: (typeof DHLINK_LAST_LEGS)[number]; number: string };
 
 /** The partner whose layout the whole number has. */
 function legOf(number: string): Leg | null {
-  const leg = number ? DHLINK_LAST_LEGS.find((candidate) => candidate.number.test(number)) : undefined;
+  const leg = number ? DHLINK_LAST_LEGS.find((candidate) => candidate.number.test(number) && (candidate.valid?.(number) ?? true)) : undefined;
   return leg ? { leg, number } : null;
 }
 
