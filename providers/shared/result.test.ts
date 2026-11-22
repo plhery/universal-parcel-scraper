@@ -431,6 +431,14 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00+08:00', '您的物品已离开')).toMatchObject({ stage: 'pending', stage_source: 'none' });
   });
 
+  it("reads JETSPEED's rows as its own map reads them, as 17TRACK relays them", () => {
+    expect(event('2026-11-18T19:09:00Z', 'Shipment entered the local delivery network.')).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+    expect(event('2026-11-10T18:57:00Z', 'Shipment information has been received for destination processing. .'))
+      .toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+    expect(event('2026-11-02T05:41:00Z', 'Consignment received at the local warehouse in Example, CA.'))
+      .toMatchObject({ stage: 'accepted', stage_source: 'wording:provider' });
+  });
+
   it("reads a forwarder's wait at the airport for its flight and the flight's take-off, as providers relay them", () => {
     for (const wording of ['Wait for a flight', 'Waiting for the flight', 'The airline has taken off.']) {
       expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
