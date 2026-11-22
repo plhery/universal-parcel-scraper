@@ -757,6 +757,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // BUFFALO's depots in South Africa, as providers relay them: a depot receiving the parcel, as BUFFALO's own map reads
   // "JHB DC Received the parcel", a floor scan, a bag packed there for the next depot, and the parcel sent on.
   if (/^[a-z][a-z ]{1,30}dc received the parcel[.!]?$|^receive in \[[a-z][a-z ]{1,30}dc\]$|^pack completed in \[[a-z][a-z ]{1,30}dc\](?:\[[a-z\d]{1,30}\])?$|^outbound and start the next transfer phase[.!]?$|^floor scan[.!]?$/i.test(value)) return 'in_transit';
+  // DHLink's export declaration in China and its warehouse there before export, as providers relay them and DHLink's
+  // own map reads them: "出口申报完成", "您的物品已离开华东仓".
+  if (/^出口申报完成$|^您的物品已(?:到达|离开).{1,30}仓$/u.test(value)) return 'in_transit';
   // Posta Shqiptare's Albanian rows, its own and those it relays from the foreign post, and Ukrposhta's Ukrainian
   // ones, as their own maps read them.
   return chinaPostRelayedStage(value) ?? postaShqiptareScanStage(value) ?? ukrposhtaWordingStage(value);
