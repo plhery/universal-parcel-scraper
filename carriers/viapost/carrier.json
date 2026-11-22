@@ -18,18 +18,57 @@
   "timezone": "Europe/Skopje",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "viapost",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.viapost.solutions/Order/Track/{trackingNumber}",
     "searchUrl": "https://viapost.com.mk/",
     "canaryUrl": "https://viapost.com.mk/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "progress_rail",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "payment_details",
+      "sender_name",
+      "staff_details",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "progress_rail",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "payment_details",
+      "sender_name",
+      "staff_details",
+      "remarks"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory"
+    ]
   },
   "links": [
     {

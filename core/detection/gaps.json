@@ -6394,5 +6394,11 @@
     "pattern": "^\\d{6}$",
     "kind": "collision",
     "reason": "CautCurier AWBs are its order ids, six digits today, a shape many carriers' numbers share, so the shape cannot name CautCurier; use explicit selection or its tracking link."
+  },
+  {
+    "carrier": "viapost",
+    "pattern": "^\\d{4,12}$",
+    "kind": "by_design",
+    "reason": "Viapost's order ids are short bare digits without a prefix or check digit, so no rule can name Viapost; use explicit selection."
   }
 ]

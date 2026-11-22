@@ -1,4 +1,45 @@
 {
   "carrier": "viapost",
-  "entries": []
+  "entries": [
+    {
+      "code": "НОВИ",
+      "wording": "НОВИ",
+      "stage": "registered",
+      "language": "mk",
+      "confirmedBy": "live",
+      "note": "New: the sender, or Magyar Posta for the AliExpress parcels Viapost delivers, created the order. Viapost does not hold the parcel yet."
+    },
+    {
+      "code": "ВО МАГАЦИН",
+      "wording": "ВО МАГАЦИН",
+      "stage": "in_transit",
+      "language": "mk",
+      "confirmedBy": "live",
+      "note": "In a depot: taken in at Skopje, arrived at another town's office, or back from a delivery round."
+    },
+    {
+      "code": "НА ДОСТАВА",
+      "wording": "НА ДОСТАВА",
+      "stage": "out_for_delivery",
+      "language": "mk",
+      "confirmedBy": "live",
+      "note": "Out for delivery with a courier. Viapost records a courier collecting the parcel from a shop, and its hand-over to another town's office, with the same status."
+    },
+    {
+      "code": "НА ЧЕКАЊЕ",
+      "wording": "НА ЧЕКАЊЕ",
+      "stage": "failed_attempt",
+      "language": "mk",
+      "confirmedBy": "live",
+      "note": "On hold after a delivery round, here with the courier's comment that the recipient did not answer; the parcel then went back to the depot."
+    },
+    {
+      "code": "ДОСТАВЕНО",
+      "wording": "ДОСТАВЕНО",
+      "stage": "delivered",
+      "language": "mk",
+      "confirmedBy": "live",
+      "note": "Delivered."
+    }
+  ]
 }

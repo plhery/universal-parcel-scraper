@@ -1,5 +1,64 @@
 {
   "carrier": "viapost",
-  "gap": "No public page shows a Viapost number.",
-  "records": []
+  "records": [
+    {
+      "number": "RR745733230HU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://viapost.solutions/Order/Track/RR745733230HU",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Magyar Posta parcel for AliExpress, delivered last-mile",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A Viapost tracking page a search engine indexes. Viapost's tracker answers it with an order Magyar Posta created for AliExpress, a failed delivery round and the delivery in Skopje."
+    },
+    {
+      "number": "269793",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.viapost.solutions/Order/Track/269793",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Viapost tracking page a search engine indexes. Viapost's tracker answers it with a web shop's cash-on-delivery order taken in at Skopje and delivered in Tetovo."
+    },
+    {
+      "number": "RR746486733HU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251211002147/https://forum.it.mk/threads/via-post-opshta-diskusija.85814/page-12",
+        "date": "2025-08-10",
+        "dateKind": "forum_post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magyar Posta parcel for AliExpress, delivered last-mile",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Posted in forum.it.mk's Via Post thread while still in Hungary. Viapost's tracker answers it with the order Magyar Posta created for AliExpress and its delivery in Skopje."
+    }
+  ]
 }
