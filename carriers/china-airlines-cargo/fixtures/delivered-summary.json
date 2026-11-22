@@ -1,0 +1,30 @@
+{
+ "data": {
+  "GetShipmentsByAwbs": [
+   {
+    "awb_number": "29772328572",
+    "pieces": 16,
+    "origin_airport_code": "ORD",
+    "destination_airport_code": "KUL",
+    "milestones": [
+     {
+      "milestone": "ACCEPTED",
+      "status": "done"
+     },
+     {
+      "milestone": "DEPARTED",
+      "status": "done"
+     },
+     {
+      "milestone": "ARRIVED",
+      "status": "done"
+     },
+     {
+      "milestone": "DELIVERED",
+      "status": "done"
+     }
+    ]
+   }
+  ]
+ }
+}

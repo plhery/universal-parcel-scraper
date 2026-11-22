@@ -15515,6 +15515,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "china-airlines-cargo": {
+    "displayName": "China Airlines Cargo",
+    "color": "#B51124",
+    "aliases": [
+      "China Airlines",
+      "華航貨運"
+    ],
+    "countries": [
+      "TW"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Taipei",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "china-airlines-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://icargowebportal.china-airlines.com/icargoneoportal/app/main/",
+    "trackingUrlTemplate": "https://icargowebportal.china-airlines.com/icargoneoportal/app/main/#/app/tracking/awb",
+    "trackingSearchUrl": "https://icargowebportal.china-airlines.com/icargoneoportal/app/main/#/app/tracking/awb",
+    "helpUrl": "https://cargo.china-airlines.com/CCNetv2/content/home/index.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "china-railway-express": {
     "displayName": "China Railway Express",
     "color": "#00316c",
@@ -71670,6 +71694,7 @@ export const CARRIER_IDS = [
   "chemcouriers",
   "chic-express",
   "chilexpress",
+  "china-airlines-cargo",
   "china-railway-express",
   "chinz-logistics",
   "chit-chats",
@@ -73704,6 +73729,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chemcouriers": [],
   "chic-express": [],
   "chilexpress": [],
+  "china-airlines-cargo": [],
   "china-railway-express": [],
   "chinz-logistics": [],
   "chit-chats": ["chit-chats-1"],

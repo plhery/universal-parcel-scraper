@@ -1,0 +1,19 @@
+{
+  "carrier": "china-airlines-cargo",
+  "entries": [
+    {"code": "BKD", "wording": "Booked", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"code": "EXE", "wording": "Executed", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The air waybill is issued; the goods are not handed over yet."},
+    {"code": "FOH", "wording": "Freight on hand", "stage": "accepted", "language": "en", "confirmedBy": "bundle"},
+    {"code": "RCS", "wording": "Accepted", "stage": "accepted", "language": "en", "confirmedBy": "live"},
+    {"code": "MAN", "wording": "Manifested", "stage": null, "language": "en", "confirmedBy": "live", "note": "A flight manifest records an assignment before the departure, so it keeps the stage before it."},
+    {"code": "PRE", "wording": "Built up", "stage": null, "language": "en", "confirmedBy": "live", "note": "The pieces are loaded onto a pallet or container for a flight before it departs, so it keeps the stage before it."},
+    {"code": "DIS", "wording": "Offloaded", "stage": null, "language": "en", "confirmedBy": "live", "note": "Pieces come off a pallet or a planned flight, often to be built up again for the same or a later flight, so it keeps the stage before it."},
+    {"code": "DEP", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "ARR", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "RCF", "wording": "Broken down", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The pieces are unloaded from the flight's pallets at the arrival station."},
+    {"code": "RCT", "wording": "Transferred in", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Taken over from another airline at a transfer."},
+    {"code": "TFD", "wording": "Transferred out", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Handed to another airline at a transfer."},
+    {"code": "DLV", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "A delivery away from the destination, or before the tracker marks the waybill delivered, stays in transit."},
+    {"code": "DRN", "wording": "Delivery returned", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "A recorded delivery is reversed and the goods are back at the cargo terminal."}
+  ]
+}

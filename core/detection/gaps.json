@@ -6036,6 +6036,12 @@
     "reason": "Cargolux's air waybills are its prefix 172, or 356 for Cargolux Italia, and eight digits ending in a mod-7 check digit, the format every airline's waybills share; the prefix names the airline but detection keeps no air waybill rule. Cargolux's tracker returns the sample's events."
   },
   {
+    "carrier": "china-airlines-cargo",
+    "pattern": "^297\\d{8}$",
+    "kind": "by_design",
+    "reason": "China Airlines Cargo's air waybills are its prefix 297 and eight digits ending in a mod-7 check digit, the format every airline's waybills share; the prefix names the airline but detection keeps no air waybill rule. China Airlines' guest tracker returns the sample's activity."
+  },
+  {
     "carrier": "cheetah-delivery",
     "pattern": "^\\d{14}$",
     "kind": "collision",

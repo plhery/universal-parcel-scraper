@@ -1,0 +1,37 @@
+{
+  "carrier": "china-airlines-cargo",
+  "records": [
+    {
+      "number": "297-72328572",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/NI8hawk-Gokul/AI-AIR-CARGO-TRACKING/blob/57e73eb3bd57d4653228ddcaeeaebc2eef22b928/src/data/shipmentData.js",
+        "access": "full_page",
+        "date": "2026-05-28",
+        "dateKind": "publication"
+      },
+      "context": {
+        "reportedRole": "A public cargo tracking demo lists this China Airlines Cargo air waybill from Chicago to Kuala Lumpur. The guest tracker returns the same waybill with acceptance at ORD, flights through TPE and delivery at KUL.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}

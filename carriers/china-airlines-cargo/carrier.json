@@ -1,0 +1,61 @@
+{
+  "id": "china-airlines-cargo",
+  "displayName": "China Airlines Cargo",
+  "aliases": [
+    "China Airlines",
+    "華航貨運"
+  ],
+  "region": {
+    "countries": [
+      "TW"
+    ]
+  },
+  "brand": {
+    "color": "#B51124"
+  },
+  "selectable": true,
+  "timezone": "Asia/Taipei",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "china-airlines-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://icargowebportal.china-airlines.com/icargoneoportal/app/main/#/app/tracking/awb",
+    "searchUrl": "https://icargowebportal.china-airlines.com/icargoneoportal/app/main/#/app/tracking/awb",
+    "helpUrl": "https://cargo.china-airlines.com/CCNetv2/content/home/index.aspx",
+    "canaryUrl": "https://icargowebportal.china-airlines.com/icargoneoportal/app/main/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

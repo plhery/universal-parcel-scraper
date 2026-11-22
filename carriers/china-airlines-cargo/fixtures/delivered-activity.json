@@ -1,0 +1,547 @@
+{
+ "data": {
+  "GetShipmentActivityByAwb": {
+   "items": [
+    {
+     "event": "DLV",
+     "pieces": 16,
+     "airport_code": "KUL",
+     "event_time": "16 Mar 2026, 18:08:00",
+     "flight": {
+      "flight_carrier_code": null,
+      "flight_number": null,
+      "flight_date": null
+     }
+    },
+    {
+     "event": "RCF",
+     "pieces": 9,
+     "airport_code": "KUL",
+     "event_time": "16 Mar 2026, 14:16:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "RCF",
+     "pieces": 1,
+     "airport_code": "KUL",
+     "event_time": "16 Mar 2026, 14:16:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "RCF",
+     "pieces": 1,
+     "airport_code": "KUL",
+     "event_time": "16 Mar 2026, 14:16:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "RCF",
+     "pieces": 5,
+     "airport_code": "KUL",
+     "event_time": "16 Mar 2026, 14:16:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "ARR",
+     "pieces": 16,
+     "airport_code": "KUL",
+     "event_time": "16 Mar 2026, 13:22:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "ARR",
+     "pieces": 16,
+     "airport_code": "KUL",
+     "event_time": "16 Mar 2026, 13:09:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 08:39:21",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 08:39:21",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "DEP",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 08:23:01",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "MAN",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 06:58:35",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 1,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 05:03:53",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "DIS",
+     "pieces": 1,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 05:03:52",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 5,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:58:03",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "DIS",
+     "pieces": 5,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:58:02",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 1,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:52:04",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "DIS",
+     "pieces": 7,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:52:03",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 1,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:52:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 5,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:51:57",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 7,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:27:57",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 9,
+     "airport_code": "TPE",
+     "event_time": "16 Mar 2026, 04:15:56",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "RCF",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "15 Mar 2026, 16:56:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "15 Mar 2026, 16:30:41",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "15 Mar 2026, 16:30:41",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "ARR",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "15 Mar 2026, 14:19:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "ARR",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "15 Mar 2026, 14:11:00",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "RCF",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "15 Mar 2026, 09:08:56",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "14 Mar 2026, 07:53:58",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "14 Mar 2026, 07:53:58",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "DEP",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "14 Mar 2026, 07:23:01",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "14 Mar 2026, 14:15:53",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "14 Mar 2026, 14:15:53",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "MAN",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "13 Mar 2026, 13:27:51",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 10,
+     "airport_code": "ORD",
+     "event_time": "13 Mar 2026, 10:09:56",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 6,
+     "airport_code": "ORD",
+     "event_time": "13 Mar 2026, 10:04:21",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "12 Mar 2026, 17:16:44",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-15"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "12 Mar 2026, 17:16:44",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "RCS",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "12 Mar 2026, 12:52:00",
+     "flight": {
+      "flight_carrier_code": null,
+      "flight_number": null,
+      "flight_date": null
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "12 Mar 2026, 10:42:40",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-15"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "12 Mar 2026, 10:42:40",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5225",
+      "flight_date": "2026-03-12"
+     }
+    },
+    {
+     "event": "RCS",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "12 Mar 2026, 10:42:39",
+     "flight": {
+      "flight_carrier_code": null,
+      "flight_number": null,
+      "flight_date": null
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "12 Mar 2026, 02:41:08",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5225",
+      "flight_date": "2026-03-12"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "TPE",
+     "event_time": "12 Mar 2026, 02:41:08",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-15"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "11 Mar 2026, 13:01:38",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5225",
+      "flight_date": "2026-03-12"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "11 Mar 2026, 13:01:38",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-15"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "11 Mar 2026, 12:29:58",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 16,
+     "airport_code": "ORD",
+     "event_time": "11 Mar 2026, 12:29:58",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 7,
+     "airport_code": "ORD",
+     "event_time": "11 Mar 2026, 10:36:15",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "5239",
+      "flight_date": "2026-03-13"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 7,
+     "airport_code": "ORD",
+     "event_time": "11 Mar 2026, 10:36:15",
+     "flight": {
+      "flight_carrier_code": "CI",
+      "flight_number": "0721",
+      "flight_date": "2026-03-16"
+     }
+    }
+   ]
+  }
+ }
+}
