@@ -15,6 +15,7 @@ export type {
   TrackingInputMatch,
 } from './types.js';
 export { AMAZON_NUMBER_PATTERN, isAmazonTrackingNumber } from './amazon.js';
+export { SHEIN_PACKAGE_NUMBER, isSheinPackageNumber } from './shein.js';
 export {
   TRACKING_CANDIDATE_PATTERNS,
   keywordNumberInText,
