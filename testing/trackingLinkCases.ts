@@ -335,7 +335,8 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/tamex\.com\.sa\/track\/30000000000000$/,
     marker: /لايتوفر سجل للشحنة/ },
   // The tracker reads waybills from its form only, behind a reCAPTCHA on its button.
-  { carrier: '21-express-id', number: '999999999999', route: /^https:\/\/21express\.co\.id\/track$/, marker: /Tracking POD/, forwarding: 'none' },
+  // "Tracking POD" heads the result modal, hidden until a lookup answers.
+  { carrier: '21-express-id', number: '999999999999', route: /^https:\/\/21express\.co\.id\/track$/, marker: /TRACE & TRACKING/, forwarding: 'none' },
   { carrier: '360lion', number: 'WSHAR0000000199YQ',
     route: /^https:\/\/toms\.360lion\.com\/track\?trackNumber=WSHAR0000000199YQ$/,
     marker: /Enter tracking number\(s\) here/ },
@@ -1017,11 +1018,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'fastbox', number: 'FB2610010000000017',
     route: /^https:\/\/fastbox\.co\.kr\/DHUB\/tracking\.php\?fb_invoice_no=FB2610010000000017$/,
     marker: /FB Invoice No\./ },
-  // The page reads the number from its address into its search tags and looks it up on load.
-  // The tracker looks the number up and lists it with its status.
-  { carrier: 'jcex', number: 'JCZ9999999999DH',
-    route: /^https:\/\/track\.jcex\.com\/\?nums=JCZ9999999999DH$/,
-    marker: /查询不到|暂无轨迹详情|全部展开/ },
   // The page looks the number in its address up on load and answers an unknown one without it.
   { carrier: 'zto-international', number: '77100000000000',
     route: /^https:\/\/m\.ztoglobal\.com\/\?path=TrackDetails&inputNo=77100000000000&lang=en$/,
@@ -1687,11 +1683,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'postex', number: '00000000000000',
     route: /^https:\/\/postex\.pk\/tracking\?cn=00000000000000$/,
     marker: /Tracking a Call Courier shipment\?/ },
-  // The server renders the lookup and names the number above an empty timeline for an unknown code.
-  // The heading is styled in capitals.
-  { carrier: 'algerie-poste', number: 'ZZ000000014DZ',
-    route: /^https:\/\/ems\.dz\/track\/index\.php\?icd=ZZ000000014DZ$/,
-    marker: /Détails d'envoi Nº/i },
   // The server looks the code up and, finding nothing, shows only the time the search took; a code
   // that is not thirteen characters long gets a refusal instead.
   { carrier: 'corre', number: 'ZZ900000040MZ',
@@ -2540,8 +2531,8 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /Отслеживание груза|Заказ не найден/ },
   // The page looks up the number in its address on load and answers an unknown one with "Нет результатов".
   { carrier: 'skif-cargo', number: '000000009',
-    route: /^https:\/\/www\.skif-cargo\.ru\/tracking\/000000009$/,
-    marker: /Отслеживание груза|Нет результатов/ },
+    route: /^https:\/\/www\.skif-cargo\.ru\/tracking\/$/,
+    marker: /Отслеживание груза/, forwarding: 'none' },
   // The page fills its field in from the address; the lookup waits for a captcha.
   { carrier: 'flippost', number: '00-0000009',
     route: /^https:\/\/flippost\.com\/instruments\/online\/\?number=00-0000009$/,
@@ -2815,6 +2806,8 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'asyad-express': 'The web tracker requires Omani network access; the adapter reads the separate mobile guest endpoints.',
   'nepal-post': 'The internal tracker requires Nepali network access; the rendered-link check has no country-specific browser transport.',
   'russian-post': 'The public tracker requires Russian network access; the rendered-link check has no country-specific browser transport.',
+  'algerie-poste': 'The tracker answers only Algerian networks; the rendered-link check has no country-specific browser transport.',
+  jcex: 'track.jcex.com\'s CDN refuses connections from Europe, the Americas and most of Asia; the adapter asks the origin server behind it, which no public address reaches.',
   'surat-kargo': 'The public tracker requires Turkish network access; the rendered-link check has no country-specific browser transport.',
   'nhat-tin': 'The tracking page searches only after its reCAPTCHA, and its lookup service requires Vietnamese network access; the rendered-link check has neither.',
   eushipments: 'euShipments\' tracking page takes the number only in its form, which posts it to a handler, so no address opens one order',

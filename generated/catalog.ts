@@ -57437,7 +57437,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "dateOnlyScans": true
     },
     "canaryUrl": "https://www.skif-cargo.ru/tracking/",
-    "trackingUrlTemplate": "https://www.skif-cargo.ru/tracking/{trackingNumber}",
+    "trackingUrlTemplate": "https://www.skif-cargo.ru/tracking/",
     "trackingSearchUrl": "https://www.skif-cargo.ru/tracking/",
     "helpUrl": "https://www.skif-cargo.ru/contacts/",
     "linkRules": [

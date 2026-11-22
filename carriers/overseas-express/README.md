@@ -48,5 +48,5 @@ no parcel link.
 npx vitest run --config vitest.carriers-live.config.ts carriers/overseas-express
 ```
 
-`OVERSEAS_EXPRESS_TRACKING_NUMBER` overrides the public sample. Run it from an address the gateway
-admits.
+`OVERSEAS_EXPRESS_TRACKING_NUMBER` overrides the public sample. From an address the gateway
+refuses, GitHub's runners among them, the tests skip.

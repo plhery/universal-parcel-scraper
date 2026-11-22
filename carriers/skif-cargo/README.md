@@ -47,8 +47,9 @@ claims them. The samples and their sources are in [`numbers.json`](numbers.json)
 
 ## Links
 
-`www.skif-cargo.ru/tracking/{number}` opens one shipment: the page looks up the number in its
-address on load.
+The catalog links the empty tracking page. `www.skif-cargo.ru/tracking/{number}` is the page's
+address for one shipment, but its script reads the number before its router has it, so the page
+opens without looking it up.
 
 ## Testing
 

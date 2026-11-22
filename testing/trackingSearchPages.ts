@@ -56,6 +56,7 @@ export const carriersWithoutSearchPage: Partial<Record<CarrierId, string>> = {
 /** Search pages the weekly check cannot open, and why. Each was seen working in a regular browser. */
 export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'aaa-cooper': 'www.aaacooper.com refuses connections from many networks; an archived copy of the home page shows its Action Trac number field',
+  'algerie-poste': 'www.ems.dz answers only Algerian networks; an archived copy shows its tracking code field',
   'airways-courier-in': 'the AWB field stays hidden until the track button in the page header opens it; the only field shown before that is the sign-in user id',
   'aloha-freight': 'the Quick Shipment Search names its field keyword, which the check reads as a site search',
   'asyad-express': 'www.asyadexpress.om answers only Omani networks; an archived copy of the page shows its tracking number field',
@@ -74,6 +75,7 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'hi-trans': 'www.hi-trans.com.au challenges automated browsers; in a regular browser its home page has the consignment number field',
   'hr-parcel': 'the tracker names its field q, which the check reads as a site search',
   'israel-post': 'israelpost.co.il answers 403 to many networks outside Israel; an archived copy shows its item-number field',
+  jcex: 'track.jcex.com\'s CDN refuses connections from Europe, the Americas and most of Asia; reached through the origin server behind it, the page shows its number box',
   kurierzentrale: 'crm.kuz.ch keeps its Sendungsnummer field in a hidden pop-up that its "Track Auftrag" button opens, so the check finds no field on load',
   'la-poste-tunisienne': 'www.poste.tn does not answer connections from outside Tunisia; an archived copy of its home page shows the item-number field',
   'mailplus-au': 'the tracker names its field search, which the check reads as a site search',

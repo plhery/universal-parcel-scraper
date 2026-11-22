@@ -32,7 +32,7 @@
     "weight"
   ],
   "portal": {
-    "url": "https://www.skif-cargo.ru/tracking/{trackingNumber}",
+    "url": "https://www.skif-cargo.ru/tracking/",
     "searchUrl": "https://www.skif-cargo.ru/tracking/",
     "helpUrl": "https://www.skif-cargo.ru/contacts/",
     "canaryUrl": "https://www.skif-cargo.ru/tracking/",
