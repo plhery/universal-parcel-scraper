@@ -2883,6 +2883,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'joom-logistics', number: 'ZZ729461835XX',
     route: /^https:\/\/joomlogistics\.com\/en\/track\?id=ZZ729461835XX$/,
     marker: /No tracking with such tracking number|Actual tracking number:/ },
+  // The tracker looks up the air waybill in its address on the server and names it over the not-found status.
+  { carrier: 'mark-express', number: '999999990',
+    route: /^https:\/\/crm\.markerp\.in\/Frm_DocTrackWeb\.aspx\?docno=999999990$/,
+    marker: /AWB No - 999999990|Online Booking Of Specified A\.W\.B\. Is Not Found/ },
 ];
 
 /**

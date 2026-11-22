@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<head><title>
+	Tracking
+</title><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap Css -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" /><link href="css/bootstrap.min.css" rel="stylesheet" /><link href="css/style.css" rel="stylesheet" /><link rel="stylesheet" href="css/responsive.css" />
+    <script src="js/jquery-2.2.4.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<style type="text/css">
+        a {
+	        color: #F47F22;
+	        text-decoration: none;
+	        -webkit-transition: all 0.3s;
+	        -moz-transition: all 0.3s;
+	        transition: all 0.3s;
+            }
+        #tip
+        {
+            position: absolute;
+            z-index: 1000;
+            display: none;
+            padding: 5px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            word-wrap: break-word;
+        }
+        
+        .redTip
+        {
+            color: #fff;
+            background: #1C1F67;
+        }
+        
+    </style>
+	<script type="text/javascript">
+
+        $(function() {
+            $('.showTip').tip();
+        });
+
+        /* Tooltip plug-in */
+        (function($) {
+            $.fn.extend({
+                tip: function(options) {
+                    var defaults = {
+                        maxWidth: '400px',
+                        offset: 20,
+                        theme: 'redTip'
+                    };
+
+                    /*
+                    extend the options
+                    */
+                    var options = $.extend(defaults, options);
+
+                    return this.each(function() {
+                        var o = options;
+                        var instance = $(this);
+                        var theme = o.theme;
+
+                        instance.hover(function() {
+                            var item = $(this);
+                            tip = $('<div id=\'tip\'><p>' + item.attr('alt') + '</p></div>');
+                            tip.addClass(o.theme).appendTo('body');
+                            tip.show();
+                        },
+
+				function() {
+				    tip.hide();
+				}).mousemove(function(e) {
+
+				    var offset = 20;
+				    var xCord = e.pageX + offset; //Get X coodrinates
+				    var yCord = e.pageY + offset; //Get Y coordinates
+				    if (typeof tip != 'undefined') {
+				        var tipWidth = tip.width(); //Find width of tooltip
+				        if (tip.width() > parseInt(o.maxWidth, 10)) {
+				            tip.width(o.maxWidth);
+				        }
+
+				        var tipHeight = tip.height(); //Find height of tooltip
+				        var distFromRight = $(window).width() - (xCord + tipWidth);
+				        var disFromBottom = $(window).height() - (yCord + tipHeight);
+
+				        //If there is not enough space on the right or bottom side just flip it
+				        if (distFromRight < offset) {
+				            xCord = e.pageX - tipWidth - offset;
+				        } if (disFromBottom < offset) {
+				            yCord = e.pageY - tipHeight - offset;
+				        }
+				        tip.css({ left: xCord, top: yCord });
+				    }
+				});
+                    });
+                }
+            });
+        })(jQuery);
+    
+    </script>
+    
+</head>
+<body id="home">
+    <form name="Form1" method="post" action="Frm_DocTrackWeb.aspx?docno=200633738" id="Form1">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE4NjMyNDU1NjMPZBYCAgMPZBYMAgUPDxYCHgRUZXh0BQkyMDA2MzM3MzhkZAIHDw8WAh8ABRNNQU5HQUxXQVIgUEVUSC1QVU5FZGQCCQ8PFgIfAAUGTVVNQkFJZGQCCw8PFgIfAAUTMjMvMDYvMjYgLSAwOTozMCBQTWRkAg0PDxYCHwAFGkhBUkVTSCBWSVZJQU5BIE1BTEwgTVVNQkFJZGQCDw8PFgIfAAUrREVMSVZFUkVEIE9OIDI2LzA2LzI2IEJZIFRIQU5FLUhVQiAoTVVNQkFJKWRkZCLPV2BGco6sxhh6IDAf7DZnhVNQ" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="DD5CB15E" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWAgKJmp20BwLf75rwDHZaNtydsVFkJdjpXjz/mJEVU6o1" />
+</div>
+    <input name="AD" type="hidden" id="AD" />
+    <section class="we_manage_area blue_manage">
+        <div class="container">	
+            <div class="row careers_table">
+                <div class="col-md-6 col-sm-6">
+                <div>
+                    <img id="MarkLogo" src="Images/Logo.png" style="border-width:0px;" />
+                    </div>
+                    <h2 class="title">AWB No - <span id="lblDocNumber">200633738</span></h2>
+                    <div class="compare-table-are table-responsive">
+                        <table class="table">                                
+                             <tbody class="t_body">
+                                  <tr>
+                                      <td>From Center :</td>
+                                      <td><span id="txtFromCenter">MANGALWAR PETH-PUNE</span></td>                                        
+                                  </tr>
+                                  <tr>
+                                      <td>To Center :</td>
+                                      <td><span id="txtToCenter">MUMBAI</span></td>                                        
+                                  </tr>
+								  <tr>
+                                      <td>Date / Time :</td>
+                                      <td><span id="txtDate">23/06/26 - 09:30 PM</span></td>                                        
+                                  </tr>
+								  <tr>
+                                      <td>Consignee :</td>
+                                      <td><span id="txtReceiver">HARESH VIVIANA MALL MUMBAI</span></td>                                        
+                                  </tr>
+                             </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <h2 class="title">Current Status</h2>
+                    <div class="compare-table-are table-responsive">
+                        <table class="table">                                
+                           <tbody class="t_body">
+                              <tr>
+                                 <td><span id="lblStatus">DELIVERED ON 26/06/26 BY THANE-HUB (MUMBAI)</span></td>                                    
+                              </tr>
+                           </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12" style="margin-top:30px;">
+                    <h2 class="title">Transit Detail</h2>
+                    <div class="compare-table-are table-responsive">
+                        <table id="tblTrack1" class="table">
+	<tr>
+		<th class="col-sm-3">T.Type</th>
+		<th class="col-sm-3">Date</th>
+		<th class="col-sm-3">Time</th>
+		<th class="col-sm-3">Transit Route</th>
+	</tr>
+	<tr>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">IN-Scan</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">23/06/26</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">09:59 PM</td>
+		<td style="background:#fbfafa;">From: <a class="showTip" href="#" alt="<u><b>SPEED EXPRESS</b></u><br />SADGURU PARK<br />NEAR.POWER HOUSE CHOUK<br />SOMVAR PETH<br />PUNE<br />MAHARASHTRA - 411011<br />Ph: 9130051800 , 9011051800<br />Mobile: 9011051800 , ">MANGALWAR PETH-PUNE</a> To: <a class="showTip" href="#" alt="<u><b>MARK EXPRESS COURIER</b></u><br />5 B G ROAD SADHUWASWANI CHOWK<br />NEAR N.C.D.C<br />BEHIND WOODLAND HOTEL<br />PUNE<br />MAHARASHTRA - 411001<br />Ph: 9371729213 , 9371729213<br />Mobile: 9371729213 , 9371729213">PUNE-R.O</a></td>
+	</tr>
+	<tr>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">OUT-Scan</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">23/06/26</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">10:29 PM</td>
+		<td style="background:#fbfafa;">Out To  <a class="showTip" href="#" alt="<u><b>MARK EXPRESS PRIVATE LIMITED</b></u><br />OFFICE NO.NB1 AND NB4,GROUND FLOOR<br />BUILDING NAME: SONA UDYOG PREMISES CS LTD<br />PARSI PANCHAYAT ROAD, ANDHERI EAST<br />MUMBAI<br />MAHARASHTRA - 400069<br />Ph: 022-40131236/022-40131237 , 7021643214/8657019923<br />Mobile: 022-40131238 , 8657019923">MUMBAI-R.O</a> From: <a class="showTip" href="#" alt="<u><b>MARK EXPRESS COURIER</b></u><br />5 B G ROAD SADHUWASWANI CHOWK<br />NEAR N.C.D.C<br />BEHIND WOODLAND HOTEL<br />PUNE<br />MAHARASHTRA - 411001<br />Ph: 9371729213 , 9371729213<br />Mobile: 9371729213 , 9371729213">PUNE-R.O</a></td>
+	</tr>
+	<tr>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">IN-Scan</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">24/06/26</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">05:37 AM</td>
+		<td style="background:#fbfafa;">From: <a class="showTip" href="#" alt="<u><b>MARK EXPRESS COURIER</b></u><br />5 B G ROAD SADHUWASWANI CHOWK<br />NEAR N.C.D.C<br />BEHIND WOODLAND HOTEL<br />PUNE<br />MAHARASHTRA - 411001<br />Ph: 9371729213 , 9371729213<br />Mobile: 9371729213 , 9371729213">PUNE-R.O</a> To: <a class="showTip" href="#" alt="<u><b>MARK EXPRESS PRIVATE LIMITED</b></u><br />OFFICE NO.NB1 AND NB4,GROUND FLOOR<br />BUILDING NAME: SONA UDYOG PREMISES CS LTD<br />PARSI PANCHAYAT ROAD, ANDHERI EAST<br />MUMBAI<br />MAHARASHTRA - 400069<br />Ph: 022-40131236/022-40131237 , 7021643214/8657019923<br />Mobile: 022-40131238 , 8657019923">MUMBAI-R.O</a></td>
+	</tr>
+	<tr>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">OUT-Scan</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">24/06/26</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">08:53 AM</td>
+		<td style="background:#fbfafa;">Out To  <a class="showTip" href="#" alt="<u><b>MARK EXPRESS PVT LTD</b></u><br />AMARGYAN SOCIETY MAIN SIGNAL,<br />OPP S.T.WORKSHOP,L B S MARG 11-A<br />KHOPAT, THANE WEST<br />THANE<br />MAHARASHTRA - 400601<br />Ph: 7808695960 , 02245701668<br />Mobile: 7808695960 , ">THANE-HUB (MUMBAI)</a> From: <a class="showTip" href="#" alt="<u><b>MARK EXPRESS PRIVATE LIMITED</b></u><br />OFFICE NO.NB1 AND NB4,GROUND FLOOR<br />BUILDING NAME: SONA UDYOG PREMISES CS LTD<br />PARSI PANCHAYAT ROAD, ANDHERI EAST<br />MUMBAI<br />MAHARASHTRA - 400069<br />Ph: 022-40131236/022-40131237 , 7021643214/8657019923<br />Mobile: 022-40131238 , 8657019923">MUMBAI-R.O</a></td>
+	</tr>
+	<tr>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">IN-Scan</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">24/06/26</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">11:48 AM</td>
+		<td style="background:#fbfafa;">From: <a class="showTip" href="#" alt="<u><b>MARK EXPRESS PRIVATE LIMITED</b></u><br />OFFICE NO.NB1 AND NB4,GROUND FLOOR<br />BUILDING NAME: SONA UDYOG PREMISES CS LTD<br />PARSI PANCHAYAT ROAD, ANDHERI EAST<br />MUMBAI<br />MAHARASHTRA - 400069<br />Ph: 022-40131236/022-40131237 , 7021643214/8657019923<br />Mobile: 022-40131238 , 8657019923">MUMBAI-R.O</a> To: <a class="showTip" href="#" alt="<u><b>MARK EXPRESS PVT LTD</b></u><br />AMARGYAN SOCIETY MAIN SIGNAL,<br />OPP S.T.WORKSHOP,L B S MARG 11-A<br />KHOPAT, THANE WEST<br />THANE<br />MAHARASHTRA - 400601<br />Ph: 7808695960 , 02245701668<br />Mobile: 7808695960 , ">THANE-HUB (MUMBAI)</a></td>
+	</tr>
+</table>
+
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12" style="margin-top:30px;">
+                    <h2 class="title">Delivery Detail</h2>
+                    <div class="compare-table-are table-responsive">
+                        <table id="tblDelivery" class="table">
+	<tr>
+		<th class="col-sm-3">Date/Time</th>
+		<th class="col-sm-3">Delivery Branch</th>
+		<th class="col-sm-3">Receiver</th>
+		<th class="col-sm-3">Status</th>
+		<th class="col-sm-3">Scan</th>
+	</tr>
+	<tr>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">26/06/26-02:57 PM</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;"><a class="showTip" href="#" alt="<u><b>MARK EXPRESS PVT LTD</b></u><br />AMARGYAN SOCIETY MAIN SIGNAL,<br />OPP S.T.WORKSHOP,L B S MARG 11-A<br />KHOPAT, THANE WEST<br />THANE<br />MAHARASHTRA - 400601<br />Ph: 7808695960 , 02245701668<br />Mobile: 7808695960 , ">THANE-HUB (MUMBAI)</a></td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">HARESH VIVIANA MALL MUMBAI</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;">DELIVERED</td>
+		<td style="background:#fbfafa;border-bottom:1px solid #f6f6f6;border-right:1px solid #f6f6f6;"></td>
+	</tr>
+</table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>        
+    </form>
+</body>
+</html> 
