@@ -821,6 +821,10 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
       shipment.trackInfos = [receipt, { ...row('2026-05-17 23:01:00', 0, 'Out of stores'), trackStage: null }, order];
     }), DELIVERED);
     expect(stored.events!.map((event) => event.stage)).toEqual(['accepted', undefined, 'registered']);
+    const stocks = parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos = [receipt, { ...row('2026-05-17 23:01:00', 0, 'Out of stocks'), trackStage: null }, order];
+    }), DELIVERED);
+    expect(stocks.events!.map((event) => event.stage)).toEqual(['accepted', undefined, 'registered']);
     // After a flight it is the first centre in the destination country.
     const flown = parseImile(changed('delivered', (shipment) => {
       shipment.trackInfos = [receipt, row('2026-05-17 06:40:00', 1002, '【HKG】The flight has taken off.'), order];
