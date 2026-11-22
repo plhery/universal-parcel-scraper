@@ -2554,6 +2554,12 @@
     "reason": "LibanPost's PX numbers have a single public lookup, too little to claim the layout."
   },
   {
+    "carrier": "liberty-express",
+    "pattern": "^WR01\\d{9}(?:\\d{4})?$",
+    "kind": "collision",
+    "reason": "Liberty Express's warehouse receipts, and its package labels that add four digits, share the WR01 layout of BM Cargo's receipts, so the shape cannot name Liberty Express."
+  },
+  {
     "carrier": "liccardi",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

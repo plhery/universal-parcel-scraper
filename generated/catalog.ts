@@ -40199,12 +40199,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Caracas",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "liberty-express",
+      "localClocks": true
     },
     "canaryUrl": "https://iqpack.libertyexpress.com/SearchGuide",
     "trackingSearchUrl": "https://iqpack.libertyexpress.com/SearchGuide",
     "helpUrl": "https://libertyexpress.com/es-us/contacto/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "iqpack.libertyexpress.com"
+        ],
+        "pathPattern": "^/Tracking$",
+        "params": [
+          "nGuia"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "libya-post": {

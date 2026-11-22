@@ -1,5 +1,27 @@
 {
   "carrier": "liberty-express",
-  "gap": "No public page shows a Liberty Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "WR01-5028292620001",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trustpilot.com/reviews/6aece752ecfb6e68e00eab8e",
+        "date": "2026-11-05",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "A customer's Trustpilot review gives it as the number of an Amazon purchase received at their Liberty Express mailbox in Miami. The tracker's search finds it as the first package of warehouse receipt WR01-502829262, which it shows received in Doral, flown to Venezuela and ready for collection."
+    }
+  ]
 }

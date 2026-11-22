@@ -1,4 +1,13 @@
 {
   "carrier": "liberty-express",
-  "entries": []
+  "entries": [
+    {"wording": "Recibido en centro de distribucion", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "The Doral warehouse received the purchase for the customer's mailbox."},
+    {"wording": "Empacado, listo para ser embarcado", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The warehouse packed the receipt for its flight."},
+    {"wording": "A bordo, para ser transportado a su destino", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The receipt is on board, on its way to the destination country."},
+    {"wording": "Facturado OnLine", "stage": null, "language": "es", "confirmedBy": "live", "note": "The shipment was billed online; nothing about where the parcel is."},
+    {"wording": "Recibido en centro de distribucion local", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The distribution center in the destination country received it."},
+    {"wording": "Transferido", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Sent on from the distribution center to the branch."},
+    {"wording": "En Auditoria para entrega", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Checked at the branch before it is handed over."},
+    {"wording": "Disponible para su retiro", "stage": "ready_for_pickup", "language": "es", "confirmedBy": "live", "note": "Waiting at the branch for the customer to collect."}
+  ]
 }

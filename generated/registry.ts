@@ -563,6 +563,7 @@ import { adapter as lexMy } from '../carriers/lex-my/adapter.js';
 import { adapter as lexTh } from '../carriers/lex-th/adapter.js';
 import { adapter as lhtex } from '../carriers/lhtex/adapter.js';
 import { adapter as libanpost } from '../carriers/libanpost/adapter.js';
+import { adapter as libertyExpress } from '../carriers/liberty-express/adapter.js';
 import { adapter as liccardi } from '../carriers/liccardi/adapter.js';
 import { adapter as lietuvosPastas } from '../carriers/lietuvos-pastas/adapter.js';
 import { adapter as lightningExpress } from '../carriers/lightning-express/adapter.js';
@@ -1642,6 +1643,7 @@ export const REGISTRY: RegistryDefinition = {
     "lex-th": lexTh,
     "lhtex": lhtex,
     "libanpost": libanpost,
+    "liberty-express": libertyExpress,
     "liccardi": liccardi,
     "lietuvos-pastas": lietuvosPastas,
     "lightning-express": lightningExpress,
@@ -3218,7 +3220,7 @@ export const REGISTRY: RegistryDefinition = {
     "lhtex": "lhtex",
     "libang-logistics": "universal",
     "libanpost": "libanpost",
-    "liberty-express": "universal",
+    "liberty-express": "liberty-express",
     "libya-post": "universal",
     "liccardi": "liccardi",
     "lietuvos-pastas": "lietuvos-pastas",
