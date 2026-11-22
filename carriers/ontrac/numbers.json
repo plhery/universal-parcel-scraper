@@ -443,6 +443,21 @@
         ]
       },
       "note": "A shipper reference archived from an OnTrac tracking link. OnTrac's tracker resolved it to the parcel and returned its history under the parcel's own number."
+    },
+    {
+      "number": "C26011599999907",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "paack",
+          "ecoscooting"
+        ]
+      },
+      "note": "Made-up SHEIN package number, C, the order date and eight digits, whose last digit passes OnTrac's check. OnTrac's C rule leaves SHEIN's dated numbers to the SHEIN rules."
     }
   ]
 }

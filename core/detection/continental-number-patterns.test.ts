@@ -420,6 +420,14 @@ describe('SHEIN package numbers Paack and Ecoscooting deliver in Spain', () => {
       expect(recognitionAskedCarriers('C26010100000001', { countryHint })).toEqual(asked);
     },
   );
+
+  it('leaves OnTrac out of one whose last digit passes OnTrac’s check', () => {
+    expect(CHECKSUMS.ontrac('C26011599999907')).toBe(true);
+    expect(detectCarrierMatch('C26011599999907')).toMatchObject({ carrier: 'unknown', candidates: ['paack', 'ecoscooting'] });
+    expect(recognitionAskedCarriers('C26011599999907', { countryHint: 'US' })).toEqual([]);
+    // OnTrac's other C numbers keep its suggestion.
+    expect(detectCarrierMatch('C36011599999907').candidates ?? []).toEqual(CHECKSUMS.ontrac('C36011599999907') ? ['ontrac'] : []);
+  });
 });
 
 describe('Paack label numbers of eighteen digits', () => {
