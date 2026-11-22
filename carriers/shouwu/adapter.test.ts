@@ -605,6 +605,10 @@ describe('Shouwu International status vocabulary', () => {
     expect(shouwuStage('Flight departed, package in transit')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 
+  it("reads the last mile's first facility after the destination's customs as transit", () => {
+    expect(shouwuStage('Processing at Origin Facility')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+  });
+
   it('reads the last mile\'s return as on its way back, whatever reason it names', () => {
     expect(shouwuStage('Back to Sender for reason: refused by the recipient')).toEqual({ stage: 'exception', source: 'carrier_map' });
     expect(statusMap.stage(null, 'back to sender for reason: sample reason')).toBe('exception');
