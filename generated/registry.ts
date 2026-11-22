@@ -877,6 +877,7 @@ import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
+import { adapter as sutengExpress } from '../carriers/suteng-express/adapter.js';
 import { adapter as sway } from '../carriers/sway/adapter.js';
 import { adapter as swiftx } from '../carriers/swiftx/adapter.js';
 import { adapter as swireShipping } from '../carriers/swire-shipping/adapter.js';
@@ -1934,6 +1935,7 @@ export const REGISTRY: RegistryDefinition = {
     "sundarban-courier": sundarbanCourier,
     "sunyou": sunyou,
     "surat-kargo": suratKargo,
+    "suteng-express": sutengExpress,
     "sway": sway,
     "swiftx": swiftx,
     "swire-shipping": swireShipping,
@@ -3769,6 +3771,7 @@ export const REGISTRY: RegistryDefinition = {
     "super-parcel-track": "universal",
     "superb-express": "universal",
     "surat-kargo": "surat-kargo",
+    "suteng-express": "suteng-express",
     "suto-logistics": "universal",
     "svenns-transport": "universal",
     "svuum": "universal",

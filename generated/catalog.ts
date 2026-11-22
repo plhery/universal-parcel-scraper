@@ -59744,6 +59744,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "suteng-express": {
+    "displayName": "Suteng Express",
+    "color": "#1b64b3",
+    "aliases": [
+      "STE Express",
+      "速腾快递",
+      "速腾物流",
+      "广东速腾物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "suteng-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.ste56.com/",
+    "trackingSearchUrl": "https://www.ste56.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "suto-logistics": {
     "displayName": "Suto Logistics",
     "color": "#1b2b56",
@@ -72355,6 +72379,7 @@ export const CARRIER_IDS = [
   "super-parcel-track",
   "superb-express",
   "surat-kargo",
+  "suteng-express",
   "suto-logistics",
   "svenns-transport",
   "svuum",
@@ -74367,6 +74392,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "super-parcel-track": [],
   "superb-express": [],
   "surat-kargo": [],
+  "suteng-express": [],
   "suto-logistics": [],
   "svenns-transport": [],
   "svuum": [],

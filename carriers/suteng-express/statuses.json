@@ -1,0 +1,53 @@
+{
+  "carrier": "suteng-express",
+  "entries": [
+    {
+      "code": "已收件",
+      "wording": "【…市】【…】的【…】已收件",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "The collecting branch's courier took the parcel in; the adapter leaves the courier's name out."
+    },
+    {
+      "code": "装车",
+      "wording": "快件在【…】【…】装车,正发往【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Loaded at a branch or hub for the next one."
+    },
+    {
+      "code": "快件到达",
+      "wording": "快件到达【…】【…】",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Reached a hub or the delivering branch."
+    },
+    {
+      "code": "二次分拣",
+      "wording": "【…市】…已二次分拣，安检通过",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Sorted a second time and passed the security check at the Humen hub."
+    },
+    {
+      "code": "正在派件",
+      "wording": "【…市】【…】的【…】正在派件",
+      "stage": "out_for_delivery",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "A courier of the delivering branch is out with it; the carrier names the courier and their phone, which the adapter leaves out."
+    },
+    {
+      "code": "签收",
+      "wording": "派件已【签收】,签收人是【…】签收网点是【…】【…】",
+      "stage": "delivered",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "Signed for at the delivering branch; the adapter leaves the signatory out."
+    }
+  ]
+}
