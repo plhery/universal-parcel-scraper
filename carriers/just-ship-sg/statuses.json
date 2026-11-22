@@ -1,0 +1,155 @@
+{
+  "carrier": "just-ship-sg",
+  "entries": [
+    {
+      "code": "created",
+      "wording": "Order Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The shipment was booked; JustShip has not collected it yet."
+    },
+    {
+      "code": "arrived_origin_sorting_facility",
+      "wording": "Arrived at origin sorting facility",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The parcel reached JustShip's facility in Singapore after its pickup."
+    },
+    {
+      "code": "processed",
+      "wording": "Processed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "ready_for_international_transit",
+      "wording": "Ready for international transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22",
+      "note": "The parcel left the origin facility with the carrier that flies it abroad."
+    },
+    {
+      "code": "in_transit",
+      "wording": "In transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "arrived_dest_airport",
+      "wording": "Arrived at destination airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "arrived_dest_sorting_facility",
+      "wording": "Arrived at destination sorting facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "handed_off_to_last_mile_delivery_partner",
+      "wording": "Handed off to last-mile delivery partner",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "out_for_delivery",
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "available_for_collection",
+      "wording": "Available for collection",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "delay",
+      "wording": "Delay",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The tracking page groups it with the customs hold and the delivery exception as an issue."
+    },
+    {
+      "code": "held_at_customs",
+      "wording": "Held at customs",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "cleared_customs",
+      "wording": "Cleared customs",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "disposed",
+      "wording": "Disposed",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The parcel was destroyed or abandoned, not delivered."
+    },
+    {
+      "code": "lost",
+      "wording": "Lost",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "returned",
+      "wording": "Returned",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "delivery_exception",
+      "wording": "Delivery exception",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "delivered_with_damage",
+      "wording": "Delivered with damage",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The parcel reached the recipient; the damage is the recipient's claim, not a failed delivery."
+    },
+    {
+      "code": "delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "code": "cancelled",
+      "wording": "Cancelled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The booking was cancelled."
+    }
+  ]
+}

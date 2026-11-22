@@ -1,0 +1,84 @@
+{
+  "id": "just-ship-sg",
+  "displayName": "JustShip",
+  "aliases": [
+    "Just Ship",
+    "JustShip Singapore"
+  ],
+  "region": {
+    "countries": [
+      "SG"
+    ]
+  },
+  "brand": {
+    "color": "#6211CB"
+  },
+  "selectable": true,
+  "timezone": "Asia/Singapore",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "just-ship-sg",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "destination_country",
+    "service_name",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.justship.sg/tracking?trackingNumber={trackingNumber}",
+    "searchUrl": "https://www.justship.sg/tracking",
+    "helpUrl": "https://www.justship.sg/contact-us",
+    "canaryUrl": "https://www.justship.sg/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "destination",
+      "destination_country",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "destination_country",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "destination"
+    ],
+    "unavailable": [
+      "eta",
+      "proof_of_delivery",
+      "signatory",
+      "recipient_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "justship.sg"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "trackingNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

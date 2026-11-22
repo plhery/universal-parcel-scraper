@@ -2723,6 +2723,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/tracking\.wearewarp\.com\/S-00000-0000$/,
     marker: /We couldn.t find a shipment with that code/,
     shipmentNotFound: { status: 404, marker: /We couldn.t find a shipment with that code/ } },
+  // The page looks the shipping ID in its address up as it loads and names an unknown one in its notice.
+  { carrier: 'just-ship-sg', number: '000000A000R00',
+    route: /^https:\/\/www\.justship\.sg\/tracking\?trackingNumber=000000A000R00$/,
+    marker: /No shipment found with tracking number 000000A000R00/ },
 ];
 
 /**

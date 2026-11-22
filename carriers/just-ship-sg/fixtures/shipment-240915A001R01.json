@@ -1,0 +1,78 @@
+{
+  "shipment": {
+    "packages": [
+      {
+        "key": "00000000-0000-0000-0000-000000000000",
+        "validLength": "none",
+        "validWidth": "none",
+        "validHeight": "none",
+        "validWeight": "none",
+        "length": "29",
+        "width": "13",
+        "height": "14",
+        "weight": "1",
+        "volumetricWeight": 1.0556,
+        "packingType": "No",
+        "packageID": "240915A001R01P01",
+        "verifiedLength": 29,
+        "verifiedWidth": 13,
+        "verifiedHeight": 14,
+        "verifiedWeight": "1.96",
+        "verifiedVolumetricWeight": "1.0556",
+        "isRemoved": false,
+        "isVerified": true,
+        "isShippedOut": true
+      }
+    ],
+    "senderCountry": "Singapore",
+    "recipientCity": "Leipzig",
+    "recipientState": "",
+    "recipientCountry": "DE",
+    "DOPU": "PU",
+    "shippingMethod": "EXPRESS",
+    "collectionDate": "2024-09-16",
+    "time": "9:00 am - 6:45 pm",
+    "shippingID": "240915A001R01",
+    "submissionDateTime": "Sat Sep 14 2024 16:03:37 GMT+0000 (Coordinated Universal Time)",
+    "isCancelled": false,
+    "shipmentUnpaidForTooLong": false,
+    "topupButton": 6,
+    "isVerified": true
+  },
+  "trackingHistory": [
+    {
+      "status": "created",
+      "createdAt": "2024-09-14T16:03:37.000Z",
+      "name": "Order Created"
+    },
+    {
+      "id": "658409",
+      "trackingInfoID": "40677",
+      "status": "ready_for_international_transit",
+      "payload": null,
+      "createdAt": "2024-09-18T08:33:05.000Z",
+      "fromLocationType": "origin_sorting_facility",
+      "toLocationType": "recipient",
+      "fromLocationName": "Origin Sorting Facility",
+      "toLocationName": "Recipient",
+      "name": "Ready for international transit"
+    },
+    {
+      "id": "44383",
+      "trackingInfoID": "40677",
+      "status": "delivered",
+      "payload": null,
+      "createdAt": "2024-09-23T17:01:36.000Z",
+      "fromLocationType": "origin_sorting_facility",
+      "toLocationType": "recipient",
+      "fromLocationName": "Origin Sorting Facility",
+      "toLocationName": "Recipient",
+      "name": "Delivered"
+    }
+  ],
+  "trackingInfo": {
+    "shippingProvider": "FedEx",
+    "trackingNumber": "778632108403",
+    "url": "https://www.fedex.com/fedextrack/?action=track&tracknumbers=778632108403"
+  }
+}
