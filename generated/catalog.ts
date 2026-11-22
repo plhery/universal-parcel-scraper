@@ -16564,9 +16564,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "cmt-express",
       "recognitionRank": 26
     },
-    "canaryUrl": "https://www.cmtexpress.com.cn/track.aspx",
+    "canaryUrl": "https://tms.cmtexpress.com.cn/en/trackIndex.htm",
     "trackingUrlTemplate": "https://tms.cmtexpress.com.cn/en/trackIndex.htm?documentCode={trackingNumber}",
-    "trackingSearchUrl": "https://www.cmtexpress.com.cn/track.aspx",
+    "trackingSearchUrl": "https://tms.cmtexpress.com.cn/en/trackIndex.htm",
     "linkRules": [
       {
         "domains": [
@@ -24579,7 +24579,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "envialia",
       "recognitionRank": 260
     },
-    "canaryUrl": "https://www.envialia.com/",
+    "canaryUrl": "https://app.ontime.es/axis2/services/EnvialiaMobileService2.00.02.EnvialiaMobileService2.00.02HttpSoap12Endpoint",
     "linkRules": [],
     "detectionRules": []
   },
@@ -29601,7 +29601,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://pda.gfedi.net/rcserver",
+    "canaryUrl": "https://gfas.no/",
     "trackingUrlTemplate": "https://pda.gfedi.net/rcserver?o=900&SP=401{trackingNumber}",
     "trackingSearchUrl": "https://gfas.no/",
     "helpUrl": "https://gfas.no/kontakt-oss/",

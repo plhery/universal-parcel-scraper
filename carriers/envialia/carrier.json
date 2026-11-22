@@ -32,7 +32,7 @@
     "eta"
   ],
   "portal": {
-    "canaryUrl": "https://www.envialia.com/",
+    "canaryUrl": "https://app.ontime.es/axis2/services/EnvialiaMobileService2.00.02.EnvialiaMobileService2.00.02HttpSoap12Endpoint",
     "shows": [
       "status",
       "eta",

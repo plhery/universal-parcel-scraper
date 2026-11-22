@@ -1,8 +1,8 @@
 # Envialia
 
-Tracks Envialia shipments in Spain through the guest search of Alina, the official app that
-`www.envialia.com` links. Envialia is now part of Ontime, and the same service answers for
-Ontime's own consignment notes in this shape, so Ontime's names count as Envialia's.
+Tracks Envialia shipments in Spain through the guest search of Alina, Envialia's official app.
+Envialia is now part of Ontime, and the same service answers for Ontime's own consignment notes
+in this shape, so Ontime's names count as Envialia's.
 
 ## How it works
 
@@ -43,9 +43,9 @@ published, so no detection rule claims these numbers.
 
 ## Limitations
 
-The old tracker at `www.envialia.com/seguimiento/` is gone. Ontime's guest web tracker and the
-service's web operation need the destination postcode, so neither is used; on the tracker, an
-unknown number and a wrong postcode get the same reply. Searches by sender reference are not
+`www.envialia.com` and its old tracker no longer answer, so the canary probes the app's service.
+Ontime's guest web tracker and the service's web operation need the destination postcode, so
+neither is used; on the tracker, an unknown number and a wrong postcode get the same reply. Searches by sender reference are not
 used. A state code the map does not know stays without a stage.
 
 ## Live test

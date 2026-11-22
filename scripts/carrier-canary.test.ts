@@ -1,3 +1,4 @@
+import { constants } from 'node:crypto';
 import fs from 'node:fs';
 import { request } from 'node:https';
 import os from 'node:os';
@@ -307,12 +308,18 @@ describe('carrier front-door canaries', () => {
   it('reads the status of a front door whose reply only Node refuses', async () => {
     vi.stubGlobal('fetch', vi.fn()
       .mockRejectedValueOnce(fetchFailure({ code: 'UNABLE_TO_VERIFY_LEAF_SIGNATURE' }))
+      .mockRejectedValueOnce(fetchFailure({ code: 'ERR_SSL_UNSAFE_LEGACY_RENEGOTIATION_DISABLED' }))
       .mockRejectedValueOnce(fetchFailure({ name: 'HTTPParserError' })));
 
     answerLooseRead(200, 'UNABLE_TO_VERIFY_LEAF_SIGNATURE');
     expect(await requestCanaryStatus(target.url, 1000)).toBe(200);
-    expect(request).toHaveBeenCalledWith(target.url,
-      expect.objectContaining({ rejectUnauthorized: false, insecureHTTPParser: true }), expect.any(Function));
+    expect(request).toHaveBeenCalledWith(target.url, expect.objectContaining({
+      rejectUnauthorized: false, secureOptions: constants.SSL_OP_LEGACY_SERVER_CONNECT, insecureHTTPParser: true,
+    }), expect.any(Function));
+
+    // A server without secure renegotiation answers the lenient read.
+    answerLooseRead(200, null);
+    expect(await requestCanaryStatus(target.url, 1000)).toBe(200);
 
     // The status still decides: a missing page fails the probe.
     answerLooseRead(404, null);

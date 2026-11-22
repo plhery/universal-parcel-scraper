@@ -142,7 +142,7 @@ jobs:
     needs: gate
     if: ${{ needs.gate.outputs.run == 'true' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     outputs:
       failures: ${{ steps.links.outputs.failures }}
     steps:
@@ -171,7 +171,7 @@ jobs:
     needs: gate
     if: ${{ needs.gate.outputs.run == 'true' && needs.gate.outputs.weekly == 'true' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 90
     outputs:
       failures: ${{ steps.search.outputs.failures }}
     steps:
@@ -187,8 +187,9 @@ jobs:
         id: search
         env:
           CANARY_SUMMARY_TITLE: Carrier search pages at phone size
-        # Four pages at once, like the tracking links.
-        run: npm run test:search-pages -- --retry.count 1 --retry.delay 70000 --maxConcurrency 4
+        # Eight pages at once: the list is nearly three times the tracking
+        # links', and a timed-out job reports none of its checks.
+        run: npm run test:search-pages -- --retry.count 1 --retry.delay 70000 --maxConcurrency 8
 
   report:
     name: Track failures in an issue

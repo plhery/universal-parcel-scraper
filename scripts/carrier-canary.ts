@@ -1,10 +1,10 @@
+import { constants } from 'node:crypto';
 import { request } from 'node:https';
 import { isIP } from 'node:net';
 import { pathToFileURL } from 'node:url';
 import catalog from '../data/catalog.json' with { type: 'json' };
 const contract = { 'x-carriers': catalog };
 import { writeCanaryReport } from './canary-report.mjs';
-import { DEFAULT_USER_AGENT } from '../core/transport/userAgent.js';
 import type { CarrierId } from '../generated/catalog.js';
 
 /**
@@ -19,6 +19,7 @@ export const unreachableFrontDoors: Partial<Record<CarrierId, string>> = {
   azerpost: 'www.azerpost.az does not answer connections from the United States; European networks get its tracking page',
   'cargo-expreso': 'cargoexpreso.com does not answer connections from European and American networks; the Internet Archive reaches it',
   cupost: 'www.cupost.co.kr does not answer connections from European and American networks; the Internet Archive reaches it',
+  'first-delivery-tn': 'www.firstdeliverygroup.com answers only Tunisian networks',
   flyking: 'www.flyking.in resets every HTTPS connection and serves its tracker over plain HTTP to Indian networks only',
   'iran-post': 'tracking.post.ir answers only Iranian networks',
   jcex: 'track.jcex.com\'s CDN refuses connections from Europe, the Americas and most of Asia',
@@ -45,11 +46,15 @@ const PROBE_HEADERS = {
   Accept: 'text/html,application/json;q=0.8,*/*;q=0.5',
   // A browser names a language. WanbExpress answers Node's default `*` with a 500.
   'Accept-Language': 'en',
-  'User-Agent': DEFAULT_USER_AGENT,
+  // The front door is the page a reader's browser opens. Some servers
+  // reset every request from a "Mozilla/5.0 (compatible; …)" client.
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
 };
 // The server sends its own certificate and leaves the rest of the chain to the
 // client. A browser fetches the missing certificate; Node does not.
 const INCOMPLETE_CHAIN = 'UNABLE_TO_VERIFY_LEAF_SIGNATURE';
+// The server predates secure renegotiation. A browser still connects; OpenSSL 3 refuses.
+const LEGACY_RENEGOTIATION = 'ERR_SSL_UNSAFE_LEGACY_RENEGOTIATION_DISABLED';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -147,22 +152,28 @@ export function automaticCanaryTargets(
   return targets;
 }
 
-/** A reply a browser reads and Node refuses: an incomplete certificate chain or a malformed header. */
+/**
+ * A reply a browser reads and Node refuses: an incomplete certificate chain, a
+ * server without secure renegotiation or a malformed header.
+ */
 function refusedByNodeOnly(error: unknown): boolean {
   const cause = isRecord(error) ? error.cause : undefined;
-  return isRecord(cause) && (cause.code === INCOMPLETE_CHAIN || cause.name === 'HTTPParserError');
+  return isRecord(cause) && (cause.code === INCOMPLETE_CHAIN || cause.code === LEGACY_RENEGOTIATION
+    || cause.name === 'HTTPParserError');
 }
 
 /**
  * Reads the status of a front door whose reply only Node refuses. The probe
- * sends no secret and reads no body, so it can skip the chain check and parse
- * headers loosely; any other certificate fault still fails.
+ * sends no secret and reads no body, so it can skip the chain check, accept a
+ * server without secure renegotiation and parse headers loosely; any other
+ * certificate fault still fails.
  */
 function requestLenientCanaryStatus(url: string, timeoutMs: number): Promise<number> {
   return new Promise((resolve, reject) => {
     const lookup = request(url, {
       headers: PROBE_HEADERS,
       rejectUnauthorized: false,
+      secureOptions: constants.SSL_OP_LEGACY_SERVER_CONNECT,
       insecureHTTPParser: true,
       signal: AbortSignal.timeout(timeoutMs),
     }, (response) => {

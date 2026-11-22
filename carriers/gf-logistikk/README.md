@@ -20,7 +20,8 @@ against.
 
 The tracking form on GF's home page builds the tracker's address, so the catalog's search page is
 that home page. The form sends to plain HTTP; the catalog uses HTTPS. Links to `/rcserver` with
-`o=900` give the number that follows `401` in `SP`.
+`o=900` give the number that follows `401` in `SP`. The canary probes the home page, because the
+tracker's replies carry a header name with a space, which Node refuses and browsers read.
 
 ## Testing
 

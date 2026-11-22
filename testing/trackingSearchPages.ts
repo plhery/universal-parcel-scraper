@@ -71,6 +71,7 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'designer-transport': 'the tracker names its field search, which the check reads as a site search',
   dtdc: 'www.dtdc.com refuses connections from many networks outside India; an archived phone-size copy shows its number field',
   'emirates-post': 'emiratespost.ae answers 403 to many networks outside the UAE; an archived copy shows its number field',
+  'first-delivery-tn': 'www.firstdeliverygroup.com answers only Tunisian networks; an archived copy shows its waybill number field',
   'grand-slam-express': 'the AWB field on www.grandslamexpress.in/Web/Track is hidden on phone-sized screens, which the check uses; the desktop page shows it',
   'hi-trans': 'www.hi-trans.com.au challenges automated browsers; in a regular browser its home page has the consignment number field',
   'hr-parcel': 'the tracker names its field q, which the check reads as a site search',

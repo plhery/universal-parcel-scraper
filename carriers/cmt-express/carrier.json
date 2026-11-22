@@ -39,8 +39,8 @@
   ],
   "portal": {
     "url": "https://tms.cmtexpress.com.cn/en/trackIndex.htm?documentCode={trackingNumber}",
-    "searchUrl": "https://www.cmtexpress.com.cn/track.aspx",
-    "canaryUrl": "https://www.cmtexpress.com.cn/track.aspx",
+    "searchUrl": "https://tms.cmtexpress.com.cn/en/trackIndex.htm",
+    "canaryUrl": "https://tms.cmtexpress.com.cn/en/trackIndex.htm",
     "shows": [
       "status",
       "history",
