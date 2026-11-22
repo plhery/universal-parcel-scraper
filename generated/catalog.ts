@@ -36731,7 +36731,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jetspeed",
+      "recognitionRank": 34,
+      "localClocks": true
     },
     "canaryUrl": "https://www.jetspeed-express.com/",
     "trackingUrlTemplate": "https://www.jetspeed-express.com/search_kuai_di/search/orderid/{trackingNumber}",

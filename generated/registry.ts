@@ -507,6 +507,7 @@ import { adapter as jerseyPost } from '../carriers/jersey-post/adapter.js';
 import { adapter as jetLogistic } from '../carriers/jet-logistic/adapter.js';
 import { adapter as jetizz } from '../carriers/jetizz/adapter.js';
 import { adapter as jetlineCouriers } from '../carriers/jetline-couriers/adapter.js';
+import { adapter as jetspeed } from '../carriers/jetspeed/adapter.js';
 import { adapter as jhgj } from '../carriers/jhgj/adapter.js';
 import { adapter as jiayang } from '../carriers/jiayang/adapter.js';
 import { adapter as jifan } from '../carriers/jifan/adapter.js';
@@ -1586,6 +1587,7 @@ export const REGISTRY: RegistryDefinition = {
     "jet-logistic": jetLogistic,
     "jetizz": jetizz,
     "jetline-couriers": jetlineCouriers,
+    "jetspeed": jetspeed,
     "jhgj": jhgj,
     "jiayang": jiayang,
     "jifan": jifan,
@@ -3109,7 +3111,7 @@ export const REGISTRY: RegistryDefinition = {
     "jetizz": "jetizz",
     "jetline-couriers": "jetline-couriers",
     "jetpak": "universal",
-    "jetspeed": "universal",
+    "jetspeed": "jetspeed",
     "jhgj": "jhgj",
     "jiachen-express": "universal",
     "jiayang": "jiayang",

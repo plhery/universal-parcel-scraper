@@ -1,6 +1,6 @@
 {
   "carrier": "jetspeed",
-  "gap": "No public page shows a JETSPEED tracking number.",
+  "gap": "No public page shows a JETSPEED parcel's number: the tracker's own example is not a parcel.",
   "records": [
     {
       "number": "JSD000000000199",
@@ -16,6 +16,28 @@
         ]
       },
       "note": "Made-up number in the shape of a parcel the app tracked, which a universal provider and JETSPEED's tracker filed under JETSPEED: JSD and twelve digits."
+    },
+    {
+      "number": "JSD663050036173",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.jetspeed-express.com/cms/c/orders",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "jetspeed"
+        ]
+      },
+      "note": "The example JETSPEED's tracking page prints in its search box and under it. The tracker does not know it."
     }
   ]
 }

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!--  关闭 ThinkPHP 全局布局：本页为控制器独立页，自带完整 HTML，
+       不允许外层模板再套一层（否则会出现两套 DOCTYPE / 导航 / 页脚）。 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>运单轨迹查询 - 捷速达国际快运有限公司</title>
+  <meta name="keywords" content="运单查询,物流轨迹,捷速达国际快运"/>
+  <meta name="description" content="按运单号查询揽收、入仓、干线、清关与派送各作业节点记录。"/>
+
+  <!-- 与 default/common/layout.html 完全一致的新版资源 -->
+  <link rel="stylesheet" href="/static/css/theme.css" id="themeLink" />
+  <script src="/static/js/canvas-scenes.js" defer></script>
+  <script src="/static/js/nav.js" defer></script>
+  <script src="/static/js/nav-lang.js" defer></script>
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/layer/layer.js"></script>
+  <link rel="stylesheet" href="/static/js/layer/skin/layer.css" id="layui_layer_skinlayercss" />
+
+  <style>
+    .query-hero { padding: calc(var(--nav-h) + 54px) 0 40px; background: var(--navy) url("/static/images/news.jpg") center/cover no-repeat; color: #fff; position: relative; overflow: hidden; }
+    .query-hero::before { content:""; position:absolute; inset:0; background:linear-gradient(100deg,rgba(0,51,102,.97),rgba(0,73,144,.8)); z-index:1; }
+    .query-hero .panel-inner { z-index: 2; }
+    .query-hero h1 { font-size: clamp(28px,3.6vw,44px); margin:0 0 8px; }
+    .query-hero p { margin:0; color:rgba(255,255,255,.72); }
+    .query-body { padding: 40px 0 76px; }
+    .query-panel { max-width: 900px; margin: 0 auto 26px; }
+    .query-main { max-width: 900px; margin: 0 auto; }
+  </style>
+</head>
+
+<body>
+  <!-- ============ 顶部导航（静态，与全站一致；不使用 CMS 标签） ============ -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <a href="/" class="brand" id="siteBrand">
+        <span class="brand-logo">
+          <img src="/static/images/logo.png" alt="捷速达国际快运"
+               onerror="this.style.display='none';document.getElementById('siteBrand').classList.add('no-logo');" />
+        </span>
+        <span class="brand-name">
+          捷速达国际快运有限公司
+          <small>JETSPEED EXPRESS</small>
+        </span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="展开导航" aria-expanded="false">☰</button>
+      <nav class="nav" id="nav">
+        <a href="/">首页</a>
+        <a href="/cms/c/aboutus">关于捷速达</a>
+        <a href="/cms/c/news">新闻动态</a>
+        <a href="/cms/c/services">运营项目</a>
+        <a href="/cms/c/orders" class="active">运单查询</a>
+        <a href="/cms/c/contactus">联系我们</a>
+
+        <!-- 自动翻译入口：一次点击直接展开语言列表 -->
+        <div class="nav-lang notranslate" id="navLang">
+          <div class="nav-lang-trigger">
+            <span class="nav-lang-btn" aria-hidden="true">
+              <svg class="nav-lang-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M3 12h18"></path>
+                <path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"></path>
+              </svg>
+              <span>语言</span>
+              <svg class="nav-lang-caret" viewBox="0 0 10 10" fill="none" stroke="currentColor"
+                   stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 3l4 4 4-4"></path>
+              </svg>
+            </span>
+            <div id="translate"></div>
+            <select class="nav-lang-native" id="navLangNative" aria-label="页面语言"
+                    onchange="__navLangChange(this.value)">
+              <option value="chinese_simplified">简体中文</option>
+              <option value="chinese_traditional">繁體中文</option>
+              <option value="english">English</option>
+              <option value="japanese">日本語</option>
+              <option value="korean">한국어</option>
+              <option value="spanish">Español</option>
+              <option value="french">Français</option>
+              <option value="russian">Русский</option>
+              <option value="arabic">العربية</option>
+            </select>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ 页面横幅 ============ -->
+  <section class="query-hero">
+    <div class="panel-inner">
+      <h1>运单轨迹查询</h1>
+      <p>按运单号查询揽收、入仓、干线、清关与派送节点</p>
+    </div>
+  </section>
+
+  <!-- ============ 查询主体（真实接口变量全部保留） ============ -->
+  <div class="query-body">
+    <div class="panel-inner">
+      <div class="query-panel">
+        <h3>运单轨迹查询</h3>
+        <p class="query-hint">输入运单号，查询各作业节点记录；多个单号用分号「;」分隔</p>
+        <div class="query-form">
+          <input type="text" name="orderid" id="orderid" placeholder="JSD663050036173" value="JSD000000000199" />
+          <button class="btn btn-primary" type="button" onclick="searchOrders()">查询</button>
+          <button class="btn btn-ghost" type="button" onclick="clearJg()" title="清空">↺</button>
+        </div>
+      </div>
+
+      <!-- 轨迹结果：紧接查询框，中间不插入任何说明性内容 -->
+      <div class="query-main" id="result">
+                <div class="main-content">
+          <h3 style="margin:0 0 8px;">物流轨迹</h3>
+          <p style="color:var(--g-muted);font-size:14px;margin-bottom:24px;">单号：<strong style="color:var(--g-gold);">JSD000000000199</strong></p>
+          <div class="timeline">
+                        <div class="timeline-item latest">
+              <div class="time">2026-05-23 01:16:57</div>
+              <div class="context">Parcel arrived at the local delivery station, serving Lyon,69007.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-21 03:09:55</div>
+              <div class="context">Shipment entered the local delivery network.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-19 09:02:11</div>
+              <div class="context">Shipment arrived at the local warehouse; inbound processing is in progress.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-17 13:19:25</div>
+              <div class="context">Shipment transferred to the carrier.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-15 23:33:15</div>
+              <div class="context">Destination processing completed.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-14 12:23:56</div>
+              <div class="context">Arrival processing is in progress.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-13 02:57:03</div>
+              <div class="context">Shipment information has been received for destination processing. .</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-11 16:28:06</div>
+              <div class="context">Shipment arrived at the FR destination processing facility.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-10 11:40:50</div>
+              <div class="context">Shipment arrived at FR Airport</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-09 09:32:40</div>
+              <div class="context">Shipment departed the origin airport; international line-haul transit is in progress.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-08 10:38:41</div>
+              <div class="context">Shipment handed over to the air carrier at the departure airport.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-07 10:56:54</div>
+              <div class="context">Shipment arrived at the departure airport cargo facility.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-06 16:31:53</div>
+              <div class="context">Shipment is ready for transfer to the departure airport.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-06 02:20:29</div>
+              <div class="context">Origin processing completed [Toronto].</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-05 11:18:51</div>
+              <div class="context">Parcel departed the processing facility Toronto Gateway.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-05 02:27:07</div>
+              <div class="context">Parcel sorted and ready for international dispatch Toronto Gateway.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-04 18:00:29</div>
+              <div class="context">Parcel received at the processing facility Toronto Gateway.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-04 13:41:35</div>
+              <div class="context">Consignment received at the local warehouse in ON,CA,L5T 0A1,Mississauga.</div>
+            </div>
+                        <div class="timeline-item done">
+              <div class="time">2026-05-04 11:20:18</div>
+              <div class="context">Mississauga,ON,CA,L5T 0A1,Order information received by the carrier.</div>
+            </div>
+                      </div>
+        </div>
+              </div>
+
+      <!-- 查询说明与状态图例：统一放在轨迹下方 -->
+      <div class="query-after query-main">
+        <div class="status-legend">
+          <span><i style="background:var(--g-primary);"></i>最新节点</span>
+          <span><i style="background:var(--g-node-done);"></i>已完成节点</span>
+          <span><i style="background:var(--g-danger);"></i>异常提示</span>
+          <span style="color:var(--g-muted-2);">轨迹按时间倒序展示</span>
+        </div>
+        <div class="query-tips">
+          <div class="q-tip"><b>单号从哪里获取</b><p>运单号通常在寄件凭证、发货通知或电商订单详情中，格式类似 JSD663050036173。</p></div>
+          <div class="q-tip"><b>支持批量查询</b><p>多个单号可用分号「;」分隔一次性提交，系统会分别返回各自的轨迹记录。</p></div>
+          <div class="q-tip"><b>轨迹更新时间</b><p>节点在揽收、入仓、干线、清关与派送环节生成，口岸查验或节假日可能略有延迟。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 页脚（静态，与全站一致） ============ -->
+  <footer class="site-footer">
+    <div class="panel-inner site-footer-inner">
+      <div class="sf-brand">
+        <div class="sf-logo">捷速达国际快运有限公司</div>
+        <p>国际快递、空运、海运与中港运输。按货类、时效与目的地组合运输方案，全程节点可查询。</p>
+      </div>
+      <div class="sf-col">
+        <h4>快捷导航</h4>
+        <a href="/">首页</a>
+        <a href="/cms/c/aboutus">关于捷速达</a>
+        <a href="/cms/c/news">新闻动态</a>
+        <a href="/cms/c/services">运营项目</a>
+        <a href="/cms/c/contactus">联系我们</a>
+      </div>
+      <div class="sf-col">
+        <h4>运输服务</h4>
+        <a href="/cms/c/services">国际快递</a>
+        <a href="/cms/c/services">国际空运</a>
+        <a href="/cms/c/services">国际海运</a>
+        <a href="/cms/c/services">中港运输</a>
+      </div>
+      <div class="sf-col">
+        <h4>联系方式</h4>
+        <p>邮箱 jetspeed-express@126.com</p>
+        <p>官网 www.jetspeed-express.com</p>
+      </div>
+    </div>
+    <div class="panel-inner site-footer-bottom">
+      <span>© 2026 捷速达国际快运有限公司 版权所有</span>
+      <span>JETSPEED EXPRESS · Since 2012</span>
+    </div>
+  </footer>
+
+  <!-- ============ 查询交互（控制器原有逻辑，未改动） ============ -->
+  <script>
+    $(document).ready(function () {
+      $("#orderid").hover(function () { this.select(); });
+    });
+    function searchOrders() {
+      var ordersId = $("#orderid").val();
+      if (ordersId && ordersId.length > 0) {
+        var orders = ordersId.split(";");
+        for (var i = 0; i < orders.length; i++) {
+          window.location.replace("/search_kuai_di/search/orderid/" + orders[i]);
+        }
+      } else {
+        layer.msg("请输入快件单号");
+      }
+    }
+    function clearJg() { $("#orderid").val(""); return; }
+  </script>
+
+  <script src="/translate.min.js"></script>
+  <script>
+    (function () {
+      if (typeof translate === 'undefined' || window.__translateInited) return;
+      window.__translateInited = true;
+      // 语言菜单自身不参与翻译，避免标题与说明被译成外文后版式错乱
+      try {
+        var ig = translate.ignore && translate.ignore.class;
+        if (ig && typeof ig.push === 'function') {
+          var list = ig.data || [];
+          if (list.indexOf('notranslate') === -1) ig.push('notranslate');
+        }
+      } catch (e) {}
+      try {
+        var builtIn = translate.service && translate.service.edge &&
+                      translate.service.edge.language && translate.service.edge.language.json;
+        if (builtIn && builtIn.length) {
+          translate.request.api.language = builtIn;
+          translate.selectLanguageTag.languages =
+            'chinese_simplified,chinese_traditional,english,japanese,korean,spanish,french,russian,arabic';
+        }
+      } catch (e) {}
+      translate.language.setLocal('chinese_simplified');
+      translate.execute();
+    })();
+  </script>
+</body>
+</html>

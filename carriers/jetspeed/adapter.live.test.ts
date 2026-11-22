@@ -1,0 +1,21 @@
+import { describe, expect, it } from 'vitest';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { createTracker } from '../../facade/index.js';
+import { adapter } from './adapter.js';
+
+const direct = () => adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+
+describe('JETSPEED live retrieval', () => {
+  it.skipIf(!process.env.JETSPEED_TRACKING_NUMBER)('retrieves the history of the requested parcel with providers disabled', async () => {
+    const answer = await createTracker({ providers: [] }).track({ number: process.env.JETSPEED_TRACKING_NUMBER!, carrier: 'jetspeed' });
+    expect(answer).toMatchObject({ carrier: 'jetspeed', source: 'jetspeed' });
+    expect(answer.attempts[0]).toMatchObject({ source: 'jetspeed', kind: 'ok' });
+    expect(answer.result.events.length).toBeGreaterThan(0);
+    // Every row keeps its wall clock: the tracker states no zone.
+    expect(answer.result.events.every((event) => event.description && event.local_time && !event.time)).toBe(true);
+  });
+
+  it.skipIf(!process.env.JETSPEED_UNKNOWN_NUMBER)('reads an unknown number as not found', async () => {
+    await expect(direct().track({ number: process.env.JETSPEED_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'not_found' });
+  });
+});

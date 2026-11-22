@@ -1,4 +1,89 @@
 {
   "carrier": "jetspeed",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Shipment entered the local delivery network.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment arrived at the local warehouse; inbound processing is in progress.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment transferred to the carrier.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Destination processing completed.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Arrival processing is in progress.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment information has been received for destination processing. .",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment arrived at the FR destination processing facility.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment arrived at FR Airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment departed the origin airport; international line-haul transit is in progress.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment handed over to the air carrier at the departure airport.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment arrived at the departure airport cargo facility.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    },
+    {
+      "wording": "Shipment is ready for transfer to the departure airport.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-22"
+    }
+  ]
 }

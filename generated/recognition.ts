@@ -272,6 +272,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "jeebly": 805,
   "jersey-post": 832,
   "jet-logistic": 823,
+  "jetspeed": 34,
   "jhgj": 907,
   "jiayang": 719,
   "jitsu": 85,

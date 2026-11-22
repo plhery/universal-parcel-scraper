@@ -19,19 +19,38 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "jetspeed",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 34
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://www.jetspeed-express.com/search_kuai_di/search/orderid/{trackingNumber}",
     "searchUrl": "https://www.jetspeed-express.com/",
     "helpUrl": "https://www.jetspeed-express.com/cms/c/contactus",
     "canaryUrl": "https://www.jetspeed-express.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "location",
+      "offset_timestamps"
+    ]
   },
   "links": [
     {
