@@ -453,6 +453,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // Specific negatives, future steps and handoffs precede broad delivery words.
   if (nonterminalEnglishReturn(text)) return 'exception';
   if (returnUnderWay(text)) return 'exception';
+  // BUFFALO's depot taking back a parcel its local courier gave up on ("Returned to BUFFALO warehouse[JHBDC]"), as
+  // ParcelsApp relays it beside the courier's failed delivery: no round goes on, and the parcel waits at BUFFALO.
+  if (/^returned to buffalo warehouse\[[a-z]{2,10}\]$/.test(text)) return 'exception';
   // Spanish and Portuguese returns still under way, announced or negated.
   if (/\b(?:en|em) (?:proceso de |processo de )?devolu(?:cion|cao)\b|^devolu(?:cion|cao)$|\bdevolu(?:cion|cao) (?:en curso|em curso|iniciada|solicitada|en transito|em transito)\b|\b(?:devolu(?:cion|cao)|retorno) (?:al|ao|a la|a) (?:remitente|remetente|origen|origem)\b(?! (?:completad|finalizad|concluid|entregad|entregue|realizad|efectuad|efetuad))|\ben camino (?:de vuelta |de regreso )?(?:al|hacia el) remitente\b|\b(?:a caminho (?:de volta )?(?:do|ao)|em transito para o) remetente\b|\b(?:siendo|sendo|a ser) (?:(?:devuelt|devolvid)[oa]s?|entregad[oa]s? al remitente|entregues? ao remetente)\b|\b(?:no|nao) (?:(?:ha|han|se|fue|foi|foram|sido|ser|sera|puede|pode|pudo|podido|todavia|aun|ainda|ya|ja) )*(?:(?:devuelt|devolvid)[oa]s?|entregad[oa]s? al remitente|entregues? ao remetente)\b|\b(?:sera|seran|serao|va a ser|vai ser|puede ser|pode ser|debe ser|deve ser|devera ser) (?:(?:pronto|proximamente|en breve|em breve|brevemente) )?(?:(?:devuelt|devolvid)[oa]s?|entregad[oa]s? al remitente|entregues? ao remetente)\b|\bse (?:le )?devolvera\b/.test(text)) return 'exception';
   if (RETURN_COMPLETED.test(text) || /\breturn (?:was |has been )?(?:successfully )?(?:handed (?:over|back)|delivered) to (?:the )?(?:sender|shipper)\b/.test(text)) return 'returned';

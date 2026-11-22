@@ -781,6 +781,8 @@ describe('classifyWording', () => {
       ['Weighed at Warehouse', 'in_transit'], ['Consolidation Completed', 'in_transit'],
       ['Picked up at destination airport', 'in_transit'],
       ['Pallet deconsolidation in progress', 'in_transit'], ['Flight arrived, pallet breakdown in progress', 'in_transit'],
+      // BUFFALO's depot taking back a parcel from its local courier, which gave up on the delivery.
+      ['Returned to BUFFALO warehouse[JHBDC]', 'exception'],
       // UniUni's local warehouse and driver, as Ship24 relays them before the round goes out.
       ['Parcel sent to local UniUni warehouse for delivery', 'in_transit'], ['Your parcel has been assigned to a delivery driver', 'in_transit'],
       // The sender's hand-in at a shop, as ParcelsApp relays a Nordic carrier's.
