@@ -514,8 +514,8 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^cause of problem\s*【?\s*rescheduled delivery\s*】?[.!]?$/iu.test(value)) return 'failed_attempt';
   if (/^contact error,? need to return[.!]?$|^start returning\b|^parcel returning[.!]?$|^\S*devolucion\S* order closed[.!]?$/i.test(value)) return 'exception';
   // A forwarder's pallet broken down after the flight's arrival, as ParcelsApp relays HuaHan's "拆板中。—Dismantling in
-  // progress" without its Chinese, and HuaHan's transfer to the last-mile carrier's number ("转单:"), relayed in English.
-  if (/^dismantling in progress[.!]?$|^re-?route: ?[a-z0-9]{8,35}$/i.test(value)) return 'in_transit';
+  // progress" with or without its Chinese, and HuaHan's transfer to the last-mile carrier's number ("转单:"), relayed in English.
+  if (/^(?:拆板中。—)?dismantling in progress[.!]?$|^re-?route: ?[a-z0-9]{8,35}$/iu.test(value)) return 'in_transit';
   // A forwarder's arrival at the destination port, worded as a delivery, also after its Chinese
   // ("picked up at the destination port"), and its order data sent to the last-mile carrier.
   if (/^(?:目的港已提货\s*)?delivery has been made at the destination port[.!]?$|^目的港已提货$/iu.test(value)) return 'in_transit';

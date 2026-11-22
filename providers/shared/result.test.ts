@@ -425,7 +425,7 @@ describe('shared provider result', () => {
   });
 
   it("reads HuaHan's pallet broken down after the flight and its transfer to the last mile's number, and a return, as providers relay them", () => {
-    for (const wording of ['Dismantling in progress', 'Re-route: 1Z9K99F99999999999']) {
+    for (const wording of ['Dismantling in progress', '拆板中。—Dismantling in progress', 'Re-route: 1Z9K99F99999999999']) {
       expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
     }
     // Beside the carrier's "RETURN TO SENDER", at the same instant.
