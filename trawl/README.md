@@ -165,13 +165,7 @@ per pooled browser and discards it on expiry (`FEDEX_SESSION_IDLE_MS`, two hours
 sessions far more often than kept ones, and a kept one it refuses costs no more than a new one. A context is verified when the
 edge accepted its last lookup and FedEx answered for that number, with tracking or with its
 answer that it has none; each lookup still submits and captures its own request. A refusal,
-an unreadable reply or another number's reply ends it.
-
-When the first lookup of a new context is refused by the edge (403) and the lookup has room
-for a 10-second wait and another read, the same request is submitted once more in that
-context. This measures whether a refused new session can still be accepted, as USPS's are. An
-accepted second try keeps the context; a refused one discards it. A reused context is never
-tried twice. TRAWL's named sessions do not
+an unreadable reply or another number's reply ends it. TRAWL's named sessions do not
 replace it: FedEx's API refuses the tracking call a kept session page makes for a tracking URL,
 and the untrusted input of a session eval never sends one.
 
@@ -387,10 +381,8 @@ without URLs or query strings and with runs that could be identifiers masked.
 FedEx's captured API refusals leave the browser tier successful. A separate
 `fedex.api-refusal` warning records the API status, browser slot, session reuse,
 session age, time since the browser's previous lookup and verified lookup, and
-lookup count on that browser. With more than one captured reply, or after a second try, it
-gives the reply count, whether the lookup ended accepted, and `retry`: `same_session` for a
-completed second try, `same_session_failed` for one that could not finish, or `no_budget`
-when the budget had no room for it. It also times the loaded page, the filled form, the submission
+lookup count on that browser. With more than one captured reply, it gives the reply count
+and whether the lookup ended accepted. It also times the loaded page, the filled form, the submission
 and the first reply, and says whether the cookie banner and the form's menu took a click.
 It contains no parcel identifier, response body or cookie. The
 `fedex.session-end` warning records why a context closes, its age and lookup count,

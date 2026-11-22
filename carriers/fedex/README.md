@@ -44,9 +44,6 @@ fallback')`.
    - it keeps the page and context only after a reply that matches the requested number
      (request and response) and has a status or scans, or an accepted reply in which FedEx
      says it has no tracking for that number;
-   - a new context whose first read the edge refuses waits 10 s and submits the same request
-     once more in that context, when the budget allows, to measure whether a refused new
-     session can still be accepted;
    - the context stays on its pooled browser and closes after 2 h idle, 8 h total, any
      failed validation, or a browser restart. The edge refuses new sessions far more often
      than kept ones, so a working one is kept long. The browser outlasts the service's
@@ -183,8 +180,8 @@ application identifiers and issued tokens stay outside the repository.
   answers 404.
 - Copying cookies into a fresh browser context: acceptance does not carry over, while the
   original context keeps working. Hence the retained session in TRAWL.
-- Retries in the same context after a 403: replies carry no `Retry-After`, and retries did
-  not recover.
+- Retries in the same context after a 403, at once or 10 s later: replies carry no
+  `Retry-After`, and retries did not recover.
 - Other browsers: stock headless Chrome gets FedEx's `System Down` shell before the form
   loads; headful Chrome loads the form but its tracking POST gets the same 403. Extra waits
   and pointer or Enter events don't change the outcome.

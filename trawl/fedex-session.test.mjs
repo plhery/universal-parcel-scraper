@@ -501,99 +501,26 @@ for (const [reason, body] of [
 });
 
 const EDGE = { status: 403, headers: { 'content-type': 'text/html', server: 'AkamaiGHost' } };
-const secondTry = async (t, replies, { maxTimeout = 40_000, reports = [], settings = {} } = {}) => {
-  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
-  const f = fixture(replies, { onRefusal: fields => reports.push(fields), ...settings });
-  let done = false;
-  const pending = f.run(NUMBER, { maxTimeout }).then(result => { done = true; return result; });
-  for (let i = 0; i < 5; i++) await tick();
-  return { f, pending, done: () => done, reports };
-};
 
-test('a new session\'s first edge refusal is submitted once more in the same context after ten seconds', async t => {
-  const { f, pending, done, reports } = await secondTry(t, [EDGE, {}, {}]);
-  assert.deepEqual(f.requests, [NUMBER]);
-  t.mock.timers.tick(9_999);
-  await tick();
-  assert.deepEqual(f.requests, [NUMBER]);
-  assert.equal(done(), false);
-  t.mock.timers.tick(1);
-  const result = await pending;
-  assert.deepEqual(f.requests, [NUMBER, NUMBER]);
-  assert.deepEqual(result.capturedResponses.map(x => x.status), [403, 200]);
-  assert.equal(result.reason, 'fedex-session-new');
-  assert.equal(f.contexts.length, 1);
-  assert.equal(f.contexts[0].closed, false);
-  assert.equal(reports.length, 1);
-  assert.equal(reports[0].session, 'new');
-  assert.equal(reports[0].cause, 'edge');
-  assert.equal(reports[0].retry, 'same_session');
-  assert.equal(reports[0].responses, 2);
-  assert.equal(reports[0].recovered, true);
-  assert.ok(!JSON.stringify(reports).includes(NUMBER));
-  // Kept and verified as usual; its next lookup is not tried twice.
-  assert.equal((await f.run()).reason, 'fedex-session-reused');
-  await f.close();
-});
-
-test('a refused second try discards the session like a single refusal', async t => {
-  const ends = [];
-  const { f, pending, reports } = await secondTry(t, [EDGE, EDGE, {}], { settings: { onSessionEnd: fields => ends.push(fields) } });
-  t.mock.timers.tick(10_000);
-  const result = await pending;
-  assert.deepEqual(result.capturedResponses.map(x => x.status), [403, 403]);
-  assert.deepEqual(f.requests, [NUMBER, NUMBER]);
+test('a refused lookup is submitted once and ends its context, new or kept', async () => {
+  const reports = [], ends = [];
+  const f = fixture([EDGE, {}, EDGE, { status: 403 }],
+    { onRefusal: fields => reports.push(fields), onSessionEnd: fields => ends.push(fields) });
+  const run = () => f.run(NUMBER, { maxTimeout: 40_000 });
+  assert.deepEqual((await run()).capturedResponses.map(x => x.status), [403]);
   assert.equal(f.contexts[0].closed, true);
-  assert.deepEqual(ends.map(x => [x.reason, x.lookups]), [['api_denied', 1]]);
-  assert.equal(reports.length, 1);
-  assert.equal(reports[0].retry, 'same_session');
-  assert.equal(reports[0].responses, 2);
-  assert.equal(reports[0].recovered, false);
-  assert.equal((await f.run()).reason, 'fedex-session-new');
-  await f.close();
-});
-
-test('a second try that fails keeps the first refusal as the answer', async t => {
-  const { f, pending, reports } = await secondTry(t, [EDGE]);
-  f.contexts[0].close = async function close() { this.closed = true; };
-  const page = await f.contexts[0].newPage();
-  page.goto = async () => { throw new Error(`navigation for ${NUMBER} failed`); };
-  t.mock.timers.tick(10_000);
-  const result = await pending;
-  assert.equal(result.status, 'success');
-  assert.deepEqual(result.capturedResponses.map(x => x.status), [403]);
-  assert.equal(f.contexts[0].closed, true);
-  assert.equal(reports[0].retry, 'same_session_failed');
-  assert.equal(reports[0].responses, 1);
-  assert.equal(reports[0].recovered, false);
-  assert.ok(!JSON.stringify(reports).includes(NUMBER));
-});
-
-test('no second try when the budget does not fit the wait and a lookup', async t => {
-  const { f, pending, reports } = await secondTry(t, [EDGE, {}], { maxTimeout: 21_999 });
-  const result = await pending;
-  assert.deepEqual(f.requests, [NUMBER]);
-  assert.deepEqual(result.capturedResponses.map(x => x.status), [403]);
-  assert.equal(f.contexts[0].closed, true);
-  assert.equal(reports[0].retry, 'no_budget');
-  assert.equal(reports[0].responses, 1);
-  assert.equal(reports[0].recovered, false);
-  await f.close();
-});
-
-test('no second try for a reused session or a refusal that is not the edge\'s', async t => {
-  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
-  const reports = [];
-  const f = fixture([{}, EDGE, { status: 403 }], { onRefusal: fields => reports.push(fields) });
-  await f.run(NUMBER, { maxTimeout: 40_000 });
-  const reused = await f.run(NUMBER, { maxTimeout: 40_000 });
+  assert.equal((await run()).reason, 'fedex-session-new');
+  const reused = await run();
   assert.equal(reused.reason, 'fedex-session-reused');
   assert.deepEqual(reused.capturedResponses.map(x => x.status), [403]);
-  assert.equal(f.contexts[0].closed, true);
-  await f.run(NUMBER, { maxTimeout: 40_000 });
-  assert.deepEqual(f.requests, [NUMBER, NUMBER, NUMBER]);
   assert.equal(f.contexts[1].closed, true);
-  assert.deepEqual(reports.map(x => [x.session, x.cause, x.retry]), [['reused', 'edge', undefined], ['new', 'api', undefined]]);
+  await run();
+  assert.equal(f.contexts[2].closed, true);
+  assert.deepEqual(f.requests, [NUMBER, NUMBER, NUMBER, NUMBER]);
+  assert.deepEqual(reports.map(x => [x.session, x.cause, x.responses]),
+    [['new', 'edge', undefined], ['reused', 'edge', undefined], ['new', 'api', undefined]]);
+  assert.deepEqual(ends.map(x => [x.reason, x.lookups]), [['api_denied', 1], ['api_denied', 2], ['api_denied', 1]]);
+  assert.ok(!JSON.stringify([reports, ends]).includes(NUMBER));
   await f.close();
 });
 

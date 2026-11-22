@@ -36,9 +36,6 @@ function memoryShare(memoryUsage) {
 // tracking. The session is as cleared as after a tracked reply, so it is kept.
 const ACCEPTED_WITHOUT_TRACKING = new Set(['no_tracking', 'empty_result']);
 
-// Whether a lookup's final reply is Akamai's refusal.
-const edgeRefused = entries => entries.at(-1)?.status === 403 && entries.at(-1).error === 'fedex-edge-denial';
-
 const slot = id => Number.isSafeInteger(id) && id >= 0 && id < 1024 ? id : undefined;
 
 // Classify an unverified reply without retaining its content or identifying its parcel.
@@ -96,8 +93,7 @@ export class FedExSessions {
   constructor({ idleMs = FEDEX_SESSION_IDLE_MS, maxAgeMs = FEDEX_SESSION_MAX_AGE_MS, closeMs = 3_000,
     settleMs = 250, incompleteSettleMs = 1_000, onRefusal = reportRefusal, onSessionEnd = reportSessionEnd,
     holdMaxLookups = FEDEX_HOLD_MAX_LOOKUPS, holdMaxAgeMs = FEDEX_HOLD_MAX_AGE_MS,
-    holdMaxMemoryShare = FEDEX_HOLD_MAX_MEMORY_SHARE, onHold = reportHold,
-    secondTryDelayMs = 10_000, secondTryMinMs = 12_000 } = {}) {
+    holdMaxMemoryShare = FEDEX_HOLD_MAX_MEMORY_SHARE, onHold = reportHold } = {}) {
     this.idleMs = idleMs;
     this.maxAgeMs = maxAgeMs;
     this.closeMs = closeMs;
@@ -109,10 +105,6 @@ export class FedExSessions {
     this.holdMaxAgeMs = holdMaxAgeMs;
     this.holdMaxMemoryShare = holdMaxMemoryShare;
     this.onHold = onHold;
-    // A new session's first refused lookup is submitted once more in the same context
-    // after this delay, when the lookup still has this long left after it.
-    this.secondTryDelayMs = secondTryDelayMs;
-    this.secondTryMinMs = secondTryMinMs;
   }
 
   #working(session) {
@@ -262,28 +254,11 @@ export class FedExSessions {
     session.digits = number.length;
     const marks = {};
     try {
-      const lookup = lookupMarks => bounded(this.#lookup({ number, session, browser, started, maxTimeout, capture, installPolicy,
-        marks: lookupMarks, replace: handle.requestBrowserReplacement, onCreated: handle.noteTemporaryContext }),
+      // A refused context is not submitted again: resubmissions in it, at once or ten
+      // seconds later, were refused too. The adapter's next read starts a new context.
+      const result = await bounded(this.#lookup({ number, session, browser, started, maxTimeout, capture, installPolicy, marks,
+        replace: handle.requestBrowserReplacement, onCreated: handle.noteTemporaryContext }),
         Math.max(0, maxTimeout - (Date.now() - started)), 'FedEx lookup budget exhausted');
-      let result = await lookup(marks), retry;
-      // Measures whether a refused new session can still be accepted: its first lookup,
-      // once, in the same context, only when the budget fits the wait and a lookup.
-      if (!reused && session.lookups === 1 && !session.secondTried && !session.verified && edgeRefused(result.capturedResponses)) {
-        session.secondTried = true;
-        if (maxTimeout - (Date.now() - started) < this.secondTryDelayMs + this.secondTryMinMs) retry = 'no_budget';
-        else {
-          await new Promise(resolve => setTimeout(resolve, this.secondTryDelayMs));
-          try {
-            const second = await lookup({});
-            result = { ...second, capturedResponses: [...result.capturedResponses, ...second.capturedResponses].slice(-MAX_REPLIES) };
-            retry = 'same_session';
-          } catch {
-            // The first refusal stays the answer; this session is discarded below.
-            session.verified = false;
-            retry = 'same_session_failed';
-          }
-        }
-      }
       // Kept like a tracked reply: no stored reply is reused, and every lookup submits
       // and captures its own request. Refusals, identity mismatches, unreadable replies
       // and failures still end the session.
@@ -301,8 +276,7 @@ export class FedExSessions {
             sinceSuccessMs: activity.successAt === undefined ? null : Math.max(0, started - activity.successAt),
             consent: marks.consent ?? null, menu: marks.menu ?? null, pageMs: marks.pageMs ?? null, formMs: marks.formMs ?? null,
             submitMs: marks.submitMs ?? null, replyMs: marks.replyMs ?? null, durationMs: Math.max(0, Date.now() - started),
-            ...(result.capturedResponses.length > 1 || retry ? { responses: result.capturedResponses.length, recovered: session.verified } : {}),
-            ...(retry ? { retry } : {}) });
+            ...(result.capturedResponses.length > 1 ? { responses: result.capturedResponses.length, recovered: session.verified } : {}) });
         } catch { /* Diagnostics must not change tracking or cleanup. */ }
       }
       if (!session.verified) await this.#discard(browser, session, handle.requestBrowserReplacement, ending);
