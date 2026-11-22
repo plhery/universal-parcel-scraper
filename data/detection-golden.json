@@ -110983,6 +110983,17 @@
     ]
   },
   {
+    "input": "RR014310824JM",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RR021441710SN",
     "carrier": "intl-post",
     "confidence": "high",

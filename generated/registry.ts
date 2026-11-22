@@ -498,6 +498,7 @@ import { adapter as jAndTMiddleEast } from '../carriers/j-and-t-middle-east/adap
 import { adapter as jAndTMx } from '../carriers/j-and-t-mx/adapter.js';
 import { adapter as jAndTUk } from '../carriers/j-and-t-uk/adapter.js';
 import { adapter as jadlog } from '../carriers/jadlog/adapter.js';
+import { adapter as jamaicaPost } from '../carriers/jamaica-post/adapter.js';
 import { adapter as janio } from '../carriers/janio/adapter.js';
 import { adapter as japanPost } from '../carriers/japan-post/adapter.js';
 import { adapter as jasWorldwide } from '../carriers/jas-worldwide/adapter.js';
@@ -1580,6 +1581,7 @@ export const REGISTRY: RegistryDefinition = {
     "j-and-t-mx": jAndTMx,
     "j-and-t-uk": jAndTUk,
     "jadlog": jadlog,
+    "jamaica-post": jamaicaPost,
     "janio": janio,
     "japan-post": japanPost,
     "jas-worldwide": jasWorldwide,
@@ -3091,7 +3093,7 @@ export const REGISTRY: RegistryDefinition = {
     "j-and-t-uk": "j-and-t-uk",
     "jadlog": "jadlog",
     "jakeluyhtio-suomi": "universal",
-    "jamaica-post": "universal",
+    "jamaica-post": "jamaica-post",
     "jamef": "universal",
     "jana-post": "universal",
     "janani-express": "universal",

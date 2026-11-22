@@ -36019,7 +36019,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Jamaica",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jamaica-post"
     },
     "canaryUrl": "https://jamailtracker.jamaicapost.gov.jm/track-status.php",
     "trackingSearchUrl": "https://jamailtracker.jamaicapost.gov.jm/track-status.php",
