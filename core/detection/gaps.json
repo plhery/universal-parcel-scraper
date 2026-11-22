@@ -1376,6 +1376,12 @@
     "reason": "Reviews of DTDC cite Z waybills with ten digits, the shape of Packeta's Z barcodes, whose high-confidence rule takes them."
   },
   {
+    "carrier": "dtdc",
+    "pattern": "^W\\d{8}$",
+    "kind": "collision",
+    "reason": "DTDC's tracker answers W waybills of eight digits, the shape of GLS Canada's W numbers in its Shopify manual, so the shape cannot name DTDC."
+  },
+  {
     "carrier": "dx",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
