@@ -2941,6 +2941,12 @@
     "reason": "Twelve bare digits are shared with many carriers, and a single public Navex number shows the layout."
   },
   {
+    "carrier": "noerpel",
+    "pattern": "^\\d{9}$",
+    "kind": "collision",
+    "reason": "Nine-digit Noerpel IDs share their shape with other carriers' numeric numbers, so the shape cannot name Noerpel."
+  },
+  {
     "carrier": "noest",
     "pattern": "^[A-Z]{3}[A-Z0-9]{3}\\d{8}$",
     "kind": "by_design",
@@ -4807,6 +4813,12 @@
     "pattern": "^\\d{16}$",
     "kind": "by_design",
     "reason": "Sixteen digits without the printed dashes are shared by DHL eCommerce, Evri, TNT and others, and nothing in a JDE number points to JDE."
+  },
+  {
+    "carrier": "zippd",
+    "pattern": "^[A-Z0-9]{8}-?\\d{6}-?\\d{8}$",
+    "kind": "open",
+    "reason": "Zippd codes seen so far are an order's eight letters and digits, then six and eight digits, for one sender; Zippd's own shape is not settled."
   },
   {
     "carrier": "zoom-ve",

@@ -16,8 +16,10 @@ rule.
 
 The tracker asks an open JSON service with the number alone, without a login or CAPTCHA, which
 answers an unknown number with an empty list of jobs. A job passed on to another carrier links to
-that carrier's tracker. No public number has shown a known delivery's reply yet. An adapter can
-follow.
+that carrier's tracker. The service is `POST https://www.ecourier.co.uk/json/search/trackingdownload` with `consign_note`, and
+the page adds `jobid` when it refreshes. A job number a customer gave in a review got an empty list as
+either, so the job number a customer sees may not be what the tracker searches. No public number has
+shown a known delivery's reply yet. An adapter can follow.
 
 ## Links
 
