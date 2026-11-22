@@ -35,9 +35,9 @@
     "destination_country"
   ],
   "portal": {
-    "url": "https://client.duopudaexpress.com/track_query.aspx?track_number={trackingNumber}",
+    "url": "https://client.duopudaexpress.com/track_query.aspx",
     "searchUrl": "https://client.duopudaexpress.com/track_query.aspx",
-    "canaryUrl": "https://www.duopudaexpress.com/",
+    "canaryUrl": "https://client.duopudaexpress.com/track_query.aspx",
     "shows": [
       "status",
       "history",

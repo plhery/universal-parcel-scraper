@@ -18,9 +18,9 @@ tenant of the rtb56 tracking platform.
   which is not found. Any other message is inconclusive, and a 404 or a redirect is a moved route.
 - Only the entry whose `server_hawbcode` is the whole number asked is read; the merchant's
   reference never is.
-- The tracking page, `track_query.aspx`, opens a number from its `track_number` parameter, which
-  the catalog's link uses. Its own search is a form that can ask for a slider CAPTCHA; the lookup
-  beside it does not.
+- The tracking page, `track_query.aspx`, ignores a number in its address, so the catalog's link
+  opens its empty search form. That search can ask for a slider CAPTCHA; the lookup beside it
+  does not.
 
 ## Notes
 

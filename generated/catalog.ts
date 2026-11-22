@@ -22179,8 +22179,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "dpdex",
       "localClocks": true
     },
-    "canaryUrl": "https://www.duopudaexpress.com/",
-    "trackingUrlTemplate": "https://client.duopudaexpress.com/track_query.aspx?track_number={trackingNumber}",
+    "canaryUrl": "https://client.duopudaexpress.com/track_query.aspx",
+    "trackingUrlTemplate": "https://client.duopudaexpress.com/track_query.aspx",
     "trackingSearchUrl": "https://client.duopudaexpress.com/track_query.aspx",
     "linkRules": [
       {

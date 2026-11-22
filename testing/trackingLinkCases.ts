@@ -1851,10 +1851,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'sfyd-express', number: 'SFYD00000000000',
     route: /^https:\/\/sfydexpress\.com\/tracking\.html\?c=SFYD00000000000$/,
     marker: /数据获取失败|物流查询|运单号/ },
-  // The page fills its box from `track_number` and looks the number up on load.
+  // The page no longer fills its box from `track_number`, so the link opens the empty search form.
   { carrier: 'dpdex', number: 'DPE99999999999',
-    route: /^https:\/\/client\.duopudaexpress\.com\/track_query\.aspx\?track_number=DPE99999999999$/,
-    marker: /输入查询单号|一次支持30条/ },
+    route: /^https:\/\/client\.duopudaexpress\.com\/track_query\.aspx$/,
+    marker: /输入查询单号|一次支持30条/, forwarding: 'none' },
   // The page reads `key` and looks the number up; an unknown one gets 暂不支持查询此单号.
   { carrier: 'runforint', number: 'RF999999999999',
     route: /^https:\/\/www\.runforint\.com\/index\.php\?m=home&c=Lists&a=index&tid=137&key=RF999999999999$/,
