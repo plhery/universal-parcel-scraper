@@ -305,6 +305,11 @@ describe('Bring bounded anonymous retrieval', () => {
     Object.assign(value.consignmentWithDomainAsync, { consignmentId: 'RR000000005DE', numberOfConsignmentItems: 0 });
     const other = structuredClone(value); parcel(other).packageNumber = 'RR000000019DE';
     expect(() => parseBring(other, 'RR000000005DE')).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
+    // Before Posten handles it, the page names the item under no brand, with the sending post's scans.
+    const unhandled = structuredClone(value); parcel(unhandled).brand = 'UNDEFINED';
+    Object.assign(unhandled.consignmentWithDomainAsync, { consignmentId: '70000000000000001', numberOfConsignmentItems: 1 });
+    expect(() => parseBring(unhandled, 'RR000000005DE')).toThrowError(expect.objectContaining({ kind: 'indeterminate',
+      message: expect.stringMatching(/not handled/) }));
     const fetcher = vi.fn<typeof fetch>(async () => Response.json(value));
     const tracker = adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
     await expect(tracker.track({ number: 'RR000000005DE' }, {})).resolves.toMatchObject({ status: 'delivered' });

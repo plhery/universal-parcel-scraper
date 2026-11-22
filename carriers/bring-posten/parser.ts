@@ -90,9 +90,15 @@ export function parseBring(payload: unknown, rawNumber: string): CarrierResult {
   if (!isRecord(consignment) || !Array.isArray(consignment.packageSet)) throw new SchemaError('Bring');
   if (!consignment.packageSet.length) throw new IndeterminateError('Bring', 'No complete single-piece consignment');
   const parcel = selectParcel(consignment, consignment.packageSet, number);
-  if (!isRecord(parcel) || typeof parcel.brand !== 'string' || !['POSTEN', 'BRING'].includes(parcel.brand)
+  if (!isRecord(parcel) || typeof parcel.brand !== 'string'
     || typeof consignment.consignmentId !== 'string' || typeof parcel.packageNumber !== 'string'
     || (consignment.consignmentId !== number && parcel.packageNumber !== number)) throw new SchemaError('Bring', 'Different consignment or parcel');
+  // Mail from abroad that Posten has not handled yet: the page names the item by its own number under no brand,
+  // with the sending post's scans. Posten has no history of it yet; the reply has not changed.
+  if (parcel.brand === 'UNDEFINED' && /^[A-Z]{2}\d{9}[A-Z]{2}$/.test(number) && parcel.packageNumber === number) {
+    throw new IndeterminateError('Bring', 'Posten has not handled this item from abroad yet');
+  }
+  if (!['POSTEN', 'BRING'].includes(parcel.brand)) throw new SchemaError('Bring', 'Unknown brand');
   if (!isRecord(parcel.domain) || !isRecord(parcel.domain.latestSignificantEvent)
     || !Array.isArray(parcel.eventSet) || parcel.eventSet.length > 500) throw new SchemaError('Bring');
   const summary = parcel.domain.latestSignificantEvent;
