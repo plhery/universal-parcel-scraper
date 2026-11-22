@@ -1,0 +1,68 @@
+{
+  "id": "coretrails",
+  "displayName": "Coretrails",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#100B37"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "coretrails",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://www.coretrails.com/home/{trackingNumber}",
+    "searchUrl": "https://www.coretrails.com/",
+    "helpUrl": "https://www.coretrails.com/contact-us",
+    "canaryUrl": "https://www.coretrails.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "recipient_address"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "weight",
+      "sender_name",
+      "recipient_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.coretrails.com",
+        "coretrails.com"
+      ],
+      "path": "^/home/(CRT\\d+)/?$"
+    }
+  ],
+  "detection": []
+}

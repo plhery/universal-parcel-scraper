@@ -1,0 +1,142 @@
+{
+  "est_delivery_date": null,
+  "latest_status": "DELIVERED",
+  "shipping_events": [
+    {
+      "content": "Delivered, Individual Picked Up at Postal Facility",
+      "date": "Mon, 19 Oct 2026 11:28:00 GMT",
+      "location": "po box 14 , seneca rocks, wv, 26884-0014, US"
+    },
+    {
+      "content": "Available for Pickup",
+      "date": "Fri, 16 Oct 2026 10:34:00 GMT",
+      "location": "SENECA ROCKS 648 ALLEGHENY DR SENECA ROCKS WV 26884-9998 Mon-Fri 9:00 AM-1:00 PMSat 9:00 AM-12:00 PM"
+    },
+    {
+      "content": "Arrived at Post Office",
+      "date": "Fri, 16 Oct 2026 10:02:00 GMT",
+      "location": "SENECA ROCKS, WV 26884"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Thu, 15 Oct 2026 10:32:00 GMT",
+      "location": "DULLES VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "In Transit to Next Facility",
+      "date": "Thu, 15 Oct 2026 10:06:00 GMT",
+      "location": ""
+    },
+    {
+      "content": "Departed carrier Facility",
+      "date": "Thu, 15 Oct 2026 09:42:00 GMT",
+      "location": "MERRIFIELD VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Thu, 15 Oct 2026 09:04:00 GMT",
+      "location": "MERRIFIELD VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "In Transit to Next Facility",
+      "date": "Thu, 15 Oct 2026 06:06:00 GMT",
+      "location": ""
+    },
+    {
+      "content": "Departed carrier Facility",
+      "date": "Thu, 15 Oct 2026 03:07:00 GMT",
+      "location": "GREENSBORO NC DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Departed carrier Facility",
+      "date": "Thu, 15 Oct 2026 02:02:00 GMT",
+      "location": "GREENSBORO NC DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Thu, 15 Oct 2026 00:02:00 GMT",
+      "location": "GREENSBORO NC DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Fri, 09 Oct 2026 12:08:00 GMT",
+      "location": "DULLES VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "In Transit to Next Facility",
+      "date": "Fri, 09 Oct 2026 11:29:00 GMT",
+      "location": ""
+    },
+    {
+      "content": "Departed carrier Facility",
+      "date": "Fri, 09 Oct 2026 11:17:00 GMT",
+      "location": "MERRIFIELD VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Fri, 09 Oct 2026 08:18:00 GMT",
+      "location": "MERRIFIELD VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Departed carrier Facility",
+      "date": "Fri, 09 Oct 2026 05:34:00 GMT",
+      "location": "RICHMOND VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Thu, 08 Oct 2026 15:33:00 GMT",
+      "location": "RICHMOND VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Wed, 07 Oct 2026 21:26:00 GMT",
+      "location": "DULLES VA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Departed carrier Facility",
+      "date": "Wed, 07 Oct 2026 20:13:00 GMT",
+      "location": "WASHINGTON DC DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Wed, 07 Oct 2026 18:45:00 GMT",
+      "location": "WASHINGTON DC DISTRIBUTION CENTER"
+    },
+    {
+      "content": "In Transit to Next Facility",
+      "date": "Wed, 07 Oct 2026 18:15:00 GMT",
+      "location": ""
+    },
+    {
+      "content": "In Transit to Next Facility",
+      "date": "Wed, 07 Oct 2026 15:21:00 GMT",
+      "location": ""
+    },
+    {
+      "content": "Departed carrier Facility",
+      "date": "Wed, 07 Oct 2026 14:25:00 GMT",
+      "location": "PHILADELPHIA PA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Arrived at carrier Facility",
+      "date": "Wed, 07 Oct 2026 08:08:00 GMT",
+      "location": "PHILADELPHIA PA DISTRIBUTION CENTER"
+    },
+    {
+      "content": "Accepted at carrier Facility",
+      "date": "Wed, 07 Oct 2026 06:53:00 GMT",
+      "location": "SWEDESBORO, NJ 08085"
+    },
+    {
+      "content": "Departed Shipping Partner Facility, carrier Awaiting Item",
+      "date": "Mon, 05 Oct 2026 20:51:00 GMT",
+      "location": "CHARLTON, MA 01507"
+    },
+    {
+      "content": "Picked Up By Shipping Partner, carrier Awaiting Item",
+      "date": "Mon, 05 Oct 2026 14:17:00 GMT",
+      "location": "Casper WY 82601"
+    }
+  ],
+  "tracking_number": "CRT330596304272"
+}

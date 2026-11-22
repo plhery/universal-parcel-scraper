@@ -2157,6 +2157,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'activos24', number: '000000000000',
     route: /^https:\/\/activos24\.com\/pt\/seguir-encomenda\?tracking=000000000000$/,
     marker: /Envio não encontrado/ },
+  { carrier: 'coretrails', number: 'CRT000000000000',
+    route: /^https:\/\/www\.coretrails\.com\/home\/CRT000000000000$/,
+    marker: /We couldn.t find this tracking number/ },
   // The page checks the device, moves a desktop to its `tracking` route and renders over Blazor's
   // connection; an unknown number gets the sentence in place of the shipment.
   { carrier: 'transaher', number: '103000000000000000000000000',

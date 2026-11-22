@@ -1,0 +1,15 @@
+{
+  "carrier": "coretrails",
+  "entries": [
+    {"code": "DELIVERED", "wording": "DELIVERED", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "The reply's `latest_status`, which the tracker shows with its underscores as spaces."},
+    {"wording": "Picked Up By Shipping Partner, carrier Awaiting Item", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Coretrails' partner collected the parcel; the last-mile network, named \"carrier\", does not hold it yet."},
+    {"wording": "Departed Shipping Partner Facility, carrier Awaiting Item", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "The parcel left the partner's facility for the last-mile network."},
+    {"wording": "Accepted at carrier Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "The last-mile network took the parcel over from the partner, which had already accepted it."},
+    {"wording": "Arrived at carrier Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "At one of the last-mile network's distribution centers, which the scan names."},
+    {"wording": "Departed carrier Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Left one of the last-mile network's distribution centers."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Between two facilities, without a place."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "At the post office that delivers or holds the parcel."},
+    {"wording": "Available for Pickup", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Held at the post office the scan names, with its opening hours, which the adapter leaves out of the location."},
+    {"wording": "Delivered, Individual Picked Up at Postal Facility", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Collected at the post office. The scan names the recipient's address, of which the adapter keeps the town, state and ZIP code."}
+  ]
+}
