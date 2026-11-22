@@ -6376,5 +6376,11 @@
     "carrier": "post-international",
     "kind": "by_design",
     "reason": "Post-International publishes no layout for its numbers, and its tracker also takes partners' references; use explicit selection or a named handoff."
+  },
+  {
+    "carrier": "home-delivery-team",
+    "pattern": "^\\d{7}$",
+    "kind": "collision",
+    "reason": "HDT order numbers are seven digits, a shape many carriers' numbers share, so the shape cannot name HDT; use explicit selection or its tracking link."
   }
 ]

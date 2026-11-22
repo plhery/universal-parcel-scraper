@@ -2719,6 +2719,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'konga-kxpress', number: 'F123456789001',
     route: /^https:\/\/logistics\.konga\.com\/track\?order_number=F123456789001$/,
     marker: /We could not find this tracking number\.|Package Number:\s*F123456789001/ },
+  // The page renders an order's steps on the server; an unknown order gets its sentence and no number.
+  { carrier: 'home-delivery-team', number: '9999999',
+    route: /^https:\/\/homedt\.hu\/nyomonkovetes\?track_number=9999999$/,
+    marker: /Sajnos a keresett megrendelés nem szerepel rendszerünkben!/,
+    forwarding: { notFound: /Sajnos a keresett megrendelés nem szerepel rendszerünkben!/ } },
 ];
 
 /**

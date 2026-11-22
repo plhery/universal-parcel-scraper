@@ -1,4 +1,61 @@
 {
   "carrier": "home-delivery-team",
-  "entries": []
+  "entries": [
+    {
+      "code": "Várakozik",
+      "wording": "Megrendelés terméke(i) még nem került(ek) átadásra a megbízótól",
+      "stage": "registered",
+      "language": "hu",
+      "confirmedBy": "live",
+      "note": "Waiting: the shop has not handed the order's goods over yet. Its icon is status 0."
+    },
+    {
+      "code": "Beszállítás alatt",
+      "wording": "Megrendelést felvettük a megbízótól és úton van központi raktárunk felé",
+      "stage": "accepted",
+      "language": "hu",
+      "confirmedBy": "live",
+      "note": "Collected from the shop and on its way to HDT's central warehouse. Its icon is status 8."
+    },
+    {
+      "code": "Központi raktárban",
+      "wording": "Megrendelése a budapesti központi raktárunkban van",
+      "stage": "in_transit",
+      "language": "hu",
+      "confirmedBy": "live",
+      "note": "At HDT's central warehouse in Budapest, which the adapter keeps as the location. Its icon is status 1."
+    },
+    {
+      "code": "Címzetthez szállítás alatt",
+      "wording": "Megrendelését kollégánk autóra tette és útban van a címzett felé",
+      "stage": "out_for_delivery",
+      "language": "hu",
+      "confirmedBy": "live",
+      "note": "Loaded on a van and on its way to the recipient. Its icon is status 3."
+    },
+    {
+      "code": "Kiszállítva",
+      "wording": "A címzett megkapta az általa várt megrendelést",
+      "stage": "delivered",
+      "language": "hu",
+      "confirmedBy": "live",
+      "note": "The recipient received the order. Its icon is status 4."
+    },
+    {
+      "code": "Visszáru / Központi raktárban",
+      "wording": "Lemondott/meghiúsult megrendelése visszaszállításra vár a központi raktárunkban",
+      "stage": "returned",
+      "language": "hu",
+      "confirmedBy": "live",
+      "note": "A cancelled or failed order waiting at the central warehouse to go back to the shop. Its icon is status 10."
+    },
+    {
+      "code": "Visszáru / leadva a feladónál",
+      "wording": "Lemondott megrendelése visszaszállításra került a megbízónkhoz",
+      "stage": "returned",
+      "language": "hu",
+      "confirmedBy": "live",
+      "note": "A cancelled order brought back to the shop that sent it. Its icon is status 6."
+    }
+  ]
 }

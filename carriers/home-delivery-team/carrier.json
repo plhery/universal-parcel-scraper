@@ -18,19 +18,45 @@
   "timezone": "Europe/Budapest",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "home-delivery-team",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://homedt.hu/nyomonkovetes?track_number={trackingNumber}",
     "searchUrl": "https://homedt.hu/nyomonkovetes",
     "helpUrl": "https://homedt.hu/kapcsolat",
     "canaryUrl": "https://homedt.hu/nyomonkovetes",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
@@ -38,7 +64,7 @@
         "homedt.hu",
         "www.homedt.hu"
       ],
-      "pathPattern": "^/nyomonkovetes/?$",
+      "pathPattern": "^/(?:nyomonkovetes|track)/?$",
       "params": [
         "track_number"
       ]

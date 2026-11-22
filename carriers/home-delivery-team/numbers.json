@@ -1,5 +1,49 @@
 {
   "carrier": "home-delivery-team",
-  "gap": "No public page shows a Home Delivery Team order number.",
-  "records": []
+  "records": [
+    {
+      "number": "3527375",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260527090648/https://www.homedt.hu/track?track_number=3527375",
+        "date": "2026-05-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "An archived HDT tracking link for this order number. HDT's tracking page answers it with an order that went through the Budapest central warehouse and was delivered."
+    },
+    {
+      "number": "3320041",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250527100129/https://www.homedt.hu/track?track_number=3320041",
+        "date": "2025-05-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "An archived HDT tracking link for this order number. HDT's tracking page answers it with an order collected from the shop, cancelled and brought back to it."
+    }
+  ]
 }
