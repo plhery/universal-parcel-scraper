@@ -51357,7 +51357,8 @@
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "postnet-za",
+      "recognitionRank": 642
     },
     "canaryUrl": "https://www.postnet.co.za/tracker",
     "trackingUrlTemplate": "https://www.postnet.co.za/tracker?pnpp={trackingNumber}",
@@ -51375,7 +51376,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^(?:PNA\\d{10}|PPA\\d{11})$",
+        "confidence": "high"
+      }
+    ]
   },
   "postplus": {
     "displayName": "PostPlus",

@@ -5610,12 +5610,6 @@
     "reason": "Ten-digit PXC Pacific Global numbers, whose leading 888 no published format ties to PXC Pacific Global, share their shape with other carriers' numeric numbers, so the shape cannot name PXC Pacific Global."
   },
   {
-    "carrier": "postnet-za",
-    "pattern": "^(?:PNA|PPA)\\d{10,11}$",
-    "kind": "open",
-    "reason": "Customers publish PostNet references beginning PNA and PPA. Detection does not offer PostNet for those references."
-  },
-  {
     "carrier": "pointpack",
     "pattern": "^PO\\d{11}$",
     "kind": "open",

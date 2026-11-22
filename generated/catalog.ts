@@ -51361,7 +51361,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "postnet-za",
+      "recognitionRank": 642
     },
     "canaryUrl": "https://www.postnet.co.za/tracker",
     "trackingUrlTemplate": "https://www.postnet.co.za/tracker?pnpp={trackingNumber}",
@@ -51379,7 +51380,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^(?:PNA\\d{10}|PPA\\d{11})$",
+        "confidence": "high"
+      }
+    ]
   },
   "postplus": {
     "displayName": "PostPlus",
@@ -74559,7 +74565,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "poste-srpske": [],
   "postex": [],
   "postmedia-parcel-services": [],
-  "postnet-za": [],
+  "postnet-za": ["postnet-za-1"],
   "postplus": [],
   "posturinn": ["posturinn-s10"],
   "ppl": ["ppl-1"],

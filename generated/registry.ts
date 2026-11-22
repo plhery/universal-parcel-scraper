@@ -740,6 +740,7 @@ import { adapter as postex } from '../carriers/postex/adapter.js';
 import { adapter as posti } from '../carriers/posti/adapter.js';
 import { adapter as postlogistics } from '../carriers/postlogistics/adapter.js';
 import { adapter as postmediaParcelServices } from '../carriers/postmedia-parcel-services/adapter.js';
+import { adapter as postnetZa } from '../carriers/postnet-za/adapter.js';
 import { adapter as postnord } from '../carriers/postnord/adapter.js';
 import { adapter as posturinn } from '../carriers/posturinn/adapter.js';
 import { adapter as ppl } from '../carriers/ppl/adapter.js';
@@ -1820,6 +1821,7 @@ export const REGISTRY: RegistryDefinition = {
     "posti": posti,
     "postlogistics": postlogistics,
     "postmedia-parcel-services": postmediaParcelServices,
+    "postnet-za": postnetZa,
     "postnord": postnord,
     "posturinn": posturinn,
     "ppl": ppl,
@@ -3559,7 +3561,7 @@ export const REGISTRY: RegistryDefinition = {
     "posti": "posti",
     "postlogistics": "postlogistics",
     "postmedia-parcel-services": "postmedia-parcel-services",
-    "postnet-za": "universal",
+    "postnet-za": "postnet-za",
     "postnord": "postnord",
     "postplus": "universal",
     "posturinn": "posturinn",
