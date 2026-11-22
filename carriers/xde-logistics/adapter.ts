@@ -7,7 +7,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isXdeLogisticsNotFound, normalizeXdeLogisticsNumber, parseXdeLogistics, PROVIDER, XDE_LOGISTICS_MAX_BYTES } from './parser.js';
 
-/** The lookup the tracker on www.xde.com.ph makes for the number typed in or given in `tn`. */
+/** The lookup the former tracker on www.xde.com.ph made for the number typed in or given in `tn`. */
 export const XDE_LOGISTICS_API = 'https://xdelogistics.com/api/v2/client/public/services/shipment/';
 const REDIRECTS = [301, 302, 303, 307, 308];
 // Bot checks a CDN or firewall could put in place of the reply.

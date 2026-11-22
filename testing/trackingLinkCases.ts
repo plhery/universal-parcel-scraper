@@ -2226,10 +2226,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gogo-xpress', number: 'ZXQA-0000-0009',
     route: /^https:\/\/app\.gogoxpress\.com\/track\/ZXQA-0000-0009$/,
     marker: /Track your package|Check your Tracking Number and try again/i },
-  // The home page puts `tn` into its field, looks it up and answers an unknown number with its own notice.
-  { carrier: 'xde-logistics', number: 'X0000000000',
-    route: /^https:\/\/www\.xde\.com\.ph\/\?tn=X0000000000$/,
-    marker: /We could not find your package|Track your package/ },
   // The page puts the ID in its address into its field, looks it up and answers an unknown one with its own notice.
   { carrier: 'fargo-uz', number: 'TEZ000000',
     route: /^https:\/\/fargo\.uz\/track\?id=TEZ000000$/,

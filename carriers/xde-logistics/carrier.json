@@ -30,9 +30,7 @@
     "delivered_at"
   ],
   "portal": {
-    "url": "https://www.xde.com.ph/?tn={trackingNumber}",
-    "searchUrl": "https://www.xde.com.ph/",
-    "canaryUrl": "https://www.xde.com.ph/",
+    "canaryUrl": "https://xdelogistics.com/",
     "shows": [
       "status",
       "history",

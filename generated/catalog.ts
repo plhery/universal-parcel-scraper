@@ -68664,9 +68664,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "xde-logistics"
     },
-    "canaryUrl": "https://www.xde.com.ph/",
-    "trackingUrlTemplate": "https://www.xde.com.ph/?tn={trackingNumber}",
-    "trackingSearchUrl": "https://www.xde.com.ph/",
+    "canaryUrl": "https://xdelogistics.com/",
     "linkRules": [
       {
         "domains": [

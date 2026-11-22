@@ -2,12 +2,12 @@
 
 XDE Logistics (Ximex Delivery Express) is a Philippine courier and freight forwarder. Its
 XpresParcel service delivers online sellers' parcels across the country. Tracked through the
-lookup its tracker on the home page of `www.xde.com.ph` makes.
+lookup its former tracker on the home page of `www.xde.com.ph` made.
 
 ## How it works
 
 1. `direct`: one `GET https://xdelogistics.com/api/v2/client/public/services/shipment/{number}/history`,
-   the request the home page's tracking form, or a `tn` in its address, makes. It needs no
+   the request the home page's tracking form, or a `tn` in its address, made. It needs no
    cookie, token, key, phone digits or browser. The JSON reply has the shipment's number, its
    current status and its scans, newest first.
 2. `retry`: the same read once more when XDE cannot be reached. The first gets half of the
@@ -54,7 +54,9 @@ carrier. The samples and their sources are in [`numbers.json`](numbers.json).
 
 The library reads a number from the `tn` query parameter on the home page of `www.xde.com.ph`
 and `xde.com.ph`, and from the `trackingnumber` query parameter of `/tracking.html` on
-`xdelogistics.com` and `www.xdelogistics.com`, the address of the former tracker.
+`xdelogistics.com` and `www.xdelogistics.com`, the address of an earlier tracker. The catalog
+links no page: `www.xde.com.ph` now serves an unrelated site, and `xdelogistics.com` only a
+sign-in, which the canary probes.
 
 ## Testing
 
