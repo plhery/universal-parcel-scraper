@@ -127,7 +127,7 @@
       "stage": "failed_attempt",
       "confirmedBy": "live",
       "firstSeen": "2026-11-21",
-      "note": "History step with no label at the end of a delivery round that recorded no outcome, before the parcel is back at the depot. The page treats it like a failed step and drops the delivery date and slot. Read as a delivery issue. Matched as the whole code."
+      "note": "History step labelled logisticIssueOpen, with the warning status, at the end of a delivery round that recorded no outcome, before the parcel is back at the depot. The page treats it like a failed step and drops the delivery date and slot. Read as a delivery issue. Matched by the code, whatever its label."
     },
     {
       "code": "absent",

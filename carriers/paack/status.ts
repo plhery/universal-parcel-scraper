@@ -16,8 +16,9 @@
  * collecting the parcel, not a transit collection.
  * The page's history also lists steps it keeps off the timeline. A failed
  * delivery attempt can come there as `SA013` or `SA014` with no label, and a
- * round that ended without a delivery as `SI000`, so those codes are matched
- * whole.
+ * round that ended without a delivery as `SI000`, labelled
+ * `logisticIssueOpen`, so those codes are matched whole, and by the code alone
+ * when a label the map does not know comes with it.
  * The provider's own wording is never returned; each mapped entry supplies the
  * English description we display.
  *
@@ -175,6 +176,9 @@ export function classifyPaackEvent(value: JsonObject): ClassifiedPaackStatus {
   ])) {
     return { ...IN_TRANSIT };
   }
+  // A history code the map knows, under a label it does not: SI000 as "logisticIssueOpen".
+  const coded = CODES.get(statusKey(value.id));
+  if (coded) return { ...coded };
   return { status: 'unknown', stage: 'in_transit', description: 'Shipment update' };
 }
 
