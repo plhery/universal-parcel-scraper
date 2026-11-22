@@ -116,6 +116,9 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   // the warehouse and the flight's from the airport, in DHLink's English.
   ['warehouse scanning bagging', 'in_transit'],
   ['master airway bill number received', 'in_transit'],
+  // The same two steps worded another way.
+  ['warehouse scanned & bagged', 'in_transit'],
+  ['mawb received', 'in_transit'],
   ['leave the warehouse', 'in_transit'],
   ['departed from airport of origin', 'in_transit'],
   ['departed from origin airport', 'in_transit'],
@@ -138,6 +141,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['货物已清关完成， import customs clearance complete', 'in_transit'],
   ['customs released', 'in_transit'],
   ['flight arrived, pallet breakdown in progress', 'in_transit'],
+  // DHLink's warehouse taking the parcel in, its departure after it the same day; a later intake is transit.
+  ['item inbound in sorting center.', 'accepted'],
   ['item outbound in sorting center.', 'in_transit'],
   ['picked up at destination airport', 'in_transit'],
   // After the pickup at the destination airport, the consolidation broken down for import clearance: a delay at
