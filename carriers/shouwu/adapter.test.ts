@@ -608,6 +608,8 @@ describe('Shouwu International status vocabulary', () => {
 
   it("reads the last mile's first facility after the destination's customs as transit", () => {
     expect(shouwuStage('Processing at Origin Facility')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    // The delivering partner's first hub after the clearance at destination is the way on, not an acceptance.
+    for (const wording of ['Arrived at Origin Hub', 'Departed Origin Hub']) expect(shouwuStage(wording)).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 
   it('reads the last mile\'s return as on its way back, whatever reason it names', () => {
