@@ -7580,6 +7580,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "air-arabia-cargo": {
+    "displayName": "Air Arabia Cargo",
+    "color": "#C20041",
+    "aliases": [
+      "Air Arabia",
+      "العربية للطيران"
+    ],
+    "countries": [
+      "AE",
+      "MA",
+      "EG",
+      "PK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-arabia-cargo"
+    },
+    "canaryUrl": "https://cargo.airarabia.com/cargo-tracking/",
+    "trackingUrlTemplate": "https://cargo.airarabia.com/cargo-tracking/",
+    "trackingSearchUrl": "https://cargo.airarabia.com/cargo-tracking/",
+    "helpUrl": "https://cargo.airarabia.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-europa-cargo": {
     "displayName": "Air Europa Cargo",
     "color": "#005699",
@@ -71705,6 +71731,7 @@ export const CARRIER_IDS = [
   "ahl-courier",
   "aics",
   "aiolos-courier",
+  "air-arabia-cargo",
   "air-europa-cargo",
   "air-greenland",
   "air-inuit",
@@ -73750,6 +73777,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ahl-courier": [],
   "aics": [],
   "aiolos-courier": [],
+  "air-arabia-cargo": [],
   "air-europa-cargo": [],
   "air-greenland": [],
   "air-inuit": [],

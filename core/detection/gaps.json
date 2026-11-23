@@ -6090,6 +6090,12 @@
     "reason": "Cargologic handles every airline's air waybills at Zurich and issues none of its own: a three-digit airline prefix and eight digits ending in a mod-7 check digit, the format every airline's waybills share. Cargologic's tracker returns the samples' steps."
   },
   {
+    "carrier": "air-arabia-cargo",
+    "pattern": "^(?:514|049|452|844|772)\\d{8}$",
+    "kind": "by_design",
+    "reason": "Air Arabia group air waybills are an airline prefix and eight digits ending in a mod-7 check digit, the format every airline's waybills share; the prefix names the airline but detection keeps no air waybill rule."
+  },
+  {
     "carrier": "china-airlines-cargo",
     "pattern": "^297\\d{8}$",
     "kind": "by_design",

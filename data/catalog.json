@@ -7576,6 +7576,32 @@
     ],
     "detectionRules": []
   },
+  "air-arabia-cargo": {
+    "displayName": "Air Arabia Cargo",
+    "color": "#C20041",
+    "aliases": [
+      "Air Arabia",
+      "العربية للطيران"
+    ],
+    "countries": [
+      "AE",
+      "MA",
+      "EG",
+      "PK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "air-arabia-cargo"
+    },
+    "canaryUrl": "https://cargo.airarabia.com/cargo-tracking/",
+    "trackingUrlTemplate": "https://cargo.airarabia.com/cargo-tracking/",
+    "trackingSearchUrl": "https://cargo.airarabia.com/cargo-tracking/",
+    "helpUrl": "https://cargo.airarabia.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "air-europa-cargo": {
     "displayName": "Air Europa Cargo",
     "color": "#005699",

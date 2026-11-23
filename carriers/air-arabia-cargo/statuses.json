@@ -1,0 +1,25 @@
+{
+  "carrier": "air-arabia-cargo",
+  "entries": [
+    {"code": "BKD", "wording": "Shipment booked", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"code": "CPT", "wording": "Waybill data captured", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The airline captures the electronic air waybill's data; the goods are not handed over yet. The tracking page has no wording for it."},
+    {"code": "FOH", "wording": "Shipment on hand", "stage": "accepted", "language": "en", "confirmedBy": "live"},
+    {"code": "RCS", "wording": "Shipment accepted", "stage": "accepted", "language": "en", "confirmedBy": "live"},
+    {"code": "PRE", "wording": "Prepared for loading", "stage": null, "language": "en", "confirmedBy": "live", "note": "The pieces are built up for a flight before it departs, so it keeps the stage before it."},
+    {"code": "MAN", "wording": "Shipment manifested", "stage": null, "language": "en", "confirmedBy": "live", "note": "A flight manifest records an assignment before the departure, so it keeps the stage before it."},
+    {"code": "DEP", "wording": "Shipment departed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "ARR", "wording": "Shipment arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "RCF", "wording": "Breakdown", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The pieces are unloaded from the flight at the arrival station."},
+    {"code": "TRM", "wording": "Shipment transferred", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
+    {"code": "TFD", "wording": "Outbound CTM", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Handed to another airline at a transfer; on a cargo transfer manifest."},
+    {"code": "RCT", "wording": "Inbound CTM", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Taken over from another airline at a transfer; on a cargo transfer manifest."},
+    {"code": "NFD", "wording": "Customer notified", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The consignee is told the goods can be collected at the arrival station's cargo terminal."},
+    {"code": "AWR", "wording": "AWB document received", "stage": null, "language": "en", "confirmedBy": "portal", "note": "The arrival station receives the waybill's papers, which says nothing about the goods."},
+    {"code": "AWD", "wording": "AWB document delivered", "stage": null, "language": "en", "confirmedBy": "portal", "note": "The papers are handed to the consignee, often before the goods, so it keeps the stage before it."},
+    {"code": "CRC", "wording": "Customs reporting", "stage": null, "language": "en", "confirmedBy": "portal", "note": "The shipment is declared to customs, which neither holds nor releases it."},
+    {"code": "CCD", "wording": "Customs clearance", "stage": null, "language": "en", "confirmedBy": "portal", "note": "Customs releases the goods at the terminal; collection follows, so it keeps the stage before it."},
+    {"code": "TGC", "wording": "Transfer customs", "stage": null, "language": "en", "confirmedBy": "portal", "note": "The goods move to a customs warehouse; the page gives no outcome."},
+    {"code": "DIS", "wording": "Discrepancy", "stage": null, "language": "en", "confirmedBy": "portal", "note": "A count or document mismatch the station records; the goods usually move on, so it keeps the stage before it."},
+    {"code": "DLV", "wording": "Shipment delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "A delivery away from the destination, or of fewer pieces than stated, stays in transit."}
+  ]
+}

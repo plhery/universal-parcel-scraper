@@ -1,0 +1,36 @@
+{
+  "carrier": "air-arabia-cargo",
+  "records": [
+    {
+      "number": "514-09707762",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/776024910/514-0970-7762",
+        "access": "full_page",
+        "date": "2026-11-23",
+        "dateKind": "accessed"
+      },
+      "context": {
+        "reportedRole": "A public Scribd upload of an air waybill is titled with this Air Arabia waybill. The tracker returns the same waybill from Sialkot to Sharjah, booked on G9 553, accepted, flown and delivered at Sharjah.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}

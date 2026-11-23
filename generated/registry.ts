@@ -23,6 +23,7 @@ import { adapter as activos24 } from '../carriers/activos24/adapter.js';
 import { adapter as aerolineasArgentinasCargo } from '../carriers/aerolineas-argentinas-cargo/adapter.js';
 import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
 import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
+import { adapter as airArabiaCargo } from '../carriers/air-arabia-cargo/adapter.js';
 import { adapter as airEuropaCargo } from '../carriers/air-europa-cargo/adapter.js';
 import { adapter as airGreenland } from '../carriers/air-greenland/adapter.js';
 import { adapter as airInuit } from '../carriers/air-inuit/adapter.js';
@@ -1120,6 +1121,7 @@ export const REGISTRY: RegistryDefinition = {
     "aerolineas-argentinas-cargo": aerolineasArgentinasCargo,
     "aeropost": aeropost,
     "aex-paraguay": aexParaguay,
+    "air-arabia-cargo": airArabiaCargo,
     "air-europa-cargo": airEuropaCargo,
     "air-greenland": airGreenland,
     "air-inuit": airInuit,
@@ -2248,6 +2250,7 @@ export const REGISTRY: RegistryDefinition = {
     "ahl-courier": "universal",
     "aics": "universal",
     "aiolos-courier": "universal",
+    "air-arabia-cargo": "air-arabia-cargo",
     "air-europa-cargo": "air-europa-cargo",
     "air-greenland": "air-greenland",
     "air-inuit": "air-inuit",

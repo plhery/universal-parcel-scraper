@@ -2749,6 +2749,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'garuda-indonesia-cargo': 'Garuda’s public form posts the airline prefix and serial separately and embeds the iCMS result.',
   'thai-airways-cargo': 'The public THAI Cargo form posts the prefix and serial, so the tracking link opens the form.',
   'china-airlines-cargo': 'The iCargo portal signs in as a guest and posts the air waybill through GraphQL, so the tracking link opens its search form.',
+  'air-arabia-cargo': 'The tracking page fills the air waybill from its form and fetches it from the group API with a key header, so the tracking link opens the form.',
   'umac-cargo': 'The public UMAC page embeds a box-number form that sends a POST lookup, so the link opens its search form.',
   'cadena-courier': 'The public tracker submits a guide through ASP.NET form state and opens the matching row, so the link opens its search form.',
   'mol-ace': 'The official tracker posts the numeric bill from a public form, so the tracking link opens that form.',

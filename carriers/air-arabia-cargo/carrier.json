@@ -1,0 +1,63 @@
+{
+  "id": "air-arabia-cargo",
+  "displayName": "Air Arabia Cargo",
+  "aliases": [
+    "Air Arabia",
+    "العربية للطيران"
+  ],
+  "region": {
+    "countries": [
+      "AE",
+      "MA",
+      "EG",
+      "PK"
+    ]
+  },
+  "brand": {
+    "color": "#C20041"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dubai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "air-arabia-cargo",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://cargo.airarabia.com/cargo-tracking/",
+    "searchUrl": "https://cargo.airarabia.com/cargo-tracking/",
+    "helpUrl": "https://cargo.airarabia.com/",
+    "canaryUrl": "https://cargo.airarabia.com/cargo-tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
