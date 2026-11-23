@@ -71,6 +71,14 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "wording": "Sendung in Postkasten zugestellt",
+      "language": "de",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Put in the letterbox, under status IZ, which otherwise reads as out for delivery."
+    },
+    {
       "code": "IMP",
       "stage": "in_transit",
       "confirmedBy": "live",

@@ -42,8 +42,9 @@ export function austrianPostShowsEstimate(summary: string, newestReason: string)
 // Empfangsbox (reason ZPB) is its delivery, which the page sums up as ZU
 // although the scan carries status IZ; putting it in the box (UPB or 2034)
 // made it ready for collection, as the page's summary EB then says. So is the
-// parcel handed to the recipient, "an Empfänger∗in übergeben", also under IZ.
-const DELIVERED = /\b(?:wurde zugestellt|aus postempfangsbox abgeholt|successfully delivered|^(?:sendung (?:wurde )?)?an empfänger(?:[∗*:_/]?in)? übergeben)\b/i;
+// parcel handed to the recipient, "an Empfänger∗in übergeben", and the one put
+// in the letterbox, "in Postkasten zugestellt", both also under IZ.
+const DELIVERED = /\b(?:wurde zugestellt|sendung in [a-zäöüß]*kasten zugestellt|aus postempfangsbox abgeholt|successfully delivered|^(?:sendung (?:wurde )?)?an empfänger(?:[∗*:_/]?in)? übergeben)\b/i;
 
 // Scans of an item another post sends to Austria: the sending post's posting
 // (BNT) or acceptance (ANI) and dispatch, as Austrian Post relays them, then its

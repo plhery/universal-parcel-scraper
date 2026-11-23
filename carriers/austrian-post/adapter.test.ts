@@ -106,6 +106,10 @@ describe('Austrian Post public tracking', () => {
       // Handed to the recipient, under IZ.
       expect(austrianPostEventStatus('IZ', '', 'Sendung an Empfänger∗in übergeben')?.stage).toBe('delivered');
       expect(statusMap.stage('IZ', 'Sendung an Empfänger*in übergeben')).toBe('delivered');
+      // Put in the letterbox, under IZ; the round itself stays out for delivery.
+      expect(austrianPostEventStatus('IZ', '', 'Sendung in Postkasten zugestellt')?.stage).toBe('delivered');
+      expect(statusMap.stage('IZ', 'sendung in postkasten zugestellt')).toBe('delivered');
+      expect(austrianPostEventStatus('IZ', '', 'Sendung in Zustellung')?.stage).toBe('out_for_delivery');
       // The reason decides a box scan's stage, so its wording alone does not.
       expect(statusMap.stage('PUG', 'sendung in postempfangsbox abholbereit')).toBeUndefined();
     });
