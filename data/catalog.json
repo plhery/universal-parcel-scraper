@@ -273,6 +273,10 @@
         "confidence": "high"
       },
       {
+        "pattern": "^AECA\\d{14}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^CNBR\\d{11}$",
         "confidence": "low"
       },
@@ -64766,6 +64770,10 @@
     "detectionRules": [
       {
         "pattern": "^TSJY\\d{9}CN$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^CFJY\\d{9}CN$",
         "confidence": "high"
       }
     ]

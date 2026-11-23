@@ -12,6 +12,18 @@
         "confidence": "high"
       },
       "note": "Made-up number in the shape of the orders TSJY's tracker answers. Its ninth digit is the S10 check digit of the eight before it, the default check of TSJY's number rule. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "CFJY999999980CN",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-23",
+      "expect": {
+        "carrier": "tsjy",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of TSJY's CFJY orders, which its tracker answers as its own, from its Kunshan warehouse. Its ninth digit is the S10 check digit of the eight before it, as in TSJY's own series. Its serial sits far beyond the range in use."
     }
   ]
 }

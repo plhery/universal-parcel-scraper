@@ -8,6 +8,8 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
  */
 const OWN: ReadonlyMap<string, Stage> = new Map([
   ['订单已提交，等待系统确认', 'registered'],
+  // An order the warehouse entered for goods it holds, waiting to leave.
+  ['订单已录入，等待出库', 'accepted'],
   ['仓库开始拣货', 'accepted'],
   ['仓库拣货完成', 'accepted'],
   ['订单打包完成，等待出库', 'accepted'],

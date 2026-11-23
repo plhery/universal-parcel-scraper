@@ -277,6 +277,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       },
       {
+        "pattern": "^AECA\\d{14}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^CNBR\\d{11}$",
         "confidence": "low"
       },
@@ -64771,6 +64775,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^TSJY\\d{9}CN$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^CFJY\\d{9}CN$",
+        "confidence": "high"
       }
     ]
   },
@@ -73500,7 +73508,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiss-post-cargo": ["swiss-post-cargo-sscc","swiss-post-cargo-pl-reference"],
   "quickpac": ["quickpac-1"],
   "planzer": ["planzer-1","planzer-2"],
-  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-hd-other-series","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-cn-dated","aliexpress-gfus","aliexpress-uusc","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-rn-rs-y","aliexpress-694788","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
+  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-hd-other-series","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-aeca","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-cn-dated","aliexpress-gfus","aliexpress-uusc","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-rn-rs-y","aliexpress-694788","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
   "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": ["hermes-delivery-note"],
   "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3","spring-gds-1810"],
@@ -75325,7 +75333,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trustexpress": [],
   "ts-lines": [],
   "tsb-es": [],
-  "tsjy": ["tsjy-1"],
+  "tsjy": ["tsjy-1","tsjy-cfjy"],
   "tsn-groen": [],
   "tst-cf-express": [],
   "ttk-europe": [],

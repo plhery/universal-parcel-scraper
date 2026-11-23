@@ -13,8 +13,8 @@ import { ESTIMATE, isTsjyDelay, tsjyStage } from './status.js';
 export const PROVIDER = 'TSJY';
 // A long history is a few kilobytes.
 export const TSJY_MAX_BYTES = 256 * 1024;
-// TSJY, nine digits and the origin's country.
-const NUMBER = /^TSJY\d{9}CN$/;
+// TSJY's two order series, TSJY and CFJY, nine digits and the origin's country.
+const NUMBER = /^(?:TSJY|CFJY)\d{9}CN$/;
 // TSJY's warehouse is in Kunshan; its own rows are read on its clock.
 const HOME_ZONE = 'Asia/Shanghai';
 // No order predates the site; an earlier stamp is a placeholder.
@@ -55,7 +55,7 @@ export const TSJY_LINES: readonly { carrier: string; accepts: (number: string) =
 /** A TSJY order number; anything else is a number its tracker is not asked for. */
 export function normalizeTsjyNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
-  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'TSJY order numbers are TSJY, nine digits and CN');
+  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'TSJY order numbers are TSJY or CFJY, nine digits and CN');
   return number;
 }
 

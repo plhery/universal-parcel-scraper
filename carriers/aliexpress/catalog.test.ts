@@ -203,6 +203,12 @@ describe('partner numbers Cainiao follows', () => {
     }
   });
 
+  it('names AliExpress for AECA and fourteen digits, its reference for a parcel to Canada', () => {
+    for (const value of ['AECA00009999999990', 'aeca 0000 9999 9999 90']) {
+      expect(detectCarrierMatch(value), value).toMatchObject({ carrier: 'aliexpress', confidence: 'high', candidates: ['aliexpress'] });
+    }
+  });
+
   it.each(['CNUSUP00000000001', 'CNBR00000000001', 'CNMEX0000000001', 'CACAINIAO00000000001',
     'RLV00000001', 'RLDW00000001', 'JNCN000000000001', 'ECSC00AARO00000001', 'PA0000000001', 'F00000000000001',
     '9C0000I000001', '9C0000J999980', 'RTZ5P00D99999980', 'FMP5P00D99999980', '6947889999999980'])('asks Cainiao about %s', (value) => {
@@ -213,6 +219,7 @@ describe('partner numbers Cainiao follows', () => {
   it.each(['AP0000000000001', 'AP000000000000001', 'AP0000000000000A', 'CNES00000000001', 'RL00000001', 'PA1000000001', 'F10000000000001', '9C0000A000001', '1C0000J000001', '3C0000J000001',
     'RTZ5P00D0000001', 'RTZ0P00D00000001', 'RTZ5X00D00000001', 'RTX5P00D00000001', '5P00D00000001',
     'FMP5P00D0000001', 'FMP1UW1AAAAAAAAA', 'GFUS0000000000001', 'GFUS000000000000001', 'GFFR00000000000019',
+    'AECA0000999999999', 'AECA000099999999901', 'AEUS00009999999990', 'AECA0000999999999A',
     '694788999999998', '69478899999999801', '6947879999999980'])(
     'does not suggest AliExpress for %s', (value) => {
       expect(detectCarrierMatch(value).candidates).not.toContain('aliexpress');

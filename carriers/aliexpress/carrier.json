@@ -113,6 +113,11 @@
       "confidence": "high"
     },
     {
+      "id": "aliexpress-aeca",
+      "pattern": "^AECA\\d{14}$",
+      "confidence": "high"
+    },
+    {
       "id": "aliexpress-cnbr",
       "pattern": "^CNBR\\d{11}$",
       "confidence": "low"

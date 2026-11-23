@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
-import { parseTrackingInput } from '../../core/detection/index.js';
+import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { SEVENTEENFEIA_API } from '../17feia/adapter.js';
@@ -13,6 +13,8 @@ import statuses from './statuses.json' with { type: 'json' };
 const AT_LINE = 'TSJY990000001CN';
 const JOURNEY = 'TSJY990000002CN';
 const UNKNOWN = 'TSJY900000000CN';
+// TSJY's other order series, which its lookup answers as its own orders.
+const CFJY = 'CFJY990000003CN';
 const LINE = 'FEISH9900000001YQ';
 const LATER = Date.parse('2026-04-01T00:00:00Z');
 
@@ -232,7 +234,7 @@ describe('TSJY HTTP adapter', () => {
 
   it('rejects numbers TSJY does not issue and pre-aborted lookups without a request', async () => {
     const fetcher = vi.fn<typeof fetch>();
-    for (const number of ['TSJY99000001CN', 'TSJY9900000011CN', 'TSJY990000001US', 'TSJX990000001CN', LINE, 'CE000000014DE']) {
+    for (const number of ['TSJY99000001CN', 'TSJY9900000011CN', 'TSJY990000001US', 'TSJX990000001CN', 'CFJY990000003US', LINE, 'CE000000014DE']) {
       await expect(carrier(fetcher).track({ number })).rejects.toMatchObject({ kind: 'invalid_input' });
     }
     await expect(carrier(fetcher).track({ number: AT_LINE }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
@@ -254,6 +256,19 @@ describe('TSJY HTTP adapter', () => {
     await expect(carrier(fetcher).track({ number: AT_LINE }, { budgetMs: 20.5 })).rejects.toThrow();
     // A busy runner can spend the budget before the request starts; a request that did start was aborted.
     expect(fetcher.mock.calls.every(([, init]) => init?.signal?.aborted)).toBe(true);
+  });
+
+  it('reads a CFJY order, TSJY’s other series, through the same lookup', async () => {
+    expect(detectCarrierMatch(CFJY)).toMatchObject({ carrier: 'tsjy', confidence: 'high' });
+    for (const number of ['CFJY99000003CN', 'CFJY990000003US', 'CFJX990000003CN']) expect(detectCarrierMatch(number).candidates).not.toContain('tsjy');
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(changed('at-line', (order) => {
+      order.no = CFJY;
+      order.searchNo = CFJY;
+      order.trackList = [{ ...order.trackList.at(-1)!, loc: '昆山集运仓', event: '订单已录入，等待出库' }];
+    })));
+    await expect(carrier(fetcher).track({ number: CFJY })).resolves.toMatchObject({ current_stage: 'accepted', last_status_text: '订单已录入，等待出库' });
+    expect(fetcher.mock.calls[0]![1]).toMatchObject({ body: JSON.stringify({ nos: [CFJY] }) });
+    expect(normalizeTsjyNumber('cfjy 990.000.003 cn')).toBe(CFJY);
   });
 
   it('routes a TSJY order to the adapter, which hands the line’s number to 17FEIA', async () => {
