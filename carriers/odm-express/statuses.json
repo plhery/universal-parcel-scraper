@@ -1,4 +1,11 @@
 {
   "carrier": "odm-express",
-  "entries": []
+  "entries": [
+    {"wording": "C.P. DOCUMENTADA", "stage": "accepted", "language": "es", "confirmedBy": "portal", "note": "The branch documented the waybill (carta porte) at its counter; the parcel left on a bus within the hour."},
+    {"wording": "TRASL. A : CHIHUAHUA, unidad: 1255 OMNIBUS", "stage": "in_transit", "language": "es", "confirmedBy": "portal", "note": "Put on a bus or truck towards the branch or distribution centre it names; the unit and its kind follow."},
+    {"wording": "RECIBIDA EN : CEDIS VALLEJO, ORIGEN : CEDIS CHIHUAHUA CHI", "stage": "in_transit", "language": "es", "confirmedBy": "portal", "note": "Received at the distribution centre it names, from the one after ORIGEN."},
+    {"wording": "EN RUTA DE REPARTO", "stage": "out_for_delivery", "language": "es", "confirmedBy": "portal", "note": "On the delivery round; the tracker names the courier after it, which the adapter drops."},
+    {"wording": "CP ENTREGADA", "stage": "delivered", "language": "es", "confirmedBy": "portal", "note": "Delivered; the tracker adds the day and who received it, which the adapter drops."},
+    {"wording": "ENTREGADO, ACUSE SCANNEADO", "stage": "delivered", "language": "es", "confirmedBy": "portal", "note": "The signed receipt was scanned, at the same second as the delivery; the page then links its image."}
+  ]
 }

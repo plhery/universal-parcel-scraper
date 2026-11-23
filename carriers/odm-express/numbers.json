@@ -1,5 +1,27 @@
 {
   "carrier": "odm-express",
-  "gap": "No public page shows an ODM Express guide number.",
-  "records": []
+  "records": [
+    {
+      "number": "P325590",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://packyapp.com/en/carriers/odm-express",
+        "date": "2026-11-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "flecha-amarilla"
+        ]
+      },
+      "note": "Packy's ODM Express page gives it as the guide format. ODM's tracker answers it with a parcel documented in Chihuahua on 29 April 2025, carried by bus through the Vallejo and León distribution centres and delivered on 7 May."
+    }
+  ]
 }

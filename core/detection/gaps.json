@@ -3067,6 +3067,12 @@
     "reason": "Twelve-digit OCS waybills share their shape and check digit with Yamato and Sagawa numbers, and OCS's own lookup forwards some twelve-digit numbers to those carriers."
   },
   {
+    "carrier": "odm-express",
+    "pattern": "^[A-Z]\\d{5,9}$",
+    "kind": "collision",
+    "reason": "ODM Express guides are a letter and a serial of up to nine digits, a shape Flecha Amarilla's guides and many carriers' references share, so the shape cannot name ODM Express."
+  },
+  {
     "carrier": "old-dominion",
     "pattern": "^\\d{11}$",
     "kind": "by_design",

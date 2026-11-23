@@ -2745,6 +2745,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'courier-it', number: 'CDM999999990',
     route: /^https:\/\/intellitrack\.courierit\.co\.za\/\?SearchString=CDM999999990$/,
     marker: /Enter a waybill to view the latest status/i },
+  // The server draws the result page for the guide in its address and names an unknown one in its notice.
+  { carrier: 'odm-express', number: 'P9999999',
+    route: /^https:\/\/odmexpress\.com\.mx\/rastreo-2\/\?rastreo_fall=P9999999$/,
+    marker: /El número de guía P9999999 no existe o es incorrecto/ },
 ];
 
 /**

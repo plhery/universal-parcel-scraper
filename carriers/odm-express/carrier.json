@@ -14,18 +14,39 @@
   "timezone": "America/Mexico_City",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "odm-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://odmexpress.com.mx/rastreo-2/?rastreo_fall={trackingNumber}",
     "searchUrl": "https://odmexpress.com.mx/rastreo/",
     "helpUrl": "https://odmexpress.com.mx/contacto/",
     "canaryUrl": "https://odmexpress.com.mx/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "proof_of_delivery",
+      "signatory",
+      "driver_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "proof_of_delivery",
+      "signatory",
+      "driver_name"
+    ],
     "unavailable": []
   },
   "links": [

@@ -46643,7 +46643,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Mexico_City",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "odm-express",
+      "localClocks": true
     },
     "canaryUrl": "https://odmexpress.com.mx/",
     "trackingUrlTemplate": "https://odmexpress.com.mx/rastreo-2/?rastreo_fall={trackingNumber}",

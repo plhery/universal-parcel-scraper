@@ -677,6 +677,7 @@ import { adapter as oca } from '../carriers/oca/adapter.js';
 import { adapter as ocasa } from '../carriers/ocasa/adapter.js';
 import { adapter as oceanNetworkExpress } from '../carriers/ocean-network-express/adapter.js';
 import { adapter as ocsAna } from '../carriers/ocs-ana/adapter.js';
+import { adapter as odmExpress } from '../carriers/odm-express/adapter.js';
 import { adapter as oldDominion } from '../carriers/old-dominion/adapter.js';
 import { adapter as olvaCourier } from '../carriers/olva-courier/adapter.js';
 import { adapter as omLogistics } from '../carriers/om-logistics/adapter.js';
@@ -1784,6 +1785,7 @@ export const REGISTRY: RegistryDefinition = {
     "ocasa": ocasa,
     "ocean-network-express": oceanNetworkExpress,
     "ocs-ana": ocsAna,
+    "odm-express": odmExpress,
     "old-dominion": oldDominion,
     "olva-courier": olvaCourier,
     "om-logistics": omLogistics,
@@ -3475,7 +3477,7 @@ export const REGISTRY: RegistryDefinition = {
     "ock-cn": "universal",
     "ocolchonespack": "universal",
     "ocs-ana": "ocs-ana",
-    "odm-express": "universal",
+    "odm-express": "odm-express",
     "okaken": "universal",
     "okay-parcel": "universal",
     "old-dominion": "old-dominion",
