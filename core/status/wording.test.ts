@@ -156,6 +156,8 @@ describe('classifyWording', () => {
       "We're sorry but we were unable to complete your delivery. Please continue to check your tracking for real time updates",
       'The driver tried to deliver the package, but the business was closed. We will reattempt up to 3 times. Contact us with any access or delivery instructions',
       'Business closed. Please provide hours',
+      // A business's goods receipt closed, as ParcelsApp relays Dachser's in English.
+      'Information - Goods receipt dept. closed. Info:concertar',
       // Bring's missed round as ParcelsApp relays it in English.
       'Delivery of the shipment has been attempted, but there was nobody available to receive it/the store was closed.',
       'Delivery was attempted',
@@ -1088,7 +1090,7 @@ describe('classifyWording', () => {
       ['Expected from Forward2me Ltd', 'registered'],
       ['Csomagod elkészült. Csomagod létrejött a rendszerünkben, a feladó még nem adta át azt a FOXPOST részére.', 'registered'],
       ['The collection has been registered', 'registered'], ['The shipment has been deposited at a SEUR pickup point', 'accepted'],
-      ['The collection has been carried out', 'accepted'], ['Order placed', 'registered'], ['Sent abroad', 'in_transit'],
+      ['The collection has been carried out', 'accepted'], ['Order placed', 'registered'], ['Ordered', 'registered'], ['Sent abroad', 'in_transit'],
       ['Send item abroad (EDI-received)', 'in_transit'], ['Send item to destination country', 'in_transit'],
       ['Item received at office of exchange (Inb)', 'in_transit'], ['Receive item at office of exchange (Otb)', 'in_transit'],
       ['Send item to domestic location (Inb)', 'in_transit'],

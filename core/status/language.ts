@@ -473,10 +473,11 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // spelling) after the post received the item.
   if (/^(?:the )?(?:recipi?ent|addressee|consignee|receiver) (?:(?:is|was) )?(?:uncontactable|unreachable|not contactable|could not be (?:contacted|reached))$/.test(text)) return 'failed_attempt';
   // Missed rounds worded around the attempt, made or tried ("Delivery of the shipment has been attempted", as
-  // ParcelsApp relays Bring), the card a missed round leaves, the absent recipient or a closed business. A
-  // scheduled attempt is not a missed one, nor is a sender pickup.
+  // ParcelsApp relays Bring), the card a missed round leaves, the absent recipient or a closed business, or its goods
+  // receipt ("Information - Goods receipt dept. closed", as ParcelsApp relays Dachser's in English). A scheduled attempt
+  // is not a missed one, nor is a sender pickup.
   if (!/\bpick ?up (?:attempt|was attempted|unsuccessful|failed)|attempted (?:to )?pick ?up/.test(text)
-    && /(?:attempted|tried) to deliver|\bdelivery(?: of (?:the |your |this )?(?:shipment|parcel|package|item|consignment))? (?:has been|had been|was) attempted\b|\bcard(?:ed| left)\b|\bwe(?: have|'ve)? missed (?:you|each other)\b(?![^.;!?]*\bready for (?:pick ?up|collection)\b)|\battempted delivery\b(?! (?:is )?(?:scheduled|planned|expected|tomorrow|will)\b)|unsuccessful delivery|delivery (?:was )?(?:un|not )successful|unable to complete (?:the |your |this )?delivery|(?<!\bif (?:the |your )?)\b(?:recipient|addressee|consignee|customer|receiver|user)(?: was| is)? (?:not (?:at home|home|available|present)|unavailable|absent)\b|absence of (?:the )?(?:recipient|addressee|consignee)|\bbusiness (?:was |is )?closed\b|\bpremises (?:(?:was|were) )?closed\b|destinataire absent|(?<!\ben cas d')\babsence du destinataire|(?:entreprise|societe) (?:etait |est )?fermee?\b|nicht angetroffen|(?:firma|betrieb|geschaft) (?:war |ist )?geschlossen|destinatario assente|(?:attivita|azienda|ditta) (?:era |e )?chiusa/.test(text)) return 'failed_attempt';
+    && /(?:attempted|tried) to deliver|\bdelivery(?: of (?:the |your |this )?(?:shipment|parcel|package|item|consignment))? (?:has been|had been|was) attempted\b|\bcard(?:ed| left)\b|\bwe(?: have|'ve)? missed (?:you|each other)\b(?![^.;!?]*\bready for (?:pick ?up|collection)\b)|\battempted delivery\b(?! (?:is )?(?:scheduled|planned|expected|tomorrow|will)\b)|unsuccessful delivery|delivery (?:was )?(?:un|not )successful|unable to complete (?:the |your |this )?delivery|(?<!\bif (?:the |your )?)\b(?:recipient|addressee|consignee|customer|receiver|user)(?: was| is)? (?:not (?:at home|home|available|present)|unavailable|absent)\b|absence of (?:the )?(?:recipient|addressee|consignee)|\bbusiness (?:was |is )?closed\b|\bpremises (?:(?:was|were) )?closed\b|\bgoods (?:receipt|receiving|reception)(?: (?:dept\.?|department|area))? (?:was |is )?closed\b|destinataire absent|(?<!\ben cas d')\babsence du destinataire|(?:entreprise|societe) (?:etait |est )?fermee?\b|nicht angetroffen|(?:firma|betrieb|geschaft) (?:war |ist )?geschlossen|destinatario assente|(?:attivita|azienda|ditta) (?:era |e )?chiusa/.test(text)) return 'failed_attempt';
   // The same in Spanish and Portuguese ("Ausente"), where "recogida" and
   // "recolha" name the sender pickup and "si"/"caso" make absence a condition.
   if (!/\bintento de recogida\b|\brecogida (?:fallida|no realizada|no efectuada)\b|\btentativa de (?:recolha|coleta)\b|\b(?:recolha|coleta) (?:falhada|sem sucesso|nao (?:realizada|efetuada|efectuada))\b/.test(text)
@@ -652,8 +653,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^(?:reported|recorded|announced|item created|enregistre|annonce|erfasst|angekundigt|registrato|annunciato)$/.test(text)) return 'registered';
   // A shipment record the sender created ("Shipment created"), and nothing else.
   if (/^(?:(?:the |your |a |new )?(?:shipment|parcel|package|consignment|order|envoi|colis|expedition|commande|sendung|paket|auftrag|spedizione|pacco|ordine|envio|paquete|pedido|encomenda|przesylka|paczka|zamowienie|gonderi|kargo|siparis) )(?:(?:has been|was|a ete|wurde|e stat[oa]|ha sido|fue|foi|zostal[ao]?) )?(?:created|creee?s?|erstellt|angelegt|creat[oa]|cread[oa]|criad[oa]|utworzon[aey]|olusturuldu)$/.test(text)) return 'registered';
-  // An order placed with the seller, before any shipment.
-  if (/^(?:the |your |an? |new )?order (?:has been |was )?placed$/.test(text)) return 'registered';
+  // An order placed with the seller, before any shipment, also as ParcelsApp relays it in one word ("Ordered").
+  if (/^(?:the |your |an? |new )?order (?:has been |was )?placed$|^ordered$/.test(text)) return 'registered';
   // The carrier recorded the shipment, in Spanish after a "notified" label ("Notificado - El envío ha sido
   // registrado") and in English.
   if (/^(?:notificado )?(?:el |la |su |tu )?(?:envio|paquete|pedido|encomienda) (?:ha sido|fue) registrad[oa]$/.test(text)

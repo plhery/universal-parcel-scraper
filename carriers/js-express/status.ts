@@ -52,10 +52,17 @@ const bracketedStage = (normalized: string): Stage | undefined =>
 // "Ihre Sendung ist zu [Beispiel HUB] zurückgekehrt.".
 const RETURNED_TO = /^(ihre sendung ist zu )\[[^\]]*\]( zurückgekehrt\.?)$/;
 
+// JS Express's notice that the destination courier could not deliver the parcel and holds it until the recipient
+// contacts it, with that courier's phone and email: "交货异常，投递失败，逾期退回或销毁的具体费用以账单为准，麻烦让收件人联系当地，
+// 当地电话：…邮箱：…" ("delivery exception, delivery failed; the costs of a return or destruction past the deadline are as
+// billed; please have the recipient contact the local courier"). The parcel waits on the recipient, not on another round.
+const HELD_FOR_RECIPIENT = /^交货异常，投递失败，逾期退回或销毁/;
+
 // iMile's scans as its destination courier, which open with the centre's name in 【】, take iMile's reading.
 const mappedStage = (normalized: string): Stage | undefined =>
   WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1').replace(RETURNED_TO, '$1[]$2')) ?? bracketedStage(normalized)
     ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined)
+    ?? (HELD_FOR_RECIPIENT.test(normalized) ? 'exception' : undefined)
     ?? uspsSentenceStage(normalized)
     ?? chinaPostRelayedStage(normalized)
     ?? imileRelayedStage(normalized);

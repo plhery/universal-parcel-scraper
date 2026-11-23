@@ -388,6 +388,12 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressMappedStage('Alert, Forwarded')).toBeUndefined();
   });
 
+  it('reads its notice that the destination courier holds a parcel it could not deliver, whatever contacts follow, as an exception', () => {
+    const notice = '交货异常，投递失败，逾期退回或销毁的具体费用以账单为准，麻烦让收件人联系当地，当地电话：邮箱：support@example.com';
+    expect(jsExpressStage(notice, 'FFW')).toEqual({ stage: 'exception', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'FFW', description: notice })).toEqual({ kind: 'mapped', stage: 'exception' });
+  });
+
   it("reads USPS's status before its sentence about the item or the package by the status's own entry, and USPS's row between facilities", () => {
     const arrived = 'On the Way, Arrived at USPS Facility -> Your item arrived at our USPS facility in SAMPLE TOWN DISTRIBUTION CENTER '
       + 'on January 2, 2030 at 12:05 am. The item is currently in transit to the destination.';
