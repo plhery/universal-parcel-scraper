@@ -467,6 +467,12 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00-03:00', 'Recibido')).not.toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
   });
 
+  it("reads a sender's despatch to Couriers Please as the carrier's acceptance, as ParcelsApp relays it", () => {
+    for (const wording of ['Despatched to CouriersPlease', 'Despatched to Couriers Please']) {
+      expect(event('2026-01-07T13:00:00+11:00', wording), wording).toMatchObject({ stage: 'accepted', stage_source: 'wording:language' });
+    }
+  });
+
   it("reads Landmark Global's pallet for any crossing, and a destination carrier's pre-alert, as ParcelsApp relays them", () => {
     for (const wording of ['Grouped when pallet scanned to crossing (SLC INTERPOST #1)', 'Grouped when pallet scanned to crossing (DDU #1234)']) {
       expect(event('2026-01-07T12:45:00-07:00', wording)).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
