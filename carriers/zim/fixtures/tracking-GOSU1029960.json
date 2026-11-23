@@ -1,0 +1,57 @@
+{
+  "unitListItem": [
+    {
+      "unitPrefix": "GOSU",
+      "unitNo": "1029960",
+      "result": {
+        "returnCode": "GSL",
+        "returnMessage": "GenericError"
+      },
+      "extendedData": {
+        "showUsTracingStatus": false,
+        "consTypeParamForUsTracing": "ct",
+        "isConsRejected": false
+      }
+    }
+  ],
+  "carriers": [
+    {
+      "contentTypeKey": "",
+      "key": "",
+      "udi": "",
+      "carrier": "GSL",
+      "code": "-20003",
+      "link": "https://www.gslltd.com.hk/"
+    },
+    {
+      "contentTypeKey": "",
+      "key": "",
+      "udi": "",
+      "carrier": "LNL",
+      "code": "-20004",
+      "link": "https://www.lnl.com.hk/"
+    },
+    {
+      "contentTypeKey": "",
+      "key": "",
+      "udi": "",
+      "carrier": "SETH",
+      "code": "-20005",
+      "link": "https://www.sethshipping.com/"
+    },
+    {
+      "contentTypeKey": "",
+      "key": "",
+      "udi": "",
+      "carrier": "ZIM",
+      "code": "-20002",
+      "link": "https://www.zim.com/"
+    }
+  ],
+  "isPrivateInfo": true,
+  "isServerTimeOut": false,
+  "isSuccess": true,
+  "tracingNotification": true,
+  "scheduleByVesselUrl": "/schedules/schedule-by-vessel",
+  "myZimDomain": "https://my.zim.com"
+}

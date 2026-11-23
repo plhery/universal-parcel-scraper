@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { noHistoryHandoff } from '../../core/catalog/handoff.js';
 import { carrierDefinition } from '../../core/catalog/index.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
@@ -20,6 +21,8 @@ const TAKEN_OUT = 'ZIMUSHH32340236';
 const CONTAINER = 'TCNU2975217';
 const RETURNED = 'ZIMUSHH32336300';
 const INLAND = 'ZIMUHCM80693336';
+// A container of Gold Star Line's public samples, which ZIM says Gold Star Line holds.
+const GOLD_STAR = 'GOSU1029960';
 
 type Row = Record<string, unknown>;
 type Container = Row & { unitPrefix: string; unitNo: string; unitActivities: { unitActivitiesItem: Row[] } };
@@ -142,6 +145,24 @@ describe('ZIM tracking replies', () => {
     expect(() => zimResult({ ...missingBill(BILL), isServerTimeOut: true }, zimQuery(BILL))).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
+  it('hands Gold Star Line the containers ZIM says it holds, and reads another ZIM line\'s as another carrier\'s', () => {
+    expect(() => read(GOLD_STAR)).toThrowError(expect.objectContaining({ kind: 'indeterminate', deliveryCarrier: 'gold-star-line',
+      deliveryTrackingNumber: GOLD_STAR }));
+    const error = (() => { try { return read(GOLD_STAR); } catch (caught) { return caught; } })();
+    expect(noHistoryHandoff('zim', GOLD_STAR, error)).toEqual({ carrier: 'gold-star-line', number: GOLD_STAR, basis: 'partner' });
+    const held = (returnCode: string, edit?: (reply: Reply) => void) => () => read(GOLD_STAR, reply => {
+      reply.unitListItem[0]!.result = { returnCode, returnMessage: 'GenericError' };
+      edit?.(reply);
+    });
+    expect(held('-20003')).toThrowError(expect.objectContaining({ deliveryCarrier: 'gold-star-line' }));
+    for (const code of ['LNL', 'SETH', '-20004']) {
+      expect(held(code), code).toThrowError(expect.objectContaining({ kind: 'invalid_input', reason: 'other_carrier' }));
+    }
+    for (const code of ['ZIM', 'XYZ', '-1', '']) expect(held(code), code).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(held('GSL', reply => { delete reply.carriers; })).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(held('GSL', reply => { reply.unitListItem[0]!.unitNo = '1029961'; })).toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it('reads Akamai\'s refusal and its check as a challenge, and other pages as a changed reply', () => {
     for (const body of ['<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD><BODY>Reference #18.0</BODY></HTML>',
       '<!DOCTYPE html><html><head><title>Challenge Validation</title></head><body></body></html>']) {
@@ -233,6 +254,16 @@ describe('ZIM adapter', () => {
   it('asks once more when the lookup does not reach ZIM', async () => {
     const fetcher = vi.fn<typeof fetch>().mockRejectedValueOnce(new TypeError('fetch failed')).mockResolvedValue(ok(CONTAINER));
     await expect(carrier(fetcher, null).track({ number: CONTAINER })).resolves.toMatchObject({ current_stage: 'out_for_delivery' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('hands the containers ZIM says Gold Star Line holds to Gold Star Line\'s tracker', async () => {
+    const answer = readFileSync(new URL(`../gold-star-line/fixtures/tracking-${GOLD_STAR}.json`, import.meta.url), 'utf8');
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async url =>
+      new Response(String(url) === 'https://www.goldstarline.com/api/cms' ? answer : JSON.stringify(fixture(GOLD_STAR))));
+    await expect(createTracker({ providers: [], env: {}, fetcher }).track({ number: GOLD_STAR, carrier: 'zim' }, { budgetMs: 5000 }))
+      .resolves.toMatchObject({ source: 'gold-star-line', handoff: { carrier: 'gold-star-line', number: GOLD_STAR },
+        result: { current_stage: 'delivered', last_update: '2026-10-21T19:19:00+07:00' } });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 

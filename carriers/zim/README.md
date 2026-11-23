@@ -25,6 +25,10 @@ No account, cookie or CAPTCHA is needed.
   must name the bill, or the container, it was asked for.
 - ZIM's answer for a number it does not hold differs by kind; only the answer for the kind asked
   is not found.
+- For a container another ZIM line holds, the result's code names that line in the reply's
+  `carriers`. Gold Star Line's containers answer with no history and hand the container to
+  [Gold Star Line](../gold-star-line/README.md). The other lines, LNL and SETH, are not in the
+  catalog: their containers are invalid input naming another carrier.
 - A bill's reply states each activity's time with its place's offset. A container's reply labels
   some wall clocks with an offset of ZIM's own, so its times are read as wall clocks in their
   place's zone: a US state's or Canadian province's from the code after the town, or the

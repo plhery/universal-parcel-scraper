@@ -52,7 +52,8 @@ and seven to nine digits; a bill typed without `GOSU` gets it, as the lookup nee
 are ISO 6346 numbers, Gold Star Line's own `GOSU` and those it leases, whose check digit is
 checked before the lookup. Detection has no rule. The samples and their sources are in
 [`numbers.json`](numbers.json). The page's own link, `https://www.goldstarline.com/tools/track_shipment/…`,
-and the former page's `CCM.aspx?textContainerNumber=…` are read as Gold Star Line's.
+and the former page's `CCM.aspx?textContainerNumber=…` are read as Gold Star Line's. ZIM hands
+it the containers ZIM's tracker says Gold Star Line holds.
 
 ## Testing
 

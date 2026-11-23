@@ -161,6 +161,22 @@ function currentStage(histories: readonly CarrierEvent[][]): Stage | undefined {
 
 const containerNumber = (row: Row) => `${text(row, 'unitPrefix', 10)}${text(row, 'unitNo', 20)}`;
 
+/**
+ * The error for a container ZIM says another of its lines holds: the result's code names that
+ * line in the reply's `carriers`. Gold Star Line's are handed to it; the other lines are not in
+ * the catalog and are another carrier's.
+ */
+function heldByLine(reply: Row, code: string, query: ZimQuery): Error | null {
+  const lines = Array.isArray(reply.carriers) ? reply.carriers.filter(isRecord) : [];
+  const line = code ? lines.find(entry => entry.carrier === code || entry.code === code) : undefined;
+  const name = line && typeof line.carrier === 'string' && /^[A-Z]{2,6}$/.test(line.carrier) ? line.carrier : '';
+  if (!name || name === 'ZIM') return null;
+  if (name === 'GSL') {
+    return new NoHistoryError(PROVIDER, 'ZIM says Gold Star Line holds this container', { deliveryCarrier: 'gold-star-line', deliveryTrackingNumber: query.number });
+  }
+  return new InvalidInputError(PROVIDER, `ZIM says its line ${name} holds this container`, { reason: 'other_carrier' });
+}
+
 /** The containers a reply holds for the number asked, or the error ZIM's answer stands for. */
 function containersOf(reply: Row, query: ZimQuery): Row[] {
   if (query.kind === 'container') {
@@ -172,7 +188,8 @@ function containersOf(reply: Row, query: ZimQuery): Row[] {
     if (text(result, 'returnCode', 10) === '0' && /^Not found/i.test(text(result, 'returnMessage'))) {
       throw new NotFoundError(PROVIDER, 'ZIM does not hold this container');
     }
-    if (text(result, 'returnCode', 10) !== '1') throw new SchemaError(PROVIDER, 'ZIM returned an unexpected container result');
+    const code = text(result, 'returnCode', 10);
+    if (code !== '1') throw heldByLine(reply, code, query) ?? new SchemaError(PROVIDER, 'ZIM returned an unexpected container result');
     return [unit];
   }
   const items = reply.consgListItem;
