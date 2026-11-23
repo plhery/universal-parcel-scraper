@@ -1,5 +1,6 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { returnedTrackingNumber } from '../../core/detection/returned.js';
+import { ChallengeError, IndeterminateError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
@@ -19,6 +20,18 @@ function rejection(bytes: Uint8Array): string {
   return message ? `: ${message}` : '';
 }
 
+/**
+ * Whether a 404 is FAN's "The AWB has been registered by sender": the sender's label, before FAN has the
+ * parcel. A reply naming another AWB in `content` is not that answer for this one.
+ */
+function registeredBySender(bytes: Uint8Array, number: string): boolean {
+  let payload: unknown;
+  try { payload = parseJsonBytes(bytes.subarray(0, 4_096), PROVIDER); } catch { return false; }
+  if (!isRecord(payload) || typeof payload.message !== 'string') return false;
+  if (payload.content !== undefined && payload.content !== null && returnedTrackingNumber(payload.content, true) !== number) return false;
+  return payload.message.trim().replace(/\.$/, '').toLowerCase() === 'the awb has been registered by sender';
+}
+
 export class FanCourierTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
@@ -35,6 +48,9 @@ export class FanCourierTracker {
         allowHttpStatuses: [404, 422], fetcher: this.options.fetcher });
       // The number was checked before the request: a rejection or a missing page says nothing about the parcel.
       // The tracking page shows the message FAN sends with it, which the diagnostics keep, without long digit runs.
+      if (response.status === 404 && registeredBySender(bytes, number)) {
+        throw new NoHistoryError(PROVIDER, 'FAN Courier lists the AWB as registered by its sender, before it has the parcel', { reason: 'listed' });
+      }
       if (response.status !== 200) {
         throw new IndeterminateError(PROVIDER, `FAN Courier tracking is unavailable (HTTP ${response.status}${rejection(bytes)})`);
       }
@@ -53,6 +69,10 @@ export class FanCourierTracker {
 export const adapter: AdapterFactory = environment => {
   const tracker = new FanCourierTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'fan-courier', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+    // An AWB its sender registered is FAN's own number, known before the parcel's first scan.
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeFanCourierNumber(number))) };
+      () => accepted(() => normalizeFanCourierNumber(number))).catch((error: unknown) => {
+      if (error instanceof NoHistoryError && error.reason === 'listed') return { known: true, lastActivityAt: null };
+      throw error;
+    }) };
 };

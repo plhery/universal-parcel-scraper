@@ -138,6 +138,18 @@ describe('FAN Courier retrieval', () => {
     expect(fetcher).toHaveBeenCalledOnce();
   });
 
+  it('reads an AWB its sender registered, before FAN has the parcel, as listed without scans', async () => {
+    const reply = (body: unknown) => vi.fn<typeof fetch>().mockResolvedValue(Response.json(body, { status: 404 }));
+    for (const body of [{ message: 'The AWB has been registered by sender', content: NUMBER }, { message: 'The AWB has been registered by sender.' }]) {
+      await expect(new FanCourierTracker({ fetcher: reply(body) }).fetch(NUMBER))
+        .rejects.toMatchObject({ kind: 'indeterminate', name: 'NoHistoryError', reason: 'listed' });
+      await expect(adapter(environment(reply(body))).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null });
+    }
+    // The same message naming another AWB says nothing about this one.
+    await expect(new FanCourierTracker({ fetcher: reply({ message: 'The AWB has been registered by sender', content: '4000000000027' }) }).fetch(NUMBER))
+      .rejects.toMatchObject({ kind: 'indeterminate', name: 'IndeterminateError', message: 'FAN Courier tracking is unavailable (HTTP 404: The AWB has been registered by sender)' });
+  });
+
   it('keeps the status and FAN Courier’s message of a rejected lookup in its diagnostics, without long digit runs', async () => {
     const lookup = (response: Response) => new FanCourierTracker({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(response) }).fetch(NUMBER);
     await expect(lookup(Response.json({ message: 'Synthetic refusal for 2999999999990' }, { status: 422 })))

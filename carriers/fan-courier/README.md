@@ -31,6 +31,10 @@ FAN Courier for them. The adapter refuses any other shape without a request.
   an empty reply, a rejected request or a missing page is inconclusive, and a Cloudflare page
   is a challenge. FAN's page shows the message sent with a 404 or 422, so the diagnostics keep
   the status and that message, without long digit runs.
+- A 404 saying "The AWB has been registered by sender" is the sender's label before FAN has
+  the parcel; the same AWB answers with its scans once FAN does. It is the shipment listed
+  without scans, and recognition takes it as FAN's number. The message naming another AWB in
+  `content` is inconclusive.
 - Events are mapped by code in [status.ts](status.ts). The codes and their names come from
   the event list in FAN Courier's API documentation; S56 (handed in at a FANbox or collect
   point) and S65 (held for the next transport abroad) are named only by the tracking page's
