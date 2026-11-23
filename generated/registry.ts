@@ -423,6 +423,7 @@ import { adapter as gruberLogistics } from '../carriers/gruber-logistics/adapter
 import { adapter as gsPostbox } from '../carriers/gs-postbox/adapter.js';
 import { adapter as gsiExpress } from '../carriers/gsi-express/adapter.js';
 import { adapter as gtaAirskip } from '../carriers/gta-airskip/adapter.js';
+import { adapter as gti } from '../carriers/gti/adapter.js';
 import { adapter as gtlGoto } from '../carriers/gtl-goto/adapter.js';
 import { adapter as guatex } from '../carriers/guatex/adapter.js';
 import { adapter as gzyl } from '../carriers/gzyl/adapter.js';
@@ -1515,6 +1516,7 @@ export const REGISTRY: RegistryDefinition = {
     "gs-postbox": gsPostbox,
     "gsi-express": gsiExpress,
     "gta-airskip": gtaAirskip,
+    "gti": gti,
     "gtl-goto": gtlGoto,
     "guatex": guatex,
     "gzyl": gzyl,
@@ -2977,6 +2979,7 @@ export const REGISTRY: RegistryDefinition = {
     "gs-postbox": "gs-postbox",
     "gsi-express": "gsi-express",
     "gta-airskip": "gta-airskip",
+    "gti": "gti",
     "gtl-goto": "gtl-goto",
     "guatex": "guatex",
     "guepex": "universal",

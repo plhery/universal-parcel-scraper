@@ -31748,6 +31748,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "gti": {
+    "displayName": "GTI",
+    "color": "#0093dd",
+    "aliases": [
+      "跨境易通",
+      "深圳市跨境易通供应链管理有限公司",
+      "KJYT"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gti",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gtl-goto": {
     "displayName": "GoTo Logistics",
     "color": "#14922c",
@@ -72286,6 +72308,7 @@ export const CARRIER_IDS = [
   "gs-postbox",
   "gsi-express",
   "gta-airskip",
+  "gti",
   "gtl-goto",
   "guatex",
   "guepex",
@@ -74326,6 +74349,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gs-postbox": [],
   "gsi-express": [],
   "gta-airskip": ["gta-airskip-1"],
+  "gti": [],
   "gtl-goto": ["gtl-goto-1","gtl-goto-2"],
   "guatex": [],
   "guepex": [],
