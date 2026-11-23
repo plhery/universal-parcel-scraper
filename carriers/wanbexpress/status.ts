@@ -61,6 +61,12 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // and in shorter words.
   ['your shipment has arrived at sorting center', 'in_transit'],
   ['arrived at sorting center', 'in_transit'],
+  // Cainiao's last mile, relayed without the codes AliExpress sends the same lines under: the order created with the
+  // parcel's data (CREATE_ORDER_CES), its sorting centre's dispatch (SC_OUTBOUND), and the delivery carrier taking the
+  // parcel from it (SL_ACCEPT), the journey going on, not the sender's handover.
+  ['shipment order created', 'registered'],
+  ['your shipment has been processed at sorting center and ready for shipping', 'in_transit'],
+  ['your shipment has been accepted by delivery carrier', 'in_transit'],
   // The handover to DPD for the last mile, after the destination's customs clearance.
   ['parcel handed to dpd', 'in_transit'],
   ['consignee contacted', null],

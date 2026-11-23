@@ -333,6 +333,30 @@
       "note": "A French last-mile partner's sorting centre taking the parcel in, relayed without a code at the minute of the partner's own line coded 202."
     },
     {
+      "wording": "Shipment order created",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Cainiao's order created with the parcel's data, at the minute of WanbExpress's DataReceived; AliExpress sends the same line under CREATE_ORDER_CES."
+    },
+    {
+      "wording": "Your shipment has been processed at sorting center and ready for shipping",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Cainiao's last-mile sorting centre sending the parcel on after the destination's clearance; AliExpress sends the same line under SC_OUTBOUND."
+    },
+    {
+      "wording": "Your shipment has been accepted by delivery carrier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The delivery carrier taking the parcel from Cainiao's last-mile sorting centre, days after the parcel left China: the journey going on, not the sender's handover. AliExpress sends the same line under SL_ACCEPT."
+    },
+    {
       "wording": "Consignee Contacted",
       "language": "en",
       "stage": null,
