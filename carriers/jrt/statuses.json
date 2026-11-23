@@ -515,6 +515,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Ready for transit to last mile operator",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Cleared at the destination and waiting for the hand-over to the delivering carrier."
+    },
+    {
       "wording": "The goods have been handed over to the carrier",
       "language": "en",
       "stage": "in_transit",

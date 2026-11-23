@@ -634,6 +634,8 @@ describe('JRT tracking adapter', () => {
     // The road into Hong Kong after the operation centre, shown in English.
     expect(answer('过港中')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(jrtEnglish(null, normalizeStatusWording('过港中'))).toBe('Crossing to Hong Kong');
+    // Cleared at the destination, waiting for the delivering carrier.
+    expect(answer('Ready for transit to last mile operator')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('预计配载航班11月11日,Expected flight on November 11th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('预计配载航班12月2日，Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Expected flight on Nov. 20th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
