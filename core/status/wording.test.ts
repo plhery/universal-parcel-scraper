@@ -1017,6 +1017,8 @@ describe('classifyWording', () => {
       ['Pendiente de recepción en CTT Express', 'registered'],
       // A centre sending the parcel on to a station.
       ['Example center Parcel has been sent to AST 01.', 'in_transit'],
+      // A sort in a logistics centre, as Ship24 relays Swiss Post's in English.
+      ['Classified, shipment has been classified in the logistics centre', 'in_transit'],
       // Unless the sentence goes on to a pickup point or a delivery round.
       ['Your parcel has been sent to the pickup point and is ready for collection', 'ready_for_pickup'],
       ['Package has been sent to the parcel shop. Ready for pickup', 'ready_for_pickup'],
