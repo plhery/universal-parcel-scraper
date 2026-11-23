@@ -26,7 +26,7 @@ import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '.
 import { classifyEvent, event, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
 import {
-  borrowsRoutingZone, carrierHomeZone, formerCopies, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
+  borrowsRoutingZone, cainiaoStampCopies, carrierHomeZone, formerCopies, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
 } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
@@ -120,10 +120,13 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   const scans: { wall: string | null; service: string; origin: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
   // The destination Royal Mail's scan leaving the UK has left for, whose post's scans the later ones are.
   let leftFor: string | null = null;
+  const listed = (rawEvents as unknown[]).map((raw) => isRecord(raw)
+    ? { service: text(raw.ds), dt: typeof raw.dt === 'string' ? raw.dt : '', location: text(raw.loc), description: text(raw.dsc) }
+    : { service: '', dt: '', location: '', description: '' });
   // The copies of Spring GDS's local scans Postal Ninja made before it gave the feed's digits, which it keeps beside the new ones.
-  const former = formerCopies((rawEvents as unknown[]).map((raw) => isRecord(raw)
-    ? { service: text(raw.ds), dt: typeof raw.dt === 'string' ? raw.dt : '', description: text(raw.dsc) }
-    : { service: '', dt: '', description: '' }), carrier);
+  const former = formerCopies(listed, carrier);
+  // Cainiao's copies of the feed's UTC stamps, at their UTC digits.
+  const stampCopies = cainiaoStampCopies(listed, carrier);
   for (const [index, raw] of (rawEvents as unknown[]).entries()) {
     if (!isRecord(raw)) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event');
     const description = text(raw.dsc);
@@ -134,7 +137,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     const service = text(raw.ds);
     const partner = royalMailPartnerScanWall(service, raw.dt, leftFor);
     leftFor ??= royalMailLeavesFor(service, description, destination);
-    const wall = partner ?? wallClock(service, raw.dt, text(raw.loc), description, carrier);
+    const wall = partner ?? (stampCopies.has(index) ? `${raw.dt}Z` : wallClock(service, raw.dt, text(raw.loc), description, carrier));
     const reporting = named.has(service) ? { reporting_carrier: service } : {};
     if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
       const parsed = event(wall, description, serviceStage(service, description));

@@ -188,6 +188,20 @@ export function formerCopies(scans: readonly { service: string; dt: string; desc
 const CAINIAO = 'Cainiao';
 
 /**
+ * The indexes of Cainiao's copies of the stamps Spring GDS's feed dates in UTC to the second. Cainiao
+ * gives such a stamp's UTC digits: its arrival in the transit country at 07:53:24 was PostNL's
+ * acceptance at 07:53:24Z, which Postal Ninja gives at the same digits beside it.
+ */
+export function cainiaoStampCopies(scans: readonly { service: string; dt: string; location: string; description: string }[],
+  carrier: string | null): Set<number> {
+  if (carrier !== 'spring-gds') return new Set();
+  const seconds = (dt: string) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(dt) && !TO_THE_MINUTE.test(dt);
+  const stamps = new Set(scans.filter((scan) => feedCopy(scan.service, carrier) && seconds(scan.dt)
+    && feedUtcStamp(scan.service, scan.dt, scan.location, scan.description)).map((scan) => scan.dt));
+  return new Set(scans.flatMap((scan, index) => scan.service === CAINIAO && stamps.has(scan.dt) ? [index] : []));
+}
+
+/**
  * 4PX, whose scans in China Postal Ninja gives in UTC: its pickup at 21:08:31 on 4PX's own
  * +08:00 came at 13:08:31. They are placed by the country their location names, in any
  * history; its scans that name no place borrow from them, and those elsewhere have no

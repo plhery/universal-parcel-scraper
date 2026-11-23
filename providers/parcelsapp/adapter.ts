@@ -1470,12 +1470,33 @@ function russianPostExportCopy(carrier: string | undefined, status: string, date
  * its instant, and undefined for a scan its place dates (`siteZone`) or only a
  * guess does (`guessedZone`).
  */
+/**
+ * The dates to the second of PostNL's UTC stamps in a reply: customs', and the acceptance and bagging stamps that keep
+ * their seconds. Cainiao gives such a stamp's UTC digits: its arrival in the transit country at 07:53:24 was PostNL's
+ * acceptance at 07:53:24Z.
+ */
+function postnlUtcStampDates(payload: Record<string, unknown>): Set<string> {
+  return new Set((Array.isArray(payload.states) ? payload.states : []).flatMap((raw: unknown) => {
+    if (!isRecord(raw) || typeof raw.status !== 'string' || typeof raw.date !== 'string') return [];
+    const name = stateCarrierName(payload, raw);
+    const status = raw.status.trim();
+    return typeof name === 'string' && carrierIdFromName(name) === 'spring-gds' && /T\d{2}:\d{2}:(?!00)\d{2}/.test(raw.date)
+      && (POSTNL_CUSTOMS_STAMP.test(status) || POSTNL_ACCEPTANCE_STAMP.test(status)) ? [raw.date.slice(0, 19)] : [];
+  }));
+}
+/** Whether a state is Cainiao's copy of one of PostNL's UTC stamps in the reply (`postnlUtcStampDates`): its date is the instant. */
+function postnlStampCopy(payload: Record<string, unknown>, name: unknown, date: unknown): boolean {
+  return typeof name === 'string' && /^cainiao\b/i.test(name.trim()) && typeof date === 'string'
+    && /T\d{2}:\d{2}:(?!00)\d{2}/.test(date) && postnlUtcStampDates(payload).has(date.slice(0, 19));
+}
+
 function carrierClock(payload: Record<string, unknown>, state: Record<string, unknown>, number: string, status = '',
   destination: string | null = null): string | null | undefined {
   const name = stateCarrierName(payload, state);
   const key = nameKey(name);
   const carrier = typeof name === 'string' ? carrierIdFromName(name) : undefined;
   if (carrier === 'tnt' && /^\d{9}$/.test(number)) return null;
+  if (postnlStampCopy(payload, name, state.date)) return null;
   if (typeof name === 'string' && ASENDIA_USA.test(name.trim())) return null;
   if (uspsLabelRow(name, status)) return null;
   // ePost Global's feed, which ParcelsApp files under EasyShip, as ePost Global's own tracker reads it.
@@ -1774,7 +1795,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const name = stateCarrierName(payload, raw);
   const location = scanLocation(name, raw.location);
   const offset = ownOffset(name, raw.date, location);
-  const wallClock = WALL_CLOCKS.has(nameKey(name)) && !offset && !uspsLabelRow(name, status);
+  const wallClock = WALL_CLOCKS.has(nameKey(name)) && !offset && !uspsLabelRow(name, status) && !postnlStampCopy(payload, name, raw.date);
   const partner = royalMailPartnerRelay(payload, name, raw.date, raw.location);
   const relay = polandPostRelay(name, raw.date, location, number, destination) ?? laPosteLetterRelay(name, raw.date, location, number)
     ?? correosDeMexicoRelay(name, raw.date, location, origin, destination) ?? partner;

@@ -289,6 +289,16 @@ describe('Postal Ninja result parsing', () => {
       '2026-03-04T12:37:33.000Z', '2026-03-04T08:25:00.000Z']);
     expect(parsed.events?.map((scan) => scan.time_zone ?? null))
       .toEqual(['Europe/Amsterdam', 'Europe/Amsterdam', null, null, 'Europe/Amsterdam']);
+    // Cainiao's copy of the acceptance stamp has its UTC digits; its copy of a local scan its local ones.
+    const copies = [
+      { ds: 'PostNL', dt: '2026-11-18T07:53:24', dsc: 'Consignment received at the PostNL Acceptance Centre', loc: 'Netherlands' },
+      { ds: 'Cainiao', dt: '2026-11-18T07:53:24', dsc: 'Arrived at transit country or region' },
+      { ds: 'PostNL', dt: '2026-11-20T14:01:17', dsc: 'The item is at the local sorting centre', loc: 'Netherlands' },
+      { ds: 'Cainiao', dt: '2026-11-20T14:01:00', dsc: 'Arrived at local delivery center' },
+    ];
+    expect(times(parsePostalNinjaResponse(withEvents(copies), number, 'Europe/Amsterdam', 'spring-gds'))).toEqual([
+      '2026-11-20T13:01:17.000Z', '2026-11-20T13:01:00.000Z', '2026-11-18T07:53:24.000Z', '2026-11-18T07:53:24.000Z']);
+    expect(times(parsePostalNinjaResponse(withEvents(copies), number, 'Europe/Amsterdam', 'postnl'))?.[3]).toBe('2026-11-18T06:53:24.000Z');
     // On a lookup for PostNL itself they keep their digits.
     expect(times(parsePostalNinjaResponse(withEvents(scans), number, 'Europe/Amsterdam', 'postnl'))).toEqual(['2026-03-07T13:01:17.000Z',
       '2026-03-06T12:46:00.000Z', '2026-03-05T06:53:24.000Z', '2026-03-04T11:37:33.000Z', '2026-03-04T08:25:00.000Z']);

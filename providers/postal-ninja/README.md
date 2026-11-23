@@ -116,7 +116,8 @@ capture failure.
   the minute and Postal Ninja relays in PostNL's words. On a Spring GDS item it names some of
   those scans "PostNL", at the feed's digits alike, and their customs and acceptance stamps, which
   the feed dates in UTC to the fraction of a second, keep their UTC digits and seconds, as
-  ParcelsApp gives them. An acceptance dated to the minute is a local scan. Postal Ninja used to
+  ParcelsApp gives them. An acceptance dated to the minute is a local scan. Cainiao's copy of such
+  a stamp has the same digits to the second and is read as that instant. Postal Ninja used to
   read the feed's local times as UTC and show them on Amsterdam's clock, and it keeps those
   former copies beside the new ones: a sorting scan at 14:18 Dutch time came at 14:18 and at
   15:18. A scan to the minute whose service gives its wording an hour earlier in winter, or two

@@ -705,7 +705,9 @@ step exists for future protocol changes.
   by customs"), which PostNL's own feed states in UTC: read on Amsterdam's clock, a clearance came
   an hour before Cainiao's copy of it. Its acceptance and bagging stamps ("Consignment received at
   the PostNL Acceptance Centre") are UTC too when they keep their seconds, as in PostNL's own feed;
-  those dated to the minute are on the local clock.
+  those dated to the minute are on the local clock. Cainiao copies such a stamp at the same digits
+  to the second, so its copy is that instant too: read on Amsterdam's clock, its arrival in the
+  transit country came an hour before PostNL's acceptance it repeats.
 - So do a mailer's labels filed under USPS, whose wording repeats their place ("Shipping Label
   Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label Created, USPS Awaiting
   Item" and keep its wall clock. Read on their place's clock, three such labels came eight hours

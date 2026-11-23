@@ -1154,14 +1154,18 @@ describe('ParcelsApp result parsing', () => {
   it('keeps the UTC instants of PostNL\'s acceptance and bagging stamps that keep their seconds', () => {
     // PostNL's own feed dates these stamps in UTC to the fraction of a second, and ParcelsApp keeps the seconds;
     // read on Dutch time they came an hour early. The sorting scan, dated to the minute, stays Dutch.
-    const result = parseParcelsAppResponse({ carriers: ['PostNL - Netherlands Post'], states: [
+    // Cainiao's copy of the acceptance has its UTC digits too; its other scans keep their clock.
+    const result = parseParcelsAppResponse({ carriers: ['PostNL - Netherlands Post', 'Cainiao'], states: [
       { date: '2026-03-06T07:46:00Z', status: 'The item is processed at the PostNL sorting center', carrier: 0, location: 'Netherlands' },
       { date: '2026-03-05T16:22:49Z', status: 'Item is nested to commercial bag', carrier: 0, location: 'Netherlands' },
       { date: '2026-03-05T16:22:40Z', status: 'Item is being processed', carrier: 0 },
       { date: '2026-03-05T07:53:24Z', status: 'Consignment received at the PostNL Acceptance Centre', carrier: 0, location: 'Netherlands' },
+      { date: '2026-03-05T07:53:24Z', status: 'Arrive at transit country or facility', carrier: 1 },
+      { date: '2026-03-04T17:24:16Z', status: 'Arrive at transit country or facility', carrier: 1 },
     ] }, number, identity(), 'Europe/Amsterdam');
     expect(result.events?.map((scan) => scan.time)).toEqual([
-      '2026-03-06T06:46:00.000Z', '2026-03-05T16:22:49.000Z', '2026-03-05T16:22:40.000Z', '2026-03-05T07:53:24.000Z']);
+      '2026-03-06T06:46:00.000Z', '2026-03-05T16:22:49.000Z', '2026-03-05T16:22:40.000Z', '2026-03-05T07:53:24.000Z',
+      '2026-03-05T07:53:24.000Z', '2026-03-04T16:24:16.000Z']);
   });
 
   it('places Muser\'s copies of the delivering network\'s scans in the US by their town, as Muser\'s tracker does', () => {
