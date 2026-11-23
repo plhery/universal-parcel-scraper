@@ -256,6 +256,9 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (anPost) return anPost;
   // A sender's parcel left at a pick-up point for a courier to collect: an acceptance, not a parcel awaiting its recipient.
   if (/^the (?:parcel|package) has been delivered to the pick-?up point\. a courier will pick it up\b/i.test(description)) return 'accepted';
+  // An airline's unit load device broken down at the destination airport, the parcels awaiting the forwarder there, not
+  // their recipient, as ParcelsApp relays it with a non-breaking hyphen: "ULD breakdown completed, awaiting pick‑up in" a place.
+  if (/^uld breakdown completed, awaiting pick[-\u2010\u2011]?up in [^,]{1,40}$/iu.test(description)) return 'in_transit';
   // myBRT's progress bar, as ParcelsApp relays it: the shipment handed to BRT, which BRT's own page calls its collection
   // (RITIRATA). "Consegnata" names the hand-over to BRT, not the delivery.
   if (/^spedizione consegnata a brt[.!]?$/i.test(description)) return 'accepted';

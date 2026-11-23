@@ -20,6 +20,12 @@ describe('shared provider result', () => {
     expect(classifyEvent('离开收寄点【示例】')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
   });
 
+  it("reads an airline's load device broken down at the destination airport in transit, the parcels awaiting the forwarder", () => {
+    for (const wording of ['ULD breakdown completed, awaiting pick\u2011up in Sampletown', 'ULD breakdown completed, awaiting pick-up in Sampletown']) {
+      expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+    }
+  });
+
   it('reads the destination post taking the item over as a hand-over on the way, not the acceptance', () => {
     // Australia Post's INT-2185, as Ship24 relays it without its code, days after the item left Australia.
     expect(classifyEvent('Item handed over to the local postal authority')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
