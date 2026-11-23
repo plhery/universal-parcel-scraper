@@ -1,0 +1,63 @@
+{
+  "id": "marfret",
+  "displayName": "Marfret",
+  "aliases": [
+    "Compagnie Maritime Marfret",
+    "Marfret Lines",
+    "MFTU"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#ef4239"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "marfret",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.marfret.com/en/container-tracking/",
+    "canaryUrl": "https://www.marfret.com/en/container-tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vehicle",
+      "eta",
+      "item_category",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vehicle",
+      "eta",
+      "item_category",
+      "weight"
+    ],
+    "unavailable": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

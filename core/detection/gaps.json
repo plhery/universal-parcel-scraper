@@ -2668,6 +2668,12 @@
     "reason": "MRKU is one of the owner codes of Maersk's own containers, whose ISO 6346 numbers end in a check digit; Maersk's tracker returns the sample container's moves. Detection does not offer Maersk."
   },
   {
+    "carrier": "marfret",
+    "pattern": "^MFTU\\d{7}$",
+    "kind": "open",
+    "reason": "MFTU is the owner code of Marfret's own containers, whose ISO 6346 numbers end in a check digit; Marfret's tracker returns the sample containers' moves. Detection does not offer Marfret."
+  },
+  {
     "carrier": "maersk-ecommerce",
     "pattern": "^1MCAINIXX\\d{10}$",
     "kind": "collision",

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<partial-response><changes><update id="infoGrowl"><![CDATA[<span id="infoGrowl"></span><script id="infoGrowl_s" type="text/javascript">$(function(){PrimeFaces.cw('Growl','widget_infoGrowl',{id:'infoGrowl',sticky:false,life:6000,escape:true,msgs:[]});});</script>]]></update><update id="warnGrowl"><![CDATA[<span id="warnGrowl"></span><script id="warnGrowl_s" type="text/javascript">$(function(){PrimeFaces.cw('Growl','widget_warnGrowl',{id:'warnGrowl',sticky:false,life:6000,escape:false,msgs:[]});});</script>]]></update><update id="errorGrowl"><![CDATA[<span id="errorGrowl"></span><script id="errorGrowl_s" type="text/javascript">$(function(){PrimeFaces.cw('Growl','widget_errorGrowl',{id:'errorGrowl',sticky:true,life:6000,escape:false,msgs:[]});});</script>]]></update><update id="contTableForm"><![CDATA[
+<form id="contTableForm" name="contTableForm" method="post" action="/Odyssey/public/marfret/ContainerTrackSearch.seam" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="contTableForm" value="contTableForm" />
+<div id="contTableForm:DtrackviewCont" style="padding:5px;"><div id="contTableForm:j_idt26">
+                            <ul class="seContainer">
+                                    <li class="seItem" style="width: 20%;">MFTU8260736
+                                    </li>
+                                    <li class="seItem" style="width: 20%;">45R1
+                                    </li>
+                                    <li class="seItem" style="width: 25%; height: 50px;">40ft High Cube Reefer Container
+                                    </li>
+                                    <li class="seItem" style="width: 25%;">
+                                        Tare = 4360.0<span> kg</span>
+                                    </li>
+                            </ul></div><div id="contTableForm:CTtrackview" class="ui-outputpanel ui-widget"><div id="contTableForm:TBtrackView" class="ui-datatable ui-widget pfTable" style="width:100%; font-family: Lato, Merriweather, Georgia, serif;text-align: center;"><div class="ui-datatable-tablewrapper"><table role="grid"><thead id="contTableForm:TBtrackView_head"><tr role="row"><th id="contTableForm:TBtrackView:contNum" class="ui-state-default" role="columnheader" aria-label="Container Number" scope="col" style="font-size: 13px;"><span class="ui-column-title">Container Number</span></th><th id="contTableForm:TBtrackView:evDate" class="ui-state-default" role="columnheader" aria-label="Date" scope="col" style="font-size: 13px;"><span class="ui-column-title">Date</span></th><th id="contTableForm:TBtrackView:evType" class="ui-state-default" role="columnheader" aria-label="Event Type" scope="col" style="font-size: 13px;"><span class="ui-column-title">Event Type</span></th><th id="contTableForm:TBtrackView:evLoc" class="ui-state-default" role="columnheader" aria-label="Location" scope="col" style="font-size: 13px;"><span class="ui-column-title">Location</span></th><th id="contTableForm:TBtrackView:evVoy" class="ui-state-default" role="columnheader" aria-label="Voyage" scope="col" style="font-size: 13px;"><span class="ui-column-title">Voyage</span></th></tr></thead><tbody id="contTableForm:TBtrackView_data" class="ui-datatable-data ui-widget-content"><tr data-ri="0" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell" style="font-size: 13px;">MFTU8260736</td><td role="gridcell" style="font-size: 13px;">11/12/26 7:35 AM</td><td role="gridcell" style="font-size: 13px;">
+		        	Depot Gate In
+		        </td><td role="gridcell" style="font-size: 13px;">TYNE BNE [AU BNE]</td><td role="gridcell" style="font-size: 13px;"></td></tr></tbody></table></div></div><script id="contTableForm:TBtrackView_s" type="text/javascript">$(function(){PrimeFaces.cw("DataTable","TBtrackView",{id:"contTableForm:TBtrackView",paginator:{id:['contTableForm:TBtrackView_paginator_top','contTableForm:TBtrackView_paginator_bottom'],rows:20,rowCount:1,page:0,currentPageTemplate:'({currentPage} of {totalPages})',alwaysVisible:false},groupColumnIndexes:[]});});</script></div></div>
+</form>]]></update><update id="provTableForm"><![CDATA[
+<form id="provTableForm" name="provTableForm" method="post" action="/Odyssey/public/marfret/ContainerTrackSearch.seam" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="provTableForm" value="provTableForm" />
+
+</form>]]></update><update id="javax.faces.ViewState"><![CDATA[1234567890123456789:-1234567890123456789]]></update><extension id="org.richfaces.extension"><render>contTableForm provTableForm infoGrowl warnGrowl errorGrowl</render></extension></changes></partial-response>

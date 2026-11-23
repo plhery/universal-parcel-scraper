@@ -1,0 +1,12 @@
+{
+  "carrier": "marfret",
+  "entries": [
+    {"wording": "Allocated", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The container is allocated to a booking, at the depot or without a place."},
+    {"wording": "Depot Gate Out", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The empty container leaves the depot for the shipper. After a discharge it is the container leaving for the consignee, out for delivery."},
+    {"wording": "Terminal Gate In", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading. After the container moved it is transit, and after it left the port of discharge it is the empty return."},
+    {"wording": "Loaded OnBoard", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded at the port of loading or of transshipment."},
+    {"wording": "Discharged", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at a port of transshipment or of discharge."},
+    {"wording": "Terminal Gate Out", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The container leaves the port of discharge for the consignee. Before the container moved it is an empty one leaving for the shipper, and between voyages it is transit."},
+    {"wording": "Depot Gate In", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The empty container comes back to a depot once the consignee unloaded it. Before the container moved it is an empty container returned unused, without a stage."}
+  ]
+}

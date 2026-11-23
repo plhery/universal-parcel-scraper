@@ -42568,6 +42568,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "marfret": {
+    "displayName": "Marfret",
+    "color": "#ef4239",
+    "aliases": [
+      "Compagnie Maritime Marfret",
+      "Marfret Lines",
+      "MFTU"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "marfret",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.marfret.com/en/container-tracking/",
+    "trackingSearchUrl": "https://www.marfret.com/en/container-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "maritime-ontario": {
     "displayName": "Maritime-Ontario",
     "color": "#0064b1",
@@ -72526,6 +72546,7 @@ export const CARRIER_IDS = [
   "mandae",
   "maple-logistics",
   "maraton",
+  "marfret",
   "maritime-ontario",
   "mark-express",
   "marken",
@@ -74563,6 +74584,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mandae": [],
   "maple-logistics": [],
   "maraton": [],
+  "marfret": [],
   "maritime-ontario": [],
   "mark-express": [],
   "marken": [],

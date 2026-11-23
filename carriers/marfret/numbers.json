@@ -1,0 +1,362 @@
+{
+  "carrier": "marfret",
+  "records": [
+    {
+      "number": "MFTU9261613",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Papeete to Melbourne, returned empty to a depot."
+    },
+    {
+      "number": "MFTU8260736",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns one move, its return to a depot at Brisbane."
+    },
+    {
+      "number": "MFTU2220438",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Le Havre through Pointe-à-Pitre to Fort-de-France, returned empty to a terminal."
+    },
+    {
+      "number": "MFTU2250134",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Rotterdam to Pointe-à-Pitre, gone out to the consignee."
+    },
+    {
+      "number": "MFTU4113399",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its allocation and depot gate out at Algiers, with a provisional voyage to Marseille."
+    },
+    {
+      "number": "MFTU8231810",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Algeciras to Vigo, discharged."
+    },
+    {
+      "number": "MFTU8245011",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from a Brisbane depot to its load at Brisbane, with a provisional discharge at Philadelphia."
+    },
+    {
+      "number": "MFTU8256870",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its allocation and depot gate out at Algiers, with a provisional voyage to Marseille."
+    },
+    {
+      "number": "MFTU8261481",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns one move, its return to a depot at Sydney."
+    },
+    {
+      "number": "MFTU8261877",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns one move, its return to a depot at Melbourne."
+    },
+    {
+      "number": "MFTU9131477",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Guayaquil to Algeciras, returned empty to a depot."
+    },
+    {
+      "number": "MFTU9223125",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Fort-de-France to Le Havre, discharged."
+    },
+    {
+      "number": "MFTU9228493",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its allocation and load at Caucedo, with a provisional discharge at Barcelona."
+    },
+    {
+      "number": "MFTU9240267",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Valencia to Cartagena in Colombia, gone out to the consignee."
+    },
+    {
+      "number": "MFTU9250028",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from a Barcelona depot to its load at Barcelona, with a provisional discharge at Caucedo."
+    },
+    {
+      "number": "MFTU9252756",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its allocation and depot gate out at Marseille."
+    },
+    {
+      "number": "MFTU9262733",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/marfret/",
+        "date": "2026-11-22",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Marfret page lists this Marfret container among its recent searches. Marfret's tracker returns its moves from Papeete to Rotterdam, discharged."
+    }
+  ]
+}

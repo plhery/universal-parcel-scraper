@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Odyssey</title></head>
+<body id="pgHome"><div id="main"><div id="body">
+<form id="cTFormView" name="cTFormView" method="post" action="/Odyssey/public/marfret/ContainerTrackSearch.seam" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="cTFormView" value="cTFormView" />
+<div id="cTFormView:j_idt19"><div id="cTFormView:j_idt20" class="searchRow">
+                        Search By:
+                        <select id="cTFormView:ctSelect" name="cTFormView:ctSelect" class="selectionBox" size="1">	<option value="CONTNUM">Container Number</option>
+	<option value="BOOKINGNUM">Booking Number</option>
+	<option value="SINUM">SI Number</option>
+	<option value="BLNUM">BL Number</option>
+</select><input id="cTFormView:searchText" type="text" name="cTFormView:searchText" class="searchText" /><button id="cTFormView:ctSearchButton" name="cTFormView:ctSearchButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only button marfretButton" onclick="PrimeFaces.ab({s:&quot;cTFormView:ctSearchButton&quot;,p:&quot;cTFormView&quot;,u:&quot;contTableForm provTableForm&quot;});return false;" style="background: #d02323;" type="submit"><span class="ui-button-text ui-c">Track and trace</span></button><script id="cTFormView:ctSearchButton_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_cTFormView_ctSearchButton",{id:"cTFormView:ctSearchButton"});</script></div></div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="1234567890123456789:-1234567890123456789" autocomplete="off" />
+</form><div id="j_idt23" class="resultsBox">
+<form id="contTableForm" name="contTableForm" method="post" action="/Odyssey/public/marfret/ContainerTrackSearch.seam" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="contTableForm" value="contTableForm" />
+<div id="contTableForm:DtrackviewCont" style="padding:5px;"><div id="contTableForm:CTtrackview" class="ui-outputpanel ui-widget"><div id="contTableForm:TBtrackView" class="ui-datatable ui-widget pfTable" style="width:100%; font-family: Lato, Merriweather, Georgia, serif;text-align: center;"><div class="ui-datatable-tablewrapper"><table role="grid"><thead id="contTableForm:TBtrackView_head"><tr role="row"><th id="contTableForm:TBtrackView:contNum" class="ui-state-default" role="columnheader" aria-label="Container Number" scope="col" style="font-size: 13px;"><span class="ui-column-title">Container Number</span></th><th id="contTableForm:TBtrackView:evDate" class="ui-state-default" role="columnheader" aria-label="Date" scope="col" style="font-size: 13px;"><span class="ui-column-title">Date</span></th><th id="contTableForm:TBtrackView:evType" class="ui-state-default" role="columnheader" aria-label="Event Type" scope="col" style="font-size: 13px;"><span class="ui-column-title">Event Type</span></th><th id="contTableForm:TBtrackView:evLoc" class="ui-state-default" role="columnheader" aria-label="Location" scope="col" style="font-size: 13px;"><span class="ui-column-title">Location</span></th><th id="contTableForm:TBtrackView:evVoy" class="ui-state-default" role="columnheader" aria-label="Voyage" scope="col" style="font-size: 13px;"><span class="ui-column-title">Voyage</span></th></tr></thead><tbody id="contTableForm:TBtrackView_data" class="ui-datatable-data ui-widget-content"><tr class="ui-widget-content ui-datatable-empty-message"><td colspan="5">No records found.</td></tr></tbody></table></div></div><script id="contTableForm:TBtrackView_s" type="text/javascript">$(function(){PrimeFaces.cw("DataTable","TBtrackView",{id:"contTableForm:TBtrackView",paginator:{id:['contTableForm:TBtrackView_paginator_top','contTableForm:TBtrackView_paginator_bottom'],rows:20,rowCount:0,page:0,currentPageTemplate:'({currentPage} of {totalPages})',alwaysVisible:false},groupColumnIndexes:[]});});</script></div></div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="1234567890123456789:-1234567890123456789" autocomplete="off" />
+</form>
+<form id="provTableForm" name="provTableForm" method="post" action="/Odyssey/public/marfret/ContainerTrackSearch.seam" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="provTableForm" value="provTableForm" />
+<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="1234567890123456789:-1234567890123456789" autocomplete="off" />
+</form>
+</div>
+<p class="texte-reserve"> Arrival and departure dates are local time. Dates are estimates without guarantee and subject to change at any time without prior notice. In no case or no event, shall MARFRET or any third party connected with MARFRET, be liable for any direct or indirect damage, connected with or derived from accessing this container tracking and/or using the information therein.</p>
+</div></body></html>

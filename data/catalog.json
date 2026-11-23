@@ -42564,6 +42564,26 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "marfret": {
+    "displayName": "Marfret",
+    "color": "#ef4239",
+    "aliases": [
+      "Compagnie Maritime Marfret",
+      "Marfret Lines",
+      "MFTU"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "marfret",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.marfret.com/en/container-tracking/",
+    "trackingSearchUrl": "https://www.marfret.com/en/container-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "maritime-ontario": {
     "displayName": "Maritime-Ontario",
     "color": "#0064b1",
