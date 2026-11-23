@@ -102,6 +102,8 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'E508700V': { status: 'in_transit', stage: 'customs' },
   'E134630V': { status: 'in_transit', stage: 'customs' },
   'E314004V': { status: 'in_transit', stage: 'customs' },
+  // Inspected ("Envío inspeccionado"), recorded at the minute its processing completed with charges.
+  'E771180R': { status: 'in_transit', stage: 'customs' },
   'E190000V': { status: 'in_transit', stage: 'in_transit' },
   // Handed back to the sender, or on the way back: never a delivery to the recipient.
   'I020000V': { status: 'exception', stage: 'returned' },
