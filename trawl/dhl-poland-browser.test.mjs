@@ -101,12 +101,36 @@ test('a shared block skips audio on later pages, retains challenge and permits a
   const result = await runDhlPolandBrowser(active.options);
   assert.equal(solves, 0); assert.equal(active.state.submitted, 0); assert.equal(active.state.closed, 1);
   assert.equal(result.capturedResponses.length, 0);
-  assert.deepEqual(active.diagnostics[0].native, ['audio_cooldown']);
+  assert.equal(active.interactions.checkbox, 1);
+  assert.deepEqual(active.diagnostics[0].native, ['audio_cooldown', 'checkbox_started']);
   assert.equal(active.diagnostics[0].outcome, 'challenge');
   const verified = fixture(); verified.options.audioBackoff = backoff;
   verified.options.solveNativeCaptcha = async () => { solves++; return true; };
   assert.equal((await runDhlPolandBrowser(verified.options)).capturedResponses.length, 1);
   assert.equal(solves, 0); assert.equal(verified.diagnostics[0].verification, 'checkbox');
+  assert.deepEqual(verified.diagnostics[0].native, ['audio_cooldown', 'checkbox_started', 'checkbox_verified']);
+});
+test('during the audio pause a checkbox that passes alone submits the form, and a missing one leaves a challenge', async () => {
+  const backoff = createRecaptchaAudioBackoff(); backoff.block();
+  const passing = fixture(); passing.options.audioBackoff = backoff;
+  let token = '';
+  const original = passing.page.locator;
+  passing.page.locator = selector => selector === '#g-recaptcha-response' ? { inputValue: async () => token } : original(selector);
+  passing.page.frameLocator = () => ({ first: () => ({ locator: () => ({ click: async () => { passing.interactions.checkbox++; token = 'PRIVATE'; } }) }) });
+  passing.options.solveNativeCaptcha = async () => { throw new Error('audio asked during its pause'); };
+  assert.equal((await runDhlPolandBrowser(passing.options)).capturedResponses.length, 1);
+  assert.equal(passing.interactions.checkbox, 1); assert.equal(passing.state.submitted, 1);
+  assert.equal(passing.diagnostics[0].outcome, 'history');
+  assert.equal(JSON.stringify(passing.diagnostics).includes('PRIVATE'), false);
+  const missing = fixture(); missing.options.audioBackoff = backoff;
+  const base = missing.page.locator;
+  missing.page.locator = selector => selector === '#g-recaptcha-response' ? { inputValue: async () => '' } : base(selector);
+  missing.page.frameLocator = () => ({ first: () => ({ locator: () => ({ click: async () => { throw new Error('Timeout 10000ms exceeded'); } }) }) });
+  assert.equal((await runDhlPolandBrowser(missing.options)).capturedResponses.length, 0);
+  assert.equal(missing.state.submitted, 0);
+  assert.equal(missing.diagnostics[0].outcome, 'challenge');
+  assert.equal(missing.diagnostics[0].failure, null);
+  assert.deepEqual(missing.diagnostics[0].native, ['audio_cooldown']);
 });
 test('a stalled native solver is stopped by the browser deadline and closes its context', async () => {
   const active = fixture(); active.options.maxTimeout = 30;
@@ -125,7 +149,7 @@ test('a restored shared pause is awaited before DHL Poland asks for audio', asyn
   await runDhlPolandBrowser(active.options);
   assert.equal(solves, 0);
   assert.equal(active.state.submitted, 0);
-  assert.deepEqual(active.diagnostics[0].native, ['audio_cooldown']);
+  assert.deepEqual(active.diagnostics[0].native, ['audio_cooldown', 'checkbox_started']);
 });
 test('extracts only safe history fields and identifies an unresolved verification form', () => {
   assert.deepEqual(dhlPolandHistory(html), { number, events: [{ date: '04.03.2026', time: '10:15',

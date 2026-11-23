@@ -128,8 +128,17 @@ export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeo
         phase = solveNativeCaptcha ? 'native' : 'checkbox';
         let checked, usedNative = false;
         if (await audioBackoff.remainingMs() > 0) {
+          // Google pauses the audio challenge for the service's address, not the checkbox, which can still pass alone.
           recordNative('audio_cooldown');
+          const clicked = await page.frameLocator('iframe[src*="recaptcha"][src*="anchor"]').first().locator('#recaptcha-anchor')
+            .click({ timeout: Math.min(10000, remaining()) }).then(() => true, () => false);
+          if (clicked) {
+            recordNative('checkbox_started');
+            await page.waitForFunction(() => document.querySelector('#g-recaptcha-response')?.value.length > 0,
+              null, { timeout: Math.min(5000, remaining()) }).catch(() => {});
+          }
           checked = await page.locator('#g-recaptcha-response').inputValue({ timeout: remaining() }).then(value => value.length > 0, () => false);
+          if (clicked && checked) recordNative('checkbox_verified');
         } else if (solveNativeCaptcha) {
           // The upstream solver owns the first checkbox click and audio flow.
           // Leave time for the matching form response.

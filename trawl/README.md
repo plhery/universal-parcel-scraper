@@ -271,7 +271,8 @@ worker failures and submitted refusals are not retried. Diagnostics retain only 
 attempt reasons and refresh count. Both the request and response bind the whole
 waybill. A planned click alone is not accepted verification.
 DHL Poland uses TRAWL's native checkbox and audio solver, on a page opened in the language the
-request names (`lang=en-gb` or `pl-pl`), which words its scans.
+request names (`lang=en-gb` or `pl-pl`), which words its scans. While the shared audio pause is
+on, it makes a checkbox-only attempt.
 Poste Italiane uses that solver only after its tracking API requests a CAPTCHA. Its page
 submits the issued token and the helper captures the matching history, keeping the earlier
 refusal and excluding verification tokens and recipient fields. A disappearing widget does

@@ -67,7 +67,8 @@ tracking requires a matching, nonempty history response. No recipient
 postcode is needed for scan history. Each history lookup
 solves Google's audio challenge, and Google refuses a host that asks too
 often, so the catalog's `tracking.refresh` asks consumers to check a parcel at
-most hourly, and two hours after a failed check.
+most hourly, and two hours after a failed check. While Google pauses the audio challenge
+for the service's address, the helper still clicks the checkbox, which sometimes passes alone.
 
 Detection suggests eleven-digit waybills whose last digit is the check digit of
 DHL Paket's Identcode: weights 4 and 9 alternate from the left over the first
