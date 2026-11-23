@@ -75,9 +75,9 @@ export function anjunWording(status: string, details: readonly string[], remark:
 }
 
 /**
- * A scan's clock: the scanning site's wall clock, to the second. The reply
- * names no zone, and one history goes from China's clocks to the destination's,
- * so the clock stays local.
+ * A scan's clock, to the second. The reply names no zone, and one history goes
+ * from China's clocks to the destination's, so the clock stays local; the scans
+ * in Brazil are dated afterwards.
  */
 function scanClock(row: Record<string, unknown>): string {
   return wallClock(text(row, 'date', 32));
@@ -107,28 +107,28 @@ function wallClock(wall: string): string {
 interface Scan { code: string; status: string; details: string[]; remark: string; local: string; location: string }
 
 /**
- * The Brazilian line's clearance, from the courier terminal's receipt to the release to the last mile, which the
- * tracker words in Portuguese and places nowhere. It is on Brazil's clock: dated on Anjun's in China, the terminal's
- * receipt fell hours before the flight's arrival in Brazil. Later scans place the parcel in Brazil and lend their
- * clock; a history that ends in clearance has none, so its clearance is dated here.
+ * The tracker's scans in Brazil are on Brasília's clock, São Paulo's, wherever the site is: in a state an hour behind,
+ * scans reached the tracker minutes after their time on São Paulo's clock, before their time on the state's. They are
+ * the scans it places in a town and a Brazilian state (`Town / UF`), and the Brazilian line's clearance, from the courier
+ * terminal's receipt to the release to the last mile, which it words in Portuguese and places nowhere: dated on Anjun's
+ * clock in China, the terminal's receipt fell hours before the flight's arrival in Brazil.
  */
 const BRAZIL_CLEARANCE: ReadonlySet<string> = new Set(['custody_receipt', 'tfk_has_been_scanned', 'customs_detention',
   'in_customs_clearance', 'customs_clearance_completed_and_released', 'clearance_successful', 'released_for_collection']);
 const PORTUGUESE = /\b(?:recebimento|armaz[ée]m|alf[âa]ndeg|pacote|liberad|coleta|entrada|desembara[çc])/i;
+const STATE = / \/ ([A-Z]{2})$/;
 const BRAZIL_CLOCK = 'America/Sao_Paulo';
 
-function brazilianClearance({ event }: { event: CarrierEvent }): boolean {
-  return !event.location && BRAZIL_CLEARANCE.has(anjunCodeKey(event.provider_code ?? '')) && PORTUGUESE.test(event.description ?? '');
+function inBrazil({ event }: { event: CarrierEvent }): boolean {
+  if (event.location) return TOWN_STATE.test(event.location) && regionZone('BR', STATE.exec(event.location)?.[1] ?? '') !== null;
+  return BRAZIL_CLEARANCE.has(anjunCodeKey(event.provider_code ?? '')) && PORTUGUESE.test(event.description ?? '');
 }
 
-/** The clearance scans after every other scan, dated on Brazil's clock. */
-function clearanceOnBrazilClock(scans: { key: string; event: CarrierEvent }[]): { key: string; event: CarrierEvent }[] {
-  const others = scans.filter((scan) => !brazilianClearance(scan)).map(({ event }) => event.local_time as string);
-  const last = others.reduce((latest, local) => (local > latest ? local : latest), '');
+/** The scans in Brazil, dated on Brasília's clock. */
+function brazilOnBrasiliaClock(scans: { key: string; event: CarrierEvent }[]): { key: string; event: CarrierEvent }[] {
   return scans.map((scan) => {
-    const local = scan.event.local_time as string;
-    const time = brazilianClearance(scan) && local > last ? isoTime(local, BRAZIL_CLOCK)?.iso : undefined;
-    return time ? { ...scan, event: { ...scan.event, time, time_zone: BRAZIL_CLOCK, time_zone_basis: 'destination' } } : scan;
+    const time = inBrazil(scan) ? isoTime(scan.event.local_time, BRAZIL_CLOCK)?.iso : undefined;
+    return time ? { ...scan, event: { ...scan.event, time, time_zone: BRAZIL_CLOCK, time_zone_basis: 'carrier' } } : scan;
   });
 }
 
@@ -203,7 +203,7 @@ export function parseAnjun(payload: unknown, raw: string): CarrierResult {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Anjun returned an invalid scan');
     return projectRow(row);
   });
-  return history(!country || country === 'BR' ? clearanceOnBrazilClock(scans) : scans, country);
+  return history(!country || country === 'BR' ? brazilOnBrasiliaClock(scans) : scans, country);
 }
 
 /**

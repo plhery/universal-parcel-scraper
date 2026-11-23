@@ -84,31 +84,41 @@ describe('Anjun HTTP adapter', () => {
     expect(result).not.toHaveProperty('destination_country');
   });
 
-  it('dates the Brazilian clearance a history ends in on Brazil\'s clock, not on Anjun\'s in China', () => {
+  it('dates the tracker\'s scans in Brazil on Brasília\'s clock, not on Anjun\'s in China or the state\'s', () => {
     // Dated on Shanghai's clock, the courier terminal's receipt came before the flight's arrival in Brazil.
     const dated = (change: (rows: Row[], body: Reply) => void = () => {}) => dateLocalClocks('anjun', parseAnjun(changed('in-transit', change), IN_TRANSIT))
       .events!.map((event) => [event.provider_code, event.time ?? null, event.time_zone_basis ?? null]);
     expect(dated().slice(0, 3)).toEqual([
-      ['TFK _has_ been_ scanned', '2026-05-21T09:14:27-03:00', 'destination'],
-      ['custody_receipt', '2026-05-21T06:02:00-03:00', 'destination'],
+      ['TFK _has_ been_ scanned', '2026-05-21T09:14:27-03:00', 'carrier'],
+      ['custody_receipt', '2026-05-21T06:02:00-03:00', 'carrier'],
       ['arrival_at_destination_airport', '2026-05-20T23:48:00-03:00', 'place'],
     ]);
     expect(dated().at(-1)).toEqual(['arrive_at_warehouse', '2026-05-15T23:55:57+08:00', 'carrier']);
     // A history of the clearance alone too.
     expect(dated((rows, body) => { body.data = rows.slice(0, 2); })).toEqual([
-      ['TFK _has_ been_ scanned', '2026-05-21T09:14:27-03:00', 'destination'], ['custody_receipt', '2026-05-21T06:02:00-03:00', 'destination']]);
-    // Not a line to another country, nor clearance worded otherwise or followed by a later scan, which lends its clock.
+      ['TFK _has_ been_ scanned', '2026-05-21T09:14:27-03:00', 'carrier'], ['custody_receipt', '2026-05-21T06:02:00-03:00', 'carrier']]);
+    // Not a line to another country, nor clearance worded otherwise.
     expect(parseAnjun(changed('in-transit', (_rows, body) => { body.extra.countryCode = 'MX'; }), IN_TRANSIT).events![0]).not.toHaveProperty('time');
     expect(dated((rows) => { rows[0]!.status = 'Customs scan'; })[0]).toEqual(['TFK _has_ been_ scanned', '2026-05-21T09:14:27+08:00', 'carrier']);
-    expect(parseAnjun(changed('in-transit', (rows) => {
-      rows.unshift({ ...rows[0], date: '2026-05-22 10:00:00', stateCode: 'LM _has _collected', status: 'Objeto coletado' });
-    }), IN_TRANSIT).events!.slice(0, 3).map((event) => event.time ?? null)).toEqual([null, null, null]);
+    // A scan in a state an hour behind São Paulo is on São Paulo's clock: it reaches the tracker before its time on the state's.
+    const later = (address: string) => parseAnjun(changed('in-transit', (rows) => {
+      rows.unshift({ ...rows[0], date: '2026-05-22 10:00:00', stateCode: 'Delivery_point_reception', status: 'Objeto chegou ao ponto de entrega', address });
+    }), IN_TRANSIT);
+    expect(dateLocalClocks('anjun', later('Sample Town / AM')).events!.slice(0, 3).map((event) => [event.time, event.time_zone, event.time_zone_basis]))
+      .toEqual([['2026-05-22T10:00:00-03:00', 'America/Sao_Paulo', 'carrier'], ['2026-05-21T09:14:27-03:00', 'America/Sao_Paulo', 'carrier'],
+        ['2026-05-21T06:02:00-03:00', 'America/Sao_Paulo', 'carrier']]);
+    expect(later('Sample Town / AM')).toMatchObject({ last_update: '2026-05-22T10:00:00-03:00', current_stage: 'in_transit' });
+    // Two letters that name no Brazilian state, a place after a street and a scan placed nowhere keep their wall clocks.
+    for (const address of ['Sample Town / XX', 'Rua Sample 100, Sample Town / AM', '']) {
+      expect(later(address).events![0], address).not.toHaveProperty('time');
+    }
   });
 
   it('keeps the delivery without the recipient, the courier, the proof of delivery, contacts or the repeated scan', () => {
     const result = parseAnjun(fixture('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-      last_status_text: 'O pacote foi assinado', last_update: null, last_update_local: '2026-03-14T15:42:10' });
+      last_status_text: 'O pacote foi assinado', last_update: '2026-03-14T15:42:10-03:00' });
+    expect(result).not.toHaveProperty('last_update_local');
     expect(result.events).toHaveLength(20);
     expect(result.events!.slice(0, 5).map((event) => [event.provider_code, event.stage, event.description])).toEqual([
       ['delivered', 'delivered', 'O pacote foi assinado'],
@@ -236,8 +246,8 @@ describe('Anjun HTTP adapter', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Anjun does not issue', async () => {
     const fetcher = routed(() => reply(fixture('delivered')));
-    // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-14T15:42:10' });
+    // The delivery in Brazil, on Brasília's clock, dates the last activity.
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-14T18:42:10.000Z' });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const unknown = routed(() => reply(fixture('not-found')));
     await expect(carrier(unknown).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
