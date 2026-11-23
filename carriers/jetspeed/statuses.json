@@ -2,6 +2,14 @@
   "carrier": "jetspeed",
   "entries": [
     {
+      "wording": "Delivery has been scheduled with the carrier.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The delivering courier's round booked, before it starts."
+    },
+    {
       "wording": "Shipment entered the local delivery network.",
       "stage": "in_transit",
       "language": "en",

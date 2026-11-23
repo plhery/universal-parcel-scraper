@@ -23,6 +23,7 @@ const WORDINGS: readonly (readonly [RegExp, Stage])[] = [
   [/^shipment arrived at the local warehouse; inbound processing is in progress\.$/, 'in_transit'],
   [/^shipment entered the local delivery network\.$/, 'in_transit'],
   [/^parcel arrived at the local delivery station, serving .+\.$/, 'in_transit'],
+  [/^delivery has been scheduled with the carrier\.$/, 'in_transit'],
 ];
 
 /** The stage JETSPEED's map gives a row, by its `normalizeStatusWording` wording. */

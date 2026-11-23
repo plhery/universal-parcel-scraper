@@ -3,6 +3,7 @@ import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, Sche
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { isoTime } from '../../core/time/index.js';
 import { jetspeedStage } from './status.js';
 
 export const PROVIDER = 'jetspeed';
@@ -11,6 +12,9 @@ export const JETSPEED_MAX_BYTES = 512 * 1024;
 // One number: the tracker reads a semicolon as a list of several.
 export const JETSPEED_NUMBER = /^[A-Z0-9]{6,40}$/;
 const CLOCK = /^(\d{4}-\d{2}-\d{2}) ([0-2]\d:[0-5]\d:[0-5]\d)$/;
+// The tracker writes every row on its own clock in Shenzhen, wherever the scan was, as Quick Fort's
+// tracker on the same platform does on Hong Kong's.
+export const JETSPEED_ZONE = 'Asia/Shanghai';
 // The site's error page for a number its tracker holds no order for.
 const NO_ORDER = '未查询到对应订单，请确认您输入的单号无误。';
 
@@ -46,9 +50,9 @@ export function jetspeedPlace(wording: string): string | undefined {
 }
 
 /**
- * The tracker's server-rendered answer for `number`. Its rows carry wall clocks without a zone,
- * written at the parcel's origin, which can be abroad, and at its destination: each keeps its wall
- * clock, and the place its wording names, which lets a lookup date it on that place's clock.
+ * The tracker's server-rendered answer for `number`. Its rows carry wall clocks without a zone, all
+ * on the tracker's clock: each keeps its wall clock and is dated on that clock, and keeps the place
+ * its wording names.
  */
 export function parseJetspeedPage(html: string, number: string): CarrierResult {
   const $ = load(html);
@@ -72,8 +76,10 @@ export function parseJetspeedPage(html: string, number: string): CarrierResult {
     if (!clock || !description) throw new SchemaError(PROVIDER, 'Invalid JETSPEED history row');
     const stage = jetspeedStage(normalizeStatusWording(description));
     const location = jetspeedPlace(description);
-    events.push({ local_time: `${clock[1]}T${clock[2]}`, description, ...(location ? { location } : {}),
-      ...(stage ? { stage, stage_source: 'carrier_map' as const } : {}) });
+    const local = `${clock[1]}T${clock[2]}`;
+    const time = isoTime(local, JETSPEED_ZONE)!.iso;
+    events.push({ time, local_time: local, time_zone: JETSPEED_ZONE, time_zone_basis: 'carrier', description,
+      ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' as const } : {}) });
   }
   // The page lists rows newest first; keep that order for rows of one second.
   events.sort((a, b) => b.local_time!.localeCompare(a.local_time!));
@@ -85,6 +91,6 @@ export function parseJetspeedPage(html: string, number: string): CarrierResult {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' as const } : {}),
     ...(destination ? { destination_country: destination } : {}),
-    last_status_text: latest.description, last_update: null, last_update_local: latest.local_time, events,
+    last_status_text: latest.description, last_update: latest.time, last_update_local: latest.local_time, events,
   };
 }

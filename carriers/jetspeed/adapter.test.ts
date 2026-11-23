@@ -1,10 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { AdapterRegistry } from '../../core/adapter/index.js';
+import { trackCarrier } from '../../core/adapter/track.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NoHistoryError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import type { UniversalTracker } from '../../providers/universal.js';
 import { adapter, JetspeedTracker } from './adapter.js';
 import { jetspeedUrl, parseJetspeedPage } from './parser.js';
 import { statusMap } from './status.js';
@@ -22,20 +25,23 @@ describe('JETSPEED tracking adapter', () => {
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['jetspeed'] });
   });
 
-  it('reads the tracker’s page for the whole number, every row on its wall clock', async () => {
+  it('reads the tracker’s page for the whole number, every row on the tracker’s clock', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(own('track.html')));
     const result = await new JetspeedTracker({ fetcher, recorder: NOOP_RECORDER }).fetch(NUMBER.toLowerCase());
     expect(String(fetcher.mock.calls[0]![0])).toBe(`https://www.jetspeed-express.com/search_kuai_di/search/orderid/${NUMBER}`);
     // The site fails on `Accept-Language: *`, Node's default.
     expect(new Headers(fetcher.mock.calls[0]![1]?.headers).get('Accept-Language')).toBe('zh-CN,zh;q=0.9,en;q=0.8');
     expect(result).toMatchObject({
-      status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_update: null,
+      status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_update: '2026-05-23T01:16:57+08:00',
       last_status_text: 'Parcel arrived at the local delivery station, serving Lyon,69007.', last_update_local: '2026-05-23T01:16:57',
     });
     expect(result.events).toHaveLength(19);
-    expect(result.events?.every((event) => event.local_time && !event.time && event.stage)).toBe(true);
+    // Rows of the origin and the destination alike: the tracker writes them all on its clock in Shenzhen.
+    expect(result.events?.every((event) => event.time === `${event.local_time}+08:00` && event.time_zone === 'Asia/Shanghai'
+      && event.time_zone_basis === 'carrier' && event.stage)).toBe(true);
     expect(result.events?.at(-1)).toEqual({
-      local_time: '2026-05-04T11:20:18', description: 'Mississauga,ON,CA,L5T 0A1,Order information received by the carrier.',
+      time: '2026-05-04T11:20:18+08:00', local_time: '2026-05-04T11:20:18', time_zone: 'Asia/Shanghai', time_zone_basis: 'carrier',
+      description: 'Mississauga,ON,CA,L5T 0A1,Order information received by the carrier.',
       location: 'Mississauga, ON, CA', stage: 'registered', stage_source: 'carrier_map',
     });
     expect(result.events?.at(-2)).toMatchObject({ stage: 'accepted', location: 'Mississauga, ON, CA' });
@@ -44,12 +50,25 @@ describe('JETSPEED tracking adapter', () => {
     expect(result.events?.map((event) => event.location).filter(Boolean)).toEqual(['Lyon', 'FR', 'FR', 'Toronto', 'Mississauga, ON, CA', 'Mississauga, ON, CA']);
   });
 
+  it('holds back a row the tracker dates after the lookup until it is due', async () => {
+    const page = own('track.html').replace(
+      /(<div class="timeline-item latest">\s*<div class="time">)[^<]+(<\/div>\s*<div class="context">)[^<]+/,
+      '$12999-01-01 08:00:00$2Delivery has been scheduled with the carrier.',
+    );
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(page));
+    expect(parseJetspeedPage(page, NUMBER).events?.[0]).toMatchObject({ time: '2999-01-01T08:00:00+08:00', stage: 'in_transit' });
+    const registry = new AdapterRegistry({ factories: { jetspeed: adapter }, carriers: { jetspeed: 'jetspeed' } }, environment(fetcher));
+    const result = await trackCarrier('jetspeed', { number: NUMBER }, { registry, universal: {} as UniversalTracker });
+    expect(result.events).toHaveLength(18);
+    expect(result.events?.[0]).toMatchObject({ local_time: '2026-05-21T03:09:55', time: '2026-05-21T03:09:55+08:00' });
+  });
+
   it('settles the site’s no-order page as not found, and recognition with it', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(own('unknown.html')));
     await expect(adapter(environment(fetcher)).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     await expect(adapter(environment(fetcher)).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const known = vi.fn<typeof fetch>().mockResolvedValue(reply(own('track.html')));
-    await expect(adapter(environment(known)).recognize!(NUMBER)).resolves.toMatchObject({ known: true, lastActivityLocal: '2026-05-23T01:16:57' });
+    await expect(adapter(environment(known)).recognize!(NUMBER)).resolves.toMatchObject({ known: true, lastActivityAt: '2026-05-22T17:16:57.000Z' });
   });
 
   it('never takes another page, another number or an empty history for a missing parcel', () => {

@@ -14,12 +14,15 @@ Recognition asks the same lookup.
 
 ## Notes
 
-- Rows carry wall clocks without a zone, written where the parcel was: at its origin, which can be
-  abroad, and at its destination. Each keeps its wall clock.
+- Rows carry wall clocks without a zone, all on the tracker's own clock in Shenzhen, wherever the
+  scan was. The tracker runs on Quick Fort's platform, with the same path, notice and wordings, and
+  writes its rows the same way: a row has been on the page before its wall clock came round at the
+  destination or anywhere west of Asia. Each row keeps its wall clock and is dated on that clock.
+- The rows follow a plan, a steady day or two apart at any hour, as Quick Fort's do. One dated after
+  the lookup waits until it is due.
 - Some rows name a place in the wording itself: the origin's town, the origin hub, the country of
   the airport or facility the parcel reached, the town the delivery station serves. The adapter
-  reads it as the row's place, so a lookup dates the rows on that place's clock rather than the
-  carrier's home clock, and the destination facility's country as the destination.
+  reads it as the row's place, and the destination facility's country as the destination.
 - The site fails with HTTP 500 when a request accepts any language (`Accept-Language: *`, Node's
   default), so the adapter names Chinese and English.
 - Universal providers do not always know these parcels, so the tracker is read directly.

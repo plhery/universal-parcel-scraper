@@ -40,7 +40,8 @@ export class JetspeedTracker {
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new JetspeedTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return {
-    id: PROVIDER, recordsSteps: true, steps: ['direct', 'retry'],
+    // The rows follow a plan on the tracker's clock: one dated after the lookup waits until it is due.
+    id: PROVIDER, recordsSteps: true, plannedScans: true, steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
     // The tracker's error page names an unknown number, so recognition asks the same lookup.
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context)),
