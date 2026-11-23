@@ -12170,7 +12170,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://t.bftlogistik.dk/",
     "trackingUrlTemplate": "https://t.bftlogistik.dk/#/t/{trackingNumber}",
-    "trackingSearchUrl": "https://t.bftlogistik.dk/",
     "helpUrl": "https://bftlogistik.dk/kontakt/",
     "linkRules": [
       {
@@ -21572,7 +21571,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ddgyl.vip/",
     "trackingUrlTemplate": "https://www.ddgyl.vip/index/tracknumber/track?nos={trackingNumber}",
-    "trackingSearchUrl": "https://www.ddgyl.vip/",
+    "trackingSearchUrl": "https://www.ddgyl.vip/index/tracknumber/track",
     "linkRules": [
       {
         "domains": [

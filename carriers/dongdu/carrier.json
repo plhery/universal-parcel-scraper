@@ -41,7 +41,7 @@
   ],
   "portal": {
     "url": "https://www.ddgyl.vip/index/tracknumber/track?nos={trackingNumber}",
-    "searchUrl": "https://www.ddgyl.vip/",
+    "searchUrl": "https://www.ddgyl.vip/index/tracknumber/track",
     "canaryUrl": "https://www.ddgyl.vip/",
     "shows": [
       "status",

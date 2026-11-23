@@ -18,6 +18,7 @@ replies against.
 ## Links
 
 `t.bftlogistik.dk/#/t/<id>` opens one shipment.
+Its home page is a sign-in form, so the catalog names no search page.
 
 ## Testing
 

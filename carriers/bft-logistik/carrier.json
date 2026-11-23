@@ -22,7 +22,6 @@
   "capabilities": [],
   "portal": {
     "url": "https://t.bftlogistik.dk/#/t/{trackingNumber}",
-    "searchUrl": "https://t.bftlogistik.dk/",
     "helpUrl": "https://bftlogistik.dk/kontakt/",
     "canaryUrl": "https://t.bftlogistik.dk/",
     "shows": [],
