@@ -264,6 +264,8 @@ const EXPORT_CLEARANCE_UNDER_WAY = new RegExp([
   String.raw`\bexport (?:customs? )?(?:clearance|declaration)(?: (?:has |is |was )?(?:started|commenced|begun|in progress|processing|under ?way|ongoing))\b`,
   String.raw`\b(?:started|commenced|began|begun) (?:the )?(?:export (?:customs? )?(?:clearance|declaration)|customs clearance process at origin)\b`,
   String.raw`(?:开始)?出口(?:报关|清关)(?:中|进行中)|开始出口(?:报关|清关)`,
+  // At the origin's customs, before the export clearance: "邮件到达始发地海关，等待清关", as a provider relays China Post.
+  String.raw`(?:到达|抵达)始发地海关`,
 ].join('|'));
 /** Customs holding, inspecting or detaining a parcel, which an export clearance under way does not end. */
 const EXPORT_HOLD = /\b(?:held|hold|holding|detain\w*|retain\w*|inspect\w*|examin\w*|seiz\w*|confiscat\w*)\b|\b(?:customs )?clearance (?:has )?failed\b|查验|扣留|扣押|滞留|留存/;

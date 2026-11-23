@@ -1110,6 +1110,7 @@ describe('classifyWording', () => {
       ['Shipment started the customs clearance process at origin', 'in_transit'],
       ['The package is shipped from the transfer warehouse to the airport Export customs clearance in progress', 'in_transit'],
       ['出口报关中', 'in_transit'], ['出口清关中', 'in_transit'], ['快件从转运仓发出至机场，出口报关中', 'in_transit'],
+      ['邮件到达始发地海关，等待清关', 'in_transit'], ['邮件到达始发地海关，海关查验', 'customs'],
       ['Export customs clearance in progress, held for inspection', 'customs'], ['Held for export customs inspection', 'customs'],
       ['出口清关中，海关查验', 'customs'], ['Import customs clearance in progress', 'customs'],
       ['目的国清关完成【Example】', 'in_transit'], ['进口清关完成', 'in_transit'],
