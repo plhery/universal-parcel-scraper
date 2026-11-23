@@ -15,6 +15,11 @@ describe('shared provider result', () => {
     expect(classifyEvent('Invalid HSCode corrected').stage_source).toBe('none');
   });
 
+  it("reads China Post's departure from the office of posting relayed uncoded in Chinese in transit", () => {
+    // Track123's copy, with the office in brackets, of the row 17TRACK gives in English as "Departed from the office of posting".
+    expect(classifyEvent('离开收寄点【示例】')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+  });
+
   it('reads the destination post taking the item over as a hand-over on the way, not the acceptance', () => {
     // Australia Post's INT-2185, as Ship24 relays it without its code, days after the item left Australia.
     expect(classifyEvent('Item handed over to the local postal authority')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });

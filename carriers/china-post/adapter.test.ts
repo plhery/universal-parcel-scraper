@@ -317,4 +317,9 @@ describe('China Post adapter', () => {
     expect(chinaPostEnglish('中转站转运中')).toBe('In transit');
     expect(chinaPostRelayedStage('目的地转运失败')).toBeUndefined();
   });
+
+  it('reads the departure from the office of posting relayed in Chinese in transit, with or without the office', () => {
+    for (const wording of ['离开收寄点【示例】', '离开收寄点']) expect(chinaPostRelayedStage(wording), wording).toBe('in_transit');
+    expect(chinaPostRelayedStage('离开收寄点失败')).toBeUndefined();
+  });
 });

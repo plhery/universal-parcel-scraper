@@ -236,6 +236,8 @@ const RELAYED_STAGES: ReadonlyArray<readonly [RegExp, Stage]> = [
   // station, within the country, or at the destination with where ("目的地转运【…】", as Track123 relays it).
   [/^(?:干线中转|中转站转运中|邮件在该国内转运中|目的地转运(?:【[^【】]+】)?)$/u, 'in_transit'],
   [/^(?:承运商接收|抵达)$/u, 'in_transit'],
+  // The departure from the office of posting, after the acceptance, as Track123 relays it with the office in brackets.
+  [/^离开收寄点(?:【[^【】]+】)?$/u, 'in_transit'],
   [/^送交出口海关$/u, 'customs'],
   [/^出口海关\/放行$/u, 'in_transit'],
   [/^送交境外进口海关$/u, 'customs'],
