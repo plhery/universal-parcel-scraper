@@ -70279,6 +70279,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "yji": {
+    "displayName": "YJI",
+    "color": "#ef5c00",
+    "aliases": [
+      "延锦国际",
+      "延锦国际物流货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yji",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yol-kargo": {
     "displayName": "Yol Kargo",
     "color": "#f66814",
@@ -73462,6 +73483,7 @@ export const CARRIER_IDS = [
   "yimidida",
   "yingtu",
   "yitu",
+  "yji",
   "yol-kargo",
   "yongma-logis",
   "yoseus",
@@ -75503,6 +75525,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yimidida": [],
   "yingtu": [],
   "yitu": [],
+  "yji": [],
   "yol-kargo": [],
   "yongma-logis": [],
   "yoseus": [],

@@ -120139,6 +120139,12 @@
     ]
   },
   {
+    "input": "YJIDB1836638923YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "YL7389999980YQ",
     "carrier": "gzyl",
     "confidence": "high",
