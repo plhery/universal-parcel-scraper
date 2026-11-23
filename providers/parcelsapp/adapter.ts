@@ -35,7 +35,7 @@ import { countryName, militaryPostOffice } from '../../places/trackingLocation.j
 import { countryZones, hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { captureFailure, capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { CAINIAO_CHINA_LEG, CAINIAO_CHINA_ZONE } from '../../carriers/aliexpress/clock.js';
-import { POSTNL_ACCEPTANCE_STAMP, POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
+import { POSTNL_ACCEPTANCE_STAMP, POSTNL_CUSTOMS_STAMP, POSTNL_UTC_RECORD } from '../../carriers/spring-gds/clock.js';
 import { OMNIPARCEL_DEFAULT_CLOCK, OMNIPARCEL_NUMBER } from '../../carriers/seko/clock.js';
 import { muserTown, muserTrailingPlace } from '../../carriers/muser/parser.js';
 import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
@@ -1527,6 +1527,9 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // before PostNL's own UTC stamps of them. Those dated to the minute are on the local clock.
   if (carrier === 'spring-gds' && POSTNL_ACCEPTANCE_STAMP.test(status.trim())
     && /T\d{2}:\d{2}:(?!00)\d{2}/.test(typeof state.date === 'string' ? state.date : '')) return null;
+  // And so do its label's creation and its processing record when they name no place, which its own feed keeps on UTC:
+  // read on Dutch time, the label came an hour before PostNL's own record of it.
+  if (carrier === 'spring-gds' && POSTNL_UTC_RECORD.test(status.trim()) && !scanLocation(name, state.location)) return null;
   const postnlPlace = carrier === 'spring-gds' ? lastPlace(scanLocation(name, state.location)) : undefined;
   const postnlCountry = countryCode(postnlPlace);
   if (postnlCountry === 'GB') return null;

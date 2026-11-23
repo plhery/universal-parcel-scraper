@@ -710,7 +710,9 @@ step exists for future protocol changes.
   supplies the zone. A country alone leaves the time local. PostNL's scans in the
   Netherlands or with no place keep Amsterdam's clock, except its customs stamps ("Item is cleared
   by customs"), which PostNL's own feed states in UTC: read on Amsterdam's clock, a clearance came
-  an hour before Cainiao's copy of it. Its acceptance and bagging stamps ("Consignment received at
+  an hour before Cainiao's copy of it. So are its label's creation and its processing record when they name
+  no place, as in PostNL's own feed: read on Amsterdam's clock, a label came an hour before PostNL's own
+  record of it. Its acceptance and bagging stamps ("Consignment received at
   the PostNL Acceptance Centre") are UTC too when they keep their seconds, as in PostNL's own feed;
   those dated to the minute are on the local clock. Cainiao copies such a stamp at the same digits
   to the second, so its copy is that instant too: read on Amsterdam's clock, its arrival in the

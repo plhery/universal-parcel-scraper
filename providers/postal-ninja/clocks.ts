@@ -10,7 +10,7 @@
  */
 import { CAINIAO_CHINA_ZONE, cainiaoInChina } from '../../carriers/aliexpress/clock.js';
 import { royalMailLabelsPartners, royalMailPartnerWall } from '../../carriers/royal-mail/clock.js';
-import { POSTNL_ACCEPTANCE_STAMP, POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
+import { POSTNL_ACCEPTANCE_STAMP, POSTNL_CUSTOMS_STAMP, POSTNL_UTC_RECORD } from '../../carriers/spring-gds/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { uspsScanZone } from '../../carriers/usps/clock.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
@@ -102,7 +102,6 @@ const SPRING_GDS = 'Spring GDS';
 const POSTNL = 'PostNL';
 const AMSTERDAM = 'Europe/Amsterdam';
 const TO_THE_MINUTE = /T\d{2}:\d{2}(?::00(?:\.0+)?)?$/;
-const POSTNL_UTC_RECORDS = /^(?:the shipping label has been created|the item is being processed)[.!]?$/i;
 
 /**
  * Royal Mail's scans on an item bound for Australia or the United States, once its scan leaving
@@ -138,7 +137,7 @@ function berlinCopyZone(service: string, location: string): string | null {
 /** Whether a scan of Spring GDS's feed through Postal Ninja is one the feed dates in UTC. */
 function feedUtcStamp(service: string, dt: string, location: string, description: string): boolean {
   const wording = description.trim();
-  if (!location.trim() && POSTNL_UTC_RECORDS.test(wording)) return true;
+  if (!location.trim() && POSTNL_UTC_RECORD.test(wording)) return true;
   return service === POSTNL && (POSTNL_CUSTOMS_STAMP.test(wording) || (POSTNL_ACCEPTANCE_STAMP.test(wording) && !TO_THE_MINUTE.test(dt)));
 }
 

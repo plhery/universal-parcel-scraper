@@ -10,3 +10,9 @@ export const POSTNL_CUSTOMS_STAMP = /^(?:pre-declaration of the item has been re
  * and keep the seconds, so a copy with seconds has the UTC digits.
  */
 export const POSTNL_ACCEPTANCE_STAMP = /^(?:consignment received at the postnl acceptance centre|item is nested to commercial bag|item is being processed)$/i;
+
+/**
+ * PostNL's own records that its feed keeps on UTC when they name no place (`postnlRecordZone`): the label's creation
+ * and the processing record. Universal providers that copy them give their UTC digits.
+ */
+export const POSTNL_UTC_RECORD = /^(?:the shipping label has been created|the item is being processed)[.!]?$/i;

@@ -1170,6 +1170,22 @@ describe('ParcelsApp result parsing', () => {
       '2026-03-05T07:53:24.000Z', '2026-03-04T16:24:16.000Z']);
   });
 
+  it('keeps the UTC instants of PostNL\'s label and processing records that name no place', () => {
+    // PostNL's own feed keeps these records on UTC; read on Dutch time, the label came an hour before PostNL's own
+    // record of it. Its pre-advice, with no place either, is on Dutch time, and a record with a place keeps that place's clock.
+    const result = parseParcelsAppResponse({ carriers: ['PostNL - Netherlands Post', 'Spring Global Mail'], states: [
+      { date: '2026-03-06T09:15:00Z', status: 'The item is being processed', carrier: 0, location: 'Netherlands' },
+      { date: '2026-03-05T17:55:00Z', status: 'The item is pre-advised to PostNL', carrier: 0 },
+      { date: '2026-03-05T17:55:00Z', status: 'The item is pre-advised to PostNL', carrier: 1 },
+      { date: '2026-03-04T15:20:00Z', status: 'The item is being processed', carrier: 0 },
+      { date: '2026-03-01T11:51:00Z', status: 'The shipping label has been created', carrier: 0 },
+      { date: '2026-03-01T11:51:00Z', status: 'The shipping label has been created', carrier: 1 },
+    ] }, number, identity(), 'Europe/Amsterdam');
+    expect(result.events?.map((scan) => [scan.time, scan.description])).toEqual([
+      ['2026-03-06T08:15:00.000Z', 'The item is being processed'], ['2026-03-05T16:55:00.000Z', 'The item is pre-advised to PostNL'],
+      ['2026-03-04T15:20:00.000Z', 'The item is being processed'], ['2026-03-01T11:51:00.000Z', 'The shipping label has been created']]);
+  });
+
   it('places Muser\'s copies of the delivering network\'s scans in the US by their town, as Muser\'s tracker does', () => {
     // ParcelsApp keeps the town and ZIP Code after the wording, at the town's wall clock; read on Muser's Chinese
     // clock the delivery round went out at night. Muser's own scans in China keep its clock.
