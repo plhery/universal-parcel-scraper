@@ -198,6 +198,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-02",
       "note": "The export from the sending country's office of exchange, after the crossing scans."
+    },
+    {
+      "wording": "Arrival from abroad",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The arrival in the destination country, days after the departure to it, at the minute of the destination post's own row saying the same."
     }
   ]
 }

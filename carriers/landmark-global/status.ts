@@ -33,7 +33,9 @@ const WORDINGS = new Map<string, ClassifiedStatus>([
     // The parcel put on a pallet for the crossing to the destination country, before the export.
     PALLET,
     // The export from the sending country's office of exchange, after the crossing.
-    'Departure from office of exchange'].map(wording => [wording, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
+    'Departure from office of exchange',
+    // The arrival in the destination country from the crossing, beside the destination post's own row.
+    'Arrival from abroad'].map(wording => [wording, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
 ]);
 
 export function landmarkStatus(wording: string): ClassifiedStatus | undefined { return WORDINGS.get(palletKey(wording)); }
