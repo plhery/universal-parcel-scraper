@@ -96,7 +96,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   size of the namesake context picks, when it lies nearer the way between the scans around
   it: "Warsaw" between Lviv and New York is in Poland.
 - A state, province or canton written after the town holds: "Earth City, MO" is not Earth
-  in Texas. After a town the reader does not know, the place is the state's country with the
+  in Texas, and "MONTERREY, NL", with a Mexican state's code as US freight carriers print it,
+  is not in Newfoundland on a parcel that may be in Mexico. After a town the reader does not know, the place is the state's country with the
   code in `region` ("EXAMPLE TOWN, AZ, US", or "EXAMPLE TOWN, AZ" on a parcel in the US), so
   the scan keeps the state's clock. A code that is also a country's names the state unless the
   parcel may be in that country: "EXAMPLE TOWN, CO" on a parcel in the US, Canada or Mexico is in
@@ -109,8 +110,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   code. Letters that are also a country's keep naming it on a parcel through that country, and
   where another scan names a country by its code alone: Meest's "NL" beside its "US" is the
   Netherlands, not Newfoundland. A code alone for the state's own country ("AU" beside "SA")
-  keeps the state. A US state whose code is also a country's ("CA", "AZ", "DE") is the state
-  only on a parcel nothing puts outside the US.
+  keeps the state. A US or Mexican state whose code is also a country's ("CA", "AZ", "DE",
+  "SO") is the state only on a parcel nothing puts outside its country.
 - Two letters after the town are a country when a town of that name is there ("MONTE CARLO
   MC"), or when the parcel is. Otherwise they may be a province or an office: "PINEROLO
   (TO)" is in the province of Turin, not Tonga, and Royal Mail's "Norwich MC" is a mail
@@ -120,7 +121,9 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   that is also a US state or a Swiss canton only favours its country's towns, after a comma
   or in brackets alike ("Bad Bevensen, DE", "Bad Bevensen (DE)"), unless the text also names
   that country or a region of it in words: "Example Town, HOLLAND, NL" is in the Netherlands,
-  not Holland in Michigan, and "Luxembourg, LU" is the city. Alone, between empty fields
+  not Holland in Michigan, and "Luxembourg, LU" is the city. After a town the reader does not
+  know, it is the country on a parcel there and in no country with a state of those letters:
+  "Example Hub, SK" on a parcel to Slovakia is not in Saskatchewan. Alone, between empty fields
   (",,,DE"), the code is the country. With no town at all, a
   code in brackets or after a space is no country on a parcel known to be elsewhere, and the
   scan gets no place. MC and DO after a name that is no town of Monaco or
@@ -292,7 +295,8 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   letter) is in the town of the airport its code names, when the airport is in that
   country. The country's name can follow the code, as bpost writes it ("BEBRUA Belgium").
   Some codes name a UN/LOCODE location no airport of the country has; the offices seen in
-  scans are listed by that location's name ("FRROIC" is at Roissy-en-France). A code no list
+  scans are listed by that location's name ("FRROIC" is at Roissy-en-France), as are those
+  named by a city's code rather than an airport's ("USCHIA" is Chicago's). A code no list
   holds, or whose letters another country's airport has, is in its country when the parcel is
   known to be there and no town has its letters for a name.
 - A station named by an airport's code and a number, as iMile names its Italian ones ("BLQ

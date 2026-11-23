@@ -127,6 +127,12 @@ const ADMIN_CODES: Record<string, Record<string, string>> = {
     PA: '16', PB: '17', PR: '18', PI: '20', RJ: '21', RN: '22', RS: '23', RO: '24', RR: '25', SC: '26', SP: '27', SE: '28',
     GO: '29', PE: '30', TO: '31',
   },
+  // Mexico's states as US freight carriers print them: "MONTERREY, NL" is in Nuevo León.
+  MX: {
+    AG: '01', BC: '02', BS: '03', CM: '04', CS: '05', CH: '06', CO: '07', CL: '08', DF: '09', CX: '09', DG: '10',
+    GT: '11', GR: '12', HG: '13', JA: '14', EM: '15', MI: '16', MO: '17', NA: '18', NL: '19', OA: '20', PU: '21',
+    QT: '22', QR: '23', SL: '24', SI: '25', SO: '26', TB: '27', TM: '28', TL: '29', VE: '30', YU: '31', ZA: '32',
+  },
 };
 // A place nothing else confirms has to be a known town, not a hamlet with the same name.
 const UNCONFIRMED_MIN_THOUSANDS = 15;
@@ -1116,6 +1122,10 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   }
   // With no town, a country the first field names alone: "China, Sorting Center".
   country ??= leadingCountry;
+  // A country's code a state shares, after a town the reader does not know, on a parcel in that
+  // country and in none with such a state: "Example Hub, SK" on a parcel in Slovakia.
+  if (!country && trailing && context.includes(trailing)
+    && !context.some((other) => other !== trailing && ADMIN_CODES[other]?.[trailing])) country = trailing;
   // A town the reader does not know keeps the state or province written after it, and so its clock.
   const region = guessed ? null : statedRegion(data, stated, country, context);
   const inState = region && countryPlace(data, region.country, true);
@@ -1141,12 +1151,12 @@ function statePlace(data: Gazetteer, text: string, explicit: { country: string |
 
 /**
  * The country whose state or province a printed code names, among those the parcel is likely in:
- * the first that has one. A US state's code that is also a country's ("CA", "DE", "IN") names
- * the state only on a parcel nothing puts outside the US.
+ * the first that has one. A US or Mexican state's code that is also a country's ("CA", "DE", "IN",
+ * "SO") names the state only on a parcel nothing puts outside its country.
  */
 function stateCountry(data: Gazetteer, code: string, context: readonly string[]): string | undefined {
   const owner = context.find((other) => ADMIN_CODES[other]?.[code]);
-  return owner === 'US' && data.countries.has(code) && context.some((other) => other !== 'US') ? undefined : owner;
+  return (owner === 'US' || owner === 'MX') && data.countries.has(code) && context.some((other) => other !== owner) ? undefined : owner;
 }
 
 /**
@@ -1388,9 +1398,10 @@ function atAirport(airport: Airport, carriers: readonly string[]): Located | nul
 
 // UPU offices of exchange whose code names a UN/LOCODE location that no airport of their country
 // has, by that location's name: "FRROIC" is the export office at Roissy-en-France, "DEROUA"
-// Rodgau's parcel centre.
+// Rodgau's parcel centre, "USCHIA" Chicago's, by a code that names the city, not an airport.
 const OFFICE_LOCATIONS = new Map([
   ['FRROI', 'Roissy-en-France'], ['DEROU', 'Rodgau'], ['GBLAL', 'Langley'], ['PTRDM', 'Rio de Mouro'],
+  ['USCHI', 'Chicago'], ['USNYC', 'New York'], ['BRSAO', 'São Paulo'], ['RUMOW', 'Moscow'],
 ]);
 
 /**

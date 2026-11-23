@@ -68,6 +68,11 @@ describe('locatePlace', () => {
     expect(place('METRO OH DISTRIBUTION CENTER', ['US'])).toMatchObject({ country: 'US', precision: 'country', region: 'OH' });
     expect(place('TAMPA FL DISTRIBUTION CENTER', ['US'])).toMatchObject({ country: 'US', name: 'Tampa' });
     expect(place('Kingston, ON', ['US', 'CA'])).toMatchObject({ country: 'CA', name: 'Kingston' });
+    // A Mexican state as US freight carriers print it, though Canada has a province of those letters:
+    // Monterrey in Nuevo León, not Newfoundland. Sonora keeps its own clock.
+    expect(place('MONTERREY, NL', ['US', 'CA', 'MX'])).toMatchObject({ country: 'MX', name: 'Monterrey', precision: 'city' });
+    expect(place('GANDER, NL', ['US', 'CA', 'MX'])).toMatchObject({ country: 'CA', name: 'Gander' });
+    expect(placeTimeZone(place('QZXVILLE, SO', ['MX'])!)).toBe('America/Hermosillo');
     expect(place('Paris, FR', ['CH'])).toMatchObject({ country: 'FR', name: 'Paris' });
   });
 
@@ -85,6 +90,10 @@ describe('locatePlace', () => {
     expect(place('QZXVILLE, PE', ['US', 'CA', 'MX'])).toMatchObject({ country: 'CA', precision: 'country', region: 'PE' });
     expect(place('QZXVILLE, AZ', ['US', 'AZ'])).toBeNull();
     expect(place('QZXVILLE, CA', ['US', 'CA', 'MX'])).toBeNull();
+    // On a parcel in the code's country alone, the country: euShipments' hub in Slovakia, not Saskatchewan.
+    expect(place('QZXVILLE HUB, SK', ['BG', 'SK'])).toMatchObject({ country: 'SK', precision: 'country' });
+    expect(placeTimeZone(place('QZXVILLE HUB, SK', ['BG', 'SK'])!)).toBe('Europe/Bratislava');
+    expect(place('QZXVILLE HUB, SK', ['CA', 'SK'])).toBeNull();
     expect(place('QZXVILLE, TX', ['US', 'CN'])).toMatchObject({ country: 'US', region: 'TX' });
     // Brazil's states whose codes a country has too, after a comma or not: Amazonas and Rondônia keep their own clocks.
     expect(place('QZXVILLE, MG', ['BR', 'CN'])).toMatchObject({ country: 'BR', precision: 'country', region: 'MG' });

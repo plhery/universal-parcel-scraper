@@ -121,12 +121,20 @@ const BRAZIL_STATE_ZONES: Readonly<Record<string, string>> = {
   SP: 'America/Sao_Paulo',
 };
 
+// The Mexican states off Mexico City's clock, by the code US freight carriers print. The border
+// strips that keep US daylight saving time are a minority of their states.
+const MEXICO_STATE_ZONES: Readonly<Record<string, string>> = {
+  BC: 'America/Tijuana', BS: 'America/Mazatlan', NA: 'America/Mazatlan', SI: 'America/Mazatlan',
+  SO: 'America/Hermosillo', CH: 'America/Chihuahua', QR: 'America/Cancun',
+};
+
 /** The zone of a state or province, by country and postal code, where a country has several. */
 export function regionZone(country: string, region: string): string | null {
   if (country === 'US') return usStateTimeZone(region);
   if (country === 'CA') return canadaProvinceTimeZone(region);
   if (country === 'AU') return AUSTRALIA_STATE_ZONES[region] ?? null;
   if (country === 'BR') return BRAZIL_STATE_ZONES[region] ?? null;
+  if (country === 'MX') return MEXICO_STATE_ZONES[region] ?? null;
   return null;
 }
 
