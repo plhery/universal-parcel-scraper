@@ -1337,6 +1337,7 @@
     {"wording": "Cargo leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Worded like \"Goods leaving the operation center\": the operation centre sending the parcel on towards its flight."},
     {"wording": "Flight departed, package in transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The flight leaving with the parcel, after China's export clearance."},
     {"wording": "Processing at Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "On a line into the United States, two days after the destination's customs released the parcel: the last mile's first facility handling it, still on the way."},
+    {"wording": "International flight has departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The international flight leaving with the parcel, the departure matching its \"International flight has arrived\"."},
     {"wording": "International flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Parcel arrived at exchange office", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Shipment picked up", "language": "en", "stage": "accepted", "confirmedBy": "live"},
