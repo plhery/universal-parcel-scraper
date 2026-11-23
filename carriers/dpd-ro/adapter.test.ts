@@ -35,6 +35,13 @@ describe('DPD Romania HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
+  it('names the shape of a reply without its scans, never its values', () => {
+    expect(() => parseDpdRoReply(200, JSON.stringify({ error: 'Sample message', code: 7, 'not a key': 1 }), DELIVERED))
+      .toThrow('DPD Romania returned a reply without its scans (an object with 3 fields: error, code)');
+    expect(() => parseDpdRoReply(200, JSON.stringify({ events: 'none' }), DELIVERED)).toThrow('(an object with 1 field: events, events: string)');
+    expect(() => parseDpdRoReply(200, '[1, 2]', DELIVERED)).toThrow('(an array of 2)');
+  });
+
   it('reads a delivered history newest first, with offset clocks and the masked signatory, without the proof of delivery', () => {
     const result = parseDpdRo(fixture('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',

@@ -94,9 +94,24 @@ export function speedyDeliveryPartner(mappings: unknown, number: string): Pick<C
   return {};
 }
 
+/**
+ * A reply's shape for a schema error: its type and, for an object, the field names it has, those spelled
+ * as field names only, and their number. Values are never named.
+ */
+export function speedyReplyShape(payload: unknown): string {
+  if (Array.isArray(payload)) return `an array of ${payload.length}`;
+  if (!isRecord(payload)) return payload === null ? 'null' : typeof payload;
+  const keys = Object.keys(payload);
+  const named = keys.filter(key => /^[A-Za-z_][A-Za-z0-9_]{0,31}$/.test(key)).slice(0, 12);
+  const events = 'events' in payload ? `, events: ${Array.isArray(payload.events) ? `${payload.events.length} rows` : typeof payload.events}` : '';
+  return `an object with ${keys.length} field${keys.length === 1 ? '' : 's'}${named.length ? `: ${named.join(', ')}` : ''}${events}`;
+}
+
 export function parseSpeedy(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeSpeedyNumber(rawNumber);
-  if (!isRecord(payload) || !Array.isArray(payload.events) || payload.events.length > 300) throw new SchemaError(PROVIDER);
+  if (!isRecord(payload) || !Array.isArray(payload.events) || payload.events.length > 300) {
+    throw new SchemaError(PROVIDER, `Speedy returned a reply without its scans (${speedyReplyShape(payload)})`);
+  }
   if (cleanScalar(payload.barcode, 32) !== number) throw new SchemaError(PROVIDER, 'Speedy did not identify the requested shipment');
   const info = isRecord(payload.info) ? payload.info : {};
 

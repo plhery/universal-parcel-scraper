@@ -34,6 +34,13 @@ describe('Speedy HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
+  it('names the shape of a reply without its scans, never its values', () => {
+    expect(() => parseSpeedyReply(200, JSON.stringify({ error: 'Sample message', code: 7, 'not a key': 1 }), COLLECTED))
+      .toThrow('Speedy returned a reply without its scans (an object with 3 fields: error, code)');
+    expect(() => parseSpeedyReply(200, JSON.stringify({ events: 'none' }), COLLECTED)).toThrow('(an object with 1 field: events, events: string)');
+    expect(() => parseSpeedyReply(200, '[1, 2]', COLLECTED)).toThrow('(an array of 2)');
+  });
+
   it('reads a parcel collected from an office newest first, by the office name only, and who took it', () => {
     const result = parseSpeedy(fixture('collected'), COLLECTED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',

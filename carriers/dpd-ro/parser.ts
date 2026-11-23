@@ -8,7 +8,7 @@ import { paddedDate } from '../../core/time/fields.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { speedyDeliveryPartner } from '../speedy/parser.js';
+import { speedyDeliveryPartner, speedyReplyShape } from '../speedy/parser.js';
 import { speedyPlace } from '../speedy/place.js';
 import { dpdRoOperation, dpdRoPhase } from './status.js';
 
@@ -100,7 +100,9 @@ function signatoryOf(ordered: readonly Scan[]): string {
 
 export function parseDpdRo(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeDpdRoNumber(rawNumber);
-  if (!isRecord(payload) || !Array.isArray(payload.events) || payload.events.length > 300) throw new SchemaError(PROVIDER);
+  if (!isRecord(payload) || !Array.isArray(payload.events) || payload.events.length > 300) {
+    throw new SchemaError(PROVIDER, `DPD Romania returned a reply without its scans (${speedyReplyShape(payload)})`);
+  }
   if (cleanScalar(payload.barcode, 32) !== number) throw new SchemaError(PROVIDER, 'DPD Romania did not identify the requested waybill');
   const info = isRecord(payload.info) ? payload.info : {};
 
