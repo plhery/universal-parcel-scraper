@@ -123,6 +123,14 @@
       "note": "A handover to the destination's delivery carrier, not to the recipient."
     },
     {
+      "wording": "Arrived at sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "A sorting centre on the way, seen in the destination country the day after the handover to the local courier."
+    },
+    {
       "wording": "First parcel scan along Poste Italiane’s logistic network",
       "stage": "in_transit",
       "language": "en",
