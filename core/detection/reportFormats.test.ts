@@ -101,6 +101,19 @@ describe('evidence-backed tracking formats', () => {
       .toEqual(parseTrackingInput(`https://www.dhl.com/us-en/home/tracking.html?submit=1&tracking-id=${number}`));
   });
 
+  it('names DHL eCommerce for a short GM number on the tracking pages it shares with DHL', () => {
+    const number = 'GM9999999990';
+    expect(parseTrackingInput(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['dhl-ecommerce'] });
+    for (const page of ['us-en/home/tracking.html', 'us-en/home/tracking/tracking-ecommerce.html']) {
+      expect(parseTrackingInput(`https://www.dhl.com/${page}?submit=1&tracking-id=${number}`)).toEqual({
+        trackingNumber: number, carrier: 'dhl-ecommerce', confidence: 'high', candidates: ['dhl-ecommerce'], preferred: [], source: 'link',
+      });
+    }
+    // DHL Parcel's page has no DHL eCommerce link: its number stays detection's.
+    expect(parseTrackingInput(`https://www.dhl.com/gb-en/home/tracking/tracking-parcel.html?tracking-id=${number}`))
+      .toEqual({ ...parseTrackingInput(number), source: 'link' });
+  });
+
   it('reads DHL links on its local tracking and service pages, not on its division pages', () => {
     // A reference detection alone does not recognize shows that DHL's rule read it.
     for (const page of ['de-de/home/sendungsverfolgung.html', 'fr-fr/home/service-client.html', 'gb-en/home/tracking/tracking-parcel.html']) {

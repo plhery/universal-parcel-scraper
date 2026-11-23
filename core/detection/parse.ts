@@ -215,10 +215,13 @@ export function parseTrackingInput(raw: string): TrackingInputMatch {
           const suggestedRules = rules.filter((candidate) => detected.candidates.includes(candidate.carrier));
           const suggestedCarriers = new Set(suggestedRules.map((candidate) => candidate.carrier));
           // A group-wide link leaves a shared number to detection, as when its number prefers
-          // another network with links of its own on this host.
+          // another network with links of its own on this host. When that network is the only
+          // one of the number's carriers with links here, and has one for this page, the link names it.
+          const hostCarriers = new Set(hostRules.filter((candidate) => detected.candidates.includes(candidate.carrier)).map((candidate) => candidate.carrier));
+          const named = suggestedCarriers.size === 1 && hostCarriers.size === 1;
           if (firstRule.detectFromNumber && (detected.confidence === 'high'
-            || (detected.confidence === 'low' && (suggestedCarriers.size > 1 || detected.preferred.some((carrier) =>
-              carrier !== firstRule.carrier && hostRules.some((candidate) => candidate.carrier === carrier)))))) {
+            || (detected.confidence === 'low' && (suggestedCarriers.size > 1 || (!named && detected.preferred.some((carrier) =>
+              carrier !== firstRule.carrier && hostRules.some((candidate) => candidate.carrier === carrier))))))) {
             return { trackingNumber, ...detected, source: 'link' };
           }
           const rule = detected.confidence === 'high'

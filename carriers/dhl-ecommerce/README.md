@@ -84,7 +84,8 @@ families and Webtrack's answer attributes the parcel.
 `GM` numbers shorter than the sixteen to eighteen digits detection selects DHL eCommerce for
 are DHL's too: its guide to tracking labels gives eCommerce IDs from ten characters, typically
 starting with `GM`. Other carriers' generic rules fit eight to fifteen digits after two letters,
-so detection only suggests DHL eCommerce first for them.
+so detection only suggests DHL eCommerce first for them. A link to DHL's tracking pages on
+`dhl.com` that holds one names DHL eCommerce, the only DHL network with such numbers.
 eBay International Standard Delivery's `ESUS` numbers are a low suggestion shared with
 [Asendia](../asendia/README.md), since eBay names Webtrack for them and Asendia carries some.
 So are eBay International Shipping's `EEUS` numbers, with nine digits, the destination's

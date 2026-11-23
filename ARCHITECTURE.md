@@ -411,7 +411,9 @@ from a missing waybill; verification failures can recover through its public bro
 Consumers can ask enabled universal providers during preflight and reuse those results
 when saving, while retaining direct confirmation for carrier identity.
 Shared tracking portals marked `detectFromNumber` preserve ambiguity when the
-number suggests several divisions served by the URL. A country-specific portal
+number suggests several divisions served by the URL, or prefers another division with
+links on that host. When that division is the only one of the number's carriers with
+links on the host, and has one for the page, the link names it. A country-specific portal
 can still identify its own operation. A link marked `ownNumbersOnly` names its carrier
 only for a number that carrier's detection rules offer; any other number it holds
 is detected on its own. A link printed without its scheme, as text messages give
