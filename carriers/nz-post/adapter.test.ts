@@ -114,6 +114,20 @@ describe('NZ Post exact-reference projection', () => {
       .events?.[0]?.time).toBe('2026-08-14T00:47:00Z');
   });
 
+  it("reads scans at Milan's office of exchange on Italy's clock rather than the airline's country's", () => {
+    const item = 'ZZ123456785NZ';
+    const scan = (date_time: string, edifact_code: string, status: string, depot_name?: string) =>
+      ({ date_time, edifact_code, status, ...(depot_name ? { depot_name } : {}), source: 'IPS' });
+    const events = [
+      scan('2026-11-18T01:00:00Z', '5007', 'International departure', 'EXAMPLE CITY'),
+      scan('2026-11-19T09:00:00Z', '5064', 'In transit with airline', 'United Kingdom'),
+      scan('2026-11-20T21:37:00Z', '5015', 'International arrival', 'MILANO CSI'),
+      scan('2026-11-22T19:26:00Z', '5017', 'At local/regional depot'),
+    ];
+    const result = parseNzPost({ success: true, status_code: 1, results: [{ tracking_reference: item, tracking_events: events }] }, item);
+    expect(result.events?.slice(0, 2).map(event => event.time)).toEqual(['2026-11-23T08:26:00+01:00', '2026-11-21T10:37:00+01:00']);
+  });
+
   it("takes back the Auckland clock NZ Post reads the origin post's scans on, until an item from abroad leaves", () => {
     const scan = (date_time: string, edifact_code: string, status: string, depot_name?: string) =>
       ({ date_time, edifact_code, status, ...(depot_name ? { depot_name } : {}), source: 'IPS' });

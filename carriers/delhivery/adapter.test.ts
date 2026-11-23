@@ -253,6 +253,19 @@ describe('Delhivery direct tracking', () => {
     expect(snapshot.events?.[0]).toMatchObject({ description: 'DELIVERED', time: '2026-03-04T10:00:00+05:30', stage: 'delivered', summary_snapshot: true });
     expect(snapshot.delivered_at).toBe('2026-03-04T10:00:00+05:30');
   });
+  it('adds no snapshot for a status repeating the milestone dated at its minute', () => {
+    const value = freight();
+    value.data[0].currentTrackIndex = 2;
+    value.data[0].status = { status: 'OUT_DELIVERY', statusType: 'UD', statusDateTime: '2026-03-02T10:30:37.478' };
+    const result = parseDelhivery(value, FREIGHT);
+    expect(result).toMatchObject({ status: 'out_for_delivery', last_update: '2026-03-02T10:30:37.478+05:30' });
+    expect(result.events?.filter(event => event.time).map(event => [event.description, event.time])).toEqual([
+      ['Out for Delivery', '2026-03-02T10:30:00+05:30'], ['On the Way', '2026-02-27T06:00:00+05:30'], ['Picked Up', '2026-02-24T09:15:00+05:30'],
+    ]);
+    // A status a minute later is a reading of its own.
+    value.data[0].status.statusDateTime = '2026-03-02T10:31:05';
+    expect(parseDelhivery(value, FREIGHT).events?.[0]).toMatchObject({ description: 'Out delivery', time: '2026-03-02T10:31:05+05:30', summary_snapshot: true });
+  });
   it('reads the destination city milestone as transit', () => {
     const value = freight();
     value.data[0].trackingStates.splice(2, 0, { label: 'Reached Dest City', date: 'Sun, 1 Mar, 8:00 PM', scans: [] });

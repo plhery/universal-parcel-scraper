@@ -20,8 +20,10 @@ function matches(incoming: SameInstantScan, stored: SameInstantScan): boolean {
 }
 
 // Scans abroad were read on Auckland's clock until October 2026 and now show
-// the offset of the country they happened in, unless nothing places them.
+// the offset of the country they happened in, unless nothing places them. A
+// scan placed in another country than an earlier release guessed keeps its
+// wall clock under another offset, and takes over the row stored so.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'nz-post', storedSources: ['nz-post'], requireProviderCode: true,
-  matchEachScan: true, matches, relabelledFrom: 'Pacific/Auckland',
+  matchEachScan: true, matches, relabelledFrom: 'Pacific/Auckland', matchWallClock: true,
 };

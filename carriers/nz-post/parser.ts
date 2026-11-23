@@ -42,6 +42,12 @@ const AIRLINE = /^(?:5064|528\d)$/;
 /** NZ Post's own scans of an item from abroad: its arrival, the border clearance pending, the border agency, its hold and the presentation to it. */
 const ARRIVED = new Set(['5015', '5057', '5016', '5019', '5208']);
 
+/**
+ * Offices of exchange abroad whose depot name holds no country: Poste Italiane's
+ * international exchange centre in Milan receives mail for Italy.
+ */
+const EXCHANGES = new Map([['MILANO CSI', 'IT']]);
+
 /** A scan abroad: its index in the source and the country its depot names, if any but New Zealand. */
 interface Abroad { index: number; country: string | null; wall: string | null }
 
@@ -121,7 +127,7 @@ export function parseNzPost(payload: unknown, number: string): CarrierResult {
     const pending = code === PENDING_CLEARANCE;
     const location = pending || isNzPostPlaceholderLocation(depot) ? '' : depot;
     const mapped = classifyNzPostStatus(code);
-    const country = location ? trackingPlace(location).country : null;
+    const country = location ? trackingPlace(location).country ?? EXCHANGES.get(location.toUpperCase()) ?? null : null;
     // Long descriptions embed signatures and other recipient details. The
     // short status and depot name carry the tracking evidence independently.
     const clocked = clock(raw.date_time);

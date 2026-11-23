@@ -72,6 +72,7 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   const reached = typeof item.currentTrackIndex === 'number' && Number.isSafeInteger(item.currentTrackIndex) ? item.currentTrackIndex : -1;
   let deliveredAt: ParsedTime | null = null;
   let scanEvents = 0;
+  const milestones = new Set<CarrierEvent>();
   // Only completed scans and reached milestones become events. States past the
   // current index are the website's future progress rail and never claim movement.
   for (const [index, state] of item.trackingStates.slice(0, 100).entries()) {
@@ -94,8 +95,10 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
       && !scans.some(scan => isRecord(scan) && clean(scan.scanDateTime, 64))) {
       const classified = item.currentFlow === 'Reverse' && status?.stage === 'delivered' ? classifyDelhiveryStatus('RTO DELIVERED') : status;
       if (classified?.stage === 'delivered' && milestoneAt && (!deliveredAt || milestoneAt.timestamp > deliveredAt.timestamp)) deliveredAt = milestoneAt;
-      events.push({ description: milestone, ...(milestoneAt ? { time: milestoneAt.iso } : { provider_time_text: milestoneText }),
-        ...(classified ? { stage: classified.stage } : {}), ...(item.currentFlow === 'Reverse' ? { provider_leg: 'return' } : {}) });
+      const event: CarrierEvent = { description: milestone, ...(milestoneAt ? { time: milestoneAt.iso } : { provider_time_text: milestoneText }),
+        ...(classified ? { stage: classified.stage } : {}), ...(item.currentFlow === 'Reverse' ? { provider_leg: 'return' } : {}) };
+      events.push(event);
+      milestones.add(event);
     }
     if (state.scans === undefined || state.scans === null) continue;
     for (const scan of scans.slice(0, 100)) {
@@ -132,7 +135,12 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   // historical location. Keep the dated status snapshot separate. A dated
   // delivered milestone already records the delivery the status repeats.
   const deliveryRecorded = mapped?.stage === 'delivered' && deliveredAt !== null;
-  if (snapshotDescription && !latest && !deliveryRecorded && (!updated || !events.some(event => event.time && Date.parse(event.time) === updated.timestamp
+  // A milestone shows the minute, the status its seconds: a status in the stage and leg of the
+  // milestone dated at its minute repeats that milestone ("OUT_DELIVERY" and "Out for Delivery").
+  const minute = updated ? updated.timestamp - updated.timestamp % 60_000 : Number.NaN;
+  const milestoneRecorded = [...milestones].some(event => event.time && Date.parse(event.time) === minute
+    && event.stage === mapped?.stage && (event.provider_leg === 'return') === returning);
+  if (snapshotDescription && !latest && !deliveryRecorded && !milestoneRecorded && (!updated || !events.some(event => event.time && Date.parse(event.time) === updated.timestamp
     && event.description?.toUpperCase() === snapshotWords.toUpperCase() && event.stage === mapped?.stage
     && (!returning || event.provider_leg === 'return')))) {
     events.unshift({ description: snapshotWords, ...(updated ? { time: updated.iso } : currentTimeText ? { provider_time_text: currentTimeText } : {}),
