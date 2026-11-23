@@ -24,6 +24,9 @@ describe('carrier search pages', () => {
     // Integraa turns autofill off on its barcode field this way.
     expect(numberFields('<input type="text" name="sorting_product_barcode" autocomplete="new-password">')).toBe(1);
     expect(numberFields('<tags><span contenteditable="" role="textbox"></span></tags><textarea data-hidden></textarea>')).toBe(1);
+    // Patuen's tracker takes its numbers in an editable box with a placeholder.
+    expect(numberFields('<div contenteditable="true" placeholder="請輸入物流單號，多個物流單號由回車分隔"></div>')).toBe(1);
+    expect(numberFields('<div contenteditable="true" placeholder="Search the site"></div>')).toBe(0);
   });
 
   it('skips hidden, disabled, sign-in and site search fields, and boxes that are not editable text fields', () => {

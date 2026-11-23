@@ -2,9 +2,11 @@ import type { CarrierId } from '../generated/catalog.js';
 
 /**
  * The fields a search page may show, in any frame and open shadow root. Tag
- * widgets such as Tagify (SkyEx) hide their text area under an editable text box.
+ * widgets such as Tagify (SkyEx) hide their text area under an editable text box,
+ * and Patuen's tracker takes numbers in an editable box with a placeholder.
  */
-export const FIELD_SELECTOR = 'input, textarea, [contenteditable][role="textbox"]:not([contenteditable="false"])';
+export const FIELD_SELECTOR = 'input, textarea, '
+  + ':is([contenteditable][role="textbox"], [contenteditable][placeholder]):not([contenteditable="false"])';
 
 /**
  * Counts the visible, enabled fields that are neither a sign-in field nor the
@@ -21,11 +23,11 @@ export function countNumberFields(elements: Element[]): number {
     if (box.width === 0 || box.height === 0 || getComputedStyle(field).visibility === 'hidden' || field.disabled) return false;
     // A text field marked new-password only turns autofill off (Integraa); it is no sign-in clue.
     const autocomplete = field.getAttribute('autocomplete') ?? '';
-    const label = [field.name, field.id, field.placeholder, field.getAttribute('aria-label'),
+    const label = [field.name, field.id, field.getAttribute('placeholder'), field.getAttribute('aria-label'),
       /^\s*new-password\s*$/i.test(autocomplete) ? '' : autocomplete].join(' ');
     if (/e-?mail|user ?name|login|password|passwort|mot de passe/i.test(label)) return false;
     const siteSearch = /^(?:q|query|s|search|keywords?)$/i.test(field.name)
-      || /^\s*(?:search|rechercher|suchen|buscar|cerca|szukaj)\b/i.test(field.placeholder || field.getAttribute('aria-label') || '');
+      || /^\s*(?:search|rechercher|suchen|buscar|cerca|szukaj)\b/i.test(field.getAttribute('placeholder') || field.getAttribute('aria-label') || '');
     return !siteSearch || /track|suivi|sendung|colis|parcel|package|shipment|waybill|consignment|number|numéro|nummer|número|numero|трек|номер|дугаар|运单|運單|单号|單號/i.test(label);
   }).length;
 }
@@ -106,6 +108,7 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'first-delivery-tn': 'www.firstdeliverygroup.com answers only Tunisian networks; an archived copy shows its waybill number field',
   fragilepak: 'the Expecting a Delivery page has no field; its "Track Delivery" link opens the tracker on tracking.agentgrid.net, which does not answer European networks',
   'ftd-nz': 'the FTD number field on www.ftd.nz/query/ shows only on desktop-size screens, which the phone-size check does not use',
+  gcx: 'info.gcx.co.il, the tracker framed on the page, does not answer connections from outside Israel; an archived copy shows its HAWB number field',
   golucky: 'the number box on www.goluckyvip.com/shipment.html stays folded until its query panel is clicked, so the check finds no field on load',
   goodmaji: 'the tracker names its number box keyword, which the check reads as a site search',
   'grand-slam-express': 'the AWB field on www.grandslamexpress.in/Web/Track is hidden on phone-sized screens, which the check uses; the desktop page shows it',
