@@ -1,16 +1,18 @@
 import type { Stage } from '../../core/status/index.js';
 import { statusWordings } from '../../core/status/english.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { jtMexicoKey } from '../gzyl/jt-mexico-rows.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const WORDINGS = statusWordings(statuses.entries);
 
 /**
  * The stage SXW Express's map gives a row, by its `normalizeStatusWording` wording: the carrier's
- * own, or the English the adapter shows for it. A row's kind code decides nothing.
+ * own, or the English the adapter shows for it. A row's kind code decides nothing. A row copied from J&T
+ * Express Mexico is found with its towns, sites, courier and phone as ellipses.
  */
 export function sxwStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.stage(wording) ?? (ARRIVAL_NOTICE.test(wording) ? 'in_transit' : undefined);
+  return WORDINGS.stage(wording) ?? WORDINGS.stage(jtMexicoKey(wording)) ?? (ARRIVAL_NOTICE.test(wording) ? 'in_transit' : undefined);
 }
 
 // The partner's notice that a flight brought the parcel, naming the airports or carriers by their codes:

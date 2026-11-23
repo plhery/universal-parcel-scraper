@@ -31,6 +31,17 @@ it('maps the inward mail centre automation scan as onward transit', () => {
     .toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
 });
 
+it('maps the rows it copies from J&T Express Mexico, whatever their towns, sites, courier and phone', () => {
+  for (const [wording, stage] of [
+    ['【Villa Dos】【CLC-Norte.pdv】?Recolección exitosa!. El mensajero de J&T asignado OTRO.pcp recolectó tu envío. Para mayor información, comunícate al: 5500000000', 'in_transit'],
+    ['【Villa Dos】Tu envío ha salido de【CLC-Norte.pdv】con destino a【MEXICO.sc】', 'in_transit'],
+    ['【Villa Uno】Tu envío ha llegado a【MEXICO.sc】', 'in_transit'],
+    ['【Villa Uno】【SITE-Sur.pdv】El mensajero de J&T Express OTRO1-DPA.pcp está en camino a tu domicilio. Si requieres mayor información, contáctanos al 5500000000', 'out_for_delivery'],
+  ] as const) {
+    expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(stage);
+  }
+});
+
 describe('SXW Express numbers', () => {
   it('takes the universal providers’ names for the forwarder', () => {
     for (const name of ['SXW', 'SXW Wuliu', 'SXW Express', '胜兴旺', '深圳胜兴旺供应链管理有限公司']) {
