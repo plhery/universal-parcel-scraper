@@ -8,6 +8,7 @@
     { "code": "23", "wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Leaving the inward office of exchange." },
     { "code": "24", "wording": "Item into sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "25", "wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "code": "26", "wording": "Arrival at post office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Arrival at the delivering post office from the mail centre, before the round." },
     { "code": "27", "wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Leaving the posting office." },
     { "code": "28", "wording": "Return to the origin post office", "language": "en", "stage": "exception", "confirmedBy": "documentation", "note": "The site's status table pairs code 28 with delivery result K, a return on its way to the origin post office. The wording is the delivery result's. Not seen in a reply." },
     { "code": "31", "wording": "Item out for physical delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live" },

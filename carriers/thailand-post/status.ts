@@ -13,6 +13,8 @@ const CODES: Readonly<Record<string, Stage>> = {
   '23': 'in_transit',
   '24': 'in_transit',
   '25': 'in_transit',
+  // Not in the site's table: the arrival at the delivering post office, after the mail centre.
+  '26': 'in_transit',
   '27': 'in_transit',
   // Delivery result K: on its way back to the origin post office.
   '28': 'exception',
