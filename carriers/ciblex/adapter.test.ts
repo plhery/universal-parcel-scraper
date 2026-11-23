@@ -135,6 +135,22 @@ describe('Ciblex response normalization', () => {
     }
   });
 
+  it('reads the history beside a bordered sender and recipient block, which it leaves unread', () => {
+    const html = readFileSync(new URL('./fixtures/full-barcode.html', import.meta.url), 'utf8');
+    const parties = '<table border="2" cellpadding="2"><tr class="t_liste_titre"><td>Expéditeur</td><td>Destinataire</td></tr>'
+      + '<tr><td>PRIVATE_SYNTHETIC_SENDER</td><td>PRIVATE_SYNTHETIC_RECIPIENT</td></tr><tr><td>99999 PRIVATE_SYNTHETIC_TOWN</td><td>99999 PRIVATE_SYNTHETIC_TOWN</td></tr></table>';
+    const framed = html.replace('<table border="2"', `${parties}\n<table border="2"`);
+    const result = parseCiblexTrackingHtml(framed, '000000000000000000000001');
+    expect(result).toMatchObject({ status: 'delivered', events: expect.arrayContaining([expect.objectContaining({ description: expect.any(String) })]) });
+    expect(result.events).toHaveLength(8);
+    expect(JSON.stringify(result)).not.toContain('PRIVATE_SYNTHETIC');
+    // Two histories, or none under the four columns, are no reading of the shipment.
+    const history = html.slice(html.indexOf('<table border="2"'), html.indexOf('</table>', html.indexOf('<table border="2"')) + 8);
+    expect(() => parseCiblexTrackingHtml(framed.replace(history, history + history), '000000000000000000000001')).toThrow('ambiguous tracking history');
+    expect(() => parseCiblexTrackingHtml(framed.replace(history, ''), '000000000000000000000001')).toThrow('columns changed');
+    expect(() => parseCiblexTrackingHtml(html.replace(history, ''), '000000000000000000000001')).toThrow('no tracking table');
+  });
+
   it('keeps ambiguous or nonexistent Paris DST clocks local without inventing an instant', () => {
     for (const [day, local] of [['29/03/2026', '2026-03-29T02:30:00'], ['25/10/2026', '2026-10-25T02:30:00']] as const) {
       const result = parseCiblexTrackingHtml(trackingPage({ rows: [[day, '02:30', 'Colis Livré', ''], ['22/01/2026', '09:00', 'Colis Contrôle', '']] }), TEST_TRACKING_NUMBER);

@@ -8,8 +8,10 @@ as recipient verification.
 
 One bounded HTTP request retrieves the parcel page without session state.
 Exactly one shipment banner must match the complete requested identifier before
-its scan table is read. The official consumer form also forwards the full
-barcode unchanged. Distinct parcel histories remain separate.
+its scan table, the one bordered table under the date, delivery time, action and
+place columns, is read. A page can also frame the sender and recipient in a
+bordered table, which is not read. The official consumer form also forwards the
+full barcode unchanged. Distinct parcel histories remain separate.
 
 ## Notes
 

@@ -60,12 +60,15 @@ export function parseCiblexTrackingHtml(html: string, raw: string): CarrierResul
   // reference in parentheses. Neither is an identity alias or projected data.
   const identity = /^SUIVI\s+COLIS\s*:\s*(\d{14}|\d{24})(?:\s*\([^()\r\n]{1,160}\))*$/i.exec(banners[0]!);
   if (!identity || identity[1] !== number) throw new SchemaError('Ciblex', 'Ciblex returned a different shipment');
-  const tables = $('table[border="2"]');
-  if (tables.length !== 1) throw new SchemaError('Ciblex', 'Ciblex returned ambiguous tracking history');
-  const rows = tables.find('tr');
+  // The history is the bordered table under its four columns. A shipment's page can also frame its sender and
+  // recipient in a bordered table ("Expéditeur", "Destinataire"), which is not read.
+  const bordered = $('table[border="2"]').toArray();
+  const histories = bordered.filter(table => $(table).find('tr').first().children('td, th')
+    .map((_, node) => comparableText($(node).text())).get().join('|') === 'date|heure livraison|action|lieu');
+  if (histories.length > 1) throw new SchemaError('Ciblex', 'Ciblex returned ambiguous tracking history');
+  if (!histories.length) throw new SchemaError('Ciblex', bordered.length ? 'Ciblex tracking columns changed' : 'Ciblex returned no tracking table');
+  const rows = $(histories[0]).find('tr');
   if (rows.length > 501) throw new SchemaError('Ciblex', 'Ciblex returned excessive tracking history');
-  const header = rows.first().children('td, th').map((_, node) => comparableText($(node).text())).get();
-  if (header.join('|') !== 'date|heure livraison|action|lieu') throw new SchemaError('Ciblex', 'Ciblex tracking columns changed');
   // The page Ciblex shows for any number it has no scans for, a label not yet
   // scanned or one it never issued: an answer about the number, not an outage.
   if (rows.length === 1) throw new NoHistoryError('Ciblex', 'Ciblex returned no parcel history', { reason: 'portal_not_found' });
