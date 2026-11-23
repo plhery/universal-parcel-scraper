@@ -11,7 +11,7 @@ const SPECIAL = new Map<number, unknown>([[-1, undefined], [-2, Number.NaN], [-3
   [-6, Infinity], [-7, undefined]]);
 const MAX_DEPTH = 64;
 
-/** A typed value: a date, a deferred promise, a thrown response. The page's tracking data holds none it reads. */
+/** A typed value: a date, a deferred promise, a thrown response, a redirect. The page's tracking data holds none it reads. */
 export interface TypedValue { $type: string; args?: unknown[] }
 
 const invalid = () => new SchemaError('Bring', 'Bring returned an invalid tracking page stream');
@@ -40,8 +40,9 @@ export function decodePageStream(stream: string): unknown {
     open.add(index);
     let decoded: unknown;
     if (Array.isArray(value) && typeof value[0] === 'string') {
-      // React Router's thrown response lists its data, status and status text by index; other types are no data here.
-      decoded = value[0] === 'ErrorResponse'
+      // React Router's thrown response lists its data, status and status text by index, and its redirect the object
+      // that names the target; other types are no data here.
+      decoded = value[0] === 'ErrorResponse' || value[0] === 'SingleFetchRedirect'
         ? { $type: value[0], args: value.slice(1).map(member => read(member, depth + 1)) } satisfies TypedValue
         : { $type: value[0] } satisfies TypedValue;
     } else if (Array.isArray(value)) {
@@ -60,12 +61,33 @@ export function decodePageStream(stream: string): unknown {
   return read(0, 0);
 }
 
+/** Posten's own tracking page, where Bring's page sends some items from abroad that Posten handles. */
+export const POSTEN_PAGE_HOST = 'sporing.posten.no';
+
+/**
+ * Whether the page sends the lookup to Posten's own tracking page for the same number, which shows the item Bring's
+ * page and JSON route do not. Any other redirect is not followed.
+ */
+export function redirectsToPosten(stream: string, number: string): boolean {
+  let decoded: unknown;
+  try { decoded = decodePageStream(stream); } catch { return false; }
+  const redirect = decoded as Partial<TypedValue> | undefined;
+  const target = redirect?.$type === 'SingleFetchRedirect' && isRecord(redirect.args?.[0]) ? redirect.args[0].redirect : undefined;
+  if (typeof target !== 'string') return false;
+  let url: URL;
+  try { url = new URL(target); } catch { return false; }
+  let path: string;
+  try { path = decodeURIComponent(url.pathname); } catch { return false; }
+  return url.protocol === 'https:' && url.hostname === POSTEN_PAGE_HOST && url.port === '' && path.toUpperCase() === `/SPORING/${number}`;
+}
+
 /**
  * The consignment the tracking page shows, as the JSON route's reply holds it. The page's loader also finds
  * parcels the JSON route answers NOT FOUND for, such as one delivered in Sweden. Its not-found is a thrown 404.
  */
 export function pageConsignment(stream: string, status: number): Record<string, unknown> {
   const decoded = decodePageStream(stream);
+  if ((decoded as Partial<TypedValue> | undefined)?.$type === 'SingleFetchRedirect') throw new IndeterminateError('Bring', 'Bring sent the lookup to another page');
   const route = isRecord(decoded) ? decoded[PAGE_ROUTE] : undefined;
   if (!isRecord(route)) throw new SchemaError('Bring', 'Bring changed its tracking page data');
   if (route.error !== undefined) {

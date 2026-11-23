@@ -31,7 +31,10 @@ The JSON route answers NOT FOUND for some parcels the tracking page shows, such
 as one delivered in Sweden. After that answer the adapter asks the page's own
 data route (`/sporing/{number}.data`, limited to the tracking route's loader),
 which React Router streams as turbo-stream: the same consignment, read by the
-same parser. Its not-found is a thrown 404 named `NOT_FOUND`.
+same parser. Its not-found is a thrown 404 named `NOT_FOUND`. For some items from
+abroad that Posten handles, the page instead redirects to Posten's own tracking page
+(`sporing.posten.no`) for the same number, whose data route shows the item; the
+adapter follows only that redirect.
 
 ## Notes
 

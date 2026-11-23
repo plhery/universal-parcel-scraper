@@ -288,6 +288,28 @@ describe('Bring bounded anonymous retrieval', () => {
     await expect(new BringTracker({ fetcher: outage }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'maintenance' }); expect(outage).toHaveBeenCalledOnce();
   });
 
+  it('follows the tracking page to Posten\'s own page for the same number', async () => {
+    // For some items from abroad that Posten handles, Bring's page answers with a redirect to Posten's page.
+    const value = payload();
+    const redirect = (target: string) => new Response(`[["SingleFetchRedirect",1],{"_2":3,"_4":5,"_6":7,"_8":9,"_10":7},"redirect",${
+      JSON.stringify(target)},"status",302,"revalidate",false,"reload",true,"replace"]`, { status: 202 });
+    const fetcher = vi.fn<typeof fetch>(async url => (String(url).includes('/json/') ? JSON_NOT_FOUND()
+      : String(url).startsWith('https://sporing.posten.no/') ? new Response(pageStream({ data: { _type: 'SINGLE_CONSIGNMENT',
+        trackingNumber: NUMBER, consignment: value.consignmentWithDomainAsync } }))
+        : redirect(`https://sporing.posten.no/sporing/${NUMBER}?lang=en`)));
+    await expect(new BringTracker({ fetcher }).fetch(NUMBER)).resolves.toEqual(parseBring(value, NUMBER));
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([`https://sporing.bring.no/sporing/json/${NUMBER}?lang=en`,
+      `https://sporing.bring.no/sporing/${NUMBER}.data?lang=en&_routes=routes%2F%24sporing.%24trackingNumber`,
+      `https://sporing.posten.no/sporing/${NUMBER}.data?lang=en&_routes=routes%2F%24sporing.%24trackingNumber`]);
+    // A redirect to another number or site is not followed, and is no changed page.
+    for (const target of ['https://sporing.posten.no/sporing/00000000000000002?lang=en', `https://example.com/sporing/${NUMBER}`,
+      `http://sporing.posten.no/sporing/${NUMBER}`, '/sporing']) {
+      const elsewhere = routes(JSON_NOT_FOUND, () => redirect(target));
+      await expect(new BringTracker({ fetcher: elsewhere }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+      expect(elsewhere).toHaveBeenCalledTimes(2);
+    }
+  });
+
   it('decodes the tracking page stream within bounds', () => {
     expect(decodePageStream('[{"_1":2,"_3":-5,"_4":5},"a",[6,-7,7],"b","c",["D",0],1,"x"]\nP1:[]')).toEqual(
       { a: [1, undefined, 'x'], b: null, c: { $type: 'D' } });

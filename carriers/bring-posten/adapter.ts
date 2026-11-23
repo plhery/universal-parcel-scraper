@@ -5,7 +5,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeBringNumber, parseBring } from './parser.js';
-import { PAGE_ROUTE, pageConsignment } from './page.js';
+import { PAGE_ROUTE, POSTEN_PAGE_HOST, pageConsignment, redirectsToPosten } from './page.js';
 
 export class BringTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -31,14 +31,18 @@ export class BringTracker {
       return parseBring(payload, raw);
     } }, {
       // The tracking page's own data route finds parcels the JSON route answers NOT FOUND for, such as one
-      // delivered in Sweden, and holds the same consignment.
+      // delivered in Sweden, and holds the same consignment. For some items from abroad that Posten handles it
+      // redirects to Posten's own tracking page for the same number, whose data route shows them.
       id: 'website', recovers: error => error instanceof IndeterminateError && error.reason === 'portal_not_found',
       run: async ({ signal, remainingMs }) => {
         signal.throwIfAborted();
-        const { response, bytes } = await fetchBounded(
-          `https://sporing.bring.no/sporing/${number}.data?lang=en&_routes=${encodeURIComponent(PAGE_ROUTE)}`,
+        const deadline = performance.now() + remainingMs;
+        const page = (host: string) => fetchBounded(
+          `https://${host}/sporing/${number}.data?lang=en&_routes=${encodeURIComponent(PAGE_ROUTE)}`,
           { signal, headers: { Accept: '*/*', 'User-Agent': userAgentOf(this.options.userAgent) } }, { provider: 'Bring',
-            timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000, allowHttpStatuses: [404], fetcher: this.options.fetcher });
+            timeoutMs: Math.max(1, Math.floor(deadline - performance.now())), maxBytes: 1_000_000, allowHttpStatuses: [404], fetcher: this.options.fetcher });
+        let { response, bytes } = await page('sporing.bring.no');
+        if (redirectsToPosten(decodeText(bytes), number)) ({ response, bytes } = await page(POSTEN_PAGE_HOST));
         return parseBring(pageConsignment(decodeText(bytes), response.status), raw);
       },
     }]);
