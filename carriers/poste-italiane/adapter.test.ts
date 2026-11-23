@@ -249,6 +249,7 @@ describe('Poste Italiane response parsing', () => {
       ['completata la fase di verifica per lo svincolo doganale', 'in_transit', 'in_transit'],
       ['consegna non andata a buon fine, riproveremo', 'exception', 'failed_attempt'],
       ['in restituzione al mittente', 'exception', 'returned'],
+      ['la spedizione è in attesa di istruzioni da parte del mittente per rifiuto del destinatario', 'exception', 'exception'],
       ['disponibile per il ritiro dal giorno lavorativo successivo alla data indicata', 'out_for_delivery', 'ready_for_pickup'],
       ['Disponibile per il ritiro entro i termini indicati su SMS/email', 'out_for_delivery', 'ready_for_pickup'],
       ["all'estero", 'in_transit', 'in_transit'],

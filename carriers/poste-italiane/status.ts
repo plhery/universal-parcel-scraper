@@ -79,6 +79,9 @@ export function classifyPosteItalianeStatus(rawWording: unknown): ClassifiedStat
   // A round that failed, with the working day the next one starts from: not that coming round.
   if (value.startsWith('non è stato possibile effettuare la consegna')) return { status: 'exception', stage: 'failed_attempt' };
   if (value.startsWith('in restituzione al mittente')) return { status: 'exception', stage: 'returned' };
+  // Held for the sender's instructions, after the recipient refused the parcel or for another reason the line gives:
+  // it goes out again or back only on the sender's word.
+  if (value.startsWith('la spedizione è in attesa di istruzioni da parte del mittente')) return { status: 'exception', stage: 'exception' };
   // Registered mail held at a post office from the date the line gives.
   if (value.startsWith('la spedizione sarà disponibile per il ritiro')) return { status: 'out_for_delivery', stage: 'ready_for_pickup' };
   switch (value) {

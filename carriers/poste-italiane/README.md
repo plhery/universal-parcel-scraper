@@ -160,6 +160,9 @@ it is its receipt from that post and reads as transit.
 - A change to the delivery instructions ("cambio disposizioni di consegna") comes before or
   during a round, after a failed one or before any: it is a notice that keeps the stage of the
   scan before it.
+- A parcel held for the sender's instructions ("la spedizione è in attesa di istruzioni da parte
+  del mittente", after a refusal for instance) is an exception: only the sender's word sends it
+  out again or back.
 - Customs release wording maps to `in_transit`.
 - A post-office scan names its office, which becomes the event location; the office's
   address, postcode and hours are not kept. Other scans keep `luogo` only when it is a town
