@@ -1,0 +1,24 @@
+{
+  "carrier": "gti",
+  "records": [
+    {
+      "number": "GTI2239196321112",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://packyapp.com/en/carriers/gti",
+        "date": "2026-11-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The format example a tracking app's GTI page gives. GTI's tracker answers it with a parcel from Putian that USPS delivered in Massachusetts."
+    }
+  ]
+}

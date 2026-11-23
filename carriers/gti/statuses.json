@@ -1,0 +1,14 @@
+{
+  "carrier": "gti",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt: arrived at the receiving point."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The warehouse's departure: the goods leave the operation centre."},
+    {"code": "CO_C_CR", "wording": "快件到达机场", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: the parcel reached the airport."},
+    {"code": "CO_C_CR", "wording": "快件到达始发地海关【深圳市],等待清关", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: at export customs in the origin city, named in brackets, awaiting clearance; a routine step before the flight, not a hold."},
+    {"code": "CO_C_CR", "wording": "出口清关完成", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: export clearance done."},
+    {"code": "CO_C_CR", "wording": "交航", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: handed to the airline."},
+    {"code": "CO_C_CR", "wording": "启运【SZX】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: the flight left the airport named in brackets."},
+    {"code": "CO_C_CR", "wording": "抵达【LAX】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: the flight reached the airport named in brackets."},
+    {"code": "CO_C_CR", "wording": "目的国清关完成", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: import clearance in the destination country done, before USPS takes the parcel."}
+  ]
+}
