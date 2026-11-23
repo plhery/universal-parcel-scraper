@@ -65,6 +65,9 @@ describe('Delhivery direct tracking', () => {
     expect(waiting).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'Waiting pickup' });
     expect(waiting.events).toEqual([expect.objectContaining({ description: 'Waiting pickup', stage: 'registered' })]);
     expect(statusMap.stage('', 'Waiting pickup')).toBe('registered');
+    value.data[0].status = { status: 'OUT_DELIVERY', statusDateTime: '2026-01-03T14:00:00' };
+    expect(parseDelhivery(value, NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out delivery' });
+    expect(statusMap.stage('', 'Out delivery')).toBe('out_for_delivery');
   });
   it('words and places a status token by the latest scan when the reply shows that scan alone', () => {
     const latestOnly = (status: string, scan: string) => {

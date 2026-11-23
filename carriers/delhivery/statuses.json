@@ -75,6 +75,14 @@
       "note": "A freight milestone."
     },
     {
+      "wording": "OUT_DELIVERY",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The current status as a token, beside the out-for-delivery milestone; unmapped, it was a stageless snapshot."
+    },
+    {
       "wording": "Dispatched",
       "language": "en",
       "stage": "out_for_delivery",

@@ -4,6 +4,8 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 const statuses: Record<string, ClassifiedStatus> = {
   DELIVERED: { status: 'delivered', stage: 'delivered' },
   'OUT FOR DELIVERY': { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  // The current status as a token, OUT_DELIVERY, beside the out-for-delivery milestone.
+  'OUT DELIVERY': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'IN TRANSIT': { status: 'in_transit', stage: 'in_transit' },
   'IN TRANSIT FOR RETURN': { status: 'in_transit', stage: 'in_transit' },
   'ON THE WAY': { status: 'in_transit', stage: 'in_transit' },
