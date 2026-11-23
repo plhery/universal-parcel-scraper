@@ -21,8 +21,9 @@ history without a banner: the form value only echoes the request.
 Numeric references remain detection candidates because other carriers share
 their shapes. Detection offers Relais Colis for ten digits only: an old customer
 report is the only public fourteen-digit reference, and fourteen digits are
-DPD's parcel number. Its help gives parcel numbers of 12 to 16 characters, and the
-ten-digit ones come from older reports, so recognition asks Relais Colis only about
+DPD's parcel number. Its help and its form give parcel numbers of 12 to 16 characters
+(the form's eight-character example has no data on the tracker), and the ten-digit ones
+come from older reports, so recognition asks Relais Colis only about
 12 to 16 characters. The adapter submits the complete normalized reference and never
 shortens it to make a returned parcel match.
 

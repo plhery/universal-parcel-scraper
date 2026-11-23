@@ -367,6 +367,34 @@
         ]
       },
       "note": "The customer identifies this parcel and quotes transit between Relais Colis sites. Its complete reference fits the official recipient form; Colis Privé overlaps the shape."
+    },
+    {
+      "number": "00L5JLD3",
+      "role": "quarantined",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://relaiscolis.com/colis/suivre",
+        "date": "2026-11-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Relais Colis tracking form example",
+        "assessment": "quarantine"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-fr",
+          "gls-ch",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The example Relais Colis's tracking form prints in its number field, whose other placeholder asks for 12 to 16 characters. The tracker has no data for it, and no eight-character number with history is known."
     }
   ]
 }

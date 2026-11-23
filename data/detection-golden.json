@@ -5018,6 +5018,26 @@
     ]
   },
   {
+    "input": "00L5JLD3",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-fr",
+      "gls-ch",
+      "gls-de",
+      "gls-nl",
+      "loggi"
+    ],
+    "preferred": [
+      "gls-fr"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
+    ]
+  },
+  {
     "input": "00L9VSLL",
     "carrier": "unknown",
     "confidence": "low",
