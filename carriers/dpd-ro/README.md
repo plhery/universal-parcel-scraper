@@ -9,17 +9,24 @@ covers.
 
 ## How it works
 
-The [MyDPD tracker](https://mydpd.dpd.ro/pub/tracking/) reads a shipment with
-`GET https://mydpd.dpd.ro/rest/public/track?id=...&language=en`, and the adapter sends that one
-request. No account, cookie, key or browser is needed. The DPD app reads the same path from
-MyDPD. `tracking.dpd.ro`, which DPD Romania's site and shop plugins link, redirects to
-`services.dpd.ro/tracking/`, which serves a Cloudflare challenge and asks for a Turnstile token
-with every lookup, so it is not used.
+1. `direct`: `GET https://mydpd.dpd.ro/rest/public/track?id=...&language=en`, the endpoint the
+   [MyDPD tracker](https://mydpd.dpd.ro/pub/tracking/) reads a shipment from. The DPD app reads
+   the same path. It answers only a request carrying the token of the tracker's Cloudflare
+   Turnstile check: without one it answers every waybill with an empty object, and it refuses a
+   token it did not issue with HTTP 406. Both are a challenge.
+2. `trawl`: the private browser service opens the tracker page for the waybill, in English. The
+   page passes its Turnstile check and asks the endpoint for the waybill with its token, and the
+   service's capture helper keeps that one reply for the whole waybill. The token stays in the
+   browser. A page that sends no request did not pass its check.
+
+`tracking.dpd.ro`, which DPD Romania's site and shop plugins link, redirects to
+`services.dpd.ro/tracking/`, which serves a Cloudflare challenge as well, so it is not used.
 
 The reply must name the whole requested waybill. For a waybill it does not know, the endpoint
 answers HTTP 404 with MyDPD's "Optiunile specificate nu au fost gasite" page, so that page is not
 found. Other 404s, blocked pages, HTTP errors and malformed replies keep their own failure kinds.
-Recognition uses the same lookup.
+Recognition makes the `direct` request alone, so it cannot confirm a waybill while the check
+stands.
 
 ## Numbers
 
@@ -64,6 +71,6 @@ MyDPD removed would answer the same 404 page as an unknown waybill.
 
 ## Live test
 
-Set `DPD_RO_TRACKING_NUMBER` outside the repository and run
-`npm run test:carriers:live -- carriers/dpd-ro/adapter.live.test.ts`.
-Optionally set `DPD_RO_UNKNOWN_NUMBER` to check a not-found waybill.
+Set `DPD_RO_TRACKING_NUMBER` outside the repository, and `FLARESOLVERR_URL` for the tracker page,
+and run `npm run test:carriers:live -- carriers/dpd-ro/adapter.live.test.ts`. Optionally set
+`DPD_RO_UNKNOWN_NUMBER` to check a not-found waybill.

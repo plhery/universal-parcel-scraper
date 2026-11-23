@@ -525,6 +525,26 @@ const SITES = [
     settled() { return true; },
   },
   {
+    // MyDPD, DPD Romania's copy of MySpeedy, behaves the same: one request for
+    // the waybill in its route, with the Turnstile token, its 404 page for a
+    // waybill it does not know and 406 for a refused token.
+    api: 'https://mydpd.dpd.ro/rest/public/track',
+    provider: 'DPD Romania',
+    requestMethod: 'GET',
+    allowTextResponse: true,
+    readStatuses: [404, 406],
+    readyOnRequest: true,
+    endsSolver: true,
+    apiForNumber(number) {
+      return `${this.api}?id=${number}&language=en&mobile=N`;
+    },
+    number(page) {
+      if (page.origin !== 'https://mydpd.dpd.ro' || page.search !== '?language=en' || page.hash) return null;
+      return /^\/pub\/tracking\/(8\d{10})$/.exec(page.pathname)?.[1] ?? null;
+    },
+    settled() { return true; },
+  },
+  {
     // FedEx answers once. The edge accepts this call only from the session
     // the page established, which is why the reply is read here and never
     // replayed. The page redirects its canonical /fedextrack/ URL to the

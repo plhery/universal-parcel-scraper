@@ -4,8 +4,9 @@ import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { createTracker } from '../../facade/index.js';
-import { adapter, DPD_RO_ENDPOINT, DpdRoTracker } from './adapter.js';
+import { adapter, DPD_RO_ENDPOINT, dpdRoPageRequest, DpdRoTracker } from './adapter.js';
 import { parseDpdRo, parseDpdRoReply } from './parser.js';
 import { dpdRoOperation, dpdRoPhase, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -149,6 +150,9 @@ describe('DPD Romania HTTP adapter', () => {
     expect(() => parseDpdRoReply(200, '<html><title>Un instant…</title></html>', DELIVERED)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     expect(() => parseDpdRoReply(200, '<html><title>SkyLogistics</title><div class="cf-turnstile"></div></html>', DELIVERED))
       .toThrow(expect.objectContaining({ kind: 'schema' }));
+    // Without the tracker page's Turnstile token every waybill gets an empty object; a refused token gets 406.
+    expect(() => parseDpdRoReply(200, '{}', DELIVERED)).toThrow(expect.objectContaining({ kind: 'challenge' }));
+    expect(() => parseDpdRoReply(406, '[{"type":"error","context":"turnstile-failure"}]', DELIVERED)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     expect(parseDpdRoReply(200, `\uFEFF${text('delivered.json')}`, DELIVERED)).toMatchObject({ current_stage: 'delivered' });
   });
 
@@ -201,6 +205,60 @@ describe('DPD Romania HTTP adapter', () => {
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED, carrier: 'dpd-ro' }, { budgetMs: 3000 });
     expect(answer).toMatchObject({ carrier: 'dpd-ro', source: 'dpd-ro', result: { current_stage: 'delivered' } });
     expect(fetcher.mock.calls.every(([url]) => String(url).startsWith(`${DPD_RO_ENDPOINT}?`))).toBe(true);
+  });
+});
+
+const page = (captures: Partial<TrawlScrapeResponse['capturedResponses'][number]>[], extra: Partial<TrawlScrapeResponse> = {}): TrawlScrapeResponse => ({
+  url: '', html: '', cookies: [], userAgent: null, tier: 2, statusCode: 200, raw: {}, ...extra,
+  capturedResponses: captures.map(capture => ({ url: dpdRoPageRequest(DELIVERED), status: 200, headers: {}, body: text('delivered.json'),
+    truncated: false, base64Encoded: false, error: null, ...capture })),
+});
+const browser = (answer: TrawlScrapeResponse) => {
+  const scrape = vi.fn<TrawlClient['scrape']>().mockResolvedValue(answer);
+  const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response('{}', { headers: { 'Content-Type': 'application/json;charset=UTF-8' } }));
+  return { scrape, fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: { scrape } as unknown as TrawlClient, browserExecutablePath: null }) };
+};
+
+describe('DPD Romania through MyDPD\'s tracker page', () => {
+  it('opens the tracker page when the endpoint wants its Turnstile token, and reads the page\'s own reply', async () => {
+    const { scrape, fetcher, instance } = browser(page([{}]));
+    expect(instance.steps).toEqual(['direct', 'trawl']);
+    await expect(instance.track({ number: DELIVERED })).resolves.toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(scrape).toHaveBeenCalledTimes(1);
+    const [request, options] = scrape.mock.calls[0]!;
+    expect(request).toMatchObject({ url: `https://mydpd.dpd.ro/pub/tracking/${DELIVERED}?language=en`, skipHttp: true,
+      captureResponses: [DPD_RO_ENDPOINT] });
+    expect(options).toMatchObject({ requireSolved: false, signal: expect.any(AbortSignal) });
+    expect(dpdRoPageRequest(DELIVERED)).toBe(`${DPD_RO_ENDPOINT}?id=${DELIVERED}&language=en&mobile=N`);
+  });
+
+  it('reads the not-found page as not found and keeps refusals, other waybills and partial replies apart', async () => {
+    for (const [answer, kind] of [
+      [page([{ status: 404, body: text('not-found.html') }]), 'not_found'],
+      [page([{ status: 404, body: null, error: 'body was not read' }]), 'transport'],
+      [page([{ status: 200, body: null, error: 'body was not read' }]), 'transport'],
+      [page([{ status: 406, body: null }]), 'challenge'],
+      [page([{ status: 403, body: null }]), 'challenge'],
+      [page([{ status: 429, body: null, headers: { 'retry-after': '60' } }]), 'rate_limited'],
+      [page([{ status: 400, body: null }]), 'transport'],
+      [page([]), 'challenge'],
+      [page([{ url: dpdRoPageRequest(CANCELLED) }]), 'challenge'],
+      [page([{ url: `${DPD_RO_ENDPOINT}?id=${DELIVERED}&language=en` }]), 'challenge'],
+      [page([{ body: text('delivered.json').replace(DELIVERED, CANCELLED) }]), 'schema'],
+      [page([{}], { tier: 1 }), 'transport'],
+    ] as const) {
+      await expect(browser(answer).instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind });
+    }
+  });
+
+  it('keeps recognition on HTTP and answers a found waybill over HTTP without the browser', async () => {
+    const { scrape, fetcher, instance } = browser(page([{}]));
+    await expect(instance.recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(scrape).not.toHaveBeenCalled();
+    fetcher.mockResolvedValue(reply('delivered'));
+    await expect(instance.track({ number: DELIVERED })).resolves.toMatchObject({ status: 'delivered' });
+    expect(scrape).not.toHaveBeenCalled();
   });
 });
 

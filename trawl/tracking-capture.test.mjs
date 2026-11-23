@@ -476,6 +476,36 @@ test('Speedy keeps the missing-resource page and a refused Turnstile token, and 
     /\.replace\(solverSignal, 'solveRemaining,\\n {8}pageCapture\.solverSignal\?\.\(budget\.signal\) \?\? budget\.signal,'\)/);
 });
 
+const dpdRoApi = 'https://mydpd.dpd.ro/rest/public/track';
+// A made-up waybill in DPD Romania's layout, the same one the adapter's tests use.
+const dpdRoNumber = '89999999980';
+const dpdRoUrl = `https://mydpd.dpd.ro/pub/tracking/${dpdRoNumber}?language=en`;
+const dpdRoRequest = `${dpdRoApi}?id=${dpdRoNumber}&language=en&mobile=N`;
+
+test('DPD Romania captures only MyDPD\'s tracker page for one whole waybill and the page\'s exact request', async () => {
+  for (const url of [dpdRoUrl.replace('mydpd.dpd.ro', 'myspeedy.speedy.bg'), dpdRoUrl.replace('?language=en', ''),
+    dpdRoUrl + '#x', dpdRoUrl.replace(dpdRoNumber, '69999999980'), dpdRoUrl.replace(dpdRoNumber, '8999999998')]) {
+    assert.equal(await attachTrackingCapture({}, url, { captureResponses: [dpdRoApi] }), undefined);
+  }
+  const { capture, respond } = await fixture(dpdRoUrl, dpdRoApi);
+  const budget = new AbortController();
+  const solver = capture.solverSignal(budget.signal);
+  await respond(JSON.stringify({ barcode: '89999999981', events: [] }), { url: dpdRoRequest.replace(dpdRoNumber, '89999999981') });
+  assert.equal(capture.hasResponse(), false);
+  await respond(JSON.stringify({ barcode: dpdRoNumber, events: [{ operationCode: 148 }] }), { url: dpdRoRequest });
+  assert.equal(solver.aborted, true);
+  await capture.settle(100);
+  const rows = (await capture.drain()).capturedResponses;
+  assert.deepEqual(rows.map(row => [row.url, row.status, JSON.parse(row.body).barcode]), [[dpdRoRequest, 200, dpdRoNumber]]);
+  for (const [status, body] of [[404, '<!DOCTYPE html><html>Optiunile specificate nu au fost gasite</html>'], [406, '[{"context":"turnstile-failure"}]']]) {
+    const missing = await fixture(dpdRoUrl, dpdRoApi);
+    await missing.respond(body, { url: dpdRoRequest, status, headers: { 'content-type': 'text/html;charset=UTF-8', 'content-length': undefined } });
+    await missing.capture.settle(100);
+    const [row] = (await missing.capture.drain()).capturedResponses;
+    assert.deepEqual([row.status, row.body], [status, body]);
+  }
+});
+
 const australiaNumber = '7T0000000000000000001';
 const australiaUrl = `https://auspost.com.au/mypost/track/details/${australiaNumber}`;
 const australiaApi = `https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments?trackingIds=${australiaNumber}`;

@@ -41,6 +41,8 @@ export function parseDpdRoReply(status: number, body: string, rawNumber: string)
     if (MISSING_PAGE.test(body)) throw new NotFoundError(PROVIDER);
     throw new TransportError(PROVIDER, 'DPD Romania tracking endpoint is unavailable');
   }
+  // A token the Turnstile check did not issue.
+  if (status === 406) throw new ChallengeError(PROVIDER, 'DPD Romania refused its Turnstile check', { status });
   let payload: unknown;
   try {
     payload = JSON.parse(body.replace(/^\uFEFF/, ''));
@@ -48,6 +50,8 @@ export function parseDpdRoReply(status: number, body: string, rawNumber: string)
     if (CHALLENGE_PAGE.test(body.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'DPD Romania answered with a browser challenge', { cause });
     throw new SchemaError(PROVIDER, 'DPD Romania returned invalid tracking JSON', { cause });
   }
+  // Without a Turnstile token the endpoint answers every waybill with an empty object.
+  if (isRecord(payload) && Object.keys(payload).length === 0) throw new ChallengeError(PROVIDER, 'DPD Romania answers only its tracker page once its Turnstile check passes');
   return parseDpdRo(payload, rawNumber);
 }
 

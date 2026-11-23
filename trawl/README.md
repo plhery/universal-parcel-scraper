@@ -75,6 +75,8 @@ dangerous goods, reefer settings, vessels or voyages.
 Speedy opens MySpeedy's English tracker for the number. The page passes its Turnstile check and
 asks the tracking endpoint for the number with its token. The helper keeps that one reply, the
 missing-resource page of a number Speedy does not know, or the 406 of a refused token.
+DPD Romania opens MyDPD, the same tracker on DPD Romania's host, for the waybill and keeps its
+one reply the same way.
 Hapag-Lloyd opens its tracking page with the whole reference in the page's route. Cloudflare's
 check and then the page's own Turnstile may each show their checkbox; the helper clicks one only
 when nothing covers it, at most three times. The page then asks the tracking service for the

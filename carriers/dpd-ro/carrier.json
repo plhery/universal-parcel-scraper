@@ -22,8 +22,10 @@
     "mode": "automatic",
     "adapter": "dpd-ro",
     "steps": [
-      "direct"
+      "direct",
+      "trawl"
     ],
+    "browser": true,
     "recognition": {
       "rank": 934,
       "servedCountriesOnly": true

@@ -1,35 +1,82 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { runSteps } from '../../core/runner/index.js';
+import {
+  BudgetExceededError, carrierErrorKind, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError,
+} from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
+import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import { retryAfterMs } from '../../core/transport/retryAfter.js';
+import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { DPD_RO_MAX_BYTES, normalizeDpdRoNumber, parseDpdRoReply, PROVIDER } from './parser.js';
 
 // The endpoint MyDPD's public tracker reads a shipment from; the DPD app ships
-// the same path. tracking.dpd.ro sits behind a Cloudflare challenge and a
-// Turnstile check; this host does not.
+// the same path. It answers only a request carrying the token of the page's
+// Turnstile check. tracking.dpd.ro sits behind a Cloudflare challenge as well.
 export const DPD_RO_ENDPOINT = 'https://mydpd.dpd.ro/rest/public/track';
 
+/** MyDPD's public tracker for the waybill, in English. */
+export const dpdRoTrackingUrl = (raw: string): string =>
+  `https://mydpd.dpd.ro/pub/tracking/${normalizeDpdRoNumber(raw)}?language=en`;
+
+/** The request that page sends once its Turnstile check passes. */
+export const dpdRoPageRequest = (raw: string): string =>
+  `${DPD_RO_ENDPOINT}?id=${normalizeDpdRoNumber(raw)}&language=en&mobile=N`;
+
+/** The tracker page's own reply for the whole waybill, read as the endpoint's. */
+export function parseDpdRoPage(page: TrawlScrapeResponse, number: string): CarrierResult {
+  if (![2, 3].includes(page.tier) || page.statusCode !== 200) throw new TransportError(PROVIDER, 'The browser service did not load MyDPD\'s tracker');
+  const captures = page.capturedResponses.filter((capture) => capture.url === dpdRoPageRequest(number));
+  if (!captures.length) throw new ChallengeError(PROVIDER, 'MyDPD\'s tracker sent no tracking request; its Turnstile check did not pass');
+  if (captures.length > 10) throw new SchemaError(PROVIDER, 'DPD Romania returned too many tracking responses');
+  const capture = captures[captures.length - 1]!;
+  if (capture.status === 429) throw new RateLimitedError(PROVIDER, retryAfterMs(capture.headers['retry-after'], { dates: false }));
+  if ([401, 403, 406].includes(capture.status)) throw new ChallengeError(PROVIDER, 'DPD Romania refused its Turnstile check', { status: capture.status });
+  if (capture.status !== 200 && capture.status !== 404) throw new UpstreamHttpError(PROVIDER, capture.status);
+  if (capture.error || capture.truncated || capture.base64Encoded || capture.body === null) {
+    throw new TransportError(PROVIDER, 'DPD Romania returned an incomplete tracking response');
+  }
+  return parseDpdRoReply(capture.status, capture.body, number);
+}
+
 export class DpdRoTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeDpdRoNumber(raw);
-    return runSteps({ carrier: 'dpd-ro', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
+    const trawl = this.options.trawl ?? null;
+    return runSteps({ carrier: 'dpd-ro', budgetMs: context.budgetMs ?? (trawl ? 60_000 : 15_000), signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
       signal.throwIfAborted();
       const { response, bytes } = await fetchBounded(`${DPD_RO_ENDPOINT}?${new URLSearchParams({ id: number, language: 'en' })}`, { signal,
         headers: { Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) } }, {
-        provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: DPD_RO_MAX_BYTES,
-        allowHttpStatuses: [404], fetcher: this.options.fetcher,
+        provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(trawl ? Math.min(10_000, remainingMs) : remainingMs)), maxBytes: DPD_RO_MAX_BYTES,
+        allowHttpStatuses: [404, 406], fetcher: this.options.fetcher,
       });
       return parseDpdRoReply(response.status, decodeText(bytes), number);
-    } }]);
+    } }, { ...this.#page(number, trawl), recovers: (error) => carrierErrorKind(error) === 'challenge' }]);
+  }
+
+  #page(number: string, trawl: TrawlClient | null): StepSpec<CarrierResult> {
+    return { id: 'trawl', enabled: Boolean(trawl), run: async ({ signal, remainingMs }) => {
+      const timeoutMs = Math.floor(Math.min(45_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
+      if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
+      // The page gets its own Turnstile token and asks for the waybill in its route; the token stays in the browser.
+      const page = await trawl!.scrape({ url: dpdRoTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
+        captureResponses: [DPD_RO_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),
+      }, { provider: 'TRAWL while fetching DPD Romania', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
+      signal.throwIfAborted();
+      return parseDpdRoPage(page, number);
+    } };
   }
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new DpdRoTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'dpd-ro', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
+  const options = { fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent };
+  const tracker = new DpdRoTracker({ ...options, trawl: environment.trawl });
+  // Recognition stays on HTTP.
+  const http = new DpdRoTracker(options);
+  return { id: 'dpd-ro', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => recognizeFromLookup(() => http.fetch(number, context),
       () => accepted(() => normalizeDpdRoNumber(number))) };
 };
