@@ -655,6 +655,11 @@ describe('Chronopost direct tracking', () => {
     expect(detectCarrierMatch('XR9999999999980')).toEqual({ carrier: 'unknown', confidence: 'low', candidates: ['chronopost'], preferred: [] });
     expect(recognitionAskedCarriers('XR9999999999980')[0]).toBe('chronopost');
     for (const other of ['XN24681357902', 'XN2468135790246', 'XM246813579024']) expect(detectCarrierMatch(other).candidates).not.toContain('chronopost');
+    // GC and FR without an S10 check digit: Chronopost's own scans answered such a parcel.
+    expect(detectCarrierMatch('GC999999998FR')).toEqual({ carrier: 'unknown', confidence: 'low', candidates: ['chronopost'], preferred: [] });
+    expect(recognitionAskedCarriers('GC999999998FR')[0]).toBe('chronopost');
+    expect(normalizeChronopostNumber('gc 999 999 998 fr')).toBe('GC999999998FR');
+    for (const other of ['GC99999998FR', 'GC9999999998FR', 'GD999999998FR', 'GC999999998FX']) expect(detectCarrierMatch(other).candidates ?? []).not.toContain('chronopost');
     expect(recognitionCandidates('RA123456785IR').map(candidate => candidate.carrier)).toContain('chronopost');
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(fixture));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
