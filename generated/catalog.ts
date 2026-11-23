@@ -59752,6 +59752,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "srilankan-cargo": {
+    "displayName": "SriLankan Cargo",
+    "color": "#153D8A",
+    "aliases": [
+      "SriLankan Airlines"
+    ],
+    "countries": [
+      "LK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Colombo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "srilankan-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://srilankancargo.ibsplc.aero/icargoneoportal/app/main/",
+    "trackingUrlTemplate": "https://srilankancargo.ibsplc.aero/icargoneoportal/app/main/#/app/tracking/awb",
+    "trackingSearchUrl": "https://srilankancargo.ibsplc.aero/icargoneoportal/app/main/#/app/tracking/awb",
+    "helpUrl": "https://www.srilankancargo.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "st-courier": {
     "displayName": "ST Courier",
     "color": "#c7262f",
@@ -73253,6 +73276,7 @@ export const CARRIER_IDS = [
   "spx-tw",
   "spx-vn",
   "sri-lanka-post",
+  "srilankan-cargo",
   "st-courier",
   "stallion-express",
   "starex-az",
@@ -75299,6 +75323,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "spx-tw": ["spx-tw-1"],
   "spx-vn": ["spx-vn-1","spx-vn-2"],
   "sri-lanka-post": [],
+  "srilankan-cargo": [],
   "st-courier": [],
   "stallion-express": ["stallion-express-1","stallion-express-2"],
   "starex-az": [],

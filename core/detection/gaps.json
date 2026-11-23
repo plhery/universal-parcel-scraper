@@ -6102,6 +6102,12 @@
     "reason": "China Airlines Cargo's air waybills are its prefix 297 and eight digits ending in a mod-7 check digit, the format every airline's waybills share; the prefix names the airline but detection keeps no air waybill rule. China Airlines' guest tracker returns the sample's activity."
   },
   {
+    "carrier": "srilankan-cargo",
+    "pattern": "^603\\d{8}$",
+    "kind": "by_design",
+    "reason": "SriLankan Cargo's air waybills are its prefix 603 and eight digits ending in a mod-7 check digit, the format every airline's waybills share; the prefix names the airline but detection keeps no air waybill rule. SriLankan's guest tracker returns the sample's activity."
+  },
+  {
     "carrier": "cheetah-delivery",
     "pattern": "^\\d{14}$",
     "kind": "collision",

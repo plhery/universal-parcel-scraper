@@ -1,0 +1,173 @@
+{
+ "data": {
+  "GetShipmentActivityByAwb": {
+   "items": [
+    {
+     "event": "DLV",
+     "pieces": 6,
+     "airport_code": "CMB",
+     "event_time": "07 Feb 2025, 17:35:00",
+     "flight": {
+      "flight_carrier_code": null,
+      "flight_number": null,
+      "flight_date": null
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 6,
+     "airport_code": "CMB",
+     "event_time": "04 Feb 2025, 10:46:13",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "NFD",
+     "pieces": 6,
+     "airport_code": "CMB",
+     "event_time": "04 Feb 2025, 10:46:12",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "RCF",
+     "pieces": 6,
+     "airport_code": "CMB",
+     "event_time": "04 Feb 2025, 10:46:11",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "ARR",
+     "pieces": 6,
+     "airport_code": "CMB",
+     "event_time": "04 Feb 2025, 08:51:00",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "ARR",
+     "pieces": 6,
+     "airport_code": "CMB",
+     "event_time": "04 Feb 2025, 08:45:00",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 05:24:59",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "DEP",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 05:24:58",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "MAN",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 05:23:08",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "PRE",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 05:22:49",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0192",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "FOH",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 03:46:24",
+     "flight": {
+      "flight_carrier_code": null,
+      "flight_number": null,
+      "flight_date": null
+     }
+    },
+    {
+     "event": "RCS",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 03:46:24",
+     "flight": {
+      "flight_carrier_code": null,
+      "flight_number": null,
+      "flight_date": null
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 03:35:18",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0196",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "04 Feb 2025, 03:34:59",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0196",
+      "flight_date": "2025-02-04"
+     }
+    },
+    {
+     "event": "BKD",
+     "pieces": 6,
+     "airport_code": "DEL",
+     "event_time": "03 Feb 2025, 11:39:48",
+     "flight": {
+      "flight_carrier_code": "UL",
+      "flight_number": "0196",
+      "flight_date": "2025-02-04"
+     }
+    }
+   ]
+  }
+ }
+}

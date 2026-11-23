@@ -1,0 +1,38 @@
+{
+  "carrier": "srilankan-cargo",
+  "records": [
+    {
+      "number": "603-76070212",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/829500637/DM-603-76070212",
+        "access": "full_page",
+        "date": "2026-11-23",
+        "dateKind": "accessed"
+      },
+      "context": {
+        "reportedRole": "A public Scribd upload of an air waybill is titled with this SriLankan Airlines waybill for six packages from India to Sri Lanka. The guest tracker returns the same waybill from Delhi to Colombo with six pieces, flown on UL 192 and delivered at Colombo.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl",
+          "speedy"
+        ]
+      }
+    }
+  ]
+}

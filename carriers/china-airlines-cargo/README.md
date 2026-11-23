@@ -6,6 +6,8 @@ China Airlines Cargo is the air freight service of Taiwan's China Airlines. Sele
 
 1. `direct`: the [public iCargo portal](https://icargowebportal.china-airlines.com/icargoneoportal/app/main/#/app/tracking/awb) signs in as an anonymous guest through its GraphQL gateway, then asks for the waybill's summary and its activity with the portal's own named operations. The adapter sends the guest token as a bearer header.
 
+The portal's client and reading live in [icargoNeo.ts](icargoNeo.ts), which SriLankan Cargo shares.
+
 ## Notes
 
 - The gateway answers only the portal's operation names; any other name is refused as not signed in.

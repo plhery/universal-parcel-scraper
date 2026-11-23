@@ -1,0 +1,60 @@
+{
+  "id": "srilankan-cargo",
+  "displayName": "SriLankan Cargo",
+  "aliases": [
+    "SriLankan Airlines"
+  ],
+  "region": {
+    "countries": [
+      "LK"
+    ]
+  },
+  "brand": {
+    "color": "#153D8A"
+  },
+  "selectable": true,
+  "timezone": "Asia/Colombo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "srilankan-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://srilankancargo.ibsplc.aero/icargoneoportal/app/main/#/app/tracking/awb",
+    "searchUrl": "https://srilankancargo.ibsplc.aero/icargoneoportal/app/main/#/app/tracking/awb",
+    "helpUrl": "https://www.srilankancargo.com/",
+    "canaryUrl": "https://srilankancargo.ibsplc.aero/icargoneoportal/app/main/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

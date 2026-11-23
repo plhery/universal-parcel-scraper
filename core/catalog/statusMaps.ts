@@ -1026,6 +1026,7 @@ import { statusMap as warp } from '../../carriers/warp/status.js';
 import { statusMap as atcLogistical } from '../../carriers/atc-logistical/status.js';
 import { statusMap as chinaAirlinesCargo } from '../../carriers/china-airlines-cargo/status.js';
 import { statusMap as airArabiaCargo } from '../../carriers/air-arabia-cargo/status.js';
+import { statusMap as srilankanCargo } from '../../carriers/srilankan-cargo/status.js';
 import { statusMap as tsLines } from '../../carriers/ts-lines/status.js';
 import { statusMap as marfret } from '../../carriers/marfret/status.js';
 import { statusMap as arkas } from '../../carriers/arkas/status.js';
@@ -1053,6 +1054,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'atc-logistical': atcLogistical,
   'china-airlines-cargo': chinaAirlinesCargo,
   'air-arabia-cargo': airArabiaCargo,
+  'srilankan-cargo': srilankanCargo,
   'ts-lines': tsLines,
   marfret,
   arkas,

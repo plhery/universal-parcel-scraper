@@ -897,6 +897,7 @@ import { adapter as spxSg } from '../carriers/spx-sg/adapter.js';
 import { adapter as spxTh } from '../carriers/spx-th/adapter.js';
 import { adapter as spxTw } from '../carriers/spx-tw/adapter.js';
 import { adapter as spxVn } from '../carriers/spx-vn/adapter.js';
+import { adapter as srilankanCargo } from '../carriers/srilankan-cargo/adapter.js';
 import { adapter as stCourier } from '../carriers/st-courier/adapter.js';
 import { adapter as stallionExpress } from '../carriers/stallion-express/adapter.js';
 import { adapter as starexAz } from '../carriers/starex-az/adapter.js';
@@ -1995,6 +1996,7 @@ export const REGISTRY: RegistryDefinition = {
     "spx-th": spxTh,
     "spx-tw": spxTw,
     "spx-vn": spxVn,
+    "srilankan-cargo": srilankanCargo,
     "st-courier": stCourier,
     "stallion-express": stallionExpress,
     "starex-az": starexAz,
@@ -3858,6 +3860,7 @@ export const REGISTRY: RegistryDefinition = {
     "spx-tw": "spx-tw",
     "spx-vn": "spx-vn",
     "sri-lanka-post": "universal",
+    "srilankan-cargo": "srilankan-cargo",
     "st-courier": "st-courier",
     "stallion-express": "stallion-express",
     "starex-az": "starex-az",

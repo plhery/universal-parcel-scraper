@@ -1,0 +1,30 @@
+{
+ "data": {
+  "GetShipmentsByAwbs": [
+   {
+    "awb_number": "60376070212",
+    "pieces": 6,
+    "origin_airport_code": "DEL",
+    "destination_airport_code": "CMB",
+    "milestones": [
+     {
+      "milestone": "ACCEPTED",
+      "status": "done"
+     },
+     {
+      "milestone": "DEPARTED",
+      "status": "done"
+     },
+     {
+      "milestone": "ARRIVED",
+      "status": "done"
+     },
+     {
+      "milestone": "DELIVERED",
+      "status": "done"
+     }
+    ]
+   }
+  ]
+ }
+}
