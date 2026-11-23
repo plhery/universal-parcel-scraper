@@ -1,0 +1,96 @@
+{
+  "carrier": "cargologic",
+  "records": [
+    {
+      "number": "016-91176875",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.unitedcargo.com/en/us/track/awb/016-91176875",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Air cargo handling",
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A United Cargo tracking link that a search engine indexes. Cargologic's tracker returns an export received and flown out of Zurich."
+    },
+    {
+      "number": "016-72916572",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.unitedcargo.com/en/us/track/awb/016-72916572",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Air cargo handling",
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A United Cargo tracking link that a search engine indexes. Cargologic's tracker returns an import flown into Zurich and handed to the forwarder."
+    },
+    {
+      "number": "016-91679210",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.unitedcargo.com/en/us/track/awb/016-91679210",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Air cargo handling",
+        "reportedRole": "air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A United Cargo tracking link that a search engine indexes. Cargologic's tracker returns an export received and flown out of Zurich."
+    }
+  ]
+}

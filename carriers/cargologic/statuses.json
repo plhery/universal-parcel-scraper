@@ -1,0 +1,13 @@
+{
+  "carrier": "cargologic",
+  "entries": [
+    {"code": "FBL", "wording": "Booked on a flight", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "An export's first step; the page's legend calls it \"geplant auf Flug\"."},
+    {"code": "FOH", "wording": "Received by Cargologic", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The goods are in Cargologic's export warehouse; the legend says \"Sendung erhalten\"."},
+    {"code": "RCS", "wording": "Ready for export", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Accepted for carriage; the legend says \"bereit für den Export\"."},
+    {"code": "DEP", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The flight left Zurich; the legend says \"abgeflogen\". It is an export's last step at Cargologic."},
+    {"code": "FFM", "wording": "Manifested", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An import's flight manifest reached Zurich, with the goods still on their way; the legend says \"Manifestiert\"."},
+    {"code": "RCF", "wording": "Received from the flight", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Checked into Cargologic's import warehouse; the legend says \"eingecheckt im Warehouse\"."},
+    {"code": "NFD", "wording": "Forwarder notified of arrival", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The forwarder can collect the goods; the legend says \"Spediteur über Ankunft avisiert\"."},
+    {"code": "DLV", "wording": "Delivered to the forwarder", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The goods left Cargologic with the forwarder. The page's legend repeats NFD's wording for it."}
+  ]
+}

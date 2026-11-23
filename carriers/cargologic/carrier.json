@@ -1,0 +1,66 @@
+{
+  "id": "cargologic",
+  "displayName": "Cargologic",
+  "aliases": [
+    "Cargologic AG"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#ca0538"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cargologic",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.cargologic.com/en/awb-tracking.html",
+    "helpUrl": "https://www.cargologic.com/en/kontakt.html",
+    "canaryUrl": "https://www.cargologic.com/en/awb-tracking.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "flight",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "flight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

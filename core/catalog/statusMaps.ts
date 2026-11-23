@@ -1008,6 +1008,7 @@ import { statusMap as turkonLine } from '../../carriers/turkon-line/status.js';
 import { statusMap as hapagLloyd } from '../../carriers/hapag-lloyd/status.js';
 import { statusMap as bimanBangladesh } from '../../carriers/biman-bangladesh/status.js';
 import { statusMap as cargolux } from '../../carriers/cargolux/status.js';
+import { statusMap as cargologic } from '../../carriers/cargologic/status.js';
 import { statusMap as copaAirlinesCargo } from '../../carriers/copa-airlines-cargo/status.js';
 import { statusMap as airasiaCargo } from '../../carriers/airasia-cargo/status.js';
 import { statusMap as daytonaExpress } from '../../carriers/daytona-express/status.js';
@@ -1031,7 +1032,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
-  'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh, cargolux,
+  'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh, cargolux, cargologic,
   'copa-airlines-cargo': copaAirlinesCargo,
   'airasia-cargo': airasiaCargo,
   'daytona-express': daytonaExpress,
