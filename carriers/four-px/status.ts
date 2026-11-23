@@ -43,6 +43,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   // The airline refused the parcel because its weight differed from the declared one: it stays at the origin
   // facility to be measured again, a problem to resolve rather than a step on the way.
   ['FPX_C_WD', { status: 'exception', stage: 'exception' }],
+  // The airline refused the parcel for its category, such as a liquid: it goes back to the origin facility to be sent again.
+  ['FPX_C_CRLD', { status: 'exception', stage: 'exception' }],
 ]);
 // A partner's step filed under a code that says otherwise, by code and
 // `normalizeStatusWording` wording: a partner can word a move between its

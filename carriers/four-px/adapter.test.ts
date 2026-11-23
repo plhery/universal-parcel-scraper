@@ -269,6 +269,7 @@ describe('4PX result projection', () => {
     ['FPX_O_RC', 'Arrived at departure transport hub', 'in_transit', 'in_transit', 'carrier_map'],
     ['FPX_Q_ECC', 'Export customs clearance complete', 'in_transit', 'in_transit', 'carrier_map'],
     ['FPX_C_WD', 'Hand over to airline failed-weight difference is too large', 'exception', 'exception', 'carrier_map'],
+    ['FPX_C_CRLD', 'Hand over to airline failed-category restrictions: liquid', 'exception', 'exception', 'carrier_map'],
     ['FPX_C_SPQS', '4px received shipment.', 'in_transit', 'accepted', 'carrier_map'],
     ['FPX_O_IR', 'Waybill generated', 'pending', 'registered', 'carrier_map'],
     ['FPX_O_IR', 'Waybill generated for EM000000000001CA', 'pending', 'registered', 'carrier_map'],

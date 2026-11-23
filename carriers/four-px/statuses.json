@@ -488,6 +488,15 @@
       "note": "The airline refused the parcel over its weight; the origin facility measured it again the next day."
     },
     {
+      "code": "FPX_C_CRLD",
+      "wording": "Hand over to airline failed-category restrictions: liquid",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The airline refused the parcel for its category; the origin facility took it back and sent it on with a later flight."
+    },
+    {
       "wording": "In transit to destination facility",
       "language": "en",
       "stage": "in_transit",
