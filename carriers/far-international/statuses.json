@@ -35,6 +35,7 @@
     {"wording": "Received at Local Distribution Center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The last-mile carrier's arrival at a local hub between its destination office's scans; it names no collection."},
     {"wording": "Recipient Absent", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-23"},
     {"wording": "Delivery Failure - Recipient Unreachable", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-23"},
+    {"wording": "Delivery Failure - Recipient Could Not Be Reached", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-23"},
     {"wording": "包裹开始派送", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-24", "note": "The last-mile carrier takes the parcel on: it comes before that carrier's own facility scans, not on the delivery round."},
     {"wording": "Left FedEx origin facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},
     {"wording": "At local FedEx facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},

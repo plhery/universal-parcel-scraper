@@ -41,6 +41,28 @@
       "firstSeen": "2026-11-22"
     },
     {
+      "wording": "Domestic customs clearance completed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Export clearance in China, before the handover to the airline."
+    },
+    {
+      "wording": "Cargo handed over to the airline",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23"
+    },
+    {
+      "wording": "The flight has taken off",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23"
+    },
+    {
       "wording": "航班已抵达",
       "language": "zh",
       "english": "Flight arrived",

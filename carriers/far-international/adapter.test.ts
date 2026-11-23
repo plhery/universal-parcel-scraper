@@ -113,6 +113,7 @@ describe('FAR International HTTP adapter', () => {
     // Nor does its arrival at a local hub between them; its failed rounds are attempts.
     expect(farStage('Received at Local Distribution Center')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(farStage('Delivery Failure - Recipient Unreachable')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+    expect(farStage('Delivery Failure - Recipient Could Not Be Reached')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     // The last-mile label, listed after the parcel reached the hub, is no step back.
     const labelled = parseFar(rows(row('2026-02-28 01:54:51', '【,,US】', 'GMT-05:00', 'Last Mile Label Create'),
       row('2026-02-28 13:49:10', '【CN】', 'GMT+08:00', 'Arrived at departure transport hub')), PARCEL);
