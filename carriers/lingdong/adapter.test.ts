@@ -177,8 +177,10 @@ describe('Lingdong International tracking adapter', () => {
       '预计11.19航班/Expected flight on Nov. 19th', '预计航班【Expected flight on Dec. 2nd】']) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
-    // The label and the order data sent to DPD before the first scan, the hand-over to GOFO in the United States after the release, and GOFO's hub.
-    for (const [description, stage] of [['Shipping Label Created', 'registered'], ['Order information has been transmitted to DPD.', 'registered'], ['包裹交接给本地物流商处理/Received by local delivery company', 'in_transit'],
+    // The label, the order data sent to DPD and the sender still preparing the parcel before the first scan, the hand-over to GOFO in the United
+    // States after the release, and GOFO's hub.
+    for (const [description, stage] of [['Shipping Label Created', 'registered'], ['Order information has been transmitted to DPD.', 'registered'],
+      ['Your package is being prepared by the sender and will be handed over to us soon', 'registered'], ['包裹交接给本地物流商处理/Received by local delivery company', 'in_transit'],
       ['Arrived at GOFO Regional Hub', 'in_transit']] as const) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage });
     }
