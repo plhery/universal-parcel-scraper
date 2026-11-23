@@ -131,10 +131,11 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce",
+          "paack",
           "tnt"
         ]
       },
-      "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack, which no rule claims."
+      "note": "Tracking number of a Nike order in a public complaint against Paack, which Paack answered as delivered. Nike issues the shape, so `paack-nike` only suggests Paack."
     },
     {
       "number": "C25062001456003",

@@ -1973,6 +1973,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
+        "pattern": "^9451162004\\d{6}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^[CE]2\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{8}$",
         "confidence": "low",
         "servedCountriesOnly": true
@@ -73739,7 +73743,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c-chez-vous": ["c-chez-vous-1"],
   "heppner": ["heppner-1"],
   "ciblex": ["ciblex-1","ciblex-full-barcode"],
-  "paack": ["paack-1","paack-5340","paack-eci","paack-shein"],
+  "paack": ["paack-1","paack-5340","paack-eci","paack-nike","paack-shein"],
   "asendia": ["asendia-1","asendia-2","asendia-3","asendia-4","asendia-5","asendia-6"],
   "shipup": [],
   "india-post": ["india-post-1"],

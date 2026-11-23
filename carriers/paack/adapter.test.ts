@@ -845,6 +845,16 @@ describe('Paack links', () => {
     }
   });
 
+  it('only suggests Paack for Nike\'s sixteen-digit Spanish numbers', () => {
+    // Synthetic: Nike's prefix and six digits.
+    const nike = '9451162004000001';
+    expect(detectCarrierMatch(nike)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch(nike).candidates).toContain('paack');
+    for (const other of ['9451162005000001', nike.slice(1), `${nike}0`, '8451162004000001']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('paack');
+    }
+  });
+
   it('leaves the rest of paack.co, the company site, alone', () => {
     for (const page of ['https://paack.co/contact', 'https://paack.co/shipments/trackings']) {
       expect(parseTrackingInput(`${page}?tracking_number=${LABEL_BARCODE}`).carrier, page).not.toBe('paack');

@@ -4167,6 +4167,15 @@
     "reason": "Without a GS1 check digit Canada Post, Correos Express and Evri UK drop out; the remaining 16-digit candidates stay a low-confidence suggestion."
   },
   {
+    "shape": "9{16} starting with 9451162004 that fails the GS1 check",
+    "carriers": [
+      "dhl-ecommerce",
+      "tnt",
+      "paack"
+    ],
+    "reason": "Nike's Spanish numbers that Paack delivers start with 9451162004, so Paack joins the 16-digit candidates left once Canada Post, Correos Express and Evri UK drop out without a GS1 check digit; all stay a low-confidence suggestion."
+  },
+  {
     "shape": "9{16} starting with 694788 that fails the GS1 check",
     "carriers": [
       "dhl-ecommerce",
