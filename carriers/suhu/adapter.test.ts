@@ -6,6 +6,8 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { createTracker } from '../../facade/index.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { adapter, SUHU_ACTION, SUHU_API, SUHU_PAGE, SuhuTracker } from './adapter.js';
 import { normalizeSuhuNumber, parseSuhu, parseSuhuNonce } from './parser.js';
 import { statusMap, suhuMappedStage, suhuStage } from './status.js';
@@ -54,6 +56,14 @@ describe('Suhu Express HTTP adapter', () => {
     expect(Object.fromEntries(new URLSearchParams(String(init.body)))).toEqual({ action: SUHU_ACTION, tracking_numbers: IN_TRANSIT, language: 'en', nonce: NONCE });
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'suhu', step: 'direct', outcome: 'ok' }));
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
+  });
+
+  it('is offered TGE, thirteen digits and SH, the shape its tracker answered, and asked about it', () => {
+    expect(detectCarrierMatch('TGE9999999999999SH')).toEqual({ carrier: 'unknown', confidence: 'low', candidates: ['suhu'], preferred: [] });
+    expect(recognitionAskedCarriers('TGE9999999999999SH')).toEqual(['suhu']);
+    for (const other of ['TGE999999999999SH', 'TGE99999999999999SH', 'TGF9999999999999SH', 'TGE9999999999999SX', 'SUH0000000000002AB']) {
+      expect(detectCarrierMatch(other).candidates ?? []).not.toContain('suhu');
+    }
   });
 
   it('takes the nonce from the tracking form’s settings and needs one', () => {

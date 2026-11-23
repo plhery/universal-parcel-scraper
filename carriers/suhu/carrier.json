@@ -75,5 +75,11 @@
     ]
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "suhu-1",
+      "pattern": "^TGE\\d{13}SH$",
+      "confidence": "low"
+    }
+  ]
 }

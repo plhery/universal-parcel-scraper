@@ -37,11 +37,11 @@ suhusupplychain.com. Tracked through the waybill form on its home page.
 
 ## Numbers
 
-A parcel the app tracked was numbered three letters, thirteen digits and two letters. 17TRACK
-reported it from suhu supply chain and Suhu's tracker answered it. With that one parcel and no
-public number, no detection rule offers Suhu; recognition asks its tracker about numbers of that
-layout. The adapter takes any number of eight or more letters and digits: other numbers reach it
-when they are filed under Suhu.
+A parcel the app tracked was numbered TGE, thirteen digits and SH. 17TRACK reported it from
+suhu supply chain and Suhu's tracker answered it. That shape suggests Suhu (`suhu-1`), so
+recognition asks its tracker; other numbers of three letters, thirteen digits and two letters are
+not offered. The adapter takes any number of eight or more letters and digits: other numbers
+reach it when they are filed under Suhu.
 
 ## Testing
 

@@ -60410,7 +60410,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingUrlTemplate": "https://www.suhusupplychain.com/",
     "trackingSearchUrl": "https://www.suhusupplychain.com/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^TGE\\d{13}SH$",
+        "confidence": "low"
+      }
+    ]
   },
   "sumxpress": {
     "displayName": "Sumxpress",
@@ -75456,7 +75461,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "stone3pl": ["stone3pl-s18"],
   "stop-start": [],
   "straightship": ["straightship-1","straightship-ca","straightship-2"],
-  "suhu": [],
+  "suhu": ["suhu-1"],
   "sumxpress": [],
   "sundarban-courier": [],
   "suning-logistics": [],
