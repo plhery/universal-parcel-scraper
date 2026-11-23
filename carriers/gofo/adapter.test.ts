@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { AdapterRegistry } from '../../core/adapter/index.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -133,6 +134,14 @@ describe('GOFO US history', () => {
     for (const row of [item(older), ...item(older).trackEventList]) if (row.waybillNo != null) row.waybillNo = 'GF0000000000001';
     bind(older);
     expect(() => parseGofo(older, cr)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('suggests GOFO beside DHLink for a DHLink number', () => {
+    // Synthetic DHLink number.
+    expect(detectCarrierMatch('FC0000000000001').candidates).toEqual(expect.arrayContaining(['dhlink', 'gofo']));
+    for (const other of ['FC000000000001', 'FC00000000000001', 'FD0000000000001']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('gofo');
+    }
   });
 
   it('tracks a GFUS waybill and the DHLink number GOFO keeps as its tracking number as one parcel', () => {

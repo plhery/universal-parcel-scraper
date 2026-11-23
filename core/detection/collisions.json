@@ -8667,6 +8667,14 @@
     "reason": "GLS Italy's low-confidence rule takes any letter and ten digits, so it overlaps Post One's R and ten digits; both stay suggestions."
   },
   {
+    "shape": "FC and thirteen digits",
+    "carriers": [
+      "dhlink",
+      "gofo"
+    ],
+    "reason": "DHLink issues them but finds one only on its own line; GOFO, which delivers DHgate parcels in the United States, finds it under the same number, so both stay low-confidence suggestions there."
+  },
+  {
     "shape": "BY, fourteen digits and CN",
     "carriers": [
       "boyuan",

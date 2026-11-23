@@ -25,8 +25,9 @@ or is the shipper's own reference, never another GOFO number. The exception is a
 GFUS waybill whose tracking number is a CR number, an `MGP` and 13 digits number, or the
 [DHLink](../dhlink/README.md) number (`FC` and 13 digits) of a DHgate parcel GOFO delivers:
 asked for any of them, GOFO returns that one parcel, so each is tracked. Detection suggests
-GOFO for `MGP` numbers and recognition asks it. Detection reads DHLink numbers as DHLink's;
-the adapter takes them when the user picks GOFO or a tracking service names it. The
+GOFO for `MGP` numbers and recognition asks it. DHLink finds a DHLink number only on its own
+line, so detection suggests GOFO beside DHLink for one asked from a country GOFO serves, and
+recognition asks both. The
 latest summary must agree with the first scan.
 
 When the user picks GOFO, or opens a GOFO link carrying one, a YunExpress `YT`

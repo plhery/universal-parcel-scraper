@@ -4054,6 +4054,11 @@
       {
         "pattern": "^MGP\\d{13}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^FC\\d{13}$",
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },
