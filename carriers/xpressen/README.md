@@ -16,7 +16,8 @@ photo, on the server without a session. No public number has shown a known parce
 
 ## Links
 
-Tracking links carry the number as `t` on the tracking page.
+Tracking links carry the number as `t` on the tracking page, which has no number field of its own,
+so the catalog names no search page.
 
 ## Testing
 

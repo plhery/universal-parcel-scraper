@@ -27,7 +27,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://shipwizmo.com/tracking/{trackingNumber}",
-    "searchUrl": "https://shipwizmo.com/",
+    "searchUrl": "https://shipwizmo.com/tracking",
     "helpUrl": "https://shipwizmo.com/contact",
     "canaryUrl": "https://shipwizmo.com/",
     "shows": [],

@@ -23,7 +23,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://superb-express.com/site/searchview?tracking_code={trackingNumber}",
-    "searchUrl": "https://superb-express.com/site/searchview",
+    "searchUrl": "https://superb-express.com/",
     "canaryUrl": "https://superb-express.com/",
     "shows": [],
     "scraped": [],

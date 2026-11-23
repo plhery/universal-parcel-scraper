@@ -60526,7 +60526,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://superb-express.com/",
     "trackingUrlTemplate": "https://superb-express.com/site/searchview?tracking_code={trackingNumber}",
-    "trackingSearchUrl": "https://superb-express.com/site/searchview",
+    "trackingSearchUrl": "https://superb-express.com/",
     "linkRules": [
       {
         "domains": [
@@ -61331,7 +61331,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.yamatohk.com.hk/",
     "trackingUrlTemplate": "https://app01.yamatohk.com.hk/spds-track-and-trace/TrackAndTrace?trackingNo={trackingNumber}",
-    "trackingSearchUrl": "https://www.yamatohk.com.hk/",
+    "trackingSearchUrl": "https://app01.yamatohk.com.hk/spds-track-and-trace/TrackAndTrace",
     "helpUrl": "https://www.yamatohk.com.hk/contact-us/enquiry/",
     "linkRules": [
       {
@@ -64771,7 +64771,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://ace2.trumpcardinc.com/searchairbill",
     "trackingUrlTemplate": "https://ace2.trumpcardinc.com/searchairbill?SearchByAirbill={trackingNumber}&SearchByRefPO=",
-    "trackingSearchUrl": "https://ace2.trumpcardinc.com/searchairbill",
     "helpUrl": "https://trumpcardinc.com/contact-us/",
     "linkRules": [
       {
@@ -68217,7 +68216,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.wepost.com.my/tracking",
     "trackingUrlTemplate": "https://www.wepost.com.my/tracking?nums={trackingNumber}",
-    "trackingSearchUrl": "https://www.wepost.com.my/tracking",
+    "trackingSearchUrl": "https://www.wepost.com.my/",
     "helpUrl": "https://www.wepost.com.my/contact",
     "linkRules": [
       {
@@ -68728,7 +68727,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://shipwizmo.com/",
     "trackingUrlTemplate": "https://shipwizmo.com/tracking/{trackingNumber}",
-    "trackingSearchUrl": "https://shipwizmo.com/",
+    "trackingSearchUrl": "https://shipwizmo.com/tracking",
     "helpUrl": "https://shipwizmo.com/contact",
     "linkRules": [
       {
@@ -69865,7 +69864,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.xpressen.dk/",
     "trackingUrlTemplate": "https://track.xpressen.dk/Tracking?t={trackingNumber}",
-    "trackingSearchUrl": "https://track.xpressen.dk/Tracking",
     "helpUrl": "https://www.xpressen.dk/kontakt/",
     "linkRules": [
       {

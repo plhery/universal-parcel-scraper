@@ -36,7 +36,7 @@
   ],
   "portal": {
     "url": "https://app01.yamatohk.com.hk/spds-track-and-trace/TrackAndTrace?trackingNo={trackingNumber}",
-    "searchUrl": "https://www.yamatohk.com.hk/",
+    "searchUrl": "https://app01.yamatohk.com.hk/spds-track-and-trace/TrackAndTrace",
     "helpUrl": "https://www.yamatohk.com.hk/contact-us/enquiry/",
     "canaryUrl": "https://www.yamatohk.com.hk/",
     "shows": [

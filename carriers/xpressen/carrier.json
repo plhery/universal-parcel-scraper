@@ -22,7 +22,6 @@
   "capabilities": [],
   "portal": {
     "url": "https://track.xpressen.dk/Tracking?t={trackingNumber}",
-    "searchUrl": "https://track.xpressen.dk/Tracking",
     "helpUrl": "https://www.xpressen.dk/kontakt/",
     "canaryUrl": "https://www.xpressen.dk/",
     "shows": [],

@@ -25,7 +25,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://www.wepost.com.my/tracking?nums={trackingNumber}",
-    "searchUrl": "https://www.wepost.com.my/tracking",
+    "searchUrl": "https://www.wepost.com.my/",
     "helpUrl": "https://www.wepost.com.my/contact",
     "canaryUrl": "https://www.wepost.com.my/tracking",
     "shows": [],

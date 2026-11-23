@@ -18,7 +18,8 @@ public number is known to see a found reply.
 
 ## Links
 
-`ace2.trumpcardinc.com/searchairbill?SearchByAirbill=<number>` opens one shipment.
+`ace2.trumpcardinc.com/searchairbill?SearchByAirbill=<number>` opens one shipment. The page has no
+number field of its own, so the catalog names no search page.
 
 ## Testing
 
