@@ -209,6 +209,7 @@ import { adapter as cseRussia } from '../carriers/cse-russia/adapter.js';
 import { adapter as ctt } from '../carriers/ctt/adapter.js';
 import { adapter as cttExpress } from '../carriers/ctt-express/adapter.js';
 import { adapter as cttyex } from '../carriers/cttyex/adapter.js';
+import { adapter as cuLines } from '../carriers/cu-lines/adapter.js';
 import { adapter as customCompanies } from '../carriers/custom-companies/adapter.js';
 import { adapter as cvc } from '../carriers/cvc/adapter.js';
 import { adapter as cyprusPost } from '../carriers/cyprus-post/adapter.js';
@@ -1297,6 +1298,7 @@ export const REGISTRY: RegistryDefinition = {
     "ctt": ctt,
     "ctt-express": cttExpress,
     "cttyex": cttyex,
+    "cu-lines": cuLines,
     "custom-companies": customCompanies,
     "cvc": cvc,
     "cyprus-post": cyprusPost,
@@ -2586,6 +2588,7 @@ export const REGISTRY: RegistryDefinition = {
     "ctt": "ctt",
     "ctt-express": "ctt-express",
     "cttyex": "cttyex",
+    "cu-lines": "cu-lines",
     "cupost": "universal",
     "curiera": "universal",
     "custom-companies": "custom-companies",

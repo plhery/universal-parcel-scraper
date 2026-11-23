@@ -1,0 +1,229 @@
+{
+"TRANS_RESULT_KEY":"S",
+"Exception":"",
+"count":"3",
+"list": [
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "enblFlag": "Y",
+    "weight": "10,897.010 KGS",
+    "copNo": "L2026924828991",
+    "blNo": "SYS2609000001719626",
+    "eventDt": "2026-11-11 13:24",
+    "cntrTpszCd": "40HC",
+    "copStsCd": "F",
+    "dspBkgNo": "CULVHPH2603770",
+    "sealNo": "U932329",
+    "placeCd": "SAJEDY02",
+    "placeNm": "JEDDAH, Saudi Arabia",
+    "yardNm": "MAMAS LOGISTICS",
+    "statusNm": "Empty Container Returned from Customer",
+    "bkgNo": "CULVHPH2603770",
+    "poNo": "",
+    "yardCd": "SAJEDY02",
+    "statusCd": "TAIYDM",
+    "cntrNo": "CULU6155032",
+    "cntrTpszNm": "40'DRY HQ.",
+    "cntrFlg": "Y",
+    "hashColumns": [
+      [
+        "no",
+        {}
+      ],
+      [
+        "bl_no",
+        "SYS2609000001719626"
+      ],
+      [
+        "cntr_no",
+        "CULU6155032"
+      ],
+      [
+        "cntr_tpsz_nm",
+        "40'DRY HQ."
+      ],
+      [
+        "ibflag",
+        {}
+      ],
+      [
+        "event_dt",
+        "2026-11-11 13:24"
+      ],
+      [
+        "cop_dtl_seq",
+        {}
+      ],
+      [
+        "yard_cd",
+        "SAJEDY02"
+      ],
+      [
+        "seal_no",
+        "U932329"
+      ],
+      [
+        "vgm_wgt",
+        {}
+      ],
+      [
+        "dsp_bkg_no",
+        "CULVHPH2603770"
+      ],
+      [
+        "place_cd",
+        "SAJEDY02"
+      ],
+      [
+        "status_cd",
+        "TAIYDM"
+      ],
+      [
+        "vgm_unit",
+        {}
+      ],
+      [
+        "cop_no",
+        "L2026924828991"
+      ],
+      [
+        "nod_cd",
+        {}
+      ],
+      [
+        "act_tp_cd",
+        {}
+      ],
+      [
+        "po_no",
+        ""
+      ],
+      [
+        "pagerows",
+        {}
+      ],
+      [
+        "cntr_tpsz_cd",
+        "40HC"
+      ],
+      [
+        "enbl_flag",
+        "Y"
+      ],
+      [
+        "weight",
+        "10,897.010 KGS"
+      ],
+      [
+        "yard_nm",
+        "MAMAS LOGISTICS"
+      ],
+      [
+        "cntr_flg",
+        "Y"
+      ],
+      [
+        "bkg_no",
+        "CULVHPH2603770"
+      ],
+      [
+        "vsl_eng_nm",
+        {}
+      ],
+      [
+        "vsl_cd",
+        {}
+      ],
+      [
+        "cop_sts_cd",
+        "F"
+      ],
+      [
+        "piece",
+        {}
+      ],
+      [
+        "vgm_status",
+        {}
+      ],
+      [
+        "status_nm",
+        "Empty Container Returned from Customer"
+      ],
+      [
+        "skd_dir_cd",
+        {}
+      ],
+      [
+        "place_nm",
+        "JEDDAH, Saudi Arabia"
+      ],
+      [
+        "skd_voy_no",
+        {}
+      ]
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "enblFlag": "Y",
+    "weight": "9,142.510 KGS",
+    "copNo": "L2026924828993",
+    "blNo": "SYS2609000001719626",
+    "eventDt": "2026-11-11 21:52",
+    "cntrTpszCd": "40HC",
+    "copStsCd": "F",
+    "dspBkgNo": "CULVHPH2603770",
+    "sealNo": "U932359",
+    "placeCd": "SAJEDY02",
+    "placeNm": "JEDDAH, Saudi Arabia",
+    "yardNm": "MAMAS LOGISTICS",
+    "statusNm": "Empty Container Returned from Customer",
+    "bkgNo": "CULVHPH2603770",
+    "poNo": "",
+    "yardCd": "SAJEDY02",
+    "statusCd": "TAIYDM",
+    "cntrNo": "HPCU4776024",
+    "cntrTpszNm": "40'DRY HQ.",
+    "cntrFlg": "Y",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "enblFlag": "Y",
+    "weight": "7,302.750 KGS",
+    "copNo": "L2026924828992",
+    "blNo": "SYS2609000001719626",
+    "eventDt": "2026-11-11 15:38",
+    "cntrTpszCd": "40HC",
+    "copStsCd": "F",
+    "dspBkgNo": "CULVHPH2603770",
+    "sealNo": "U932313",
+    "placeCd": "SAJEDY02",
+    "placeNm": "JEDDAH, Saudi Arabia",
+    "yardNm": "MAMAS LOGISTICS",
+    "statusNm": "Empty Container Returned from Customer",
+    "bkgNo": "CULVHPH2603770",
+    "poNo": "",
+    "yardCd": "SAJEDY02",
+    "statusCd": "TAIYDM",
+    "cntrNo": "CIMU3282476",
+    "cntrTpszNm": "40'DRY HQ.",
+    "cntrFlg": "Y",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  }
+]}

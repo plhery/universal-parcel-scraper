@@ -1,0 +1,441 @@
+{
+"TRANS_RESULT_KEY":"S",
+"Exception":"",
+"count":"13",
+"list": [
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "1",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-10-13 02:18",
+    "vslEngNm": "",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "",
+    "yardNm": "Depot Egypt Logistics Park",
+    "copDtlSeq": "1011",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Empty Container Release to Shipper",
+    "statusCd": "TDOYOM",
+    "nodCd": "EGSOKY01",
+    "hashColumns": [
+      [
+        "no",
+        "1"
+      ],
+      [
+        "bl_no",
+        {}
+      ],
+      [
+        "cntr_no",
+        {}
+      ],
+      [
+        "cntr_tpsz_nm",
+        {}
+      ],
+      [
+        "ibflag",
+        {}
+      ],
+      [
+        "event_dt",
+        "2026-10-13 02:18"
+      ],
+      [
+        "cop_dtl_seq",
+        "1011"
+      ],
+      [
+        "yard_cd",
+        {}
+      ],
+      [
+        "seal_no",
+        {}
+      ],
+      [
+        "vgm_wgt",
+        {}
+      ],
+      [
+        "dsp_bkg_no",
+        {}
+      ],
+      [
+        "place_cd",
+        {}
+      ],
+      [
+        "status_cd",
+        "TDOYOM"
+      ],
+      [
+        "vgm_unit",
+        {}
+      ],
+      [
+        "cop_no",
+        "L2026A06847341"
+      ],
+      [
+        "nod_cd",
+        "EGSOKY01"
+      ],
+      [
+        "act_tp_cd",
+        "A"
+      ],
+      [
+        "po_no",
+        {}
+      ],
+      [
+        "pagerows",
+        {}
+      ],
+      [
+        "cntr_tpsz_cd",
+        {}
+      ],
+      [
+        "enbl_flag",
+        {}
+      ],
+      [
+        "weight",
+        {}
+      ],
+      [
+        "yard_nm",
+        "Depot Egypt Logistics Park"
+      ],
+      [
+        "cntr_flg",
+        {}
+      ],
+      [
+        "bkg_no",
+        {}
+      ],
+      [
+        "vsl_eng_nm",
+        ""
+      ],
+      [
+        "vsl_cd",
+        ""
+      ],
+      [
+        "cop_sts_cd",
+        {}
+      ],
+      [
+        "piece",
+        {}
+      ],
+      [
+        "vgm_status",
+        {}
+      ],
+      [
+        "status_nm",
+        "Empty Container Release to Shipper"
+      ],
+      [
+        "skd_dir_cd",
+        ""
+      ],
+      [
+        "place_nm",
+        "SOKHNA ,EGYPT"
+      ],
+      [
+        "skd_voy_no",
+        ""
+      ]
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "2",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-10-21 16:26",
+    "vslEngNm": "",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "1031",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Gate In to Outbound Terminal",
+    "statusCd": "TAOMDF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "WNFD",
+    "no": "3",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-10-23 05:07",
+    "vslEngNm": "WAN FU DA",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "2638",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "1032",
+    "skdDirCd": "E",
+    "actTpCd": "A",
+    "statusNm": "Loaded on 'WAN FU DA 2638E' at Port of Loading",
+    "statusCd": "VLLMOF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "WNFD",
+    "no": "4",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-10-23 16:42",
+    "vslEngNm": "WAN FU DA",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "2638",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "4033",
+    "skdDirCd": "E",
+    "actTpCd": "A",
+    "statusNm": "'WAN FU DA 2638E' Departure from Port of Loading",
+    "statusCd": "VDLMOF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "WNFD",
+    "no": "5",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-11-29 08:00",
+    "vslEngNm": "WAN FU DA",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2638",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4051",
+    "skdDirCd": "E",
+    "actTpCd": "E",
+    "statusNm": "'WAN FU DA 2638E' Arrival at Transhipment Port",
+    "statusCd": "VATMDF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "WNFD",
+    "no": "6",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-11-29 10:00",
+    "vslEngNm": "WAN FU DA",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2638",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4052",
+    "skdDirCd": "E",
+    "actTpCd": "E",
+    "statusNm": "'WAN FU DA 2638E' T/S Berthing Destination",
+    "statusCd": "VBTMDF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "WNFD",
+    "no": "7",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-12-09 03:30",
+    "vslEngNm": "WAN FU DA",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2638",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4053",
+    "skdDirCd": "E",
+    "actTpCd": "E",
+    "statusNm": "Unloaded from 'WAN FU DA 2638E' at Transhipment Port",
+    "statusCd": "VUTMDF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SCKL",
+    "no": "8",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-12-09 08:00",
+    "vslEngNm": "SMC KLANG",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2649",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4054",
+    "skdDirCd": "S",
+    "actTpCd": "E",
+    "statusNm": "Loaded on 'SMC KLANG 2649S' at Transhipment Port",
+    "statusCd": "WLTMOF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SCKL",
+    "no": "9",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-12-09 08:00",
+    "vslEngNm": "SMC KLANG",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2649",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4055",
+    "skdDirCd": "S",
+    "actTpCd": "E",
+    "statusNm": "'SMC KLANG 2649S' Depature from Transhipment Port",
+    "statusCd": "WDTMOF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SCKL",
+    "no": "10",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-12-11 08:00",
+    "vslEngNm": "SMC KLANG",
+    "placeNm": "BELAWAN ,INDONESIA",
+    "skdVoyNo": "2649",
+    "yardNm": "PT Belawan New Container Terminal (BNCT)",
+    "copDtlSeq": "4071",
+    "skdDirCd": "S",
+    "actTpCd": "E",
+    "statusNm": "'SMC KLANG 2649S' Arrival at Port of Discharging",
+    "statusCd": "WAUMDF",
+    "nodCd": "IDBLWT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SCKL",
+    "no": "11",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-12-11 10:00",
+    "vslEngNm": "SMC KLANG",
+    "placeNm": "BELAWAN ,INDONESIA",
+    "skdVoyNo": "2649",
+    "yardNm": "PT Belawan New Container Terminal (BNCT)",
+    "copDtlSeq": "6072",
+    "skdDirCd": "S",
+    "actTpCd": "E",
+    "statusNm": "Unloaded from 'SMC KLANG 2649S' at Port of Discharging",
+    "statusCd": "WUUMDF",
+    "nodCd": "IDBLWT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "12",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-12-11 10:00",
+    "vslEngNm": "",
+    "placeNm": "BELAWAN ,INDONESIA",
+    "skdVoyNo": "",
+    "yardNm": "PT Belawan New Container Terminal (BNCT)",
+    "copDtlSeq": "6073",
+    "skdDirCd": "",
+    "actTpCd": "E",
+    "statusNm": "Gate Out from Inbound Terminal for Delivery to Consignee (or Port Shuttle)",
+    "statusCd": "TDIMOF",
+    "nodCd": "IDBLWT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "13",
+    "copNo": "L2026A06847341",
+    "eventDt": "2026-12-11 16:00",
+    "vslEngNm": "",
+    "placeNm": "BELAWAN ,INDONESIA",
+    "skdVoyNo": "",
+    "yardNm": "Depot CLC Meratus Belawan",
+    "copDtlSeq": "6091",
+    "skdDirCd": "",
+    "actTpCd": "E",
+    "statusNm": "Empty Container Returned from Customer",
+    "statusCd": "TAIYDM",
+    "nodCd": "IDBLWY01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  }
+]}

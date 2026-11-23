@@ -1,0 +1,188 @@
+{
+  "carrier": "cu-lines",
+  "records": [
+    {
+      "number": "CULU1911100",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/cu-lines/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent CU Lines searches",
+        "assessment": "confirmed"
+      },
+      "relationships": [
+        {
+          "kind": "child_of",
+          "number": "CULVSOK2601552",
+          "source": {
+            "url": "https://www.culines.com/en/site/bill",
+            "date": "2026-11-23",
+            "dateKind": "carrier reply",
+            "access": "full_page"
+          }
+        }
+      ],
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Pier2Pier lists this CU Lines container among its recent container searches. CU Lines' eService returns it on board from Sokhna, bound for Belawan through Port Klang."
+    },
+    {
+      "number": "CULU6155032",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/cu-lines/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent CU Lines searches",
+        "assessment": "confirmed"
+      },
+      "relationships": [
+        {
+          "kind": "child_of",
+          "number": "CULVHPH2603770",
+          "source": {
+            "url": "https://www.culines.com/en/site/bill",
+            "date": "2026-11-23",
+            "dateKind": "carrier reply",
+            "access": "full_page"
+          }
+        }
+      ],
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Pier2Pier lists this CU Lines container among its recent container searches. CU Lines' eService returns it from Haiphong through Nansha to Jeddah, returned empty."
+    },
+    {
+      "number": "CULU6355200",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/cu-lines/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent CU Lines searches",
+        "assessment": "confirmed"
+      },
+      "relationships": [
+        {
+          "kind": "child_of",
+          "number": "CULVNGB2639662",
+          "source": {
+            "url": "https://www.culines.com/en/site/bill",
+            "date": "2026-11-23",
+            "dateKind": "carrier reply",
+            "access": "full_page"
+          }
+        }
+      ],
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Pier2Pier lists this CU Lines container among its recent container searches. CU Lines' eService returns it from Ningbo through Port Klang and Sokhna to Jeddah, returned empty."
+    },
+    {
+      "number": "CULU6245115",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/cu-lines/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent CU Lines searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Pier2Pier lists this CU Lines container among its recent container searches. CU Lines' eService returns it from Shanghai through Aliaga to Algiers, returned empty."
+    },
+    {
+      "number": "CULVSOK2601552",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/cu-lines/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "booking number CU Lines gives for a listed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "CU Lines' eService names this booking for a container Pier2Pier lists among its recent CU Lines searches. Its booking search returns twenty containers on board from Sokhna."
+    },
+    {
+      "number": "CULVHPH2603770",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/cu-lines/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "booking number CU Lines gives for a listed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "CU Lines' eService names this booking for a container Pier2Pier lists among its recent CU Lines searches. Its booking search returns three containers from Haiphong to Jeddah, all returned empty."
+    },
+    {
+      "number": "CULVNGB2639662",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/cu-lines/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "booking number CU Lines gives for a listed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "CU Lines' eService names this booking for a container Pier2Pier lists among its recent CU Lines searches. Its booking search returns five containers from Ningbo to Jeddah, all returned empty."
+    }
+  ]
+}

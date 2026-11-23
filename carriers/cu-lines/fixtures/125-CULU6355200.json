@@ -1,0 +1,556 @@
+{
+"TRANS_RESULT_KEY":"S",
+"Exception":"",
+"count":"18",
+"list": [
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "1",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-09-21 00:04",
+    "vslEngNm": "",
+    "placeNm": "NINGBO ,CHINA",
+    "skdVoyNo": "",
+    "yardNm": "Ningbo FTX XinGao Depot",
+    "copDtlSeq": "1011",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Empty Container Release to Shipper",
+    "statusCd": "TDOYOM",
+    "nodCd": "CNNGBY05",
+    "hashColumns": [
+      [
+        "no",
+        "1"
+      ],
+      [
+        "bl_no",
+        {}
+      ],
+      [
+        "cntr_no",
+        {}
+      ],
+      [
+        "cntr_tpsz_nm",
+        {}
+      ],
+      [
+        "ibflag",
+        {}
+      ],
+      [
+        "event_dt",
+        "2026-09-21 00:04"
+      ],
+      [
+        "cop_dtl_seq",
+        "1011"
+      ],
+      [
+        "yard_cd",
+        {}
+      ],
+      [
+        "seal_no",
+        {}
+      ],
+      [
+        "vgm_wgt",
+        {}
+      ],
+      [
+        "dsp_bkg_no",
+        {}
+      ],
+      [
+        "place_cd",
+        {}
+      ],
+      [
+        "status_cd",
+        "TDOYOM"
+      ],
+      [
+        "vgm_unit",
+        {}
+      ],
+      [
+        "cop_no",
+        "L2026917806249"
+      ],
+      [
+        "nod_cd",
+        "CNNGBY05"
+      ],
+      [
+        "act_tp_cd",
+        "A"
+      ],
+      [
+        "po_no",
+        {}
+      ],
+      [
+        "pagerows",
+        {}
+      ],
+      [
+        "cntr_tpsz_cd",
+        {}
+      ],
+      [
+        "enbl_flag",
+        {}
+      ],
+      [
+        "weight",
+        {}
+      ],
+      [
+        "yard_nm",
+        "Ningbo FTX XinGao Depot"
+      ],
+      [
+        "cntr_flg",
+        {}
+      ],
+      [
+        "bkg_no",
+        {}
+      ],
+      [
+        "vsl_eng_nm",
+        ""
+      ],
+      [
+        "vsl_cd",
+        ""
+      ],
+      [
+        "cop_sts_cd",
+        {}
+      ],
+      [
+        "piece",
+        {}
+      ],
+      [
+        "vgm_status",
+        {}
+      ],
+      [
+        "status_nm",
+        "Empty Container Release to Shipper"
+      ],
+      [
+        "skd_dir_cd",
+        ""
+      ],
+      [
+        "place_nm",
+        "NINGBO ,CHINA"
+      ],
+      [
+        "skd_voy_no",
+        ""
+      ]
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "2",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-09-21 12:26",
+    "vslEngNm": "",
+    "placeNm": "NINGBO ,CHINA",
+    "skdVoyNo": "",
+    "yardNm": "Ningbo Yongzhou, Zhoushan Port Ltd (Yzct)",
+    "copDtlSeq": "1031",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Gate In to Outbound Terminal",
+    "statusCd": "TAOMDF",
+    "nodCd": "CNNGBT04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SGRV",
+    "no": "3",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-09-28 15:00",
+    "vslEngNm": "SINGAPORE RIVER",
+    "placeNm": "NINGBO ,CHINA",
+    "skdVoyNo": "2639",
+    "yardNm": "Ningbo Yongzhou, Zhoushan Port Ltd (Yzct)",
+    "copDtlSeq": "1032",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "Loaded on 'SINGAPORE RIVER 2639W' at Port of Loading",
+    "statusCd": "WLLMOF",
+    "nodCd": "CNNGBT04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SGRV",
+    "no": "4",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-09-29 02:30",
+    "vslEngNm": "SINGAPORE RIVER",
+    "placeNm": "NINGBO ,CHINA",
+    "skdVoyNo": "2639",
+    "yardNm": "Ningbo Yongzhou, Zhoushan Port Ltd (Yzct)",
+    "copDtlSeq": "4033",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "'SINGAPORE RIVER 2639W' Departure from Port of Loading",
+    "statusCd": "WDLMOF",
+    "nodCd": "CNNGBT04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SGRV",
+    "no": "5",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-10-10 23:00",
+    "vslEngNm": "SINGAPORE RIVER",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2639",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4051",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "'SINGAPORE RIVER 2639W' Arrival at Transhipment Port",
+    "statusCd": "WATMDF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "SGRV",
+    "no": "6",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-10-12 17:39",
+    "vslEngNm": "SINGAPORE RIVER",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2639",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4052",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "Unloaded from 'SINGAPORE RIVER 2639W' at Transhipment Port",
+    "statusCd": "WUTMDF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "TNVN",
+    "no": "7",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-10-18 23:09",
+    "vslEngNm": "TEN VENUS",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2642",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4053",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "Loaded on 'TEN VENUS 2642W' at Transhipment Port",
+    "statusCd": "VLTMOF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "TNVN",
+    "no": "8",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-10-19 06:02",
+    "vslEngNm": "TEN VENUS",
+    "placeNm": "PORT KLANG ,MALAYSIA",
+    "skdVoyNo": "2642",
+    "yardNm": "Klang Multi Terminal (Westport)",
+    "copDtlSeq": "4054",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "T/S Truck Terminal Departure",
+    "statusCd": "TDTMOF",
+    "nodCd": "MYPKGT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "TNVN",
+    "no": "9",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-01 04:55",
+    "vslEngNm": "TEN VENUS",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "2642",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "4071",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "'TEN VENUS 2642W' Arrival at Transhipment Port",
+    "statusCd": "VATMDF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "TNVN",
+    "no": "10",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-01 16:35",
+    "vslEngNm": "TEN VENUS",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "2642",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "4072",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "'TEN VENUS 2642W' T/S Berthing Destination",
+    "statusCd": "VBTMDF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "TNVN",
+    "no": "11",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-06 05:30",
+    "vslEngNm": "TEN VENUS",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "2642",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "4073",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "Unloaded from 'TEN VENUS 2642W' at Transhipment Port",
+    "statusCd": "VUTMDF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "CUHM",
+    "no": "12",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-05 23:41",
+    "vslEngNm": "CUL HUMEN",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "2639",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "4074",
+    "skdDirCd": "E",
+    "actTpCd": "A",
+    "statusNm": "Loaded on 'CUL HUMEN 2639E' at Transhipment Port",
+    "statusCd": "VLTMOF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "CUHM",
+    "no": "13",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-06 06:54",
+    "vslEngNm": "CUL HUMEN",
+    "placeNm": "SOKHNA ,EGYPT",
+    "skdVoyNo": "2639",
+    "yardNm": "DP World Sokhna",
+    "copDtlSeq": "4075",
+    "skdDirCd": "E",
+    "actTpCd": "A",
+    "statusNm": "'CUL HUMEN 2639E' Depature from Transhipment Port",
+    "statusCd": "VDTMOF",
+    "nodCd": "EGSOKT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "CUHM",
+    "no": "14",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-08 03:42",
+    "vslEngNm": "CUL HUMEN",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "2639",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "4091",
+    "skdDirCd": "E",
+    "actTpCd": "A",
+    "statusNm": "'CUL HUMEN 2639E' Arrival at Port of Discharging",
+    "statusCd": "VAUMDF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "CUHM",
+    "no": "15",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-08 20:40",
+    "vslEngNm": "CUL HUMEN",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "2639",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "4092",
+    "skdDirCd": "E",
+    "actTpCd": "A",
+    "statusNm": "'CUL HUMEN 2639E' POD Berthing Destination",
+    "statusCd": "VBUMDF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "CUHM",
+    "no": "16",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-09 12:12",
+    "vslEngNm": "CUL HUMEN",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "2639",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "6093",
+    "skdDirCd": "E",
+    "actTpCd": "A",
+    "statusNm": "Unloaded from 'CUL HUMEN 2639E' at Port of Discharging",
+    "statusCd": "VUUMDF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "17",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-11 18:20",
+    "vslEngNm": "",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "6094",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Gate Out from Inbound Terminal for Delivery to Consignee (or Port Shuttle)",
+    "statusCd": "TDIMOF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "18",
+    "copNo": "L2026917806249",
+    "eventDt": "2026-11-15 04:22",
+    "vslEngNm": "",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "",
+    "yardNm": "RSGT LOGIC POINT",
+    "copDtlSeq": "6111",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Empty Container Returned from Customer",
+    "statusCd": "TAIYDM",
+    "nodCd": "SAJEDY03",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  }
+]}

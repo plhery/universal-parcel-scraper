@@ -1,0 +1,28 @@
+{
+  "carrier": "cu-lines",
+  "entries": [
+    {"code": "TDOYOM", "wording": "Empty Container Release to Shipper", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container from the depot to load it; the cargo is not yet with CU Lines."},
+    {"code": "TAOMDF", "wording": "Gate In to Outbound Terminal", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading. After the container moved, a further gate in is transit."},
+    {"code": "VLLMOF", "wording": "Loaded on 'WAN FU DA 2638E' at Port of Loading", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The wording names the vessel and voyage; the code is the same for every vessel."},
+    {"code": "WLLMOF", "wording": "Loaded on 'SINGAPORE RIVER 2639W' at Port of Loading", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The same load with W for the vessel instead of V."},
+    {"code": "VDLMOF", "wording": "'WAN FU DA 2638E' Departure from Port of Loading", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A booking's container list words it as Vessel Departure from Port of Loading."},
+    {"code": "WDLMOF", "wording": "'SINGAPORE RIVER 2639W' Departure from Port of Loading", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "VATMDF", "wording": "'PRIDE PACIFIC 2639N' Arrival at Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "WATMDF", "wording": "'SINGAPORE RIVER 2639W' Arrival at Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "VBTMDF", "wording": "'PRIDE PACIFIC 2639N' T/S Berthing Destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "VUTMDF", "wording": "Unloaded from 'PRIDE PACIFIC 2639N' at Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "WUTMDF", "wording": "Unloaded from 'SINGAPORE RIVER 2639W' at Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "VLTMOF", "wording": "Loaded on 'MYD TIANJIN 2642W' at Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "WLTMOF", "wording": "Loaded on 'FOLK JEDDAH 2640E' at Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "VDTMOF", "wording": "'MYD TIANJIN 2642W' Depature from Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "WDTMOF", "wording": "'FOLK JEDDAH 2640E' Depature from Transhipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "TDTMOF", "wording": "T/S Truck Terminal Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The container leaves a transshipment terminal by truck for its next vessel."},
+    {"code": "VAUMDF", "wording": "'MYD TIANJIN 2642W' Arrival at Port of Discharging", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "WAUMDF", "wording": "'FOLK JEDDAH 2640E' Arrival at Port of Discharging", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "VBUMDF", "wording": "'MYD TIANJIN 2642W' POD Berthing Destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "VUUMDF", "wording": "Unloaded from 'MYD TIANJIN 2642W' at Port of Discharging", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the port of discharge."},
+    {"code": "WUUMDF", "wording": "Unloaded from 'FOLK JEDDAH 2640E' at Port of Discharging", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "TDIMOF", "wording": "Gate Out from Inbound Terminal for Delivery to Consignee (or Port Shuttle)", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The full container leaves the port of discharge for the consignee."},
+    {"code": "TAIYDM", "wording": "Empty Container Returned from Customer", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee returns the unloaded container. Before the container moved, it is an empty container returned unused."}
+  ]
+}

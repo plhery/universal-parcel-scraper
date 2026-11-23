@@ -18712,6 +18712,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "cu-lines": {
+    "displayName": "CU Lines",
+    "color": "#006979",
+    "aliases": [
+      "China United Lines",
+      "CULines",
+      "中联航运",
+      "CULU"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cu-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.culines.com/en/site/bill",
+    "trackingSearchUrl": "https://www.culines.com/en/site/bill",
+    "helpUrl": "https://www.culines.com/en/site/outlets",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cupost": {
     "displayName": "CUpost",
     "color": "#4cb756",
@@ -71816,6 +71838,7 @@ export const CARRIER_IDS = [
   "ctm-messagerie",
   "cts-group",
   "cttyex",
+  "cu-lines",
   "cupost",
   "curiera",
   "custom-companies",
@@ -73852,6 +73875,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ctm-messagerie": [],
   "cts-group": [],
   "cttyex": ["cttyex-1"],
+  "cu-lines": [],
   "cupost": [],
   "curiera": [],
   "custom-companies": [],

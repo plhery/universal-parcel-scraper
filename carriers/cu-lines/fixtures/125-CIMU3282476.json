@@ -1,0 +1,464 @@
+{
+"TRANS_RESULT_KEY":"S",
+"Exception":"",
+"count":"14",
+"list": [
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "1",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-09-25 06:02",
+    "vslEngNm": "",
+    "placeNm": "HAIPHONG ,VIETNAM",
+    "skdVoyNo": "",
+    "yardNm": "GREATING FORTURE 3 CONTAINER JOINT STOCK CO.,",
+    "copDtlSeq": "1011",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Empty Container Release to Shipper",
+    "statusCd": "TDOYOM",
+    "nodCd": "VNHPHY01",
+    "hashColumns": [
+      [
+        "no",
+        "1"
+      ],
+      [
+        "bl_no",
+        {}
+      ],
+      [
+        "cntr_no",
+        {}
+      ],
+      [
+        "cntr_tpsz_nm",
+        {}
+      ],
+      [
+        "ibflag",
+        {}
+      ],
+      [
+        "event_dt",
+        "2026-09-25 06:02"
+      ],
+      [
+        "cop_dtl_seq",
+        "1011"
+      ],
+      [
+        "yard_cd",
+        {}
+      ],
+      [
+        "seal_no",
+        {}
+      ],
+      [
+        "vgm_wgt",
+        {}
+      ],
+      [
+        "dsp_bkg_no",
+        {}
+      ],
+      [
+        "place_cd",
+        {}
+      ],
+      [
+        "status_cd",
+        "TDOYOM"
+      ],
+      [
+        "vgm_unit",
+        {}
+      ],
+      [
+        "cop_no",
+        "L2026924828992"
+      ],
+      [
+        "nod_cd",
+        "VNHPHY01"
+      ],
+      [
+        "act_tp_cd",
+        "A"
+      ],
+      [
+        "po_no",
+        {}
+      ],
+      [
+        "pagerows",
+        {}
+      ],
+      [
+        "cntr_tpsz_cd",
+        {}
+      ],
+      [
+        "enbl_flag",
+        {}
+      ],
+      [
+        "weight",
+        {}
+      ],
+      [
+        "yard_nm",
+        "GREATING FORTURE 3 CONTAINER JOINT STOCK CO.,"
+      ],
+      [
+        "cntr_flg",
+        {}
+      ],
+      [
+        "bkg_no",
+        {}
+      ],
+      [
+        "vsl_eng_nm",
+        ""
+      ],
+      [
+        "vsl_cd",
+        ""
+      ],
+      [
+        "cop_sts_cd",
+        {}
+      ],
+      [
+        "piece",
+        {}
+      ],
+      [
+        "vgm_status",
+        {}
+      ],
+      [
+        "status_nm",
+        "Empty Container Release to Shipper"
+      ],
+      [
+        "skd_dir_cd",
+        ""
+      ],
+      [
+        "place_nm",
+        "HAIPHONG ,VIETNAM"
+      ],
+      [
+        "skd_voy_no",
+        ""
+      ]
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "2",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-09-25 12:25",
+    "vslEngNm": "",
+    "placeNm": "HAIPHONG ,VIETNAM",
+    "skdVoyNo": "",
+    "yardNm": "Nam Dinh Vu Port (NDV)",
+    "copDtlSeq": "1031",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Gate In to Outbound Terminal",
+    "statusCd": "TAOMDF",
+    "nodCd": "VNHPHT08",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "PDPC",
+    "no": "3",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-10-01 16:43",
+    "vslEngNm": "PRIDE PACIFIC",
+    "placeNm": "HAIPHONG ,VIETNAM",
+    "skdVoyNo": "2639",
+    "yardNm": "Nam Dinh Vu Port (NDV)",
+    "copDtlSeq": "1032",
+    "skdDirCd": "N",
+    "actTpCd": "A",
+    "statusNm": "Loaded on 'PRIDE PACIFIC 2639N' at Port of Loading",
+    "statusCd": "VLLMOF",
+    "nodCd": "VNHPHT08",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "PDPC",
+    "no": "4",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-10-02 00:30",
+    "vslEngNm": "PRIDE PACIFIC",
+    "placeNm": "HAIPHONG ,VIETNAM",
+    "skdVoyNo": "2639",
+    "yardNm": "Nam Dinh Vu Port (NDV)",
+    "copDtlSeq": "4033",
+    "skdDirCd": "N",
+    "actTpCd": "A",
+    "statusNm": "'PRIDE PACIFIC 2639N' Departure from Port of Loading",
+    "statusCd": "VDLMOF",
+    "nodCd": "VNHPHT08",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "PDPC",
+    "no": "5",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-10-05 06:14",
+    "vslEngNm": "PRIDE PACIFIC",
+    "placeNm": "NANSHA ,CHINA",
+    "skdVoyNo": "2639",
+    "yardNm": "Nansha International Container Terminal P III",
+    "copDtlSeq": "4051",
+    "skdDirCd": "N",
+    "actTpCd": "A",
+    "statusNm": "'PRIDE PACIFIC 2639N' Arrival at Transhipment Port",
+    "statusCd": "VATMDF",
+    "nodCd": "CNNAST04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "PDPC",
+    "no": "6",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-10-05 09:25",
+    "vslEngNm": "PRIDE PACIFIC",
+    "placeNm": "NANSHA ,CHINA",
+    "skdVoyNo": "2639",
+    "yardNm": "Nansha International Container Terminal P III",
+    "copDtlSeq": "4052",
+    "skdDirCd": "N",
+    "actTpCd": "A",
+    "statusNm": "'PRIDE PACIFIC 2639N' T/S Berthing Destination",
+    "statusCd": "VBTMDF",
+    "nodCd": "CNNAST04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "PDPC",
+    "no": "7",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-10-10 18:30",
+    "vslEngNm": "PRIDE PACIFIC",
+    "placeNm": "NANSHA ,CHINA",
+    "skdVoyNo": "2639",
+    "yardNm": "Nansha International Container Terminal P III",
+    "copDtlSeq": "4053",
+    "skdDirCd": "N",
+    "actTpCd": "A",
+    "statusNm": "Unloaded from 'PRIDE PACIFIC 2639N' at Transhipment Port",
+    "statusCd": "VUTMDF",
+    "nodCd": "CNNAST04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "MYTJ",
+    "no": "8",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-10-11 02:29",
+    "vslEngNm": "MYD TIANJIN",
+    "placeNm": "NANSHA ,CHINA",
+    "skdVoyNo": "2642",
+    "yardNm": "Nansha International Container Terminal P III",
+    "copDtlSeq": "4054",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "Loaded on 'MYD TIANJIN 2642W' at Transhipment Port",
+    "statusCd": "VLTMOF",
+    "nodCd": "CNNAST04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "MYTJ",
+    "no": "9",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-10-11 07:10",
+    "vslEngNm": "MYD TIANJIN",
+    "placeNm": "NANSHA ,CHINA",
+    "skdVoyNo": "2642",
+    "yardNm": "Nansha International Container Terminal P III",
+    "copDtlSeq": "4055",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "'MYD TIANJIN 2642W' Depature from Transhipment Port",
+    "statusCd": "VDTMOF",
+    "nodCd": "CNNAST04",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "MYTJ",
+    "no": "10",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-11-03 09:00",
+    "vslEngNm": "MYD TIANJIN",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "2642",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "4071",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "'MYD TIANJIN 2642W' Arrival at Port of Discharging",
+    "statusCd": "VAUMDF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "MYTJ",
+    "no": "11",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-11-03 23:12",
+    "vslEngNm": "MYD TIANJIN",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "2642",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "4072",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "'MYD TIANJIN 2642W' POD Berthing Destination",
+    "statusCd": "VBUMDF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "MYTJ",
+    "no": "12",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-11-04 20:02",
+    "vslEngNm": "MYD TIANJIN",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "2642",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "6073",
+    "skdDirCd": "W",
+    "actTpCd": "A",
+    "statusNm": "Unloaded from 'MYD TIANJIN 2642W' at Port of Discharging",
+    "statusCd": "VUUMDF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "13",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-11-11 10:20",
+    "vslEngNm": "",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "",
+    "yardNm": "Red Sea Gateway Terminal (RSGT)",
+    "copDtlSeq": "6074",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Gate Out from Inbound Terminal for Delivery to Consignee (or Port Shuttle)",
+    "statusCd": "TDIMOF",
+    "nodCd": "SAJEDT01",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  },
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "vslCd": "",
+    "no": "14",
+    "copNo": "L2026924828992",
+    "eventDt": "2026-11-11 15:38",
+    "vslEngNm": "",
+    "placeNm": "JEDDAH ,Saudi Arabia",
+    "skdVoyNo": "",
+    "yardNm": "MAMAS LOGISTICS",
+    "copDtlSeq": "6091",
+    "skdDirCd": "",
+    "actTpCd": "A",
+    "statusNm": "Empty Container Returned from Customer",
+    "statusCd": "TAIYDM",
+    "nodCd": "SAJEDY02",
+    "hashColumns": [
+    ],
+    "hashFields": [
+    ]
+  }
+]}

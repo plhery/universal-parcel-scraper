@@ -6256,6 +6256,18 @@
     "reason": "Wan Hai's bookings and bills are three digits for the office, a letter, a letter or digit and five digits, after its SCAC in import records; detection has no rule for them yet."
   },
   {
+    "carrier": "cu-lines",
+    "pattern": "^CULU\\d{7}$",
+    "kind": "open",
+    "reason": "CULU is the owner code of CU Lines' own containers, whose ISO 6346 numbers end in a check digit; CU Lines' eService returns each sample container's moves. Detection does not offer CU Lines."
+  },
+  {
+    "carrier": "cu-lines",
+    "pattern": "^CUL[A-Z]{4}\\d{7}$",
+    "kind": "open",
+    "reason": "CU Lines' bookings and bills are CULV, the port of loading's code and seven digits; CU Lines' eService returns each sample booking's containers. Detection has no rule for them yet."
+  },
+  {
     "carrier": "swire-shipping",
     "pattern": "^(?:PLLU)?[A-Z]{2}\\d{8}$",
     "kind": "open",

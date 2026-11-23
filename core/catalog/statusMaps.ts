@@ -981,6 +981,7 @@ import { statusMap as hmm } from '../../carriers/hmm/status.js';
 import { statusMap as zim } from '../../carriers/zim/status.js';
 import { statusMap as yangMing } from '../../carriers/yang-ming/status.js';
 import { statusMap as wanHai } from '../../carriers/wan-hai/status.js';
+import { statusMap as cuLines } from '../../carriers/cu-lines/status.js';
 import { statusMap as kmtc } from '../../carriers/kmtc/status.js';
 import { statusMap as swireShipping } from '../../carriers/swire-shipping/status.js';
 import { statusMap as airInuit } from '../../carriers/air-inuit/status.js';
@@ -1045,7 +1046,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'ts-lines': tsLines,
   'sarjak-container-lines': sarjakContainerLines, 'ck-line': ckLine, 'vasco-maritime': vascoMaritime, romocean, amass,
   danx, 'emo-trans': emoTrans, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
-  'wan-hai': wanHai, 'wanjia-logistics': wanjiaLogistics, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,
+  'wan-hai': wanHai, 'cu-lines': cuLines, 'wanjia-logistics': wanjiaLogistics, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,
   'ocean-network-express': oceanNetworkExpress, 'cosco-shipping-lines': coscoShippingLines, oocl, maersk, msc, hmm, zim, 'yang-ming': yangMing,
   'bir-gunde-kargo': birGundeKargo, golilla, 'yol-kargo': yolKargo, matson, 'skif-cargo': skifCargo, 'hi-trans': hiTrans,
   'altex-curier': altexCurier,

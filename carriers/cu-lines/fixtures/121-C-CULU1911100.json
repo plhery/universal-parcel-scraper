@@ -1,0 +1,171 @@
+{
+"TRANS_RESULT_KEY":"S",
+"Exception":"",
+"count":"1",
+"list": [
+  {
+    "maxRows": 0,
+    "models": [
+    ],
+    "enblFlag": "Y",
+    "weight": "27,020.000 KGS",
+    "copNo": "L2026A06847343",
+    "blNo": "SYS2610000001726366",
+    "eventDt": "2026-10-23 16:42",
+    "cntrTpszCd": "20GP",
+    "copStsCd": "T",
+    "dspBkgNo": "CULVSOK2601552",
+    "sealNo": "L018987",
+    "placeCd": "EGSOKT01",
+    "placeNm": "SOKHNA, EGYPT",
+    "yardNm": "DP World Sokhna",
+    "statusNm": "Vessel Departure from Port of Loading",
+    "bkgNo": "CULVSOK2601552",
+    "poNo": "",
+    "yardCd": "EGSOKT01",
+    "statusCd": "VDLMOF",
+    "cntrNo": "CULU1911100",
+    "cntrTpszNm": "20'DRY ST.",
+    "cntrFlg": "Y",
+    "hashColumns": [
+      [
+        "no",
+        {}
+      ],
+      [
+        "bl_no",
+        "SYS2610000001726366"
+      ],
+      [
+        "cntr_no",
+        "CULU1911100"
+      ],
+      [
+        "cntr_tpsz_nm",
+        "20'DRY ST."
+      ],
+      [
+        "ibflag",
+        {}
+      ],
+      [
+        "event_dt",
+        "2026-10-23 16:42"
+      ],
+      [
+        "cop_dtl_seq",
+        {}
+      ],
+      [
+        "yard_cd",
+        "EGSOKT01"
+      ],
+      [
+        "seal_no",
+        "L018987"
+      ],
+      [
+        "vgm_wgt",
+        {}
+      ],
+      [
+        "dsp_bkg_no",
+        "CULVSOK2601552"
+      ],
+      [
+        "place_cd",
+        "EGSOKT01"
+      ],
+      [
+        "status_cd",
+        "VDLMOF"
+      ],
+      [
+        "vgm_unit",
+        {}
+      ],
+      [
+        "cop_no",
+        "L2026A06847343"
+      ],
+      [
+        "nod_cd",
+        {}
+      ],
+      [
+        "act_tp_cd",
+        {}
+      ],
+      [
+        "po_no",
+        ""
+      ],
+      [
+        "pagerows",
+        {}
+      ],
+      [
+        "cntr_tpsz_cd",
+        "20GP"
+      ],
+      [
+        "enbl_flag",
+        "Y"
+      ],
+      [
+        "weight",
+        "27,020.000 KGS"
+      ],
+      [
+        "yard_nm",
+        "DP World Sokhna"
+      ],
+      [
+        "cntr_flg",
+        "Y"
+      ],
+      [
+        "bkg_no",
+        "CULVSOK2601552"
+      ],
+      [
+        "vsl_eng_nm",
+        {}
+      ],
+      [
+        "vsl_cd",
+        {}
+      ],
+      [
+        "cop_sts_cd",
+        "T"
+      ],
+      [
+        "piece",
+        {}
+      ],
+      [
+        "vgm_status",
+        {}
+      ],
+      [
+        "status_nm",
+        "Vessel Departure from Port of Loading"
+      ],
+      [
+        "skd_dir_cd",
+        {}
+      ],
+      [
+        "place_nm",
+        "SOKHNA, EGYPT"
+      ],
+      [
+        "skd_voy_no",
+        {}
+      ]
+    ],
+    "hashFields": [
+    ]
+  }
+]}
