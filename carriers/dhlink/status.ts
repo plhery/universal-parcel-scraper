@@ -198,6 +198,8 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^拆板清关中[;；]/, 'customs'],
   // The destination's customs inspecting the parcel and holding it, in Chinese, and the hold in English between them.
   [/^目的国海关查验$/, 'customs'],
+  // Import clearance in progress ("parcel in clearance"), after the arrival in the destination country.
+  [/^包裹清关中$/, 'customs'],
   [/^海关扣关$/, 'customs'],
   [/^package has been detained\.?$/, 'customs'],
   [/^清关完成[,，]交仓中/, 'in_transit'],
