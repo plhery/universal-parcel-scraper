@@ -54,6 +54,30 @@
       "note": "The origin office's receipt after the label: Aramex's first scan of the parcel."
     },
     {
+      "wording": "The shipment has been received at our Aramex origin office and will continue its journey to the destination",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The origin office's receipt, worded without the country."
+    },
+    {
+      "wording": "The shipment has left the Aramex origin office and is on its way to the destination office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The departure from the origin office."
+    },
+    {
+      "wording": "We've attempted to deliver the shipment",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The attempt, worded without its reason, between two delivery rounds."
+    },
+    {
       "wording": "Label added to shipment, shipment now waiting to be handed to the last mile courier.",
       "language": "en",
       "stage": "in_transit",

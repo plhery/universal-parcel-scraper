@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
 import { AramexTracker } from './adapter.js';
 import { aramexDetailUrl, parseAramex } from './parser.js';
-import { classifyAramexStatus } from './status.js';
+import { classifyAramexStatus, isAramexNote } from './status.js';
 
 const NUMBER = '00000000001';
 const html = readFileSync(new URL('./fixtures/delivered.html', import.meta.url), 'utf8');
@@ -36,6 +36,18 @@ describe('Aramex direct tracking', () => {
       'The shipment has been received at our Aramex origin office and will continue its journey to the destination country',
       'Label added to shipment, shipment now waiting to be handed to the last mile courier.',
     ].map((wording) => classifyAramexStatus(wording)?.stage)).toEqual(['registered', 'accepted', 'in_transit']);
+  });
+  it('stages the shorter wordings of the origin office receipt, its departure and an attempt', () => {
+    expect([
+      'The shipment has been received at our Aramex origin office and will continue its journey to the destination',
+      'The shipment has left the Aramex origin office and is on its way to the destination office',
+      "We've attempted to deliver the shipment",
+    ].map((wording) => classifyAramexStatus(wording)?.stage)).toEqual(['accepted', 'in_transit', 'failed_attempt']);
+  });
+  it("keeps the customer's delivery instructions a note that stages nothing", () => {
+    const wording = 'The customer has shared new delivery instructions and the status will be updated once shipment is out for delivery';
+    expect(isAramexNote(wording)).toBe(true);
+    expect(classifyAramexStatus(wording)).toBeUndefined();
   });
   it('reads the service, weight and destination country from the shipment details', () => {
     const result = parseAramex(html, NUMBER);

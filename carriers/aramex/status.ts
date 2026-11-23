@@ -5,6 +5,8 @@ const wording: Record<string, ClassifiedStatus> = {
   'The shipment has been delivered': { status: 'delivered', stage: 'delivered' },
   "An Aramex Delivery Champion has the shipment and is expected to reach the customer's doorstep shortly": { status: 'out_for_delivery', stage: 'out_for_delivery' },
   "We've attempted to deliver the shipment, but the customer was not available at the time. Not to worry, the delivery has been rescheduled": { status: 'exception', stage: 'failed_attempt' },
+  // The attempt, worded without its reason.
+  "We've attempted to deliver the shipment": { status: 'exception', stage: 'failed_attempt' },
   'Updated delivery address required from customer': { status: 'exception', stage: 'exception' },
   'The shipment is currently going through customs inspection': { status: 'in_transit', stage: 'customs' },
   'The shipment is on its way to our Aramex facility': { status: 'in_transit', stage: 'in_transit' },
@@ -16,6 +18,10 @@ const wording: Record<string, ClassifiedStatus> = {
   // The label before Aramex has the parcel, then its origin office's receipt: the first scan.
   'Shipper generated a new shipment label, but the shipment has not been handed over to Aramex, yet. Shipment will be updated once collected from shipper and received in Aramex offices': { status: 'pending', stage: 'registered' },
   'The shipment has been received at our Aramex origin office and will continue its journey to the destination country': { status: 'in_transit', stage: 'accepted' },
+  // The same receipt, worded without the country.
+  'The shipment has been received at our Aramex origin office and will continue its journey to the destination': { status: 'in_transit', stage: 'accepted' },
+  // The departure from the origin office.
+  'The shipment has left the Aramex origin office and is on its way to the destination office': { status: 'in_transit', stage: 'in_transit' },
   // The last-mile carrier's label, put on while the parcel moves between Aramex's offices.
   'Label added to shipment, shipment now waiting to be handed to the last mile courier.': { status: 'in_transit', stage: 'in_transit' },
   // Collection or delivery is still to come.
@@ -34,6 +40,8 @@ const notes = new Set([
   'One of our Aramex delivery champion has contacted the customer and they have responded',
   'The customer contacted one of our Aramex delivery champion and contact was made successfully',
   'Customer ID received',
+  // The customer's delivery instructions, before the parcel left the origin office.
+  'The customer has shared new delivery instructions and the status will be updated once shipment is out for delivery',
   'Shipment charges paid',
   'The value of the shipment has been successfully confirmed',
   'The status of the shipment\\delivery is currently being reviewed',
