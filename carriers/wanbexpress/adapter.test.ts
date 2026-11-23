@@ -179,6 +179,7 @@ describe('WanbExpress', () => {
     expect(statusMap.stage(null, 'in transit to next facility.')).toBe('in_transit');
     expect(wanbStage(null, 'Departed from the sorting center')).toBe('in_transit');
     expect(wanbStage(null, 'Your shipment has arrived at sorting center')).toBe('in_transit');
+    expect(wanbStage(null, 'Arrived at sorting center')).toBe('in_transit');
     // The handover to DPD for the last mile carries the parcel on; DPD's own scans accept it.
     expect(wanbStage(null, 'Parcel handed to DPD')).toBe('in_transit');
     // A round filed as waiting for collection is the round; the code still reads other words.

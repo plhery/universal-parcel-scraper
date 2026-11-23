@@ -57,8 +57,10 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['shipment arrived to sorting centre / shipment in the sorting centre', 'in_transit'],
   // A Dutch partner's English copy of its departure from its sorting centre, sent beside its own line coded 200.
   ['departed from the sorting center', 'in_transit'],
-  // A last-mile partner's sorting centre taking the parcel in, relayed without a code at the minute of its acceptance.
+  // A last-mile partner's sorting centre taking the parcel in, relayed without a code at the minute of its acceptance,
+  // and in shorter words.
   ['your shipment has arrived at sorting center', 'in_transit'],
+  ['arrived at sorting center', 'in_transit'],
   // The handover to DPD for the last mile, after the destination's customs clearance.
   ['parcel handed to dpd', 'in_transit'],
   ['consignee contacted', null],
