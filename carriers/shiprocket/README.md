@@ -38,7 +38,9 @@ Tracked through the tracking page Shiprocket serves for an AWB.
   Shiprocket's own order and export hub rows.
 - ShiprocketX rows abroad keep their wall clock: they come from the destination's carrier or a
   transit hub, and the page names no zone for them. Unplaced rows of another partner, such as
-  USPS's pre-advice, keep it too.
+  USPS's pre-advice, keep it too. The page does not say which clock the pre-advice keeps, and it
+  is filed while the parcel is still in India: `dateLocalClocks` dates it on the clock of the
+  rows beside it, India's.
 - A row at midnight gives its day only.
 - The order's row is placed at the buyer's town, so its place is left out.
 - The domestic courier's wording is kept as it comes. "Manifested - Out for Pickup" is a

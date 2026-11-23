@@ -7,7 +7,7 @@ trans-o-flex parcels use enabled universal providers. There is no dedicated adap
 trans-o-flex support quoted two numbers on the O2 help forum, each eleven digits, a hyphen and
 thirteen digits. Shippers' links to the tracker pass the same barcode as twenty-four digits,
 which end in `49` and the five-digit delivery postcode. Twenty-four digits is a length other
-carriers share, so no rule claims them; a pasted tracker link names trans-o-flex.
+carriers share, so no rule claims them; a pasted tracker link names trans-o-flex in either form.
 
 ## Links
 

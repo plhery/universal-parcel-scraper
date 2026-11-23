@@ -681,6 +681,9 @@ describe('the detection engine', () => {
         trackingNumber: '100000000000000004900000', carrier: 'trans-o-flex', source: 'link',
       });
     }
+    // The form trans-o-flex support quotes: eleven digits, a hyphen and thirteen.
+    expect(parseTrackingInput('https://www.trans-o-flex.com/sendungsverfolgung/tracking?ref=10000000000-0000004900000&type=barcode'))
+      .toMatchObject({ trackingNumber: '10000000000-0000004900000', carrier: 'trans-o-flex', source: 'link' });
     expect(parseTrackingInput('https://www.trans-o-flex.com/sendungsverfolgung/tracking?ref=ABC-0001&type=ref').carrier)
       .not.toBe('trans-o-flex');
   });

@@ -414,6 +414,15 @@ describe('DHL eCommerce Webtrack', () => {
     ]);
   });
 
+  it('reads a German scan under the European label Webtrack gives it on German time, not as Delaware', () => {
+    const scan = (time: string, location: string) => ({ primaryEventDescription: 'PROCESSED', date: '2026-10-17', time, timeZone: 'CEST', location });
+    const payload = webtrack(); payload.packages[0]!.events = [
+      scan('15:17:06', 'Frankfurt am Main, DE'), scan('11:31:00', 'FRA(DE-POST), DE'),
+    ];
+    expect(parseDHLEcommerceWebtrackResponse(payload, NUMBER).events?.map((event) => event.time))
+      .toEqual(['2026-10-17T13:17:06.000Z', '2026-10-17T09:31:00.000Z']);
+  });
+
   it('settles a repeated hour by its abbreviation', () => {
     const scan = (timeZone: string) => ({ primaryEventDescription: 'PROCESSED', date: '2026-11-01', time: '01:30:00', timeZone, location: 'Sampleton, IL, US' });
     const payload = webtrack(); payload.packages[0]!.events = [scan('CST'), scan('CDT')];
