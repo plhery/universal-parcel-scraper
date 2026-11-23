@@ -560,6 +560,15 @@
       "note": "After the loading into the delivery vehicle, before another round."
     },
     {
+      "code": "4200",
+      "wording": "Distribué",
+      "language": "fr",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "A parcel's only delivery scan; unmapped, it left the stage to the shipment summary."
+    },
+    {
       "code": "4600",
       "stage": "delivered",
       "confirmedBy": "prior-art",
