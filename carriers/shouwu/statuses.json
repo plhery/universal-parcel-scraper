@@ -683,6 +683,14 @@
       "note": "DHL's sort at the parcel centre that serves the recipient, relayed before its round."
     },
     {
+      "wording": "Sorted",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Relayed a second before DHL's processing at the destination parcel centre, on the same leg."
+    },
+    {
       "wording": "The recipient is unknown",
       "stage": "failed_attempt",
       "language": "en",
