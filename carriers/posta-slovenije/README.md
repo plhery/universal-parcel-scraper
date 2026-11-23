@@ -39,7 +39,9 @@ Pošta Slovenije's own scans carry UTC instants. A foreign post's events reach i
 with that post's wall clock, which the service reads as Ljubljana time before labelling it UTC.
 Such an event names a foreign office of exchange, or only the postcode of a post office on the
 foreign side of the border. The adapter reads its wall clock in that country's zone, or keeps it
-without an offset when the country has several zones or the reply does not tell which it is. The
+without an offset when the country has several zones or the reply does not tell which it is. An
+office of exchange comes without a name; in a country of several zones its code becomes the scan's
+place, so its town tells the clock: USJFKA is by New York's JFK. The
 app identity policy in [identity.ts](identity.ts) (`relabelledFrom: 'Europe/Ljubljana'`) lets such
 an event take over the row stored under the Ljubljana reading, by wall clock, provider code and
 location.

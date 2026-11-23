@@ -7,6 +7,7 @@ import { classifyWording, languageStageStatus, type Stage } from '../../core/sta
 import { countryCode, countryTimeZone, explicitOffsetTime, isoTime, type ParsedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { hasSeveralClocks } from '../../places/zones.js';
 import { postaSlovenijeStage, startsReturn } from './status.js';
 
 export const PROVIDER = 'Pošta Slovenije';
@@ -69,6 +70,18 @@ function wordingOf(row: Record<string, unknown>): string {
 function exchangeCountry(postalId: unknown): string | null {
   const match = EXCHANGE.exec(clean(postalId, 20).toUpperCase());
   return match ? countryCode(match[1]) : null;
+}
+
+/**
+ * Where a scan happened: the post office's name, without its number, a
+ * postcode. A foreign office of exchange comes without a name. In a country
+ * of several clocks its code stays, for its town's airport to tell which
+ * clock it keeps: USJFKA is by New York's JFK.
+ */
+function placeOf(row: Record<string, unknown>, country: string | null): string {
+  const name = clean(row.postalName, 120);
+  const office = clean(row.postalId, 20).toUpperCase();
+  return name || (country && country !== HOME && hasSeveralClocks(country) && exchangeCountry(office) === country ? office : '');
 }
 
 /**
@@ -139,8 +152,7 @@ export function parsePostaSlovenije(payload: unknown, rawNumber: string): Carrie
     const code = clean(row.code, 40);
     const at = explicitOffsetTime(row.statusDateTime);
     if (!CODE.test(code) || !at) throw new SchemaError(PROVIDER, 'Pošta Slovenije returned a scan without a code or clock');
-    // The post office's name; its number, a postcode, is left out.
-    const place = clean(row.postalName, 120);
+    const place = placeOf(row, countries[index]!);
     const event: CarrierEvent = { ...clockOf(at, countries[index]!), description: wordingOf(row) || code, provider_code: code,
       ...(place ? { location: place } : {}) };
     const identity = JSON.stringify(event);

@@ -5,6 +5,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter, POSTA_SLOVENIJE_ENDPOINT, PostaSlovenijeTracker } from './adapter.js';
 import { parsePostaSlovenije } from './parser.js';
 import { postaSlovenijeStage, statusMap } from './status.js';
@@ -111,6 +112,16 @@ describe('Pošta Slovenije tracking adapter', () => {
     expect(far).toMatchObject({ last_update: null, last_update_local: '2026-03-04T14:48:00' });
     expect(far.events!.map(event => [event.time, event.local_time])).toEqual([[undefined, '2026-03-04T14:48:00'],
       [undefined, '2026-03-04T00:44:00'], [undefined, '2026-03-02T17:07:00']]);
+    // Its office of exchange keeps its code for a place, so its town tells which of the clocks:
+    // JFK's is New York's, Chicago's office is named for the city.
+    for (const [office, zone] of [['USJFKA', 'America/New_York'], ['USCHIA', 'America/Chicago']]) {
+      const exchanged = parsePostaSlovenije(edited('abroad', payload => {
+        payload.result.parcel.trackingNumber = 'RR900000053US';
+        for (const row of payload.result.statuses) if (row.postalId === 'LTSMPA') row.postalId = office;
+      }), 'RR900000053US');
+      const dated = dateLocalClocks('posta-slovenije', exchanged).events!.filter(event => event.location === office);
+      expect(dated.map(event => [event.time_zone, event.time_zone_basis]), office).toEqual([[zone, 'place'], [zone, 'place']]);
+    }
 
     // Before any office of exchange, the S10 code names the origin of a posting abroad.
     const posted = parsePostaSlovenije(edited('abroad', payload => { payload.result.statuses = payload.result.statuses.slice(0, 1); }), ABROAD);
