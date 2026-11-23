@@ -1368,6 +1368,7 @@
     {"wording": "Votre envoi est en cours de traitement sur le site de tri local.", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "note": "La Poste's sort at the local sorting site, which Shouwu gives after the country's code and before its Chinese label."},
     {"wording": "Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.", "language": "fr", "stage": "out_for_delivery", "confirmedBy": "live", "note": "La Poste's sort into the delivery round, as Colissimo's map reads it; relayed like the sort above."},
     {"wording": "Votre envoi a été distribué dans la boîte à lettres.", "language": "fr", "stage": "delivered", "confirmedBy": "live", "note": "Delivered to the letterbox; relayed like the sort above."},
-    {"wording": "Arrived at pick-up point. Package available for collection.", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The last mile can append its own note after a comma (\"Carrier note: …\"), which does not change the stage."}
+    {"wording": "Arrived at pick-up point. Package available for collection.", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The last mile can append its own note after a comma (\"Carrier note: …\"), which does not change the stage."},
+    {"wording": "Reparto fallido", "language": "es", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The Spanish last mile's failed round, between two rounds; its station keeping the parcel follows minutes later (Envío estacionado, Estacionado ubicado)."}
   ]
 }

@@ -39,8 +39,9 @@ numbers `shouwu-1` offers.
   the delivering partner's "Your consignment has been picked up", or FedEx's "Picked up", after
   them is that partner collecting the parcel from Shouwu's depot, in transit, not a handover from
   the sender. A last mile's "STATIONED SHIPMENT" and "STATIONED LOCATED" after its failed
-  delivery, its station keeping the parcel, say neither that it waits for collection nor that
-  another round follows, so they name no stage. The flight booked for the parcel ("Estimated time
+  delivery, or their Spanish "Envío estacionado" and "Estacionado ubicado", its station keeping
+  the parcel, say neither that it waits for collection nor that another round follows, so they
+  name no stage. The flight booked for the parcel ("Estimated time
   of take-off", or Shouwu's own row naming the flight's day) is a forecast written before it flies,
   a notice on the stage of the scan before it.
 - A delivery after a row that sends the parcel back, as DHL's "Shipment sent directly from parcel

@@ -615,6 +615,8 @@ describe('Shouwu International status vocabulary', () => {
     expect(statusMap.stage(null, 'back to sender for reason: sample reason')).toBe('exception');
     expect(shouwuStage('Failed delivery for reason: recipient was not at home')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     expect(statusMap.stage(null, 'failed delivery for reason: sample reason')).toBe('failed_attempt');
+    // The Spanish last mile's failed round, in its own words.
+    expect(shouwuStage('Reparto fallido')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     // DHL's failed round, then its way to the outlet that keeps it, whichever outlet it names.
     expect(shouwuStage('The shipment could not be delivered, and the recipient has been notified.')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     expect(shouwuStage('The shipment is being brought to [Sample outlet].The earliest time when it can be picked up can be found on the notification card.'))
@@ -629,7 +631,7 @@ describe('Shouwu International status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null,
       description: 'Unfortunately we have not been able to deliver your parcel. Consignee address not correct.' })).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     // The last mile's station keeping the parcel after a failed delivery names no stage.
-    for (const wording of ['STATIONED SHIPMENT', 'STATIONED LOCATED']) {
+    for (const wording of ['STATIONED SHIPMENT', 'STATIONED LOCATED', 'Envío estacionado', 'Estacionado ubicado']) {
       expect(shouwuStage(wording), wording).toBeNull();
       expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
     }
