@@ -110,6 +110,12 @@ describe('Raben tracking adapter', () => {
     }), IN_TRANSIT);
     expect(abroad.events!.slice(0, 3).map(event => [event.time, event.location])).toEqual([
       ['2026-03-10T09:05:00Z', 'Pavyzdžiai, RU'], ['2026-03-10T06:20:00Z', 'Pavyzdžiai, Sample Land'], ['2026-03-09T17:45:00Z', 'Przykładowo, Unlisted Land']]);
+    // Turkey by its English name, which Intl now writes Türkiye.
+    const turkish = parseRaben(edited('in-transit', payload => {
+      payload.enumerations['CMS.Countries']!.push(['Turkey', 'Turkey']);
+      rows(payload)[0]!.Country = { value: 'Turkey' };
+    }), IN_TRANSIT);
+    expect([turkish.events![0]!.time, turkish.events![0]!.location]).toEqual(['2026-03-10T12:05:00+03:00', 'Pavyzdžiai, TR']);
   });
 
   it('keeps the newest stage under a notice or an unknown status, and reads a key without a caption by its words', () => {
