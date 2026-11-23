@@ -56,6 +56,7 @@ it.each([
   ['Arrived at USPS facility', 'in_transit'],
   ['Departed USPS facility', 'in_transit'],
   ['In transit to next facility', 'in_transit'],
+  ['In transit to destination facility', 'in_transit'],
   ['Goods leaving the operation center | The outbound scan at the operation center is complete.', 'in_transit'],
   ['Goods leaving the operation center | The shipment has been loaded onto the transport vehicle.', 'in_transit'],
   ['Shipment started the customs clearance process at origin | Export declaration data has been prepared.', 'in_transit'],

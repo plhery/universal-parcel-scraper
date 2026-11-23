@@ -15,6 +15,7 @@
     {"wording": "Parcel arrives at Airport, Parcel Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The flight's arrival at the destination airport, the day after it left the airport of origin."},
     {"wording": "Clearence processing completed - Export", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "China's export clearance done, in the line's spelling, before the flight: the parcel is not held."},
     {"wording": "International flight has departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The flight out of China, after the export clearance."},
+    {"wording": "Shipment in transit to DHL", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "On the way to DHL, which carries the last mile."},
     {"wording": "Arrived at origin facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The line's facility in China, before its sort facility."},
     {"wording": "Departed from sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Leaving the line's sort facility in China."},
     {"wording": "Arrived at the origin international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "At the airport of departure, before the flight."},
