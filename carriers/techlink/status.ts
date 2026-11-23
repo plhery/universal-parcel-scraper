@@ -7,13 +7,13 @@ import statuses from './statuses.json' with { type: 'json' };
 
 type Entry = { code?: string; wording: string; stage?: string };
 
-// A code ending in `_Other` stands for any scan of its family without a code of its own, so the map
+// A code ending in `_Other`, or in `_Other` and a number, stands for any scan of its family without a code of its own, so the map
 // reads its rows by code and wording together. Abroad they are the delivering partner's scans in its
 // words: iMile's in Italy, which open with the centre's name in 【】, J&T Express Australia's, whose
 // pickup is Techlink's handover, and YWE's in the United States. Their readings stage a family's row
 // the map does not list, whatever centre or reason it names, and the sentence decides over the family:
 // a failure's code on an out-for-delivery line is a new round.
-const FAMILY = /_Other$/;
+const FAMILY = /_Other(?:_\d{1,3})?$/;
 const key = (code: string, wording: string): string => (FAMILY.test(code) ? `${code}\n${normalizeStatusWording(wording)}` : code);
 
 /** The stage each scan code seen on Techlink's tracker gives. */

@@ -212,6 +212,9 @@ describe('Techlink status vocabulary', () => {
       expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other', description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other', description: 'Synthetic other scan' })).toEqual({ kind: 'unknown' });
+    // A numbered code of the family is read the same way.
+    expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other_01', description: 'Shipment in Transit' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other_01', description: 'Synthetic other scan' })).toEqual({ kind: 'unknown' });
     // A move abroad has a code of its own, which stages it whatever its wording.
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Oversea', description: 'In transit, it is currently in transit to the next facility' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
