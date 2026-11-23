@@ -510,6 +510,9 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^item posted[.!]?$|^objeto postado[.!]?$/i.test(value)) return 'accepted';
   if (/^item in transfer - please wait[.!]?$|^objeto em transferencia - por favor aguarde[.!]?$|^item received at the export unit in the country of origin[.!]?$|^item received by the brazilian post[.!]?$|^objeto recebido pelos correios do brasil[.!]?$/i.test(value)) return 'in_transit';
   if (/^need to inform (?:the )?recipient['’]?s cpf\/cnpj[.!]?$|^necessidade de informar (?:o )?cpf\/cnpj do destinatario[.!]?$/i.test(value)) return 'customs';
+  // Jadlog's word that it holds the parcel ("Seu produto já está com a Jadlog"), as Ship24 relays it ahead of its
+  // "em trânsito": the carrier has taken the parcel in.
+  if (/^seu produto ja esta com a jadlog[.!]?$/i.test(value)) return 'accepted';
   if (/^(?:received\.|(?:\d\) )?[a-z ]{1,40} cent(?:er|re)) your order has been received[.!]?$|^(?:\S+ )?cent(?:er|re) (?:received|parcel shipped to \S+)[.!]?$|^origin port warehouse receive\b|^the flight has taken off[.!]?$|^(?:\S+ )?dispatch task assigned to da[.!]?$/i.test(value)) return 'in_transit';
   if (/^<bad address>$/i.test(value)) return 'failed_attempt';
   // Speedaf's issue scan ending a delivery round the recipient had moved to another day, as its own map reads it.
