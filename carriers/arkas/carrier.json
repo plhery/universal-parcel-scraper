@@ -1,0 +1,64 @@
+{
+  "id": "arkas",
+  "displayName": "Arkas Line",
+  "aliases": [
+    "Arkas",
+    "Arkas Container Transport",
+    "Arkas Konteyner Taşımacılık",
+    "ARKU"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#28448F"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "arkas",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://arkasline.com.tr/en/online-tracking/",
+    "canaryUrl": "https://arkasline.com.tr/en/online-tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "vehicle",
+      "eta",
+      "item_category"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "destination",
+      "vehicle",
+      "eta",
+      "item_category"
+    ],
+    "unavailable": [
+      "origin",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "weight"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

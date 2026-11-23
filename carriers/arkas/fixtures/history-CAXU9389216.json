@@ -1,0 +1,88 @@
+{
+  "data": [
+    {
+      "port": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "terminal": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "status": "Assigned to Booking Full Export",
+      "statusCode": "Full Export",
+      "date": "21.09.2026 06:40",
+      "eventDate": "2026-09-21T06:40:59",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "terminal": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "status": "Gate Out Empty",
+      "statusCode": "Empty",
+      "date": "21.09.2026 06:41",
+      "eventDate": "2026-09-21T06:41:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "terminal": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "status": "Gate In Full Export",
+      "statusCode": "Full Export",
+      "date": "21.09.2026 11:30",
+      "eventDate": "2026-09-21T11:30:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "terminal": "NEW YORK – APMT ELIZABETH TERMINAL",
+      "status": "Load Full Export",
+      "statusCode": "LFUL",
+      "date": "24.09.2026 22:05",
+      "eventDate": "2026-09-24T22:05:00",
+      "vesselName": "KAAN KALKAVAN",
+      "voyageNumber": "USX3126",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "MERSIN",
+      "terminal": "MERSIN INTERNATIONAL PORT (MIP)",
+      "status": "Discharge Full Import",
+      "statusCode": "DFUL",
+      "date": "15.10.2026 10:30",
+      "eventDate": "2026-10-15T10:30:00",
+      "vesselName": "KAAN KALKAVAN",
+      "voyageNumber": "USX3626",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "MERSIN",
+      "terminal": "MERSIN INTERNATIONAL PORT (MIP)",
+      "status": "Unstuff Empty",
+      "statusCode": "Empty",
+      "date": "23.10.2026 18:33",
+      "eventDate": "2026-10-23T18:33:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "",
+      "terminal": "MERSİN 2 DEPO",
+      "status": "Gate In Empty",
+      "statusCode": "RCCN",
+      "date": "26.10.2026 15:37",
+      "eventDate": "2026-10-26T15:37:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": false
+    }
+  ]
+}

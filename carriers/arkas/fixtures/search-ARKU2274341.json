@@ -1,0 +1,21 @@
+{
+  "data": {
+    "data": [
+      {
+        "bookingNo": "",
+        "blNo": "",
+        "documentationId": 197075,
+        "containerNo": "ARKU2274341",
+        "size": 20,
+        "type": "BO",
+        "isSoc": false,
+        "lastRecordedStatus": "Discharge",
+        "lastRecordedStatusCode": null,
+        "lastRecordedLocation": "ALGER (ALGIERS)",
+        "lastRecordedDate": "2026-11-14T07:25:00",
+        "finalDestination": "ALGER PORT"
+      }
+    ],
+    "dataCount": 0
+  }
+}

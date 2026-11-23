@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "port": "CASTELLON DE LA PLANA",
+      "terminal": "NOATUM TERMINAL CENTENARIO CASTELLON S.A.U",
+      "status": "Assigned to Booking Empty",
+      "statusCode": "Empty",
+      "date": "17.11.2026 18:56",
+      "eventDate": "2026-11-17T18:56:59.914129",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "CASTELLON DE LA PLANA",
+      "terminal": "NOATUM TERMINAL CENTENARIO CASTELLON S.A.U",
+      "status": "Load Empty",
+      "statusCode": "Empty",
+      "date": null,
+      "eventDate": "2026-11-20T09:00:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": true,
+      "isPort": true
+    },
+    {
+      "port": "ALIAGA",
+      "terminal": "NEMPORT",
+      "status": "Discharge Empty",
+      "statusCode": "Empty",
+      "date": null,
+      "eventDate": "2026-12-01T04:00:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": true,
+      "isPort": true
+    }
+  ]
+}

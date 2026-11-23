@@ -328,6 +328,18 @@
     "reason": "Some Aramex New Zealand labels start with a letter and a digit. That shape also holds YTO, Whistl and Colis Privé numbers, and nothing else in the label points to Aramex, so detection leaves it out."
   },
   {
+    "carrier": "arkas",
+    "pattern": "^ARKU\\d{7}$",
+    "kind": "open",
+    "reason": "ARKU is the owner code of Arkas Line's own containers, whose ISO 6346 numbers end in a check digit; Arkas Line's tracker returns the sample containers' moves. Detection does not offer Arkas Line."
+  },
+  {
+    "carrier": "arkas",
+    "pattern": "^CAXU\\d{7}$",
+    "kind": "by_design",
+    "reason": "CAXU is a container lessor's owner code, whose ISO 6346 numbers end in a check digit; Arkas Line's tracker returns the moves of the sample container it leased, and other lines lease the same lessor's containers. Detection does not offer Arkas Line."
+  },
+  {
     "carrier": "arrow-xl",
     "pattern": "^\\d[A-Z0-9]{11}[A-Z]\\d{3}$",
     "kind": "by_design",

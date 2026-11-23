@@ -1,0 +1,21 @@
+{
+  "data": {
+    "data": [
+      {
+        "bookingNo": "",
+        "blNo": "",
+        "documentationId": 1936189,
+        "containerNo": "CAXU9389216",
+        "size": 40,
+        "type": "HC",
+        "isSoc": false,
+        "lastRecordedStatus": "Unstuff",
+        "lastRecordedStatusCode": null,
+        "lastRecordedLocation": "MERSIN",
+        "lastRecordedDate": "2026-10-26T15:37:00",
+        "finalDestination": "MERSIN INTERNATIONAL PORT (MIP)"
+      }
+    ],
+    "dataCount": 0
+  }
+}

@@ -1027,6 +1027,7 @@ import { statusMap as atcLogistical } from '../../carriers/atc-logistical/status
 import { statusMap as chinaAirlinesCargo } from '../../carriers/china-airlines-cargo/status.js';
 import { statusMap as tsLines } from '../../carriers/ts-lines/status.js';
 import { statusMap as marfret } from '../../carriers/marfret/status.js';
+import { statusMap as arkas } from '../../carriers/arkas/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1050,6 +1051,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'china-airlines-cargo': chinaAirlinesCargo,
   'ts-lines': tsLines,
   marfret,
+  arkas,
   'sarjak-container-lines': sarjakContainerLines, 'ck-line': ckLine, 'vasco-maritime': vascoMaritime, romocean, amass,
   danx, 'emo-trans': emoTrans, topparcel, 'usend-chile': usendChile, 'phantom-couriers': phantomCouriers, 'gaint-logistic': gaintLogistic, milaha,
   'wan-hai': wanHai, 'cu-lines': cuLines, 'wanjia-logistics': wanjiaLogistics, kmtc, 'swire-shipping': swireShipping, 'air-inuit': airInuit, 'acpl-cargo': acplCargo, 'jtl-express-id': jtlExpressId, '21-express-id': twentyOneExpress, spedire,

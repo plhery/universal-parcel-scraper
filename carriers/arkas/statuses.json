@@ -1,0 +1,18 @@
+{
+  "carrier": "arkas",
+  "entries": [
+    {"wording": "Assigned to Booking Full Export", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The container is allocated to the shipper's booking; the cargo is not with Arkas yet."},
+    {"wording": "Gate Out Empty", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The empty container leaves the depot or terminal for the shipper to load. After the container moved it is transit, and after it went out for delivery it stays out for delivery."},
+    {"wording": "Gate In Full Export", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading."},
+    {"wording": "Load Full Export", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on board at the port of loading."},
+    {"wording": "Discharge T/S Full", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at a port of transshipment."},
+    {"wording": "Load T/S Full", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on its next vessel at a port of transshipment."},
+    {"wording": "Discharge Full Import", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at the port of discharge."},
+    {"wording": "Gate Out Full Import", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee takes the loaded container from the port."},
+    {"wording": "Unstuff Empty", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The cargo is unloaded from the container at the port for the consignee; the empty return follows."},
+    {"wording": "Gate In Empty", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The empty container comes back to a depot or terminal once the cargo was unloaded. Before the container moved it is an empty container returned unused, without a stage."},
+    {"wording": "Assigned to Booking Empty", "language": "en", "confirmedBy": "live", "note": "Arkas moves its own empty container under an empty booking: no shipper's cargo travels in it."},
+    {"wording": "Load Empty", "language": "en", "confirmedBy": "live", "note": "An empty container loaded under an empty booking, which carries no shipper's cargo. Seen as an estimated move."},
+    {"wording": "Discharge Empty", "language": "en", "confirmedBy": "live", "note": "An empty container discharged under an empty booking, which carries no shipper's cargo. Seen as an estimated move."}
+  ]
+}

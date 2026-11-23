@@ -1,0 +1,173 @@
+{
+  "carrier": "arkas",
+  "records": [
+    {
+      "number": "ARKU8317250",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. Arkas Line's tracker returns its cycle from Gemlik to Salerno, returned empty to a depot."
+    },
+    {
+      "number": "ARKU8602330",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. Arkas Line's tracker returns its cycle from Valencia to Beirut, returned empty to the terminal."
+    },
+    {
+      "number": "ARKU2274341",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. Arkas Line's tracker returns its moves from Port Said through Evyap to Algiers, discharged."
+    },
+    {
+      "number": "CAXU9389216",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. A lessor's container. Arkas Line's tracker returns its cycle from New York to Mersin, unstuffed at the port and returned empty to a depot."
+    },
+    {
+      "number": "ARKU8614686",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. Arkas Line's tracker returns its allocation to an empty booking at Castellón, with its loading and discharge at Aliağa as estimated moves."
+    },
+    {
+      "number": "ARKU5022908",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. Arkas Line's tracker returns its allocation to an empty booking at Abidjan and its gate in empty at a Mersin depot."
+    },
+    {
+      "number": "ARKU2438867",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. Arkas Line's tracker returns its allocation to an empty booking at Fos-sur-Mer and its gate in empty at a depot."
+    },
+    {
+      "number": "ARKU5000447",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pier2pier.com/universal-container-tracking/arkas/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Arkas Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Arkas Line page lists this container among its recent searches. Arkas Line's tracker returns its allocation to an empty booking and its gate in empty at Poti."
+    }
+  ]
+}

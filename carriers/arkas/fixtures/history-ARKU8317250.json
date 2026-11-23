@@ -1,0 +1,88 @@
+{
+  "data": [
+    {
+      "port": "",
+      "terminal": "GEMLIK DEPO",
+      "status": "Assigned to Booking Full Export",
+      "statusCode": "Full Export",
+      "date": "13.08.2026 17:48",
+      "eventDate": "2026-08-13T17:48:49",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": false
+    },
+    {
+      "port": "",
+      "terminal": "GEMLIK DEPO",
+      "status": "Gate Out Empty",
+      "statusCode": "Empty",
+      "date": "13.08.2026 17:49",
+      "eventDate": "2026-08-13T17:49:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": false
+    },
+    {
+      "port": "GEMLIK",
+      "terminal": "RODAPORT TERMINAL",
+      "status": "Gate In Full Export",
+      "statusCode": "Full Export",
+      "date": "14.08.2026 15:59",
+      "eventDate": "2026-08-14T15:59:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "GEMLIK",
+      "terminal": "RODAPORT TERMINAL",
+      "status": "Load Full Export",
+      "statusCode": "LFUL",
+      "date": "22.08.2026 06:40",
+      "eventDate": "2026-08-22T06:40:00",
+      "vesselName": "VENTO DI MAESTRALE",
+      "voyageNumber": "ITE52426",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "SALERNO",
+      "terminal": "SALERNO CONTAINER TERMINAL",
+      "status": "Discharge Full Import",
+      "statusCode": "DFUL",
+      "date": "29.08.2026 08:05",
+      "eventDate": "2026-08-29T08:05:00",
+      "vesselName": "VENTO DI MAESTRALE",
+      "voyageNumber": "ITE52626",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "SALERNO",
+      "terminal": "SALERNO CONTAINER TERMINAL",
+      "status": "Gate Out Full Import",
+      "statusCode": "Full Import",
+      "date": "04.09.2026 18:03",
+      "eventDate": "2026-09-04T18:03:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "",
+      "terminal": "AMENDOLA DEPOT",
+      "status": "Gate In Empty",
+      "statusCode": "RCCN",
+      "date": "25.09.2026 14:39",
+      "eventDate": "2026-09-25T14:39:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": false
+    }
+  ]
+}

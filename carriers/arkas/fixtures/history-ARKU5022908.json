@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "port": "ABIDJAN",
+      "terminal": "ABIDJAN TERMINAL",
+      "status": "Assigned to Booking Empty",
+      "statusCode": "Empty",
+      "date": "24.09.2026 12:20",
+      "eventDate": "2026-09-24T12:20:42",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": true
+    },
+    {
+      "port": "",
+      "terminal": "MERSIN DEPO (ARKAS)\t",
+      "status": "Gate In Empty",
+      "statusCode": "RCCN",
+      "date": "03.11.2026 19:23",
+      "eventDate": "2026-11-03T19:23:00",
+      "vesselName": "",
+      "voyageNumber": "",
+      "isDummy": false,
+      "isPort": false
+    }
+  ]
+}

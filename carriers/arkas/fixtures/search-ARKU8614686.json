@@ -1,0 +1,21 @@
+{
+  "data": {
+    "data": [
+      {
+        "bookingNo": "",
+        "blNo": "",
+        "documentationId": 2471873,
+        "containerNo": "ARKU8614686",
+        "size": 40,
+        "type": "HC",
+        "isSoc": false,
+        "lastRecordedStatus": "Load",
+        "lastRecordedStatusCode": null,
+        "lastRecordedLocation": "ALIAGA",
+        "lastRecordedDate": "2026-12-01T04:00:00",
+        "finalDestination": "NEMPORT"
+      }
+    ],
+    "dataCount": 0
+  }
+}

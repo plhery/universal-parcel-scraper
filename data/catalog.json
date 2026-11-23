@@ -10229,6 +10229,27 @@
       }
     ]
   },
+  "arkas": {
+    "displayName": "Arkas Line",
+    "color": "#28448F",
+    "aliases": [
+      "Arkas",
+      "Arkas Container Transport",
+      "Arkas Konteyner Taşımacılık",
+      "ARKU"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "arkas",
+      "localClocks": true
+    },
+    "canaryUrl": "https://arkasline.com.tr/en/online-tracking/",
+    "trackingSearchUrl": "https://arkasline.com.tr/en/online-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "arrow-express": {
     "displayName": "Arrow Express",
     "color": "#014fb1",

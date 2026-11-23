@@ -10233,6 +10233,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "arkas": {
+    "displayName": "Arkas Line",
+    "color": "#28448F",
+    "aliases": [
+      "Arkas",
+      "Arkas Container Transport",
+      "Arkas Konteyner Taşımacılık",
+      "ARKU"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "arkas",
+      "localClocks": true
+    },
+    "canaryUrl": "https://arkasline.com.tr/en/online-tracking/",
+    "trackingSearchUrl": "https://arkasline.com.tr/en/online-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "arrow-express": {
     "displayName": "Arrow Express",
     "color": "#014fb1",
@@ -71721,6 +71742,7 @@ export const CARRIER_IDS = [
   "aras-kargo",
   "arco-spedizioni",
   "ark-express",
+  "arkas",
   "arrow-express",
   "arrow-xl",
   "aruba-post",
@@ -73763,6 +73785,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aras-kargo": ["aras-kargo-1"],
   "arco-spedizioni": [],
   "ark-express": ["ark-express-1"],
+  "arkas": [],
   "arrow-express": [],
   "arrow-xl": [],
   "aruba-post": ["aruba-post-s10"],

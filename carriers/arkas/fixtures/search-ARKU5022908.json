@@ -1,0 +1,21 @@
+{
+  "data": {
+    "data": [
+      {
+        "bookingNo": "",
+        "blNo": "",
+        "documentationId": 876594,
+        "containerNo": "ARKU5022908",
+        "size": 40,
+        "type": "HR",
+        "isSoc": false,
+        "lastRecordedStatus": "Discharge",
+        "lastRecordedStatusCode": null,
+        "lastRecordedLocation": "MERSIN",
+        "lastRecordedDate": "2026-11-03T19:23:00",
+        "finalDestination": "MERSIN INTERNATIONAL PORT (MIP)"
+      }
+    ],
+    "dataCount": 0
+  }
+}
