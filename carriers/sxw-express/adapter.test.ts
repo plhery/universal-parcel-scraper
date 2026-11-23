@@ -35,6 +35,11 @@ it('maps the processing it copies from DHL in Germany as onward transit', () => 
   expect(statusMap.stage(null, normalizeStatusWording('The shipment has been processed in the parcel center of origin'))).toBe('in_transit');
 });
 
+it('reads the last-mile carrier\'s locker token as the parcel waiting for collection, not delivered', () => {
+  expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'DELIVERED_TO_LOCKER' }))
+    .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+});
+
 it('maps the rows it copies from J&T Express Mexico, whatever their towns, sites, courier and phone', () => {
   for (const [wording, stage] of [
     ['【Villa Dos】【CLC-Norte.pdv】?Recolección exitosa!. El mensajero de J&T asignado OTRO.pcp recolectó tu envío. Para mayor información, comunícate al: 5500000000', 'in_transit'],
