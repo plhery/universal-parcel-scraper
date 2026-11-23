@@ -14,6 +14,8 @@ const codes: Record<string, ClassifiedStatus> = {
   'BDE/25': { status: 'exception', stage: 'failed_attempt' },
   // The postman found no such address on the delivery run.
   'BDE/99': { status: 'exception', stage: 'failed_attempt' },
+  // Nobody at the address knew the recipient on the delivery run.
+  'BDE/06': { status: 'exception', stage: 'failed_attempt' },
   'BDE/23': { status: 'exception', stage: 'returned' },
   'BDE/34': { status: 'exception', stage: 'exception' },
   'BDE/47': { status: 'exception', stage: 'exception' },

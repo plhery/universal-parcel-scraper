@@ -425,7 +425,7 @@ describe('JS Express tracking adapter', () => {
       ['OIT', 'The customs clearance agent is queuing up to pick up the goods', 'in_transit'],
       ['OIT', 'The customs clearance agent has picked up the goods', 'customs'],
       ['DCF', 'Released from customs: customs cleared.', 'in_transit'], ['OIT', 'Depart from the destination distribution center.', 'in_transit'],
-      ['OIT', 'Accepted at USPS Facility', 'in_transit'], ['DOP', 'Enviado', 'in_transit'], ['OIT', 'Consignee Contacted', 'pending'],
+      ['OIT', 'Accepted at USPS Facility', 'in_transit'], ['DOP', 'Enviado', 'in_transit'], ['OIT', 'Nuevo reparto', 'in_transit'], ['OIT', 'Consignee Contacted', 'pending'],
       ['DZT', 'The recipient has selected a Packstation as the new delivery address.', 'pending'],
       ['OIT', 'There is a preferred location/neighbour for this item.', 'pending'],
     ] as const) {
