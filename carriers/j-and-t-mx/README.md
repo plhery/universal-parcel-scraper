@@ -29,8 +29,8 @@ digits of the recipient's or sender's phone the tracker asks for.
 ## Notes
 
 - The reply's language follows the reader's: Spanish, English or Chinese, Spanish otherwise.
-- A scan's description is the label the page lists it under. `statuses.json` holds no labels
-  yet, so the shared wording rules stage the scans.
+- A scan's description is the label the page lists it under. `statuses.json` maps the labels
+  seen in replies; the shared wording rules stage any other.
 - A scan's location is the place set apart in brackets at the head of its sentence. The rest of
   the sentence names couriers and phones and is not read, nor are the origin and destination
   towns.
