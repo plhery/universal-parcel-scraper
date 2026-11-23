@@ -22,6 +22,8 @@ export const HAYPOST_EVENTS: Readonly<Record<string, Stage>> = {
   // The office that hands the item over received it.
   'Receive item at location': 'in_transit',
   'Receive item at delivery office': 'in_transit',
+  // The destination post's arrival at the office that will hand the item over, in its own words rather than IPS's.
+  'Item was delivered to the postal office': 'in_transit',
   'Receive item at sorting centre': 'in_transit',
   'Send item out for physical delivery': 'out_for_delivery',
   'Unsuccessful item delivery attempt': 'failed_attempt',
