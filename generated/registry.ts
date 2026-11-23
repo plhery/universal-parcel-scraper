@@ -131,6 +131,7 @@ import { adapter as cadenaCourier } from '../carriers/cadena-courier/adapter.js'
 import { adapter as calidexCourier } from '../carriers/calidex-courier/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
+import { adapter as cargologic } from '../carriers/cargologic/adapter.js';
 import { adapter as cargolux } from '../carriers/cargolux/adapter.js';
 import { adapter as cargox } from '../carriers/cargox/adapter.js';
 import { adapter as cargus } from '../carriers/cargus/adapter.js';
@@ -861,6 +862,7 @@ import { adapter as skyking } from '../carriers/skyking/adapter.js';
 import { adapter as skynetSa } from '../carriers/skynet-sa/adapter.js';
 import { adapter as skynetWorldwide } from '../carriers/skynet-worldwide/adapter.js';
 import { adapter as skypostal } from '../carriers/skypostal/adapter.js';
+import { adapter as skyquick } from '../carriers/skyquick/adapter.js';
 import { adapter as slgtrax } from '../carriers/slgtrax/adapter.js';
 import { adapter as slovakParcelService } from '../carriers/slovak-parcel-service/adapter.js';
 import { adapter as slovenskaPosta } from '../carriers/slovenska-posta/adapter.js';
@@ -1221,6 +1223,7 @@ export const REGISTRY: RegistryDefinition = {
     "calidex-courier": calidexCourier,
     "canada-post": canadaPost,
     "canpar": canpar,
+    "cargologic": cargologic,
     "cargolux": cargolux,
     "cargox": cargox,
     "cargus": cargus,
@@ -1951,6 +1954,7 @@ export const REGISTRY: RegistryDefinition = {
     "skynet-sa": skynetSa,
     "skynet-worldwide": skynetWorldwide,
     "skypostal": skypostal,
+    "skyquick": skyquick,
     "slgtrax": slgtrax,
     "slovak-parcel-service": slovakParcelService,
     "slovenska-posta": slovenskaPosta,
@@ -2452,6 +2456,7 @@ export const REGISTRY: RegistryDefinition = {
     "cargoboard": "universal",
     "cargobus": "universal",
     "cargoline": "universal",
+    "cargologic": "cargologic",
     "cargolux": "cargolux",
     "cargomini": "universal",
     "cargox": "cargox",
@@ -3793,6 +3798,7 @@ export const REGISTRY: RegistryDefinition = {
     "skynet-sa": "skynet-sa",
     "skynet-worldwide": "skynet-worldwide",
     "skypostal": "skypostal",
+    "skyquick": "skyquick",
     "slgtrax": "slgtrax",
     "slovak-parcel-service": "slovak-parcel-service",
     "slovenska-posta": "slovenska-posta",

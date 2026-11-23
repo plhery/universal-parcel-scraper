@@ -14406,6 +14406,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cargologic": {
+    "displayName": "Cargologic",
+    "color": "#ca0538",
+    "aliases": [
+      "Cargologic AG"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cargologic"
+    },
+    "canaryUrl": "https://www.cargologic.com/en/awb-tracking.html",
+    "trackingSearchUrl": "https://www.cargologic.com/en/awb-tracking.html",
+    "helpUrl": "https://www.cargologic.com/en/kontakt.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cargolux": {
     "displayName": "Cargolux",
     "color": "#CC0033",
@@ -58048,6 +58069,49 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "skyquick": {
+    "displayName": "SkyQuick International",
+    "color": "#e4002b",
+    "aliases": [
+      "SkyQuick",
+      "SkyQuick International Pte Ltd"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Singapore",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "skyquick",
+      "recognitionRank": 689,
+      "localClocks": true
+    },
+    "canaryUrl": "https://skyquickinternational.com/",
+    "trackingUrlTemplate": "https://skyquickinternational.com/tracking.aspx?cn={trackingNumber}",
+    "trackingSearchUrl": "https://skyquickinternational.com/",
+    "helpUrl": "https://skyquickinternational.com/index.aspx#contactus",
+    "linkRules": [
+      {
+        "domains": [
+          "skyquickinternational.com",
+          "www.skyquickinternational.com"
+        ],
+        "pathPattern": "^/tracking\\.aspx$",
+        "params": [
+          "cn"
+        ]
+      },
+      {
+        "domains": [
+          "tracking.frontierforce.com"
+        ],
+        "pathPattern": "^/(?:tracking(?:_search)?\\.aspx|go/plm-tracking(?:_search)?)/?$",
+        "query": "^(?=(?:[^&]*&)*stid=skyquick(?:&|$))(?:[^&]*&)*?cn=([^&]+)"
+      }
+    ],
+    "detectionRules": []
+  },
   "slgtrax": {
     "displayName": "SLGTrax",
     "color": "#2d7a52",
@@ -71731,6 +71795,7 @@ export const CARRIER_IDS = [
   "cargoboard",
   "cargobus",
   "cargoline",
+  "cargologic",
   "cargolux",
   "cargomini",
   "cargox",
@@ -73004,6 +73069,7 @@ export const CARRIER_IDS = [
   "skynet-sa",
   "skynet-worldwide",
   "skypostal",
+  "skyquick",
   "slgtrax",
   "slovak-parcel-service",
   "slovenska-posta",
@@ -73769,6 +73835,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cargoboard": [],
   "cargobus": [],
   "cargoline": [],
+  "cargologic": [],
   "cargolux": [],
   "cargomini": [],
   "cargox": [],
@@ -75042,6 +75109,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "skynet-sa": [],
   "skynet-worldwide": [],
   "skypostal": ["skypostal-1","skypostal-2"],
+  "skyquick": [],
   "slgtrax": [],
   "slovak-parcel-service": ["slovak-parcel-service-1","slovak-parcel-service-2"],
   "slovenska-posta": ["slovenska-posta-own","slovenska-posta-s10"],
