@@ -26,7 +26,7 @@ export function countNumberFields(elements: Element[]): number {
     if (/e-?mail|user ?name|login|password|passwort|mot de passe/i.test(label)) return false;
     const siteSearch = /^(?:q|query|s|search|keywords?)$/i.test(field.name)
       || /^\s*(?:search|rechercher|suchen|buscar|cerca|szukaj)\b/i.test(field.placeholder || field.getAttribute('aria-label') || '');
-    return !siteSearch || /track|suivi|sendung|colis|parcel|package|shipment|waybill|consignment|number|numéro|nummer|número|numero|трек|номер|дугаар/i.test(label);
+    return !siteSearch || /track|suivi|sendung|colis|parcel|package|shipment|waybill|consignment|number|numéro|nummer|número|numero|трек|номер|дугаар|运单|運單|单号|單號/i.test(label);
   }).length;
 }
 
@@ -53,35 +53,46 @@ export const carriersWithoutSearchPage: Partial<Record<CarrierId, string>> = {
   yimidida: 'www.yimidida.com answers the search-page check with its cloud firewall\'s 405 block page; a waybill opens at its own address',
 };
 
-/** Search pages the weekly check cannot open, and why. Each was seen working in a regular browser. */
+/**
+ * Search pages the weekly check cannot open, and why. Each was seen working in a regular browser,
+ * except the sites the catalog opens because their tracker answers plain HTTP only.
+ */
 export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'aaa-cooper': 'www.aaacooper.com refuses connections from many networks; an archived copy of the home page shows its Action Trac number field',
-  'algerie-poste': 'www.ems.dz answers only Algerian networks; an archived copy shows its tracking code field',
   'airways-courier-in': 'the AWB field stays hidden until the track button in the page header opens it; the only field shown before that is the sign-in user id',
+  'algerie-poste': 'www.ems.dz answers only Algerian networks; an archived copy shows its tracking code field',
   'aloha-freight': 'the Quick Shipment Search names its field keyword, which the check reads as a site search',
   'asyad-express': 'www.asyadexpress.om answers only Omani networks; an archived copy of the page shows its tracking number field',
+  auexpress: 'the Tracking No. box on www.auexpress.com/tracking shows only on desktop-size screens, which the phone-size check does not use',
   azerpost: 'www.azerpost.az does not answer connections from the United States; to European networks it shows its item-number field',
   belpost: 'belpost.by\'s tracking page renders without its number field on the weekly check\'s network; European and American networks get the field',
   'best-express-my': 'www.best-inc.my sends phone-sized screens to a tracking page with no waybill field; the desktop page has it',
   'best-express-vn': 'www.best-inc.vn sends phone-sized screens to a tracking page that renders blank in automated browsers; the desktop page has the waybill field',
+  btd: 'www.btdair.com has no number field; its tracker answers plain HTTP only, on a bare IP address, which the catalog does not link',
   'chunghwa-post': 'the tracker draws its form only when its menu template loads before its site map, a race a fresh browser often loses; its Track & Trace menu then opens the form',
   'custom-companies': 'the Shipment ID box sits in the desktop banner of www.customco.com, which the phone-size check does not show',
   'daylight-transport': 'the Track PRO # field sits in the desktop header of dylt.com, which the phone-size check does not show',
   dellin: 'the tracker answers automated browsers with a Qrator check (HTTP 401); in a regular browser it shows its order-number field',
   deprisa: 'www.deprisa.com answers 403 to networks outside Colombia, the United States, Spain and Argentina; its tracker at /es/rastrea has the number field and checks reCAPTCHA',
   'designer-transport': 'the tracker names its field search, which the check reads as a site search',
+  dpdex: 'the number box on client.duopudaexpress.com shows only on desktop-size screens, which the phone-size check does not use',
   dtdc: 'www.dtdc.com refuses connections from many networks outside India; an archived phone-size copy shows its number field',
   'emirates-post': 'emiratespost.ae answers 403 to many networks outside the UAE; an archived copy shows its number field',
   'first-delivery-tn': 'www.firstdeliverygroup.com answers only Tunisian networks; an archived copy shows its waybill number field',
+  'ftd-nz': 'the FTD number field on www.ftd.nz/query/ shows only on desktop-size screens, which the phone-size check does not use',
   'grand-slam-express': 'the AWB field on www.grandslamexpress.in/Web/Track is hidden on phone-sized screens, which the check uses; the desktop page shows it',
   'hi-trans': 'www.hi-trans.com.au challenges automated browsers; in a regular browser its home page has the consignment number field',
   'hr-parcel': 'the tracker names its field q, which the check reads as a site search',
+  'inter-global-kargo': 'the Takip No field on www.globalkargo.com shows only on desktop-size screens, which the phone-size check does not use',
   'israel-post': 'israelpost.co.il answers 403 to many networks outside Israel; an archived copy shows its item-number field',
   jcex: 'track.jcex.com\'s CDN refuses connections from Europe, the Americas and most of Asia; reached through the origin server behind it, the page shows its number box',
+  'jiaying-express': 'the tracker answers plain HTTP only, on a bare IP address, which the catalog does not link; the help page links to it',
   kurierzentrale: 'crm.kuz.ch keeps its Sendungsnummer field in a hidden pop-up that its "Track Auftrag" button opens, so the check finds no field on load',
   'la-poste-tunisienne': 'www.poste.tn does not answer connections from outside Tunisia; an archived copy of its home page shows the item-number field',
+  'lm-parcel': 'the number box on www.lmparcel.com/search shows only on desktop-size screens, which the phone-size check does not use',
   'mailplus-au': 'the tracker names its field search, which the check reads as a site search',
   'midland-transport': 'the tracking-number field sits in the desktop navigation bar of the tracker, which the phone-size check does not show',
+  'mobel-services': 'the Reference field on tracking.mobelservices.com shows only on desktop-size screens, which the phone-size check does not use',
   'nepal-post': 'pits.gpo.gov.np does not answer connections from outside Nepal; to a Nepali network it shows its item-number field',
   'olva-courier': 'the tracker names its field q, which the check reads as a site search',
   'ozon-logistics': 'tracking.ozon.ru answers automated browsers with a bot check; in a regular browser it shows the tracking number field',
@@ -92,17 +103,25 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'pony-express': 'www.ponyexpress.ru answers 403 to many networks outside Russia; an archived copy shows its waybill field',
   postaplus: 'postaplus.com draws its tracking form late in a script app, after the automated check gives up',
   saee: 'saee.sa answers 503 to automated checks from many networks; archived copies of its tracking page show the waybill field',
-  'sofex-post': 'sofexpost.md keeps its tracking box in a hidden pop-up that its "Verifică statutul coletului" button opens, so the check finds no field on load',
+  'sengi-express': 'portal.sengiexpress.com shows its waybill box only on desktop-size screens, which the phone-size check does not use',
+  shippify: 'www.shippify.co keeps its tracking ID field in a hidden pop-up that its "Rastreie seu pedido" link opens, so the check finds no field on load',
   slgtrax: 'sonic.pk drops connections from the weekly check\'s network and some others; to European and other American networks it shows its tracking number field',
+  'sofex-post': 'sofexpost.md keeps its tracking box in a hidden pop-up that its "Verifică statutul coletului" button opens, so the check finds no field on load',
   'spee-dee': 'the tracking form is a frame from packages.speedeedelivery.com, which drops connections from many networks',
   'surat-kargo': 'www.suratkargo.com.tr answers a Cloudflare block to many networks outside Turkey; an archived copy shows its number field',
   't-cat': 'www.t-cat.com.tw answers only Taiwanese networks; to a Taiwanese network it shows its waybill number fields',
   'thailand-post': 'some of the tracker\'s servers stall on its script bundles, so the form often stays empty past the render window',
+  'the-human-express': 'the tracking field on thehuman.express/trackings shows only on desktop-size screens, which the phone-size check does not use',
+  topyou: 'the number box on track.szty56.com shows only on desktop-size screens, which the phone-size check does not use',
   'total-express': 'totalconecta.totalexpress.com.br answers many networks with an Akamai Access Denied page; to the networks it lets through it shows its number field',
   'trans-express-lk': 'tracking.transexpress.lk shows its waybill field only after its DOMESTIC or COD tab is chosen, so the check finds no field on load',
   'trans-o-flex': 'www.trans-o-flex.com answers the burst of script requests its tracking app makes with HTTP 429, so the form often stays empty past the render window',
   'transport-rdl': 'transportrdl.com does not answer the weekly check\'s runners in time, not even a plain request; to other networks it shows its tracking number field',
+  'usend-chile': 'the Número de envío field on usend.cl shows only on desktop-size screens, which the phone-size check does not use',
   veloblitz: 'veloblitz.kuz.ch keeps its Sendungsnummer field in a hidden pop-up that its "Track Auftrag" button opens, so the check finds no field on load',
+  'velocity-express-in': 'the AWB field on velexp.com/home-tracking shows only on desktop-size screens, which the phone-size check does not use',
   'ward-trucking': 'wardtlctools.com refuses connections from many networks; an archived copy shows its PRO number fields',
+  xingyunyi: 'the tracking number field on www.xingyunyi.com/tracking shows only on desktop-size screens, which the phone-size check does not use',
+  'yamato-america': 'the phone page names its number field s and asks for "No.", which the check reads as a site search; the desktop page asks for a tracking number',
   'yc-delivery': 'www.e1.yc-otodoke.com answers 403 or 503 to many networks outside Japan; an archived copy shows its inquiry-number fields',
 };

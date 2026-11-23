@@ -26,7 +26,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://www.jetft.com/tracking.html?order={trackingNumber}",
-    "searchUrl": "https://www.jetft.com/tracking.html",
+    "searchUrl": "https://www.jetft.com/order.html",
     "helpUrl": "https://www.jetft.com/contact.html",
     "canaryUrl": "https://www.jetft.com/tracking.html",
     "shows": [],

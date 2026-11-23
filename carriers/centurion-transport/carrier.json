@@ -25,7 +25,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://www.centurion.net.au/TrackAndTrace/?track=on&con={trackingNumber}",
-    "searchUrl": "https://www.centurion.net.au/TrackAndTrace/",
+    "searchUrl": "https://centurion.net.au/tracking/",
     "canaryUrl": "https://www.centurion.net.au/",
     "shows": [],
     "scraped": [],

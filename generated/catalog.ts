@@ -15230,7 +15230,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.centurion.net.au/",
     "trackingUrlTemplate": "https://www.centurion.net.au/TrackAndTrace/?track=on&con={trackingNumber}",
-    "trackingSearchUrl": "https://www.centurion.net.au/TrackAndTrace/",
+    "trackingSearchUrl": "https://centurion.net.au/tracking/",
     "linkRules": [
       {
         "domains": [
@@ -36874,7 +36874,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.jetft.com/tracking.html",
     "trackingUrlTemplate": "https://www.jetft.com/tracking.html?order={trackingNumber}",
-    "trackingSearchUrl": "https://www.jetft.com/tracking.html",
+    "trackingSearchUrl": "https://www.jetft.com/order.html",
     "helpUrl": "https://www.jetft.com/contact.html",
     "linkRules": [
       {
