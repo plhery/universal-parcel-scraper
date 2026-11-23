@@ -471,6 +471,8 @@ describe('shared provider result', () => {
     for (const wording of ['Despatched to CouriersPlease', 'Despatched to Couriers Please']) {
       expect(event('2026-01-07T13:00:00+11:00', wording), wording).toMatchObject({ stage: 'accepted', stage_source: 'wording:language' });
     }
+    // One still to come is no hand-over.
+    expect(classifyEvent('Your parcel will be despatched to CouriersPlease').stage).not.toBe('accepted');
   });
 
   it("reads Landmark Global's pallet for any crossing, and a destination carrier's pre-alert, as ParcelsApp relays them", () => {
