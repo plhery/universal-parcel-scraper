@@ -1,0 +1,24 @@
+{
+  "carrier": "yji",
+  "records": [
+    {
+      "number": "YJIDB1836638923YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260614134752/https://www.parcelpanel.com/couriers/yji/",
+        "date": "2026-06-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample number a tracking app's archived YJI page embeds. YJI's tracker answers it with a parcel shipped by sea from Guangzhou that FedEx delivered in Tennessee."
+    }
+  ]
+}

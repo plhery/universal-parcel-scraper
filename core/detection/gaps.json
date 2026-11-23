@@ -6181,6 +6181,11 @@
     "reason": "GTI numbers are GTI and thirteen digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   },
   {
+    "carrier": "yji",
+    "kind": "open",
+    "reason": "YJI numbers are YJID, a letter, ten digits and YQ; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
     "carrier": "tuomeida",
     "kind": "open",
     "reason": "Tuomeida numbers are TM and thirteen digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."

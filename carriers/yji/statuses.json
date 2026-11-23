@@ -1,0 +1,28 @@
+{
+  "carrier": "yji",
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "live", "note": "The order's data reached the platform, before the warehouse has the goods."},
+    {"code": "ARRIVAL", "wording": "CHINA, GUANGZHOU, ARRIVAL AT OUTWARD OFFICE OF EXCHANGE", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt, worded as a post's: the country and city lead, so any city reads the same."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The warehouse's departure: the goods leave the operation centre."},
+    {"wording": "【CN】您的订单预计3.25开船，4.9到港，船名航次：HANSA DUBURG/2603E", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The forwarder's note of the planned sailing, arrival and vessel; the dates and vessel change, so any such note reads the same."},
+    {"wording": "【CN】您的订单已开船，船期预计4.9到港", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The forwarder's note that the ship sailed, with its expected arrival."},
+    {"wording": "【US】您的订单已到港，等待清关卸船", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The ship reached the US port; clearance and unloading come next, a routine step, not a hold."},
+    {"wording": "【US】您的订单已提柜，等待拆柜", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The container was collected from the port and waits to be unpacked."},
+    {"wording": "【US】您的订单已交服务商，请留意提取信息！", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the US delivery carrier, whose rows follow."},
+    {"code": "CO_C_CR", "wording": "过机扫描入库(广州设备)", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's script: scanned into the Guangzhou warehouse. The script's rows are written ahead, so they are named, not kept as scans."},
+    {"code": "CO_C_CR", "wording": "运单已确认", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's script: waybill confirmed."},
+    {"code": "CO_C_CR", "wording": "计划配载", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's script: stowage planned."},
+    {"code": "CO_C_CR", "wording": "完成配载", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's script: stowage done."},
+    {"code": "CO_C_CR", "wording": "已开船", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's script: the ship sailed."},
+    {"code": "CO_C_CR", "wording": "运输中..", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's script: in transit."},
+    {"wording": "货件信息已发送给 FedEx", "language": "zh", "stage": "registered", "confirmedBy": "live", "note": "Copied from FedEx: the label's data reached FedEx, which delivers the last leg."},
+    {"wording": "已收取", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from FedEx: picked up from the forwarder's US warehouse, a hand-over after the forwarder's own acceptance."},
+    {"wording": "抵达 FedEx 服务站", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from FedEx: arrived at a FedEx facility."},
+    {"wording": "货件将准时送达", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from FedEx: on schedule for delivery."},
+    {"wording": "已离开 FedEx 服务站", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from FedEx: left a FedEx facility."},
+    {"wording": "途中", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from FedEx: on the way."},
+    {"wording": "抵达当地 FedEx 服务站", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from FedEx: at the local FedEx facility before the delivery run."},
+    {"wording": "已装上 FedEx 车辆等待递送", "language": "zh", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Copied from FedEx: on the FedEx vehicle for delivery."},
+    {"wording": "已送达,放在前门处。  不要求签收服务。", "language": "zh", "stage": "delivered", "confirmedBy": "live", "note": "Copied from FedEx: delivered and left at the front door, no signature required; where FedEx left it changes, so any such row reads the same."}
+  ]
+}

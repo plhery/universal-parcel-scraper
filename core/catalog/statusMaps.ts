@@ -80,6 +80,7 @@ import { statusMap as lerdex } from '../../carriers/lerdex/status.js';
 import { statusMap as sheensync } from '../../carriers/sheensync/status.js';
 import { statusMap as yuanpeng } from '../../carriers/yuanpeng/status.js';
 import { statusMap as gti } from '../../carriers/gti/status.js';
+import { statusMap as yji } from '../../carriers/yji/status.js';
 import { statusMap as tuomeida } from '../../carriers/tuomeida/status.js';
 import { statusMap as huaExpress } from '../../carriers/hua-express/status.js';
 import { statusMap as rmLogistics } from '../../carriers/rm-logistics/status.js';
@@ -1102,6 +1103,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   sheensync,
   yuanpeng,
   gti,
+  yji,
   tuomeida,
   'hua-express': huaExpress,
   'rm-logistics': rmLogistics,
