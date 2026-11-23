@@ -317,6 +317,14 @@
       "note": "A Dutch last-mile partner's departure from its sorting centre, relayed without a code beside its own Dutch line coded 200."
     },
     {
+      "wording": "Your shipment has arrived at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "A last-mile partner's sorting centre taking the parcel in, relayed without a code at the minute its acceptance by the delivery carrier is coded SupplierAndLastMileReceive."
+    },
+    {
       "wording": "Consignee Contacted",
       "language": "en",
       "stage": null,
