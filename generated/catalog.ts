@@ -43379,6 +43379,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^ANS\\d{13}UA$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^MGR[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
       }
     ]
   },
@@ -74920,7 +74924,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mazet": [],
   "mds-collivery": [],
   "mebel-taxi": [],
-  "meest": ["meest-1","meest-2","meest-3"],
+  "meest": ["meest-1","meest-2","meest-3","meest-4"],
   "megacity-courier": [],
   "meihoo-pegasus": ["meihoo-pegasus-1"],
   "meitetsu-unyu": [],

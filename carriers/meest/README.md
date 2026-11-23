@@ -31,7 +31,9 @@ with their registration and collection. A low-confidence rule offers Meest for t
 [HR Parcel](../hr-parcel/README.md), which delivers iHerb's parcels in Italy; recognition
 settles which one has the parcel.
 Meest's tracker also answers numbers of `ANS`, thirteen digits and `UA` for parcels posted in
-Poland, and a low-confidence rule offers Meest for them.
+Poland, and a low-confidence rule offers Meest for them. A low-confidence rule also offers Meest
+for numbers of `MGR`, two letters, ten digits and `YQ`, a consolidator's waybill whose parcels
+its tracker answers from their registration in China.
 The tracker also knows the S10 numbers other posts and senders give the parcels Meest carries,
 which stay with the postal routing, and partners' references of many shapes. The adapter takes
 six to forty letters and digits with at least one digit; anything else is invalid without a

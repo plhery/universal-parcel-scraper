@@ -138,6 +138,11 @@
       "id": "meest-3",
       "pattern": "^ANS\\d{13}UA$",
       "confidence": "low"
+    },
+    {
+      "id": "meest-4",
+      "pattern": "^MGR[A-Z]{2}\\d{10}YQ$",
+      "confidence": "low"
     }
   ]
 }
