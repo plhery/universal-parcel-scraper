@@ -15,8 +15,19 @@ export function stone3plUnsigned(wording: string): string {
   return wording.replace(SIGNER, '').replace(/^[\s,;:\-–]+|[\s,;:\-–]+$/g, '');
 }
 
+// The place some scans name before their wording: "PLACE, Arrived at origin facility".
+const PLACE_HEAD = /^([^,\d]{2,40}), (.+)$/;
+
+/**
+ * A wording's stage by the map: the whole wording, else what follows the place it names first. A head
+ * the shared rules read, as "Returned, …", is no place, so the wording is not read without it.
+ */
 export function stone3plStage(wording: string): Stage | undefined {
-  return WORDINGS.get(normalizeStatusWording(wording));
+  const whole = WORDINGS.get(normalizeStatusWording(wording));
+  if (whole) return whole;
+  const [, head, tail] = PLACE_HEAD.exec(wording) ?? [];
+  if (!head || !tail || head.trim().split(/\s+/).length > 3 || classifyWording(head).source !== 'none') return undefined;
+  return WORDINGS.get(normalizeStatusWording(tail));
 }
 
 export function stone3plScanStage(text: string): ClassifiedWording | null {

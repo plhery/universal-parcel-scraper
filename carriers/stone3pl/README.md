@@ -30,7 +30,9 @@ bucket establishes no information. An empty history without it is inconclusive.
   destination scans included; `createTracker()` dates them on a deduced zone,
   as it does for every carrier with local clocks.
 - The scan's wording establishes its milestone. Numeric status 1 also appears
-  on electronic pre-advice. The site's overall pick-up, delivered and alert
+  on electronic pre-advice. Some scans name a place before their wording
+  (`PLACE, Arrived at origin facility`); the map reads the wording after it,
+  unless the head is itself a status the shared rules read. The site's overall pick-up, delivered and alert
   buckets are retained; when a headline has no corresponding scan, the answer
   is partial.
 - `true_track_number` is the page's last-mile number. The carrier is a handoff

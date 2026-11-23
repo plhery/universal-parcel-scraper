@@ -110,6 +110,70 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-23",
       "note": "The hand-over to the delivering carrier, after its preparation: that carrier's own scans come later."
+    },
+    {
+      "wording": "Shipment information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The parcel's details from the sender, before any scan of the parcel."
+    },
+    {
+      "wording": "The instruction data for this shipment have been provided by the sender to DHL electronically",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "DHL's notice that the sender's data reached it, as Prime relays it before the parcel leaves China."
+    },
+    {
+      "wording": "Order Received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "After the parcel's details and DHL's notice of the sender's data, and a day before the first sorting centre's scan: the order, not yet the parcel."
+    },
+    {
+      "wording": "Arrived at origin facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The parcel at the origin's sorting centre."
+    },
+    {
+      "wording": "Departed from sort facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The parcel leaving the origin's sorting centre."
+    },
+    {
+      "wording": "Shipment is in transit to next facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Between the origin's sorting centre and the airport."
+    },
+    {
+      "wording": "Arrived at the origin international airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "At the airport the flight leaves from."
+    },
+    {
+      "wording": "Waiting for the flight",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "At the origin airport after its arrival there, before the flight."
     }
   ]
 }

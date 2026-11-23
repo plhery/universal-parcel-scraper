@@ -134,6 +134,13 @@ describe('Stone3PL', () => {
       'Batch delivery to carrier'].map(stone3plStage)).toEqual(Array(8).fill('in_transit'));
   });
 
+  it('reads a scan by the map after the place it names first, not after a head the wording rules read', () => {
+    expect(['Synthetic Town, Shipping inbound in sorting center', 'ABC, Arrived at origin facility', 'ABC, Departed from sort facility',
+      'Waiting for the flight'].map(stone3plStage)).toEqual(Array(4).fill('in_transit'));
+    expect(stone3plStage('Returned, Arrived at origin facility')).toBeUndefined();
+    expect(stone3plStage('Some Long Synthetic Place Name, Arrived at origin facility')).toBeUndefined();
+  });
+
   it('works through the public tracker with universal providers disabled', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => json(fixture()));
     const answer = await createTracker({ providers: [], fetcher }).track({ number: NUMBER, carrier: 'stone3pl' });
