@@ -10,7 +10,7 @@
  */
 import { CAINIAO_CHINA_ZONE, cainiaoInChina } from '../../carriers/aliexpress/clock.js';
 import { royalMailLabelsPartners, royalMailPartnerWall } from '../../carriers/royal-mail/clock.js';
-import { POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
+import { POSTNL_ACCEPTANCE_STAMP, POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { uspsScanZone } from '../../carriers/usps/clock.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
@@ -84,22 +84,20 @@ const BERLIN_UTC_COPIES = 'DHL Germany';
 const BERLIN = 'Europe/Berlin';
 
 /**
- * Spring GDS's scans dated to the minute, which are PostNL's: PostNL's feed
- * gives a scan's local time marked as UTC (carriers/spring-gds/adapter.ts),
- * and Postal Ninja reads that as UTC and gives it on Amsterdam's clock. Three
- * sorting scans at 14:18 and 14:19 Dutch time came at 15:18 and 15:19, an hour
- * after PostNL's own. Written back in UTC, the `dt` is the scan's wall clock
- * again. Stamps to the second are real UTC in that feed and keep Amsterdam's
- * clock, and so do the label's creation and the processing record without a
- * country, which PostNL stamps in UTC to the minute (`postnlRecordZone`): they
- * name no place, and Postal Ninja relays their wording.
+ * Spring GDS's scans, which are PostNL's feed (carriers/spring-gds/adapter.ts). Postal Ninja gives
+ * their `dt` as the feed has it: the scan's local time for most, and UTC for the label's creation
+ * and the processing record without a country (`postnlRecordZone`), which name no place and keep
+ * PostNL's wording. Spring GDS's sorting at 14:18 Dutch time came at 14:18, beside the copies at
+ * 15:18 Postal Ninja made before, when it read the feed's local times as UTC and showed them on
+ * Amsterdam's clock. It keeps those former copies beside the new ones (`formerCopies`).
  */
-const AMSTERDAM_UTC_READINGS = 'Spring GDS';
+const SPRING_GDS = 'Spring GDS';
 /**
- * On a Spring GDS item Postal Ninja also names PostNL's scans from that feed "PostNL", an hour ahead
- * alike: the pre-advice at 09:25 Dutch time came at 10:25. Their customs stamps, which the feed dates
- * to the fraction of a second in UTC, come with their UTC digits, as ParcelsApp gives them: the
- * pre-declaration at 12:37:33Z came at 12:37:33.
+ * On a Spring GDS item Postal Ninja also names PostNL's scans from that feed "PostNL", at the feed's
+ * digits alike: the pre-advice at 15:49 Dutch time came at 15:49. The stamps the feed dates in UTC
+ * to the fraction of a second, customs' and the acceptance centre's, come with their UTC digits and
+ * seconds, as ParcelsApp gives them: the acceptance at 07:53:24Z came at 07:53:24. An acceptance
+ * dated to the minute is a local scan.
  */
 const POSTNL = 'PostNL';
 const AMSTERDAM = 'Europe/Amsterdam';
@@ -137,25 +135,47 @@ function berlinCopyZone(service: string, location: string): string | null {
   return service === BERLIN_UTC_COPIES ? postalOfficeZone(location) : null;
 }
 
+/** Whether a scan of Spring GDS's feed through Postal Ninja is one the feed dates in UTC. */
+function feedUtcStamp(service: string, dt: string, location: string, description: string): boolean {
+  const wording = description.trim();
+  if (!location.trim() && POSTNL_UTC_RECORDS.test(wording)) return true;
+  return service === POSTNL && (POSTNL_CUSTOMS_STAMP.test(wording) || (POSTNL_ACCEPTANCE_STAMP.test(wording) && !TO_THE_MINUTE.test(dt)));
+}
+
+/** Whether a service's scans are Spring GDS's feed at its digits on a lookup for `carrier`. */
+const feedCopy = (service: string, carrier: string | null) => service === SPRING_GDS || (service === POSTNL && carrier === 'spring-gds');
+
 /**
  * A scan's `dt` as its service's wall clock: without the UTC suffix Postal
- * Ninja writes on some, DHL Germany's back on Berlin's clock, and PostNL's
- * local scans through Spring GDS back in UTC; the `dt` itself otherwise. A PostNL customs stamp on a Spring GDS
- * item is its UTC instant instead.
+ * Ninja writes on some, DHL Germany's back on Berlin's clock; the `dt` itself
+ * otherwise. A scan of Spring GDS's feed that the feed dates in UTC is its UTC
+ * instant instead.
  */
 export function wallClock(service: string, dt: string, location = '', description = '', carrier: string | null = null): string {
   if (service === BERLIN_UTC_COPIES) {
     const written = DateTime.fromISO(dt, { zone: 'UTC' });
     if (written.isValid) return written.setZone(BERLIN).toFormat("yyyy-MM-dd'T'HH:mm:ss");
   }
-  const postnlCopy = service === POSTNL && carrier === 'spring-gds';
-  if (postnlCopy && POSTNL_CUSTOMS_STAMP.test(description.trim()) && !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(dt)) return `${dt}Z`;
-  const utcRecord = !location.trim() && POSTNL_UTC_RECORDS.test(description.trim());
-  if ((service === AMSTERDAM_UTC_READINGS || postnlCopy) && TO_THE_MINUTE.test(dt) && !utcRecord) {
-    const shown = firstOccurrence(DateTime.fromISO(dt, { zone: AMSTERDAM }));
-    if (shown.isValid) return shown.toUTC().toFormat("yyyy-MM-dd'T'HH:mm:ss");
-  }
+  if (feedCopy(service, carrier) && !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(dt) && feedUtcStamp(service, dt, location, description)) return `${dt}Z`;
   return SUFFIXED_WALL_CLOCKS.has(carrierIdFromName(service) ?? '') ? dt.replace(UTC_SUFFIX, '') : dt;
+}
+
+/**
+ * The indexes of Postal Ninja's former copies of Spring GDS's local scans: a scan to the minute
+ * whose service also gives its wording at the feed's digits, its `dt` read on Amsterdam's clock and
+ * written back in UTC, an hour earlier in winter and two in summer.
+ */
+export function formerCopies(scans: readonly { service: string; dt: string; description: string }[], carrier: string | null): Set<number> {
+  const key = (service: string, minute: string, description: string) => `${service}\n${minute}\n${description.trim().toLowerCase()}`;
+  const minuteScans = scans.map((scan, index) => ({ ...scan, index }))
+    .filter((scan) => feedCopy(scan.service, carrier) && TO_THE_MINUTE.test(scan.dt));
+  const given = new Set(minuteScans.map((scan) => key(scan.service, scan.dt.slice(0, 16), scan.description)));
+  const former = new Set<number>();
+  for (const scan of minuteScans) {
+    const feed = firstOccurrence(DateTime.fromISO(scan.dt, { zone: AMSTERDAM })).toUTC();
+    if (feed.isValid && given.has(key(scan.service, feed.toFormat("yyyy-MM-dd'T'HH:mm"), scan.description))) former.add(scan.index);
+  }
+  return former;
 }
 
 /**

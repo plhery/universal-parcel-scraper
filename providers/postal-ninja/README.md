@@ -110,19 +110,18 @@ capture failure.
   gives that instant on the UK's clock: its "Item Received" at 00:34 was Australia Post's arrival
   at customs at 10:04 Sydney summer time. Those scans keep the wall clock under the label, since
   both countries have several zones.
-  Spring GDS's scans dated to the minute are PostNL's, whose feed marks a scan's local time as
-  UTC ([Spring GDS](../../carriers/spring-gds/README.md)). Postal Ninja reads it as UTC and gives
-  it on Amsterdam's clock: three sorting scans at 14:18 and 14:19 Dutch time came at 15:18 and
-  15:19 and showed an hour after PostNL's own. Their `dt` is written back in UTC, which gives the
-  scan's wall clock again. Stamps to the second are real UTC in that feed and keep Amsterdam's
-  clock, and so do the label's creation and the processing record without a place, which PostNL
-  stamps in UTC to the minute and Postal Ninja relays in PostNL's words. A stamp to the second
-  that falls on a whole minute is written back like PostNL's local scans: Postal Ninja's `dt`
-  has none of the fraction digits that mark it in PostNL's feed. On a Spring GDS item Postal
-  Ninja names some of those scans "PostNL", an hour ahead alike, and they are written back the
-  same way. Their customs stamps come with their UTC digits, as ParcelsApp gives them: read on
-  Amsterdam's clock, the pre-declaration came an hour before PostNL's own. On a lookup for
-  PostNL itself, its scans keep their digits.
+  Spring GDS's scans are PostNL's feed ([Spring GDS](../../carriers/spring-gds/README.md)), and
+  Postal Ninja gives their `dt` as the feed has it: the scan's local time for most, and UTC for
+  the label's creation and the processing record without a place, which PostNL stamps in UTC to
+  the minute and Postal Ninja relays in PostNL's words. On a Spring GDS item it names some of
+  those scans "PostNL", at the feed's digits alike, and their customs and acceptance stamps, which
+  the feed dates in UTC to the fraction of a second, keep their UTC digits and seconds, as
+  ParcelsApp gives them. An acceptance dated to the minute is a local scan. Postal Ninja used to
+  read the feed's local times as UTC and show them on Amsterdam's clock, and it keeps those
+  former copies beside the new ones: a sorting scan at 14:18 Dutch time came at 14:18 and at
+  15:18. A scan to the minute whose service gives its wording an hour earlier in winter, or two
+  in summer, is such a copy and is dropped. On a lookup for PostNL itself, its scans keep their
+  digits.
   Cainiao's scans keep its feed's wall clock, each at its site's, as Cainiao's own offsets
   showed on two parcels. Its steps in China, from the seller's to the departing flight, are
   read on China's clock by their wording ([shared with ParcelsApp](../../carriers/aliexpress/clock.ts)),

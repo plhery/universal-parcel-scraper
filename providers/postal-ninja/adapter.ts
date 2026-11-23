@@ -26,7 +26,7 @@ import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '.
 import { classifyEvent, event, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
 import {
-  borrowsRoutingZone, carrierHomeZone, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
+  borrowsRoutingZone, carrierHomeZone, formerCopies, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
 } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
@@ -120,12 +120,17 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   const scans: { wall: string | null; service: string; origin: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
   // The destination Royal Mail's scan leaving the UK has left for, whose post's scans the later ones are.
   let leftFor: string | null = null;
-  for (const raw of rawEvents as unknown[]) {
+  // The copies of Spring GDS's local scans Postal Ninja made before it gave the feed's digits, which it keeps beside the new ones.
+  const former = formerCopies((rawEvents as unknown[]).map((raw) => isRecord(raw)
+    ? { service: text(raw.ds), dt: typeof raw.dt === 'string' ? raw.dt : '', description: text(raw.dsc) }
+    : { service: '', dt: '', description: '' }), carrier);
+  for (const [index, raw] of (rawEvents as unknown[]).entries()) {
     if (!isRecord(raw)) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event');
     const description = text(raw.dsc);
     if (!description || isNotice(description) || DEADLINE.test(description)) continue;
     if (typeof raw.dt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?/.test(raw.dt)
       || !DateTime.fromISO(raw.dt, { zone: 'UTC' }).isValid) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event date');
+    if (former.has(index)) continue;
     const service = text(raw.ds);
     const partner = royalMailPartnerScanWall(service, raw.dt, leftFor);
     leftFor ??= royalMailLeavesFor(service, description, destination);
