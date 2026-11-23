@@ -1041,13 +1041,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dpd-pl', number: '9999999999999U',
     route: /^https:\/\/tracktrace\.dpd\.com\.pl\/EN\/parcelDetails\?/,
     marker: /There is no trace for this parcel|Parcel history/ },
-  // The page fills its search field from the address and searches on load.
-  { carrier: 'dpd-ru', number: 'RU999999990',
-    route: /^https:\/\/mydpd\.dpd\.kz\/ols\/trace2\/standard\.do2\?orderNum=RU999999990$/,
-    marker: /Информация по вашему запросу не найдена/ },
-  { carrier: 'dpd-by', number: 'BY999999990',
-    route: /^https:\/\/mydpd\.dpd\.by\/ols\/trace2\/standard\.do2\?orderNum=BY999999990$/,
-    marker: /Информация по вашему запросу не найдена/ },
   // The page frames the tracker app, which looks the waybill up from its address.
   { carrier: 'dpd-za', number: 'ZZ9999999980',
     route: /^https:\/\/www\.dpd\.com\/za\/en\/receiving-parcels\/track-my-parcel\/tracking-details\/\?ZZ9999999980$/,
@@ -2482,10 +2475,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'makati-express', number: 'DXB0000000',
     route: /^https:\/\/makati-express\.com\/tracking\/\?awbnumber=DXB0000000$/,
     marker: /Data not found \/ its not updated in the server|Shipment Progress of AWB No\./ },
-  // The server renders the lookup for the ODT in the address and names an unknown one in its notice.
-  { carrier: 'pullman-cargo', number: '00000000000',
-    route: /^https:\/\/pullmancargo\.cl\/seguimiento\/00000000000$/,
-    marker: /ODT no encontrada|Historial de Movimientos/ },
   // The server renders the lookup for the guía in the address, repeats it in the history's
   // heading and answers an unknown one with a notice.
   { carrier: 'aex-paraguay', number: 'A000000000',
@@ -2830,6 +2819,9 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   jcex: 'track.jcex.com\'s CDN refuses connections from Europe, the Americas and most of Asia; the adapter asks the origin server behind it, which no public address reaches.',
   'surat-kargo': 'The public tracker requires Turkish network access; the rendered-link check has no country-specific browser transport.',
   't-cat': 'The tracker answers only Taiwanese networks; the rendered-link check has no country-specific browser transport.',
+  'dpd-by': 'The tracker does not answer connections from the United States; the rendered-link check has no country-specific browser transport.',
+  'dpd-ru': 'The tracker does not answer connections from the United States; the rendered-link check has no country-specific browser transport.',
+  'pullman-cargo': 'The tracker does not answer the runner\'s network, while Chilean, American and German networks get it; the rendered-link check has no other browser transport.',
   'nhat-tin': 'The tracking page searches only after its reCAPTCHA, and its lookup service requires Vietnamese network access; the rendered-link check has neither.',
   eushipments: 'euShipments\' tracking page takes the number only in its form, which posts it to a handler, so no address opens one order',
   'no-limit': 'No Limit\'s tracking page takes the number only in its form, which it posts back to itself with the page\'s state, so no address opens one shipment',

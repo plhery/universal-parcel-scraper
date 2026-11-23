@@ -41,6 +41,7 @@ tracking page makes.
 - Older items drop out of the tracker's records and then read as not found.
 - The tracker has no ETA, weight, service, origin, destination, recipient or delivery instant.
 - The adapter takes only S10 codes with a valid check digit.
+- `post.kg` answers only Kyrgyz networks; elsewhere every lookup times out.
 
 ## Numbers
 

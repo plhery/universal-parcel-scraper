@@ -40,6 +40,7 @@ adapter.
 ## Limitations
 
 - No clocks before delivery, no zone, no proof of delivery or pickup point.
+- `mydpd.dpd.by` and `mydpd.dpd.kz` do not answer connections from the United States.
 
 ## Numbers
 
