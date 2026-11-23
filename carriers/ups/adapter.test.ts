@@ -395,6 +395,9 @@ describe('UPS structured response', () => {
     // And a day's delay UPS gives no reason for, after an export scan.
     expect(statusMapAnswer({ carrier: 'ups', providerCode: '08', description: 'delivery will be delayed by one business day.' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // And a late UPS trailer, minutes after an arrival scan.
+    expect(statusMapAnswer({ carrier: 'ups', providerCode: '17', description: "a late ups trailer arrival has delayed delivery. we're adjusting plans to deliver your package as quickly as possible." }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
     // So do events outside UPS's control, between facility scans.
     expect(statusMapAnswer({ carrier: 'ups', providerCode: 'C5', description: 'uncontrollable events have delayed delivery. we are adjusting delivery plans as quickly as possible. please check back on the next business day for updates.' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
