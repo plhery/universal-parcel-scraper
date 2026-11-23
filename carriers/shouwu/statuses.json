@@ -300,6 +300,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Shipment of Flight departure",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The flight leaving with the parcel, after it went to the airline and before its arrival in the destination country."
+    },
+    {
       "wording": "Shipment in transit-To the airline",
       "stage": "in_transit",
       "language": "en",

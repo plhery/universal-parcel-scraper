@@ -102,6 +102,14 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "note": "Ready to be handed to the delivering carrier."
+    },
+    {
+      "wording": "Delivery to local courier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The hand-over to the delivering carrier, after its preparation: that carrier's own scans come later."
     }
   ]
 }

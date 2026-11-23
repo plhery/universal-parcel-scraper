@@ -37,6 +37,7 @@
     { "code": "EVENT_TRANSIT_POST_COLLECTION", "wording": "Parcel collected at transit location", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Grouped under In transit, at the second of the arrival and the departure." },
     { "code": "EVENT_TRANSIT_DEPARTURE", "wording": "Parcel sent to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "The tracker groups it under Out for delivery, but the item leaves for another country." },
     { "code": "EVENT_LAST_MILE_ARRIVAL", "wording": "Parcel has arrived in last mile", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "Reached the destination country's network." },
-    { "code": "EVENT_LAST_MILE_CUSTOMS", "wording": "Parcel has gone thought last mile customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "The tracker's own spelling: the item has passed the destination's customs, a release." }
+    { "code": "EVENT_LAST_MILE_CUSTOMS", "wording": "Parcel has gone thought last mile customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-22", "note": "The tracker's own spelling: the item has passed the destination's customs, a release." },
+    { "code": "EVENT_LAST_MILE_DELIVERED", "wording": "Parcel delivered to client", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The last mile's delivery to the recipient, after its own arrival and delivery scans." }
   ]
 }

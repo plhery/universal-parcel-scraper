@@ -25,6 +25,7 @@
     {"wording": "NOA received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The airline's notice of arrival at the destination."},
     {"wording": "Collected at Cargo Terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Collected from the destination airport's cargo terminal."},
     {"wording": "Start customs clearence", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Import clearance starts at the destination."},
+    {"wording": "Customs inspection - Import", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "The destination's import inspection, after the flight's arrival and before the clearance completes: a routine step, not a hold."},
     {"wording": "Shipment is in transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "On the way to the next facility."},
     {"wording": "Departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-17", "note": "Leaving one of the line's facilities on the way."},
     {"wording": "Clearance processing completed - Import", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The destination's import clearance done, an hour after it started: the parcel goes on."},

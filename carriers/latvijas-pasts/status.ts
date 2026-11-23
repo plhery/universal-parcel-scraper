@@ -47,7 +47,8 @@ const EVENTS: Readonly<Record<string, Stage>> = {
   75: 'ready_for_pickup',
   37: 'delivered',
   // Items carried for shops through a transit location: announced, received there, sent on to the
-  // destination country, then its last mile. Passing the last mile's customs is the release.
+  // destination country, then its last mile. Passing the last mile's customs is the release, and the last mile's
+  // delivery to the recipient ends it.
   EVENT_TRANSIT_NOTIFY: 'registered',
   EVENT_TRANSIT_ASN: 'registered',
   EVENT_TRANSIT_ARRIVAL: 'accepted',
@@ -55,6 +56,7 @@ const EVENTS: Readonly<Record<string, Stage>> = {
   EVENT_TRANSIT_DEPARTURE: 'in_transit',
   EVENT_LAST_MILE_ARRIVAL: 'in_transit',
   EVENT_LAST_MILE_CUSTOMS: 'in_transit',
+  EVENT_LAST_MILE_DELIVERED: 'delivered',
 };
 
 /** The stage Latvijas Pasts' event code gives a scan, if the map knows it. */

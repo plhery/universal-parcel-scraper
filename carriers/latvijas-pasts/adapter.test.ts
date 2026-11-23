@@ -120,11 +120,16 @@ describe('Latvijas Pasts tracking adapter', () => {
       ['2026-02-27T21:03:10', 'EVENT_TRANSIT_ASN', 'registered', null],
       ['2026-02-27T20:58:02', 'EVENT_TRANSIT_NOTIFY', 'registered', null],
     ]);
-    // A named code the map does not know goes to the shared wording rules.
+    // The last mile's delivery to the recipient ends it.
     const delivered = edited('transit', payload => {
-      payload.data!.unshift({ ...payload.data![0]!, event_timestamp: '2026-03-10 12:00:00', event_code: 'EVENT_LAST_MILE_DELIVERED', event: 'Parcel delivered' });
+      payload.data!.unshift({ ...payload.data![0]!, event_timestamp: '2026-03-10 12:00:00', event_code: 'EVENT_LAST_MILE_DELIVERED', event: 'Parcel delivered to client' });
     });
-    expect(parseLatvijasPasts(delivered, TRANSIT)).toMatchObject({ current_stage: 'delivered', current_stage_source: 'wording:language' });
+    expect(parseLatvijasPasts(delivered, TRANSIT)).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
+    // A named code the map does not know goes to the shared wording rules.
+    const unknown = edited('transit', payload => {
+      payload.data!.unshift({ ...payload.data![0]!, event_timestamp: '2026-03-10 12:00:00', event_code: 'EVENT_LAST_MILE_EXAMPLE', event: 'Parcel delivered' });
+    });
+    expect(parseLatvijasPasts(unknown, TRANSIT)).toMatchObject({ current_stage: 'delivered', current_stage_source: 'wording:language' });
   });
 
   it('reads an unsuccessful delivery at the second of a redirection\'s relabelling as the item going on', () => {
