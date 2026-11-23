@@ -8,6 +8,7 @@
     {"wording": "Item will be delivered next cycle", "language": "en", "confirmedBy": "portal", "note": "A status flag shown under a scan, not an event of its own."},
     {"wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "official-doc", "note": "Event status the current tracker page's script looks for to draw its first milestone."},
     {"wording": "Label Created", "stage": "registered", "language": "en", "confirmedBy": "official-doc", "note": "Event status the current tracker page's script hides when it is not the first event."},
-    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Event status the current tracker page's script uses for the delivered milestone."}
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Event status the current tracker page's script uses for the delivered milestone."},
+    {"code": "D/BUSI", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "A delivery scan with a subtype after the slash, hours after the parcel went out on the delivering vehicle: delivered."}
   ]
 }

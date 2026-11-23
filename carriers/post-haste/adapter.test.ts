@@ -205,6 +205,8 @@ describe('Post Haste status vocabulary', () => {
     expect(statusMap).toBe(nzCouriersMap);
     expect(STATUS_MAPS['post-haste']).toBe(nzCouriersMap);
     expect(statusMapAnswer({ carrier: 'post-haste', providerCode: 'D', description: 'Delivered' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+    expect(statusMapAnswer({ carrier: 'post-haste', providerCode: 'D/BUSI', description: 'Delivered' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+    expect(statusMapAnswer({ carrier: 'post-haste', providerCode: 'D/BUSI', description: 'Delivery Handed Over' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'post-haste', providerCode: 'STAT/HLDFR8', description: 'Held Freight Office' }))
       .toMatchObject({ kind: 'intentional_gap' });
   });

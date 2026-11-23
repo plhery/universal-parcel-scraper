@@ -10,6 +10,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['P', 'accepted'], // Picked Up.
   ['ONBD', 'out_for_delivery'], // On board the delivery vehicle.
   ['D', 'delivered'],
+  ['D/BUSI', 'delivered'], // A delivery scan with a subtype, after the round, as Post Haste reports it.
   ['3P/D', 'delivered'], // Delivered by the rural delivery partner the parcel was handed to.
   ['STAT/REDEL', 'in_transit'], // Sent out again after a delivery that did not happen.
   ['STAT/RZDEL', 'in_transit'], // A notice that the address is rural, with two or three more days to delivery.
@@ -27,7 +28,7 @@ export function nzCouriersMappedStage(code: string, wording = ''): Stage | undef
   // Every subtype of a non-delivery gives its reason, such as a card left.
   if (key === 'NOND' || key.startsWith('NOND/')) return 'failed_attempt';
   const stage = CODES.get(key);
-  return stage === 'delivered' && key === 'D' && HANDOVER.test(wording) ? 'in_transit' : stage;
+  return stage === 'delivered' && (key === 'D' || key.startsWith('D/')) && HANDOVER.test(wording) ? 'in_transit' : stage;
 }
 
 /** A scan's stage: its code, else the shared wording rules, else nothing. */
