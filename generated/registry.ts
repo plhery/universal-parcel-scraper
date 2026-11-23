@@ -705,6 +705,7 @@ import { adapter as parcelabc } from '../carriers/parcelabc/adapter.js';
 import { adapter as parcelninja } from '../carriers/parcelninja/adapter.js';
 import { adapter as parcelpoint } from '../carriers/parcelpoint/adapter.js';
 import { adapter as pasarex } from '../carriers/pasarex/adapter.js';
+import { adapter as pashaHawaii } from '../carriers/pasha-hawaii/adapter.js';
 import { adapter as passport } from '../carriers/passport/adapter.js';
 import { adapter as pathaoCourier } from '../carriers/pathao-courier/adapter.js';
 import { adapter as paxel } from '../carriers/paxel/adapter.js';
@@ -1801,6 +1802,7 @@ export const REGISTRY: RegistryDefinition = {
     "parcelninja": parcelninja,
     "parcelpoint": parcelpoint,
     "pasarex": pasarex,
+    "pasha-hawaii": pashaHawaii,
     "passport": passport,
     "pathao-courier": pathaoCourier,
     "paxel": paxel,
@@ -3522,6 +3524,7 @@ export const REGISTRY: RegistryDefinition = {
     "parts-express": "universal",
     "parxl": "universal",
     "pasarex": "pasarex",
+    "pasha-hawaii": "pasha-hawaii",
     "passport": "passport",
     "pathao-courier": "pathao-courier",
     "patrus": "universal",

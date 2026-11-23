@@ -1,0 +1,250 @@
+{
+  "carrier": "pasha-hawaii",
+  "records": [
+    {
+      "number": "PGHU4014372",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Freight_Spotting_In_SoCal_May-03-2020_(49852826068).jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number painted on a Pasha Hawaii container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wikimedia Commons photo shows this Pasha Hawaii container on a train in Southern California. Pasha Hawaii's tracker returns its moves between Long Beach and Honolulu over several shipments, the latest one released at Long Beach."
+    },
+    {
+      "number": "PGHU4016122",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Pasha_Hawaii_shipping_container.jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number painted on a Pasha Hawaii container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wikimedia Commons photo shows this Pasha Hawaii container with its owner code's second letter and its boxed check digit blurred; PGHU and the ISO 6346 digit are recorded. Pasha Hawaii's tracker returns it as a 40-foot high cube, as the photo's 45G1 size code shows, shipped from Oakland to Honolulu and returned empty."
+    },
+    {
+      "number": "552811120012",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Freight_Spotting_In_SoCal_May-03-2020_(49852826068).jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading Pasha Hawaii gives for a photographed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "Pasha Hawaii's tracker names this bill for the container in the photo. Its bill search returns that container released at Long Beach."
+    },
+    {
+      "number": "2811120394",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Freight_Spotting_In_SoCal_May-03-2020_(49852826068).jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "booking Pasha Hawaii gives for a photographed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "Pasha Hawaii's tracker names this booking for the container in the photo. Its booking search returns that container, which shipped from Honolulu to Long Beach."
+    },
+    {
+      "number": "573810910196",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Freight_Spotting_In_SoCal_May-03-2020_(49852826068).jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading Pasha Hawaii gives for a photographed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "Pasha Hawaii's tracker names this bill for an earlier shipment of the container in the photo. Its bill search returns that container returned empty at Honolulu."
+    },
+    {
+      "number": "3810910799",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Freight_Spotting_In_SoCal_May-03-2020_(49852826068).jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "booking Pasha Hawaii gives for a photographed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "Pasha Hawaii's tracker names this booking for an earlier shipment of the container in the photo, from Long Beach to Honolulu."
+    },
+    {
+      "number": "557811110017",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Pasha_Hawaii_shipping_container.jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading Pasha Hawaii gives for a photographed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "Pasha Hawaii's tracker names this bill for the container in the photo. Its bill search returns that container returned empty at Honolulu."
+    },
+    {
+      "number": "7811110178",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://commons.wikimedia.org/wiki/File:Pasha_Hawaii_shipping_container.jpg",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "booking Pasha Hawaii gives for a photographed container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "dpd-ie"
+        ]
+      },
+      "note": "Pasha Hawaii's tracker names this booking for the container in the photo. Its booking search returns that container, shipped from Oakland to Honolulu."
+    }
+  ]
+}

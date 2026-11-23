@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Pasha Hawaii - Bill Of Lading Track and Trace</title>
+</head>
+<body>
+    <div class="container body-content">
+        
+<div class="col-xs-12 col-sm-12 col-md-12" style="padding-bottom: 20px;padding-left:77px;">
+    <div class="row">
+        <div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+    </div>
+<form action="/PHLiner/Tracking" class="form-group" method="post">        <div class="col-md-2 no-padding" style="padding-right:5px;">
+            <label for="SearchType">Track By:</label>
+            <select class="form-control" data-val="true" data-val-required="Please select a search type" id="SearchType" name="SearchType"><option value="">Select a search type</option>
+<option value="0">Booking Number</option>
+<option selected="selected" value="1">Bill of Lading Number</option>
+<option value="2">Container Number</option>
+<option value="3">Container Customer Ref</option>
+<option value="4">Party Reference</option>
+<option value="5">Container List</option>
+</select>
+        </div>
+        <div class="col-md-2 no-padding" style="padding-right:5px;">
+<label for="SearchTerm">Tracking number:</label><input class="form-control" data-val="true" data-val-required="Please enter a tracking number" id="SearchTerm" name="SearchTerm" placeholder="" type="text" value="552811120012" />        </div>
+        <div class="col-md-4 no-padding">
+            <label>&nbsp;</label><br />
+            <button type="submit" id="submit-search" class="btn btn-default">Submit</button>
+            <div id="loading-spinner" class="spinner-loader" style="display:none; margin: 1em auto 0 2em;"></div>
+        </div>
+</form></div>
+
+<div class="col-xs-12 col-sm-10 no-padding col-sm-offset-1">
+    <div class="row">
+        <h4>B/L Inquiry</h4>
+
+        <dl class="dl-horizontal">
+            <dt>
+                B/L Number
+            </dt>
+
+            <dd>
+                552811120012
+            </dd>
+
+            <dt>
+                Booking Number
+            </dt>
+
+            <dd>
+                2811120394
+            </dd>
+
+            <dt>
+                Vessel/Voyage
+            </dt>
+
+            <dd>
+                GEORGE III 111E
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                Origin
+            </dt>
+
+            <dd>
+                HONOLULU, HI
+            </dd>
+
+            <dt>
+                Load Port
+            </dt>
+
+            <dd>
+                HNL PIER 51A
+            </dd>
+
+            <dt>
+                Discharge Port
+            </dt>
+
+            <dd>
+                SSA PIER A
+            </dd>
+
+            <dt>
+                Destination
+            </dt>
+
+            <dd>
+                PERRIS, CA
+            </dd>
+
+            <dt>
+                Line Release
+            </dt>
+
+            <dd>
+                Yes
+            </dd>
+
+            <dt>
+                ETD at Load
+            </dt>
+
+            <dd>
+                Nov 13, 2026
+            </dd>
+
+            <dt>
+                ETA at Disch
+            </dt>
+
+            <dd>
+                Nov 19, 2026
+            </dd>
+
+            <dt>
+                Party Refs
+            </dt>
+
+            <dd>
+                
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="col-xs-12 col-sm-10 no-padding col-sm-offset-1">
+    <div class="row"><h4>Commodities</h4></div>
+</div>
+
+    <div class="col-xs-4 hidden-md hidden-lg flip-scroll-navigation">
+        <span id="prevItem" class="glyphicon glyphicon-chevron-left disabled"></span>
+        <span id="nextItem" class="glyphicon glyphicon-chevron-right"></span>
+    </div>
+    <div class="InquiryInformation">
+        <div id="ItemsContainer" class="col-xs-12 no-padding table-container flip-scroll">
+            <table id="ItemDetails" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="table-header">Item<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Qty<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Metric Tons<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Cubic Meters<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Commodity<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Hazardous<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Set Temp<span class="hidden-md hidden-lg">:</span></th>
+                    </tr>
+                </thead>
+                <tbody id="ItemDetailsBody">
+                        <tr class="ItemDetailsRow">
+                            <td>1</td>
+                            <td>1</td>
+                            <td>18.67</td>
+                            <td>77.022</td>
+                            <td>Container Cargo</td>
+                            <td>No</td>
+                            <td></td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<div class="col-xs-12 col-sm-10 no-padding col-sm-offset-1" style="padding-top:20px;">
+    <div class="row"><h4>Containers</h4></div>
+</div>
+
+    <div class="col-xs-4 hidden-md hidden-lg flip-scroll-navigation">
+        <span id="prevItemContainer" class="glyphicon glyphicon-chevron-left disabled"></span>
+        <span id="nextItemContainer" class="glyphicon glyphicon-chevron-right"></span>
+    </div>
+    <div class="InquiryInformation">
+        <div id="ItemContainersContainer" class="col-xs-12 no-padding table-container flip-scroll">
+            <table id="ItemContainerDetails" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="table-header">Item<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Container<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Size/Type<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Qty<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Metric Tons<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Cubic Meters<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Date<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Status<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Location<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Yard Location<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Hold Status<span class="hidden-md hidden-lg">:</span></th>
+                        <th class="table-header">Last Free Date<span class="hidden-md hidden-lg">:</span></th>
+                    </tr>
+                </thead>
+                <tbody id="ItemContainerDetailsBody">
+                        <tr class="ItemContainerDetailsRow">
+                            <td>1</td>
+                            <td><a href="/PHLiner/Tracking?SearchTerm=PGHU4014372&amp;Type=Container">PGHU4014372</a></td>
+                            <td>40HC</td>
+                            <td>1</td>
+                            <td>18.67</td>
+                            <td>77.022</td>
+                            <td style="white-space:nowrap;">Nov 21, 2026</td>
+                            <td style="white-space:nowrap;">Import Outgate</td>
+                            <td style="white-space:nowrap;">LONGBEACH SSAPIER A</td>
+                            <td style="white-space:nowrap;"></td>
+                            <td>No Hold</td>
+                            <td style="white-space:nowrap;"></td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<div id="MobileIndicator"></div>
+<div class="col-xs-12 col-sm-10 col-sm-offset-1 no-padding">
+    <p style="text-align: center;padding-top:10px;font-size:12px;">**Date and time values are always local to container event status</p>
+</div>
+
+        <footer></footer>
+    </div>
+</body>
+</html>

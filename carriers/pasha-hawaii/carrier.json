@@ -1,0 +1,64 @@
+{
+  "id": "pasha-hawaii",
+  "displayName": "Pasha Hawaii",
+  "aliases": [
+    "Pasha Hawaii Transport Lines",
+    "PGHU"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#96451d"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Honolulu",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pasha-hawaii",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.pashahawaii.com/tracking/container-tracking",
+    "canaryUrl": "https://web01.pashahawaii.com/PHLiner/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "eta",
+      "weight"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

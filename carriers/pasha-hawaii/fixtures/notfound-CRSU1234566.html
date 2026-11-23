@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Pasha Hawaii - Cargo Track and Trace</title>
+</head>
+<body>
+    <div class="container body-content">
+        
+
+<div class="col-xs-12 col-sm-12 col-md-12" style="padding-bottom: 20px;padding-left:77px;">
+    <div class="row">
+        <div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+    </div>
+<form action="/PHLiner/Tracking" class="form-group" method="post">        <div class="col-md-2 no-padding" style="padding-right:5px;">
+            <label for="SearchType">Track By:</label>
+            <select class="form-control" data-val="true" data-val-required="Please select a search type" id="SearchType" name="SearchType"><option value="">Select a search type</option>
+<option value="0">Booking Number</option>
+<option value="1">Bill of Lading Number</option>
+<option selected="selected" value="2">Container Number</option>
+<option value="3">Container Customer Ref</option>
+<option value="4">Party Reference</option>
+<option value="5">Container List</option>
+</select>
+        </div>
+        <div class="col-md-2 no-padding" style="padding-right:5px;">
+<label for="SearchTerm">Tracking number:</label><input class="form-control" data-val="true" data-val-required="Please enter a tracking number" id="SearchTerm" name="SearchTerm" placeholder="" type="text" value="CRSU1234566" />        </div>
+        <div class="col-md-4 no-padding">
+            <label>&nbsp;</label><br />
+            <button type="submit" id="submit-search" class="btn btn-default">Submit</button>
+            <div id="loading-spinner" class="spinner-loader" style="display:none; margin: 1em auto 0 2em;"></div>
+        </div>
+</form></div>
+
+<div class="col-xs-12 col-sm-10 no-padding col-sm-offset-1">
+    <div class="row">
+        <h5>CRSU1234566 is not on file, please try again.</h5>
+    </div>
+</div>
+
+
+        <footer></footer>
+    </div>
+</body>
+</html>

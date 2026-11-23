@@ -48778,6 +48778,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pasha-hawaii": {
+    "displayName": "Pasha Hawaii",
+    "color": "#96451d",
+    "aliases": [
+      "Pasha Hawaii Transport Lines",
+      "PGHU"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Honolulu",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pasha-hawaii",
+      "localClocks": true
+    },
+    "canaryUrl": "https://web01.pashahawaii.com/PHLiner/Tracking",
+    "trackingSearchUrl": "https://www.pashahawaii.com/tracking/container-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "passport": {
     "displayName": "Passport",
     "color": "#00e796",
@@ -72891,6 +72913,7 @@ export const CARRIER_IDS = [
   "parts-express",
   "parxl",
   "pasarex",
+  "pasha-hawaii",
   "passport",
   "pathao-courier",
   "patrus",
@@ -74935,6 +74958,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "parts-express": [],
   "parxl": [],
   "pasarex": ["pasarex-1"],
+  "pasha-hawaii": [],
   "passport": ["passport-1"],
   "pathao-courier": ["pathao-courier-1"],
   "patrus": [],

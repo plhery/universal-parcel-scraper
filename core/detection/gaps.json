@@ -3206,6 +3206,24 @@
     "reason": "Eleven-digit waybills from Pargo's earlier tracker share their shape with many carriers' numeric waybills."
   },
   {
+    "carrier": "pasha-hawaii",
+    "pattern": "^PGHU\\d{7}$",
+    "kind": "open",
+    "reason": "PGHU is the owner code of Pasha Hawaii's own containers, whose ISO 6346 numbers end in a check digit; Pasha Hawaii's tracker returns the sample containers' moves. Detection does not offer Pasha Hawaii."
+  },
+  {
+    "carrier": "pasha-hawaii",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Pasha Hawaii's bills of lading are twelve bare digits, a shape many carriers' numeric waybills share, so no rule claims them; select Pasha Hawaii explicitly."
+  },
+  {
+    "carrier": "pasha-hawaii",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "Pasha Hawaii's bookings are ten bare digits, a shape DHL and several other carriers share, so no rule claims them; select Pasha Hawaii explicitly."
+  },
+  {
     "carrier": "pavan-courier",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

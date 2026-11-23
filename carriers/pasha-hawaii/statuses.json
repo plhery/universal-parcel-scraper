@@ -1,0 +1,19 @@
+{
+  "carrier": "pasha-hawaii",
+  "entries": [
+    {"wording": "Dispatch empty", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The empty container leaves the terminal for the shipper to load it; the cargo is not yet with Pasha Hawaii."},
+    {"wording": "Empty Gate-out", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The empty container leaves the terminal for the shipper, as Oakland words it."},
+    {"wording": "Export Ingate", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading."},
+    {"wording": "Loaded Full on Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Discharge Full from Vessel", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the port of discharge."},
+    {"wording": "Import Outgate", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The loaded container leaves the terminal for the consignee."},
+    {"wording": "Empty Ingate", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The empty container comes back to the terminal once the consignee unloaded it. Without a bill and before the container left full, it is an unused one, without a stage."},
+    {"wording": "Loaded Empty on Vessel", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "An empty container loaded to reposition it after its return; it belongs to no shipment."},
+    {"wording": "Disc Empty Cntr", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "An empty container discharged after its repositioning voyage; it belongs to no shipment."},
+    {"wording": "Loaded Empty to Barge", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "An empty container loaded on the inter-island barge, coming back from a neighbor island; the stage stays that of the move before."},
+    {"wording": "Barge Departure", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "The inter-island barge leaves with the container; the stage stays that of the move before."},
+    {"wording": "Barge Arrival", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "The inter-island barge arrives with the container; the stage stays that of the move before."},
+    {"wording": "Discharged Empty from Barge", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "An empty container taken off the inter-island barge; the stage stays that of the move before."},
+    {"wording": "Empty Positioning by Barge", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "An empty container moved from the barge's yard toward the terminal; the stage stays that of the move before."}
+  ]
+}
