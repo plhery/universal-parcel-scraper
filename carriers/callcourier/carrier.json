@@ -1,0 +1,46 @@
+{
+  "id": "callcourier",
+  "displayName": "CallCourier",
+  "aliases": [
+    "Call Courier",
+    "CallCourier Pakistan"
+  ],
+  "region": {
+    "countries": [
+      "PK"
+    ]
+  },
+  "brand": {
+    "color": "#00b14c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Karachi",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://callcourier.com.pk/tracking/?tc={trackingNumber}",
+    "searchUrl": "https://callcourier.com.pk/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": [],
+    "canaryUrl": "https://callcourier.com.pk/tracking/"
+  },
+  "links": [
+    {
+      "domains": [
+        "callcourier.com.pk",
+        "www.callcourier.com.pk"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "tc"
+      ]
+    }
+  ],
+  "detection": []
+}

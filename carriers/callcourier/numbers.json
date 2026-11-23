@@ -1,0 +1,154 @@
+{
+  "carrier": "callcourier",
+  "records": [
+    {
+      "number": "10376530014751",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220805144738/https://callcourier.com.pk/tracking/?tc=10376530014751",
+        "date": "2022-08-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "dpd",
+          "mondial-relay",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog",
+          "xpressbees"
+        ]
+      },
+      "note": "An archived lookup on CallCourier's own tracking page shows this consignment with its history, from booking in Rawalpindi to delivery in Karachi."
+    },
+    {
+      "number": "10388820331824",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220529081555/https://callcourier.com.pk/tracking/?tc=10388820331824",
+        "date": "2022-05-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "dpd",
+          "mondial-relay",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog",
+          "xpressbees"
+        ]
+      },
+      "note": "An archived lookup on CallCourier's own tracking page shows this consignment booked in Lahore and reaching the Karachi branch."
+    },
+    {
+      "number": "10740270012959",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221011155644/https://callcourier.com.pk/tracking/?tc=10740270012959",
+        "date": "2022-10-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "dpd",
+          "mondial-relay",
+          "ciblex",
+          "seur",
+          "brt",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog",
+          "xpressbees"
+        ]
+      },
+      "note": "An archived lookup on CallCourier's own tracking page shows this consignment booked in Sargodha for Faisalabad."
+    },
+    {
+      "number": "10241520611771",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/HuzaifaIrfan-Web/callcourier_com_pk-api-plugin/blob/fa198ee60460ee1bca8f8b1410fa2c5edc462b92/README.md",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "dpd",
+          "mondial-relay",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog",
+          "xpressbees"
+        ]
+      },
+      "note": "The README of a public CallCourier tracking plugin uses this consignment as its example; CallCourier's tracking service returns its booking in Rawalpindi."
+    }
+  ]
+}

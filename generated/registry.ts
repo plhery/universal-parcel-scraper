@@ -2462,6 +2462,7 @@ export const REGISTRY: RegistryDefinition = {
     "cacesa": "cacesa",
     "cadena-courier": "cadena-courier",
     "calidex-courier": "calidex-courier",
+    "callcourier": "universal",
     "campos-cadilhe": "universal",
     "campost": "universal",
     "canada-air-express": "universal",

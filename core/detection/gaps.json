@@ -598,6 +598,12 @@
     "reason": "Published Calidex guides use location prefixes in a shared format. The guest lookup confirms the complete guide on explicit selection."
   },
   {
+    "carrier": "callcourier",
+    "pattern": "^10\\d{12}$",
+    "kind": "collision",
+    "reason": "Fourteen-digit CallCourier consignment numbers share their shape with many carriers' numeric numbers, so the shape cannot name CallCourier."
+  },
+  {
     "carrier": "cargo-expreso",
     "pattern": "^A\\d{10}$",
     "kind": "open",

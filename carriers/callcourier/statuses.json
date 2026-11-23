@@ -1,0 +1,13 @@
+{
+  "carrier": "callcourier",
+  "entries": [
+    {"wording": "CONSIGNMENT BOOKED", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "The shipper booked the consignment."},
+    {"wording": "ARRIVED AT ORIGIN BRANCH", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "CallCourier has the parcel at the branch that booked it."},
+    {"wording": "MOVED TO DEST. BRANCH", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Sent on from a branch towards the delivering one."},
+    {"wording": "REACHED AT DEST. BRANCH", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "At the branch that delivers it."},
+    {"wording": "OUT FOR DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal"},
+    {"wording": "UNDELIVERED", "stage": "failed_attempt", "language": "en", "confirmedBy": "portal", "note": "Followed by the reason, as in \"UNDELIVERED: Reason for Non-Delivery CONSIGNEE WANTS TO OPEN PARCEL\"."},
+    {"wording": "CONTACTING CONSIGNEE", "stage": "failed_attempt", "language": "en", "confirmedBy": "portal", "note": "The branch is calling the recipient after a failed attempt."},
+    {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "Followed by who took it, as in \"DELIVERED: Received by …\"."}
+  ]
+}

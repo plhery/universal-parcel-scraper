@@ -2736,6 +2736,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'just-ship-sg', number: '000000A000R00',
     route: /^https:\/\/www\.justship\.sg\/tracking\?trackingNumber=000000A000R00$/,
     marker: /No shipment found with tracking number 000000A000R00/ },
+  // The server renders the page with the consignment number in its search box.
+  { carrier: 'callcourier', number: '10000000000000',
+    route: /^https:\/\/callcourier\.com\.pk\/tracking\/\?tc=10000000000000$/,
+    marker: /Track your order status with your consignment number/ },
 ];
 
 /**

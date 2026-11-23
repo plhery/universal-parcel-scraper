@@ -14155,6 +14155,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "callcourier": {
+    "displayName": "CallCourier",
+    "color": "#00b14c",
+    "aliases": [
+      "Call Courier",
+      "CallCourier Pakistan"
+    ],
+    "countries": [
+      "PK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Karachi",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://callcourier.com.pk/tracking/",
+    "trackingUrlTemplate": "https://callcourier.com.pk/tracking/?tc={trackingNumber}",
+    "trackingSearchUrl": "https://callcourier.com.pk/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "callcourier.com.pk",
+          "www.callcourier.com.pk"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "tc"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "campos-cadilhe": {
     "displayName": "Campos&Cadilhe",
     "color": "#536b8f",
@@ -71988,6 +72021,7 @@ export const CARRIER_IDS = [
   "cacesa",
   "cadena-courier",
   "calidex-courier",
+  "callcourier",
   "campos-cadilhe",
   "campost",
   "canada-air-express",
@@ -74036,6 +74070,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cacesa": [],
   "cadena-courier": [],
   "calidex-courier": [],
+  "callcourier": [],
   "campos-cadilhe": [],
   "campost": [],
   "canada-air-express": [],
