@@ -48,6 +48,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-22",
       "note": "Placed at the destination airport (AMS)."
+    },
+    {
+      "wording": "清关完成，中转德国中",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Customs cleared and moving on to Germany, two days after the flight's arrival in Europe."
     }
   ]
 }
