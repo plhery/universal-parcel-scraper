@@ -38,6 +38,9 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(([
   ['Pickup attempt was unsuccessful', 'exception'],
   ['Pickup attempt was unsuccessful. Awaiting rebook confirmation by sender', 'exception'],
   ['Arrived at facility for processing', 'in_transit'],
+  // Not in the help centre: a row of the transfer kind at a facility, days after its arrival there. The parcel stays in
+  // the network; nothing says it failed.
+  ['Parcel requires further processing', 'in_transit'],
   ['Processed at delivery centre', 'in_transit'],
   ['In transit to delivery centre', 'in_transit'],
   ['Arrived at delivery centre', 'in_transit'],

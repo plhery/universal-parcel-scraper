@@ -6,6 +6,7 @@
     {"wording": "Pickup attempt was unsuccessful", "stage": "exception", "language": "en", "confirmedBy": "official-doc", "note": "A collection attempt at the sender failed."},
     {"code": "futile", "wording": "Pickup attempt was unsuccessful. Awaiting rebook confirmation by sender", "stage": "exception", "language": "en", "confirmedBy": "live", "note": "The reply breaks the line between the two sentences."},
     {"code": "reweigh", "wording": "Arrived at facility for processing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The reply ends it with a full stop, which the adapter drops."},
+    {"code": "transfer", "wording": "Parcel requires further processing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "Twice in two hours, days after the arrival at a facility for processing, under the transfer kind. The help centre does not list it; nothing says the parcel failed or left the network."},
     {"code": "indepot", "wording": "Processed at delivery centre", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "transit", "wording": "In transit to delivery centre", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The reply appends the line haul's two cities in brackets."},
     {"code": "deconsolidate", "wording": "Arrived at delivery centre", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
