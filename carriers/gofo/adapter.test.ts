@@ -197,6 +197,14 @@ describe('GOFO US history', () => {
     for (const error of [{ errorCount: 0 }, { errorCount: 1, us: [OTHER] }, { errorCount: 1, fr: [NUMBER] }, { errorCount: 1, us: [NUMBER], fr: [OTHER] }]) {
       expect(() => parseGofo({ ...negative, data: { success: [], error } }, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     }
+    // GOFO files its US series without a region under `other` when it does not have the number, as it answers made-up ones.
+    for (const number of ['GF0000000000001', 'CR000000000001', 'MGP0000000000001']) {
+      const absent = (error: Record<string, unknown>) => () => parseGofo({ ...negative, data: { success: [], error } }, number);
+      expect(absent({ other: [number], errorCount: 1 })).toThrow(expect.objectContaining({ kind: 'not_found' }));
+      for (const error of [{ errorCount: 1, us: [number] }, { errorCount: 1, other: [number], fr: [OTHER] }, { errorCount: 1, other: [OTHER] }]) {
+        expect(absent(error)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+      }
+    }
     for (const success of [true, '1', 0]) { const value = fixture(); value.success = success; expect(() => parseGofo(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' })); }
     // GOFO's own failure code is named; anything else is not.
     expect(() => parseGofo({ ...fixture(), success: 0, code: 500 }, NUMBER))

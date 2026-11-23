@@ -31,8 +31,12 @@ latest summary must agree with the first scan.
 
 When the user picks GOFO, or opens a GOFO link carrying one, a YunExpress `YT`
 number that GOFO delivers under the same number is sent too, and GOFO must give it
-as both waybill and tracking number. Detection reads these numbers as YunExpress's. GOFO files a `YT` number
-it does not deliver under another region, so that answer stays inconclusive.
+as both waybill and tracking number. Detection reads these numbers as YunExpress's.
+
+GOFO files a number it does not have under the region its prefix names, and a number whose
+prefix names none under `other`. The GF, CR and `MGP` series belong to GOFO US alone, so `other`
+is their absence. A `YT` or DHLink number GOFO US does not deliver may be another region's, so
+that answer stays inconclusive.
 
 The public page renders the whole list without paging and ignores the event
 counter, which can count scans the list omits. A larger counter is accepted only

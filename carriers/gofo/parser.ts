@@ -28,6 +28,8 @@ const PAIRED_WAYBILL = /^GFUS\d{14}$/;
 const PAIRED_REFERENCE = new RegExp(`^CR\\d{12}$|${DHLINK.source}|${MGP.source}`);
 /** YunExpress numbers GOFO delivers under the same number, as both waybill and tracking number. */
 const YUNEXPRESS = /^YT\d{16}$/;
+/** GOFO US's series whose prefix names no region: the GF and CR waybills, and MGP numbers. */
+const UNREGIONED_US = new RegExp(`^GF\\d{13}$|^CR\\d{12}$|${MGP.source}`);
 
 /**
  * A national GOFO site that runs the US consignee service: its gofo.com path,
@@ -121,9 +123,13 @@ export function parseGofo(payload: unknown, rawNumber: string, site: GofoSite = 
     || !payload.data.success.every(isRecord) || !isRecord(payload.data.error)) throw new SchemaError(site.provider);
   const entries = payload.data.success;
   const error = payload.data.error;
-  const own = error[site.path];
+  // GOFO files a number it does not have under the region its prefix names, and one whose prefix names none under
+  // `other`. GOFO US's own series without a region are no other region's, so `other` is their absence; a YunExpress
+  // or DHLink number GOFO US does not deliver may be another region's, and stays inconclusive.
+  const region = site.path === 'us' && UNREGIONED_US.test(number) ? 'other' : site.path;
+  const own = error[region];
   if (!entries.length && error.errorCount === 1 && Array.isArray(own) && own.length === 1 && own[0] === number
-    && Object.keys(error).every(key => ['errorCount', site.path].includes(key))) throw new NotFoundError(site.provider);
+    && Object.keys(error).every(key => ['errorCount', region].includes(key))) throw new NotFoundError(site.provider);
   if (!entries.length) throw new IndeterminateError(site.provider, 'GOFO returned no matching history');
   // The requested number is the waybill, or the CR or DHLink tracking number of
   // its GFUS waybill. Otherwise the tracking number repeats the waybill or is the
