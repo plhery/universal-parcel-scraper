@@ -95,6 +95,8 @@ export function classifyPosteItalianeStatus(rawWording: unknown): ClassifiedStat
     case 'in data':
     // Registered mail's international processing centre, on its own line.
     case 'presso il centro di lavorazione internazionale':
+    // The delivering office preparing the parcel for a round, with the movement in transit at the same time.
+    case 'in lavorazione per la consegna':
       return { status: 'in_transit', stage: 'in_transit' };
     case 'sono in corso delle verifiche sulla spedizione. contatta assistenza':
       return { status: 'exception', stage: 'failed_attempt' };
