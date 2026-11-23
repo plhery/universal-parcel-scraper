@@ -114,6 +114,15 @@
       "note": "GZYL's tenant of the same platform words it \"Goods leave the operation center\"."
     },
     {
+      "wording": "过港中",
+      "language": "zh",
+      "english": "Crossing to Hong Kong",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The road from the operation centre into Hong Kong, hours after the parcel left the centre."
+    },
+    {
       "wording": "深圳集散中心 已收货",
       "language": "zh",
       "english": "Received at the Shenzhen distribution center",

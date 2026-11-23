@@ -631,6 +631,9 @@ describe('JRT tracking adapter', () => {
     // The landing on the line into Canada, with the import clearance under way, shown in English.
     expect(answer('落地清关中')).toEqual({ kind: 'mapped', stage: 'customs' });
     expect(jrtEnglish(null, normalizeStatusWording('落地清关中'))).toBe('Landed, customs clearance in progress');
+    // The road into Hong Kong after the operation centre, shown in English.
+    expect(answer('过港中')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(jrtEnglish(null, normalizeStatusWording('过港中'))).toBe('Crossing to Hong Kong');
     expect(answer('预计配载航班11月11日,Expected flight on November 11th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('预计配载航班12月2日，Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Expected flight on Nov. 20th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
