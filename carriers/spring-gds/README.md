@@ -25,7 +25,8 @@ it; everything user-facing says PostNL.
      phase alone is not read as delivered, because it already reads so while a parcel waits
      at a pick-up point. An announced parcel without observations is kept as a summary.
    - `eta` is the delivery slot from PostNL's page. `Specific` has a start and an end with
-     offsets, and `WholeDay` gives the day only. PostNL keeps it after delivery and at a pick-up
+     offsets, `WholeDay` gives the day only, and `MultipleDaySpan` runs from one day's midnight
+     to a later day's 23:59:59, read as those days. PostNL keeps it after delivery and at a pick-up
      point, so the adapter drops it then. Other types go to `unread_estimates`. Its
      `minutesOverdue` is the time since the slot's end when PostNL answers, which the slot
      already says.

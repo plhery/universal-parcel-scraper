@@ -834,6 +834,10 @@ describe('PostNL domestic tracker', () => {
     const day = parsePostNLDomesticResponse(reply(collo({ eta: { type: 'WholeDay', start: '2026-05-12T00:00:00+02:00', end: '2026-05-12T23:59:00+02:00' } })), barcode);
     expect(day.expected_delivery).toBe('2026-05-12');
     expect(day.expected_delivery_from).toBeUndefined();
+    // Days: from the first day's midnight to the last day's end, read by their days.
+    const days = parsePostNLDomesticResponse(reply(collo({ eta: { type: 'MultipleDaySpan', start: '2026-05-12T00:00:00+02:00', end: '2026-05-14T23:59:59+02:00', minutesOverdue: null } })), barcode);
+    expect(days).toMatchObject({ expected_delivery_from: '2026-05-12', expected_delivery: '2026-05-14' });
+    expect(days.unread_estimates).toBeUndefined();
     // An announced parcel keeps its slot too.
     const announced = { index: 0, message: 'Shipment expected, but not yet arrived or processed at PostNL' };
     expect(parsePostNLDomesticResponse(reply(collo({ observations: [], statusPhase: announced, eta: slot })), barcode).expected_delivery)
