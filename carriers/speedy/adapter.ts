@@ -10,6 +10,9 @@ import { retryAfterMs } from '../../core/transport/retryAfter.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { normalizeSpeedyNumber, parseSpeedyReply, PROVIDER, SPEEDY_MAX_BYTES } from './parser.js';
 
+/** The least of the browser service's time in which the tracker page passes its Turnstile check and answers. */
+const PAGE_MIN_MS = 10_000;
+
 // The endpoint MySpeedy's public tracker reads a shipment from. It answers only
 // a request carrying the token of the page's Turnstile check.
 export const SPEEDY_ENDPOINT = 'https://myspeedy.speedy.bg/rest/public/track';
@@ -68,7 +71,9 @@ export class SpeedyTracker {
   #page(number: string, trawl: TrawlClient | null): StepSpec<CarrierResult> {
     return { id: 'trawl', enabled: Boolean(trawl), run: async ({ signal, remainingMs }) => {
       const timeoutMs = Math.floor(Math.min(45_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
-      if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
+      // The page passes its Turnstile check before it asks for the number: with less of the service's time it ends
+      // without the reply, so the read is not started and the lookup fails as its budget.
+      if (timeoutMs < PAGE_MIN_MS) throw new BudgetExceededError(PROVIDER, remainingMs);
       // The page gets its own Turnstile token and asks for the number in its route; the token stays in the browser.
       const page = await trawl!.scrape({ url: speedyTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
         captureResponses: [SPEEDY_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),

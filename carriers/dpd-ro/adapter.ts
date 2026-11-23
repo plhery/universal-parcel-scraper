@@ -10,6 +10,9 @@ import { retryAfterMs } from '../../core/transport/retryAfter.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { DPD_RO_MAX_BYTES, normalizeDpdRoNumber, parseDpdRoReply, PROVIDER } from './parser.js';
 
+/** The least of the browser service's time in which the tracker page passes its Turnstile check and answers. */
+const PAGE_MIN_MS = 10_000;
+
 // The endpoint MyDPD's public tracker reads a shipment from; the DPD app ships
 // the same path. It answers only a request carrying the token of the page's
 // Turnstile check. tracking.dpd.ro sits behind a Cloudflare challenge as well.
@@ -60,7 +63,9 @@ export class DpdRoTracker {
   #page(number: string, trawl: TrawlClient | null): StepSpec<CarrierResult> {
     return { id: 'trawl', enabled: Boolean(trawl), run: async ({ signal, remainingMs }) => {
       const timeoutMs = Math.floor(Math.min(45_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
-      if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
+      // The page passes its Turnstile check before it asks for the waybill: with less of the service's time it ends
+      // without the reply, so the read is not started and the lookup fails as its budget.
+      if (timeoutMs < PAGE_MIN_MS) throw new BudgetExceededError(PROVIDER, remainingMs);
       // The page gets its own Turnstile token and asks for the waybill in its route; the token stays in the browser.
       const page = await trawl!.scrape({ url: dpdRoTrackingUrl(number), skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
         captureResponses: [DPD_RO_ENDPOINT], settleTimeout: Math.min(timeoutMs, 20_000),

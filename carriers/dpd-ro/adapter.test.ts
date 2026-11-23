@@ -252,6 +252,14 @@ describe('DPD Romania through MyDPD\'s tracker page', () => {
     }
   });
 
+  it('leaves the page unopened when the budget cannot give the service the time its Turnstile check takes', async () => {
+    const { scrape, instance } = browser(page([{}]));
+    await expect(instance.track({ number: DELIVERED }, { budgetMs: 20_000 })).rejects.toMatchObject({ kind: 'budget' });
+    expect(scrape).not.toHaveBeenCalled();
+    await expect(instance.track({ number: DELIVERED }, { budgetMs: 26_000 })).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(scrape.mock.calls[0]![0].maxTimeout).toBeGreaterThanOrEqual(10_000);
+  });
+
   it('keeps recognition on HTTP and answers a found waybill over HTTP without the browser', async () => {
     const { scrape, fetcher, instance } = browser(page([{}]));
     await expect(instance.recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });

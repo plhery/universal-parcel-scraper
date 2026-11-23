@@ -17,7 +17,9 @@ covers.
 2. `trawl`: the private browser service opens the tracker page for the waybill, in English. The
    page passes its Turnstile check and asks the endpoint for the waybill with its token, and the
    service's capture helper keeps that one reply for the whole waybill. The token stays in the
-   browser. A page that sends no request did not pass its check.
+   browser. A page that sends no request did not pass its check. Passing it takes the page
+   seconds: a lookup that cannot leave the service ten seconds does not open the page and fails
+   as its budget.
 
 `tracking.dpd.ro`, which DPD Romania's site and shop plugins link, redirects to
 `services.dpd.ro/tracking/`, which serves a Cloudflare challenge as well, so it is not used.

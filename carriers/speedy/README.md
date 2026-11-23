@@ -13,7 +13,9 @@ the endpoint behind MySpeedy's public tracker.
 2. `trawl`: the private browser service opens the tracker page for the number, in English.
    The page passes its Turnstile check and asks the endpoint for the number with its token,
    and the service's capture helper keeps that one reply for the whole number. The token stays in the
-   browser. A page that sends no request did not pass its check.
+   browser. A page that sends no request did not pass its check. Passing it takes the page
+   seconds: a lookup that cannot leave the service ten seconds does not open the page and fails
+   as its budget.
 
 www.speedy.bg sits behind a Cloudflare challenge, and Speedy's REST API at api.speedy.bg needs
 a customer account, so neither is used.
