@@ -1,8 +1,9 @@
 import type { CarrierEvent, CarrierStatus } from '../../core/result/index.js';
-import type { ClassifiedStatus } from '../../core/status/index.js';
+import { languageStageStatus, type ClassifiedStatus } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { chinaPostEnglish, chinaPostRelayedStage } from '../china-post/status.js';
+import { imileRelayedStage } from '../imile/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const FAILED_ATTEMPT: ClassifiedStatus = { status: 'exception', stage: 'failed_attempt' };
@@ -38,6 +39,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Departed from facility', { status: 'in_transit', stage: 'in_transit' }],
   // The hand-over to the destination's last-mile carrier, not to the recipient.
   ['Delivered to local carrier', { status: 'in_transit', stage: 'in_transit' }],
+  // The hand-over to iMile, in the words 4PX gives it too.
+  ['Shipment delivered to iMile RDC or Lastmile vendor', { status: 'in_transit', stage: 'in_transit' }],
   // The sorting before import customs, and the last-mile carrier's steps it relays up to the delivery round.
   ['Processing at sort facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at destination', { status: 'in_transit', stage: 'in_transit' }],
@@ -296,11 +299,14 @@ export function isYunExpressNotice(description: string): boolean {
 
 /** Yuntrack's scan wording, compared without case or repeated spaces. */
 const WORDING = new Map(ENTRIES.map(([text, status]) => [normalizeStatusWording(text), status]));
-// China Post's offices and flights, named in 【】, read as China Post's relayed scans.
+// China Post's offices and flights, named in 【】, read as China Post's relayed scans; iMile's
+// scans, its centre in 【】 before the sentence ("【Example center】Received."), as iMile's.
 const worded = (wording: string): ClassifiedStatus | undefined => {
   const relayed = chinaPostRelayedStage(wording);
+  const imile = relayed ? undefined : imileRelayedStage(wording);
   return WORDING.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1]
-    ?? (relayed ? { status: 'in_transit', stage: relayed } : undefined);
+    ?? (relayed ? { status: 'in_transit', stage: relayed } : undefined)
+    ?? (imile ? { status: languageStageStatus(imile), stage: imile } : undefined);
 };
 
 // China Post's relayed scans show in English, which stages as their Chinese.

@@ -80,6 +80,7 @@ reference. That reference is the hand-off when the notes' carrier offers it,
 else when detection gives it to one carrier alone and that carrier delivers in
 the destination country. The feed relays the last-mile carrier's wording
 without codes, so the status map also holds the partner lines seen there.
+iMile's lines, which open with its centre in 【】, read as iMile's map reads them.
 
 The reply carries a weight without a unit and with placeholder values for some
 services, and estimate fields the page never shows, so neither is read. The

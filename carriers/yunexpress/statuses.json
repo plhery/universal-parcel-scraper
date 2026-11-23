@@ -296,6 +296,14 @@
       "note": "The handover to the last-mile carrier, not a delivery to the recipient."
     },
     {
+      "wording": "Shipment delivered to iMile RDC or Lastmile vendor",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The handover to iMile, the last mile, whose scans follow with its centre in 【】."
+    },
+    {
       "wording": "Processing at sort facility",
       "stage": "in_transit",
       "language": "en",
