@@ -542,6 +542,10 @@ describe('shared provider result', () => {
     }
     expect(classifyEvent('Information On Delivery Transmitted').stage_source).toBe('none');
     expect(statusMap.gaps.some(({ wording }) => wording === 'information on delivery transmitted')).toBe(true);
+    // The note that DHL told the recipient of the delivery's details is no step either.
+    const notified = 'The recipient has been notified (e.g. via email) about delivery details and available services';
+    expect(classifyEvent(notified).stage_source).toBe('none');
+    expect(statusMap.gaps.some(({ wording }) => wording === normalizeStatusWording(notified))).toBe(true);
     // A planned delivery that names its day is no step the rule reads.
     expect(classifyEvent('Delivery planned for Example day').stage_source).toBe('none');
   });

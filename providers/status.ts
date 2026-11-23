@@ -150,6 +150,9 @@ export const statusMap: CarrierStatusMap = {
   }, {
     wording: 'information on delivery transmitted',
     note: "The delivery's details sent to the recipient, as ParcelsApp relays it for DHL parcels between the hub's sorting and the planned delivery: not a scan, so it keeps the stage the parcel already had.",
+  }, {
+    wording: 'the recipient has been notified (e.g. via email) about delivery details and available services',
+    note: "DHL's note that it told the recipient of the delivery's details and services, as ParcelsApp relays it for DHL parcels after the arrival at the destination gateway: not a scan, so it keeps the stage the parcel already had.",
   }, ...NO_STEP.map(([wording, note]) => ({ wording, note }))],
   // USPS's closing of a customer's missing-mail search, which ParcelsApp follows with the place of the scan.
   gapNote: (code, wording) => {
