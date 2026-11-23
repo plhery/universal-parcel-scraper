@@ -38,7 +38,6 @@
   ],
   "portal": {
     "url": "https://tracking.pasarex.com/?awb={trackingNumber}",
-    "searchUrl": "https://tracking.pasarex.com/",
     "canaryUrl": "https://pasarex.com/co/",
     "shows": [
       "status",

@@ -37,6 +37,7 @@ show, and the tracker answers them. The copies come from one source, so the rule
 ## Links
 
 Tracking links carry the number as `awb` on tracking.pasarex.com.
+The tracker has no number field of its own, so the catalog names no search page.
 
 ## Testing
 

@@ -24,7 +24,7 @@
   "capabilities": [],
   "portal": {
     "url": "https://post.plus/?tracking={trackingNumber}",
-    "searchUrl": "https://post.plus/",
+    "searchUrl": "https://post.plus/track",
     "helpUrl": "https://post.plus/contact",
     "canaryUrl": "https://post.plus/",
     "shows": [],

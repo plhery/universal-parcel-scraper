@@ -48856,7 +48856,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://pasarex.com/co/",
     "trackingUrlTemplate": "https://tracking.pasarex.com/?awb={trackingNumber}",
-    "trackingSearchUrl": "https://tracking.pasarex.com/",
     "linkRules": [
       {
         "domains": [
@@ -51768,7 +51767,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://post.plus/",
     "trackingUrlTemplate": "https://post.plus/?tracking={trackingNumber}",
-    "trackingSearchUrl": "https://post.plus/",
+    "trackingSearchUrl": "https://post.plus/track",
     "helpUrl": "https://post.plus/contact",
     "linkRules": [
       {
