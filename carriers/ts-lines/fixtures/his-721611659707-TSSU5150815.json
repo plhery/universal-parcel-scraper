@@ -1,0 +1,70 @@
+{
+  "docs": [
+    {
+      "EQPA_CONTAINER": "TSSU5150815",
+      "EQPA_MOVE_DATE": "2026/11/20 09:52:00",
+      "COURNTRY": "Vietnam",
+      "PORTNAME": "HC017",
+      "LOCATION": "GREATING FORTUNE DEPOT (DONG AN)",
+      "ACTIVITY": "Empty gate-In",
+      "EQPA_VESSEL": "GNZA",
+      "EQPA_VOYAGE": "2614S",
+      "EQPA_SEAL_NUMBER": null
+    },
+    {
+      "EQPA_CONTAINER": "TSSU5150815",
+      "EQPA_MOVE_DATE": "2026/11/19 02:30:00",
+      "COURNTRY": "Vietnam",
+      "PORTNAME": "HC012",
+      "LOCATION": "CAT LAI ",
+      "ACTIVITY": "FULL CONTAINER OUT FOR DEVANNING",
+      "EQPA_VESSEL": "GNZA",
+      "EQPA_VOYAGE": "2614S",
+      "EQPA_SEAL_NUMBER": null
+    },
+    {
+      "EQPA_CONTAINER": "TSSU5150815",
+      "EQPA_MOVE_DATE": "2026/11/18 01:00:00",
+      "COURNTRY": "Vietnam",
+      "PORTNAME": "HC012",
+      "LOCATION": "CAT LAI ",
+      "ACTIVITY": "FCL CONTAINER DISCHAREGED FROM VESSEL",
+      "EQPA_VESSEL": "GNZA",
+      "EQPA_VOYAGE": "2614S",
+      "EQPA_SEAL_NUMBER": "TSF0648023"
+    },
+    {
+      "EQPA_CONTAINER": "TSSU5150815",
+      "EQPA_MOVE_DATE": "2026/11/13 11:31:00",
+      "COURNTRY": "China",
+      "PORTNAME": "CW002",
+      "LOCATION": "CHIWAN CONTAINER TERMINAL CO.,  LTD. (CCT)",
+      "ACTIVITY": "FULL CONTAINER LOADED ON VESSEL",
+      "EQPA_VESSEL": "GNZA",
+      "EQPA_VOYAGE": "2614S",
+      "EQPA_SEAL_NUMBER": "TSF0648023"
+    },
+    {
+      "EQPA_CONTAINER": "TSSU5150815",
+      "EQPA_MOVE_DATE": "2026/11/05 12:26:00",
+      "COURNTRY": "China",
+      "PORTNAME": "CW002",
+      "LOCATION": "CHIWAN CONTAINER TERMINAL CO.,  LTD. (CCT)",
+      "ACTIVITY": "FULL TURN IN CY-OUTBOUND",
+      "EQPA_VESSEL": "GNZA",
+      "EQPA_VOYAGE": "2614S",
+      "EQPA_SEAL_NUMBER": "TSF0648023"
+    },
+    {
+      "EQPA_CONTAINER": "TSSU5150815",
+      "EQPA_MOVE_DATE": "2026/11/04 18:15:00",
+      "COURNTRY": "China",
+      "PORTNAME": "CW002",
+      "LOCATION": "CHIWAN CONTAINER TERMINAL CO.,  LTD. (CCT)",
+      "ACTIVITY": "MTY CONTAINER OUT FOR VANNING",
+      "EQPA_VESSEL": "GNZA",
+      "EQPA_VOYAGE": "2614S",
+      "EQPA_SEAL_NUMBER": null
+    }
+  ]
+}

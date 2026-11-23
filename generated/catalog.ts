@@ -64548,6 +64548,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ts-lines": {
+    "displayName": "T.S. Lines",
+    "color": "#009fe8",
+    "aliases": [
+      "TS Lines",
+      "T.S. Lines Ltd",
+      "TSL",
+      "德翔海運"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ts-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.tslines.com/en/tracking",
+    "trackingSearchUrl": "https://www.tslines.com/en/tracking?nowmenu=search_by_container_number",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tsb-es": {
     "displayName": "TSB",
     "color": "#32499c",
@@ -73128,6 +73149,7 @@ export const CARRIER_IDS = [
   "trunkrs",
   "trusk",
   "trustexpress",
+  "ts-lines",
   "tsb-es",
   "tsjy",
   "tsn-groen",
@@ -75163,6 +75185,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trunkrs": [],
   "trusk": [],
   "trustexpress": [],
+  "ts-lines": [],
   "tsb-es": [],
   "tsjy": ["tsjy-1"],
   "tsn-groen": [],

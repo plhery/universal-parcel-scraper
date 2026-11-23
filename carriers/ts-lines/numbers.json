@@ -1,0 +1,264 @@
+{
+  "carrier": "ts-lines",
+  "records": [
+    {
+      "number": "TSSU2130380",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's T.S. Lines container tracking page lists this container among its recent searches. T.S. Lines' tracker lists its cycles; the latest has no bill yet and starts with the full container's gate in at Taichung."
+    },
+    {
+      "number": "TSSU2065200",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's T.S. Lines container tracking page lists this container among its recent searches. T.S. Lines' tracker returns its latest cycle loaded at Tianjin."
+    },
+    {
+      "number": "TSTU8520007",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's T.S. Lines container tracking page lists this container among its recent searches. T.S. Lines' tracker returns its latest cycle from Nhava Sheva, discharged at Laem Chabang."
+    },
+    {
+      "number": "TSSU5150815",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's T.S. Lines container tracking page lists this container among its recent searches. T.S. Lines' tracker returns its latest cycle from Chiwan to Cat Lai, returned empty."
+    },
+    {
+      "number": "TSTU8204797",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's T.S. Lines container tracking page lists this container among its recent searches. T.S. Lines' tracker returns its latest cycle with no bill yet, an empty container made available at Laem Chabang."
+    },
+    {
+      "number": "TSSU2250810",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's T.S. Lines container tracking page lists this container among its recent searches. T.S. Lines' tracker returns its latest cycle from Mundra to Qingdao, returned empty."
+    },
+    {
+      "number": "TSSU5234449",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's T.S. Lines container tracking page lists this container among its recent searches. T.S. Lines' tracker returns its latest cycle discharged and returned empty in Saudi Arabia."
+    },
+    {
+      "number": "741650181991",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "T.S. Lines' reply for the container TSSU2130380, which pier2pier's T.S. Lines page lists among its recent searches, names this bill for the container's previous cycle. T.S. Lines' tracker returns its one container from Ningbo to Taichung, returned empty."
+    },
+    {
+      "number": "800610312902",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "T.S. Lines' reply for the container TSSU2065200, which pier2pier's T.S. Lines page lists among its recent searches, names this bill for the container's latest cycle. T.S. Lines' tracker returns its five containers loaded at Tianjin."
+    },
+    {
+      "number": "554610098792",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/tsl/",
+        "date": "2026-11-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "T.S. Lines' reply for the container TSSU2065200, which pier2pier's T.S. Lines page lists among its recent searches, names this bill for the container's previous cycle. T.S. Lines' tracker returns its sixty containers, returned empty at Tianjin."
+    }
+  ]
+}

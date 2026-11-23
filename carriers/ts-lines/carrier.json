@@ -1,0 +1,62 @@
+{
+  "id": "ts-lines",
+  "displayName": "T.S. Lines",
+  "aliases": [
+    "TS Lines",
+    "T.S. Lines Ltd",
+    "TSL",
+    "德翔海運"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#009fe8"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ts-lines",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.tslines.com/en/tracking?nowmenu=search_by_container_number",
+    "canaryUrl": "https://www.tslines.com/en/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

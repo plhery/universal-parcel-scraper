@@ -6442,5 +6442,17 @@
     "pattern": "^\\d{6}[A-Z]\\d{3}R\\d{2}$",
     "kind": "open",
     "reason": "JustShip shipping IDs open with the booking date, and one public sample is too few to give the shape a rule; select JustShip explicitly."
+  },
+  {
+    "carrier": "ts-lines",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "T.S. Lines' bills of lading are twelve bare digits, a shape many carriers' numeric waybills share, so no rule claims them; select T.S. Lines explicitly."
+  },
+  {
+    "carrier": "ts-lines",
+    "pattern": "^[A-Z]{3}U\\d{7}$",
+    "kind": "by_design",
+    "reason": "T.S. Lines tracks containers by their ISO 6346 numbers, its own and other owners' it carries, and its own containers also travel under other lines' bills, so no rule claims them; select T.S. Lines explicitly."
   }
 ]

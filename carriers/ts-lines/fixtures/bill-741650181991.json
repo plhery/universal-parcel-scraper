@@ -1,0 +1,33 @@
+{
+  "cargos": [
+    {
+      "STATUS": "CARGO ARRIVAL",
+      "CONTAINER_NUMBER": "TSSU2130380",
+      "ACTIVE_DATE": "2026/10/28 10:11",
+      "COUNTRY": "Taiwan",
+      "LOCATION_NAME": "SHINYANG CONTAINER CO.,LTD (欣陽貨櫃有限公司)",
+      "CURRENT_LOCATION": "SHINYANG CONTAINER CO.,LTD (欣陽貨櫃有限公司)",
+      "ACTIVITY": "Empty gate-In",
+      "VESSEL_NAME": "TEH PEACE",
+      "VSLVOY": "PECB2639S",
+      "SEAL": null,
+      "BL_NUMBER": "741650181991"
+    }
+  ],
+  "estimatedCargoRoute": [
+    {
+      "SERVICE": "CTE",
+      "IMO": "9868170",
+      "VESSEL": "TEH PEACE",
+      "VSLVOY": "PECB2639S",
+      "POL": "NINGBO, CHINA",
+      "POD": "TAICHUNG,TAIWAN",
+      "ETD": "2026/10/13 12:30",
+      "ETA": "2026/10/12 14:30",
+      "ETB": null,
+      "POL_ATD": " 2026/10/13 12:15",
+      "POD_ATA": "2026/10/16 02:30",
+      "POD_ETA": "2026/10/16 01:30"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "docs": [
+    {
+      "EQPA_CONTAINER": "GAOU2027995",
+      "EQPA_MOVE_DATE": "2026/09/24 12:53:00",
+      "COURNTRY": "China",
+      "PORTNAME": "XG025",
+      "LOCATION": "TIANJIN EX INTERNATIONAL LOGISTICS CO.,LTD",
+      "ACTIVITY": "Empty gate-In",
+      "EQPA_VESSEL": "XMNB",
+      "EQPA_VOYAGE": "2616N",
+      "EQPA_SEAL_NUMBER": null
+    },
+    {
+      "EQPA_CONTAINER": "GAOU2027995",
+      "EQPA_MOVE_DATE": "2026/09/24 12:51:00",
+      "COURNTRY": "China",
+      "PORTNAME": "XG023",
+      "LOCATION": "TIANJIN PORT SECOND CONTAINER TERMINAL CO., LTD.",
+      "ACTIVITY": "FULL CONTAINER OUT FOR DEVANNING",
+      "EQPA_VESSEL": "XMNB",
+      "EQPA_VOYAGE": "2616N",
+      "EQPA_SEAL_NUMBER": null
+    }
+  ]
+}

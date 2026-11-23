@@ -972,6 +972,7 @@ import { adapter as transmission } from '../carriers/transmission/adapter.js';
 import { adapter as transportesChevalier } from '../carriers/transportes-chevalier/adapter.js';
 import { adapter as transportesRapex } from '../carriers/transportes-rapex/adapter.js';
 import { adapter as trendyolExpress } from '../carriers/trendyol-express/adapter.js';
+import { adapter as tsLines } from '../carriers/ts-lines/adapter.js';
 import { adapter as tsbEs } from '../carriers/tsb-es/adapter.js';
 import { adapter as tsjy } from '../carriers/tsjy/adapter.js';
 import { adapter as tstCfExpress } from '../carriers/tst-cf-express/adapter.js';
@@ -2059,6 +2060,7 @@ export const REGISTRY: RegistryDefinition = {
     "transportes-chevalier": transportesChevalier,
     "transportes-rapex": transportesRapex,
     "trendyol-express": trendyolExpress,
+    "ts-lines": tsLines,
     "tsb-es": tsbEs,
     "tsjy": tsjy,
     "tst-cf-express": tstCfExpress,
@@ -3985,6 +3987,7 @@ export const REGISTRY: RegistryDefinition = {
     "trunkrs": "universal",
     "trusk": "universal",
     "trustexpress": "universal",
+    "ts-lines": "ts-lines",
     "tsb-es": "tsb-es",
     "tsjy": "tsjy",
     "tsn-groen": "universal",

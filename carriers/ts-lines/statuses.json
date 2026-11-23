@@ -1,0 +1,14 @@
+{
+  "carrier": "ts-lines",
+  "entries": [
+    {"wording": "MTY CONTAINER OUT FOR VANNING", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not yet with T.S. Lines."},
+    {"wording": "EMTY CONTAINER TO CFS FOR STUFFING", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "An empty container goes to a freight station to be loaded; the cargo is not yet with T.S. Lines."},
+    {"wording": "FULL TURN IN CY-OUTBOUND", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading. After the container moved, a further gate in is transit."},
+    {"wording": "FULL CONTAINER LOADED ON VESSEL", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "FCL CONTAINER DISCHAREGED FROM VESSEL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at the port of discharge or a transshipment port."},
+    {"wording": "FULL CONTAINER OUT FOR DEVANNING", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The loaded container leaves the terminal to be unloaded at the consignee's."},
+    {"wording": "Empty gate-In", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The unloaded container is returned. Before the container moved, it is an empty container returned unused."},
+    {"wording": "Empty gate-In.", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The same return as some depots word it, with a full stop."},
+    {"wording": "EMPTY AVAILABLE GATE IN/CHANGE AVAILABLE/EMPTY AVAILABLE", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The returned container is made available again. Before the container moved, it is an empty container that was not used."}
+  ]
+}
