@@ -208,7 +208,7 @@ describe('Techlink status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other', description: 'Your shipment has arrived at sorting center' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     for (const description of ['Your shipment has been processed at sorting center and ready for shipping', 'Your shipment has departed from the transit origin',
-      'Your shipment has arrived at the transit destination', 'Your shipment is in process at sorting center']) {
+      'Your shipment has arrived at the transit destination', 'Your shipment is in process at sorting center', 'Processing at facility']) {
       expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other', description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other', description: 'Synthetic other scan' })).toEqual({ kind: 'unknown' });

@@ -32,6 +32,7 @@
     {"code": "DlvFail_Other", "wording": "Parcel is out for delivery.", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "A new delivery round after a failed one, under the failure family's code. YWE's own copy of the scan, at the same second, is its out-for-delivery scan, so the sentence decides."},
     {"code": "DlvFail_Other", "wording": "Parcel delivery failed [Wrong Address]. Parcel will be returned to the warehouse.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Back to YWE's warehouse, not to the sender: the parcel goes out again. Other reasons take Wrong Address's place."},
     {"code": "InTransit_Other", "wording": "In transit to destination facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
-    {"code": "InTransit_Other", "wording": "Processing at transit facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"}
+    {"code": "InTransit_Other", "wording": "Processing at transit facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "InTransit_Other", "wording": "Processing at facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "A facility in the destination country, after the moves between its facilities; it may come on several days."}
   ]
 }
