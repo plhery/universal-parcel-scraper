@@ -42,7 +42,8 @@ function hasCheckedShape(number: string): boolean {
  * and sixteen digits either: it is a DHL Express piece, JD01, with its zero
  * typed as a letter. Nor does any carrier issue "JRTO", ten digits and MM: it
  * is a JRT number with a letter O typed after its prefix, and JRT's tracker
- * knows it only without the O. A JS Express waybill, JSE, two letters, ten
+ * knows it only without the O. Its ten digits hold no letter either, so a
+ * letter O among them is a zero typed as a letter. A JS Express waybill, JSE, two letters, ten
  * digits and YQ, holds only digits between its letters, so a letter O there is
  * a zero typed as a letter: the tracker knows the number with the zero. A zero
  * typed for its second letter, which leaves eleven digits, is the letter O: the
@@ -78,6 +79,8 @@ export function normalizeTrackingNumber(raw: string): string {
   if (piece) return `${piece[1]}0${piece[2]}`;
   const jrt = /^JRTO(\d{10}MM)$/.exec(value);
   if (jrt) return `JRT${jrt[1]}`;
+  const jrtZero = /^JRT([\dO]{10})MM$/.exec(value);
+  if (jrtZero?.[1]!.includes('O')) return `JRT${jrtZero[1]!.replace(/O/g, '0')}MM`;
   const gofo = /^(GF(?:US|CA))O(\d{13})$/.exec(value);
   if (gofo) return `${gofo[1]}0${gofo[2]}`;
   const allegro = /^AD[0O][0-9B-DF-HJ-NP-TV-XZO]{14}$/.test(value) ? value.slice(2) : '';

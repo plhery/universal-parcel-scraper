@@ -106,7 +106,8 @@ cannot follow the parcel yet.
 
 JRT's own numbers are JRT, ten digits and MM, made by a Hualei number rule; JRT is 今日通's
 initials. A number typed with a letter O after JRT reads as JRT's: the tracker knows it only
-without the O, and `normalizeTrackingNumber` drops it. The tracker also accepts the customer's reference, which the shipper chooses. References
+without the O, and `normalizeTrackingNumber` drops it. A letter O among the ten digits is a zero
+typed as a letter, and reads as one. The tracker also accepts the customer's reference, which the shipper chooses. References
 made of UP and sixteen digits find JRT orders, but nothing shows that only JRT's shippers use the
 shape, so `jrt-2` offers them with low confidence and recognition asks the tracker, which must
 hold the whole reference. No public number of either shape has been found, so the corpus holds

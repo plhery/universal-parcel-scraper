@@ -353,8 +353,13 @@ describe('normalization', () => {
       expect(normalizeTrackingNumber(typed), typed).toBe('JRT0000000001MM');
       expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'jrt', confidence: 'high' });
     }
+    // A letter O among the ten digits is a zero typed as a letter.
+    for (const typed of ['JRTOO00000001MM', 'JRTO000000001MM', 'jrt 00o0000001 mm']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe('JRT0000000001MM');
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'jrt', confidence: 'high' });
+    }
     // Only JRT's own length and suffix: anything else stays as typed.
-    for (const typed of ['JRTO000000001MM', 'JRTO00000000001MM', 'JRTO0000000001AB', 'JRTOO0000000001MM']) {
+    for (const typed of ['JRTO00000000001MM', 'JRTO0000000001AB', 'JRTOO0000000001MM', 'JRTOO000000001AB']) {
       expect(normalizeTrackingNumber(typed), typed).toBe(typed);
     }
   });
