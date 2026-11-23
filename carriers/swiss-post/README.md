@@ -53,6 +53,10 @@ is revoked.
   `internationalMailpieceId` it was given abroad — the endpoint is a search. None
   or two matches are refused, and so is a detail naming another item. Numbers
   are compared without spaces, dots or dashes, so the portal's dotted form matches.
+- Event codes take the meaning Swiss Post gives them in its list of
+  [sorting and delivery events](https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3),
+  or one seen live. Enquiry and delay notes and recipients' orders are left
+  without a stage, so the shipment summary decides.
 - Each scan's `provider_code` is written as the former tracker wrote it, and as
   stored scans carry it: the item's `type`, a star, its product code and the
   scan's own code (`PARCEL.*.2.1202`).

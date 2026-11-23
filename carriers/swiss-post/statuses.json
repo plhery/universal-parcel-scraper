@@ -81,6 +81,15 @@
       "firstSeen": "2026-10-08"
     },
     {
+      "code": "400",
+      "wording": "Sorting - forwarding",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
       "code": "500",
       "wording": "picked up at the client",
       "language": "en",
@@ -372,6 +381,15 @@
       "firstSeen": "2026-10-08"
     },
     {
+      "code": "1000",
+      "wording": "Arrival at the collection/delivery point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
       "code": "1001",
       "wording": "Arrival at the collection/delivery point",
       "language": "en",
@@ -398,6 +416,15 @@
       "note": "Also carries a hard-coded fallback wording."
     },
     {
+      "code": "1004",
+      "wording": "Given to branch",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
       "code": "1100",
       "wording": "Arrival at the delivery point",
       "language": "en",
@@ -405,6 +432,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "Arrival at the delivery office, not a handover to the recipient."
+    },
+    {
+      "code": "1200",
+      "wording": "Shipment was sorted",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
     },
     {
       "code": "1201",
@@ -458,6 +494,33 @@
       "firstSeen": "2026-10-22"
     },
     {
+      "code": "1302",
+      "wording": "Sorting - forwarding",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "1303",
+      "wording": "Sorted for delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "1304",
+      "wording": "Sorting",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
       "code": "1400",
       "wording": "Arrival in special delivery",
       "language": "en",
@@ -465,6 +528,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-22",
       "note": "After a failed delivery, before the sorting and loading for the next round."
+    },
+    {
+      "code": "1401",
+      "wording": "Logistic-Channel has changed general cargo",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
     },
     {
       "code": "2000",
@@ -503,10 +575,55 @@
       "note": "Arrival in a locker, not a delivery, even when the shipment summary says DELIVERED."
     },
     {
+      "code": "3401",
+      "wording": "Start of return",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "3501",
+      "wording": "Start Forwarding",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "3502",
+      "wording": "Forwarding processed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
       "code": "3600",
       "stage": "returned",
       "confirmedBy": "prior-art",
       "firstSeen": "2026-09-12"
+    },
+    {
+      "code": "3601",
+      "wording": "Start of return",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "3602",
+      "wording": "Return processed",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
     },
     {
       "code": "3700",
@@ -526,6 +643,24 @@
       "firstSeen": "2026-10-08"
     },
     {
+      "code": "3900",
+      "wording": "Delivered via P.O. box",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "3901",
+      "wording": "Delivered P.O. Box",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
       "code": "4000",
       "wording": "Delivered",
       "language": "en",
@@ -541,6 +676,24 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08"
+    },
+    {
+      "code": "4002",
+      "wording": "Delivered to deposit location",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "4003",
+      "wording": "Delivered to the parcel box",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
     },
     {
       "code": "4020",
@@ -573,6 +726,24 @@
       "stage": "delivered",
       "confirmedBy": "prior-art",
       "firstSeen": "2026-09-12"
+    },
+    {
+      "code": "5500",
+      "wording": "Retention period extended by the recipient",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
+    },
+    {
+      "code": "6300",
+      "wording": "Notified in P.O. box",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "official-doc",
+      "firstSeen": "2026-11-23",
+      "sourceUrl": "https://www.post.ch/-/media/portal-opp/pm/dokumente/sortier-und-zustellereignisse-fuer-bericht-25.xlsx?vs=3"
     },
     {
       "code": "9400",

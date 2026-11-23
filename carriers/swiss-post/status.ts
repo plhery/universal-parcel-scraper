@@ -39,6 +39,7 @@ export const FALLBACK_EVENT_LABELS: Record<string, string> = {
 export const EVENT_STAGE_BY_CODE: Record<string, Stage> = {
   '100': 'accepted',
   '200': 'accepted',
+  '400': 'in_transit',
   '500': 'accepted',
   // Pickups at the client, like 500, in Swiss Post's own wording table.
   '501': 'accepted',
@@ -75,10 +76,13 @@ export const EVENT_STAGE_BY_CODE: Record<string, Stage> = {
   '926': 'ready_for_pickup',
   '934': 'failed_attempt',
   '938': 'delivered',
+  '1000': 'in_transit',
   '1001': 'in_transit',
   '1002': 'in_transit',
   '1003': 'out_for_delivery',
+  '1004': 'in_transit',
   '1100': 'in_transit',
+  '1200': 'in_transit',
   '1201': 'in_transit',
   '1202': 'in_transit',
   '1204': 'in_transit',
@@ -87,24 +91,40 @@ export const EVENT_STAGE_BY_CODE: Record<string, Stage> = {
   // Sorted and sent on, and its arrival at a special delivery base, between two delivery rounds.
   '1300': 'in_transit',
   '1400': 'in_transit',
+  // More sorting, and the item moved to general cargo, in Swiss Post's own wording table.
+  '1302': 'in_transit',
+  '1303': 'in_transit',
+  '1304': 'in_transit',
+  '1401': 'in_transit',
   // Handed to the recipient at a post office counter.
   '2000': 'delivered',
   // A pickup notice like 910: the item waits at a post office for collection.
   '2100': 'ready_for_pickup',
   '2101': 'ready_for_pickup',
   '2102': 'ready_for_pickup',
+  '3401': 'returned',
+  '3501': 'in_transit',
+  '3502': 'in_transit',
   '3600': 'returned',
+  '3601': 'returned',
+  '3602': 'returned',
   // The recipient's refusal. Sending the item back is a later scan of its own.
   '3700': 'exception',
   '3800': 'delivered',
+  '3900': 'delivered',
+  '3901': 'delivered',
   '4000': 'delivered',
   '4001': 'delivered',
+  '4002': 'delivered',
+  '4003': 'delivered',
   '4020': 'in_transit',
   // After the item was loaded into the delivery vehicle; a later round follows.
   '4100': 'failed_attempt',
   // Delivered, worded as 4000 is, and the only delivery scan of a parcel that has it.
   '4200': 'delivered',
   '4600': 'delivered',
+  '5500': 'ready_for_pickup',
+  '6300': 'ready_for_pickup',
   // Held at a post office for the recipient to collect, as poste restante.
   '9400': 'ready_for_pickup',
 };

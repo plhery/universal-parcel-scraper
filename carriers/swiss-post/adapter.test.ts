@@ -85,11 +85,16 @@ describe('Swiss Post event codes', () => {
     ['1204', 'Consignment is being processed', 'in_transit'],
     ['1213', 'Sorted for delivery', 'in_transit'],
     ['1218', 'Sorted for delivery', 'in_transit'],
+    ['1304', 'Sorting', 'in_transit'],
     ['2000', 'Delivered over counter', 'delivered'],
+    ['3601', 'Start of return', 'returned'],
     ['3700', 'The recipient has refused delivery', 'exception'],
     ['3800', 'Delivered to the mailbox/letter box', 'delivered'],
+    ['3900', 'Delivered via P.O. box', 'delivered'],
+    ['4003', 'Delivered to the parcel box', 'delivered'],
     ['4020', 'Forwarding abroad', 'in_transit'],
     ['4200', 'Distribué', 'delivered'],
+    ['6300', 'Notified in P.O. box', 'ready_for_pickup'],
     ['9400', 'Consignment poste restante in post office and ready for collection', 'ready_for_pickup'],
   ])('classifies scan %s from its code for letters and parcels alike', (code, title, stage) => {
     expect(EVENT_STAGE_BY_CODE[code]).toBe(stage);
