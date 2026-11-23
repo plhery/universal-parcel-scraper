@@ -128,7 +128,7 @@ describe('TSJY HTTP adapter', () => {
     expect(result.events![1]!.time).toBeUndefined();
   });
 
-  it.each(['已装柜，预计11.22开船，预计12.7到港', '已装柜，预计1.8开船，预计2.15到港'])('reads TSJY container loading with sailing dates: %s', (wording) => {
+  it.each(['已装柜，预计11.22开船，预计12.7到港', '已装柜，预计1.8开船，预计2.15到港', '已开船，预计美国时间12.9到港', '已开船，预计美国时间1.15到港'])('reads TSJY container loading and sailing with their estimated days: %s', (wording) => {
     const result = parseTsjy(changed('relayed-journey', (order) => {
       order.trackList[0]!.event = wording;
     }), JOURNEY, LATER);
