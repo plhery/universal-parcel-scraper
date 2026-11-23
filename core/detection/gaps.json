@@ -3960,6 +3960,12 @@
     "reason": "Eleven or twelve bare digits are printed by many carriers and nothing in the number points to SkyNet."
   },
   {
+    "carrier": "skyquick",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "Twelve bare digits are printed by many carriers, SkyNet's network among them, and nothing in the number points to SkyQuick."
+  },
+  {
     "carrier": "slgtrax",
     "pattern": "^\\d{14}$",
     "kind": "by_design",

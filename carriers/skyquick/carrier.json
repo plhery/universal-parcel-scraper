@@ -1,0 +1,92 @@
+{
+  "id": "skyquick",
+  "displayName": "SkyQuick International",
+  "aliases": [
+    "SkyQuick",
+    "SkyQuick International Pte Ltd"
+  ],
+  "region": {
+    "countries": [
+      "SG"
+    ]
+  },
+  "brand": {
+    "color": "#e4002b"
+  },
+  "selectable": true,
+  "timezone": "Asia/Singapore",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "skyquick",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 689
+    }
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://skyquickinternational.com/tracking.aspx?cn={trackingNumber}",
+    "searchUrl": "https://skyquickinternational.com/",
+    "helpUrl": "https://skyquickinternational.com/index.aspx#contactus",
+    "canaryUrl": "https://skyquickinternational.com/",
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "location",
+      "destination_country",
+      "service_type",
+      "signatory",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "service_type",
+      "signatory",
+      "customer_reference"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "delivered_at",
+      "offset_timestamps",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "skyquickinternational.com",
+        "www.skyquickinternational.com"
+      ],
+      "pathPattern": "^/tracking\\.aspx$",
+      "params": [
+        "cn"
+      ]
+    },
+    {
+      "domains": [
+        "tracking.frontierforce.com"
+      ],
+      "pathPattern": "^/(?:tracking(?:_search)?\\.aspx|go/plm-tracking(?:_search)?)/?$",
+      "query": "^(?=(?:[^&]*&)*stid=skyquick(?:&|$))(?:[^&]*&)*?cn=([^&]+)"
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,42 @@
+{
+  "carrier": "skyquick",
+  "records": [
+    {
+      "number": "711952411623",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://uk.trustpilot.com/reviews/61cc1a3e0430e828ebe19655",
+        "date": "2021-12-29",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "poste-italiane",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "A customer gives it as the Skynet Express tracking number of a department-store order in a Trustpilot review of SkyNet Worldwide Express. SkyQuick's tracker holds it under SkyQuick's own wordings, from its departure in London to its delivery in Singapore."
+    }
+  ]
+}

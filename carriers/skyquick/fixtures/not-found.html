@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>GETOnline</title>
+  </head>
+  <body class="fixed-header menu-pin  ">
+<div class=" container-fluid container-fixed-lg  no-trackingstatus" style="display:none;">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="card-block" style="justify-content: center;display: grid;">
+                <h5 class="last-status mb-2">No tracking found for this number.</h5>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class=" container-fluid container-fixed-lg bg-primary-light trackingstatus-connote" style="display:none;">
+    <div class="row ">
+        <div class="col-md-6 text-left hidden-xs">
+            <div class="card-block">
+                <h3 class="cn1 m-t-0">&nbsp;</h3>
+                <span class="last-notes text14 bold">&nbsp;</span>
+                <br />
+                <span class="langlbl text12 lblsenderref" style="display:none" langtag="trackingstatus_SenderRef">Sender Ref</span>
+                <br />
+                <span class="senderref text14"></span>
+                <!--<p class="last-location"></p>-->
+            </div>
+        </div>
+        <div class="col-md-6 text-right">
+            <!-- START card -->
+            <div class="card-block ">
+                <!--<form id="form-project" role="form" autocomplete="off" novalidate="novalidate" class="">-->
+                <h3 class="last-status m-t-0"></h3>
+
+                <!--<span class="langlbl text-12" langtag="trackingstatus_Destination">Destination</span>
+                <br />-->
+                <span class="destination bold"></span>
+                <br />
+                <span class="langlbl text12" langtag="trackingstatus_Servicetype" id="lblservicetype">Service Type</span>
+                <br />
+                <span class="servicetype" id="servicetype"></span>
+                <div class="visible-xs"> 
+                    <span class="senderref text14"></span>
+                </div>
+                <div class="lblaltref" style="display: none;" id="lblaltref">
+                    <span id="labelaltref" class="text12">Alternate Ref</span>
+                    <!--<input type="text" class="form-control" name="lastName" value="NA" id="altref" readonly="readonly">-->
+                    <br />
+                    <a href="#" id="altref" class="disabled altref" target="_blank">NA</a>
+                </div>
+                <div class="lblsenderref2" style="display: none;">
+                    <span class="text12">Sender Ref 2</span>
+                    <br />
+                    <span class="senderref2"></span>
+                    <!--<input type="text" class="form-control senderref2" name="" value="NA" id="" readonly="readonly">-->
+                </div>
+                <div class="" style="display: none;">
+                    <span class="text12">Job #</span>
+                    <br />
+                    <span class="jobnumber" id="jobnumber">asdasdasd</span>
+                    <!--<input type="text" class="form-control jobnumber" name="lastName" value="NA" id="jobnumber" readonly="readonly">-->
+                </div>
+               
+                <!--</form>-->
+            </div>
+            <!-- END card -->
+        </div>
+    </div>
+    <div class="row" id="recipient_details" style="display:none">
+        <div class="col-md-6 text-left">
+            <div class="card-block">
+                <div>
+                    <strong>Recipient Name:</strong> <span id="recipient_name"></span>
+                    <br />
+                    <strong>Recipient Address:</strong> <span id="recipient_address"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-group horizontal tracking-events" role="tablist" aria-multiselectable="true">
+            <!--content loop here-->
+        </div>
+
+    <script>
+        function js_getTrack() {
+            var cn = getUrlParameter("cn");
+            var stid = getUrlParameter("stid");
+            var a = getUrlParameter("action");
+            var status = getUrlParameter("status");
+            if (stid == "") { location.href = errorsite; return false; }
+            if (cn == "") { location.href = location.origin + "/tracking_search.aspx?stid=" + stid; return false; }
+
+           
+            $(".cn").html(cn);
+            $(".cn1").html(cn);
+
+            $(".trackingstatus").show();
+            $(".last-notes, .trackingstatus-connote").hide();
+
+        //var obj = $.parseJSON(data);
+        
+            $(".tracking-events").html("");
+       
+            var sno = 0;
+        
+            $(".no-trackingstatus").show();
+            $(".trackingstatus, .trackingstatus-connote, .tracking-events").hide();
+                             
+            return false;
+           
+
+            $(".hdntoggle").click(function () {
+                if ($(this).attr("aria-expanded") == "true") {
+                    $(this).html("Show all events");
+                } else {
+                    $(this).html("Hide events");
+                }
+            });
+
+            if ($(".nav-item").find("a:visible").length == 1) {
+                $("#trackingmenubar").hide();
+                $(".tracking-top-header").hide();
+            } else {
+                $(".trackingstatus-connote .cn").html("&nbsp;");
+                $(".trackingstatus-connote .cn1").html("&nbsp;");
+            }
+            
+        }
+
+        function VerifyNow(stg) {
+        }
+    </script>
+  </body>
+</html>

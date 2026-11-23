@@ -2251,6 +2251,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'airpak-express', number: '999999999990',
     route: /^https:\/\/tracking\.airpak-express\.com\/go\/plm-tracking_search\?stid=airpak&cn=999999999990$/,
     marker: /No tracking available|Track & Trace/ },
+  // The server renders the lookup; its answer to an unknown number does not show the number.
+  { carrier: 'skyquick', number: '999999999990',
+    route: /^https:\/\/skyquickinternational\.com\/tracking\.aspx\?cn=999999999990$/,
+    marker: /Tracking results/,
+    forwarding: { notFound: /Shipment Not Found/ } },
   // The page puts the number in its address into its field, looks it up and answers an unknown one with its own notice.
   // The page's styles show its notices in capitals.
   { carrier: 'chronodiali', number: 'CHPU0000000000000000000',

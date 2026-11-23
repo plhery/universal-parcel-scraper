@@ -1,0 +1,15 @@
+{
+  "carrier": "skyquick",
+  "entries": [
+    {"code": "3", "wording": "Departed SkyQuick Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Written for the origin's departure too, at a station abroad."},
+    {"code": "14", "wording": "In Transit Delay", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel waits for the next departure; the history moved on after it."},
+    {"code": "4", "wording": "Arrived SkyQuick Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "262", "wording": "Scheduled for Delivery", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the delivering station, booked on a delivery round."},
+    {"code": "15", "wording": "On Vehicle for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"code": "18", "wording": "Unsuccessful Delivery Attempt", "language": "en", "stage": "failed_attempt", "confirmedBy": "live"},
+    {"code": "53", "wording": "Unable to Complete Delivery - Unavoidable Delay", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "Written at the end of a round the parcel was on; it went out again later."},
+    {"code": "1", "wording": "Successful Delivery", "language": "en", "stage": "delivered", "confirmedBy": "live"},
+    {"code": "45", "wording": "Shipment Returned to SkyQuick Sending Facility", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "Seen at the destination after a failed attempt and before the delivery: the parcel went back to the depot. The wording also fits a return to the origin."},
+    {"code": "148", "wording": "Info Message Sent to Recipient", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "A message to the recipient."}
+  ]
+}

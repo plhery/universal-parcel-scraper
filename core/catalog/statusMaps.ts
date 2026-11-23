@@ -744,6 +744,7 @@ import { statusMap as skyking } from '../../carriers/skyking/status.js';
 import { statusMap as skynetSa } from '../../carriers/skynet-sa/status.js';
 import { statusMap as skynetWorldwide } from '../../carriers/skynet-worldwide/status.js';
 import { statusMap as skypostal } from '../../carriers/skypostal/status.js';
+import { statusMap as skyquick } from '../../carriers/skyquick/status.js';
 import { statusMap as slgtrax } from '../../carriers/slgtrax/status.js';
 import { statusMap as slovakParcelService } from '../../carriers/slovak-parcel-service/status.js';
 import { statusMap as slovenskaPosta } from '../../carriers/slovenska-posta/status.js';
@@ -1195,7 +1196,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'rpx-indonesia': rpxIndonesia, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
   'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shipter, shouwu,
   'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skroutz-last-mile': skroutzLastMile,
-  skybox, skyking, 'skynet-sa': skynetSa, 'skynet-worldwide': skynetWorldwide, skypostal, slgtrax,
+  skybox, skyking, 'skynet-sa': skynetSa, 'skynet-worldwide': skynetWorldwide, skypostal, skyquick, slgtrax,
   'slovak-parcel-service': slovakParcelService,
   'slovenska-posta': slovenskaPosta, 'smsa-express': smsaExpress, 'south-african-post-office': southAfricanPost,
   'southeastern-freight-lines': southeasternFreightLines, 'sp-express': spExpress, 'spark-kz': sparkKz, 'spee-dee': speeDee, 'speed-and-safe': speedAndSafe, speedaf, speedex, speedpak, speedx, speedy, 'spring-gds': springGds, sptexp, 'spx-br': spxBr, 'spx-id': spxId, 'spx-my': spxMy, 'spx-sg': spxSg,
