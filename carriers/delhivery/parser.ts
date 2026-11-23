@@ -84,13 +84,17 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
     // milestone can have none), so the milestone becomes an event of its own.
     const milestone = clean(state.label, 200);
     const milestoneText = clean(state.date, 64);
-    if (index <= reached && milestone && milestoneText
+    const milestoneAt = milestone && milestoneText ? milestoneTime(milestoneText, updated) : null;
+    const status = milestone ? classifyDelhiveryStatus(milestone) : undefined;
+    // A missed delivery takes the index back from "Out for Delivery" to "On the Way". The milestone it
+    // leaves past the index keeps a date no later than the status: reached, unlike the rail's. A
+    // delivered one is never read so.
+    const left = index > reached && milestoneAt !== null && status?.stage !== 'delivered';
+    if ((index <= reached || left) && milestone && milestoneText
       && !scans.some(scan => isRecord(scan) && clean(scan.scanDateTime, 64))) {
-      const time = milestoneTime(milestoneText, updated);
-      const status = classifyDelhiveryStatus(milestone);
       const classified = item.currentFlow === 'Reverse' && status?.stage === 'delivered' ? classifyDelhiveryStatus('RTO DELIVERED') : status;
-      if (classified?.stage === 'delivered' && time && (!deliveredAt || time.timestamp > deliveredAt.timestamp)) deliveredAt = time;
-      events.push({ description: milestone, ...(time ? { time: time.iso } : { provider_time_text: milestoneText }),
+      if (classified?.stage === 'delivered' && milestoneAt && (!deliveredAt || milestoneAt.timestamp > deliveredAt.timestamp)) deliveredAt = milestoneAt;
+      events.push({ description: milestone, ...(milestoneAt ? { time: milestoneAt.iso } : { provider_time_text: milestoneText }),
         ...(classified ? { stage: classified.stage } : {}), ...(item.currentFlow === 'Reverse' ? { provider_leg: 'return' } : {}) });
     }
     if (state.scans === undefined || state.scans === null) continue;

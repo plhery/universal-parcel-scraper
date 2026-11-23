@@ -35,7 +35,10 @@ milestone can have no scans. Such a milestone becomes an event of its own. Its d
 no year: it takes the year, no more than one before the status date, in which the day
 falls on the weekday shown, or else stays as written. The delivered milestone dates the
 delivery, since a freight status can date a later proof-of-delivery audit, and the
-delivered status then adds no snapshot of its own.
+delivered status then adds no snapshot of its own. Milestones past the current index are the
+website's progress rail, except one dated no later than the status: a missed delivery takes
+the index back from "Out for Delivery" to "On the Way", and the out-for-delivery milestone
+it leaves keeps its date. A delivered milestone is never read past the index.
 Once a shipment turns back, Delhivery relabels its "On the Way" milestone "Undelivered" at the
 same date, which dates no delivery attempt: it reads as an exception. The parcel app's identity
 policy lets a placeless milestone take over the placeless row at its instant, so the relabel

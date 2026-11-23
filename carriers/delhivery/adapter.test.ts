@@ -257,6 +257,29 @@ describe('Delhivery direct tracking', () => {
     const events = parseDelhivery(value, FREIGHT).events ?? [];
     expect(events.find(event => event.description === 'Reached Dest City')).toMatchObject({ time: '2026-03-01T20:00:00+05:30', stage: 'in_transit' });
   });
+  it('keeps the out-for-delivery milestone a missed delivery leaves past the current index', () => {
+    // The missed delivery takes the index back to "On the Way", and the shipment reaches the destination city again.
+    const missed = (statusDateTime: string) => {
+      const value = freight();
+      value.data[0].currentTrackIndex = 1;
+      value.data[0].status = { status: 'REACHED_DEST_CITY', statusType: 'UD', statusDateTime, instructions: 'Private instruction' };
+      return value;
+    };
+    const value = missed('2026-03-03T22:30:00.000000');
+    Object.assign(value.data[0].trackingStates[3], { date: '', scans: null });
+    const result = parseDelhivery(value, FREIGHT);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-03-03T22:30:00+05:30' });
+    expect(result.events?.filter(event => event.time).map(event => [event.description, event.time, event.stage])).toEqual([
+      ['Reached dest city', '2026-03-03T22:30:00+05:30', 'in_transit'],
+      ['Out for Delivery', '2026-03-02T10:30:00+05:30', 'out_for_delivery'],
+      ['On the Way', '2026-02-27T06:00:00+05:30', 'in_transit'],
+      ['Picked Up', '2026-02-24T09:15:00+05:30', 'accepted'],
+    ]);
+    // A delivered milestone past the index stays unread, even dated, and so does one dated after the status.
+    expect(parseDelhivery(missed('2026-03-03T22:30:00'), FREIGHT).events?.filter(event => event.time && event.stage === 'delivered')).toEqual([]);
+    expect(parseDelhivery(missed('2026-03-01T22:30:00'), FREIGHT).events?.filter(event => event.time).map(event => event.description))
+      .toEqual(['Reached dest city', 'On the Way', 'Picked Up']);
+  });
   it('reads a milestone year from its weekday before the status date, or keeps the text', () => {
     const value = freight();
     value.data[0].status.statusDateTime = '2027-01-05T10:00:00';
