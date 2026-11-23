@@ -562,6 +562,8 @@ describe('classifyWording', () => {
       'The parcel is at the distribution center', 'Your package is now at the distribution centre',
       "L'envoi est dans le réseau de livraison local.",
       'The notification for delivery has been sent to the recipient',
+      // DHL eCommerce Netherlands' notice of the delivery window, as ParcelsApp relays it.
+      'Notification Of Time Frame Has Been Sent',
       'Item handed over to delivery partner', 'Item distributed', 'The shipment item has been loaded.',
       'Your package has been loaded onto a vehicle',
       'The latest feedback from abroad is expected to arrange truck transfer to the destination port of Example on October 13th',
