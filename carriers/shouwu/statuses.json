@@ -419,6 +419,14 @@
       "note": "The last mile's transit facility, before its local one."
     },
     {
+      "wording": "Parcel received by local facility.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The last mile's local facility, the day after its transit facility and an hour before the round."
+    },
+    {
       "wording": "Shipment is in transit to next facility",
       "stage": "in_transit",
       "language": "en",
