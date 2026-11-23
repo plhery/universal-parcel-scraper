@@ -512,6 +512,10 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^item posted[.!]?$|^objeto postado[.!]?$/i.test(value)) return 'accepted';
   if (/^item in transfer - please wait[.!]?$|^objeto em transferencia - por favor aguarde[.!]?$|^item received at the export unit in the country of origin[.!]?$|^item received by the brazilian post[.!]?$|^objeto recebido pelos correios do brasil[.!]?$/i.test(value)) return 'in_transit';
   if (/^need to inform (?:the )?recipient['’]?s cpf\/cnpj[.!]?$|^necessidade de informar (?:o )?cpf\/cnpj do destinatario[.!]?$/i.test(value)) return 'customs';
+  // An import clearance stopped by the declaration's invalid tariff code ("Invalid HSCode"), as ParcelsApp relays it after a
+  // Cainiao parcel's "Import clearance start": held until the sender corrects it, as CACESA's map reads customs holding a
+  // parcel over its documents, not customs at work.
+  if (/^invalid hs ?code[.!]?$/i.test(value)) return 'exception';
   // Jadlog's word that it holds the parcel ("Seu produto já está com a Jadlog"), as Ship24 relays it ahead of its
   // "em trânsito": the carrier has taken the parcel in.
   if (/^seu produto ja esta com a jadlog[.!]?$/i.test(value)) return 'accepted';

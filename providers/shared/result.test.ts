@@ -10,6 +10,11 @@ describe('shared provider result', () => {
     expect(classifyEvent('Handed over to the customs').stage).toBe('customs');
   });
 
+  it('reads an import clearance stopped by an invalid tariff code as a problem, as ParcelsApp relays it', () => {
+    for (const wording of ['Invalid HSCode', 'Invalid HS code.']) expect(classifyEvent(wording), wording).toEqual({ stage: 'exception', stage_source: 'wording:provider' });
+    expect(classifyEvent('Invalid HSCode corrected').stage_source).toBe('none');
+  });
+
   it('reads the destination post taking the item over as a hand-over on the way, not the acceptance', () => {
     // Australia Post's INT-2185, as Ship24 relays it without its code, days after the item left Australia.
     expect(classifyEvent('Item handed over to the local postal authority')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
