@@ -279,6 +279,7 @@ describe('4PX result projection', () => {
     // iMile's order and its hand-over to iMile's regional centre, which 4PX relays with and without a code.
     ['FPX_O_IR', 'Order Submited.', 'pending', 'registered', 'carrier_map'],
     ['', 'Shipment delivered to iMile RDC or lastmile vendor', 'in_transit', 'in_transit', 'carrier_map'],
+    ['', 'Arrived at sorting center', 'in_transit', 'in_transit', 'carrier_map'],
     ['FPX_I_CP', 'Customs clearance in progress.', 'in_transit', 'customs', 'carrier_map'],
     ['FPX_D_SASPS', 'Parcel was handed over to pickup parcel shop_shop', 'out_for_delivery', 'ready_for_pickup', 'carrier_map'],
     ['FPX_D_SD', 'In transit', 'in_transit', 'in_transit', 'carrier_map'],

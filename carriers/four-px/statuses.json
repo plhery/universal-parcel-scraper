@@ -505,6 +505,14 @@
       "note": "Relayed without a code: SpeedX's scan 57112 on its way to the delivering facility, at the same second as SpeedX's own."
     },
     {
+      "wording": "Arrived at sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Relayed without a code: GOFO's arrival at its sorting centre, beside GOFO's coded copy (612) of the same scan."
+    },
+    {
       "code": "FPX_O_IRI",
       "wording": "Label created",
       "language": "en",

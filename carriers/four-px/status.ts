@@ -81,6 +81,8 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['shipment delivered to imile rdc or lastmile vendor', 'in_transit'],
   // SpeedX's scan on its way to the delivering facility, at the same second as SpeedX's own.
   ['in transit to destination facility', 'in_transit'],
+  // GOFO's arrival at its sorting centre, relayed beside GOFO's coded copy (612) of the same scan.
+  ['arrived at sorting center', 'in_transit'],
 ]);
 
 export interface FourPxStatus extends ClassifiedStatus {
