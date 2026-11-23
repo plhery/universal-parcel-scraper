@@ -8,7 +8,7 @@ import { planRoyalMailVision, type RoyalMailVisionOptions } from './vision-model
 
 const CHALLENGE = 'iframe[src*="hcaptcha.com"][src*="frame=challenge"]:visible';
 const PROVIDER = 'Royal Mail';
-type Outcome = 'accepted' | 'deferred' | 'declined' | 'stale' | 'unsupported' | 'refused' | 'blocked' | 'timeout';
+type Outcome = 'accepted' | 'declined' | 'stale' | 'unsupported' | 'refused' | 'blocked' | 'timeout';
 
 /** A derived guide for the model, never drawn on the live widget. */
 export function royalMailVisionGrid(width: number, height: number): Buffer {
@@ -48,8 +48,6 @@ export interface RoyalMailVisionContext {
   options: RoyalMailCaptchaOptions;
   /** Shared by the browser step and its existing fresh-context retry. */
   attempt: { used: boolean };
-  /** Preserve the existing fresh-context retry before spending time on inference. */
-  retryReserveMs?: number;
 }
 
 /** Observe before navigation. The original guest widget issues and consumes its own proof. */
@@ -108,9 +106,6 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
 
   const solve = async (signal: AbortSignal, phaseMs = Infinity): Promise<boolean> => {
     seen = true;
-    if ((config.retryReserveMs ?? 0) > 0 && remainingMs() >= config.retryReserveMs!) {
-      outcome = 'deferred'; return false;
-    }
     if (config.attempt.used) return false;
     config.attempt.used = true;
     const expires = performance.now() + Math.min(13_000, remainingMs() - 2500, phaseMs - 1000);

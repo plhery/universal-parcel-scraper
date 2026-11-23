@@ -74,11 +74,12 @@ export class RoyalMailTracker {
       const budgetMs = Math.min(BROWSER_TIMEOUT_MS, context.budgetMs ?? this.timeoutMs);
       const started = performance.now();
       const vision = this.#captchaVision ? { options: this.#captchaVision, attempt: { used: false } } : undefined;
-      const run = ({ remainingMs, signal, attempt }: { remainingMs: number; signal: AbortSignal; attempt: number }) => {
+      // Vision answers an interactive CAPTCHA in the attempt that met it: a fresh context
+      // seldom escapes one, though it often gets past an edge refusal.
+      const run = ({ remainingMs, signal }: { remainingMs: number; signal: AbortSignal }) => {
         const args = [number, this.#executablePath ?? '', signal, remainingMs, this.#fullHistory,
           this.#browserProxy, this.#browserWsEndpoint] as const;
-        return vision ? fetchRoyalMailInBrowser(...args, { ...vision,
-          retryReserveMs: attempt === 1 ? BROWSER_RETRY_MIN_MS : 0 }) : fetchRoyalMailInBrowser(...args);
+        return vision ? fetchRoyalMailInBrowser(...args, vision) : fetchRoyalMailInBrowser(...args);
       };
       return runSteps<CarrierResult>({ carrier: 'royal-mail', budgetMs,
         signal: context.signal, recorder: this.#recorder }, [

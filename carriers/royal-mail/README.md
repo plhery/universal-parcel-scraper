@@ -172,8 +172,10 @@ tokens stay outside Git.
 `ROYAL_MAIL_GEMINI_API_KEY` opts into single-drag hCaptcha recovery through Google
 Gemini Flash-Lite. Only the cropped verification widget reaches Google. The adapter
 writes no keys, images, answers or issued proof to files or logs. Recovery keeps the original
-guest session and lookup deadline, after reserving the existing fresh-context retry,
-with one visual round and no new attempt after a verification refusal.
+guest session and lookup deadline, with one visual round and no new attempt after a
+verification refusal. It answers the challenge in the attempt that met it: a fresh context
+seldom escapes an interactive CAPTCHA, though it often gets past an edge refusal, and a
+retry left too little time for the widget and the model.
 Ambiguous plans, changed images, multi-page tasks, click tasks and unsupported layouts remain
 challenges for provider fallback.
 An image from a widget refresh is discarded before inference; the frame, generation,

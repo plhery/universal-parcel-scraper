@@ -897,9 +897,9 @@ describe('Royal Mail lookup steps', () => {
     const calls = vi.mocked(fetchRoyalMailInBrowser).mock.calls;
     expect(calls).toHaveLength(2);
     expect(calls[0]?.[7]?.options.apiKey).toBe('synthetic-key');
-    expect(calls[0]?.[7]?.attempt).toBe(calls[1]?.[7]?.attempt);
-    expect(calls[0]?.[7]?.retryReserveMs).toBe(15_000);
-    expect(calls[1]?.[7]?.retryReserveMs).toBe(0);
+    // The first attempt can spend the one visual round: it is not kept for the retry.
+    expect(calls[0]?.[7]).toBe(calls[1]?.[7]);
+    expect(calls[0]?.[7]).not.toHaveProperty('retryReserveMs');
   });
 
   it.each(['captcha_refused', 'captcha_blocked'])('does not retry after a real visual refusal: %s', async reason => {

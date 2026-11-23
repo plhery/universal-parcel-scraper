@@ -49,15 +49,6 @@ async function harness() {
 }
 
 describe('Royal Mail verification recovery', () => {
-  it('reserves the proven fresh-context retry without using its one solver attempt', async () => {
-    const h = await harness();
-    h.context.retryReserveMs = 15_000;
-    await expect(h.solve(h.signal)).resolves.toBe(false);
-    expect(h.context.attempt.used).toBe(false);
-    expect(planRoyalMailVision).not.toHaveBeenCalled();
-    h.finish(false);
-    expect(h.records[0]?.outcome).toBe('deferred');
-  });
   it('requires a fresh official proof and reports history separately from accepted verification', async () => {
     const h = await harness();
     await expect(h.solve(h.signal)).resolves.toBe(true);
