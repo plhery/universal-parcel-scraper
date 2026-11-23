@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { classifyEvent, event, localEvent, result } from './result.js';
 import { statusMap } from '../status.js';
 import { hasPrivateDeliveryDetails } from '../../core/status/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 
 describe('shared provider result', () => {
   it('keeps customs refusing a parcel an exception, not customs at work', () => {
@@ -543,6 +544,12 @@ describe('shared provider result', () => {
     expect(statusMap.gaps.some(({ wording }) => wording === 'information on delivery transmitted')).toBe(true);
     // A planned delivery that names its day is no step the rule reads.
     expect(classifyEvent('Delivery planned for Example day').stage_source).toBe('none');
+  });
+
+  it('leaves a delivery booked for a date unstaged, as ParcelsApp relays it, and names it a gap', () => {
+    const wording = 'Information - Booking (Scheduled delivery date). Info:Example 2026-01-08 Example';
+    expect(classifyEvent(wording).stage_source).toBe('none');
+    expect(statusMap.gapNote?.(null, normalizeStatusWording(wording))).toMatch(/^A delivery booked for a date/);
   });
 
   it("reads a shipment's data created, and GLS's parcel made ready for its collection, as registration", () => {

@@ -157,6 +157,10 @@ export const statusMap: CarrierStatusMap = {
     if (/^package research case closed(?:, [^,]{1,60}){0,2}$/.test(wording)) {
       return "USPS's closing of a customer's missing-mail search, as ParcelsApp relays it with a place: not a scan, so it keeps the stage the parcel already had.";
     }
+    // A delivery booked for a date, as ParcelsApp relays it with the date after "Info:".
+    if (/^information - booking \(scheduled delivery date\)\. info: ?\S.{0,80}$/.test(wording)) {
+      return 'A delivery booked for a date, as ParcelsApp relays it: a booking, not a scan, so it keeps the stage the parcel already had.';
+    }
     // Rows recorded before the providers left them out.
     return relayedRowLeftOut(wording)
       ? 'A notice, a flight or schedule still to come, a bare time or a label without words, which the providers leave out of a history: not a scan, so it keeps the stage the parcel already had.'
