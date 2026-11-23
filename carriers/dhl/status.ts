@@ -19,10 +19,11 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 /**
  * The recipient's booked receiving option ("Für diese Sendung wurde ein Liefertag als
  * Empfangsoption vorgemerkt.", in English "The preferred day delivery on <date> was ordered by
- * Recipient."): a wish, not a movement. The parser leaves it out, as Hermes Germany's booked
+ * Recipient.", and for a place "A preferred location was designated as a reception option for
+ * this shipment."): a wish, not a movement. The parser leaves it out, as Hermes Germany's booked
  * delivery day; read as unmapped wording, it came as transit.
  */
-export const BOOKED_OPTION = /\bals empfangsoption vorgemerkt\b|\bpreferred day delivery on \d{2}\.\d{2}\.\d{4} was ordered by\b/i;
+export const BOOKED_OPTION = /\bals empfangsoption vorgemerkt\b|\bpreferred day delivery on \d{2}\.\d{2}\.\d{4} was ordered by\b|\bwas designated as a reception option\b/i;
 
 /** The day the English booked option names, as an ISO date: DHL keeps the parcel until then. */
 export function bookedDay(text: string): string | null {

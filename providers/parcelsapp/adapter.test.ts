@@ -373,9 +373,11 @@ describe('ParcelsApp result parsing', () => {
     // An address in place of the destination names no country.
     expect(result.destination_country).toBeUndefined();
     expect(() => parseParcelsAppResponse({ states: [{ date: '2026-08-18T00:00:00Z', status: 'Enter the recipient postal code', require_fields: [{}] }] }, number, identity())).toThrow();
-    // A prompt to track the parcel on a partner's site, a drop-off place or PaketShop the recipient booked or their details updated is no scan either.
+    // A prompt to track the parcel on a partner's site, a drop-off place, PaketShop or DHL receiving option the recipient booked or their details updated is no scan either.
     const prompted = parseParcelsAppResponse({ states: [{ date: '2026-08-19T00:00:00Z', status: 'Track Sendcloud shipment by tapping the button' },
       { date: '2026-08-18T12:00:00Z', status: 'A preferred drop-off location was booked for the shipment' },
+      { date: '2026-08-18T11:50:00Z', status: 'A preferred location was designated as a reception option for this shipment.' },
+      { date: '2026-08-18T11:40:00Z', status: 'Für diese Sendung wurde ein Liefertag als Empfangsoption vorgemerkt.' },
       { date: '2026-08-18T11:30:00Z', status: 'A desired PaketShop has been booked for the shipment' },
       { date: '2026-08-18T11:00:00Z', status: 'Recipient information updated' }, ...announced.states] }, number, identity());
     expect(prompted.events?.map(({ description }) => description)).toEqual(result.events?.map(({ description }) => description));

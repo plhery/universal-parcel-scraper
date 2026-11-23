@@ -475,6 +475,10 @@ describe('status map answers', () => {
     expect(answer('dhl', null, 'The shipment will be delivered tomorrow')).toEqual(unknown);
     expect(answer('dhl', null, 'Synthetic note')).toEqual(unknown);
     expect(answer('dhl', null, 'Für diese Sendung wurde ein Liefertag als Empfangsoption vorgemerkt.')).toEqual(gap);
+    expect(answer('dhl', null, 'A preferred location was designated as a reception option for this shipment.')).toEqual(gap);
+    // Relayed by a provider, the same options are notices the providers leave out.
+    expect(answer('unknown', null, 'A preferred location was designated as a reception option for this shipment.')).toEqual(gap);
+    expect(answer('unknown', null, 'Für diese Sendung wurde ein Ablageort als Empfangsoption vorgemerkt')).toEqual(gap);
     expect(answer('dhl', null, 'Die Paketumleitung wurde aufgrund Produkt/Service- Kombination nicht erlaubt storniert. Die Sendung wird an die Hausadresse zugestellt.'))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
   });

@@ -134,9 +134,10 @@ how a consumer learns that DHL holds one behind a postcode.
   be collected. The providers' shared rules read these lines the same way when
   they relay DHL.
 - A receiving option the recipient booked ("Liefertag als Empfangsoption
-  vorgemerkt", "The preferred day delivery on … was ordered") is left out: it is a
+  vorgemerkt", "The preferred day delivery on … was ordered", or a place, "A
+  preferred location was designated as a reception option") is left out: it is a
   wish, not a movement, as Hermes Germany's booked delivery day is. The English line
-  names the day, which DHL keeps the parcel until, so the newest one is the expected
+  for a day names it, and DHL keeps the parcel until then, so the newest one is the expected
   delivery while DHL gives no window. The German one names none, so a German
   lookup with that line and no window reads the day from the English reply while
   the parcel is on its way; without it the expected delivery came and went with

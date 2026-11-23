@@ -86,12 +86,14 @@ describe('DHL public tracking normalization', () => {
   });
 
   it('leaves out a receiving option the recipient booked, a wish rather than a movement', () => {
-    const payload = shipment();
-    payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push({
-      datum: '2026-08-11T10:00:00+02:00', status: 'Für diese Sendung wurde ein Liefertag als Empfangsoption vorgemerkt.' });
-    const result = parseDHLTrackingResponse(payload, NUMBER);
-    expect(result.events?.map((event) => event.time)).toEqual(['2026-08-10T18:30:00+02:00', '2026-08-09T20:00:00+02:00']);
-    expect(result.current_stage).toBe('in_transit');
+    for (const status of ['Für diese Sendung wurde ein Liefertag als Empfangsoption vorgemerkt.',
+      'A preferred location was designated as a reception option for this shipment.']) {
+      const payload = shipment();
+      payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push({ datum: '2026-08-11T10:00:00+02:00', status });
+      const result = parseDHLTrackingResponse(payload, NUMBER);
+      expect(result.events?.map((event) => event.time), status).toEqual(['2026-08-10T18:30:00+02:00', '2026-08-09T20:00:00+02:00']);
+      expect(result.current_stage).toBe('in_transit');
+    }
   });
 
   it('leaves out the English booked option too, and gives the newest day it names as the expected delivery', () => {
