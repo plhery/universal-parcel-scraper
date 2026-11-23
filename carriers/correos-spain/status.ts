@@ -21,6 +21,8 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'X010000V': { status: 'pending', stage: 'registered' },
   'A010000V': { status: 'in_transit', stage: 'accepted' },
   'A010AA0V': { status: 'in_transit', stage: 'accepted' },
+  // A business sender's consignment admitted at a logistics centre ("Remesa admitida en centro logístico"), the first scan.
+  'A050010V': { status: 'in_transit', stage: 'accepted' },
   'P040000V': { status: 'in_transit', stage: 'in_transit' },
   'P100000V': { status: 'in_transit', stage: 'in_transit' },
   'P110000V': { status: 'in_transit', stage: 'in_transit' },

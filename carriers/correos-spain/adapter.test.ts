@@ -89,6 +89,7 @@ describe('Correos Spain response parsing', () => {
     const cases: Array<[string, string, string]> = [
       ['A090000V', 'pending', 'registered'],
       ['A010000V', 'in_transit', 'accepted'],
+      ['A050010V', 'in_transit', 'accepted'],
       ['P101110V', 'in_transit', 'in_transit'],
       ['H01I350V', 'out_for_delivery', 'ready_for_pickup'],
       ['G01L020V', 'out_for_delivery', 'ready_for_pickup'],
