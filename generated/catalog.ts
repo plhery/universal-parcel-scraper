@@ -55842,6 +55842,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "seaboard-marine": {
+    "displayName": "Seaboard Marine",
+    "color": "#153e7e",
+    "aliases": [
+      "Seaboard Marine Ltd.",
+      "SMLU"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "seaboard-marine",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.seaboardmarine.com/tracking-results/",
+    "trackingSearchUrl": "https://www.seaboardmarine.com/tracking-results/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "seabourne-logistics": {
     "displayName": "Seabourne Logistics",
     "color": "#e52628",
@@ -73076,6 +73095,7 @@ export const CARRIER_IDS = [
   "schaeflein",
   "schneider",
   "sea-legend-line",
+  "seaboard-marine",
   "seabourne-logistics",
   "seino",
   "seino-super-express",
@@ -75119,6 +75139,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "schaeflein": [],
   "schneider": [],
   "sea-legend-line": [],
+  "seaboard-marine": [],
   "seabourne-logistics": [],
   "seino": [],
   "seino-super-express": [],

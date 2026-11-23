@@ -1,0 +1,173 @@
+{
+  "carrier": "seaboard-marine",
+  "records": [
+    {
+      "number": "SMLU3130772",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://panjiva.com/Seaboard-Marine/27832268",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Panjiva's sample US import record for Seaboard Marine lists this container from Puerto Cortes to Miami. Seaboard Marine's tracker returns its last move, full on board a vessel."
+    },
+    {
+      "number": "SMLU3148560",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://panjiva.com/Seaboard-Marine/27832268",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Panjiva's sample US import record for Seaboard Marine lists this container from Puerto Cortes to Miami. Seaboard Marine's tracker returns its last move, empty at Puerto Limon."
+    },
+    {
+      "number": "SMLU7873014",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://panjiva.com/Seaboard-Marine-Ltd/1246379",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Panjiva's sample US import record for Seaboard Marine Ltd. lists this container from Puerto Cortes to Miami. Seaboard Marine's tracker returns its last move, empty on board a vessel."
+    },
+    {
+      "number": "SMLU5459160",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://panjiva.com/Seaboard-Marine-Corp/59862157",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Panjiva's sample US import record for Seaboard Marine Corp lists this container from Guayaquil to Miami. Seaboard Marine's tracker returns its last move, empty at Puerto Cortes."
+    },
+    {
+      "number": "SMLU8522821",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/sea-cargo-sa",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ImportGenius's US import records for Sea Cargo S.A. list this container from Manzanillo to Miami. Seaboard Marine's tracker returns its last move, full for export at the Port of Miami."
+    },
+    {
+      "number": "SMLU7704689",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/seaboard-honduras-s-de-rl-de-cv",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ImportGenius's US import records for Seaboard Honduras list this container from Puerto Cortes to Miami. Seaboard Marine's tracker returns its last move, handed empty to a customer."
+    },
+    {
+      "number": "SMLU7858200",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/seadom-units",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ImportGenius's US import records for Seadom Units list this container from Rio Haina to Savannah. Seaboard Marine's tracker returns its last move, empty at a Savannah terminal."
+    },
+    {
+      "number": "SMLU4000330",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/seaboard-freight-shipping-ja-ltd",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ImportGenius's US import records for Seaboard Freight & Shipping Jamaica list this container from Kingston to Miami. Seaboard Marine's tracker returns its last move, empty at the Port of Miami, from a later cycle."
+    }
+  ]
+}

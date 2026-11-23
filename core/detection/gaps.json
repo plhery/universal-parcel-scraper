@@ -3759,6 +3759,12 @@
     "reason": "The guest search confirms a shared equipment identifier. Select Sea Legend Line explicitly."
   },
   {
+    "carrier": "seaboard-marine",
+    "pattern": "^SMLU\\d{7}$",
+    "kind": "open",
+    "reason": "SMLU is the owner code of Seaboard Marine's own containers, whose ISO 6346 numbers end in a check digit; Seaboard Marine's tracker returns the sample containers' last moves. Detection does not offer Seaboard Marine."
+  },
+  {
     "carrier": "seino",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

@@ -1,0 +1,58 @@
+{
+  "id": "seaboard-marine",
+  "displayName": "Seaboard Marine",
+  "aliases": [
+    "Seaboard Marine Ltd.",
+    "SMLU"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#153e7e"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "seaboard-marine",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.seaboardmarine.com/tracking-results/",
+    "canaryUrl": "https://www.seaboardmarine.com/tracking-results/",
+    "shows": [
+      "status",
+      "location",
+      "vehicle",
+      "item_category"
+    ],
+    "scraped": [
+      "status",
+      "location"
+    ],
+    "discarded": [
+      "vehicle",
+      "item_category"
+    ],
+    "unavailable": [
+      "history",
+      "eta",
+      "weight",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

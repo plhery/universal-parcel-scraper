@@ -1,0 +1,13 @@
+{
+  "carrier": "seaboard-marine",
+  "entries": [
+    {"wording": "Equipment On-Board Seaboard Viking V. 22 Full.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A full container on board a vessel, named with its voyage. The map reads every vessel and voyage alike."},
+    {"wording": "Equipment At Port Of Miami Moving Export Full.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A full container at a place on its way out as an export. The map reads every place alike, and an import alike."},
+    {"wording": "Equipment On-Board Seaboard Galaxy V. 54 Empty.", "stage": null, "language": "en", "confirmedBy": "live", "note": "An empty container on board, carried without a shipment."},
+    {"wording": "Equipment At Puerto Limon, Costa Rica Moving Import Empty.", "stage": null, "language": "en", "confirmedBy": "live", "note": "An empty container at a place. Without the moves before it, it does not tell a delivered shipment from a repositioned container."},
+    {"wording": "Equipment At Puerto Cortes, Honduras Moving Import Empty.", "stage": null, "language": "en", "confirmedBy": "live", "note": "An empty container at a place."},
+    {"wording": "Equipment At Port Of Miami Moving Import Empty.", "stage": null, "language": "en", "confirmedBy": "live", "note": "An empty container at a place named without its country."},
+    {"wording": "Equipment At Garden City Terminal Moving Import Empty.", "stage": null, "language": "en", "confirmedBy": "live", "note": "An empty container at a terminal named without its city."},
+    {"wording": "Equipment Dispatched To Customer Moving No Direction Empty.", "stage": null, "language": "en", "confirmedBy": "live", "note": "An empty container handed over to a customer."}
+  ]
+}
