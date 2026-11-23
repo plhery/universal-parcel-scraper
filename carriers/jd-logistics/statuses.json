@@ -122,6 +122,15 @@
       "firstSeen": "2026-11-01"
     },
     {
+      "code": "1045",
+      "wording": "Your package is in transit. Please wait patiently.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Between the departure from the origin port and the arrival at the destination's: the flight."
+    },
+    {
       "code": "CXLHAP",
       "wording": "Arrive at destination port",
       "language": "en",

@@ -195,7 +195,7 @@ describe('JD Logistics international projection', () => {
       ['DMLMOP', 'Out for Delivery'], ['DMAPR', 'Arrived at GOFO Delivery Station'], ['DMLMIT', 'In Transit to Next Facility'],
       ['DMSCD', 'Loaded on Vehicle'], ['DMLMLW', 'Arrived at GOFO Regional Hub'], ['CXLMHL', 'Handover to local carrier'],
       ['CXLHCP', 'Cleanrance agency picked'], ['CXCCRS', 'Customs clearance completed'], ['CXLHAP', 'Arrive at destination port'],
-      ['CXLHDP', 'Departure from origin port'], ['CXCCOE', 'Customs released from origin port'], ['CXCCAP', 'Arrive at airport'],
+      ['1045', 'Your package is in transit. Please wait patiently.'], ['CXLHDP', 'Departure from origin port'], ['CXCCOE', 'Customs released from origin port'], ['CXCCAP', 'Arrive at airport'],
       ['CXWHSO', 'Departed from Warehouse.'], ['CXWHSP', 'Consolidation Completed'], ['CXWHRC', 'Weighed at Warehouse'],
       ['ECWHRC', 'Arrived at Warehouse'], ['FMPU', 'Shipment Picked up'], ['COSH', 'Order Created.'],
     ];
@@ -206,7 +206,7 @@ describe('JD Logistics international projection', () => {
     expect(result.events?.map(event => event.stage)).toEqual([
       'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
       'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit',
-      'in_transit', 'accepted', 'accepted', 'accepted', 'accepted', 'registered',
+      'in_transit', 'in_transit', 'accepted', 'accepted', 'accepted', 'accepted', 'registered',
     ]);
     expect(result.events?.filter(event => event.provider_code !== 'DMSCD').every(event => event.stage_source === 'carrier_map')).toBe(true);
   });

@@ -30,6 +30,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['CXCCAP', MOVING],
   ['CXCCOE', MOVING],
   ['CXLHDP', MOVING],
+  // A note between the departure from the origin port and the arrival at the destination's: the flight.
+  ['1045', MOVING],
   ['CXLHAP', MOVING],
   ['CCL', { status: 'in_transit', stage: 'customs' }],
   // Clearance completed: the parcel moves on.
