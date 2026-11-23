@@ -113,7 +113,7 @@ const CHINESE_LABEL = String.raw`(?:(?:运|運|快递|快遞|物流|包裹)(?:�
   + String.raw`|(?:追踪|追蹤|跟踪|跟蹤)(?:单号|單號|号码|號碼|编号|編號|号|號|码|碼))(?:\s*(?:是|为|為))?`;
 const LABELLED_NUMBER = new RegExp(
   String.raw`(?:track(?:ing)?(?:\s*${LABEL_SUFFIX}|(?!\p{L}))`
-  + String.raw`|(?:parcel|shipment|waybill|awb)(?:\s+(?:tracking(?!\p{L})|${LABEL_SUFFIX})|(?!\p{L}))`
+  + String.raw`|(?:parcel|package|shipment|waybill|awb)(?:\s+(?:tracking(?!\p{L})|${LABEL_SUFFIX})|(?!\p{L}))`
   + String.raw`|(?<!service\s{1,3})(?:(?:${NUMBER_WORDS})\s*(?:(?:de|du|di|del|do|da)\s+|d')?)?(?:${PARCEL_WORDS})(?!\p{L})(?:\s*(?:${NUMBER_WORDS}))?`
   + String.raw`|${RUSSIAN_LABEL}|${CHINESE_LABEL}`
   // A joined word is read from its start: a later start in the same word reads no more, and would try every letter.

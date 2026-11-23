@@ -824,6 +824,21 @@ describe('the detection engine', () => {
     expect(parseTrackingInput('For additional information track 1Z999AA10123456784').trackingNumber).toBe('1Z999AA10123456784');
   });
 
+  it('reads the number "package" introduces as it reads one after "parcel"', () => {
+    // Synthetic number in the shape of a marketplace's "arrived in your country" notice: three letters, 16 digits.
+    const number = 'ABC1234567890123456';
+    for (const text of [
+      `Your package ${number} has arrived in your country/region.`, `Package ${number}: in your country/region`,
+      `Package ${number} is out for delivery`, `Package number: ${number}`, `Package ID: ${number}`, `Package no. ${number}`,
+      `Package tracking number: ${number}`, `Track your package ${number}`,
+    ]) expect(keywordNumberInText(text), text).toBe(number);
+    // A count, a word, a date or a weight after it is no number.
+    for (const text of ['Package 1 of 2', 'Package details: 2 items', 'Your package will arrive on 2026-11-25', 'Package weight 2500 g',
+      'Package 12 of 30', 'Packages: 3']) {
+      expect(keywordNumberInText(text), text).toBeUndefined();
+    }
+  });
+
   it('reads the number after a separator printed twice', () => {
     expect(parseTrackingInput('Tracking Number: : 12345678901')).toMatchObject({ trackingNumber: '12345678901', source: 'text', confidence: 'low' });
   });
