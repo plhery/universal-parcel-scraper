@@ -250,6 +250,13 @@ describe('Delhivery direct tracking', () => {
     expect(snapshot.events?.[0]).toMatchObject({ description: 'DELIVERED', time: '2026-03-04T10:00:00+05:30', stage: 'delivered', summary_snapshot: true });
     expect(snapshot.delivered_at).toBe('2026-03-04T10:00:00+05:30');
   });
+  it('reads the destination city milestone as transit', () => {
+    const value = freight();
+    value.data[0].trackingStates.splice(2, 0, { label: 'Reached Dest City', date: 'Sun, 1 Mar, 8:00 PM', scans: [] });
+    value.data[0].currentTrackIndex = 2;
+    const events = parseDelhivery(value, FREIGHT).events ?? [];
+    expect(events.find(event => event.description === 'Reached Dest City')).toMatchObject({ time: '2026-03-01T20:00:00+05:30', stage: 'in_transit' });
+  });
   it('reads a milestone year from its weekday before the status date, or keeps the text', () => {
     const value = freight();
     value.data[0].status.statusDateTime = '2027-01-05T10:00:00';

@@ -7,6 +7,8 @@ const statuses: Record<string, ClassifiedStatus> = {
   'IN TRANSIT': { status: 'in_transit', stage: 'in_transit' },
   'IN TRANSIT FOR RETURN': { status: 'in_transit', stage: 'in_transit' },
   'ON THE WAY': { status: 'in_transit', stage: 'in_transit' },
+  // The freight milestone after "On the Way": the shipment reached the destination's city.
+  'REACHED DEST CITY': { status: 'in_transit', stage: 'in_transit' },
   // The scan of the out-for-delivery milestone.
   DISPATCHED: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'PICKED UP': { status: 'in_transit', stage: 'accepted' },

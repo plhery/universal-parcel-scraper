@@ -16,6 +16,14 @@
       "note": "A freight milestone."
     },
     {
+      "wording": "Reached Dest City",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "A freight milestone after \"On the Way\": the shipment reached the destination's city."
+    },
+    {
       "wording": "Undelivered",
       "language": "en",
       "stage": "exception",
