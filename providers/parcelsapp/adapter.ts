@@ -420,7 +420,10 @@ const CAINIAO_LAST_MILE = [
  * import customs on the destination's clock, and the last mile as well,
  * except the UK's, on GMT in July. In a country of several clocks its import
  * customs is on the main one, Brasília's for Brazil and Mexico City's for
- * Mexico, but not in the US, where it is on the port of entry's. Its transit hub's arrival, warehouse
+ * Mexico, but not in the US, where it is on the port of entry's: AliExpress's
+ * feed stated a start -05:00 that ParcelsApp's UTC label put five hours early.
+ * With no scan of its network placed in the destination to borrow from, such a
+ * scan keeps its wall clock (`knownClock`). Its transit hub's arrival, warehouse
  * outbound and departure on a parcel to Europe are on Central European time:
  * AliExpress's feed states them +02:00 in summer and +01:00 in winter on
  * parcels to Switzerland, Spain, France and Italy, and ParcelsApp's copies
@@ -548,9 +551,11 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
 /**
  * A scan's known clock: its zone, null when the destination or origin has
  * several, and for a scan in the destination, that country, or the one `via`
- * names for it.
+ * names for it. `port` marks an office of exchange in a country whose states
+ * or provinces keep their own clocks: it is on its port of entry's, which no
+ * row names.
  */
-function knownClock(name: unknown, status: string, destination: string | null, origin: string | null = null): { zone: string | null; country?: string } | null {
+function knownClock(name: unknown, status: string, destination: string | null, origin: string | null = null): { zone: string | null; country?: string; port?: boolean } | null {
   const known = KNOWN_CLOCKS.get(nameKey(name))?.find(({ wording, to, among }) => wording.test(status.trim())
     && (!to || to === destination) && (!among || among.has(destination ?? '')));
   if (known?.zone === ORIGIN) return origin ? { zone: countryTimeZone(origin) } : null;
@@ -558,9 +563,10 @@ function knownClock(name: unknown, status: string, destination: string | null, o
   if (!destination) return known.otherwise ? { zone: known.otherwise } : null;
   if (destination === known.except) return null;
   const country = known.via?.[destination] ?? destination;
-  const zone = countryTimeZone(country)
-    ?? (known.main && hasSeveralClocks(country) && !REGIONAL_CLOCKS.has(country) ? mainZone(country) : null);
-  return { zone, country };
+  const single = countryTimeZone(country);
+  if (single) return { zone: single, country };
+  if (known.main && REGIONAL_CLOCKS.has(country)) return { zone: null, country, port: true };
+  return { zone: known.main && hasSeveralClocks(country) ? mainZone(country) : null, country };
 }
 /**
  * Networks whose dates are their home clock wherever the scan was: their own
@@ -1834,8 +1840,10 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
     instant: own === null,
     local: zone !== null && zone === regionScanZone(name, location, inNorthAmerica, distrusted)?.zone,
     fallback: wallClock || office ? fitsPlace(fallback, location) : null, known: known?.zone ?? null, arrival: known?.country ?? null,
-    // With no zone, a scan whose label nothing vouches for keeps its wall clock, as does one on a clock its place cannot tell (`siteZone`).
-    wallOnly: unplacedWall || sited === null || destinationCode || unknownNetwork(name) || localClockBrand(name) || militaryPostOffice(location) };
+    // With no zone, a scan whose label nothing vouches for keeps its wall clock, as does one on a clock its place cannot
+    // tell (`siteZone`) or at a port of entry no row names (`knownClock`).
+    wallOnly: unplacedWall || sited === null || destinationCode || unknownNetwork(name) || localClockBrand(name) || militaryPostOffice(location)
+      || known?.port === true };
 }
 
 type ZoneStep = 'carrier' | 'place' | 'copy' | 'borrowed' | 'routing' | 'known' | 'labeled';

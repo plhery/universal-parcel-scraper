@@ -173,7 +173,7 @@ step exists for future protocol changes.
   with it, in the rendered page too. A scan that its carrier's clock or its place dates
   keeps its time, so that a wrong clock there still shows.
 
-  Three kinds of scan with no zone keep their wall clock in `local_time` instead, with no
+  Four kinds of scan with no zone keep their wall clock in `local_time` instead, with no
   instant. One names no carrier, or a network that
   neither the catalog nor the tables here know ("Example Parcel Co"): nothing says its
   label is an instant. Another names a bare brand whose catalog networks all keep local
@@ -181,7 +181,9 @@ step exists for future protocol changes.
   network scanned it. The third is at a US military post office ("Fpo, AE", "APO AP
   96001"), which names no country: AE there is the Armed Forces Europe, not the Emirates,
   and the base can be anywhere in its region, so no guess and no zone of the scans around
-  it fits. Each stays a scan: as the latest one it sets the stage with `last_update` null,
+  it fits. The fourth is at an office of exchange in the US, Canada or Australia that no
+  scan of its network placed there dates: it is on its port of entry's clock (Wall clocks
+  below). Each stays a scan: as the latest one it sets the stage with `last_update` null,
   and it moves no freshness watermark. Another carrier's acceptance is a hand-over to it
   once a different carrier moved the parcel before. A wall clock is later than a move by
   more than a day, or as soon as it would sort above a dated one.
@@ -354,7 +356,9 @@ step exists for future protocol changes.
   CTT's wording) on the destination's clock, except the UK's last mile, on GMT in July.
   In a country of several clocks its import customs is on the main one, Brasília's for
   Brazil and Mexico City's for Mexico, but not in the US, where AliExpress's feed puts it
-  on the port of entry's. Its transit hub's arrival, warehouse outbound and departure on a
+  on the port of entry's: a start it stated -05:00 came five hours early on the UTC label.
+  With no scan of its network placed in the destination to borrow from, such a scan keeps
+  its wall clock. Its transit hub's arrival, warehouse outbound and departure on a
   parcel to Europe ("Arrive at transit country or facility", "Parcel outbound from transit
   facility", "Depart from transit country or district") are on Central European time:
   AliExpress's feed states them +02:00 in summer and +01:00 in winter on parcels to

@@ -2194,8 +2194,26 @@ describe('ParcelsApp result parsing', () => {
       ['2026-11-11T03:28:47.000Z', 'Europe/London', 'destination'],
     ]);
     expect(times('PT')?.[0]?.[1]).toBe('Europe/Paris');
-    // The US's import customs is on its port of entry's clock, which no rule gives.
-    expect(times('US')?.slice(0, 2).map(([, zone, basis]) => [zone, basis])).toEqual([['UTC', 'label'], ['UTC', 'label']]);
+    // The US's import customs is on its port of entry's clock, which no rule gives: AliExpress's feed stated a start
+    // -05:00 that the UTC label put five hours early. With nothing placed in the US, each keeps its wall clock.
+    expect(parseParcelsAppResponse({ carriers: ['Cainiao'], destinationCode: 'US', states }, number, identity()).events?.slice(0, 2)
+      .map((scan) => [scan.time, scan.local_time])).toEqual([
+      [undefined, '2026-11-13T17:07:00.000'],
+      [undefined, '2026-11-11T03:28:47.000'],
+    ]);
+  });
+
+  it('dates Cainiao\'s US import customs on the clock of the network\'s scan placed in the US', () => {
+    const states = [
+      { date: '2026-11-13T06:10:00Z', status: 'Arrived at destination country/region sorting center', carrier: 0,
+        location: 'Example City, NJ 07000' },
+      { date: '2026-11-10T02:15:00Z', status: 'Import clearance start', carrier: 0 },
+      { date: '2026-11-10T09:30:00Z', status: 'Export customs clearance complete', carrier: 0 },
+    ];
+    expect(parseParcelsAppResponse({ carriers: ['Cainiao'], destinationCode: 'US', states }, number, identity()).events
+      ?.find((scan) => scan.description === 'Import clearance start')).toMatchObject({
+      time: '2026-11-10T07:15:00.000Z', time_zone: 'America/New_York',
+    });
   });
 
   it('reads MailAmericas\' origin leg and Tax ID checks on the origin\'s clock, its scans in the destination on that one\'s', () => {
