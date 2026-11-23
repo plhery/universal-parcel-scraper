@@ -6,6 +6,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { hasSeveralClocks } from '../../places/zones.js';
 import { normalizeExpressOneNumber } from '../express-one/parser.js';
 import { eurodisQuiet, eurodisStage } from './status.js';
 
@@ -77,7 +78,8 @@ function reference(rows: Map<string, string>, label: string, required: boolean):
  * A scan's clock. The page gives a wall clock to the minute and no offset; it
  * is the clock of the country the scan names, so it is read in that country's
  * zone. A scan without a country, or in a country with several zones, keeps
- * its wall clock.
+ * its wall clock, for its town to choose: Spain's Canary Islands are an hour
+ * behind Madrid.
  */
 function clockOf(stamp: RegExpExecArray, country: string | null): { at: { time: string } | { local_time: string }; wall: string } {
   const [, year, month, day, hour, minute] = stamp;
@@ -92,7 +94,7 @@ function clockOf(stamp: RegExpExecArray, country: string | null): { at: { time: 
 
 /** A wall clock's instant in a single-zone country, or null; a clock the spring change skips has none. */
 function inCountry(wall: string, country: string | null): string | null {
-  const zone = country ? countryTimeZone(country) : null;
+  const zone = country && !hasSeveralClocks(country) ? countryTimeZone(country) : null;
   const zoned = zone ? firstOccurrence(DateTime.fromISO(wall, { zone })) : null;
   return zoned?.isValid && zoned.toFormat("yyyy-MM-dd'T'HH:mm:ss") === wall ? zoned.toISO({ suppressMilliseconds: true }) : null;
 }

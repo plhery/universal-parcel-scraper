@@ -8,6 +8,7 @@ import { relayedWordingStage } from '../../core/catalog/statusMaps.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter, EurodisTracker } from './adapter.js';
 import { eurodisLookup, parseEurodis } from './parser.js';
 import { eurodisQuiet, eurodisStage } from './status.js';
@@ -63,6 +64,17 @@ describe('EURODIS direct tracking', () => {
     expect(onTheWay.events?.[0]).not.toHaveProperty('time');
   });
 
+  it('leaves a Spanish scan to its town\'s clock: the Canary Islands are an hour behind Madrid', () => {
+    const result = parseEurodis(timeline(scan('Out for delivery', '2026-11-20, 08:15 / Las Palmas de Gran Canaria / ES'),
+      scan('Inbound Gateway', '2026-11-18, 21:05 / Madrid / ES'), scan('Outbound Gateway', '2026-11-17, 18:30 / Musterdorf / DE')), BARCODE);
+    expect(result.events?.slice(0, 3).map(event => event.time ?? event.local_time)).toEqual([
+      '2026-11-20T08:15:00', '2026-11-18T21:05:00', '2026-11-17T18:30:00+01:00',
+    ]);
+    expect(dateLocalClocks('eurodis', result).events?.slice(0, 3).map(event => [event.time, event.time_zone])).toEqual([
+      ['2026-11-20T08:15:00+00:00', 'Atlantic/Canary'], ['2026-11-18T21:05:00+01:00', 'Europe/Madrid'], ['2026-11-17T18:30:00+01:00', undefined],
+    ]);
+  });
+
   it('hands the parcel to the delivering member under that member\'s own number', () => {
     for (const number of [BARCODE, SHIPMENT]) {
       const result = parseEurodis(delivered, number);
@@ -93,16 +105,17 @@ describe('EURODIS direct tracking', () => {
     expect(first).not.toHaveProperty('delivered_at');
     expect(first.events).toEqual([
       { time: '2026-03-10T02:20:00+01:00', description: 'in transit', location: 'Musterdorf, DE', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-09T11:21:00+01:00', description: 'Outbound Gateway', location: 'Ejemplo, ES', stage: 'in_transit', stage_source: 'carrier_map' },
+      // Spain keeps two clocks, so its scans keep their wall clocks for the town to choose.
+      { local_time: '2026-03-09T11:21:00', description: 'Outbound Gateway', location: 'Ejemplo, ES', stage: 'in_transit', stage_source: 'carrier_map' },
       // A scan that names no country keeps its wall clock.
       { local_time: '2026-03-09T09:40:00', description: 'depot', stage: 'in_transit', stage_source: 'carrier_map' },
-      { time: '2026-03-08T18:20:00+01:00', description: 'depot', location: 'Ejemplo, ES', stage: 'in_transit', stage_source: 'carrier_map' },
+      { local_time: '2026-03-08T18:20:00', description: 'depot', location: 'Ejemplo, ES', stage: 'in_transit', stage_source: 'carrier_map' },
     ]);
-    expect(parseEurodis(transit, SECOND).events?.map(event => event.time)).toEqual(['2026-03-09T11:21:00+01:00', '2026-03-08T18:25:00+01:00']);
+    expect(parseEurodis(transit, SECOND).events?.map(event => event.local_time)).toEqual(['2026-03-09T11:21:00', '2026-03-08T18:25:00']);
     const shipment = parseEurodis(transit, '7000000000002');
     expect(shipment.events?.map(event => [event.time ?? event.local_time, event.description])).toEqual([
-      ['2026-03-10T02:20:00+01:00', 'in transit'], ['2026-03-09T11:21:00+01:00', 'Outbound Gateway'], ['2026-03-09T09:40:00', 'depot'],
-      ['2026-03-08T18:25:00+01:00', 'depot'], ['2026-03-08T18:20:00+01:00', 'depot'],
+      ['2026-03-10T02:20:00+01:00', 'in transit'], ['2026-03-09T11:21:00', 'Outbound Gateway'], ['2026-03-09T09:40:00', 'depot'],
+      ['2026-03-08T18:25:00', 'depot'], ['2026-03-08T18:20:00', 'depot'],
     ]);
   });
 
