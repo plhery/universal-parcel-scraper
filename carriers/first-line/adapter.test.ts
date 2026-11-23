@@ -214,6 +214,24 @@ describe('FIRST LINE HTTP adapter', () => {
     expect(normalizeFirstLineNumber(' 1st-00000000001 ')).toBe(DELIVERED);
   });
 
+  it('asks again, in a new session, after the tracker says it does not know a waybill it holds, up to three lookups', async () => {
+    const missed = text('not-found.txt').replaceAll(UNKNOWN, DELIVERED);
+    const answers = [missed, missed, text('delivered.txt')];
+    const fetcher = site(() => html(answers.shift()!));
+    const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    await expect(new FirstLineTracker({ fetcher, recorder }).fetch(DELIVERED)).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(6);
+    expect(fetcher.mock.calls.map(([url]) => String(url) === FIRST_LINE_PAGE)).toEqual([true, false, true, false, true, false]);
+    expect(recorder.step.mock.calls.map(([step]) => [step.step, step.outcome])).toEqual([['direct', 'indeterminate'], ['retry', 'ok']]);
+    const unknown = site(() => html(text('not-found.txt')));
+    await expect(carrier(unknown).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    expect(unknown).toHaveBeenCalledTimes(6);
+    // A refused session is not asked again.
+    const refused = site(() => html(text('refused.txt')));
+    await expect(carrier(refused).track({ number: DELIVERED })).rejects.toMatchObject({ reason: 'session_rejected' });
+    expect(refused).toHaveBeenCalledTimes(2);
+  });
+
   it('tries an attempt that hangs once more, in a new session, inside the budget', async () => {
     fakeBudgetClock();
     const { fetcher, ended } = delayedFetcher([{ afterMs: Infinity }, { afterMs: Infinity }]);

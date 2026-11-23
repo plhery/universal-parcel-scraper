@@ -2,7 +2,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { ChallengeError, IndeterminateError, RateLimitedError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
-import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
+import { firstAttemptMs, isNetworkFailure } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { FIRST_LINE_MAX_BYTES, normalizeFirstLineNumber, parseFirstLine, parseFirstLinePage, PROVIDER } from './parser.js';
@@ -18,6 +18,12 @@ const GONE = [404, 405, 410];
 const BUSY = /服务器繁忙/;
 const COOKIES = ['PHPSESSID', 'tokenc'];
 const COOKIE_VALUE = /^[A-Za-z0-9%._-]{8,512}$/;
+// The tracker says it does not know a waybill it holds on some lookups and lists its scans on
+// another: up to two more lookups, each in a new session, before that answer stands.
+const UNLISTED_RETRIES = 2;
+
+/** The tracker's answer that it does not know the waybill. */
+const unlisted = (error: unknown): boolean => error instanceof IndeterminateError && error.reason === 'portal_not_found';
 
 /** The session cookies the tracking page sets, which the lookup sends back with the signed address. */
 function sessionCookies(response: Response): string {
@@ -66,11 +72,22 @@ export class FirstLineTracker {
       return parseFirstLine(decodeText(reply.bytes), number);
     };
     // An attempt that fails to reach the tracker, or hangs, gets one more in a new session:
-    // the first gets half of the budget, so the retry fits in the rest.
+    // the first gets half of the budget, so the retry fits in the rest. The tracker's "not
+    // found" gets up to two more, each with its share of what is left.
     return runSteps({ carrier: 'first-line', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
       { id: 'direct', run: ({ signal, remainingMs }) => attempt(signal, firstAttemptMs(remainingMs)) },
-      networkRetryStep(({ signal, remainingMs }) => attempt(signal, remainingMs)),
+      { id: 'retry', recovers: (error) => isNetworkFailure(error) || unlisted(error), run: async ({ signal, remainingMs, previousError }) => {
+        if (!unlisted(previousError)) return attempt(signal, remainingMs);
+        const deadline = performance.now() + remainingMs;
+        for (let left = UNLISTED_RETRIES; ; left -= 1) {
+          try {
+            return await attempt(signal, Math.max(1, Math.floor((deadline - performance.now()) / left)));
+          } catch (error) {
+            if (left === 1 || !unlisted(error)) throw error;
+          }
+        }
+      } },
     ]);
   }
 }

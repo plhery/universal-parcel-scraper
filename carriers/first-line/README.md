@@ -12,7 +12,7 @@ FIRST LINE's tracker answers many of them.
    (`query.php?meter=track_query&nonce=…&timestamp=…&sign=…`). Then one POST of
    `track_number=<number>` to that address with both cookies, as the page's script sends it.
 2. `retry`: the same pair once more, in a new session, after a request fails to reach the
-   tracker or hangs.
+   tracker or hangs, and up to twice more after the tracker says it does not know the waybill.
 
 The tracker answers plain HTTP only. No account, key, CAPTCHA or browser is needed.
 
@@ -21,7 +21,9 @@ The tracker answers plain HTTP only. No account, key, CAPTCHA or browser is need
 - The reply is `ok{FGF}` and an HTML list: a header row with the number and its newest scan,
   then each scan as a clock, a place and the wording, six non-breaking spaces apart. A waybill
   the tracker does not know says 未找到此单号信息 instead. Another of the group's forwarders can
-  hold it, so that answer is inconclusive, with the reason `portal_not_found`. A lookup without
+  hold it, so that answer is inconclusive, with the reason `portal_not_found`. The tracker also
+  gives it on some lookups of a waybill it holds, often in transit, and lists the scans on
+  another, so the answer stands only after three lookups in new sessions. A lookup without
   the session cookies, or with a spent signature, answers `error{FGF}` and 身份验证失败, which says
   nothing about the waybill.
 - Scan times are wall clocks without an offset, each on its facility's clock: Shenzhen's, Hong
@@ -49,7 +51,10 @@ places' postcodes are dropped, as is GOFO's town and state said again after its 
 delivery, in the English of another forwarder's system. No public tracker of the
 group answers those: the group's own query at `1st56.com/group/tracking/` is gone (HTTP 404),
 摆渡一下's tracker at ferryboatlogistics.com, the same software as FIRST LINE's without the
-signature, does not know them, and 一代国际's at 1st168.com needs an account.
+signature, does not know them, and 一代国际's at 1st168.com needs an account. FIRST LINE's
+API page names its ITDIDA platform: `GET f1.itdida.com/itdida-api/queryTracks?no=` answers
+the waybills that tenant holds, as `1st.itdida.com` does the group's, without a key, but
+neither knows every waybill the tracker answers, so the adapter keeps the tracker.
 
 ## Numbers
 
