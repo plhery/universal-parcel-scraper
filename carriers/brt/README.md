@@ -120,8 +120,11 @@ places without a depot code and a clock that the change to or from summer time
 repeats or skips. A scan BRT dates by its day alone, as it does a delivery
 round, keeps that day as `local_time`, and the catalog's `dateOnlyScans` tells
 consumers no copy has its clock; a date that is no calendar day remains
-provider text. BRT delivers only in Italy, so its catalog zone is Rome's: a
-host starts such a day there, and a local time no place settles is dated on
+provider text. BRT's collection scan, COLLECTED (RITIRATA), carries the end of the pickup
+round, 12:00 or 18:00, and can be entered before that time. The adapter keeps the clock, ahead
+of the lookup or not, for the host to flag: the collection itself took place, so holding the
+scan back would hide it, and dating it otherwise would change its key between lookups.
+BRT delivers only in Italy, so its catalog zone is Rome's: a host starts such a day there, and a local time no place settles is dated on
 it. The newest scan, when dated, gives the last update
 and, for a delivery, the delivery instant. Source order determines current
 status even when the newest clock is unresolved.
