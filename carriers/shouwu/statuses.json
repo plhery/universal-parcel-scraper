@@ -387,6 +387,38 @@
       "note": "The flight's arrival abroad, the day after the hand-over to the airline; customs has not started on the parcel."
     },
     {
+      "wording": "Customs cleared.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The destination's customs releasing the parcel, after its clearance there and before the overseas processing centre."
+    },
+    {
+      "wording": "Arrived at overseas processing center.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The destination country's processing centre, hours after customs released the parcel."
+    },
+    {
+      "wording": "Parcel departed from facility.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The last mile's departure from that centre, on to its transit facility."
+    },
+    {
+      "wording": "Parcel received by transit facility.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "The last mile's transit facility, before its local one."
+    },
+    {
       "wording": "Shipment is in transit to next facility",
       "stage": "in_transit",
       "language": "en",
