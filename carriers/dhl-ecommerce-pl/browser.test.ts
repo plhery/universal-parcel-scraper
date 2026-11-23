@@ -91,6 +91,9 @@ describe('DHL Poland browser history', () => {
     const pairs: [string, string, string][] = [
       ['The shipment has reached DHL terminal in Example. Planned date of delivery to: 04-03-2026.',
         'Przesyłka dotarła do oddziału nadawczego DHL Parcel Example. Przewidywana data doręczenia do: 04-03-2026.', 'in_transit'],
+      // The page can leave the terminal's town blank.
+      ['The shipment has reached DHL terminal in . Planned date of delivery to: 04-03-2026.',
+        'Przesyłka dotarła do oddziału nadawczego DHL Parcel . Przewidywana data doręczenia do: 04-03-2026.', 'in_transit'],
       ['The shipment has reached DHL Terminal Example (branch in Sample)', 'Przesyłka dotarła do oddziału DHL eCommerce Example (z siedzibą w Samplu).', 'in_transit'],
       ['The shipment has reached DHL Terminal. Delivery to the Recipient is expected on the next working day.',
         'Przesyłka dotarła do oddziału DHL eCommerce. Doręczenie do Odbiorcy planowane jest w kolejnym dniu roboczym.', 'in_transit'],
@@ -101,6 +104,8 @@ describe('DHL Poland browser history', () => {
       ['The shipment has arrives at sorting center.', 'Przesyłka została przyjęta w centrum sortowania.', 'in_transit'],
       ['The shipment has arrived at delivery depot.', 'Przesyłka przyjęta w oddziale doręczającym.', 'in_transit'],
       ['With delivery courier.', 'Przesyłka przekazana kurierowi do doręczenia.', 'out_for_delivery'],
+      ['With delivery courier. Expected delivery hours: 08:00-12:00.',
+        'Przesyłka przekazana kurierowi do doręczenia. Przewidywane godziny doręczenia: 08:00-12:00.', 'out_for_delivery'],
       ['According to consignee request the parcel will be delivered to the safe place.',
         'Odbiorca złożył dyspozycję dot. doręczenia przesyłki do bezpiecznego miejsca doręczenia.', 'pending'],
       ['DHL Courier did not reach the Recipient at the indicated delivery address. The shipment will be waiting for collection in DHL POP in the nearest area.',

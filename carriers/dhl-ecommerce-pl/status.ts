@@ -57,7 +57,7 @@ export function statusForStage(stage: Stage): CarrierStatus {
 // The history page's scan wording, in English or Polish, with the stage each names.
 const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^(?:Delivered to customer\.|Przesyłka doręczona do Odbiorcy\.)$/i, 'delivered'],
-  [/^(?:With delivery courier|Przesyłka przekazana kurierowi do doręczenia)\.?(?: Expected delivery hours: \d{1,2}:\d{2}-\d{1,2}:\d{2}\.)?$/i, 'out_for_delivery'],
+  [/^(?:With delivery courier|Przesyłka przekazana kurierowi do doręczenia)\.?(?: (?:Expected delivery hours|Przewidywane godziny doręczenia): \d{1,2}:\d{2}-\d{1,2}:\d{2}\.)?$/i, 'out_for_delivery'],
   [/^(?:The shipment is in transit to the delivery depot\.|Przesyłka w transporcie do oddziału doręczającego\.)$/i, 'in_transit'],
   [/^(?:The shipment has arrives at sorting center\.|Przesyłka została przyjęta w centrum sortowania\.)$/i, 'in_transit'],
   [/^(?:The shipment is processed at depot of origin country\.|Przesyłka jest obsługiwana w oddziale nadającym\.)$/i, 'in_transit'],
@@ -65,8 +65,8 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   // Sorting on the way, at a hub and again at the delivery depot, which the page words two ways in English.
   [/^(?:The shipment is handled in Sorting Center|The shipment is processed at sorting center|Przesyłka jest obsługiwana w Centrum Sortowania)\.?$/i, 'in_transit'],
   [/^(?:The shipment has reached DHL terminal\.|Przesyłka dotarła do oddziału nadawczego DHL Parcel\.)$/i, 'accepted'],
-  // A terminal that gives the planned delivery day is reached on the way, with the sorting centre's scan.
-  [/^(?:The shipment has reached DHL terminal(?: in [^.]{0,80})?\. Planned date of delivery to|Przesyłka dotarła do oddziału nadawczego DHL Parcel(?: [^.]{1,80})?\. Przewidywana data doręczenia do): \d{1,2}-\d{1,2}-\d{4}\.$/i, 'in_transit'],
+  // A terminal that gives the planned delivery day is reached on the way, with the sorting centre's scan. Its town can be blank.
+  [/^(?:The shipment has reached DHL terminal(?: in [^.]{0,80})?\. Planned date of delivery to|Przesyłka dotarła do oddziału nadawczego DHL Parcel(?: [^.]{0,80})?\. Przewidywana data doręczenia do): \d{1,2}-\d{1,2}-\d{4}\.$/i, 'in_transit'],
   // A terminal named on the way, after the first one.
   [/^(?:The shipment has reached DHL Terminal (?!in )[^.]{1,80}|Przesyłka dotarła do oddziału DHL eCommerce [^.]{1,80})\.?$/i, 'in_transit'],
   // The delivery depot, with the day the courier will take the parcel and, for today, the hours.
