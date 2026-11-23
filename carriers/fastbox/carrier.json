@@ -34,7 +34,7 @@
   ],
   "portal": {
     "url": "https://fastbox.co.kr/DHUB/tracking.php?fb_invoice_no={trackingNumber}",
-    "searchUrl": "https://fastbox.co.kr/en/",
+    "searchUrl": "https://fastbox.co.kr/DHUB/tracking.php",
     "helpUrl": "https://fastbox.co.kr/en/introduction/contact.php",
     "canaryUrl": "https://fastbox.co.kr/en/",
     "shows": [

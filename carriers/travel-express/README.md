@@ -21,6 +21,8 @@ check its replies against, there is no adapter.
 ## Links
 
 `portal.travelexpress.com.cy/system/?page=track&awb=<number>` opens one shipment.
+The portal hides its own number field and asks visitors to sign in, so the catalog names no
+search page.
 
 ## Testing
 

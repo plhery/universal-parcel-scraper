@@ -26705,7 +26705,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://fastbox.co.kr/en/",
     "trackingUrlTemplate": "https://fastbox.co.kr/DHUB/tracking.php?fb_invoice_no={trackingNumber}",
-    "trackingSearchUrl": "https://fastbox.co.kr/en/",
+    "trackingSearchUrl": "https://fastbox.co.kr/DHUB/tracking.php",
     "helpUrl": "https://fastbox.co.kr/en/introduction/contact.php",
     "linkRules": [
       {
@@ -64567,7 +64567,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://portal.travelexpress.com.cy/system/",
     "trackingUrlTemplate": "https://portal.travelexpress.com.cy/system/?page=track&awb={trackingNumber}",
-    "trackingSearchUrl": "https://portal.travelexpress.com.cy/system/",
     "helpUrl": "https://www.travelexpresscourier.com/support.html",
     "linkRules": [
       {
