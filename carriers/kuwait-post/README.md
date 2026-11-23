@@ -11,8 +11,11 @@ numbers, so no rule for Kuwait Post claims them.
 
 ## Why there is no adapter
 
-The tracking form carries a Google reCAPTCHA and limits how often it answers. No public number is
-known to check its tracker's replies against.
+The tracking page on moc.gov.kw sends the number with a Google reCAPTCHA v2 checkbox answer to a
+Next.js server action, `submitShipmentTracking`, which checks the answer (`captcha_invalid`
+otherwise) and limits how often it answers (`rate_limit_exceeded`, with a wait in seconds). Its
+other refusals are `no_data_found` and `tracking_unavailable`. No public number is known to check
+its tracker's replies against.
 
 ## Links
 
