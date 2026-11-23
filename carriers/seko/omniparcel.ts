@@ -5,6 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { pageText } from './parser.js';
+import { OMNIPARCEL_NUMBER } from './clock.js';
 import { sekoStage } from './status.js';
 
 export const OMNIPARCEL_PROVIDER = 'SEKO OmniParcel';
@@ -14,8 +15,6 @@ export const OMNIPARCEL_PAGE = 'https://track.omniparcel.com/';
 export const OMNIPARCEL_UTC = '91';
 // The page is about 110 kB, most of it the time zone list and scripts.
 export const OMNIPARCEL_MAX_BYTES = 1024 * 1024;
-/** OmniParcel's own parcel numbers: GX and 17 or 18 digits. SEKO's tracking page does not know them. */
-const NUMBER = /^GX\d{17,18}$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 const HEADING = /<h3>\s*Tracking:([\s\S]*?)<\/h3>/;
@@ -33,7 +32,7 @@ const SUMMARY_FIELD = /<div class="col-md-3"><strong>([^<]*)<\/strong><\/div>\s*
 const TWELVE_HOUR = /^(?:0?[1-9]|1[0-2]):[0-5]\d [AP]M$/;
 
 /** Whether a SEKO number is one of OmniParcel's, which only its own tracker answers. */
-export const isOmniParcelNumber = (number: string): boolean => NUMBER.test(number);
+export const isOmniParcelNumber = (number: string): boolean => OMNIPARCEL_NUMBER.test(number);
 
 /** The page asking the tracker for the number, with its clocks in UTC. */
 export const omniParcelUrl = (number: string): string =>

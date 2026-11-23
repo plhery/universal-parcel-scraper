@@ -516,7 +516,10 @@ step exists for future protocol changes.
   catalog's UTC and Brazil's several zones left out. Its copies of the sending post's scans
   are that post's (below). "Shopee
   Express Brazil" has Shopee's UTC+8 digits wherever in Brazil the scan was: SPX's own
-  tracker dates the same scans, to the second, eight hours earlier. "CTT Express" has Madrid's
+  tracker dates the same scans, to the second, eight hours earlier. SEKO's rows of an
+  OmniParcel GX parcel have the digits of OmniParcel's tracker on its default clock, a fixed
+  +10:00, wherever the scan was: read on SEKO's Chicago clock, the catalog's, a parcel's scans
+  in Canada came 16 hours after the tracker's UTC instants of them. "CTT Express" has Madrid's
   digits at its offices: its own tracker states the same scans at Madrid's offset, and its
   offices place none, so the catalog's UTC label put them an hour late. Its rows without an
   office have the instants its tracker states. "South Korea Post"

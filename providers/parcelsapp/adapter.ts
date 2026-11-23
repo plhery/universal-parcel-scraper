@@ -36,6 +36,7 @@ import { countryZones, hasSeveralClocks, keepsZone, mainZone } from '../../place
 import { captureFailure, capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { CAINIAO_CHINA_LEG, CAINIAO_CHINA_ZONE } from '../../carriers/aliexpress/clock.js';
 import { POSTNL_ACCEPTANCE_STAMP, POSTNL_CUSTOMS_STAMP } from '../../carriers/spring-gds/clock.js';
+import { OMNIPARCEL_DEFAULT_CLOCK, OMNIPARCEL_NUMBER } from '../../carriers/seko/clock.js';
 import { muserTown, muserTrailingPlace } from '../../carriers/muser/parser.js';
 import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { correosDeMexicoForeignClock } from '../../carriers/correos-de-mexico/clock.js';
@@ -1597,6 +1598,10 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (carrier === 'international-bridge') return 'UTC';
   if (carrier === 'correios-br') return CORREIOS_BRAZIL_CLOCK;
   if (carrier === 'spx-br') return SHOPEE_BRAZIL_CLOCK;
+  // SEKO's rows of an OmniParcel parcel have the digits of OmniParcel's tracker on its default clock, a fixed +10:00,
+  // wherever the scan was: read on SEKO's Chicago clock, the catalog's, a parcel's scans in Canada came 16 hours after
+  // the tracker's UTC instants of them.
+  if (carrier === 'seko' && OMNIPARCEL_NUMBER.test(number.toUpperCase())) return OMNIPARCEL_DEFAULT_CLOCK;
   if (carrier === 'ctt-express') return scanLocation(name, state.location) ? CTT_EXPRESS_CLOCK : null;
   // A home clock stays a guess that a location abroad rules out, even when
   // the catalog gives the network that zone (GEODIS Poland for "Pekaes").

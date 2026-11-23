@@ -2216,6 +2216,18 @@ describe('ParcelsApp result parsing', () => {
     });
   });
 
+  it('reads SEKO\'s rows of an OmniParcel parcel on the tracker\'s default clock, a fixed +10:00', () => {
+    // A public sample's export hub in Canada: OmniParcel's default page shows it at 03:07 on 22 July, its UTC page at
+    // 17:07 the day before.
+    const states = [{ date: '2026-07-22T03:07:00Z', status: 'Processed Through Export Hub', carrier: 0,
+      location: 'RICKMOND, BRITISH COLUMBIA, CA' }];
+    const read = (trackingNumber: string) => parseParcelsAppResponse({ carriers: ['SEKO Logistics'], destinationCode: 'AU', states },
+      trackingNumber, identity(trackingNumber)).events?.[0];
+    expect(read('GX155430071018191323')).toMatchObject({ time: '2026-07-21T17:07:00.000Z', time_zone: 'Australia/Brisbane' });
+    // SEKO's own shipments keep its Chicago clock.
+    expect(read('ABC1234567')?.time_zone).toBe('America/Chicago');
+  });
+
   it('reads MailAmericas\' origin leg and Tax ID checks on the origin\'s clock, its scans in the destination on that one\'s', () => {
     // On a parcel to Colombia (2026-10-16), the Tax ID checks precede
     // ParcelsApp's first answer only on China's clock, and the scans there

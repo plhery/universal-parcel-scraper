@@ -41,7 +41,9 @@ OmniParcel tracker, which its server renders too.
   location.
 - OmniParcel's scans give a day heading, a 12-hour time and, before the last mile, a place.
   `timezoneId=91` is the tracker's id for UTC, so the clocks are instants; the page must show
-  it selected. The tracker's default is Sydney's clock. Its delivery heading runs on another
+  it selected. The tracker's default, "(UTC+10:00) Canberra, Melbourne, Sydney", stays +10:00
+  all year, without Sydney's daylight saving, and ParcelsApp's copies of the scans have its
+  digits (`clock.ts`). Its delivery heading runs on another
   clock than the scans and is not read. Its scans are staged by the wordings of SEKO's
   OmniParcel code list, which the tracker shows without their codes, and the shared rules.
 - OmniParcel's summary gives the service and the weight in kilograms, both kept. Its order
