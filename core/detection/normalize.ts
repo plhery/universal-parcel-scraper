@@ -4,6 +4,7 @@ import { CHECKSUMS } from './checksums.js';
 import { restsOnCheckDigit, ruleFits } from './rules.js';
 import { noLimitShipmentNumber } from './noLimit.js';
 import { hasS10CheckDigit } from './s10CheckDigit.js';
+import { tiuiFolio } from './tiui.js';
 
 /**
  * Tracking-number normalization and display formatting.
@@ -99,15 +100,24 @@ export function normalizeTrackingNumber(raw: string): string {
   return hasS10CheckDigit(digits) ? `${serial[1]}${digits}${serial[3]}` : value;
 }
 
+/**
+ * The number as its carrier knows it, to store and look up: the normalized number, except a Tiui
+ * folio, which keeps its hyphens since the digits alone do not give it back. The exception is
+ * Tiui's alone: another carrier's number of the same shape, Seino's or Flip Post's, normalizes.
+ */
+export function carrierTrackingNumber(raw: string, carrier: string | undefined): string {
+  return (carrier === 'tiui' && raw.length <= 64 ? tiuiFolio(raw) : undefined) ?? normalizeTrackingNumber(raw);
+}
+
 /** Capability-link shipment numbers look like 999.90.########. */
 export function isPlanzerSharedTrackingNumber(raw: string): boolean {
   return /^99990\d{8}$/.test(normalizeTrackingNumber(raw));
 }
 
-/** Swiss carriers show 18-digit barcodes as 99.34.123456.12345678. */
+/** Swiss carriers show 18-digit barcodes as 99.34.123456.12345678; a Tiui folio shows its hyphens. */
 export function formatTrackingNumber(raw: string, carrier?: string): string {
   if (carrier === 'postlogistics') return postlogisticsIdentifier(raw);
-  const value = normalizeTrackingNumber(raw);
+  const value = carrierTrackingNumber(raw, carrier);
   if (isPlanzerSharedTrackingNumber(value)) {
     return `${value.slice(0, 3)}.${value.slice(3, 5)}.${value.slice(5)}`;
   }

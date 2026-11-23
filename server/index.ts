@@ -221,7 +221,7 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     const detected = detectCarrierMatch(input.number);
     const route = input.carrier ?? { carrier: detected.carrier, candidates: detected.candidates };
     // The number each carrier the lookup may ask is sent, where it differs from the normalized one:
-    // TForce Logistics and time:matters keep the dash before a piece or rebooking suffix.
+    // TForce Logistics and time:matters keep the dash before a piece or rebooking suffix, and a Tiui folio its hyphens.
     const asked = typeof route === 'string' ? [route] : [route.carrier, ...route.candidates];
     const sent = [...new Set(asked.map(carrier => directTrackingNumber(carrier, input.number)))].filter(spelled => spelled !== number);
     // The other fields as the tracker reads them: absent, null and blank alike, trimmed, and the

@@ -49,6 +49,7 @@
       "carrierLinkRules",
       "carrierRequirements",
       "carrierTimezone",
+      "carrierTrackingNumber",
       "checksumRejections",
       "classifyStage",
       "classifyWording",

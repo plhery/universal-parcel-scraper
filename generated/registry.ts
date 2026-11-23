@@ -964,6 +964,7 @@ import { adapter as timeMatters } from '../carriers/time-matters/adapter.js';
 import { adapter as timelyTitan } from '../carriers/timely-titan/adapter.js';
 import { adapter as tipsa } from '../carriers/tipsa/adapter.js';
 import { adapter as tirupatiCourier } from '../carriers/tirupati-courier/adapter.js';
+import { adapter as tiui } from '../carriers/tiui/adapter.js';
 import { adapter as tmmExpress } from '../carriers/tmm-express/adapter.js';
 import { adapter as tnt } from '../carriers/tnt/adapter.js';
 import { adapter as tntAu } from '../carriers/tnt-au/adapter.js';
@@ -2072,6 +2073,7 @@ export const REGISTRY: RegistryDefinition = {
     "timely-titan": timelyTitan,
     "tipsa": tipsa,
     "tirupati-courier": tirupatiCourier,
+    "tiui": tiui,
     "tmm-express": tmmExpress,
     "tnt": tnt,
     "tnt-au": tntAu,
@@ -3971,7 +3973,7 @@ export const REGISTRY: RegistryDefinition = {
     "tipsa": "tipsa",
     "tiptop": "universal",
     "tirupati-courier": "tirupati-courier",
-    "tiui": "universal",
+    "tiui": "tiui",
     "tjw-fragt": "universal",
     "tm-cargo-pk": "universal",
     "tma-companies": "universal",

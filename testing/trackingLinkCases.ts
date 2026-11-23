@@ -2749,6 +2749,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'odm-express', number: 'P9999999',
     route: /^https:\/\/odmexpress\.com\.mx\/rastreo-2\/\?rastreo_fall=P9999999$/,
     marker: /El número de guía P9999999 no existe o es incorrecto/ },
+  // The page reads the folio from its address, with its hyphens, and draws the guide's panels around it.
+  { carrier: 'tiui', number: '99-99-9999',
+    route: /^https:\/\/tiuiamigo\.tiui\.mx\/rastreo\/99-99-9999$/,
+    marker: /FOLIO DE GUÍA[\s\S]*Historial de movimientos/i },
 ];
 
 /**

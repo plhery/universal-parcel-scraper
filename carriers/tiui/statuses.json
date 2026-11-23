@@ -1,4 +1,13 @@
 {
   "carrier": "tiui",
-  "entries": []
+  "entries": [
+    {"code": "16", "wording": "Envío documentado recolección", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "Tiui registered a pickup from the merchant; it does not have the parcel yet."},
+    {"code": "17", "wording": "En camino a recolección", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "A courier is on the way to the merchant for the pickup."},
+    {"code": "18", "wording": "Envío recolectado", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "Picked up from the merchant."},
+    {"code": "19", "wording": "Tu envío está en CEDIS Tiui CDMX recolección", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "At the Tiui distribution centre (CEDIS) the wording names."},
+    {"code": "20", "wording": "Estamos preparando la ruta", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Tiui is planning the delivery round."},
+    {"code": "9", "wording": "Tu envío está en ruta de entrega", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live"},
+    {"code": "21", "wording": "No alcanzamos a visitar tu domicilio.", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The round ended before the courier reached the address, with no attempt at the door; Tiui's page script names this flow NO_VISITADO, apart from a delivery attempt. The parcel goes out on a later round."},
+    {"code": "13", "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live"}
+  ]
 }

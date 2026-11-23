@@ -176,7 +176,10 @@ counts; adapters and providers get the normalized number. Normalization reads a 
 S10 serial as a zero when the check digit then holds, since the serial holds only digits. It
 drops the slashes of a NO LIMIT shipment number, which reads the same without them, and NO
 LIMIT's adapter puts them back for its form. It also drops the slash MRW's receipts print after the office's five
-digits; MRW's tracker knows the number without it. A
+digits; MRW's tracker knows the number without it. A Tiui folio keeps its hyphens when Tiui is
+the carrier, since its digits alone do not give the folio back: `carrierTrackingNumber()` gives
+the number as its carrier knows it, for consumers to store, and the same shape under another
+carrier normalizes. A
 postcode the carrier does not read goes to the enabled fallbacks only, since ParcelsApp and
 17TRACK can ask for one. Phone digits reach only a carrier whose catalog entry asks for them,
 never a fallback, and its adapter's errors never repeat them.

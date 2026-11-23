@@ -18,17 +18,45 @@
   "timezone": "America/Mexico_City",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "tiui",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://tiuiamigo.tiui.mx/rastreo/{trackingNumber}",
     "searchUrl": "https://tiuiamigo.tiui.mx/rastreo",
     "canaryUrl": "https://tiui.mx/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "sender_name",
+      "recipient_name",
+      "postcodes",
+      "origin",
+      "destination",
+      "remarks",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "postcodes",
+      "origin",
+      "destination",
+      "remarks",
+      "proof_of_delivery"
+    ],
     "unavailable": []
   },
   "links": [

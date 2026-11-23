@@ -1,4 +1,4 @@
-import { normalizeTrackingNumber } from '../detection/normalize.js';
+import { carrierTrackingNumber } from '../detection/normalize.js';
 import { BudgetExceededError } from '../errors/index.js';
 import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../telemetry/index.js';
@@ -6,11 +6,15 @@ import type { UniversalTracker } from '../../providers/universal.js';
 import type { AdapterRegistry, TrackingContext, TrackingInput } from './index.js';
 import { runAdapter } from './run.js';
 
+/**
+ * The number an adapter is asked with: the number as its carrier knows it (`carrierTrackingNumber`),
+ * and for TForce Logistics and time:matters with the dash before a piece or rebooking suffix.
+ */
 export function directTrackingNumber(carrier: string, raw: string): string {
   if (raw.includes('-') && (carrier === 'tforce-logistics' || carrier === 'time-matters')) {
     return raw.toUpperCase().replace(/[\s.]/g, '');
   }
-  return normalizeTrackingNumber(raw);
+  return carrierTrackingNumber(raw, carrier);
 }
 
 /**

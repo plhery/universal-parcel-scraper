@@ -62800,7 +62800,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Mexico_City",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tiui"
     },
     "canaryUrl": "https://tiui.mx/",
     "trackingUrlTemplate": "https://tiuiamigo.tiui.mx/rastreo/{trackingNumber}",

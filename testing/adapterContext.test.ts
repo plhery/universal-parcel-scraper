@@ -21,7 +21,7 @@ import { trackCarrier } from '../core/adapter/track.js';
 import { activeRequirements } from '../core/catalog/index.js';
 import { carrierLinkRules } from '../core/catalog/linkRules.js';
 import { amazonShareToken } from '../core/catalog/urls.js';
-import { normalizeTrackingNumber } from '../core/detection/index.js';
+import { carrierTrackingNumber } from '../core/detection/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../core/telemetry/index.js';
 import { loadNumberCorpusFiles } from '../core/testing/corpus.js';
 import { TrawlClient } from '../core/transport/trawl.js';
@@ -169,7 +169,8 @@ function credential(validator: string, number: string, carrier: string): string 
 function carrierInputs(carrier: string): TrackingInput[] {
   const numbers = (corpus.get(carrier) ?? []).filter((record) => !['negative', 'quarantined'].includes(record.role)).map((record) => record.number);
   return (numbers.length ? numbers : UNSAMPLED[carrier] ?? []).map((raw) => {
-    const number = normalizeTrackingNumber(raw);
+    // The number as the carrier knows it, which its adapter is given: a Tiui folio with its hyphens.
+    const number = carrierTrackingNumber(raw, carrier);
     const input: TrackingInput = { number };
     for (const requirement of activeRequirements(carrier, number)) {
       const value = credential(requirement.validator, number, carrier);
