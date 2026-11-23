@@ -48793,7 +48793,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://tnt.partsexpress.nl/",
-    "trackingSearchUrl": "https://tnt.partsexpress.nl/",
+    "trackingSearchUrl": "https://partsexpress.eu/",
     "helpUrl": "https://partsexpress.eu/contact/",
     "linkRules": [],
     "detectionRules": []
@@ -51109,7 +51109,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://postone.eu/en",
     "trackingUrlTemplate": "https://postone.eu/en/track?code={trackingNumber}",
-    "trackingSearchUrl": "https://postone.eu/en/products/view/track",
     "helpUrl": "https://postone.eu/en/contact-us",
     "linkRules": [
       {
@@ -53621,7 +53620,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://redbox.mv/",
     "trackingUrlTemplate": "https://redbox.mv/tracking?tracking_number={trackingNumber}",
-    "trackingSearchUrl": "https://redbox.mv/tracking",
     "helpUrl": "https://redbox.mv/contact",
     "linkRules": [
       {

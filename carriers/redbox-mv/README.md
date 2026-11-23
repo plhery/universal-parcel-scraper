@@ -16,7 +16,8 @@ with not found. No public number has shown a known parcel's reply yet. An adapte
 
 ## Links
 
-Tracking links carry the number as `tracking_number` on the tracking page.
+Tracking links carry the number as `tracking_number` on the tracking page. The page has no
+number field of its own, so the catalog names no search page.
 
 ## Testing
 

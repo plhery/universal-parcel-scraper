@@ -19,7 +19,7 @@ check its replies against.
 ## Links
 
 A link needs the delivery postcode as well as the barcode, so the catalog sends people to the
-tracking page.
+home page, which asks for both.
 
 ## Testing
 

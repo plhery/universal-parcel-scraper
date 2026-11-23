@@ -48,6 +48,8 @@ export const carriersWithoutSearchPage: Partial<Record<CarrierId, string>> = {
   'nova-kargo': 'novakargo.com has no tracking form; its Web Postman tracker opens a parcel only from the number in its address',
   pasarex: 'tracking.pasarex.com has no number field and answers "Guía no encontrada" without one; a waybill opens only at its own address',
   pigeonship: 'pigeonship.com has no tracking form; an order opens only at its own address on admin.pigeonship.com, from the recipient\'s link',
+  'post-one': 'postone.eu opens a parcel only from the number in its tracking address; its track page shows a sign-in form',
+  'redbox-mv': 'redbox.mv/tracking shows no number field; it opens a parcel only from the number in its address',
   rivigo: 'Rivigo\'s public tracker is a hash route on zoom.rivigo.com whose other pages redirect to the staff sign-in; a consignment opens at its own address',
   'skynet-worldwide': 'SkyNet\'s tracker shows its number field only with a network parameter in the address, and skynetworldwide.com has no tracking page of its own',
   torrestir: 'Torrestir hides its number field on phone-sized screens, in a collapsed menu; its Track & Trace button opens the tracker with the number',

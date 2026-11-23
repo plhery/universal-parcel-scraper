@@ -12,6 +12,7 @@ The labelled item number must match the complete requested reference before any 
 read. Only the observed empty redirect to the official English home page is not found;
 other redirects, refusals, verification pages and malformed replies remain distinct.
 One network-only retry shares the caller's deadline.
+The site has no public number field, so the catalog names no search page.
 
 Only reached, dated logistics rows become events. The official icons and their status
 labels establish the code mapping. The milestone view is marked partial so the delivery

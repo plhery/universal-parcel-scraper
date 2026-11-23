@@ -39,7 +39,6 @@
   ],
   "portal": {
     "url": "https://postone.eu/en/track?code={trackingNumber}",
-    "searchUrl": "https://postone.eu/en/products/view/track",
     "helpUrl": "https://postone.eu/en/contact-us",
     "canaryUrl": "https://postone.eu/en",
     "shows": [
