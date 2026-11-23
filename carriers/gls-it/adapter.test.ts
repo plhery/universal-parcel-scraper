@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
+import { DateTime } from 'luxon';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
+import { finishAdapterAnswer } from '../../core/adapter/run.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { adapter, GLSItalyTracker, glsItalyLookupUrl } from './adapter.js';
@@ -233,6 +235,18 @@ describe('GLS Italy direct tracking', () => {
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ confidence: 'low', candidates: ['gls-it'] });
     expect(parseTrackingInput(`https://gls-group.com/IT/it/servizi-online/ricerca-spedizioni/?match=${NUMBER}&type=NAT`))
       .toMatchObject({ trackingNumber: NUMBER, carrier: 'gls-it', source: 'link' });
+  });
+
+  it('holds back a delay notice the receiving depot dates at a time still to come, until it is due', () => {
+    const instance = adapter(environment(vi.fn<typeof fetch>()));
+    expect(instance.plannedScans).toBe(true);
+    const notice = 'The shipment did not arrive at the receiving GLS Depot.';
+    const ahead = DateTime.now().setZone('Europe/Rome').plus({ hours: 3 });
+    const result = parseGLSItaly(shipment((row) => {
+      row.history.unshift({ time: ahead.toFormat('HH:mm:ss'), date: ahead.toFormat('yyyy-MM-dd'), evtDscr: notice });
+    }), NUMBER);
+    expect(result.events?.[0]).toMatchObject({ description: notice });
+    expect(finishAdapterAnswer('gls-it', result, instance.plannedScans).events?.map((event) => event.description)).not.toContain(notice);
   });
 
   it('asks the national lookup once, with the host agent and no session', async () => {

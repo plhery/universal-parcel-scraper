@@ -57,6 +57,8 @@ export const adapter: AdapterFactory = (environment) => {
   const tracker = new GLSItalyTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return {
     id: 'gls-it', recordsSteps: true, steps: ['direct', 'retry'],
+    // The receiving depot can date its delay notice at a time still to come: it waits until it is due.
+    plannedScans: true,
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeGLSItalyNumber(number))),

@@ -43,6 +43,9 @@ numbers, so this adapter does not share their route.
 - The national search writes every timed scan in Italian time, a depot's abroad on a parcel
   sent on to another GLS country too, so each is read in Italian time. A scan with only a date
   keeps the date as a local clock, and so does an hour the clocks skip in spring.
+- The receiving depot can date its delay notice ("The shipment did not arrive at the receiving
+  GLS Depot.") hours after the lookup that reads it. A scan dated after the lookup is held back
+  until it is due (`plannedScans`).
 - The weight, the consignee's town and the masked signer are kept; without the shipment's
   signature, the masked name beside the delivery stands in. The depots, the sender's town,
   the customer's reference and the departure date are never read.
