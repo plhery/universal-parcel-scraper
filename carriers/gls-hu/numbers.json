@@ -90,7 +90,8 @@
           "dhl-ecommerce-es",
           "dhl-freight",
           "dpd-ie",
-          "geniki-taxydromiki"
+          "geniki-taxydromiki",
+          "gls-hu"
         ]
       },
       "note": "Archived overview of GLS Hungary's tracking service (national owner HU01): a 10-digit national parcel whose collection was cancelled."
@@ -120,7 +121,8 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
-          "dpd-ie"
+          "dpd-ie",
+          "gls-hu"
         ]
       },
       "note": "Archived overview of GLS Hungary's tracking service (national owner HU01): a 10-digit national parcel, delivered."
@@ -150,7 +152,8 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
-          "dpd-ie"
+          "dpd-ie",
+          "gls-hu"
         ]
       },
       "note": "Archived overview of GLS Hungary's tracking service (national owner HU01): a 10-digit national parcel picked up by GLS."
@@ -180,7 +183,8 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
-          "dpd-ie"
+          "dpd-ie",
+          "gls-hu"
         ]
       },
       "note": "Archived overview of GLS Hungary's tracking service (national owner HU01): a 10-digit national parcel, pre-advised."

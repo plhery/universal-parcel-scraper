@@ -148,7 +148,8 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
-          "dpd-ie"
+          "dpd-ie",
+          "gls-hu"
         ]
       },
       "note": "Direx's own API documentation gives this second item number in its partner status example, handed to Asendia."

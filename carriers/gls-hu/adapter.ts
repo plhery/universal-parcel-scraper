@@ -1,4 +1,4 @@
-import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { returnedTrackingNumber } from '../../core/detection/returned.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
@@ -52,11 +52,44 @@ export function parseGLSHungaryOverview(payload: unknown, raw: string): CarrierR
   return { ...result, canonical_tracking_number: number, summary_only: true, timezone: 'Europe/Budapest' };
 }
 
+/**
+ * The day the overview gives the requested parcel: the day GLS first had its data. A parcel keeps it
+ * from pre-advice to delivery, as its archived replies in numbers.json show.
+ */
+export function glsHungaryParcelDay(payload: unknown, raw: string): string | null {
+  const number = normalizeGLSHungaryNumber(raw);
+  if (!isRecord(payload) || !Array.isArray(payload.tuStatus)) return null;
+  const rows = payload.tuStatus.filter((row) => isRecord(row) && typeof row.tuNo === 'string' && returnedTrackingNumber(row.tuNo) === number);
+  const day = rows.length === 1 && isRecord(rows[0]) ? rows[0].date : undefined;
+  return typeof day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(day) && Number.isFinite(Date.parse(day)) ? day : null;
+}
+
 export class GLSHungaryTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; userAgent?: string; now?: () => number } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeGLSHungaryNumber(raw);
+    return parseGLSHungaryOverview(await this.overview(number, context), number);
+  }
+
+  /**
+   * Whether GLS Hungary knows the number. Its ten digits are other carriers' numbers too, and GLS knows
+   * another parcel under some of them: the answer gives the parcel's day, the overview's only clock, so a
+   * consumer sets aside a parcel quiet for two months or more.
+   */
+  async recognize(raw: string, context: TrackingContext = {}): Promise<Recognition> {
+    const seen: { day?: string | null } = {};
+    const answer = await recognizeFromLookup(async () => {
+      const number = normalizeGLSHungaryNumber(raw);
+      const payload = await this.overview(number, context);
+      seen.day = glsHungaryParcelDay(payload, number);
+      return parseGLSHungaryOverview(payload, number);
+    }, () => accepted(() => normalizeGLSHungaryNumber(raw)));
+    return answer.known && seen.day && !answer.lastActivityAt && !answer.lastActivityLocal
+      ? { ...answer, lastActivityLocal: `${seen.day}T00:00:00` } : answer;
+  }
+
+  private async overview(number: string, context: TrackingContext): Promise<unknown> {
     const budget = lookupBudget(context, TIMEOUT_MS);
     // A request that fails to reach GLS, or hangs, is sent once more within the budget.
     const { response, bytes } = await withNetworkRetry(budget, (timeoutMs) => fetchBounded(
@@ -76,7 +109,7 @@ export class GLSHungaryTracker {
       throw new IndeterminateError(PROVIDER, 'GLS Hungary returned HTTP 404 without its own not-found reply', { status: 404 });
     }
     if (!response.ok) throw new UpstreamHttpError(PROVIDER, response.status);
-    return parseGLSHungaryOverview(parseJsonBytes(bytes, PROVIDER), number);
+    return parseJsonBytes(bytes, PROVIDER);
   }
 }
 
@@ -86,7 +119,6 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'gls-hu',
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeGLSHungaryNumber(number))),
+    recognize: (number, context) => tracker.recognize(number, context),
   };
 };

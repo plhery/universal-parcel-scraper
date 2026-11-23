@@ -326,7 +326,8 @@
           "dhl-ecommerce-es",
           "dhl-freight",
           "dpd-ie",
-          "geniki-taxydromiki"
+          "geniki-taxydromiki",
+          "gls-hu"
         ]
       },
       "note": "The T-CAT example in a Taiwanese parcel-tracker browser extension, which opens it on T-CAT's TraceDetail page; not checked against T-CAT's tracker."

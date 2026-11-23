@@ -15,6 +15,22 @@
     "reason": "These carriers accept the same numeric length without a DHL Express checksum, and Packeta's packet ID is ten digits without its Z. Direct tracking must confirm the carrier."
   },
   {
+    "shape": "Ten digits from 33 or 34 that fail the DHL Express waybill check",
+    "carriers": [
+      "dhl",
+      "estafeta",
+      "mondial-relay",
+      "packeta",
+      "relais-colis",
+      "dhl-ecommerce-es",
+      "box-now",
+      "dhl-freight",
+      "dpd-ie",
+      "gls-hu"
+    ],
+    "reason": "These carriers accept the same numeric length without a DHL Express checksum, and Packeta's packet ID is ten digits without its Z. GLS Hungary numbers its national parcels through this range, and is asked only once the others have missed the number. Direct tracking must confirm the carrier."
+  },
+  {
     "shape": "Ten digits starting 902 that fail the DHL Express waybill check",
     "carriers": [
       "dhl",
@@ -1689,6 +1705,25 @@
       "dpd-ie"
     ],
     "reason": "10-digit numbers are shared by several carriers; the number stays a low-confidence suggestion. ACS Courier and Geniki Taxydromiki numbers pass the same modulo-7 check as DHL Express waybills."
+  },
+  {
+    "shape": "Ten digits from 33 or 34 that pass the modulo-7 check",
+    "carriers": [
+      "dhl",
+      "estafeta",
+      "mondial-relay",
+      "packeta",
+      "relais-colis",
+      "dhl-express",
+      "dhl-ecommerce-es",
+      "acs-courier",
+      "geniki-taxydromiki",
+      "box-now",
+      "dhl-freight",
+      "dpd-ie",
+      "gls-hu"
+    ],
+    "reason": "10-digit numbers are shared by several carriers; the number stays a low-confidence suggestion. ACS Courier and Geniki Taxydromiki numbers pass the same modulo-7 check as DHL Express waybills. GLS Hungary numbers its national parcels through this range, and is asked only once the others have missed the number."
   },
   {
     "shape": "Ten plain digits starting 0 that pass the modulo-7 check",

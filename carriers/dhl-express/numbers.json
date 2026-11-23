@@ -55,7 +55,8 @@
           "dhl-ecommerce-es",
           "dhl-freight",
           "dpd-ie",
-          "geniki-taxydromiki"
+          "geniki-taxydromiki",
+          "gls-hu"
         ]
       },
       "note": "Publicly reported DHL Express waybill. DHL Express's mobile tracking returned its delivered history from the United Kingdom to the United States."

@@ -21,7 +21,8 @@
           "box-now",
           "dhl-ecommerce-es",
           "dhl-freight",
-          "dpd-ie"
+          "dpd-ie",
+          "gls-hu"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Relais Colis, which stays one candidate among several."

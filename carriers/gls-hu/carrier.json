@@ -21,6 +21,9 @@
     "steps": [
       "direct"
     ],
+    "recognition": {
+      "rank": 607
+    },
     "refresh": {
       "minMinutes": 60,
       "afterFailureMinutes": 240
@@ -59,5 +62,12 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "gls-hu-1",
+      "pattern": "^3[34]\\d{8}$",
+      "confidence": "low",
+      "lastResort": true
+    }
+  ]
 }

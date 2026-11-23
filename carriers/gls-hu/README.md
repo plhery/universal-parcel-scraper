@@ -24,12 +24,25 @@ Hungary, through the group's tracking service under Hungary's own path.
 - Links to `gls-group.com/HU/` or `gls-group.eu/HU/` name this carrier, whatever the number,
   since that page tracks the same parcels as the adapter.
 
+## Detection and recognition
+
+GLS Hungary numbers its national parcels in one sequence, which has run through ten digits
+from 33 and 34, as the archived parcels in [numbers.json](numbers.json) show. Other carriers'
+numbers fill that range too, DHL Express's and Relais Colis's among them, and GLS Hungary
+knows another parcel under some of them. So its rule for those ten digits is a `lastResort`:
+recognition asks GLS Hungary about such a number only once every other candidate has missed it.
+The overview dates a parcel only by the day GLS first had its data, which stays the same from
+pre-advice to delivery. Recognition gives that day as the answer's local clock, so a consumer
+sets aside a parcel quiet for two months or more rather than file another carrier's number
+under it. A pre-advised parcel, not yet handed to GLS, is not known.
+
 ## Limitations
 
 - No scans, location, pickup point or delivery estimate: the detail request needs the
   recipient's postcode, which this carrier does not ask for.
-- No detection rule: GLS Hungary's 10- and 11-digit numbers overlap other carriers' numeric
-  formats, so it is reached by link, name or the carrier picker.
+- Ten digits outside 33 and 34, and eleven digits, offer no rule: they overlap other
+  carriers' numeric formats and nothing in them points to GLS Hungary, so such a parcel is
+  reached by link, name or the carrier picker.
 
 ## Testing
 

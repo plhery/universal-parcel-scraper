@@ -218,6 +218,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "gls-ch": 920,
   "gls-de": 940,
   "gls-fr": 950,
+  "gls-hu": 607,
   "gls-it": 930,
   "gls-pl": 606,
   "gls-us": 652,

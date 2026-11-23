@@ -30540,6 +30540,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "gls-hu",
+      "recognitionRank": 607,
       "refresh": {
         "minMinutes": 60,
         "afterFailureMinutes": 240
@@ -30563,7 +30564,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^3[34]\\d{8}$",
+        "confidence": "low",
+        "lastResort": true
+      }
+    ]
   },
   "gls-it": {
     "displayName": "GLS Italy",
@@ -74570,7 +74577,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gls-at": ["gls-at-1","gls-at-2"],
   "gls-ca": [],
   "gls-es": ["gls-es-1","gls-es-2"],
-  "gls-hu": [],
+  "gls-hu": ["gls-hu-1"],
   "gls-it": ["gls-it-1","gls-it-digit-depot"],
   "gls-nl": ["gls-nl-1","gls-nl-2","gls-nl-3"],
   "gls-pl": ["gls-pl-1","gls-pl-2"],

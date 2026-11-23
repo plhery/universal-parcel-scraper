@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { adapter, GLSHungaryTracker, glsHungaryOverviewUrl, normalizeGLSHungaryNumber, parseGLSHungaryOverview } from './adapter.js';
+import { settleRecognition } from '../../core/recognition/index.js';
+import { adapter, GLSHungaryTracker, glsHungaryOverviewUrl, glsHungaryParcelDay, normalizeGLSHungaryNumber, parseGLSHungaryOverview } from './adapter.js';
 
 // Synthetic overview rows in the shape of GLS Hungary's archived public replies (see numbers.json).
 const row = (tuNo: string, statusInfo: string, extra: Record<string, unknown> = {}) => ({
@@ -86,12 +87,31 @@ describe('GLS Hungary retrieval', () => {
 
   it('recognizes a parcel past pre-advice, and a number GLS does not know as unknown', async () => {
     const make = (response: Response) => adapter({ fetcher: vi.fn().mockResolvedValue(response), env: {}, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null });
-    await expect(make(json({ tuStatus: [row('1000000001', 'DELIVERED')] })).recognize!('1000000001')).resolves.toMatchObject({ known: true });
+    await expect(make(json({ tuStatus: [row('1000000001', 'DELIVERED')] })).recognize!('1000000001'))
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-02T00:00:00' });
     await expect(make(json({ tuStatus: [row('1000000001', 'PREADVICE')] })).recognize!('1000000001')).resolves.toMatchObject({ known: false });
     await expect(make(json({ lastError: 'E000' }, 404)).recognize!('1000000001')).resolves.toEqual({ known: false });
     const unused = vi.fn();
     const instance = adapter({ fetcher: unused, env: {}, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null });
     await expect(instance.recognize!('ZZ123456789')).resolves.toEqual({ known: false });
     expect(unused).not.toHaveBeenCalled();
+  });
+
+  it('dates its answer by the parcel\'s day, so an older parcel under another carrier\'s number is set aside', async () => {
+    const make = (date: unknown) => adapter({ fetcher: vi.fn().mockResolvedValue(json({ tuStatus: [row('3400000001', 'DELIVERED', { date })] })),
+      env: {}, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null });
+    const settle = async (date: unknown) => settleRecognition([{ carrier: 'gls-hu', needsInput: null, preferred: false, status: 'known',
+      lastActivityAt: null, ...await make(date).recognize!('3400000001') }], new Date('2026-11-23T12:00:00Z')).carrier;
+    await expect(settle('2026-11-02')).resolves.toBe('gls-hu');
+    await expect(settle('2026-07-02')).resolves.toBeUndefined();
+    // Without a day the answer has no clock, as before.
+    await expect(make('soon').recognize!('3400000001')).resolves.toEqual({ known: true, lastActivityAt: null });
+  });
+
+  it('reads the day of the requested parcel\'s row only', () => {
+    expect(glsHungaryParcelDay({ tuStatus: [row('3400000001', 'DELIVERED', { date: '2026-07-02' })] }, '3400000001')).toBe('2026-07-02');
+    expect(glsHungaryParcelDay({ tuStatus: [row('3400000002', 'DELIVERED', { date: '2026-07-02' })] }, '3400000001')).toBeNull();
+    expect(glsHungaryParcelDay({ tuStatus: [row('3400000001', 'DELIVERED', { date: '2026-13-45' })] }, '3400000001')).toBeNull();
+    expect(glsHungaryParcelDay({ lastError: 'E000' }, '3400000001')).toBeNull();
   });
 });

@@ -30536,6 +30536,7 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "gls-hu",
+      "recognitionRank": 607,
       "refresh": {
         "minMinutes": 60,
         "afterFailureMinutes": 240
@@ -30559,7 +30560,13 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^3[34]\\d{8}$",
+        "confidence": "low",
+        "lastResort": true
+      }
+    ]
   },
   "gls-it": {
     "displayName": "GLS Italy",
