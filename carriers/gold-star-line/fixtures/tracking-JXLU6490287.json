@@ -1,0 +1,298 @@
+{
+  "message": "vgm form successfully submitted",
+  "data": {
+    "status": 1,
+    "message": {
+      "response": {
+        "blRouteLegs": [
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "MALAYSIA",
+            "countryNameTo": "MALAYSIA",
+            "portCodeFrom": "MYPKL",
+            "portCodeTo": "MYPKL",
+            "portFromType": "POL",
+            "portNameFrom": "PORT KLANG",
+            "portNameTo": "PORT KLANG",
+            "portToType": "Transshipment",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2026-11-01T11:00:00",
+              "offsetMinutes": 480
+            },
+            "countryNameFrom": "MALAYSIA",
+            "countryNameTo": "SINGAPORE",
+            "portCodeFrom": "MYPKL",
+            "portCodeTo": "SGSIN",
+            "portFromType": "POL",
+            "portNameFrom": "PORT KLANG",
+            "portNameTo": "SINGAPORE",
+            "portToType": "Transshipment",
+            "sailingDateTz": {
+              "dateTime": "2026-10-27T20:00:00",
+              "offsetMinutes": 480
+            },
+            "vessel": "KJ2",
+            "vesselName": "KOTA JOHAN",
+            "voyage": "10",
+            "arrivalDateDT": "2026-11-01T11:00:00.000",
+            "sailingDateDT": "2026-10-27T20:00:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2026-12-25T17:30:00",
+              "offsetMinutes": -300
+            },
+            "countryNameFrom": "SINGAPORE",
+            "countryNameTo": "U.S.A.",
+            "portCodeFrom": "SGSIN",
+            "portCodeTo": "USBOS",
+            "portFromType": "Transshipment",
+            "portNameFrom": "SINGAPORE",
+            "portNameTo": "BOSTON (MA)",
+            "portToType": "POD",
+            "sailingDateTz": {
+              "dateTime": "2026-11-05T04:00:00",
+              "offsetMinutes": 480
+            },
+            "vessel": "ZS3",
+            "vesselName": "Z SAMMY OFER",
+            "voyage": "16",
+            "arrivalDateDT": "2026-12-25T17:30:00.000",
+            "sailingDateDT": "2026-11-05T04:00:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "U.S.A.",
+            "countryNameTo": "U.S.A.",
+            "portCodeFrom": "USBOS",
+            "portCodeTo": "USBOS",
+            "portFromType": "POD",
+            "portNameFrom": "BOSTON (MA)",
+            "portNameTo": "BOSTON (MA)",
+            "portToType": "DEL",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          }
+        ],
+        "consignmentDetails": {
+          "consDel": null,
+          "consDelCountryCode": null,
+          "consDelCountryName": null,
+          "consDelDesc": null,
+          "consPor": null,
+          "consPorCountryCode": null,
+          "consPorCountryName": null,
+          "consPorDesc": null,
+          "consPod": null,
+          "consPodCountryName": null,
+          "consPodDesc": null,
+          "consPol": null,
+          "consPolCountryName": null,
+          "consPolDesc": null,
+          "type": "Container",
+          "consContainerList": [
+            {
+              "unitPrefix": "JXLU",
+              "unitNo": "6490287 ",
+              "cargoType": "HC40",
+              "unitActivityList": [
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-11-01T20:54:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Container was discharged at Transshipment Port",
+                  "countryFromName": "SINGAPORE",
+                  "vessel": "KJ2",
+                  "vesselName": "KOTA JOHAN",
+                  "voyage": "10",
+                  "placeFromDesc": "SINGAPORE"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-27T04:20:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Container was loaded at Port of Loading to Transshipment Port",
+                  "countryFromName": "MALAYSIA",
+                  "vessel": "KJ2",
+                  "vesselName": "KOTA JOHAN",
+                  "voyage": "10",
+                  "placeFromDesc": "PORT KLANG"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-11-04T11:22:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Container was loaded at Transsihipment Port to Port of Discharge",
+                  "countryFromName": "SINGAPORE",
+                  "vessel": "ZS3",
+                  "vesselName": "ZIM SAMMY OFER",
+                  "voyage": "16",
+                  "placeFromDesc": "SINGAPORE"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-17T19:00:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Empty container dispatched from inland point to Customer",
+                  "countryFromName": "MALAYSIA",
+                  "vessel": "KJ2",
+                  "vesselName": "KOTA JOHAN",
+                  "voyage": "10",
+                  "placeFromDesc": "PORT KLANG"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-22T11:22:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Export gate-in from Customer to Port of Loading ",
+                  "countryFromName": "MALAYSIA",
+                  "vessel": "KJ2",
+                  "vesselName": "KOTA JOHAN",
+                  "voyage": "10",
+                  "placeFromDesc": "PORT KLANG"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-30T15:50:28",
+                    "offsetMinutes": 180
+                  },
+                  "activityDesc": "Carrier Release",
+                  "countryFromName": "U.S.A.",
+                  "vessel": null,
+                  "vesselName": null,
+                  "voyage": null,
+                  "placeFromDesc": "BOSTON (MA)"
+                }
+              ]
+            }
+          ]
+        },
+        "finalETA": {
+          "etaValue": {
+            "dateTime": null,
+            "offsetMinutes": 0
+          },
+          "etaValueDate": null,
+          "etaDescription": "DEL"
+        }
+      },
+      "containerid": "JXLU6490287",
+      "result": [
+        {
+          "container": "JXLU6490287   HC40",
+          "last_activity": "Container was loaded at Transsihipment Port to Port of Discharge",
+          "location": "SINGAPORE",
+          "placeFromDesc": "SINGAPORE",
+          "date": "04-Nov-2026 11:22:00",
+          "new_rec": [
+            {
+              "activityDesc": "Empty container dispatched from inland point to Customer",
+              "countryFromName": "MALAYSIA",
+              "placeFromDesc": "PORT KLANG",
+              "activityDateTz": "17-Oct-2026 19:00:00",
+              "voyage": "KOTA JOHAN / 10"
+            },
+            {
+              "activityDesc": "Export gate-in from Customer to Port of Loading ",
+              "countryFromName": "MALAYSIA",
+              "placeFromDesc": "PORT KLANG",
+              "activityDateTz": "22-Oct-2026 11:22:00",
+              "voyage": "KOTA JOHAN / 10"
+            },
+            {
+              "activityDesc": "Container was loaded at Port of Loading to Transshipment Port",
+              "countryFromName": "MALAYSIA",
+              "placeFromDesc": "PORT KLANG",
+              "activityDateTz": "27-Oct-2026 04:20:00",
+              "voyage": "KOTA JOHAN / 10"
+            },
+            {
+              "activityDesc": "Carrier Release",
+              "countryFromName": "U.S.A.",
+              "placeFromDesc": "BOSTON (MA)",
+              "activityDateTz": "30-Oct-2026 15:50:28",
+              "voyage": " / "
+            },
+            {
+              "activityDesc": "Container was discharged at Transshipment Port",
+              "countryFromName": "SINGAPORE",
+              "placeFromDesc": "SINGAPORE",
+              "activityDateTz": "01-Nov-2026 20:54:00",
+              "voyage": "KOTA JOHAN / 10"
+            },
+            {
+              "activityDesc": "Container was loaded at Transsihipment Port to Port of Discharge",
+              "countryFromName": "SINGAPORE",
+              "placeFromDesc": "SINGAPORE",
+              "activityDateTz": "04-Nov-2026 11:22:00",
+              "voyage": "ZIM SAMMY OFER / 16"
+            }
+          ]
+        }
+      ],
+      "pod": {
+        "port_of_discharge": "BOSTON (MA), U.S.A.",
+        "final_destination": "",
+        "estimated_time_of_arrival": "25-Dec-2026"
+      },
+      "pol": {
+        "port_of_loading": "PORT KLANG, MALAYSIA",
+        "sailingdate": "27-Oct-2026",
+        "port_of_receipt": ""
+      },
+      "container_flag": true,
+      "array": {
+        "POL": "Port of Loading",
+        "POD": "Port of Discharge",
+        "POR": "Port of Receipt",
+        "DEL": "Final Destination"
+      }
+    }
+  },
+  "status": "OK"
+}

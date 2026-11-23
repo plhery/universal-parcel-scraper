@@ -1,0 +1,271 @@
+{
+  "message": "vgm form successfully submitted",
+  "data": {
+    "status": 1,
+    "message": {
+      "response": {
+        "blRouteLegs": [
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "THAILAND",
+            "countryNameTo": "THAILAND",
+            "portCodeFrom": "THLEM",
+            "portCodeTo": "THLEM",
+            "portFromType": "POL",
+            "portNameFrom": "LAEM CHABANG",
+            "portNameTo": "LAEM CHABANG",
+            "portToType": "Transshipment",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2026-10-26T12:00:00",
+              "offsetMinutes": 480
+            },
+            "countryNameFrom": "THAILAND",
+            "countryNameTo": "CHINA. PEOPLE'S REPUBLIC",
+            "portCodeFrom": "THLEM",
+            "portCodeTo": "CNOJA",
+            "portFromType": "POL",
+            "portNameFrom": "LAEM CHABANG",
+            "portNameTo": "YANTIAN (GD)",
+            "portToType": "POD",
+            "sailingDateTz": {
+              "dateTime": "2026-10-21T01:30:00",
+              "offsetMinutes": 420
+            },
+            "vessel": "ZU6",
+            "vesselName": "ZHONG GU 6",
+            "voyage": "15",
+            "arrivalDateDT": "2026-10-26T12:00:00.000",
+            "sailingDateDT": "2026-10-21T01:30:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "CHINA. PEOPLE'S REPUBLIC",
+            "countryNameTo": "CHINA. PEOPLE'S REPUBLIC",
+            "portCodeFrom": "CNOJA",
+            "portCodeTo": "CNOJA",
+            "portFromType": "POD",
+            "portNameFrom": "YANTIAN (GD)",
+            "portNameTo": "YANTIAN (GD)",
+            "portToType": "DEL",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          }
+        ],
+        "consignmentDetails": {
+          "consDel": null,
+          "consDelCountryCode": null,
+          "consDelCountryName": null,
+          "consDelDesc": null,
+          "consPor": null,
+          "consPorCountryCode": null,
+          "consPorCountryName": null,
+          "consPorDesc": null,
+          "consPod": null,
+          "consPodCountryName": null,
+          "consPodDesc": null,
+          "consPol": null,
+          "consPolCountryName": null,
+          "consPolDesc": null,
+          "type": "Container",
+          "consContainerList": [
+            {
+              "unitPrefix": "GSLU",
+              "unitNo": "2051127 ",
+              "cargoType": "DV20",
+              "unitActivityList": [
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-27T00:02:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Container was discharged at Port of Destination",
+                  "countryFromName": "CHINA. PEOPLE'S REPUBLIC",
+                  "vessel": "ZU6",
+                  "vesselName": "ZHONG GU 6",
+                  "voyage": "16",
+                  "placeFromDesc": "YANTIAN (GD)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-20T15:00:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Container was loaded at Port of Loading to Port of Discharge",
+                  "countryFromName": "THAILAND",
+                  "vessel": "ZU6",
+                  "vesselName": "ZHONG GU 6",
+                  "voyage": "15",
+                  "placeFromDesc": "LAEM CHABANG"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-15T10:09:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Empty container dispatched from inland point to Customer",
+                  "countryFromName": "THAILAND",
+                  "vessel": "ZU6",
+                  "vesselName": "ZHONG GU 6",
+                  "voyage": "15",
+                  "placeFromDesc": "LAEM CHABANG"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-11-02T08:11:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Empty container gate in",
+                  "countryFromName": "CHINA. PEOPLE'S REPUBLIC",
+                  "vessel": null,
+                  "vesselName": null,
+                  "voyage": null,
+                  "placeFromDesc": "YANTIAN (GD)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-16T09:28:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Export gate-in from Customer to Port of Loading ",
+                  "countryFromName": "THAILAND",
+                  "vessel": "ZU6",
+                  "vesselName": "ZHONG GU 6",
+                  "voyage": "15",
+                  "placeFromDesc": "LAEM CHABANG"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-11-02T04:28:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Import Gate-Out from Port of Discharge to Customer",
+                  "countryFromName": "CHINA. PEOPLE'S REPUBLIC",
+                  "vessel": "ZU6",
+                  "vesselName": "ZHONG GU 6",
+                  "voyage": "16",
+                  "placeFromDesc": "YANTIAN (GD)"
+                }
+              ]
+            }
+          ]
+        },
+        "finalETA": {
+          "etaValue": {
+            "dateTime": null,
+            "offsetMinutes": 0
+          },
+          "etaValueDate": null,
+          "etaDescription": "DEL"
+        }
+      },
+      "containerid": "GSLU2051127",
+      "result": [
+        {
+          "container": "GSLU2051127   DV20",
+          "last_activity": "Empty container gate in",
+          "location": "CHINA. PEOPLE'S REPUBLIC",
+          "placeFromDesc": "YANTIAN (GD)",
+          "date": "02-Nov-2026 08:11:00",
+          "new_rec": [
+            {
+              "activityDesc": "Empty container dispatched from inland point to Customer",
+              "countryFromName": "THAILAND",
+              "placeFromDesc": "LAEM CHABANG",
+              "activityDateTz": "15-Oct-2026 10:09:00",
+              "voyage": "ZHONG GU 6 / 15"
+            },
+            {
+              "activityDesc": "Export gate-in from Customer to Port of Loading ",
+              "countryFromName": "THAILAND",
+              "placeFromDesc": "LAEM CHABANG",
+              "activityDateTz": "16-Oct-2026 09:28:00",
+              "voyage": "ZHONG GU 6 / 15"
+            },
+            {
+              "activityDesc": "Container was loaded at Port of Loading to Port of Discharge",
+              "countryFromName": "THAILAND",
+              "placeFromDesc": "LAEM CHABANG",
+              "activityDateTz": "20-Oct-2026 15:00:00",
+              "voyage": "ZHONG GU 6 / 15"
+            },
+            {
+              "activityDesc": "Container was discharged at Port of Destination",
+              "countryFromName": "CHINA. PEOPLE'S REPUBLIC",
+              "placeFromDesc": "YANTIAN (GD)",
+              "activityDateTz": "27-Oct-2026 00:02:00",
+              "voyage": "ZHONG GU 6 / 16"
+            },
+            {
+              "activityDesc": "Import Gate-Out from Port of Discharge to Customer",
+              "countryFromName": "CHINA. PEOPLE'S REPUBLIC",
+              "placeFromDesc": "YANTIAN (GD)",
+              "activityDateTz": "02-Nov-2026 04:28:00",
+              "voyage": "ZHONG GU 6 / 16"
+            },
+            {
+              "activityDesc": "Empty container gate in",
+              "countryFromName": "CHINA. PEOPLE'S REPUBLIC",
+              "placeFromDesc": "YANTIAN (GD)",
+              "activityDateTz": "02-Nov-2026 08:11:00",
+              "voyage": " / "
+            }
+          ]
+        }
+      ],
+      "pod": {
+        "port_of_discharge": "YANTIAN (GD), CHINA. PEOPLE'S REPUBLIC",
+        "final_destination": "",
+        "estimated_time_of_arrival": "26-Oct-2026"
+      },
+      "pol": {
+        "port_of_loading": "LAEM CHABANG, THAILAND",
+        "sailingdate": "21-Oct-2026",
+        "port_of_receipt": ""
+      },
+      "container_flag": true,
+      "array": {
+        "POL": "Port of Loading",
+        "POD": "Port of Discharge",
+        "POR": "Port of Receipt",
+        "DEL": "Final Destination"
+      }
+    }
+  },
+  "status": "OK"
+}

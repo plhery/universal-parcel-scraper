@@ -1,0 +1,393 @@
+{
+  "message": "vgm form successfully submitted",
+  "data": {
+    "status": 1,
+    "message": {
+      "response": {
+        "blRouteLegs": [
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "INDONESIA",
+            "countryNameTo": "INDONESIA",
+            "portCodeFrom": "IDJKT",
+            "portCodeTo": "IDJKT",
+            "portFromType": "POL",
+            "portNameFrom": "JAKARTA",
+            "portNameTo": "JAKARTA",
+            "portToType": "Transshipment",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2026-08-19T20:00:00",
+              "offsetMinutes": 480
+            },
+            "countryNameFrom": "INDONESIA",
+            "countryNameTo": "SINGAPORE",
+            "portCodeFrom": "IDJKT",
+            "portCodeTo": "SGSIN",
+            "portFromType": "POL",
+            "portNameFrom": "JAKARTA",
+            "portNameTo": "SINGAPORE",
+            "portToType": "Transshipment",
+            "sailingDateTz": {
+              "dateTime": "2026-08-17T19:30:00",
+              "offsetMinutes": 420
+            },
+            "vessel": "NB3",
+            "vesselName": "NATTHA BHUM",
+            "voyage": "37",
+            "arrivalDateDT": "2026-08-19T20:00:00.000",
+            "sailingDateDT": "2026-08-17T19:30:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2026-10-06T04:40:00",
+              "offsetMinutes": -240
+            },
+            "countryNameFrom": "SINGAPORE",
+            "countryNameTo": "U.S.A.",
+            "portCodeFrom": "SGSIN",
+            "portCodeTo": "USSAV",
+            "portFromType": "Transshipment",
+            "portNameFrom": "SINGAPORE",
+            "portNameTo": "SAVANNAH (GA)",
+            "portToType": "POD",
+            "sailingDateTz": {
+              "dateTime": "2026-08-22T03:45:00",
+              "offsetMinutes": 480
+            },
+            "vessel": "ZR1",
+            "vesselName": "Z MOUNT RAINIER",
+            "voyage": "13",
+            "arrivalDateDT": "2026-10-06T04:40:00.000",
+            "sailingDateDT": "2026-08-22T03:45:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "U.S.A.",
+            "countryNameTo": "U.S.A.",
+            "portCodeFrom": "USSAV",
+            "portCodeTo": "USSAV",
+            "portFromType": "POD",
+            "portNameFrom": "SAVANNAH (GA)",
+            "portNameTo": "SAVANNAH (GA)",
+            "portToType": "DEL",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          }
+        ],
+        "consignmentDetails": {
+          "consDel": null,
+          "consDelCountryCode": null,
+          "consDelCountryName": null,
+          "consDelDesc": null,
+          "consPor": null,
+          "consPorCountryCode": null,
+          "consPorCountryName": null,
+          "consPorDesc": null,
+          "consPod": null,
+          "consPodCountryName": null,
+          "consPodDesc": null,
+          "consPol": null,
+          "consPolCountryName": null,
+          "consPolDesc": null,
+          "type": "Container",
+          "consContainerList": [
+            {
+              "unitPrefix": "UETU",
+              "unitNo": "2904518 ",
+              "cargoType": "DV20",
+              "unitActivityList": [
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-06T22:36:00",
+                    "offsetMinutes": -240
+                  },
+                  "activityDesc": "Container was discharged at Port of Destination",
+                  "countryFromName": "U.S.A.",
+                  "vessel": "ZR1",
+                  "vesselName": "ZIM MOUNT RAINIER",
+                  "voyage": "13",
+                  "placeFromDesc": "SAVANNAH (GA)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-08-20T00:53:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Container was discharged at Transshipment Port",
+                  "countryFromName": "SINGAPORE",
+                  "vessel": "NB3",
+                  "vesselName": "NATTHA BHUM",
+                  "voyage": "37",
+                  "placeFromDesc": "SINGAPORE"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-08-17T03:06:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Container was loaded at Port of Loading to Transshipment Port",
+                  "countryFromName": "INDONESIA",
+                  "vessel": "NB3",
+                  "vesselName": "NATTHA BHUM",
+                  "voyage": "37",
+                  "placeFromDesc": "JAKARTA"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-08-21T19:46:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Container was loaded at Transsihipment Port to Port of Discharge",
+                  "countryFromName": "SINGAPORE",
+                  "vessel": "ZR1",
+                  "vesselName": "ZIM MOUNT RAINIER",
+                  "voyage": "13",
+                  "placeFromDesc": "SINGAPORE"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-08-11T21:03:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Empty container dispatched from inland point to Customer",
+                  "countryFromName": "INDONESIA",
+                  "vessel": "NB3",
+                  "vesselName": "NATTHA BHUM",
+                  "voyage": "37",
+                  "placeFromDesc": "JAKARTA"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-14T09:18:00",
+                    "offsetMinutes": -240
+                  },
+                  "activityDesc": "Empty container gate in by Truck",
+                  "countryFromName": "U.S.A.",
+                  "vessel": null,
+                  "vesselName": null,
+                  "voyage": null,
+                  "placeFromDesc": "SAVANNAH (GA)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-08-12T20:42:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Export gate-in from Customer to Port of Loading ",
+                  "countryFromName": "INDONESIA",
+                  "vessel": "NB3",
+                  "vesselName": "NATTHA BHUM",
+                  "voyage": "37",
+                  "placeFromDesc": "JAKARTA"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-12T13:41:00",
+                    "offsetMinutes": -240
+                  },
+                  "activityDesc": "Import truck departure from Port of Discharge to Customer",
+                  "countryFromName": "U.S.A.",
+                  "vessel": "ZR1",
+                  "vesselName": "ZIM MOUNT RAINIER",
+                  "voyage": "13",
+                  "placeFromDesc": "SAVANNAH (GA)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-08-20T10:52:41",
+                    "offsetMinutes": 180
+                  },
+                  "activityDesc": "Carrier Release",
+                  "countryFromName": "U.S.A.",
+                  "vessel": null,
+                  "vesselName": null,
+                  "voyage": null,
+                  "placeFromDesc": "SAVANNAH (GA)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-06T22:36:00",
+                    "offsetMinutes": 180
+                  },
+                  "activityDesc": "Container is available to be released / delivered",
+                  "countryFromName": "U.S.A.",
+                  "vessel": null,
+                  "vesselName": null,
+                  "voyage": null,
+                  "placeFromDesc": "SAVANNAH (GA)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-02T16:01:29",
+                    "offsetMinutes": 180
+                  },
+                  "activityDesc": "Customs release",
+                  "countryFromName": "U.S.A.",
+                  "vessel": null,
+                  "vesselName": null,
+                  "voyage": null,
+                  "placeFromDesc": "SAVANNAH (GA)"
+                }
+              ]
+            }
+          ]
+        },
+        "finalETA": {
+          "etaValue": {
+            "dateTime": null,
+            "offsetMinutes": 0
+          },
+          "etaValueDate": null,
+          "etaDescription": "DEL"
+        }
+      },
+      "containerid": "UETU2904518",
+      "result": [
+        {
+          "container": "UETU2904518   DV20",
+          "last_activity": "Empty container gate in by Truck",
+          "location": "U.S.A.",
+          "placeFromDesc": "SAVANNAH (GA)",
+          "date": "14-Oct-2026 09:18:00",
+          "new_rec": [
+            {
+              "activityDesc": "Empty container dispatched from inland point to Customer",
+              "countryFromName": "INDONESIA",
+              "placeFromDesc": "JAKARTA",
+              "activityDateTz": "11-Aug-2026 21:03:00",
+              "voyage": "NATTHA BHUM / 37"
+            },
+            {
+              "activityDesc": "Export gate-in from Customer to Port of Loading ",
+              "countryFromName": "INDONESIA",
+              "placeFromDesc": "JAKARTA",
+              "activityDateTz": "12-Aug-2026 20:42:00",
+              "voyage": "NATTHA BHUM / 37"
+            },
+            {
+              "activityDesc": "Container was loaded at Port of Loading to Transshipment Port",
+              "countryFromName": "INDONESIA",
+              "placeFromDesc": "JAKARTA",
+              "activityDateTz": "17-Aug-2026 03:06:00",
+              "voyage": "NATTHA BHUM / 37"
+            },
+            {
+              "activityDesc": "Container was discharged at Transshipment Port",
+              "countryFromName": "SINGAPORE",
+              "placeFromDesc": "SINGAPORE",
+              "activityDateTz": "20-Aug-2026 00:53:00",
+              "voyage": "NATTHA BHUM / 37"
+            },
+            {
+              "activityDesc": "Carrier Release",
+              "countryFromName": "U.S.A.",
+              "placeFromDesc": "SAVANNAH (GA)",
+              "activityDateTz": "20-Aug-2026 10:52:41",
+              "voyage": " / "
+            },
+            {
+              "activityDesc": "Container was loaded at Transsihipment Port to Port of Discharge",
+              "countryFromName": "SINGAPORE",
+              "placeFromDesc": "SINGAPORE",
+              "activityDateTz": "21-Aug-2026 19:46:00",
+              "voyage": "ZIM MOUNT RAINIER / 13"
+            },
+            {
+              "activityDesc": "Customs release",
+              "countryFromName": "U.S.A.",
+              "placeFromDesc": "SAVANNAH (GA)",
+              "activityDateTz": "02-Oct-2026 16:01:29",
+              "voyage": " / "
+            },
+            {
+              "activityDesc": "Container was discharged at Port of Destination",
+              "countryFromName": "U.S.A.",
+              "placeFromDesc": "SAVANNAH (GA)",
+              "activityDateTz": "06-Oct-2026 22:36:00",
+              "voyage": "ZIM MOUNT RAINIER / 13"
+            },
+            {
+              "activityDesc": "Container is available to be released / delivered",
+              "countryFromName": "U.S.A.",
+              "placeFromDesc": "SAVANNAH (GA)",
+              "activityDateTz": "06-Oct-2026 22:36:00",
+              "voyage": " / "
+            },
+            {
+              "activityDesc": "Import truck departure from Port of Discharge to Customer",
+              "countryFromName": "U.S.A.",
+              "placeFromDesc": "SAVANNAH (GA)",
+              "activityDateTz": "12-Oct-2026 13:41:00",
+              "voyage": "ZIM MOUNT RAINIER / 13"
+            },
+            {
+              "activityDesc": "Empty container gate in by Truck",
+              "countryFromName": "U.S.A.",
+              "placeFromDesc": "SAVANNAH (GA)",
+              "activityDateTz": "14-Oct-2026 09:18:00",
+              "voyage": " / "
+            }
+          ]
+        }
+      ],
+      "pod": {
+        "port_of_discharge": "SAVANNAH (GA), U.S.A.",
+        "final_destination": "",
+        "estimated_time_of_arrival": "06-Oct-2026"
+      },
+      "pol": {
+        "port_of_loading": "JAKARTA, INDONESIA",
+        "sailingdate": "17-Aug-2026",
+        "port_of_receipt": ""
+      },
+      "container_flag": true,
+      "array": {
+        "POL": "Port of Loading",
+        "POD": "Port of Discharge",
+        "POR": "Port of Receipt",
+        "DEL": "Final Destination"
+      }
+    }
+  },
+  "status": "OK"
+}

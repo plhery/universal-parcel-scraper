@@ -1,0 +1,81 @@
+{
+  "id": "gold-star-line",
+  "displayName": "Gold Star Line",
+  "aliases": [
+    "GSL",
+    "Gold Star Line Ltd"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#123c60"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gold-star-line",
+    "steps": [
+      "direct",
+      "retry",
+      "browser"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.goldstarline.com/tools/track_shipment",
+    "canaryUrl": "https://www.goldstarline.com/tools/track_shipment",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.goldstarline.com",
+        "goldstarline.com"
+      ],
+      "path": "^/tools/track_shipment/([^/?#]+)/?$"
+    },
+    {
+      "domains": [
+        "www.goldstarline.com",
+        "goldstarline.com"
+      ],
+      "pathPattern": "^/CCM\\.aspx$",
+      "params": [
+        "textContainerNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

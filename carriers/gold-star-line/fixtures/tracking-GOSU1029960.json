@@ -1,0 +1,271 @@
+{
+  "message": "vgm form successfully submitted",
+  "data": {
+    "status": 1,
+    "message": {
+      "response": {
+        "blRouteLegs": [
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "SINGAPORE",
+            "countryNameTo": "SINGAPORE",
+            "portCodeFrom": "SGSIN",
+            "portCodeTo": "SGSIN",
+            "portFromType": "POL",
+            "portNameFrom": "SINGAPORE",
+            "portNameTo": "SINGAPORE",
+            "portToType": "Transshipment",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2026-10-17T17:00:00",
+              "offsetMinutes": 420
+            },
+            "countryNameFrom": "SINGAPORE",
+            "countryNameTo": "CAMBODIA KAMPUCHEA",
+            "portCodeFrom": "SGSIN",
+            "portCodeTo": "KHOUX",
+            "portFromType": "POL",
+            "portNameFrom": "SINGAPORE",
+            "portNameTo": "SIHANOUKVILLE (KOMPONG SOM)",
+            "portToType": "POD",
+            "sailingDateTz": {
+              "dateTime": "2026-10-15T22:00:00",
+              "offsetMinutes": 480
+            },
+            "vessel": "OBH",
+            "vesselName": "OTANA BHUM",
+            "voyage": "157",
+            "arrivalDateDT": "2026-10-17T17:00:00.000",
+            "sailingDateDT": "2026-10-15T22:00:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "CAMBODIA KAMPUCHEA",
+            "countryNameTo": "CAMBODIA KAMPUCHEA",
+            "portCodeFrom": "KHOUX",
+            "portCodeTo": "KHOUX",
+            "portFromType": "POD",
+            "portNameFrom": "SIHANOUKVILLE (KOMPONG SOM)",
+            "portNameTo": "SIHANOUKVILLE (KOMPONG SOM)",
+            "portToType": "DEL",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "sailingDateDT": null
+          }
+        ],
+        "consignmentDetails": {
+          "consDel": null,
+          "consDelCountryCode": null,
+          "consDelCountryName": null,
+          "consDelDesc": null,
+          "consPor": null,
+          "consPorCountryCode": null,
+          "consPorCountryName": null,
+          "consPorDesc": null,
+          "consPod": null,
+          "consPodCountryName": null,
+          "consPodDesc": null,
+          "consPol": null,
+          "consPolCountryName": null,
+          "consPolDesc": null,
+          "type": "Container",
+          "consContainerList": [
+            {
+              "unitPrefix": "GOSU",
+              "unitNo": "1029960 ",
+              "cargoType": "HC40",
+              "unitActivityList": [
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-17T17:21:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Barge was discharged at Port of Discharge",
+                  "countryFromName": "CAMBODIA KAMPUCHEA",
+                  "vessel": "OBH",
+                  "vesselName": "OTANA BHUM",
+                  "voyage": "157",
+                  "placeFromDesc": "SIHANOUKVILLE (KOMPONG SOM)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-15T16:30:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Barge was loaded at Port of Loading to Port of Discharge",
+                  "countryFromName": "SINGAPORE",
+                  "vessel": "OBH",
+                  "vesselName": "OTANA BHUM",
+                  "voyage": "157",
+                  "placeFromDesc": "SINGAPORE"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-08T12:56:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Empty container dispatched from inland point to Customer",
+                  "countryFromName": "SINGAPORE",
+                  "vessel": "OBH",
+                  "vesselName": "OTANA BHUM",
+                  "voyage": "157",
+                  "placeFromDesc": "SINGAPORE"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-21T19:19:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Empty container gate in",
+                  "countryFromName": "CAMBODIA KAMPUCHEA",
+                  "vessel": null,
+                  "vesselName": null,
+                  "voyage": null,
+                  "placeFromDesc": "SIHANOUKVILLE (KOMPONG SOM)"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-14T13:23:00",
+                    "offsetMinutes": 480
+                  },
+                  "activityDesc": "Export gate-in from Customer to Port of Loading ",
+                  "countryFromName": "SINGAPORE",
+                  "vessel": "OBH",
+                  "vesselName": "OTANA BHUM",
+                  "voyage": "157",
+                  "placeFromDesc": "SINGAPORE"
+                },
+                {
+                  "activityDateTz": {
+                    "dateTime": "2026-10-21T10:11:00",
+                    "offsetMinutes": 420
+                  },
+                  "activityDesc": "Import Gate-Out from Port of Discharge to Customer",
+                  "countryFromName": "CAMBODIA KAMPUCHEA",
+                  "vessel": "OBH",
+                  "vesselName": "OTANA BHUM",
+                  "voyage": "157",
+                  "placeFromDesc": "SIHANOUKVILLE (KOMPONG SOM)"
+                }
+              ]
+            }
+          ]
+        },
+        "finalETA": {
+          "etaValue": {
+            "dateTime": null,
+            "offsetMinutes": 0
+          },
+          "etaValueDate": null,
+          "etaDescription": "DEL"
+        }
+      },
+      "containerid": "GOSU1029960",
+      "result": [
+        {
+          "container": "GOSU1029960   HC40",
+          "last_activity": "Empty container gate in",
+          "location": "CAMBODIA KAMPUCHEA",
+          "placeFromDesc": "SIHANOUKVILLE (KOMPONG SOM)",
+          "date": "21-Oct-2026 19:19:00",
+          "new_rec": [
+            {
+              "activityDesc": "Empty container dispatched from inland point to Customer",
+              "countryFromName": "SINGAPORE",
+              "placeFromDesc": "SINGAPORE",
+              "activityDateTz": "08-Oct-2026 12:56:00",
+              "voyage": "OTANA BHUM / 157"
+            },
+            {
+              "activityDesc": "Export gate-in from Customer to Port of Loading ",
+              "countryFromName": "SINGAPORE",
+              "placeFromDesc": "SINGAPORE",
+              "activityDateTz": "14-Oct-2026 13:23:00",
+              "voyage": "OTANA BHUM / 157"
+            },
+            {
+              "activityDesc": "Barge was loaded at Port of Loading to Port of Discharge",
+              "countryFromName": "SINGAPORE",
+              "placeFromDesc": "SINGAPORE",
+              "activityDateTz": "15-Oct-2026 16:30:00",
+              "voyage": "OTANA BHUM / 157"
+            },
+            {
+              "activityDesc": "Barge was discharged at Port of Discharge",
+              "countryFromName": "CAMBODIA KAMPUCHEA",
+              "placeFromDesc": "SIHANOUKVILLE (KOMPONG SOM)",
+              "activityDateTz": "17-Oct-2026 17:21:00",
+              "voyage": "OTANA BHUM / 157"
+            },
+            {
+              "activityDesc": "Import Gate-Out from Port of Discharge to Customer",
+              "countryFromName": "CAMBODIA KAMPUCHEA",
+              "placeFromDesc": "SIHANOUKVILLE (KOMPONG SOM)",
+              "activityDateTz": "21-Oct-2026 10:11:00",
+              "voyage": "OTANA BHUM / 157"
+            },
+            {
+              "activityDesc": "Empty container gate in",
+              "countryFromName": "CAMBODIA KAMPUCHEA",
+              "placeFromDesc": "SIHANOUKVILLE (KOMPONG SOM)",
+              "activityDateTz": "21-Oct-2026 19:19:00",
+              "voyage": " / "
+            }
+          ]
+        }
+      ],
+      "pod": {
+        "port_of_discharge": "SIHANOUKVILLE (KOMPONG SOM), CAMBODIA KAMPUCHEA",
+        "final_destination": "",
+        "estimated_time_of_arrival": "17-Oct-2026"
+      },
+      "pol": {
+        "port_of_loading": "SINGAPORE, SINGAPORE",
+        "sailingdate": "15-Oct-2026",
+        "port_of_receipt": ""
+      },
+      "container_flag": true,
+      "array": {
+        "POL": "Port of Loading",
+        "POD": "Port of Discharge",
+        "POR": "Port of Receipt",
+        "DEL": "Final Destination"
+      }
+    }
+  },
+  "status": "OK"
+}

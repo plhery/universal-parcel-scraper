@@ -1,0 +1,21 @@
+{
+  "carrier": "gold-star-line",
+  "entries": [
+    {"wording": "Empty container dispatched from inland point to Customer", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it, from a depot or the port; the cargo is not yet with Gold Star Line."},
+    {"wording": "Export gate-in from Customer to Port of Loading", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the port of loading. After a move it reads as transit."},
+    {"wording": "Container was loaded at Port of Loading to Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Container was loaded at Port of Loading to Transshipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Container was discharged at Transshipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Container was loaded at Transsihipment Port to Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Spelt so by the carrier."},
+    {"wording": "Container was discharged at Port of Destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Barge was loaded at Port of Loading to Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A feeder barge's loading, as for a short sea leg."},
+    {"wording": "Barge was discharged at Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Container is available to be released / delivered", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker may collect the container at the port of discharge."},
+    {"wording": "Import Gate-Out from Port of Discharge to Customer", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee takes the loaded container from the port."},
+    {"wording": "Import truck departure from Port of Discharge to Customer", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker collects the loaded container for delivery."},
+    {"wording": "Empty container gate in", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee unloaded the container and returned it empty. Before the container moved, it is an unused one and has no stage."},
+    {"wording": "Empty container gate in by Truck", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee unloaded the container and returned it empty by truck. Before the container moved, it is an unused one and has no stage."},
+    {"wording": "Carrier Release", "language": "en", "confirmedBy": "live", "note": "The line releases the cargo to the consignee, often before it arrives: a notice, not a move."},
+    {"wording": "Customs release", "language": "en", "confirmedBy": "live", "note": "Customs cleared the cargo, often before it arrives: a notice, not a move."}
+  ]
+}

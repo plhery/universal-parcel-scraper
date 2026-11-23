@@ -1,0 +1,131 @@
+{
+  "carrier": "gold-star-line",
+  "records": [
+    {
+      "number": "GOSU1029960",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/gsl/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Gold Star Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Gold Star Line page lists this container among its recent searches. Gold Star Line's tracker returns its cycle from Singapore to Sihanoukville, returned empty."
+    },
+    {
+      "number": "GSLU2051127",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/gsl/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Gold Star Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Gold Star Line page lists this container among its recent searches. Gold Star Line's tracker returns its cycle from Laem Chabang to Yantian, returned empty."
+    },
+    {
+      "number": "JXLU6490287",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/gsl/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Gold Star Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Gold Star Line page lists this leased container among its recent searches. Gold Star Line's tracker returns its cycle from Port Klang through Singapore toward Boston."
+    },
+    {
+      "number": "UETU2904518",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pier2pier.com/universal-container-tracking/gsl/",
+        "date": "2026-11-23",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container number among recent Gold Star Line searches",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "pier2pier's Gold Star Line page lists this leased container among its recent searches. Gold Star Line's tracker returns its cycle from Jakarta through Singapore to Savannah, returned empty by truck."
+    },
+    {
+      "number": "GOSUSHH003860672",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240323232504/https://www.goldstarline.com/CCM.aspx?hidSearch=true&hidFromHomePage=false&hidSearchType=1&id=166&l=4&textContainerNumber=GOSUSHH003860672",
+        "date": "2024-03-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading in an archived tracking link",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived link of Gold Star Line's former tracking page asks for this bill. Gold Star Line's tracker lists it from Chiwan to ICD Faridabad, with one container and no activities."
+    },
+    {
+      "number": "GOSUPAV6038932",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20170327100745/http://www.goldstarline.com:80/CCM.aspx?hidSearch=true&hidFromHomePage=false&hidSearchType=1&id=166&l=4&textContainerNumber=GOSUPAV6038932",
+        "date": "2017-03-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading in an archived tracking link",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived link of Gold Star Line's former tracking page asks for this bill. Gold Star Line's tracker lists it from Pipavav to Haiphong, with one container and no activities."
+    }
+  ]
+}

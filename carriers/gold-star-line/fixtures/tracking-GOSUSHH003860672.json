@@ -1,0 +1,129 @@
+{
+  "message": "vgm form successfully submitted",
+  "data": {
+    "status": 1,
+    "message": {
+      "response": {
+        "blRouteLegs": [
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2017-09-11T17:12:00",
+              "offsetMinutes": 330
+            },
+            "countryNameFrom": "CHINA. PEOPLE'S REPUBLIC",
+            "countryNameTo": "INDIA",
+            "portCodeFrom": "CNCWQ",
+            "portCodeTo": "INNHV",
+            "portFromType": "POL",
+            "portNameFrom": "CHIWAN (GD)",
+            "portNameTo": "NHAVA SHEVA",
+            "portToType": "POD",
+            "sailingDateTz": {
+              "dateTime": "2017-08-30T15:42:00",
+              "offsetMinutes": 480
+            },
+            "vessel": "AV2",
+            "vesselName": "APL VANCOUVER",
+            "voyage": "35",
+            "arrivalDateDT": "2017-09-11T17:12:00.000",
+            "actualArrivalDateDT": null,
+            "sailingDateDT": "2017-08-30T15:42:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2017-09-16T17:12:00",
+              "offsetMinutes": 330
+            },
+            "countryNameFrom": "INDIA",
+            "countryNameTo": "INDIA",
+            "portCodeFrom": "INNHV",
+            "portCodeTo": "INFBD",
+            "portFromType": "POD",
+            "portNameFrom": "NHAVA SHEVA",
+            "portNameTo": "ICD FARIDABAD",
+            "portToType": "DEL",
+            "sailingDateTz": {
+              "dateTime": "2017-09-12T17:12:00",
+              "offsetMinutes": 330
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": "2017-09-16T17:12:00.000",
+            "actualArrivalDateDT": null,
+            "sailingDateDT": "2017-09-12T17:12:00.000"
+          }
+        ],
+        "consignmentDetails": {
+          "consDel": "INFBD",
+          "consDelCountryCode": "IN",
+          "consDelCountryName": "INDIA",
+          "consDelDesc": "ICD FARIDABAD",
+          "consPor": null,
+          "consPorCountryCode": null,
+          "consPorCountryName": null,
+          "consPorDesc": null,
+          "consPod": "INNHV",
+          "consPodCountryName": "INDIA",
+          "consPodDesc": "NHAVA SHEVA",
+          "consPol": "CNCWQ",
+          "consPolCountryName": "CHINA. PEOPLE'S REPUBLIC",
+          "consPolDesc": "CHIWAN (GD)",
+          "type": "BL",
+          "consContainerList": [
+            {
+              "unitPrefix": "ZIMU",
+              "unitNo": "1345958 ",
+              "cargoType": null
+            }
+          ]
+        },
+        "finalETA": {
+          "etaValue": {
+            "dateTime": "2017-09-16T14:42:00",
+            "offsetMinutes": 180
+          },
+          "etaValueDate": "2017-09-16T17:12:00.000",
+          "etaDescription": null
+        }
+      },
+      "containerid": "GOSUSHH003860672",
+      "result": [
+        {
+          "container": "ZIMU1345958   ",
+          "last_activity": null,
+          "location": null,
+          "placeFromDesc": null,
+          "date": null,
+          "new_rec": []
+        }
+      ],
+      "pod": {
+        "port_of_discharge": "NHAVA SHEVA, INDIA",
+        "final_destination": "ICD FARIDABAD, INDIA",
+        "estimated_time_of_arrival": "16-Sep-2017"
+      },
+      "pol": {
+        "port_of_loading": "CHIWAN (GD), CHINA. PEOPLE'S REPUBLIC",
+        "sailingdate": "30-Aug-2017",
+        "port_of_receipt": ""
+      },
+      "container_flag": true,
+      "array": {
+        "POL": "Port of Loading",
+        "POD": "Port of Discharge",
+        "POR": "Port of Receipt",
+        "DEL": "Final Destination"
+      }
+    }
+  },
+  "status": "OK"
+}

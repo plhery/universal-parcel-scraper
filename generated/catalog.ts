@@ -31295,6 +31295,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "gold-star-line": {
+    "displayName": "Gold Star Line",
+    "color": "#123c60",
+    "aliases": [
+      "GSL",
+      "Gold Star Line Ltd"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gold-star-line",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.goldstarline.com/tools/track_shipment",
+    "trackingSearchUrl": "https://www.goldstarline.com/tools/track_shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "www.goldstarline.com",
+          "goldstarline.com"
+        ],
+        "path": "^/tools/track_shipment/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "www.goldstarline.com",
+          "goldstarline.com"
+        ],
+        "pathPattern": "^/CCM\\.aspx$",
+        "params": [
+          "textContainerNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "golilla": {
     "displayName": "Golilla",
     "color": "#415364",
@@ -72435,6 +72473,7 @@ export const CARRIER_IDS = [
   "gofo-it",
   "gofo-nl",
   "gogo-xpress",
+  "gold-star-line",
   "golilla",
   "gollog",
   "golucky",
@@ -74482,6 +74521,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gofo-it": ["gofo-it-1","gofo-it-unchecked"],
   "gofo-nl": ["gofo-nl-1","gofo-nl-unchecked"],
   "gogo-xpress": ["gogo-xpress-1"],
+  "gold-star-line": [],
   "golilla": [],
   "gollog": ["gollog-1"],
   "golucky": [],

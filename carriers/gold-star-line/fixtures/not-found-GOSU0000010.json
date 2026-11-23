@@ -1,0 +1,32 @@
+{
+  "message": "vgm form successfully submitted",
+  "data": {
+    "status": 0,
+    "message": {
+      "response": {
+        "statusCode": "GSL-0016",
+        "message": "reference not found"
+      },
+      "containerid": "GOSU0000010",
+      "result": [],
+      "pod": {
+        "port_of_discharge": "",
+        "final_destination": "",
+        "estimated_time_of_arrival": ""
+      },
+      "pol": {
+        "port_of_loading": "",
+        "sailingdate": "",
+        "port_of_receipt": ""
+      },
+      "container_flag": false,
+      "array": {
+        "POL": "Port of Loading",
+        "POD": "Port of Discharge",
+        "POR": "Port of Receipt",
+        "DEL": "Final Destination"
+      }
+    }
+  },
+  "status": "OK"
+}

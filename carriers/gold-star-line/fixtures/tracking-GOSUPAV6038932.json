@@ -1,0 +1,157 @@
+{
+  "message": "vgm form successfully submitted",
+  "data": {
+    "status": 1,
+    "message": {
+      "response": {
+        "blRouteLegs": [
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "INDIA",
+            "countryNameTo": "HONG KONG S.A.R. CHINA",
+            "portCodeFrom": "INPAV",
+            "portCodeTo": "HKHKG",
+            "portFromType": "POL",
+            "portNameFrom": "PIPAVAV",
+            "portNameTo": "HONG KONG",
+            "portToType": "Transshipment",
+            "sailingDateTz": {
+              "dateTime": "2017-03-08T10:30:00",
+              "offsetMinutes": 330
+            },
+            "vessel": "NYX",
+            "vesselName": "OOCL NEW YORK",
+            "voyage": "125",
+            "arrivalDateDT": null,
+            "actualArrivalDateDT": null,
+            "sailingDateDT": "2017-03-08T10:30:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": "2017-04-01T17:00:00",
+              "offsetMinutes": 420
+            },
+            "countryNameFrom": "HONG KONG S.A.R. CHINA",
+            "countryNameTo": "VIETNAM",
+            "portCodeFrom": "HKHKG",
+            "portCodeTo": "VNHAI",
+            "portFromType": "Transshipment",
+            "portNameFrom": "HONG KONG",
+            "portNameTo": "HAIPHONG",
+            "portToType": "POD",
+            "sailingDateTz": {
+              "dateTime": "2017-03-30T03:00:00",
+              "offsetMinutes": 480
+            },
+            "vessel": "FZE",
+            "vesselName": "MEDKON ZOE",
+            "voyage": "47",
+            "arrivalDateDT": "2017-04-01T17:00:00.000",
+            "actualArrivalDateDT": null,
+            "sailingDateDT": "2017-03-30T03:00:00.000"
+          },
+          {
+            "actualArrivalDateTZ": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "arrivalDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "countryNameFrom": "VIETNAM",
+            "countryNameTo": "VIETNAM",
+            "portCodeFrom": "VNHAI",
+            "portCodeTo": "VNHAI",
+            "portFromType": "POD",
+            "portNameFrom": "HAIPHONG",
+            "portNameTo": "HAIPHONG",
+            "portToType": "DEL",
+            "sailingDateTz": {
+              "dateTime": null,
+              "offsetMinutes": 0
+            },
+            "vessel": null,
+            "vesselName": null,
+            "voyage": null,
+            "arrivalDateDT": null,
+            "actualArrivalDateDT": null,
+            "sailingDateDT": null
+          }
+        ],
+        "consignmentDetails": {
+          "consDel": null,
+          "consDelCountryCode": null,
+          "consDelCountryName": null,
+          "consDelDesc": null,
+          "consPor": null,
+          "consPorCountryCode": null,
+          "consPorCountryName": null,
+          "consPorDesc": null,
+          "consPod": "VNHAI",
+          "consPodCountryName": "VIETNAM",
+          "consPodDesc": "HAIPHONG",
+          "consPol": "INPAV",
+          "consPolCountryName": "INDIA",
+          "consPolDesc": "PIPAVAV",
+          "type": "BL",
+          "consContainerList": [
+            {
+              "unitPrefix": "ZCSU",
+              "unitNo": "5114412 ",
+              "cargoType": null
+            }
+          ]
+        },
+        "finalETA": {
+          "etaValue": {
+            "dateTime": "2017-04-01T13:00:00",
+            "offsetMinutes": 180
+          },
+          "etaValueDate": "2017-04-01T17:00:00.000",
+          "etaDescription": null
+        }
+      },
+      "containerid": "GOSUPAV6038932",
+      "result": [
+        {
+          "container": "ZCSU5114412   ",
+          "last_activity": null,
+          "location": null,
+          "placeFromDesc": null,
+          "date": null,
+          "new_rec": []
+        }
+      ],
+      "pod": {
+        "port_of_discharge": "HAIPHONG, VIETNAM",
+        "final_destination": "",
+        "estimated_time_of_arrival": "01-Apr-2017"
+      },
+      "pol": {
+        "port_of_loading": "PIPAVAV, INDIA",
+        "sailingdate": "08-Mar-2017",
+        "port_of_receipt": ""
+      },
+      "container_flag": true,
+      "array": {
+        "POL": "Port of Loading",
+        "POD": "Port of Discharge",
+        "POR": "Port of Receipt",
+        "DEL": "Final Destination"
+      }
+    }
+  },
+  "status": "OK"
+}

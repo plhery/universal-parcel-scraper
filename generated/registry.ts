@@ -417,6 +417,7 @@ import { adapter as gofoFr } from '../carriers/gofo-fr/adapter.js';
 import { adapter as gofoIt } from '../carriers/gofo-it/adapter.js';
 import { adapter as gofoNl } from '../carriers/gofo-nl/adapter.js';
 import { adapter as gogoXpress } from '../carriers/gogo-xpress/adapter.js';
+import { adapter as goldStarLine } from '../carriers/gold-star-line/adapter.js';
 import { adapter as golilla } from '../carriers/golilla/adapter.js';
 import { adapter as gollog } from '../carriers/gollog/adapter.js';
 import { adapter as goodExpressUs } from '../carriers/good-express-us/adapter.js';
@@ -1516,6 +1517,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-it": gofoIt,
     "gofo-nl": gofoNl,
     "gogo-xpress": gogoXpress,
+    "gold-star-line": goldStarLine,
     "golilla": golilla,
     "gollog": gollog,
     "good-express-us": goodExpressUs,
@@ -2978,6 +2980,7 @@ export const REGISTRY: RegistryDefinition = {
     "gofo-it": "gofo-it",
     "gofo-nl": "gofo-nl",
     "gogo-xpress": "gogo-xpress",
+    "gold-star-line": "gold-star-line",
     "golilla": "golilla",
     "gollog": "gollog",
     "golucky": "universal",

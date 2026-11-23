@@ -6542,5 +6542,23 @@
     "pattern": "^[A-Z]{3}U\\d{7}$",
     "kind": "by_design",
     "reason": "T.S. Lines tracks containers by their ISO 6346 numbers, its own and other owners' it carries, and its own containers also travel under other lines' bills, so no rule claims them; select T.S. Lines explicitly."
+  },
+  {
+    "carrier": "gold-star-line",
+    "pattern": "^GOSU\\d{7}$",
+    "kind": "open",
+    "reason": "GOSU is the owner code of Gold Star Line's own containers, whose ISO 6346 numbers end in a check digit; Gold Star Line's tracker returns the sample container's moves. Detection does not offer Gold Star Line."
+  },
+  {
+    "carrier": "gold-star-line",
+    "pattern": "^GOSU[A-Z]{3}\\d{7,9}$",
+    "kind": "open",
+    "reason": "Archived links of Gold Star Line's tracking page give its bills as GOSU, its carrier code, an office's three letters and a serial number; Gold Star Line's tracker lists each sample. Detection does not offer Gold Star Line."
+  },
+  {
+    "carrier": "gold-star-line",
+    "pattern": "^(?!GOSU)[A-Z]{3}U\\d{7}$",
+    "kind": "by_design",
+    "reason": "Gold Star Line tracks the containers it leases by their owners' ISO 6346 numbers, and lessors' containers travel with many lines, so no rule claims them; select Gold Star Line explicitly."
   }
 ]

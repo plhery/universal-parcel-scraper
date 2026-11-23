@@ -31291,6 +31291,44 @@
       }
     ]
   },
+  "gold-star-line": {
+    "displayName": "Gold Star Line",
+    "color": "#123c60",
+    "aliases": [
+      "GSL",
+      "Gold Star Line Ltd"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gold-star-line",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.goldstarline.com/tools/track_shipment",
+    "trackingSearchUrl": "https://www.goldstarline.com/tools/track_shipment",
+    "linkRules": [
+      {
+        "domains": [
+          "www.goldstarline.com",
+          "goldstarline.com"
+        ],
+        "path": "^/tools/track_shipment/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "www.goldstarline.com",
+          "goldstarline.com"
+        ],
+        "pathPattern": "^/CCM\\.aspx$",
+        "params": [
+          "textContainerNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "golilla": {
     "displayName": "Golilla",
     "color": "#415364",
