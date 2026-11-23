@@ -31,6 +31,10 @@ it('maps the inward mail centre automation scan as onward transit', () => {
     .toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
 });
 
+it('maps the processing it copies from DHL in Germany as onward transit', () => {
+  expect(statusMap.stage(null, normalizeStatusWording('The shipment has been processed in the parcel center of origin'))).toBe('in_transit');
+});
+
 it('maps the rows it copies from J&T Express Mexico, whatever their towns, sites, courier and phone', () => {
   for (const [wording, stage] of [
     ['【Villa Dos】【CLC-Norte.pdv】?Recolección exitosa!. El mensajero de J&T asignado OTRO.pcp recolectó tu envío. Para mayor información, comunícate al: 5500000000', 'in_transit'],
