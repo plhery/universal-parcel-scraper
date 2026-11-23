@@ -1,16 +1,22 @@
 import { describe, expect, it } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { createTracker } from '../../facade/index.js';
+import { createTracker, TrackingError } from '../../facade/index.js';
 import { adapter } from './adapter.js';
 import numbers from './numbers.json' with { type: 'json' };
 
 const direct = () => adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 // The tracking page's sample AWB, unless another is given.
 const NUMBER = process.env.CAUTCURIER_TRACKING_NUMBER ?? numbers.records[0]!.number;
+// Cloudflare refuses some networks, GitHub runners included, while others get the answer: a refusal
+// proves neither breakage nor health.
+const REFUSED = 'CautCurier\'s Cloudflare front refused this network: the guest lookup remains unverified';
 
 describe('CautCurier live retrieval', () => {
-  it('retrieves the requested order with providers disabled', async () => {
-    const answer = await createTracker({ providers: [] }).track({ number: NUMBER, carrier: 'cautcurier' });
+  it('retrieves the requested order with providers disabled', async (context) => {
+    const answer = await createTracker({ providers: [] }).track({ number: NUMBER, carrier: 'cautcurier' }).catch((error: unknown) => {
+      if (error instanceof TrackingError && error.attempts.every((attempt) => attempt.kind === 'challenge')) return context.skip(REFUSED);
+      throw error;
+    });
     expect(answer).toMatchObject({ carrier: 'cautcurier', source: 'cautcurier' });
     expect(answer.attempts[0]).toMatchObject({ source: 'cautcurier', kind: 'ok' });
     const { events } = answer.result;
