@@ -1063,7 +1063,7 @@
         "preferred": true
       },
       {
-        "pattern": "^(?!8880|3[016]000)\\d{15}$",
+        "pattern": "^(?!888[01]|3[016]000)\\d{15}$",
         "confidence": "low",
         "checksum": "gs1",
         "preferred": true
@@ -36177,7 +36177,7 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^8880\\d{11}$",
+        "pattern": "^888[01]\\d{11}$",
         "confidence": "high"
       }
     ]

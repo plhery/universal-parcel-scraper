@@ -245,6 +245,18 @@
         "confidence": "high"
       },
       "note": "The public complaint names this domestic waybill and the carrier replies about delivery. Native guest history echoes the whole identifier."
+    },
+    {
+      "number": "888199999999980",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-24",
+      "expect": {
+        "carrier": "j-and-t-br",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of the 8881 waybills J&T Express Brazil's own tracker answered for parcels the app tracked, the series after 8880. Its serial sits far beyond the range in use."
     }
   ]
 }

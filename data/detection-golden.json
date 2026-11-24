@@ -76311,6 +76311,14 @@
     ]
   },
   {
+    "input": "888199999999980",
+    "carrier": "j-and-t-br",
+    "confidence": "high",
+    "candidates": [
+      "j-and-t-br"
+    ]
+  },
+  {
     "input": "88837165311674",
     "carrier": "unknown",
     "confidence": "low",

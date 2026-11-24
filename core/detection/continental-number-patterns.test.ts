@@ -578,9 +578,9 @@ describe('J&T Express Middle East waybills', () => {
     expect(detectCarrierMatch('JMX300000000001')).toMatchObject({ carrier: 'j-and-t-mx', confidence: 'high' });
   });
 
-  it('names J&T Express Brazil for its fifteen-digit 8880 waybills only', () => {
+  it('names J&T Express Brazil for its fifteen-digit 8880 and 8881 waybills only', () => {
     // Synthetic numbers in the layout of J&T Brazil's domestic waybills; none is a real parcel.
-    for (const number of ['888012345678901', '888099999999999']) {
+    for (const number of ['888012345678901', '888099999999999', '888112345678901', '888199999999980']) {
       const match = detectCarrierMatch(number);
       expect(match, number).toMatchObject({ carrier: 'j-and-t-br', confidence: 'high' });
       expect(match.candidates[0], number).toBe('j-and-t-br');
@@ -588,14 +588,16 @@ describe('J&T Express Middle East waybills', () => {
       expect(recognitionCandidates(number, { countryHint: 'BR' }).map(({ carrier }) => carrier), number)
         .not.toContain('j-and-t-br');
     }
-    for (const number of ['888112345678901', '988012345678901', '88801234567890', '8880123456789012', 'JMX888012345678']) {
+    for (const number of ['888212345678901', '889012345678901', '988012345678901', '88801234567890', '8880123456789012', 'JMX888012345678']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('j-and-t-br');
     }
-    // Whatever the last digit: FedEx's fifteen-digit GS1 rule leaves the 8880 range out, and
-    // BRT's and Yunda's broad rules give way to J&T Brazil's.
-    for (let digit = 0; digit <= 9; digit++) {
-      const number = `88801234567890${digit}`;
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'j-and-t-br', candidates: ['j-and-t-br'] });
+    // Whatever the last digit: FedEx's fifteen-digit GS1 rule leaves the 8880 and 8881 ranges out,
+    // and BRT's and Yunda's broad rules give way to J&T Brazil's.
+    for (const series of ['8880', '8881']) {
+      for (let digit = 0; digit <= 9; digit++) {
+        const number = `${series}1234567890${digit}`;
+        expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'j-and-t-br', candidates: ['j-and-t-br'] });
+      }
     }
   });
 

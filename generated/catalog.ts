@@ -1067,7 +1067,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       },
       {
-        "pattern": "^(?!8880|3[016]000)\\d{15}$",
+        "pattern": "^(?!888[01]|3[016]000)\\d{15}$",
         "confidence": "low",
         "checksum": "gs1",
         "preferred": true
@@ -36181,7 +36181,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^8880\\d{11}$",
+        "pattern": "^888[01]\\d{11}$",
         "confidence": "high"
       }
     ]

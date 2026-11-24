@@ -54,7 +54,7 @@
   "detection": [
     {
       "id": "j-and-t-br-1",
-      "pattern": "^8880\\d{11}$",
+      "pattern": "^888[01]\\d{11}$",
       "confidence": "high"
     }
   ]
