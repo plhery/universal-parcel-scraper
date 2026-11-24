@@ -1,0 +1,17 @@
+{
+  "carrier": "ed-post",
+  "entries": [
+    {"wording": "Package details received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration. The tracker writes its spaces as question marks, which the shared cleaning turns back into spaces."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "english": "Departed the operations centre", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves the Shenzhen operations centre."},
+    {"code": "CO_C_CR", "wording": "Out of warehouse, waiting for matching flight", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row: the parcel has left the warehouse and waits for a flight. Listed as a planned step."},
+    {"wording": "Estimated flight departure time (ETD: …)", "language": "en", "stage": null, "confirmedBy": "live", "note": "Names the booked flight's departure day, read as an ellipsis, before the take-off. A forecast, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "Departed from airport of Origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves China."},
+    {"wording": "The flight has landed and will be handed over to the warehouse after customs clearance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight lands in Europe; import clearance follows."},
+    {"wording": "Import customs clearance completed awaiting extraction", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance done; the parcel waits to be collected from the airport."},
+    {"wording": "Sent to warehouse, waiting for scanning", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel reaches the delivery carrier's depot and waits for its first scan there."},
+    {"wording": "Shipment not yet received or processed", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "GOFO's label row, copied on GOFO's wall clock: the delivery carrier holds the parcel's data, not the parcel."},
+    {"wording": "The instruction data for this shipment have been provided by the sender to DHL electronically", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "DHL's label row, copied on DHL's wall clock with the tracker's status glued to its end, which is dropped."},
+    {"wording": "A preferred neighbour was designated as a reception option for this shipment.", "language": "en", "stage": null, "confirmedBy": "live", "note": "DHL's row for the recipient's choice of a neighbour, copied. A delivery preference, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "The shipment is in transit to DHL", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's row, copied: the parcel is on its way to DHL."}
+  ]
+}

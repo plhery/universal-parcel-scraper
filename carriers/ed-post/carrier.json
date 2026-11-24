@@ -1,0 +1,84 @@
+{
+  "id": "ed-post",
+  "displayName": "ED POST",
+  "aliases": [
+    "易德国际",
+    "Yide International",
+    "易德供应链有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#c94c40"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ed-post",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "customer_reference",
+      "recipient_name",
+      "recipient_address",
+      "sender_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference",
+      "recipient_name",
+      "recipient_address",
+      "sender_name"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.666post.com",
+        "666post.com"
+      ],
+      "pathPattern": "^/(?:sz56t/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": []
+}

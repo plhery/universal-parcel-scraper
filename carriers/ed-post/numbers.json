@@ -1,0 +1,43 @@
+{
+  "carrier": "ed-post",
+  "records": [
+    {
+      "number": "YDPOZ0000265145YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/yide-international/",
+        "date": "2026-11-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "One of the example tracking numbers a tracking directory's Yide International page shows, a different one on some loads. ED POST's tracker answers it with a parcel on its European line to the Netherlands, its tracking number GOFO's, landed in Europe."
+    },
+    {
+      "number": "YDPOZ0000265735YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/yide-international/",
+        "date": "2026-11-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another example the same page showed. ED POST's tracker answers it with a parcel on the same line to Germany, its tracking number DHL's, with rows copied from DHL."
+    }
+  ]
+}
