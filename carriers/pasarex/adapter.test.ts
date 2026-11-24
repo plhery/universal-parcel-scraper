@@ -12,8 +12,8 @@ import statuses from './statuses.json' with { type: 'json' };
 const NUMBER = fixture.number;
 const capture = (data: unknown = fixture, extra: Record<string, unknown> = {}) => ({ url: PASAREX_RESULT, status: 200, trackingNumberSubmitted: NUMBER,
   headers: {}, body: JSON.stringify(data), ...extra });
-function harness(rows = [capture()]) {
-  const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({ url: pasarexUrl(NUMBER), html: '', statusCode: 200,
+function harness(rows = [capture()], statusCode = 200) {
+  const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify({ url: pasarexUrl(NUMBER), html: '', statusCode,
     tier: 3, cookies: [], capturedResponses: rows }), { headers: { 'content-type': 'application/json' } }));
   const environment = { fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null, trawl: new TrawlClient('https://trawl.invalid') };
   return { fetcher, environment, tracker: new PasarexTracker(environment) };
@@ -78,6 +78,9 @@ describe('PasarEX tracking', () => {
     await expect(harness([capture(null, { status: 403 })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(harness([capture(null, { error: 'unexpected-redirect', body: null })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
     await expect(harness([]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(harness([], 0).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', message: expect.stringContaining('did not load') });
+    await expect(harness([capture(null, { status: 404, body: null })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    await expect(harness([], 404).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
     await expect(harness([capture({ kind: 'not_found' })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'not_found' });
   });
 });

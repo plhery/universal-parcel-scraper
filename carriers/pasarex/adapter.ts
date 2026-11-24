@@ -41,6 +41,8 @@ export class PasarexTracker {
             const value = Object.entries(row.headers).find(([k]) => k.toLowerCase() === 'retry-after')?.[1];
             failure = new RateLimitedError(PROVIDER, retryAfterMs(value, { dates: false })); continue;
           }
+          // The form's endpoint answers a number it does not hold with a notice, so a 404 means the endpoint is gone.
+          if (row.status === 404 || row.status === 410) { failure = new SchemaError(PROVIDER, 'PasarEX\'s tracking form is missing'); continue; }
           if (row.status !== 200) { failure = new UpstreamHttpError(PROVIDER, row.status); continue; }
           if (typeof row.body !== 'string' || new TextEncoder().encode(row.body).byteLength > MAX_BYTES) { failure = new TransportError(PROVIDER); continue; }
           let data: unknown; try { data = JSON.parse(row.body); } catch { throw new SchemaError(PROVIDER, 'PasarEX returned invalid tracking JSON'); }
@@ -52,8 +54,12 @@ export class PasarexTracker {
         if (page.statusCode === 429) throw new RateLimitedError(PROVIDER);
         if ([401, 403, 419, 428].includes(page.statusCode)) throw new ChallengeError(PROVIDER, 'PasarEX refused its tracking page', { status: page.statusCode });
         if (page.statusCode >= 400) throw new UpstreamHttpError(PROVIDER, page.statusCode);
+        // No status: the browser never opened the tracker, so its checkbox was not reached.
+        if (!page.statusCode) throw new TransportError(PROVIDER, 'PasarEX\'s tracking page did not load');
         throw new ChallengeError(PROVIDER, 'PasarEX did not complete its checkbox');
       } catch (error) {
+        // The browser service reads the page's own 404 as an HTTP error: the tracker is gone, not the item.
+        if (error instanceof UpstreamHttpError && (error.status === 404 || error.status === 410)) throw new SchemaError(PROVIDER, 'PasarEX\'s tracking page is missing');
         if (error instanceof UpstreamHttpError) throw new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);
         if (error instanceof UpstreamNetworkError) throw new UpstreamNetworkError(error.provider, error.cause);
         throw error;

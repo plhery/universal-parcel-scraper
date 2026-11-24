@@ -51,10 +51,13 @@ export class KuwaitPostTracker {
         }
         if (page.statusCode === 429) throw new RateLimitedError(PROVIDER);
         if ([401, 403, 419, 428].includes(page.statusCode)) throw new ChallengeError(PROVIDER, 'Kuwait Post refused its tracking page', { status: page.statusCode });
-        if (page.statusCode === 404 || page.statusCode === 410) throw new SchemaError(PROVIDER, 'Kuwait Post\'s tracking page is missing');
         if (page.statusCode >= 400) throw new UpstreamHttpError(PROVIDER, page.statusCode);
+        // No status: the browser never opened the tracker, so its checkbox was not reached.
+        if (!page.statusCode) throw new TransportError(PROVIDER, 'Kuwait Post\'s tracking page did not load');
         throw new ChallengeError(PROVIDER, 'Kuwait Post did not complete its checkbox');
       } catch (error) {
+        // The browser service reads the page's own 404 as an HTTP error: the tracker is gone, not the item.
+        if (error instanceof UpstreamHttpError && (error.status === 404 || error.status === 410)) throw new SchemaError(PROVIDER, 'Kuwait Post\'s tracking page is missing');
         if (error instanceof UpstreamHttpError) throw new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);
         if (error instanceof UpstreamNetworkError) throw new UpstreamNetworkError(error.provider, error.cause);
         throw error;
