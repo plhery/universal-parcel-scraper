@@ -645,7 +645,7 @@ describe('Shouwu International status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null,
       description: 'Unfortunately we have not been able to deliver your parcel. Consignee address not correct.' })).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     // The last mile's station keeping the parcel after a failed delivery names no stage.
-    for (const wording of ['STATIONED SHIPMENT', 'STATIONED LOCATED', 'Envío estacionado', 'Estacionado ubicado']) {
+    for (const wording of ['STATIONED SHIPMENT', 'STATIONED LOCATED', 'Envío estacionado', 'Estacionado ubicado', 'Pendiente de extracción']) {
       expect(shouwuStage(wording), wording).toBeNull();
       expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
     }
