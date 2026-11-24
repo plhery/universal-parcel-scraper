@@ -81,7 +81,7 @@ describe('J&T Express Mexico HTTP adapter', () => {
       // The collection from the sender, by the map.
       ['2026-05-12T11:30:00-06:00', 'Recolectado', 'Origin Town Branch', 'accepted'],
     ]);
-    expect(result.events!.map((event) => event.stage_source)).toEqual(['wording:language', 'wording:language', 'carrier_map', 'carrier_map', 'carrier_map']);
+    expect(result.events!.map((event) => event.stage_source)).toEqual(['wording:language', 'carrier_map', 'carrier_map', 'carrier_map', 'carrier_map']);
     expect(result.events!.every((event) => event.local_time === undefined && event.provider_code === undefined)).toBe(true);
     expect(JSON.stringify(result)).not.toMatch(/Courier|Recipient|5500000000|Recibió|mensajero|Origin Town"|Sample City"/);
   });
@@ -206,6 +206,7 @@ describe('J&T Express Mexico HTTP adapter', () => {
   it('maps the labels seen in replies, and reads others by the shared wording rules', () => {
     expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: 'recolectado' })).toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: 'en tránsito' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: 'En ruta de entrega' })).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     expect(statusMapAnswer({ carrier: 'j-and-t-mx', providerCode: null, description: 'Entregado' })).toEqual({ kind: 'unknown' });
   });
 });
