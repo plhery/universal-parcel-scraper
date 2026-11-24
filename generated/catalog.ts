@@ -69922,7 +69922,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "xingyunyi",
+      "localClocks": true
     },
     "canaryUrl": "https://www.xingyunyi.com/",
     "trackingUrlTemplate": "https://www.xingyunyi.com/tracking?nums={trackingNumber}",

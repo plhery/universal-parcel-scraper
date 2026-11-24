@@ -1101,6 +1101,7 @@ import { adapter as xgs } from '../carriers/xgs/adapter.js';
 import { adapter as xindus } from '../carriers/xindus/adapter.js';
 import { adapter as xingheFreight } from '../carriers/xinghe-freight/adapter.js';
 import { adapter as xingyou } from '../carriers/xingyou/adapter.js';
+import { adapter as xingyunyi } from '../carriers/xingyunyi/adapter.js';
 import { adapter as xlcourier } from '../carriers/xlcourier/adapter.js';
 import { adapter as xlsFutar } from '../carriers/xls-futar/adapter.js';
 import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
@@ -2245,6 +2246,7 @@ export const REGISTRY: RegistryDefinition = {
     "xindus": xindus,
     "xinghe-freight": xingheFreight,
     "xingyou": xingyou,
+    "xingyunyi": xingyunyi,
     "xlcourier": xlcourier,
     "xls-futar": xlsFutar,
     "xpo-ltl": xpoLtl,
@@ -4268,7 +4270,7 @@ export const REGISTRY: RegistryDefinition = {
     "xindus": "xindus",
     "xinghe-freight": "xinghe-freight",
     "xingyou": "xingyou",
-    "xingyunyi": "universal",
+    "xingyunyi": "xingyunyi",
     "xinsu": "universal",
     "xlcourier": "xlcourier",
     "xlmiles": "universal",
