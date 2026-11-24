@@ -128,9 +128,14 @@ describe('Estafeta bound history', () => {
     const result = parseEstafetaHistory(history.html(), held);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update_local: '2026-01-04T09:00:00' });
     expect(result.events?.[0]?.description).toMatch(/^Pendiente programación/);
-    // Shown as under way, the same summary must date the newest scan; held, it must date a scan of the step it shows.
-    expect(() => parseEstafetaHistory(history.html(), { ...held, held: undefined })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    // Later the step shows as under way while the notice is still the newest scan: the summary still dates the step's scan.
+    expect(parseEstafetaHistory(history.html(), { ...held, held: undefined }))
+      .toMatchObject({ current_stage: 'in_transit', last_update_local: '2026-01-04T09:00:00' });
     expect(() => parseEstafetaHistory(history.html(), { ...held, latestClock: '08:58' })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseEstafetaHistory(history.html(), { ...held, held: undefined, latestClock: '08:58' })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    // Under way after any other newer scan, the summary must date the newest scan.
+    notice!.last().text('Recibido por Estafeta');
+    expect(() => parseEstafetaHistory(history.html(), { ...held, held: undefined })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     $('.stateStatusLineDiv').append('<p class="stateDescription fontColorCurrentProcess">Entregado</p>');
     expect(() => parseEstafetaLookup($.html(), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });

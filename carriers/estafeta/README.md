@@ -26,7 +26,9 @@ registered without a history request. The service name is kept. The summary
 shows the current step in red, with a "!" beside it, while the parcel is held
 back, as when it waits to be scheduled for a round. It then dates that step's
 newest scan, and the notice holding the parcel comes after it, so the summary
-is matched to the step's scan and the newest scan gives the stage.
+is matched to the step's scan and the newest scan gives the stage. Later the
+step can show as under way while that notice is still the newest scan; the
+summary is matched the same way.
 
 Recipient names, postcodes, signatures, proof images and report actions are
 excluded. Scheduled-date controls retain dates after delivery and are omitted.

@@ -5,7 +5,7 @@ import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } fr
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { paddedDate } from '../../core/time/fields.js';
 import { clean } from '../../core/transport/index.js';
-import { estafetaStatus, estafetaWording } from './status.js';
+import { estafetaStatus, estafetaWording, estafetaRoundNotice } from './status.js';
 
 export interface EstafetaLookup {
   number: string;
@@ -131,9 +131,11 @@ export function parseEstafetaHistory(html: string, lookup: EstafetaLookup): Carr
     }
   }
   if (scanCount !== $('.eventInfo').length) throw new SchemaError('Estafeta', 'Estafeta returned scans outside its parcel groups');
-  // The summary dates the newest scan, or, for a parcel held back, the newest scan of the step it shows in red: the
-  // notice that holds the parcel, such as the wait to be scheduled for a round, comes after it.
-  const anchor = lookup.held ? scans.find(({ description }) => estafetaWording(description) === estafetaWording(lookup.state)) : scans[0];
+  // The summary dates the newest scan, or, for a parcel held back, the newest scan of the step it shows: the notice that
+  // holds the parcel, such as the wait to be scheduled for a round, comes after it. The step shows in red while the
+  // parcel is held, and later as under way while that notice is still the newest scan.
+  const holding = lookup.held || (scans[0] !== undefined && estafetaRoundNotice(scans[0].description));
+  const anchor = holding ? scans.find(({ description }) => estafetaWording(description) === estafetaWording(lookup.state)) : scans[0];
   if (anchor?.day !== lookup.latestDate || anchor.clock !== clockText(lookup.latestClock)) throw new IndeterminateError('Estafeta', 'Estafeta latest summary does not match its first scan');
   const latest = events[0]!;
   const current = estafetaStatus(String(latest.description));

@@ -14,6 +14,11 @@ const WORDINGS = new Map<string, ClassifiedStatus>([
   ['pendiente programacion para salida a ruta (ver fecha programada de entrega )', { status: 'in_transit', stage: 'in_transit' }],
 ]);
 
+/** The notice that holds a parcel until it is scheduled for a round. */
+export function estafetaRoundNotice(description: string): boolean {
+  return estafetaWording(description).startsWith('pendiente programacion para salida a ruta');
+}
+
 export function estafetaStatus(wording: string): ClassifiedStatus | undefined {
   const normalized = estafetaWording(wording);
   if (/^.+ llegada a centro operativo plaza destino$/.test(normalized)) return { status: 'in_transit', stage: 'in_transit' };
