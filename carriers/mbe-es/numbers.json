@@ -1,0 +1,24 @@
+{
+  "carrier": "mbe-es",
+  "records": [
+    {
+      "number": "ES0061-0L-000000VTHP",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/CarlosAdrianM/NestoAPI/blob/c5cc8fe1d9fdfd8ba8899995b9dfae2154f7a875/NestoAPI.Tests/Infrastructure/PedidosCompra/CorreosSeguimientoFase3Tests.cs",
+        "date": "2026-11-19",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A public repository's tests quote an MBE Center's shipping email as 'Tracking MBE', beside the UPS numbers of its three parcels; MBE Spain's tracker answers the code with UPS's delivery."
+    }
+  ]
+}

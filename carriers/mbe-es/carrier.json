@@ -1,0 +1,78 @@
+{
+  "id": "mbe-es",
+  "displayName": "MBE Spain",
+  "aliases": [
+    "Mail Boxes Etc. Spain",
+    "Mail Boxes Etc. España",
+    "MBE España",
+    "MBE Spain 2000"
+  ],
+  "region": {
+    "countries": [
+      "ES"
+    ]
+  },
+  "brand": {
+    "color": "#CC0000"
+  },
+  "selectable": true,
+  "timezone": "Europe/Madrid",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "mbe-es",
+    "steps": [
+      "direct",
+      "retry",
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.mbe.es/es/tracking?c={trackingNumber}",
+    "searchUrl": "https://www.mbe.es/es/tracking",
+    "helpUrl": "https://www.mbe.es/es/faq",
+    "canaryUrl": "https://www.mbe.es/es/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivered_at",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "delivery_partner",
+      "delivered_at",
+      "signatory"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "mbe.es",
+        "www.mbe.es"
+      ],
+      "pathPattern": "^/es/tracking$",
+      "params": [
+        "c"
+      ],
+      "detectFromNumber": true
+    }
+  ],
+  "detection": []
+}

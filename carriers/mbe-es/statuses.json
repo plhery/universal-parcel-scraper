@@ -1,0 +1,11 @@
+{
+  "carrier": "mbe-es",
+  "entries": [
+    { "wording": "El remitente creó una etiqueta; UPS aún no ha recibido el paquete.", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "Relayed from UPS: the label exists, the parcel is not with UPS yet." },
+    { "wording": "Ha llegado a las instalaciones", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Relayed from UPS, after the facility's town." },
+    { "wording": "Ha salido de las instalaciones", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Relayed from UPS, after the facility's town." },
+    { "wording": "Procesando en Centro UPS", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Relayed from UPS, after the facility's town." },
+    { "wording": "Listo para entrega hoy", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "note": "Relayed from UPS: out for delivery today, minutes before the delivery in the sample." },
+    { "wording": "ENTREGADO", "stage": "delivered", "language": "es", "confirmedBy": "live", "note": "Relayed from UPS, after the delivery town." }
+  ]
+}

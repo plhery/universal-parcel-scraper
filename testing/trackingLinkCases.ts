@@ -2773,6 +2773,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'planete-courrier', number: '19999991',
     route: /^https:\/\/www\.planetecourrier\.com\/fr\/suivi-courrier\.html\?r=19999991&detail=true$/,
     marker: /N° 19999991 via[\s\S]*Historique de commande/ },
+  { carrier: 'mbe-es', number: 'ES9999-0X-000000AAAA',
+    route: /^https:\/\/www\.mbe\.es\/es\/tracking\?c=ES9999-0X-000000AAAA$/,
+    marker: /La búsqueda del código de envío no ha dado ningún resultado/ },
 ];
 
 /**
