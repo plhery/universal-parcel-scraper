@@ -1,0 +1,28 @@
+{
+  "carrier": "vyang",
+  "entries": [
+    {"wording": "Parcel information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the parcel reaches the warehouse."},
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's copy of the registration."},
+    {"code": "ARRIVAL", "wording": "Shipment arrived", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The Dongguan warehouse's receipt."},
+    {"wording": "Arrived at origin facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's receipt in China."},
+    {"code": "SHIPMENT", "wording": "Depart from facility to service provider", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Dongguan warehouse hands the parcel to the line."},
+    {"wording": "Departed from sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "Shipment is in transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "Arrived at the origin international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "The country of origin commences customs declaration.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China."},
+    {"wording": "International flight has departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's departure, without a place."},
+    {"wording": "International flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's landing, placed in the country it lands in."},
+    {"wording": "NOA received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The airline's notice of arrival, at Liège."},
+    {"wording": "Start Customs Clearence", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance starts, at Liège."},
+    {"wording": "Clearance processing completed - Import", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance done, at Liège."},
+    {"wording": "Collected at Cargo Terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At Liège's cargo terminal."},
+    {"wording": "Arrived at sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the sort facility near Liège."},
+    {"wording": "Shipment is ready for outbound", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the sort facility near Liège."},
+    {"wording": "Departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "From the sort facility near Liège."},
+    {"wording": "Delivered to local carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The hand-over to the delivering carrier, DHL in Germany."},
+    {"wording": "The shipment has been processed in the destination parcel center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied."},
+    {"wording": "The shipment has been processed in the parcel center of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied."},
+    {"wording": "Loaded to movement / tour vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied, for a trunk run or a delivery round alike, so it does not say the parcel is out for delivery."},
+    {"wording": "The shipment has been successfully delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "DHL's delivery, copied."}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "carrier": "vyang",
+  "records": [
+    {
+      "number": "VY000010380781YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/vyang/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's VYANG page shows. VYANG's tracker answers it with a parcel flown to Liège and delivered by DHL in Germany, under DHL's number."
+    }
+  ]
+}
