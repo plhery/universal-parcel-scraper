@@ -1179,6 +1179,16 @@
     "reason": "Purolator's lettered PINs and TNT Australia's domestic consignments both print three letters and nine digits, and Colis Privé accepts any 12-character alphanumeric, so no rule decides; recognition asks them in turn. TNT Australia's own tracker answers its consignments; TNT is not offered, because tnt.com refuses them."
   },
   {
+    "shape": "A{3}9{9}",
+    "carriers": [
+      "colis-prive",
+      "purolator",
+      "tnt-au",
+      "kuehne-nagel"
+    ],
+    "reason": "Kuehne+Nagel's tracker files NTG and nine digits as a shipment's own tracking number, but Purolator's lettered PINs and TNT Australia's domestic consignments print three letters and nine digits too, and Colis Privé accepts any 12-character alphanumeric, so no rule decides; Kuehne+Nagel is preferred, and recognition asks it first."
+  },
+  {
     "shape": "WYB followed by nine digits",
     "carriers": [
       "colis-prive",

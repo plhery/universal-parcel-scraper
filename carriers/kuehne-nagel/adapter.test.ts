@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -349,6 +349,18 @@ describe('Kuehne+Nagel search', () => {
     // Its RAPI tracking numbers: RAPI and eight digits exactly, spaces ignored.
     for (const number of ['RAPI99900001', 'rapi 9990 0001']) expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'kuehne-nagel', confidence: 'high' });
     for (const number of ['RAPI9990001', 'RAPI999000001', 'RAPX99900001', 'XRAPI9990001']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('kuehne-nagel');
+    }
+    // Its NTG tracking numbers: NTG and nine digits exactly, a shape Purolator's, TNT Australia's and Colis Privé's rules
+    // take too, so Kuehne+Nagel is preferred and asked first wherever the lookup comes from.
+    for (const number of ['NTG999000001', 'ntg 999 000 001']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ confidence: 'low', preferred: ['kuehne-nagel'] });
+      expect(detectCarrierMatch(number).candidates, number).toEqual(['kuehne-nagel', 'colis-prive', 'purolator', 'tnt-au']);
+    }
+    for (const countryHint of [undefined, 'DE', 'AU', 'CA']) {
+      expect(recognitionCandidates('NTG999000001', { countryHint })[0]?.carrier, countryHint).toBe('kuehne-nagel');
+    }
+    for (const number of ['NTG99900001', 'NTG9990000001', 'NTX999000001', 'XNTG99900001']) {
       expect(detectCarrierMatch(number).candidates, number).not.toContain('kuehne-nagel');
     }
     for (const link of [`https://mykn.kuehne-nagel.com/public-tracking/shipments?query=${DELIVERED}`,

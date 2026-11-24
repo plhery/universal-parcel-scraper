@@ -116,6 +116,12 @@
       "id": "kuehne-nagel-3",
       "pattern": "^RAPI\\d{8}$",
       "confidence": "high"
+    },
+    {
+      "id": "kuehne-nagel-4",
+      "pattern": "^NTG\\d{9}$",
+      "confidence": "low",
+      "preferred": true
     }
   ]
 }

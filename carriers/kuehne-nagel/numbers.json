@@ -468,6 +468,24 @@
         "confidence": "high"
       },
       "note": "ParcelPanel's Kuehne+Nagel page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
+    },
+    {
+      "number": "NTG999000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-24",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "kuehne-nagel",
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "Invented placeholder for NTG and nine digits, which Kuehne+Nagel's tracker files as a shipment's own tracking number. Its serial is made up."
     }
   ]
 }
