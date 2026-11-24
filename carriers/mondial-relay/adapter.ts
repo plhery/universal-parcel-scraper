@@ -41,6 +41,12 @@ const APP_RESERVE_MS = 500;
  * for the rest of the budget.
  */
 const DEFAULT_ESTIMATE_TIMEOUT_MS = 15_000;
+/**
+ * How long a page's request token serves later lookups. The browser service replays the site's saved
+ * session in each request and the token stays good with it: the tracking call alone takes about a
+ * second, the page several more. A token the website no longer takes is dropped and the page loaded again.
+ */
+const TOKEN_REUSE_MS = 30 * 60_000;
 /** The stages of a parcel on its way, whose app answer the website's estimate completes. */
 const ON_THE_WAY = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
 const ZONE = 'Europe/Paris';
@@ -453,6 +459,8 @@ export class MondialRelayTracker {
   readonly #recorder: StepRecorder;
   readonly #now: () => number;
   readonly #serialize = singleFlight();
+  /** The page's request token and when it was read, for the lookups after it. */
+  #token: { value: string; at: number } | undefined;
 
   constructor(options: MondialRelayTrackerOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
@@ -567,8 +575,31 @@ export class MondialRelayTracker {
     deadline: number,
     signal: AbortSignal,
   ): Promise<CarrierResult> {
+    const kept = this.#token && this.#now() - this.#token.at < TOKEN_REUSE_MS ? this.#token.value : undefined;
+    if (kept) {
+      try {
+        return await this.#tracked(trawl, credential, kept, deadline, signal);
+      } catch {
+        // Only a parcel the website shows is taken on a kept token: a refusal, an error or a reply
+        // without the parcel is asked again on the token of a freshly loaded page.
+        signal.throwIfAborted();
+        this.#token = undefined;
+      }
+    }
     const bootstrap = await this.#scrape(trawl, { url: TRACKING_PAGE }, deadline, signal);
     const token = verificationToken(originalTrawlPage(bootstrap));
+    this.#token = { value: token, at: this.#now() };
+    return this.#tracked(trawl, credential, token, deadline, signal);
+  }
+
+  /** The website's tracking call on a page's request token. */
+  async #tracked(
+    trawl: TrawlClient,
+    credential: MondialRelayCredential,
+    token: string,
+    deadline: number,
+    signal: AbortSignal,
+  ): Promise<CarrierResult> {
     const apiUrl = trackingApiUrl(credential);
     const tracked = await this.#scrape(trawl, {
       url: apiUrl,

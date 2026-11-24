@@ -813,7 +813,6 @@ describe('Mondial Relay web session', () => {
         init!.signal!.addEventListener('abort', () => reject(init!.signal!.reason), { once: true });
         reached();
       }))
-      .mockResolvedValueOnce(bootstrap())
       .mockResolvedValueOnce(reply({
         tier: 3, statusCode: 200, url: apiUrl(), html: VUE_PAGE,
         body: numericByteObject(JSON.stringify(syntheticSuccessFixture())),
@@ -837,9 +836,39 @@ describe('Mondial Relay web session', () => {
     await expect(first).rejects.toBe(stopped);
     expect(fetcher.mock.calls[1]![1]?.signal?.aborted).toBe(true);
 
-    // The cancelled turn passes without a request; the next lookup is served.
+    // The cancelled turn passes without a request; the next lookup is served on the page's token.
     await expect(third).resolves.toMatchObject({ status: 'out_for_delivery' });
-    expect(fetcher).toHaveBeenCalledTimes(4);
+    expect(fetcher).toHaveBeenCalledTimes(3);
+  });
+
+  it('keeps the page\'s token for the next lookups, and loads the page again once the website refuses it or it is old', async () => {
+    const reply = (payload: unknown) => new Response(JSON.stringify(payload), { headers: { 'Content-Type': 'application/json' } });
+    const page = () => reply({ tier: 2, statusCode: 200, url: TRACKING_PAGE, html: VUE_PAGE, body: numericByteObject(tokenPage()) });
+    const found = () => reply({ tier: 2, statusCode: 200, url: apiUrl(), html: VUE_PAGE, body: numericByteObject(JSON.stringify(syntheticSuccessFixture())) });
+    const refused = () => reply({ tier: 2, statusCode: 400, url: apiUrl(), html: '' });
+    const fetcher = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(page()).mockResolvedValueOnce(found())
+      .mockResolvedValueOnce(found())
+      .mockResolvedValueOnce(refused()).mockResolvedValueOnce(page()).mockResolvedValueOnce(found())
+      .mockResolvedValueOnce(page()).mockResolvedValueOnce(found());
+    let now = Date.UTC(2026, 10, 24, 12);
+    const tracker = new MondialRelayTracker({ trawl: new TrawlClient('http://trawl.internal:8191/scrape'), now: () => now });
+    const urls = () => fetcher.mock.calls.map(([, init]) => JSON.parse(String(init?.body)).url as string);
+
+    await expect(tracker.fetch(PUBLIC_CREDENTIAL)).resolves.toMatchObject({ status: 'out_for_delivery' });
+    now += 60_000;
+    await expect(tracker.fetch(PUBLIC_CREDENTIAL)).resolves.toMatchObject({ status: 'out_for_delivery' });
+    expect(urls()).toEqual([TRACKING_PAGE, apiUrl(), apiUrl()]);
+    expect(JSON.parse(String(fetcher.mock.calls[2]![1]?.body)).headers.RequestVerificationToken).toBe(TEST_TOKEN);
+
+    // The website refuses the kept token: the page is loaded again within the same lookup.
+    await expect(tracker.fetch(PUBLIC_CREDENTIAL)).resolves.toMatchObject({ status: 'out_for_delivery' });
+    expect(urls().slice(3)).toEqual([apiUrl(), TRACKING_PAGE, apiUrl()]);
+
+    // Half an hour on, the page is loaded first.
+    now += 30 * 60_000;
+    await expect(tracker.fetch(PUBLIC_CREDENTIAL)).resolves.toMatchObject({ status: 'out_for_delivery' });
+    expect(urls().slice(6)).toEqual([TRACKING_PAGE, apiUrl()]);
   });
 });
 

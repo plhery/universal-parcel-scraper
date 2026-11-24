@@ -27,22 +27,25 @@ so only the Spanish names resolve here. InPost Spain's own `FV` numbers are read
      lookup to `trawl`.
    - The app gives no delivery estimate. For a parcel on its way (accepted, in
      transit, in customs or out for delivery) the website is read too, through
-     `trawl`'s two requests, and only its estimate is added: one browser session
-     per such lookup. Without a browser service, or when the website fails or
+     `trawl`'s requests, and only its estimate is added. Without a browser service, or when the website fails or
      takes more than 15 seconds, the app's answer stands without an estimate:
      lookups run one at a time, so a hanging read would hold the ones behind it.
      The website's estimate must fall on or after the latest app scan's day in Paris.
      A caller's `knownEstimate` whose day is after today in Paris stands in its
      place, and the website is not read, while the app shows no scan newer than
      the estimate's `lastUpdate`.
-2. `trawl`: two requests through the browser service, on one
-   solved identity.
+2. `trawl`: requests through the browser service, on one solved identity.
    - Load `/suivi-de-colis/` and read the `token` attribute of `#tracking` from
      the captured response body (`trawlBody()`), not the rendered HTML: the Vue
      app replaces that root as soon as it boots.
    - Call `GET /api/tracking?shipment=…&postcode=…&brand=&codePays=fr` with the
      token as `RequestVerificationToken`, as the official bundle does. Check the
      answered URL still names the same shipment and postcode.
+   - The token serves the lookups of the next half hour, which make the call
+     alone: the browser service replays the site's saved session, with which
+     the token stays good, and the page takes several seconds to load against
+     about one for the call. A call on a kept token that fails or does not show
+     the parcel is made again after loading the page.
 3. Parse the JSON from the captured body or the `<pre>` a browser navigation
    wraps it in. `Expedition.Numero` must match the requested number or its
    embedded 8-digit shipment before anything else is read.
