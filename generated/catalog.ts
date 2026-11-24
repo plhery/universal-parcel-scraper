@@ -37832,7 +37832,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Hong_Kong",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "joom-logistics",
+      "localClocks": true
     },
     "canaryUrl": "https://joomlogistics.com/en/track",
     "trackingUrlTemplate": "https://joomlogistics.com/en/track?id={trackingNumber}",
