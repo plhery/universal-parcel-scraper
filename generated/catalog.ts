@@ -68099,11 +68099,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Melbourne",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "vt-freight-express",
+      "localClocks": true
     },
-    "canaryUrl": "https://www.vtfe.com.au/",
+    "canaryUrl": "https://portal.vtfe.com.au/Track/VTFE",
     "trackingUrlTemplate": "https://portal.vtfe.com.au/Track/VTFE/{trackingNumber}",
-    "trackingSearchUrl": "https://www.vtfe.com.au/",
+    "trackingSearchUrl": "https://portal.vtfe.com.au/Track/VTFE",
     "helpUrl": "https://www.vtfe.com.au/contact-us/",
     "linkRules": [
       {
@@ -68790,7 +68791,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "western-post",
+      "localClocks": true
     },
     "canaryUrl": "https://www.wpglb.com/",
     "trackingSearchUrl": "https://www.wpglb.com/",

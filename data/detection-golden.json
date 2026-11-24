@@ -94303,6 +94303,12 @@
     ]
   },
   {
+    "input": "END0000315765",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "ENE158239622MY",
     "carrier": "pos-malaysia",
     "confidence": "high",
@@ -120347,6 +120353,17 @@
   },
   {
     "input": "WP1000000000009",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "wooliiporter"
+    ],
+    "asked": [
+      "wooliiporter"
+    ]
+  },
+  {
+    "input": "WP2607140015605",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [

@@ -1055,6 +1055,7 @@ import { adapter as vnpost } from '../carriers/vnpost/adapter.js';
 import { adapter as volarisCargo } from '../carriers/volaris-cargo/adapter.js';
 import { adapter as vozovoz } from '../carriers/vozovoz/adapter.js';
 import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
+import { adapter as vtFreightExpress } from '../carriers/vt-freight-express/adapter.js';
 import { adapter as wahana } from '../carriers/wahana/adapter.js';
 import { adapter as walkerLogistics } from '../carriers/walker-logistics/adapter.js';
 import { adapter as walleniusWilhelmsen } from '../carriers/wallenius-wilhelmsen/adapter.js';
@@ -1066,6 +1067,7 @@ import { adapter as warp } from '../carriers/warp/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
 import { adapter as westernBid } from '../carriers/western-bid/adapter.js';
+import { adapter as westernPost } from '../carriers/western-post/adapter.js';
 import { adapter as westjetCargo } from '../carriers/westjet-cargo/adapter.js';
 import { adapter as whatsship } from '../carriers/whatsship/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
@@ -2182,6 +2184,7 @@ export const REGISTRY: RegistryDefinition = {
     "volaris-cargo": volarisCargo,
     "vozovoz": vozovoz,
     "vrl-logistics": vrlLogistics,
+    "vt-freight-express": vtFreightExpress,
     "wahana": wahana,
     "walker-logistics": walkerLogistics,
     "wallenius-wilhelmsen": walleniusWilhelmsen,
@@ -2193,6 +2196,7 @@ export const REGISTRY: RegistryDefinition = {
     "we-world-express": weWorldExpress,
     "wedo": wedo,
     "western-bid": westernBid,
+    "western-post": westernPost,
     "westjet-cargo": westjetCargo,
     "whatsship": whatsship,
     "whistl": whistl,
@@ -4178,7 +4182,7 @@ export const REGISTRY: RegistryDefinition = {
     "volaris-cargo": "volaris-cargo",
     "vozovoz": "vozovoz",
     "vrl-logistics": "vrl-logistics",
-    "vt-freight-express": "universal",
+    "vt-freight-express": "vt-freight-express",
     "w-express-ph": "universal",
     "wahana": "wahana",
     "wakilni": "universal",
@@ -4199,7 +4203,7 @@ export const REGISTRY: RegistryDefinition = {
     "wepost": "universal",
     "west-postal": "universal",
     "western-bid": "western-bid",
-    "western-post": "universal",
+    "western-post": "western-post",
     "westjet-cargo": "westjet-cargo",
     "westweg": "universal",
     "whatsship": "whatsship",
