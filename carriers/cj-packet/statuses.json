@@ -39,6 +39,7 @@
     {"wording": "The package has arrived at the processing center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Shipping Label Created", "stage": "registered", "language": "en", "confirmedBy": "live"},
     {"wording": "The electronic information of the goods has been received", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Parcel electronic information received", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The line's order data received, hours after the label, before any scan."},
     {"wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live"},
     {"wording": "En reparto", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live"},
     {"wording": "Enviado", "stage": "in_transit", "language": "es", "confirmedBy": "live"},
