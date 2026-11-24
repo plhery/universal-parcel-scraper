@@ -64,6 +64,7 @@ import { adapter as apdParcel } from '../carriers/apd-parcel/adapter.js';
 import { adapter as apgEcommerce } from '../carriers/apg-ecommerce/adapter.js';
 import { adapter as apmLogistics } from '../carriers/apm-logistics/adapter.js';
 import { adapter as appleExpress } from '../carriers/apple-express/adapter.js';
+import { adapter as aquantuo } from '../carriers/aquantuo/adapter.js';
 import { adapter as aquiline } from '../carriers/aquiline/adapter.js';
 import { adapter as aramex } from '../carriers/aramex/adapter.js';
 import { adapter as aramexAu } from '../carriers/aramex-au/adapter.js';
@@ -453,6 +454,7 @@ import { adapter as heungALine } from '../carriers/heung-a-line/adapter.js';
 import { adapter as hgd } from '../carriers/hgd/adapter.js';
 import { adapter as hiTrans } from '../carriers/hi-trans/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
+import { adapter as hitCargoNicaragua } from '../carriers/hit-cargo-nicaragua/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as hmm } from '../carriers/hmm/adapter.js';
 import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter.js';
@@ -495,6 +497,8 @@ import { adapter as intelValley } from '../carriers/intel-valley/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
 import { adapter as interlogistica } from '../carriers/interlogistica/adapter.js';
 import { adapter as internetExpress } from '../carriers/internet-express/adapter.js';
+import { adapter as interparcelAu } from '../carriers/interparcel-au/adapter.js';
+import { adapter as interparcelUk } from '../carriers/interparcel-uk/adapter.js';
 import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.js';
 import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
 import { adapter as intexPaketdienst } from '../carriers/intex-paketdienst/adapter.js';
@@ -1173,6 +1177,7 @@ export const REGISTRY: RegistryDefinition = {
     "apg-ecommerce": apgEcommerce,
     "apm-logistics": apmLogistics,
     "apple-express": appleExpress,
+    "aquantuo": aquantuo,
     "aquiline": aquiline,
     "aramex": aramex,
     "aramex-au": aramexAu,
@@ -1562,6 +1567,7 @@ export const REGISTRY: RegistryDefinition = {
     "hgd": hgd,
     "hi-trans": hiTrans,
     "hispapost": hispapost,
+    "hit-cargo-nicaragua": hitCargoNicaragua,
     "hitch": hitch,
     "hmm": hmm,
     "hoegh-autoliners": hoeghAutoliners,
@@ -1604,6 +1610,8 @@ export const REGISTRY: RegistryDefinition = {
     "intelcom": intelcom,
     "interlogistica": interlogistica,
     "internet-express": internetExpress,
+    "interparcel-au": interparcelAu,
+    "interparcel-uk": interparcelUk,
     "interrapidisimo": interrapidisimo,
     "intertown-transport": intertownTransport,
     "intex-paketdienst": intexPaketdienst,
@@ -2348,6 +2356,7 @@ export const REGISTRY: RegistryDefinition = {
     "apollo-budbiler": "universal",
     "apple-express": "apple-express",
     "apx-logistics": "universal",
+    "aquantuo": "aquantuo",
     "aquiline": "aquiline",
     "aqx-logistics": "universal",
     "aramex": "aramex",
@@ -3051,6 +3060,7 @@ export const REGISTRY: RegistryDefinition = {
     "hi-trans": "hi-trans",
     "hintzen": "universal",
     "hispapost": "hispapost",
+    "hit-cargo-nicaragua": "hit-cargo-nicaragua",
     "hitch": "hitch",
     "hiyes": "universal",
     "hkd-express": "universal",
@@ -3125,6 +3135,8 @@ export const REGISTRY: RegistryDefinition = {
     "interlogistica": "interlogistica",
     "international-bridge": "universal",
     "internet-express": "internet-express",
+    "interparcel-au": "interparcel-au",
+    "interparcel-uk": "interparcel-uk",
     "interrapidisimo": "interrapidisimo",
     "intertown-transport": "intertown-transport",
     "intex-courier": "universal",

@@ -1042,6 +1042,10 @@ import { statusMap as arkas } from '../../carriers/arkas/status.js';
 import { statusMap as seaboardMarine } from '../../carriers/seaboard-marine/status.js';
 import { statusMap as pashaHawaii } from '../../carriers/pasha-hawaii/status.js';
 import { statusMap as goldStarLine } from '../../carriers/gold-star-line/status.js';
+import { statusMap as interparcelUk } from '../../carriers/interparcel-uk/status.js';
+import { statusMap as interparcelAu } from '../../carriers/interparcel-au/status.js';
+import { statusMap as aquantuo } from '../../carriers/aquantuo/status.js';
+import { statusMap as hitCargoNicaragua } from '../../carriers/hit-cargo-nicaragua/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1049,6 +1053,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'interparcel-uk': interparcelUk, 'interparcel-au': interparcelAu, aquantuo, 'hit-cargo-nicaragua': hitCargoNicaragua,
   'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh, cargolux, cargologic,
   'copa-airlines-cargo': copaAirlinesCargo,
   'airasia-cargo': airasiaCargo,

@@ -1,0 +1,45 @@
+{
+  "carrier": "hit-cargo-nicaragua",
+  "records": [
+    {
+      "number": "926791",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://github.com/carlosrenatohr/hit-ever/blob/e2a075a5e6db3e0321d2757e4cb5fd083d0c6ecc/docs/production-deployment.md",
+        "date": "2026-11-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Guía the tracker's deployment guide checks, also the placeholder of hit-cargo.com/track/",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "HIT Cargo's tracker answers it with an air package received in Miami and delivered in Managua."
+    },
+    {
+      "number": "910500",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://github.com/carlosrenatohr/hit-ever/blob/e2a075a5e6db3e0321d2757e4cb5fd083d0c6ecc/docs/e2e-testing.md",
+        "date": "2026-11-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Sample guía the tracker's end-to-end test guide uses for its public check",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "HIT Cargo's tracker answers it with a sea package received in Miami and delivered in Managua."
+    }
+  ]
+}

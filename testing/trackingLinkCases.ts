@@ -2937,4 +2937,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   danx: 'the portal takes the number only in its form, and the tracker page the form opens names it in base64, so the link opens the portal alone; native retrieval asks the service behind the tracker page',
   'atc-logistical': 'the tracking page takes a token the form\'s lookup builds from the number, not the number, so the link opens the home page and its Track Shipment form alone; native retrieval asks the lookup, then reads the page it names',
   viapost: 'An unknown number gets the site\'s generic HTTP 500 error page, which neither names the number nor words anything only Viapost shows, and its order ids run in sequence, so only a known order reaches its page.',
+  'interparcel-uk': 'uk.interparcel.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
+  'interparcel-au': 'au.interparcel.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
+  aquantuo: 'aquantuo.com answers automated requests with a Cloudflare check before the tracking page, so number forwarding cannot be verified',
 };

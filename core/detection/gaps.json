@@ -2124,6 +2124,12 @@
     "reason": "NT numbers are the barcodes of council notifications Hispapost delivers. One public sample does not show that Hispapost issues the shape rather than the notifying administration, so no rule claims it."
   },
   {
+    "carrier": "hit-cargo-nicaragua",
+    "pattern": "^\\d{6}$",
+    "kind": "by_design",
+    "reason": "HIT Cargo's guías are its Miami warehouse's six-digit receipt counter, a bare digit run many carriers share."
+  },
+  {
     "carrier": "hoegh-autoliners",
     "kind": "open",
     "reason": "The native service confirms the full HOEG-prefixed bills. The carrier remains explicitly selectable pending a detection review."
@@ -6578,5 +6584,22 @@
     "pattern": "^(?!GOSU)[A-Z]{3}U\\d{7}$",
     "kind": "by_design",
     "reason": "Gold Star Line tracks the containers it leases by their owners' ISO 6346 numbers, and lessors' containers travel with many lines, so no rule claims them; select Gold Star Line explicitly."
+  },
+  {
+    "carrier": "interparcel-uk",
+    "pattern": "^GB\\d{10}$",
+    "kind": "collision",
+    "reason": "Interparcel UK's references, GB and ten digits, take the shape of Amazon's British shipment ids, which Amazon's rule names. Select Interparcel UK explicitly."
+  },
+  {
+    "carrier": "interparcel-au",
+    "pattern": "^AU\\d{10}$",
+    "kind": "collision",
+    "reason": "Interparcel Australia's references, AU and ten digits, share their shape with other carriers' two letters and ten digits, and a prefix that names a country does not name Interparcel. Select Interparcel Australia explicitly."
+  },
+  {
+    "carrier": "aquantuo",
+    "kind": "open",
+    "reason": "One public tracking id, sixteen digits, a shape many carriers' numbers share, and the page also takes item ids of an unpublished shape. Select Aquantuo explicitly."
   }
 ]

@@ -9979,6 +9979,49 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "aquantuo": {
+    "displayName": "Aquantuo",
+    "color": "#066277",
+    "aliases": [
+      "aquantuo.com"
+    ],
+    "countries": [
+      "GH",
+      "NG",
+      "KE",
+      "RW",
+      "TZ",
+      "UG",
+      "ZM",
+      "US",
+      "GB",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Accra",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "aquantuo",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://aquantuo.com/track-order",
+    "trackingUrlTemplate": "https://aquantuo.com/track-order?package_id={trackingNumber}",
+    "trackingSearchUrl": "https://aquantuo.com/track-order",
+    "linkRules": [
+      {
+        "domains": [
+          "aquantuo.com",
+          "www.aquantuo.com"
+        ],
+        "pathPattern": "^/track-order/?$",
+        "params": [
+          "package_id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "aquiline": {
     "displayName": "Aquiline",
     "color": "#5e60eb",
@@ -32902,6 +32945,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hit-cargo-nicaragua": {
+    "displayName": "HIT Cargo",
+    "color": "#14213D",
+    "aliases": [
+      "HIT Cargo Nicaragua",
+      "hit-cargo.com"
+    ],
+    "countries": [
+      "NI",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Managua",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hit-cargo-nicaragua",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://hit-cargo.com/track/",
+    "trackingSearchUrl": "https://hit-cargo.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hitch": {
     "displayName": "Hitch",
     "color": "#1d6efd",
@@ -35212,6 +35279,69 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "params": [
           "ref"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "interparcel-au": {
+    "displayName": "Interparcel Australia",
+    "color": "#4579B2",
+    "aliases": [
+      "Interparcel",
+      "Interparcel AU",
+      "au.interparcel.com"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "interparcel-au",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://au.interparcel.com/tracking/",
+    "trackingUrlTemplate": "https://au.interparcel.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://au.interparcel.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "au.interparcel.com"
+        ],
+        "path": "^/tracking/(AU\\d{10})(?:/nocache)?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "interparcel-uk": {
+    "displayName": "Interparcel UK",
+    "color": "#4579B2",
+    "aliases": [
+      "Interparcel",
+      "uk.interparcel.com"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "interparcel-uk",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://uk.interparcel.com/tracking/",
+    "trackingUrlTemplate": "https://uk.interparcel.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://uk.interparcel.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "uk.interparcel.com"
+        ],
+        "path": "^/tracking/(GB\\d{10})(?:/nocache)?/?$"
       }
     ],
     "detectionRules": []
@@ -71947,6 +72077,7 @@ export const CARRIER_IDS = [
   "apollo-budbiler",
   "apple-express",
   "apx-logistics",
+  "aquantuo",
   "aquiline",
   "aqx-logistics",
   "aramex-au",
@@ -72606,6 +72737,7 @@ export const CARRIER_IDS = [
   "hi-trans",
   "hintzen",
   "hispapost",
+  "hit-cargo-nicaragua",
   "hitch",
   "hiyes",
   "hkd-express",
@@ -72677,6 +72809,8 @@ export const CARRIER_IDS = [
   "interlogistica",
   "international-bridge",
   "internet-express",
+  "interparcel-au",
+  "interparcel-uk",
   "interrapidisimo",
   "intertown-transport",
   "intex-courier",
@@ -73996,6 +74130,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "apollo-budbiler": [],
   "apple-express": ["apple-express-1"],
   "apx-logistics": [],
+  "aquantuo": [],
   "aquiline": ["aquiline-1"],
   "aqx-logistics": [],
   "aramex-au": ["aramex-au-1"],
@@ -74655,6 +74790,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hi-trans": [],
   "hintzen": [],
   "hispapost": [],
+  "hit-cargo-nicaragua": [],
   "hitch": ["hitch-1"],
   "hiyes": [],
   "hkd-express": [],
@@ -74726,6 +74862,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "interlogistica": [],
   "international-bridge": [],
   "internet-express": [],
+  "interparcel-au": [],
+  "interparcel-uk": [],
   "interrapidisimo": [],
   "intertown-transport": [],
   "intex-courier": [],

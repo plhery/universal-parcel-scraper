@@ -97,11 +97,13 @@ context. Only selected identity and scan fields leave it; keys, tokens, contacts
 pages stay out of the result. Audio cooldowns remain shared, with a checkbox-only attempt
 while audio is unavailable.
 
-Pro Carrier, Delnext, MRL Global, AIT Worldwide, Hitch, PBT, Celeritas and Hi-Trans Express also use the
-ordinary browser tiers after a challenged HTTP lookup. Their adapters read the rendered
-page through the same identity checks as HTTP; no carrier helper or image rebuild is needed.
+Pro Carrier, Delnext, MRL Global, AIT Worldwide, Hitch, PBT, Celeritas, Hi-Trans Express,
+Interparcel and Aquantuo also use the ordinary browser tiers after a challenged HTTP lookup.
+Their adapters read the rendered page through the same identity checks as HTTP; no carrier
+helper or image rebuild is needed.
 Trendyol Express uses those tiers for its public shipment page and reads the complete
-collapsed timeline without recipient details or delivery controls.
+collapsed timeline without recipient details or delivery controls. HIT Cargo uses them for its
+tracker's JSON reply, and reads an unknown guía's HTTP 404 reply with its body.
 
 Ozon's helper waits for its guest form after browser verification, then reads the matching
 posting API through a bounded decoded stream. It returns the full timeline without retaining

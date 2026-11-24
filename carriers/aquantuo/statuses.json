@@ -1,0 +1,27 @@
+{
+  "carrier": "aquantuo",
+  "entries": [
+    {"wording": "Pending", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The order exists but the package is not yet in Aquantuo's hands."},
+    {"wording": "Reviewed", "stage": "registered", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Buy For Me and Door to Door: the order has been checked."},
+    {"wording": "Pending Purchase", "stage": "registered", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Buy For Me: payment confirmed, item not yet bought from the supplier."},
+    {"wording": "Item Purchased", "stage": "registered", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Buy For Me: the item is bought and on its way from the supplier to the origin warehouse."},
+    {"wording": "Pickup Scheduled", "stage": "registered", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Door to Door: a collection is arranged; the package is still at the pick-up point."},
+    {"wording": "Pickup Completed", "stage": "accepted", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Door to Door: collected from the pick-up point for the origin warehouse."},
+    {"wording": "Package Received", "stage": "accepted", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "The package reached the origin warehouse and is in Aquantuo's possession."},
+    {"wording": "Package Processed", "stage": "accepted", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "Checked and measured at the origin warehouse, awaiting the customer's payment."},
+    {"wording": "Pre-Export (Paid)", "stage": "accepted", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Fees paid; the package waits at the origin warehouse for export."},
+    {"wording": "Export Ready", "stage": "accepted", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "The package meets the export requirements and waits at the origin warehouse."},
+    {"wording": "Dropped off/Awaiting departure", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "Handed to the external carrier, awaiting departure from the origin country."},
+    {"wording": "Shipment departed", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "Left the origin country."},
+    {"wording": "Customs clearance", "stage": "customs", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "Going through customs in the destination country."},
+    {"wording": "Custom Clearance Completed", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "Released by customs for processing in the destination country."},
+    {"wording": "Customs Clearance Completed", "stage": "in_transit", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Released by customs for processing in the destination country."},
+    {"wording": "Sorting Completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Received and sorted at the destination warehouse, ready for delivery or collection."},
+    {"wording": "Ready for Pickup", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "The package waits for its recipient at Aquantuo's destination office."},
+    {"wording": "Picked Up", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "The recipient collected the package; the page's message says it has been delivered."},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "With a delivery agent for final delivery."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-21", "note": "Delivered; the status is final."},
+    {"wording": "Delayed", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "Aquantuo marks a step delayed without changing it, so the row says nothing new of the parcel's progress."},
+    {"wording": "Disposed", "stage": "exception", "language": "en", "confirmedBy": "documentation", "firstSeen": "2026-11-21", "note": "The package stayed 21 days at a warehouse without action and was disposed of."}
+  ]
+}

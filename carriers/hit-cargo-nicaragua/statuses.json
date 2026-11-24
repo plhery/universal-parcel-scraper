@@ -1,0 +1,17 @@
+{
+  "carrier": "hit-cargo-nicaragua",
+  "entries": [
+    {"code": "en_almacen", "wording": "En bodega Miami", "stage": "accepted", "language": "es", "confirmedBy": "source", "firstSeen": "2026-11-21", "note": "On hand at the Miami warehouse."},
+    {"code": "parcial", "wording": "En preparación", "language": "es", "confirmedBy": "source", "firstSeen": "2026-11-21", "note": "Some pieces of the receipt have left Miami while others wait there, so the events decide the stage."},
+    {"code": "en_transito", "wording": "En camino", "stage": "in_transit", "language": "es", "confirmedBy": "source", "firstSeen": "2026-11-21", "note": "Shipped from Miami to Nicaragua."},
+    {"code": "en_destino", "wording": "En Nicaragua", "stage": "in_transit", "language": "es", "confirmedBy": "source", "firstSeen": "2026-11-21", "note": "In Nicaragua, not yet delivered."},
+    {"code": "entregado", "wording": "Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Delivered in Nicaragua."},
+    {"code": "excepcion", "wording": "Retenido", "stage": "exception", "language": "es", "confirmedBy": "source", "firstSeen": "2026-11-21", "note": "Held or blocked."},
+    {"code": "desconocido", "wording": "Sin información", "language": "es", "confirmedBy": "source", "firstSeen": "2026-11-21", "note": "The tracker has no status for the package, so the events decide the stage."},
+    {"wording": "Recibido", "stage": "accepted", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Received at the Miami warehouse."},
+    {"wording": "Recibido en Bodega Santa Maria", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Received at HIT Cargo's Santa Maria warehouse in Managua."},
+    {"wording": "Enviando a Oficina Metrocentro", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Sent from the Managua warehouse to HIT Cargo's Metrocentro office."},
+    {"wording": "Recibido en Oficina Metrocentro", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "At HIT Cargo's Metrocentro office in Managua, before its delivery."},
+    {"wording": "Delivered / Entregado", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-21", "note": "Delivered in Nicaragua."}
+  ]
+}
