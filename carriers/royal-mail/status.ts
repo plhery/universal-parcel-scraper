@@ -57,6 +57,9 @@ const EVENT_STAGES = new Map<string, Stage>([
   // Customer Service Point waits for its recipient, who can also book a redelivery. EVNAE says
   // the same in the same words, minutes after the round it missed, without a scan of the attempt.
   ['EVNAR', 'failed_attempt'],
+  // The round could not deliver to the address it was given ("incorrect address"); the next morning
+  // the item waits at the Customer Service Point under EVNDA.
+  ['EVKAI', 'failed_attempt'],
   ['EVNDA', 'ready_for_pickup'],
   ['EVNAE', 'ready_for_pickup'],
   // A delivery office's own delivery, to a business or a box that collects there: the summary

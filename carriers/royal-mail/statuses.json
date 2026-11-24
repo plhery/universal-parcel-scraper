@@ -349,6 +349,15 @@
       "note": "The morning after a missed delivery; the redelivery round comes as its own out-for-delivery scan."
     },
     {
+      "code": "EVKAI",
+      "wording": "Couldn't deliver your parcel due to incorrect address",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The evening of the round that was due to deliver it; the next morning the item is available for redelivery or collection (EVNDA)."
+    },
+    {
       "code": "EVNDA",
       "wording": "Available for Redelivery or Collection",
       "language": "en",

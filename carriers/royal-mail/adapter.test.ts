@@ -251,6 +251,8 @@ describe('Royal Mail structured response', () => {
     // The same words under EVNAE, minutes after the round, without a scan of the attempt.
     expect(royalMailScanStage('EVNAE', 'Available for Redelivery or Collection')).toBe('ready_for_pickup');
     expect(statusMap.stage('EVNAE', 'available for redelivery or collection')).toBe('ready_for_pickup');
+    // A round that could not deliver to the address it was given, before the item waits for collection.
+    expect(statusMap.stage('EVKAI', 'couldn\'t deliver your parcel due to incorrect address')).toBe('failed_attempt');
   });
 
   it('reads a Customer Service Point’s collection as the delivery when the summary calls the item collected on it', () => {
