@@ -256,6 +256,8 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (anPost) return anPost;
   // A sender's parcel left at a pick-up point for a courier to collect: an acceptance, not a parcel awaiting its recipient.
   if (/^the (?:parcel|package) has been delivered to the pick-?up point\. a courier will pick it up\b/i.test(description)) return 'accepted';
+  // Jadlog's words for the same hand-in at one of its points, as its own map reads them.
+  if (/^seu produto foi entregue em um ponto jadlog[.!]?$/i.test(description)) return 'accepted';
   // An airline's unit load device broken down at the destination airport, the parcels awaiting the forwarder there, not
   // their recipient, as ParcelsApp relays it with a non-breaking hyphen: "ULD breakdown completed, awaiting pick‑up in" a place.
   if (/^uld breakdown completed, awaiting pick[-\u2010\u2011]?up in [^,]{1,40}$/iu.test(description)) return 'in_transit';
@@ -520,8 +522,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // parcel over its documents, not customs at work.
   if (/^invalid hs ?code[.!]?$/i.test(value)) return 'exception';
   // Jadlog's word that it holds the parcel ("Seu produto já está com a Jadlog"), as Ship24 relays it ahead of its
-  // "em trânsito": the carrier has taken the parcel in.
-  if (/^seu produto ja esta com a jadlog[.!]?$/i.test(value)) return 'accepted';
+  // "em trânsito": the carrier has taken the parcel in, or collected it from the Jadlog point the sender left it at.
+  if (/^seu produto (?:foi coletado no ponto de apoio e )?ja esta com a jadlog[.!]?$/i.test(value)) return 'accepted';
   if (/^(?:received\.|(?:\d\) )?[a-z ]{1,40} cent(?:er|re)) your order has been received[.!]?$|^(?:\S+ )?cent(?:er|re) (?:received|parcel shipped to \S+)[.!]?$|^origin port warehouse receive\b|^the flight has taken off[.!]?$|^(?:\S+ )?dispatch task assigned to da[.!]?$/i.test(value)) return 'in_transit';
   if (/^<bad address>$/i.test(value)) return 'failed_attempt';
   // Speedaf's issue scan ending a delivery round the recipient had moved to another day, as its own map reads it.

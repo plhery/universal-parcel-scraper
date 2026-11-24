@@ -19,8 +19,10 @@
     "mode": "automatic",
     "adapter": "jadlog",
     "steps": [
-      "direct"
+      "direct",
+      "group"
     ],
+    "localClocks": true,
     "recognition": {
       "rank": 717,
       "servedCountriesOnly": true

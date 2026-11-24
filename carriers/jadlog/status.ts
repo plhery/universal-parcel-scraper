@@ -6,9 +6,9 @@ import statuses from './statuses.json' with { type: 'json' };
 const WORDINGS = statusWordings(statuses.entries.filter(entry => !('code' in entry)));
 
 /**
- * Jadlog's lookups read the Geopost guest API, so DPD's codes stage their scans and the codes
- * DPD's map leaves unmapped stay so. A scan without a code, as providers relay Jadlog's own
- * tracker, reads Jadlog's Portuguese wording.
+ * Geopost's guest API answers under DPD's codes, which DPD's map stages, and the codes it leaves
+ * unmapped stay so. A scan without a code, from Jadlog's own tracker or as providers relay it, reads
+ * Jadlog's Portuguese wording.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? dpd.stage(code, wording) : WORDINGS.stage(normalizeStatusWording(wording))),

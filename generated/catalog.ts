@@ -36397,7 +36397,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "jadlog",
       "recognitionRank": 717,
-      "recognitionServedCountriesOnly": true
+      "recognitionServedCountriesOnly": true,
+      "localClocks": true
     },
     "canaryUrl": "https://www.jadlog.com.br/jadlog/home",
     "trackingSearchUrl": "https://www.jadlog.com.br/jadlog/home",

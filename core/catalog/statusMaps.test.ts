@@ -1958,6 +1958,7 @@ describe("universal providers' answers", () => {
       ['Item received at the export unit in the country of origin', 'in_transit'],
       ['Item received by the Brazilian Post', 'in_transit'], ["Need to inform recipient's CPF/CNPJ", 'customs'],
       ['Objeto postado', 'accepted'], ['Objeto em transferência - por favor aguarde', 'in_transit'], ['Seu produto já está com a Jadlog.', 'accepted'],
+      ['Seu produto foi entregue em um ponto Jadlog.', 'accepted'], ['Seu produto foi coletado no ponto de apoio e já está com a Jadlog.', 'accepted'],
       ['Objeto recebido pelos Correios do Brasil', 'in_transit'], ['Necessidade de informar CPF/CNPJ do destinatário', 'customs'],
       ['Received by carrier', 'in_transit'],
       ['Cambio disposizioni di consegna', 'in_transit'],
