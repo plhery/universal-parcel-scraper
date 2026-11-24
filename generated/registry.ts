@@ -459,6 +459,7 @@ import { adapter as hanjin } from '../carriers/hanjin/adapter.js';
 import { adapter as hapagLloyd } from '../carriers/hapag-lloyd/adapter.js';
 import { adapter as happyPost } from '../carriers/happy-post/adapter.js';
 import { adapter as haypost } from '../carriers/haypost/adapter.js';
+import { adapter as hcrd } from '../carriers/hcrd/adapter.js';
 import { adapter as hctLogistics } from '../carriers/hct-logistics/adapter.js';
 import { adapter as hecnyShipping } from '../carriers/hecny-shipping/adapter.js';
 import { adapter as hedeShipping } from '../carriers/hede-shipping/adapter.js';
@@ -560,6 +561,7 @@ import { adapter as jordanPost } from '../carriers/jordan-post/adapter.js';
 import { adapter as jrsExpress } from '../carriers/jrs-express/adapter.js';
 import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
+import { adapter as jthq } from '../carriers/jthq/adapter.js';
 import { adapter as jtlExpressId } from '../carriers/jtl-express-id/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
 import { adapter as jumppointInternational } from '../carriers/jumppoint-international/adapter.js';
@@ -1089,6 +1091,7 @@ import { adapter as volarisCargo } from '../carriers/volaris-cargo/adapter.js';
 import { adapter as vozovoz } from '../carriers/vozovoz/adapter.js';
 import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as vtFreightExpress } from '../carriers/vt-freight-express/adapter.js';
+import { adapter as vyang } from '../carriers/vyang/adapter.js';
 import { adapter as wahana } from '../carriers/wahana/adapter.js';
 import { adapter as walkerLogistics } from '../carriers/walker-logistics/adapter.js';
 import { adapter as walleniusWilhelmsen } from '../carriers/wallenius-wilhelmsen/adapter.js';
@@ -1625,6 +1628,7 @@ export const REGISTRY: RegistryDefinition = {
     "hapag-lloyd": hapagLloyd,
     "happy-post": happyPost,
     "haypost": haypost,
+    "hcrd": hcrd,
     "hct-logistics": hctLogistics,
     "hecny-shipping": hecnyShipping,
     "hede-shipping": hedeShipping,
@@ -1726,6 +1730,7 @@ export const REGISTRY: RegistryDefinition = {
     "jrs-express": jrsExpress,
     "jrt": jrt,
     "js-express": jsExpress,
+    "jthq": jthq,
     "jtl-express-id": jtlExpressId,
     "jumppoint": jumppoint,
     "jumppoint-international": jumppointInternational,
@@ -2255,6 +2260,7 @@ export const REGISTRY: RegistryDefinition = {
     "vozovoz": vozovoz,
     "vrl-logistics": vrlLogistics,
     "vt-freight-express": vtFreightExpress,
+    "vyang": vyang,
     "wahana": wahana,
     "walker-logistics": walkerLogistics,
     "wallenius-wilhelmsen": walleniusWilhelmsen,
@@ -3151,6 +3157,7 @@ export const REGISTRY: RegistryDefinition = {
     "hart2hart-express": "universal",
     "hartmann-international": "universal",
     "haypost": "haypost",
+    "hcrd": "hcrd",
     "hct-logistics": "hct-logistics",
     "hecny-ecom": "universal",
     "hecny-shipping": "hecny-shipping",
@@ -3324,6 +3331,7 @@ export const REGISTRY: RegistryDefinition = {
     "jrs-express": "jrs-express",
     "jrt": "jrt",
     "js-express": "js-express",
+    "jthq": "jthq",
     "jtl-express-id": "jtl-express-id",
     "jumppoint": "jumppoint",
     "jumppoint-international": "jumppoint-international",
@@ -4259,6 +4267,7 @@ export const REGISTRY: RegistryDefinition = {
     "vozovoz": "vozovoz",
     "vrl-logistics": "vrl-logistics",
     "vt-freight-express": "vt-freight-express",
+    "vyang": "vyang",
     "w-express-ph": "universal",
     "wahana": "wahana",
     "wakilni": "universal",

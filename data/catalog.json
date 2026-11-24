@@ -32665,6 +32665,37 @@
       }
     ]
   },
+  "hcrd": {
+    "displayName": "HCRD",
+    "color": "#0167ae",
+    "aliases": [
+      "惠程荣达",
+      "许昌市惠程荣达货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hcrd"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.xchcrd.com",
+          "xchcrd.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hct-logistics": {
     "displayName": "HCT Logistics",
     "color": "#004b97",
@@ -38127,6 +38158,36 @@
         "confidence": "low"
       }
     ]
+  },
+  "jthq": {
+    "displayName": "JTHQ",
+    "color": "#e23e35",
+    "aliases": [
+      "极通环球",
+      "深圳市极通环球供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jthq"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "jthq.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "jtl-express-id": {
     "displayName": "JTL Express",
@@ -68413,6 +68474,38 @@
           "portal.vtfe.com.au"
         ],
         "path": "^/Track/VTFE/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "vyang": {
+    "displayName": "VYANG International",
+    "color": "#295dc5",
+    "aliases": [
+      "VYANG",
+      "维央国际",
+      "深圳市维央国际供应链有限公司",
+      "深圳市维央国际贸易有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "vyang"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "43.136.110.132"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
       }
     ],
     "detectionRules": []

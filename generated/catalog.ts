@@ -32669,6 +32669,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "hcrd": {
+    "displayName": "HCRD",
+    "color": "#0167ae",
+    "aliases": [
+      "惠程荣达",
+      "许昌市惠程荣达货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hcrd"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.xchcrd.com",
+          "xchcrd.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hct-logistics": {
     "displayName": "HCT Logistics",
     "color": "#004b97",
@@ -38131,6 +38162,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "jthq": {
+    "displayName": "JTHQ",
+    "color": "#e23e35",
+    "aliases": [
+      "极通环球",
+      "深圳市极通环球供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jthq"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "jthq.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "jtl-express-id": {
     "displayName": "JTL Express",
@@ -68421,6 +68482,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "vyang": {
+    "displayName": "VYANG International",
+    "color": "#295dc5",
+    "aliases": [
+      "VYANG",
+      "维央国际",
+      "深圳市维央国际供应链有限公司",
+      "深圳市维央国际贸易有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "vyang"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "43.136.110.132"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "w-express-ph": {
     "displayName": "W Express",
     "color": "#1e62af",
@@ -73330,6 +73423,7 @@ export const CARRIER_IDS = [
   "hart2hart-express",
   "hartmann-international",
   "haypost",
+  "hcrd",
   "hct-logistics",
   "hecny-ecom",
   "hecny-shipping",
@@ -73493,6 +73587,7 @@ export const CARRIER_IDS = [
   "jrs-express",
   "jrt",
   "js-express",
+  "jthq",
   "jtl-express-id",
   "jumppoint",
   "jumppoint-international",
@@ -74384,6 +74479,7 @@ export const CARRIER_IDS = [
   "vozovoz",
   "vrl-logistics",
   "vt-freight-express",
+  "vyang",
   "w-express-ph",
   "wahana",
   "wakilni",
@@ -75393,6 +75489,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hart2hart-express": [],
   "hartmann-international": [],
   "haypost": ["haypost-s10"],
+  "hcrd": [],
   "hct-logistics": [],
   "hecny-ecom": [],
   "hecny-shipping": [],
@@ -75556,6 +75653,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
   "js-express": ["js-express-1","js-express-jch"],
+  "jthq": [],
   "jtl-express-id": [],
   "jumppoint": ["jumppoint-1"],
   "jumppoint-international": ["jumppoint-international-1"],
@@ -76447,6 +76545,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "vozovoz": [],
   "vrl-logistics": [],
   "vt-freight-express": [],
+  "vyang": [],
   "w-express-ph": [],
   "wahana": [],
   "wakilni": [],

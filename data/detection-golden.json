@@ -98953,6 +98953,30 @@
     ]
   },
   {
+    "input": "HC0003010989RD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HC0003011885RD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HC0003013565RD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HC0003031059RD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "HC019942965LT",
     "carrier": "unknown",
     "confidence": "low",
@@ -101548,6 +101572,36 @@
     "candidates": [
       "j-and-t-middle-east"
     ]
+  },
+  {
+    "input": "JTHQ022557630284",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "JTHQ023937990657",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "JTHQ024154980703",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "JTHQ024866600547",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "JTHQ024866620735",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "JTUK100004930604",
@@ -120092,6 +120146,12 @@
       "tnt-au",
       "purolator"
     ]
+  },
+  {
+    "input": "VY000010380781YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "W01019874",
