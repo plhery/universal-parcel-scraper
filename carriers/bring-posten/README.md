@@ -22,8 +22,8 @@ identifier must match exactly. A parcel's SSCC typed with its 00 identifier is
 asked as the 18-digit parcel number, which the result reports. An item from
 abroad is its own consignment: the reply counts no items and names the piece
 by the number asked. Before Posten handles such an item, the page names it
-under no brand with the sending post's scans: Posten has no history of it yet,
-which is not a changed reply. This route is
+under no brand with the sending post's scans: Posten lists the item without a
+scan of its own yet, which is not a changed reply. This route is
 separate from the authenticated
 [developer API](https://developer.bring.com/api/tracking/).
 

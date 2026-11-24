@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -94,9 +94,9 @@ export function parseBring(payload: unknown, rawNumber: string): CarrierResult {
     || typeof consignment.consignmentId !== 'string' || typeof parcel.packageNumber !== 'string'
     || (consignment.consignmentId !== number && parcel.packageNumber !== number)) throw new SchemaError('Bring', 'Different consignment or parcel');
   // Mail from abroad that Posten has not handled yet: the page names the item by its own number under no brand,
-  // with the sending post's scans. Posten has no history of it yet; the reply has not changed.
+  // with the sending post's scans. Posten lists the item without a scan of its own yet; the reply has not changed.
   if (parcel.brand === 'UNDEFINED' && /^[A-Z]{2}\d{9}[A-Z]{2}$/.test(number) && parcel.packageNumber === number) {
-    throw new IndeterminateError('Bring', 'Posten has not handled this item from abroad yet');
+    throw new NoHistoryError('Bring', 'Posten has not handled this item from abroad yet', { reason: 'listed' });
   }
   if (!['POSTEN', 'BRING'].includes(parcel.brand)) throw new SchemaError('Bring', 'Unknown brand');
   if (!isRecord(parcel.domain) || !isRecord(parcel.domain.latestSignificantEvent)
