@@ -11,6 +11,24 @@
       "note": "The flight's take-off from China, at the airport's code."
     },
     {
+      "code": "CD001",
+      "wording": "Salida de Aduana",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Customs letting the parcel out in the transit country on the way to Colombia, on that country's clock, the day after the flight from China and days before the onward flight."
+    },
+    {
+      "code": "WSO111",
+      "wording": "International Gateway released",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The gateway's release of the parcel to the destination country, placed in that country an hour before the landing at its airport."
+    },
+    {
       "code": "WSD00",
       "wording": "arrived at airport",
       "stage": "in_transit",

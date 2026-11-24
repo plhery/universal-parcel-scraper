@@ -34,6 +34,10 @@ const RAIL: ReadonlyMap<string, Stage> = new Map<string, Stage>([
 // and `WSD` codes at destination.
 const SCANS: ReadonlyMap<string, LionStatus> = new Map<string, LionStatus>([
   ['WSO04', { en: 'departed from airport', stage: 'in_transit' }],
+  // The transit country's customs letting the parcel out, the day after the flight from China, and the
+  // gateway's release to the destination country, an hour before the landing there.
+  ['CD001', { en: 'Salida de Aduana', stage: 'in_transit' }],
+  ['WSO111', { en: 'International Gateway released', stage: 'in_transit' }],
   ['WSD00', { en: 'arrived at airport', stage: 'in_transit' }],
   ['WSD02', { en: 'handover to lastmile', stage: 'in_transit' }],
   ['WSD051', { en: 'Arrived at sorting center', stage: 'in_transit' }],
