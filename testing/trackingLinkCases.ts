@@ -2802,6 +2802,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'booths-logistics', number: 'ZZ99000000',
     route: /^https:\/\/www\.booths\.co\.nz\/services\/tracking\/results\/\?reference=ZZ99000000$/,
     marker: /No results found for\s*ZZ99000000/ },
+  // The page fills its field from the or parameter, airbill and branch code with their hyphen, and asks the API for them.
+  { carrier: 'jrs-express', number: '9999999990-9990',
+    route: /^https:\/\/jrs-express\.com\/track\?or=9999999990-9990$/,
+    marker: /No tracking records were found for this tracking number/ },
 ];
 
 /**
