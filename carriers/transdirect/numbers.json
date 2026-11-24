@@ -16,7 +16,10 @@
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
-        "candidates": ["colis-prive", "purolator", "tnt-au"]
+        "candidates": [
+          "purolator",
+          "tnt-au"
+        ]
       }
     }
   ]

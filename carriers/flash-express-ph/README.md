@@ -60,8 +60,7 @@ challenge, not a missing parcel.
 
 Archived lookups on the tracker and customer reviews show a P, four digits, six or seven
 letters and digits, and a final letter. The low-confidence rule suggests Flash Express
-Philippines for that layout: the single-letter prefix carries little evidence on its own, and
-the twelve-character form also fits Colis Privé's generic alphanumeric rule. Recognition asks
+Philippines for that layout: the single-letter prefix carries little evidence on its own. Recognition asks
 the app's service. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links

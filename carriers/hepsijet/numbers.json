@@ -71,10 +71,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Customer complaint on Şikayetvar's HepsiJET page quoting it as the tracking code of a parcel sent with HepsiJET."
     },
@@ -93,10 +90,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "ParcelPanel's HepsiJET page offered it as a sample to try on 13 Oct 2026; it is not described as a live shipment."
     },

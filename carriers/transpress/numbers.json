@@ -37,10 +37,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The Plovdiv court decision identifies the waybill issued when Transpress accepted the consignment. The public tracker requires reCAPTCHA."
     }

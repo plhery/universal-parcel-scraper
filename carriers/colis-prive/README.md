@@ -38,11 +38,11 @@ recipient's postcode.
 - The postcode is what opens the page, so treat the whole value as a secret:
   never log it, quote it in an issue or put it in a fixture or `numbers.json`.
   The corpus keeps bare 12-character numbers only.
-- Yanwen's US last-mile numbers, `YW` with a hub code and twelve digits,
-  YWE's numbers, `YWE` and fourteen digits, BYT's, `BYT` and fourteen digits, GOFO's numbers, `GF` or `CI` with a
-  country code and thirteen digits, Cainiao's `CNG` numbers with fourteen digits
-  and numbers that open with DobroPost's prefix `DBRPST` also end in five digits;
-  detection does not read those as a postcode.
+- Detection takes the twelve characters only as at most two letters and then digits, the
+  shape of every known number. Three letters or more open other carriers' numbers, such as
+  Yanwen's `YW` with a hub code, YWE, BYT, GOFO's `GF` or `CI` with a country code, Cainiao's
+  `CNG` and DobroPost's `DBRPST`, even when they end in five digits. The adapter still takes
+  any twelve letters and digits from a link or a chosen carrier.
 - `.divDesti` lists the recipient's name, street, and postcode and town, one per line. It is
   read on its own and then removed, not filtered afterwards: a later selector can forget a
   filter, not a removal.

@@ -46,10 +46,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The DHL order code shown on DHL Freight's ActiveTracing for the consignment of that capture, with its history."
     },
@@ -68,10 +65,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up on DHL Freight's ActiveTracing as an order code; the opened capture shows a DHL Freight EuroConnect history."
     },
@@ -134,10 +128,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The order code shown on DHL Freight's ActiveTracing for the package of that capture, with its history."
     },
@@ -315,10 +306,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The order code shown on DHL Freight's ActiveTracing for the package of that capture."
     },
@@ -413,10 +401,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The order code shown on DHL Freight's ActiveTracing for the package of that capture."
     },

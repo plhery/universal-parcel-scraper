@@ -118,10 +118,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An alternative tracking number that Big Smart's tracking API accepts; the archived reply lists it beside Big Smart's own tracking number and shows the parcel delivered."
     }

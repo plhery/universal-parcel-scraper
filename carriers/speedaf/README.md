@@ -67,8 +67,7 @@ Speedaf numbers start with the destination country's code. Its tracker answers t
 
 Both rules take only a prefix for a country where Speedaf numbers have been seen. `speedaf-r`
 detects the second layout with high confidence: no other carrier's numbers in the corpus or the
-harvested pages end in a letter after nine digits, and it otherwise overlaps only Colis Privé's
-rule for any twelve characters, whose numbers end in digits. `speedaf-12` only suggests
+harvested pages end in a letter after nine digits. `speedaf-12` only suggests
 Speedaf, because the same country-and-digits shape turns up in Instabox and Bring samples. It
 takes `IE` and `CV` too: Speedaf's site lists a customer service in Ireland, its tracker answers
 a number in that layout with Cabo Verde as its destination, and numbers of both have been seen,

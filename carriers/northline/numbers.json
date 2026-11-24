@@ -73,10 +73,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A ProductReview.com.au reviewer gives it as the con number of a partly delivered Northline consignment booked through Freight Exchange."
     },

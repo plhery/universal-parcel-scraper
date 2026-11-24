@@ -17,10 +17,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The recipient published the P2G reference. Parcel2Go’s public tracker returned the matching order line and dated UK-to-Brazil scans."
     }

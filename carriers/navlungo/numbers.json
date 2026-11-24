@@ -17,10 +17,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The recipient published the domestic Navlungo delivery number. The guest tracker returned that same number with five dated scans."
     }

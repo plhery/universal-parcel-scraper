@@ -19,7 +19,6 @@
         "confidence": "low",
         "candidates": [
           "australia-post",
-          "colis-prive",
           "kuehne-nagel"
         ]
       },
@@ -43,7 +42,6 @@
         "confidence": "low",
         "candidates": [
           "australia-post",
-          "colis-prive",
           "kuehne-nagel"
         ]
       },
@@ -480,7 +478,6 @@
         "confidence": "low",
         "candidates": [
           "kuehne-nagel",
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]

@@ -18,7 +18,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "whiz-delivery"
         ]
       },
@@ -41,7 +40,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "whiz-delivery"
         ]
       },

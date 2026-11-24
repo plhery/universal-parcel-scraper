@@ -7,7 +7,7 @@
       "evidence": "public_shipment_report",
       "source": { "url": "https://es.marken.com/track-shipment?jobNumber=620X43658402", "access": "indexed_excerpt" },
       "context": { "reportedRole": "Marken Tracking ID on an indexed carrier shipment page", "assessment": "confirmed" },
-      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["australia-post", "colis-prive"] }
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["australia-post"] }
     },
     {
       "number": "620X42712895",
@@ -15,7 +15,7 @@
       "evidence": "public_shipment_report",
       "source": { "url": "https://www.marken.com/track-shipment?jobNumber=620X42712895", "access": "full_page" },
       "context": { "reportedRole": "Marken Tracking ID for a freight shipment with customs scans", "assessment": "confirmed" },
-      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["australia-post", "colis-prive"] }
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["australia-post"] }
     },
     {
       "number": "12847572",

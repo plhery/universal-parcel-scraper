@@ -66,8 +66,7 @@ collection points such as newsagencies. Tracked through the lookup its tracking 
 CouriersPlease's help centre says a consignment number is usually up to fifteen letters and
 digits and generally starts with `CP`. Complaints filed against CouriersPlease quote numbers of
 `CP`, a letter, a run of letters and digits and six or more digits, fourteen to nineteen
-characters in all; `couriersplease-1` claims them. Those of seventeen characters can end like
-a French postcode range, which Colis Privé's broad rule also suggests. One complaint quotes a
+characters in all; `couriersplease-1` claims them. One complaint quotes a
 twelve-character number without the prefix, and archived lookups include all-digit numbers;
 those are shapes many carriers share, so no rule claims them. The tracker also answers item
 labels and prepaid coupons by their own numbers. The samples and their sources are in

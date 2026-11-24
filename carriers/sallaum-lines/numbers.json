@@ -17,10 +17,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The first-party tracker returned the exact VIN, intake, vessel shipment and timed discharge in Lagos."
     },
@@ -40,10 +37,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The first-party tracker returned the exact VIN, intake and vessel shipment."
     }

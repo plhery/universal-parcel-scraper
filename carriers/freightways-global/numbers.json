@@ -93,10 +93,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived lookup on Freightways Global's tracker finds a domestic NZ Couriers job by this GoSweetSpot number. GoSweetSpot runs the tracker and numbers other shippers' consignments the same way, so the job is not shown to be Freightways Global's."
     },

@@ -98,7 +98,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -117,7 +116,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -138,7 +136,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -156,7 +153,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -174,7 +170,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -333,7 +328,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -357,7 +351,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -381,7 +374,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -405,7 +397,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -429,7 +420,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -559,10 +549,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A Cubyn number whose tracking page the Wayback Machine archived with its history. Cubyn's numbers are CUB and nine digits; the service has closed, and the carrier it handed a parcel to tracks it under its own number."
     }

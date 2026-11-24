@@ -71,10 +71,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A ComplaintsBoard complaint about XDP calls it the delivery tracking; it may be a merchant reference."
     },

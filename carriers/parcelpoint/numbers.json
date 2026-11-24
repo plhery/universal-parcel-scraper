@@ -16,10 +16,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived lookup on ParcelPoint's own tracker address carries this reference; the opened capture shows the tracker's page shell, and the history, drawn by script, is not visible."
     },
@@ -38,10 +35,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived lookup on ParcelPoint's own tracker address carries this reference; the capture was not opened and the tracker draws its history by script."
     },
@@ -60,10 +54,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived lookup on ParcelPoint's own tracker address carries this reference; the capture was not opened and the tracker draws its history by script."
     },
@@ -82,10 +73,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived lookup on ParcelPoint's own tracker address carries this reference; the capture was not opened and the tracker draws its history by script."
     },

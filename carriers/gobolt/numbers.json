@@ -50,10 +50,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Archived reply of GoBolt's own tracking API, which its tracker calls; it shows the shipment created in Markham."
     }

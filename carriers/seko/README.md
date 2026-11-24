@@ -69,10 +69,9 @@ five letters and seven digits, and nine digits. Addresses archived from OmniParc
 give GX and 17 or 18 digits, which it answers. OmniParcel also carries postal S10 numbers,
 which belong to the postal network that issued them.
 
-Australia Post, Day & Ross and DSV share the consignment layout, Colis Privé's numbers the
-five-letter one and many carriers nine digits, and Purolator's rule claims the package
-barcode's, so no rule claims SEKO numbers and recognition does not ask SEKO. The GX samples
-are too few for a rule. The samples and their sources are in [`numbers.json`](numbers.json).
+Australia Post, Day & Ross and DSV share the consignment layout, many carriers nine digits, and
+Purolator's rule claims the package barcode's, so no rule claims those, and recognition does not
+ask SEKO. The five-letter layout and the GX samples are too few for a rule. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

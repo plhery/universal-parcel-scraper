@@ -56,8 +56,7 @@ Australia Post. Tracked through the lookup its tracking page makes.
 
 The tracker gives `MPX` and nine digits as its example tracking ID, and `MPXL` and six digits
 beside it among the examples for tracking several parcels at once. `mailplus-au-1` suggests
-MailPlus for the first with low confidence, since only that example is public; Colis Privé
-takes the same twelve characters. The `MPXL` layout is an open gap: its one example also fits
+MailPlus for the first with low confidence, since only that example is public. The `MPXL` layout is an open gap: its one example also fits
 C Chez Vous. The tracker also takes the barcodes of the carriers MailPlus lodges parcels with,
 such as Australia Post's, which stay with those carriers' rules. The adapter takes any number
 of six to forty letters and digits with a digit and leaves the layout to the API. The samples

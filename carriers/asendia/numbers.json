@@ -208,10 +208,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Asendia USA's tracking returned this parcel's history, handed to USPS for Kyrgyzstan. One reported reference of this layout."
     },

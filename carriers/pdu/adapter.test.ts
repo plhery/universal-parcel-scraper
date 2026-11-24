@@ -130,8 +130,9 @@ describe('PDU guest adapter', () => {
     await expect(carrier(blocked).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
   });
 
-  it('is asked beside Colis Privé, whose numbers share the shape', () => {
-    expect(recognitionAskedCarriers(NUMBER)).toEqual(expect.arrayContaining(['pdu', 'colis-prive']));
+  it('is asked about its numbers, whose closing letters Colis Privé never prints', () => {
+    expect(recognitionAskedCarriers(NUMBER)).toContain('pdu');
+    expect(recognitionAskedCarriers(NUMBER)).not.toContain('colis-prive');
   });
 
   it('offers PDU for its numbers without claiming other layouts', () => {

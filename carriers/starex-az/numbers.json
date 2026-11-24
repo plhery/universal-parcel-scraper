@@ -16,10 +16,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A customer's complaint about Starex on bildir.az gives it as the parcel's tracking code; Starex's tracker returned its history."
     },
@@ -38,10 +35,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A customer's complaint about Starex on bildir.az gives it as the parcel's tracking code; Starex's tracker returned its history."
     },
@@ -60,10 +54,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A customer's complaint about Starex on bildir.az gives it as the parcel's tracking code; Starex's tracker returned its history."
     },
@@ -82,10 +73,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A customer's complaint about Starex on bildir.az gives it as the parcel's tracking code; Starex's tracker returned its history."
     },
@@ -104,10 +92,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A customer's complaint about Starex on bildir.az gives it as the parcel's tracking code; Starex's tracker returned its history."
     },
@@ -126,10 +111,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A customer's complaint about Starex on bildir.az gives it as the parcel's tracking code; Starex's tracker returned its history."
     },
@@ -148,10 +130,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A customer's complaint about Starex on bildir.az gives it as the parcel's tracking code; Starex's tracker returned its history."
     },
@@ -172,7 +151,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]

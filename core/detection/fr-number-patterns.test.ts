@@ -27,11 +27,22 @@ describe('French carrier number candidates', () => {
     }
   });
 
+  it('takes Colis Privé\'s twelve characters only as at most two letters and then digits', () => {
+    for (const number of ['AB123456789075001', 'A12345678901B1000', '123456789012L9999', 'AB1234567890', 'A12345678901', '123456789012']) {
+      expect(detectCarrierMatch(number).candidates, number).toContain('colis-prive');
+    }
+    // Three letters or more open other carriers' numbers, even when the last five digits look like a postcode.
+    for (const number of [
+      'JTAB1234567890123', 'JTABCD12345675001', 'JTAB12345678', 'ABC123456789', 'ABCDEF123456', 'A1B234567890', 'CONFIRMATION',
+      'YWLA0000000075001', 'XWLAX000000075001', 'YWE0000000A075001', 'GFUSA000000075001', 'DBRPSU00000075001',
+    ]) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('colis-prive');
+    }
+  });
+
   it('does not read a postcode into Yanwen\'s US last-mile numbers', () => {
     // YW, a US hub code and twelve digits: the last five look like a French postcode.
     expect(detectCarrierMatch('YWLAX000000075001')).toMatchObject({ carrier: 'yanwen', confidence: 'high', candidates: ['yanwen'] });
-    expect(detectCarrierMatch('YWLA0000000075001').candidates).toEqual(['colis-prive']);
-    expect(detectCarrierMatch('XWLAX000000075001').candidates).toEqual(['colis-prive']);
   });
 
   it("names YWE for YWE and fourteen digits, without reading a postcode into them", () => {
@@ -44,8 +55,6 @@ describe('French carrier number candidates', () => {
     // The fourteen digits close with a GS1 check digit, and a number that fails it is nobody's.
     expect(detectCarrierMatch('YWE00000000075001')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
     expect(checksumRejections('YWE00000000075001')).toEqual([{ carrier: 'ywe', rule: 'ywe-1', checksum: 'gs1-digits' }]);
-    // Twelve characters and a postcode that do not open with YWE and fourteen digits stay Colis Privé's.
-    expect(detectCarrierMatch('YWE0000000A075001').candidates).toEqual(['colis-prive']);
   });
 
   it("does not read a postcode into GOFO's 13-digit numbers", () => {
@@ -54,7 +63,6 @@ describe('French carrier number candidates', () => {
       expect(detectCarrierMatch(number).candidates).not.toContain('colis-prive');
     }
     expect(detectCarrierMatch('GFFR0000000075001')).toMatchObject({ carrier: 'gofo-fr', candidates: ['gofo-fr'] });
-    expect(detectCarrierMatch('GFUSA000000075001').candidates).toEqual(['colis-prive']);
   });
 
   it("suggests Mondial Relay for its label barcode's head when the parcel sequence is within the count", () => {
@@ -71,7 +79,6 @@ describe('French carrier number candidates', () => {
     // DBRPST and eleven digits: the last five look like a French postcode.
     expect(detectCarrierMatch('DBRPST00000075001').candidates ?? []).not.toContain('colis-prive');
     expect(detectCarrierMatch('DBRPST0000075001')).toMatchObject({ carrier: 'dobropost', confidence: 'high' });
-    expect(detectCarrierMatch('DBRPSU00000075001').candidates).toEqual(['colis-prive']);
   });
 
   it('offers GLS France to HTTP recognition for shared numeric and alpha references', () => {

@@ -56,8 +56,7 @@ on its tracker. Tracked through the lookup its tracking page makes.
 ## Numbers
 
 SkyPostal's tracker and customers' complaints show two layouts. `SKAMZUS` and ten digits is
-claimed by `skypostal-1`; Colis Privé's low rule also accepts some of these
-seventeen-character numbers. `SP`, eleven digits and `BR` is suggested by `skypostal-2` at low
+claimed by `skypostal-1`. `SP`, eleven digits and `BR` is suggested by `skypostal-2` at low
 confidence, because it is seen only on older Brazil shipments. Recent shipments' hub scans carry
 a label of `SP`, twelve digits and `BR`, which no rule claims. The tracker also follows Correios
 international numbers for Brazil parcels; generic postal detection handles those. The samples

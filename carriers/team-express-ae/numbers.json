@@ -16,10 +16,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An opened archived lookup on Team Express's own tracker shows this airwaybill's export from Deira, Dubai, with its dated scans: collected at the despatch center, then forwarded to destination."
     },
@@ -38,10 +35,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An opened archived lookup on Team Express's own tracker shows this airwaybill's export from Deira, Dubai, with its dated scans: collected at the despatch center, then forwarded to destination."
     },
@@ -60,10 +54,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An opened archived lookup on Team Express's own tracker shows this airwaybill's export from Deira, Dubai, with its dated scans through to delivery and a separate forwarding number from the onward carrier."
     },

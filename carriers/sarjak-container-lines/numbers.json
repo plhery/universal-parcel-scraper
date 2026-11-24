@@ -16,10 +16,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Sarjak Container Lines tracking directory. iTrack holds it as a booking from Nhava Sheva to Sohar with one container, returned empty; a parser fixture is its reply."
     },

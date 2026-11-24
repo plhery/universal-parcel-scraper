@@ -62,7 +62,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]
@@ -106,10 +105,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived lookup on SEKO's own tracking page; the capture was not opened."
     },

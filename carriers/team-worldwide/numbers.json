@@ -33,10 +33,7 @@
       "shapeConfirmed": "2026-10-19",
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Invented placeholder for a two-digit year, a station code, a letter and six digits; Team Trac names the signer of each public sample of this layout. Its serial sits far beyond the range in use."
     },

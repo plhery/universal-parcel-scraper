@@ -40,8 +40,8 @@ describe('BYT numbers', () => {
     for (const other of ['BYT7391582046193', 'BYT739158204619370', 'BYS73915820461937', 'XBYT73915820461937', 'BYT7391582046193A']) {
       expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('byt');
     }
-    // Its last five digits are no postcode; twelve characters and a postcode that are not BYT's stay Colis Privé's.
-    expect(detectCarrierMatch('BYT73915820A61937').candidates).toEqual(['colis-prive']);
+    // Its last five digits are no postcode: Colis Privé's numbers open with two letters at most.
+    expect(detectCarrierMatch('BYT73915820A61937').candidates ?? []).not.toContain('colis-prive');
   });
 });
 

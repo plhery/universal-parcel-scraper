@@ -9,10 +9,7 @@
       "shapeConfirmed": "2026-09-12",
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Invented placeholder used as a shape check. Filed under ShipUp, which no rule claims. Its serial sits far beyond the range in use."
     }

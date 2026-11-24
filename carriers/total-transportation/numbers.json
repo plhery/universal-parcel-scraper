@@ -17,7 +17,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "purolator",
           "tnt-au"
         ]

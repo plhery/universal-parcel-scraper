@@ -13,10 +13,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Archived in the Wayback Machine as a call of the Dutch Dragonfly portal's delivery-instruction service. The portal's tracking service answers it with a delivered history."
     },
@@ -32,10 +29,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Archived in the Wayback Machine as a call of the Dutch Dragonfly portal's delivery-instruction service. The portal's tracking service answers it with a failed attempt and then a lost parcel."
     },
@@ -54,10 +48,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The Wayback Machine archived the Dutch tracking service's reply, a parcel brought back to the depot after a day out for delivery. The service has since dropped it and answers not_found."
     }

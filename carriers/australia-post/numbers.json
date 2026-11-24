@@ -92,8 +92,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "australia-post",
-          "colis-prive"
+          "australia-post"
         ]
       },
       "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A consignment number, which Colis Privé's twelve-character rule also takes."
@@ -115,8 +114,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "australia-post",
-          "colis-prive"
+          "australia-post"
         ]
       },
       "note": "An Australia Post tracking link archived by the Wayback Machine; the tracker returns its history. A consignment number whose location ID mixes a digit and letters."
@@ -219,8 +217,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "australia-post",
-          "colis-prive"
+          "australia-post"
         ]
       },
       "note": "Made-up number in the shape of a StarTrack Express consignment that Australia Post's tracker lists with its articles: three characters with a letter, then Z and eight digits. Its serial sits far beyond the range in use."

@@ -319,8 +319,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "aliexpress",
-          "colis-prive"
+          "aliexpress"
         ]
       },
       "note": "A Cainiao tracking link archived by the Wayback Machine. Cainiao's tracker returns its history. Detection suggests AliExpress beside Colis Privé's generic rule."
@@ -509,8 +508,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "aliexpress",
-          "colis-prive"
+          "aliexpress"
         ]
       },
       "note": "Cainiao's tracking reply, archived by the Wayback Machine, lists its history: an AliExpress parcel to the United States."
@@ -671,8 +669,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "aliexpress",
-          "colis-prive"
+          "aliexpress"
         ]
       },
       "note": "Cainiao's tracking reply, archived by the Wayback Machine, lists its history: an AliExpress parcel to Russia."
@@ -695,8 +692,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "aliexpress",
-          "colis-prive"
+          "aliexpress"
         ]
       },
       "note": "Cainiao's tracking reply, archived by the Wayback Machine, lists its history: an AliExpress parcel to Russia."

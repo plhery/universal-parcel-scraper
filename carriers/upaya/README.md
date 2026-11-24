@@ -47,7 +47,7 @@ page on `upaya.com.np` makes.
 Upaya's tracker asks for the tracking code from the SMS. Its example has six letters, five
 digits, a hyphen and seven digits, and a merchant's open-source integration shows a code of the
 same layout with four digits before the hyphen. `upaya-1` claims the layout when it is typed
-with its hyphen; without it the code fits Colis Privé's broad shape. The adapter looks up only
+with its hyphen. The adapter looks up only
 that layout. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links

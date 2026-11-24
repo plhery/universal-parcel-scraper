@@ -162,10 +162,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up on Border Express's tracker, as an archived address shows; the capture was not opened. A sender prefix with a longer range than the documented six digits."
     },

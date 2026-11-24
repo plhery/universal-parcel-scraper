@@ -55,9 +55,8 @@ collected. Tracked through the lookup its tracking app makes, with the delivery 
 
 ## Numbers
 
-Relay's tracking IDs are `RELR` and eight capital letters and digits. Colis Privé's
-twelve-character rule also takes that shape, but no other carrier's numbers start with Relay's
-prefix, so `relaytech-1` claims them. The sample and its source are in
+Relay's tracking IDs are `RELR` and eight capital letters and digits. No other carrier's
+numbers start with Relay's prefix, so `relaytech-1` claims them. The sample and its source are in
 [`numbers.json`](numbers.json).
 
 ## Testing

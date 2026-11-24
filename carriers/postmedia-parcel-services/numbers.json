@@ -9,10 +9,7 @@
       "shapeConfirmed": "2026-10-19",
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Invented placeholder for BNI and nine digits; every archived lookup on the tracker also carries the recipient's postal code, so none is kept. Its serial sits far beyond the range in use."
     }

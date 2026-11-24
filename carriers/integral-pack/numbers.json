@@ -19,8 +19,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "australia-post",
-          "colis-prive"
+          "australia-post"
         ]
       },
       "note": "Integral Pack's former tracking page carries it as the guide in its result template, under 'Consulta de tracking.' with the state 'Entregado'; the page does not say whether it was a live shipment."

@@ -45,8 +45,8 @@ preflight asks the tracker. `RWM` and nine digits is `kuehne-nagel-2`. `RAPI` an
 `kuehne-nagel-3`: the tracker files the samples ParcelPanel's Kuehne+Nagel page gives, and a
 parcel a universal provider relays from myKN, under Kuehne+Nagel's own tracking number. `NTG` and
 nine digits is `kuehne-nagel-4`: the tracker files such a number as the shipment's own tracking
-number. Purolator's and TNT Australia's rules for three letters and nine digits fit it too, and so
-does Colis Privé's for twelve letters and digits, so it is low confidence but preferred, and
+number. Purolator's and TNT Australia's rules for three letters and nine digits fit it too, so it
+is low confidence but preferred, and
 recognition asks Kuehne+Nagel first. Waybills and customer
 references have no rule of their own.
 

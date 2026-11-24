@@ -47,8 +47,7 @@ Tracked through the lookup its tracking page makes.
 ## Numbers
 
 Starex's tracker shows `STRAZ` and twelve digits. Customers' public complaints give such
-numbers, and the tracker knows them. Colis Privé's catch-all rule takes the shape, so no rule
-claims it yet.
+numbers, and the tracker knows them. No rule claims the shape.
 
 An archived lookup on Starex's former parcel page carries `STR` and nine digits. That is
 inside the three letters and nine digits that `purolator-2` claims, and one lookup is too

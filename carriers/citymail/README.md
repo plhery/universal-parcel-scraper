@@ -45,8 +45,7 @@ CityMail's tracker asks for the parcel reference from its SMS or email. Lookups 
 its tracker show references of `BCM`, one to three letters and seven to nine digits; the
 letters after `BCM` change with the sender, and the Spåra paket page's own example has the
 same layout. `citymail-1` claims that family at high confidence, so recognition is not needed
-to settle it. Its twelve-character references also fit the GoGo Xpress and Colis Privé
-twelve-character rules, which is declared. CityMail's integration document has a sender build
+to settle it. CityMail's integration document has a sender build
 the reference from a prefix CityMail gives it and an identifier of its own. Some senders'
 references are `BCM`, two letters, thirteen digits and `CN`; the tracker answers them with
 CityMail's own scans, and `citymail-2` claims that layout at high confidence too.

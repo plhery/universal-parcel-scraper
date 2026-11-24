@@ -507,7 +507,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "rozetka-delivery"
         ]
       },
@@ -530,7 +529,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "rozetka-delivery"
         ]
       },

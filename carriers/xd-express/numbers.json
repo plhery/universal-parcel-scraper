@@ -18,10 +18,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The public tracking history identifies XD Express and includes its Australia export and China arrival scans before domestic delivery. The carrier tracker currently reports no tracking information."
     }

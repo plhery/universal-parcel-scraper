@@ -54,10 +54,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Qatar Navigation Lines tracking directory. Milaha's tracker holds it as a booking from Nhava Sheva to Sohar, returned empty."
     },

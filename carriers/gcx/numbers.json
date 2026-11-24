@@ -60,10 +60,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The recipient posts this exact tracking input in their GCX review or complaint. The catalogued public tracking page returned HTTP 404 before a shipment lookup could be submitted."
     }

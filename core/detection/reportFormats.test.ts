@@ -306,7 +306,7 @@ describe('evidence-backed tracking formats', () => {
     for (const input of ['AALZJR', 'aalzjr', ' ABCDEF ']) expect(validTrackingNumber(input)).toBe(true);
     // No carrier issues seven letters, and twelve are outside what a rule may claim.
     for (const input of ['ABCDE', 'ABCDEFG', 'ABCDEFGHIJ', 'CONFIRMATION', 'AAL ZJR', 'AAL-ZJR', 'thank you', 'ÀBCDEF']) expect(validTrackingNumber(input)).toBe(false);
-    expect(detectCarrierMatch('CONFIRMATION').confidence).toBe('low');
+    expect(detectCarrierMatch('CONFIRMATION').confidence).toBe('none');
     expect(parseTrackingInput('bonjour').source).toBe('none');
     expect(parseTrackingInput('aalzjr')).toMatchObject({ trackingNumber: 'aalzjr', carrier: 'unknown', confidence: 'low', candidates: ['gls-ch', 'gls-de'], source: 'number' });
     // A word after a tracking label, or anywhere in a message, is not a number.

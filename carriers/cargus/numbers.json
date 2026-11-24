@@ -247,10 +247,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up through the tracking script of Cargus's former site, as an archived address shows; the capture was not opened."
     },
@@ -269,10 +266,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up through the tracking script of Cargus's former site, as an archived address shows; the capture was not opened."
     },
@@ -291,10 +285,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up through the tracking script of Cargus's former site, as an archived address shows; the capture was not opened."
     }

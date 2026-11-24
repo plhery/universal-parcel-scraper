@@ -16,10 +16,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Valencia to Algiers with one container, collected and returned empty; the parser fixture is its reply."
     },
@@ -38,10 +35,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Barcelona to Bejaia with one container, transshipped at Valencia; the parser fixture is its reply."
     },
@@ -60,10 +54,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Leixões to Casablanca with three containers, whose collection and empty return come without a bill; the parser fixture is its reply."
     },
@@ -82,10 +73,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Sagunto to Tunis with one container, whose loading it files under another bill; the parser fixture is its reply."
     },
@@ -104,10 +92,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Barcelona to Casablanca with one container, listed with its earlier trips; the parser fixture is its reply."
     },
@@ -126,10 +111,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Romocean tracking directory. The tracker lists one container for it, whose history holds only an earlier bill’s moves; the parser fixture is its reply."
     },
@@ -148,10 +130,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Listed in the public Romocean tracking directory. The tracker holds it as a bill from Valencia to Algiers with one container, collected and returned empty."
     }

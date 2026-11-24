@@ -187,10 +187,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "ParcelPanel's AxleHire page offered it as a sample to try. Jitsu's tracking service knows it."
     }

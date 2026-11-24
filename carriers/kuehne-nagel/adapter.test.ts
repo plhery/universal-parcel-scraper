@@ -351,11 +351,11 @@ describe('Kuehne+Nagel search', () => {
     for (const number of ['RAPI9990001', 'RAPI999000001', 'RAPX99900001', 'XRAPI9990001']) {
       expect(detectCarrierMatch(number).candidates, number).not.toContain('kuehne-nagel');
     }
-    // Its NTG tracking numbers: NTG and nine digits exactly, a shape Purolator's, TNT Australia's and Colis Privé's rules
-    // take too, so Kuehne+Nagel is preferred and asked first wherever the lookup comes from.
+    // Its NTG tracking numbers: NTG and nine digits exactly, a shape Purolator's and TNT Australia's rules take too,
+    // so Kuehne+Nagel is preferred and asked first wherever the lookup comes from.
     for (const number of ['NTG999000001', 'ntg 999 000 001']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ confidence: 'low', preferred: ['kuehne-nagel'] });
-      expect(detectCarrierMatch(number).candidates, number).toEqual(['kuehne-nagel', 'colis-prive', 'purolator', 'tnt-au']);
+      expect(detectCarrierMatch(number).candidates, number).toEqual(['kuehne-nagel', 'purolator', 'tnt-au']);
     }
     for (const countryHint of [undefined, 'DE', 'AU', 'CA']) {
       expect(recognitionCandidates('NTG999000001', { countryHint })[0]?.carrier, countryHint).toBe('kuehne-nagel');

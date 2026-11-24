@@ -33,8 +33,7 @@ Recognition asks the same page.
 
 ## Numbers
 
-Three letters and nine digits are also Purolator's lettered PINs, and Colis Privé takes any twelve
-letters and digits, so the rule is low confidence and recognition asks each of them. tnt.com's
+Three letters and nine digits are also Purolator's lettered PINs, so the rule is low confidence and recognition asks each of them. tnt.com's
 answers for archived numbers name these as TNT Australia domestic consignments.
 
 ## Limitations

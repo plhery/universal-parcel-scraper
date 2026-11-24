@@ -161,8 +161,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "stallion-express",
-          "colis-prive"
+          "stallion-express"
         ]
       },
       "note": "A Stallion Express reference that Intelcom's tracker accepts and returns history for. Stallion hands parcels to several carriers, so nothing in it names Intelcom."

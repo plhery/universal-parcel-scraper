@@ -15,10 +15,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "TrackShip's Walkers page gives it as a tracking code example."
     }

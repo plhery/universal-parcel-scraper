@@ -347,18 +347,18 @@ describe('Australia Post barcodes', () => {
     expect(detectCarrierMatch('90000000000000123000001')).toMatchObject({ carrier: 'unknown', candidates: ['correos-express'] });
   });
 
-  it('suggests Australia Post first for a twelve-character consignment number whose location ID has a letter', () => {
+  it('suggests Australia Post for a twelve-character consignment number whose location ID has a letter', () => {
     expect(detectCarrierMatch('33ABC1234567')).toEqual({
-      carrier: 'unknown', confidence: 'low', candidates: ['australia-post', 'colis-prive'], preferred: ['australia-post'],
+      carrier: 'unknown', confidence: 'low', candidates: ['australia-post'], preferred: ['australia-post'],
     });
-    expect(recognitionAskedCarriers('33ABC1234567')).toEqual(['australia-post', 'colis-prive']);
+    expect(recognitionAskedCarriers('33ABC1234567')).toEqual(['australia-post']);
     expect(detectCarrierMatch('343AY1234567').candidates).toContain('australia-post');
     expect(detectCarrierMatch('331231234567').candidates).not.toContain('australia-post');
   });
 
-  it.each(['ABCZ12345678', '1ABZ12345678', 'A1BZ12345678'])('suggests Australia Post first for the StarTrack consignment number %s', (number) => {
+  it.each(['ABCZ12345678', '1ABZ12345678', 'A1BZ12345678'])('suggests Australia Post for the StarTrack consignment number %s', (number) => {
     expect(detectCarrierMatch(number)).toEqual({
-      carrier: 'unknown', confidence: 'low', candidates: ['australia-post', 'colis-prive'], preferred: ['australia-post'],
+      carrier: 'unknown', confidence: 'low', candidates: ['australia-post'], preferred: ['australia-post'],
     });
     expect(recognitionAskedCarriers(number)[0]).toBe('australia-post');
   });

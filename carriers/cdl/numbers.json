@@ -145,10 +145,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up on CDL's own tracker as a package reference, as an archived address shows. CDL's tracking service lists it as a parcel's package reference, a field that also holds shippers' own references, so the prefix may be a shipper's rather than CDL's."
     },
@@ -168,10 +165,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up on CDL's own tracker as a package reference, as an archived address shows; the prefix may be a shipper's rather than CDL's."
     }

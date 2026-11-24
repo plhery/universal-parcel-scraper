@@ -18,8 +18,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "sendle",
-          "colis-prive"
+          "sendle"
         ]
       },
       "note": "Sendle's tracking page gives it as the example tracking number, printed under the label's barcode. The tracker knows it as a booked order."

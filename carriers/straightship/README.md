@@ -51,8 +51,7 @@ Ontario. Tracked through its tracking page's own lookup.
 Straightship numbers start with `STRTD` or `STRCA` followed by digits; `straightship-1` and
 `straightship-ca` claim the lengths archived lookups show. The thirteen digits after `STRCA`
 close with a Luhn check digit, which the rule asks for; `STRTD` numbers carry none. Its tracker also holds parcels under `STSH`, two letters and
-eleven digits. One archived lookup shows that layout and Colis Privé's rule takes the same
-characters, so `straightship-2` only offers Straightship and recognition asks its tracker. The
+eleven digits. Only one archived lookup shows that layout, so `straightship-2` only offers Straightship and recognition asks its tracker. The
 adapter takes both layouts. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links

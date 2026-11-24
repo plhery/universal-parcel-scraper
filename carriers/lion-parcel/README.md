@@ -56,9 +56,7 @@ Indonesia and an international service. Tracked through the lookup its tracking 
 Lion Parcel STT numbers are two digits, `LP` and thirteen digits. They appear in archived
 lookups on Lion Parcel's tracker and its tracking API, in complaints that name Lion Parcel and
 in Indonesian tracking guides, with the prefixes `11`, `88` and `99`. Rule `lion-parcel-1`
-claims the layout with high confidence because the `LP` infix points to Lion Parcel alone.
-Colis Privé's broad seventeen-character rule also takes many of these numbers, which the
-collision registry records. The samples and their sources are in [`numbers.json`](numbers.json).
+claims the layout with high confidence because the `LP` infix points to Lion Parcel alone. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

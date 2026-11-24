@@ -265,10 +265,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "A Detik Finance guide to Indah Cargo tracking prints it as an example resi; it lacks the digit after the branch code that the other numbers carry. Indah Logistik's app lookup does not know it."
     }

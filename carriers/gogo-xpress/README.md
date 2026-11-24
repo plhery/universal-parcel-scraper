@@ -59,7 +59,7 @@ and digits in every group. Archived replies of its tracking API show such number
 history.
 
 `gogo-xpress-1` claims the hyphenated layout when it contains a letter. Typed without hyphens
-the twelve characters fit Colis Privé's broad shape, so they stay unclaimed. All-digit groups
+the twelve characters fit other carriers' twelve-character shapes, so they stay unclaimed. All-digit groups
 are left to the Japanese carriers that print them the same way, and the adapter does not send
 them. The samples and their sources are in [`numbers.json`](numbers.json).
 

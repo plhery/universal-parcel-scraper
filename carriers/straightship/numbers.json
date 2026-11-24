@@ -189,7 +189,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "straightship"
         ]
       },

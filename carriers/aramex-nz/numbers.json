@@ -151,7 +151,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive",
           "aramex-au",
           "aramex-nz"
         ]

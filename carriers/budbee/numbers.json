@@ -72,10 +72,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Archived lookup on Budbee's own tracker; the opened capture shows the verification step that asks for the recipient's email or phone, so the history was not visible."
     }

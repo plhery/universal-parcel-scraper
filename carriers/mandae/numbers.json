@@ -130,10 +130,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived lookup on Mandaê's Rastreaê tracker asked for this code; the capture was not opened, so the history was not visible."
     },

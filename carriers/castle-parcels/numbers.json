@@ -64,10 +64,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "Castle Parcels' Wellington ticket guide shows it on its national distribution ticket: a product code with digits and the ticket number."
     },

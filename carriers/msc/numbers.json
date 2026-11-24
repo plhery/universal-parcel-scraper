@@ -18,10 +18,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "The sample import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Vitoria through Rio de Janeiro to New York, returned empty."
     },
@@ -63,10 +60,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Vitoria to Norfolk, then by rail to East Saint Louis, returned empty to a rail ramp in Saint Louis."
     },
@@ -87,10 +81,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Salvador through Panama to Long Beach, ending with the import cycle's end."
     },
@@ -111,10 +102,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Salvador through Panama to Long Beach, ending with the import cycle's end."
     },
@@ -135,10 +123,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An import record listed under MSC's MEDU carrier code gives this master bill. MSC's tracker returns its one container from Rio de Janeiro through Antwerp and Sines to Boston, returned empty."
     }

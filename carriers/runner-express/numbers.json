@@ -16,10 +16,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "confidence": "none"
       },
       "note": "An archived ParcelPanel Runner Express page offered it to try. Runner Express's tracker answers it with a parcel received at its Shenzhen warehouse, flown to Israel and cleared, left uncollected at a service point and returned to the shipper."
     }
