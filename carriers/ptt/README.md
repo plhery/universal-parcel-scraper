@@ -18,9 +18,10 @@ barcode PTT rejects. A redirect is PTT's firewall turning the request away to it
 is a challenge. Block pages, empty replies, HTTP errors and malformed replies keep their own
 failure kinds. Recognition uses the same lookup.
 
-The tracking window on `www.ptt.gov.tr` reads a different service, which asks for a Cloudflare
-Turnstile token before each lookup, and `gonderitakip.ptt.gov.tr` redirects to that home page.
-The adapter reads neither.
+The tracking window on `www.ptt.gov.tr` reads a different service on `api.ptt.gov.tr`: an
+invisible Cloudflare Turnstile check, whose token `POST /api/TrackingToken` exchanges for an
+`X-Tracking-Token` header, then `POST /api/ShipmentTracking` with the number as a JSON string.
+`gonderitakip.ptt.gov.tr` redirects to that home page. The adapter reads neither.
 
 ## Numbers
 
@@ -54,6 +55,10 @@ delivery, while it waits there or once it was collected there. An office holding
 collected, "(MEVKUF)", is an exception. The weight is given in grams and kept in kilograms.
 
 ## Limitations
+
+The app's service accepts connections only from Turkish networks, and so does the website's
+`api.ptt.gov.tr`: elsewhere the connection times out or is reset, which stays a network failure
+rather than a missing item. Tracking from outside Turkey needs a Turkish egress.
 
 Items from abroad by their foreign S10 code have not been seen with live history. The reply has
 no estimated delivery date or service name.
