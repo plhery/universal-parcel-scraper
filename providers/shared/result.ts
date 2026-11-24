@@ -538,6 +538,12 @@ function providerWordingStage(description: string): Stage | undefined {
   // A line's truck taking the parcel from its hub towards the airport, and the hand-over to the airlines after the
   // truck arrived, in the forwarder's English as ParcelsApp relays it naming no carrier: "On truck", "Handovered to airlines".
   if (/^on (?:the )?truck[.!]?$|^handovered to (?:the )?airlines?[.!]?$/i.test(value)) return 'in_transit';
+  // Suhu's operation centre sending the parcel on, and an office of exchange receiving it, as ParcelsApp relays them
+  // naming no carrier ("Cargo leaves operation center", "Received at office of exchange"), as Suhu's map reads the first.
+  if (/^cargo leaves (?:the )?operation cent(?:er|re)[.!]?$|^received at (?:the )?office of exchange[.!]?$/i.test(value)) return 'in_transit';
+  // A facility named by its code, three letters and two digits, receiving the parcel after the flight, as Ship24 relays
+  // it on HuaHan's line: "Parcel received by ABC01.". A code names no recipient.
+  if (/^parcel received by [a-z]{3}\d{2}[.!]?$/i.test(value)) return 'in_transit';
   // A forwarder's arrival at the destination port, worded as a delivery, also after its Chinese
   // ("picked up at the destination port"), and its order data sent to the last-mile carrier.
   if (/^(?:目的港已提货\s*)?delivery has been made at the destination port[.!]?$|^目的港已提货$/iu.test(value)) return 'in_transit';

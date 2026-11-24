@@ -472,6 +472,15 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00+08:00', 'On truck for delivery')).not.toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
   });
 
+  it("reads Suhu's operation centre sending the parcel on, an office of exchange's receipt and a facility's by its code, as providers relay them", () => {
+    for (const wording of ['Cargo leaves operation center', 'Received at office of exchange', 'Parcel received by ABC01.']) {
+      expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
+    }
+    // A person who received the parcel is no facility's code.
+    expect(event('2026-01-07T12:45:00+08:00', 'Parcel received by Sample')).not.toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+  });
+
   it("reads HuaHan's pallet broken down after the flight and its transfer to the last mile's number, and a return, as providers relay them", () => {
     for (const wording of ['Dismantling in progress', '拆板中。—Dismantling in progress', 'Re-route: 1Z9K99F99999999999']) {
       expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
