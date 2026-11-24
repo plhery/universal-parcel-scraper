@@ -340,6 +340,9 @@ describe('Postal Ninja result parsing', () => {
     // Cainiao names the sorting centre's town before some steps in China, in brackets.
     expect(times(parsePostalNinjaResponse(postal(item, 'CH', [{ ds: 'Cainiao', dt: '2026-08-05T10:31:23',
       dsc: '[Example Town] Package not accepted by sorting center' }]), item, 'Europe/Zurich', 'swiss-post'))).toEqual(['2026-08-05T02:31:23.000Z']);
+    // A delay at that sorting centre, which AliExpress's feed dates +08:00 at the same digits.
+    expect(times(parsePostalNinjaResponse(postal(item, 'CH', [{ ds: 'Cainiao', dt: '2026-08-06T00:19:51',
+      dsc: 'Processing delay at the sorting center', loc: 'Example Town' }]), item, 'Europe/Zurich', 'swiss-post'))).toEqual(['2026-08-05T16:19:51.000Z']);
     // Without a zone from routing, the step in China keeps its clock and the later scan its wall time.
     expect(times(parsePostalNinjaResponse(postal(item, 'CH', reply.track.events.slice(4, 6)), item))).toEqual([
       'local 2026-08-08T15:09:00', '2026-08-07T21:07:00.000Z',

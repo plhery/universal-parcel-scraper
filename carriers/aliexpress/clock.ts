@@ -20,7 +20,7 @@ export const CAINIAO_CHINA_LEG: readonly string[] = [
   'pending shipping by the seller', 'order received successfully', 'order has been cancelled', 'shipment cancelled', 'package finished', 'leave the warehouse',
   'departed from warehouse', 'accepted by carrier', 'shipment information received by warehouse electronically',
   'product sorting is completed', 'package ready for shipping from warehouse', 'package shipped out from warehouse',
-  '(?:inbound|outbound) in sorting center', 'processing at sorting center', 'departed from sorting center',
+  '(?:inbound|outbound) in sorting center', 'processing at sorting center', 'processing delay at (?:the )?sorting center', 'departed from sorting center',
   'package not accepted by sorting center', 'inbound failure in sorting center', 'package (?:received by|left) sorting center of transit',
   'last-mile delivery forecast',
   'arrived at departure transport hub', 'export customs clearance started', 'export clearance success',
