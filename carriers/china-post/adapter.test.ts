@@ -318,6 +318,12 @@ describe('China Post adapter', () => {
     expect(chinaPostRelayedStage('目的地转运失败')).toBeUndefined();
   });
 
+  it("reads the round relayed in Chinese, alone or as Track123 gives it with its code, the English and the place", () => {
+    for (const wording of ['出门投递', '出门投递【XX Dispatching【示例】']) expect(chinaPostRelayedStage(wording), wording).toBe('out_for_delivery');
+    expect(chinaPostEnglish('出门投递【XX Dispatching【示例】')).toBe('Out for delivery');
+    expect(chinaPostRelayedStage('出门投递失败')).toBeUndefined();
+  });
+
   it('reads the departure from the office of posting relayed in Chinese in transit, with or without the office', () => {
     for (const wording of ['离开收寄点【示例】', '离开收寄点']) expect(chinaPostRelayedStage(wording), wording).toBe('in_transit');
     expect(chinaPostRelayedStage('离开收寄点失败')).toBeUndefined();

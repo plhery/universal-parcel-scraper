@@ -213,7 +213,7 @@ export function chinaPostEnglish(wording: string): string | undefined {
 // place, a sorting or a dispatch to the delivering office, a flight between two cities, the closing of
 // an export dispatch, its hand-over to the carrier that flies it, the airline's receipt and
 // departure, the flight's landing (飞机进港) and the arrival in the destination country or at a
-// transit office abroad, the carrier's receipt and an arrival as 17TRACK words them, and export customs' presentation,
+// transit office abroad, the carrier's receipt and an arrival as 17TRACK words them, the round, and export customs' presentation,
 // hold for inspection and release, and import customs' abroad, as China Post's own codes 486, 493 and 487
 // read them. Also China Post's
 // receipt of the mail, and a centre sending the parcel back, as the airport's security check does
@@ -238,6 +238,9 @@ const RELAYED_STAGES: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^(?:承运商接收|抵达)$/u, 'in_transit'],
   // The departure from the office of posting, after the acceptance, as Track123 relays it with the office in brackets.
   [/^离开收寄点(?:【[^【】]+】)?$/u, 'in_transit'],
+  // The round, as Track123 relays it with its own code, the English and the place after the label, the outer bracket
+  // left open: "出门投递【XX Dispatching【…】".
+  [/^出门投递(?:【.+)?$/u, 'out_for_delivery'],
   [/^送交出口海关$/u, 'customs'],
   [/^出口海关\/放行$/u, 'in_transit'],
   [/^送交境外进口海关$/u, 'customs'],
