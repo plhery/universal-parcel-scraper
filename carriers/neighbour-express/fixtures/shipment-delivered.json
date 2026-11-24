@@ -1,0 +1,45 @@
+{
+  "code": "0",
+  "errmsg": "ok",
+  "data": [
+    {
+      "pkgNo": "NX7461938205JY",
+      "subOrderNo": "",
+      "orderStatus": "",
+      "destination": "SYNTHETIC PRIVATE DESTINATION",
+      "images": [
+        "https://example.invalid/synthetic-photo.jpg"
+      ],
+      "signImgUrl": "https://example.invalid/synthetic-signature.jpg",
+      "track": [
+        {
+          "code": 100,
+          "time": "2026-01-10 09:15:00",
+          "status": "",
+          "city": "Canada/ON/Vaughan",
+          "content": "shipment data generated in NB system",
+          "timezone": "UTC-5",
+          "address": "SYNTHETIC PRIVATE ADDRESS"
+        },
+        {
+          "code": 101,
+          "time": "2026-01-11 14:02:30",
+          "status": "",
+          "city": "Canada/ON/Vaughan",
+          "content": "Arrived at sorting center",
+          "timezone": "UTC-5",
+          "address": "SYNTHETIC PRIVATE ADDRESS"
+        },
+        {
+          "code": 203,
+          "time": "2026-01-13 16:40:05",
+          "status": "COMPLETED",
+          "city": "Canada/ON/Toronto",
+          "content": "Delivered",
+          "timezone": "UTC-5",
+          "address": "SYNTHETIC PRIVATE ADDRESS"
+        }
+      ]
+    }
+  ]
+}

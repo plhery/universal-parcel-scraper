@@ -35,6 +35,28 @@
       "stage": "delivered",
       "language": "en",
       "confirmedBy": "portal"
+    },
+    {
+      "code": "100",
+      "wording": "shipment data generated in NB system",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The shipment route's first row: the shipper's data reached Neighbour Express before it holds the parcel."
+    },
+    {
+      "code": "203",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The tracking page marks the shipment route's row with this code complete when the history has no 900."
+    },
+    {
+      "code": "900",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The tracking page marks the shipment route's row with this code complete whenever it appears."
     }
   ]
 }

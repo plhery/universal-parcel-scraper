@@ -2,18 +2,50 @@ import type { AdapterEnvironment, AdapterFactory, TrackingContext } from '../../
 import { BudgetExceededError, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
+import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
+import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
 import { isRecord } from '../../core/types.js';
-import { neighbourLookupUrl, neighbourNeedsVerification, neighbourPageUrl, NEIGHBOUR_MAX_BYTES, normalizeNeighbourNumber, parseNeighbour, PROVIDER } from './parser.js';
+import { isNeighbourReturn, neighbourLookupUrl, neighbourNeedsVerification, neighbourPageUrl, NEIGHBOUR_MAX_BYTES, NEIGHBOUR_ORIGIN,
+  NEIGHBOUR_SHIPMENT_URL, normalizeNeighbourNumber, parseNeighbour, parseNeighbourShipment, PROVIDER } from './parser.js';
 
 export class NeighbourExpressTracker {
   constructor(private readonly environment: AdapterEnvironment) {}
+
+  /** The shipment route takes no verification token: the page posts the reference with an empty postcode, which the service does not check. */
+  private async shipment(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
+    const { response, bytes } = await fetchBounded(NEIGHBOUR_SHIPMENT_URL, { method: 'POST', signal,
+      body: JSON.stringify({ pkgNos: number, zip: '' }), headers: {
+        Accept: 'application/json, text/plain, */*', 'Accept-Language': 'en-US', 'Content-Type': 'application/json',
+        Origin: NEIGHBOUR_ORIGIN, Referer: neighbourPageUrl(number), 'User-Agent': userAgentOf(this.environment.userAgent),
+      } }, { provider: PROVIDER, timeoutMs, maxBytes: NEIGHBOUR_MAX_BYTES, redirect: 'manual', fetcher: this.environment.fetcher,
+      allowHttpStatuses: [301, 302, 303, 307, 308, 404, 410] });
+    // A moved or missing route is an outage, not a missing shipment.
+    if (response.status !== 200) throw new TransportError(PROVIDER, 'Neighbour Express shipment tracking is unavailable', { status: response.status });
+    const text = decodeText(bytes);
+    if (!/^application\/json\b/i.test(response.headers.get('content-type') ?? '')) {
+      // A page in place of the JSON reply is a block or an outage, never a missing shipment.
+      if (/<(?:!doctype|html)\b/i.test(text)) throw new ChallengeError(PROVIDER, 'Neighbour Express answered its shipment route with a page');
+      throw new SchemaError(PROVIDER, 'Neighbour Express returned a shipment reply that is not JSON');
+    }
+    let data: unknown;
+    try { data = JSON.parse(text); } catch (error) { throw new SchemaError(PROVIDER, 'Neighbour Express returned invalid JSON', { cause: error }); }
+    return parseNeighbourShipment(data, number);
+  }
+
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     context.signal?.throwIfAborted();
     const number = normalizeNeighbourNumber(raw);
-    return runSteps({ carrier: 'neighbour-express', recorder: this.environment.recorder, signal: context.signal,
-      budgetMs: context.budgetMs ?? 75_000 }, [{ id: 'trawl', run: async ({ signal, remainingMs }) => {
+    const options = { carrier: 'neighbour-express', recorder: this.environment.recorder, signal: context.signal };
+    if (!isNeighbourReturn(number)) {
+      // A read that fails to reach the service, or hangs, is sent once more: the first try gets half of the budget.
+      return runSteps({ ...options, budgetMs: context.budgetMs ?? 20_000 }, [
+        { id: 'direct', run: ({ signal, remainingMs }) => this.shipment(number, signal, firstAttemptMs(remainingMs)) },
+        networkRetryStep(({ signal, remainingMs }) => this.shipment(number, signal, remainingMs)),
+      ]);
+    }
+    return runSteps({ ...options, budgetMs: context.budgetMs ?? 75_000 }, [{ id: 'trawl', run: async ({ signal, remainingMs }) => {
       const trawl = this.environment.trawl;
       if (!trawl) throw new ChallengeError(PROVIDER, 'Neighbour Express needs the browser tracking service');
       const started = Date.now(), url = neighbourPageUrl(number), lookup = neighbourLookupUrl(number);
@@ -67,5 +99,5 @@ export class NeighbourExpressTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new NeighbourExpressTracker(environment);
-  return { id: 'neighbour-express', steps: ['trawl'], recordsSteps: true, track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'neighbour-express', steps: ['trawl', 'direct', 'retry'], recordsSteps: true, track: (input, context) => tracker.fetch(input.number, context) };
 };

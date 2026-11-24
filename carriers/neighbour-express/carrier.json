@@ -18,12 +18,15 @@
     "mode": "automatic",
     "adapter": "neighbour-express",
     "steps": [
-      "trawl"
+      "trawl",
+      "direct",
+      "retry"
     ],
     "browser": true
   },
   "capabilities": [
-    "history"
+    "history",
+    "location"
   ],
   "portal": {
     "url": "https://neighbourexpress.com/track?no={trackingNumber}",
@@ -31,18 +34,23 @@
     "helpUrl": "https://neighbourexpress.com/support",
     "canaryUrl": "https://neighbourexpress.com/track",
     "shows": [
-      "Return tracking reference",
+      "Shipment and return tracking references",
       "Shipment milestones",
-      "Scan clocks and offsets"
+      "Scan cities",
+      "Scan clocks and offsets",
+      "Delivery photos"
     ],
     "scraped": [
-      "Return tracking reference",
+      "Shipment and return tracking references",
       "Shipment milestones",
+      "Scan cities",
       "Scan clocks and offsets"
     ],
     "discarded": [
       "Recipient details",
+      "Scan addresses",
       "Free-form notes",
+      "Delivery photos and signatures",
       "Verification state"
     ],
     "unavailable": [
