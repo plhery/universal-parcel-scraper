@@ -43518,6 +43518,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "mbe-es": {
+    "displayName": "MBE Spain",
+    "color": "#CC0000",
+    "aliases": [
+      "Mail Boxes Etc. Spain",
+      "Mail Boxes Etc. España",
+      "MBE España",
+      "MBE Spain 2000"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mbe-es",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.mbe.es/es/tracking",
+    "trackingUrlTemplate": "https://www.mbe.es/es/tracking?c={trackingNumber}",
+    "trackingSearchUrl": "https://www.mbe.es/es/tracking",
+    "helpUrl": "https://www.mbe.es/es/faq",
+    "linkRules": [
+      {
+        "domains": [
+          "mbe.es",
+          "www.mbe.es"
+        ],
+        "pathPattern": "^/es/tracking$",
+        "params": [
+          "c"
+        ],
+        "detectFromNumber": true
+      }
+    ],
+    "detectionRules": []
+  },
   "mds-collivery": {
     "displayName": "MDS Collivery",
     "color": "#00823d",
@@ -50779,6 +50818,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/[Mm]y[Pp]itt[Oo]hio/Shipping/LTL/TraceRequest/?$",
         "params": [
           "pro"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "planete-courrier": {
+    "displayName": "Planète Courrier",
+    "color": "#241F59",
+    "aliases": [
+      "Planete Courrier",
+      "Planète Courrier Inc."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "planete-courrier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.planetecourrier.com/fr/suivi-courrier.html",
+    "trackingUrlTemplate": "https://www.planetecourrier.com/fr/suivi-courrier.html?r={trackingNumber}&detail=true",
+    "trackingSearchUrl": "https://www.planetecourrier.com/fr/suivi-courrier.html",
+    "helpUrl": "https://www.planetecourrier.com/fr/nous-joindre.html",
+    "linkRules": [
+      {
+        "domains": [
+          "planetecourrier.com",
+          "www.planetecourrier.com"
+        ],
+        "pathPattern": "^/(?:fr/suivi-courrier|en/parcel-tracking)\\.html$",
+        "params": [
+          "r"
         ]
       }
     ],
@@ -73197,6 +73271,7 @@ export const CARRIER_IDS = [
   "mayiyinfu",
   "maystro-delivery",
   "mazet",
+  "mbe-es",
   "mds-collivery",
   "mebel-taxi",
   "meest",
@@ -73410,6 +73485,7 @@ export const CARRIER_IDS = [
   "pink-post",
   "pitney-bowes",
   "pitt-ohio",
+  "planete-courrier",
   "plycon",
   "pml-tw",
   "pmm",
@@ -75254,6 +75330,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mayiyinfu": ["mayiyinfu-1","mayiyinfu-2"],
   "maystro-delivery": [],
   "mazet": [],
+  "mbe-es": [],
   "mds-collivery": [],
   "mebel-taxi": [],
   "meest": ["meest-1","meest-2","meest-3","meest-4"],
@@ -75467,6 +75544,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pink-post": [],
   "pitney-bowes": ["pitney-bowes-1","pitney-bowes-2","pitney-bowes-3"],
   "pitt-ohio": [],
+  "planete-courrier": [],
   "plycon": [],
   "pml-tw": [],
   "pmm": [],

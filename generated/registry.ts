@@ -632,6 +632,7 @@ import { adapter as matkahuolto } from '../carriers/matkahuolto/adapter.js';
 import { adapter as matson } from '../carriers/matson/adapter.js';
 import { adapter as mauritiusPost } from '../carriers/mauritius-post/adapter.js';
 import { adapter as mayiyinfu } from '../carriers/mayiyinfu/adapter.js';
+import { adapter as mbeEs } from '../carriers/mbe-es/adapter.js';
 import { adapter as mdsCollivery } from '../carriers/mds-collivery/adapter.js';
 import { adapter as meest } from '../carriers/meest/adapter.js';
 import { adapter as meihooPegasus } from '../carriers/meihoo-pegasus/adapter.js';
@@ -747,6 +748,7 @@ import { adapter as pilotFreight } from '../carriers/pilot-freight/adapter.js';
 import { adapter as pinAg } from '../carriers/pin-ag/adapter.js';
 import { adapter as pitneyBowes } from '../carriers/pitney-bowes/adapter.js';
 import { adapter as pittOhio } from '../carriers/pitt-ohio/adapter.js';
+import { adapter as planeteCourrier } from '../carriers/planete-courrier/adapter.js';
 import { adapter as planzer } from '../carriers/planzer/adapter.js';
 import { adapter as pocztaPolska } from '../carriers/poczta-polska/adapter.js';
 import { adapter as polarExpress } from '../carriers/polar-express/adapter.js';
@@ -1752,6 +1754,7 @@ export const REGISTRY: RegistryDefinition = {
     "matson": matson,
     "mauritius-post": mauritiusPost,
     "mayiyinfu": mayiyinfu,
+    "mbe-es": mbeEs,
     "mds-collivery": mdsCollivery,
     "meest": meest,
     "meihoo-pegasus": meihooPegasus,
@@ -1867,6 +1870,7 @@ export const REGISTRY: RegistryDefinition = {
     "pin-ag": pinAg,
     "pitney-bowes": pitneyBowes,
     "pitt-ohio": pittOhio,
+    "planete-courrier": planeteCourrier,
     "planzer": planzer,
     "poczta-polska": pocztaPolska,
     "polar-express": polarExpress,
@@ -3400,6 +3404,7 @@ export const REGISTRY: RegistryDefinition = {
     "mayiyinfu": "mayiyinfu",
     "maystro-delivery": "universal",
     "mazet": "universal",
+    "mbe-es": "mbe-es",
     "mds-collivery": "mds-collivery",
     "mebel-taxi": "universal",
     "meest": "meest",
@@ -3623,6 +3628,7 @@ export const REGISTRY: RegistryDefinition = {
     "pink-post": "universal",
     "pitney-bowes": "pitney-bowes",
     "pitt-ohio": "pitt-ohio",
+    "planete-courrier": "planete-courrier",
     "planzer": "planzer",
     "plycon": "universal",
     "pml-tw": "universal",

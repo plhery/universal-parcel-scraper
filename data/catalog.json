@@ -43514,6 +43514,45 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "mbe-es": {
+    "displayName": "MBE Spain",
+    "color": "#CC0000",
+    "aliases": [
+      "Mail Boxes Etc. Spain",
+      "Mail Boxes Etc. España",
+      "MBE España",
+      "MBE Spain 2000"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mbe-es",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.mbe.es/es/tracking",
+    "trackingUrlTemplate": "https://www.mbe.es/es/tracking?c={trackingNumber}",
+    "trackingSearchUrl": "https://www.mbe.es/es/tracking",
+    "helpUrl": "https://www.mbe.es/es/faq",
+    "linkRules": [
+      {
+        "domains": [
+          "mbe.es",
+          "www.mbe.es"
+        ],
+        "pathPattern": "^/es/tracking$",
+        "params": [
+          "c"
+        ],
+        "detectFromNumber": true
+      }
+    ],
+    "detectionRules": []
+  },
   "mds-collivery": {
     "displayName": "MDS Collivery",
     "color": "#00823d",
@@ -50775,6 +50814,41 @@
         "pathPattern": "^/[Mm]y[Pp]itt[Oo]hio/Shipping/LTL/TraceRequest/?$",
         "params": [
           "pro"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "planete-courrier": {
+    "displayName": "Planète Courrier",
+    "color": "#241F59",
+    "aliases": [
+      "Planete Courrier",
+      "Planète Courrier Inc."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "planete-courrier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.planetecourrier.com/fr/suivi-courrier.html",
+    "trackingUrlTemplate": "https://www.planetecourrier.com/fr/suivi-courrier.html?r={trackingNumber}&detail=true",
+    "trackingSearchUrl": "https://www.planetecourrier.com/fr/suivi-courrier.html",
+    "helpUrl": "https://www.planetecourrier.com/fr/nous-joindre.html",
+    "linkRules": [
+      {
+        "domains": [
+          "planetecourrier.com",
+          "www.planetecourrier.com"
+        ],
+        "pathPattern": "^/(?:fr/suivi-courrier|en/parcel-tracking)\\.html$",
+        "params": [
+          "r"
         ]
       }
     ],

@@ -20472,6 +20472,16 @@
     ]
   },
   {
+    "input": "13458399",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
     "input": "1349107274",
     "carrier": "unknown",
     "confidence": "low",
@@ -20902,7 +20912,27 @@
     ]
   },
   {
+    "input": "13705192",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
     "input": "13737343",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
+    "input": "13749541",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -79141,6 +79171,14 @@
     ]
   },
   {
+    "input": "9381042",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
+    ]
+  },
+  {
     "input": "93823UJW",
     "carrier": "unknown",
     "confidence": "low",
@@ -87646,6 +87684,14 @@
     ]
   },
   {
+    "input": "CC224487115CA",
+    "carrier": "canada-post",
+    "confidence": "high",
+    "candidates": [
+      "canada-post"
+    ]
+  },
+  {
     "input": "CC242123085CA",
     "carrier": "canada-post",
     "confidence": "high",
@@ -88309,6 +88355,17 @@
     "confidence": "high",
     "candidates": [
       "dhl"
+    ]
+  },
+  {
+    "input": "CG041482775GH",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {
@@ -94581,6 +94638,12 @@
   },
   {
     "input": "ERF26391597",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "ES0061-0L-000000VTHP",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
