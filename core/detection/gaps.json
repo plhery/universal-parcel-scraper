@@ -316,6 +316,12 @@
     "reason": "Apple Express order numbers are a bare eight-digit run that many carriers share."
   },
   {
+    "carrier": "aqx-logistics",
+    "pattern": "^HF[0-9A-F]{8}$",
+    "kind": "open",
+    "reason": "Only AQX's own tracking page shows its HF- references, as examples; AQX documents no format."
+  },
+  {
     "carrier": "aramex",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

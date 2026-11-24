@@ -1147,6 +1147,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'top-logistics-au', number: 'TPL000000000',
     route: /^https:\/\/toplogistics\.com\.au\/\?s=TPL000000000$/,
     marker: /Search Reference Number/ },
+  // AQX's tracking page reads the number from `id` and looks it up on load.
+  { carrier: 'aqx-logistics', number: 'HF-00000000',
+    route: /^https:\/\/aqxlogistics\.com\/track\?id=HF-00000000$/,
+    marker: /Tracking Number Not Found/ },
   // BoxC's tracking app puts the number in its path into its field.
   { carrier: 'boxc', number: 'BOXC00000000999',
     route: /^https:\/\/boxc\.com\/track\/BOXC00000000999$/,

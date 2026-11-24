@@ -17,19 +17,58 @@
   "timezone": "America/Los_Angeles",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "aqx-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "service_name",
+    "destination_country",
+    "weight"
+  ],
   "portal": {
     "url": "https://aqxlogistics.com/track?id={trackingNumber}",
     "searchUrl": "https://aqxlogistics.com/track",
     "helpUrl": "https://aqxlogistics.com/faqs",
     "canaryUrl": "https://aqxlogistics.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "service_name",
+      "origin",
+      "destination",
+      "weight",
+      "piece_count",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "service_name",
+      "destination_country",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "piece_count",
+      "recipient_name",
+      "event_details"
+    ],
+    "unavailable": [
+      "eta",
+      "proof_of_delivery",
+      "delivery_partner"
+    ]
   },
   "links": [
     {

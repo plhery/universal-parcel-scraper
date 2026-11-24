@@ -1,5 +1,43 @@
 {
   "carrier": "aqx-logistics",
-  "gap": "No public page shows an AQX Logistics shipment reference beyond its tracker example.",
-  "records": []
+  "records": [
+    {
+      "number": "HF-BC5DCC0A",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://aqxlogistics.com/track",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example reference in the search field of AQX's tracking page. The tracker answers it as a delivered AQX Express Priority shipment to Saudi Arabia with its registration event."
+    },
+    {
+      "number": "HF-BD4A920D",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://aqxlogistics.com/track",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "AQX's pages link an OrderTracker tracking page for this reference in their structured data. The tracker answers it as a paid AQX Express Priority shipment to Australia with its label and registration events."
+    }
+  ]
 }

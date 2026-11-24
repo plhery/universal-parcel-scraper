@@ -1,4 +1,9 @@
 {
   "carrier": "aqx-logistics",
-  "entries": []
+  "entries": [
+    {"wording": "Shipment Request Received", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "An event: the shipment's order is registered in AQX's system, as its description says."},
+    {"wording": "AQX Air Waybill Generated", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "An event: AQX made the shipment's label for air dispatch, before it has the parcel."},
+    {"wording": "PAID", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The shipment's status once the sender paid for it, beside the label and registration events."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The shipment's status for a delivered shipment; the tracking page shows it in green."}
+  ]
 }
