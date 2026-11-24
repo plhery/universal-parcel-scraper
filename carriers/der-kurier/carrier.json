@@ -18,19 +18,39 @@
   "timezone": "Europe/Berlin",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "der-kurier",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://derkurier.de/sendungsverfolgung/?d-pt-search={trackingNumber}",
     "searchUrl": "https://derkurier.de/sendungsverfolgung/",
     "helpUrl": "https://derkurier.de/kontakt/",
     "canaryUrl": "https://derkurier.de/sendungsverfolgung/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "location",
+      "weight",
+      "service_name",
+      "delivery_partner",
+      "proof_of_delivery",
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

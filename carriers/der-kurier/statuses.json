@@ -1,4 +1,20 @@
 {
   "carrier": "der-kurier",
-  "entries": []
+  "entries": [
+    {"wording": "Daten erfasst", "stage": "registered", "language": "de", "confirmedBy": "live", "note": "The parcel's data were recorded; the export station takes the parcel in the same minute or later."},
+    {"wording": "Eingang Export", "stage": "accepted", "language": "de", "confirmedBy": "live", "note": "Received at the sending station, the export side of DER KURIER's overnight network."},
+    {"wording": "Export verladen", "stage": "in_transit", "language": "de", "confirmedBy": "live", "note": "Loaded at the sending station for the night's line haul."},
+    {"wording": "Linie beladen", "stage": "in_transit", "language": "de", "confirmedBy": "live", "note": "Loaded onto a line, the trunk run between a station and a hub."},
+    {"wording": "Linie entladen", "stage": "in_transit", "language": "de", "confirmedBy": "live"},
+    {"wording": "HUB entladen", "stage": "in_transit", "language": "de", "confirmedBy": "live"},
+    {"wording": "HUB beladen", "stage": "in_transit", "language": "de", "confirmedBy": "live"},
+    {"wording": "Eingang Import", "stage": "in_transit", "language": "de", "confirmedBy": "live", "note": "Received at the delivering station, the import side of the network, before the delivery round."},
+    {"wording": "Rollkartenscan", "stage": "out_for_delivery", "language": "de", "confirmedBy": "live", "note": "Scanned onto the Rollkarte, the driver's list for the delivery round, on the morning of the delivery."},
+    {"wording": "in Zustellung", "stage": "out_for_delivery", "language": "de", "confirmedBy": "live"},
+    {"wording": "Zustellhindernis", "stage": "failed_attempt", "language": "de", "confirmedBy": "live", "note": "A delivery obstacle; the tracker's remark column may say which, and a later round can still deliver."},
+    {"wording": "Zustellhindernis: Kunde nicht angetroffen", "stage": "failed_attempt", "language": "de", "confirmedBy": "live", "note": "The status with the remark that nobody was in, as the adapter joins them."},
+    {"wording": "Zustellhindernis: Empfänger nicht angetroffen", "stage": "failed_attempt", "language": "de", "confirmedBy": "live", "note": "The status with the remark that the recipient was not in, as the adapter joins them."},
+    {"wording": "Zustellhindernis: Retoure", "stage": "failed_attempt", "language": "de", "confirmedBy": "live", "note": "The status with the remark Retoure; a public sample's parcel was delivered the next day after it, so it is not read as a return."},
+    {"wording": "Ausgeliefert", "stage": "delivered", "language": "de", "confirmedBy": "live"}
+  ]
 }

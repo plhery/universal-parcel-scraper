@@ -1,0 +1,187 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	track and trace
+</title><link rel="Stylesheet" type="text/css" href="neu.css" />
+    <!-- Helper for menus http://derkurier.privju.com/stylesheets/iframe_der_kurier.css-->
+    <style type="text/css">
+    
+    .sendeverfolgung_tabelle_alternate_item_row
+    {
+	    background-color:#EAEDF6;
+    }
+    .sendeverfolgung_tabelle_item_row
+    {
+    }
+    .sendeverfolgung_tabelle_item_datum
+    {
+        white-space:nowrap;
+    }
+    .sendeverfolgung_tabelle_item_zeit
+    {
+        white-space:nowrap;
+        text-align:right
+    }
+    .sendeverfolgung_tabelle_first_row td
+    {
+        font-weight:bold;
+        padding-bottom:20px;
+    }
+    </style>
+</head>
+<body onload="document.getElementById('txtNr').focus()" >
+
+
+
+<!-- ******************************************************************************** -->
+<!-- ******************************************************************************** -->
+
+    <form method="post" action="./paketstatus.aspx?Lang=DE&amp;parcel=99999999999" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'btnSearch')" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="VIEWSTATE" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=RESOURCE" type="text/javascript"></script>
+
+
+<script src="/WebResource.axd?d=RESOURCE" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CDEDA557" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="EVENTVALIDATION" />
+</div>
+    <h2><span id="Label1"></span>
+        
+        
+       
+    </h2>
+    
+    <h2><span id="lblSendung">Sendungsnummer Bitte geben Sie die ersten 11 Stellen an</span><img id="iLogo" src="images/dkLogo.gif" /></h2>
+    <div>
+        <table><tr>
+            <td>
+        <input name="txtNr" type="text" id="txtNr" size="15" /></td><td rowspan="3">
+        <input type="submit" name="btnSearch" value="" id="btnSearch" /></td>
+        </tr>
+            <tr><td><h2><span id="lblPlz">Ziel- PLZ für die Anzeige des Empfängers</span></h2></td></tr>
+            <tr><td><input name="txtPlz" type="text" id="txtPlz" /></td></tr>
+            </table>
+    </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+WebForm_AutoFocus('btnSearch');//]]>
+</script>
+</form>
+    <br />
+    
+
+	    <table class="sendeverfolgung_tabelle" cellspacing="0" cellpadding="0" id="tntGrid" style="border-collapse:collapse;">
+	<tr class="sendeverfolgung_tabelle_first_row">
+		<td>Sendungsnummer</td><td>Datum</td><td>Zeit</td><td>Bemerkung</td><td>STATUS</td>
+	</tr><tr class="sendeverfolgung_tabelle_item_row">
+		<td>
+	                40000000000
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                13.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                07:54
+	            </td><td></td><td>Ausgeliefert</td>
+	</tr><tr class="sendeverfolgung_tabelle_alternate_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                13.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                06:49
+	            </td><td></td><td>in Zustellung</td>
+	</tr><tr class="sendeverfolgung_tabelle_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                13.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                06:29
+	            </td><td></td><td>Eingang Import</td>
+	</tr><tr class="sendeverfolgung_tabelle_alternate_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                13.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                02:05
+	            </td><td></td><td>HUB beladen</td>
+	</tr><tr class="sendeverfolgung_tabelle_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                13.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                01:55
+	            </td><td></td><td>HUB entladen</td>
+	</tr><tr class="sendeverfolgung_tabelle_alternate_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                13.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                01:55
+	            </td><td></td><td>Daten erfasst</td>
+	</tr><tr class="sendeverfolgung_tabelle_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                13.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                01:54
+	            </td><td></td><td>HUB entladen</td>
+	</tr><tr class="sendeverfolgung_tabelle_alternate_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                12.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                20:15
+	            </td><td></td><td>Export verladen</td>
+	</tr><tr class="sendeverfolgung_tabelle_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                12.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                20:15
+	            </td><td></td><td>Eingang Export</td>
+	</tr><tr class="sendeverfolgung_tabelle_alternate_item_row">
+		<td>
+	                
+	            </td><td class="sendeverfolgung_tabelle_item_datum">
+	                12.07.2022
+                </td><td class="sendeverfolgung_tabelle_item_zeit">
+	                20:15
+	            </td><td></td><td>Daten erfasst</td>
+	</tr>
+</table>
+	    
+        <span id="lblMeldung">10 Ergebnisse</span>
+    
+</body>
+</html>

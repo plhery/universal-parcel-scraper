@@ -2,19 +2,56 @@
   "carrier": "der-kurier",
   "records": [
     {
-      "number": "02060111854",
+      "number": "48800015025",
       "role": "shipment",
       "evidence": "public_shipment_report",
       "source": {
-        "url": "https://de.trustpilot.com/review/hamburg-derkurier.de",
-        "date": "2019-08-24",
-        "dateKind": "review update",
+        "url": "https://de.trustpilot.com/reviews/6786770e3371eaf585fdb4dc",
+        "date": "2025-01-14",
+        "dateKind": "review",
         "access": "full_page"
       },
       "context": {
-        "service": "Hamburg DER KURIER with GLS final delivery",
-        "reportedRole": "shipment number",
-        "assessment": "candidate"
+        "service": "DER KURIER parcel delivery",
+        "reportedRole": "AuftragsNr.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "A recipient's review of DER KURIER heads its text with this number. DER KURIER's tracker lists the parcel under it, with a missed first round and a delivery the same day, as the review tells."
+    },
+    {
+      "number": "02082461417",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240129130549/https://leotrace.derkurier.de/paketstatus.aspx?Lang=DE&parcel=02082461417",
+        "date": "2024-01-29",
+        "dateKind": "archive capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "DER KURIER parcel delivery",
+        "reportedRole": "parcel number",
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -31,7 +68,72 @@
           "paquetexpress"
         ]
       },
-      "note": "The buyer names Hamburg DER KURIER as the shipping service and posts its tracking history with this shipment number. The review identifies GLS as the delivery partner."
+      "note": "An archived tracking link on DER KURIER's own tracker. The tracker still lists the parcel's rows, ending with its delivery."
+    },
+    {
+      "number": "54852333475",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/reviews/62c6e656853b02c06c9a36cc",
+        "date": "2022-07-07",
+        "dateKind": "review",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "DER KURIER parcel delivery",
+        "reportedRole": "Paketnummer",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "A recipient's complaint about a missed delivery gives this as the parcel number. DER KURIER's tracker lists the parcel's missed rounds under the number's GLS form, with the 8 moved to the front, as its tracking widget rewrites such numbers."
+    },
+    {
+      "number": "02060111854",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/review/hamburg-derkurier.de",
+        "date": "2019-08-24",
+        "dateKind": "review update",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Hamburg DER KURIER with GLS final delivery",
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The buyer names Hamburg DER KURIER as the shipping service and posts its tracking history with this shipment number. The review identifies GLS as the delivery partner. DER KURIER's tracker lists the review's parcel under the number, and a later parcel that reused it."
     }
   ]
 }

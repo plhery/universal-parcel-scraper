@@ -285,6 +285,7 @@ import { statusMap as delivro } from '../../carriers/delivro/status.js';
 import { statusMap as dellin } from '../../carriers/dellin/status.js';
 import { statusMap as delnext } from '../../carriers/delnext/status.js';
 import { statusMap as deppon } from '../../carriers/deppon/status.js';
+import { statusMap as derKurier } from '../../carriers/der-kurier/status.js';
 import { statusMap as dexPk } from '../../carriers/dex-pk/status.js';
 import { statusMap as dhlEcommerce } from '../../carriers/dhl-ecommerce/status.js';
 import { statusMap as dhlEcommerceEs } from '../../carriers/dhl-ecommerce-es/status.js';
@@ -1229,7 +1230,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-guatemala': correosGuatemala, 'correos-spain': correosSpain,
   'courier-center': courierCenter, 'courier-it': courierIt, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
   'cyprus-post': cyprusPost, 'd-express': dExpress, dachser, 'dai-post': daiPost, 'danske-fragtmaend': danskeFragtmaend, dao, 'datian-logistics': datianLogistics, 'day-ross': dayRoss,
-  dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, delivro, dellin, delnext, deppon, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
+  dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, delivro, dellin, delnext, deppon, 'der-kurier': derKurier, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
   'dhl-freight': dhlFreight, dhlink, direx, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, dongdu, dpd,
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-ru': dpdRu, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,

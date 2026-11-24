@@ -1139,6 +1139,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'comone-express', number: 'CM9900000017',
     route: /^https:\/\/www\.com1logistics\.com\/tracking\.html\?trackNo=CM9900000017$/,
     marker: /Can key in up to 5 no with \(,\) in between/ },
+  // DER KURIER's widget looks the number up on load and shows its search form again for one it lacks.
+  { carrier: 'der-kurier', number: '99999999999',
+    route: /^https:\/\/derkurier\.de\/sendungsverfolgung\/\?d-pt-search=99999999999$/,
+    marker: /die ersten 11 Paketscheinziffern/ },
   // The site's search page puts the number in its field and opens the tracking frame for it.
   { carrier: 'top-logistics-au', number: 'TPL000000000',
     route: /^https:\/\/toplogistics\.com\.au\/\?s=TPL000000000$/,
