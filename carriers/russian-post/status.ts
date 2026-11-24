@@ -13,6 +13,8 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['28.0', 'registered'],
   ['8.0', 'in_transit'], ['8.1', 'in_transit'], ['8.2', 'ready_for_pickup'], ['8.3', 'in_transit'],
   ['8.4', 'in_transit'], ['8.18', 'out_for_delivery'], ['8.20', 'in_transit'], ['4.5', 'exception'],
+  // Processing under an attribute the operation list does not name, which the page labels "Sorting" as it does 8.0.
+  ['8.83', 'in_transit'],
   // International exchange, by the operation list of the open-source lapaygroup/RussianPost client: the
   // exchange office where customs clears the item, transit, arrival in Russia, import and export, customs,
   // and the hand-over to the carrier abroad and the destination's post. Import without an attribute (9.0) is

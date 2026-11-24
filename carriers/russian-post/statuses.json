@@ -48,6 +48,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "8.83",
+      "wording": "Sorting",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Processing (operation type 8) under an attribute the lapaygroup/RussianPost operation list does not name; the page labels it Sorting, as 8.0, the day after the item's registration."
+    },
+    {
       "code": "8.1",
       "wording": "Sorting complete",
       "stage": "in_transit",
