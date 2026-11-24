@@ -1,4 +1,26 @@
 {
   "carrier": "rhenus-de",
-  "entries": []
+  "entries": [
+    {"code": "created", "wording": "Auftrag erfasst", "stage": "registered", "language": "de", "confirmedBy": "live", "note": "A step of the order's tracking: the retailer handed the order over."},
+    {"code": "goodsReceived", "wording": "Ware im Depot", "stage": "accepted", "language": "de", "confirmedBy": "live", "note": "A step of the order's tracking: the goods reached the depot that delivers them."},
+    {"code": "inDelivery", "wording": "Auftrag unterwegs", "stage": "out_for_delivery", "language": "de", "confirmedBy": "live", "note": "A step of the order's tracking: the crew is on its way with the order."},
+    {"code": "delivered", "wording": "Auftrag zugestellt", "stage": "delivered", "language": "de", "confirmedBy": "live", "note": "A step of the order's tracking: the order was delivered, or its service done."},
+    {"code": "deliveryStopped", "wording": "Ausführung unterbrochen", "stage": "failed_attempt", "language": "de", "confirmedBy": "bundle", "note": "A step the portal's script words; the delivery was not carried out."},
+    {"code": "cancelled", "wording": "Auftrag storniert", "stage": "exception", "language": "de", "confirmedBy": "bundle", "note": "A step the portal's script words; the order was cancelled."},
+    {"code": "problemInDepot", "wording": "Ware unvollständig", "stage": "exception", "language": "de", "confirmedBy": "bundle", "note": "A step the portal's script words; the depot holds only part of the goods."},
+    {"code": "OrderCreated", "wording": "Auftrag erfasst", "stage": "registered", "language": "de", "confirmedBy": "bundle", "note": "The order's current status, worded by the portal's script."},
+    {"code": "ReceivedAtHub", "wording": "Ware im Depot", "stage": "accepted", "language": "de", "confirmedBy": "bundle"},
+    {"code": "GoodsAvailable", "wording": "Ware im Depot", "stage": "accepted", "language": "de", "confirmedBy": "bundle"},
+    {"code": "Picked", "wording": "Ware im Depot", "stage": "accepted", "language": "de", "confirmedBy": "bundle", "note": "Picked in the depot for the delivery tour."},
+    {"code": "GoodsLoaded", "wording": "Ware im Depot", "stage": "accepted", "language": "de", "confirmedBy": "bundle"},
+    {"code": "LoadedOnDistributionTruck", "wording": "Ware im Depot", "stage": "accepted", "language": "de", "confirmedBy": "bundle"},
+    {"code": "LoadedOnDeliveryTruck", "wording": "Ware im Depot", "stage": "accepted", "language": "de", "confirmedBy": "bundle", "note": "The portal still words it as goods in the depot; the crew leaves later."},
+    {"code": "OnWayToCustomer", "wording": "Auftrag unterwegs", "stage": "out_for_delivery", "language": "de", "confirmedBy": "bundle"},
+    {"code": "Fulfilled", "wording": "Auftrag zugestellt", "stage": "delivered", "language": "de", "confirmedBy": "live"},
+    {"code": "NotDelivered", "wording": "Ausführung unterbrochen", "stage": "failed_attempt", "language": "de", "confirmedBy": "bundle"},
+    {"code": "Clarification", "wording": "Ausführung unterbrochen", "stage": "exception", "language": "de", "confirmedBy": "bundle", "note": "Held while Rhenus clarifies the order with the retailer or the customer."},
+    {"code": "Cancelled", "wording": "Auftrag storniert", "stage": "exception", "language": "de", "confirmedBy": "bundle"},
+    {"code": "PartiallyReceivedAtHub", "wording": "Ware unvollständig", "stage": "exception", "language": "de", "confirmedBy": "bundle"},
+    {"code": "GoodsNotAvailable", "wording": "Ware unvollständig", "stage": "exception", "language": "de", "confirmedBy": "bundle"}
+  ]
 }

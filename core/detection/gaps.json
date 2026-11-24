@@ -6388,6 +6388,12 @@
     "reason": "Detection returns no carrier for two public Matson ocean master bills that start with its MATS carrier code."
   },
   {
+    "carrier": "rhenus-de",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Rhenus Germany tracks by the retailer's order number, here IKEA's nine digits, a bare counter many carriers share; every lookup also needs the delivery postcode, so nothing in the number points to Rhenus Germany."
+  },
+  {
     "carrier": "rhenus-it",
     "pattern": "^\\d{11}$",
     "kind": "collision",

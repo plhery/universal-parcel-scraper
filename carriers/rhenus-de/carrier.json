@@ -16,18 +16,69 @@
   "timezone": "Europe/Berlin",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "rhenus-de",
+    "requirements": [
+      {
+        "field": "postcode",
+        "optional": true,
+        "showsMore": true,
+        "label": "Delivery postcode",
+        "type": "text",
+        "placeholder": "10115",
+        "pattern": "^[0-9]{5}$",
+        "maxLength": 5,
+        "inputMode": "numeric",
+        "autoComplete": "postal-code",
+        "help": "Rhenus shows an order only with its delivery postcode. Without it, other sources are asked.",
+        "validator": "germanyPostcode"
+      }
+    ],
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "eta",
+    "delivered_at",
+    "provider_code"
+  ],
   "portal": {
     "searchUrl": "https://rhenusmydelivery.com/de",
     "helpUrl": "https://rhenusmydelivery.com/de/contact",
     "canaryUrl": "https://www.rhenus.group/de/de/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "eta_window",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "coordinates",
+      "documents",
+      "delivery_options"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta_window",
+      "delivered_at",
+      "provider_code",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "coordinates",
+      "documents",
+      "delivery_options"
+    ],
+    "unavailable": [
+      "location",
+      "weight"
+    ]
   },
   "links": [],
   "detection": []

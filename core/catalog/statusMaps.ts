@@ -1004,6 +1004,7 @@ import { statusMap as paxel } from '../../carriers/paxel/status.js';
 import { statusMap as pxcPacific } from '../../carriers/pxc-pacific/status.js';
 import { statusMap as rayspeed } from '../../carriers/rayspeed/status.js';
 import { statusMap as relayExpress } from '../../carriers/relay-express/status.js';
+import { statusMap as rhenusDe } from '../../carriers/rhenus-de/status.js';
 import { statusMap as rhenusIt } from '../../carriers/rhenus-it/status.js';
 import { statusMap as shipgce } from '../../carriers/shipgce/status.js';
 import { statusMap as sway } from '../../carriers/sway/status.js';
@@ -1203,7 +1204,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'airways-courier-in': airwaysCourierIn, 'akis-express': akisExpress, 'ambro-express': ambroExpress, 'apg-ecommerce': apgEcommerce, 'bigfoot-express': bigfootExpress, 'biz-courier': bizCourier, cvc,
   diakinisis, 'faster-shipe': fasterShipe, 'first-flight-me': firstFlightMe, 'gbs-broker': gbsBroker, 'herona-express': heronaExpress, 'hop-envios': hopEnvios, interlogistica,
   'intertown-transport': intertownTransport, 'intras-jp': intrasJp, 'jas-worldwide': jasWorldwide, 'king-kong-express': kingKongExpress, lafasta, 'm24-logistics': m24Logistics,
-  'moran-transportation': moranTransportation, paxel, 'pxc-pacific': pxcPacific, rayspeed, 'relay-express': relayExpress, 'rhenus-it': rhenusIt, shipgce, sway, tamex, 'tig-freight': tigFreight,
+  'moran-transportation': moranTransportation, paxel, 'pxc-pacific': pxcPacific, rayspeed, 'relay-express': relayExpress, 'rhenus-de': rhenusDe, 'rhenus-it': rhenusIt, shipgce, sway, tamex, 'tig-freight': tigFreight,
   'usea-express': useaExpress, 'velocity-express-in': velocityExpressIn, 'wangjing-3cq': wangjing3cq, xindus, 'uof-express': uofExpress, 'delivery-auto': deliveryAuto, 'fastway-za': fastwayZa,
   'gls-ca': glsCa, gollog, 'lex-th': lexTh, 'sentral-cargo': sentralCargo,
   'fez-delivery': fezDelivery,

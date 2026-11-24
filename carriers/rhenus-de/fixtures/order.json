@@ -1,0 +1,43 @@
+{
+  "isOk": true,
+  "order": {
+    "internalOrderId": "00000000-0000-4000-8000-000000000001",
+    "orderNumber": "465294362",
+    "clientKey": "IKOS",
+    "clientDisplayName": "IKEA",
+    "deliveryDate": "2026-06-18T00:00:00+02:00",
+    "deliveryTimeWindowFrom": "2026-06-18T07:00:00+02:00",
+    "deliveryTimeWindowTo": "2026-06-18T21:00:00+02:00",
+    "currentStatus": "Fulfilled",
+    "orderType": "Service",
+    "volume": null,
+    "weight": null,
+    "allowSelfScheduling": false,
+    "isSchedulingStatusReached": true,
+    "contactData": {
+      "customerName": "Erika Mustermann",
+      "orderAddressStreet": "Musterstraße",
+      "orderAddressHouseNumber": "1",
+      "orderAddressPostCode": "47807",
+      "orderAddressCity": "Krefeld",
+      "orderAddressCountry": "DE",
+      "orderAddressPhone": "+49000000000",
+      "orderAddressEmail": "erika@example.com"
+    },
+    "shipments": [],
+    "services": [
+      {
+        "name": "Nachmontage Küchen (KT:TSP)",
+        "deliveryQuantity": 2
+      }
+    ],
+    "tourPlanningCode": "209",
+    "tourPlanningStatus": "TourPlanningCompleted",
+    "plannedArrivalTime": "2026-06-18T10:40:00+00:00",
+    "deliveryArticleCount": 0,
+    "endCustomerPhoneNumber1": "+49000000000",
+    "endCustomerPhoneNumber2": "",
+    "isSelfSchedulingPossibleUntil": null,
+    "updated": "2026-06-19T09:04:16.851035+00:00"
+  }
+}

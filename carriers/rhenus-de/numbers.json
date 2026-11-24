@@ -1,5 +1,32 @@
 {
   "carrier": "rhenus-de",
-  "gap": "No public page shows a Rhenus Germany number; its portal needs the recipient's postcode.",
-  "records": []
+  "records": [
+    {
+      "number": "465294362",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260618125454/https://rhenus-my-delivery-api.rhenus-digital.de/api/order",
+        "date": "2026-06-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Rhenus Home Delivery service order for IKEA",
+        "reportedRole": "externalOrderNumber",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "An archived reply of rhenusmydelivery.com's order service, captured beside an archived link to the portal's order page, gives the order with its delivery postcode. Rhenus's booking service finds the order with that postcode and lists its steps up to the completed service."
+    }
+  ]
 }
