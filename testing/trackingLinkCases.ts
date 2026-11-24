@@ -1449,6 +1449,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'meest', number: 'ZZ0000000ZZ00000G',
     route: /^https:\/\/t\.meest-group\.com\/n\/ZZ0000000ZZ00000G$/,
     marker: /Відстежити посилку|не знайдено відправлення з таким номером/ },
+  // The page fills its field from the `tracking` parameter and looks the number up on load.
+  { carrier: 'dnipro-llc', number: 'DN000000000',
+    route: /^https:\/\/dniprollc\.com\/en\/packages-tracking\/\?tracking=DN000000000$/,
+    marker: /Parcel not found\. Check the number and try again\.|Packages Tracking/ },
   // The page looks the waybill up on load and writes it back in groups of three.
   { carrier: 'sat-ukraine', number: '000000000',
     route: /^https:\/\/www\.sat\.ua\/tracking\/\?number=000\+?000\+?000$/,

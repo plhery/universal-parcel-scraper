@@ -1,5 +1,43 @@
 {
   "carrier": "dnipro-llc",
-  "gap": "No public page shows a Dnipro LLC tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "CV044917309US",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://apps.apple.com/us/app/dnus-dniprollc/id6745604995",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Dnipro LLC's App Store screenshots of its dnus.dniprollc app show it as an air parcel to Ukraine with a FedEx pickup. Its tracker answers it as a parcel created in Hialeah, Florida."
+    },
+    {
+      "number": "CV044917241US",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://apps.apple.com/us/app/dnus-dniprollc/id6745604995",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "The second parcel on the same App Store screenshots. Its tracker answers it as a parcel created in Hialeah, Florida."
+    }
+  ]
 }

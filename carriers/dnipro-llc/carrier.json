@@ -20,19 +20,57 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "dnipro-llc",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://dniprollc.com/en/packages-tracking/?tracking={trackingNumber}",
     "searchUrl": "https://dniprollc.com/en/packages-tracking/",
     "helpUrl": "https://dniprollc.com/en/contacts/",
     "canaryUrl": "https://dniprollc.com/en/packages-tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "origin",
+      "destination",
+      "postcodes",
+      "recipient_name",
+      "container_number",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "postcodes",
+      "recipient_name",
+      "container_number",
+      "vessel"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "sender_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

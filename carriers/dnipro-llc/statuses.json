@@ -1,4 +1,35 @@
 {
   "carrier": "dnipro-llc",
-  "entries": []
+  "entries": [
+    {"code": "1", "wording": "Created", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The parcel is made in Dnipro LLC's system; the event reads \"Parcel was created\" and the number."},
+    {"code": "6", "wording": "Expected at USA warehouse", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's script groups codes 6, 9 and 33 under this label: the parcel is on its way to a US warehouse."},
+    {"code": "9", "wording": "Expected at USA warehouse", "stage": "registered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "33", "wording": "Expected at USA warehouse", "stage": "registered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "4", "wording": "Received at USA warehouse", "stage": "accepted", "language": "en", "confirmedBy": "bundle"},
+    {"code": "2", "wording": "Sent from USA", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "25", "wording": "Sent from USA", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "3", "wording": "In transit from USA", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "12", "wording": "In transit from USA", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "5", "wording": "At destination country warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "26", "wording": "At destination country warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "13", "wording": "Out for delivery in the destination country", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The page groups four codes under this label, including hand-overs to the destination country's delivery network, so it is not read as out for delivery."},
+    {"code": "14", "wording": "Out for delivery in the destination country", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "21", "wording": "Out for delivery in the destination country", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "22", "wording": "Out for delivery in the destination country", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "10", "wording": "Held by customs", "stage": "customs", "language": "en", "confirmedBy": "bundle"},
+    {"code": "18", "wording": "Being processed at customs", "stage": "customs", "language": "en", "confirmedBy": "bundle"},
+    {"code": "20", "wording": "Being processed at customs", "stage": "customs", "language": "en", "confirmedBy": "bundle"},
+    {"code": "84", "wording": "Being processed at customs", "stage": "customs", "language": "en", "confirmedBy": "bundle"},
+    {"code": "85", "wording": "Being processed at customs", "stage": "customs", "language": "en", "confirmedBy": "bundle"},
+    {"code": "86", "wording": "Being processed at customs", "stage": "customs", "language": "en", "confirmedBy": "bundle"},
+    {"code": "7", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "The page's script groups codes 7, 8, 15, 23, 53, 63, 73, 93 and 1203 under Delivered."},
+    {"code": "8", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "15", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "23", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "53", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "63", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "73", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "93", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"},
+    {"code": "1203", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle"}
+  ]
 }
