@@ -24,9 +24,9 @@ CAPTCHA or browser is needed.
   (`ARRIVAL`) and departure (`SHIPMENT`, a row without text whose place `KUN Warehouse` stands
   as the wording), Hangzhou sorting, export clearance and the flight. [status.ts](status.ts)
   maps them, and the departure written as the goods leaving the warehouse (`货物离开`) with its
-  place. The rows copied from USPS keep USPS's wording and are staged by the shared wording
-  rules, except USPS's acceptance: it comes after the flight, when USPS takes the parcel over
-  from the line, so it reads in transit.
+  place. The rows copied from USPS keep USPS's wording. The map lists those seen, which read in
+  transit, USPS's acceptance included: it comes after the flight, when USPS takes the parcel
+  over from the line. Other copied rows are staged by the shared wording rules.
 - Scan times are wall clocks without an offset. The forwarder writes its own rows to the
   second, on the platform's Beijing clock. The rows it copies from USPS come to the minute on
   the facility's clock, as USPS's explanation of each row states, so a row to the minute keeps
