@@ -192,6 +192,7 @@ import { adapter as coordinadora } from '../carriers/coordinadora/adapter.js';
 import { adapter as cootranstame } from '../carriers/cootranstame/adapter.js';
 import { adapter as copaAirlinesCargo } from '../carriers/copa-airlines-cargo/adapter.js';
 import { adapter as copaCourier } from '../carriers/copa-courier/adapter.js';
+import { adapter as copeSensitiveFreight } from '../carriers/cope-sensitive-freight/adapter.js';
 import { adapter as cordeliaShipping } from '../carriers/cordelia-shipping/adapter.js';
 import { adapter as coretrails } from '../carriers/coretrails/adapter.js';
 import { adapter as corre } from '../carriers/corre/adapter.js';
@@ -1329,6 +1330,7 @@ export const REGISTRY: RegistryDefinition = {
     "cootranstame": cootranstame,
     "copa-airlines-cargo": copaAirlinesCargo,
     "copa-courier": copaCourier,
+    "cope-sensitive-freight": copeSensitiveFreight,
     "cordelia-shipping": cordeliaShipping,
     "coretrails": coretrails,
     "corre": corre,
@@ -2637,7 +2639,7 @@ export const REGISTRY: RegistryDefinition = {
     "cootranstame": "cootranstame",
     "copa-airlines-cargo": "copa-airlines-cargo",
     "copa-courier": "copa-courier",
-    "cope-sensitive-freight": "universal",
+    "cope-sensitive-freight": "cope-sensitive-freight",
     "cordelia-shipping": "cordelia-shipping",
     "coretrails": "coretrails",
     "corlan-post-express": "universal",

@@ -96881,6 +96881,18 @@
     ]
   },
   {
+    "input": "GFT006460",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "GFT012578",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "GFUS01011884214272",
     "carrier": "gofo",
     "confidence": "high",

@@ -17469,7 +17469,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Sydney",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cope-sensitive-freight",
+      "localClocks": true
     },
     "canaryUrl": "https://www.cope.com.au/",
     "trackingSearchUrl": "https://www.cope.com.au/",
