@@ -4710,6 +4710,12 @@
     "reason": "UniUni's tracker serves these Canadian parcels, one sample per shape; no family is established."
   },
   {
+    "carrier": "ural-express",
+    "pattern": "^URA\\d{8}ZPRU$",
+    "kind": "open",
+    "reason": "Archived GdePosylka pages show Ural Express numbers as URA, eight digits and ZPRU. Ural Express documents no number format, so no rule offers it for the shape yet."
+  },
+  {
     "carrier": "urbano",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

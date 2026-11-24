@@ -1,5 +1,100 @@
 {
   "carrier": "ural-express",
-  "gap": "No public page shows a Ural Express number; its tracker takes numbers in a form.",
-  "records": []
+  "records": [
+    {
+      "number": "URA08634607ZPRU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250815065112/https://gdeposylka.ru/courier/uralsvip/tracking/URA08634607ZPRU",
+        "date": "2025-08-15",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived GdePosylka tracking page filed it under Ural Express and showed its events. Ural Express's tracker answers it with a parcel from China by land to Moscow, cleared there and handed over at a pickup point in Russia."
+    },
+    {
+      "number": "URA02172676ZPRU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20241101115617/https://gdeposylka.ru/courier/uralsvip/tracking/URA02172676ZPRU",
+        "date": "2024-11-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived GdePosylka tracking page filed it under Ural Express. Ural Express's tracker answers it with a parcel flown from China, cleared in Moscow and handed over at a pickup point in Russia."
+    },
+    {
+      "number": "URA01849819ZPRU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240912074204/https://gdeposylka.ru/courier/uralsvip/tracking/URA01849819ZPRU",
+        "date": "2024-09-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived GdePosylka tracking page filed it under Ural Express. Ural Express's tracker answers it with a parcel from China by land to Moscow, cleared there and handed over at a pickup point in Russia."
+    },
+    {
+      "number": "URA00610618ZPRU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240118074405/https://gdeposylka.ru/courier/uralsvip/tracking/URA00610618ZPRU",
+        "date": "2024-01-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived GdePosylka tracking page filed it under Ural Express. Ural Express's tracker still lists it with its marketplace order number, without rows."
+    },
+    {
+      "number": "URA00340703ZPRU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231127032916/https://gdeposylka.ru/courier/uralsvip/tracking/URA00340703ZPRU",
+        "date": "2023-11-27",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived GdePosylka tracking page filed it under Ural Express; PackageRadar's page did too. Ural Express's tracker still lists it with its marketplace order number, without rows."
+    }
+  ]
 }

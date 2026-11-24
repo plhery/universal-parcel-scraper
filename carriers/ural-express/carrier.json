@@ -21,18 +21,50 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ural-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country"
+  ],
   "portal": {
     "searchUrl": "https://tmsplus.ilinexpress.com/#/track",
     "helpUrl": "https://www.uralsvip.com/contact/",
     "canaryUrl": "https://www.uralsvip.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "location",
+      "provider_code",
+      "destination_country"
+    ],
+    "discarded": [
+      "order_reference"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "service_name",
+      "pickup_point",
+      "delivery_partner",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

@@ -1,0 +1,15 @@
+{
+  "code": 200,
+  "data": [
+    {
+      "tracks": [],
+      "waybillNum": "URA00340703ZPRU",
+      "mailNo": "pl-172191-02338870-0063-1-1",
+      "displaySupplierName": "乌拉尔国际物流"
+    }
+  ],
+  "message": "操作成功",
+  "traceId": "a9bddeb0-a2e3-45ad-8438-2fd54772403e",
+  "logId": null,
+  "success": true
+}

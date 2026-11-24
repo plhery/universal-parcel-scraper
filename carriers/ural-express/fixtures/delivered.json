@@ -1,0 +1,258 @@
+{
+  "code": 200,
+  "data": [
+    {
+      "tracks": [
+        {
+          "id": 47263572540532151,
+          "message": "Отправление выдано",
+          "status": "TYP_SUCCESS",
+          "time": "2025-09-07 09:09:52",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 600,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263572540532158,
+          "message": "Готово к выдаче",
+          "status": "TYP_IN_DELIVERY_STATION",
+          "time": "2025-08-28 13:44:15",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 300,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263572540532153,
+          "message": "Отправлено в ваш город",
+          "status": "TYP_THIRD_DELIVERING",
+          "time": "2025-08-25 11:39:46",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 260,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263572540532145,
+          "message": "Передано в службу доставки",
+          "status": null,
+          "time": "2025-08-25 11:39:45",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": null,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": null
+        },
+        {
+          "id": 47263571706492760,
+          "message": "Customs clearance is completed",
+          "status": "TYP_OUT_CUSTOMS_CLEARANCE",
+          "time": "2025-08-12 17:06:30",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 200,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263571703277144,
+          "message": "Customs clearance started",
+          "status": "TYP_IN_CUSTOMS_CLEARANCE",
+          "time": "2025-08-12 00:59:26",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 180,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263571641942269,
+          "message": "The package has arrived at the Moscow Customs Center",
+          "status": "TYP_LAND_ARRIVE",
+          "time": "2025-07-31 10:00:00",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 160,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263571552004240,
+          "message": "ID data collected",
+          "status": "TYP_ID_DATA_COLLECTED",
+          "time": "2025-07-24 17:02:08",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 2,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263571551583227,
+          "message": "The package is in transit and is being sent to Moscow",
+          "status": "TYP_LAND_START_ARRIVE",
+          "time": "2025-07-24 10:00:00",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 155,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263570134362267,
+          "message": "The package has completed the customs transfer procedures",
+          "status": "TYP_LAND_TRANSFER_CUSTOMS",
+          "time": "2025-06-17 10:00:00",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 80,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263570090661603,
+          "message": "Parcel arrived destination country",
+          "status": "TYP_LAND_PASS_BORDER",
+          "time": "2025-06-16 19:14:00",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 61,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263569139882928,
+          "message": "Parcel arrive at the border",
+          "status": "TYP_LAND_ARRIVAL_BORDER",
+          "time": "2025-05-27 18:02:00",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 58,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 47263569139915301,
+          "message": "The package has completed export customs clearance",
+          "status": "TYP_LAND_EXPORT_DECLARATION",
+          "time": "2025-05-27 10:04:00",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 60,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 5177015805,
+          "message": "Parcel arrive at Border warehouse.",
+          "status": "TYP_LAND_BORDER_IN_BOUND",
+          "time": "2025-05-26 17:02:45",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 56,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 5171959671,
+          "message": "Parcel in domestic transit",
+          "status": "TYP_LAND_LOADING",
+          "time": "2025-05-24 11:04:00",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 55,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "RU"
+        },
+        {
+          "id": 5031878788,
+          "message": "Parcel out of warehouse",
+          "status": "TYP_COMPLETED_OUTBOUND_SCAN",
+          "time": "2025-05-23 08:34:35",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 40,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "CN"
+        },
+        {
+          "id": 5006098581,
+          "message": "Parcel arrive at warehouse",
+          "status": "TYP_COMPLETED_INTBOUND_SCAN",
+          "time": "2025-05-22 17:48:25",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 20,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "CN"
+        },
+        {
+          "id": 4949694089,
+          "message": "Success Collect",
+          "status": "TYP_THIRD_PICK_UP_SUCCESS",
+          "time": "2025-05-21 04:11:23",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 10,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "CN"
+        },
+        {
+          "id": 4915164010,
+          "message": "Received Package details",
+          "status": "TYP_PRE_ORDER",
+          "time": "2025-05-20 05:15:03",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 0,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "CN"
+        },
+        {
+          "id": 4915162485,
+          "message": "Received Package details",
+          "status": "TYP_PRE_ORDER",
+          "time": "2025-05-20 05:14:32",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": 0,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": "CN"
+        },
+        {
+          "id": 4915162465,
+          "message": "Last mile service OK",
+          "status": null,
+          "time": "2025-05-20 05:14:31",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": null,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": null
+        },
+        {
+          "id": 47263572540532143,
+          "message": "Отправление зарегистрировано",
+          "status": null,
+          "time": "2025-05-20 00:14:31",
+          "waybillNum": "URA08634607ZPRU",
+          "statusSort": null,
+          "fromCountry": "CN",
+          "toCountry": "RU",
+          "location": null
+        }
+      ],
+      "waybillNum": "URA08634607ZPRU",
+      "mailNo": "35226325-0125-1",
+      "displaySupplierName": "乌拉尔国际物流"
+    }
+  ],
+  "message": "操作成功",
+  "traceId": "988fee82-bb40-41b9-bffc-be09b0de1288",
+  "logId": null,
+  "success": true
+}
