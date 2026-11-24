@@ -33,6 +33,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['RC-2', 'in_transit'], // At the last-mile provider's sorting centre.
   ['RC-3', 'in_transit'], // On the way to the delivery office.
   ['RC-4', 'in_transit'], // Sent on a corrected route.
+  ['LM-0', 'in_transit'], // The container reached the delivery office.
   ['LM-1', 'in_transit'], // Received at the delivery office.
   ['LM-2', 'out_for_delivery'], // With the postman.
   ['LM-3', 'failed_attempt'], // A delivery attempt that did not deliver; a delivery scan follows one that did.
@@ -40,6 +41,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['LM-5', 'returned'], // Sent back after failed deliveries.
   ['LM-7', 'failed_attempt'], // The recipient was not in.
   ['LM-9', 'failed_attempt'], // The address was wrong; the parcel can go out again.
+  ['LM-12', 'in_transit'], // Checked at the delivery office before a round with the postman.
   ['PF-1', 'delivered'],
   ['PF-2', 'returned'], // Delivered to the return address.
   ['RT-1', 'returned'], // Received at the return warehouse.
