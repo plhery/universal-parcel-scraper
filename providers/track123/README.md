@@ -6,7 +6,7 @@ The browser helper does not load that page, which takes longer than the lookup i
 
 A courier is listed only after one of its public numbers came back with history from its page. Track123's own detection is not used: asking a courier page names the carrier, so the answer cannot come from a carrier sharing the number's shape. Track123 lists one code per courier, so a catalog carrier with several services maps to the code that answered its numbers.
 
-Empty history is `NoHistoryError`, except when Track123 marks the courier's site as unreadable (`nodeStatus` `UNSTABLE_OFFICIAL_WEBSITE`): that answer is about the courier, not the parcel, and fails as `carrier_unavailable`. Event clocks retain their wall time and explicit offset; a conflicting UTC field is rejected. Recipient fields and verification material are removed before the reply leaves the browser.
+Empty history is `NoHistoryError`, except when Track123 marks the courier's site as unreadable (`nodeStatus` `UNSTABLE_OFFICIAL_WEBSITE`): that answer is about the courier, not the parcel, and fails as `carrier_unavailable`. Event clocks retain their wall time and explicit offset; a conflicting UTC field is rejected. Track123 labels Japan Post's scans in Japan +08:00, where the post's own tracker shows the same wall clocks on Tokyo time, so a Japan Post scan whose place ends in a Japanese postcode is dated on Tokyo time. Recipient fields and verification material are removed before the reply leaves the browser.
 
 Run the configured facade with a public reference supplied outside source:
 

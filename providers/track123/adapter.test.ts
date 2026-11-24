@@ -65,6 +65,18 @@ describe('Track123 public courier history', () => {
     payload.data.landWaybillLists[0]!.localDetails[0]!.timezone = '';
     expect(parseTrack123Response(payload, NUMBER).events![0]).not.toHaveProperty('time');
   });
+  it("dates Japan Post's scans at a place with a Japanese postcode on Tokyo time, whatever offset Track123 gives", () => {
+    const japan = (address: string) => ({ code: '00000', data: { landWaybillLists: [{ trackingNo: NUMBER, localProviderCode: 'japan-post',
+      localProviderEnName: 'Japan Post', querying: false, nodeStatus: 'NORMAL_QUERY', localDetails: [{ trackingNo: NUMBER,
+        eventTime: '2026-01-08 09:20:00', timezone: '+08:00', eventTimeUtc: '2026-01-08 01:20:00',
+        eventDetail: 'Dispatch from outward office of exchange', address }] }] } });
+    expect(parseTrack123Response(japan('EXAMPLE,EXAMPLE KEN,100-0001'), NUMBER, 'japan-post').events).toMatchObject([
+      { time: '2026-01-08T00:20:00.000Z', local_time: '2026-01-08T09:20:00' }]);
+    // A place elsewhere keeps the offset Track123 gives.
+    expect(parseTrack123Response(japan('EXAMPLE'), NUMBER, 'japan-post').events).toMatchObject([{ time: '2026-01-08T01:20:00.000Z' }]);
+    const fedex = fixture(); fedex.data.landWaybillLists[0]!.localDetails[0]!.address = 'EXAMPLE,100-0001';
+    expect(parseTrack123Response(fedex, NUMBER).events).toMatchObject([{ time: '2026-01-08T15:00:00.000Z' }]);
+  });
   it('is opt-in, and asked only about the carrier the lookup is for when its courier page is listed', () => {
     expect(universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER }).sources).not.toContain('Track123');
     expect(universalPlan({ carriers: ['fedex'], trackingNumber: NUMBER, enableTrack123: true }).sources).toContain('Track123');

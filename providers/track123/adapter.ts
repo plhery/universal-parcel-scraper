@@ -3,6 +3,7 @@ import type { AdapterFactory } from '../../core/adapter/index.js';
 import { ChallengeError, IndeterminateError, NoHistoryError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
+import { firstOccurrence } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { localEvent, numberOf, place, result, text } from '../shared/result.js';
 import { track123Carrier, track123CourierCode } from './couriers.js';
@@ -13,6 +14,21 @@ export const TRACK123_QUERY = `${ORIGIN}/tk/api/v2/anonymous/track/query-track-n
 export const TRACK123_POLL = `${ORIGIN}/tk/api/v2/anonymous/track/polling-waybill`;
 
 const pageOf = (code: string) => `${ORIGIN}/carriers/${code}`;
+const OFFSET = /^[+-](?:0\d|1[0-4]):[0-5]\d$/;
+
+/**
+ * Couriers whose scans at home Track123 labels with another offset than their own: it gives Japan
+ * Post's +08:00, where the post's own tracker shows the same wall clocks on Tokyo time. A scan whose
+ * place ends in the country's postcode is on that country's clock.
+ */
+const HOME_CLOCKS: Readonly<Record<string, { place: RegExp; zone: string }>> = {
+  'japan-post': { place: /(?:^|[\s,])\d{3}-\d{4}$/, zone: 'Asia/Tokyo' },
+};
+
+function homeZone(code: string, address: unknown): string | null {
+  const home = Object.hasOwn(HOME_CLOCKS, code) ? HOME_CLOCKS[code]! : null;
+  return home && typeof address === 'string' && home.place.test(address.trim()) ? home.zone : null;
+}
 
 /**
  * Reads the courier page's final reply for `number`. The shipment must be the one asked of the
@@ -42,13 +58,15 @@ export function parseTrack123Response(payload: unknown, number: string, code = '
     if (!isRecord(raw) || raw.trackingNo !== number || typeof raw.eventTime !== 'string'
       || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(raw.eventTime)) throw new SchemaError(SOURCE, 'Unbound or undated tracking event');
     const wall = raw.eventTime.replace(' ', 'T');
-    const offset = typeof raw.timezone === 'string' && /^[+-](?:0\d|1[0-4]):[0-5]\d$/.test(raw.timezone) ? raw.timezone : null;
-    const clock = DateTime.fromISO(offset ? wall + offset : wall, { setZone: true, zone: 'UTC' });
+    const given = typeof raw.timezone === 'string' && OFFSET.test(raw.timezone) ? raw.timezone : null;
+    const clock = DateTime.fromISO(given ? wall + given : wall, { setZone: true, zone: 'UTC' });
     if (!clock.isValid) throw new SchemaError(SOURCE, 'Invalid event clock');
-    if (offset && typeof raw.eventTimeUtc === 'string') {
+    if (given && typeof raw.eventTimeUtc === 'string') {
       const utc = DateTime.fromISO(raw.eventTimeUtc.replace(' ', 'T'), { zone: 'UTC' });
       if (!utc.isValid || utc.toMillis() !== clock.toMillis()) throw new SchemaError(SOURCE, 'Conflicting event clocks');
     }
+    const zone = homeZone(code, raw.address);
+    const offset = zone ? firstOccurrence(DateTime.fromISO(wall, { zone })).toFormat('ZZ') : given;
     const event = localEvent(offset ? wall + offset : wall, text(raw.eventDetail) || text(raw.desc));
     if (event) events.push({ ...event, local_time: wall, ...(place(raw.address) ? { location: place(raw.address) } : {}) });
   }
