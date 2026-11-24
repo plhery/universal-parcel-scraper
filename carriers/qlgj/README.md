@@ -21,6 +21,10 @@ Recognition asks the same lookup: a row says Qilin holds the number.
 - Rows in China, placed in Chinese, in Latin letters ("shen zhen", "shanghai") or nowhere, are
   read on Beijing's clock. A row placed abroad, such as the flight's arrival at its airport, keeps
   its wall clock: the tracker states no zone for it.
+- The rows it copies from DHL, most without a place, are on DHL's clock where DHL scanned the
+  parcel: a town's when one is named, Germany's for those before the parcel leaves for the
+  destination country, else the destination's. Read on Beijing's clock, they would come seven
+  hours before DHL's own rows for the same scans.
 - A record names the delivery carrier's number as its tracking number, beside Qilin's own: DHL's on
   the line to Europe. It is named only when DHL's rule claims the number whole.
 - Some rows are worded only in Chinese; the adapter shows them in English.

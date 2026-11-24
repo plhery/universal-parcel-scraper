@@ -62,6 +62,38 @@ describe('Qilin International tracking adapter', () => {
     }
   });
 
+  it('dates the rows it copies from DHL, placed or not, on DHL’s clock in Germany', async () => {
+    vi.useFakeTimers({ now: READ_AT, toFake: ['Date'] });
+    try {
+      const payload = JSON.parse(own('track.json'));
+      const record = payload[0].data[0];
+      const copy = (id: string, date: string, written: string, content: string, location = '') => ({
+        ...record.trackDetails[0], track_id: id, track_date: date, track_createdate: written, track_content: content, track_location: location,
+      });
+      record.trackDetails.unshift(
+        copy('20000010', '2026-05-24 10:19:00', '2026-05-24 18:02:00', 'The international shipment has been processed in the parcel center of origin'),
+        copy('20000009', '2026-05-23 22:02:00', '2026-05-24 06:10:00', '抵达德国，已交服务商', 'FRA'),
+      );
+      record.trackDetails.push(copy('20000001', '2026-05-14 12:15:00', '2026-05-14 19:40:00',
+        'The instruction data for this shipment have been provided by the sender to DHL electronically'));
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(JSON.stringify(payload)));
+      const result = await new QlgjTracker({ fetcher, recorder: NOOP_RECORDER }).fetch(NUMBER);
+      const row = (description: string) => result.events?.find((event) => event.description === description);
+      // Read on Beijing's clock, these would come seven hours before DHL's own rows for the same scans.
+      expect(row('The international shipment has been processed in the parcel center of origin')).toMatchObject({
+        stage: 'in_transit', stage_source: 'carrier_map', time: '2026-05-24T10:19:00+02:00', time_zone: 'Europe/Berlin', time_zone_basis: 'carrier',
+      });
+      expect(row('The instruction data for this shipment have been provided by the sender to DHL electronically')).toMatchObject({
+        stage: 'registered', stage_source: 'carrier_map', time: '2026-05-14T12:15:00+02:00',
+      });
+      // The hand-over to DHL, at the airport it names, keeps its wall clock, and shows in English.
+      expect(row('Arrived in Germany, handed to the delivering carrier')).toMatchObject({ stage: 'in_transit', local_time: '2026-05-23T22:02:00' });
+      expect(result.last_update).toBe('2026-05-24T10:19:00+02:00');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('leaves the hand-off open for a number no partner claims', () => {
     const payload = JSON.parse(own('track.json'));
     payload[0].data[0].trackingNumber = 'EM000000000CA';

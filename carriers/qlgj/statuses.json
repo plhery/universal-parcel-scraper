@@ -78,6 +78,47 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-23",
       "note": "Customs cleared and moving on to Germany, two days after the flight's arrival in Europe."
+    },
+    {
+      "wording": "抵达德国，已交服务商",
+      "language": "zh",
+      "english": "Arrived in Germany, handed to the delivering carrier",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Handed to the delivering carrier, DHL, after the clearance; not a delivery to the recipient."
+    },
+    {
+      "wording": "The instruction data for this shipment have been provided by the sender to DHL electronically",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "DHL's record of the parcel's data, copied without a place, on DHL's clock in Germany."
+    },
+    {
+      "wording": "The international shipment has been processed in the parcel center of origin",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "DHL's first scan in Germany, copied without a place, on DHL's clock there."
+    },
+    {
+      "wording": "The international shipment has been processed in the export parcel center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Copied from DHL in Germany."
+    },
+    {
+      "wording": "The shipment will be transported to the destination country/destination area and, from there, handed over to the delivery organization.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Copied from DHL in Germany, before the parcel leaves for the destination country."
     }
   ]
 }

@@ -16,3 +16,13 @@ export function qlgjEnglish(_code: string | null, wording: string): string | und
 }
 
 export const statusMap: CarrierStatusMap = { stage: qlgjStage, gaps: [] };
+
+// DHL's sentences the tracker copies on the line into Europe, on DHL's wall clock where it scanned the parcel, most
+// without a place, and those from Germany before the parcel leaves for the destination country.
+const DHL_SENTENCE = /^(?:the (?:international )?shipment\b|the instruction data for this shipment\b)/i;
+const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:of origin|export parcel center|transported to the destination country)\b/i;
+
+/** Whether a row is one the tracker copies from DHL, on DHL's wall clock. */
+export const isQlgjDhlRow = (wording: string): boolean => DHL_SENTENCE.test(wording.trim());
+/** Whether a DHL row is one from Germany, before the parcel leaves for the destination country. */
+export const isQlgjDhlGermanRow = (wording: string): boolean => DHL_GERMAN_ROW.test(wording);

@@ -1,9 +1,14 @@
-import type { AdapterFactory } from '../../core/adapter/index.js';
+import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import { HualeiTracker } from '../gzyl/hualei.js';
-import { QLGJ } from './parser.js';
+import { dateQlgjDhlRows, QLGJ } from './parser.js';
 
 export class QlgjTracker extends HualeiTracker {
   constructor(options: ConstructorParameters<typeof HualeiTracker>[1] = {}) { super(QLGJ, options); }
+
+  override async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    return dateQlgjDhlRows(await super.fetch(raw, context));
+  }
 }
 
 export const adapter: AdapterFactory = (environment) => {
