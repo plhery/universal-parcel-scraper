@@ -66,6 +66,13 @@
       "note": "The international flight's departure, in other words."
     },
     {
+      "wording": "International flight has arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The international flight's landing, after its departure."
+    },
+    {
       "wording": "Initial landing",
       "language": "en",
       "stage": "in_transit",
