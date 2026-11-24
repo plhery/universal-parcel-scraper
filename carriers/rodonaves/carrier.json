@@ -18,19 +18,72 @@
   "timezone": "America/Sao_Paulo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "rodonaves",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "eta"
+  ],
   "portal": {
+    "url": "https://rodonaves.com.br/rastreio-de-mercadoria?rastreiemercadoria=1&protocolo={trackingNumber}",
     "searchUrl": "https://rodonaves.com.br/rastreio-de-mercadoria",
     "helpUrl": "https://rodonaves.com.br/fale-conosco",
     "canaryUrl": "https://rodonaves.com.br/rastreio-de-mercadoria",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "customer_reference",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "eta"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "customer_reference",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "weight",
+      "proof_of_delivery"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "rodonaves.com.br",
+        "www.rodonaves.com.br"
+      ],
+      "pathPattern": "^/rastreio-de-mercadoria/?$",
+      "query": "^(?=(?:.*&)?rastreiemercadoria=1(?:&|$))(?:.*&)?protocolo=([^&]+)(?=&|$)"
+    },
+    {
+      "domains": [
+        "rodonaves.com.br",
+        "www.rodonaves.com.br"
+      ],
+      "pathPattern": "^/rastreio-de-mercadoria/?$",
+      "query": "^(?=(?:.*&)?rastreiemercadoria=4(?:&|$))(?:.*&)?minuta=([^&]+)(?=&|$)"
+    }
+  ],
   "detection": []
 }

@@ -2465,6 +2465,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'roadrunner', number: '999999999',
     route: /^https:\/\/tools\.rrts\.com\/LTLTrack\/\?searchValues=999999999$/,
     marker: /Invalid PRO number|Travel History/ },
+  // The tracking page reads the protocol from its address and looks it up on load, in the road system and then Brudam.
+  { carrier: 'rodonaves', number: '999999999',
+    route: /^https:\/\/rodonaves\.com\.br\/rastreio-de-mercadoria\?rastreiemercadoria=1&protocolo=999999999$/,
+    marker: /Nenhum pedido encontrado|Previsão de entrega/ },
   // The page fills its search field in from the address and looks the number up on load; it shows no notice for an unknown one.
   { carrier: 'followmont', number: '0000000',
     route: /^https:\/\/www\.followmont\.com\.au\/\?(?=.*\bconsignmentNumber=0000000\b)(?=.*\btrack-trace-start-unsecured-user\b)/,

@@ -1,5 +1,43 @@
 {
   "carrier": "rodonaves",
-  "gap": "No public page shows a Rodonaves protocol number.",
-  "records": []
+  "records": [
+    {
+      "number": "159853",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/rodonaves/minuta-159853_fXiqVQRUL571jiaF/",
+        "date": "2024-07-18",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A customer's Reclame Aqui complaint names it as the Rodonaves minuta of goods sent from São Paulo to Bahia. Rodonaves's tracker answers it through Brudam as a delivered Rodo Aéreo ECO minuta, followed by billing records."
+    },
+    {
+      "number": "110455",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/rodonaves/minuta-110455_ykN1ZPdFZPy88ZLl/",
+        "date": "2023-08-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A customer's Reclame Aqui complaint is titled with it as a Rodonaves minuta. Rodonaves's tracker answers it through Brudam as a delivered Rodo Aéreo ECO minuta, with its flights through Guarulhos and Teresina."
+    }
+  ]
 }

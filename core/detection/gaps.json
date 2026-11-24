@@ -6365,6 +6365,12 @@
     "reason": "A confirmed Rhenus Italia home delivery number starts with OU and has ten digits after the prefix. Detection does not offer Rhenus Italia."
   },
   {
+    "carrier": "rodonaves",
+    "pattern": "^\\d{6}$",
+    "kind": "by_design",
+    "reason": "Rodonaves's Rodo Aéreo minutas are bare six-digit runs, and its road protocol numbers bare runs of up to twelve digits, which many carriers share, so nothing in the number points to Rodonaves."
+  },
+  {
     "carrier": "rohlig",
     "pattern": "^RLUSS\\d{8}$",
     "kind": "open",
