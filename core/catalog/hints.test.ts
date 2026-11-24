@@ -252,7 +252,7 @@ describe('carrier names reported by universal providers', () => {
     ['Portugal Post - Portugal CTT', 'ctt'], ['Posten Norge - Norway Post', 'bring-posten'], ['Italy Post', 'poste-italiane'],
     ['Italy SDA', 'poste-italiane'],
     ['SDA Express Courier', 'poste-italiane'], ['4PX Express', 'four-px'], ['Asendia United States', 'asendia'], ['WnDirect/Asendia UK', 'asendia'],
-    ['Deutsche Post - DHL Paket', 'dhl'], ['DHL eCommerce Global Mail', 'dhl-ecommerce'], ['DHL eCommerce Asia', 'dhl-ecommerce'],
+    ['Deutsche Post - DHL Paket', 'dhl'], ['myHermes', 'hermes-de'], ['DHL eCommerce Global Mail', 'dhl-ecommerce'], ['DHL eCommerce Asia', 'dhl-ecommerce'],
     ['DHL eCommerce US', 'dhl-ecommerce'],
     ['Correos de España', 'correos-spain'], ['Correos Spain', 'correos-spain'], ['Austria Post', 'austrian-post'],
     ['Intelcom', 'intelcom'], ['Dragonfly', 'intelcom'], ['Orange Connex', 'speedpak'],

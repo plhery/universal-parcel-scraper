@@ -10,7 +10,8 @@ No public page shows a GIO Express order number, so no rule names it.
 
 ## Tracker
 
-The tracking page relays a dispatch portal that asks for the order's key beside its number.
+The tracking page takes a tracking ID or a reference number alone, its `type` saying which, and answers
+on the page. No public number is known to see a found reply.
 
 ## Links
 

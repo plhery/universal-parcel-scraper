@@ -7,7 +7,7 @@
 const TERMS: ReadonlyArray<readonly [RegExp, string]> = ([
   // Places a line serves.
   ['欧美', 'Europe and US'], ['欧洲', 'Europe'], ['全球通', 'Global'], ['全球', 'Global'], ['美国', 'US'], ['英国', 'UK'],
-  ['西班牙', 'Spain'], ['波兰', 'Poland'], ['墨西哥', 'Mexico'], ['荷兰', 'Netherlands'],
+  ['西班牙', 'Spain'], ['波兰', 'Poland'], ['墨西哥', 'Mexico'], ['荷兰', 'Netherlands'], ['澳加', 'Australia and Canada'],
   // How it travels: a dedicated line, a fast or an economy one, a small parcel, air freight, bulk cargo
   // and road freight run on a timetable (卡航, "truck flights").
   ['专线', 'Line'], ['快线', 'Express Line'], ['慢线', 'Economy Line'], ['经济', 'Economy'], ['小包', 'Small Parcel'], ['空派', 'Air Freight'],

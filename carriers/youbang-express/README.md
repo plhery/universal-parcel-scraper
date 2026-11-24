@@ -40,7 +40,7 @@ never shown. No delivery estimate or weight.
 No public source shows a whole YouBang Express number. A parcel a universal provider files under
 YBWL has `YB`, ten digits and `CN`, so a low rule suggests YouBang Express for that layout; the
 corpus holds a made-up number in that shape. Other Shenzhen and Guangdong forwarders share the
-initials, so the rule stays low.
+initials, so the rule stays low, and recognition asks YouBang's tracker whether it holds the number.
 
 ## Links
 

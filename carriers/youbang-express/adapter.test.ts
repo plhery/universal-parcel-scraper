@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
@@ -83,6 +84,14 @@ describe('YouBang Express tracking adapter', () => {
     expect(fetcher.mock.calls[1]![1]).toMatchObject({ method: 'POST' });
     expect(parseYoubangExpressTrack(fixture('no-track'), UNKNOWN, READ_AT)).toBeNull();
     expect(() => parseYoubangExpressPage(page('page-unknown'), UNKNOWN, READ_AT)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+  });
+
+  it('recognizes by the same lookup, since its rule is low and preflight asks it', async () => {
+    const unknown = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('no-track'))).mockResolvedValueOnce(html(page('page-unknown')));
+    await expect(adapter(environment(unknown)).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
+    const known = vi.fn<typeof fetch>().mockResolvedValue(json(fixture('track')));
+    await expect(adapter(environment(known)).recognize!(NUMBER)).resolves.toMatchObject({ known: true });
+    expect(recognitionCandidates(NUMBER).map(({ carrier }) => carrier)).toEqual(['youbang-express']);
   });
 
   it('refuses a number the tracker cannot be asked for without a request', async () => {

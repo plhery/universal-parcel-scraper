@@ -12,8 +12,9 @@ No public page shows one of its numbers, so there is no rule.
 
 ## Why there is no adapter
 
-Its tracker on tms.hyexp.net takes several numbers without a login. No public number is known to see a found
-reply.
+Its tracker page on tms.hyexp.net, which its site links, sends up to ten numbers without a login to the
+platform's interface on vip.hyeline.net (`tms-saas-oms/oms/tms/tracequery/out/list`). No public number is
+known to see a found reply.
 
 ## Links
 

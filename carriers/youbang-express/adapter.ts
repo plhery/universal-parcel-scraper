@@ -8,5 +8,9 @@ export class YoubangExpressTracker extends HualeiTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new YoubangExpressTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'youbang-express', recordsSteps: true, steps: ['direct', 'retry'], track: (input, context) => tracker.fetch(input.number, context) };
+  return {
+    id: 'youbang-express', recordsSteps: true, steps: ['direct', 'retry'],
+    track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => tracker.recognize(number, context),
+  };
 };

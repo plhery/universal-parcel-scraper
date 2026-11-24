@@ -7,7 +7,7 @@ import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, JOOM_LOGISTICS_API, JoomLogisticsTracker, joomLogisticsLookupUrl } from './adapter.js';
-import { isJoomLogisticsNotFound, normalizeJoomLogisticsNumber, parseJoomLogistics } from './parser.js';
+import { isJoomLogisticsNotFound, joomLogisticsRequestNumbers, normalizeJoomLogisticsNumber, parseJoomLogistics } from './parser.js';
 import { joomLogisticsMappedStage, joomLogisticsStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -235,6 +235,32 @@ describe('Joom Logistics HTTP adapter', () => {
       .rejects.toMatchObject({ kind: 'schema' });
     // The not-found answer under HTTP 200 is not a parcel.
     await expect(lookup(() => json(fixture('not-found')))).rejects.toMatchObject({ kind: 'schema' });
+  });
+
+  it('asks a reference in the hyphenated layout with its hyphens first, then as given', async () => {
+    // A public sample the tracker finds only with its hyphens; the reply is a fixture filed under it.
+    const printed = 'EL356-230927-0298';
+    const bare = 'EL3562309270298';
+    const asked = (fetcher: ReturnType<typeof vi.fn<typeof fetch>>) =>
+      fetcher.mock.calls.map(([url]) => new URL(String(url)).searchParams.get('trackingNumber'));
+    const found = vi.fn<typeof fetch>().mockResolvedValue(json(changed((parcel) => {
+      parcel.trackingNumber = printed;
+      parcel.trackingNumbers = [printed];
+    })));
+    await expect(carrier(found).track({ number: bare })).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(asked(found)).toEqual([printed]);
+    // Unknown with its hyphens, it is asked as given; unknown both ways, it is not found.
+    const missing = vi.fn<typeof fetch>().mockImplementation(async (url) => json({ type: 'api.not_found',
+      message: `failed to get tracking by tracking number ${new URL(String(url)).searchParams.get('trackingNumber')}` }, { status: 404 }));
+    await expect(carrier(missing).track({ number: printed })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(asked(missing)).toEqual([printed, bare]);
+    // Another failure is not retried in the other form.
+    const refused = vi.fn<typeof fetch>().mockImplementation(async () => new Response('', { status: 403 }));
+    await expect(carrier(refused).track({ number: bare })).rejects.toMatchObject({ kind: 'challenge' });
+    expect(new Set(asked(refused))).toEqual(new Set([printed]));
+    // Other numbers, and a group that is no date, are asked as given.
+    expect(joomLogisticsRequestNumbers('EL3562313270298')).toEqual(['EL3562313270298']);
+    expect(joomLogisticsRequestNumbers(RU)).toEqual([RU]);
   });
 
   it('keeps a refusal, a browser check, a moved route and a broken reply apart from not found', async () => {

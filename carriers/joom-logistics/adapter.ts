@@ -5,9 +5,9 @@ import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { isJoomLogisticsNotFound, JOOM_LOGISTICS_MAX_BYTES, normalizeJoomLogisticsNumber, parseJoomLogistics, PROVIDER } from './parser.js';
+import { isJoomLogisticsNotFound, JOOM_LOGISTICS_MAX_BYTES, joomLogisticsRequestNumbers, normalizeJoomLogisticsNumber, parseJoomLogistics, PROVIDER } from './parser.js';
 
-export { normalizeJoomLogisticsNumber, parseJoomLogistics } from './parser.js';
+export { joomLogisticsRequestNumbers, normalizeJoomLogisticsNumber, parseJoomLogistics } from './parser.js';
 
 /** The interface the tracker at joomlogistics.com asks, its `MAIN_API`. */
 export const JOOM_LOGISTICS_API = 'https://api-logistics.joom.com/api/0.1/trackings';
@@ -53,13 +53,26 @@ export class JoomLogisticsTracker {
     return parseJoomLogistics(body, number);
   }
 
+  /** Asks each form of the number in turn while the tracker does not know the one asked. */
+  private async readForms(forms: readonly string[], signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
+    const deadline = Date.now() + timeoutMs;
+    for (const form of forms.slice(0, -1)) {
+      try {
+        return await this.read(form, signal, Math.max(1, deadline - Date.now()));
+      } catch (error) {
+        if (!(error instanceof NotFoundError)) throw error;
+      }
+    }
+    return this.read(forms.at(-1)!, signal, Math.max(1, deadline - Date.now()));
+  }
+
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
-    const number = normalizeJoomLogisticsNumber(raw);
+    const forms = joomLogisticsRequestNumbers(normalizeJoomLogisticsNumber(raw));
     // A read that fails to reach the interface, or hangs, is sent once more: the first try gets half of the budget.
     return runSteps({ carrier: 'joom-logistics', budgetMs: context.budgetMs ?? DEFAULT_BUDGET_MS, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => this.read(number, signal, firstAttemptMs(remainingMs)) },
-      networkRetryStep(({ signal, remainingMs }) => this.read(number, signal, remainingMs)),
+      { id: 'direct', run: ({ signal, remainingMs }) => this.readForms(forms, signal, firstAttemptMs(remainingMs)) },
+      networkRetryStep(({ signal, remainingMs }) => this.readForms(forms, signal, remainingMs)),
     ]);
   }
 }

@@ -32,6 +32,19 @@ export function normalizeJoomLogisticsNumber(raw: string): string {
   return number;
 }
 
+// A reference of two letters, three digits, a date and four digits is filed with hyphens between
+// those groups (EL356-230927-0298), and the tracker finds it only with them.
+const HYPHENATED = /^([A-Z]{2}\d{3})(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01]))(\d{4})$/;
+
+/**
+ * The forms of a number to ask, in order. Normalizing drops a reference's hyphens, so one in the
+ * hyphenated layout is asked with them first, then as given, in case it was filed without them.
+ */
+export function joomLogisticsRequestNumbers(number: string): string[] {
+  const groups = HYPHENATED.exec(number);
+  return groups ? [`${groups[1]}-${groups[2]}-${groups[3]}`, number] : [number];
+}
+
 /** An optional text field; anything but a string is a changed reply. */
 function text(row: Record<string, unknown>, key: string, maxLength = 200): string {
   const value = row[key];

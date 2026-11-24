@@ -49,8 +49,9 @@ from flights, lines, posts and couriers carry their local wall clock under the Z
 ## Numbers
 
 The tracker finds a number only as it was filed: in upper case and, for numbers filed with hyphens,
-with them. The adapter takes four to forty letters and digits, at least one a digit, and drops
-hyphens, so a hyphenated number is not found. No rule offers Joom Logistics: its numbers are other
+with them. The adapter takes four to forty letters and digits, at least one a digit. Lookups drop
+hyphens, so a reference in the hyphenated layout (two letters and three digits, a date, four digits)
+is asked with them restored, then as given. No rule offers Joom Logistics: its numbers are other
 carriers' ([`gaps.json`](../../core/detection/gaps.json)). Parcels a universal provider names Joom
 Logistics may be unknown to its tracker. The samples and their sources are in
 [`numbers.json`](numbers.json).

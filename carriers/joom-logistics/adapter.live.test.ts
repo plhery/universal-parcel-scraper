@@ -31,6 +31,11 @@ describe('Joom Logistics live retrieval', () => {
       .every((event) => WALL_CLOCK.test(String(event.local_time)))).toBe(true);
   }, 45_000);
 
+  it('finds the public sample filed with hyphens from its number without them', async () => {
+    const hyphenated = numbers.records.find((record) => record.number.includes('-'))!.number;
+    await expect(direct().track({ number: hyphenated.replaceAll('-', '') })).resolves.toMatchObject({ current_stage: 'delivered' });
+  }, 45_000);
+
   it('reads an unknown number as not found', async () => {
     await expect(direct().track({ number: process.env.JOOM_LOGISTICS_UNKNOWN_NUMBER ?? 'ZZ729461835XX' }))
       .rejects.toMatchObject({ kind: 'not_found' });
