@@ -19,18 +19,53 @@
   "timezone": "Australia/Sydney",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "cope-sensitive-freight",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "eta"
+  ],
   "portal": {
     "searchUrl": "https://www.cope.com.au/",
     "helpUrl": "https://www.cope.com.au/contact-us",
     "canaryUrl": "https://www.cope.com.au/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "eta",
+      "awb_date",
+      "transit_time"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "eta"
+    ],
+    "discarded": [
+      "awb_date",
+      "transit_time"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "signatory",
+      "receiver_name",
+      "weight"
+    ]
   },
   "links": [],
   "detection": []

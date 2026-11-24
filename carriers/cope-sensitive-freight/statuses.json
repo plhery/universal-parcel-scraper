@@ -1,4 +1,57 @@
 {
   "carrier": "cope-sensitive-freight",
-  "entries": []
+  "entries": [
+    {
+      "code": "NEW",
+      "wording": "Job created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The sender booked the job in eSmart; COPE does not have the goods yet."
+    },
+    {
+      "code": "ALLOCATED",
+      "wording": "Job dispatched",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The pickup job went to a driver; the goods are still with the sender."
+    },
+    {
+      "code": "PICKED UP",
+      "wording": "Articles picked up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "COPE collected the goods from the sender."
+    },
+    {
+      "code": "IN TRANSIT",
+      "wording": "Articles in movement",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24"
+    },
+    {
+      "code": "ON BOARD FOR DELIVERY",
+      "wording": "Articles loaded for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24"
+    },
+    {
+      "code": "PROOF OF DELIVERY",
+      "wording": "Delivery at receiver",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The row names the receiver's suburb and state."
+    }
+  ]
 }

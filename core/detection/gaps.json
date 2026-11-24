@@ -6149,6 +6149,12 @@
     "reason": "Two COPE eSmart consignment notes show the BRU customer prefix and seven digits. Detection does not offer COPE."
   },
   {
+    "carrier": "cope-sensitive-freight",
+    "pattern": "^GFT\\d{6}$",
+    "kind": "by_design",
+    "reason": "COPE's consignment numbers start with the sending customer's letter code, and three letters and six digits is a reference shape many carriers and shops print."
+  },
+  {
     "carrier": "delibox",
     "pattern": "^\\d{12}$",
     "kind": "collision",

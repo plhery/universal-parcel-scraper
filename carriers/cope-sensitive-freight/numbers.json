@@ -2,6 +2,44 @@
   "carrier": "cope-sensitive-freight",
   "records": [
     {
+      "number": "GFT012578",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516083828/https://www.parcelpanel.com/couriers/cope/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ParcelPanel's COPE page published it as the courier's sample number to try. COPE's tracker answers it with a tail-gate road consignment from Broadmeadows, Victoria, delivered in Western Australia."
+    },
+    {
+      "number": "GFT006460",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251117095514/https://www.parcelpanel.com/couriers/cope/",
+        "date": "2025-11-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An earlier capture of ParcelPanel's COPE page published it as the sample number. COPE's tracker answers it with a consignment picked up in Victoria and delivered in New South Wales."
+    },
+    {
       "number": "BRU1414966",
       "role": "shipment",
       "evidence": "public_shipment_report",
