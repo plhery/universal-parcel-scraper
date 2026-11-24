@@ -89,6 +89,9 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['parcel arrives at transit airport, parcel arrival', 'in_transit'],
   ['parcel is leaving transit airport, parcel leaving port', 'in_transit'],
   ['shipment data processed', 'in_transit'],
+  // The UK partner's depot receipt, sent under SupplierAndLastMileReceive and relayed again without a code at the
+  // minute of Royal Mail's own mail-centre scan: the journey goes on.
+  ['shipment received in depot', 'in_transit'],
 ]);
 
 // Partners' lines WanbExpress files under a code their words contradict, by code and `normalizeStatusWording` wording:

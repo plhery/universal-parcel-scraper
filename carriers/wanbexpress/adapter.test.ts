@@ -204,9 +204,9 @@ describe('WanbExpress', () => {
     expect(wanbStage(null, 'processing center collecting')).toBe('in_transit');
     expect(wanbStage(null, 'Arrive dest customs')).toBe('customs');
     // A connecting airport's uncoded copies of the line-haul's arrival and departure, and the last-mile partner's record
-    // of the parcel's data at its depot's receipt, carry the parcel on, and the app closes them by the map.
+    // of the parcel's data at its depot's receipt and that receipt itself, carry the parcel on, and the app closes them by the map.
     for (const wording of ['Parcel arrives at Transit Airport, Parcel Arrival', 'Parcel is leaving Transit Airport, Parcel Leaving Port',
-      'Shipment Data Processed']) {
+      'Shipment Data Processed', 'Shipment Received in Depot']) {
       expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: wording }), wording)
         .toEqual({ kind: 'mapped', stage: 'in_transit' });
     }

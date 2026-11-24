@@ -555,6 +555,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-24",
       "note": "The last-mile partner's record of the parcel's data, without a code, at the minute of its depot's receipt: the journey goes on."
+    },
+    {
+      "wording": "Shipment Received in Depot",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The UK partner's depot receipt, also sent under SupplierAndLastMileReceive, relayed without a code at the minute of Royal Mail's mail-centre scan."
     }
   ]
 }
