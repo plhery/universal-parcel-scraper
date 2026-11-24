@@ -47764,6 +47764,25 @@
     ]
   },
   {
+    "input": "4006318880257783",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce",
+      "correos-express",
+      "canada-post",
+      "tnt",
+      "evri-uk"
+    ],
+    "asked": [
+      "correos-express",
+      "evri-uk",
+      "canada-post",
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "400800901904",
     "carrier": "unknown",
     "confidence": "low",
@@ -102370,6 +102389,18 @@
   },
   {
     "input": "LB046066520LT",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "lietuvos-pastas",
+      "chronopost"
+    ]
+  },
+  {
+    "input": "LB095118387LT",
     "carrier": "intl-post",
     "confidence": "high",
     "candidates": [
