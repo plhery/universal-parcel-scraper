@@ -252,6 +252,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'cambodia-post', number: 'RR999999995KH',
     route: /^https:\/\/www\.cambodiapost\.com\.kh\/tracking\/search\?search=RR999999995KH$/,
     marker: /Item N\s*o\s+RR999999995KH/ },
+  // The page prefills the code in its search field and answers it below the form.
+  { carrier: 'azerpost', number: 'RR999999995AZ',
+    route: /^https:\/\/www\.azerpost\.az\/az\/xidmetler\/gonderislerin-izlenmesi\?package_id=RR999999995AZ$/,
+    marker: /bağlama kodu nümunə/ },
   { carrier: 'aruba-post', number: 'RR999999995AW',
     route: /^https:\/\/cds\.postaruba\.com\/ipswt\/IPSWeb_item_events\.aspx\?itemid=RR999999995AW$/,
     marker: /No information, please check your item identifier/,
