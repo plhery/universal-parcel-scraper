@@ -501,6 +501,15 @@
     },
     {
       "code": "70",
+      "wording": "The customer service representative confirms the inbound service expenses or pays the service expenses in advance",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Official routes opCode 70 with this remark, after the hand-over to the round: a delivery into a warehouse waits while its receiving fee is confirmed or paid in advance, then is signed."
+    },
+    {
+      "code": "70",
       "wording": "Delivery failed (as the receiver could not be reached due to unavailability/power-off/no signal). Delivery to be rescheduled.",
       "stage": "failed_attempt",
       "language": "en",

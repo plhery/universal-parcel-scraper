@@ -16,12 +16,15 @@ const UNDELIVERED = new Map<string, ClassifiedStatus>([
   ['222', { stage: 'ready_for_pickup', status: 'out_for_delivery' }],
 ]);
 // Without a reason it knows, code 70 is read by its remark: the courier waits at a receiving
-// warehouse that inspects the parcel before it accepts it, the step before the delivery.
+// warehouse that inspects the parcel before it accepts it, or for the warehouse's receiving fee
+// to be confirmed or paid in advance, the step before the delivery.
 // A remark that says the delivery failed is a failed attempt whatever group its reason is in: the courier
 // could not reach the recipient, and the delivery is to be rescheduled.
 const FAILED_REMARK = /^Delivery failed\b/i;
 const UNDELIVERED_REMARKS: readonly (readonly [RegExp, ClassifiedStatus])[] = [
   [/^The shipment has arrived at the warehouse and is waiting for inspection and acceptance\b/i, { stage: 'out_for_delivery', status: 'out_for_delivery' }],
+  [/^The customer service representative confirms the inbound service expenses or pays the service expenses in advance\b/i,
+    { stage: 'out_for_delivery', status: 'out_for_delivery' }],
 ];
 const SUMMARY = new Map<string, ClassifiedStatus>([['2', EXCEPTION], ['3', TRANSIT], ['4', RETURNED], ['5', EXCEPTION], ['6', EXCEPTION], ['99', TRANSIT], ['100', DELIVERED]]);
 
