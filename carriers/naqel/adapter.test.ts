@@ -246,6 +246,8 @@ describe('Naqel status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'naqel', providerCode: null, description: 'Departed to EASTWICK' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'naqel', providerCode: null, description: 'Parcel Locker Request Created' }))
       .toMatchObject({ kind: 'intentional_gap' });
+    expect(statusMapAnswer({ carrier: 'naqel', providerCode: null, description: 'Re-Weight' })).toMatchObject({ kind: 'intentional_gap' });
+    expect(naqelStage('Re-Weight')).toBeNull();
     expect(statusMapAnswer({ carrier: 'naqel', providerCode: null, description: 'Sample notice' })).toEqual({ kind: 'unknown' });
   });
 });

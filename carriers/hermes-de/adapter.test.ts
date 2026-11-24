@@ -265,6 +265,10 @@ describe('Hermes Germany', () => {
     const result = parseHermesGermanyResponse(payload, NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
     expect(result.events?.[0]).toMatchObject({ stage: 'delivered', provider_code: 'DELIVERED_INHOUSE' });
+    // Handed to an employee, as at a business.
+    payload[0]!.parcelProgress = (payload[0]!.parcelProgress as Array<Record<string, unknown>>).map((entry) => entry.parcelStatus === 'DELIVERED_INHOUSE'
+      ? { ...entry, parcelStatus: 'DELIVERED_AT_EMPLOYEE', historyText: 'Die Sendung wurde zugestellt (an einen Mitarbeiter übergeben).' } : entry);
+    expect(parseHermesGermanyResponse(payload, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
   });
 
   it("reads the partner's sort minutes after the shop abroad reported the parcel ready as a notice of that receipt", () => {

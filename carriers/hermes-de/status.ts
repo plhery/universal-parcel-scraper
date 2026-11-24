@@ -57,6 +57,8 @@ export const STATUSES: Record<string, Milestone> = {
   DELIVERED_HOMEDELIVERY: milestone('delivered', 'delivered', 'Delivered'),
   DELIVERED_INHOUSE: milestone('delivered', 'delivered', 'Delivered at the address'),
   DELIVERED_NEIGHBOUR: milestone('delivered', 'delivered', 'Delivered to a neighbour'),
+  // Handed to an employee at the address, as at a business.
+  DELIVERED_AT_EMPLOYEE: milestone('delivered', 'delivered', 'Delivered to an employee'),
   DELIVERED_DROPOFF: milestone('delivered', 'delivered', 'Delivered to the agreed safe place'),
   DELIVERED_MAILBOX: milestone('delivered', 'delivered', 'Delivered to the mailbox'),
   DELIVERED_PARCELSHOP: milestone('delivered', 'delivered', 'Collected at the ParcelShop'),

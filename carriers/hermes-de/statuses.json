@@ -162,6 +162,15 @@
       "note": "Delivered to a neighbour"
     },
     {
+      "code": "DELIVERED_AT_EMPLOYEE",
+      "wording": "Die Sendung wurde zugestellt (an einen Mitarbeiter übergeben).",
+      "language": "de",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Delivered to an employee at the address, as at a business."
+    },
+    {
       "code": "DELIVERED_DROPOFF",
       "stage": "delivered",
       "confirmedBy": "official-doc",

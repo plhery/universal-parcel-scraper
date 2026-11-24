@@ -3,6 +3,7 @@
   "entries": [
     {"wording": "Waybill created. Shipment has not been received from the retailer", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The retailer created the waybill; Naqel has not received the parcel yet."},
     {"wording": "Parcel Locker Request Created", "language": "en", "confirmedBy": "live", "note": "A delivery option recorded by the system, not a movement."},
+    {"wording": "Re-Weight", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A weight recorded by the system, minutes after the waybill and before any pickup scan: not a movement."},
     {"wording": "Picked up by Naqel", "stage": "accepted", "language": "en", "confirmedBy": "live"},
     {"wording": "Shipment Picked Up by Naqel", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "Seen in an archived capture of Naqel's tracker."},
     {"wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "Seen in an archived capture of Naqel's tracker."},

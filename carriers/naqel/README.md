@@ -28,7 +28,8 @@ delivers there. Tracked through its tracking page.
   Naqel works across the Gulf. The clocks stay in `local_time`, and a delivery gets no
   `delivered_at`.
 - Scans carry wording only, which [status.ts](status.ts) stages. `Parcel Locker Request
-  Created` is a delivery option, not a movement, and keeps no stage. The summary's current
+  Created`, a delivery option, and `Re-Weight`, a weight recorded before any pickup scan, are
+  not movements and give no stage. The summary's current
   status `Delivered` settles a delivered shipment; other summary wording is left to the scans.
 - Scans the system records, such as the waybill's creation, give `SYSTEM` as their place,
   which is not kept as a location.

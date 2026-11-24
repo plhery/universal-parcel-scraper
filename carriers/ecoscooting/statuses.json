@@ -317,6 +317,24 @@
       "confirmedBy": "live"
     },
     {
+      "code": "TC_INBOUND",
+      "wording": "Your shipment has arrived at transfer center.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Arrival at a transfer centre on the way to the delivery."
+    },
+    {
+      "code": "TC_OUTBOUND",
+      "wording": "Your shipment is ready to be transferred.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The transfer centre's outbound scan, after its arrival scan."
+    },
+    {
       "code": "SC_SORTING",
       "wording": "Your shipment is in process at sorting center",
       "language": "en",

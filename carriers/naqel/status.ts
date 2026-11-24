@@ -40,14 +40,17 @@ const PREFIXES: readonly (readonly [string, Stage])[] = [
   ['shipment delivered – signed by', 'delivered'],
 ];
 
-/** A delivery option the system records: no movement, so the parcel keeps its stage. */
-const NOTICES = ['Parcel Locker Request Created'];
+/** Records the system keeps that show no movement, so the parcel keeps its stage. */
+const NOTICES: Readonly<Record<string, string>> = {
+  'Parcel Locker Request Created': 'A parcel-locker delivery option the system records, not a movement: the parcel keeps the stage it had.',
+  'Re-Weight': 'A weight the system records, minutes after the waybill and before any pickup scan: the parcel keeps the stage it had.',
+};
 
 /** The page's current status, read only when it says the journey ended. */
 const SUMMARIES: Readonly<Record<string, Stage>> = { 'Delivered': 'delivered' };
 
 const SCAN_KEYS = new Map(Object.entries(SCANS).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));
-const NOTICE_KEYS = new Set(NOTICES.map(normalizeStatusWording));
+const NOTICE_KEYS = new Map(Object.entries(NOTICES).map(([wording, note]) => [normalizeStatusWording(wording), note]));
 const SUMMARY_KEYS = new Map(Object.entries(SUMMARIES).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));
 
 /** The stage Naqel's wording gives a scan, if any. */
@@ -72,7 +75,5 @@ export function naqelStage(wording: string): ClassifiedWording | null {
 
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code === null ? naqelMappedStage(wording) : undefined),
-  gaps: [...NOTICE_KEYS].map((wording) => ({
-    wording, note: 'A parcel-locker delivery option the system records, not a movement: the parcel keeps the stage it had.',
-  })),
+  gaps: [...NOTICE_KEYS].map(([wording, note]) => ({ wording, note })),
 };

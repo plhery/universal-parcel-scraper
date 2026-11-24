@@ -60,6 +60,9 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['TRANSFER_DEPART', { status: 'in_transit', stage: 'in_transit' }],
   ['SC_OUTBOUND', { status: 'in_transit', stage: 'in_transit' }],
   ['SC_INBOUND', { status: 'in_transit', stage: 'in_transit' }],
+  // A transfer centre between sorting centres: arrived, then ready to go on.
+  ['TC_INBOUND', { status: 'in_transit', stage: 'in_transit' }],
+  ['TC_OUTBOUND', { status: 'in_transit', stage: 'in_transit' }],
   // Sorting and consolidation between the sorting center's intake and its outbound scan.
   ['SC_SORTING', { status: 'in_transit', stage: 'in_transit' }],
   ['SC_CONSOLIDATION', { status: 'in_transit', stage: 'in_transit' }],
