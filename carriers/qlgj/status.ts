@@ -5,9 +5,13 @@ import statuses from './statuses.json' with { type: 'json' };
 
 const WORDINGS = statusWordings(statuses.entries);
 
+// Its notes on the booked flight name the day by month and ordinal: "Estimated departure is November 22nd". The day
+// becomes an ellipsis.
+const ESTIMATED_DAY = /^(estimated (?:departure|arrival date) is )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
+
 /** The stage Qilin's map gives a row, by its `normalizeStatusWording` wording. A row's kind code decides nothing. */
 export function qlgjStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.stage(wording);
+  return WORDINGS.stage(wording.replace(ESTIMATED_DAY, '$1…'));
 }
 
 /** The English the adapter shows for a row the line words only in Chinese. */

@@ -120,6 +120,10 @@ describe('Qilin International tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description: 'Inbound in sorting center' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description: 'Synthetic wording' })).toEqual({ kind: 'unknown' });
+    // The booked flight's day is read as an ellipsis.
+    for (const description of ['Estimated departure is March 5th', 'Estimated arrival date is March 22nd']) {
+      expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     expect(qlgjEnglish(null, normalizeStatusWording('航班已抵达'))).toBe('Flight arrived');
   });
 

@@ -28,6 +28,8 @@ Recognition asks the same lookup: a row says Qilin holds the number.
 - A record names the delivery carrier's number as its tracking number, beside Qilin's own: DHL's on
   the line to Europe. It is named only when DHL's rule claims the number whole.
 - Some rows are worded only in Chinese; the adapter shows them in English.
+- Its notes on the booked flight name the day, as "Estimated departure is" and a month and ordinal:
+  the map reads the day as an ellipsis.
 
 ## Numbers
 

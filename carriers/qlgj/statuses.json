@@ -56,6 +56,22 @@
       "firstSeen": "2026-11-23"
     },
     {
+      "wording": "Estimated departure is …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Names the booked flight's day, read as an ellipsis, before the take-off."
+    },
+    {
+      "wording": "Estimated arrival date is …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-23",
+      "note": "Names the day the booked flight lands, read as an ellipsis, written with the departure's note."
+    },
+    {
       "wording": "The flight has taken off",
       "language": "en",
       "stage": "in_transit",
