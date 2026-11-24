@@ -112,6 +112,8 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 - Each row carries a code, kept as its `provider_code`. Most rows are `OIT` whatever happened, so a
   code gives a stage only to a wording the map lacks, and only where it settles one alone: the
   order's data, the collection, the round, the pickup point, a failed attempt and the delivery.
+  A bare "Collected" or "Received" names neither who took the parcel nor where: under `OIT` it
+  is a line's agent taking the parcel on, in transit, and under a code that settles the stage, the code reads it.
 - The delivering depot's receipt comes before each round and again after a missed delivery. It is a
   notice that keeps the stage of the scan before it with no source of its own: in transit before a
   round, and after a missed delivery the miss, as the parcel waits for the next round or the

@@ -99,12 +99,19 @@ const CODE_STAGES: ReadonlyMap<string, Stage> = new Map([
   ['DSD', 'delivered'],
 ]);
 
+// A bare collection or receipt names neither who took the parcel nor where. Under `OIT`, JS Express's code for a parcel
+// on its way, it is a line's agent taking the parcel on a day after its departure from origin; under a code that
+// settles the stage alone, such as a delivery's, the code reads it, as a recipient's collection at a pickup point.
+const BARE_IN_TRANSIT = new Set(['collected', 'received']);
+const codeStage = (code: string | null, normalized: string): Stage | undefined => !code ? undefined
+  : CODE_STAGES.get(code) ?? (code === 'OIT' && BARE_IN_TRANSIT.has(normalized) ? 'in_transit' : undefined);
+
 /**
  * A row's stage: the map, else its code, else the shared wording rules, else nothing. A recorded gap has none.
  */
 export function jsExpressStage(wording: string, code: string | null = null): ClassifiedWording | null {
   if (GAP_WORDINGS.has(normalizeStatusWording(wording))) return null;
-  const mapped = jsExpressMappedStage(wording) ?? (code ? CODE_STAGES.get(code) : undefined);
+  const mapped = jsExpressMappedStage(wording) ?? codeStage(code, normalizeStatusWording(wording));
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
@@ -113,7 +120,7 @@ export function jsExpressStage(wording: string, code: string | null = null): Cla
 const GAP_NOTES = new Map(GAPS.map((gap) => [gap.wording, gap.note]));
 
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => GAP_WORDINGS.has(wording) ? undefined : mappedStage(wording) ?? (code ? CODE_STAGES.get(code) : undefined),
+  stage: (code, wording) => GAP_WORDINGS.has(wording) ? undefined : mappedStage(wording) ?? codeStage(code, wording),
   gaps: GAPS,
   // A gap is one by its wording, whatever code the row carries.
   gapNote: (_code, wording) => GAP_NOTES.get(wording),

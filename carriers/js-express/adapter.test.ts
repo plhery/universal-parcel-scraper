@@ -981,5 +981,13 @@ describe('JS Express status vocabulary', () => {
     expect(statusMap.stage('OIR', normalizeStatusWording(gap))).toBeUndefined();
     expect(jsExpressStage(gap, 'OIR')).toBeNull();
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: gap })).toMatchObject({ kind: 'intentional_gap' });
+    // A bare collection or receipt is the journey going on under OIT; a code that settles the stage reads it, and
+    // without a code it has no stage.
+    for (const wording of ['Collected', 'Received']) {
+      expect(jsExpressStage(wording, 'OIT'), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+      expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: wording }), wording).toEqual({ kind: 'mapped', stage: 'in_transit' });
+      expect(jsExpressStage(wording, 'DSD'), wording).toEqual({ stage: 'delivered', source: 'carrier_map' });
+      expect(jsExpressStage(wording), wording).toBeNull();
+    }
   });
 });
