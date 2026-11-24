@@ -729,6 +729,18 @@ describe('QLS, HSD Express, Expedico, PasarEX, Parceljet, LetterTrack, Frontier 
   });
 });
 
+describe('SHENGAO', () => {
+  it('routes SA, ten digits and GJ to SHENGAO, and no near shape', () => {
+    for (const number of ['SA9999999980GJ', 'sa 9999999980 gj']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'shengao', confidence: 'high' });
+    }
+    for (const number of ['SA999999998GJ', 'SA99999999801GJ', 'SA9999999980CN', 'SB9999999980GJ', 'XSA9999999980GJ']) {
+      const match = detectCarrierMatch(number);
+      expect([match.carrier, ...(match.candidates ?? [])], number).not.toContain('shengao');
+    }
+  });
+});
+
 describe('FlashBird', () => {
   it('names FlashBird and reads its tracker links', () => {
     expect(carrierIdFromName('FlashBird')).toBe('flashbird-ca');

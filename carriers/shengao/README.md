@@ -33,13 +33,16 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
 ## Limitations
 
 The last-mile partner is not named and its number is never shown. No delivery estimate or
-weight. HTTP recognition does not ask it.
+weight. Recognition does not ask it: its rule needs no confirmation.
 
 ## Numbers
 
-No public source shows a whole SHENGAO number, and neither the site nor another public source
-documents their layout, so detection offers SHENGAO for no number and the corpus is empty. The
-carrier is chosen by hand, by a universal provider's carrier name, or from a link to its tracker.
+Its tracking numbers are SA, ten digits and GJ: SA for Sheng Ao, GJ for 国际 (international). No
+public source shows a whole one, but the tracker gives a parcel the app tracked that number as its
+own, beside the shipper's reference. The shape is fixed and no other carrier's rule takes it, so
+the rule has high confidence. The corpus holds a made-up number in that shape. A shipper's
+reference, which the tracker also finds, matches no rule: such a parcel is chosen by hand, by a
+universal provider's carrier name, or from a link to its tracker.
 
 ## Links
 

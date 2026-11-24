@@ -1,5 +1,17 @@
 {
   "carrier": "shengao",
-  "gap": "No public page shows a whole SHENGAO tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "SA9999999980GJ",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-24",
+      "expect": {
+        "carrier": "shengao",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of the tracking number SHENGAO's own tracker gives a parcel: SA, ten digits and GJ. Its serial sits far beyond the range in use."
+    }
+  ]
 }

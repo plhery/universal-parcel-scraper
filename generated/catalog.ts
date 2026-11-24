@@ -57413,7 +57413,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^SA\\d{10}GJ$",
+        "confidence": "high"
+      }
+    ]
   },
   "shenghang": {
     "displayName": "Shenghang International Logistics",
@@ -75972,7 +75977,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shalom-pe": [],
   "sharf": [],
   "sheensync": [],
-  "shengao": [],
+  "shengao": ["shengao-1"],
   "shenghang": [],
   "shipa": ["shipa-1"],
   "shipagent-in": [],

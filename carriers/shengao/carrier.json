@@ -93,5 +93,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "shengao-1",
+      "pattern": "^SA\\d{10}GJ$",
+      "confidence": "high"
+    }
+  ]
 }

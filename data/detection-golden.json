@@ -114257,6 +114257,14 @@
     ]
   },
   {
+    "input": "SA9999999980GJ",
+    "carrier": "shengao",
+    "confidence": "high",
+    "candidates": [
+      "shengao"
+    ]
+  },
+  {
     "input": "SAGTUN02426R",
     "carrier": "unknown",
     "confidence": "none",

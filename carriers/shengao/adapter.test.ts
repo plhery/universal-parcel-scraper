@@ -22,8 +22,8 @@ const html = (body: string, status = 200) => new Response(body, { status, header
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('SHENGAO numbers', () => {
-  it('claims no number by its shape, reads one out of a link to its tracker and answers to its names', () => {
-    expect(detectCarrierMatch(NUMBER).candidates ?? []).not.toContain('shengao');
+  it('claims SA, ten digits and GJ by its shape, reads a number out of a link to its tracker and answers to its names', () => {
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'shengao', confidence: 'high' });
     for (const path of ['trackIndex.htm', 'en/trackIndex.htm']) {
       expect(parseTrackingInput(`http://www.shengaoguojiwuliu.com:8082/${path}?documentCode=${NUMBER}`))
         .toMatchObject({ trackingNumber: NUMBER, carrier: 'shengao' });

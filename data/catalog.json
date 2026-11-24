@@ -57409,7 +57409,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^SA\\d{10}GJ$",
+        "confidence": "high"
+      }
+    ]
   },
   "shenghang": {
     "displayName": "Shenghang International Logistics",
