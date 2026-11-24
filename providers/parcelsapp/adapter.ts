@@ -2204,6 +2204,22 @@ function markHandovers(carried: readonly { event: CarrierEvent; carrier: string 
   }
 }
 
+/**
+ * YunExpress's arrival at its origin facility, when it is the first of YunExpress's scans to move
+ * the parcel, is YunExpress taking the parcel in, as its own adapter reads it: a parcel its sender
+ * brings to that facility has no pick-up before it.
+ */
+function markYunExpressIntake(carried: readonly { event: CarrierEvent; carrier: string }[]): void {
+  let first: CarrierEvent | undefined;
+  for (const { event, carrier } of carried) {
+    const moves = carrier === 'yunexpress' && clockOf(event) && event.stage && event.stage !== 'registered' && event.stage !== 'pending';
+    if (moves && (!first || moment(event) < moment(first))) first = event;
+  }
+  if (first?.stage === 'in_transit' && /^arrived at origin facility$/i.test(first.description?.trim() ?? '')) {
+    Object.assign(first, { stage: 'accepted', stage_source: 'carrier_map' });
+  }
+}
+
 const BARE_DELIVERY = /^delivered[.!]?$/i;
 const MOVEMENTS: ReadonlySet<string> = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery', 'failed_attempt']);
 /**
@@ -2692,6 +2708,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   }
   markReturnLeg(scans);
   markLaterReceipts(scans);
+  markYunExpressIntake(carried);
   markHandovers(carried);
   dropPassed(events, carried, steps);
   dropRussianPostSummaries(events, summaries);
@@ -2854,6 +2871,7 @@ function parseHtml(html: string, trackingNumber: string, timezone: string | null
   }
   markReturnLeg(scans);
   markLaterReceipts(scans);
+  markYunExpressIntake(carried);
   markHandovers(carried);
   dropPassed(events, carried, steps);
   latest.check();

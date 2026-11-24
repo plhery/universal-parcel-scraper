@@ -2485,6 +2485,23 @@ describe('ParcelsApp result parsing', () => {
     expect(read('US', scan('2026-11-17T09:10:12Z', 'Start Customs Clearence', 0, 'EXAMPLE TOWN NORTH SAXONY DE'))?.[0]?.[2]).not.toMatch(/^America\//);
   });
 
+  it('reads YunExpress\'s origin facility arrival as the acceptance when no pick-up came before it, as its own adapter does', () => {
+    const cn = 'Example City, People\'s Republic of China';
+    const stages = (...first: { date: string; status: string; carrier: number; location?: string }[]) => parseParcelsAppResponse({
+      carriers: ['Yun Express', 'USPS'], originCode: 'CN', destinationCode: 'US', states: [
+        { date: '2026-11-15T10:00:23Z', status: 'Departed from sort facility', carrier: 0, location: cn },
+        { date: '2026-11-14T01:36:30Z', status: 'Arrived at origin facility', carrier: 0, location: cn },
+        ...first,
+      ],
+    }, number, identity()).events?.map((event) => [event.description, event.stage]);
+    expect(stages({ date: '2026-11-13T21:28:00Z', status: 'Shipping Label Created', carrier: 0 })).toEqual([
+      ['Departed from sort facility', 'in_transit'], ['Arrived at origin facility', 'accepted'], ['Shipping Label Created', 'registered'],
+    ]);
+    expect(stages({ date: '2026-11-13T15:30:21Z', status: 'Shipment picked up', carrier: 0, location: cn })).toEqual([
+      ['Departed from sort facility', 'in_transit'], ['Arrived at origin facility', 'in_transit'], ['Shipment picked up', 'accepted'],
+    ]);
+  });
+
   it('reads YunExpress\'s scans in Australia on the clock of its scans at a town there, and in China on China\'s', () => {
     // Live shape: the town, its state and the country's code with spaces alone, and the rest of the
     // destination's leg at the country alone or no place, all at that town's digits; its copy of

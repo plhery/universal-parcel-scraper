@@ -186,7 +186,9 @@ step exists for future protocol changes.
   below). Each stays a scan: as the latest one it sets the stage with `last_update` null,
   and it moves no freshness watermark. Another carrier's acceptance is a hand-over to it
   once a different carrier moved the parcel before. A wall clock is later than a move by
-  more than a day, or as soon as it would sort above a dated one.
+  more than a day, or as soon as it would sort above a dated one. YunExpress's "Arrived at
+  origin facility", as the first of its scans to move the parcel, is its acceptance, as in
+  YunExpress's adapter: a parcel its sender brings to that facility has no pick-up.
 - A state with no `date` (an Asendia Spain leg listed after dated US scans), or with an
   offset-less date that no zone resolves, but for the scans above that keep their wall
   clock, has no instant. It is skipped and counted in `undated_event_count`, so it never
