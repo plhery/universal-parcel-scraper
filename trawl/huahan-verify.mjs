@@ -2,7 +2,8 @@
 // characters are clicked in order (`tncode.php`), checks the clicks (`check.php`) and then
 // answers one waybill (`CargoTrackActionPlus.php`) in the same cookie session. The adapter's
 // own HTTP client cannot read the picture; this helper runs the same requests here and reads
-// it with the OCR worker ZTO's helper uses. No browser context is opened.
+// it with the OCR worker ZTO's helper uses. Unproxied it opens no browser context; through a
+// request's proxy its requests leave through a fresh context's request client.
 import { solveZtoCharacters } from './zto-ocr.mjs';
 
 const BASE = 'https://www.hh-exp.cn/WebTrack/';
@@ -75,13 +76,41 @@ export function projectHuahanReply(body) {
 
 const parse = body => { try { return JSON.parse(body ?? ''); } catch { return null; } };
 
+const aborted = signal => new Promise((_, reject) => {
+  if (signal.aborted) reject(signal.reason);
+  else signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+});
+
+/**
+ * A fetch through a browser context's request client, which leaves through the context's proxy.
+ * The helper keeps each session's cookies itself, so the context's are cleared before each
+ * request; redirects are not followed.
+ */
+export function contextFetcher(context) {
+  return async (url, { method = 'GET', headers = {}, body, signal } = {}) => {
+    signal?.throwIfAborted();
+    await context.clearCookies();
+    const sent = context.request.fetch(url, { method, headers, ...(body === undefined ? {} : { data: body }),
+      maxRedirects: 0, failOnStatusCode: false });
+    sent.catch(() => {});
+    const response = await (signal ? Promise.race([sent, aborted(signal)]) : sent);
+    const named = name => response.headersArray().filter(header => header.name.toLowerCase() === name).map(header => header.value);
+    return {
+      status: response.status(),
+      headers: { get: name => named(name.toLowerCase()).at(0) ?? null, getSetCookie: () => named('set-cookie') },
+      text: () => response.text(),
+      body: { cancel: () => response.dispose() },
+    };
+  };
+}
+
 /**
  * Up to two pictures, each in its own verification session; a picture the worker reads with
  * little confidence is not submitted. The result carries the tracking reply, or a refusal as the
  * widget gave it, under the tracking address; none when no picture passed.
  */
 export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, fetcher = globalThis.fetch,
-  solve = solveZtoCharacters, onReport = reportVerification }) {
+  openContext, handle, cleanupMs = 1500, solve = solveZtoCharacters, onReport = reportVerification }) {
   const number = huahanVerifyNumber(url, capture);
   if (!number) return undefined;
   const start = Date.now(), entries = [], cookies = new Map();
@@ -89,7 +118,7 @@ export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, 
     abstentions: { missingPoints: 0, pointCount: 0, confidence: 0, coordinates: 0 } };
   const ending = new AbortController();
   const combined = signal ? AbortSignal.any([signal, ending.signal]) : ending.signal;
-  let timer;
+  let timer, context;
   const left = () => maxTimeout - (Date.now() - start);
   const entry = fields => {
     entries.push({ url: HUAHAN_TRACKING, status: 200, headers: {}, body: null, truncated: false, base64Encoded: false,
@@ -131,7 +160,21 @@ export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, 
     }
     return false;
   };
+  // A context that opens after the deadline closes on arrival.
+  const close = async target => {
+    let closed = false, cleanup;
+    await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }, () => {}),
+      new Promise(resolve => { cleanup = setTimeout(resolve, cleanupMs); })]);
+    clearTimeout(cleanup);
+    if (!closed) handle?.requestBrowserReplacement?.('HuaHan context cleanup failed');
+  };
   const lookup = async () => {
+    if (openContext) {
+      const opened = await openContext();
+      if (combined.aborted) { await close(opened); return; }
+      context = opened;
+      fetcher = contextFetcher(context);
+    }
     for (let picture = 0; picture < MAX_PICTURES && !combined.aborted; picture++) {
       cookies.clear();
       const init = await request(`init.php?_=${Date.now()}`, 4096);
@@ -197,6 +240,7 @@ export async function runHuahanVerify({ url, capture, tier, maxTimeout, signal, 
   } finally {
     clearTimeout(timer);
     ending.abort();
+    if (context) await close(context);
     onReport({ ...tally, abstentions: { ...tally.abstentions }, durationMs: Date.now() - start });
   }
   // TRAWL forwards captures from a successful tier; an empty list is the unpassed picture.

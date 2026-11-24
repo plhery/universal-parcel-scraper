@@ -246,7 +246,8 @@ warning gives each lookup's final phase, puzzle count, OCR time and the times it
 form, first puzzle and tracking reply arrived. Its two-scan guest window stays marked
 incomplete; the helper enters no phone digits and signs into no account.
 HuaHan's helper opens no browser: it makes the guest form's own requests and reads the
-ordered-character picture with the same worker. A reading below its confidence floor is
+ordered-character picture with the same worker. Through a request's proxy those requests
+leave from a fresh context's request client there, with the helper's own cookies. A reading below its confidence floor is
 not submitted; each of at most two pictures opens its own verification session, which
 HuaHan counts per address. The widget's refusal returns in the reply's shape, and a
 `huahan.verification` warning gives counts and an outcome label, without images or tokens.

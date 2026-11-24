@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { HUAHAN_TRACKING, huahanAnswer, huahanPicture, huahanVerifyNumber, projectHuahanReply, runHuahanVerify } from './huahan-verify.mjs';
+import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
+import { contextFetcher, HUAHAN_TRACKING, huahanAnswer, huahanPicture, huahanVerifyNumber, projectHuahanReply, runHuahanVerify } from './huahan-verify.mjs';
 
 const number = 'HHWZZ0000000000YQ';
 const url = `https://www.hh-exp.cn/WebTrack/CargoTrack.html?ordernumber=${number}`;
@@ -138,4 +140,83 @@ test('HuaHan ends at its deadline and cancels the reader', async () => {
   }) });
   assert.deepEqual(result.capturedResponses, []);
   assert.equal(aborted, true);
+});
+
+/** A browser context whose request client answers through `fetcher`, as Playwright's does. */
+function proxiedContext(fetcher) {
+  const state = { cleared: 0, closed: 0, sent: [] };
+  const context = {
+    clearCookies: async () => { state.cleared++; },
+    close: async () => { state.closed++; },
+    request: { fetch: async (address, options) => {
+      state.sent.push(options);
+      const response = await fetcher(address, { method: options.method, headers: options.headers, body: options.data });
+      const headers = [...response.headers].map(([name, value]) => ({ name, value }));
+      const text = await response.text();
+      return { status: () => response.status, headersArray: () => headers, text: async () => text, dispose: async () => {} };
+    } },
+  };
+  return { state, context };
+}
+
+test('HuaHan sends the same session through a proxied context and closes it', async () => {
+  const { asked, fetcher } = huahan({ ...opened, 'check.php': () => 'ok', 'CargoTrackActionPlus.php': () => reply });
+  const { state, context } = proxiedContext(fetcher);
+  const result = await run(() => { throw new Error('unexpected direct fetch'); }, { openContext: async () => context, solve: sure });
+  assert.equal(asked.at(-1).cookie, 'PHPSESSID=s1');
+  assert.equal(asked.at(-1).body, `ordernumber=${number}`);
+  assert.equal(state.cleared, asked.length);
+  assert.ok(state.sent.every(options => options.maxRedirects === 0 && options.failOnStatusCode === false));
+  assert.equal(state.closed, 1);
+  assert.equal(result.capturedResponses[0].trackingNumberSubmitted, number);
+});
+
+test('HuaHan closes a proxied context that opens after its deadline, and one that will not close asks for a new browser', async () => {
+  const { context, state } = proxiedContext(async () => { throw new Error('unexpected request'); });
+  let arrive;
+  const late = new Promise(resolve => { arrive = resolve; });
+  const result = await run(undefined, { maxTimeout: 30, openContext: () => late });
+  assert.deepEqual(result.capturedResponses, []);
+  arrive(context);
+  await new Promise(resolve => setTimeout(resolve, 10));
+  assert.equal(state.closed, 1);
+  assert.equal(state.sent.length, 0);
+
+  const replaced = [];
+  const stuck = { ...proxiedContext(huahan(opened).fetcher).context, close: () => new Promise(() => {}) };
+  await run(undefined, { maxTimeout: 30, cleanupMs: 5, openContext: async () => stuck, solve: () => new Promise(() => {}),
+    handle: { requestBrowserReplacement: reason => replaced.push(reason) } });
+  assert.deepEqual(replaced, ['HuaHan context cleanup failed']);
+});
+
+test('HuaHan stops waiting for a proxied request when its signal ends', async () => {
+  const context = { clearCookies: async () => {}, request: { fetch: () => new Promise(() => {}) } };
+  const ending = new AbortController();
+  const pending = contextFetcher(context)('https://www.hh-exp.cn/WebTrack/init.php', { signal: ending.signal });
+  ending.abort(new Error('stop'));
+  await assert.rejects(pending, /stop/);
+});
+
+test('The installer runs HuaHan through a request proxy from a fresh context there, and unproxied without one', async () => {
+  const source = readFileSync(new URL('./install.mjs', import.meta.url), 'utf8');
+  const start = source.indexOf("  // Through a proxy HuaHan's helper");
+  const end = source.indexOf('\n  if (carrierPage && jdDomesticNumber', start);
+  assert.ok(start >= 0 && end > start);
+  const block = vm.runInNewContext('`' + source.slice(start, end) + '`', {});
+  const opens = [], runs = [];
+  const dispatch = vm.runInNewContext(`(async function({ proxyUrl, carrierRequest = true }) {
+    const carrierRun = { url, capture, handle, tier: 3, maxTimeout: 1000 };
+    ${block}
+    return 'generic';
+  })`, { url, capture, handle: { browser: 'browser', noteTemporaryContext: 'note', requestBrowserReplacement: 'replace' },
+    budget: { signal: 'signal' }, huahanVerifyNumber,
+    runHuahanVerify: async options => { runs.push(options); return options.openContext ? options.openContext() : 'direct'; },
+    newWanbContext: async (browser, options) => { opens.push({ browser, options }); return 'context'; } });
+  assert.equal(await dispatch({ proxyUrl: 'http://fixture:opaque@proxy.invalid:8080' }), 'context');
+  assert.deepEqual(JSON.parse(JSON.stringify(opens)), [{ browser: 'browser', options: { proxy: 'http://fixture:opaque@proxy.invalid:8080', onCreated: 'note',
+    requestReplacement: 'replace' } }]);
+  assert.equal(runs[0].signal, 'signal');
+  assert.equal(await dispatch({}), 'direct');
+  assert.equal(opens.length, 1);
+  assert.equal(await dispatch({ carrierRequest: false }), 'generic');
 });

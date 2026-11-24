@@ -6,6 +6,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { DirectRest } from '../../core/runner/directRest.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import type { TrawlCapturedResponse, TrawlClient } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
@@ -49,14 +50,16 @@ export function parseHuahanCapture(captured: readonly TrawlCapturedResponse[], n
 }
 
 export class HuahanTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null;
+    /** The proxy the browser service's helper sends HuaHan's requests through, for a service HuaHan does not answer. */
+    browserProxy?: string | null; } = {}) {}
 
   private async browser(number: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
     const timeoutMs = Math.floor(remainingMs);
     if (timeoutMs <= 2500) throw new BudgetExceededError(PROVIDER, timeoutMs);
     const page = await this.options.trawl!.scrape({
       url: `${BASE}CargoTrack.html?${new URLSearchParams({ ordernumber: number })}`, skipHttp: true, maxTier: 3,
-      maxTimeout: timeoutMs - 2000, captureResponses: [HUAHAN_TRACKING],
+      maxTimeout: timeoutMs - 2000, captureResponses: [HUAHAN_TRACKING], ...(this.options.browserProxy ? { proxy: this.options.browserProxy } : {}),
     }, { provider: PROVIDER, signal, timeoutMs, maxBytes: 4_000_000, requireSolved: false, captureWindow: 'last', fetcher: this.options.fetcher });
     return parseHuahanCapture(page.capturedResponses, number);
   }
@@ -121,7 +124,10 @@ export class HuahanTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
+  const browserProxy = environment.env.HUAHAN_BROWSER_PROXY_URL?.trim() || null;
+  // Checked here, so a mistyped proxy fails at setup with a message that leaves its value out.
+  if (browserProxy) browserContextProxy(browserProxy);
   const tracker = new HuahanTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent,
-    trawl: environment.trawl });
+    trawl: environment.trawl, browserProxy });
   return { id: 'huahan', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context) };
 };

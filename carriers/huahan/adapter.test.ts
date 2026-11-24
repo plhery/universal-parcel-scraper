@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import type { Stage } from '../../core/status/index.js';
 import { TrawlClient, type TrawlCapturedResponse } from '../../core/transport/trawl.js';
-import { HUAHAN_TRACKING, HuahanTracker, parseHuahanCapture, solveHuahanQuestion } from './adapter.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { adapter, HUAHAN_TRACKING, HuahanTracker, parseHuahanCapture, solveHuahanQuestion } from './adapter.js';
 import { parseHuahan } from './parser.js';
 import { huahanStage } from './status.js';
 
@@ -92,6 +93,19 @@ describe('HuaHan guest tracking', () => {
       await new HuahanTracker({ fetcher: later, trawl }).fetch(NUMBER);
       expect(later).not.toHaveBeenCalled();
       expect(scrape).toHaveBeenCalledTimes(2);
+    });
+
+    it('sends the configured proxy with the browser service\'s read, and refuses one that is not an HTTP(S) origin at setup', async () => {
+      const proxy = 'http://user:opaque@proxy.invalid:8080';
+      const { trawl, scrape, picture } = setup([captured()]);
+      const make = (env: Record<string, string>) => adapter({ env, fetcher: picture(), trawl, browserExecutablePath: null, recorder: NOOP_RECORDER });
+      await expect(make({ HUAHAN_BROWSER_PROXY_URL: ` ${proxy} ` }).track({ number: NUMBER }, {})).resolves.toMatchObject({ current_stage: 'delivered' });
+      expect(scrape.mock.calls[0]![0]).toMatchObject({ proxy });
+      for (const bad of ['relay.internal:3128', `${proxy}/path`]) expect(() => make({ HUAHAN_BROWSER_PROXY_URL: bad })).toThrow(TypeError);
+      const { trawl: own, scrape: unproxied, picture: shown } = setup([captured()]);
+      await adapter({ env: { HUAHAN_BROWSER_PROXY_URL: '  ' }, fetcher: shown(), trawl: own, browserExecutablePath: null, recorder: NOOP_RECORDER })
+        .track({ number: NUMBER }, {});
+      expect(unproxied.mock.calls[0]![0]).not.toHaveProperty('proxy');
     });
 
     it('does not ask the browser service after a rate limit', async () => {

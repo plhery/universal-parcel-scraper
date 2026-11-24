@@ -111,7 +111,12 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && jAndTBrBrowserNumber(url, capture)) return await runJAndTBrBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && ztoBrowserNumber(url, capture)) return await runZtoBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && chinaPostBrowserNumber(url, capture)) return await runChinaPostBrowser({ ...carrierRun, signal: budget.signal })
-  if (carrierPage && huahanVerifyNumber(url, capture)) return await runHuahanVerify({ ...carrierRun, signal: budget.signal })
+  // Through a proxy HuaHan's helper sends its requests from a fresh context there.
+  if (carrierRequest && huahanVerifyNumber(url, capture)) {
+    return await runHuahanVerify({ ...carrierRun, signal: budget.signal, ...(proxyUrl ? {
+      openContext: () => newWanbContext(handle.browser, { proxy: proxyUrl, onCreated: handle.noteTemporaryContext,
+        requestReplacement: handle.requestBrowserReplacement }) } : {}) })
+  }
   if (carrierPage && jdDomesticNumber(url, capture)) return await runJdDomestic({ ...carrierRun, signal: budget.signal })
   if (carrierPage && sfExpressSessionNumber(url, capture)) {
     return await sfExpressSessions.run({ ...carrierRun, signal: budget.signal })
