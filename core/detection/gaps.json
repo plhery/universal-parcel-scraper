@@ -3811,6 +3811,12 @@
     "reason": "Runner Express waybills seen are ZYIL and thirteen digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   },
   {
+    "carrier": "rxo",
+    "pattern": "^RXO[A-Z0-9]{15}$",
+    "kind": "open",
+    "reason": "RXO tracking numbers seen in public complaints are RXO and fifteen letters and digits. RXO publishes no format and its tracker also takes retailers' order ids, so the adapter answers explicit selection and RXO's links."
+  },
+  {
     "carrier": "russian-post",
     "pattern": "^\\d{14}$",
     "kind": "by_design",

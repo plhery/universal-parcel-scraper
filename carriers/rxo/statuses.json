@@ -1,4 +1,18 @@
 {
   "carrier": "rxo",
-  "entries": []
+  "entries": [
+    {"wording": "Order Created", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The retailer booked the delivery, the return pickup or the service visit."},
+    {"wording": "Some of the items have arrived at the pickup location", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Part of the order reached RXO's local hub."},
+    {"wording": "Items arrived at the pickup location", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The order reached RXO's local hub."},
+    {"wording": "Driver has arrived at the pickup location", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The driver is at the hub to load a delivery, or at the customer's door to collect a return."},
+    {"wording": "Driver is on the route for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Driver has arrived at the delivery location", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Delivery completed", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A stop the tracker marks as not performed closes with this wording too; the adapter then reads the stop's exception in its place."},
+    {"wording": "Driver is on the route to the facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A collected return on its way to the facility."},
+    {"wording": "Driver has arrived at the facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A collected return at the facility."},
+    {"wording": "Return completed", "stage": "returned", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The collected return is back at the retailer's facility."},
+    {"code": "CANT-PERFORM-STOP", "wording": "Cannot Perform Stop", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The stop's exception when it was not performed, such as a delivery the customer or RXO rescheduled en route. The tracker shows the stop as an exception."},
+    {"code": "CANT-PU/DEL-ITEM", "wording": "Cannot Pickup/Deliver Item", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "The items' exception when none of them could be delivered or collected; the tracking page's script shows such a stop as an exception."},
+    {"code": "CN", "wording": "Cancelled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The order's status code for a cancelled order, which the tracking page shows as Cancelled."}
+  ]
 }

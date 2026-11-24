@@ -1,5 +1,62 @@
 {
   "carrier": "rxo",
-  "gap": "No public page shows an RXO tracking number; its tracker's hint shows only a template.",
-  "records": []
+  "records": [
+    {
+      "number": "RXONC70OKLNWA14J26",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.bbb.org/us/nc/charlotte/profile/trucking-transportation-brokers/rxo-0473-92025017/complaints?page=2#0473_92025017_25395993",
+        "date": "2026-10-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A complaint on RXO's BBB profile gives it as the tracking number of a Samsung delivery. RXO's tracker answers it with two delivery appointments, the first not performed and the second delivered."
+    },
+    {
+      "number": "RXONC70OSO5GWB6J26",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.bbb.org/us/nc/charlotte/profile/trucking-transportation-brokers/rxo-0473-92025017/complaints?page=2#0473_92025017_25393312",
+        "date": "2026-10-15",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A complaint on RXO's BBB profile gives it as the tracking number of a washer bought from Wayfair. RXO's tracker answers it with two delivery and two installation appointments, ending with the installation completed."
+    },
+    {
+      "number": "RXONC70OPDXJNKNI26",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.bbb.org/us/nc/charlotte/profile/trucking-transportation-brokers/rxo-0473-92025017/complaints?page=2#0473_92025017_25362611",
+        "date": "2026-10-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A complaint on RXO's BBB profile gives it as the tracking number of an Amazon return pickup. RXO's tracker answers it with two return appointments, the first not performed and the second completed at the facility."
+    }
+  ]
 }

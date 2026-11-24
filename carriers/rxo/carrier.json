@@ -21,19 +21,56 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "rxo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta_window",
+    "sender_name"
+  ],
   "portal": {
     "url": "https://track.rxo.com/?trackingnumber={trackingNumber}",
     "searchUrl": "https://track.rxo.com/",
     "helpUrl": "https://rxo.com/contact-us/",
     "canaryUrl": "https://rxo.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "eta_window",
+      "progress_rail",
+      "sender_name",
+      "order_contents"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "eta_window",
+      "sender_name",
+      "failed_delivery_reason"
+    ],
+    "discarded": [
+      "order_contents",
+      "customer_reference",
+      "coordinates",
+      "origin"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "weight",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
   "links": [
     {
