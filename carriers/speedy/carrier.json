@@ -26,7 +26,8 @@
     ],
     "browser": true,
     "recognition": {
-      "rank": 280
+      "rank": 280,
+      "pattern": "^63\\d{9}$"
     },
     "browserRecognition": {
       "rank": 280,

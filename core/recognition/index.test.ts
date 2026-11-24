@@ -227,15 +227,20 @@ describe('recognition candidates', () => {
     }
   });
 
-  it('asks Speedy first for its 63 series and in Bulgaria for the rest of its 6 series', () => {
+  it('asks Speedy first for its 63 series and only suggests it for the rest of its 6 series', () => {
     // No other carrier's public eleven digits start 63, so Speedy leads wherever the lookup comes from.
     expect(detectCarrierMatch('63000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['speedy'] });
     for (const countryHint of [undefined, 'BG', 'DE', 'CZ', 'GB']) {
       expect(recognitionCandidates('63000000001', { countryHint })[0]?.carrier, countryHint).toBe('speedy');
     }
-    // GLS, PPL and Japan Post numbers appear elsewhere in the 6 series, where Speedy is only a suggestion.
+    // GLS, PPL and Japan Post numbers appear elsewhere in the 6 series, where Speedy is only a suggestion. Recognition
+    // does not ask it there, even from Bulgaria: its request meets the tracker's check, and no browser read follows.
     expect(detectCarrierMatch('60600000001')).toMatchObject({ confidence: 'low', preferred: [] });
-    expect(recognitionCandidates('60600000001', { countryHint: 'BG' })[0]?.carrier).toBe('speedy');
+    expect(detectCarrierMatch('60600000001').candidates).toContain('speedy');
+    for (const countryHint of [undefined, 'BG', 'RO', 'MD', 'DE']) {
+      expect(recognitionCandidates('60600000001', { countryHint }).map(({ carrier }) => carrier), countryHint).not.toContain('speedy');
+      expect(recognitionCandidates('60600000001', { countryHint, phase: 'browser' }).map(({ carrier }) => carrier), countryHint).not.toContain('speedy');
+    }
     expect(recognitionCandidates('68200000001', { countryHint: 'DE' })[0]?.carrier).toBe('gls-de');
     expect(recognitionCandidates('60100000001', { countryHint: 'CZ' })[0]?.carrier).toBe('ppl');
     // Palletways' consignment IDs run in the 600 series, and Speedy's other first digits stay unclaimed.

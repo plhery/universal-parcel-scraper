@@ -59693,6 +59693,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "speedy",
       "recognitionRank": 280,
+      "recognitionPattern": "^63\\d{9}$",
       "browserRecognitionRank": 280,
       "browserRecognitionPattern": "^63\\d{9}$",
       "browser": true

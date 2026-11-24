@@ -25,8 +25,10 @@ answers HTTP 404 with MySpeedy's "the requested resource does not exist" page, w
 tracker shows as an invalid number, so that page is not found. Other 404s, blocked pages,
 HTTP errors and malformed replies keep their own failure kinds. Recognition makes the `direct`
 request alone, so it cannot confirm a number while the check stands. Opt-in browser recognition
-then opens the tracker page alone for the 63 series, unless the `direct` request was throttled
-or malformed, and needs dated shipment activity.
+then opens the tracker page alone, unless the `direct` request was throttled or malformed, and
+needs dated shipment activity. Both ask only about the 63 series: a browser read for every run of
+eleven digits starting with 6 would cost too much, and without one the `direct` request can only
+meet the check, a failed lookup on every check of such a parcel.
 
 ## Numbers
 
@@ -35,9 +37,8 @@ request. Speedy's API documentation and public reports show them starting with 6
 Eleven digits are shared with several carriers, so both rules are low confidence. `speedy-1`
 prefers Speedy for the 63 series, which no other carrier's public numbers show, so recognition
 asks it first wherever the lookup comes from. `speedy-2` only suggests Speedy for the rest of
-the 6 series, where GLS, PPL and Japan Post numbers appear too: recognition asks it first when
-the lookup's country is Bulgaria or Romania. It leaves out 600, the series of Palletways'
-consignment IDs.
+the 6 series, where GLS, PPL and Japan Post numbers appear too, and recognition does not ask it
+about them. It leaves out 600, the series of Palletways' consignment IDs.
 
 ## Notes
 
