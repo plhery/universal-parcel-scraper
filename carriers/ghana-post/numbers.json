@@ -38,6 +38,25 @@
         "confidence": "high"
       },
       "note": "Quoted in a review on TrackingMore's Ghana Post page by a sender who was given it when posting a parcel; its GH suffix names Ghana Post as the issuing post."
+    },
+    {
+      "number": "CG041482775GH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720011618/https://www.parcelpanel.com/couriers/ghana-post/",
+        "date": "2026-07-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "ParcelPanel's Ghana Post page offered it as the sample to try in every capture from October 2024; it is not described as a live shipment, and Ghana Post's own tracker has not been asked."
     }
   ]
 }
