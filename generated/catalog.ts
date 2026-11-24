@@ -18145,7 +18145,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Vancouver",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "coship",
+      "localClocks": true
     },
     "canaryUrl": "https://www.coship.ca/tracking/",
     "trackingUrlTemplate": "https://www.coship.ca/tracking/?no={trackingNumber}",
@@ -54851,12 +54852,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rodonaves",
+      "localClocks": true
     },
     "canaryUrl": "https://rodonaves.com.br/rastreio-de-mercadoria",
+    "trackingUrlTemplate": "https://rodonaves.com.br/rastreio-de-mercadoria?rastreiemercadoria=1&protocolo={trackingNumber}",
     "trackingSearchUrl": "https://rodonaves.com.br/rastreio-de-mercadoria",
     "helpUrl": "https://rodonaves.com.br/fale-conosco",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "rodonaves.com.br",
+          "www.rodonaves.com.br"
+        ],
+        "pathPattern": "^/rastreio-de-mercadoria/?$",
+        "query": "^(?=(?:.*&)?rastreiemercadoria=1(?:&|$))(?:.*&)?protocolo=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "rodonaves.com.br",
+          "www.rodonaves.com.br"
+        ],
+        "pathPattern": "^/rastreio-de-mercadoria/?$",
+        "query": "^(?=(?:.*&)?rastreiemercadoria=4(?:&|$))(?:.*&)?minuta=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "rohlig": {
@@ -66719,7 +66739,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ural-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.uralsvip.com/",
     "trackingSearchUrl": "https://tmsplus.ilinexpress.com/#/track",

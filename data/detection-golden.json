@@ -17251,6 +17251,12 @@
     ]
   },
   {
+    "input": "110455",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "11049367794",
     "carrier": "unknown",
     "confidence": "low",
@@ -23781,6 +23787,12 @@
       "dpd-nl",
       "dpd-de"
     ]
+  },
+  {
+    "input": "159853",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "15BAEB8A",
@@ -60571,6 +60583,57 @@
     "asked": [
       "imile",
       "fedex-pl",
+      "aras-kargo"
+    ]
+  },
+  {
+    "input": "6076184073827",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "aras-kargo"
+    ]
+  },
+  {
+    "input": "6076184085349",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "aras-kargo"
+    ]
+  },
+  {
+    "input": "6076184087637",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
       "aras-kargo"
     ]
   },
@@ -118729,6 +118792,36 @@
     "candidates": [
       "uniuni"
     ]
+  },
+  {
+    "input": "URA00340703ZPRU",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "URA00610618ZPRU",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "URA01849819ZPRU",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "URA02172676ZPRU",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "URA08634607ZPRU",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "URE6VI",

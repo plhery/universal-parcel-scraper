@@ -216,6 +216,7 @@ import { adapter as correosGuatemala } from '../carriers/correos-guatemala/adapt
 import { adapter as correosPanama } from '../carriers/correos-panama/adapter.js';
 import { adapter as correosSpain } from '../carriers/correos-spain/adapter.js';
 import { adapter as coscoShippingLines } from '../carriers/cosco-shipping-lines/adapter.js';
+import { adapter as coship } from '../carriers/coship/adapter.js';
 import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter.js';
 import { adapter as cotaxi } from '../carriers/cotaxi/adapter.js';
 import { adapter as courierCenter } from '../carriers/courier-center/adapter.js';
@@ -840,6 +841,7 @@ import { adapter as rmLogistics } from '../carriers/rm-logistics/adapter.js';
 import { adapter as roadie } from '../carriers/roadie/adapter.js';
 import { adapter as roadrunner } from '../carriers/roadrunner/adapter.js';
 import { adapter as rocketShipping } from '../carriers/rocket-shipping/adapter.js';
+import { adapter as rodonaves } from '../carriers/rodonaves/adapter.js';
 import { adapter as rohligSuus } from '../carriers/rohlig-suus/adapter.js';
 import { adapter as romocean } from '../carriers/romocean/adapter.js';
 import { adapter as rosaliaExpress } from '../carriers/rosalia-express/adapter.js';
@@ -1047,6 +1049,7 @@ import { adapter as uniuni } from '../carriers/uniuni/adapter.js';
 import { adapter as uofExpress } from '../carriers/uof-express/adapter.js';
 import { adapter as upaya } from '../carriers/upaya/adapter.js';
 import { adapter as ups } from '../carriers/ups/adapter.js';
+import { adapter as uralExpress } from '../carriers/ural-express/adapter.js';
 import { adapter as urbano } from '../carriers/urbano/adapter.js';
 import { adapter as urvaam } from '../carriers/urvaam/adapter.js';
 import { adapter as useaExpress } from '../carriers/usea-express/adapter.js';
@@ -1364,6 +1367,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-panama": correosPanama,
     "correos-spain": correosSpain,
     "cosco-shipping-lines": coscoShippingLines,
+    "coship": coship,
     "costco-logistics": costcoLogistics,
     "cotaxi": cotaxi,
     "courier-center": courierCenter,
@@ -1988,6 +1992,7 @@ export const REGISTRY: RegistryDefinition = {
     "roadie": roadie,
     "roadrunner": roadrunner,
     "rocket-shipping": rocketShipping,
+    "rodonaves": rodonaves,
     "rohlig-suus": rohligSuus,
     "romocean": romocean,
     "rosalia-express": rosaliaExpress,
@@ -2195,6 +2200,7 @@ export const REGISTRY: RegistryDefinition = {
     "uof-express": uofExpress,
     "upaya": upaya,
     "ups": ups,
+    "ural-express": uralExpress,
     "urbano": urbano,
     "urvaam": urvaam,
     "usea-express": useaExpress,
@@ -2684,7 +2690,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-panama": "correos-panama",
     "correos-spain": "correos-spain",
     "cosco-shipping-lines": "cosco-shipping-lines",
-    "coship": "universal",
+    "coship": "coship",
     "costco-logistics": "costco-logistics",
     "cot-uy": "universal",
     "cotaxi": "cotaxi",
@@ -3806,7 +3812,7 @@ export const REGISTRY: RegistryDefinition = {
     "roadie": "roadie",
     "roadrunner": "roadrunner",
     "rocket-shipping": "rocket-shipping",
-    "rodonaves": "universal",
+    "rodonaves": "rodonaves",
     "rohlig": "universal",
     "rohlig-suus": "rohlig-suus",
     "rojas-express": "universal",
@@ -4175,7 +4181,7 @@ export const REGISTRY: RegistryDefinition = {
     "uparcel": "universal",
     "upaya": "upaya",
     "ups": "ups",
-    "ural-express": "universal",
+    "ural-express": "ural-express",
     "urbano": "urbano",
     "urbano-ar": "universal",
     "urvaam": "urvaam",
