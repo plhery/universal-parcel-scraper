@@ -87,12 +87,21 @@ describe('Estafeta bound history', () => {
     expect(parseEstafetaHistory(`${historyHtml()}<div class="NoHistory" hidden>Unavailable</div>`, lookup()).events).toHaveLength(4);
   });
   it('requires every date group to identify the canonical guide and rejects detached or malformed scans', () => {
-    const wrong = historyHtml().replace(GUIDE, OTHER);
+    const wrong = historyHtml().replace(`data-shipmentindex="${GUIDE}"`, `data-shipmentindex="${OTHER}"`);
+    const wrongTarget = historyHtml().replace(`#remainigEventInfo${GUIDE}0`, `#remainigEventInfo${OTHER}0`);
     const missing = historyHtml().replace(`data-shipmentindex="${GUIDE}"`, '');
+    const untargeted = load(historyHtml()); untargeted('.historyEventRow').first().removeAttr('data-target').find('.remainingHistoryEvents').remove();
     const duplicate = load(historyHtml()); duplicate('.historyEventRow').first().find('.col-xs-9').append(`<div class="remainingHistoryEvents" data-shipmentindex="${GUIDE}"></div>`);
     const malformed = load(historyHtml()); malformed('.eventInfo').eq(1).append('<div>Extra</div>');
     const detached = load(historyHtml()); detached('body').append(detached('.eventInfo').first().clone());
-    for (const html of [wrong, missing, duplicate.html(), malformed.html(), detached.html()]) expect(() => parseEstafetaHistory(html, lookup())).toThrow(expect.objectContaining({ kind: 'schema' }));
+    for (const html of [wrong, wrongTarget, missing, untargeted.html(), duplicate.html(), malformed.html(), detached.html()]) expect(() => parseEstafetaHistory(html, lookup())).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+  it('binds a day with a single scan, which has no collapse of later scans, by the target naming the guide', () => {
+    const single = load(historyHtml()); single('.historyEventRow').first().find('.remainingHistoryEvents').remove();
+    expect(parseEstafetaHistory(single.html(), lookup())).toMatchObject({ current_stage: 'delivered', events: [{ description: 'Entregado' }, { description: 'En tránsito' }, { description: 'Recibido por estafeta' }] });
+    const other = load(single.html()); other('.historyEventRow').first().attr('data-target', `#remainigEventInfo${OTHER}0`);
+    const longer = load(single.html()); longer('.historyEventRow').first().attr('data-target', `#remainigEventInfo${GUIDE}0A`);
+    for (const html of [other.html(), longer.html()]) expect(() => parseEstafetaHistory(html, lookup())).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
   it('rejects latest-clock disagreement even when the terminal description matches', () => {
     const day = load(historyHtml()); day('.historyEventRow').first().children('.col-xs-2').text('05/01/2026');

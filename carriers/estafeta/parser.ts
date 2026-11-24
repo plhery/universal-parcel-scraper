@@ -86,6 +86,12 @@ export function estafetaRegistered(lookup: EstafetaLookup): CarrierResult {
     ...(lookup.service ? { service_name: lookup.service } : {}), ...(lookup.number !== lookup.guide ? { canonical_tracking_number: lookup.guide } : {}), summary_only: true, events: [] };
 }
 
+/** A date group's target, the guide and the group's index after the collapse's name, which Estafeta spells "remainig". */
+function targetsGuide(target: string, guide: string): boolean {
+  const name = /^#remainin?gEventInfo/.exec(target)?.[0];
+  return name !== undefined && target.startsWith(guide, name.length) && /^\d{1,3}$/.test(target.slice(name.length + guide.length));
+}
+
 function clockText(raw: string): string { return raw.replace(/\s+hrs\.$/i, '').trim(); }
 
 function clock(day: string, time: string): { local_time?: string; provider_time_text?: string } {
@@ -111,10 +117,14 @@ export function parseEstafetaHistory(html: string, lookup: EstafetaLookup): Carr
     const bindings = root.find('.remainingHistoryEvents[data-shipmentindex]');
     const dayCell = root.children('.col-xs-2');
     const eventBox = root.children('.col-xs-9');
-    if (bindings.length !== 1 || bindings.attr('data-shipmentindex') !== lookup.guide || dayCell.length !== 1 || eventBox.length !== 1
+    const rows = eventBox.find('.eventInfo');
+    // A day's later scans sit in a collapse naming the guide, which the group's target names too. A day with a single
+    // scan has no collapse, so its target names the guide alone.
+    const target = root.attr('data-target');
+    const bound = bindings.length === 1 ? bindings.attr('data-shipmentindex') === lookup.guide : bindings.length === 0 && rows.length === 1 && target !== undefined;
+    if (!bound || (target !== undefined && !targetsGuide(target, lookup.guide)) || dayCell.length !== 1 || eventBox.length !== 1
       || root.find('.historyEventRow').length) throw new SchemaError('Estafeta', 'Estafeta returned a different or ambiguous history group');
     const day = clean(dayCell.text(), 64);
-    const rows = eventBox.find('.eventInfo');
     if (!rows.length) throw new SchemaError('Estafeta', 'Estafeta returned an empty history group');
     for (const row of rows.toArray()) {
       const cells = $(row).children('div');

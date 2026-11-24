@@ -8,7 +8,9 @@ and are outside this adapter's scope.
 
 A bounded GET must identify one parcel and its canonical guide. A second,
 anonymous form POST retrieves history for that guide. Every date group must
-identify the same guide, and the first scan must match the latest summary.
+identify the same guide, and the first scan must match the latest summary. A
+day's later scans sit in a collapse that names the guide; a day with a single
+scan has none, and the group's target, naming the guide, binds it instead.
 No cookies, account bootstrap or API credentials are needed. Colliding codes
 and multiple-piece guides require disambiguation and remain inconclusive.
 Full guides retain their complete alphanumeric identity. The short-code alias
