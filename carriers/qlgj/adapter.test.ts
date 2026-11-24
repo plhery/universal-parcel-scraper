@@ -116,13 +116,16 @@ describe('Qilin International tracking adapter', () => {
   });
 
   it('maps every row it has written, and the app reads the map', () => {
-    for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
+    for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage ?? undefined);
     expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description: 'Inbound in sorting center' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description: 'Synthetic wording' })).toEqual({ kind: 'unknown' });
-    // The booked flight's day and the airport it lands at are read as an ellipsis.
-    for (const description of ['Estimated departure is March 5th', 'Estimated arrival date is March 22nd', 'Arrived at Sample Town Airport']) {
-      expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // The booked flight's day and the airport it lands at are read as an ellipsis. The booked flight is a forecast: it
+    // keeps the stage of the scan before it.
+    expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description: 'Arrived at Sample Town Airport' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    for (const description of ['Estimated departure is March 5th', 'Estimated arrival date is March 22nd']) {
+      expect(statusMapAnswer({ carrier: 'qlgj', providerCode: null, description }), description)
+        .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
     }
     expect(qlgjEnglish(null, normalizeStatusWording('航班已抵达'))).toBe('Flight arrived');
   });

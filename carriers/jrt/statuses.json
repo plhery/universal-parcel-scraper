@@ -463,9 +463,9 @@
     {
       "wording": "Flight is expected to take off on …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
-      "note": "Waiting at the airport for the booked flight, whose day is read as an ellipsis."
+      "note": "The flight booked at the airport, whose day is read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "Flight has flown",
@@ -555,17 +555,17 @@
     {
       "wording": "The flight is expected to depart on … and land on …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
-      "note": "Waiting at the airport for the booked flight, whose days, month.day, are read as an ellipsis."
+      "note": "The flight booked at the airport, whose days, month.day, are read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "The flight is expected to depart on …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-21",
-      "note": "Waiting at the airport for the booked flight, naming its departure day alone, month.day, read as an ellipsis."
+      "note": "The flight booked at the airport, naming its departure day alone, month.day, read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "The flight has departed and is expected to … land",
@@ -577,10 +577,10 @@
     {
       "wording": "Sorry, the second flight has been delayed and is expected to … land",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-12",
-      "note": "The connecting flight is late, after the first flight's departure; the new landing day, month.day, is read as an ellipsis."
+      "note": "The connecting flight is late, after the first flight's departure; the new landing day, month.day, is read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "The flight has arrived and is awaiting dismantling",
@@ -599,18 +599,18 @@
       "wording": "…号航班",
       "language": "zh",
       "english": "Booked on a flight",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-10-30",
-      "note": "JRT's own row on its line into the United States, naming the flight's month and day, read as an ellipsis."
+      "note": "JRT's own row on its line into the United States, naming the booked flight's month and day, read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "航班延误，预计…号飞出 Flight delayed, estimated departure on …",
       "language": "zh",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
-      "note": "A delayed flight with its new day, month/day and month name day, in both halves; the map reads each day as an ellipsis."
+      "note": "A delayed flight with its new day, month/day and month name day, in both halves; the map reads each day as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "Parcel Information Received",
@@ -647,33 +647,33 @@
     {
       "wording": "预计…航班/Flight scheduled for …",
       "language": "zh",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-10-28",
-      "note": "The flight booked, naming its day in both halves (\"预计10.29航班\", \"October 29th\"); the map reads each day as an ellipsis. The flight is still to come."
+      "note": "The flight booked, naming its day in both halves (\"预计10.29航班\", \"October 29th\"); the map reads each day as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "预计…航班/Scheduled flight on …",
       "language": "zh",
-      "stage": "in_transit",
+      "stage": null, "note": "The same booked flight in another English, its day read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it.",
       "confirmedBy": "live",
       "firstSeen": "2026-11-17"
     },
     {
       "wording": "预计配载航班…月…日,Expected flight on …",
       "language": "zh",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-08",
-      "note": "The flight the parcel is loaded for, naming its day in both halves (\"11月11日\", \"November 11th\"); the map reads each day as an ellipsis. The flight is still to come."
+      "note": "The flight the parcel is loaded for, naming its day in both halves (\"11月11日\", \"November 11th\"); the map reads each day as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "Expected flight on …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-19",
-      "note": "The English half of the loaded flight's row alone, its day with the month cut short (\"Nov. 20th\"); the map reads the day as an ellipsis. The flight is still to come."
+      "note": "The English half of the loaded flight's row alone, its day with the month cut short (\"Nov. 20th\"); the map reads the day as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "Your parcel has been released by customs",
@@ -898,18 +898,18 @@
     {
       "wording": "Estimated departure is …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-01",
-      "note": "Names the booked flight's day, read as an ellipsis: \"Estimated departure is October 23th\"."
+      "note": "Names the booked flight's day, read as an ellipsis: \"Estimated departure is October 23th\". A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "Estimated arrival date is …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-01",
-      "note": "Names the booked flight's arrival day, read as an ellipsis."
+      "note": "Names the booked flight's arrival day, read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "The flight has taken off",
@@ -1157,10 +1157,10 @@
     {
       "wording": "Se espera que el vuelo salga hacia … el …",
       "language": "es",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
-      "note": "Waiting for the booked flight on the line into Mexico; the destination and the flight's day are read as ellipses."
+      "note": "The booked flight on the line into Mexico; the destination and the flight's day are read as ellipses. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "The flight is en route to the airport in …",
@@ -1287,10 +1287,10 @@
       "wording": "预计…号航班飞",
       "language": "zh",
       "english": "Booked on a flight",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-13",
-      "note": "The booked flight's day as month.day (\"11.11\"), read as an ellipsis, after the parcel was sent to the airline and before the flight."
+      "note": "The booked flight's day as month.day (\"11.11\"), read as an ellipsis, after the parcel was sent to the airline and before the flight. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "理货较慢，导致提货缓慢，已催促尽快处理 Slow cargo sorting has resulted in delayed pickup. We have followed up for prompt handling.",

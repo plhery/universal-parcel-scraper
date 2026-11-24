@@ -12,7 +12,7 @@ export function lingdongEnglish(wording: string): string | undefined {
 }
 
 // Each wording, and the English half of a row in both languages, which the map reads as the whole row.
-const WORDINGS = new Map<string, Stage>(statuses.entries.flatMap((entry) => {
+const WORDINGS = new Map<string, Stage>(statuses.entries.filter((entry) => entry.stage).flatMap((entry) => {
   const english = lingdongEnglish(entry.wording);
   return [entry.wording, ...(english ? [english] : [])].map((wording) => [normalizeStatusWording(wording), entry.stage as Stage] as const);
 }));
@@ -51,4 +51,8 @@ export function lingdongStage(_code: string | null, wording: string): Stage | un
   return mapped(wording) ?? (english === undefined ? undefined : mapped(english));
 }
 
-export const statusMap: CarrierStatusMap = { stage: lingdongStage, gaps: [] };
+const FLIGHT_BOOKED_NOTE = 'The flight booked for the parcel, before it flies: a forecast, so the parcel keeps the stage of the scan before it.';
+
+/** The booked flight, whole or by the English half shown, has no stage of its own: it keeps the one before it. */
+export const statusMap: CarrierStatusMap = { stage: lingdongStage, gaps: [],
+  gapNote: (_code, wording) => (isLingdongFlightBooked(wording) ? FLIGHT_BOOKED_NOTE : undefined) };

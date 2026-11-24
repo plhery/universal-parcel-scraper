@@ -11,9 +11,11 @@ const ESTIMATED_DAY = /^(estimated (?:departure|arrival date) is )[a-z]+ \d{1,2}
 // The flight's landing names the airport: "Arrived at Sample Airport". The name becomes an ellipsis.
 const AIRPORT = /^(arrived at )[a-z][a-z .'-]{0,40}( airport)$/;
 
+const key = (wording: string): string => wording.replace(ESTIMATED_DAY, '$1…').replace(AIRPORT, '$1…$2');
+
 /** The stage Qilin's map gives a row, by its `normalizeStatusWording` wording. A row's kind code decides nothing. */
 export function qlgjStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.stage(wording.replace(ESTIMATED_DAY, '$1…').replace(AIRPORT, '$1…$2'));
+  return WORDINGS.stage(key(wording));
 }
 
 /** The English the adapter shows for a row the line words only in Chinese. */
@@ -21,7 +23,16 @@ export function qlgjEnglish(_code: string | null, wording: string): string | und
   return WORDINGS.english(wording);
 }
 
-export const statusMap: CarrierStatusMap = { stage: qlgjStage, gaps: [] };
+/**
+ * Whether a row, by its `normalizeStatusWording` wording, is one the map lists without a stage: the booked flight's
+ * departure or arrival day, before it flies. A forecast, not a movement, so it keeps the stage of the scan before it.
+ */
+export const isQlgjFlightNotice = (wording: string): boolean => WORDINGS.unstaged(key(wording));
+
+const FLIGHT_NOTE = "The booked flight's departure or arrival day, before it flies: a forecast, so the parcel keeps the stage of the scan before it.";
+
+export const statusMap: CarrierStatusMap = { stage: qlgjStage, gaps: [],
+  gapNote: (_code, wording) => (isQlgjFlightNotice(wording) ? FLIGHT_NOTE : undefined) };
 
 // DHL's sentences the tracker copies on the line into Europe, on DHL's wall clock where it scanned the parcel, most
 // without a place, and those from Germany before the parcel leaves for the destination country.

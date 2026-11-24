@@ -8,7 +8,7 @@ import { dateHualeiGofoRows, dateWallClocks, isHualeiUsPartnerRow } from '../gzy
 import { dateJtMexicoRows } from '../gzyl/jt-mexico-rows.js';
 import { normalizeHualeiNumber, parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hualei.js';
 import {
-  isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtCountryPlace, jrtEnglish, jrtStage,
+  isJrtDhlGermanRow, isJrtDhlRow, isJrtFlightNotice, isJrtJtMexicoRow, isJrtUpsRow, jrtCountryPlace, jrtEnglish, jrtStage,
 } from './status.js';
 
 export const PROVIDER = 'JRT';
@@ -29,6 +29,7 @@ export const JRT: HualeiTenant = {
   clock: ({ content, location }) => (isJrtUpsRow(content, location) || isHualeiUsPartnerRow(content, location) || isJrtDhlRow(content)
     || isJrtJtMexicoRow(content) || jrtCanadaZone(location) !== null ? 'wall' : 'platform'),
   ownNumber: /^JRT\d{10}[A-Z]{2}$/, unlabelledPartners: ['dhl', 'ctt-express'], productPartners: [[/\bFEDEX\b/i, 'fedex']],
+  notice: (_code, wording) => isJrtFlightNotice(wording),
 };
 
 /** The result with the rows the tracker copies from DHL dated, each keeping its wall clock, and a country's code beside them shown as one. */

@@ -100,10 +100,13 @@ describe('Lingdong International tracking adapter', () => {
       ['Scheduled flight on November 9st', 'in_transit', 'none'],
     ]);
     expect(events.slice(2).find((event) => event.stage)?.stage).toBe('in_transit');
-    // The app reads the English half shown alone by the same map.
-    for (const description of ['Flight arrival', 'Scheduled flight on November 9st', 'Flight scheduled for October 28th', 'Expect flight 30th.',
-      'Received by local delivery company']) {
+    // The app reads the English half shown alone by the same map, the flight booked as a notice.
+    for (const description of ['Flight arrival', 'Received by local delivery company']) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+    for (const description of ['Scheduled flight on November 9st', 'Flight scheduled for October 28th', 'Expect flight 30th.']) {
+      expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description }), description)
+        .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
     }
     // A row in one language, or whose halves are not Chinese and then English, is shown whole.
     for (const wording of ['货物电子信息已经收到', 'Shipment arrived at facility', 'Example/Sample', '示例/示例', 'Example 示例/Sample', '示例【示例】']) {
@@ -168,14 +171,16 @@ describe('Lingdong International tracking adapter', () => {
   });
 
   it('maps every wording it lists by wording alone, and the app reads the map', () => {
-    for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
+    for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage ?? undefined);
     expect(statusMapAnswer({ carrier: 'lingdong', providerCode: 'ARRIVAL', description: 'Shipment arrived at facility' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
     for (const description of ['预计10.28航班/Flight scheduled for October 28th', '预计1.2航班/Flight scheduled for January 2nd', '预计30号航班【Expect flight 30th.】', '预计2号航班【Expect flight 2nd.】',
       '预计11.9航班/Scheduled flight on November 9st', '预计12.21航班/Scheduled flight on December 21st', 'Expected flight on Nov. 19th',
       '预计11.19航班/Expected flight on Nov. 19th', '预计航班【Expected flight on Dec. 2nd】']) {
-      expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+      // The flight booked before it flies is a forecast: it keeps the stage of the scan before it.
+      expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description }), description)
+        .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
     }
     // The label, the order data sent to DPD and the sender still preparing the parcel before the first scan, the hand-over to GOFO in the United
     // States after the release, and GOFO's hub.

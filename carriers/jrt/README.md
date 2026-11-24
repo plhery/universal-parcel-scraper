@@ -32,6 +32,8 @@ browser is needed, and no portal link is published.
 - JRT's own rows mix Chinese and an English translation, and the map reads each one whole. The
   airport row books a flight on a day it names in both halves; [status.ts](status.ts) reads the
   day as an ellipsis, and the row shows its English without the flight, which is still to come.
+  A row that only books, expects or delays a flight is a forecast: the map lists it without a
+  stage, so it keeps the stage of the scan before it and decides no status.
   `已交服务商` (handed to the delivering carrier) and `货物已交机场` (handed to
   the airport) stay in transit, though their translations read "delivered".
 - JRT words its arrival, its departure and the platform's own row only in Chinese. They show the

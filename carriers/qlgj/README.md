@@ -29,7 +29,8 @@ Recognition asks the same lookup: a row says Qilin holds the number.
   the line to Europe. It is named only when DHL's rule claims the number whole.
 - Some rows are worded only in Chinese; the adapter shows them in English.
 - Its notes on the booked flight name the day, as "Estimated departure is" and a month and ordinal,
-  and its landing names the airport: the map reads the day and the airport as an ellipsis.
+  and its landing names the airport: the map reads the day and the airport as an ellipsis. The
+  notes are forecasts, listed without a stage: each keeps the stage of the scan before it.
 
 ## Numbers
 

@@ -118,6 +118,12 @@ export interface HualeiTenant {
    * carrier in `unlabelledPartners` takes it when its own high-confidence rule claims it whole.
    */
   readonly handOff?: (content: string) => string | undefined;
+  /**
+   * Whether a row, by its kind code (null without one) and `normalizeStatusWording` wording, is a notice
+   * rather than a movement, such as the flight booked for the parcel before it flies: it keeps the stage of
+   * the scan before it, with no source of its own, and decides no status.
+   */
+  readonly notice?: (code: string | null, wording: string) => boolean;
 }
 
 /**
@@ -310,14 +316,16 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   const seen = new Set<string>();
   const ahead = new Set<string>();
   const held: { clock: string; index: number; step: PlannedEvent }[] = [];
-  const kept: { clock: string; index: number; event: CarrierEvent; english?: string }[] = [];
+  const kept: { clock: string; index: number; event: CarrierEvent; english?: string; notice: boolean }[] = [];
   const clocks = rows.map((row) => wallClock(row.clock, tenant.provider));
   const read = rows.map((row) => {
     const parts = tenant.split?.(row.content, row.location) ?? row;
     const place = hualeiPlace(parts.location);
     const wording = hualeiWording(parts.content, parts.location);
     const description = wording || place;
-    return { wording, description, location: wording ? place : '', staged: description ? stageOf(tenant, row.code, description) : undefined };
+    const notice = description !== '' && tenant.notice?.(row.code || null, normalizeStatusWording(description)) === true;
+    return { wording, description, location: wording ? place : '', notice,
+      staged: description && !notice ? stageOf(tenant, row.code, description) : undefined };
   });
   const forecast = tenant.oneBatch
     ? oneBatchForecasts(rows, clocks, read.map(({ staged }) => staged?.stage === 'registered')) : forecasts(rows, clocks);
@@ -328,7 +336,7 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
     const local = clocks[index]!;
     const placed = isoTime(local, HUALEI_ZONE)!;
     const reading = tenant.clock?.(row, rows) ?? (tenant.wallClocks ? 'wall' : 'platform');
-    const { wording, description, location, staged } = read[index]!;
+    const { wording, description, location, staged, notice } = read[index]!;
     const english = wording ? tenant.english?.(row.code || null, normalizeStatusWording(wording), wording) : undefined;
     // A row held back is named by its clock as the tenant reads it, and listed as a step at that same clock,
     // in the words a scan would show.
@@ -353,7 +361,7 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
       return;
     }
     const written = writtenAt(row);
-    kept.push({ clock: local, index, ...(english ? { english } : {}), event: {
+    kept.push({ clock: local, index, notice, ...(english ? { english } : {}), event: {
       ...(reading === 'platform' ? { time: placed.iso } : { local_time: reading === 'day' ? local.slice(0, 10) : local }), description,
       ...(location ? { location } : {}),
       ...(row.code ? { provider_code: row.code } : {}),
@@ -383,6 +391,14 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   const returns = returnStages(unique.map(({ event }) => event));
   const events = unique.map(({ event, english }, index) => ({ ...event, ...(english ? { description: english } : {}),
     ...(returns[index] ? { stage: returns[index] } : {}) }));
+  // A notice takes the stage of the scan before it, with no source of its own.
+  let before: Stage | undefined;
+  for (let index = events.length - 1; index >= 0; index--) {
+    const event = events[index]!;
+    if (unique[index]!.notice) {
+      if (before) Object.assign(event, { stage: before, stage_source: 'none' });
+    } else if (event.stage) before = event.stage as Stage;
+  }
   // The steps held back, the earliest first, each once.
   held.sort((a, b) => (a.clock === b.clock ? b.index - a.index : a.clock < b.clock ? -1 : 1));
   return { events: events.slice(0, MAX_EVENTS), truncated: events.length > MAX_EVENTS, ahead: [...ahead],
@@ -451,8 +467,9 @@ function result(rows: readonly HualeiRow[], facts: Facts, tenant: HualeiTenant, 
     });
   }
   const newest = events[0]!;
-  // A note mapped as pending moves nothing: the newest row that moves the parcel leads it.
-  const current = events.find((event) => event.stage && event.stage !== 'pending') ?? events.find((event) => event.stage);
+  // A note mapped as pending moves nothing: the newest row that moves the parcel leads it. A notice decides nothing.
+  const decides = events.filter((event) => event.stage && event.stage_source !== 'none');
+  const current = decides.find((event) => event.stage !== 'pending') ?? decides[0];
   const stage = current?.stage as Stage | undefined;
   // The tracking number is the order's own unless it is the delivery carrier's.
   const canonical = facts.tracking && identity(facts.tracking) !== identity(facts.number)

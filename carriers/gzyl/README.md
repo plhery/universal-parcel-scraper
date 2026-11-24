@@ -60,7 +60,9 @@ instead.
   whose rows are all held back has no history yet. Either way the clocks of the rows written
   ahead are named, in `written_ahead` or the error, and the rows are kept as planned steps, so
   that a universal provider's copies of them are set aside too: GZYL's order row alone is kept while the script fills a provider's
-  history. The record's own summary status is not read; the stage comes from the rows kept.
+  history. The record's own summary status is not read; the stage comes from the rows kept. A
+  row a tenant names as a notice, such as a flight booked before it flies, is a forecast: it
+  keeps the stage of the scan before it, with no source of its own, and decides no status.
   After a row a tenant's map reads as returned, a move or a delivery is the parcel going, or
   delivered, back to the sender, and is returned too, until a row says the shipper received
   it: the rows after that are the parcel sent again, and the shipper's receipt is then an

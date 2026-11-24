@@ -124,7 +124,16 @@ export const isJrtDhlRow = (wording: string): boolean => DHL_SENTENCE.test(wordi
 /** Whether a DHL row is one from Germany, before the parcel leaves for the destination country. */
 export const isJrtDhlGermanRow = (wording: string): boolean => DHL_GERMAN_ROW.test(wording);
 
-export const statusMap: CarrierStatusMap = { stage: jrtStage, gaps: [] };
+/**
+ * Whether a row, by its `normalizeStatusWording` wording, is one the map lists without a stage: a flight booked,
+ * expected or delayed, before it flies. A forecast, not a movement, so it keeps the stage of the scan before it.
+ */
+export const isJrtFlightNotice = (wording: string): boolean => WORDINGS.unstaged(jrtScanKey(wording));
+
+const FLIGHT_NOTE = 'A flight booked, expected or delayed, before it flies: a forecast, so the parcel keeps the stage of the scan before it.';
+
+export const statusMap: CarrierStatusMap = { stage: jrtStage, gaps: [],
+  gapNote: (_code, wording) => (isJrtFlightNotice(wording) ? FLIGHT_NOTE : undefined) };
 
 /** A country's code the tracker writes in lower case beside DHL's rows ("de"), as other places name a country: "DE". */
 export const jrtCountryPlace = (location: string): string =>

@@ -1,7 +1,7 @@
 import type { CarrierResult } from '../../core/result/index.js';
 import { dateDhlRows } from '../gzyl/dhl-rows.js';
 import type { HualeiRow, HualeiTenant } from '../gzyl/hualei.js';
-import { isQlgjDhlGermanRow, isQlgjDhlRow, qlgjEnglish, qlgjStage } from './status.js';
+import { isQlgjDhlGermanRow, isQlgjDhlRow, isQlgjFlightNotice, qlgjEnglish, qlgjStage } from './status.js';
 
 export const PROVIDER = 'Qilin International';
 export const QLGJ_ORIGIN = 'http://www.qlgj168.com:8082';
@@ -23,7 +23,7 @@ function qlgjClock({ content, location }: HualeiRow): 'platform' | 'wall' {
 
 export const QLGJ: HualeiTenant = {
   carrier: 'qlgj', provider: PROVIDER, origin: QLGJ_ORIGIN, stage: qlgjStage, english: qlgjEnglish,
-  ownNumber: /^QL\d{13}YQ$/, unlabelledPartners: ['dhl'], clock: qlgjClock,
+  ownNumber: /^QL\d{13}YQ$/, unlabelledPartners: ['dhl'], clock: qlgjClock, notice: (_code, wording) => isQlgjFlightNotice(wording),
 };
 
 /** The result with the rows the tracker copies from DHL dated, each keeping its wall clock. */

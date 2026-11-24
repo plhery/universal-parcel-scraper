@@ -9,7 +9,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
 import { dateJrtUspsSentences, JRT_ORIGIN, jrtCanadaZone, parseJrtPage, parseJrtTrack, stageJrtDhlRounds } from './parser.js';
-import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtEnglish, statusMap } from './status.js';
+import { isJrtDhlGermanRow, isJrtDhlRow, isJrtFlightNotice, isJrtJtMexicoRow, isJrtUpsRow, jrtEnglish, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -255,9 +255,25 @@ describe('JRT tracking adapter', () => {
       ['2026-03-15T06:25:35+08:00', undefined, 'Picking up the goods', 'in_transit'],
       ['2026-03-14T05:20:26+08:00', undefined, 'Flight has arrived', 'in_transit'],
       ['2026-03-13T22:44:52+08:00', undefined, 'Flight has flown', 'in_transit'],
-      ['2026-03-12T19:23:51+08:00', undefined, 'Booked on a flight', 'in_transit'],
+      // The flight booked is a notice on the stage of the row before it.
+      ['2026-03-12T19:23:51+08:00', undefined, 'Booked on a flight', 'registered'],
       ['2026-03-10T01:03:15-04:00', 'place', 'Shipper created a label, UPS has not received the package yet.', 'registered'],
       ['2026-03-07T17:57:36+08:00', undefined, 'The electronic cargo information has been received', 'registered'],
+    ]);
+  });
+
+  it('reads a flight booked before it flies as a notice on the scan before it, which leads the status', () => {
+    // The UPS line's record before the flight: the platform's data, UPS's label and the flight JRT booked for the parcel.
+    const payload = fixture('track-ups') as { data: Record<string, unknown>[] }[];
+    const record = payload[0]!.data[0]!;
+    record.trackDetails = (record.trackDetails as Record<string, unknown>[]).slice(-3);
+    Object.assign(record, { trackContent: '3/13号航班', trackDate: '2026-03-12 19:23:51', trackLocation: '' });
+    const result = parseJrtTrack(payload, 'UP0000000000000003', Date.parse('2026-03-13T00:00:00Z'))!;
+    expect(result).toMatchObject({ status: 'pending', current_stage: 'registered', current_stage_source: 'carrier_map' });
+    expect(result.events?.map(({ description, stage, stage_source }) => [description, stage, stage_source])).toEqual([
+      ['Booked on a flight', 'registered', 'none'],
+      ['Shipper created a label, UPS has not received the package yet.', 'registered', 'carrier_map'],
+      ['The electronic cargo information has been received', 'registered', 'carrier_map'],
     ]);
   });
 
@@ -539,26 +555,34 @@ describe('JRT tracking adapter', () => {
   it('maps every wording it lists as a whole phrase, whatever day the airport row books', () => {
     for (const entry of statuses.entries) {
       for (const wording of 'english' in entry && entry.english ? [entry.wording, entry.english] : [entry.wording]) {
-        expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(entry.stage);
+        expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(entry.stage ?? undefined);
       }
     }
     const answer = (description: string) => statusMapAnswer({ carrier: 'jrt', providerCode: null, description });
+    // A flight booked, expected or delayed, before it flies, is a notice that keeps the stage of the scan before it.
+    const notice = { kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) };
+    for (const entry of statuses.entries.filter((listed) => listed.stage === null)) {
+      for (const wording of 'english' in entry && entry.english ? [entry.wording, entry.english] : [entry.wording]) {
+        expect(answer(wording), wording).toEqual(notice);
+        expect(isJrtFlightNotice(normalizeStatusWording(wording)), wording).toBe(true);
+      }
+    }
     expect(answer('货物已交机场,预计18号的航班 Goods delivered to airport, scheduled on flight of the 18th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('Flight is expected to take off on September 11')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('Flight is expected to take off on November?3')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('The flight is expected to depart on 10.27 and land on 10.28')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('The flight is expected to depart on 11.17')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Flight is expected to take off on September 11')).toEqual(notice);
+    expect(answer('Flight is expected to take off on November?3')).toEqual(notice);
+    expect(answer('The flight is expected to depart on 10.27 and land on 10.28')).toEqual(notice);
+    expect(answer('The flight is expected to depart on 11.17')).toEqual(notice);
     expect(answer('The flight has departed and is expected to 1.3 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    // A delayed connecting flight names its landing day the same way.
-    expect(answer('Sorry, the second flight has been delayed and is expected to 11.12 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // A delayed connecting flight names its landing day the same way, a forecast too.
+    expect(answer('Sorry, the second flight has been delayed and is expected to 11.12 land')).toEqual(notice);
     expect(answer('报关已放行等待3号航班起飞 Customs released,Awaiting departure on flight of the 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('10/22号航班')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('10/22号航班')).toEqual(notice);
     // UPS's access point note moves nothing.
     expect(answer('等待递送至 UPS Access Point? 地点。')).toEqual({ kind: 'mapped', stage: 'pending' });
     // A delayed flight names its new day in both halves.
-    expect(answer('航班延误，预计12/3号飞出 Flight delayed, estimated departure on Dec 3.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('航班延误，预计11/21号飞出 Flight delayed, estimated departure on November 21st')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('航班延误，预计10/24号飞出 Flight delayed, estimated departure on Oct.24.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('航班延误，预计12/3号飞出 Flight delayed, estimated departure on Dec 3.')).toEqual(notice);
+    expect(answer('航班延误，预计11/21号飞出 Flight delayed, estimated departure on November 21st')).toEqual(notice);
+    expect(answer('航班延误，预计10/24号飞出 Flight delayed, estimated departure on Oct.24.')).toEqual(notice);
     // The airport row that waits for the booked flight names its day in both halves.
     expect(answer('货物已交机场,等待23号的航班起飞 Goods have been delivered to the airport, pending departure on the flight on the 23rd.'))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
@@ -597,9 +621,9 @@ describe('JRT tracking adapter', () => {
     // DHL's row for the parcel on its way to it, as JRT copies it in lower case.
     expect(answer('shipment in transit to dhl')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // The bilingual row of a booked flight reads alike whatever its day.
-    expect(answer('预计10.29航班/Flight scheduled for October 29th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('预计11.3航班/Flight scheduled for November 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('预计11.21航班/Scheduled flight on November 21st')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('预计10.29航班/Flight scheduled for October 29th')).toEqual(notice);
+    expect(answer('预计11.3航班/Flight scheduled for November 3rd')).toEqual(notice);
+    expect(answer('预计11.21航班/Scheduled flight on November 21st')).toEqual(notice);
     // The US partner's scans while USPS waits for the item: the pickup accepts it, the rest carry it on.
     expect(answer('Picked Up By Shipping Partner, USPS Awaiting Item')).toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(answer('Arrived Shipping Partner Facility, USPS Awaiting Item')).toEqual({ kind: 'mapped', stage: 'in_transit' });
@@ -636,10 +660,10 @@ describe('JRT tracking adapter', () => {
     expect(jrtEnglish(null, normalizeStatusWording('过港中'))).toBe('Crossing to Hong Kong');
     // Cleared at the destination, waiting for the delivering carrier.
     expect(answer('Ready for transit to last mile operator')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('预计配载航班11月11日,Expected flight on November 11th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('预计配载航班12月2日，Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('Expected flight on Nov. 20th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    expect(answer('Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('预计配载航班11月11日,Expected flight on November 11th')).toEqual(notice);
+    expect(answer('预计配载航班12月2日，Expected flight on December 2nd')).toEqual(notice);
+    expect(answer('Expected flight on Nov. 20th')).toEqual(notice);
+    expect(answer('Expected flight on December 2nd')).toEqual(notice);
     expect(answer('Departed from Port of Origin')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // On the line into Canada the hand-over to the delivering courier, which it names, is no delivery round.
     expect(answer('Your parcel has been released by customs')).toEqual({ kind: 'mapped', stage: 'in_transit' });
@@ -647,7 +671,7 @@ describe('JRT tracking adapter', () => {
     expect(answer('Your package has been handed over to the courier Sample Express')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Parcel received by UniUni')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // On the line into Latin America the booked flight and the flight name the destination and the day.
-    expect(answer('Se espera que el vuelo salga hacia Perú el 12 de diciembre')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Se espera que el vuelo salga hacia Perú el 12 de diciembre')).toEqual(notice);
     expect(answer('The flight is en route to the airport in Colombia')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('During transportation to Spain')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('During transportation to Portugal')).toEqual({ kind: 'mapped', stage: 'in_transit' });
@@ -668,10 +692,12 @@ describe('JRT tracking adapter', () => {
     // The slow pickup at the destination airport moves nothing: the wait for the pickup and the clearance leads.
     expect(answer('理货较慢，导致提货缓慢，已催促尽快处理 Slow cargo sorting has resulted in delayed pickup. We have followed up for prompt handling.'))
       .toEqual({ kind: 'mapped', stage: 'pending' });
-    // The rows at the port of departure read alike whatever day, with its year or as month.day, they book.
-    for (const description of ['货物到达口岸，预计2026/11/17号航班起飞', '货物到达口岸,预计2027/1/3号航班起飞', '预计11.11号航班飞', '预计1.3号航班飞']) {
+    // The rows at the port of departure read alike whatever day, with its year or as month.day, they book: the arrival
+    // at the port moves the parcel, the flight booked alone is a notice.
+    for (const description of ['货物到达口岸，预计2026/11/17号航班起飞', '货物到达口岸,预计2027/1/3号航班起飞']) {
       expect(answer(description), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
+    for (const description of ['预计11.11号航班飞', '预计1.3号航班飞']) expect(answer(description), description).toEqual(notice);
     expect(jrtEnglish(null, normalizeStatusWording('预计11.11号航班飞'))).toBe('Booked on a flight');
     expect(jrtEnglish(null, normalizeStatusWording('分拣包裹已出库'))).toBe('Sorted parcel has left the warehouse');
     // J&T Express Mexico's rows read alike whatever their towns, sites, courier and phone; its collection after the

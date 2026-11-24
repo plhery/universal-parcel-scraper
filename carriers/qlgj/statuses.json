@@ -58,18 +58,18 @@
     {
       "wording": "Estimated departure is …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-23",
-      "note": "Names the booked flight's day, read as an ellipsis, before the take-off."
+      "note": "Names the booked flight's day, read as an ellipsis, before the take-off. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "Estimated arrival date is …",
       "language": "en",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-23",
-      "note": "Names the day the booked flight lands, read as an ellipsis, written with the departure's note."
+      "note": "Names the day the booked flight lands, read as an ellipsis, written with the departure's note. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
       "wording": "The flight has taken off",
