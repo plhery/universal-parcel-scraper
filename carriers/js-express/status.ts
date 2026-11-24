@@ -79,6 +79,18 @@ export const isJsExpressDepotReceipt = (wording: string): boolean => normalizeSt
 export const jsExpressEnglish = (wording: string): string | undefined => WORDINGS.english(normalizeStatusWording(wording));
 
 /**
+ * One of its rows as a universal provider relays it under JS Express's name: the stage the map gives, `pending` for
+ * a recorded gap, and the English shown for its Chinese. A wording the map lacks has no entry.
+ */
+export function jsExpressRelayedScan(label: string): { stage: Stage; wording: string } | undefined {
+  const normalized = normalizeStatusWording(label);
+  const wording = jsExpressEnglish(label) ?? label;
+  if (GAP_WORDINGS.has(normalized)) return { stage: 'pending', wording };
+  const stage = mappedStage(normalized);
+  return stage && { stage, wording };
+}
+
+/**
  * The stage of a row's code where the code settles it alone. Most rows are `OIT`, in transit, whatever
  * happened; others group the customs, the hand-overs and the courier's exceptions, forwards among them.
  */

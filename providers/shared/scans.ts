@@ -1,8 +1,9 @@
 /**
  * Carrier scan vocabularies for histories a universal provider relays.
  *
- * Some carriers reach us only through aggregators, which pass the carrier's own
- * scan labels through, sometimes machine-translated. When the provider names
+ * Some carriers reach us only through aggregators, and others through them when
+ * their own tracker fails. The aggregators pass the carrier's own scan labels
+ * through, sometimes machine-translated. When the provider names
  * the carrier of a scan and that carrier has a vocabulary, the label's stage and
  * stored wording come from it rather than from the shared wording rules. A
  * label the carrier files under no stage is `pending`, so it never sets the
@@ -16,6 +17,7 @@ import { chunghwaPostScan } from '../../carriers/chunghwa-post/status.js';
 import { emileScan } from '../../carriers/emile/status.js';
 import { firstLineScan } from '../../carriers/first-line/status.js';
 import { hrvatskaPostaScan } from '../../carriers/hrvatska-posta/status.js';
+import { jsExpressRelayedScan } from '../../carriers/js-express/status.js';
 import { paackScan } from '../../carriers/paack/status.js';
 import { sendingScan } from '../../carriers/sending/status.js';
 import { ytoScan } from '../../carriers/yto/status.js';
@@ -39,6 +41,7 @@ const VOCABULARIES: Readonly<Record<string, (label: string) => CarrierScan | und
   emile: emileScan,
   'first-line': firstLineScan,
   'hrvatska-posta': hrvatskaPostaScan,
+  'js-express': jsExpressRelayedScan,
   paack: paackScan,
   sending: sendingScan,
   yto: ytoScan,

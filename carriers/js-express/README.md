@@ -107,6 +107,8 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   they give the instant J&T Express Germany's own tracker gives each scan, to the second, and the
   order's data then comes as JS Express's sorting centre takes the parcel in. Read on Berlin's clock,
   they would come two hours early.
+- A universal provider's copy of its rows under JS Express's name, which answers when the tracker
+  fails, takes the stage the map gives and its English, and a recorded gap stays `pending`.
 - Each row carries a code, kept as its `provider_code`. Most rows are `OIT` whatever happened, so a
   code gives a stage only to a wording the map lacks, and only where it settles one alone: the
   order's data, the collection, the round, the pickup point, a failed attempt and the delivery.

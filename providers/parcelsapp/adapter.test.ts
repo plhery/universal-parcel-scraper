@@ -1318,6 +1318,22 @@ describe('ParcelsApp result parsing', () => {
     });
   });
 
+  it("reads JS Express's rows by JS Express's map, a recorded gap as pending", () => {
+    // Its partner's pickup at its hub and weighing there, which the shared rules leave unread.
+    const result = parseParcelsAppResponse({ carriers: ['JS Express'], states: [
+      { date: '2026-11-20T09:00:00Z', status: 'RECEIVED AT LOCAL DEPOT', carrier: 0 },
+      { date: '2026-11-18T05:31:00Z', status: 'Operation center Weighing', carrier: 0 },
+      { date: '2026-11-18T05:25:00Z', status: 'Quick Pickup', carrier: 0 },
+      { date: '2026-11-17T17:09:00Z', status: 'Item has been collected', carrier: 0 },
+    ] }, number, identity(), 'Asia/Shanghai');
+    expect(result.events!.map((scan) => [scan.description, scan.stage, scan.stage_source])).toEqual([
+      ['RECEIVED AT LOCAL DEPOT', 'pending', 'carrier_map'],
+      ['Operation center Weighing', 'in_transit', 'carrier_map'],
+      ['Quick Pickup', 'in_transit', 'carrier_map'],
+      ['Item has been collected', 'accepted', 'carrier_map'],
+    ]);
+  });
+
   it("reads Juxi Express's copies of a local carrier's scans abroad on their place's clock, and its own rows on Beijing's", () => {
     // On Beijing's clock a British delivery office's rounds came at night, and a copy of USPS's
     // departure from Chicago before USPS's own acceptance there.

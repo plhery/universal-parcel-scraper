@@ -215,8 +215,8 @@ counts are their own, and [the benchmark](../benchmark/README.md) holds what was
 - [shared/hints.ts](shared/hints.ts): reported carrier names to catalog ids, and whether
   a name is new to the catalog.
 - [shared/scans.ts](shared/scans.ts): scan vocabularies of carriers whose labels providers
-  relay (YTO, Paack's page labels, Emile's status texts, CDEK's leg labels, FIRST LINE's rows and
-  Chunghwa Post's office and status): stage and stored wording of the carrier's own labels, original
+  relay (YTO, Paack's page labels, Emile's status texts, CDEK's leg labels, FIRST LINE's and JS
+  Express's rows and Chunghwa Post's office and status): stage and stored wording of the carrier's own labels, original
   or translated, the place a label names beside its status, and the return leg that follows a return scan.
 - [shared/capture.ts](shared/capture.ts): TRAWL response decoding and capture errors.
 - [core/runner](../core/runner/index.ts) runs steps and records telemetry.
