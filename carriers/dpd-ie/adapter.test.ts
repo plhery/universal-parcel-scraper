@@ -208,6 +208,16 @@ describe('DPD Ireland direct tracking', () => {
     expect(missed.events?.[1]).toMatchObject({ description: TODAY, stage: 'in_transit', stage_source: 'carrier_map' });
   });
 
+  it('reads the outbound security scan as in transit and the recipient\'s delivery as delivered', () => {
+    const delivered = parseDpdIe(history([NETWORK, 'Head Office', '01/3/2026 at 22:00'], ['Security Outbound', 'Dpd Example North', '02/3/2026 at 7:58'],
+      [VAN, 'Dpd Example North', '02/3/2026 at 8:53'], ['Delivered Recipient', 'Dpd Example North', '02/3/2026 at 10:05']), NUMBER);
+    expect(delivered).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered Recipient' });
+    expect(delivered.events?.map(event => [event.description, event.stage, event.stage_source])).toEqual([
+      ['Delivered Recipient', 'delivered', 'carrier_map'], [VAN, 'out_for_delivery', 'carrier_map'],
+      ['Security Outbound', 'in_transit', 'carrier_map'], [NETWORK, 'in_transit', 'carrier_map'],
+    ]);
+  });
+
   it('keeps new wording unstaged and dedupes only identical scans', () => {
     const unknown = parseDpdIe(history([NETWORK, 'Head Office', '01/3/2026 at 22:00'], ['Your parcel is ready for dispatch', 'Head Office', '02/3/2026 at 9:30']), NUMBER);
     expect(unknown).toMatchObject({ status: 'unknown', last_status_text: 'Your parcel is ready for dispatch' });
