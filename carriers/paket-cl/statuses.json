@@ -1,4 +1,85 @@
 {
   "carrier": "paket-cl",
-  "entries": []
+  "entries": [
+    {
+      "code": "1",
+      "wording": "Paket aún no retira este pedido",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Titled Por Retirar: the shop has booked the order and Paket has not collected it yet."
+    },
+    {
+      "code": "2",
+      "wording": "Paket retiró este pedido",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Titled Retirado: Paket collected the order from the shop."
+    },
+    {
+      "code": "4",
+      "wording": "Tu pedido está en reparto",
+      "stage": "out_for_delivery",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Titled En tránsito, but its sentence and the page's rail step, En reparto, put the parcel on its delivery round."
+    },
+    {
+      "code": "5",
+      "wording": "Tu pedido fue entregado",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "Titled Entregado."
+    },
+    {
+      "code": "fallido",
+      "wording": "No pudimos entregarlo",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "bundle",
+      "note": "The page's headline for the progress alert fallido: Paket will try again or the shop will get in touch."
+    },
+    {
+      "code": "no_recibido",
+      "wording": "Paket no tiene este pedido",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle",
+      "note": "The page's headline for the progress alert no_recibido: the shop cancelled the order or never handed it to Paket."
+    },
+    {
+      "code": "devolviendo",
+      "wording": "Tu pedido va de vuelta a la tienda",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle",
+      "note": "The page's headline for the progress alert devolviendo: a return to the shop under way."
+    },
+    {
+      "code": "devuelto",
+      "wording": "Tu pedido volvió a la tienda",
+      "stage": "returned",
+      "language": "es",
+      "confirmedBy": "bundle",
+      "note": "The page's headline for the progress alert devuelto: the parcel is back at the shop."
+    },
+    {
+      "code": "consultar",
+      "wording": "Consulta con la tienda",
+      "language": "es",
+      "confirmedBy": "bundle",
+      "unmapped": true,
+      "note": "The page's headline for the progress alert consultar, which sends the reader to the shop and says nothing of the parcel; the rows set the stage."
+    },
+    {
+      "code": "extraviado",
+      "wording": "Estamos buscando tu pedido",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle",
+      "note": "The page's headline when the reply marks the parcel as lost (extraviado.es_extraviado): Paket is looking for it."
+    }
+  ]
 }

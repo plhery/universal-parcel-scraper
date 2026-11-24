@@ -3196,6 +3196,12 @@
     "reason": "Eight digits are a bare counter that many carriers print, and nothing in the number points to Packs."
   },
   {
+    "carrier": "paket-cl",
+    "pattern": "^\\d{4,12}$",
+    "kind": "collision",
+    "reason": "Paket's tracking numbers are four to twelve digits, a shape many carriers' numeric numbers share, so the shape cannot name Paket."
+  },
+  {
     "carrier": "palletways",
     "pattern": "^\\d{11}$",
     "kind": "by_design",

@@ -1,0 +1,84 @@
+{
+  "success": true,
+  "data": {
+    "envio": {
+      "id": 102826435,
+      "uid": "9009",
+      "referencia": "19800",
+      "estado": "5",
+      "fecha": "2026-05-15 00:14:43.812",
+      "bultos": "1",
+      "origen": "RM",
+      "destino": "RM",
+      "comuna": "Comuna",
+      "status": "1",
+      "nombre": "N•••••••X",
+      "direccion": "••••••••",
+      "telefono": null,
+      "telefono_masked": "9XXXX0000",
+      "nota": null
+    },
+    "estado_info": {
+      "titulo": "Entregado",
+      "color": "#4CAF50",
+      "descripcion": "Tu pedido fue entregado"
+    },
+    "progreso": {
+      "paso": 4,
+      "alerta": null
+    },
+    "masked": true,
+    "requiere_verificacion": true,
+    "firmado": false,
+    "pictures": [],
+    "fotos_ocultas": 2,
+    "historial": [
+      {
+        "id": 14218911,
+        "fecha": "2026-05-15 15:41:58",
+        "estado": 5,
+        "titulo": "Entregado",
+        "descripcion": "Tu pedido fue entregado",
+        "color": "#4CAF50"
+      },
+      {
+        "id": 14214915,
+        "fecha": "2026-05-15 14:00:46",
+        "estado": 4,
+        "titulo": "En tránsito",
+        "descripcion": "Tu pedido está en reparto",
+        "color": "#9C27B0"
+      },
+      {
+        "id": 14211533,
+        "fecha": "2026-05-15 12:20:53",
+        "estado": 2,
+        "titulo": "Retirado",
+        "descripcion": "Paket retiró este pedido",
+        "color": "#FF9800"
+      },
+      {
+        "id": 14204472,
+        "fecha": "2026-05-15 00:14:44",
+        "estado": 1,
+        "titulo": "Por Retirar",
+        "descripcion": "Paket aún no retira este pedido",
+        "color": "#2196F3"
+      }
+    ],
+    "tienda": {
+      "nombre_tienda": "Tienda"
+    },
+    "tiene_ubicacion": true,
+    "correccion": {
+      "modo": null,
+      "max_metros": 3000,
+      "max_indicaciones": 150,
+      "corte": "23:59",
+      "indicaciones": null
+    },
+    "extraviado": {
+      "es_extraviado": false
+    }
+  }
+}

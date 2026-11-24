@@ -19,18 +19,62 @@
   "timezone": "America/Santiago",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "paket-cl",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://track.paket.cl/?id={trackingNumber}",
     "searchUrl": "https://track.paket.cl/",
     "canaryUrl": "https://track.paket.cl/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "progress_rail",
+      "parcel_count",
+      "sender_name",
+      "destination",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "delivery_instructions",
+      "delivery_photo",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "progress_rail",
+      "provider_code"
+    ],
+    "discarded": [
+      "parcel_count",
+      "sender_name",
+      "destination",
+      "recipient_name",
+      "recipient_address",
+      "recipient_contact",
+      "delivery_instructions",
+      "delivery_photo",
+      "coordinates"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "service_name",
+      "delivered_at",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
   },
   "links": [
     {

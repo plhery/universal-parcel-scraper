@@ -1,5 +1,27 @@
 {
   "carrier": "paket-cl",
-  "gap": "No public page shows a Paket number.",
-  "records": []
+  "records": [
+    {
+      "number": "102826435",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/2026/https://www.parcelpanel.com/couriers/paket/",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "An archived ParcelPanel Paket page offered it to try. Paket's tracker answers it with an order a shop booked in the Santiago Metropolitan region, collected by Paket and delivered the same day."
+    }
+  ]
 }
