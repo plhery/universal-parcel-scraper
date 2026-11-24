@@ -12996,6 +12996,43 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "booths-logistics": {
+    "displayName": "Booth's Logistics",
+    "color": "#005f9e",
+    "aliases": [
+      "Booths Logistics",
+      "Booth Logistics",
+      "Booths Transport",
+      "Booth's Transport"
+    ],
+    "countries": [
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Auckland",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "booths-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.booths.co.nz/services/tracking/",
+    "trackingUrlTemplate": "https://www.booths.co.nz/services/tracking/results/?reference={trackingNumber}",
+    "trackingSearchUrl": "https://www.booths.co.nz/services/tracking/",
+    "helpUrl": "https://www.booths.co.nz/our-locations/",
+    "linkRules": [
+      {
+        "domains": [
+          "booths.co.nz",
+          "www.booths.co.nz"
+        ],
+        "pathPattern": "^/services/tracking/results/?$",
+        "params": [
+          "reference"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "border-express": {
     "displayName": "Border Express",
     "color": "#cc092f",
@@ -22821,6 +22858,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/tracking-awb/?$",
         "params": [
           "awb"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "dragonfly-au": {
+    "displayName": "Dragonfly Australia",
+    "color": "#13a58f",
+    "aliases": [
+      "Dragonfly (AU)",
+      "Dragonfly Shipping Australia"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dragonfly-au"
+    },
+    "canaryUrl": "https://dragonflyshipping.com.au/track-your-package/",
+    "trackingUrlTemplate": "https://dragonflyshipping.com.au/track-your-package/?tracking-id={trackingNumber}",
+    "trackingSearchUrl": "https://dragonflyshipping.com.au/track-your-package/",
+    "helpUrl": "https://dragonflyshipping.com.au/faq/",
+    "linkRules": [
+      {
+        "domains": [
+          "dragonflyshipping.com.au"
+        ],
+        "params": [
+          "tracking-id"
         ]
       }
     ],
@@ -72382,6 +72451,7 @@ export const CARRIER_IDS = [
   "bombino",
   "bonds-couriers",
   "bookurier",
+  "booths-logistics",
   "border-express",
   "borzo",
   "bosta",
@@ -72662,6 +72732,7 @@ export const CARRIER_IDS = [
   "dpex",
   "dpx-logistics",
   "dragon-star-curier",
+  "dragonfly-au",
   "dragonfly-nl",
   "drop2shop",
   "dropp",
@@ -74441,6 +74512,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bombino": [],
   "bonds-couriers": [],
   "bookurier": ["bookurier-1"],
+  "booths-logistics": [],
   "border-express": ["border-express-1"],
   "borzo": [],
   "bosta": [],
@@ -74721,6 +74793,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpex": [],
   "dpx-logistics": [],
   "dragon-star-curier": [],
+  "dragonfly-au": [],
   "dragonfly-nl": [],
   "drop2shop": ["drop2shop-1"],
   "dropp": [],

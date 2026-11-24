@@ -113,6 +113,7 @@ import { adapter as bmCargo } from '../carriers/bm-cargo/adapter.js';
 import { adapter as bobGo } from '../carriers/bob-go/adapter.js';
 import { adapter as bombino } from '../carriers/bombino/adapter.js';
 import { adapter as bookurier } from '../carriers/bookurier/adapter.js';
+import { adapter as boothsLogistics } from '../carriers/booths-logistics/adapter.js';
 import { adapter as borderExpress } from '../carriers/border-express/adapter.js';
 import { adapter as bosta } from '../carriers/bosta/adapter.js';
 import { adapter as boxNow } from '../carriers/box-now/adapter.js';
@@ -279,6 +280,7 @@ import { adapter as dpdZa } from '../carriers/dpd-za/adapter.js';
 import { adapter as dpdex } from '../carriers/dpdex/adapter.js';
 import { adapter as dpex } from '../carriers/dpex/adapter.js';
 import { adapter as dragonStarCurier } from '../carriers/dragon-star-curier/adapter.js';
+import { adapter as dragonflyAu } from '../carriers/dragonfly-au/adapter.js';
 import { adapter as dragonflyNl } from '../carriers/dragonfly-nl/adapter.js';
 import { adapter as drop2shop } from '../carriers/drop2shop/adapter.js';
 import { adapter as dropp } from '../carriers/dropp/adapter.js';
@@ -1235,6 +1237,7 @@ export const REGISTRY: RegistryDefinition = {
     "bob-go": bobGo,
     "bombino": bombino,
     "bookurier": bookurier,
+    "booths-logistics": boothsLogistics,
     "border-express": borderExpress,
     "bosta": bosta,
     "box-now": boxNow,
@@ -1401,6 +1404,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpdex": dpdex,
     "dpex": dpex,
     "dragon-star-curier": dragonStarCurier,
+    "dragonfly-au": dragonflyAu,
     "dragonfly-nl": dragonflyNl,
     "drop2shop": drop2shop,
     "dropp": dropp,
@@ -2466,6 +2470,7 @@ export const REGISTRY: RegistryDefinition = {
     "bombino": "bombino",
     "bonds-couriers": "universal",
     "bookurier": "bookurier",
+    "booths-logistics": "booths-logistics",
     "border-express": "border-express",
     "borzo": "universal",
     "bosta": "bosta",
@@ -2770,6 +2775,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpex": "dpex",
     "dpx-logistics": "universal",
     "dragon-star-curier": "dragon-star-curier",
+    "dragonfly-au": "dragonfly-au",
     "dragonfly-nl": "dragonfly-nl",
     "drop2shop": "drop2shop",
     "dropp": "dropp",
