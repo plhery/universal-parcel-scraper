@@ -48393,7 +48393,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Santiago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "paket-cl",
+      "localClocks": true
     },
     "canaryUrl": "https://track.paket.cl/",
     "trackingUrlTemplate": "https://track.paket.cl/?id={trackingNumber}",
@@ -55310,11 +55311,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Jerusalem",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "runner-express",
+      "localClocks": true
     },
     "canaryUrl": "https://runnerexpress.co.il/",
     "trackingUrlTemplate": "https://runnerexpress.co.il/track/?search_query={trackingNumber}",
-    "trackingSearchUrl": "https://runnerexpress.co.il/track/",
+    "trackingSearchUrl": "https://runnerexpress.co.il/",
     "helpUrl": "https://runnerexpress.co.il/contact/",
     "linkRules": [
       {

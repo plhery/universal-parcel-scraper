@@ -716,6 +716,7 @@ import { adapter as packlink } from '../carriers/packlink/adapter.js';
 import { adapter as packs } from '../carriers/packs/adapter.js';
 import { adapter as pactic } from '../carriers/pactic/adapter.js';
 import { adapter as padtf } from '../carriers/padtf/adapter.js';
+import { adapter as paketCl } from '../carriers/paket-cl/adapter.js';
 import { adapter as pakistanPost } from '../carriers/pakistan-post/adapter.js';
 import { adapter as palletways } from '../carriers/palletways/adapter.js';
 import { adapter as panduLogistics } from '../carriers/pandu-logistics/adapter.js';
@@ -835,6 +836,7 @@ import { adapter as royaleInternational } from '../carriers/royale-international
 import { adapter as rozetkaDelivery } from '../carriers/rozetka-delivery/adapter.js';
 import { adapter as rpxIndonesia } from '../carriers/rpx-indonesia/adapter.js';
 import { adapter as runforint } from '../carriers/runforint/adapter.js';
+import { adapter as runnerExpress } from '../carriers/runner-express/adapter.js';
 import { adapter as russianPost } from '../carriers/russian-post/adapter.js';
 import { adapter as sacoShippingLine } from '../carriers/saco-shipping-line/adapter.js';
 import { adapter as safewayExpressCargo } from '../carriers/safeway-express-cargo/adapter.js';
@@ -1845,6 +1847,7 @@ export const REGISTRY: RegistryDefinition = {
     "packs": packs,
     "pactic": pactic,
     "padtf": padtf,
+    "paket-cl": paketCl,
     "pakistan-post": pakistanPost,
     "palletways": palletways,
     "pandu-logistics": panduLogistics,
@@ -1964,6 +1967,7 @@ export const REGISTRY: RegistryDefinition = {
     "rozetka-delivery": rozetkaDelivery,
     "rpx-indonesia": rpxIndonesia,
     "runforint": runforint,
+    "runner-express": runnerExpress,
     "russian-post": russianPost,
     "saco-shipping-line": sacoShippingLine,
     "safeway-express-cargo": safewayExpressCargo,
@@ -3572,7 +3576,7 @@ export const REGISTRY: RegistryDefinition = {
     "padtf": "padtf",
     "pago": "universal",
     "paisley-freight": "universal",
-    "paket-cl": "universal",
+    "paket-cl": "paket-cl",
     "pakettipiste": "universal",
     "pakistan-post": "pakistan-post",
     "palletforce": "universal",
@@ -3786,7 +3790,7 @@ export const REGISTRY: RegistryDefinition = {
     "rtt": "universal",
     "ruiqi": "universal",
     "runforint": "runforint",
-    "runner-express": "universal",
+    "runner-express": "runner-express",
     "russian-post": "russian-post",
     "rxo": "universal",
     "ryder-last-mile": "universal",
