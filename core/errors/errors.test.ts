@@ -83,6 +83,9 @@ describe('carrier error taxonomy', () => {
 
   it('names errors for metric labels without leaking messages', () => {
     expect(errorTypeOf(new NotFoundError('CTT'))).toBe('NotFoundError');
+    // A failure an adapter rebuilds without its cause reports the error its kind stands for.
+    expect(errorTypeOf(new CarrierError('not_found', 'X', 'X tracking failed (not_found)'))).toBe('NotFoundError');
+    expect(errorTypeOf(new CarrierError('transport', 'X', 'X tracking failed (transport)'))).toBe('TransportError');
     expect(errorTypeOf(Object.assign(new Error('x'), { name: 'weird name with spaces' }))).toBe('Error');
     expect(errorTypeOf(42)).toBe('number');
   });

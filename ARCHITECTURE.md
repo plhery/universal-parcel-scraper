@@ -353,7 +353,9 @@ and no credential where a serializer finds it: `UpstreamHttpError` and `Upstream
 redact credential headers, an address's user info and fragment, and the query parameters and
 JSON, form or XML body fields named after credentials or guest verification proofs. Structured
 proxy fields and incomplete JSON bodies are redacted in full. A reply's body excerpt is read by name only. `CarrierError.reason` separates expected details,
-such as Amazon Shipping's expired history, from transport failures. An inconclusive error
+such as Amazon Shipping's expired history, from transport failures. A record's error type is the
+error's class name; a plain `CarrierError`, which an adapter builds to keep a failure's kind without
+its cause, gives the class its kind stands for. An inconclusive error
 for the carrier's own answer that it holds no history under the number, an empty result or
 not-found notice, carries `portal_not_found`, so a consumer can tell that answer from an
 outage; it does not make the parcel absent. An answer without history from a carrier that lists

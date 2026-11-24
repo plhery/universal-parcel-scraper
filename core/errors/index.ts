@@ -335,8 +335,17 @@ export function plannedEventsOf(error: unknown): readonly PlannedEvent[] {
   return [];
 }
 
+// The error each kind stands for, the name a plain CarrierError reports: adapters rebuild a failure as one to keep
+// its kind and drop a cause that holds request data.
+const TYPE_BY_KIND: Record<CarrierErrorKind, string> = {
+  not_found: 'NotFoundError', indeterminate: 'IndeterminateError', challenge: 'ChallengeError', rate_limited: 'RateLimitedError',
+  maintenance: 'MaintenanceError', schema: 'SchemaError', input_required: 'InputRequiredError', invalid_input: 'InvalidInputError',
+  transport: 'TransportError', budget: 'BudgetExceededError',
+};
+
 /** A stable, low-cardinality name for an error, safe as a metric label. */
 export function errorTypeOf(error: unknown): string {
+  if (error instanceof CarrierError && error.name === 'CarrierError' && Object.hasOwn(TYPE_BY_KIND, error.kind)) return TYPE_BY_KIND[error.kind];
   if (error instanceof Error && /^(?:Error|[A-Z][A-Za-z0-9_.-]{0,80}(?:Error|Exception))$/.test(error.name.trim())) {
     return error.name.trim();
   }
