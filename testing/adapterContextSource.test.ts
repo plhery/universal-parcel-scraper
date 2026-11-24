@@ -8,12 +8,20 @@
  * so the requests, browser calls and pauses after the first are held to the
  * same rule. It reads that a signal is written, not which one.
  */
+import { realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// TypeScript names a declaration by its real path, so a `node_modules` linked from another checkout
+// lies outside this one: a file under its real path is named as under the link.
+const modules = realpathSync(path.join(root, 'node_modules'));
+const moduleOf = (fileName: string) => {
+  const relative = path.relative(modules, fileName);
+  return relative.startsWith('..') || path.isAbsolute(relative) ? path.relative(root, fileName) : path.join('node_modules', relative);
+};
 
 /** The transport calls and the promise timer, by the module that declares them, and the argument that takes the signal. */
 const TRANSPORTS: Readonly<Record<string, { module: string; argument: number }>> = {
@@ -55,9 +63,9 @@ function transportOf(call: ts.CallExpression): string | null {
   let symbol = checker.getSymbolAtLocation(callee);
   if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = checker.getAliasedSymbol(symbol);
   if (!symbol || !Object.hasOwn(TRANSPORTS, symbol.name)) return null;
-  const modules = (symbol.declarations ?? []).map((declaration) => path.relative(root, declaration.getSourceFile().fileName));
-  if (modules.includes(TRANSPORTS[symbol.name]!.module)) return symbol.name;
-  return symbol.name === 'setTimeout' && modules.includes(TIMER.module) ? TIMER.name : null;
+  const declared = (symbol.declarations ?? []).map((declaration) => moduleOf(declaration.getSourceFile().fileName));
+  if (declared.includes(TRANSPORTS[symbol.name]!.module)) return symbol.name;
+  return symbol.name === 'setTimeout' && declared.includes(TIMER.module) ? TIMER.name : null;
 }
 
 const named = (property: ts.ObjectLiteralElementLike, name: string) =>
