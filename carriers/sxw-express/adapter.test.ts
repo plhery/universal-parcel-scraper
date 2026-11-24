@@ -31,8 +31,10 @@ it('maps the inward mail centre automation scan as onward transit', () => {
     .toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
 });
 
-it('maps the processing it copies from DHL in Germany as onward transit', () => {
-  expect(statusMap.stage(null, normalizeStatusWording('The shipment has been processed in the parcel center of origin'))).toBe('in_transit');
+it('maps the processing and unloading it copies from DHL in Germany as onward transit', () => {
+  for (const wording of ['The shipment has been processed in the parcel center of origin', 'Unloaded from movement / tour vehicle']) {
+    expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
+  }
 });
 
 it('reads the last-mile carrier\'s locker token as the parcel waiting for collection, not delivered', () => {
