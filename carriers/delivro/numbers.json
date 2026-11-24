@@ -1,5 +1,27 @@
 {
   "carrier": "delivro",
-  "gap": "No public page shows a Délivro number.",
-  "records": []
+  "records": [
+    {
+      "number": "DEL3556238",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/2026/https://www.parcelpanel.com/couriers/delivro/",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An archived ParcelPanel Délivro page offered it to try. Délivro's Dispatch Science tracker answers it with an order picked up, put on hold the next morning for missing information, released and delivered that day."
+    }
+  ]
 }

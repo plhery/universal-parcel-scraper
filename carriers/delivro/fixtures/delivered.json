@@ -1,0 +1,121 @@
+{
+  "orderId": "DEL3556238",
+  "status": "4",
+  "pickupCity": "PICKUP TOWN",
+  "dropoffCity": "DROPOFF TOWN",
+  "dropoffFromTime": "2026-06-29T08:00:00-04:00",
+  "dropoffToTime": "2026-06-30T23:00:00-04:00",
+  "dropoffTimeZone": {
+    "systemTimeZoneId": "Eastern Standard Time",
+    "ianaTimeZoneId": "America/New_York",
+    "shortDisplayName": "EST",
+    "longDisplayName": "Eastern Standard Time",
+    "isDaylightSavingTime": false,
+    "offset": -300.0
+  },
+  "isOnHold": false,
+  "eta": null,
+  "statusDeliveredDate": "2026-06-30T17:44:19.839656-04:00",
+  "history": [
+    {
+      "timestamp": "2026-06-30T17:44:19.839656-04:00",
+      "timeZone": {
+        "systemTimeZoneId": "Eastern Standard Time",
+        "ianaTimeZoneId": "America/New_York",
+        "shortDisplayName": "EST",
+        "longDisplayName": "Eastern Standard Time",
+        "isDaylightSavingTime": false,
+        "offset": -300.0
+      },
+      "interruption": false,
+      "supportPhoneNumber": null,
+      "description": "Order delivered",
+      "additionalInfo": null,
+      "additionalCheckpointInfo": null,
+      "status": "4"
+    },
+    {
+      "timestamp": "2026-06-30T10:25:20.555612-04:00",
+      "timeZone": {
+        "systemTimeZoneId": "Eastern Standard Time",
+        "ianaTimeZoneId": "America/New_York",
+        "shortDisplayName": "EST",
+        "longDisplayName": "Eastern Standard Time",
+        "isDaylightSavingTime": false,
+        "offset": -300.0
+      },
+      "interruption": false,
+      "supportPhoneNumber": null,
+      "description": "Order released",
+      "additionalInfo": null,
+      "additionalCheckpointInfo": null,
+      "status": "2"
+    },
+    {
+      "timestamp": "2026-06-30T09:48:47.7063126-04:00",
+      "timeZone": {
+        "systemTimeZoneId": "Eastern Standard Time",
+        "ianaTimeZoneId": "America/New_York",
+        "shortDisplayName": "EST",
+        "longDisplayName": "Eastern Standard Time",
+        "isDaylightSavingTime": false,
+        "offset": -300.0
+      },
+      "interruption": true,
+      "supportPhoneNumber": "418-681-0759",
+      "description": "Order put on hold",
+      "additionalInfo": "Missing information ",
+      "additionalCheckpointInfo": null,
+      "status": "2"
+    },
+    {
+      "timestamp": "2026-06-29T14:49:00.7297861-04:00",
+      "timeZone": {
+        "systemTimeZoneId": "Eastern Standard Time",
+        "ianaTimeZoneId": "America/New_York",
+        "shortDisplayName": "EST",
+        "longDisplayName": "Eastern Standard Time",
+        "isDaylightSavingTime": false,
+        "offset": -300.0
+      },
+      "interruption": false,
+      "supportPhoneNumber": null,
+      "description": "Order picked up",
+      "additionalInfo": null,
+      "additionalCheckpointInfo": null,
+      "status": "2"
+    },
+    {
+      "timestamp": "2026-06-27T10:34:53.2401232-04:00",
+      "timeZone": {
+        "systemTimeZoneId": "Eastern Standard Time",
+        "ianaTimeZoneId": "America/New_York",
+        "shortDisplayName": "EST",
+        "longDisplayName": "Eastern Standard Time",
+        "isDaylightSavingTime": false,
+        "offset": -300.0
+      },
+      "interruption": false,
+      "supportPhoneNumber": null,
+      "description": "Order information received",
+      "additionalInfo": null,
+      "additionalCheckpointInfo": null,
+      "status": "0"
+    }
+  ],
+  "imageUrl": "https://dispatchstorageprod.blob.core.windows.net/branding/delivro/d93b753b45ca47a0a3909f3227db4e6e",
+  "mainColor": "#e8412c",
+  "languages": {
+    "primaryLanguage": "fr",
+    "secondaryLanguage": "en"
+  },
+  "stopsRemaining": null,
+  "canShowOrderMapTracking": false,
+  "canShowOrderMapTrackingPositions": false,
+  "displayPickupSignature": false,
+  "displayDeliverySignature": false,
+  "requirePickupZipCodeValidationToDisplaySignature": false,
+  "requireDeliveryZipCodeValidationToDisplaySignature": false,
+  "deliveryLocation": null,
+  "driverLocation": null
+}

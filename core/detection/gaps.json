@@ -1048,6 +1048,12 @@
     "reason": "Ten-digit Delivery numbers share their shape with other carriers' numeric numbers, so the shape cannot name Delivery."
   },
   {
+    "carrier": "delivro",
+    "pattern": "^DEL\\d{7}$",
+    "kind": "collision",
+    "reason": "Délivro's order ids, DEL and seven digits, fall inside Australia Post's ten-character consignment shape, and a prefix its Dispatch Science account chose is too little to name Délivro."
+  },
+  {
     "carrier": "dellin",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

@@ -18,19 +18,65 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "delivro",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "delivered_at",
+    "eta",
+    "eta_window"
+  ],
   "portal": {
     "url": "https://delivro.dsapp.io/customer/{trackingNumber}",
     "searchUrl": "https://delivro.dsapp.io/customer",
     "helpUrl": "https://delivro.ca/page/contact",
     "canaryUrl": "https://delivro.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "progress_rail",
+      "delivered_at",
+      "eta",
+      "eta_window",
+      "origin",
+      "destination",
+      "event_details",
+      "office_contact_details",
+      "coordinates",
+      "signature"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "progress_rail",
+      "delivered_at",
+      "eta",
+      "eta_window"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "event_details",
+      "office_contact_details",
+      "coordinates",
+      "signature"
+    ],
+    "unavailable": [
+      "location",
+      "weight",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "service_name",
+      "delivery_partner"
+    ]
   },
   "links": [
     {

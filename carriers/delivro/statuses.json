@@ -1,4 +1,118 @@
 {
   "carrier": "delivro",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Order information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The order is entered in Délivro's system, before a driver collects the parcel."
+    },
+    {
+      "wording": "Informations de la commande reçues",
+      "stage": "registered",
+      "language": "fr",
+      "confirmedBy": "live",
+      "note": "The French wording of the same checkpoint, which the tracker gives when asked in French."
+    },
+    {
+      "wording": "Order picked up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A driver collects the parcel at the pickup stop."
+    },
+    {
+      "wording": "Commande récupérée",
+      "stage": "accepted",
+      "language": "fr",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Order put on hold",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The tracker flags it as an interruption and asks the reader to call Délivro to resolve it; in the sample, for missing information. Its status code stays the order's, picked up."
+    },
+    {
+      "wording": "Commande mise en attente",
+      "stage": "exception",
+      "language": "fr",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Order released",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The hold is lifted and the parcel moves on."
+    },
+    {
+      "wording": "Commande débloquée",
+      "stage": "in_transit",
+      "language": "fr",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Order delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Commande livrée",
+      "stage": "delivered",
+      "language": "fr",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "0",
+      "wording": "Received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "An order status, the order's and its checkpoints', not a scan. The tracking page's script names it Received, the first step of its rail. The adapter reads it for the order only when no checkpoint has a stage."
+    },
+    {
+      "code": "1",
+      "wording": "Assigned",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "An order status: a driver is assigned to collect the parcel, which Délivro does not hold yet. The rail's second step."
+    },
+    {
+      "code": "2",
+      "wording": "Picked Up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "An order status: the rail's third step."
+    },
+    {
+      "code": "3",
+      "wording": "En Route",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "An order status the script names EnRoute. The rail counts it past the pickup and before the delivery without a step of its own, and nothing ties it to the delivery round."
+    },
+    {
+      "code": "4",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "An order status: the rail's last step."
+    },
+    {
+      "code": "91",
+      "wording": "Cancelled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "An order status the script names Cancelled; the rail shows no step for it."
+    }
+  ]
 }
