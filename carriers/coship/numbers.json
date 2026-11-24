@@ -1,5 +1,65 @@
 {
   "carrier": "coship",
-  "gap": "No public page shows a COSHIP number.",
-  "records": []
+  "records": [
+    {
+      "number": "6076184085349",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.youtube.com/watch?v=SC8L5HoY3sk",
+        "date": "2021-03-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["correos-chile", "yunda", "korea-post", "aras-kargo", "econt", "ozon-logistics", "paquetexpress"]
+      },
+      "note": "COSHIP's own tracking tutorial video types it into the tracking page, which shows its rows to Korea Post's delivery. The tracker now answers it with COSHIP's own rows, from its Vancouver warehouse to Incheon airport."
+    },
+    {
+      "number": "6076184073827",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.youtube.com/watch?v=SC8L5HoY3sk",
+        "date": "2021-03-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["correos-chile", "yunda", "korea-post", "aras-kargo", "econt", "ozon-logistics", "paquetexpress"]
+      },
+      "note": "The same video shows it, grouped with hyphens, on a COSHIP waybill as where to find the tracking number. The tracker answers it with COSHIP's rows from Vancouver to Incheon."
+    },
+    {
+      "number": "6076184087637",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.youtube.com/watch?v=SC8L5HoY3sk",
+        "date": "2021-03-16",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["correos-chile", "yunda", "korea-post", "aras-kargo", "econt", "ozon-logistics", "paquetexpress"]
+      },
+      "note": "The same video shows it as the tracking number on a Korea Post parcel label COSHIP printed. The tracker now answers it with its blank record, as it does an unknown number."
+    }
+  ]
 }

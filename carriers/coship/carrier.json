@@ -18,19 +18,56 @@
   "timezone": "America/Vancouver",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "coship",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.coship.ca/tracking/?no={trackingNumber}",
     "searchUrl": "https://www.coship.ca/tracking/",
     "helpUrl": "https://www.coship.ca/contact/",
     "canaryUrl": "https://www.coship.ca/tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "progress_rail",
+      "route"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "provider_code"
+    ],
+    "discarded": [
+      "progress_rail",
+      "route",
+      "recipient_name",
+      "recipient_address",
+      "contents",
+      "piece_count",
+      "order_reference",
+      "remarks",
+      "signed_by",
+      "driver_name"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "service_name"
+    ]
   },
   "links": [
     {

@@ -1147,6 +1147,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'boxc', number: 'BOXC00000000999',
     route: /^https:\/\/boxc\.com\/track\/BOXC00000000999$/,
     marker: /When will my tracking information appear\?/ },
+  // COSHIP's tracking page puts the number in its field and looks it up on load.
+  { carrier: 'coship', number: '0000000000000',
+    route: /^https:\/\/www\.coship\.ca\/tracking\/\?no=0000000000000$/,
+    marker: /No tracking information yet/ },
   // The page fills its field in and looks the number up on load.
   { carrier: 'orlen-paczka', number: '2109999000003',
     route: /^https:\/\/www\.orlenpaczka\.pl\/sledz-paczke\/\?numer=/,

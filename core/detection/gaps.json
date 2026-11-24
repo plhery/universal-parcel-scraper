@@ -869,6 +869,12 @@
     "reason": "ComOne Express waybills are nine bare digits with no known check, a length TNT and other carriers share, and ComOne publishes no number layout, so nothing in the number points to it."
   },
   {
+    "carrier": "coship",
+    "pattern": "^6\\d{12}$",
+    "kind": "by_design",
+    "reason": "COSHIP's parcels to Korea are numbered in Korea Post's thirteen-digit domestic range, on a Korea Post label, so nothing in the number points to COSHIP rather than Korea Post."
+  },
+  {
     "carrier": "conexiones-empresariales",
     "kind": "open",
     "reason": "The court-published guides are short numeric references. The sample does not establish a unique detection rule."

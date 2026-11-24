@@ -1,4 +1,24 @@
 {
   "carrier": "coship",
-  "entries": []
+  "entries": [
+    {"code": "00", "wording": "입고 완료", "stage": "accepted", "language": "ko", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Received at COSHIP's Vancouver warehouse. The page translates it as Received at warehouse."},
+    {"code": "01", "wording": "출고", "stage": "in_transit", "language": "ko", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Left for the flight, at VANCOUVER AIRPORT."},
+    {"code": "02", "wording": "도착", "stage": "in_transit", "language": "ko", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Arrived, at INCHEON AIRPORT on COSHIP's own row. Korea Post's rows use the same word when a mail centre or post office receives the parcel."},
+    {"wording": "Wait for loading", "stage": "accepted", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "COSHIP's first row in VANCOUVER, awaiting the flight, in place of 입고 완료 on newer parcels."},
+    {"wording": "Departure", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Left on the flight, at VANCOUVER AIRPORT."},
+    {"wording": "입항보고 제출", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the flight's arrival report filed."},
+    {"wording": "입항보고 수리", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the arrival report accepted."},
+    {"wording": "입항적재화물목록 제출", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the inbound cargo manifest filed."},
+    {"wording": "입항적재화물목록 심사완료", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the inbound cargo manifest reviewed."},
+    {"wording": "입항적재화물목록 운항정보 정정", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the manifest's flight details corrected."},
+    {"wording": "하기신고 수리", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the unloading declaration accepted."},
+    {"wording": "통관목록접수", "stage": "customs", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the parcel's customs list filed for clearance."},
+    {"wording": "반입신고", "stage": "customs", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: brought into the bonded area for clearance."},
+    {"wording": "통관목록심사완료", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: the customs list reviewed and the parcel cleared."},
+    {"wording": "반출신고", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korean customs: released from the bonded area to Korea Post."},
+    {"wording": "접수", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korea Post's receipt at its international mail logistics centre after clearance, not the parcel's first acceptance."},
+    {"wording": "발송", "stage": "in_transit", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Sent on by a Korea Post mail centre or post office."},
+    {"wording": "배달준비", "stage": "out_for_delivery", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Korea Post's delivering post office prepares the round. The row names the postman after it, which is never read."},
+    {"wording": "배달완료", "stage": "delivered", "language": "ko", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "Delivered by Korea Post. The row adds (배달) and who took the parcel, which are never read."}
+  ]
 }

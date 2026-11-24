@@ -1,0 +1,45 @@
+{
+  "resultJson": {
+    "mArray": [
+      {
+        "buyernm": "",
+        "custordno": "6076184085349",
+        "hawbno": "6076184085349",
+        "itemcnt": 78,
+        "itemnm": "SYNTHETIC CONTENTS",
+        "rcptaddr": "SYNTHETIC ADDRESS",
+        "rcptnm": "",
+        "stepnm": "NG",
+        "details": [
+          {
+            "statusCd": "00",
+            "statusNm": "입고 완료",
+            "stepDt": "2021-02-01",
+            "ProcessStoreName": "",
+            "csInfo": "",
+            "locationNm": "VANCOUVER",
+            "memo": "-"
+          },
+          {
+            "statusCd": "01",
+            "statusNm": "출고",
+            "stepDt": "2021-02-03",
+            "ProcessStoreName": "",
+            "csInfo": "",
+            "locationNm": "VANCOUVER AIRPORT",
+            "memo": "-"
+          },
+          {
+            "statusCd": "02",
+            "statusNm": "도착",
+            "stepDt": "2021-02-04",
+            "ProcessStoreName": "",
+            "csInfo": "",
+            "locationNm": "INCHEON AIRPORT",
+            "memo": "-"
+          }
+        ]
+      }
+    ]
+  }
+}
