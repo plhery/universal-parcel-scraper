@@ -41,9 +41,9 @@ numbers `shouwu-1` offers.
   the sender. A last mile's "STATIONED SHIPMENT" and "STATIONED LOCATED" after its failed
   delivery, or their Spanish "Envío estacionado" and "Estacionado ubicado", its station keeping
   the parcel, say neither that it waits for collection nor that another round follows, so they
-  name no stage. The flight booked for the parcel ("Estimated time
-  of take-off", or Shouwu's own row naming the flight's day) is a forecast written before it flies,
-  a notice on the stage of the scan before it.
+  name no stage. The flight booked for the parcel ("Estimated time of take-off", "Scheduled
+  flights", or Shouwu's own row naming the flight's day) is a forecast written before it flies, a
+  notice on the stage of the scan before it.
 - A delivery after a row that sends the parcel back, as DHL's "Shipment sent directly from parcel
   center to business customer" after its "Shipment will be returned to origin", is the return
   delivered to the sender: returned, which refines Undelivered and Delivered alike.

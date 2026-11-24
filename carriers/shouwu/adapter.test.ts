@@ -12,7 +12,7 @@ import { createTracker } from '../../facade/index.js';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { adapter, SHOUWU_API, SHOUWU_PAGE, ShouwuTracker } from './adapter.js';
 import { normalizeShouwuNumber, parseShouwu } from './parser.js';
-import { shouwuStage, shouwuStatusLabel, shouwuStatusStage, statusMap } from './status.js';
+import { isShouwuFlightBooked, shouwuStage, shouwuStatusLabel, shouwuStatusStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const DELIVERED = 'SWECN990000000001YQ';
@@ -604,6 +604,18 @@ describe('Shouwu International status vocabulary', () => {
     expect(shouwuStage('Arrive at the delivery location Picked up by Shipping Partner')).toEqual({ stage: 'accepted', source: 'carrier_map' });
     expect(shouwuStage('Cargo leaving the operation center')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(shouwuStage('Flight departed, package in transit')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+  });
+
+  it('reads the order data and the booked delivery as registered, and the postal line through the offices of exchange as transit', () => {
+    expect(shouwuStage('运单电子信息已收到')).toEqual({ stage: 'registered', source: 'carrier_map' });
+    expect(shouwuStage('The booking of the delivery is completed.')).toEqual({ stage: 'registered', source: 'carrier_map' });
+    for (const wording of ['Arriving at the airport', 'Office of exchange pre-alert/posting', 'The flight has taken off', 'The flight arrives',
+      'Customs clearance is completed', 'Received at office of exchange', 'Departed from office of exchange']) {
+      expect(shouwuStage(wording), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    }
+    // The flight booked is a forecast, which keeps the stage of the scan before it.
+    expect(shouwuStage('Scheduled flights')).toBeNull();
+    expect(isShouwuFlightBooked('Scheduled flights')).toBe(true);
   });
 
   it("reads the last mile's first facility after the destination's customs as transit", () => {

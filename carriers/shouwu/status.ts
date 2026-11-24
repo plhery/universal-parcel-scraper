@@ -22,11 +22,11 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => !
   .map((entry) => [normalizeStatusWording(entry.wording!), entry.stage as Stage]));
 
 /**
- * The flight booked for the parcel, before it flies: "Estimated time of take-off", or Shouwu's own
- * "预计23号的航班", and "二程预计27号的航班" for the second leg, naming the flight's day. A forecast,
- * not a movement, so it keeps the stage of the scan before it.
+ * The flight booked for the parcel, before it flies: "Estimated time of take-off", "Scheduled flights", or
+ * Shouwu's own "预计23号的航班", and "二程预计27号的航班" for the second leg, naming the flight's day. A
+ * forecast, not a movement, so it keeps the stage of the scan before it.
  */
-const FLIGHT_BOOKED = /^estimated time of take-off$|^(?:二程)?预计\d{1,2}号的航班$/;
+const FLIGHT_BOOKED = /^estimated time of take-off$|^scheduled flights$|^(?:二程)?预计\d{1,2}号的航班$/;
 
 /** Whether a scan is the flight booked for the parcel, a notice on the stage of the scan before it. */
 export const isShouwuFlightBooked = (wording: string): boolean => FLIGHT_BOOKED.test(normalizeStatusWording(wording));
