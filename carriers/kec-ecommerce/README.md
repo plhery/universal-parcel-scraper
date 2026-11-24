@@ -11,7 +11,9 @@ gives every visitor. The adapter uses that same request without an account or br
 failure can retry once within the lookup budget; HTTP errors and invalid replies do not retry.
 
 The returned whole number must match the request. Each scan keeps `event_date` with its stated
-`timezone` offset; `timezone_date` is the UTC copy, checked when present. Stages use the observed
+`timezone` offset; `timezone_date` is the UTC copy, checked when present. Some shipments state no
+zone, an empty `timezone` with `timezone_date` repeating `event_date`; their scans keep that wall
+clock as local time rather than an invented offset, to be dated by their place. Stages use the observed
 code and wording together because delivery-attempt categories can contain depot sorting.
 
 ## Limitations

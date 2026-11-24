@@ -78,6 +78,29 @@ describe('KEC eCommerce guest history parser', () => {
     expect(() => parseKec(p, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('keeps the wall clocks of scans without a stated zone local rather than inventing an offset', () => {
+    const p = fixture();
+    for (const row of p.data[0].status) Object.assign(row, { timezone: '', timezone_date: row.event_date });
+    const result = parseKec(p, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null, last_update_local: '2026-04-21T09:13:16' });
+    expect(result.events!.map(event => event.local_time)).toEqual(p.data[0].status.map((row: { event_date: string }) => row.event_date.replace(' ', 'T')));
+    expect(result.events!.some(event => 'time' in event)).toBe(false);
+  });
+
+  it('keeps the feed order across stated instants and wall clocks', () => {
+    const p = fixture(), rows = p.data[0].status;
+    for (const row of rows.slice(0, 4)) Object.assign(row, { timezone: '', timezone_date: row.event_date });
+    const result = parseKec(p, NUMBER);
+    expect(result.events!.map(event => event.provider_code)).toEqual(rows.map((row: { status_code: string }) => row.status_code));
+    expect(result.events![3]).toMatchObject({ local_time: '2026-04-20T09:58:00' });
+    expect(result.events![4]).toMatchObject({ time: '2026-04-19T07:15:00+08:00' });
+  });
+
+  it('rejects a UTC copy that departs from a wall clock without a stated zone', () => {
+    const p = fixture(); Object.assign(p.data[0].status[0], { timezone: '', timezone_date: '2026-04-21 01:13:16' });
+    expect(() => parseKec(p, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it('allows a missing optional UTC copy while retaining the stated offset', () => {
     const p = fixture(); delete p.data[0].status[4].timezone_date;
     expect(parseKec(p, NUMBER).events![4]!.time).toBe('2026-04-19T07:15:00+08:00');

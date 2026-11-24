@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { orderComparableScans } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
@@ -30,12 +31,14 @@ function text(value: unknown, maximum: number, required = false): string {
   return answer;
 }
 
-function scanOf(value: unknown): { event: CarrierEvent; timestamp: number } {
+function scanOf(value: unknown): CarrierEvent {
   if (!isRecord(value)) throw new SchemaError(PROVIDER, 'KEC eCommerce returned an invalid scan');
   const wall = typeof value.event_date === 'string' ? value.event_date : '';
+  // Some shipments state no zone: an empty timezone, with timezone_date repeating event_date.
+  const unstated = value.timezone == null || value.timezone === '';
   const offset = typeof value.timezone === 'string' ? OFFSET.exec(value.timezone)?.[1] : undefined;
-  if (!WALL_CLOCK.test(wall) || !offset) throw new SchemaError(PROVIDER, 'KEC eCommerce returned an invalid stated scan clock');
-  const time = `${wall.replace(' ', 'T')}${offset}`;
+  if (!WALL_CLOCK.test(wall) || !offset && !unstated) throw new SchemaError(PROVIDER, 'KEC eCommerce returned an invalid stated scan clock');
+  const local = wall.replace(' ', 'T'), time = `${local}${offset ?? 'Z'}`;
   const at = explicitOffsetTime(time);
   if (!at) throw new SchemaError(PROVIDER, 'KEC eCommerce returned an invalid scan calendar');
   // event_date is the wall clock in timezone; timezone_date is its UTC twin.
@@ -49,11 +52,12 @@ function scanOf(value: unknown): { event: CarrierEvent; timestamp: number } {
   if (!/^[a-z][a-z0-9_]{0,79}$/.test(code)) throw new SchemaError(PROVIDER, 'KEC eCommerce returned an invalid scan code');
   const description = text(value.track_message, 500, true), location = text(value.location, 160);
   const staged = kecStage(code, description);
-  return { timestamp: at.timestamp, event: { time, description, provider_code: code,
-    ...(location ? { location } : {}), ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) } };
+  // Without a stated zone the wall clock stays local, for the consumer to date by its place.
+  return { ...(offset ? { time } : { local_time: local }), description, provider_code: code,
+    ...(location ? { location } : {}), ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) };
 }
 
-/** The official guest feed: a whole matching shipment and scans with stated offsets. */
+/** The official guest feed: a whole matching shipment and scans with stated offsets or, without one, wall clocks. */
 export function parseKec(payload: unknown, raw: string): CarrierResult {
   const number = normalizeKecNumber(raw);
   if (!isRecord(payload) || (typeof payload.responsecode !== 'string' && typeof payload.responsecode !== 'number')) {
@@ -70,12 +74,12 @@ export function parseKec(payload: unknown, raw: string): CarrierResult {
   if (shipment.tracking_number.trim().toUpperCase() !== number) throw new IndeterminateError(PROVIDER, 'KEC eCommerce answered for another number');
   if (!Array.isArray(shipment.status) || shipment.status.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'KEC eCommerce returned an invalid history');
   if (!shipment.status.length) throw new NoHistoryError(PROVIDER);
-  const scans = shipment.status.map(scanOf).map((scan, index) => ({ ...scan, index }));
-  scans.sort((a, b) => b.timestamp - a.timestamp || a.index - b.index);
-  const events = scans.map(scan => scan.event), newest = events[0]!, current = newest;
+  // The feed lists its newest scan first; stated instants and wall clocks sort only among their own kind.
+  const events = orderComparableScans(shipment.status.map(scanOf), event => event.time ? 'instant' : 'wall'), newest = events[0]!, current = newest;
   const stage = current.stage as Stage | undefined;
   return { status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: current.stage_source! } : {}),
-    last_status_text: newest.description!, last_update: newest.time!, expected_delivery: null,
+    last_status_text: newest.description!, last_update: newest.time ?? null,
+    ...(newest.local_time ? { last_update_local: newest.local_time } : {}), expected_delivery: null,
     events: events.slice(0, MAX_EVENTS), ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}) };
 }
