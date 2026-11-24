@@ -168,6 +168,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ["Arrived at Pickup Facility", { status: 'in_transit', stage: 'in_transit' }],
   // CTT Express's transit branch, relayed for a parcel it delivers.
   ['Delegación de tránsito', { status: 'in_transit', stage: 'in_transit' }],
+  // CityMail's arrival at its terminal, relayed for a parcel it delivers in Sweden.
+  ['Paket har ankommit till vår terminal', { status: 'in_transit', stage: 'in_transit' }],
   // China Post's scans in Chinese after YunExpress hands a parcel to it: its receipt is that
   // hand-over, and a presentation to export or import customs holds the parcel there until its release,
   // which puts it back in transit.
