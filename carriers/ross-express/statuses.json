@@ -1,4 +1,8 @@
 {
   "carrier": "ross-express",
-  "entries": []
+  "entries": [
+    {"wording": "Loaded On Trailer", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Seen at the delivering terminal with the same clock as the round that followed: the freight is put on the trailer that takes it out."},
+    {"wording": "Out For Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A history row, and the shipment's lifecycle above the rows, whose code is then 80."}
+  ]
 }

@@ -18,19 +18,55 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ross-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "weight"
+  ],
   "portal": {
     "url": "https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
-    "searchUrl": "https://www.rossexpress.com/",
+    "searchUrl": "https://rossexpress.com/quick_trace.php",
     "helpUrl": "https://www.rossexpress.com/contact/",
     "canaryUrl": "https://www.rossexpress.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "delivered_at",
+      "weight",
+      "parcel_count",
+      "customer_reference",
+      "origin",
+      "destination",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "weight"
+    ],
+    "discarded": [
+      "delivered_at",
+      "parcel_count",
+      "customer_reference",
+      "origin",
+      "destination",
+      "signatory"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "provider_code"
+    ]
   },
   "links": [
     {

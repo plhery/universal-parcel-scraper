@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO8859-1" standalone="yes"?>
+<protrace>
+  <pronumb>6378333</pronumb>
+  <trn>00</trn>
+  <billno>SHIPPER BILL</billno>
+  <pono>SHIPPER PO</pono>
+  <shipdate>11/19/2021</shipdate>
+  <shipdateiso>2021-11-19</shipdateiso>
+  <origcity>Etobicoke</origcity>
+  <origstate>ON</origstate>
+  <origzip>M9C</origzip>
+  <origterm>SUT</origterm>
+  <destcity>Willimantic</destcity>
+  <deststate>CT</deststate>
+  <destzip>06226</destzip>
+  <destterm>SUT</destterm>
+  <pallets>1</pallets>
+  <palletpositions>1</palletpositions>
+  <pieces>1</pieces>
+  <weight>60</weight>
+  <prodelivered>Yes</prodelivered>
+  <deldate>11/24/2021</deldate>
+  <deldateiso>2021-11-24</deldateiso>
+  <deltime>12:59</deltime>
+  <delstatus>OK</delstatus>
+  <receivedby>SIGNER NAME</receivedby>
+  <status>OK - DELIVERED COMPL 11/24/21 12:59 Signed: SIGNER NAME</status>
+  <lifecycle>Delivered</lifecycle>
+  <lifecyclestatuscode>80</lifecyclestatuscode>
+  <temperaturecode></temperaturecode>
+  <temperaturedesc></temperaturedesc>
+  <shiphists>
+    <shiphist>
+      <histcode>Delivered</histcode>
+      <histdate>2021-11-24</histdate>
+      <histtime>12:59</histtime>
+      <histremarks>Willimantic, CT</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Out For Delivery</histcode>
+      <histdate>2021-11-24</histdate>
+      <histtime>08:27</histtime>
+      <histremarks>Ross Auburn, MA</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Loaded On Trailer</histcode>
+      <histdate>2021-11-24</histdate>
+      <histtime>08:27</histtime>
+      <histremarks>Ross Auburn, MA</histremarks>
+    </shiphist>
+  </shiphists>
+</protrace>

@@ -1,5 +1,27 @@
 {
   "carrier": "ross-express",
-  "gap": "Ross Express PRO numbers are seven digits, a length many carriers share, and no public page shows one.",
-  "records": []
+  "records": [
+    {
+      "number": "6378333",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1=6378333&seskey=&nav=top&language=ENGLISH",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "A search engine indexed Ross Express's own shipment details page for it. Ross's trace shows freight from Ontario delivered in Willimantic, Connecticut, with its history."
+    }
+  ]
 }

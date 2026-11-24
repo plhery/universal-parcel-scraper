@@ -3786,6 +3786,12 @@
     "reason": "The native tracker confirms a public twelve-digit receipt with its leading zero. Explicit selection is available while numeric overlaps remain open."
   },
   {
+    "carrier": "ross-express",
+    "pattern": "^\\d{6,7}$",
+    "kind": "by_design",
+    "reason": "Ross Express PROs are six or seven bare digits with no known check, a shape many carriers share, so nothing in the number points to Ross Express."
+  },
+  {
     "carrier": "royal-express-mm",
     "pattern": "^[A-Z]{3}\\d{11}[A-Z]{3}$",
     "kind": "by_design",
