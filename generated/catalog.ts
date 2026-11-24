@@ -35037,7 +35037,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Madrid",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "instapack",
+      "localClocks": true
     },
     "canaryUrl": "https://www.instapack.es/",
     "trackingSearchUrl": "https://back.instapack.es/client-dashboard/seguimiento-de-envios/",

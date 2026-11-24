@@ -508,6 +508,7 @@ import { adapter as indigoCargo } from '../carriers/indigo-cargo/adapter.js';
 import { adapter as inposdom } from '../carriers/inposdom/adapter.js';
 import { adapter as inpost } from '../carriers/inpost/adapter.js';
 import { adapter as instabox } from '../carriers/instabox/adapter.js';
+import { adapter as instapack } from '../carriers/instapack/adapter.js';
 import { adapter as integralPack } from '../carriers/integral-pack/adapter.js';
 import { adapter as intelValley } from '../carriers/intel-valley/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
@@ -1651,6 +1652,7 @@ export const REGISTRY: RegistryDefinition = {
     "inposdom": inposdom,
     "inpost": inpost,
     "instabox": instabox,
+    "instapack": instapack,
     "integral-pack": integralPack,
     "intel-valley": intelValley,
     "intelcom": intelcom,
@@ -3186,7 +3188,7 @@ export const REGISTRY: RegistryDefinition = {
     "inposdom": "inposdom",
     "inpost": "inpost",
     "instabox": "instabox",
-    "instapack": "universal",
+    "instapack": "instapack",
     "integraa": "universal",
     "integral-pack": "integral-pack",
     "intel-valley": "intel-valley",

@@ -11945,6 +11945,20 @@
     ]
   },
   {
+    "input": "090420181030503",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "brt",
+      "yunda",
+      "ozon-logistics"
+    ],
+    "asked": [
+      "brt"
+    ]
+  },
+  {
     "input": "09187717",
     "carrier": "unknown",
     "confidence": "low",
@@ -89477,6 +89491,12 @@
     "asked": [
       "aliexpress"
     ]
+  },
+  {
+    "input": "CNES00102358787",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "CNES00602228835",
