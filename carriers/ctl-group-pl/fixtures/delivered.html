@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Firma transportowa, usługi transportowe | ctlgroup.pl</title>
+    <link rel="canonical" href="https://www.ctlgroup.pl/tracking/20130401" />
+</head>
+<body>
+<div class="container12" id="main-content">
+<h1>Śledzenie przesyłek</h1>
+<div class="column6">
+    <p>Sprawdź status swojej przesyłki podając numer listu przewozowego</p>
+    <br />
+    <form method="post" accept-charset="utf-8" class="formularz" action="/orders/tracking"><div style="display:none;"><input type="hidden" name="_csrfToken" autocomplete="off" value="TOKEN"></div>			<div class="input text"><input type="text" name="tracking_number" placeholder="wpisz numer listu przewozowego" id="tracking-number" aria-label="wpisz numer listu przewozowego" value="20130401"></div>	<div class="submit"><input type="submit" class="btn-black" value="sprawdź"></div>	</form>	
+		        <br /><br />
+        <table class="dane">
+            <tr>
+                <th>Data</th>
+                <th>Miejsce</th>
+                <th>Status</th>
+            <tr>
+                            <tr>
+                    <td>2020-11-16 17:54:53</td>
+                    <td></td>
+                    <td>
+                        <strong>wprowadzona do systemu</strong>                    </td>
+                </tr>
+                            <tr>
+                    <td>2020-11-17 09:30:17</td>
+                    <td></td>
+                    <td>
+                        <strong>oczekuje na odbiór</strong>                    </td>
+                </tr>
+                            <tr>
+                    <td>2020-11-17 18:54:09</td>
+                    <td>Kożuchów</td>
+                    <td>
+                        <strong>odebrana od nadawcy</strong>                    </td>
+                </tr>
+                            <tr>
+                    <td>2020-11-17 19:00:04</td>
+                    <td></td>
+                    <td>
+                        <strong>w doręczeniu</strong>                    </td>
+                </tr>
+                            <tr>
+                    <td>2020-11-18 14:57:49</td>
+                    <td>Baza 2 -  Poznań</td>
+                    <td>
+                        <strong>w drodze</strong>                    </td>
+                </tr>
+                            <tr>
+                    <td>2020-11-19 01:52:27</td>
+                    <td>Baza 2 -  Poznań</td>
+                    <td>
+                        <strong>w drodze</strong>                    </td>
+                </tr>
+                            <tr>
+                    <td>2020-11-19 01:54:11</td>
+                    <td>Kępno</td>
+                    <td>
+                        <strong>doręczona</strong>                    </td>
+                </tr>
+                    </table>
+					<br />
+		        <br>
+                
+        <form method="post" accept-charset="utf-8" class="formularz hidden" id="phones-numbers-form" action="#"><div style="display:none;"><input type="hidden" name="_csrfToken" autocomplete="off" value="TOKEN"></div>        <br>
+        <p>W celu uzyskania numerów telefonów do kierowców proszę uzupełnić jedno z poniższych pól:</p>
+        <br>
+        <div class="message hidden"></div>
+        
+        <input type="hidden" name="tracking_number" id="tracking-number" value="20130401">        <div class="input text"><label for="postcode">Kod pocztowy nadawcy lub odbiorcy</label><input type="text" name="postcode" id="postcode"></div>        <div class="input tel"><label for="phone">lub telefon odbiorcy</label><input type="tel" name="phone" id="phone"></div>        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-field">        <div class="submit"><input type="submit" class="btn-black" value="dalej"></div>        </form>        
+        <div id="drivers-phones" class="hidden"></div>
+        
+		</div>
+</div>
+</body>
+</html>

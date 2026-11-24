@@ -1,0 +1,54 @@
+{
+  "carrier": "ctl-group-pl",
+  "records": [
+    {
+      "number": "20130717",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.ctlgroup.pl/wyswietl/tracking-jak-uzyskac-telefon-do-kierowcy",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The waybill in the screenshot of the tracker with the driver's details on CTL Group's guide to reaching the driver. The tracker answers it with a shipment collected at Orońsko and delivered."
+    },
+    {
+      "number": "20130401",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.ctlgroup.pl/wyswietl/tracking-jak-uzyskac-telefon-do-kierowcy",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "The waybill in the screenshot of the tracker's button for the driver's phone on CTL Group's guide to reaching the driver. The tracker answers it with a shipment collected at Kożuchów and delivered at Kępno."
+    }
+  ]
+}

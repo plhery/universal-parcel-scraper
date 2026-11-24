@@ -2554,6 +2554,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'skif-cargo', number: '000000009',
     route: /^https:\/\/www\.skif-cargo\.ru\/tracking\/$/,
     marker: /Отслеживание груза/, forwarding: 'none' },
+  // The server looks up the waybill in the address and keeps it in the search box over an unknown one's notice.
+  { carrier: 'ctl-group-pl', number: '00000000',
+    route: /^https:\/\/www\.ctlgroup\.pl\/tracking\/00000000$/,
+    marker: /Brak zamówienia z podanym numerem listu przewozowego|Sprawdź status swojej przesyłki/ },
   // The page fills its field in from the address; the lookup waits for a captcha.
   { carrier: 'flippost', number: '00-0000009',
     route: /^https:\/\/flippost\.com\/instruments\/online\/\?number=00-0000009$/,

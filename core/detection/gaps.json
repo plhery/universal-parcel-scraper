@@ -6672,5 +6672,11 @@
     "carrier": "aquantuo",
     "kind": "open",
     "reason": "One public tracking id, sixteen digits, a shape many carriers' numbers share, and the page also takes item ids of an unpublished shape. Select Aquantuo explicitly."
+  },
+  {
+    "carrier": "ctl-group-pl",
+    "pattern": "^\\d{8}$",
+    "kind": "by_design",
+    "reason": "CTL Group's waybill numbers are plain digits, eight on its help pages, a shape many carriers print, and nothing in the number points to CTL Group. Select CTL Group explicitly or paste its tracking page link."
   }
 ]

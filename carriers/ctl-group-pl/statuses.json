@@ -1,0 +1,15 @@
+{
+  "carrier": "ctl-group-pl",
+  "entries": [
+    {"wording": "wprowadzona do systemu", "stage": "registered", "language": "pl", "confirmedBy": "live", "note": "The sender entered the shipment and printed its label."},
+    {"wording": "oczekuje na odbiór", "stage": "registered", "language": "pl", "confirmedBy": "live", "note": "The shipment waits for a driver to collect it from the sender."},
+    {"wording": "odebrana od nadawcy", "stage": "accepted", "language": "pl", "confirmedBy": "live", "note": "The driver scanned the shipment at the sender's address."},
+    {"wording": "w drodze", "stage": "in_transit", "language": "pl", "confirmedBy": "live", "note": "The shipment is on its way between the depot and its destination."},
+    {"wording": "przyjęta do hub", "stage": "in_transit", "language": "pl", "confirmedBy": "portal", "note": "The tracker's legend names the shipment's arrival at a depot."},
+    {"wording": "wydana z hub", "stage": "in_transit", "language": "pl", "confirmedBy": "portal", "note": "The tracker's legend names the shipment leaving a depot."},
+    {"wording": "w doręczeniu", "stage": "out_for_delivery", "language": "pl", "confirmedBy": "live", "note": "A driver has the shipment for delivery; the recipient gets the driver's phone number."},
+    {"wording": "doręczona", "stage": "delivered", "language": "pl", "confirmedBy": "live", "note": "The shipment was delivered."},
+    {"wording": "odmowa przyjęcia przesyłki", "stage": "failed_attempt", "language": "pl", "confirmedBy": "portal", "note": "The tracker's legend names the recipient refusing the shipment."},
+    {"wording": "zwrot", "stage": "returned", "language": "pl", "confirmedBy": "portal", "note": "The tracker's legend names the shipment's return."}
+  ]
+}
