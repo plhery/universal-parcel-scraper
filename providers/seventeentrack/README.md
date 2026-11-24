@@ -90,6 +90,9 @@ carrier.
 - Stages come from the exact `sub_status` map in [status.ts](status.ts) first. It works
   when `stage` is null or the description is Chinese, and a stage it gives is credited to
   the map (`carrier_map`). Then come the declared stage and the shared wording rules. `Exception_Returning` is not a completed return.
+  `InTransit_LocalPickedUp`, which no specification lists, files the destination's last mile receiving the parcel
+  after the hand-over, such as BFE's receipt in Argentina; like `InTransit_Other`, it gives transit only to wording
+  that no rule reads.
   Once a scan has told the return, a later scan filed under it that its wording reads in transit, such as DHL's
   arrival at a parcel centre on the way back, is a leg in transit.
   `InfoReceived` yields to scans 17TRACK files under it: Correios Brazil's posting ("Objeto

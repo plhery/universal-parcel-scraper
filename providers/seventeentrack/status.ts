@@ -1,10 +1,12 @@
 import type { Stage } from '../../generated/catalog.js';
 
 // Official v2 status vocabulary, plus TransportArrived/Departed observed in
-// public China Post histories. Expired describes tracking age, not a scan.
+// public China Post histories, and LocalPickedUp, the destination's last mile
+// receiving the parcel after the carrier handed it over (BFE's "El paquete ha
+// sido recibido." in Argentina). Expired describes tracking age, not a scan.
 export const SUB_STAGES: Record<string, Stage> = {
   InfoReceived: 'registered',
-  InTransit_PickedUp: 'accepted', InTransit_Other: 'in_transit',
+  InTransit_PickedUp: 'accepted', InTransit_Other: 'in_transit', InTransit_LocalPickedUp: 'in_transit',
   InTransit_Departure: 'in_transit', InTransit_Arrival: 'in_transit',
   InTransit_TransportArrived: 'in_transit', InTransit_TransportDeparted: 'in_transit',
   InTransit_CustomsProcessing: 'customs', InTransit_CustomsReleased: 'in_transit',
@@ -43,6 +45,9 @@ export function returnLeg(code: string, worded: Stage | undefined): boolean {
   return code === 'Exception_Returning' && worded === 'in_transit';
 }
 
+/** Transit codes that yield to any reading of the wording: the generic one, and the last mile's receipt, which no specification describes. */
+const GENERIC_TRANSIT = new Set(['InTransit_Other', 'InTransit_LocalPickedUp']);
+
 /**
  * The stage a scan's `sub_status` gives it over the stage its wording got
  * (`pending` when no rule read it), or undefined when the code does not
@@ -56,7 +61,7 @@ export function returnLeg(code: string, worded: Stage | undefined): boolean {
  */
 export function subStatusStage(code: string, worded: Stage, description = ''): Stage | undefined {
   const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;
-  if (!mapped || (code === 'InTransit_Other' && worded !== 'pending')) return undefined;
+  if (!mapped || (GENERIC_TRANSIT.has(code) && worded !== 'pending')) return undefined;
   if (code === 'InfoReceived' && [SCANNED, PARTNER_SCANNED].some((scan) => scan.test(description.trim()))) return undefined;
   if (mapped === 'out_for_delivery' && worded === 'delivered') return undefined;
   if (mapped === 'out_for_delivery' && (worded === 'customs' || (worded === 'in_transit' && CUSTOMS.test(description)))) return undefined;

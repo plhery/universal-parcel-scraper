@@ -94,6 +94,12 @@ describe('17TRACK result parsing', () => {
     expect(result.events?.[0]).toMatchObject({ description: notice, stage: 'pending', stage_source: 'none' });
     expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other')]), number).events?.[0]).toMatchObject({ stage: 'in_transit' });
   });
+  it("reads the last mile's receipt 17TRACK files as local pickup in transit, unless its wording says more", () => {
+    const received = parse17TrackResponse(postalHistory([postalScan('InTransit_LocalPickedUp', 'El paquete ha sido recibido.')]), number);
+    expect(received.events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map', provider_code: 'InTransit_LocalPickedUp' });
+    const round = parse17TrackResponse(postalHistory([postalScan('InTransit_LocalPickedUp', 'Out for delivery')]), number);
+    expect(round.events?.[0]).toMatchObject({ stage: 'out_for_delivery' });
+  });
   it("gives DPD Poland's notices to the recipient no stage, though 17TRACK files them under the round's code", () => {
     const result = parse17TrackResponse(postalHistory([postalScan('OutForDelivery_Other', 'Mail notification')]), number);
     expect(result.events?.[0]).toMatchObject({ description: 'Mail notification', stage: 'pending', stage_source: 'none' });
