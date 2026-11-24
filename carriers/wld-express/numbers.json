@@ -1,5 +1,24 @@
 {
   "carrier": "wld-express",
-  "gap": "No public page shows a WLD Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "WLDME6071800028",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260719041429id_/https://www.parcelpanel.com/couriers/wld-express/",
+        "date": "2026-07-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ParcelPanel's WLD Express page published it as the courier's sample number to try. WLD's track query answers it with a parcel to Hungary that Magyar Posta returned to its sender after a failed delivery."
+    }
+  ]
 }

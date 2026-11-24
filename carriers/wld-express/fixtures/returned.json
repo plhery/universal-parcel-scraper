@@ -1,0 +1,171 @@
+{
+  "code": 200,
+  "message": "OK",
+  "error": [],
+  "data": {
+    "status": {
+      "": {
+        "status": "",
+        "status_name": "全部",
+        "count": 1
+      },
+      "AF": {
+        "status": "AF",
+        "status_name": "already online",
+        "count": 0
+      },
+      "ND": {
+        "status": "ND",
+        "status_name": "in transit",
+        "count": 0
+      },
+      "CC": {
+        "status": "CC",
+        "status_name": "Delivered",
+        "count": 0
+      },
+      "CF": {
+        "status": "CF",
+        "status_name": "Failed to deliver",
+        "count": 0
+      },
+      "UE": {
+        "status": "UE",
+        "status_name": "Returned",
+        "count": 0
+      }
+    },
+    "detail": {
+      "": [
+        {
+          "ask": 1,
+          "code": "WLDME6071800028",
+          "message": "Success",
+          "data": {
+            "track_sign": {
+              "title": "in transit",
+              "icon": "icon-yunshuzhong"
+            },
+            "shipper_hawbcode": "WLDME6071800028",
+            "refer_hawbcode": "SN260718001796",
+            "server_hawbcode": "PBR33584524390017354012900",
+            "country_code": "HU",
+            "country_name": "HUNGARY",
+            "create_date": "2026-07-18 00:09:44",
+            "newest_track_date": "2026-08-07 18:05:26",
+            "newest_track_location": "budapesti 4. sz. operatív osztály|budapest",
+            "newest_track_content": "(return) returned to sender",
+            "track_detail_list": [
+              {
+                "track_date": "2026-08-07 18:05:26",
+                "track_location": "budapesti 4. sz. operatív osztály|budapest",
+                "track_content": "(return) returned to sender",
+                "track_code": "TT"
+              },
+              {
+                "track_date": "2026-08-07 18:04:26",
+                "track_location": "budapesti 4. sz. operatív osztály|budapest",
+                "track_content": "item handed over to delivery man",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-08-05 04:08:05",
+                "track_location": "csomaglogisztikai központ|budapest",
+                "track_content": "forwarding for delivery",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-08-04 17:33:35",
+                "track_location": "szekszárdi operatív osztály|szekszárd",
+                "track_content": "forwarding for delivery",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-08-04 16:48:40",
+                "track_location": "szekszárdi operatív osztály|szekszárd",
+                "track_content": "arrival for processing",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-08-04 13:15:00",
+                "track_location": "bonyhád 1 posta|bonyhád",
+                "track_content": "arrival for processing",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-08-04 07:49:00",
+                "track_location": "váralja postapartner|váralja",
+                "track_content": "forwarding for delivery",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-08-04 07:08:08",
+                "track_location": "váralja postapartner|váralja",
+                "track_content": "returned for repeated delivery",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-07-27 14:19:00",
+                "track_location": "váralja postapartner|váralja",
+                "track_content": "mail item available for collection at post office",
+                "track_code": "DD"
+              },
+              {
+                "track_date": "2026-07-27 14:16:34",
+                "track_location": "",
+                "track_content": "mail item available for collection at post office",
+                "track_code": "DD"
+              },
+              {
+                "track_date": "2026-07-27 13:59:39",
+                "track_location": "",
+                "track_content": "unsuccessful delivery",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-07-27 09:37:22",
+                "track_location": "kaposvári operatív osztály|kaposvár",
+                "track_content": "arrival for processing",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-07-27 08:40:20",
+                "track_location": "kaposvári operatív osztály|kaposvár",
+                "track_content": "item handed over to delivery man",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-07-25 01:21:02",
+                "track_location": "csomaglogisztikai központ|budapest",
+                "track_content": "acceptance completed",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-07-24 20:52:16",
+                "track_location": "csomaglogisztikai központ|budapest",
+                "track_content": "forwarding for delivery",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-07-18 00:09:49",
+                "track_location": "",
+                "track_content": "SHIPMENT INFORMATION SUBMITTED",
+                "track_code": "IR"
+              }
+            ],
+            "shipping_location": "Dongguan",
+            "shipping_country_code": "CN",
+            "shipping_country_code_name": "CHINA",
+            "child_track_info": []
+          }
+        }
+      ],
+      "AF": [],
+      "ND": [],
+      "CC": [],
+      "CF": [],
+      "UE": []
+    }
+  },
+  "cost": 0.05069994926452637
+}

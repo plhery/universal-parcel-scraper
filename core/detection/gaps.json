@@ -4844,6 +4844,12 @@
     "reason": "WINIT order numbers, WO and ten or eleven digits, share their shape with Colis Privé, Aramex and La Poste references; a WINIT rule needs those overlaps declared first. The package numbers that add a letter are detected."
   },
   {
+    "carrier": "wld-express",
+    "pattern": "^WLD[A-Z]{2}\\d{10}$",
+    "kind": "open",
+    "reason": "One ParcelPanel sample shows a WLD Express number as WLD, two letters and ten digits. No rule offers WLD Express for the shape yet."
+  },
+  {
     "carrier": "woori-taekbae",
     "pattern": "^50\\d{8}$",
     "kind": "collision",

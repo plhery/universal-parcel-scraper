@@ -1,4 +1,18 @@
 {
   "carrier": "wld-express",
-  "entries": []
+  "entries": [
+    {"code": "IR", "wording": "SHIPMENT INFORMATION SUBMITTED", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "WLD's first scan, when the order's data reaches its system."},
+    {"code": "ND", "wording": "forwarding for delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "ND carries the line's own scans in its words. The page names ND 运输途中 (in transit)."},
+    {"code": "ND", "wording": "acceptance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination post takes the parcel in at its parcel centre after the flight."},
+    {"code": "ND", "wording": "arrival for processing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "ND", "wording": "item handed over to delivery man", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "ND", "wording": "unsuccessful delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "ND", "wording": "returned for repeated delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Back at the delivery office after a failed attempt, to be delivered again: not a return to the sender."},
+    {"code": "DD", "wording": "mail item available for collection at post office", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "TT", "wording": "(return) returned to sender", "stage": "returned", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "AF", "wording": "已上网", "stage": "in_transit", "language": "zh", "confirmedBy": "bundle", "note": "The track query page's status name for AF: in the network."},
+    {"code": "CC", "wording": "已妥投", "stage": "delivered", "language": "zh", "confirmedBy": "bundle", "note": "The track query page's status name for CC."},
+    {"code": "CF", "wording": "妥投失败", "stage": "failed_attempt", "language": "zh", "confirmedBy": "bundle", "note": "The track query page's status name for CF."},
+    {"code": "UE", "wording": "已退件", "stage": "returned", "language": "zh", "confirmedBy": "bundle", "note": "The track query page's status name for UE."}
+  ]
 }
