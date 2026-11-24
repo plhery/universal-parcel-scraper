@@ -86,7 +86,8 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
   the first flight, with a flight after it, is the export clearance and reads in transit; without a
   later flight it stays customs, since a shipment by road may be cleared on import before any flight.
 - Not used: [SF International](https://www.sf-international.com/us/en/support/querySupport/waybill)
-  (Tencent verification) and the Mainland China portal (GeeTest plus phone verification).
+  (SF's own captcha, icons to select in order, before any tracking call) and the Mainland China
+  portal (GeeTest plus phone verification).
 - Not used: SF's Android apps. `com.sf.hmto` posts to
   `https://hmto.sf-express.com/cx-app-query/query/app/waybillNo/queryWaybillByBNo` with a signature
   computed in a packed native library, and asks for the last four digits of a phone number. Its
