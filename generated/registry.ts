@@ -84,6 +84,7 @@ import { adapter as australiaPost } from '../carriers/australia-post/adapter.js'
 import { adapter as austrianPost } from '../carriers/austrian-post/adapter.js';
 import { adapter as averitt } from '../carriers/averitt/adapter.js';
 import { adapter as aymakan } from '../carriers/aymakan/adapter.js';
+import { adapter as azerpost } from '../carriers/azerpost/adapter.js';
 import { adapter as azulCargo } from '../carriers/azul-cargo/adapter.js';
 import { adapter as bangladeshPost } from '../carriers/bangladesh-post/adapter.js';
 import { adapter as baridAlMaghrib } from '../carriers/barid-al-maghrib/adapter.js';
@@ -202,6 +203,7 @@ import { adapter as correosChile } from '../carriers/correos-chile/adapter.js';
 import { adapter as correosCostaRica } from '../carriers/correos-costa-rica/adapter.js';
 import { adapter as correosCuba } from '../carriers/correos-cuba/adapter.js';
 import { adapter as correosDeMexico } from '../carriers/correos-de-mexico/adapter.js';
+import { adapter as correosEcuador } from '../carriers/correos-ecuador/adapter.js';
 import { adapter as correosElSalvador } from '../carriers/correos-el-salvador/adapter.js';
 import { adapter as correosExpress } from '../carriers/correos-express/adapter.js';
 import { adapter as correosGuatemala } from '../carriers/correos-guatemala/adapter.js';
@@ -1208,6 +1210,7 @@ export const REGISTRY: RegistryDefinition = {
     "austrian-post": austrianPost,
     "averitt": averitt,
     "aymakan": aymakan,
+    "azerpost": azerpost,
     "azul-cargo": azulCargo,
     "bangladesh-post": bangladeshPost,
     "barid-al-maghrib": baridAlMaghrib,
@@ -1326,6 +1329,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-costa-rica": correosCostaRica,
     "correos-cuba": correosCuba,
     "correos-de-mexico": correosDeMexico,
+    "correos-ecuador": correosEcuador,
     "correos-el-salvador": correosElSalvador,
     "correos-express": correosExpress,
     "correos-guatemala": correosGuatemala,
@@ -2414,7 +2418,7 @@ export const REGISTRY: RegistryDefinition = {
     "avis-logistics": "universal",
     "aymakan": "aymakan",
     "azems": "universal",
-    "azerpost": "universal",
+    "azerpost": "azerpost",
     "azul-cargo": "azul-cargo",
     "baikal-service": "universal",
     "bangladesh-post": "bangladesh-post",
@@ -2628,7 +2632,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-costa-rica": "correos-costa-rica",
     "correos-cuba": "correos-cuba",
     "correos-de-mexico": "correos-de-mexico",
-    "correos-ecuador": "universal",
+    "correos-ecuador": "correos-ecuador",
     "correos-el-salvador": "correos-el-salvador",
     "correos-express": "correos-express",
     "correos-guatemala": "correos-guatemala",

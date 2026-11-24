@@ -11135,7 +11135,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Baku",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "azerpost",
+      "localClocks": true
     },
     "canaryUrl": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi",
     "trackingUrlTemplate": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi?package_id={trackingNumber}",
@@ -17965,9 +17966,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Guayaquil",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "correos-ecuador",
+      "localClocks": true
     },
-    "canaryUrl": "https://www.serviciopostal.gob.ec/",
+    "canaryUrl": "https://sipostal.serviciopostal.gob.ec/Navegacion/Tracking",
     "trackingSearchUrl": "https://sipostal.serviciopostal.gob.ec/Navegacion/Tracking",
     "helpUrl": "https://www.serviciopostal.gob.ec/contactos/",
     "linkRules": [],

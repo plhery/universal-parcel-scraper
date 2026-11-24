@@ -88486,6 +88486,14 @@
     ]
   },
   {
+    "input": "CH166241282US",
+    "carrier": "usps",
+    "confidence": "high",
+    "candidates": [
+      "usps"
+    ]
+  },
+  {
     "input": "CH166307960NL",
     "carrier": "spring-gds",
     "confidence": "high",
@@ -112651,6 +112659,17 @@
   },
   {
     "input": "RR010457475AZ",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "RR013659216AZ",
     "carrier": "intl-post",
     "confidence": "high",
     "candidates": [
