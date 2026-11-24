@@ -1,0 +1,19 @@
+{
+  "carrier": "shengao",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse's receipt, SHENGAO's first scan, in the English the platform's other tenants give it."},
+    {"wording": "Parcel received at Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's sorting centre, after the warehouse's receipt: the line taking the parcel on, not its acceptance."},
+    {"wording": "Parcel processed at Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's sorting centre, its city in the wording."},
+    {"wording": "Parcel departure in Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's sorting centre sending the parcel on."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "english": "Goods leave the operation center", "stage": "in_transit", "confirmedBy": "live", "note": "The warehouse's departure, minutes after the line's sorting centre sent the parcel on."},
+    {"wording": "Customs declaration completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "China's export declaration, before the flight: the parcel is not held."},
+    {"wording": "Parcel departure in Transit Facility, Parcel Departure", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line-haul agent sending the parcel to the airport, after the export declaration."},
+    {"wording": "Parcel is leaving Airport, Parcel Leaving Port", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaving the airport of origin."},
+    {"wording": "Parcel is leaving Transit Airport, Parcel Leaving Port", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The connecting flight leaving the transit airport."},
+    {"wording": "Parcel arrives at Airport, Parcel Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's arrival at the destination airport."},
+    {"wording": "Parcel arrives at Transit Airport, Parcel Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Written beside the destination airport's arrival, minutes after it: an arrival, not a hold."},
+    {"wording": "Custom clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination's import clearance done, the parcel goes on."},
+    {"wording": "Shipment Received in Depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The last-mile partner's depot in the destination country taking the parcel in, after the import clearance."},
+    {"wording": "Shipment Data Processed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The last-mile partner's record of the parcel's data, a second after its depot's receipt: the journey goes on."}
+  ]
+}
