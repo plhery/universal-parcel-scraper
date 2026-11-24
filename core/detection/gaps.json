@@ -863,6 +863,12 @@
     "reason": "Closer Logistics' twelve-digit numbers share their length with many carriers and carry no known check, so no rule claims them."
   },
   {
+    "carrier": "comone-express",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "ComOne Express waybills are nine bare digits with no known check, a length TNT and other carriers share, and ComOne publishes no number layout, so nothing in the number points to it."
+  },
+  {
     "carrier": "conexiones-empresariales",
     "kind": "open",
     "reason": "The court-published guides are short numeric references. The sample does not establish a unique detection rule."

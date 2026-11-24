@@ -1,4 +1,24 @@
 {
   "carrier": "comone-express",
-  "entries": []
+  "entries": [
+    {"code": "RD", "wording": "Ready The Shipment", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "货物准备好: the sender's goods are ready and ComOne does not have them yet. The page's first step is Package Ready to Ship."},
+    {"code": "SPU", "wording": "Shipment Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "收到货物: ComOne received the goods at its Shenzhen collection site."},
+    {"code": "STBT", "wording": "Send to BT Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "从坂田站点出发: the parcel left the Bantian site for the hub."},
+    {"code": "SP", "wording": "Shipment Packing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "货物装袋: bagged at the Shenzhen hub."},
+    {"code": "SOF", "wording": "Shipment Outbound Forecast", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "出境预报: the export notice, whose remark gives the sailing's planned dates."},
+    {"code": "ECST", "wording": "Export Clearance Start", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "An export clearance under way before departure is a routine step."},
+    {"code": "ECS", "wording": "Export Clearance Success", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "ATD", "wording": "Departure from Origin port (ATD)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "货船离港: the ship left Shenzhen."},
+    {"code": "SDELAY", "wording": "Shipment Delay", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "船期延误: the sailing is late; the parcel is not held."},
+    {"code": "ATA", "wording": "Arrival at Destination port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "到港清关中: the ship reached the destination port. Import clearance has its own scans."},
+    {"code": "ICST", "wording": "Import Clearance Start", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "进口清关开始: import clearance under way."},
+    {"code": "ICS", "wording": "Import Clearance Success", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "进口清关通过: cleared, so back in transit."},
+    {"code": "TTW", "wording": "Transferred to warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "转入仓库: moved to the destination warehouse."},
+    {"code": "DC", "wording": "Landing Scan", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "拆柜扫描: scanned as the container is unloaded at the destination warehouse."},
+    {"code": "WPD", "wording": "In warehouse sorting", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "PS", "wording": "Package shelved", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "包裹上架: shelved at the destination warehouse before a delivery round."},
+    {"code": "DLS", "wording": "Driver loading shipments", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "司机装载货物: loaded into the driver's van at the warehouse. ComOne gives it the warehouse's status code; Out For delivery follows with the page's Delivering step."},
+    {"code": "OFD", "wording": "Out For delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "SD", "wording": "Shipment Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"}
+  ]
 }

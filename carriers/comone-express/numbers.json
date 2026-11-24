@@ -1,5 +1,80 @@
 {
   "carrier": "comone-express",
-  "gap": "No public page shows a ComOne Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "881137924",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260416154134/https://www.parcelpanel.com/couriers/com1express/",
+        "date": "2026-04-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "ParcelPanel's ComOne Express page published it as the courier's sample number to try. ComOne's tracker answers it with a parcel picked up in Shenzhen, shipped by sea and delivered in Singapore."
+    },
+    {
+      "number": "881053412",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260121013535/https://www.parcelpanel.com/couriers/com1express/",
+        "date": "2026-01-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "An earlier capture of ParcelPanel's ComOne Express page published it as the sample number. ComOne's tracker answers it with a parcel from Shenzhen whose sailing was delayed, delivered in Singapore."
+    },
+    {
+      "number": "992289815",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250316040259/https://www.parcelpanel.com/couriers/com1express/",
+        "date": "2025-03-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "dpd-ie",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "An older capture of ParcelPanel's ComOne Express page published it as the sample number. ComOne's tracker now answers it with an empty list, as it does an unknown number."
+    }
+  ]
 }

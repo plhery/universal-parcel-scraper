@@ -24,18 +24,58 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "comone-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.com1logistics.com/tracking.html?trackNo={trackingNumber}",
     "searchUrl": "https://www.com1logistics.com/tracking.html",
     "canaryUrl": "https://www.com1logistics.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "progress_rail",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "order_reference",
+      "weight",
+      "remarks",
+      "driver_name",
+      "proof_of_delivery",
+      "signature"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "service_name"
+    ]
   },
   "links": [
     {
