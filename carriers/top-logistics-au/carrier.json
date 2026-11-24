@@ -17,19 +17,54 @@
   "timezone": "Australia/Sydney",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "top-logistics-au",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://toplogistics.com.au/?s={trackingNumber}",
     "searchUrl": "https://toplogistics.com.au/",
     "helpUrl": "https://toplogistics.com.au/contact-us",
     "canaryUrl": "https://toplogistics.com.au/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "vessel",
+      "summary_route",
+      "eta",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "vessel",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "summary_route",
+      "eta",
+      "postcode"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "location",
+      "recipient_name",
+      "recipient_address",
+      "weight",
+      "service_name"
+    ]
   },
   "links": [
     {

@@ -4506,6 +4506,12 @@
     "reason": "To-Day waybills are bare twelve-digit numbers, a shape many carriers' rules already suggest."
   },
   {
+    "carrier": "top-logistics-au",
+    "pattern": "^TPL\\d{9}$",
+    "kind": "open",
+    "reason": "ParcelPanel's Top Logistics Australia sample is TPL and nine digits. Top Logistics publishes no layout and its courier tracks the parcel under the same number, so no rule offers it for the shape."
+  },
+  {
     "carrier": "topparcel",
     "kind": "by_design",
     "reason": "Topparcel tracks a parcel by the number of the courier or post it booked, so the number names that carrier, not Topparcel."

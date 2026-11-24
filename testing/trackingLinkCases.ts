@@ -1139,6 +1139,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'comone-express', number: 'CM9900000017',
     route: /^https:\/\/www\.com1logistics\.com\/tracking\.html\?trackNo=CM9900000017$/,
     marker: /Can key in up to 5 no with \(,\) in between/ },
+  // The site's search page puts the number in its field and opens the tracking frame for it.
+  { carrier: 'top-logistics-au', number: 'TPL000000000',
+    route: /^https:\/\/toplogistics\.com\.au\/\?s=TPL000000000$/,
+    marker: /Search Reference Number/ },
   // BoxC's tracking app puts the number in its path into its field.
   { carrier: 'boxc', number: 'BOXC00000000999',
     route: /^https:\/\/boxc\.com\/track\/BOXC00000000999$/,

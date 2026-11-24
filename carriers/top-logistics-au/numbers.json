@@ -1,5 +1,28 @@
 {
   "carrier": "top-logistics-au",
-  "gap": "No public page shows a Top Logistics Australia number; its site takes numbers in a search box.",
-  "records": []
+  "records": [
+    {
+      "number": "TPL600042194",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260609121509/https://www.parcelpanel.com/couriers/tla/",
+        "date": "2026-06-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "ParcelPanel's Top Logistics Australia page published it as the courier's sample number to try. The tracking frame answers it with a parcel shipped by sea from Shekou, cleared, and delivered in Melbourne by Allied Express."
+    }
+  ]
 }

@@ -1,4 +1,18 @@
 {
   "carrier": "top-logistics-au",
-  "entries": []
+  "entries": [
+    {"wording": "Shipment info received", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The shipper's data for the parcel reached Top Logistics, before the sailing."},
+    {"wording": "Sea vessel dispatched YM ESSENCE/101S", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The ship left the origin port, dated without a time. The vessel and voyage follow the words, and the map reads any of them so; a second row can repeat the voyage without the vessel."},
+    {"wording": "Shipment info confirmed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The shipment's data confirmed while the ship is at sea, minutes before the customs report."},
+    {"wording": "Reported To Customs", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Lodged with Australian customs for import clearance."},
+    {"wording": "Customs held(Border)", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Held by the Australian Border Force during clearance."},
+    {"wording": "Clearance processing complete", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Cleared by customs, so the parcel moves on."},
+    {"wording": "Sea arrived YM ESSENCE/101S", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The ship reached the Australian port, dated without a time. The vessel and voyage follow the words, and the map reads any of them so."},
+    {"wording": "Arrived at warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The container reached Top Logistics' warehouse."},
+    {"wording": "Deconsolidation has been done, waiting for despatch", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The container was unpacked and the parcel waits for its courier."},
+    {"wording": "Shipment despatched to courier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Handed to the delivering courier. The frame follows the words with the courier and its number in brackets, such as ALLIED and the parcel's own number, and the map reads any of them so."},
+    {"wording": "IN DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The courier's scan at its depot, relayed by the frame."},
+    {"wording": "ON BOARD FOR DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The courier's driver has the parcel for delivery, relayed by the frame."},
+    {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The courier's delivery, relayed by the frame."}
+  ]
 }
