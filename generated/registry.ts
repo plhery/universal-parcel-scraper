@@ -142,6 +142,7 @@ import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
 import { adapter as cargologic } from '../carriers/cargologic/adapter.js';
 import { adapter as cargolux } from '../carriers/cargolux/adapter.js';
+import { adapter as cargomini } from '../carriers/cargomini/adapter.js';
 import { adapter as cargox } from '../carriers/cargox/adapter.js';
 import { adapter as cargus } from '../carriers/cargus/adapter.js';
 import { adapter as carrybee } from '../carriers/carrybee/adapter.js';
@@ -833,6 +834,7 @@ import { adapter as qwintry } from '../carriers/qwintry/adapter.js';
 import { adapter as raben } from '../carriers/raben/adapter.js';
 import { adapter as ramHandToHand } from '../carriers/ram-hand-to-hand/adapter.js';
 import { adapter as rayspeed } from '../carriers/rayspeed/adapter.js';
+import { adapter as recibelo } from '../carriers/recibelo/adapter.js';
 import { adapter as redecarga } from '../carriers/redecarga/adapter.js';
 import { adapter as redpack } from '../carriers/redpack/adapter.js';
 import { adapter as redur } from '../carriers/redur/adapter.js';
@@ -1311,6 +1313,7 @@ export const REGISTRY: RegistryDefinition = {
     "canpar": canpar,
     "cargologic": cargologic,
     "cargolux": cargolux,
+    "cargomini": cargomini,
     "cargox": cargox,
     "cargus": cargus,
     "carrybee": carrybee,
@@ -2002,6 +2005,7 @@ export const REGISTRY: RegistryDefinition = {
     "raben": raben,
     "ram-hand-to-hand": ramHandToHand,
     "rayspeed": rayspeed,
+    "recibelo": recibelo,
     "redecarga": redecarga,
     "redpack": redpack,
     "redur": redur,
@@ -2618,7 +2622,7 @@ export const REGISTRY: RegistryDefinition = {
     "cargoline": "universal",
     "cargologic": "cargologic",
     "cargolux": "cargolux",
-    "cargomini": "universal",
+    "cargomini": "cargomini",
     "cargox": "cargox",
     "cargus": "cargus",
     "caribe-pack": "universal",
@@ -3823,7 +3827,7 @@ export const REGISTRY: RegistryDefinition = {
     "rapid-courier-gr": "universal",
     "rapido-ochoa": "universal",
     "rayspeed": "rayspeed",
-    "recibelo": "universal",
+    "recibelo": "recibelo",
     "red-courier-gr": "universal",
     "red-express": "universal",
     "red-star-express": "universal",

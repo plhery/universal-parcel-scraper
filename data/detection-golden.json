@@ -18420,6 +18420,14 @@
     ]
   },
   {
+    "input": "117490233",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-ie"
+    ]
+  },
+  {
     "input": "1176101017977",
     "carrier": "unknown",
     "confidence": "low",
@@ -18445,6 +18453,14 @@
       "econt",
       "ozon-logistics",
       "paquetexpress"
+    ]
+  },
+  {
+    "input": "117696687",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-ie"
     ]
   },
   {
@@ -25841,6 +25857,12 @@
     ]
   },
   {
+    "input": "180230741306TR",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "18047A000264492",
     "carrier": "apc-postal-logistics",
     "confidence": "high",
@@ -26602,6 +26624,12 @@
       "ozon-logistics",
       "paquetexpress"
     ]
+  },
+  {
+    "input": "190230529212TR",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "190669647990",

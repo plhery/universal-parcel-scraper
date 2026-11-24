@@ -14708,7 +14708,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Istanbul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cargomini"
     },
     "canaryUrl": "https://tracking.cargomini.com/",
     "trackingUrlTemplate": "https://tracking.cargomini.com/{trackingNumber}",
@@ -54181,7 +54181,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Santiago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "recibelo",
+      "localClocks": true
     },
     "canaryUrl": "https://www.recibelo.cl/seguimiento/",
     "trackingUrlTemplate": "https://www.recibelo.cl/seguimiento/?codigo={trackingNumber}",
