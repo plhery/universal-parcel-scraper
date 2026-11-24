@@ -48918,7 +48918,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Berlin",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "parcel-one",
+      "localClocks": true
     },
     "canaryUrl": "https://parcel.one/en/tracking/",
     "trackingUrlTemplate": "https://parcel.one/tracking?trackno={trackingNumber}",

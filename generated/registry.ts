@@ -723,6 +723,7 @@ import { adapter as paperfly } from '../carriers/paperfly/adapter.js';
 import { adapter as paqmex } from '../carriers/paqmex/adapter.js';
 import { adapter as paqueteriaVencedor } from '../carriers/paqueteria-vencedor/adapter.js';
 import { adapter as paquetexpress } from '../carriers/paquetexpress/adapter.js';
+import { adapter as parcelOne } from '../carriers/parcel-one/adapter.js';
 import { adapter as parcel2go } from '../carriers/parcel2go/adapter.js';
 import { adapter as parcelabc } from '../carriers/parcelabc/adapter.js';
 import { adapter as parcelninja } from '../carriers/parcelninja/adapter.js';
@@ -1849,6 +1850,7 @@ export const REGISTRY: RegistryDefinition = {
     "paqmex": paqmex,
     "paqueteria-vencedor": paqueteriaVencedor,
     "paquetexpress": paquetexpress,
+    "parcel-one": parcelOne,
     "parcel2go": parcel2go,
     "parcelabc": parcelabc,
     "parcelninja": parcelninja,
@@ -3584,7 +3586,7 @@ export const REGISTRY: RegistryDefinition = {
     "paqueteria-vencedor": "paqueteria-vencedor",
     "paquetexpress": "paquetexpress",
     "paquexpress-urgente": "universal",
-    "parcel-one": "universal",
+    "parcel-one": "parcel-one",
     "parcel2go": "parcel2go",
     "parcelabc": "parcelabc",
     "parcelforce": "royal-mail",
