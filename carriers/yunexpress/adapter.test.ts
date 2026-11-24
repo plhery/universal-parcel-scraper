@@ -124,6 +124,8 @@ describe('YunExpress captured response projection', () => {
   it('stages the destination leg, and a hand-over to the local carrier is no delivery', () => {
     expect(yunExpressStatus('Delivered to local carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Package accepted at courier partner')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    // The sender's order deleted before YunExpress had the parcel.
+    expect(yunExpressStatus('The order has been deleted')).toEqual({ status: 'exception', stage: 'exception' });
     // The last-mile carrier's intake after that hand-over, and the flight out before it.
     expect(yunExpressStatus('Item accepted')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Parcel handed to DPD Pick-up (first scan)')).toEqual({ status: 'in_transit', stage: 'in_transit' });
