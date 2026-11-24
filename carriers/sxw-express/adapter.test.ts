@@ -175,6 +175,10 @@ describe('SXW Express tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'Item outbound in sorting center.' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'Synthetic wording' })).toEqual({ kind: 'unknown' });
+    // USPS's rows on the line into the United States: its partner's pickup and its own acceptance come after SXW accepted the parcel.
+    for (const description of ['Picked up by Shipping Partner', 'Accepted at USPS Facility']) {
+      expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     // The platform's Chinese rows show the English its other tenants give them, which the map reads too.
     expect(sxwEnglish(null, normalizeStatusWording('到达收货点'))).toBe('Arrived at the receiving point');
     expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'Goods leave the operation center' }))
