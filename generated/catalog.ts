@@ -7827,9 +7827,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Sydney",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "airroad",
+      "localClocks": true
     },
-    "canaryUrl": "https://myclient.airroad.com.au/",
+    "canaryUrl": "https://www.airroad.com.au/quick-track/",
     "trackingSearchUrl": "https://www.airroad.com.au/quick-track/",
     "helpUrl": "https://www.airroad.com.au/support/",
     "linkRules": [],

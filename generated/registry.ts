@@ -29,6 +29,7 @@ import { adapter as airGreenland } from '../carriers/air-greenland/adapter.js';
 import { adapter as airInuit } from '../carriers/air-inuit/adapter.js';
 import { adapter as airasiaCargo } from '../carriers/airasia-cargo/adapter.js';
 import { adapter as airpakExpress } from '../carriers/airpak-express/adapter.js';
+import { adapter as airroad } from '../carriers/airroad/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as airwaysCourierIn } from '../carriers/airways-courier-in/adapter.js';
 import { adapter as aitWorldwide } from '../carriers/ait-worldwide/adapter.js';
@@ -1168,6 +1169,7 @@ export const REGISTRY: RegistryDefinition = {
     "air-inuit": airInuit,
     "airasia-cargo": airasiaCargo,
     "airpak-express": airpakExpress,
+    "airroad": airroad,
     "airspeed": airspeed,
     "airways-courier-in": airwaysCourierIn,
     "ait-worldwide": aitWorldwide,
@@ -2340,7 +2342,7 @@ export const REGISTRY: RegistryDefinition = {
     "airasia-cargo": "airasia-cargo",
     "airmee": "universal",
     "airpak-express": "airpak-express",
-    "airroad": "universal",
+    "airroad": "airroad",
     "airspeed": "airspeed",
     "airtrans": "universal",
     "airways-courier-in": "airways-courier-in",

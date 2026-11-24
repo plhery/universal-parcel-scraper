@@ -96647,6 +96647,28 @@
     ]
   },
   {
+    "input": "GFL0118266",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
+    "input": "GFL0125070",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "GFNL26142036286842",
     "carrier": "gofo-nl",
     "confidence": "high",
