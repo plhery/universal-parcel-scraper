@@ -20,10 +20,11 @@ one to Peru whose number is "being transferred", ends as no history with the rea
 ## Notes
 
 BFE's own rows are in English and start with their place, as "<place>, Arrived at Airport of
-destination". The adapter shows them without it, with the place as the location and the whole
-row as `original_description`. A last mile's rows, in Spanish in Uruguay, are kept as written,
-with the place as the location where the wording says the parcel is there ("en"). The map reads
-both forms whole, the place included, so a provider's copy reads the same.
+destination"; in Argentina they are in Spanish and start with the country. The adapter shows them
+without that place, with it as the location and the whole row as `original_description`. A last
+mile's rows, in Spanish in Uruguay, are kept as written, with the place as the location where the
+wording says the parcel is there ("en"). The map reads both forms whole, the place included, so a
+provider's copy reads the same.
 
 Each scan states its offset, as "(GMT-03:00)", and keeps it. Scans follow the page's order
 numbers, newest first. BFE's status `Delivered` decides the stage when the last scan's wording

@@ -5,7 +5,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, BfeExpressTracker, bfeRequestBody } from './adapter.js';
 import { parseBfe } from './parser.js';
-import { statusMap } from './status.js';
+import { bfeWording, statusMap } from './status.js';
 
 const NUMBER = 'CK598000000000001';
 const KEY = 'Vnj25FYu3mIjbNUS'; // gitleaks:allow
@@ -118,12 +118,16 @@ describe('BFE Express tracking', () => {
       ['example city, arrived at airport of destination', 'in_transit'],
       ['arrived at airport of destination', 'in_transit'],
       ['ar, en transporte', 'in_transit'],
+      ['ar, el paquete ha sido recibido.', 'in_transit'],
+      ['ar, en tránsito', 'in_transit'],
       ['tu paquete está en viaje a oficina ejemplo', 'in_transit'],
       ['reparto en curso', 'out_for_delivery'],
       ['entregado', 'delivered'],
       ['tu paquete está en viaje a', undefined],
       ['example city, arrived at airport', undefined],
     ] as const) expect(statusMap.stage(null, wording), wording).toBe(stage);
+    // BFE's Spanish rows in Argentina start with the country, which becomes the location.
+    expect(bfeWording('AR, En tránsito')).toEqual({ description: 'En tránsito', location: 'AR', original_description: 'AR, En tránsito' });
   });
 
   it('posts the signed number and signs again once on the service clock when ours is off', async () => {
