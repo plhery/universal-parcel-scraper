@@ -1,0 +1,9 @@
+{
+  "success": false,
+  "data": {
+    "status": 404,
+    "statusText": "Not Found",
+    "result": null,
+    "code": "not_found"
+  }
+}

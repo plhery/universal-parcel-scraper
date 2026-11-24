@@ -1,0 +1,492 @@
+{
+  "success": true,
+  "data": {
+    "code": "found",
+    "result": {
+      "version": "v3",
+      "tracking_id": "DRNFLY000020896056",
+      "eta": "2026-04-29T12:10:08.000000+10:00",
+      "buffered_eta": "2026-04-29T06:10:08.000Z",
+      "public_eta": {
+        "from": "2026-04-29T02:10:08.000Z",
+        "to": "2026-04-29T06:10:08.000Z",
+        "min": 6,
+        "max": 21
+      },
+      "driver_name": null,
+      "client_code": null,
+      "is_green_task": false,
+      "subsidiary": "dragonfly_au",
+      "service_type": "SMDYEXP",
+      "allow_cancel": false,
+      "allow_reschedule": false,
+      "can_reschedule": false,
+      "can_cancel": false,
+      "last_status": {
+        "package_location": null,
+        "timestamp": 1777406736372,
+        "task_type": "last_mile_delivery",
+        "status": 108,
+        "label": "Delivery station inbound scan",
+        "step": 2,
+        "showEta": true,
+        "etaType": "period",
+        "etaBuffer": 4,
+        "hidden": false,
+        "freqCap": 1,
+        "isDelivered": false,
+        "canReschedule": false,
+        "canCancel": false,
+        "driver": {
+          "status": 108,
+          "serviceType": "",
+          "label": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          }
+        },
+        "client": {
+          "status": 108,
+          "label": {
+            "en": "",
+            "fr": "",
+            "nl": ""
+          }
+        },
+        "labels": {
+          "status": 108,
+          "serviceType": "",
+          "subReason": "",
+          "shortLabel": {
+            "en": "Your parcel is being prepared for delivery!",
+            "fr": "",
+            "nl": ""
+          },
+          "longLabel": {
+            "en": "Hang tight! We're preparing your shipment from your local station in {city}. We'll let you know when it's out for delivery with our driver.",
+            "fr": "",
+            "nl": ""
+          }
+        },
+        "lottie": {
+          "status": 108,
+          "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/05_Almost-There_16x9-%E2%80%93-2024.json",
+          "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/05_Almost-There_1x1-%E2%80%93-2024.json"
+        },
+        "dropoff": null,
+        "statusCode": 108
+      },
+      "status_list": [
+        {
+          "package_location": null,
+          "timestamp": 1777406736372,
+          "task_type": "last_mile_delivery",
+          "status": 108,
+          "label": "Delivery station inbound scan",
+          "step": 2,
+          "showEta": true,
+          "etaType": "period",
+          "etaBuffer": 4,
+          "hidden": false,
+          "freqCap": 1,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "driver": {
+            "status": 108,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 108,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 108,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "Your parcel is being prepared for delivery!",
+              "fr": "",
+              "nl": ""
+            },
+            "longLabel": {
+              "en": "Hang tight! We're preparing your shipment from your local station in {city}. We'll let you know when it's out for delivery with our driver.",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "lottie": {
+            "status": 108,
+            "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/05_Almost-There_16x9-%E2%80%93-2024.json",
+            "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/05_Almost-There_1x1-%E2%80%93-2024.json"
+          },
+          "dropoff": null,
+          "statusCode": 108
+        },
+        {
+          "package_location": null,
+          "timestamp": 1777380742311,
+          "task_type": "last_mile_delivery",
+          "status": 610,
+          "label": "Returned to warehouse",
+          "step": -3,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": null,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "driver": {
+            "status": 610,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 610,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 610,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "We’ll try again soon!",
+              "fr": "",
+              "nl": ""
+            },
+            "longLabel": {
+              "en": "Unfortunately, we couldn't make it in time to deliver your parcel today. Don’t worry! Your parcel was safely returned to the local station. Keep an eye out for the rescheduled delivery time. Thanks for your patience!",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "lottie": {
+            "status": 610,
+            "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/08_Postponed_16x9-%E2%80%93-2024.json",
+            "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/08_Postponed_1x1-%E2%80%93-2024.json"
+          },
+          "dropoff": null,
+          "statusCode": 610
+        },
+        {
+          "package_location": null,
+          "timestamp": 1777356315386,
+          "task_type": "last_mile_delivery",
+          "status": 590,
+          "label": "First delivery attempt / REASON",
+          "step": -3,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": null,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "driver": {
+            "status": 590,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 590,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 590,
+            "serviceType": "",
+            "subReason": "G9",
+            "shortLabel": {
+              "en": "We’ll try again soon!",
+              "fr": "",
+              "nl": ""
+            },
+            "longLabel": {
+              "en": "We attempted to deliver your parcel today but were unable to access the property, or no one answered the door. Don't worry! Our driver will give it another go very soon. Keep an eye out for the rescheduled delivery time.",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "lottie": {
+            "status": 590,
+            "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/08_Postponed_16x9-%E2%80%93-2024.json",
+            "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/08_Postponed_1x1-%E2%80%93-2024.json"
+          },
+          "dropoff": null,
+          "statusCode": 590
+        },
+        {
+          "package_location": {
+            "address": {
+              "zip": "",
+              "country_code": "AU",
+              "country": "AU",
+              "address_line1": "",
+              "city": "",
+              "timezone": "Australia/Victoria",
+              "name": "",
+              "event_local_time": "2026-04-28T07:09:06.708000+10:00",
+              "state_province": "",
+              "address_line_2": ""
+            }
+          },
+          "timestamp": 1777324146708,
+          "task_type": "last_mile_delivery",
+          "status": 300,
+          "label": "Loaded",
+          "step": 3,
+          "showEta": true,
+          "etaType": "time",
+          "etaBuffer": 4,
+          "hidden": false,
+          "freqCap": null,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "driver": {
+            "status": 300,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 300,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 300,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "On our way to you!",
+              "fr": "",
+              "nl": ""
+            },
+            "longLabel": {
+              "en": "Exciting update! Your parcel is currently en route and will be delivered by 9 p.m. today. If you're not around, don't worry! We'll either leave it in a secure location or try delivering it again soon.",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "lottie": {
+            "status": 300,
+            "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/06_OnTheWay_16x9_Dragonfly_2024-2.json",
+            "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/06_OnTheWay_1x1_Dragonfly_2024-2.json"
+          },
+          "dropoff": null,
+          "statusCode": 300
+        },
+        {
+          "package_location": null,
+          "timestamp": 1777308674933,
+          "task_type": "last_mile_delivery",
+          "status": 108,
+          "label": "Delivery station inbound scan",
+          "step": 2,
+          "showEta": true,
+          "etaType": "period",
+          "etaBuffer": 4,
+          "hidden": false,
+          "freqCap": 1,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "driver": {
+            "status": 108,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 108,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 108,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "Your parcel is being prepared for delivery!",
+              "fr": "",
+              "nl": ""
+            },
+            "longLabel": {
+              "en": "Hang tight! We're preparing your shipment from your local station in {city}. We'll let you know when it's out for delivery with our driver.",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "lottie": {
+            "status": 108,
+            "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/05_Almost-There_16x9-%E2%80%93-2024.json",
+            "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/05_Almost-There_1x1-%E2%80%93-2024.json"
+          },
+          "dropoff": null,
+          "statusCode": 108
+        },
+        {
+          "package_location": null,
+          "timestamp": 1777308665763,
+          "task_type": "last_mile_delivery",
+          "status": 105,
+          "label": "Received",
+          "step": 2,
+          "showEta": true,
+          "etaType": "period",
+          "etaBuffer": 48,
+          "hidden": false,
+          "freqCap": 1,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "driver": {
+            "status": 105,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 105,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 105,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "Dragonfly has your parcel!",
+              "fr": "",
+              "nl": ""
+            },
+            "longLabel": {
+              "en": "Your merchant has handed us your parcel at our {city} station. We'll make sure to keep you posted as it makes its way to you.",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "lottie": {
+            "status": 105,
+            "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/03_Package-Received_16x9_Dragonfly_2024-2.json",
+            "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/03_Package-Received_1x1_Dragonfly_2024-2.json"
+          },
+          "dropoff": null,
+          "statusCode": 105
+        },
+        {
+          "package_location": null,
+          "timestamp": 1777264356964,
+          "task_type": "last_mile_delivery",
+          "status": 0,
+          "label": "Data received",
+          "step": 1,
+          "showEta": false,
+          "etaType": "none",
+          "etaBuffer": 0,
+          "hidden": false,
+          "freqCap": 1,
+          "isDelivered": false,
+          "canReschedule": false,
+          "canCancel": false,
+          "driver": {
+            "status": 0,
+            "serviceType": "",
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "client": {
+            "status": 0,
+            "label": {
+              "en": "",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "labels": {
+            "status": 0,
+            "serviceType": "",
+            "subReason": "",
+            "shortLabel": {
+              "en": "Your parcel will be in good hands with Dragonfly!",
+              "fr": "",
+              "nl": ""
+            },
+            "longLabel": {
+              "en": "Good news! We've received your shipment details, but the parcel is still with your merchant. Stay tuned, and we'll notify you as soon as we receive it.",
+              "fr": "",
+              "nl": ""
+            }
+          },
+          "lottie": {
+            "status": 0,
+            "desktop": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/desktop/01_Info-Received_16x9_Dragonfly_2024.json",
+            "mobile": "https://dragonflyshipping.com.au/uploads/5_Animations/tracking/mobile/01_Info-Received_1x1_Dragonfly_2024.json"
+          },
+          "dropoff": null,
+          "statusCode": 0
+        }
+      ]
+    }
+  },
+  "raw_last_status": {
+    "status_reason_string": "Normal Status",
+    "status_code": "X4",
+    "status_reason_code": "NS",
+    "status_code_string": "Arrived at Terminal Location",
+    "status": 108,
+    "timestamp": 1777406736372,
+    "task_type": "last_mile_delivery",
+    "package_location": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "carrier": "dragonfly-au",
+  "entries": [
+    { "code": "0", "wording": "Your parcel will be in good hands with Dragonfly!", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "Internal label Data received: the merchant's data arrived and the parcel is still with the merchant." },
+    { "code": "105", "wording": "Dragonfly has your parcel!", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "Internal label Received: the merchant handed the parcel over at a Dragonfly station." },
+    { "code": "106", "wording": "Your parcel is on the move!", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Internal label Hub station inbound scan." },
+    { "code": "108", "wording": "Your parcel is being prepared for delivery!", "language": "en", "stage": "in_transit", "confirmedBy": "portal", "note": "Internal label Delivery station inbound scan: the local station prepares the round. Seen in archived replies of the tracking service." },
+    { "code": "300", "wording": "On our way to you!", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Internal label Loaded." },
+    { "code": "590", "wording": "We’ll try again soon!", "language": "en", "stage": "failed_attempt", "confirmedBy": "portal", "note": "Internal label First delivery attempt / REASON; the long label says the driver could not get in or no one answered. Seen in an archived reply of the tracking service." },
+    { "code": "595", "wording": "Oops, there might be a problem with the address you gave", "language": "en", "stage": "failed_attempt", "confirmedBy": "portal", "note": "Internal label Incorrect address, on the day of a round; the parcel then went back to the station and was delivered later. Seen in an archived reply of the tracking service." },
+    { "code": "601", "wording": "Hooray! Your parcel is here", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Internal label Delivered - No Signature." },
+    { "code": "610", "wording": "We’ll try again soon!", "language": "en", "stage": "failed_attempt", "confirmedBy": "portal", "note": "Internal label Returned to warehouse: the parcel went back to the local station undelivered for another day. Seen in archived replies of the tracking service." }
+  ]
+}

@@ -1282,6 +1282,12 @@
     "reason": "AMZNL numbers are Amazon's, not Dragonfly's: Dragonfly documents no format and Amazon can hand the series to its other Dutch delivery partners, so no rule claims it."
   },
   {
+    "carrier": "dragonfly-au",
+    "pattern": "^DRNFLY\\d{12}$",
+    "kind": "open",
+    "reason": "Every public Dragonfly Australia number is DRNFLY and twelve digits, but Dragonfly documents no format and the brand also delivers in Canada and the Netherlands, so no rule claims it yet. Select Dragonfly Australia or use a portal link."
+  },
+  {
     "carrier": "dropp",
     "pattern": "^DR[0-9A-Z]{11}$",
     "kind": "by_design",

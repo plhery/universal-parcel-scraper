@@ -1,0 +1,81 @@
+{
+  "carrier": "dragonfly-au",
+  "records": [
+    {
+      "number": "DRNFLY000023971907",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260923220120/https://dragonflyshipping.com.au/track-your-package/?tracking-id=DRNFLY000023971907",
+        "date": "2026-09-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A tracking link of the Australian Dragonfly portal archived in the Wayback Machine, with the tracking service's reply archived beside it. A later capture of the service (https://web.archive.org/web/20261124063550/https://dragonflyshipping.com.au/cfworker/v3/tracking/DRNFLY000023971907/) answers it with a delivered history."
+    },
+    {
+      "number": "DRNFLY000020665131",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260512080815/https://dragonflyshipping.com.au/cfworker/v3/tracking/DRNFLY000020665131/",
+        "date": "2026-05-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wayback Machine archived the Australian tracking service's reply: an address problem on a round, a return to the station and a later delivery."
+    },
+    {
+      "number": "DRNFLY000020896056",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260428210130/https://dragonflyshipping.com.au/cfworker/v3/tracking/DRNFLY000020896056/",
+        "date": "2026-04-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wayback Machine archived the Australian tracking service's reply: a failed attempt, the parcel back at the station and prepared for another round."
+    },
+    {
+      "number": "DRNFLY000020465971",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260330001206/https://dragonflyshipping.com.au/cfworker/v3/tracking/DRNFLY000020465971/",
+        "date": "2026-03-30",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wayback Machine archived the Australian tracking service's reply for a parcel out for delivery, with the hour window the page shows."
+    }
+  ]
+}

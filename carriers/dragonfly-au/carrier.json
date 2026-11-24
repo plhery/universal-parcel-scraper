@@ -1,0 +1,67 @@
+{
+  "id": "dragonfly-au",
+  "displayName": "Dragonfly Australia",
+  "aliases": [
+    "Dragonfly (AU)",
+    "Dragonfly Shipping Australia"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#13a58f"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dragonfly-au",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "eta"
+  ],
+  "portal": {
+    "url": "https://dragonflyshipping.com.au/track-your-package/?tracking-id={trackingNumber}",
+    "searchUrl": "https://dragonflyshipping.com.au/track-your-package/",
+    "helpUrl": "https://dragonflyshipping.com.au/faq/",
+    "canaryUrl": "https://dragonflyshipping.com.au/track-your-package/",
+    "shows": [
+      "status",
+      "history",
+      "eta",
+      "delivery_place"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "eta"
+    ],
+    "discarded": [
+      "delivery_place"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "location",
+      "weight",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "dragonflyshipping.com.au"
+      ],
+      "params": [
+        "tracking-id"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -2963,4 +2963,5 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'interparcel-uk': 'uk.interparcel.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
   'interparcel-au': 'au.interparcel.com answers automated Chrome with a Cloudflare managed challenge before the tracking page, so number forwarding cannot be verified',
   aquantuo: 'aquantuo.com answers automated requests with a Cloudflare check before the tracking page, so number forwarding cannot be verified',
+  'dragonfly-au': 'dragonflyshipping.com.au answers browsers outside the networks it allows with a Cloudflare block page, so number forwarding cannot be verified',
 };
