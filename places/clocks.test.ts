@@ -132,6 +132,24 @@ describe('dateLocalClocks', () => {
     expect(zones(scans.slice(1))).toEqual(['America/Los_Angeles', 'America/Los_Angeles', 'America/Los_Angeles']);
   });
 
+  it('dates a place-less scan out for delivery on the clock of the next scan with a zone, not the start of its leg', () => {
+    // COPE's rows: picked up in Victoria, loaded for delivery with no place, delivered in Western Australia.
+    const scans: CarrierEvent[] = [
+      { local_time: '2026-05-21T13:14:00', description: 'Delivery at receiver', location: 'ELLENBROOK WA', stage: 'delivered' },
+      { local_time: '2026-05-21T10:26:00', description: 'Articles loaded for delivery', stage: 'out_for_delivery' },
+      { local_time: '2026-05-21T10:25:00', description: 'Articles in movement', stage: 'in_transit' },
+      { local_time: '2026-05-12T16:11:00', description: 'Job created', location: 'BROADMEADOWS VIC', stage: 'registered' },
+    ];
+    const events = (list: CarrierEvent[]) => dateLocalClocks('cope-sensitive-freight', { status: 'in_transit', events: list }).events!;
+    expect(events(scans).slice(1).map(dated)).toEqual([
+      ['2026-05-21T10:26:00+08:00', 'Australia/Perth', 'neighbour'],
+      ['2026-05-21T10:25:00+10:00', 'Australia/Melbourne', 'neighbour'],
+      ['2026-05-12T16:11:00+10:00', 'Australia/Melbourne', 'place'],
+    ]);
+    // Before the delivery is scanned, the leg's start is the only clock there is.
+    expect(events(scans.slice(1))[0]).toMatchObject({ time_zone: 'Australia/Melbourne', time_zone_basis: 'neighbour' });
+  });
+
   it('dates USPS\'s bare "JAMAICA", its international centre at JFK, and the place-less scan after it on New York\'s clock', () => {
     // A parcel sent back from Spain: USPS's rows abroad name the country, its own the centre in Jamaica, New York.
     const events = (destination_country: string): CarrierEvent[] => dateLocalClocks('usps', { status: 'in_transit', destination_country, events: [

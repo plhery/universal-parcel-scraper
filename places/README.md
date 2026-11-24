@@ -229,7 +229,9 @@ the parcel: a line from China copies DHL's record of the sender's data before th
 a country of one clock or an airport), or once a scan since says the parcel landed or reached its
 destination (a flight that took off and awaits its arrival has not), or is a customs scan after the
 export's clearance, the next one after, so later scans do not move it, or with none, the destination's
-clock, unless the last one is on a clock the destination keeps. With none before, it is the next
+clock, unless the last one is on a clock the destination keeps. A scan out for delivery takes the
+next one after, where the parcel is delivered or tried, once there is one: COPE's place-less "loaded
+for delivery" in Perth follows a pickup in Melbourne nine days before. With none before, it is the next
 one, unless the parcel lands on the way there; else from the parcel's
 destination, when the carrier delivers there; else from the carrier's home clock: its catalog
 zone, or with UTC there, its first country's. A country of several clocks named alone, as a place

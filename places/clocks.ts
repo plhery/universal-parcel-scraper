@@ -105,7 +105,7 @@ function destinationZone(carrier: string, country: string, home: string | null):
  * parcel; else from the leg the parcel was on: the last scan before
  * it with a zone of its own, or, once a scan since says the parcel landed or
  * reached its destination, or is a customs scan after the export's clearance, the next one after, else the destination's clock unless
- * the last one is on a clock the destination keeps; or with none before, the next
+ * the last one is on a clock the destination keeps; out for delivery, the next one after once there is one; or with none before, the next
  * one unless the parcel lands on the way there; else from the destination, if the carrier
  * delivers there; else from the carrier's home clock. A place that names only
  * a country with several zones, and none of its states, borrows the zone of a
@@ -172,6 +172,10 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     while (before >= 0 && !zoned(before)) before -= 1;
     let after = at + 1;
     while (after < scans.length && !zoned(after)) after += 1;
+    // Out for delivery, the parcel is where the next scan with a zone delivers it or tries to, not
+    // where the leg began: COPE's "Articles loaded for delivery" hours before its delivery in Perth,
+    // nine days after the pickup in Melbourne.
+    if (text(scans[at]!.stage) === 'out_for_delivery' && after < scans.length) return neighbour(lent(after));
     if (crossed.slice(before + 1, at + 1).includes(true)) return neighbour(lent(after)) ?? landing(lent(before));
     return neighbour(lent(before)) ?? (crossed.slice(at + 1, after).includes(true) ? null : neighbour(lent(after)));
   };
