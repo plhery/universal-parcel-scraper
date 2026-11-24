@@ -1,0 +1,99 @@
+{
+  "carrier": "planete-courrier",
+  "records": [
+    {
+      "number": "13749541",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261108142627/https://www.planetecourrier.com/fr/suivi-courrier.html?r=13749541&detail=true",
+        "date": "2026-11-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "An archived link to Planète Courrier's own tracking page; the tracker answers it with an order delivered in Quebec."
+    },
+    {
+      "number": "13705192",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261009163415/https://www.planetecourrier.com/fr/suivi-courrier.html?r=13705192&detail=true",
+        "date": "2026-10-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "An archived link to Planète Courrier's own tracking page; the tracker answers it with an order delivered in Quebec."
+    },
+    {
+      "number": "13458399",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260701024309/https://www.planetecourrier.com/fr/suivi-courrier.html?r=13458399&detail=true",
+        "date": "2026-07-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "An archived link to Planète Courrier's own tracking page; the tracker answers it with a failed attempt, a booked second attempt and a delivery."
+    },
+    {
+      "number": "9381042",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230503172352/https://www.planetecourrier.com/fr/suivi-courrier.html?r=9381042",
+        "date": "2023-05-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "An archived link to Planète Courrier's own tracking page. The list now calls the order expired, and its page still shows the order handed to FedEx under FedEx's number, with FedEx's scans."
+    }
+  ]
+}

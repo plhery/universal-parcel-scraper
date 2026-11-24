@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<base href="https://www.planetecourrier.com/" />
+<title>Suivi de vos envois de courrier locaux, nationaux et internationaux</title>
+</head>
+<body>
+<div class="conteneur contenuPrincipal">
+
+	
+
+    <div class="boiteFormReperer">
+        <div>
+
+            <h2 class="boiteFormReperer__titre">Suivi de vos envois locaux, nationaux ou internationaux</h2>
+
+            <div id="enteteRecherche">
+                
+
+                
+                    <form class='form  formReperer space-bottom' name="champRecherche" id="champRecherchex" action="" method="get">
+                        
+                        <div class="formSuivi">
+                            <input class='formSuiviInput' type="text" name="r" id="recherche" value="9381042" placeholder='Numéro de suivi '/>
+
+                           <button class='bouton1 formReperer__btn' name="submitBtnRecherche" id="envoiFormRecherche" >Repérez</button>
+                        
+                        </div>
+
+
+
+                        
+                    </form>
+                
+            </div>
+        </div>
+    </div>
+
+    
+
+<!-- Check the first character of the tracking number -->
+
+
+<!-- Define variables for the API endpoints -->
+
+
+<!-- Initialize the API URL variable -->
+
+
+<!-- Conditionally set the API URL based on the first character -->
+
+<!-- Make the API request using the selected URL -->
+
+
+                              <div id="contenuRecherche" class="messageErreur">
+                                  Commande expirée.
+                              </div>
+
+                          <div class="informationReperage">
+	
+	  <div class="sectionTableau">
+		  <div class="bloc">
+	   		<p class="titrePrincipal">Livraisons liées à ce numéro </p> 
+					<div id="contenuRecherche" class="messageErreur">
+						
+							Il n’y aucune commande de placée chez Planète Courrier avec ce numéro de suivi. Veuillez appeler au 438-896-4009 pour de l'aide.
+						
+					</div>
+					
+				<form id="formLienNumeroSuivi" action="" method="post">
+					<input id="numeroSuivi" name="r" type="hidden" value="0">
+				</form>
+			</div>
+		</div>
+	
+</div>
+
+
+  <form class='form' name="postalSearch" id="postalSearch" action="" method="post" enctype="multipart/form-data">
+    <p for="recherche">Vous ne trouvez pas votre numéro de suivi? Approfondir la recherche en inscrivant le code postal de la destination.</p>
+
+    <div class="formSuivi">
+      <input class='formSuiviInput' type="text" name="destinationPostalCode" id="destinationPostalCode" value="" placeholder='Code postal'/>
+
+      <button class='bouton1 formReperer__btn' name="submitBtnDestinationPostalCode" id="envoiFormDestinationPostalCode" >Rechercher</button>
+    </div>
+  </form>
+
+
+<script>
+	function postClickLienNumeroSuivi(){
+		$('.lienNumeroSuivi').bind("click", function(event){
+			event.preventDefault();
+			$('#formLienNumeroSuivi').attr('action', $(this).attr('href'));
+			$('#numeroSuivi').val($(this).attr('ref'));
+			$('#formLienNumeroSuivi').submit();
+		});
+	}
+	$(document).ready(function(){
+		postClickLienNumeroSuivi();
+	});
+</script>
+                    <p class="noticeResultat">
+                        Résultats de suivi fournis par Planète Courrier : 23 novembre 2026 23h53
+                    </p>
+                
+
+
+
+
+
+<script>
+    $(function(){
+        $('#formSuivi,#champRecherche').submit(function() {
+            $(this).find('input:text').each(function(){
+                $(this).val($.trim($(this).val()));
+            });
+        });
+    });
+</script>
+
+
+
+    <div class="banniereContenu">
+        <p class="sousTitre">Les prix les plus bas,<br> c'est garanti!</p>
+        <div class="texte">
+            <div class="incTinyMce">
+                <strong>Économisez jusqu'à 50 %</strong> sur le prix courant en faisant affaire avec Planète Courrier - un service hors pair au meilleur prix sur le marché. 
+            </div>
+            <a class="bouton1" href="fr/tarifs-courrier.html">Demande de tarifs</a>
+        </div>
+    </div>
+
+
+</div>
+</main>
+
+		<div class="push"></div>
+	</div>
+</body>
+</html>

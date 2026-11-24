@@ -662,6 +662,7 @@ import { statusMap as pilotFreight } from '../../carriers/pilot-freight/status.j
 import { statusMap as pinAg } from '../../carriers/pin-ag/status.js';
 import { statusMap as pitneyBowes } from '../../carriers/pitney-bowes/status.js';
 import { statusMap as pittOhio } from '../../carriers/pitt-ohio/status.js';
+import { statusMap as planeteCourrier } from '../../carriers/planete-courrier/status.js';
 import { statusMap as planzer } from '../../carriers/planzer/status.js';
 import { statusMap as pocztaPolska } from '../../carriers/poczta-polska/status.js';
 import { statusMap as posIndonesia } from '../../carriers/pos-indonesia/status.js';
@@ -1229,7 +1230,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, pargo, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress, peddler,
   'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, pigeonship, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
-  'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
+  'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, 'planete-courrier': planeteCourrier, planzer,'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
   'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'postnet-za': postnetZa, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-moldovei': postaMoldovei, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,
   xcargo, skladusa, 'seino-super-express': seinoSuperExpress, 'post-one': postOne, 'post-international': postInternational, 'posta-slovenije': postaSlovenije, 'posta-srbije': postaSrbije, 'poste-italiane': posteItaliane, postex, posti, postlogistics, 'postmedia-parcel-services': postmediaParcelServices,

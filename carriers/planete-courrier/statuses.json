@@ -1,0 +1,22 @@
+{
+  "carrier": "planete-courrier",
+  "entries": [
+    { "wording": "Commande placée chez Planète Courrier", "stage": "registered", "language": "fr", "confirmedBy": "live", "note": "The order is booked; the page dates it before any pickup." },
+    { "wording": "Ramassée par un de nos livreurs", "stage": "accepted", "language": "fr", "confirmedBy": "live", "note": "Picked up by a driver." },
+    { "wording": "Arrivé au centre de tri", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Followed on the page by the depot's town and province, which the adapter moves to the location." },
+    { "wording": "Données du colis transmises à FedEx", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "The order is handed to FedEx for delivery; FedEx's scans follow it in the history." },
+    { "wording": "Destinataire non-disponible - Action du destinataire requise", "stage": "failed_attempt", "language": "fr", "confirmedBy": "live", "note": "The recipient was not there and has to act." },
+    { "wording": "Rendez-vous pris pour une autre tentative de livraison", "stage": "failed_attempt", "language": "fr", "confirmedBy": "live", "note": "A new delivery attempt is booked after a failed one." },
+    { "wording": "Retourné au centre de tri", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Back at the depot after an attempt, waiting for the next one; followed by the depot's town and province." },
+    { "wording": "Livré", "stage": "delivered", "language": "fr", "confirmedBy": "live" },
+    { "wording": "Livrée", "stage": "delivered", "language": "fr", "confirmedBy": "live", "note": "The order's status in the tracker's list." },
+    { "wording": "N/A", "stage": null, "language": "fr", "confirmedBy": "live", "note": "A status the tracker's list gives a delivered order too; it says nothing about where the order is." },
+    { "wording": "Shipment arriving On-Time", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from FedEx." },
+    { "wording": "En transit", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Relayed from FedEx." },
+    { "wording": "A quitté les installations FedEx d'origine", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Relayed from FedEx." },
+    { "wording": "Aux installations de tri de destination", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Relayed from FedEx." },
+    { "wording": "Aux installations locales de FedEx", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Relayed from FedEx." },
+    { "wording": "Dans un véhicule FedEx pour livraison", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live", "note": "Relayed from FedEx." },
+    { "wording": "Delay", "stage": null, "language": "en", "confirmedBy": "live", "note": "A delay notice relayed from FedEx, with no movement stated; the stage before it stands." }
+  ]
+}

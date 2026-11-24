@@ -2769,6 +2769,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'tiui', number: '99-99-9999',
     route: /^https:\/\/tiuiamigo\.tiui\.mx\/rastreo\/99-99-9999$/,
     marker: /FOLIO DE GUÍA[\s\S]*Historial de movimientos/i },
+  // The server draws the order's page for the number in its address, an unknown number's with its one undated step.
+  { carrier: 'planete-courrier', number: '19999991',
+    route: /^https:\/\/www\.planetecourrier\.com\/fr\/suivi-courrier\.html\?r=19999991&detail=true$/,
+    marker: /N° 19999991 via[\s\S]*Historique de commande/ },
 ];
 
 /**

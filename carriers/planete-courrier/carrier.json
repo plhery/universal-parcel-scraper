@@ -1,0 +1,83 @@
+{
+  "id": "planete-courrier",
+  "displayName": "Planète Courrier",
+  "aliases": [
+    "Planete Courrier",
+    "Planète Courrier Inc."
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#241F59"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "planete-courrier",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.planetecourrier.com/fr/suivi-courrier.html?r={trackingNumber}&detail=true",
+    "searchUrl": "https://www.planetecourrier.com/fr/suivi-courrier.html",
+    "helpUrl": "https://www.planetecourrier.com/fr/nous-joindre.html",
+    "canaryUrl": "https://www.planetecourrier.com/fr/suivi-courrier.html",
+    "shows": [
+      "status",
+      "milestones",
+      "history",
+      "location",
+      "destination",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "parcel_count",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "milestones",
+      "destination",
+      "parcel_count",
+      "weight"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "planetecourrier.com",
+        "www.planetecourrier.com"
+      ],
+      "pathPattern": "^/(?:fr/suivi-courrier|en/parcel-tracking)\\.html$",
+      "params": [
+        "r"
+      ]
+    }
+  ],
+  "detection": []
+}

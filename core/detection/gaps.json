@@ -3380,6 +3380,12 @@
     "reason": "Ten digits are shared by several carriers and nothing in the number points to Pitt Ohio."
   },
   {
+    "carrier": "planete-courrier",
+    "pattern": "^\\d{7,8}$",
+    "kind": "by_design",
+    "reason": "Planète Courrier numbers its orders in sequence, a bare counter of seven or eight digits that other carriers print too."
+  },
+  {
     "carrier": "planzer",
     "kind": "by_design",
     "reason": "A Planzer lookup needs the access key of its shared link."
