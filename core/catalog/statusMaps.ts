@@ -228,6 +228,7 @@ import { statusMap as cityAirExpress } from '../../carriers/city-air-express/sta
 import { statusMap as cityExpressRs } from '../../carriers/city-express-rs/status.js';
 import { statusMap as citylinkExpress } from '../../carriers/citylink-express/status.js';
 import { statusMap as citymail } from '../../carriers/citymail/status.js';
+import { statusMap as citymailPk } from '../../carriers/citymail-pk/status.js';
 import { statusMap as cjLogistics } from '../../carriers/cj-logistics/status.js';
 import { statusMap as cjPacket } from '../../carriers/cj-packet/status.js';
 import { statusMap as closerLogistics } from '../../carriers/closer-logistics/status.js';
@@ -1199,7 +1200,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   bookurier, 'border-express': borderExpress, bosta, 'box-now': boxNow, boxtal, bpost, 'bring-posten': bringPosten, 'bringer-parcel': bringerParcel, brt, 'bulgarian-posts': bulgarianPosts, 'burd-delivery': burdDelivery, bussgods, byt,
   byhd, 'c-chez-vous': cChezVous, c3x, cacesa, 'cambodia-post': cambodiaPost, 'canada-post': canadaPost, canpar, cargus, 'castle-parcels': castleParcels, castores, cautcurier, 'cbl-logistica': cblLogistica, ccfs, cdek, cdl, celeritas, celero,
   'central-transport': centralTransport, 'ceska-posta': ceskaPosta, 'ceva-logistics': cevaLogistics, chazki, chilexpress, 'china-post': chinaPost,
-  'chit-chats': chitChats, chronodiali, chronopost, 'chronopost-ma': chronopostMa, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, citilogistics, 'city-air-express': cityAirExpress, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail,
+  'chit-chats': chitChats, chronodiali, chronopost, 'chronopost-ma': chronopostMa, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, citilogistics, 'city-air-express': cityAirExpress, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail, 'citymail-pk': citymailPk,
   'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, 'cmt-express': cmtExpress, cne, 'colis-prive': colisPrive, colisweb, 'commercive-parcel': commerciveParcel, 'connect-couriers': connectCouriers, consegnia, coordinadora,
   'copa-courier': copaCourier, corre, coretrails,
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-bolivia': correosBolivia, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-guatemala': correosGuatemala, 'correos-spain': correosSpain,

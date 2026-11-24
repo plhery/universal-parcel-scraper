@@ -1,4 +1,23 @@
 {
   "carrier": "citymail-pk",
-  "entries": []
+  "entries": [
+    {
+      "code": "Booked",
+      "wording": "Booked - Shipment is booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The customer booked the consignment; CityMail does not have the parcel yet."
+    },
+    {
+      "code": "Cancelled",
+      "wording": "Cancelled - Shipment is cancled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The booking was cancelled; the remark is the tracker's own, typo included."
+    }
+  ]
 }

@@ -22,17 +22,47 @@
   "timezone": "Asia/Karachi",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "citymail-pk",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
+    "url": "https://citymail.com.pk/",
     "searchUrl": "https://my.citymail.com.pk/track",
     "canaryUrl": "https://citymail.com.pk/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "sender_name",
+      "customer_reference",
+      "origin",
+      "destination",
+      "awb_date"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "sender_name",
+      "customer_reference",
+      "origin",
+      "destination",
+      "awb_date"
+    ],
+    "unavailable": [
+      "location",
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery",
+      "weight"
+    ]
   },
   "links": [],
   "detection": []

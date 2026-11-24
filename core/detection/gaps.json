@@ -822,6 +822,12 @@
     "reason": "Amazon's AM and nine-digit references travel with whichever carrier delivers the parcel, and two letters and nine digits is a reference shape several carriers share."
   },
   {
+    "carrier": "citymail-pk",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Nine digits are printed by many carriers and nothing in the number points to CityMail Pakistan."
+  },
+  {
     "carrier": "citysprint",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

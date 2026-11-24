@@ -1,5 +1,27 @@
 {
   "carrier": "citymail-pk",
-  "gap": "No public page shows a CityMail Pakistan number.",
-  "records": []
+  "records": [
+    {
+      "number": "111027990",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516075035/https://www.parcelpanel.com/couriers/citymail-pk/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "ParcelPanel's CityMail Pakistan page published it as the courier's sample number to try. CityMail's tracker answers it with a consignment booked in Dubai for Dubai and then cancelled."
+    }
+  ]
 }
