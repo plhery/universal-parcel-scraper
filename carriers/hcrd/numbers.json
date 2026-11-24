@@ -1,0 +1,81 @@
+{
+  "carrier": "hcrd",
+  "records": [
+    {
+      "number": "HC0003013565RD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/hcrd/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "One of the example tracking numbers a tracking directory's HCRD page shows, a different one on each load. HCRD's tracker answers it with a parcel on its HC-FEDEX4 line to the United States, handed to GOFO and delivered."
+    },
+    {
+      "number": "HC0003010989RD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/hcrd/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another example the same page showed. HCRD's tracker answers it with a parcel on its HC-FEDEX4 line to the United States, its scripted rows done and one row of its own."
+    },
+    {
+      "number": "HC0003031059RD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/hcrd/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another example the same page showed. HCRD's tracker answers it with a parcel on its HC-FEDEX6 line to the United States, with a row naming FedEx beside the scripted rows."
+    },
+    {
+      "number": "HC0003011885RD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/hcrd/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another example the same page showed. HCRD's tracker answers it with a parcel on its HC-FEDEX4 line to the United States that holds only the platform's scripted rows so far."
+    }
+  ]
+}

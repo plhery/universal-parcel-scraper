@@ -1,0 +1,19 @@
+{
+  "carrier": "hcrd",
+  "entries": [
+    {"code": "CO_C_CR", "wording": "Pickup Scan", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The platform's scripted row, in FedEx's words: the pickup in China. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Arrived at Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row, at a place in China, Korea or the United States. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Departed from Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Export Scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: export from China. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Import Scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: import into the United States. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Processing at Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row, its last. Listed as a planned step."},
+    {"wording": "FedEx", "language": "en", "stage": null, "confirmedBy": "live", "note": "A row placed in the United States that names the delivering carrier of the line, before the scripted pickup, with no movement or number."},
+    {"wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The forwarder's row placed in the United States after the scripted rows."},
+    {"wording": "in transit via GOFO tracking number:GFUS01084400785794", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The hand-over to GOFO, naming GOFO's number. Any number reads the same."},
+    {"wording": "Arrived at GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Loaded on Vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Arrived at GOFO Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Delivered, Door/Yard.", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "GOFO's delivery, copied without the support line GOFO appends."}
+  ]
+}
