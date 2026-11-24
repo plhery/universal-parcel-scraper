@@ -358,6 +358,15 @@
       "note": "The evening of the round that was due to deliver it; the next morning the item is available for redelivery or collection (EVNDA)."
     },
     {
+      "code": "EVKAI",
+      "wording": "Incorrectly addressed. Returned to sender.",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "A post abroad's round could not deliver to the address it was given and sends the item back to its sender, as the summary's Returned to Sender later says."
+    },
+    {
       "code": "EVNDA",
       "wording": "Available for Redelivery or Collection",
       "language": "en",

@@ -93,9 +93,15 @@ const UNSTAGED_EVENTS: ReadonlyMap<string, string> = new Map([
   ['EVNRT', 'The delivery office keeps the item, seconds after holding it for a fee to pay: no movement, so the item keeps the stage of the scan before it.'],
 ]);
 
-/** A scan's stage by its code, else by its wording, unless the code leaves it without one on purpose. */
+/**
+ * A scan's stage by its code, else by its wording, unless the code leaves it without one on purpose.
+ * A round that could not deliver whose wording sends the item back to its sender is the return:
+ * a post abroad files "Incorrectly addressed. Returned to sender." under the incorrect address's code.
+ */
 export function royalMailScanStage(code: string, description: string): Stage | undefined {
-  return royalMailEventStage(code) ?? (UNSTAGED_EVENTS.has(code) ? undefined : royalMailStage(description) ?? undefined);
+  const coded = royalMailEventStage(code);
+  if (coded === 'failed_attempt' && royalMailStage(description) === 'returned') return 'returned';
+  return coded ?? (UNSTAGED_EVENTS.has(code) ? undefined : royalMailStage(description) ?? undefined);
 }
 
 const SUMMARY_STAGES = new Map<string, Stage>([

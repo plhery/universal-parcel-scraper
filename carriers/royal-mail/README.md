@@ -71,6 +71,9 @@ answers are not retried. An unavailable browser fails fast.
   recipient's own collection. The same wording under the code the summary
   turns delivered with is the recipient's collection, and so the delivery, as
   is one of these scans when the summary calls the item collected on it.
+- A round that could not deliver to the address it was given (`EVKAI`) is a failed attempt,
+  unless its wording sends the item back to its sender, as a post abroad's "Incorrectly
+  addressed. Returned to sender." does: that scan is the return.
 - A delivery's scan time becomes `delivered_at`. The details reply's
   destination country becomes `destination_country`.
 - An estimate whose start and end clocks fall on its day becomes that window;

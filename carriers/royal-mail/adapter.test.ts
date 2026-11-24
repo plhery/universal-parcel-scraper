@@ -253,6 +253,8 @@ describe('Royal Mail structured response', () => {
     expect(statusMap.stage('EVNAE', 'available for redelivery or collection')).toBe('ready_for_pickup');
     // A round that could not deliver to the address it was given, before the item waits for collection.
     expect(statusMap.stage('EVKAI', 'couldn\'t deliver your parcel due to incorrect address')).toBe('failed_attempt');
+    // A post abroad returning the item under that code.
+    expect(statusMap.stage('EVKAI', 'incorrectly addressed. returned to sender.')).toBe('returned');
   });
 
   it('reads a Customer Service Point’s collection as the delivery when the summary calls the item collected on it', () => {
