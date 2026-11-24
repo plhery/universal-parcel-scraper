@@ -2,6 +2,25 @@
   "carrier": "inposdom",
   "records": [
     {
+      "number": "LF065150446SG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720013733/https://www.parcelpanel.com/couriers/inposdom/",
+        "date": "2026-07-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "singapore-post",
+        "confidence": "high"
+      },
+      "note": "An archived ParcelPanel INPOSDOM page offered it to try. INPOSDOM's tracker answers it as a Singapore Post postal parcel that entered the Dominican Republic for the Puerto Plata office and is being processed at the head office."
+    },
+    {
       "number": "RR240035215DO",
       "role": "shipment",
       "evidence": "public_shipment_report",

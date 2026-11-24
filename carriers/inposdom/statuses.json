@@ -1,4 +1,19 @@
 {
   "carrier": "inposdom",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Entrada",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The adapter's scan for a record's Fecha de Entrada, the day the item entered the Dominican Republic: the tracker only lists items that have."
+    },
+    {
+      "wording": "PROCESANDO EN LA SEDE CENTRAL",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "A record's Estatus: the item is being processed at INPOSDOM's head office in Santo Domingo. The record names its destination office apart."
+    }
+  ]
 }

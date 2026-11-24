@@ -17,18 +17,56 @@
   "timezone": "America/Santo_Domingo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "inposdom",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "service_name",
+    "destination_country",
+    "pickup_point"
+  ],
   "portal": {
     "searchUrl": "https://inposdomtech.com/Inposoft/cliente/",
     "helpUrl": "https://inposdom.gob.do/contactos/",
     "canaryUrl": "https://inposdomtech.com/Inposoft/cliente/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "scan_times",
+      "service_name",
+      "weight",
+      "delivery_office",
+      "office_addresses",
+      "recipient_name",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "scan_times",
+      "service_name",
+      "delivery_office",
+      "office_addresses"
+    ],
+    "discarded": [
+      "weight",
+      "recipient_name",
+      "remarks"
+    ],
+    "unavailable": [
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "sender_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "signatory",
+      "origin"
+    ]
   },
   "links": [],
   "detection": []

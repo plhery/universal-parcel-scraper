@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+<title>Inposdom | SERVICIO AL CLIENTE</title>
+<meta charset='utf-8'>
+</head>
+<body>
+<center><img src="img/logo.png" height="100px" width="100px"></center>
+<h2><center><i class="fa fa-edit"></i>Consulta tu Envío llegado al país</center></h2>
+<form id="buscador" name="buscador" method="post" action="/Inposoft/cliente/index.php">
+  <center><input id="buscar" name="buscar" type="search" placeholder="Ingresa tu Código de envío" autofocus>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-default" name="buscador" class="boton peque aceptar" value="BUSCAR"></center>
+</form>
+<p><center><strong>Consulta el estado detallado de tu envío introduciendo su código de envío<br/>Esta aplicación es solo para consultar envíos llegados a República Dominicana</strong></center></p>
+<p><center><strong>La nomenclatura de los códigos de envíos de los correos está conformada por trece (13) dígitos Ejemplo: EE123456789US</center></strong></p>
+<center><strong><p>1- Los dos (2) primeros dígitos son letras que identifican el servicio</p>
+<p>2- Luego nueve (9) números</p>
+<p>3- Al final dos (2) letras las cuales identifican al país de origen</p></center></strong>
+<div class="colore alert alert-success alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <strong><center>HEMOS ENCONTRADO 1 REGISTRO(S)</center></strong>
+            </div><br/>      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Servicio</th>
+            <th>Código de Envío</th>
+            <th>Peso</th>
+            <th>Oficina de Destino</th>
+            <th>Destinatario</th>
+            <th>Monitor</th>
+            <th>Fecha de Entrada</th>
+            <th>Estatus</th>
+            <th>Direccion</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr><td>BULTO POSTAL</td><td>LF065150446SG</td><td>0.25</td><td>PUERTO PLATA</td><td>RECIPIENT NAME</td><td>Ninguno</td><td>2025-07-01</td><td>PROCESANDO EN LA SEDE CENTRAL</td><td>Av. 12 de Julio esq. Separacion, Puerto Plata</td></tr></tbody></table><p class='lol'><center><strong>C/ Héroes de Luperón, esq. Rafael Damirón, Centro de Los Héroes, Santo Domingo, D.N., Rep. Dom., Código Postal 10101, Tel. 809-534-5838 / ® 2017 INPOSDOM</strong></center></p>
+</body>
+</html>

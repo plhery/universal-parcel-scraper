@@ -77,6 +77,7 @@ import { statusMap as libertyExpress } from '../../carriers/liberty-express/stat
 import { statusMap as correosPanama } from '../../carriers/correos-panama/status.js';
 import { statusMap as correoParaguayo } from '../../carriers/correo-paraguayo/status.js';
 import { statusMap as jamaicaPost } from '../../carriers/jamaica-post/status.js';
+import { statusMap as inposdom } from '../../carriers/inposdom/status.js';
 import { statusMap as omLogistics } from '../../carriers/om-logistics/status.js';
 import { statusMap as zesExpress } from '../../carriers/zes-express/status.js';
 import { statusMap as whwdt } from '../../carriers/whwdt/status.js';
@@ -1105,6 +1106,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'correos-panama': correosPanama,
   'correo-paraguayo': correoParaguayo,
   'jamaica-post': jamaicaPost,
+  'inposdom': inposdom,
   'om-logistics': omLogistics,
   'ap-cargo': apCargo, 'apd-parcel': apdParcel,
   'carrybee': carrybee,
