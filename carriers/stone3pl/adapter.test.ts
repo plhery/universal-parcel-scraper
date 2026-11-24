@@ -136,7 +136,7 @@ describe('Stone3PL', () => {
 
   it('reads a scan by the map after the place it names first, not after a head the wording rules read', () => {
     expect(['Synthetic Town, Shipping inbound in sorting center', 'ABC, Arrived at origin facility', 'ABC, Departed from sort facility',
-      'Waiting for the flight'].map(stone3plStage)).toEqual(Array(4).fill('in_transit'));
+      'Waiting for the flight', 'International flight has departed'].map(stone3plStage)).toEqual(Array(5).fill('in_transit'));
     expect(stone3plStage('Returned, Arrived at origin facility')).toBeUndefined();
     expect(stone3plStage('Some Long Synthetic Place Name, Arrived at origin facility')).toBeUndefined();
   });

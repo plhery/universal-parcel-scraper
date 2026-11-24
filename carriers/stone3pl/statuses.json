@@ -139,6 +139,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-23",
       "note": "At the origin airport after its arrival there, before the flight."
+    },
+    {
+      "wording": "International flight has departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The flight abroad has left, after the wait for it at the origin airport."
     }
   ]
 }
