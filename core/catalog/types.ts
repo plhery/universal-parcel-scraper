@@ -19,6 +19,7 @@ export type CarrierInputValidator =
   | 'truskCapabilityUrl'
   | 'freightwaysCapabilityUrl'
   | 'amazonShareUrl'
+  | 'mendrixCapabilityUrl'
   | 'swissPostcode'
   | 'francePostcode'
   | 'germanyPostcode'

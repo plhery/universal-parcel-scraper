@@ -1,5 +1,24 @@
 {
   "carrier": "max-pakket",
-  "gap": "No public page shows a MAX Pakket shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "MXTT88F27D091ABA1889",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251009125512/https://emens.mendrix.cloud/TrackAndTrace/tnt?Tracecode=MXTT88F27D091ABA1889&OrderId=39118",
+        "date": "2025-10-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Wayback Machine archived this track and trace link of MAX Pakket's Mendrix tracking app with its order number. The app answers it as a MAX XXL parcel delivered and signed for, with its registration, planned window and delivery moments."
+    }
+  ]
 }

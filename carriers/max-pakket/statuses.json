@@ -1,4 +1,17 @@
 {
   "carrier": "max-pakket",
-  "entries": []
+  "entries": [
+    {"wording": "Aangemeld", "stage": "registered", "language": "nl", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The order's registration, at its order moment: the tracking app's first milestone and one of its scan wordings."},
+    {"wording": "Onderweg", "stage": "in_transit", "language": "nl", "confirmedBy": "bundle", "note": "The tracking app's name for its second milestone, which it shows as the order's state while the milestone is active."},
+    {"wording": "Succesvol afgeleverd", "stage": "delivered", "language": "nl", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The delivery milestone completed successfully, as the tracking app words its summary, at the driver's departure from the stop."},
+    {"wording": "Gedeeltelijk afgeleverd", "stage": "exception", "language": "nl", "confirmedBy": "bundle", "note": "The delivery milestone completed with only part of the goods delivered."},
+    {"wording": "Niet succesvol afgeleverd", "stage": "failed_attempt", "language": "nl", "confirmedBy": "bundle", "note": "The delivery milestone completed without a delivery."},
+    {"wording": "Succesvol opgehaald", "stage": "accepted", "language": "nl", "confirmedBy": "bundle", "note": "A collection order's last milestone completed: the parcel was collected from its sender."},
+    {"wording": "Gedeeltelijk opgehaald", "stage": "exception", "language": "nl", "confirmedBy": "bundle", "note": "A collection completed with only part of the goods collected."},
+    {"wording": "Niet succesvol opgehaald", "stage": "exception", "language": "nl", "confirmedBy": "bundle", "note": "A collection completed without collecting the goods."},
+    {"wording": "Opgehaald", "stage": "accepted", "language": "nl", "confirmedBy": "bundle", "note": "A scan wording the tracking app translates: picked up from the sender."},
+    {"wording": "Verplaatst op/overslag", "stage": "in_transit", "language": "nl", "confirmedBy": "bundle", "note": "A scan wording the tracking app translates: moved on or transshipped."},
+    {"wording": "Aflevering mislukt", "stage": "failed_attempt", "language": "nl", "confirmedBy": "bundle", "note": "A scan wording the tracking app translates: delivery failed."},
+    {"wording": "Afgeleverd", "stage": "delivered", "language": "nl", "confirmedBy": "bundle", "note": "A scan wording the tracking app translates: delivered."}
+  ]
 }

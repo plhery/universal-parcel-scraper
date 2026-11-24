@@ -16,19 +16,76 @@
   "timezone": "Europe/Amsterdam",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "max-pakket",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "requirements": [
+      {
+        "field": "trackingUrl",
+        "validator": "mendrixCapabilityUrl",
+        "optional": true,
+        "label": "MAX Pakket tracking link",
+        "type": "url",
+        "placeholder": "https://emens.mendrix.cloud/TrackAndTrace/tnt?Tracecode=MXTT…",
+        "help": "The track and trace link from the delivery email names the order the code belongs to. Without it, other sources are asked."
+      }
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "eta",
+    "delivered_at",
+    "offset_timestamps"
+  ],
   "portal": {
     "searchUrl": "https://emens.mendrix.cloud/TrackAndTrace",
     "helpUrl": "https://maxpakket.nl/contact/",
     "canaryUrl": "https://emens.mendrix.cloud/TrackAndTrace",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "eta",
+      "delivered_at",
+      "recipient_name",
+      "destination",
+      "proof_of_delivery",
+      "weight",
+      "dimensions",
+      "driver_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "recipient_name",
+      "destination",
+      "proof_of_delivery",
+      "weight",
+      "dimensions",
+      "driver_name"
+    ],
+    "unavailable": [
+      "location",
+      "sender_name"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "emens.mendrix.cloud"
+      ],
+      "pathPattern": "^/TrackAndTrace/tnt/?$",
+      "query": "^(?=(?:.*&)?orderid=[1-9]\\d{0,11}(?:&|$))(?:.*&)?tracecode=(MXTT[0-9A-F]{8,32})(?=&|$)",
+      "keepsCapabilityUrl": true
+    }
+  ],
   "detection": []
 }

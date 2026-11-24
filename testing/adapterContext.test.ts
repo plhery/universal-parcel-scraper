@@ -164,6 +164,10 @@ function credential(validator: string, number: string, carrier: string): string 
     }
     case 'amazonShareUrl':
       return `https://www.amazon.co.uk/progress-tracker/package/share/?shareToken=${amazonShareToken(number)}`;
+    case 'mendrixCapabilityUrl': {
+      const host = carrierLinkRules(carrier as CarrierId).find((rule) => rule.keepsCapabilityUrl)!.domains[0];
+      return `https://${host}/TrackAndTrace/tnt?Tracecode=${number}&OrderId=1`;
+    }
     default: throw new Error(`No synthetic credential for ${validator}`);
   }
 }

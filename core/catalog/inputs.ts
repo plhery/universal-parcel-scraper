@@ -8,6 +8,7 @@ import { validateInstaboxTrackingUrl } from './urls.js';
 import { validateTruskTrackingUrl } from './urls.js';
 import { validateFreightwaysTrackingUrl } from './urls.js';
 import { validateAmazonShareUrl } from './urls.js';
+import { validateMendrixTrackingUrl } from './urls.js';
 import { DELIVERY_POSTCODE, colisPrivePostcode, deliveryPostcodeText } from './postcode.js';
 
 export {
@@ -53,6 +54,7 @@ function capabilityUrl(validator: CarrierInputValidator, value: string, tracking
     case 'truskCapabilityUrl': return validateTruskTrackingUrl(value, trackingNumber);
     case 'freightwaysCapabilityUrl': return validateFreightwaysTrackingUrl(value, trackingNumber, carrierId);
     case 'amazonShareUrl': return validateAmazonShareUrl(value, trackingNumber);
+    case 'mendrixCapabilityUrl': return validateMendrixTrackingUrl(value, trackingNumber, carrierId);
     default: return undefined;
   }
 }
@@ -136,6 +138,7 @@ export function normalizeCarrierInputs(
       case 'truskCapabilityUrl':
       case 'freightwaysCapabilityUrl':
       case 'amazonShareUrl':
+      case 'mendrixCapabilityUrl':
         supplied[field] = capabilityUrl(requirement.validator, value, trackingNumber, carrierId)!;
         break;
       case 'swissPostcode':

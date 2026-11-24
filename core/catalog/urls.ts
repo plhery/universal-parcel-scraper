@@ -304,3 +304,63 @@ export function readAmazonShareUrl(rawUrl: string, trackingNumber: string): Amaz
 export function validateAmazonShareUrl(rawUrl: string, trackingNumber: string): string {
   return readAmazonShareUrl(rawUrl, trackingNumber).url;
 }
+
+// The track and trace host of each carrier that runs the Mendrix transport system's tracking app.
+const MENDRIX_HOSTS: Readonly<Record<string, string>> = {
+  'max-pakket': 'emens.mendrix.cloud',
+};
+const MENDRIX_LINK_PATH = /^\/TrackAndTrace\/tnt\/?$/i;
+/** A Mendrix Track & Trace code, as its links and its app show it: MXTT and hexadecimal digits. */
+export const MENDRIX_TRACE_CODE = /^MXTT[0-9A-F]{8,32}$/;
+const MENDRIX_ORDER_ID = /^[1-9]\d{0,11}$/;
+
+/** A Mendrix tracking link, read into the Track & Trace code and the order it opens. */
+export interface MendrixTrackingLink {
+  /** The link as the tracking app's emails give it, with no other parameter. */
+  url: string;
+  /** The tracking app's host. */
+  host: string;
+  /** The Track & Trace code, which is the tracking number. */
+  code: string;
+  /** The transport order the code belongs to. */
+  orderId: string;
+}
+
+/**
+ * Read a Mendrix tracking link, `https://<host>/TrackAndTrace/tnt?Tracecode=<code>&OrderId=<order>`,
+ * bound to the carrier's tracking host and to the complete Track & Trace code. The app opens an
+ * order only with its code and its order number, or with its code and the delivery address.
+ */
+export function readMendrixTrackingUrl(rawUrl: string, trackingNumber: string, carrierId: string): MendrixTrackingLink {
+  const host = MENDRIX_HOSTS[carrierId];
+  if (!host) throw new TypeError('This carrier takes no Mendrix tracking link');
+  let url: URL;
+  try { url = new URL(rawUrl.trim()); } catch { throw new TypeError('Paste the complete tracking link'); }
+  if (rawUrl.length > 4096 || url.protocol !== 'https:' || url.hostname.toLowerCase() !== host || url.username || url.password
+    || (url.port && url.port !== '443') || url.hash || !MENDRIX_LINK_PATH.test(url.pathname)) {
+    throw new TypeError(`The tracking link must open https://${host}/TrackAndTrace/tnt`);
+  }
+  /** A parameter by its name, whatever its case; two values are refused. */
+  const param = (name: string) => {
+    const values = [...url.searchParams].filter(([key]) => key.toLowerCase() === name).map(([, value]) => value.trim());
+    return values.length === 1 ? values[0]! : undefined;
+  };
+  for (const [key, value] of url.searchParams) {
+    if (!['tracecode', 'orderid'].includes(key.toLowerCase())
+      && (!/^utm_(?:source|medium|campaign|content|term)$/.test(key) || value.length > 256)) {
+      throw new TypeError('The tracking link contains an unsupported parameter');
+    }
+  }
+  const code = param('tracecode')?.toUpperCase();
+  if (!code || !MENDRIX_TRACE_CODE.test(code) || code !== normalizeTrackingNumber(trackingNumber)) {
+    throw new TypeError('The tracking link must name this complete Track & Trace code');
+  }
+  const orderId = param('orderid');
+  if (!orderId || !MENDRIX_ORDER_ID.test(orderId)) throw new TypeError('The tracking link must include its order number');
+  return { url: `https://${host}/TrackAndTrace/tnt?Tracecode=${code}&OrderId=${orderId}`, host, code, orderId };
+}
+
+/** A Mendrix tracking link, as the link it keeps. */
+export function validateMendrixTrackingUrl(rawUrl: string, trackingNumber: string, carrierId: string): string {
+  return readMendrixTrackingUrl(rawUrl, trackingNumber, carrierId).url;
+}

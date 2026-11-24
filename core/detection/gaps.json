@@ -2828,6 +2828,12 @@
     "reason": "Maruti Air document numbers are plain runs of eight to ten digits, a shape many carriers share."
   },
   {
+    "carrier": "max-pakket",
+    "pattern": "^MXTT[0-9A-F]{8,32}$",
+    "kind": "by_design",
+    "reason": "MXTT codes are the Track and Trace codes of the Mendrix transport system, which other transport companies run too, and they open an order only with the order number of their link."
+  },
+  {
     "carrier": "mbe-es",
     "pattern": "^ES\\d{4}[0-9A-Z]{12}$",
     "kind": "open",

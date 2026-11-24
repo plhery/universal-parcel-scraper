@@ -55,7 +55,7 @@ async function readAdapterFolders() {
 }
 
 const carrierInputValidators = {
-  trackingUrl: new Set(['planzerSharedUrl', 'dachserCapabilityUrl', 'instaboxCapabilityUrl', 'truskCapabilityUrl', 'freightwaysCapabilityUrl', 'amazonShareUrl']),
+  trackingUrl: new Set(['planzerSharedUrl', 'dachserCapabilityUrl', 'instaboxCapabilityUrl', 'truskCapabilityUrl', 'freightwaysCapabilityUrl', 'amazonShareUrl', 'mendrixCapabilityUrl']),
   postcode: new Set([
     'swissPostcode',
     'francePostcode',
