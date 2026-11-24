@@ -19,19 +19,57 @@
   "timezone": "Asia/Baku",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "azerpost",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "weight"
+  ],
   "portal": {
     "url": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi?package_id={trackingNumber}",
     "searchUrl": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi",
     "helpUrl": "https://www.azerpost.az/az/tez-tez-verilen-suallar/umumi-br-suallar",
     "canaryUrl": "https://www.azerpost.az/az/xidmetler/gonderislerin-izlenmesi",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "weight",
+      "item_category",
+      "order_contents",
+      "origin_country",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "weight",
+      "destination_country"
+    ],
+    "discarded": [
+      "item_category",
+      "order_contents",
+      "origin_country"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "service_name",
+      "sender_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "delivered_at"
+    ]
   },
   "links": [
     {

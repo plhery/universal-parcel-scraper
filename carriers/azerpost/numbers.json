@@ -2,6 +2,25 @@
   "carrier": "azerpost",
   "records": [
     {
+      "number": "RR013659216AZ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260614140456/https://www.parcelpanel.com/couriers/azerbaijan-post/",
+        "date": "2026-06-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "An archived ParcelPanel Azerbaijan Post page offered it to try. Azerpost's tracker answers it as a registered letter posted in Baku for Australia that left Baku's outward office of exchange."
+    },
+    {
       "number": "SS643530608AZ",
       "role": "shipment",
       "evidence": "public_shipment_report",

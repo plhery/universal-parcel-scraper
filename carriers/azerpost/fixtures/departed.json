@@ -1,0 +1,30 @@
+{
+  "Item": {
+    "@Identifier": "RR013659216AZ",
+    "Weight": 0.32,
+    "ClassCd": "Written mail",
+    "Content": "Merchandise",
+    "OrigCountryCd": "AZERBAIJAN",
+    "DestCountryCd": "AUSTRALIA",
+    "PostalStatusCd": "Arrived",
+    "Event": [
+      {
+        "Code": "Posting/collection",
+        "Date": "2025-03-07T12:57:00",
+        "OfficeCd": "Bakı: AZ1000",
+        "ConditionCd": "30"
+      },
+      {
+        "Code": "Arrival at outward office of exchange",
+        "Date": "2025-03-07T18:45:00",
+        "OfficeCd": "Bakı: AZ9095",
+        "ConditionCd": "30"
+      },
+      {
+        "Code": "Departure from outward office of exchange",
+        "Date": "2025-03-10T06:37:10.566667",
+        "OfficeCd": "Bakı: AZBAKA"
+      }
+    ]
+  }
+}

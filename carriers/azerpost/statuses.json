@@ -1,6 +1,9 @@
 {
   "carrier": "azerpost",
   "entries": [
+    {"wording": "Posting/collection", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "UPU's EMA, the item taken in at a post office, as the tracking lookup names it in English."},
+    {"wording": "Arrival at outward office of exchange", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "UPU's EMB: at the office of exchange that sends it abroad, Baku's for an item from Azerbaijan."},
+    {"wording": "Departure from outward office of exchange", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "UPU's EMC: the item leaves for the destination country."},
     {"wording": "Qəbul olunub", "stage": "accepted", "language": "az", "confirmedBy": "portal", "note": "Shown on archived lookups on azerpost.az."},
     {"wording": "Mübadilə məntəqəsinə daxil olub", "stage": "in_transit", "language": "az", "confirmedBy": "portal", "note": "Shown on archived lookups on azerpost.az. Arrived at an office of exchange."},
     {"wording": "Göndərən ölkənin mübadilə məntəqəsinə daxil olub", "stage": "in_transit", "language": "az", "confirmedBy": "portal", "note": "Shown on archived lookups on azerpost.az."},
