@@ -60,13 +60,15 @@ export function uspsOutage(result) {
 
 // A session that USPS sent to the outage page carries the cookies it flagged: replayed, it is
 // sent there again. TRAWL keeps a replayed session that returned any page, so it would replay
-// that one until it expired. A replay sent to the outage page drops the site's session instead,
-// and a fresh browser sent there saves none.
+// that one until it expired. A replay sent to the outage page drops that session instead, under
+// the key it was cached under (a request's own proxy keeps its own), and a fresh browser sent
+// there saves none.
 const SESSION_PATCHES = [
-  ['        if (t2.cookies && t2.cookies.length > 0) {',
-    '        if (uspsOutage(t2)) await deps.invalidateSession(domain)\n        else if (t2.cookies && t2.cookies.length > 0) {'],
-  ['        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !privateRequest) {',
-    '        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !privateRequest && !uspsOutage(t3)) {'],
+  ['        if (t2.cookies && t2.cookies.length > 0) {\n          await deps.saveSession(cacheKey, {',
+    '        if (uspsOutage(t2)) await deps.invalidateSession(cacheKey)\n'
+      + '        else if (t2.cookies && t2.cookies.length > 0) {\n          await deps.saveSession(cacheKey, {'],
+  ['        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && cacheAllowed) {',
+    '        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && cacheAllowed && !uspsOutage(t3)) {'],
 ];
 
 // USPS sends the first read of every browser session to the outage page, and keeps sending some
