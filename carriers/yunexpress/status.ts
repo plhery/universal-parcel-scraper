@@ -140,6 +140,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Accepted at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Processing at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
   // The same intake and facilities when the last-mile carrier is USPS, after the hand-over to it.
   ['Accepted at USPS Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at USPS Facility', { status: 'in_transit', stage: 'in_transit' }],

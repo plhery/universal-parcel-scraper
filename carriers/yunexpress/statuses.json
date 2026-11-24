@@ -756,6 +756,14 @@
       "note": "Relayed from the same carrier, leaving its sorting facilities."
     },
     {
+      "wording": "Processing at Carrier's Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Relayed from the same carrier, at one of its sorting facilities minutes before its arrival scan there."
+    },
+    {
       "wording": "Delivery failed, type: Recipient absent or delivery location inaccessible.",
       "stage": "failed_attempt",
       "language": "en",
