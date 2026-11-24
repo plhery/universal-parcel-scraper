@@ -1,0 +1,100 @@
+{
+  "carrier": "jthq",
+  "records": [
+    {
+      "number": "JTHQ024866600547",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/jthq/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "One of the example tracking numbers a tracking directory's JTHQ page shows, a different one on each load. JTHQ's lookup answers it with a parcel to Canada flown from Hong Kong to Toronto, with Canada Post's number."
+    },
+    {
+      "number": "JTHQ024866620735",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/jthq/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another example the same page showed. JTHQ's lookup answers it with a parcel to Canada on the same flight, with Canada Post's number."
+    },
+    {
+      "number": "JTHQ023937990657",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/jthq/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another example the same page showed. JTHQ's lookup answers it with a parcel to Canada out for delivery, with Canada Post's scans copied."
+    },
+    {
+      "number": "JTHQ024154980703",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/jthq/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another example the same page showed. JTHQ's lookup answers it with a parcel to Canada still at the Shenzhen warehouse."
+    },
+    {
+      "number": "JTHQ022557630284",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/jthq/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An earlier example the same page showed. JTHQ's lookup answers it with a parcel to the United States delivered by USPS, with USPS's scans copied."
+    }
+  ]
+}
