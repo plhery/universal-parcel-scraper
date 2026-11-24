@@ -12,6 +12,7 @@ import { isRecord } from '../../core/types.js';
 import { hasSeveralClocks, mainZone } from '../../places/zones.js';
 import { cttExpressRelayZone } from '../ctt-express/clock.js';
 import { DHL_PAKET_ROW } from '../dhl/paket-rows.js';
+import { isJAndTGermanyCopy } from '../j-and-t-de/copies.js';
 import { jsExpressChinaClock } from './clock.js';
 import { imileReceiver } from '../imile/parser.js';
 import { IMILE_RECEIVER, LIST_PLACE, RECEIVER } from './identity.js';
@@ -66,9 +67,6 @@ const STATE = /,\s*[A-Z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/;
 const TOWN_STATE = /^[^,]+,([A-Z]{2})$/;
 // The offset a row states, as "+02:00".
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
-// J&T Express Germany's rows in German, as the destination courier: its scans opening with the district in 【】, its
-// round, its delivery and its record of the order's data.
-const J_AND_T_GERMANY = /^【[^】]*】.*\b(?:Sendung|Paket)\b|^Die Sendung von 【[^】]*】 in 【[^】]*】 ist unterwegs zur Zustellung\b|^Ihr Paket wurde erfolgreich zugestellt\b|^Die Auftragsdaten für diese Sendung wurden elektronisch an J&T Express übermittelt\b/u;
 // A row's code, as "OIT" or "DSD".
 const CODE = /^[A-Z]{2,4}$/;
 const MAX_ROWS = 500;
@@ -197,7 +195,7 @@ function destinationInstant(local: string, offset: string, country: string | nul
  * second; read on Berlin's clock, its scans would come two hours early.
  */
 function statedInstant(local: string, offset: string, description: string): string | undefined {
-  if (!OFFSET.test(offset) || !J_AND_T_GERMANY.test(description)) return undefined;
+  if (!OFFSET.test(offset) || !isJAndTGermanyCopy(description)) return undefined;
   const instant = DateTime.fromISO(`${local}${offset}`, { setZone: true });
   return instant.isValid ? instant.toISO({ suppressMilliseconds: true }) ?? undefined : undefined;
 }

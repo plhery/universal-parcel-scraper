@@ -174,6 +174,30 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-23",
       "note": "At the origin airport after its arrival there, before the flight."
+    },
+    {
+      "wording": "【】【】Ihr Sendung wurde abgeholt.",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "J&T Express Germany's first scan, with its district and site in 【】, copied in German: it takes the parcel from the line's hand-over to the local courier, after the flight and customs, so the parcel moves on."
+    },
+    {
+      "wording": "【】Die Sendung hat【】verlassen. Weiterversand nach【】",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "J&T Express Germany's departure from one of its sites to the next, both named in 【】, copied in German."
+    },
+    {
+      "wording": "【】Die Sendung ist bei【】 angekommen.",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "J&T Express Germany's arrival at a hub or at the depot that delivers, before its round, copied in German."
     }
   ]
 }

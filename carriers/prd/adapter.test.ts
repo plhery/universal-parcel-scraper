@@ -62,10 +62,27 @@ describe('Prime Express HTTP adapter', () => {
       stage: 'in_transit', stage_source: 'carrier_map' });
     expect(events[2]).toMatchObject({ description: 'Inbound to customs temporary warehouse', stage: 'customs' });
     expect(events.at(-1)).toMatchObject({ local_time: '2030-03-04T16:44:59', stage: 'registered' });
-    // J&T Express Germany's notice has no place.
-    expect(events.at(-2)).toEqual({ local_time: '2030-03-05T17:01:16', stage: 'registered', stage_source: 'carrier_map',
+    // J&T Express Germany's notice has no place, and its clock is an hour behind UTC.
+    expect(events.at(-2)).toEqual({ time: '2030-03-05T17:01:16-01:00', stage: 'registered', stage_source: 'carrier_map',
       description: 'Die Auftragsdaten für diese Sendung wurden elektronisch an J&T Express übermittelt' });
     expect(JSON.stringify(result)).not.toMatch(/S000000000000000001|signatory|pod_url/);
+  });
+
+  it("dates J&T Express Germany's rows it copies an hour behind UTC, and reads their wording without the sites in brackets", () => {
+    const copied = (date: string, description: string) => ({ trk_id: '1001', tbs_id: '2000', childpiece_id: null, track_occur_date: date,
+      track_location: 'Beispiel', track_description: description, track_description_en: description, track_code: '', track_status: '',
+      track_status_cnname: '', track_status_enname: '', gmt_offset: '' });
+    const result = parsePrd(changed((item) => { item.details.unshift(
+      copied('2030-03-13 18:30:46', '【Beispiel】Die Sendung ist bei【Beispiel HUB】 angekommen.'),
+      copied('2030-03-13 18:19:46', '【Beispiel】Die Sendung hat【Beispiel HUB】verlassen. Weiterversand nach【Beispiel】'),
+      copied('2030-03-13 18:09:46', '【Beispiel】【Beispiel Kurier】Ihr Sendung wurde abgeholt.')); }), PARCEL);
+    expect(result.events!.slice(0, 4)).toEqual([
+      { time: '2030-03-13T18:30:46-01:00', location: 'Beispiel', description: '【Beispiel】Die Sendung ist bei【Beispiel HUB】 angekommen.',
+        stage: 'in_transit', stage_source: 'carrier_map' },
+      expect.objectContaining({ time: '2030-03-13T18:19:46-01:00', stage: 'in_transit', stage_source: 'carrier_map' }),
+      expect.objectContaining({ time: '2030-03-13T18:09:46-01:00', stage: 'in_transit', stage_source: 'carrier_map' }),
+      expect.objectContaining({ local_time: '2030-03-12T15:41:00', description: 'Prepared for last mile handover' }),
+    ]);
   });
 
   it('names a delivering carrier only when its rules claim the number whole', () => {

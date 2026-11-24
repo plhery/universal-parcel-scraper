@@ -1,8 +1,9 @@
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
-import type { CarrierResult } from '../../core/result/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { countryCode } from '../../core/time/index.js';
+import { countryCode, explicitOffsetTime } from '../../core/time/index.js';
+import { isJAndTGermanyCopy, J_AND_T_GERMANY_COPY_OFFSET } from '../j-and-t-de/copies.js';
 import { RTB56_MAX_BYTES, rtb56Entry, rtb56Scans, rtb56Text } from '../yypost/rtb56.js';
 import { prdStage } from './status.js';
 
@@ -15,6 +16,19 @@ const REFERENCE = /^[A-Z0-9]{6,40}$/;
 // The networks the line was seen handing parcels to, which their own rules claim whole.
 const PARTNERS: ReadonlySet<string> = new Set(['j-and-t-de']);
 const MAX_EVENTS = 100;
+
+/**
+ * A row J&T Express Germany wrote, which the tracker copies in German once the parcel is handed to it: its wall
+ * clock is on the offset those copies keep, an hour behind UTC, not on the clock of the German place it names.
+ */
+function jAndTGermanyClock(event: CarrierEvent): CarrierEvent {
+  const instant = event.local_time && isJAndTGermanyCopy(event.description ?? '')
+    ? explicitOffsetTime(`${event.local_time}${J_AND_T_GERMANY_COPY_OFFSET}`) : null;
+  if (!instant) return event;
+  const dated: CarrierEvent = { time: instant.iso, ...event };
+  delete dated.local_time;
+  return dated;
+}
 
 /** A Prime Express parcel number; anything else is not one its tracker is asked about. */
 export function normalizePrdNumber(raw: string): string {
@@ -34,7 +48,7 @@ export function normalizePrdNumber(raw: string): string {
 export function parsePrd(payload: unknown, raw: string): CarrierResult {
   const number = normalizePrdNumber(raw);
   const { item, rows } = rtb56Entry(payload, number, PROVIDER);
-  const events = rtb56Scans(rows, PROVIDER, prdStage, { offsets: false });
+  const events = rtb56Scans(rows, PROVIDER, prdStage, { offsets: false }).map(jAndTGermanyClock);
   const newest = events[0]!;
   const staged = events.find((event) => event.stage);
   const stage = staged?.stage as Stage | undefined;

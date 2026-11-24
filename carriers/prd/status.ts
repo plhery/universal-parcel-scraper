@@ -13,8 +13,13 @@ const ENTRIES: readonly Entry[] = statuses.entries;
  */
 const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.map((entry) => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
 
+// J&T Express Germany's scans, which the tracker copies in German, open with the district in 【】 and name its sites
+// in 【】, so each place makes a new wording: emptied of those names, they take their entry.
+const BRACKETED = /【[^】]*】/g;
+
 function mappedStage(wording: string): Stage | undefined {
-  return WORDINGS.get(normalizeStatusWording(wording));
+  const normalized = normalizeStatusWording(wording);
+  return WORDINGS.get(normalized) ?? (normalized.startsWith('【') ? WORDINGS.get(normalized.replace(BRACKETED, '【】')) : undefined);
 }
 
 /** A scan's stage: the map, else the shared wording rules, else nothing. */

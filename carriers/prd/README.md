@@ -23,7 +23,11 @@ the rtb56 tracking platform.
 ## Notes
 
 - Scans are wall clocks without an offset, so they keep `local_time`, the result keeps the
-  tracker's order and the facade dates them by their places where it can.
+  tracker's order and the facade dates them by their places where it can. J&T Express Germany's rows,
+  which the tracker copies in German once the parcel is handed to it, are an hour behind UTC: that
+  gives the instant J&T Express Germany's own tracker gives the same scan, to the second, where the
+  German place they name would put them two hours early. Their sites in `【】` are left out of the
+  wording the map reads.
 - Scans carry no code. [`statuses.json`](statuses.json) maps the wordings seen live; others go
   through the shared wording rules. The delivering network's notice comes in its own language.
 - `channel_hawbcode` is the delivering network's number, kept as the onward number. Its carrier is
