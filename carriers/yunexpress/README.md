@@ -59,7 +59,13 @@ depot or the scans around it: the latest-scan record labels one at a Brisbane
 depot with Sydney's summer offset, and J&T's own instants are its wall clock on
 Brisbane's, an hour later, so that label is left out. A history needs one of
 J&T's own sentences for that: "Your parcel has been delivered." alone is any
-carrier's.
+carrier's. In a country of several clocks the record can also state another
+zone's offset than the newest scan's place keeps: GMT-05:00 for a US last
+mile's delivery in Illinois in winter put it before that carrier's
+out-for-delivery there. When the stated offset puts the newest scan before the
+nearest earlier scan with an instant, its own or its place's, and the place's
+clock does not, the scan is dated on its place's clock; otherwise the stated
+offset stands.
 [`identity.ts`](identity.ts) lets such a row take over the one an app
 stored for its wall clock under another offset, with the same place and wording. The
 reply is inconclusive when its latest summary does not match the first scan.

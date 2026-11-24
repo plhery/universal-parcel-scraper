@@ -141,6 +141,9 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Arrived at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Processing at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
+  // That carrier's round in the United States: the parcel loaded on the van, then out for delivery.
+  ['Loaded on Delivery Vehicle', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  ['Out For Delivery Today', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // The same intake and facilities when the last-mile carrier is USPS, after the hand-over to it.
   ['Accepted at USPS Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at USPS Facility', { status: 'in_transit', stage: 'in_transit' }],
@@ -264,9 +267,12 @@ export function withoutRepeatedParts(location: string): string {
 }
 
 // A relayed notice about the parcel rather than a scan of it names no stage,
-// so the parcel keeps the one it had: here a reminder to collect it that
-// failed to send.
-const NOTICE = normalizeStatusWording('REMINDER EMAIL SENT FAILED');
+// so the parcel keeps the one it had: a reminder to collect it that failed to
+// send, and a US last mile's note of the day it delivers on, without a place.
+const NOTICES = new Map(([
+  ['REMINDER EMAIL SENT FAILED', 'A reminder that failed to send, not a movement: the parcel keeps the stage it had.'],
+  ['Scheduled delivery date', 'A note of the delivery day, not a movement: the parcel keeps the stage it had.'],
+] as const).map(([wording, note]) => [normalizeStatusWording(wording), note] as const));
 
 const IMPORT_CLEARED = new Set(['Clearance processing completed - Import', 'Customs released - Import'].map(normalizeStatusWording));
 const BROKER_WAREHOUSE = normalizeStatusWording('Arrived at the warehouse of Customs Broker');
@@ -297,7 +303,7 @@ export function isYunExpressDataRecord(description: string): boolean {
 
 /** Whether the wording is a relayed notice the map gives no stage on purpose. */
 export function isYunExpressNotice(description: string): boolean {
-  return normalizeStatusWording(description) === NOTICE;
+  return NOTICES.has(normalizeStatusWording(description));
 }
 
 /** Yuntrack's scan wording, compared without case or repeated spaces. */
@@ -343,5 +349,5 @@ export function yunExpressCodeStatus(code: unknown): CarrierStatus | undefined {
  */
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => yunExpressStatus(withoutMarkup(wording))?.stage,
-  gaps: [{ wording: NOTICE, note: 'A reminder that failed to send, not a movement: the parcel keeps the stage it had.' }],
+  gaps: [...NOTICES].map(([wording, note]) => ({ wording, note })),
 };

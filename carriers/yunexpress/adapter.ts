@@ -13,7 +13,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { clean, type TrawlClient, type TrawlScrapeResponse } from '../../core/transport/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { isRecord } from '../../core/types.js';
-import { airportTimeZone } from '../../places/index.js';
+import { airportTimeZone, locatePlace, placeTimeZone } from '../../places/index.js';
 import { hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { chinaPostAirline, chinaPostDestinationScan } from '../china-post/status.js';
 import { jAndTAuRelayedStage, relaysJAndTAu } from '../j-and-t-au/status.js';
@@ -171,6 +171,38 @@ function unlabelJAndTAuScans(events: CarrierEvent[], country: string): CarrierEv
 }
 
 /**
+ * The newest scan in a country of several clocks, on its place's clock when the
+ * latest-scan record states another zone's offset that puts it before the scan
+ * it follows: GMT-05:00 for a delivery the US last mile scanned in Illinois in
+ * winter came an hour before its out-for-delivery there. Without that
+ * contradiction, the stated offset stands.
+ */
+function datePlacedLatest(events: CarrierEvent[], country: string): CarrierEvent[] {
+  const [latest, ...older] = events;
+  if (!latest?.time || latest.local_time || latest.time_zone || !latest.location || !hasSeveralClocks(country)) return events;
+  const zoneOf = (location: string | undefined) => {
+    const place = location ? locatePlace(location, { countries: [country] }) : null;
+    return place?.country === country && (place.precision === 'city' || place.region) ? placeTimeZone(place) : null;
+  };
+  const stated = DateTime.fromISO(latest.time, { setZone: true });
+  const local = stated.toISO({ includeOffset: false, suppressMilliseconds: true });
+  const zone = zoneOf(latest.location);
+  if (!local || !zone) return events;
+  const placed = firstOccurrence(DateTime.fromISO(local, { zone }));
+  if (!stated.isValid || !placed.isValid || placed.offset === stated.offset) return events;
+  // The nearest earlier scan with an instant, its own or its place's.
+  let before: number | undefined;
+  for (const event of older) {
+    const other = event.time ? null : event.local_time ? zoneOf(event.location) : null;
+    const at = event.time ? DateTime.fromISO(event.time) : other ? firstOccurrence(DateTime.fromISO(event.local_time!, { zone: other })) : null;
+    if (at?.isValid) { before = at.toMillis(); break; }
+  }
+  if (before === undefined || stated.toMillis() >= before || placed.toMillis() < before) return events;
+  const time = placed.toISO({ suppressMilliseconds: true });
+  return time ? [{ ...latest, time, local_time: local, time_zone: zone, time_zone_basis: 'place' }, ...older] : events;
+}
+
+/**
  * China Post's arrivals and departures, relayed after the hand-over to it, name
  * their office in the wording; the office becomes the scan's place, in place
  * of the city the feed gives. An airline the feed gives as a place (邮政航空)
@@ -316,7 +348,9 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const domestic = /^[A-Z]{2}$/.test(country) && clean(info.OriginCountryCode, 8).toUpperCase() === country;
   const landed = dateArrivalAirport(events, info.DestAirport, country);
-  const dated = unlabelJAndTAuScans(officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(landed), country), lastOffset, domestic)), country);
+  const dated = datePlacedLatest(unlabelJAndTAuScans(officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(landed), country), lastOffset, domestic)), country), country);
+  // Each step dates the scans in place, one for one.
+  const decided = decider && dated[events.indexOf(decider)];
   const latest = dated[0]!;
   const classified = current;
   // A partner's relayed row can link its contact page with its own reference,
@@ -333,7 +367,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   return { status: classified?.status ?? yunExpressCodeStatus(last.TrackingStatus) ?? 'unknown', ...(classified ? { current_stage: classified.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(receiverName ? { receiver_name: receiverName } : {}), ...(receiverAddress ? { receiver_address: receiverAddress } : {}),
-    ...(classified?.stage === 'delivered' && decider?.time ? { delivered_at: decider.time } : {}),
+    ...(classified?.stage === 'delivered' && decided?.time ? { delivered_at: decided.time } : {}),
     ...(handoff ? { delivery_tracking_number: handoff, ...(partner ? { delivery_carrier: partner } : {}) } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: dated.slice(0, 100) };
 }

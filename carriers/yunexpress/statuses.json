@@ -1163,6 +1163,9 @@
     {"wording": "Arrived at Pickup Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Delegación de tránsito", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "CTT Express's transit branch, relayed for a parcel it delivers, at the minute of CTT Express's own \"Enviado\"."},
     {"wording": "Arrived at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The first scan after the label, hours before the departure scan."},
-    {"wording": "Paket har ankommit till vår terminal", "language": "sv", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from CityMail, delivering in Sweden: its arrival at its terminal, as CityMail reads its own scan."}
+    {"wording": "Paket har ankommit till vår terminal", "language": "sv", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from CityMail, delivering in Sweden: its arrival at its terminal, as CityMail reads its own scan."},
+    {"wording": "Loaded on Delivery Vehicle", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from the US last mile whose facilities show as the Carrier's Facility: the parcel loaded on the van for its round, before its out-for-delivery and delivery the same morning."},
+    {"wording": "Out For Delivery Today", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from the same carrier: its delivery round."},
+    {"wording": "Scheduled delivery date", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Relayed from the same carrier without a place, beside its delivery: a note of the delivery day, not a movement, so it has no stage and the parcel keeps the one it had."}
   ]
 }

@@ -429,6 +429,26 @@ describe('YunExpress captured response projection', () => {
     expect(parse(payload, NUMBER).events?.[0]!.time).toBe('2026-03-20T13:39:00+11:00');
   });
 
+  it("dates the newest US scan on its place's clock when the stated offset puts it before the scan it follows", () => {
+    const payload = placing({ 0: 'Chicago, IL', 1: '', 2: 'Chicago, IL' });
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string; ProcessDate: string }[] }) => group.ProcessDetailList);
+    Object.assign(rows[0], { ProcessDate: '2026-11-24T10:22:00', ProcessContent: 'DELIVERED----Chicago, IL' });
+    Object.assign(rows[1], { ProcessDate: '2026-11-24T10:22:00', ProcessContent: 'Scheduled delivery date' });
+    Object.assign(rows[2], { ProcessDate: '2026-11-24T09:25:00', ProcessContent: 'Out For Delivery Today----Chicago, IL' });
+    const info = payload.ResultList[0].TrackInfo;
+    Object.assign(info.LastTrackEvent, { ProcessDate: '2026-11-24T10:22:00', ProcessContent: 'DELIVERED', ProcessLocation: 'Chicago, IL', GmtProcessTimezone: 'GMT-05:00', TrackingStatus: 50 });
+    // On the stated GMT-05:00 the delivery came three minutes before the round's 09:25 in Chicago, on Central time.
+    const result = parse(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', delivered_at: '2026-11-24T10:22:00-06:00', last_update: '2026-11-24T10:22:00-06:00' });
+    expect(result.events?.[0]).toMatchObject({ time: '2026-11-24T10:22:00-06:00', local_time: '2026-11-24T10:22:00', time_zone: 'America/Chicago', time_zone_basis: 'place' });
+    // The day's note keeps no stage, and the round is the carrier's.
+    expect(result.events?.slice(1, 3).map((event) => event.stage)).toEqual([undefined, 'out_for_delivery']);
+    // Read after the round, the stated offset stands.
+    Object.assign(rows[2], { ProcessDate: '2026-11-24T08:25:00' });
+    expect(parse(payload, NUMBER).events?.[0]).toMatchObject({ time: '2026-11-24T10:22:00-05:00' });
+    expect(parse(payload, NUMBER).events?.[0]).not.toHaveProperty('time_zone');
+  });
+
   it("reads La Poste's platform scans in France on UTC, and its delivery office's on the office's clock", () => {
     // Against La Poste's own instants: its arrival in France at 18:08:37+02:00 came as 16:08:37.
     const relay = () => fixture('la-poste-relay');
