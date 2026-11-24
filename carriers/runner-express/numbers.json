@@ -1,5 +1,27 @@
 {
   "carrier": "runner-express",
-  "gap": "No public page shows a Runner Express tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "ZYIL0000000093533",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/2026/https://www.parcelpanel.com/couriers/runner-express/",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "An archived ParcelPanel Runner Express page offered it to try. Runner Express's tracker answers it with a parcel received at its Shenzhen warehouse, flown to Israel and cleared, left uncollected at a service point and returned to the shipper."
+    }
+  ]
 }

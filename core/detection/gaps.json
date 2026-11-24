@@ -3745,6 +3745,12 @@
     "reason": "Ten digits are printed by many carriers and nothing in the number points to RR Express."
   },
   {
+    "carrier": "runner-express",
+    "pattern": "^ZYIL\\d{13}$",
+    "kind": "open",
+    "reason": "Runner Express waybills seen are ZYIL and thirteen digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
     "carrier": "russian-post",
     "pattern": "^\\d{14}$",
     "kind": "by_design",

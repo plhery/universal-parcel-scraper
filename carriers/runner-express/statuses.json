@@ -1,4 +1,126 @@
 {
   "carrier": "runner-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Shipment Information Received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel's data, before the origin warehouse has it."
+    },
+    {
+      "wording": "Parcel arrive to our warehouse",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Runner Express's own warehouse at the origin, in Shenzhen for the sample, receives the parcel."
+    },
+    {
+      "wording": "The shenzhen warehouse has been sent out",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel leaves the origin warehouse for the flight."
+    },
+    {
+      "wording": "Transport delay, Wait for flight.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A wait for space on a flight: the parcel moves on with the next one."
+    },
+    {
+      "wording": "Flight depart",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Flight arrive at destination airpot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The flight lands in Israel. The misspelling is the carrier's."
+    },
+    {
+      "wording": "Held at Clearance Facility – Declaration submitted",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The import declaration is filed and the parcel waits for clearance."
+    },
+    {
+      "wording": "ORDER RECEIVED BY TRUCKER",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The truck from the airport's clearance facility takes the parcel."
+    },
+    {
+      "wording": "Customs cleared",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived to Sorting Center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived At Service Point",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel waits for the recipient at a pickup point."
+    },
+    {
+      "wording": "still at service point",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Repeated every few days while the parcel waits at the pickup point."
+    },
+    {
+      "wording": "enReady to back to Sorting Center",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The first step of the return from an uncollected pickup point. The leading \"en\" is the carrier's."
+    },
+    {
+      "wording": "On the way back to Sorting Center",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The return leg from the pickup point."
+    },
+    {
+      "wording": "Return to Sorting Center",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The returned parcel is back at the sorting center."
+    },
+    {
+      "wording": "To be returned",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel is set to go back to the shipper."
+    },
+    {
+      "wording": "returned to shipper",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }
