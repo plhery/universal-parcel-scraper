@@ -2411,6 +2411,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/go\.paperfly\.com\.bd\/track\/order\/010125-0000-A1-A1$/,
     marker: /Share Tracking Details|Parcel Details/,
     shipmentNotFound: { status: 404, marker: /Share Tracking Details/ } },
+  // LEXSHIP's tracking app looks the number in its address up on load.
+  { carrier: 'lexship', number: 'LX0000000000',
+    route: /^https:\/\/track\.lexship\.biz\/\?tracking=LX0000000000$/,
+    marker: /Can't Find Your Shipment Details\?|Current Status|Loading Tracking Information/ },
   // The page looks up the number in its address and answers an unknown one with a notice.
   { carrier: 'line-clear', number: 'V000000000000000',
     route: /^https:\/\/www\.lineclearexpress\.com\/tracker\?id=V000000000000000$/,

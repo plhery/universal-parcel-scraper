@@ -1,0 +1,94 @@
+[
+  {
+    "AWBNo": "RR057830637AE",
+    "Consignee": "EXAMPLE",
+    "Destination": "BY",
+    "Destination_City": "Minsk",
+    "Origin": "IN",
+    "Origin_City": "Ahmedabad",
+    "ShipDate": "31/10/2024 17:24:00",
+    "Status": "Delivered",
+    "TrackPoints": {
+      "AWBHistory": [
+        {
+          "SNo": 13,
+          "Status": "Delivered",
+          "ActionDate": "31/10/2024",
+          "ActionTime": "17:24:00"
+        },
+        {
+          "SNo": 12,
+          "Status": "Item arrived to destination country",
+          "ActionDate": "25/10/2024",
+          "ActionTime": "07:18:00"
+        },
+        {
+          "SNo": 11,
+          "Status": "Item forwarded to the destination country",
+          "ActionDate": "19/10/2024",
+          "ActionTime": "02:27:53"
+        },
+        {
+          "SNo": 10,
+          "Status": "Arrived at International transit Hub",
+          "ActionDate": "19/10/2024",
+          "ActionTime": "01:10:06"
+        },
+        {
+          "SNo": 9,
+          "Status": "Uplifted",
+          "ActionDate": "09/10/2024",
+          "ActionTime": "13:17:26"
+        },
+        {
+          "SNo": 8,
+          "Status": "Customs Cleared",
+          "ActionDate": "09/10/2024",
+          "ActionTime": "13:17:11"
+        },
+        {
+          "SNo": 7,
+          "Status": "Sent for Customs Clearance",
+          "ActionDate": "09/10/2024",
+          "ActionTime": "13:16:56"
+        },
+        {
+          "SNo": 6,
+          "Status": "LEX India Hub (Operations)",
+          "ActionDate": "04/10/2024",
+          "ActionTime": "12:57:09"
+        },
+        {
+          "SNo": 5,
+          "Status": "Received at LEX India Hub",
+          "ActionDate": "30/09/2024",
+          "ActionTime": "13:04:00"
+        },
+        {
+          "SNo": 4,
+          "Status": "Item Picked Up",
+          "ActionDate": "28/09/2024",
+          "ActionTime": "15:45:00"
+        },
+        {
+          "SNo": 3,
+          "Status": "PICKUP EMPLOYEE IS OUT TO P/U SHIPMENT ",
+          "ActionDate": "28/09/2024",
+          "ActionTime": "13:14:00"
+        },
+        {
+          "SNo": 2,
+          "Status": "Pickup Scheduled",
+          "ActionDate": "28/09/2024",
+          "ActionTime": "13:00:05"
+        },
+        {
+          "SNo": 1,
+          "Status": "Shipment Created",
+          "ActionDate": "28/09/2024",
+          "ActionTime": "12:58:28"
+        }
+      ]
+    }
+  }
+]

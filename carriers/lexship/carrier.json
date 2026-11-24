@@ -16,19 +16,49 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "lexship",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://track.lexship.biz/?tracking={trackingNumber}",
     "searchUrl": "https://track.lexship.biz/",
     "helpUrl": "https://www.lexship.com/contact",
     "canaryUrl": "https://track.lexship.biz/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "origin",
+      "destination",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "recipient_name"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "sender_name",
+      "delivery_partner"
+    ]
   },
   "links": [
     {

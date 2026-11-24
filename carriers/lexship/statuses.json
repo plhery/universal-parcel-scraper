@@ -1,4 +1,18 @@
 {
   "carrier": "lexship",
-  "entries": []
+  "entries": [
+    {"wording": "Shipment Created", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The seller's booking, before a pickup is planned."},
+    {"wording": "Pickup Scheduled", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "PICKUP EMPLOYEE IS OUT TO P/U SHIPMENT", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The courier is on the way to collect the parcel from the seller."},
+    {"wording": "Item Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Received at LEX India Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "LEX India Hub (Operations)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Handled at LEXSHIP's export hub in India."},
+    {"wording": "Sent for Customs Clearance", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Export clearance in India."},
+    {"wording": "Customs Cleared", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Export clearance done, as the shared wording rules read a release."},
+    {"wording": "Uplifted", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Loaded on the outbound flight."},
+    {"wording": "Arrived at International transit Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Item forwarded to the destination country", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Item arrived to destination country", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"}
+  ]
 }

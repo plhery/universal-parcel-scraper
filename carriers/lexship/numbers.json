@@ -1,5 +1,24 @@
 {
   "carrier": "lexship",
-  "gap": "No public page shows a LEXSHIP number.",
-  "records": []
+  "records": [
+    {
+      "number": "RR057830637AE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20241006033901/https://track.lexship.com/track?tracking_id%5B%5D=RR057830637AE",
+        "date": "2024-10-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "emirates-post",
+        "confidence": "high"
+      },
+      "note": "An archived lookup on LEXSHIP's former tracker shows this shipment booked in Ahmedabad for Minsk and handled at LEXSHIP's India hub. The current tracker answers it as delivered in Belarus, with its scans from booking."
+    }
+  ]
 }
