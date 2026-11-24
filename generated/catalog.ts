@@ -17117,7 +17117,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "comone-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.com1logistics.com/",
     "trackingUrlTemplate": "https://www.com1logistics.com/tracking.html?trackNo={trackingNumber}",
