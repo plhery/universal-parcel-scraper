@@ -1,5 +1,33 @@
 {
   "carrier": "southwestern-motor-transport",
-  "gap": "Southwestern Motor Transport publishes no PRO number format and no public page shows one of its numbers.",
-  "records": []
+  "records": [
+    {
+      "number": "00171053240",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/southwestern-motor-transport/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "TrackShip's Southwestern Motor Transport page gives it as its example tracking number, zero-padded to the trace's eleven digits. SMT's Shipment Tracing screen answers it with freight picked up in Houston and delivered in Angleton, Texas."
+    }
+  ]
 }

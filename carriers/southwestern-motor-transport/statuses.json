@@ -1,4 +1,11 @@
 {
   "carrier": "southwestern-motor-transport",
-  "entries": []
+  "entries": [
+    {"wording": "Pickup", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The trace's first row: SMT picked the freight up from the shipper."},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Cut off not made", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Seen at the destination town after a round started and before the next day's round: the freight missed the day's delivery and stays with SMT."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Signed by", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Follows the delivery with the signer's name where the other rows give the town. The parser leaves the row out."},
+    {"wording": "Delivered to customer", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The shipment's status line above the trace."}
+  ]
 }

@@ -1,0 +1,109 @@
+{
+  "success": true,
+  "version": "6.40.2",
+  "timeout": 900,
+  "psid": "00000000000000000000000000000000000000000000000000000000FEEDC0DE",
+  "layers": [
+    {
+      "formats": [
+        {
+          "name": "TRACEBY",
+          "file": "MWP705D",
+          "library": "PROFOUNDUI",
+          "active": true,
+          "data": {
+            "#TABINDEX": "0",
+            "$STAT": "",
+            "ANUM": "0",
+            "APPTDATE": "",
+            "APPTTIME": "",
+            "APPTWNDW": "",
+            "BL": "",
+            "BTNBACK": "0",
+            "BTNEMAIL": "0",
+            "BTNEXIT": "0",
+            "BTNIMAGE": "0",
+            "CLRTRACE": "0",
+            "DESTCITY": "",
+            "DLVDATE": "",
+            "DLVTIME": "",
+            "DUEDATE": "",
+            "FHPRO": "0",
+            "FOCUSBL": "",
+            "FOCUSIL": "",
+            "FOCUSPICK": "",
+            "FOCUSPO": "",
+            "FOCUSPRO": "1",
+            "ILPRO": "",
+            "MYACCOUNT": "",
+            "MYNAME": "",
+            "PICKDATE": "",
+            "PICKTIME": "",
+            "PICKWNDW": "",
+            "PO": "",
+            "S1SHIPSTAT": "",
+            "SHIPCITY": "",
+            "SHOWIMG": "0",
+            "SHPBL": "",
+            "SHPHU": "0",
+            "SHPIL": "",
+            "SHPNUM": "0",
+            "SHPPCS": "0",
+            "SHPPO": "",
+            "SHPPRO": "0",
+            "SHPWGT": "0",
+            "TABINDEX": "0",
+            "TITLE": "Shipment Tracing"
+          },
+          "subfiles": {
+            "TRACEPICK": {
+              "field names": [
+                "SHPCTY",
+                "SHPDATE",
+                "SHPSTS",
+                "SHPTIME"
+              ],
+              "data": []
+            },
+            "TRACEIL": {
+              "field names": [
+                "SHPCTY",
+                "SHPDATE",
+                "SHPSTS",
+                "SHPTIME"
+              ],
+              "data": []
+            },
+            "TRACEBL": {
+              "field names": [
+                "SHPCTY",
+                "SHPDATE",
+                "SHPSTS",
+                "SHPTIME"
+              ],
+              "data": []
+            },
+            "TRACEPO": {
+              "field names": [
+                "SHPCTY",
+                "SHPDATE",
+                "SHPSTS",
+                "SHPTIME"
+              ],
+              "data": []
+            },
+            "TRACEPRO": {
+              "field names": [
+                "SHPCTY",
+                "SHPDATE",
+                "SHPSTS",
+                "SHPTIME"
+              ],
+              "data": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -4185,6 +4185,12 @@
     "reason": "Seven digits are shared by several carriers and nothing in the number points to Southeastern Freight Lines."
   },
   {
+    "carrier": "southwestern-motor-transport",
+    "pattern": "^\\d{6,11}$",
+    "kind": "by_design",
+    "reason": "Southwestern Motor Transport PROs are bare digits, padded with zeros to eleven, with no known check, a shape many carriers share, and SMT publishes no number layout, so nothing in the number points to it."
+  },
+  {
     "carrier": "sp-express",
     "pattern": "^(?:CZ|NL|PL)\\d{12}$",
     "kind": "by_design",
