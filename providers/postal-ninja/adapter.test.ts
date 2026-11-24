@@ -354,17 +354,21 @@ describe('Postal Ninja result parsing', () => {
       { ds: 'Cainiao', dt: '2026-11-14T13:59:00', dsc: 'Arrived at transit country or region' },
       { ds: 'Cainiao', dt: '2026-11-23T12:24:00', dsc: 'Arrived at customs' },
       { ds: 'Cainiao', dt: '2026-11-23T12:24:00', dsc: 'Received by local delivery company' },
+      { ds: 'Cainiao', dt: '2026-11-23T12:24:00', dsc: 'Import customs clearance started' },
+      { ds: 'Cainiao', dt: '2026-11-23T23:55:00', dsc: 'Departed from customs' },
+      { ds: 'Cainiao', dt: '2026-11-23T23:55:00', dsc: 'Import customs clearance complete' },
       { ds: 'Cainiao', dt: '2026-11-23T23:55:00', dsc: 'Arrived at the destination country or region sorting center' },
       { ds: 'Cainiao', dt: '2026-11-24T05:38:00', dsc: 'Out for delivery' },
     ]);
     const parsed = parsePostalNinjaResponse(reply, item, 'Europe/Amsterdam', 'spring-gds');
-    expect(times(parsed)).toEqual(['2026-11-24T05:38:00.000Z', '2026-11-23T23:55:00.000Z', '2026-11-23T12:24:00.000Z',
-      '2026-11-23T12:24:00.000Z', '2026-11-14T12:59:00.000Z']);
+    // AliExpress's copies of the same steps, in the same words, state these digits with +00:00.
+    expect(times(parsed)).toEqual(['2026-11-24T05:38:00.000Z', ...Array.from({ length: 3 }, () => '2026-11-23T23:55:00.000Z'),
+      ...Array.from({ length: 3 }, () => '2026-11-23T12:24:00.000Z'), '2026-11-14T12:59:00.000Z']);
     expect(parsed.events?.map((scan) => [scan.time_zone, scan.time_zone_basis])).toEqual([
-      ...Array.from({ length: 4 }, () => ['Europe/London', 'destination']), ['Europe/Amsterdam', 'carrier'],
+      ...Array.from({ length: 7 }, () => ['Europe/London', 'destination']), ['Europe/Amsterdam', 'carrier'],
     ]);
     // A destination of several clocks names none, and the step borrows routing's zone as before.
-    expect(parsePostalNinjaResponse(postal(item, 'US', reply.track.events.slice(4)), item, 'America/New_York', 'spring-gds').events?.[0])
+    expect(parsePostalNinjaResponse(postal(item, 'US', reply.track.events.slice(-1)), item, 'America/New_York', 'spring-gds').events?.[0])
       .toMatchObject({ time: '2026-11-24T10:38:00.000Z', time_zone: 'America/New_York', time_zone_basis: 'carrier' });
   });
 
