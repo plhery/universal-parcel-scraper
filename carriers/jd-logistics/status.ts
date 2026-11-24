@@ -40,6 +40,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['CXLHCP', MOVING],
   ['CXLMHL', MOVING],
   ['DMSCR', MOVING],
+  // The departure from the last-mile carrier's regional facility, as USPS words it.
+  ['DMSCD', MOVING],
   ['SCVS', MOVING],
   // Sent on to a sorting center abroad, then its arrival there.
   ['TVD', MOVING],

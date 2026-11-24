@@ -194,6 +194,15 @@
       "note": "Unloaded at a sorting center."
     },
     {
+      "code": "DMSCD",
+      "wording": "Departed USPS Regional Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "USPS's departure from its regional facility, relayed after its acceptance and arrival there; USPS's own copy of the scan follows at the same minute."
+    },
+    {
       "code": "SCVS",
       "stage": "in_transit",
       "confirmedBy": "live",
