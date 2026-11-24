@@ -390,6 +390,10 @@ describe('MailAmericas status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'mailamericas', providerCode: 'LM-7', description: 'Delivery office: Recipient Absent' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(statusMapAnswer({ carrier: 'mailamericas', providerCode: 'ZZ-9', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
+    // A buyer-details check under a code not listed, on the buyer's address: a notice as well.
+    expect(statusMapAnswer({ carrier: 'mailamericas', providerCode: 'SM-7', description: 'Buyer info: Example Address' }))
+      .toMatchObject({ kind: 'intentional_gap' });
+    expect(mailamericasStage('SM-7', 'Buyer info: Example Address')).toBeNull();
     // A code the map does not know falls to the shared wording rules.
     expect(mailamericasStage('PF-9', 'Finished: Delivered')).toEqual({ stage: 'delivered', source: 'wording:language' });
     expect(mailamericasStage('ZZ-9', 'Synthetic note')).toBeNull();

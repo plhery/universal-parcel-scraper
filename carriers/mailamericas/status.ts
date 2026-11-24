@@ -78,4 +78,7 @@ export const statusMap: CarrierStatusMap = {
     { code: 'AV-1', note: 'A notice that adds information to the history; it moves nothing.' },
     { code: 'LM-11', note: 'The delivery moved to a later round, logged after a round or beside the next one, which can deliver; it names no attempt and moves nothing.' },
   ],
+  // The buyer-details checks and notices under codes not listed yet, such as SM-7 on the buyer's address: the parcel
+  // moved on after it as after the others.
+  gapNote: (code) => (code && /^(?:SM|AV)-/i.test(code) ? "A check of the buyer's details or a notice logged beside the scans; it moves nothing." : undefined),
 };
