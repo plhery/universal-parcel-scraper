@@ -544,6 +544,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // A facility named by its code, three letters and two digits, receiving the parcel after the flight, as Ship24 relays
   // it on HuaHan's line: "Parcel received by ABC01.". A code names no recipient.
   if (/^parcel received by [a-z]{3}\d{2}[.!]?$/i.test(value)) return 'in_transit';
+  // GLS Italy's receiving depot, as a provider relays its notices in "working days" where GLS writes "business days":
+  // it serves the recipient's area every so many hours, then books the delivery for the next day. The parcel waits.
+  if (/^area served in \d{1,3} hours, we will deliver within the next [a-z]+ (?:business|working) days\.?$|^delivery scheduled for the (?:first )?next (?:business|working) day\.?$/i.test(value)) return 'in_transit';
   // A forwarder's arrival at the destination port, worded as a delivery, also after its Chinese
   // ("picked up at the destination port"), and its order data sent to the last-mile carrier.
   if (/^(?:目的港已提货\s*)?delivery has been made at the destination port[.!]?$|^目的港已提货$/iu.test(value)) return 'in_transit';

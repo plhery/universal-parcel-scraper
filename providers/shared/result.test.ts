@@ -481,6 +481,13 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00+08:00', 'Parcel received by Sample')).not.toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
   });
 
+  it("reads GLS Italy's depot notices as a provider words them, in working days", () => {
+    for (const wording of ['Area served in 48 hours, we will deliver within the next two working days.', 'Delivery scheduled for the next working day']) {
+      expect(event('2026-01-07T12:45:00+01:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
+    }
+  });
+
   it("reads HuaHan's pallet broken down after the flight and its transfer to the last mile's number, and a return, as providers relay them", () => {
     for (const wording of ['Dismantling in progress', '拆板中。—Dismantling in progress', 'Re-route: 1Z9K99F99999999999']) {
       expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });

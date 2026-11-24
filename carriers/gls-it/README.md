@@ -72,7 +72,9 @@ rejects, so the catalog link carries it.
 - Parcel numbers, delivery-note references and international searches are not supported.
 - A shipment forwarded or returned under a new number is not followed.
 - No delivery estimate beyond a booked redelivery's day, no pickup point or sender name.
-- Older shipments drop out of the tracker and come back not found.
+- Older shipments drop out of the tracker and come back not found. Now and then it also answers
+  not found for a shipment it holds, then lists it again on the next lookup: the not-found is
+  the tracker's own answer, and a consumer with saved history keeps it.
 
 ## Testing
 
