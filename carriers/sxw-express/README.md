@@ -32,7 +32,9 @@ The site's tracking page is SXW's own tenant of the Hualei (华磊) platform at
   UK. The identity policy lets such a row take over the one earlier releases stored on Beijing's
   clock.
 - The seller can take a parcel back at the origin ("Returned parcel has been recieved by shipper")
-  and send it again under the same waybill. The row reads as returned, and the rows after it lead.
+  and send it again under the same waybill. The row reads as returned while it is the newest; once
+  rows follow it, it is an exception and the rows after it lead, since an app holds a return over
+  the moves that follow one.
   A row at a place with no words, only a mark such as ".", moves nothing.
 - A not-found leaves the enabled universal providers to answer.
 

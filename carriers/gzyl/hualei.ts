@@ -380,9 +380,9 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
     || !deliveries.some((at) => Date.parse(`${clock}Z`) - at >= 86_400_000)) : copies;
   // Rows come newest first; rows on one clock keep the reply's order.
   unique.sort((a, b) => (a.clock === b.clock ? a.index - b.index : a.clock < b.clock ? 1 : -1));
-  const leg = returnLeg(unique.map(({ event }) => event));
+  const returns = returnStages(unique.map(({ event }) => event));
   const events = unique.map(({ event, english }, index) => ({ ...event, ...(english ? { description: english } : {}),
-    ...(leg[index] ? { stage: 'returned' } : {}) }));
+    ...(returns[index] ? { stage: returns[index] } : {}) }));
   // The steps held back, the earliest first, each once.
   held.sort((a, b) => (a.clock === b.clock ? b.index - a.index : a.clock < b.clock ? -1 : 1));
   return { events: events.slice(0, MAX_EVENTS), truncated: events.length > MAX_EVENTS, ahead: [...ahead],
@@ -399,20 +399,26 @@ const RETURN_LEG: ReadonlySet<string> = new Set(['in_transit', 'out_for_delivery
 const BACK_WITH_SHIPPER = /\brec(?:ei|ie)ved by (?:the )?(?:shipper|sender)\b/i;
 
 /**
- * Which scans, newest first, are on the way back: after a row the tenant's map
- * reads as returned, a move or a delivery is the parcel going, or delivered,
- * back to the sender, until the shipper has it. A return only the shared
- * wording rules read starts none.
+ * The stage each scan, newest first, takes from a return before it. After a row the tenant's map
+ * reads as returned, a move or a delivery is the parcel going, or delivered, back to the sender,
+ * and is returned too, until the shipper has it. A return the shipper received with a scan after
+ * it is the parcel held back at the origin and sent again: a problem on the way, not the parcel's
+ * end, so that the app does not hold the return over the journey that follows. A return only the
+ * shared wording rules read starts none.
  */
-function returnLeg(events: readonly CarrierEvent[]): boolean[] {
-  const leg = events.map(() => false);
+function returnStages(events: readonly CarrierEvent[]): Array<Stage | undefined> {
+  const stages: Array<Stage | undefined> = events.map(() => undefined);
   let back = false;
   for (let index = events.length - 1; index >= 0; index--) {
     const { stage, stage_source: source, description } = events[index]!;
-    if (back && stage && RETURN_LEG.has(stage)) leg[index] = true;
-    else if (stage === 'returned' && source === 'carrier_map') back = !BACK_WITH_SHIPPER.test(description ?? '');
+    if (back && stage && RETURN_LEG.has(stage)) stages[index] = 'returned';
+    else if (stage === 'returned' && source === 'carrier_map') {
+      const withShipper = BACK_WITH_SHIPPER.test(description ?? '');
+      back = !withShipper;
+      if (withShipper && events.slice(0, index).some((later) => later.stage && later.stage !== 'pending')) stages[index] = 'exception';
+    }
   }
-  return leg;
+  return stages;
 }
 
 interface Facts {

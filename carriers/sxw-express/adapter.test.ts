@@ -140,8 +140,14 @@ describe('SXW Express tracking adapter', () => {
       row('2026-11-09 10:00:00', 'Arrived at origin facility', 'Mainland China, CN'),
     ] });
     const result = parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-13T00:00:00Z'))!;
-    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit', 'returned', 'in_transit']);
+    // Held back and sent again: an exception, so that no return holds over the journey after it.
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit', 'exception', 'in_transit']);
     expect(result.current_stage).toBe('in_transit');
+    // While nothing follows it, the shipper has the parcel back.
+    Object.assign(payload[0].data[0], { trackDetails: payload[0].data[0].trackDetails.slice(3) });
+    const back = parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-13T00:00:00Z'))!;
+    expect(back.events?.map((event) => event.stage)).toEqual(['returned', 'in_transit']);
+    expect(back.current_stage).toBe('returned');
   });
 
   it('settles the interface’s no-row answer with the page', async () => {
