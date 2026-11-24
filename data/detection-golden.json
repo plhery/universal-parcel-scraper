@@ -91937,6 +91937,17 @@
     ]
   },
   {
+    "input": "DEL3556238",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "DELC0000555611",
     "carrier": "ekart",
     "confidence": "high",
@@ -120906,6 +120917,14 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "XPDAR625014414642Q1",
+    "carrier": "obibox",
+    "confidence": "high",
+    "candidates": [
+      "obibox"
     ]
   },
   {

@@ -20271,7 +20271,7 @@
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "delivro"
     },
     "canaryUrl": "https://delivro.com/",
     "trackingUrlTemplate": "https://delivro.dsapp.io/customer/{trackingNumber}",
@@ -46783,7 +46783,7 @@
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "obibox"
     },
     "canaryUrl": "https://obibox.co/",
     "trackingUrlTemplate": "https://tracking.obibox.io/{trackingNumber}",

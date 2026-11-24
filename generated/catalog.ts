@@ -20275,7 +20275,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "delivro"
     },
     "canaryUrl": "https://delivro.com/",
     "trackingUrlTemplate": "https://delivro.dsapp.io/customer/{trackingNumber}",
@@ -46787,7 +46787,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "obibox"
     },
     "canaryUrl": "https://obibox.co/",
     "trackingUrlTemplate": "https://tracking.obibox.io/{trackingNumber}",

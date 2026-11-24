@@ -243,6 +243,7 @@ import { adapter as dealersend } from '../carriers/dealersend/adapter.js';
 import { adapter as delhivery } from '../carriers/delhivery/adapter.js';
 import { adapter as delibox } from '../carriers/delibox/adapter.js';
 import { adapter as deliveryAuto } from '../carriers/delivery-auto/adapter.js';
+import { adapter as delivro } from '../carriers/delivro/adapter.js';
 import { adapter as dellin } from '../carriers/dellin/adapter.js';
 import { adapter as delnext } from '../carriers/delnext/adapter.js';
 import { adapter as deppon } from '../carriers/deppon/adapter.js';
@@ -691,6 +692,7 @@ import { adapter as numarkTransportation } from '../carriers/numark-transportati
 import { adapter as nzCouriers } from '../carriers/nz-couriers/adapter.js';
 import { adapter as nzPost } from '../carriers/nz-post/adapter.js';
 import { adapter as oakHarbor } from '../carriers/oak-harbor/adapter.js';
+import { adapter as obibox } from '../carriers/obibox/adapter.js';
 import { adapter as oca } from '../carriers/oca/adapter.js';
 import { adapter as ocasa } from '../carriers/ocasa/adapter.js';
 import { adapter as oceanNetworkExpress } from '../carriers/ocean-network-express/adapter.js';
@@ -1378,6 +1380,7 @@ export const REGISTRY: RegistryDefinition = {
     "delhivery": delhivery,
     "delibox": delibox,
     "delivery-auto": deliveryAuto,
+    "delivro": delivro,
     "dellin": dellin,
     "delnext": delnext,
     "deppon": deppon,
@@ -1826,6 +1829,7 @@ export const REGISTRY: RegistryDefinition = {
     "nz-couriers": nzCouriers,
     "nz-post": nzPost,
     "oak-harbor": oakHarbor,
+    "obibox": obibox,
     "oca": oca,
     "ocasa": ocasa,
     "ocean-network-express": oceanNetworkExpress,
@@ -2727,7 +2731,7 @@ export const REGISTRY: RegistryDefinition = {
     "deliverdirect": "universal",
     "deliveright": "universal",
     "delivery-auto": "delivery-auto",
-    "delivro": "universal",
+    "delivro": "delivro",
     "dellin": "dellin",
     "delnext": "delnext",
     "depo": "universal",
@@ -3535,7 +3539,7 @@ export const REGISTRY: RegistryDefinition = {
     "nz-couriers": "nz-couriers",
     "nz-post": "nz-post",
     "oak-harbor": "oak-harbor",
-    "obibox": "universal",
+    "obibox": "obibox",
     "oca": "oca",
     "ocasa": "ocasa",
     "ocean-network-express": "ocean-network-express",
