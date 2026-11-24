@@ -582,10 +582,28 @@ function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant
   return named && takes(named, downstream, destination) ? { carrier: named, number: downstream } : undefined;
 }
 
+/** An empty optional field: absent, null or an empty string. */
+const blank = (value: unknown): boolean => value === undefined || value === null || value === '';
+
+/**
+ * Some tenants' answer for a number they hold nothing under, in place of their no-row answer: one
+ * record that only echoes the number as the shipper's reference, without an order id, any other of
+ * its own numbers or a row, as the page's (`isUnknown`).
+ */
+function echoesOnly(records: readonly JsonObject[], number: string): boolean {
+  const [record] = records;
+  if (records.length !== 1 || !record) return false;
+  const reference = record.referenceNumber;
+  return typeof reference === 'string' && identity(reference) === identity(number) && blank(record.businessId)
+    && IDENTITY_FIELDS.every((key) => key === 'referenceNumber' || blank(record[key]))
+    && (blank(record.trackDetails) || (Array.isArray(record.trackDetails) && !record.trackDetails.length));
+}
+
 /**
  * The reply of `selectTrack.htm` for one number: the record whose own numbers
  * include the one asked, or null when the service says it holds no row for
- * it. Recipient, sender, signature, fee and weight fields are never read.
+ * it, or answers with a record that only echoes the number. Recipient, sender,
+ * signature, fee and weight fields are never read.
  */
 export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTenant, readAt = Date.now()): CarrierResult | null {
   const { provider } = tenant;
@@ -606,6 +624,8 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
     if (!isRecord(record)) throw new SchemaError(provider, `${provider} returned an invalid record`);
     return record;
   });
+  // The page then settles it, as after the no-row answer.
+  if (echoesOnly(records, number)) return null;
   // The service matches a number in any of the record's own fields; a reference two orders share is no answer.
   const bound = records.filter((record) => IDENTITY_FIELDS.some((key) => identity(text(record, key, provider, 64)) === identity(number)));
   const own = (value: string) => Boolean(tenant.ownNumber?.test(value));

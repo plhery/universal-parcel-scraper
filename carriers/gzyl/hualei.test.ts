@@ -91,6 +91,33 @@ describe('Hualei track interface', () => {
     }
   });
 
+  it('reads a lone record that only echoes the number as its reference as the no-row answer, which the page settles', async () => {
+    // Some tenants answer an unknown number so: every field empty but the reference, which repeats the number asked.
+    const echo = (change: (record: Reply) => void = () => {}): Reply => {
+      const payload = fixture('track');
+      const record = payload[0].data[0];
+      for (const key of Object.keys(record)) record[key] = Array.isArray(record[key]) ? [] : typeof record[key] === 'string' ? '' : null;
+      record.referenceNumber = 'notfound000001';
+      change(record);
+      return payload;
+    };
+    expect(parseHualeiTrack(echo(), 'NOTFOUND000001', GZYL, READ_AT)).toBeNull();
+    expect(parseHualeiTrack(echo((record) => { delete record.trackDetails; delete record.businessId; }), 'NOTFOUND000001', GZYL, READ_AT)).toBeNull();
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(echo())).mockResolvedValueOnce(html(page('page-unknown')));
+    await expect(new HualeiTracker(GZYL, { fetcher, recorder: NOOP_RECORDER }).fetch('NOTFOUND000001')).rejects.toBeInstanceOf(NotFoundError);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    // An order id, another of its numbers or a row makes it an order the tenant holds, and an echo of another number is no answer.
+    expect(() => parseHualeiTrack(echo((record) => { record.businessId = '1001'; }), 'NOTFOUND000001', GZYL, READ_AT)).toThrow(NoHistoryError);
+    expect(() => parseHualeiTrack(echo((record) => { record.business_seqinvoicecode = 'GZTEST00000002'; }), 'NOTFOUND000001', GZYL, READ_AT))
+      .toThrow(NoHistoryError);
+    expect(parseHualeiTrack(echo((record) => { record.trackDetails = fixture('track')[0].data[0].trackDetails; }), 'NOTFOUND000001', GZYL, READ_AT))
+      .toMatchObject({ status: 'in_transit' });
+    expect(() => parseHualeiTrack(echo(), 'NOTFOUND000009', GZYL, READ_AT)).toThrow(IndeterminateError);
+    const twice = echo();
+    twice[0].data.push(twice[0].data[0]);
+    expect(() => parseHualeiTrack(twice, 'NOTFOUND000001', GZYL, READ_AT)).toThrow(NoHistoryError);
+  });
+
   it('holds back rows written ahead of the lookup on the trackers’ clock, and reads none of the parties', () => {
     const result = parseHualeiTrack(fixture('track'), NUMBER, GZYL, READ_AT)!;
     expect(result.events!.map((event) => event.time)).not.toContain('2026-03-06T15:10:42+08:00');
