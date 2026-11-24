@@ -10,6 +10,8 @@ export const ELTA_SCANS: Readonly<Record<string, Stage>> = {
   // The sender's label, then the item handed in at a post office, which the shared rules read as delivered.
   'Label printed by customer': 'registered',
   'Item deposited at ELTA': 'accepted',
+  // An item from abroad taken in by ELTA, before the stations send it on.
+  'Consignment received from abroad': 'in_transit',
   'Shipment in transit': 'in_transit',
   // At Athens airport's hub, then readied there to leave Greece.
   'Arrival at the airport': 'in_transit',
@@ -18,8 +20,11 @@ export const ELTA_SCANS: Readonly<Record<string, Stage>> = {
   // The courier's attempt: the notice left and its reason, at the same minute.
   'Notification of attempted delivery': 'failed_attempt',
   'ADDRESSEE NOT AVAILABLE AT TIME OF DELIVERY': 'failed_attempt',
-  // The recipient will collect the item instead of having it delivered.
+  // The recipient will collect the item instead of having it delivered, or asked for a later round.
   'ADDRESSEE REQUEST OWN PICK-UP': 'failed_attempt',
+  'ADDRESSEE REQUESTED LATER DELIVERY': 'failed_attempt',
+  // The address does not know the recipient, and the item goes back: a return under way.
+  'Addressee unknown. Return to sender': 'exception',
   // Waiting at the station the scan names, a post office or a courier agency.
   'Item at post office - Can be collected': 'ready_for_pickup',
   'Shipment delivered': 'delivered',
