@@ -20,19 +20,66 @@
   "timezone": "Australia/Melbourne",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "vt-freight-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "offset_timestamps",
+    "delivered_at",
+    "eta",
+    "weight"
+  ],
   "portal": {
     "url": "https://portal.vtfe.com.au/Track/VTFE/{trackingNumber}",
-    "searchUrl": "https://www.vtfe.com.au/",
+    "searchUrl": "https://portal.vtfe.com.au/Track/VTFE",
     "helpUrl": "https://www.vtfe.com.au/contact-us/",
-    "canaryUrl": "https://www.vtfe.com.au/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://portal.vtfe.com.au/Track/VTFE",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "parcel_count",
+      "parcel_scans",
+      "destination",
+      "postcodes",
+      "signatory",
+      "delivered_at"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "delivered_at"
+    ],
+    "discarded": [
+      "progress_rail",
+      "parcel_count",
+      "parcel_scans",
+      "destination",
+      "postcodes",
+      "signatory"
+    ],
+    "unavailable": [
+      "provider_code",
+      "service_name",
+      "sender_name",
+      "pickup_point",
+      "proof_of_delivery",
+      "delivery_partner"
+    ]
   },
   "links": [
     {

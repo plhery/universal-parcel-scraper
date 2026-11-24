@@ -1,4 +1,26 @@
 {
   "carrier": "vt-freight-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Depot In",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Arrival scan at a VT Freight Express depot, named by its depot code."
+    },
+    {
+      "wording": "On Board",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Loaded on a truck at a depot. The consignment software has a separate \"On Delivery\" scan for the delivery run."
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Both the delivery itself, with its clock and zone, and the depot's grouped delivery scan."
+    }
+  ]
 }

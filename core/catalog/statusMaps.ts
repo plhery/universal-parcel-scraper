@@ -885,6 +885,7 @@ import { statusMap as vintedGo } from '../../carriers/vinted-go/status.js';
 import { statusMap as vitranExpress } from '../../carriers/vitran-express/status.js';
 import { statusMap as vozovoz } from '../../carriers/vozovoz/status.js';
 import { statusMap as vrlLogistics } from '../../carriers/vrl-logistics/status.js';
+import { statusMap as vtFreightExpress } from '../../carriers/vt-freight-express/status.js';
 import { statusMap as wanbexpress } from '../../carriers/wanbexpress/status.js';
 import { statusMap as wahana } from '../../carriers/wahana/status.js';
 import { statusMap as wedo } from '../../carriers/wedo/status.js';
@@ -1262,7 +1263,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'ubi-smart-parcel': ubiSmartParcel, 'ukp-worldwide': ukpWorldwide, ukrposhta,
   'united-delivery-service': unitedDeliveryService, uniuni, 'unipost-express': unipostExpress, upaya, ups, urbano, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, viapost, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,
-  vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, 'western-post': westernPost, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'x-express-rs': xExpressRs, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
+  vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, 'vt-freight-express': vtFreightExpress, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, 'western-post': westernPost, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'x-express-rs': xExpressRs, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
   yalidine, yamato, yanwen, 'yaoqi-logistics': yaoqiLogistics, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, 'yuxin-logistics': yuxinLogistics, ywbz, ywe, yypost, zto, 'zto-freight': ztoFreight, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
   'bob-go': bobGo, dypaq, navex,

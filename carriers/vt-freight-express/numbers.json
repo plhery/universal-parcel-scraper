@@ -2,6 +2,25 @@
   "carrier": "vt-freight-express",
   "records": [
     {
+      "number": "END0000315765",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/2026/https://www.parcelpanel.com/couriers/vt-freight-express/",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived ParcelPanel VT Freight Express page offered it to try. VT Freight Express's tracker answers it with a consignment scanned into one depot, loaded at another and delivered."
+    },
+    {
       "number": "EBOS4699484",
       "role": "shipment",
       "evidence": "public_shipment_report",
@@ -18,7 +37,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "An archived lookup on VT Freight Express's own tracker shows it delivered; the number opens with its sender's prefix."
+      "note": "An archived lookup on VT Freight Express's own tracker shows it delivered; the number opens with its sender's prefix. The tracker no longer finds it."
     },
     {
       "number": "WIN40910152985",
@@ -37,7 +56,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "An archived lookup on VT Freight Express's own tracker shows it delivered; the number opens with its sender's prefix."
+      "note": "An archived lookup on VT Freight Express's own tracker shows it delivered; the number opens with its sender's prefix. The tracker no longer finds it."
     },
     {
       "number": "WIN40910156472",
@@ -56,7 +75,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "An archived lookup on VT Freight Express's own tracker shows it delivered; the number opens with its sender's prefix."
+      "note": "An archived lookup on VT Freight Express's own tracker shows it delivered; the number opens with its sender's prefix. The tracker no longer finds it."
     }
   ]
 }

@@ -5061,6 +5061,12 @@
   },
   {
     "carrier": "vt-freight-express",
+    "pattern": "^[A-Z]{3}\\d{10}$",
+    "kind": "by_design",
+    "reason": "VT Freight Express consignment numbers open with a prefix set per sender, which names the sender rather than the carrier."
+  },
+  {
+    "carrier": "vt-freight-express",
     "pattern": "^[A-Z]{3}\\d{11}$",
     "kind": "by_design",
     "reason": "VT Freight Express consignment numbers open with a prefix set per sender, which names the sender rather than the carrier."
