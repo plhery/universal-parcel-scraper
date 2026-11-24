@@ -1,5 +1,50 @@
 {
   "carrier": "boxc",
-  "gap": "BoxC tracks final-mile numbers that belong to USPS, DHL eCommerce and other carriers, and no public page shows one of its own label numbers.",
-  "records": []
+  "records": [
+    {
+      "number": "4006318880257783",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240920144706/https://www.parcelpanel.com/couriers/boxc/",
+        "date": "2024-09-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "correos-express",
+          "canada-post",
+          "tnt",
+          "evri-uk"
+        ]
+      },
+      "note": "An earlier capture of ParcelPanel's BoxC page published it as the courier's sample number to try. BoxC's tracker answers it as a delivered BoxC Parcel shipment to Canada with SkyPostal as its final-mile carrier, without events."
+    },
+    {
+      "number": "LB095118387LT",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516085811/https://www.parcelpanel.com/couriers/boxc/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "ParcelPanel's BoxC page published it as the courier's sample number to try. BoxC's tracker answers it as an en-route BoxC Parcel shipment to Spain with PostPlus as its final-mile carrier, without events."
+    }
+  ]
 }

@@ -18,19 +18,60 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "boxc",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "destination_country",
+    "delivery_partner"
+  ],
   "portal": {
     "url": "https://boxc.com/track/{trackingNumber}",
     "searchUrl": "https://boxc.com/track",
     "helpUrl": "https://support.boxc.com/support/home",
     "canaryUrl": "https://boxc.com/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "destination",
+      "postcodes",
+      "delivery_partner",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "provider_code",
+      "service_name",
+      "destination_country",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "destination",
+      "postcodes",
+      "coordinates",
+      "order_reference",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "sender_name",
+      "recipient_name"
+    ]
   },
   "links": [
     {

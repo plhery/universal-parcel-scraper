@@ -1131,6 +1131,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'cj-packet', number: 'CJPZZZ0000000001YQ',
     route: /^https:\/\/www\.cjpacket\.com\/\?trackingNumber=CJPZZZ0000000001YQ$/,
     marker: /Copy All Tracking Numbers|No tracking info found|Global Package Tracking/i },
+  // BoxC's tracking app puts the number in its path into its field.
+  { carrier: 'boxc', number: 'BOXC00000000999',
+    route: /^https:\/\/boxc\.com\/track\/BOXC00000000999$/,
+    marker: /When will my tracking information appear\?/ },
   // The page fills its field in and looks the number up on load.
   { carrier: 'orlen-paczka', number: '2109999000003',
     route: /^https:\/\/www\.orlenpaczka\.pl\/sledz-paczke\/\?numer=/,

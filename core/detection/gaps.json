@@ -547,6 +547,12 @@
     "reason": "Bosta's seven- to ten-digit shipment numbers are a bare digit run many carriers share."
   },
   {
+    "carrier": "boxc",
+    "pattern": "^\\d{16}$",
+    "kind": "by_design",
+    "reason": "BoxC also tracks a parcel under its final-mile carrier's number, and sixteen digits are shared by several carriers, so nothing in the number points to BoxC."
+  },
+  {
     "carrier": "bts-uz",
     "pattern": "^\\d{11,12}$",
     "kind": "by_design",
