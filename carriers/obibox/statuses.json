@@ -1,4 +1,92 @@
 {
   "carrier": "obibox",
-  "entries": []
+  "entries": [
+    {
+      "code": "shipment_ready_pending",
+      "wording": "Package Ready for Shipping",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The shop has sent the shipment's data. Once the parcel has moved, the page reads it again as a delivery put off for later; the shared rules read a registration after a movement as in transit."
+    },
+    {
+      "code": "shipment_ready_engaged",
+      "wording": "Shipment ready for delivery with status: engaged",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Still before the collection: the page shows the parcel as ready for shipping."
+    },
+    {
+      "code": "pickup_confirmed",
+      "wording": "Package has been picked up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Obibox has collected the parcel from the shop."
+    },
+    {
+      "code": "on_delivery",
+      "wording": "Package is out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "delivered_recipient_here",
+      "wording": "Package delivered to recipient",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Handed to the recipient in person: the page says delivered hand to hand."
+    },
+    {
+      "code": "delivered_recipient_not_here",
+      "wording": "Delivered in a secure location",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The page's label for the code: left in a safe place without the recipient."
+    },
+    {
+      "code": "delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The page's label for the code."
+    },
+    {
+      "code": "shipment_ready_for_delivery",
+      "wording": "Ready for delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The page's label for the code, which it explains as a parcel processed in Obibox's facility and out for delivery soon."
+    },
+    {
+      "code": "shipment_ready_on_delivery",
+      "wording": "On the way",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The page's label for the code, the one it gives out for delivery."
+    },
+    {
+      "code": "out_for_delivery",
+      "wording": "On the way to your location",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The page's label for the code."
+    },
+    {
+      "code": "delivery_attempt_1",
+      "wording": "1st delivery attempt",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "The page's label for the code, which counts the attempts: delivery_attempt_2 is the second."
+    }
+  ]
 }

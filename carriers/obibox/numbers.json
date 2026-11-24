@@ -2,6 +2,26 @@
   "carrier": "obibox",
   "records": [
     {
+      "number": "XPDAR625014414642Q1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/2026/https://www.parcelpanel.com/couriers/obibox/",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment_tracking",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "obibox",
+        "confidence": "high"
+      },
+      "note": "An archived ParcelPanel Obibox page offered it to try. Obibox's tracker answers it with a parcel collected from the shop and handed to the recipient in person the same day."
+    },
+    {
       "number": "XPLOP807214725068_1",
       "role": "shipment",
       "evidence": "public_shipment_report",

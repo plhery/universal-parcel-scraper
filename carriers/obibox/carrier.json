@@ -18,19 +18,63 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "obibox",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "offset_timestamps",
+    "eta",
+    "eta_window",
+    "sender_name"
+  ],
   "portal": {
     "url": "https://tracking.obibox.io/{trackingNumber}",
     "searchUrl": "https://tracking.obibox.io/",
     "helpUrl": "https://obibox.co/faq/",
     "canaryUrl": "https://obibox.co/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "eta",
+      "eta_window",
+      "sender_name",
+      "customer_reference",
+      "recipient_address",
+      "coordinates",
+      "delivery_instructions",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "offset_timestamps",
+      "eta",
+      "eta_window",
+      "sender_name"
+    ],
+    "discarded": [
+      "location",
+      "customer_reference",
+      "recipient_address",
+      "coordinates",
+      "delivery_instructions",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
   },
   "links": [
     {

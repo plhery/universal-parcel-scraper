@@ -1,0 +1,150 @@
+{
+  "shipment_ready": {
+    "status": "shipment_ready",
+    "created_at": "2026-05-13 12:24:38",
+    "shipment": {
+      "id": 11754725,
+      "status": "delivered_recipient_here",
+      "shipment_type": "delivery",
+      "tracking_number": "XPDAR625014414642Q1",
+      "from_address": "1 Example Street, Example Town, QC X0X 0X0, Canada",
+      "from_gps": "0.0000000,0.0000000",
+      "to_address": "2 Example Street, Example Town, QC X0X 0X0, Canada",
+      "to_gps": "0.0000000,0.0000000",
+      "recipients_name": "Recipient Name",
+      "delivery_instructions": "#00000",
+      "customer_order_number": "#00000",
+      "delivery_note": "Hand delivery",
+      "shipper_name": "Darwynn",
+      "is_complete": 1,
+      "delivery_date": "2026-05-13 09:45:00",
+      "safe_drop_required": 1,
+      "confirmation_type": null,
+      "delivery_instructions_updated_at": null,
+      "safe_drop_updated_at": null
+    },
+    "scanned_status": "scanned"
+  },
+  "pickup_confirmed": {
+    "status": "pickup_confirmed",
+    "created_at": "2026-05-13 12:48:34",
+    "shipment": {
+      "id": 11754725,
+      "status": "delivered_recipient_here",
+      "shipment_type": "delivery",
+      "tracking_number": "XPDAR625014414642Q1",
+      "from_address": "1 Example Street, Example Town, QC X0X 0X0, Canada",
+      "from_gps": "0.0000000,0.0000000",
+      "to_address": "2 Example Street, Example Town, QC X0X 0X0, Canada",
+      "to_gps": "0.0000000,0.0000000",
+      "recipients_name": "Recipient Name",
+      "delivery_instructions": "#00000",
+      "customer_order_number": "#00000",
+      "delivery_note": "Hand delivery",
+      "shipper_name": "Darwynn",
+      "is_complete": 1,
+      "delivery_date": "2026-05-13 09:45:00",
+      "safe_drop_required": 1,
+      "confirmation_type": null,
+      "delivery_instructions_updated_at": null,
+      "safe_drop_updated_at": null
+    },
+    "scanned_status": "scanned",
+    "tracking": {
+      "eta_start": "2026-05-13T15:30:00-04:00",
+      "eta_end": "2026-05-13T19:30:00-04:00"
+    }
+  },
+  "on_delivery": {
+    "status": "on_delivery",
+    "created_at": "2026-05-13 22:38:34",
+    "shipment": {
+      "id": 11754725,
+      "status": "delivered_recipient_here",
+      "shipment_type": "delivery",
+      "tracking_number": "XPDAR625014414642Q1",
+      "from_address": "1 Example Street, Example Town, QC X0X 0X0, Canada",
+      "from_gps": "0.0000000,0.0000000",
+      "to_address": "2 Example Street, Example Town, QC X0X 0X0, Canada",
+      "to_gps": "0.0000000,0.0000000",
+      "recipients_name": "Recipient Name",
+      "delivery_instructions": "#00000",
+      "customer_order_number": "#00000",
+      "delivery_note": "Hand delivery",
+      "shipper_name": "Darwynn",
+      "is_complete": 1,
+      "delivery_date": "2026-05-13 09:45:00",
+      "safe_drop_required": 1,
+      "confirmation_type": null,
+      "delivery_instructions_updated_at": null,
+      "safe_drop_updated_at": null
+    },
+    "scanned_status": "scanned",
+    "tracking": {
+      "current_courier_location": "0.000000000000,0.000000000000",
+      "eta": [
+        null,
+        null
+      ]
+    }
+  },
+  "delivered_recipient_here": {
+    "status": "delivered_recipient_here",
+    "created_at": "2026-05-13 22:42:08",
+    "shipment": {
+      "id": 11754725,
+      "status": "delivered_recipient_here",
+      "shipment_type": "delivery",
+      "tracking_number": "XPDAR625014414642Q1",
+      "from_address": "1 Example Street, Example Town, QC X0X 0X0, Canada",
+      "from_gps": "0.0000000,0.0000000",
+      "to_address": "2 Example Street, Example Town, QC X0X 0X0, Canada",
+      "to_gps": "0.0000000,0.0000000",
+      "recipients_name": "Recipient Name",
+      "delivery_instructions": "#00000",
+      "customer_order_number": "#00000",
+      "delivery_note": "Hand delivery",
+      "shipper_name": "Darwynn",
+      "is_complete": 1,
+      "delivery_date": "2026-05-13 09:45:00",
+      "safe_drop_required": 1,
+      "confirmation_type": null,
+      "delivery_instructions_updated_at": null,
+      "safe_drop_updated_at": null
+    },
+    "scanned_status": "scanned"
+  },
+  "tracking_statuses": [
+    {
+      "status": "shipment_ready_pending",
+      "timestamp": "2026-05-11T21:06:49+00:00",
+      "description": "Package Ready for Shipping",
+      "location": null
+    },
+    {
+      "status": "shipment_ready_engaged",
+      "timestamp": "2026-05-13T12:24:38+00:00",
+      "description": "Shipment ready for delivery with status: engaged",
+      "location": null
+    },
+    {
+      "status": "pickup_confirmed",
+      "timestamp": "2026-05-13T12:48:34+00:00",
+      "description": "Package has been picked up",
+      "location": null
+    },
+    {
+      "status": "on_delivery",
+      "timestamp": "2026-05-13T22:38:34+00:00",
+      "description": "Package is out for delivery",
+      "location": null
+    },
+    {
+      "status": "delivered_recipient_here",
+      "timestamp": "2026-05-13T22:42:08+00:00",
+      "description": "Package delivered to recipient",
+      "location": null
+    }
+  ],
+  "hide_pickup_statuses": false
+}
