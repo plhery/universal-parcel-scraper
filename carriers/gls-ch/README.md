@@ -37,6 +37,8 @@ upstream error.
   (weights 3, 1, 3, … from the right, plus one). Nine other carriers share
   the 12-digit shape, so detection offers GLS for it only when that digit
   passes. GLS numbers are never 13 or 14 digits.
+- A Track ID can be letters alone, so detection offers GLS for any eight letters and digits
+  with a letter. Loggi's codes share the shape, so GLS stays a low-confidence suggestion.
 - Identity: the parcel must echo the number on `tuNo`, `trackId`, `trackingId`
   or a track/parcel reference. A 12-digit printed number may come back as its
   first 11 digits (documented in GLS ShipIT), so that alias is accepted by exact

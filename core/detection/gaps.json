@@ -1910,12 +1910,6 @@
     "reason": "Old tracking links carry the GLS number without its check digit, and the tracker takes it, but eleven bare digits fit too many carriers to offer GLS Netherlands for them."
   },
   {
-    "carrier": "gls-nl",
-    "pattern": "^[A-Z]{8}$",
-    "kind": "by_design",
-    "reason": "Track IDs are letters and digits, and an ID of letters alone reads as a word, so detection offers GLS Netherlands only when the ID has a digit."
-  },
-  {
     "carrier": "gms-worldwide",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

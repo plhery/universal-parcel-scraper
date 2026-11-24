@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { recognitionAskedCarriers } from '../catalog/recognition.js';
 import { detectCarrierMatch, parseTrackingInput, validTrackingNumber } from './index.js';
 
 describe('evidence-backed tracking formats', () => {
@@ -351,6 +352,12 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('ABCDEF')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['gls-ch', 'gls-de'] });
     expect(detectCarrierMatch('ABCDE')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
     expect(detectCarrierMatch('ABCDEFG')).toMatchObject({ carrier: 'unknown', confidence: 'none' });
+    // GLS also prints eight-character Track IDs without a digit: every GLS network is suggested beside Loggi,
+    // and a reader in Germany asks GLS Germany first.
+    expect(detectCarrierMatch('ABCDEFGH')).toMatchObject({
+      carrier: 'unknown', confidence: 'low', candidates: ['gls-ch', 'gls-fr', 'gls-de', 'gls-nl', 'loggi'],
+    });
+    expect(recognitionAskedCarriers('ABCDEFGH', { countryHint: 'DE' })[0]).toBe('gls-de');
     expect(detectCarrierMatch('9680123456').candidates).not.toContain('aramex');
   });
 });

@@ -105,7 +105,7 @@
   "detection": [
     {
       "id": "gls-ch-1",
-      "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\\d)[A-Z0-9]{8}$",
+      "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])[A-Z0-9]{8}$",
       "confidence": "low"
     },
     {

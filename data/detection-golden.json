@@ -91783,7 +91783,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -96244,7 +96253,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -96275,7 +96293,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -97462,7 +97489,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -97493,7 +97529,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -102930,10 +102975,17 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
       "the-courier-guy",
+      "gls-nl",
       "loggi"
     ],
     "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
       "the-courier-guy"
     ]
   },
@@ -106752,7 +106804,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -108254,7 +108315,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -122482,7 +122552,16 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
       "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {

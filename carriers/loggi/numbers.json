@@ -18,6 +18,10 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
           "loggi"
         ]
       },
@@ -40,6 +44,10 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
           "loggi"
         ]
       },

@@ -1150,7 +1150,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\\d)[A-Z0-9]{8}$",
+        "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])[A-Z0-9]{8}$",
         "confidence": "low"
       },
       {
@@ -1631,7 +1631,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       },
       {
-        "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\\d)[A-Z0-9]{8}$",
+        "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])[A-Z0-9]{8}$",
         "confidence": "low"
       },
       {
@@ -2274,7 +2274,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\\d)[A-Z0-9]{8}|\\d{11})$",
+        "pattern": "^(?:(?=[A-Z0-9]{8}$)(?=.*[A-Z])[A-Z0-9]{8}|\\d{11})$",
         "confidence": "low"
       },
       {
@@ -30919,7 +30919,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "gls"
       },
       {
-        "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\\d)[A-Z0-9]{8}$",
+        "pattern": "^(?=[A-Z0-9]{8}$)(?=.*[A-Z])[A-Z0-9]{8}$",
         "confidence": "low"
       }
     ]

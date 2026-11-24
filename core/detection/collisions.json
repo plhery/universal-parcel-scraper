@@ -1415,7 +1415,7 @@
     "reason": "A DPD France label barcode is its fifteen-digit 250 parcel number plus a GS1 check digit, which these carriers' sixteen-digit shapes also accept. The check puts DPD France first without selecting it."
   },
   {
-    "shape": "eight characters mixing letters and digits",
+    "shape": "eight letters, or letters and digits",
     "carriers": [
       "gls-ch",
       "gls-de",
@@ -1423,7 +1423,7 @@
       "loggi",
       "gls-nl"
     ],
-    "reason": "The three GLS countries share one 8-character format; the number stays a low-confidence suggestion. Loggi also suggests this shape at low confidence."
+    "reason": "The GLS networks share one 8-character Track ID format, letters alone included; the number stays a low-confidence suggestion. Loggi also suggests this shape at low confidence."
   },
   {
     "shape": "eight characters mixing letters and digits",
@@ -6258,14 +6258,6 @@
       "gls-nl"
     ],
     "reason": "Passing check digits add GLS, Purolator and Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
-  },
-  {
-    "shape": "Eight letters in a Courier Guy reference",
-    "carriers": [
-      "loggi",
-      "the-courier-guy"
-    ],
-    "reason": "Courier Guy references without digits overlap Loggi tracking codes. Direct confirmation must establish the carrier."
   },
   {
     "shape": "Fourteen digits in Anteraja ranges, starting 10",

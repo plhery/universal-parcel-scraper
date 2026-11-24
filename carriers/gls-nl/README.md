@@ -56,9 +56,9 @@ compute, so both are taken as typed. The 11-digit GLS number without its check d
 too.
 
 Detection offers GLS Netherlands for 14 digits, which DPD and others share; for 12 digits only
-when GLS's check digit passes; and for 8 letters and digits with at least one of each. GLS
-Netherlands issues track IDs starting with `00`, as GLS France does, so GLS France's rule for
-them is low and preferred, and its recognition confirms its own parcels. The samples and their
+when GLS's check digit passes; and for 8 letters and digits with at least one letter, since GLS
+prints some track IDs without a digit. GLS Netherlands issues track IDs starting with `00`, as
+GLS France does, so GLS France's rule for them is low and preferred, and its recognition confirms its own parcels. The samples and their
 sources are in [`numbers.json`](numbers.json).
 
 ## Links
