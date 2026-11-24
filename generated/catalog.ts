@@ -16491,9 +16491,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Karachi",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "citymail-pk",
+      "localClocks": true
     },
     "canaryUrl": "https://citymail.com.pk/",
+    "trackingUrlTemplate": "https://citymail.com.pk/",
     "trackingSearchUrl": "https://my.citymail.com.pk/track",
     "linkRules": [],
     "detectionRules": []

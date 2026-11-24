@@ -175,6 +175,7 @@ import { adapter as cityAirExpress } from '../carriers/city-air-express/adapter.
 import { adapter as cityExpressRs } from '../carriers/city-express-rs/adapter.js';
 import { adapter as citylinkExpress } from '../carriers/citylink-express/adapter.js';
 import { adapter as citymail } from '../carriers/citymail/adapter.js';
+import { adapter as citymailPk } from '../carriers/citymail-pk/adapter.js';
 import { adapter as cjLogistics } from '../carriers/cj-logistics/adapter.js';
 import { adapter as cjPacket } from '../carriers/cj-packet/adapter.js';
 import { adapter as ckLine } from '../carriers/ck-line/adapter.js';
@@ -1309,6 +1310,7 @@ export const REGISTRY: RegistryDefinition = {
     "city-express-rs": cityExpressRs,
     "citylink-express": citylinkExpress,
     "citymail": citymail,
+    "citymail-pk": citymailPk,
     "cj-logistics": cjLogistics,
     "cj-packet": cjPacket,
     "ck-line": ckLine,
@@ -2601,7 +2603,7 @@ export const REGISTRY: RegistryDefinition = {
     "city-express-rs": "city-express-rs",
     "citylink-express": "citylink-express",
     "citymail": "citymail",
-    "citymail-pk": "universal",
+    "citymail-pk": "citymail-pk",
     "citypak": "universal",
     "citysprint": "universal",
     "citytrans": "universal",
