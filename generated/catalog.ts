@@ -57383,6 +57383,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "shengao": {
+    "displayName": "SHENGAO",
+    "color": "#084485",
+    "aliases": [
+      "盛傲物流",
+      "Shengao International Logistics",
+      "深圳市盛傲国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "shengao"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "shengaoguojiwuliu.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "shenghang": {
     "displayName": "Shenghang International Logistics",
     "color": "#212184",
@@ -73877,6 +73908,7 @@ export const CARRIER_IDS = [
   "shalom-pe",
   "sharf",
   "sheensync",
+  "shengao",
   "shenghang",
   "shipa",
   "shipagent-in",
@@ -75939,6 +75971,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shalom-pe": [],
   "sharf": [],
   "sheensync": [],
+  "shengao": [],
   "shenghang": [],
   "shipa": ["shipa-1"],
   "shipagent-in": [],

@@ -887,6 +887,7 @@ import { adapter as sflWorldwide } from '../carriers/sfl-worldwide/adapter.js';
 import { adapter as sfydExpress } from '../carriers/sfyd-express/adapter.js';
 import { adapter as shadowfax } from '../carriers/shadowfax/adapter.js';
 import { adapter as sheensync } from '../carriers/sheensync/adapter.js';
+import { adapter as shengao } from '../carriers/shengao/adapter.js';
 import { adapter as shipa } from '../carriers/shipa/adapter.js';
 import { adapter as shipagentIn } from '../carriers/shipagent-in/adapter.js';
 import { adapter as shipblu } from '../carriers/shipblu/adapter.js';
@@ -2041,6 +2042,7 @@ export const REGISTRY: RegistryDefinition = {
     "sfyd-express": sfydExpress,
     "shadowfax": shadowfax,
     "sheensync": sheensync,
+    "shengao": shengao,
     "shipa": shipa,
     "shipagent-in": shipagentIn,
     "shipblu": shipblu,
@@ -3898,6 +3900,7 @@ export const REGISTRY: RegistryDefinition = {
     "shalom-pe": "universal",
     "sharf": "universal",
     "sheensync": "sheensync",
+    "shengao": "shengao",
     "shenghang": "universal",
     "shipa": "shipa",
     "shipagent-in": "shipagent-in",
