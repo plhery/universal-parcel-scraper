@@ -18,7 +18,8 @@
  * delivery attempt can come there as `SA013` or `SA014` with no label, and a
  * round that ended without a delivery as `SI000`, labelled
  * `logisticIssueOpen`, so those codes are matched whole, and by the code alone
- * when a label the map does not know comes with it.
+ * when a label the map does not know comes with it. `SI014` comes with no
+ * label either, and the page shows nothing for it: it is a gap.
  * The provider's own wording is never returned; each mapped entry supplies the
  * English description we display.
  *
@@ -198,5 +199,10 @@ export const statusMap: CarrierStatusMap = {
     // A history code stored beside "Shipment update" by a release that did not know it.
     ?? (wording === 'shipment update' ? CODES.get(statusKey(code))?.stage : undefined)
     ?? evriStatusMap.stage(code, wording),
-  gaps: [],
+  codeKey: statusKey,
+  gaps: [{
+    code: 'si014',
+    note: 'A history step the page gives no label or status and keeps off its timeline, after a new attempt was put on a round. '
+      + 'It states no movement, so it keeps the stage of the scan before it.',
+  }],
 };

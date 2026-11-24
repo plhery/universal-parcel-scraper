@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
+import { statusGapNote } from '../../core/status/statusMap.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { carrierScan } from '../../providers/shared/scans.js';
@@ -152,7 +153,11 @@ describe('Paack status vocabulary', () => {
   it('files every recorded status under its stage', () => {
     for (const entry of statuses.entries) {
       if (entry.wording !== undefined) expect(paackScan(entry.wording)?.stage, entry.wording).toBe(entry.stage);
-      else expect(classifyPaackEvent({ label: entry.code ?? '' }).stage, entry.code).toBe(entry.stage);
+      else if (entry.stage === null) {
+        // A gap: no stage, and the map says why.
+        expect(classifyPaackEvent({ id: entry.code }).status, entry.code).toBe('unknown');
+        expect(statusGapNote(statusMap, entry.code.toUpperCase(), 'shipment update'), entry.code).toBeDefined();
+      } else expect(classifyPaackEvent({ label: entry.code ?? '' }).stage, entry.code).toBe(entry.stage);
     }
   });
 
@@ -181,7 +186,10 @@ describe('Paack status vocabulary', () => {
     // Stored beside "Shipment update" by a release that did not know them, they read by their code.
     expect(statusMap.stage('SA013', 'shipment update')).toBe('failed_attempt');
     expect(statusMap.stage('SI000', 'shipment update')).toBe('failed_attempt');
+    // A step the page shows nothing for keeps the stage before it, on purpose.
     expect(statusMap.stage('SI014', 'shipment update')).toBeUndefined();
+    expect(statusGapNote(statusMap, 'SI014', 'shipment update')).toMatch(/keeps the stage/);
+    expect(statusGapNote(statusMap, 'SI015', 'shipment update')).toBeUndefined();
     expect(classifyPaackEvent({ id: 'SA015', label: 'additionalDeliveryAttemptScheduled' }))
       .toEqual({ status: 'exception', stage: 'failed_attempt', description: 'New delivery attempt scheduled' });
     expect(classifyPaackEvent({ id: 'SA016', label: 'driverAssigned' }))
