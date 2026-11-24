@@ -46,7 +46,7 @@ describe('DPEX Worldwide HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
-  it('dates the GETOnline scans in Singapore on its clock, keeps Hong Kong’s as wall clocks and drops the signatory', () => {
+  it('dates the GETOnline scans in Singapore and Hong Kong on their clocks and drops the signatory', () => {
     const result = parseDpex(fixture('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Delivered', last_update: '2026-03-16T14:41:00+08:00', expected_delivery: null, destination_country: 'SG' });
@@ -55,9 +55,8 @@ describe('DPEX Worldwide HTTP adapter', () => {
       ['2026-03-16T09:05:00+08:00', '15', 'out_for_delivery', 'Singapore - SINGAPORE'],
       ['2026-03-16T07:12:00+08:00', '40', 'in_transit', 'Singapore - SINGAPORE'],
       ['2026-03-15T23:58:00+08:00', '4', 'in_transit', 'Singapore - SINGAPORE'],
-      // The tracker's name for Hong Kong settles no zone, so its scans keep the station's wall clock.
-      ['2026-03-15T18:20:00', '3', 'in_transit', 'Hong Kong - HONG KONG'],
-      ['2026-03-15T00:00:00', '4', 'in_transit', 'Hong Kong - HONG KONG'],
+      ['2026-03-15T18:20:00+08:00', '3', 'in_transit', 'Hong Kong - HONG KONG'],
+      ['2026-03-15T00:00:00+08:00', '4', 'in_transit', 'Hong Kong - HONG KONG'],
     ]);
     // The masked signatory, the service type and the destination's town are not kept.
     expect(JSON.stringify(result)).not.toMatch(/S\*{7}|Export Non Documents|SAMPLETOWN/);

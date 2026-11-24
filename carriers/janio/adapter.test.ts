@@ -86,8 +86,8 @@ describe('Janio HTTP adapter', () => {
       ['2026-06-01T10:00:00Z', 'FAILED_PICKUP', 'registered', null],
       ['2026-06-01T02:55:06.239Z', 'ORDER_CREATED', 'registered', null],
     ]);
-    // The related order is its own parcel, with a destination the catalog names no code for.
-    expect(parseJanio(fixture('in-transit'), RELATED)).toMatchObject({ current_stage: 'registered', destination_country_name: 'Hong Kong',
+    // The related order is its own parcel, with its own destination.
+    expect(parseJanio(fixture('in-transit'), RELATED)).toMatchObject({ current_stage: 'registered', destination_country: 'HK',
       last_update: '2026-06-01T02:00:00Z' });
   });
 

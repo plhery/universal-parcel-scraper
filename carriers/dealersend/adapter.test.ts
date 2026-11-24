@@ -92,11 +92,11 @@ describe('DealerSend HTTP adapter', () => {
       ['2026-04-11T19:19:02', 'JAMAICA, NEWYORK, US', 'in_transit'],
       ['2026-04-11T18:19:00', null, 'in_transit'],
       ['2026-04-09T17:25:00', 'John F. Kennedy, US', 'in_transit'],
-      ['2026-04-09T16:12:00', 'Hong Kong, HK', 'in_transit'],
-      ['2026-04-09T02:13:00', 'Hong Kong, HK', 'in_transit'],
+      ['2026-04-09T16:12:00', 'Hong Kong', 'in_transit'],
+      ['2026-04-09T02:13:00', 'Hong Kong', 'in_transit'],
       ['2026-04-06T16:59:00', 'Tsuen Wan, HK', 'in_transit'],
       ['2026-04-06T15:09:19', 'Tsuen Wan, HK', 'in_transit'],
-      ['2026-04-06T13:59:22', 'Hong Kong, HK', 'accepted'],
+      ['2026-04-06T13:59:22', 'Hong Kong', 'accepted'],
       ['2026-04-04T11:30:26', null, 'registered'],
     ]);
     // No row carries an instant or an offset of its own, and no postcode is kept.

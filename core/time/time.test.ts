@@ -163,6 +163,8 @@ describe('time policies', () => {
     expect(countryCode(' United States ')).toBe('US');
     expect(countryCode('south africa')).toBe('ZA');
     expect(countryCode('Bosnia and Herzegovina')).toBe('BA');
+    expect(countryCode('HONG KONG')).toBe('HK');
+    expect(countryCode('Macau')).toBe('MO');
     expect(countryCode('Bosnia & Herzegovina')).toBe('BA');
     expect(countryCode('Saint Kitts and Nevis')).toBe('KN');
     expect(countryCode('Trinidad and Tobago')).toBe('TT');

@@ -41,9 +41,8 @@ trace-and-track system of its own. Tracked through both.
 - The GETOnline tracker reads `%` as a wildcard and answers short references with other
   people's shipments, so the adapter sends only twelve digits that pass the check digit.
 - Each GETOnline scan's clock is the station's wall clock to the minute, with no zone. Scans in
-  a country with one clock, such as Singapore, Malaysia or China, are dated on it. Scans in
-  Australia, and in Hong Kong, whose name the shared country lookup does not read, stay
-  `local_time`.
+  a country with one clock, such as Singapore, Malaysia, Hong Kong or China, are dated on it.
+  Scans in Australia stay `local_time`.
 - DPEX China's scans stay `local_time`. Its UTC fields apply the offset of the station that
   entered the scan, not the scan's place, and many places name no country.
 - Both trackers write the same event numbers, which stage a scan. The documents prepared before
