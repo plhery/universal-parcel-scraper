@@ -513,6 +513,14 @@
       "note": "Relayed without a code: GOFO's arrival at its sorting centre, beside GOFO's coded copy (612) of the same scan."
     },
     {
+      "wording": "Departed GOFO regional hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Relayed without a code: GOFO's departure from its regional hub, beside GOFO's coded copy (411) of the same scan."
+    },
+    {
       "code": "FPX_O_IRI",
       "wording": "Label created",
       "language": "en",
