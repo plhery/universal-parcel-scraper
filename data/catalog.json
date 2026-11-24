@@ -71180,7 +71180,7 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "youbang-express"
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [

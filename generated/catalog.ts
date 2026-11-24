@@ -71184,7 +71184,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "youbang-express"
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [
