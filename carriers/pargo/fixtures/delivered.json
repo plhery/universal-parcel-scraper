@@ -1,0 +1,118 @@
+{
+  "meta": {},
+  "data": {
+    "orderData": {
+      "trackingCode": "PAR4080177479",
+      "externalReference": "WO25305",
+      "orderType": "W2D",
+      "owner": {
+        "name": "Toner and Ink",
+        "supportEmail": "support@example.com",
+        "supportPhoneNumber": "0000000000"
+      },
+      "courier": {
+        "name": "DPD"
+      }
+    },
+    "events": [
+      {
+        "level": "major",
+        "date": "2026-07-14T06:36:04+00:00",
+        "code": "1.40.4.100",
+        "title": "Parcel Notification",
+        "description": "Pargo is waiting for parcel PAR4080177479 from Toner and Ink to be handed over.",
+        "seq": 0
+      },
+      {
+        "level": "major",
+        "date": "2026-07-14T06:36:06+00:00",
+        "code": "1.40.4.200",
+        "title": "Parcel is being prepared",
+        "description": "Parcel is being prepared by Toner and Ink.",
+        "seq": 1
+      },
+      {
+        "level": "minor",
+        "date": "2026-07-14T06:40:50+00:00",
+        "code": "1.40.4.310",
+        "title": "Parcel is ready for courier collection",
+        "description": "The courier is on its way to collect the parcel.",
+        "seq": 2
+      },
+      {
+        "level": "minor",
+        "date": "2026-07-14T15:56:11+00:00",
+        "code": "1.40.4.302",
+        "title": "Parcel at courier hub",
+        "description": "Parcel has arrived at the courier HUB.",
+        "seq": 3
+      },
+      {
+        "level": "minor",
+        "date": "2026-07-14T20:17:50+00:00",
+        "code": "1.40.4.301",
+        "title": "Parcel collected by courier",
+        "description": "Parcel has been collected by the courier and is en route to the courier HUB.",
+        "seq": 4
+      },
+      {
+        "level": "minor",
+        "date": "2026-07-16T22:00:50+00:00",
+        "code": "1.40.4.302",
+        "title": "Parcel at courier hub",
+        "description": "Parcel has arrived at the courier HUB.",
+        "seq": 5
+      },
+      {
+        "level": "minor",
+        "date": "2026-07-17T05:10:35+00:00",
+        "code": "1.40.4.303",
+        "title": "Parcel out for delivery",
+        "description": "Parcel is out for delivery.",
+        "seq": 6
+      },
+      {
+        "level": "major",
+        "date": "2026-07-17T20:35:56+00:00",
+        "code": "1.40.4.400",
+        "title": "Parcel delivered",
+        "description": "Parcel has been delivered.",
+        "seq": 7
+      }
+    ],
+    "currentStatus": {
+      "name": "Completed",
+      "code": "1.40.4.400",
+      "title": "Parcel delivered",
+      "description": "Parcel has been delivered.",
+      "updatedAt": "2026-07-17T20:35:56+00:00"
+    },
+    "addresses": [
+      {
+        "type": "residential"
+      }
+    ],
+    "steps": [
+      {
+        "name": "Received",
+        "code": "1.40.4.200",
+        "active": true,
+        "seq": 0
+      },
+      {
+        "name": "En route",
+        "code": "1.40.4.300",
+        "active": true,
+        "seq": 1
+      },
+      {
+        "name": "Delivered",
+        "code": "1.40.4.400",
+        "active": true,
+        "seq": 2
+      }
+    ]
+  },
+  "success": true,
+  "statusCode": 200
+}

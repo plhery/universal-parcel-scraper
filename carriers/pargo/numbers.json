@@ -2,6 +2,25 @@
   "carrier": "pargo",
   "records": [
     {
+      "number": "PAR4080177479",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720002111/https://www.parcelpanel.com/couriers/pargo/",
+        "date": "2026-07-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "pargo",
+        "confidence": "high"
+      },
+      "note": "An archived ParcelPanel Pargo page offered it to try. Pargo's tracker answers it as a shop's warehouse-to-door order that DPD carried and delivered."
+    },
+    {
       "number": "ODOCP6042597S1",
       "role": "shipment",
       "evidence": "public_shipment_report",

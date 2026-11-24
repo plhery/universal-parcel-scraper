@@ -17,16 +17,65 @@
   "timezone": "Africa/Johannesburg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "pargo",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "offset_timestamps",
+    "pickup_point",
+    "sender_name"
+  ],
   "portal": {
     "canaryUrl": "https://track.pargo.co.za/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": [],
+    "shows": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "provider_code",
+      "progress_rail",
+      "pickup_point",
+      "pickup_point_address",
+      "office_opening_hours",
+      "sender_name",
+      "contact_details",
+      "event_details",
+      "delivery_partner",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "provider_code",
+      "pickup_point",
+      "pickup_point_address",
+      "sender_name"
+    ],
+    "discarded": [
+      "progress_rail",
+      "office_opening_hours",
+      "contact_details",
+      "event_details",
+      "delivery_partner",
+      "customer_reference"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "recipient_name",
+      "recipient_address",
+      "signatory",
+      "proof_of_delivery",
+      "delivery_tracking_number"
+    ],
     "url": "https://track.pargo.co.za/?code={trackingNumber}",
     "searchUrl": "https://track.pargo.co.za/",
     "helpUrl": "https://pargo.co.za/faq/"

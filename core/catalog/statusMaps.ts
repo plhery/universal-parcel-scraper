@@ -643,6 +643,7 @@ import { statusMap as paperfly } from '../../carriers/paperfly/status.js';
 import { statusMap as paquetexpress } from '../../carriers/paquetexpress/status.js';
 import { statusMap as parcelabc } from '../../carriers/parcelabc/status.js';
 import { statusMap as parcelpoint } from '../../carriers/parcelpoint/status.js';
+import { statusMap as pargo } from '../../carriers/pargo/status.js';
 import { statusMap as passport } from '../../carriers/passport/status.js';
 import { statusMap as pathaoCourier } from '../../carriers/pathao-courier/status.js';
 import { statusMap as pbt } from '../../carriers/pbt/status.js';
@@ -1225,7 +1226,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocs-ana': ocsAna, 'odm-express': odmExpress,
   'old-dominion': oldDominion, 'olva-courier': olvaCourier, omgo, omniva,
   'one-world-express': oneWorldExpress, onex, ontrac, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'overseas-express': overseasExpress, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic, padtf,
-  'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, passport,
+  'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, pargo, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress, peddler,
   'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, pigeonship, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
   'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
