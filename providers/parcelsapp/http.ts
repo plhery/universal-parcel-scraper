@@ -1,8 +1,22 @@
 
-import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
+import { decodeText, fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { numberOf } from '../shared/result.js';
 
 export const PARCELSAPP_API = 'https://parcelsapp.com/api/v2/parcels';
+
+/** How long the tracking page may take, within the lookup's cap. */
+const PAGE_TIMEOUT_MS = 10_000;
+
+/** The tracking page, which issues the ticket the API asks for. */
+export const parcelsAppPage = (number: string): string => `https://parcelsapp.com/en/tracking/${number}`;
+
+/**
+ * The ticket the tracking page issues (`window.parcelsTicket`), signed by ParcelsApp for the
+ * requesting network and the time it was issued; the session cookie is not needed with it.
+ */
+export function parcelsAppTicket(html: string): string | undefined {
+  return /window\.parcelsTicket\s*=\s*"([A-Za-z0-9+/=_.-]{16,400})"/.exec(html)?.[1];
+}
 
 // Public frontend protocol: no session or issued secret, from the tracking bundle
 // (packs/js/application-….js on dvow0vltefbxy.cloudfront.net). The website accepts
@@ -11,8 +25,8 @@ export const PARCELSAPP_API = 'https://parcelsapp.com/api/v2/parcels';
 // outer size (first). It refuses a window larger inside than outside, a request
 // without Accept-Language or jQuery's JSON Accept, and a User-Agent that names no
 // browser or an outdated Chrome, with a bare NO_DATA. The checksum below binds the
-// profile to each number. The ticket (pt), sensor (s2) and detected-carrier fields the
-// page now adds are not required.
+// profile to each number. The ticket (pt) comes from the tracking page; the sensor (s2)
+// and detected-carrier fields the page adds are not required.
 const CHROME_142_RELEASE = Date.UTC(2025, 9, 28);
 const CHROME_RELEASE_CYCLE_MS = 28 * 86_400_000;
 
@@ -45,7 +59,7 @@ export function parcelsAppChecksum(text: string): number {
   return (hash ^ hash >>> 15) >>> 0;
 }
 
-export function parcelsAppRequest(trackingNumber: string, postcode?: string | null): URLSearchParams {
+export function parcelsAppRequest(trackingNumber: string, postcode?: string | null, ticket?: string | null): URLSearchParams {
   const number = numberOf(trackingNumber);
   // The bundle shifts ASCII by 2 * sum([1,2,8,4,5,6,7,5]) modulo 126,
   // URI-encodes it, then lets jQuery form-encode it a second time.
@@ -55,6 +69,7 @@ export function parcelsAppRequest(trackingNumber: string, postcode?: string | nu
     platform: 'web-desktop', wd: 'false', c: 'true', p: '5', l: '3',
     se: `${TELEMETRY},${TELEMETRY.length},${number.length},${parcelsAppChecksum(encodeURIComponent(number) + TELEMETRY)}`,
   });
+  if (ticket) { params.set('pt', ticket); params.set('ptv', '1'); }
   const zipcode = postcode?.trim();
   if (zipcode) params.set('extra[zipcode]', zipcode);
   return params;
@@ -63,19 +78,29 @@ export function parcelsAppRequest(trackingNumber: string, postcode?: string | nu
 export class ParcelsAppHttpClient {
   constructor(readonly fetcher?: typeof fetch) {}
 
+  /**
+   * Opens the number's tracking page for its ticket, as the website does, then asks the API
+   * with it. A page without a ticket leaves the API to answer, with its refusal if it needs one.
+   */
   async fetch(trackingNumber: string, timeoutMs: number, postcode?: string | null, signal?: AbortSignal): Promise<unknown> {
     const number = numberOf(trackingNumber);
     if (!Number.isFinite(timeoutMs) || timeoutMs < 1) throw new TypeError('ParcelsApp HTTP timeout must be positive');
+    const deadline = performance.now() + timeoutMs;
+    const userAgent = parcelsAppUserAgent();
+    const page = await fetchBounded(parcelsAppPage(number), {
+      signal, headers: { 'User-Agent': userAgent, 'Accept-Language': 'en-US,en;q=0.9', Accept: 'text/html,application/xhtml+xml' },
+    }, { provider: 'ParcelsApp', fetcher: this.fetcher, timeoutMs: Math.max(1, Math.floor(Math.min(timeoutMs, PAGE_TIMEOUT_MS))), maxBytes: 1_000_000 });
+    const ticket = parcelsAppTicket(decodeText(page.bytes));
     const { bytes } = await fetchBounded(PARCELSAPP_API, {
       method: 'POST', signal,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        Origin: 'https://parcelsapp.com', Referer: `https://parcelsapp.com/en/tracking/${number}`,
-        'User-Agent': parcelsAppUserAgent(), 'Accept-Language': 'en-US,en;q=0.9', 'X-Requested-With': 'XMLHttpRequest',
+        Origin: 'https://parcelsapp.com', Referer: parcelsAppPage(number),
+        'User-Agent': userAgent, 'Accept-Language': 'en-US,en;q=0.9', 'X-Requested-With': 'XMLHttpRequest',
         Accept: 'application/json, text/javascript, */*; q=0.01',
       },
-      body: parcelsAppRequest(number, postcode),
-    }, { provider: 'ParcelsApp', fetcher: this.fetcher, timeoutMs: Math.floor(timeoutMs), maxBytes: 2_000_000 });
+      body: parcelsAppRequest(number, postcode, ticket),
+    }, { provider: 'ParcelsApp', fetcher: this.fetcher, timeoutMs: Math.max(1, Math.floor(deadline - performance.now())), maxBytes: 2_000_000 });
     return parseJsonBytes(bytes, 'ParcelsApp');
   }
 }

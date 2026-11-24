@@ -33,9 +33,8 @@ describe('Emile catalog and tracking', () => {
       ['2026-01-05T09:00:00.000Z', 'ARRIVE TRANSITHUB'],
       ['2026-01-02T08:00:00.000Z', 'Shipment information received'],
     ]);
-    expect(fetcher).toHaveBeenCalledTimes(2);
-    expect(String(fetcher.mock.calls[0]![0])).toBe(endpoint);
-    expect(String(fetcher.mock.calls[1]![0])).toBe('https://parcelsapp.com/api/v2/parcels');
+    // Emile, then ParcelsApp's tracking page for its ticket and its lookup.
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([endpoint, `https://parcelsapp.com/en/tracking/${number}`, 'https://parcelsapp.com/api/v2/parcels']);
   });
 
   it('dispatches a consumer router\'s Emile lookup to its direct adapter', async () => {

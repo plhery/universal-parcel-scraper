@@ -2558,13 +2558,16 @@ const numberFormNotice = (raw: unknown): boolean => isRecord(raw) && typeof raw.
  * ParcelsApp's refusal of a request it does not take for its website's: NO_DATA alone. Its
  * answer for a number it has no data for also lists the carriers and services it checked.
  */
-const refused = (payload: unknown): boolean => isRecord(payload) && payload.error === 'NO_DATA' && Object.keys(payload).length === 1;
+// A bare NO_DATA, or the website's explicit block of the requesting network.
+const refused = (payload: unknown): boolean => isRecord(payload)
+  && ((payload.error === 'NO_DATA' && Object.keys(payload).length === 1) || payload.error === 'IP_BLOCKED');
 
 const refusal = () => new IndeterminateError(SOURCE, 'ParcelsApp refused the lookup', { reason: 'guest_refused' });
 
 function parseHistory(payload: unknown, trackingNumber: string, timezone: string | null = null, readAt = Date.now(),
   filed: string | null = null): CarrierResult {
-  if (isRecord(payload) && payload.error === 'RELOAD') throw new ChallengeError(SOURCE);
+  // TICKET: the page's ticket was not accepted; the website asks for a new one, then reloads.
+  if (isRecord(payload) && (payload.error === 'RELOAD' || payload.error === 'TICKET')) throw new ChallengeError(SOURCE);
   if (refused(payload)) throw refusal();
   if (isRecord(payload) && (payload.error === 'NO_DATA' || payload.error === 'NO_TRACKER')) {
     throw new NoHistoryError(SOURCE, 'ParcelsApp has no usable shipment history');

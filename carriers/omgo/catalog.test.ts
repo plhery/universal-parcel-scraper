@@ -4,6 +4,7 @@ import { carrierAdapter, carrierDefinition } from '../../core/catalog/index.js';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { createTracker, TrackingError } from '../../facade/index.js';
+import { withParcelsAppPage } from '../../testing/parcelsAppPage.js';
 
 const number = 'OMGO9999999999980';
 const history: unknown = JSON.parse(readFileSync(new URL('./fixtures/in-transit.json', import.meta.url), 'utf8'));
@@ -38,7 +39,7 @@ describe('OMGO catalog and tracking', () => {
       .mockResolvedValueOnce(new Response(fixture('unknown.json'))).mockResolvedValueOnce(new Response(JSON.stringify(history), {
       headers: { 'Content-Type': 'application/json' },
     }));
-    const answer = await createTracker({ providers: ['ParcelsApp'], fetcher }).track({ number });
+    const answer = await createTracker({ providers: ['ParcelsApp'], fetcher: withParcelsAppPage(fetcher) }).track({ number });
     expect(answer).toMatchObject({
       carrier: 'omgo', source: 'ParcelsApp', attempts: [{ source: 'omgo', kind: 'indeterminate' }, { source: 'ParcelsApp', kind: 'ok' }],
       result: { status: 'in_transit', current_stage: 'in_transit', discovered_carrier: 'omgo' },

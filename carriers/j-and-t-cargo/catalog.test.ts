@@ -4,6 +4,7 @@ import { carrierAdapter, carrierDefinition } from '../../core/catalog/index.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { recognitionCandidates } from '../../core/recognition/index.js';
 import { createTracker } from '../../facade/index.js';
+import { withParcelsAppPage } from '../../testing/parcelsAppPage.js';
 
 const MASTER = '200000000001';
 const PIECE = '200000000001002';
@@ -49,7 +50,7 @@ describe('J&T Cargo catalog and routing', () => {
     ] };
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(fixture('unknown.json')))
       .mockResolvedValueOnce(new Response(JSON.stringify(provider), { headers: { 'Content-Type': 'application/json' } }));
-    const answer = await createTracker({ fetcher, providers: ['ParcelsApp'] }).track({ number: MASTER, carrier: 'j-and-t-cargo' });
+    const answer = await createTracker({ fetcher: withParcelsAppPage(fetcher), providers: ['ParcelsApp'] }).track({ number: MASTER, carrier: 'j-and-t-cargo' });
     expect(answer).toMatchObject({ carrier: 'j-and-t-cargo', source: 'ParcelsApp', result: { current_stage: 'in_transit' },
       attempts: [{ source: 'j-and-t-cargo', kind: 'indeterminate' }, { source: 'ParcelsApp', kind: 'ok' }] });
     expect(fetcher).toHaveBeenCalledTimes(2);

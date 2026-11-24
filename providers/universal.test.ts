@@ -102,14 +102,15 @@ describe('universal discovery chain', () => {
   });
 
   it('starts with ParcelsApp and stops after success', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(parcels));
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(parcels));
     const browserLookup = vi.fn().mockRejectedValue(new Error('Unavailable'));
     const result = await new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'],  trawlUrl: 'http://browser.test/v1', fetcher, browserLookup }).fetch(number);
     expect(result.current_stage).toBe('registered');
     expect(result.tracking_provider).toBe('ParcelsApp');
-    expect(fetcher).toHaveBeenCalledOnce();
+    // The tracking page for its ticket, then the lookup.
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([`https://parcelsapp.com/en/tracking/${number}`, 'https://parcelsapp.com/api/v2/parcels']);
     expect(browserLookup).not.toHaveBeenCalled();
-    const [url, options] = fetcher.mock.calls[0]!;
+    const [url, options] = fetcher.mock.calls[1]!;
     expect(String(url)).toBe('https://parcelsapp.com/api/v2/parcels');
     expect(new URLSearchParams(String(options!.body)).get('carrier')).toBe('Auto-Detect');
   });
@@ -165,12 +166,12 @@ describe('universal discovery chain', () => {
   });
 
   it('falls through an unrelated ParcelsApp result to 17TRACK', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply({ error: 'RELOAD' }))
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response('<html></html>')).mockResolvedValueOnce(reply({ error: 'RELOAD' }))
       .mockResolvedValueOnce(browserResponse('ParcelsApp', parcels, { html: identity('OTHER123') }))
       .mockResolvedValueOnce(browserResponse('17TRACK', track17));
     const result = await new UniversalTracker({ providers: ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'],  trawlUrl: 'http://browser.test', fetcher, browserLookup: vi.fn().mockRejectedValue(new Error('Unavailable')) }).fetch(number);
     expect(result.tracking_provider).toBe('17TRACK');
-    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(fetcher).toHaveBeenCalledTimes(4);
   });
 
   it('retains provider failures for Sentry while keeping the lookup summary readable', async () => {
@@ -237,8 +238,11 @@ describe('universal discovery chain', () => {
       browserLookup: vi.fn().mockRejectedValue(new Error('Ship24 unavailable')) });
     await expect(tracker.fetchSource('ParcelsApp', number, 20_000, '01234')).resolves.toMatchObject({ tracking_provider: 'ParcelsApp' });
     await expect(tracker.fetch(number, '01234')).resolves.toMatchObject({ tracking_provider: 'ParcelsApp' });
-    expect(fetcher).toHaveBeenCalledTimes(2);
-    for (const [, init] of fetcher.mock.calls) {
+    // Each lookup opens the tracking page for its ticket first.
+    expect(fetcher).toHaveBeenCalledTimes(4);
+    const lookups = fetcher.mock.calls.filter(([url]) => String(url) === 'https://parcelsapp.com/api/v2/parcels');
+    expect(lookups).toHaveLength(2);
+    for (const [, init] of lookups) {
       expect(new URLSearchParams(String(init!.body)).get('extra[zipcode]')).toBe('01234');
     }
   });
@@ -421,7 +425,7 @@ describe('universal discovery chain', () => {
   });
 
   it('turns down ParcelsApp\'s guess of another carrier for a number that short', async () => {
-    const delivered = (carriers: string[]) => vi.fn<typeof fetch>().mockResolvedValue(reply({ carriers,
+    const delivered = (carriers: string[]) => vi.fn<typeof fetch>().mockImplementation(async () => reply({ carriers,
       states: [{ date: '2026-01-02T12:00:00Z', status: 'Delivered', carrier: 0, location: 'Paris, France' }] }));
     const lookup = (fetcher: typeof fetch) => new UniversalTracker({ providers: ['ParcelsApp'], fetcher })
       .fetchSource('ParcelsApp', '58471', 20_000, null, null, undefined, null, 'seur');
@@ -435,7 +439,7 @@ describe('universal discovery chain', () => {
       { date: '2026-03-03T06:40:00Z', status: 'SCAN VEHICLE DEPARTURE', carrier: 0 },
     ];
     const lookup = (carriers: string[]) => new UniversalTracker({ providers: ['ParcelsApp'],
-      fetcher: vi.fn<typeof fetch>().mockResolvedValue(reply({ carriers, states })) }).fetchSource('ParcelsApp', 'BUFZA0SK00000BUYQ', 20_000);
+      fetcher: vi.fn<typeof fetch>().mockImplementation(async () => reply({ carriers, states })) }).fetchSource('ParcelsApp', 'BUFZA0SK00000BUYQ', 20_000);
     const buffalo = await lookup(['Buffalo Logistics']);
     expect(buffalo).toMatchObject({ discovered_carrier: 'buffalo-ex', current_stage: 'failed_attempt' });
     expect(buffalo.events?.find((event) => event.description === 'RETURNS')).toMatchObject({ stage: 'failed_attempt', stage_source: 'wording:provider' });

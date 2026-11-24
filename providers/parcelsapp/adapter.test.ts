@@ -11,6 +11,7 @@ import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { ParcelsAppTracker, parseParcelsAppHtml, parseParcelsAppResponse } from './adapter.js';
 import type { ParcelsAppHttpClient } from './http.js';
+import { withParcelsAppPage } from '../../testing/parcelsAppPage.js';
 
 const number = 'ZZ12345678900';
 const API = 'https://parcelsapp.com/api/v2/parcels';
@@ -4168,6 +4169,7 @@ describe('ParcelsApp browser capture', () => {
   });
 });
 
+
 describe('ParcelsApp direct lookup', () => {
   const reply = (data: unknown) => new Response(JSON.stringify(data));
   const prompt = { states: [{ date: '2026-01-01T00:00:00', status: 'Enter recipient details',
@@ -4175,7 +4177,7 @@ describe('ParcelsApp direct lookup', () => {
 
   it('retrieves history without a browser and sends the stored postcode only in the form body', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(announced));
-    const result = await new ParcelsAppTracker({ fetcher }).fetch(number, 10_000, ' 01234 ');
+    const result = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number, 10_000, ' 01234 ');
     expect(result).toMatchObject({ current_stage: 'registered', tracking_source: 'structured-web-response' });
     expect(fetcher).toHaveBeenCalledOnce();
     const [url, init] = fetcher.mock.calls[0]!;
@@ -4188,7 +4190,7 @@ describe('ParcelsApp direct lookup', () => {
     let finishFirst!: (response: Response) => void;
     const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(() => new Promise((resolve) => { finishFirst = resolve; }))
       .mockResolvedValueOnce(reply({ states: [{ date: '2026-01-02T12:00:00Z', status: 'Delivered' }] }));
-    const tracker = new ParcelsAppTracker({ fetcher });
+    const tracker = new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) });
     const first = tracker.fetch(number);
     const second = await tracker.fetch('ZZ98765432100');
     finishFirst(reply(announced));
@@ -4199,7 +4201,7 @@ describe('ParcelsApp direct lookup', () => {
 
   it('reports a postcode gate without treating it as a scan or retrying in a browser', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(prompt));
-    const tracker = new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) });
+    const tracker = new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) });
     for (const postcode of [undefined, '99999']) {
       const error = await tracker.fetch(number, 10_000, postcode).catch((error: unknown) => error);
       expect(error).toMatchObject({ kind: 'input_required', field: 'postcode' });
@@ -4211,7 +4213,7 @@ describe('ParcelsApp direct lookup', () => {
 
   it('names the carrier a postcode gate is for, when every gate names one that maps', async () => {
     const gate = (carrier?: number) => ({ ...prompt.states[0], ...(carrier === undefined ? {} : { carrier }) });
-    const gated = async (data: unknown) => new ParcelsAppTracker({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(reply(data)) })
+    const gated = async (data: unknown) => new ParcelsAppTracker({ fetcher: withParcelsAppPage(vi.fn<typeof fetch>().mockResolvedValue(reply(data))) })
       .fetch(number).catch((error: unknown) => error);
     expect(await gated({ carriers: ['SEUR'], states: [gate(0)] }))
       .toMatchObject({ name: 'InputRequiredError', kind: 'input_required', field: 'postcode', carrier: 'seur' });
@@ -4230,14 +4232,14 @@ describe('ParcelsApp direct lookup', () => {
 
   it('returns the dated history of a reply with an undated state, without a browser retry', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(undatedLeg));
-    await expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
       .resolves.toMatchObject({ tracking_source: 'structured-web-response', undated_event_count: 1 });
     expect(fetcher).toHaveBeenCalledOnce();
   });
 
   it('retains actual scans alongside a postcode gate', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({ states: [...prompt.states, ...announced.states] }));
-    const result = await new ParcelsAppTracker({ fetcher }).fetch(number);
+    const result = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number);
     expect(result.events).toHaveLength(1);
     expect(result.current_stage).toBe('registered');
   });
@@ -4247,13 +4249,18 @@ describe('ParcelsApp direct lookup', () => {
     const lookups: LookupRecord[] = [];
     const recorder: StepRecorder = { step: (record) => { steps.push(record); }, lookup: (record) => { lookups.push(record); } };
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply({ error: 'RELOAD' })).mockResolvedValueOnce(captured(announced));
-    const result = await new ParcelsAppTracker({ fetcher, recorder, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number);
+    const result = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), recorder, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number);
     expect(result.current_stage).toBe('registered');
     expect(steps).toMatchObject([{ step: 'direct', outcome: 'challenge' }, { step: 'trawl', outcome: 'ok', fallbackFrom: 'direct' }]);
     expect(lookups).toMatchObject([{ finalStep: 'trawl', attempts: 2, outcome: 'ok' }]);
 
     fetcher.mockResolvedValueOnce(reply({ error: 'RELOAD' })).mockResolvedValueOnce(captured(announced, { html: identity('OTHER123') }));
-    await expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number)).rejects.toThrow('identity missing');
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number)).rejects.toThrow('identity missing');
+
+    // A ticket it did not accept sends the website for a new one, then a reload: the browser's turn too.
+    fetcher.mockResolvedValueOnce(reply({ error: 'TICKET' })).mockResolvedValueOnce(captured(announced));
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+      .resolves.toMatchObject({ current_stage: 'registered' });
   });
 
   it('reads a direct reply past the size cap through the browser, which accepts a larger one', async () => {
@@ -4262,7 +4269,7 @@ describe('ParcelsApp direct lookup', () => {
     const fetcher = vi.fn<typeof fetch>()
       .mockResolvedValueOnce(new Response('x', { headers: { 'content-length': '3000000' } }))
       .mockResolvedValueOnce(captured(announced));
-    const result = await new ParcelsAppTracker({ fetcher, recorder, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number);
+    const result = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), recorder, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number);
     expect(result.current_stage).toBe('registered');
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(steps).toMatchObject([
@@ -4273,21 +4280,21 @@ describe('ParcelsApp direct lookup', () => {
 
   it('names an error code it does not know in the schema failure', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({ error: 'SOMETHING_NEW' }));
-    await expect(new ParcelsAppTracker({ fetcher }).fetch(number)).rejects.toThrow('ParcelsApp lookup unavailable: SOMETHING_NEW');
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number)).rejects.toThrow('ParcelsApp lookup unavailable: SOMETHING_NEW');
     fetcher.mockResolvedValue(reply({ error: '<b>no</b>' }));
-    await expect(new ParcelsAppTracker({ fetcher }).fetch(number)).rejects.toThrow(/^ParcelsApp lookup unavailable$/);
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number)).rejects.toThrow(/^ParcelsApp lookup unavailable$/);
   });
 
   it('starts no browser lookup for a reply within the cap that carries no usable scan', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({ states: [{ date: '2026-01-01T00:00:00Z', status: 'Tracking number not found' }] }));
-    await expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
       .rejects.toMatchObject({ kind: 'indeterminate', message: 'No usable tracking events' });
     expect(fetcher).toHaveBeenCalledOnce();
   });
 
   it.each([429, 500, 503])('does not amplify HTTP %i with a browser retry', async (status) => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status, headers: { 'Retry-After': '120' } }));
-    await expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
       .rejects.toMatchObject({ status, retryAfterMs: 120_000 });
     expect(fetcher).toHaveBeenCalledOnce();
   });
@@ -4298,7 +4305,7 @@ describe('ParcelsApp direct lookup', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({
       error: code, carriers: ['Example Courier'], services: [{ name: 'Example Courier', slug: 'example-courier' }],
     }));
-    const error = await new ParcelsAppTracker({ fetcher, recorder, trawl: new TrawlClient('http://browser.test', fetcher) })
+    const error = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), recorder, trawl: new TrawlClient('http://browser.test', fetcher) })
       .fetch(number).catch((error: unknown) => error);
     expect(error).toMatchObject({ kind: 'indeterminate', reason: 'carrier_unavailable', message: `ParcelsApp's carrier lookup failed: ${code}` });
     expect(error).not.toBeInstanceOf(NoHistoryError);
@@ -4309,7 +4316,7 @@ describe('ParcelsApp direct lookup', () => {
 
   it.each([{ error: 'NO_DATA', carriers: [], services: [] }, { error: 'NO_TRACKER' }, { states: [] }])('leaves no-history replies inconclusive without browser retries: %j', async (payload) => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(payload));
-    const error = await new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number).catch((error: unknown) => error);
+    const error = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number).catch((error: unknown) => error);
     expect(carrierErrorKind(error)).toBe('indeterminate');
     expect(error).toBeInstanceOf(NoHistoryError);
     expect(fetcher).toHaveBeenCalledOnce();
@@ -4319,38 +4326,45 @@ describe('ParcelsApp direct lookup', () => {
     const steps: StepRecord[] = [];
     const recorder: StepRecorder = { step: (record) => { steps.push(record); }, lookup: () => {} };
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({ error: 'NO_DATA' }));
-    const error = await new ParcelsAppTracker({ fetcher, recorder, trawl: new TrawlClient('http://browser.test', fetcher) })
+    const error = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), recorder, trawl: new TrawlClient('http://browser.test', fetcher) })
       .fetch(number).catch((error: unknown) => error);
     expect(error).toMatchObject({ kind: 'indeterminate', reason: 'guest_refused' });
     expect(error).not.toBeInstanceOf(NoHistoryError);
     expect(steps).toMatchObject([{ step: 'direct', outcome: 'indeterminate' }]);
     expect(fetcher).toHaveBeenCalledOnce();
+    // So is the website's block of the requesting network.
+    fetcher.mockResolvedValueOnce(reply({ error: 'IP_BLOCKED' }));
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+      .rejects.toMatchObject({ kind: 'indeterminate', reason: 'guest_refused' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
   it("reads its check of the number's form as an incomplete number, not a scan", async () => {
     const notice = { date: '2026-11-09T13:52:03+00:00', status: 'One digit is missing from the tracking number.' };
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({ states: [notice], status: 'transit' }));
-    const error = await new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number).catch((error: unknown) => error);
+    const error = await new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number).catch((error: unknown) => error);
     expect(error).toBeInstanceOf(InvalidInputError);
     expect(carrierErrorKind(error)).toBe('invalid_input');
     expect(fetcher).toHaveBeenCalledOnce();
     // A carrier's scan in those words is still a scan.
     fetcher.mockResolvedValue(reply({ states: [{ ...notice, carrier: 0 }, { date: '2026-11-08T10:00:00+00:00', status: 'Shipment information received', carrier: 0 }], carriers: ['Sample Post'], status: 'transit' }));
-    await expect(new ParcelsAppTracker({ fetcher }).fetch(number)).resolves.toMatchObject({ events: expect.any(Array) });
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number)).resolves.toMatchObject({ events: expect.any(Array) });
   });
 
   it.each([{ correctId: 'OTHER123', ...announced }, { states: [{}] }, { states: [null] }, { states: Array(1001).fill({}) }, { uuid: 'unfinished' }])('rejects aliases, malformed and intermediate replies', async (payload) => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(payload));
-    await expect(new ParcelsAppTracker({ fetcher }).fetch(number)).rejects.toThrow();
+    await expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number)).rejects.toThrow();
   });
 
   it('starts no retry and no browser lookup once the caller cancels', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new TypeError('connection reset'));
     const controller = new AbortController();
-    const lookup = new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) })
+    // The caller cancels while the request is failing.
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(() => {
+      controller.abort(new Error('caller cancelled'));
+      return Promise.reject(new TypeError('connection reset'));
+    });
+    const lookup = new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) })
       .fetch(number, undefined, null, null, controller.signal);
-    await vi.waitFor(() => expect(fetcher).toHaveBeenCalledOnce());
-    controller.abort(new Error('caller cancelled'));
     // The interrupted request is the failure; the chain and the facade answer with the caller's reason.
     await expect(lookup).rejects.toMatchObject({ name: 'UpstreamNetworkError' });
     expect(fetcher).toHaveBeenCalledOnce();
@@ -4383,7 +4397,7 @@ describe('ParcelsApp slow lookup recovery', () => {
 
   it('lets a cold lookup finish after the old ten-second cutoff without another request', async () => {
     const fetcher = timedFetch([{ afterMs: 12_000, payload: announced }]);
-    const lookup = new ParcelsAppTracker({ fetcher }).fetch(number);
+    const lookup = new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number);
     await vi.advanceTimersByTimeAsync(12_000);
     await expect(lookup).resolves.toMatchObject({ current_stage: 'registered' });
     expect(fetcher).toHaveBeenCalledOnce();
@@ -4393,7 +4407,7 @@ describe('ParcelsApp slow lookup recovery', () => {
     const steps: StepRecord[] = [], lookups: LookupRecord[] = [];
     const recorder: StepRecorder = { step: (r) => { steps.push(r); }, lookup: (r) => { lookups.push(r); } };
     const fetcher = timedFetch([{ afterMs: 100, failure: new TypeError('connection reset') }, { afterMs: 100, payload: announced }]);
-    const tracker = new ParcelsAppTracker({ fetcher, recorder, trawl: new TrawlClient('http://browser.test', fetcher) });
+    const tracker = new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), recorder, trawl: new TrawlClient('http://browser.test', fetcher) });
     const lookup = tracker.fetch(number, undefined, ' 01234 ');
     await vi.advanceTimersByTimeAsync(2_099);
     expect(fetcher).toHaveBeenCalledOnce();
@@ -4411,7 +4425,7 @@ describe('ParcelsApp slow lookup recovery', () => {
 
   it('fails a POST ParcelsApp holds to the cap without a retry or a browser lookup', async () => {
     const fetcher = timedFetch([{ afterMs: 40_000, payload: announced }, { afterMs: 100, payload: announced }]);
-    const failure = expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+    const failure = expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
       .rejects.toMatchObject({ kind: 'transport' });
     await vi.advanceTimersByTimeAsync(30_000);
     await failure;
@@ -4423,7 +4437,7 @@ describe('ParcelsApp slow lookup recovery', () => {
       { afterMs: 10, failure: new TypeError('connection reset') },
       { afterMs: 10, failure: new TypeError('connection reset again') },
     ]);
-    const failure = expect(new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
+    const failure = expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher), trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number))
       .rejects.toMatchObject({ kind: 'transport' });
     await vi.advanceTimersByTimeAsync(2_020);
     await failure;
@@ -4435,7 +4449,7 @@ describe('ParcelsApp slow lookup recovery', () => {
       { afterMs: 10, failure: new TypeError('connection reset') },
       { afterMs: 10, payload: { ...announced, correctId: 'OTHER123' } },
     ]);
-    const failure = expect(new ParcelsAppTracker({ fetcher }).fetch(number)).rejects.toThrow('unverified tracking alias');
+    const failure = expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number)).rejects.toThrow('unverified tracking alias');
     await vi.advanceTimersByTimeAsync(2_020);
     await failure;
     expect(fetcher).toHaveBeenCalledTimes(2);
@@ -4443,7 +4457,7 @@ describe('ParcelsApp slow lookup recovery', () => {
 
   it('does not retry when a shorter caller deadline cannot accommodate the backoff', async () => {
     const fetcher = timedFetch([{ afterMs: 40_000, payload: announced }]);
-    const failure = expect(new ParcelsAppTracker({ fetcher }).fetch(number, 31_000)).rejects.toMatchObject({ kind: 'transport' });
+    const failure = expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number, 31_000)).rejects.toMatchObject({ kind: 'transport' });
     await vi.advanceTimersByTimeAsync(30_000);
     await failure;
     expect(fetcher).toHaveBeenCalledOnce();
@@ -4451,7 +4465,7 @@ describe('ParcelsApp slow lookup recovery', () => {
 
   it('aborts the second request at the original deadline, including its backoff time', async () => {
     const fetcher = timedFetch([{ afterMs: 15_000, failure: new TypeError('connection reset') }, { afterMs: 40_000, payload: announced }]);
-    const failure = expect(new ParcelsAppTracker({ fetcher }).fetch(number)).rejects.toMatchObject({ kind: 'transport' });
+    const failure = expect(new ParcelsAppTracker({ fetcher: withParcelsAppPage(fetcher) }).fetch(number)).rejects.toMatchObject({ kind: 'transport' });
     await vi.advanceTimersByTimeAsync(45_000);
     await failure;
     expect(fetcher).toHaveBeenCalledTimes(2);

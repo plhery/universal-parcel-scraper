@@ -14,6 +14,7 @@ import type { UniversalSource } from '../providers/types.js';
 import type { UniversalTracker } from '../providers/universal.js';
 import { fakeBudgetClock } from '../testing/budgetClock.js';
 import { createTracker, TrackingError } from './index.js';
+import { withParcelsAppPage } from '../testing/parcelsAppPage.js';
 
 // UPS and Royal Mail stand in for any carrier with an adapter, Ship24 for any provider. Their
 // coverage evidence, which leaves Ship24 out for both, is coverage.test.ts's to check.
@@ -279,7 +280,7 @@ describe('standalone tracker', () => {
   it('accepts a country hint without retrying an empty universal answer', async () => {
     const lookup = vi.fn().mockRejectedValue(new NotFoundError('UPS'));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ error: 'NO_DATA', carriers: [] }));
-    await expect(createTracker({ registry: registry(lookup), fetcher, providers: ['ParcelsApp'] }).track({ number, countryHint: 'FR' }))
+    await expect(createTracker({ registry: registry(lookup), fetcher: withParcelsAppPage(fetcher), providers: ['ParcelsApp'] }).track({ number, countryHint: 'FR' }))
       .rejects.toMatchObject({ attempts: [{ source: 'ups', kind: 'not_found' }, { source: 'ParcelsApp', kind: 'indeterminate' }] });
     expect(fetcher).toHaveBeenCalledOnce();
     expect(String(fetcher.mock.calls[0]![1]!.body)).not.toContain('manualCountry');
@@ -455,7 +456,7 @@ describe('standalone tracker', () => {
     const lookup = vi.fn().mockResolvedValue({ status: 'delivered', events: [{ time: '2026-01-02T12:00:00Z', description: 'Delivered' }] });
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => Response.json({
       carriers: ['Universal Postal Union'], states: [{ date: '2026-01-02T12:00:00Z', status: 'Delivered', carrier: 0 }] }));
-    const tracker = createTracker({ registry: registry(lookup), fetcher, providers: ['ParcelsApp', 'UPU'] });
+    const tracker = createTracker({ registry: registry(lookup), fetcher: withParcelsAppPage(fetcher), providers: ['ParcelsApp', 'UPU'] });
     await expect(tracker.track({ number, source: 'ParcelsApp' })).resolves.toMatchObject({ carrier: 'ups', source: 'ParcelsApp',
       result: { status: 'delivered' }, attempts: [{ source: 'ParcelsApp', kind: 'ok' }] });
     expect(lookup).not.toHaveBeenCalled();
@@ -476,7 +477,7 @@ describe('standalone tracker', () => {
         ? [{ date: '2026-01-02T12:00:00Z', status: 'Delivered', carrier: 0 }]
         : [{ date: '2026-01-01T00:00:00', status: 'Enter recipient details', require_fields: [{ name: 'zipcode', type: 'text' }] }],
     }));
-    const tracker = createTracker({ registry: registry(lookup), fetcher, providers: ['ParcelsApp'] });
+    const tracker = createTracker({ registry: registry(lookup), fetcher: withParcelsAppPage(fetcher), providers: ['ParcelsApp'] });
     await expect(tracker.track({ number, carrier: 'ups' })).rejects.toMatchObject({ hint: { kind: 'input_required', field: 'postcode' },
       attempts: [{ source: 'ups', kind: 'not_found' }, { source: 'ParcelsApp', kind: 'input_required' }] });
     await expect(tracker.track({ number, carrier: 'ups', postcode: ' 01234 ' })).resolves.toMatchObject({ source: 'ParcelsApp',

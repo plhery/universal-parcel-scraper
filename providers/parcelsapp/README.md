@@ -10,10 +10,12 @@ postcode. Persisted provider name: `ParcelsApp`. Link shown to users:
 All steps share a 45 s budget. The router reserves the same amount, and a shorter caller
 deadline still wins.
 
-1. `direct`: [http.ts](http.ts) sends one form-encoded anonymous
-   `POST https://parcelsapp.com/api/v2/parcels`, capped at 30 s because cold lookups
-   aggregate on demand (later requests hit ParcelsApp's cache), and at 2 MB. It uses no
-   cookies, bootstrap page, cache or redirects. A stored postcode goes in
+1. `direct`: [http.ts](http.ts) opens the number's tracking page
+   (`https://parcelsapp.com/en/tracking/<number>`, at most 10 s and 1 MB) for the ticket it
+   issues, then sends one form-encoded anonymous
+   `POST https://parcelsapp.com/api/v2/parcels`. Both share a 30 s cap, because cold lookups
+   aggregate on demand (later requests hit ParcelsApp's cache); the reply is capped at 2 MB.
+   It uses no cookies, cache or redirects. A stored postcode goes in
    `extra[zipcode]`, trimmed, with leading zeros, spaces and letters kept.
 2. `retry`: after a network failure or cut-off body, one more direct attempt after 2 s,
    with the same input. The public frontend retries the same way. The deadline is the
@@ -22,9 +24,10 @@ deadline still wins.
    for the whole 30 s ends the lookup: for parcels it held that long from the production
    server, a retry waited out the rest of the budget too, while cold lookups answered
    within 16 s.
-3. `trawl`: on a challenge (`RELOAD`) or schema drift, TRAWL (`FLARESOLVERR_URL`) loads
-   the tracking page (`skipHttp`, up to tier 3) and captures `/api/v2/parcels` replies
-   with a 15 s settle window. Bodies are parsed newest first, skipping polling replies
+3. `trawl`: on a challenge (`RELOAD`, or `TICKET` for a ticket it did not accept, after
+   which the website fetches a new one and then reloads) or schema drift, TRAWL
+   (`FLARESOLVERR_URL`) loads the tracking page (`skipHttp`, up to tier 3) and captures
+   `/api/v2/parcels` replies with a 15 s settle window. Bodies are parsed newest first, skipping polling replies
    and other shipments. If no body is readable, the rendered event list
    (`.tracking-info .parcel .events > .event`) is parsed instead.
    For a number it has no data for, ParcelsApp renders its empty view
@@ -43,6 +46,9 @@ Other outcomes:
 - A bare `{"error":"NO_DATA"}`, with nothing else, is ParcelsApp refusing the request, not
   an answer about the number. It is inconclusive (reason `guest_refused`), is not read as
   no history, and gets no browser attempt: the tracking page gets the same refusal.
+  `IP_BLOCKED`, the website's block of the requesting network, is read the same way.
+  Requests from some data-centre networks get these refusals whatever they send, the
+  ticket included, in a browser as well.
 - `DOWN`, `BUSY`, `PARSER`, `CAPTCHA` and `MAINTENANCE` mean ParcelsApp's own lookup at
   the carrier failed: its page says the carrier's website is down, busy, unreadable,
   refusing automated tracking or under maintenance. They are inconclusive (reason
@@ -75,17 +81,21 @@ Built from the site's tracking bundle (`packs/js/application-….js`; the
 - Headers: `Accept-Language`, jQuery's JSON `Accept`
   (`application/json, text/javascript, */*; q=0.01`) and a desktop Chrome `User-Agent` whose
   major version follows Chrome's four-week stable releases, counted from Chrome 142.
+- `pt`: the ticket the tracking page sets as `window.parcelsTicket`, read from a plain GET of
+  that page, with `ptv=1`. ParcelsApp signs it for the requesting network and the time it
+  was issued, so it is fetched for each lookup and never stored. Without it the API answers
+  a bare `NO_DATA` (a browser session gets `RELOAD`). The page's session cookie is not needed.
 - A stored postcode uses `extra[zipcode]`.
 
 ParcelsApp refuses, with a bare `NO_DATA`, a window larger inside than outside, a request
 without `Accept-Language` or that `Accept`, and a `User-Agent` that names no browser or an
 outdated Chrome. A fixed version would age into a refusal, so the adapter names the version
 Chrome has reached.
-The ticket (`pt`, `ptv`), sensor (`s2`), detected-carrier (`extra[detectedSlugs]`) and CSRF
-fields the page also sends are not required.
+The sensor (`s2`), detected-carrier (`extra[detectedSlugs]`) and CSRF fields the page also
+sends are not required.
 
-`se` is a public checksum, not an issued credential, so Node alone is enough. The browser
-step exists for future protocol changes.
+`se` is a public checksum and the ticket is issued to every visitor of the page, so Node
+alone is enough. The browser step exists for future protocol changes.
 
 ## Parsing
 

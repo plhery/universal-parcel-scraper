@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
-import { parcelsAppChecksum, parcelsAppRequest, parcelsAppUserAgent, ParcelsAppHttpClient, PARCELSAPP_API } from './http.js';
+import { parcelsAppChecksum, parcelsAppPage, parcelsAppRequest, parcelsAppTicket, parcelsAppUserAgent, ParcelsAppHttpClient, PARCELSAPP_API } from './http.js';
 
 describe('ParcelsApp public request protocol', () => {
   it.each([
@@ -20,6 +20,19 @@ describe('ParcelsApp public request protocol', () => {
     expect(inner![1]).toBeLessThanOrEqual(outer![1]!);
     expect(form.get('se')).not.toBe(parcelsAppRequest('ZZ12345678901').get('se'));
     expect([...form.keys()]).toEqual(['trackingId', 'carrier', 'language', 'country', 'platform', 'wd', 'c', 'p', 'l', 'se']);
+    // The page's ticket travels as pt, with its version.
+    const ticketed = parcelsAppRequest('ZZ12345678900', null, 'MS4xLjIuMw.abcdef0123456789');
+    expect([ticketed.get('pt'), ticketed.get('ptv')]).toEqual(['MS4xLjIuMw.abcdef0123456789', '1']);
+    expect(ticketed.get('se')).toBe(parcelsAppRequest('ZZ12345678900').get('se'));
+  });
+
+  it('reads the ticket the tracking page issues, and nothing else as one', () => {
+    const page = (script: string) => `<html><head><script>\n  ${script}\n</script></head></html>`;
+    expect(parcelsAppTicket(page('window.parcelsTicket = "MS4xNzAwMDAwMDAwLmFiY2QuMTAuMC4wLjA.0123456789abcdef0123456789abcdef";')))
+      .toBe('MS4xNzAwMDAwMDAwLmFiY2QuMTAuMC4wLjA.0123456789abcdef0123456789abcdef');
+    for (const script of ['window.parcelsTicket = "";', 'window.parcelsTicket = "<script>alert(1)</script>";', 'window.otherTicket = "MS4xNzAwMDAwMDAwLmFiY2Q.0123";']) {
+      expect(parcelsAppTicket(page(script)), script).toBeUndefined();
+    }
   });
 
   it('names the Chrome version stable releases have reached, since ParcelsApp refuses an outdated one', () => {
@@ -42,13 +55,21 @@ describe('ParcelsApp public request protocol', () => {
     for (const postcode of [undefined, null, '', '  ']) expect(parcelsAppRequest('ZZ12345678900', postcode).has('extra[zipcode]')).toBe(false);
   });
 
-  it('bounds the request and omits caching, redirects and cookies', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ states: [] }));
+  it('opens the tracking page for its ticket, then bounds the request and omits caching, redirects and cookies', async () => {
+    const ticket = 'MS4xNzAwMDAwMDAwLmFiY2QuMTAuMC4wLjA.0123456789abcdef0123456789abcdef';
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(`<script>window.parcelsTicket = "${ticket}";</script>`, { headers: { 'Content-Type': 'text/html' } }))
+      .mockResolvedValueOnce(Response.json({ states: [] }));
     await new ParcelsAppHttpClient(fetcher).fetch('ZZ12345678900', 1000.75, '01234');
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([parcelsAppPage('ZZ12345678900'), PARCELSAPP_API]);
     expect(fetcher).toHaveBeenCalledWith(PARCELSAPP_API, expect.objectContaining({
       method: 'POST', cache: 'no-store', redirect: 'error', signal: expect.any(AbortSignal),
     }));
-    const headers = new Headers(fetcher.mock.calls[0]![1]!.headers);
+    const form = new URLSearchParams(String(fetcher.mock.calls[1]![1]!.body));
+    expect([form.get('pt'), form.get('ptv'), form.get('extra[zipcode]')]).toEqual([ticket, '1', '01234']);
+    expect(new Headers(fetcher.mock.calls[0]![1]!.headers).get('User-Agent')).toBe(parcelsAppUserAgent());
+    expect(new Headers(fetcher.mock.calls[0]![1]!.headers).has('cookie')).toBe(false);
+    const headers = new Headers(fetcher.mock.calls[1]![1]!.headers);
     expect(headers.get('Content-Type')).toContain('application/x-www-form-urlencoded');
     expect(headers.get('User-Agent')).toMatch(/^Mozilla\/5\.0 \(Macintosh;.* Chrome\/\d/);
     expect(headers.get('User-Agent')).toBe(parcelsAppUserAgent());
@@ -66,10 +87,13 @@ describe('ParcelsApp public request protocol', () => {
   });
 
   it('rejects oversized and non-JSON responses', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response('', { headers: { 'Content-Length': '2000001' } }))
-      .mockResolvedValueOnce(new Response('<html>Challenge</html>'));
+    const page = () => new Response('<html>Tracking</html>');
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(page()).mockResolvedValueOnce(new Response('', { headers: { 'Content-Length': '2000001' } }))
+      .mockResolvedValueOnce(page()).mockResolvedValueOnce(new Response('<html>Challenge</html>'));
     const http = new ParcelsAppHttpClient(fetcher);
     await expect(http.fetch('ZZ12345678900', 1000)).rejects.toThrow('unexpectedly large');
     await expect(http.fetch('ZZ12345678900', 1000)).rejects.toThrow('invalid tracking response');
+    // Without a ticket on the page the API is still asked, and answers for itself.
+    expect(new URLSearchParams(String(fetcher.mock.calls[1]![1]!.body)).has('pt')).toBe(false);
   });
 });

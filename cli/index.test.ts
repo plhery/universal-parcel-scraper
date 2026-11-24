@@ -52,7 +52,8 @@ describe('command line', () => {
     await expect(main(['track', number, '--source', 'ParcelsApp'], { SCRAPER_PROVIDERS: 'UPU' })).resolves.toBe(0);
     expect(JSON.parse(log.mock.calls[0]![0] as string)).toMatchObject({ carrier: 'ups', source: 'ParcelsApp',
       attempts: [{ source: 'ParcelsApp', kind: 'ok' }] });
-    expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual([expect.stringContaining('parcelsapp')]);
+    // ParcelsApp's tracking page for its ticket, then its lookup.
+    expect(fetcher.mock.calls.map(([url]) => new URL(String(url)).hostname)).toEqual([expect.stringContaining('parcelsapp'), expect.stringContaining('parcelsapp')]);
   });
 
   it('prints those messages and keeps every other failure generic', () => {
