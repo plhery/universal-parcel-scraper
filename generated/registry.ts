@@ -1088,6 +1088,7 @@ import { adapter as whizDelivery } from '../carriers/whiz-delivery/adapter.js';
 import { adapter as whwdt } from '../carriers/whwdt/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
+import { adapter as wldExpress } from '../carriers/wld-express/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
 import { adapter as wooriTaekbae } from '../carriers/woori-taekbae/adapter.js';
 import { adapter as wpGround } from '../carriers/wp-ground/adapter.js';
@@ -2230,6 +2231,7 @@ export const REGISTRY: RegistryDefinition = {
     "whwdt": whwdt,
     "wiio": wiio,
     "winit": winit,
+    "wld-express": wldExpress,
     "wooliiporter": wooliiporter,
     "woori-taekbae": wooriTaekbae,
     "wp-ground": wpGround,
@@ -4243,7 +4245,7 @@ export const REGISTRY: RegistryDefinition = {
     "winit": "winit",
     "wise-express": "universal",
     "wizmo": "universal",
-    "wld-express": "universal",
+    "wld-express": "wld-express",
     "wmg-group": "universal",
     "wooliiporter": "wooliiporter",
     "woori-taekbae": "woori-taekbae",
