@@ -443,7 +443,7 @@ describe('settling on a carrier', () => {
 });
 
 describe('Ozon unseparated postings', () => {
-  it.each(['4827163520481', '014827163520481'])('offers %s without claiming ownership and asks Ozon first only in its markets', number => {
+  it.each(['4827163500481', '014827163501281'])('offers %s without claiming ownership and asks Ozon first only in its markets', number => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch(number).candidates).toContain('ozon-logistics');
     for (const phase of ['http', 'browser'] as const) {
@@ -453,6 +453,18 @@ describe('Ozon unseparated postings', () => {
       // Elsewhere, even named by a hint, it comes after every other candidate.
       for (const countryHint of [undefined, 'GB', 'US', 'XX']) {
         expect(outsideCountryLast(number, 'ozon-logistics', { phase, countryHint, hint: 'ozon-logistics' }), countryHint).toBe(true);
+      }
+    }
+  });
+
+  it('asks Ozon only about a posting index that begins with a zero', () => {
+    // A posting's index within its order is four digits from 0001: 2048 is no posting's.
+    for (const number of ['4827163520481', '014827163520481']) {
+      expect(detectCarrierMatch(number).candidates).toContain('ozon-logistics');
+      for (const phase of ['http', 'browser'] as const) {
+        for (const countryHint of [undefined, 'RU', 'ES']) {
+          expect(recognitionAskedCarriers(number, { phase, countryHint }), `${phase} ${countryHint}`).not.toContain('ozon-logistics');
+        }
       }
     }
   });

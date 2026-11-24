@@ -48048,9 +48048,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "ozon-logistics",
       "recognitionRank": 37,
-      "recognitionPattern": "^(?:\\d{13}|\\d{15})$",
+      "recognitionPattern": "^(?:\\d{8}|\\d{10})0\\d{4}$",
       "recognitionServedCountriesOnly": true,
       "browserRecognitionRank": 37,
+      "browserRecognitionPattern": "^(?:\\d{8}|\\d{10})0\\d{4}$",
       "localClocks": true,
       "browser": true
     },

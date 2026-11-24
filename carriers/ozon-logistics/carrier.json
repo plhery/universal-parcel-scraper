@@ -29,11 +29,12 @@
     "browser": true,
     "recognition": {
       "rank": 37,
-      "pattern": "^(?:\\d{13}|\\d{15})$",
+      "pattern": "^(?:\\d{8}|\\d{10})0\\d{4}$",
       "servedCountriesOnly": true
     },
     "browserRecognition": {
-      "rank": 37
+      "rank": 37,
+      "pattern": "^(?:\\d{8}|\\d{10})0\\d{4}$"
     },
     "localClocks": true
   },
