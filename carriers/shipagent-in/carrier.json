@@ -1,0 +1,79 @@
+{
+  "id": "shipagent-in",
+  "displayName": "ShipAgent",
+  "aliases": [
+    "Shipagent Express"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#4f46e5"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "shipagent-in",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "service_name"
+  ],
+  "portal": {
+    "url": "https://www.shipagent.in/track/{trackingNumber}",
+    "searchUrl": "https://www.shipagent.in/track",
+    "canaryUrl": "https://www.shipagent.in/track",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "service_name",
+      "order_reference",
+      "origin_town",
+      "destination_town",
+      "weight",
+      "payment_mode"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "service_name"
+    ],
+    "discarded": [
+      "order_reference",
+      "origin_town",
+      "destination_town",
+      "weight",
+      "payment_mode"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery",
+      "recipient"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "shipagent.in",
+        "www.shipagent.in"
+      ],
+      "path": "^/track/([A-Za-z0-9]{6,40})/?$"
+    }
+  ],
+  "detection": []
+}

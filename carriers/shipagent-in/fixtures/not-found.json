@@ -1,0 +1,9 @@
+{
+  "success": false,
+  "error": {
+    "type": "NOT_FOUND",
+    "title": "Not Found",
+    "status": 404,
+    "timestamp": "2026-11-24T02:56:49.916Z"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "success": true,
+  "data": {
+    "shipment": {
+      "awbNumber": "59120810000103",
+      "masterTrackingNumber": null,
+      "orderReference": "ORDER-REFERENCE-2",
+      "courierCode": "delhivery",
+      "courierName": "Delhivery",
+      "logisticsPartner": "Delhivery",
+      "status": "delivered",
+      "statusLabel": "Delivered",
+      "statusCategory": "delivered",
+      "paymentMode": "prepaid",
+      "paymentLabel": "Prepaid",
+      "codAmount": 0,
+      "shipmentType": "forward",
+      "deliveryType": "Forward Delivery",
+      "serviceSla": null,
+      "billedWeightKg": 0.25,
+      "pieces": 1,
+      "origin": "Gurgaon, HR",
+      "destination": "Kurukshetra, Haryana",
+      "originCountry": "IN",
+      "destCountry": "IN",
+      "originHub": null,
+      "destinationHub": null,
+      "currentLocation": null,
+      "createdAt": "2026-07-29T08:03:17.744Z",
+      "pickedUpAt": null,
+      "estimatedDelivery": null,
+      "deliveredAt": "2026-08-02T13:18:01.002Z",
+      "lastScan": "2026-11-24T02:56:49.189Z",
+      "trackingSource": null,
+      "isInternational": false
+    },
+    "timeline": [
+      {
+        "status": "delivered",
+        "statusLabel": "Delivered",
+        "message": "Delivered",
+        "location": null,
+        "timestamp": "2026-11-24T02:56:49.189Z",
+        "current": true
+      }
+    ],
+    "updatedAt": "2026-11-24T02:56:49.189Z"
+  },
+  "meta": {
+    "requestId": "req_1c5398b1-c6c1-4482-90f9-61e704b9cea6"
+  }
+}

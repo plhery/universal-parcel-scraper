@@ -1,0 +1,24 @@
+{
+  "carrier": "shipagent-in",
+  "entries": [
+    {"code": "picked_up", "wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "ShipAgent's code and label for a row or a shipment."},
+    {"code": "in_transit", "wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "ShipAgent's code and label for a row or a shipment."},
+    {"code": "out_for_delivery", "wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "ShipAgent's code and label for a row or a shipment."},
+    {"code": "delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "ShipAgent's code and label for a row or a shipment."},
+    {"wording": "Shipment Created, Awaiting Package", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The label is booked; ShipAgent codes the row unknown."},
+    {"wording": "Order Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live"},
+    {"wording": "Received at Delhi Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The export hub of ShipAgent's international service."},
+    {"wording": "We need additional information to proceed with your shipment. We are in touch with the sender to resolve it on priority", "stage": "exception", "language": "en", "confirmedBy": "live", "note": "The export hub holds the parcel until the sender answers; ShipAgent codes the row unknown."},
+    {"wording": "We have recieved additional information from the sender. Your shipment is moving forward.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The hold above is lifted; spelt as the service spells it."},
+    {"wording": "Order Processed & Awaiting Airport Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Your shipment is being prepared for flight and will depart shortly.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Your shipment has left Delhi and is now on its way to the destination.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Your shipment has departed and is on its way to the destination country", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Your shipment is en route to the destination country", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Your shipment has arrived at the destination airport.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Your shipment is being inspected by customs", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "ShipAgent codes the row in_transit."},
+    {"wording": "Arrived at GOFO Regional Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination's last-mile partner in the United States."},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"wording": "Shipment Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live"}
+  ]
+}

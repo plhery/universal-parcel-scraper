@@ -743,6 +743,7 @@ import { statusMap as shipblu } from '../../carriers/shipblu/status.js';
 import { statusMap as shipentegra } from '../../carriers/shipentegra/status.js';
 import { statusMap as shiprocket } from '../../carriers/shiprocket/status.js';
 import { statusMap as shipglobalIn } from '../../carriers/shipglobal-in/status.js';
+import { statusMap as shipagentIn } from '../../carriers/shipagent-in/status.js';
 import { statusMap as shipter } from '../../carriers/shipter/status.js';
 import { statusMap as shouwu } from '../../carriers/shouwu/status.js';
 import { statusMap as shreeAnjani } from '../../carriers/shree-anjani/status.js';
@@ -1229,7 +1230,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
   rincos, 'riyu-logistics': riyuLogistics, rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rohlig-suus': rohligSuus, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
-  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shipter, shouwu,
+  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, 'shipagent-in': shipagentIn, shipter, shouwu,
   'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skroutz-last-mile': skroutzLastMile,
   skybox, skyking, 'skynet-sa': skynetSa, 'skynet-worldwide': skynetWorldwide, skypostal, skyquick, slgtrax,
   'slovak-parcel-service': slovakParcelService,

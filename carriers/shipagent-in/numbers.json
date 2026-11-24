@@ -1,0 +1,46 @@
+{
+  "carrier": "shipagent-in",
+  "records": [
+    {
+      "number": "SA260899579915",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.shipagent.in/track",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "ShipAgent Rakhi Special",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["speedaf"]
+      },
+      "note": "One of the two live shipments ShipAgent's tracking page offers under its search box, marked International. Its tracker answers it with a delivered parcel from India to the United States, carried under a ShipGlobal India AWB."
+    },
+    {
+      "number": "59120810000103",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.shipagent.in/track",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["dpd", "mondial-relay", "chronopost", "ciblex", "seur", "brt", "delhivery", "dhl-ecommerce-uk", "dpd-be", "dpd-de", "dpd-hu", "dpd-nl", "dpd-pt", "dpd-uk", "gls-nl", "jadlog"]
+      },
+      "note": "The other live shipment ShipAgent's tracking page offers, marked Delivered. Its tracker names Delhivery as the courier and gives only the delivered status."
+    }
+  ]
+}

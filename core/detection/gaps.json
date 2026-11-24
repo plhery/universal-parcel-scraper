@@ -3902,6 +3902,18 @@
     "reason": "Shadowfax's tracker knows AWBs whose merchant code has one or two letters, but too few samples show these shorter codes to widen the three-letter rule."
   },
   {
+    "carrier": "shipagent-in",
+    "pattern": "^SA\\d{12}$",
+    "kind": "by_design",
+    "reason": "ShipAgent's own references, SA and twelve digits, appear only on its tracking page, and ShipAgent publishes no rule for them."
+  },
+  {
+    "carrier": "shipagent-in",
+    "pattern": "^\\d{14}$",
+    "kind": "by_design",
+    "reason": "ShipAgent's tracker also takes the AWB of the courier it booked, which belongs to that courier."
+  },
+  {
     "carrier": "shipblu",
     "pattern": "^[1-4]\\d{10,11}$",
     "kind": "by_design",

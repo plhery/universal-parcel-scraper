@@ -1,0 +1,172 @@
+{
+  "success": true,
+  "data": {
+    "shipment": {
+      "awbNumber": "SG32608036587148",
+      "masterTrackingNumber": "SA260899579915",
+      "orderReference": "ORDER-REFERENCE-1",
+      "courierCode": "shipglobal_direct_ddp",
+      "courierName": "ShipAgent",
+      "logisticsPartner": "ShipAgent",
+      "status": "delivered",
+      "statusLabel": "Delivered",
+      "statusCategory": "delivered",
+      "paymentMode": "prepaid",
+      "paymentLabel": "Prepaid",
+      "codAmount": 0,
+      "shipmentType": "forward",
+      "deliveryType": "Forward Delivery",
+      "serviceSla": "ShipAgent Rakhi Special",
+      "billedWeightKg": 0.5,
+      "pieces": 1,
+      "origin": "kurukshetra, Haryana",
+      "destination": "Garden Grove, CA",
+      "originCountry": "IN",
+      "destCountry": "US",
+      "originHub": "-",
+      "destinationHub": "Garden Grove, CA",
+      "currentLocation": null,
+      "createdAt": "2026-08-03T13:33:13.919Z",
+      "pickedUpAt": "2026-08-04T18:29:22.000Z",
+      "estimatedDelivery": null,
+      "deliveredAt": "2026-08-13T09:52:55.000Z",
+      "lastScan": "2026-08-13T09:52:55.000Z",
+      "trackingSource": "orchestrator",
+      "isInternational": true
+    },
+    "timeline": [
+      {
+        "status": "unknown",
+        "statusLabel": "Status unavailable",
+        "message": "Shipment Created, Awaiting Package",
+        "location": "-",
+        "timestamp": "2026-08-03T19:03:16.000Z",
+        "current": false
+      },
+      {
+        "status": "picked_up",
+        "statusLabel": "Picked up",
+        "message": "Order Picked Up",
+        "location": null,
+        "timestamp": "2026-08-04T18:29:22.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Received at Delhi Hub",
+        "location": "Delhi, India",
+        "timestamp": "2026-08-06T16:18:37.000Z",
+        "current": false
+      },
+      {
+        "status": "unknown",
+        "statusLabel": "Status unavailable",
+        "message": "We need additional information to proceed with your shipment. We are in touch with the sender to resolve it on priority",
+        "location": "Delhi, India",
+        "timestamp": "2026-08-06T16:38:22.000Z",
+        "current": false
+      },
+      {
+        "status": "unknown",
+        "statusLabel": "Status unavailable",
+        "message": "We have recieved additional information from the sender. Your shipment is moving forward.",
+        "location": "Delhi, India",
+        "timestamp": "2026-08-07T22:21:07.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Order Processed & Awaiting Airport Arrival",
+        "location": "Delhi, India",
+        "timestamp": "2026-08-08T08:48:48.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Your shipment is being prepared for flight and will depart shortly.",
+        "location": "Delhi, India",
+        "timestamp": "2026-08-08T10:45:27.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Your shipment has left Delhi and is now on its way to the destination.",
+        "location": "Delhi, India",
+        "timestamp": "2026-08-08T14:28:59.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Your shipment has departed and is on its way to the destination country",
+        "location": "DELHI",
+        "timestamp": "2026-08-10T11:05:00.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Your shipment is en route to the destination country",
+        "location": "USA",
+        "timestamp": "2026-08-10T12:27:00.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Your shipment is en route to the destination country",
+        "location": "USA",
+        "timestamp": "2026-08-11T07:02:00.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Your shipment has arrived at the destination airport.",
+        "location": "USA",
+        "timestamp": "2026-08-12T02:32:00.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Your shipment is being inspected by customs",
+        "location": "USA",
+        "timestamp": "2026-08-12T03:33:00.000Z",
+        "current": false
+      },
+      {
+        "status": "in_transit",
+        "statusLabel": "In transit",
+        "message": "Arrived at GOFO Regional Hub",
+        "location": "Vernon, CA",
+        "timestamp": "2026-08-12T17:17:27.000Z",
+        "current": false
+      },
+      {
+        "status": "out_for_delivery",
+        "statusLabel": "Out for delivery",
+        "message": "Out for Delivery",
+        "location": "Garden Grove, CA",
+        "timestamp": "2026-08-13T06:27:18.000Z",
+        "current": false
+      },
+      {
+        "status": "delivered",
+        "statusLabel": "Delivered",
+        "message": "Shipment Delivered",
+        "location": "Garden Grove, CA",
+        "timestamp": "2026-08-13T09:52:55.000Z",
+        "current": true
+      }
+    ],
+    "updatedAt": "2026-11-24T02:56:47.994Z"
+  },
+  "meta": {
+    "requestId": "req_a613c73c-201c-4e5e-a1d2-dc52716bd0b5"
+  }
+}

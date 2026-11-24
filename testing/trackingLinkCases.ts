@@ -460,6 +460,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shipglobal-in', number: 'SG32606018374621',
     route: /^https:\/\/shipglobal\.in\/tracking\/\?awb=SG32606018374621$/,
     marker: /OrderId not found/ },
+  // The page names the number in its not-found notice.
+  { carrier: 'shipagent-in', number: 'SA000000000001',
+    route: /^https:\/\/www\.shipagent\.in\/track\/SA000000000001$/,
+    marker: /Shipment Not Found/i },
   { carrier: 'pflogistics', number: 'NEXAU1000000025YQ',
     route: /^https:\/\/pflogistics\.com\.au\/tracking-result\?tracking=NEXAU1000000025YQ$/,
     marker: /We couldn't find your tracking number|Tracking Number/ },
