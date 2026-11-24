@@ -23,8 +23,10 @@ CAPTCHA or browser is needed.
 - The forwarder writes its own rows in English: the order data, its warehouse's receipt
   (`ARRIVAL`) and departure (`SHIPMENT`, a row without text whose place `KUN Warehouse` stands
   as the wording), Hangzhou sorting, export clearance and the flight. [status.ts](status.ts)
-  maps them. The rows copied from USPS keep USPS's wording and are staged by the shared
-  wording rules.
+  maps them, and the departure written as the goods leaving the warehouse (`货物离开`) with its
+  place. The rows copied from USPS keep USPS's wording and are staged by the shared wording
+  rules, except USPS's acceptance: it comes after the flight, when USPS takes the parcel over
+  from the line, so it reads in transit.
 - Scan times are wall clocks without an offset. The forwarder writes its own rows to the
   second, on the platform's Beijing clock. The rows it copies from USPS come to the minute on
   the facility's clock, as USPS's explanation of each row states, so a row to the minute keeps

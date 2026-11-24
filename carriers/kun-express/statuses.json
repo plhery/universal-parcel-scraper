@@ -4,6 +4,7 @@
     {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order data, before Kun Express has the parcel."},
     {"code": "ARRIVAL", "wording": "Arrived at the receiving point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt, at the place KUN Warehouse."},
     {"code": "SHIPMENT", "wording": "KUN Warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The warehouse's departure row has no text, so its place stands as the wording."},
+    {"code": "SHIPMENT", "wording": "货物离开…", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The same departure written as the goods leaving the warehouse, followed by its place; the map reads the words before the place."},
     {"wording": "Arrive at the delivery point", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A Hangzhou row where the shipper hands the parcel over, before the warehouse's receipt; the delivery point is not the recipient's."},
     {"wording": "Cargo leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Arrive at the sorting center for operation and transfer", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
@@ -13,6 +14,7 @@
     {"wording": "departed from airport of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "U.S. Postal Service, The goods are in transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Kun Express's own row at the airports of the flight, naming the delivery carrier; not a USPS scan."},
     {"wording": "arrived at airport of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "custom clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States, at the place US. Written to the minute, so it keeps its wall clock."}
+    {"wording": "custom clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States, at the place US. Written to the minute, so it keeps its wall clock."},
+    {"wording": "Accepted at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "USPS's first scan, copied after the flight and before the import clearance: USPS takes the parcel over from the line, which accepted it in China days before."}
   ]
 }

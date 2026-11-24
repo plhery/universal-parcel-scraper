@@ -138,8 +138,13 @@ describe('Kun Express tracking adapter', () => {
     for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
     expect(statusMapAnswer({ carrier: 'kun-express', providerCode: 'ARRIVAL', description: 'Arrived at the receiving point' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
-    // USPS's wordings are left to the shared rules.
+    // The warehouse's departure, followed by its place.
+    expect(statusMapAnswer({ carrier: 'kun-express', providerCode: 'SHIPMENT', description: '货物离开仓库' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // USPS's wordings are left to the shared rules, except its acceptance after the flight.
     expect(statusMapAnswer({ carrier: 'kun-express', providerCode: null, description: 'Arrived at USPS Regional Facility' })).toEqual({ kind: 'unknown' });
+    expect(statusMapAnswer({ carrier: 'kun-express', providerCode: null, description: 'Accepted at USPS Facility' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(carrier.portal).not.toHaveProperty('url');
     expect(carrier.links).toEqual([]);
   });
