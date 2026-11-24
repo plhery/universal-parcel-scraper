@@ -18,18 +18,59 @@
   "timezone": "Europe/Istanbul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "cargomini",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://tracking.cargomini.com/{trackingNumber}",
     "searchUrl": "https://tracking.cargomini.com/",
     "canaryUrl": "https://tracking.cargomini.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "offset_timestamps",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "sender_name",
+      "recipient_name",
+      "postcodes",
+      "destination",
+      "order_reference",
+      "weight",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "offset_timestamps",
+      "provider_code",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "sender_name",
+      "recipient_name",
+      "postcodes",
+      "destination",
+      "order_reference",
+      "weight",
+      "eta"
+    ],
+    "unavailable": [
+      "location",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

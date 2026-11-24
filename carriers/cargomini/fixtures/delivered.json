@@ -1,0 +1,177 @@
+{
+  "consignmentNo": "190230529212TR",
+  "sender": {
+    "name": "shan xi ming lu dian zi shang wu you xian gong si UniMarket",
+    "city": "Sivas",
+    "countryCode": "CN"
+  },
+  "receiver": {
+    "name": "R***** N****",
+    "postcode": "00000",
+    "city": "RECIPIENT TOWN",
+    "countryCode": "TR"
+  },
+  "referenceNo": "N11-000000000000000",
+  "shipperFirm": "KolayGelsin",
+  "innerConsNo": "254640506454",
+  "innerTrackingUrl": "https://sube.kolaygelsin.com/takip?ccode=409670&takipno=254640506454",
+  "weight": 0.63,
+  "clientRef": null,
+  "estimatedDeliveryDate": null,
+  "estimatedDeliveryDateTimezone": null,
+  "status": 5,
+  "events": [
+    {
+      "date": "2025-10-24T02:29:14.036163+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-24 02:29:14",
+      "event": 1,
+      "location": null,
+      "description": "LabelCreated - Etiket Basıldı"
+    },
+    {
+      "date": "2025-10-26T10:41:45.084074+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-26 10:41:45",
+      "event": 2,
+      "location": null,
+      "description": "PickedUp - Toplama Yapıldı"
+    },
+    {
+      "date": "2025-10-26T10:51:44.686973+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-26 10:51:44",
+      "event": 18,
+      "location": null,
+      "description": "Sorted - Ölçüldü ve ayrıştırıldı."
+    },
+    {
+      "date": "2025-10-26T11:41:40.374304+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-26 11:41:40",
+      "event": 3,
+      "location": null,
+      "description": "Departed - Yurtdışı Çıkışı Yapıldı"
+    },
+    {
+      "date": "2025-10-27T12:00:05.276765+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-27 12:00:05",
+      "event": 6,
+      "location": null,
+      "description": "Waiting for linehaul to handover to customs agent"
+    },
+    {
+      "date": "2025-10-28T12:00:00+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-28 12:00:00",
+      "event": 17,
+      "location": null,
+      "description": "Shipment manifested to flight"
+    },
+    {
+      "date": "2025-10-30T06:21:00+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-30 06:21:00",
+      "event": 19,
+      "location": null,
+      "description": null
+    },
+    {
+      "date": "2025-10-30T07:43:00+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-10-30 07:43:00",
+      "event": 4,
+      "location": null,
+      "description": null
+    },
+    {
+      "date": "2025-11-03T12:00:12.969484+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-03 12:00:12",
+      "event": 6,
+      "location": null,
+      "description": "Customs hold"
+    },
+    {
+      "date": "2025-11-04T14:33:00+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-04 14:33:00",
+      "event": 5,
+      "location": null,
+      "description": "Customs clearance completed, parcel is released."
+    },
+    {
+      "date": "2025-11-04T19:48:22.343+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-04 19:48:22",
+      "event": 11,
+      "location": null,
+      "description": "Paket KolayGelsin'e Verildi"
+    },
+    {
+      "date": "2025-11-04T19:53:22.343+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-04 19:53:22",
+      "event": 11,
+      "location": null,
+      "description": "Çıkış Şubesinden Hareket Etti"
+    },
+    {
+      "date": "2025-11-05T12:26:08+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-05 12:26:08",
+      "event": 11,
+      "location": null,
+      "description": "Ölçüm Tartım yapıldı"
+    },
+    {
+      "date": "2025-11-05T12:27:00.657+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-05 12:27:00",
+      "event": 11,
+      "location": null,
+      "description": "Hat Aracından İndi"
+    },
+    {
+      "date": "2025-11-05T13:47:18.53+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-05 13:47:18",
+      "event": 11,
+      "location": null,
+      "description": "Hat Aracına Yüklendi"
+    },
+    {
+      "date": "2025-11-07T05:54:34.617+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-07 05:54:34",
+      "event": 11,
+      "location": null,
+      "description": "Teslimat Noktasında"
+    },
+    {
+      "date": "2025-11-07T05:54:34.78+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-07 05:54:34",
+      "event": 11,
+      "location": null,
+      "description": "Dağıtıma Çıkarıldı"
+    },
+    {
+      "date": "2025-11-07T07:28:18.5+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-07 07:28:18",
+      "event": 11,
+      "location": null,
+      "description": "Kurye zimmete alma"
+    },
+    {
+      "date": "2025-11-07T12:05:57.637+00:00",
+      "timezone": "GMT+00:00",
+      "formattedDate": "2025-11-07 12:05:57",
+      "event": 7,
+      "location": null,
+      "description": "Teslim Edildi"
+    }
+  ]
+}

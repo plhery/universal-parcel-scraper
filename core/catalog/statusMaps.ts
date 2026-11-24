@@ -207,6 +207,7 @@ import { statusMap as cacesa } from '../../carriers/cacesa/status.js';
 import { statusMap as cambodiaPost } from '../../carriers/cambodia-post/status.js';
 import { statusMap as canadaPost } from '../../carriers/canada-post/status.js';
 import { statusMap as canpar } from '../../carriers/canpar/status.js';
+import { statusMap as cargomini } from '../../carriers/cargomini/status.js';
 import { statusMap as cargus } from '../../carriers/cargus/status.js';
 import { statusMap as castleParcels } from '../../carriers/castle-parcels/status.js';
 import { statusMap as castores } from '../../carriers/castores/status.js';
@@ -1233,7 +1234,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'aramex-nz': aramexNz, 'aras-kargo': arasKargo, 'arrow-xl': arrowXl, asendia, 'asyad-express': asyadExpress, 'atlantic-courier': atlanticCourier, 'ats-healthcare': atsHealthcare, 'australia-post': australiaPost, 'austrian-post': austrianPost, averitt, aymakan, azerpost, 'azul-cargo': azulCargo, 'bangladesh-post': bangladeshPost,
   'barid-al-maghrib': baridAlMaghrib, belpost, 'bfe-express': bfeExpress, 'best-express-th': bestExpressTh, 'best-express-vn': bestExpressVn, 'best-overnite-express': bestOverniteExpress, bestfulfill, 'better-trucks': betterTrucks, 'bex-express': bexExpress, 'bjs-home-delivery': bjsHomeDelivery, blitznow, 'blue-dart': blueDart, 'blue-express': blueExpress, blueex, bombino, 'booths-logistics': boothsLogistics,
   bookurier, 'border-express': borderExpress, bosta, 'box-now': boxNow, boxc, boxtal, bpost, 'bring-posten': bringPosten, 'bringer-parcel': bringerParcel, brt, 'bulgarian-posts': bulgarianPosts, 'burd-delivery': burdDelivery, bussgods, byt,
-  byhd, 'c-chez-vous': cChezVous, c3x, cacesa, 'cambodia-post': cambodiaPost, 'canada-post': canadaPost, canpar, cargus, 'castle-parcels': castleParcels, castores, cautcurier, 'cbl-logistica': cblLogistica, ccfs, cdek, cdl, celeritas, celero,
+  byhd, 'c-chez-vous': cChezVous, c3x, cacesa, 'cambodia-post': cambodiaPost, 'canada-post': canadaPost, canpar, cargomini, cargus, 'castle-parcels': castleParcels, castores, cautcurier, 'cbl-logistica': cblLogistica, ccfs, cdek, cdl, celeritas, celero,
   'central-transport': centralTransport, 'ceska-posta': ceskaPosta, 'ceva-logistics': cevaLogistics, chazki, chilexpress, 'china-post': chinaPost,
   'chit-chats': chitChats, chronodiali, chronopost, 'chronopost-ma': chronopostMa, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, citilogistics, 'city-air-express': cityAirExpress, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail, 'citymail-pk': citymailPk,
   'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, 'cmt-express': cmtExpress, cne, codexpress, 'colis-prive': colisPrive, colisweb, 'commercive-parcel': commerciveParcel, 'comone-express': comoneExpress, 'connect-couriers': connectCouriers, consegnia, coordinadora,

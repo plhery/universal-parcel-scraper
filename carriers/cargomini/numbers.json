@@ -1,5 +1,47 @@
 {
   "carrier": "cargomini",
-  "gap": "No public page shows a CargoMini number.",
-  "records": []
+  "records": [
+    {
+      "number": "180230741306TR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargomkolay/kargom-uzun-suredir-teslim-edilmedi-ve-gecikme-hakkinda-net-bilgi-alamiyorum",
+        "date": "2025-12-21",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "KargomKolay Global import to Türkiye",
+        "reportedRole": "consignment tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A customer quoted it in a Şikayetvar complaint about a KargomKolay Global consignment. CargoMini's tracker answers it with a consignment flown into Türkiye, cleared and handed to Kolay Gelsin, which delivered it."
+    },
+    {
+      "number": "190230529212TR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargomkolay/kargom-teslim-edilmiyor-musteri-hizmetleri-ilgisiz-ve-yanit-vermiyor",
+        "date": "2025-10-30",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "KargomKolay import to Türkiye",
+        "reportedRole": "consignment tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A customer quoted it in a Şikayetvar complaint about a KargomKolay consignment. CargoMini's tracker answers it with a consignment held in customs, cleared and handed to Kolay Gelsin, which delivered it."
+    }
+  ]
 }

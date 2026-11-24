@@ -633,6 +633,12 @@
     "reason": "Detection does not offer Cargo Expreso for the A-prefixed shipment number published with its Guatemala tracking history."
   },
   {
+    "carrier": "cargomini",
+    "pattern": "^\\d{12}TR$",
+    "kind": "open",
+    "reason": "CargoMini's tracker finds consignments of twelve digits and TR, which KargomKolay does not document, so no rule offers CargoMini; it is available by explicit selection."
+  },
+  {
     "carrier": "cargus",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

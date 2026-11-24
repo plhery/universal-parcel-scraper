@@ -1,4 +1,32 @@
 {
   "carrier": "cargomini",
-  "entries": []
+  "entries": [
+    {"code": "1", "wording": "Label has been created", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "LabelCreated in the tracking page's script; the tracker writes it as \"LabelCreated - Etiket Basıldı\"."},
+    {"code": "2", "wording": "Arrived At The Warehouse", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "PickedUp in the script: KargomKolay has collected the parcel at its warehouse."},
+    {"code": "3", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel has left the country it was sent from."},
+    {"code": "4", "wording": "Import customs process started", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "EnteredCustoms in the script; the tracker sends it without wording."},
+    {"code": "5", "wording": "Departed from customs", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "DepartedCustoms in the script: customs released the parcel."},
+    {"code": "7", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The tracker relays the last-mile carrier's delivery, such as Kolay Gelsin's \"Teslim Edildi\"."},
+    {"code": "8", "wording": "Not Delivered", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "NotDelivered in the tracking page's script."},
+    {"code": "9", "wording": "Returning To Sender", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "ReturnToSender in the tracking page's script."},
+    {"code": "10", "wording": "Returned To Sender", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "ReturnedToSender in the tracking page's script."},
+    {"code": "12", "wording": "Applied For Pre Custom Approval", "stage": "customs", "language": "en", "confirmedBy": "bundle", "note": "AwaitingApproval in the tracking page's script."},
+    {"code": "13", "wording": "Pre-approved by customs", "stage": "customs", "language": "en", "confirmedBy": "bundle", "note": "Approved in the tracking page's script."},
+    {"code": "14", "wording": "On The Way To Airport", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Dispatched in the tracking page's script."},
+    {"code": "15", "wording": "Canceled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "Canceled in the tracking page's script."},
+    {"code": "16", "wording": "Fraud Order", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "FraudOrder in the tracking page's script."},
+    {"code": "17", "wording": "Flight Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The tracker writes it as \"Shipment manifested to flight\"."},
+    {"code": "18", "wording": "Sorted", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Measured and sorted at the warehouse: \"Sorted - Ölçüldü ve ayrıştırıldı.\""},
+    {"code": "19", "wording": "Plane has arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "FlightArrived in the script; the tracker sends it without wording."},
+    {"wording": "Waiting for linehaul to handover to customs agent", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A special event (code 6) before the flight."},
+    {"wording": "Customs hold", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A special event (code 6); the tracking page counts it among its customs holds."},
+    {"wording": "Paket KolayGelsin'e Verildi", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A last-mile scan (code 11): the parcel was handed to Kolay Gelsin."},
+    {"wording": "Çıkış Şubesinden Hareket Etti", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A Kolay Gelsin scan: left the dispatch branch."},
+    {"wording": "Ölçüm Tartım yapıldı", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A Kolay Gelsin scan: measured and weighed."},
+    {"wording": "Hat Aracından İndi", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A Kolay Gelsin scan: unloaded from the line-haul truck."},
+    {"wording": "Hat Aracına Yüklendi", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A Kolay Gelsin scan: loaded on the line-haul truck."},
+    {"wording": "Teslimat Noktasında", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A Kolay Gelsin scan: at the delivering branch."},
+    {"wording": "Dağıtıma Çıkarıldı", "stage": "out_for_delivery", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A Kolay Gelsin scan: out for delivery."},
+    {"wording": "Kurye zimmete alma", "stage": "out_for_delivery", "language": "tr", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A Kolay Gelsin scan: the courier signed for the parcel for the round."}
+  ]
 }
