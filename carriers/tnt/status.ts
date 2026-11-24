@@ -36,6 +36,8 @@ const EXPRESS_CODES: Record<string, ClassifiedStatus> = {
   LP: { status: 'exception', stage: 'exception' },
   MR: { status: 'exception', stage: 'exception' },
   WL: { status: 'exception', stage: 'exception' },
+  // Held until the address is put right; TNT contacts the sender or the receiver.
+  WAS: { status: 'exception', stage: 'exception' },
   RTS: { status: 'exception', stage: 'returned' },
 };
 

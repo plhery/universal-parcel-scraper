@@ -132,6 +132,15 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "code": "WAS",
+      "wording": "Held awaiting correct address. We're doing our best to resolve this and will contact the sender/receiver if necessary.",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Held until the address is put right, before the shipment goes on or back to the sender."
+    },
+    {
       "code": "RTS",
       "wording": "Returned to sender as agreed",
       "language": "en",
