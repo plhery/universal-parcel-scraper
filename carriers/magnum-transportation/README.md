@@ -12,11 +12,14 @@ so there is no rule.
 
 ## Why there is no adapter
 
-Its tracking form posts `trace_type` (`2PTRACE` for a Magnum pro bill, or a C/L pro, bill, bill of
-lading or booking number type) and `search_value` to
-`portal.magnumlog.com/trace/external_bill_viewer.msw`, with no page or address per number. That
-portal's gateway answers with a 502 error, the form's own request included, so no reply is known,
-and no public number is known to see a found one.
+Its Track Shipment form posts `type` (`BILL_NUMBER`, `2` for a Magnum pro bill, `3` for a C/L pro
+bill, `B` for a bill of lading or `K` for a booking number) and `refnumber` to
+`cs.magnumlog.com/quick-track.php`, which opens a results page with no address per number. That
+page's script posts the same two fields to `cs.magnumlog.com/api-quick-track.php`, which answers
+JSON without a login, cookie or CAPTCHA: the bill's header and its status history with offsets.
+A number it does not hold gets a header with every field empty, which the page shows as "Freight
+bill not found". A number can also bring back another bill, so a reply's `Bill_Number` must be the
+number asked. No public number is known to check a found reply with.
 
 ## Links
 
