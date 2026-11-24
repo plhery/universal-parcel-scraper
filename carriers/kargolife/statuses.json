@@ -1,0 +1,10 @@
+{
+  "carrier": "kargolife",
+  "entries": [
+    {"wording": "Siparişiniz alındı", "stage": "registered", "language": "tr", "confirmedBy": "live", "note": "First step: the shop has the order; the goods are not with Kargolife yet."},
+    {"wording": "Hazırlanıyor", "stage": "registered", "language": "tr", "confirmedBy": "live", "note": "Second step: the shop is preparing the goods."},
+    {"wording": "Teslimat deposunda", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "Third step: the order is at Kargolife's delivery depot."},
+    {"wording": "Dağıtıma Hazır", "stage": "in_transit", "language": "tr", "confirmedBy": "live", "note": "Fourth step: ready to go out for delivery, not yet on the way."},
+    {"wording": "Teslim edildi", "stage": "delivered", "language": "tr", "confirmedBy": "live", "note": "Last step: delivered."}
+  ]
+}

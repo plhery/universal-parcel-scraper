@@ -1,0 +1,54 @@
+{
+  "id": "kargolife",
+  "displayName": "Kargolife",
+  "aliases": [
+    "Kargo Life",
+    "KargoLife Lojistik"
+  ],
+  "region": {
+    "countries": [
+      "TR"
+    ]
+  },
+  "brand": {
+    "color": "#2d86c7"
+  },
+  "selectable": true,
+  "timezone": "Europe/Istanbul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "kargolife",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "eta",
+    "eta_window"
+  ],
+  "portal": {
+    "searchUrl": "https://kargolife.com/index.php?url=kargolife/main",
+    "helpUrl": "https://kargolife.com/index.php?url=kargolife/contact",
+    "canaryUrl": "https://kargolife.com/",
+    "shows": [
+      "status",
+      "progress_rail",
+      "eta_window"
+    ],
+    "scraped": [
+      "status",
+      "progress_rail",
+      "eta_window"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "history",
+      "location",
+      "delivered_at",
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

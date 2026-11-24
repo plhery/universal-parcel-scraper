@@ -2389,6 +2389,12 @@
     "reason": "Kargoist tracks parcels by the shop's barcode, bare digit runs of many lengths that other carriers print too."
   },
   {
+    "carrier": "kargolife",
+    "pattern": "^\\d{11}$",
+    "kind": "by_design",
+    "reason": "Eleven digits are shared by several carriers, and a Kargolife order number is the marketplace's own order number."
+  },
+  {
     "carrier": "kenya-airways-cargo",
     "kind": "open",
     "reason": "The guest search confirms the full Kenya Airways Cargo air waybill. Select Kenya Airways Cargo explicitly."

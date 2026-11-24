@@ -1,0 +1,333 @@
+{
+  "carrier": "kargolife",
+  "records": [
+    {
+      "number": "11271780681",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/mobetto-silva-takiminin-bir-aylik-teslimat-gecikmesi",
+        "date": "2026-06-18",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the recipient's Kargo Life order number; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "11177557139",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/kargolife-dagitim-deposu-17-gun-teslimat-gecikmesi",
+        "date": "2026-05-15",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the order held at Kargolife's depot; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "11208797060",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/kargolife-tarafima-teslim-edilmedi",
+        "date": "2026-06-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the Trendyol order Kargolife had not delivered; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "11220556762",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/trendyol-siparisinde-kargo-life-teslimat-gecikmesi-ve-takip-sorunu",
+        "date": "2026-06-11",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the Trendyol order Kargo Life carried; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "11234080671",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/kargolife-teslim-gecikmesi-trendyol-destek-yaniti-yok",
+        "date": "2026-06-17",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the order and tracking number of the late delivery; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "11284117740",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/kargolife-teslimat-gecikmesi-ve-bilgilendirme-eksikligi",
+        "date": "2026-06-25",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the order sent with Kargolife; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "11287283327",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/siparis-teslim-edilmedi-kargolife-gecikmesi-ve-saticiya-ulasilamiyor",
+        "date": "2026-07-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the order Kargolife had not delivered; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "11310156630",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/kargolife-ve-trendyoldan-uzun-sureli-teslimat-gecikmesi-ve-bilgi-saglanmamasi",
+        "date": "2026-07-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "old-dominion",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the shipment Kargolife had not delivered; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "10161273169",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/siparisim-20-gun-sonra-hala-teslim-edilmedi-ve-kargo-takibi-yapilamiyor",
+        "date": "2025-05-13",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "cdek",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the order Kargolife had not delivered; Kargolife's tracker answers it with a delivered order."
+    },
+    {
+      "number": "10227260836",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/kargolife/bos-kagida-imza-attirilmasi-nedeniyle-endiseliyim",
+        "date": "2025-05-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish furniture home delivery",
+        "reportedRole": "order number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "cdek",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "A complaint about Kargolife on Şikayetvar gives it as the order Kargolife delivered; Kargolife's tracker answers it with a delivered order."
+    }
+  ]
+}
