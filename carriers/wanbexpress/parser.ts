@@ -169,15 +169,25 @@ export function wanbShippingService(payload: unknown): string | undefined {
 }
 
 /**
- * The courier the last-mile panel names. The catalog must know its name or site, and that
- * carrier's detection must offer the courier's number.
+ * The courier's number the last-mile panel is asked about: the one the reply shows, or the
+ * asked number when it is the courier's, as for a parcel looked up by its Cainiao Express number.
  */
-export function withWanbCourier(result: CarrierResult, payload: unknown): CarrierResult {
+export function wanbCourierNumber(result: CarrierResult, number: string): string | undefined {
+  return result.delivery_tracking_number ?? (COURIER_NUMBER.test(number) ? number : undefined);
+}
+
+/**
+ * The courier the last-mile panel names. The catalog must know its name or site, and that
+ * carrier's detection must offer the courier's number. The panel names Cainiao Express's
+ * network in France "Cainiao France", which delivers the home-delivery numbers that are its own.
+ */
+export function withWanbCourier(result: CarrierResult, payload: unknown, number = ''): CarrierResult {
   const data = isRecord(payload) && payload.Succeeded === true && isRecord(payload.Data) ? payload.Data : {};
-  const reference = result.delivery_tracking_number;
+  const reference = wanbCourierNumber(result, number);
   const name = typeof data.Name === 'string' ? clean(data.Name, 80) : '';
   if (!reference || !name) return result;
-  const partner = carrierIdFromPartner(name, typeof data.OfficialWebSite === 'string' ? data.OfficialWebSite.slice(0, 300) : '');
+  const partner = COURIER_NUMBER.test(reference) && /^cainiao france$/i.test(name) ? 'aliexpress'
+    : carrierIdFromPartner(name, typeof data.OfficialWebSite === 'string' ? data.OfficialWebSite.slice(0, 300) : '');
   return partner && partner !== 'wanbexpress' && (detectCarrierMatch(reference).candidates as string[]).includes(partner)
     ? { ...result, delivery_carrier: partner } : result;
 }

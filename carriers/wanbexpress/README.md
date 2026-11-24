@@ -58,9 +58,12 @@ Once WanbExpress has relabelled the parcel for its courier, the reply's metadata
 courier's number, which the tracker shows as `TrackingNo`, and the shipping service. The
 tracker's last-mile panel names that service's courier from
 `/Common/TrackLastMileCarrier?shippingServiceId=…&trackingNumber=…`, a plain request without
-verification, which the adapter makes within the lookup's deadline after any retrieval path. The
-courier is named only when the catalog knows it and its rules fit the number; without the
-panel's answer the number stays unattributed.
+verification, which the adapter makes within the lookup's deadline after any retrieval path, also
+for a parcel looked up by its courier's number. The courier is named only when the catalog knows
+it and its rules fit the number; without the panel's answer the number stays unattributed. The
+panel calls Cainiao Express's network in France "Cainiao France", a name the catalog does not
+give Cainiao, whose home is China; on Cainiao's French home-delivery numbers it names Cainiao,
+which carries on tracking the parcel after WanbExpress's last row, the hand-over to it.
 Recipient details, proofs of delivery and photographs are excluded.
 
 Verification depends on the browser and its network. A datacenter network can be rejected by

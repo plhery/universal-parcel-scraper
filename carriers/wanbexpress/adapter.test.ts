@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { ChallengeError } from '../../core/errors/index.js';
@@ -125,16 +126,23 @@ describe('WanbExpress', () => {
     for (const input of ['DOFR999000000001HD', 'DEFR9990000000001HD', '1234567890']) {
       expect(() => parseWanb(relabelled(), input)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
-    const fetcher = vi.fn<typeof fetch>();
+    // The last-mile panel, asked under the courier number, names Cainiao Express's network in France: the parcel's
+    // delivery carrier, which the host then asks about the same number.
+    const fetcher = vi.fn<typeof fetch>(async () => reply({ Succeeded: true,
+      Data: { Id: 'SAMPLE', Name: 'Cainiao France', Tel: '0000', OfficialWebSite: 'http://www.cainiao.com' }, Error: null }));
     const browser = new TrawlClient('http://browser.test', async (_url, init) => {
       expect(JSON.parse(String(init?.body))).toMatchObject({ url: `https://tracking.wanbexpress.com/?trackingNumbers=${courier}` });
       return reply({ tier: 3, statusCode: 200, html: '', capturedResponses: [capture(relabelled(), 200, courier)] });
     });
     const carrier = adapter({ env: {}, fetcher, trawl: browser, browserExecutablePath: null, recorder: NOOP_RECORDER });
-    await expect(carrier.track({ number: courier }, { budgetMs: 8000 })).resolves.toMatchObject({ current_stage: 'in_transit' });
+    const tracked = await carrier.track({ number: courier }, { budgetMs: 8000 });
+    expect(tracked).toMatchObject({ current_stage: 'in_transit', delivery_carrier: 'aliexpress' });
+    expect(tracked.delivery_tracking_number).toBeUndefined();
+    expect(fetcher.mock.calls.map(([url]) => String(url))).toEqual([`${COURIER_API}?shippingServiceId=COE_STD_PH&trackingNumber=${courier}`]);
+    expect(deliveryHandoff('wanbexpress', courier, tracked)).toEqual({ carrier: 'aliexpress', number: courier, basis: 'partner' });
     // Recognition asks only about the parcel id: the courier number is Cainiao's to recognize.
     await expect(carrier.recognize!(courier)).resolves.toEqual({ known: false });
-    expect(fetcher).not.toHaveBeenCalled();
+    expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
   it('stages the last-mile partner\'s scans by iMile\'s sentences, a run that never reached the parcel as a delay', () => {
@@ -271,8 +279,9 @@ describe('WanbExpress', () => {
     const named = await track(async () => reply(courier('CTT Express', 'https://www.cttexpress.com/')));
     expect(named.result).toMatchObject({ delivery_carrier: 'ctt-express', delivery_tracking_number: courierNumber });
     expect(String(named.fetcher.mock.calls[0]![0])).toBe(`${COURIER_API}?shippingServiceId=SAMPLE_ES_48H&trackingNumber=${courierNumber}`);
-    // A courier the catalog does not know, or whose rules refuse the number, stays unnamed.
-    for (const name of ['Sample Courier', 'Royal Mail']) {
+    // A courier the catalog does not know, or whose rules refuse the number, stays unnamed; so does Cainiao's
+    // network in France on a number that is not its own.
+    for (const name of ['Sample Courier', 'Royal Mail', 'Cainiao France']) {
       const { result } = await track(async () => reply(courier(name)));
       expect(result.delivery_tracking_number).toBe(courierNumber);
       expect(result).not.toHaveProperty('delivery_carrier');
@@ -283,6 +292,10 @@ describe('WanbExpress', () => {
       expect(result).toMatchObject({ current_stage: 'delivered', delivery_tracking_number: courierNumber });
       expect(result).not.toHaveProperty('delivery_carrier');
     }
+    // A parcel relabelled for Cainiao Express in France names it by the panel's name for it.
+    const cainiao = found(); Object.assign(cainiao.Data.Metadata, { TrackingNumber: 'CNFR9990000000001HD', ShippingServiceId: 'COE_STD_PH' });
+    const relabelledForCainiao = await track(async () => reply(courier('Cainiao France', 'http://www.cainiao.com')), cainiao);
+    expect(relabelledForCainiao.result).toMatchObject({ delivery_carrier: 'aliexpress', delivery_tracking_number: 'CNFR9990000000001HD' });
     // Without a service, or with the parcel's own number shown, there is no panel to ask.
     const own = found(); Object.assign(own.Data.Metadata, { TrackingNumber: number, ShippingServiceId: 'SAMPLE_ES_48H' });
     expect(parseWanb(own, number)).not.toHaveProperty('delivery_tracking_number');

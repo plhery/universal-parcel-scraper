@@ -5,7 +5,7 @@ import { runSteps } from '../../core/runner/index.js';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { API, COURIER_API, MAX_BYTES, normalizeWanbLookup, normalizeWanbNumber, ORIGIN, parseWanb, PROVIDER, wanbShippingService, withWanbCourier } from './parser.js';
+import { API, COURIER_API, MAX_BYTES, normalizeWanbLookup, normalizeWanbNumber, ORIGIN, parseWanb, PROVIDER, wanbCourierNumber, wanbShippingService, withWanbCourier } from './parser.js';
 import { fetchWanbInBrowser } from './browser.js';
 
 type Route = NonNullable<StepRecord['networkRoute']>;
@@ -75,19 +75,20 @@ export class WanbTracker {
 
   /**
    * Parses the tracking reply, then asks the last-mile panel for the courier of its shipping
-   * service within the lookup's deadline. The panel needs no verification; without its answer
-   * the courier's number stays unattributed.
+   * service within the lookup's deadline, also when the parcel was asked by its courier's number.
+   * The panel needs no verification; without its answer the courier stays unnamed.
    */
   private async read(payload: unknown, number: string, signal: AbortSignal | undefined, deadline: number): Promise<CarrierResult> {
     const result = parseWanb(payload, number);
     const service = wanbShippingService(payload);
+    const courier = wanbCourierNumber(result, number);
     const timeoutMs = Math.min(3000, Math.floor(deadline - performance.now() - 500));
-    if (!result.delivery_tracking_number || !service || timeoutMs < 500) return result;
+    if (!courier || !service || timeoutMs < 500) return result;
     try {
-      const { bytes } = await fetchBounded(`${COURIER_API}?shippingServiceId=${encodeURIComponent(service)}&trackingNumber=${result.delivery_tracking_number}`, { signal,
+      const { bytes } = await fetchBounded(`${COURIER_API}?shippingServiceId=${encodeURIComponent(service)}&trackingNumber=${courier}`, { signal,
         headers: { Accept: 'application/json', 'Accept-Language': 'en', 'User-Agent': userAgentOf(this.environment.userAgent) } },
       { provider: PROVIDER, timeoutMs, maxBytes: 20_000, fetcher: this.environment.fetcher });
-      return withWanbCourier(result, JSON.parse(decodeText(bytes)));
+      return withWanbCourier(result, JSON.parse(decodeText(bytes)), number);
     } catch {
       signal?.throwIfAborted();
       return result;
