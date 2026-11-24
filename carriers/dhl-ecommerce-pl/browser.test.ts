@@ -94,6 +94,9 @@ describe('DHL Poland browser history', () => {
       // The page can leave the terminal's town blank.
       ['The shipment has reached DHL terminal in . Planned date of delivery to: 04-03-2026.',
         'Przesyłka dotarła do oddziału nadawczego DHL Parcel . Przewidywana data doręczenia do: 04-03-2026.', 'in_transit'],
+      // The first terminal, before DHL adds the planned delivery day.
+      ['The shipment has reached DHL terminal in Example.', 'Przesyłka dotarła do oddziału nadawczego DHL Parcel Example.', 'accepted'],
+      ['The shipment has reached DHL terminal in .', 'Przesyłka dotarła do oddziału nadawczego DHL Parcel .', 'accepted'],
       ['The shipment has reached DHL Terminal Example (branch in Sample)', 'Przesyłka dotarła do oddziału DHL eCommerce Example (z siedzibą w Samplu).', 'in_transit'],
       ['The shipment has reached DHL Terminal. Delivery to the Recipient is expected on the next working day.',
         'Przesyłka dotarła do oddziału DHL eCommerce. Doręczenie do Odbiorcy planowane jest w kolejnym dniu roboczym.', 'in_transit'],
