@@ -28,11 +28,9 @@ Both steps share one budget: 45 s standalone, 30 s inside the chain.
    (`TRACKING_CHROMIUM_PATH`), reading the stored-parcel response from the page. Result
    labelled `browser-session-response`.
 
-With a Chromium configured, the direct step keeps 10 s (at most half the budget) for
-the browser. A slow direct answer is Ship24 querying carriers, or a slow 404, which the
-page would only ask for again.
-
-The browser step runs only when a browser could fix the direct failure:
+The direct step may use the whole budget but a second. A slow direct answer is Ship24
+querying carriers, or a slow 404, which the page would only ask for again, so the browser
+step runs only when a browser could fix the direct failure:
 
 - Without a configured Chromium the direct failure is reported as it is.
 - HTTP 429 and 5xx are reported with their `Retry-After`, so the router backs off once
@@ -43,7 +41,10 @@ The browser step runs only when a browser could fix the direct failure:
   named. It is a `NotFoundError` with reason `subscriber_only`; the courier's name stays
   out of it. [coverage.json](../coverage.json) records these couriers as `subscriber_only`,
   so routing does not ask Ship24 for their parcels.
-- So is a parcel Ship24 knows but has no scans for after the refresh (`NoHistoryError`).
+- So is a parcel Ship24 knows but has no scans for after the refresh (`NoHistoryError`),
+  has yet to query the carriers for, or holds no usable scan for (`IndeterminateError`).
+- So is a direct request that times out (`transport`): Ship24 was still querying the
+  carriers, and the page would wait on the same query.
 
 Built without an HTTP client (as in browser tests), the adapter runs the browser step
 alone. Only one local browser session runs per server process; an overlapping lookup

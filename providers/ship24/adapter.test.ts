@@ -716,14 +716,24 @@ describe('Ship24 anonymous HTTP tracking', () => {
     await expect(tracker.fetch(number)).resolves.toMatchObject({ tracking_source: 'browser-session-response' });
   });
 
-  it('gives the direct request all of the budget but the browser\'s reserve', async () => {
+  it('gives the direct request all of the budget but a second', async () => {
     vi.spyOn(performance, 'now').mockReturnValue(1000);
-    for (const [executablePath, budget, direct] of [['/test/chromium', 45_000, 35_000], ['/test/chromium', 12_000, 6000], [null, 45_000, 45_000]] as const) {
+    for (const [executablePath, budget, direct] of [['/test/chromium', 45_000, 44_000], ['/test/chromium', 1500, 750], [null, 30_000, 29_000]] as const) {
       const { client, tracker } = fixture(executablePath);
       const fetch = vi.spyOn(client, 'fetch');
       await tracker.fetch(number, budget);
       expect(fetch).toHaveBeenCalledWith(number, direct, expect.anything());
     }
+  });
+
+  it('reports a direct request that timed out while Ship24 queried the carriers, or before it did, without the browser', async () => {
+    const { tracker, fetcher, steps } = fixture();
+    fetcher.mockRejectedValueOnce(new DOMException('The operation was aborted due to timeout', 'TimeoutError'));
+    await expect(tracker.fetch(number, 30_000)).rejects.toMatchObject({ kind: 'transport' });
+    fetcher.mockResolvedValueOnce(reply(stale([]))).mockResolvedValueOnce(reply(stale([])));
+    await expect(tracker.fetch(number, 30_000)).rejects.toThrow(IndeterminateError);
+    expect(scrapeUniversalPage).not.toHaveBeenCalled();
+    expect(steps.map(({ step, errorType }) => [step, errorType])).toEqual([['direct', 'UpstreamNetworkError'], ['direct', 'IndeterminateError']]);
   });
 
   it('rejects unrelated history before falling back and does not leak it into the result', async () => {

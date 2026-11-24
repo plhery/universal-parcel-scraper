@@ -16,7 +16,7 @@ import { DateTime } from 'luxon';
 import type { AdapterFactory } from '../../core/adapter/index.js';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { carrierDefinition } from '../../core/catalog/index.js';
-import { IndeterminateError, NoHistoryError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
+import { IndeterminateError, NoHistoryError, NotFoundError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -44,11 +44,12 @@ const SOURCE: UniversalSource = 'Ship24';
 const MAX_EVENTS = 1000;
 const MAX_COURIERS = 20;
 /**
- * What the browser keeps of the budget when the direct tier fails: enough to
- * load the page and read a parcel Ship24 already holds. A slow direct answer
- * is Ship24 querying the carriers, which the page would only start again.
+ * How much sooner than the budget the direct request gives up, so that Ship24
+ * still querying the carriers is reported as such rather than as the budget.
+ * The browser does not follow a slow direct answer (`browserCanRecover`), so
+ * the direct request keeps the rest.
  */
-const BROWSER_RESERVE_MS = 10_000;
+const DIRECT_MARGIN_MS = 1_000;
 /** How long a refresh may keep a stored history waiting; most take a few seconds, a stuck carrier query 30. */
 const REFRESH_MS = 15_000;
 /** The least time left worth asking again with the courier named; most such answers take a second or two. */
@@ -666,12 +667,14 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
  * A browser cannot repair a rate limit or a server outage: keep the original
  * status and Retry-After for the router's backoff instead of asking twice.
  * Nor can it find a parcel the API answered 404 for, show a courier Ship24
- * keeps for subscribers, or find scans Ship24 said it has none of: the page
- * asks the same API and shows the same answer.
+ * keeps for subscribers, find scans Ship24 said it has none of or has yet to
+ * query the carriers for, or outwait a request that timed out while Ship24
+ * queried them: the page asks the same API and shows the same answer.
  */
 function browserCanRecover(error: unknown): boolean {
-  return !(error instanceof NoHistoryError) && !(error instanceof NotFoundError) && !(error instanceof UpstreamHttpError
-    && (error.status === 404 || error.status === 410 || error.status === 429 || error.status >= 500));
+  return !(error instanceof NoHistoryError) && !(error instanceof NotFoundError) && !(error instanceof IndeterminateError)
+    && !(error instanceof UpstreamNetworkError && error.cause instanceof DOMException && error.cause.name === 'TimeoutError')
+    && !(error instanceof UpstreamHttpError && (error.status === 404 || error.status === 410 || error.status === 429 || error.status >= 500));
 }
 
 /**
@@ -733,8 +736,8 @@ export class Ship24Tracker {
         id: 'direct',
         enabled: http !== null,
         run: async ({ remainingMs, signal }) => ({
-          ...parseShip24Response(await currentParcel(http!, number, browser
-            ? Math.max(remainingMs / 2, remainingMs - BROWSER_RESERVE_MS) : remainingMs, signal, courier), number, timezone),
+          ...parseShip24Response(await currentParcel(http!, number,
+            Math.max(remainingMs / 2, remainingMs - DIRECT_MARGIN_MS), signal, courier), number, timezone),
           tracking_source: 'structured-web-response',
         }),
       },
