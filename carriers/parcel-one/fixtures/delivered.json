@@ -1,0 +1,97 @@
+{
+  "trackingNumber": "4002102255056",
+  "zipCode": "",
+  "language": "en",
+  "found": true,
+  "error": null,
+  "environment": null,
+  "recipient": null,
+  "trackingProgress": "TrackProg050",
+  "carrier": {
+    "trackingNumber": "994717434200216281",
+    "trackingUrl": null,
+    "logoHtml": "<a href=https://service.post.ch/EasyTrack/submitParcelData.do?formattedParcelCodes=994717434200216281&lang=en target=_blank><img src=https://shipproduction.awiwe.solutions/tracking/img/LI_liechtenstein_post.png height=40px;></a>"
+  },
+  "events": [
+    {
+      "date": "2026-07-17 08:57",
+      "status": "The shipment has been delivered to the mailbox of the recipient.",
+      "location": "805070",
+      "carrierTrackingNumber": "994717434200216281",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-17 06:25",
+      "status": "The shipment is out for delivery and is expected to be delivered today.",
+      "location": "805070",
+      "carrierTrackingNumber": "994717434200216281",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-16 21:58",
+      "status": "The shipment arrived at the distribution office.",
+      "location": "852000",
+      "carrierTrackingNumber": "994717434200216281",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-16 12:31",
+      "status": "The shipment arrived at the distribution office.",
+      "location": "720000",
+      "carrierTrackingNumber": "994717434200216281",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-15 18:43",
+      "status": "The shipment has been handled.",
+      "location": "949453",
+      "carrierTrackingNumber": "994717434200216281",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-14 14:18",
+      "status": "The shipment has left the P1 HUB and can be tracked further in the tracking system of the respective carrier using the shipment number <a class=clink href=https://service.post.ch/EasyTrack/submitParcelData.do?formattedParcelCodes=994717434200216281&lang=en target=_blank>994717434200216281</a>.",
+      "location": "DE Pohlheim",
+      "carrierTrackingNumber": "994717434200216281",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": "<a href=https://service.post.ch/EasyTrack/submitParcelData.do?formattedParcelCodes=994717434200216281&lang=en target=_blank><img src=https://shipproduction.awiwe.solutions/tracking/img/LI_liechtenstein_post.png height=40px;></a>"
+    },
+    {
+      "date": "2026-07-14 08:30",
+      "status": "The shipping label with trackingno 994717434200216281 has been created.",
+      "location": "DE Pohlheim",
+      "carrierTrackingNumber": "994717434200216281",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-14 08:30",
+      "status": "The shipment arrived the P1 HUB and is now being handled.",
+      "location": "DE Pohlheim",
+      "carrierTrackingNumber": "",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-06 11:20",
+      "status": "The shipment has been handed over to a carrier and is now on it's way to PARCEL.ONE.",
+      "location": "DE Legden",
+      "carrierTrackingNumber": "",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    },
+    {
+      "date": "2026-07-06 10:03",
+      "status": "The shipment has been prepared for transportation by the sender.",
+      "location": "DE Legden",
+      "carrierTrackingNumber": "",
+      "carrierTrackingUrl": null,
+      "carrierLogoHtml": null
+    }
+  ]
+}

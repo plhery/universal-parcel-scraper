@@ -1,0 +1,12 @@
+{
+  "trackingNumber": "4002109876543",
+  "zipCode": "",
+  "language": "en",
+  "found": false,
+  "error": "No data could be found for the entered Tracking Number and Receiver ZIP Code!",
+  "environment": null,
+  "recipient": null,
+  "trackingProgress": null,
+  "carrier": null,
+  "events": []
+}

@@ -1,7 +1,35 @@
 {
   "carrier": "parcel-one",
-  "gap": "No public number has been found on PARCEL.ONE's tracker.",
   "records": [
+    {
+      "number": "4002102255056",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260716195657/https://www.parcelpanel.com/couriers/parcel-one/",
+        "date": "2026-07-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "An archived ParcelPanel PARCEL.ONE page offered it to try. PARCEL.ONE's tracker answers it, without a postcode, with a parcel prepared by a sender in Legden, handled at the hub in Pohlheim, then handed to Liechtenstein Post, whose scans it relays up to the delivery."
+    },
     {
       "number": "3981228230182",
       "role": "quarantined",
@@ -31,7 +59,7 @@
           "paquetexpress"
         ]
       },
-      "note": "A customer quoted this number in a review of PARCEL.ONE. Its tracker did not find it without the recipient's postcode."
+      "note": "A customer quoted this number in a review of PARCEL.ONE. Its tracker does not find it."
     }
   ]
 }

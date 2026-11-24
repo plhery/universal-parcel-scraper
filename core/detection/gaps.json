@@ -3224,6 +3224,12 @@
     "reason": "Vencedor's guest tracker confirms these ten-digit guides. Several other carriers share the shape, so Vencedor is offered through explicit selection."
   },
   {
+    "carrier": "parcel-one",
+    "pattern": "^\\d{13}$",
+    "kind": "collision",
+    "reason": "PARCEL.ONE's thirteen-digit tracking ids share their shape with many carriers' numeric numbers, so the shape cannot name PARCEL.ONE."
+  },
+  {
     "carrier": "parcel2go",
     "pattern": "^P2G\\d{9}$",
     "kind": "open",

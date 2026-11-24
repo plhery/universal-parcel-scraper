@@ -639,6 +639,7 @@ import { statusMap as packeta } from '../../carriers/packeta/status.js';
 import { statusMap as packlink } from '../../carriers/packlink/status.js';
 import { statusMap as packs } from '../../carriers/packs/status.js';
 import { statusMap as pactic } from '../../carriers/pactic/status.js';
+import { statusMap as parcelOne } from '../../carriers/parcel-one/status.js';
 import { statusMap as padtf } from '../../carriers/padtf/status.js';
 import { statusMap as pakistanPost } from '../../carriers/pakistan-post/status.js';
 import { statusMap as palletways } from '../../carriers/palletways/status.js';
@@ -1233,6 +1234,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   northline, 'nova-global': novaGlobal, 'nova-poshta': novaPoshta, 'now-couriers': nowCouriers, nox, 'nz-couriers': nzCouriers, 'nz-post': nzPost, 'oak-harbor': oakHarbor, oca, ocasa, 'ocs-ana': ocsAna, 'odm-express': odmExpress,
   'old-dominion': oldDominion, 'olva-courier': olvaCourier, omgo, omniva,
   'one-world-express': oneWorldExpress, onex, ontrac, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'overseas-express': overseasExpress, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic, padtf,
+  'parcel-one': parcelOne,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, pargo, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress, peddler,
   'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, pigeonship, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,

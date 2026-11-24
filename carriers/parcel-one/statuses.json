@@ -1,4 +1,100 @@
 {
   "carrier": "parcel-one",
-  "entries": []
+  "entries": [
+    {
+      "wording": "The shipment has been prepared for transportation by the sender.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The sender has prepared the parcel and its data, at the sender's town."
+    },
+    {
+      "wording": "The shipment has been handed over to a carrier and is now on it's way to PARCEL.ONE.",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A carrier has collected the parcel from the sender to bring it to PARCEL.ONE's hub."
+    },
+    {
+      "wording": "The shipment arrived the P1 HUB and is now being handled.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "PARCEL.ONE's hub in Pohlheim."
+    },
+    {
+      "wording": "The shipping label with trackingno <number> has been created.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The delivery carrier's label, created at the hub after the parcel arrived there: no registration of the parcel. The number is the delivery carrier's."
+    },
+    {
+      "wording": "The shipment has left the P1 HUB and can be tracked further in the tracking system of the respective carrier using the shipment number <number>.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The hand-over to the delivery carrier. The reply links the number to that carrier's tracker; the adapter keeps the text."
+    },
+    {
+      "wording": "The shipment has been handled.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A delivery carrier's scan as PARCEL.ONE relays it: Liechtenstein Post's processing in Schaan."
+    },
+    {
+      "wording": "The shipment arrived at the distribution office.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A delivery carrier's scan as PARCEL.ONE relays it."
+    },
+    {
+      "wording": "The shipment is out for delivery and is expected to be delivered today.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A delivery carrier's scan as PARCEL.ONE relays it."
+    },
+    {
+      "wording": "The shipment has been delivered to the mailbox of the recipient.",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A delivery carrier's scan as PARCEL.ONE relays it."
+    },
+    {
+      "code": "TrackProg020",
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A progress code, the parcel's and not a scan's. The tracking page's script reads it as its second step and labels it so; the adapter reads it only for a parcel without scans."
+    },
+    {
+      "code": "TrackProg030",
+      "wording": "Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A progress code: the page's third step, the parcel at its destination."
+    },
+    {
+      "code": "TrackProg040",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "bundle",
+      "note": "A progress code: the page's fourth step."
+    },
+    {
+      "code": "TrackProg050",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A progress code: the page's last step, beside a delivery scan."
+    }
+  ]
 }
