@@ -419,5 +419,10 @@ describe('SEKO status vocabulary', () => {
     // The coded entries are from OmniParcel's code list; neither tracker shows the codes.
     expect(statusMap.stage('OP-72', 'delivered')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'seko', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
+    // The last-mile hub line names the hub, with or without its full stop.
+    for (const wording of ['THE ORDER HAS ARRIVED AT THE EXAMPLE SORTING HUB.', 'The order has arrived at the Sample Town sorting hub']) {
+      expect(sekoStage(wording), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    }
+    expect(sekoStage('PROCESSED THROUGH EXPORT HUB')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 });

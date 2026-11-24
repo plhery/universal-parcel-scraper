@@ -58,6 +58,8 @@ const OMNIPARCEL: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['parcel received and accepted', 'in_transit'],
   ['received by carrier', 'in_transit'],
   ['received by last mile provider', 'in_transit'],
+  // The last-mile courier's hub, named in the line, the evening before its round.
+  ['the order has arrived at the … sorting hub.', 'in_transit'],
   // The last-mile courier's line, hours before its delivery.
   ['the order is on the way to the recipient.', 'out_for_delivery'],
   ['customer to collect from carrier', 'ready_for_pickup'],
@@ -68,6 +70,9 @@ const OMNIPARCEL: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['return to sender', 'returned'],
   ['delivered - authority to leave / safe drop', 'delivered'],
 ]);
+
+// The last-mile courier's hub line names the hub: "The order has arrived at the Example sorting hub."
+const SORTING_HUB = /^(the order has arrived at the ).{1,60}?( sorting hub)\.?$/;
 
 // "Status Changed to [X]", with the brackets or, for one status, a trailing dash instead.
 const CHANGED = /^status changed to\s*(.*)$/;
@@ -89,7 +94,8 @@ export function isSekoBookkeeping(wording: string): boolean {
 /** The stage SEKO's own vocabulary gives a status or milestone, on its tracking page or OmniParcel's. */
 export function sekoMappedStage(wording: string): Stage | undefined {
   const normalized = normalizeStatusWording(wording);
-  return MESSAGES.get(normalized) ?? OMNIPARCEL.get(normalized) ?? STATUSES.get(statusOf(normalized));
+  return MESSAGES.get(normalized) ?? OMNIPARCEL.get(normalized.replace(SORTING_HUB, '$1…$2.'))
+    ?? STATUSES.get(statusOf(normalized));
 }
 
 /** A milestone's stage: SEKO's vocabulary, else the shared wording rules, else nothing. */

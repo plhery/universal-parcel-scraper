@@ -21,6 +21,7 @@
     {"wording": "Received by Destination Customs", "stage": "customs", "language": "en", "confirmedBy": "official-doc", "note": "An event in the example reply of SEKO's OmniParcel tracking API."},
     {"code": "RC-1", "wording": "Received by Last Mile Provider", "stage": "in_transit", "language": "en", "confirmedBy": "official-doc", "note": "Handed to the final-mile carrier. An event in the example reply of SEKO's OmniParcel tracking API."},
     {"wording": "PARCEL RECEIVED AND ACCEPTED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A scan on OmniParcel's tracker: the destination's hub taking the parcel after customs."},
+    {"wording": "THE ORDER HAS ARRIVED AT THE … SORTING HUB.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A scan on OmniParcel's tracker, from the last-mile courier, naming its hub, the evening before the round."},
     {"wording": "THE ORDER IS ON THE WAY TO THE RECIPIENT.", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "A scan on OmniParcel's tracker, from the last-mile courier, hours before its delivery."},
     {"wording": "Shipment information received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "A milestone on SEKO's tracking page. The shipper's data reached SEKO, before the pickup."},
     {"wording": "Shipment Created", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "A milestone on SEKO's tracking page. The shipment booked, before the pickup."},
