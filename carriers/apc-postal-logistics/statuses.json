@@ -32,6 +32,7 @@
     {"code": "17", "wording": "Order is ready for pickup at a collection point.", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "Seen in a live reply of the tracker page's lookup."},
     {"code": "11", "wording": "Delivered.", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Seen in a live reply of the tracker page's lookup."},
     {"code": "201", "wording": "Delivered.", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Seen in a live reply of the tracker page's lookup."},
-    {"code": "214", "wording": "Delivered.", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Seen in a live reply of the tracker page's lookup."}
+    {"code": "214", "wording": "Delivered.", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Seen in a live reply of the tracker page's lookup."},
+    {"code": "24", "wording": "Delayed.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Days after APC's departure: the parcel is held up on its way, nothing asked of the recipient."}
   ]
 }

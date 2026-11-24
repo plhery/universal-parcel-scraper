@@ -302,7 +302,7 @@ describe('APC Postal Logistics numbers', () => {
 
 describe('APC Postal Logistics status vocabulary', () => {
   it('records every code with the stage the map gives it', () => {
-    expect(statuses.entries.filter((entry) => entry.confirmedBy === 'live')).toHaveLength(23);
+    expect(statuses.entries.filter((entry) => entry.confirmedBy === 'live')).toHaveLength(24);
     for (const entry of statuses.entries) {
       expect(apcStage(entry.code), `${entry.code} ${entry.wording}`).toBe(entry.stage);
       expect(statusMapAnswer({ carrier: 'apc-postal-logistics', providerCode: entry.code, description: entry.wording }), entry.code)

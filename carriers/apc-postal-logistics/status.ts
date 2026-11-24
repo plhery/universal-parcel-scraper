@@ -24,6 +24,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['57', 'in_transit'], // Arrived at a local courier.
   ['64', 'in_transit'], // Arrived at a facility.
   ['317', 'in_transit'],
+  ['24', 'in_transit'], // Delayed: days after APC's departure, the parcel still on its way.
   ['02', 'customs'], // Customs inspection in progress.
   ['227', 'customs'],
   ['03', 'in_transit'], // Cleared customs: the parcel moves on.
