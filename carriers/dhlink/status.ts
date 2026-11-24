@@ -107,6 +107,10 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   // DHLink's own nodes QG001 and JH001: export clearance, then the hand-over to the airline.
   ['customs export clearance completed', 'in_transit'],
   ['package handed over to airline', 'in_transit'],
+  // The airline's booking after that hand-over, before the flight; the hand-over to the destination's local
+  // provider after its pickup, before the round.
+  ['to be shipped by airline', 'in_transit'],
+  ['hand it over to local service provider, waiting for pickup', 'in_transit'],
   ['item presented to customs', 'customs'],
   // Export customs released the item (出口海关/放行).
   ['item returned from customs?', 'in_transit'],
