@@ -71823,7 +71823,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "zhongzhou-logistics",
+      "localClocks": true
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
