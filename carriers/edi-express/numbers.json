@@ -1,5 +1,27 @@
 {
   "carrier": "edi-express",
-  "gap": "No public page shows an EDI Express PRO number.",
-  "records": []
+  "records": [
+    {
+      "number": "605323877",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240901123656/https://my.ediexpressinc.com/prodetail.asp?proNum=605323877",
+        "date": "2024-09-01",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "An archived shipment page on EDI Express's own tracker. The tracker still answers it as freight picked up in New Jersey and delivered in Arizona, with its trailer's dispatch day."
+    }
+  ]
 }

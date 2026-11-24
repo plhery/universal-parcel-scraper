@@ -18,19 +18,75 @@
   "timezone": "America/Los_Angeles",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "edi-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "eta",
+    "weight",
+    "destination_country",
+    "receiver_address"
+  ],
   "portal": {
+    "url": "https://my.ediexpressinc.com/prodetail.asp?proNum={trackingNumber}",
     "searchUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
     "helpUrl": "https://www.ediexpressinc.com/contact-us",
     "canaryUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "departure_date",
+      "eta",
+      "delivered_at",
+      "weight",
+      "parcel_count",
+      "order_contents",
+      "payment_details",
+      "customer_reference",
+      "origin",
+      "destination",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "departure_date",
+      "eta",
+      "weight",
+      "destination",
+      "recipient_address"
+    ],
+    "discarded": [
+      "delivered_at",
+      "parcel_count",
+      "order_contents",
+      "payment_details",
+      "customer_reference",
+      "origin"
+    ],
+    "unavailable": [
+      "history",
+      "location",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "signatory"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "ediexpressinc.com"
+      ],
+      "pathPattern": "^/prodetail\\.asp$",
+      "params": [
+        "proNum"
+      ]
+    }
+  ],
   "detection": []
 }

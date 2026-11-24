@@ -333,6 +333,7 @@ import { statusMap as easyMail } from '../../carriers/easy-mail/status.js';
 import { statusMap as ecmsExpress } from '../../carriers/ecms-express/status.js';
 import { statusMap as ecomLogistics } from '../../carriers/ecom-logistics/status.js';
 import { statusMap as econt } from '../../carriers/econt/status.js';
+import { statusMap as ediExpress } from '../../carriers/edi-express/status.js';
 import { statusMap as ecoscooting } from '../../carriers/ecoscooting/status.js';
 import { statusMap as ecourier } from '../../carriers/ecourier/status.js';
 import { statusMap as egyptPost } from '../../carriers/egypt-post/status.js';
@@ -1238,7 +1239,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-ru': dpdRu, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
   'e-commerce-international': eCommerceInternational, 'early-bird': earlyBird, 'easy-mail': easyMail,
-  'ecms-express': ecmsExpress, 'ecom-logistics': ecomLogistics, econt, ecoscooting, ecourier, 'egypt-post': egyptPost, egxpress, ekart, elta, emile, 'emirates-post': emiratesPost, ems, 'ems-vietnam': emsVietnam, 'energia-tk': energiaTk, 'envia-colombia': enviaColombia,
+  'ecms-express': ecmsExpress, 'ecom-logistics': ecomLogistics, econt, ecoscooting, ecourier, 'edi-express': ediExpress,'egypt-post': egyptPost, egxpress, ekart, elta, emile, 'emirates-post': emiratesPost, ems, 'ems-vietnam': emsVietnam, 'energia-tk': energiaTk, 'envia-colombia': enviaColombia,
   envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, etomars, 'ets-express': etsExpress, eurodis, 'euroexpress-ba': euroexpressBa, europochta, eushipments,
   'evdemo-lojistik': evdemoLojistik, evri, 'evri-uk': evriUk, evropat, ewe, exelot,
   'exline-kz': exlineKz, exmate, 'express-one': expressOne, 'express-one-bg': expressOneBg, 'fan-courier': fanCourier, 'fan-courier-international': fanCourierInternational, 'far-international': farInternational, 'fargo-courier': fargoCourier, 'fargo-uz': fargoUz, fastbox, fastdrop,

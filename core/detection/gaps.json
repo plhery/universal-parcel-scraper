@@ -1424,6 +1424,12 @@
     "reason": "OCASA in Argentina prints the same ECO and ten-digit layout, so the shape cannot name Eco Express."
   },
   {
+    "carrier": "edi-express",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Nine digits are shared by several carriers and nothing in the number points to EDI Express."
+  },
+  {
     "carrier": "eimskip",
     "kind": "open",
     "reason": "The guest tracker accepts a bare shipment number. Eimskip is selected explicitly."

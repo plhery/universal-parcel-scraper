@@ -1,4 +1,9 @@
 {
   "carrier": "edi-express",
-  "entries": []
+  "entries": [
+    {"wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The milestone the parser makes of the page's Pickup Date (PUD in its legend)."},
+    {"wording": "Trailer dispatched to AZ", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The page's shipment status, which names the destination's state and ends with the day it was set; the parser keeps that day as the milestone's date."},
+    {"wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal", "firstSeen": "2026-11-24", "note": "The milestone the parser makes of the page's Out for Del day (OFD in its legend)."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The milestone the parser makes of the page's DEL Date, in green on the page."}
+  ]
 }
