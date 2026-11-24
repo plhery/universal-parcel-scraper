@@ -65,6 +65,20 @@ describe('recognition candidates', () => {
     for (const network of ['gls-at', 'gls-pl']) expect(detectCarrierMatch('123456789012').candidates).not.toContain(network);
   });
 
+  it('asks Colis Privé with the others only for a caller in France, Belgium or Luxembourg, or one with no country', () => {
+    // Synthetic: twelve characters, bare or with a French or Belgian postcode, a shape carriers everywhere print.
+    for (const number of ['12345678901275001', 'AB123456789075001', '123456789012B1000', 'AB1234567890', '123456789012']) {
+      expect(detectCarrierMatch(number).candidates, number).toContain('colis-prive');
+      for (const countryHint of [undefined, 'FR', 'BE', 'LU']) {
+        const candidate = recognitionCandidates(number, { countryHint }).find(({ carrier }) => carrier === 'colis-prive');
+        expect(candidate?.lastResort, `${number} ${countryHint}`).toBeUndefined();
+      }
+      for (const countryHint of ['DE', 'CH', 'US', 'PT']) {
+        expect(outsideCountryLast(number, 'colis-prive', { countryHint }), `${number} ${countryHint}`).toBe(true);
+      }
+    }
+  });
+
   it('asks Econt about 13 digits with the others only for a caller in Bulgaria', () => {
     // Synthetic: every Econt shipment number is thirteen digits, a run carriers elsewhere print too.
     const number = '2000000000001';

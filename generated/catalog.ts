@@ -1698,11 +1698,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^(?!YW[A-Z]{3}\\d{12}$|YWE\\d{14}$|BYT\\d{14}$|(?:GF|CI)[A-Z]{2}\\d{13}$|CNG\\d{14}$|DBRPST\\d{11}$)[A-Z0-9]{12}(?:(?:0[1-9]|[1-8]\\d|9[0-5]|97|98)\\d{3}|[BL][1-9]\\d{3})$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       },
       {
         "pattern": "^[A-Z0-9]{12}$",
-        "confidence": "low"
+        "confidence": "low",
+        "servedCountriesOnly": true
       }
     ]
   },

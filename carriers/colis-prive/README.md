@@ -32,6 +32,9 @@ recipient's postcode.
   `postcode` input. A written prefix such as `B-1000` or `LU 1234` becomes the
   letter. The page never opens without the postcode, so a bare number with no
   postcode is `input_required`.
+- Twelve characters, or twelve and five digits, are printed by carriers everywhere. Colis Privé
+  delivers only in France, Belgium and Luxembourg, so recognition asks it about them for a
+  reader elsewhere only once every other candidate has missed (`servedCountriesOnly`).
 - The postcode is what opens the page, so treat the whole value as a secret:
   never log it, quote it in an issue or put it in a fixture or `numbers.json`.
   The corpus keeps bare 12-character numbers only.
