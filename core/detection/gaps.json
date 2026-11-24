@@ -4780,6 +4780,12 @@
     "reason": "WARP's shipment and order numbers, S or P, a serial and four digits for the year and week, lose their hyphens in a shape other carriers' numbers share, and three public samples are too few to give the shape a rule; select WARP explicitly or use its tracking link."
   },
   {
+    "carrier": "western-post",
+    "pattern": "^WP\\d{13}$",
+    "kind": "collision",
+    "reason": "Western Post's WP and thirteen digits are WooliiPorter's shape too, and one public sample gives no check digit or range to tell them apart, so the shape cannot name Western Post."
+  },
+  {
     "carrier": "westjet-cargo",
     "kind": "by_design",
     "reason": "WestJet Cargo is selectable explicitly. The air waybill prefix and check digit have not been assessed against other carriers."

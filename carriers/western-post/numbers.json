@@ -1,5 +1,27 @@
 {
   "carrier": "western-post",
-  "gap": "No public page shows a Western Post number.",
-  "records": []
+  "records": [
+    {
+      "number": "WP2607140015605",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/2026/https://www.parcelpanel.com/couriers/western-post/",
+        "date": "2026-11-24",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "wooliiporter"
+        ]
+      },
+      "note": "An archived ParcelPanel Western Post page offered it to try. Western Post's tracker answers it with a parcel taken from the warehouse in Walnut to its distribution center in Ontario, California, and delivered in Indio. It fails the Luhn check WooliiPorter's numbers of the same shape carry."
+    }
+  ]
 }

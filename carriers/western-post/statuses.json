@@ -1,4 +1,57 @@
 {
   "carrier": "western-post",
-  "entries": []
+  "entries": [
+    {
+      "code": "SI",
+      "wording": "Shipment Information sent to the Carrier",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel's data sent to the carrier that will move it, at the sender's warehouse, before anyone takes the parcel."
+    },
+    {
+      "code": "AC",
+      "wording": "Arrived at Carrier Terminal",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The carrier's terminal takes the parcel in, the first scan with the parcel in hand; it comes with the pickup scan, at the same second."
+    },
+    {
+      "code": "PU",
+      "wording": "Shipment Picked Up by Carrier",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "IT",
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "AP",
+      "wording": "Arrived at the final destination WP distribution center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Western Post's own distribution center that delivers the parcel."
+    },
+    {
+      "code": "OD",
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DD",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

@@ -18,18 +18,55 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "western-post",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "weight",
+    "dimensions"
+  ],
   "portal": {
     "searchUrl": "https://www.wpglb.com/",
     "helpUrl": "https://www.wpglb.com/about/contact/",
     "canaryUrl": "https://www.wpglb.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "weight",
+      "dimensions",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "weight",
+      "dimensions"
+    ],
+    "discarded": [
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "service_name",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
   "links": [],
   "detection": []

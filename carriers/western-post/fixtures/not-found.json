@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "code": 200,
+  "message": "操作成功",
+  "data": {
+    "type": 1,
+    "list": [],
+    "trackFiles": [],
+    "trackAddress": {
+      "senderInfo": [],
+      "receiverInfo": []
+    },
+    "sizeAndWeight": []
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "success": true,
+  "code": 200,
+  "message": "操作成功",
+  "data": {
+    "type": 1,
+    "list": [
+      {
+        "nodeCode": "DD",
+        "trackingNumber": "WP2607140015605",
+        "trackAddress": "Indio",
+        "trackTime": "2026-07-15 13:49:03",
+        "remarks": "Delivered"
+      },
+      {
+        "nodeCode": "OD",
+        "trackingNumber": "WP2607140015605",
+        "trackAddress": "Ontario",
+        "trackTime": "2026-07-15 05:40:06",
+        "remarks": "Out for delivery"
+      },
+      {
+        "nodeCode": "AP",
+        "trackingNumber": "WP2607140015605",
+        "trackAddress": "Ontario",
+        "trackTime": "2026-07-15 01:40:06",
+        "remarks": "Arrived at the final destination WP distribution center"
+      },
+      {
+        "nodeCode": "IT",
+        "trackingNumber": "WP2607140015605",
+        "trackAddress": "Ontario",
+        "trackTime": "2026-07-14 21:57:02",
+        "remarks": "In Transit"
+      },
+      {
+        "nodeCode": "PU",
+        "trackingNumber": "WP2607140015605",
+        "trackAddress": "Ontario",
+        "trackTime": "2026-07-14 15:04:02",
+        "remarks": "Shipment Picked Up by Carrier"
+      },
+      {
+        "nodeCode": "AC",
+        "trackingNumber": "WP2607140015605",
+        "trackAddress": "Ontario",
+        "trackTime": "2026-07-14 15:04:02",
+        "remarks": "Arrived at Carrier Terminal"
+      },
+      {
+        "nodeCode": "SI",
+        "trackingNumber": "WP2607140015605",
+        "trackAddress": "Walnut",
+        "trackTime": "2026-07-14 00:32:16",
+        "remarks": "Shipment Information sent to the Carrier"
+      }
+    ],
+    "trackFiles": [
+      {
+        "trackingNumber": "WP2607140015605"
+      }
+    ],
+    "trackAddress": {
+      "senderInfo": [
+        {
+          "trackingNumber": "WP2607140015605",
+          "osaCity": "Walnut"
+        }
+      ],
+      "receiverInfo": [
+        {
+          "trackingNumber": "WP2607140015605",
+          "oraCity": "Indio"
+        }
+      ]
+    },
+    "sizeAndWeight": [
+      {
+        "trackingNumber": "WP2607140015605",
+        "sizeUnit": "IN",
+        "weightUnit": "LB",
+        "ordersLength": "68.000",
+        "ordersWidth": "31.000",
+        "ordersHeight": "11.000",
+        "ordersWeight": "115.081"
+      }
+    ]
+  }
+}
