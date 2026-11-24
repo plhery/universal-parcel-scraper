@@ -1,5 +1,39 @@
 {
   "carrier": "emirates-courier-express",
-  "gap": "No public page shows an Emirates Courier Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "310100641953",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260410154735/https://www.parcelpanel.com/couriers/emirates-courier-express/",
+        "date": "2026-04-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "An archived ParcelPanel Emirates Courier Express page offered it to try. The tracker answers it with a parcel collected in Manchester, flown through Dubai to Riyadh, refused once and delivered there."
+    }
+  ]
 }

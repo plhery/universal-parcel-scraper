@@ -1381,6 +1381,12 @@
     "reason": "Ellerman’s lookup uses equipment identifiers shared across carriers and sailings."
   },
   {
+    "carrier": "emirates-courier-express",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve-digit Emirates Courier Express numbers share their shape with many carriers' numeric waybills, so the shape cannot name Emirates Courier Express."
+  },
+  {
     "carrier": "emirates-post",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

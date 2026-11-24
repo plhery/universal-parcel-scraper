@@ -1,0 +1,22 @@
+{
+  "details": null,
+  "origin": null,
+  "destination": null,
+  "estimatedDelivery": null,
+  "estimatedDeliveryDate": null,
+  "isOnHold": null,
+  "pieces": null,
+  "isDeliveryOptionExpired": false,
+  "showDoorDeliveryOptions": false,
+  "showTrackingDetailPanel": false,
+  "hasReturnRequestCreated": false,
+  "showReturnPanel": false,
+  "returnTermsAndConditions": null,
+  "referenceAirWaybill": null,
+  "deliveryManagerActive": null,
+  "showPaymentLink": null,
+  "psuUrls": null,
+  "urls": null,
+  "hasInTransit": false,
+  "allowCancelShipment": false
+}

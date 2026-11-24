@@ -16,19 +16,61 @@
   "timezone": "Asia/Dubai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "emirates-courier-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "destination_country",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://www.emiratescx.com/en/tracking-details?awb_number={trackingNumber}",
     "searchUrl": "https://www.emiratescx.com/en/tracking",
     "helpUrl": "https://www.emiratescx.com/en/supportcenter",
     "canaryUrl": "https://www.emiratescx.com/en/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "origin",
+      "destination",
+      "progress_rail",
+      "parcel_count",
+      "proof_of_delivery",
+      "delivery_options"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "eta",
+      "origin",
+      "progress_rail",
+      "parcel_count",
+      "proof_of_delivery",
+      "delivery_options"
+    ],
+    "unavailable": [
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "signatory"
+    ]
   },
   "links": [
     {
