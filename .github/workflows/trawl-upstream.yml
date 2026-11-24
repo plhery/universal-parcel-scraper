@@ -3,11 +3,17 @@ name: TRAWL upstream
 # When germondai/trawl publishes a release newer than the pinned one, this
 # builds the browser image on it and says in an issue whether the patches
 # still apply. It commits and deploys nothing: a release can change behaviour
-# the build does not see.
+# the build does not see. Run by hand with `force`, it builds whatever the
+# checkout pins, such as an upgrade branch whose pins already name the newest release.
 on:
   schedule:
     - cron: '43 4 * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: Build and start the image even when the checkout already pins the newest release.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -39,7 +45,7 @@ jobs:
       # The installer stops the build when the source it patches has moved.
       - name: Build the image with this repository's patches
         id: build
-        if: ${{ steps.pins.outputs.newer == 'true' }}
+        if: ${{ steps.pins.outputs.newer == 'true' || inputs.force == true }}
         continue-on-error: true
         run: docker build -t trawl-upstream trawl
       - name: Start the service and wait for its browsers
