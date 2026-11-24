@@ -256,6 +256,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'azerpost', number: 'RR999999995AZ',
     route: /^https:\/\/www\.azerpost\.az\/az\/xidmetler\/gonderislerin-izlenmesi\?package_id=RR999999995AZ$/,
     marker: /bağlama kodu nümunə/ },
+  // The page moves to its German or English path and keeps the number in its search field.
+  { carrier: 'parcel-one', number: '4002109876543',
+    route: /^https:\/\/parcel\.one\/(?:de|en)\/tracking\/\?trackno=4002109876543$/,
+    marker: /Sendung verfolgen|Track (?:a |your )?shipment/i },
   { carrier: 'aruba-post', number: 'RR999999995AW',
     route: /^https:\/\/cds\.postaruba\.com\/ipswt\/IPSWeb_item_events\.aspx\?itemid=RR999999995AW$/,
     marker: /No information, please check your item identifier/,
