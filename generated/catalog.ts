@@ -20513,7 +20513,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Berlin",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "der-kurier",
+      "localClocks": true
     },
     "canaryUrl": "https://derkurier.de/sendungsverfolgung/",
     "trackingUrlTemplate": "https://derkurier.de/sendungsverfolgung/?d-pt-search={trackingNumber}",
@@ -40378,7 +40379,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Santiago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "latam-cargo",
+      "localClocks": true
     },
     "canaryUrl": "https://www.latamcargo.com/en/trackshipment",
     "trackingSearchUrl": "https://www.latamcargo.com/en/trackshipment",
@@ -54527,7 +54529,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Berlin",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rhenus-de",
+      "requirements": [
+        {
+          "field": "postcode",
+          "optional": true,
+          "showsMore": true,
+          "label": "Delivery postcode",
+          "type": "text",
+          "placeholder": "10115",
+          "pattern": "^[0-9]{5}$",
+          "maxLength": 5,
+          "inputMode": "numeric",
+          "autoComplete": "postal-code",
+          "help": "Rhenus shows an order only with its delivery postcode. Without it, other sources are asked.",
+          "validator": "germanyPostcode"
+        }
+      ]
     },
     "canaryUrl": "https://www.rhenus.group/de/de/",
     "trackingSearchUrl": "https://rhenusmydelivery.com/de",
@@ -55106,11 +55124,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ross-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.rossexpress.com/",
     "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
-    "trackingSearchUrl": "https://www.rossexpress.com/",
+    "trackingSearchUrl": "https://rossexpress.com/quick_trace.php",
     "helpUrl": "https://www.rossexpress.com/contact/",
     "linkRules": [
       {
@@ -59562,7 +59581,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Chicago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "southwestern-motor-transport",
+      "localClocks": true
     },
     "canaryUrl": "https://www.smtl.com/",
     "trackingSearchUrl": "https://profoundui.smtl.com/profoundui/start?pgm=profoundui/mwp705c&p1=0&l1=1&p2=none&l2=4&p3=none&l3=4",

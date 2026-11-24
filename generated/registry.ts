@@ -253,6 +253,7 @@ import { adapter as delivro } from '../carriers/delivro/adapter.js';
 import { adapter as dellin } from '../carriers/dellin/adapter.js';
 import { adapter as delnext } from '../carriers/delnext/adapter.js';
 import { adapter as deppon } from '../carriers/deppon/adapter.js';
+import { adapter as derKurier } from '../carriers/der-kurier/adapter.js';
 import { adapter as dexPk } from '../carriers/dex-pk/adapter.js';
 import { adapter as dhl } from '../carriers/dhl/adapter.js';
 import { adapter as dhlEcommerce } from '../carriers/dhl-ecommerce/adapter.js';
@@ -595,6 +596,7 @@ import { adapter as laljiMuljiTransport } from '../carriers/lalji-mulji-transpor
 import { adapter as landmarkGlobal } from '../carriers/landmark-global/adapter.js';
 import { adapter as laserLogistics } from '../carriers/laser-logistics/adapter.js';
 import { adapter as lastOneMileCoop } from '../carriers/last-one-mile-coop/adapter.js';
+import { adapter as latamCargo } from '../carriers/latam-cargo/adapter.js';
 import { adapter as latvijasPasts } from '../carriers/latvijas-pasts/adapter.js';
 import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
 import { adapter as ledaExpress } from '../carriers/leda-express/adapter.js';
@@ -833,6 +835,7 @@ import { adapter as relaisColis } from '../carriers/relais-colis/adapter.js';
 import { adapter as relayExpress } from '../carriers/relay-express/adapter.js';
 import { adapter as relaytech } from '../carriers/relaytech/adapter.js';
 import { adapter as rexIndonesia } from '../carriers/rex-indonesia/adapter.js';
+import { adapter as rhenusDe } from '../carriers/rhenus-de/adapter.js';
 import { adapter as rhenusIt } from '../carriers/rhenus-it/adapter.js';
 import { adapter as rincos } from '../carriers/rincos/adapter.js';
 import { adapter as rivigo } from '../carriers/rivigo/adapter.js';
@@ -846,6 +849,7 @@ import { adapter as rodonaves } from '../carriers/rodonaves/adapter.js';
 import { adapter as rohligSuus } from '../carriers/rohlig-suus/adapter.js';
 import { adapter as romocean } from '../carriers/romocean/adapter.js';
 import { adapter as rosaliaExpress } from '../carriers/rosalia-express/adapter.js';
+import { adapter as rossExpress } from '../carriers/ross-express/adapter.js';
 import { adapter as royalExpressMm } from '../carriers/royal-express-mm/adapter.js';
 import { adapter as royalMail } from '../carriers/royal-mail/adapter.js';
 import { adapter as royaleInternational } from '../carriers/royale-international/adapter.js';
@@ -923,6 +927,7 @@ import { adapter as smsaExpress } from '../carriers/smsa-express/adapter.js';
 import { adapter as southAfricanPostOffice } from '../carriers/south-african-post-office/adapter.js';
 import { adapter as southPost } from '../carriers/south-post/adapter.js';
 import { adapter as southeasternFreightLines } from '../carriers/southeastern-freight-lines/adapter.js';
+import { adapter as southwesternMotorTransport } from '../carriers/southwestern-motor-transport/adapter.js';
 import { adapter as spExpress } from '../carriers/sp-express/adapter.js';
 import { adapter as sparkKz } from '../carriers/spark-kz/adapter.js';
 import { adapter as spedire } from '../carriers/spedire/adapter.js';
@@ -1409,6 +1414,7 @@ export const REGISTRY: RegistryDefinition = {
     "dellin": dellin,
     "delnext": delnext,
     "deppon": deppon,
+    "der-kurier": derKurier,
     "dex-pk": dexPk,
     "dhl": dhl,
     "dhl-ecommerce": dhlEcommerce,
@@ -1751,6 +1757,7 @@ export const REGISTRY: RegistryDefinition = {
     "landmark-global": landmarkGlobal,
     "laser-logistics": laserLogistics,
     "last-one-mile-coop": lastOneMileCoop,
+    "latam-cargo": latamCargo,
     "latvijas-pasts": latvijasPasts,
     "lbc-express": lbcExpress,
     "leda-express": ledaExpress,
@@ -1989,6 +1996,7 @@ export const REGISTRY: RegistryDefinition = {
     "relay-express": relayExpress,
     "relaytech": relaytech,
     "rex-indonesia": rexIndonesia,
+    "rhenus-de": rhenusDe,
     "rhenus-it": rhenusIt,
     "rincos": rincos,
     "rivigo": rivigo,
@@ -2002,6 +2010,7 @@ export const REGISTRY: RegistryDefinition = {
     "rohlig-suus": rohligSuus,
     "romocean": romocean,
     "rosalia-express": rosaliaExpress,
+    "ross-express": rossExpress,
     "royal-express-mm": royalExpressMm,
     "royal-mail": royalMail,
     "royale-international": royaleInternational,
@@ -2079,6 +2088,7 @@ export const REGISTRY: RegistryDefinition = {
     "south-african-post-office": southAfricanPostOffice,
     "south-post": southPost,
     "southeastern-freight-lines": southeasternFreightLines,
+    "southwestern-motor-transport": southwesternMotorTransport,
     "sp-express": spExpress,
     "spark-kz": sparkKz,
     "spedire": spedire,
@@ -2775,7 +2785,7 @@ export const REGISTRY: RegistryDefinition = {
     "depo": "universal",
     "deppon": "deppon",
     "deprisa": "universal",
-    "der-kurier": "universal",
+    "der-kurier": "der-kurier",
     "der-kurier-sk": "universal",
     "designer-transport": "universal",
     "dex-i": "universal",
@@ -3375,7 +3385,7 @@ export const REGISTRY: RegistryDefinition = {
     "lao-post": "universal",
     "laser-logistics": "laser-logistics",
     "last-one-mile-coop": "last-one-mile-coop",
-    "latam-cargo": "universal",
+    "latam-cargo": "latam-cargo",
     "latam-global-express": "universal",
     "latvijas-pasts": "latvijas-pasts",
     "lbc-express": "lbc-express",
@@ -3810,7 +3820,7 @@ export const REGISTRY: RegistryDefinition = {
     "reunidas-cargas": "universal",
     "rex-indonesia": "rex-indonesia",
     "rgw-express": "universal",
-    "rhenus-de": "universal",
+    "rhenus-de": "rhenus-de",
     "rhenus-it": "rhenus-it",
     "riders-express": "universal",
     "rika-express": "universal",
@@ -3828,7 +3838,7 @@ export const REGISTRY: RegistryDefinition = {
     "rojas-express": "universal",
     "romocean": "romocean",
     "rosalia-express": "rosalia-express",
-    "ross-express": "universal",
+    "ross-express": "ross-express",
     "route1-fulfilment": "universal",
     "royal-express-mm": "royal-express-mm",
     "royal-mail": "royal-mail",
@@ -3962,7 +3972,7 @@ export const REGISTRY: RegistryDefinition = {
     "south-african-post-office": "south-african-post-office",
     "south-post": "south-post",
     "southeastern-freight-lines": "southeastern-freight-lines",
-    "southwestern-motor-transport": "universal",
+    "southwestern-motor-transport": "southwestern-motor-transport",
     "sp-express": "sp-express",
     "spark-kz": "spark-kz",
     "sped-trans": "universal",
