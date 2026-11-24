@@ -349,6 +349,10 @@ Keep the service on a private network. Pass its URL as `trawlUrl` to the library
 `FLARESOLVERR_URL` to the CLI and the HTTP server. `TRACKING_CHROMIUM_PATH` enables the
 separate local Chromium transport.
 
+Leave `PROXY_URL` unset: when it is set, TRAWL sends every sessionless `/v1` request through it
+with no direct fallback, so a proxy outage fails the adapters that solve pages there. A carrier
+that needs a proxy names one in its own request.
+
 `REDIS_URL` configures the session cache. `AUSTRALIA_POST_BROWSER_LOCALE` overrides the
 browser locale for Australia Post, `AUSTRALIA_POST_PROXY_FILTER=off` lets its proxied pages load
 everything, and `FFMPEG_PATH` selects SF Express's PNG decoder.
