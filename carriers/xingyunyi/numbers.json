@@ -1,5 +1,43 @@
 {
   "carrier": "xingyunyi",
-  "gap": "No public page shows a XingYunYi number.",
-  "records": []
+  "records": [
+    {
+      "number": "XYYEX0035607568YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250612164627id_/https://www.parcelpanel.com/couriers/xingyunyi/",
+        "date": "2025-06-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ParcelPanel's XingYunYi page published it as the courier's sample number to try. XingYunYi's tracker answers it with a parcel from Guangzhou to the United Kingdom, last released from customs there."
+    },
+    {
+      "number": "XYYEX1036968315YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251013100629id_/https://www.parcelpanel.com/couriers/xingyunyi/",
+        "date": "2025-10-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A later capture of ParcelPanel's XingYunYi page published it as the sample number. XingYunYi's tracker answers it with an order to Australia it calls delivered, with the line's number and no scan left."
+    }
+  ]
 }

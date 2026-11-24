@@ -1,0 +1,123 @@
+{
+  "code": 200,
+  "success": true,
+  "message": "操作成功！",
+  "data": [
+    {
+      "InputTrackingNumber": "XYYEX0035607568YQ",
+      "IsHideFirstTracking": false,
+      "TriggerTime": "2025-04-02T16:04:00",
+      "WeightAsVolumetricWeight": false,
+      "Active": false,
+      "DraftStatus": 0,
+      "TrackingLogs": [
+        {
+          "TriggerTime": "2025-04-02T16:04:00",
+          "Location": "GB",
+          "Status": 4,
+          "StatusString": "GB , Item was released from customs.",
+          "OrderId": 0,
+          "Id": 0
+        },
+        {
+          "TriggerTime": "2025-04-02T04:33:00",
+          "Location": "GB",
+          "Status": 4,
+          "StatusString": "GB , Item is being presented to customs.",
+          "OrderId": 0,
+          "Id": 0
+        },
+        {
+          "TriggerTime": "2025-03-31T11:40:00",
+          "Location": "CN",
+          "Status": 4,
+          "StatusString": "CN , Item is ready for departure.",
+          "OrderId": 0,
+          "Id": 0
+        },
+        {
+          "TriggerTime": "2025-03-30T14:07:00",
+          "Location": "CN",
+          "Status": 4,
+          "StatusString": "CN , Arrived Export Airport.",
+          "OrderId": 0,
+          "Id": 0
+        },
+        {
+          "TriggerTime": "2025-03-29T22:53:50.563",
+          "Location": "广州",
+          "Status": 4,
+          "StatusString": "广州 , Item outbound in sorting center.",
+          "OrderId": 0,
+          "Id": 0
+        },
+        {
+          "TriggerTime": "2025-03-29T16:28:38.547",
+          "Location": "广州",
+          "Status": 2,
+          "StatusString": "广州 , Item inbound in sorting center.",
+          "OrderId": 0,
+          "Id": 0
+        },
+        {
+          "TriggerTime": "2025-03-25T16:10:52.053",
+          "Location": "广州",
+          "Status": 1,
+          "StatusString": "广州 , shipment information received.",
+          "OrderId": 0,
+          "Id": 0
+        }
+      ],
+      "CFright": 0.0,
+      "HasIOSS": false,
+      "LatestLogisticsStatus": "Transit",
+      "OrderStatusDec": "已取消",
+      "IsResidential": false,
+      "MpsOrderId": 0,
+      "PostDSStatus": false,
+      "IsOnline": false,
+      "SystemId": 0,
+      "Printintercept": false,
+      "CreateOrderChannelId": 75,
+      "CustomerId": 0,
+      "CustomerWeight": 0,
+      "CustomerTotalFee": 0.0,
+      "OPWeight": 0,
+      "OPTotalFee": 0.0,
+      "HasSpecialGoods": false,
+      "SWeight": 0,
+      "IsContainsElectricGoosd": false,
+      "IsResend": false,
+      "IsCod": false,
+      "CodFee": 0.0,
+      "Length": 0.0,
+      "Width": 0.0,
+      "Height": 0.0,
+      "ChannelId": 1080,
+      "TrackingNumber": "XYYEX0035607568YQ",
+      "TransferNumber": "XYYEX0035607568YQ",
+      "ReceiverCountryCode": "GB",
+      "SourceType": 0,
+      "SenderCountryCode": "CN",
+      "OrderStatus": 0,
+      "LogisticsStatus": 4,
+      "IsUnusual": false,
+      "OrderTime": "0001-01-01T00:00:00",
+      "ReceiveTime": "2025-03-29T16:28:38",
+      "IsTelephone": false,
+      "IsSMS": false,
+      "TelephoneConfirmationStatus": 0,
+      "RoomId": 0,
+      "IsPrint": false,
+      "IsPartShipment": false,
+      "CreateBy": 0,
+      "IsContainsSpecialGoods": false,
+      "SourceSystemId": 0,
+      "ForwardingSystemId": 0,
+      "IsTransfer": false,
+      "ERPApiId": 0,
+      "SystemNo": "XYYEX0035607568YQ",
+      "Id": 226262286
+    }
+  ]
+}

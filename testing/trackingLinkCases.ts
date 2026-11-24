@@ -1131,6 +1131,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'cj-packet', number: 'CJPZZZ0000000001YQ',
     route: /^https:\/\/www\.cjpacket\.com\/\?trackingNumber=CJPZZZ0000000001YQ$/,
     marker: /Copy All Tracking Numbers|No tracking info found|Global Package Tracking/i },
+  // XingYunYi's page reads the numbers from its address and looks them up on load.
+  { carrier: 'xingyunyi', number: 'XYYEX9999999990YQ',
+    route: /^https:\/\/www\.xingyunyi\.com\/tracking\?nums=XYYEX9999999990YQ$/,
+    marker: /Copy all tracking information|No tracking information/i },
   // ComOne's page puts the number in its field and posts it to the tracker on load.
   { carrier: 'comone-express', number: 'CM9900000017',
     route: /^https:\/\/www\.com1logistics\.com\/tracking\.html\?trackNo=CM9900000017$/,

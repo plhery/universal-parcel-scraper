@@ -1,4 +1,22 @@
 {
   "carrier": "xingyunyi",
-  "entries": []
+  "entries": [
+    {"code": "1", "wording": "shipment information received.", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The order's first scan, when its data reaches XingYunYi. The row starts with its place, which the adapter moves out."},
+    {"code": "2", "wording": "Item inbound in sorting center.", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "XingYunYi's warehouse in Guangzhou takes the parcel in; the order dates its receipt with this scan."},
+    {"code": "4", "wording": "Item outbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "4", "wording": "Arrived Export Airport.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "4", "wording": "Item is ready for departure.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "4", "wording": "Item is being presented to customs.", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Import customs in the destination country."},
+    {"code": "4", "wording": "Item was released from customs.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "8", "wording": "Not Found", "stage": null, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The line's tracker no longer finds the line's number. The row is dated when the page asks, so the adapter drops it."},
+    {"code": "Delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The page's status for the shipment, shown with the days it took."},
+    {"code": "Transit", "wording": "Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The page's status for the shipment. An order without scans, or a number without an order, shows it too."},
+    {"code": "InfoReceived", "wording": "Info Received", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's name for the shipment status."},
+    {"code": "Pickup", "wording": "Pickup", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's name for the shipment status; its Chinese page reads 到达待取, arrived and waiting to be collected."},
+    {"code": "Delivery", "wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's name for the shipment status."},
+    {"code": "Failed", "wording": "Failed", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's name for the shipment status; its Chinese page reads 派送失败, delivery failed."},
+    {"code": "UnDelivered", "wording": "UnDelivered", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's name for the shipment status; its Chinese page reads 未妥投, not delivered."},
+    {"code": "Exception", "wording": "Exception", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's name for the shipment status."},
+    {"code": "NotFound", "wording": "Not Found", "stage": null, "language": "en", "confirmedBy": "bundle", "note": "The tracking page's name for a number it has no result for. The service answers a number without an order with Transit instead."}
+  ]
 }

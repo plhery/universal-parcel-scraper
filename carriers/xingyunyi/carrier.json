@@ -22,19 +22,57 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "xingyunyi",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.xingyunyi.com/tracking?nums={trackingNumber}",
     "searchUrl": "https://www.xingyunyi.com/tracking",
     "helpUrl": "https://www.xingyunyi.com/contactus",
     "canaryUrl": "https://www.xingyunyi.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin_country",
+      "destination_country",
+      "delivery_tracking_number",
+      "transit_time"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "origin_country",
+      "transit_time"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "delivered_at",
+      "offset_timestamps",
+      "service_name",
+      "pickup_point",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

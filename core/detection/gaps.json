@@ -4904,6 +4904,12 @@
     "reason": "One hexadecimal reference reported for an XDP delivery; its role is not established."
   },
   {
+    "carrier": "xingyunyi",
+    "pattern": "^XYY[A-Z]{2}\\d{10}[A-Z]{2}$",
+    "kind": "open",
+    "reason": "Two ParcelPanel samples show XingYunYi numbers as XYYEX, ten digits and YQ. No rule offers XingYunYi for the shape yet."
+  },
+  {
     "carrier": "xpressbees",
     "pattern": "^15\\d{13}$",
     "kind": "open",
