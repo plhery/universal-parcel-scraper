@@ -737,6 +737,7 @@ import { statusMap as quiqup } from '../../carriers/quiqup/status.js';
 import { statusMap as qwintry } from '../../carriers/qwintry/status.js';
 import { statusMap as raben } from '../../carriers/raben/status.js';
 import { statusMap as ramHandToHand } from '../../carriers/ram-hand-to-hand/status.js';
+import { statusMap as recibelo } from '../../carriers/recibelo/status.js';
 import { statusMap as redpack } from '../../carriers/redpack/status.js';
 import { statusMap as redur } from '../../carriers/redur/status.js';
 import { statusMap as rexIndonesia } from '../../carriers/rex-indonesia/status.js';
@@ -1287,7 +1288,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   xcargo, skladusa, 'seino-super-express': seinoSuperExpress, 'post-one': postOne, 'post-international': postInternational, 'posta-slovenije': postaSlovenije, 'posta-srbije': postaSrbije, 'poste-italiane': posteItaliane, postex, posti, postlogistics, 'postmedia-parcel-services': postmediaParcelServices,
   postnord, posturinn, ppl, prd, 'precision-deliveries': precisionDeliveries,
   'pro-carrier': proCarrier, 'prompt-xpress': promptXpress, proships, 'pts-worldwide-express': ptsWorldwideExpress, ptt, 'pullman-cargo': pullmanCargo, purolator, pwb, 'quantium-solutions': quantiumSolutions,
-  'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
+  'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, recibelo, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
   rincos, 'riyu-logistics': riyuLogistics, rivigo, 'rl-carriers': rlCarriers, roadrunner, rodonaves, 'rohlig-suus': rohligSuus, 'ross-express': rossExpress, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, 'runner-express': runnerExpress, rxo, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
   'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shengao, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, 'shipagent-in': shipagentIn, shipter, shouwu,

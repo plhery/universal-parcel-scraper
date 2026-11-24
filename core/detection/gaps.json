@@ -3728,6 +3728,12 @@
     "reason": "Three letters and six digits are too generic to point to RAM."
   },
   {
+    "carrier": "recibelo",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "Recíbelo's nine-digit shipment numbers are a bare digit run many carriers share."
+  },
+  {
     "carrier": "redecarga",
     "number": "31CA66270",
     "kind": "open",

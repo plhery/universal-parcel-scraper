@@ -1155,6 +1155,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'boxc', number: 'BOXC00000000999',
     route: /^https:\/\/boxc\.com\/track\/BOXC00000000999$/,
     marker: /When will my tracking information appear\?/ },
+  // Recíbelo's tracking page puts the number in its field and looks it up on load.
+  { carrier: 'recibelo', number: '900000000',
+    route: /^https:\/\/www\.recibelo\.cl\/seguimiento\/\?codigo=900000000$/,
+    marker: /Ingresa tu número de envío/ },
   // COSHIP's tracking page puts the number in its field and looks it up on load.
   { carrier: 'coship', number: '0000000000000',
     route: /^https:\/\/www\.coship\.ca\/tracking\/\?no=0000000000000$/,

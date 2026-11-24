@@ -1,5 +1,51 @@
 {
   "carrier": "recibelo",
-  "gap": "No public page shows a Recíbelo number.",
-  "records": []
+  "records": [
+    {
+      "number": "117490233",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclamos.cl/reclamo/2024/jun/recibelocl-incumplimiento-de-plazo-de-entrega-pedido-no-entregado",
+        "date": "2024-06-19",
+        "dateKind": "complaint publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "envío number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "The customer posts the Recíbelo envío number of an online-shop order bought on 5 June. Recíbelo's tracker names the number and lists it created that day, a failed delivery, then out for delivery and completed."
+    },
+    {
+      "number": "117696687",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclamos.cl/reclamo/2024/jul/lab-store-pedido-no-entregado",
+        "date": "2024-07-02",
+        "dateKind": "complaint publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "N° de envío distributed by Recíbelo",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "The customer quotes the shop's shipping details: distributed by Recíbelo, created on 8 June at 18:31. Recíbelo's tracker names the number with that one Creado status at that minute."
+    }
+  ]
 }

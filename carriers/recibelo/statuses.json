@@ -1,4 +1,14 @@
 {
   "carrier": "recibelo",
-  "entries": []
+  "entries": [
+    {"wording": "Creado", "stage": "registered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The merchant has created the parcel; the tracking page's first step."},
+    {"wording": "Etiqueta impresa", "stage": "accepted", "language": "es", "confirmedBy": "bundle", "note": "The tracking page's script shows it as its Retirado (picked up) step."},
+    {"wording": "En deposito", "stage": "in_transit", "language": "es", "confirmedBy": "bundle", "note": "At Recíbelo's warehouse; a step of the tracking page."},
+    {"wording": "En ruta", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "On the delivery route, the step before Completado."},
+    {"wording": "No completado", "stage": "failed_attempt", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A delivery that was not completed; the public sample went out again after it."},
+    {"wording": "Completado", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Delivered; the tracking page's last step."},
+    {"wording": "No aceptado", "stage": "exception", "language": "es", "confirmedBy": "bundle", "note": "A parcel Recíbelo did not accept; the tracking page hides a parcel in this status."},
+    {"wording": "Sin comuna", "stage": "exception", "language": "es", "confirmedBy": "bundle", "note": "A parcel without a delivery district; the tracking page hides a parcel in this status."},
+    {"wording": "Falta Información", "stage": "exception", "language": "es", "confirmedBy": "bundle", "note": "A parcel missing delivery details; the tracking page hides a parcel in this status."}
+  ]
 }

@@ -16,19 +16,42 @@
   "timezone": "America/Santiago",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "recibelo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://www.recibelo.cl/seguimiento/?codigo={trackingNumber}",
     "searchUrl": "https://www.recibelo.cl/seguimiento/",
     "helpUrl": "https://www.recibelo.cl/contacto/",
     "canaryUrl": "https://www.recibelo.cl/seguimiento/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times"
+    ],
+    "discarded": [
+      "recipient_name"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "sender_name"
+    ]
   },
   "links": [
     {
