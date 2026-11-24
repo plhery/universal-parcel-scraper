@@ -595,13 +595,16 @@ const OUTWARD_SCAN = /^(?:Posting\/Collection|(?:Arrival at|Dispatch from) outwa
  * from a country on one clock, such a post's copies are read on that clock; elsewhere
  * 17TRACK's reading stays. `home` is the relaying post's country.
  */
-function relayedOriginZone(number: string, home: string): string | null {
+function relayedOriginZone(number: string, relay: OriginRelay): string | null {
   const origin = isValidS10TrackingNumber(number) ? number.slice(-2) : null;
-  return origin && origin !== home ? countryTimeZone(origin) : null;
+  return !origin ? null : origin !== relay.home ? countryTimeZone(origin) : relay.homeZone ?? null;
 }
 
-/** A destination post's leg that relays the origin post's scans: its country, the wording that marks them, and whether its rows placed in the origin country are them too. */
-interface OriginRelay { home: string; outward?: RegExp; placed?: true }
+/**
+ * A destination post's leg that relays the origin post's scans: its country, the wording that marks them, whether its
+ * rows placed in the origin country are them too, and the clock of its own such scans on an item it sends.
+ */
+interface OriginRelay { home: string; outward?: RegExp; placed?: true; homeZone?: string }
 
 /**
  * Destination posts' legs that relay the origin post's scans on an item from abroad at that post's
@@ -616,7 +619,10 @@ interface OriginRelay { home: string; outward?: RegExp; placed?: true }
  * the office of exchange and customs hold kept those of China Post's receipt, presentation to export
  * customs and hold under +00:00. Their copies are worded as the origin's, or placed in the origin
  * country, a name both countries share counting as the post's own; Correo Argentino marks the
- * origin's leg "(Otb)" and its data "(EDI-received)".
+ * origin's leg "(Otb)" and its data "(EDI-received)". On an item Argentina sends, those marked rows are
+ * Correo Argentino's own scans, at its offices' wall clocks under +00:00 and placed in the destination
+ * country: UPU's record of the item gives the same digits at Argentine offices. They are read on
+ * Argentina's clock, as the UPU adapter reads them.
  */
 const ORIGIN_RELAYS = new Map<unknown, OriginRelay>([
   [JAPAN_POST, { home: 'JP', outward: OUTWARD_SCAN }],
@@ -624,7 +630,7 @@ const ORIGIN_RELAYS = new Map<unknown, OriginRelay>([
   [16011, { home: 'PK', outward: / in origin country$/, placed: true }],
   [19071, { home: 'SA', placed: true }],
   [14081, { home: 'NO', outward: /^The (?:parcel has been collected and is in transit|shipment has arrived at the export terminal|consignment is going through export customs clearance|shipment has cleared export customs|shipment has been sent from origin country)\.?$/ }],
-  [1121, { home: 'AR', outward: /\((?:Otb|EDI-received)\)$/i }],
+  [1121, { home: 'AR', outward: /\((?:Otb|EDI-received)\)$/i, homeZone: 'America/Argentina/Buenos_Aires' }],
 ]);
 
 /** Whether a row of a relaying post's leg is the origin post's scan, as its wording or place shows. */
@@ -783,7 +789,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       : nz ? nzPostAbroad(provider.events, number, nzPostDestination(shipment, tracking.providers))
         : india ? indiaPostInbound(provider.events, recipientCountry(shipment)) : new Map<number, Placed | null>();
     const relay = ORIGIN_RELAYS.get(reported.key);
-    const origin = reported.key === CHINA_POST ? originZone(number) : relay ? relayedOriginZone(number, relay.home) : null;
+    const origin = reported.key === CHINA_POST ? originZone(number) : relay ? relayedOriginZone(number, relay) : null;
     // China Post's copies of the destination post's own scans keep that post's wall clock, as China Post's adapter
     // reads them, and 17TRACK labels them with China's offset: Correos's arrival at its exchange office at 09:25
     // Madrid time showed in China Post's leg at 09:25 +08:00, seven hours before Correos's own row of it.

@@ -274,7 +274,9 @@ carrier.
   country", Norway Post's collection, export terminal, export clearance and departure from the
   origin country) or placed in the origin country is read on that country's clock, as Japan
   Post's are. Correo Argentino's leg (1121) relays them under `+00:00`, marked `(Otb)` or
-  `(EDI-received)`, and is read the same way.
+  `(EDI-received)`, and is read the same way. On an item Argentina sends, the rows so marked are
+  Correo Argentino's own, placed in the destination country at the digits UPU's record gives for
+  Argentine offices, and are read on Argentina's clock.
 - Correos de El Salvador's leg (carrier key 19031) dates its own scans in UTC, as its own
   tracker does, and its copies of the origin post's scans, marked `(salida)` or
   `(recibido por EDI)`, at the origin office's wall clock; 17TRACK labels them all `-05:00`

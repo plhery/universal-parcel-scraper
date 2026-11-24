@@ -1238,8 +1238,8 @@ describe('17TRACK result parsing', () => {
         ] }] } } }] }, requested).events?.map(e => e.time);
     // The origin post's receipt at 09:12 and its office of exchange at 16:35 Beijing time, under 17TRACK's +00:00.
     expect(times('ZZ123456785CN')).toEqual(['2026-11-07T10:40:00.000Z', '2026-11-05T08:35:00.000Z', '2026-11-05T01:12:00.000Z']);
-    // An item Correo Argentino sends keeps 17TRACK's reading.
-    expect(times('ZZ123456785AR')).toEqual(['2026-11-07T18:40:00.000Z', '2026-11-05T16:35:00.000Z', '2026-11-05T09:12:00.000Z']);
+    // On an item Argentina sends they are Correo Argentino's own scans, on Argentina's clock.
+    expect(times('ZZ123456785AR')).toEqual(['2026-11-07T21:40:00.000Z', '2026-11-05T19:35:00.000Z', '2026-11-05T12:12:00.000Z']);
   });
 
   it("reads Mexico Post's rows at the digits Correos de México's tracker shows, which 17TRACK read as UTC", () => {
