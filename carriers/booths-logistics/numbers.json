@@ -1,0 +1,53 @@
+{
+  "carrier": "booths-logistics",
+  "records": [
+    {
+      "number": "BCPTEST8",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.booths.co.nz/wp-content/uploads/2024/10/B-Connected-How-to-track-a-freight-job-inside-the-B-CONNECTED-portal.pdf",
+        "date": "2024-10-25",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The test consignment Booth's shows on its consignment page in its B CONNECTED guide; the public tracker finds it as a cancelled container job with its booking and cancellation."
+    },
+    {
+      "number": "100067364",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.booths.co.nz/wp-content/uploads/2024/10/B-Connected-How-to-add-a-consignment-to-your-watchlist.pdf",
+        "date": "2024-10-25",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "A consignment number Booth's system gave a general freight job, shown in its watchlist guide; the public tracker no longer lists it."
+    }
+  ]
+}

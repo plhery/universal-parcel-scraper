@@ -512,6 +512,11 @@
     "reason": "Bombino air waybills are plain runs of seven to ten digits, a shape many carriers share."
   },
   {
+    "carrier": "booths-logistics",
+    "kind": "by_design",
+    "reason": "Booth's consignment numbers are plain digits from its system or a customer's own letters and digits, shapes many carriers share."
+  },
+  {
     "carrier": "border-express",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

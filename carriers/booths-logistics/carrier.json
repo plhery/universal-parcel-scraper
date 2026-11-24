@@ -1,0 +1,79 @@
+{
+  "id": "booths-logistics",
+  "displayName": "Booth's Logistics",
+  "aliases": [
+    "Booths Logistics",
+    "Booth Logistics",
+    "Booths Transport",
+    "Booth's Transport"
+  ],
+  "region": {
+    "countries": [
+      "NZ"
+    ]
+  },
+  "brand": {
+    "color": "#005f9e"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Auckland",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "booths-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.booths.co.nz/services/tracking/results/?reference={trackingNumber}",
+    "searchUrl": "https://www.booths.co.nz/services/tracking/",
+    "helpUrl": "https://www.booths.co.nz/our-locations/",
+    "canaryUrl": "https://www.booths.co.nz/services/tracking/",
+    "shows": [
+      "status",
+      "milestones",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta",
+      "weight",
+      "volume",
+      "map"
+    ],
+    "scraped": [
+      "status",
+      "milestones",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta",
+      "weight",
+      "volume",
+      "map"
+    ],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "booths.co.nz",
+        "www.booths.co.nz"
+      ],
+      "pathPattern": "^/services/tracking/results/?$",
+      "params": [
+        "reference"
+      ]
+    }
+  ],
+  "detection": []
+}

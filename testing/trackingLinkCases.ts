@@ -2776,6 +2776,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'mbe-es', number: 'ES9999-0X-000000AAAA',
     route: /^https:\/\/www\.mbe\.es\/es\/tracking\?c=ES9999-0X-000000AAAA$/,
     marker: /La búsqueda del código de envío no ha dado ningún resultado/ },
+  // The results page searches the number in its address; one consignment opens its details page.
+  { carrier: 'booths-logistics', number: 'ZZ99000000',
+    route: /^https:\/\/www\.booths\.co\.nz\/services\/tracking\/results\/\?reference=ZZ99000000$/,
+    marker: /No results found for\s*ZZ99000000/ },
 ];
 
 /**

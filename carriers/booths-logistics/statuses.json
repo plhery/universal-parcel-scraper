@@ -1,0 +1,61 @@
+{
+  "carrier": "booths-logistics",
+  "entries": [
+    {
+      "code": "Booked",
+      "wording": "Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The customer booked the job in B CONNECTED; Booth's has not collected the freight yet. Also the job's own status."
+    },
+    {
+      "code": "Cancelled",
+      "wording": "Cancelled",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The job was cancelled and will not be delivered. Also the job's own status."
+    },
+    {
+      "code": "PickedUp",
+      "wording": "Picked Up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The code is named in the tracker's script, the wording in Booth's public track and trace guide."
+    },
+    {
+      "wording": "In Transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A milestone in Booth's public track and trace guide, on the way between depots or across Cook Strait."
+    },
+    {
+      "wording": "At Location",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "A milestone in Booth's public track and trace guide: the freight reached a depot."
+    },
+    {
+      "code": "OutForDelivery",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The code is named in the tracker's script, the wording in Booth's public track and trace guide."
+    },
+    {
+      "code": "Delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The code is named in the tracker's script, the wording in Booth's public track and trace guide."
+    }
+  ]
+}

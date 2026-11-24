@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": 246746,
+      "containerID": 38285,
+      "reference": "BCPTEST8",
+      "status": "Cancelled",
+      "origin": null,
+      "destination": null,
+      "containerNumber": ""
+    }
+  ],
+  "success": true,
+  "failed": false,
+  "isQueued": false,
+  "message": null,
+  "errorType": null
+}
