@@ -302,6 +302,7 @@ import { adapter as ekart } from '../carriers/ekart/adapter.js';
 import { adapter as ellermanCityLiners } from '../carriers/ellerman-city-liners/adapter.js';
 import { adapter as elta } from '../carriers/elta/adapter.js';
 import { adapter as emile } from '../carriers/emile/adapter.js';
+import { adapter as emiratesCourierExpress } from '../carriers/emirates-courier-express/adapter.js';
 import { adapter as emiratesPost } from '../carriers/emirates-post/adapter.js';
 import { adapter as emoTrans } from '../carriers/emo-trans/adapter.js';
 import { adapter as ems } from '../carriers/ems/adapter.js';
@@ -721,6 +722,7 @@ import { adapter as parcel2go } from '../carriers/parcel2go/adapter.js';
 import { adapter as parcelabc } from '../carriers/parcelabc/adapter.js';
 import { adapter as parcelninja } from '../carriers/parcelninja/adapter.js';
 import { adapter as parcelpoint } from '../carriers/parcelpoint/adapter.js';
+import { adapter as pargo } from '../carriers/pargo/adapter.js';
 import { adapter as pasarex } from '../carriers/pasarex/adapter.js';
 import { adapter as pashaHawaii } from '../carriers/pasha-hawaii/adapter.js';
 import { adapter as passport } from '../carriers/passport/adapter.js';
@@ -1420,6 +1422,7 @@ export const REGISTRY: RegistryDefinition = {
     "ellerman-city-liners": ellermanCityLiners,
     "elta": elta,
     "emile": emile,
+    "emirates-courier-express": emiratesCourierExpress,
     "emirates-post": emiratesPost,
     "emo-trans": emoTrans,
     "ems": ems,
@@ -1839,6 +1842,7 @@ export const REGISTRY: RegistryDefinition = {
     "parcelabc": parcelabc,
     "parcelninja": parcelninja,
     "parcelpoint": parcelpoint,
+    "pargo": pargo,
     "pasarex": pasarex,
     "pasha-hawaii": pashaHawaii,
     "passport": passport,
@@ -2809,7 +2813,7 @@ export const REGISTRY: RegistryDefinition = {
     "em-distribusjon": "universal",
     "emex": "universal",
     "emile": "emile",
-    "emirates-courier-express": "universal",
+    "emirates-courier-express": "emirates-courier-express",
     "emirates-post": "emirates-post",
     "emiro": "universal",
     "emo-trans": "emo-trans",
@@ -3572,7 +3576,7 @@ export const REGISTRY: RegistryDefinition = {
     "parceljet": "universal",
     "parcelninja": "parcelninja",
     "parcelpoint": "parcelpoint",
-    "pargo": "universal",
+    "pargo": "pargo",
     "parts-express": "universal",
     "parxl": "universal",
     "pasarex": "pasarex",

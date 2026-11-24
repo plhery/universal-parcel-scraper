@@ -41150,6 +41150,31 @@
     ]
   },
   {
+    "input": "310100641953",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "purolator",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "purolator",
+      "brt",
+      "colis-prive"
+    ]
+  },
+  {
     "input": "3104802026",
     "carrier": "unknown",
     "confidence": "low",
@@ -107867,6 +107892,14 @@
   },
   {
     "input": "PAR4027027396",
+    "carrier": "pargo",
+    "confidence": "high",
+    "candidates": [
+      "pargo"
+    ]
+  },
+  {
+    "input": "PAR4080177479",
     "carrier": "pargo",
     "confidence": "high",
     "candidates": [

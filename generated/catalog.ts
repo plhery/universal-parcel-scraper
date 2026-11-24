@@ -24438,7 +24438,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Dubai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "emirates-courier-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.emiratescx.com/en/tracking",
     "trackingUrlTemplate": "https://www.emiratescx.com/en/tracking-details?awb_number={trackingNumber}",
@@ -49006,7 +49007,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "pargo"
     },
     "canaryUrl": "https://track.pargo.co.za/",
     "trackingUrlTemplate": "https://track.pargo.co.za/?code={trackingNumber}",
