@@ -14,8 +14,13 @@ numbers, so no rule for Kuwait Post claims them.
 The tracking page on moc.gov.kw sends the number with a Google reCAPTCHA v2 checkbox answer to a
 Next.js server action, `submitShipmentTracking`, which checks the answer (`captcha_invalid`
 otherwise) and limits how often it answers (`rate_limit_exceeded`, with a wait in seconds). Its
-other refusals are `no_data_found` and `tracking_unavailable`. No public number is known to check
-its tracker's replies against.
+other refusals are `no_data_found` and `tracking_unavailable`.
+
+The tracker keeps items for years and also answers items other posts issued for Kuwait. For a
+public sample in [`numbers.json`](numbers.json) it returns every scan, the origin post's and
+Kuwait Post's, each with the country, the UPU event code and wording, a wall-clock time without
+a zone, the office and the next office. An adapter needs a browser helper that answers the
+checkbox before each lookup.
 
 ## Links
 

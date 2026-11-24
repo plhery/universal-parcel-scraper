@@ -1,5 +1,24 @@
 {
   "carrier": "kuwait-post",
-  "gap": "No public page shows a Kuwait Post number.",
-  "records": []
+  "records": [
+    {
+      "number": "CC224487115CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.trackingmore.com/review-kuwait-post.html",
+        "date": "2018-03-01",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "canada-post",
+        "confidence": "high"
+      },
+      "note": "Quoted in a review on TrackingMore's Kuwait Post page by a sender in Canada asking for the parcel back. Kuwait Post's tracker answers it with Canada Post's acceptance and dispatch, its receipt at Kuwait's parcel office of exchange and its dispatch onward to Zurich."
+    }
+  ]
 }
