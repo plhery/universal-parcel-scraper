@@ -130,6 +130,14 @@
       "note": "Inherited from the pre-package adapter; source not recorded."
     },
     {
+      "wording": "AVIS DE PASSAGE",
+      "language": "fr",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The notice left when the parcel could not be handed over, without a place; the parcel was back at the depot and out for delivery again days later."
+    },
+    {
       "wording": "incident",
       "language": "fr",
       "stage": "exception",

@@ -93,6 +93,7 @@ describe('Ciblex status vocabulary', () => {
     expect(classifyCiblexStatus('Colis Livré')).toMatchObject({ stage: 'delivered' });
     expect(classifyCiblexStatus('COLIS LIVRE')).toMatchObject({ stage: 'delivered' });
     expect(classifyCiblexStatus('PROBLEME DESTINATAIRE')).toMatchObject({ stage: 'exception', description: 'Shipment exception' });
+    expect(classifyCiblexStatus('AVIS DE PASSAGE')).toMatchObject({ stage: 'failed_attempt', description: 'Delivery issue' });
     expect(classifyCiblexStatus('Statut provider nouveau')).toMatchObject({
       status: 'unknown',
       stage: 'in_transit',

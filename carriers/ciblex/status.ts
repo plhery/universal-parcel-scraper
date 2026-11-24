@@ -88,7 +88,8 @@ export function classifyCiblexStatus(rawDescription: string): ClassifiedCiblexSt
   ])) {
     return EXCEPTION;
   }
-  if (includesAny(value, ['destinataire absent', 'non livre'])) {
+  // "Avis de passage": the notice the courier leaves when nobody takes the parcel, before it goes back to the depot.
+  if (includesAny(value, ['destinataire absent', 'non livre', 'avis de passage'])) {
     return FAILED_ATTEMPT;
   }
   if (includesAny(value, ['colis controle', 'colis en transit', 'arrive agence', 'depart agence'])) {
