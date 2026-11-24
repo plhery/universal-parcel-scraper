@@ -86,7 +86,10 @@ export function isDhlExpressNotice(description: string): boolean {
   return isDhlExpressPieceDelivery(description) || isDhlExpressClearanceAhead(description);
 }
 
-/** Events newest first, each piece delivery and clearance note on the stage of the staged scan before it. */
+/**
+ * Events newest first, each piece delivery and clearance note on the stage of the staged scan before it.
+ * Run it after withCustomsHolds, so a note never takes a customs hold's raw problem stage.
+ */
 export function withPieceDeliveries<T extends { description?: string; stage?: string; stage_source?: string }>(events: T[]): T[] {
   const read = [...events];
   for (let index = read.length - 1; index >= 0; index--) {

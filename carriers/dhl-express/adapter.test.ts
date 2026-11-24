@@ -114,6 +114,36 @@ describe('DHL Express projection', () => {
     ];
     expect(parse(waiting, number).events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit']);
   });
+  it('keeps a clearance note after a customs hold in customs, whichever of the minute’s two scans DHL lists first', () => {
+    const ahead = 'Customs clearance status updated. Note - The Customs clearance process may start while the shipment is in transit to the destination.';
+    const pair = [
+      { description: 'Shipment is on hold', date: 'Tuesday, November 24, 2026', time: '08:24', location: 'EXAMPLE CITY - FRANCE' },
+      { description: 'Clearance Event', date: 'Tuesday, November 24, 2026', time: '08:24', location: 'EXAMPLE CITY - FRANCE' },
+    ];
+    for (const order of [pair, [...pair].reverse()]) {
+      const web = payload();
+      web.results[0]!.checkpoints = [
+        { description: ahead, date: 'Tuesday, November 24, 2026', time: '15:37', location: 'EXAMPLE CITY - FRANCE' }, ...order,
+        { description: 'Processed for clearance at EXAMPLE CITY - FRANCE', date: 'Monday, November 23, 2026', time: '04:44', location: 'EXAMPLE CITY - FRANCE' },
+      ];
+      expect(parse(web, number), order[0]!.description).toMatchObject({ status: 'in_transit', current_stage: 'customs' });
+      const unified = unifiedPayload();
+      const note = { description: ahead, statusCode: 'transit', status: 'CR', timestamp: '2026-11-24T15:37:00+01:00' };
+      unified.shipments[0]!.status = note;
+      unified.shipments[0]!.events = [note, ...order.map(({ description }) => ({ description, statusCode: 'transit',
+        status: description === 'Clearance Event' ? 'CD' : 'OH', timestamp: '2026-11-24T08:24:00+01:00' })),
+      ...unified.shipments[0]!.events.slice(1)] as typeof unified.shipments[0]['events'];
+      const read = parseUnified(unified, number);
+      expect(read, order[0]!.description).toMatchObject({ status: 'in_transit', current_stage: 'customs' });
+      expect(read.events?.slice(0, 3).map((event) => event.stage)).toEqual(['customs', 'customs', 'customs']);
+    }
+    // A hold alone stays a problem, and the note after it says so too.
+    const alone = payload();
+    alone.results[0]!.checkpoints = [
+      { description: ahead, date: 'Tuesday, November 24, 2026', time: '15:37', location: 'EXAMPLE CITY - FRANCE' }, pair[0]!,
+    ];
+    expect(parse(alone, number)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+  });
   it('maps DHL checkpoints that end with their facility, and leaves other wording to the classifier', () => {
     expect([
       'Shipment information received',

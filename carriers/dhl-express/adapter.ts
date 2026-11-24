@@ -138,7 +138,7 @@ function unifiedResult(shipment: Record<string, unknown>): CarrierResult {
       ...(time ? { time } : {}), ...(typeof address.addressLocality === 'string' ? { location: clean(address.addressLocality).slice(0, 300) } : {}),
       ...(typeof row.status === 'string' ? { provider_code: row.status.slice(0, 100) } : {}) };
   };
-  const events = withCustomsHolds(withPieceDeliveries(shipment.events.map(event)));
+  const events = withPieceDeliveries(withCustomsHolds(shipment.events.map(event)));
   const status = withCustomsHolds([event(shipment.status), ...events])[0]!;
   const current = isDhlExpressNotice(status.description ?? '')
     ? { ...status, stage: events.find((row) => !isDhlExpressNotice(row.description ?? ''))?.stage ?? 'registered', stage_source: 'none' } : status;
@@ -186,7 +186,7 @@ export function parse(payload: unknown, raw: string): CarrierResult {
   if (shipment.checkpoints.length === 1 && blankCheckpoint(shipment.checkpoints[0])) {
     throw new IndeterminateError(PROVIDER, 'DHL Express shows nothing for the waybill', { reason: 'portal_not_found' });
   }
-  const events: CarrierEvent[] = withCustomsHolds(withPieceDeliveries(shipment.checkpoints.map((row): CarrierEvent => {
+  const events: CarrierEvent[] = withPieceDeliveries(withCustomsHolds(shipment.checkpoints.map((row): CarrierEvent => {
     if (!isRecord(row) || typeof row.description !== 'string' || !row.description.trim()) throw new SchemaError(PROVIDER, 'DHL Express returned an invalid checkpoint');
     const description = clean(row.description).slice(0, 1000);
     const mapped = dhlExpressStage(description);

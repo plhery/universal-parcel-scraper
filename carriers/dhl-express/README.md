@@ -139,7 +139,8 @@ which DHL writes at the destination's facilities from the pickup on. A hold
 written in the same minute as a "Clearance Event", a pair DHL repeats each day the
 parcel waits in clearance, is that customs hold; one in the same minute as "Scheduled to
 depart on the next planned movement" is that routine wait, in transit; a hold alone is a
-problem.
+problem. Holds are read before the notes, so a note after a customs hold stays in customs
+whichever of the minute's two scans DHL lists first.
 
 ## Limits
 
