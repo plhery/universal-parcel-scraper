@@ -1,5 +1,49 @@
 {
   "carrier": "airroad",
-  "gap": "AirRoad's consignment notes have no published layout, and no public page shows one.",
-  "records": []
+  "records": [
+    {
+      "number": "GFL0125070",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260521194018/https://www.parcelpanel.com/couriers/air-road/",
+        "date": "2026-05-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "ParcelPanel's AirRoad page published it as the courier's sample number to try. AirRoad's Quick Track answers it as delivered, with the time of the delivery."
+    },
+    {
+      "number": "GFL0118266",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251212182158/https://www.parcelpanel.com/couriers/air-road/",
+        "date": "2025-12-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "An earlier capture of ParcelPanel's AirRoad page published it as the sample number. AirRoad's Quick Track answers it as delivered, with the time of the delivery."
+    }
+  ]
 }

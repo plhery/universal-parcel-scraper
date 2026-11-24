@@ -1,4 +1,29 @@
 {
   "carrier": "airroad",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The reply's delivered flag. The Quick Track page then shows \"Delivered to: \" and the status text, which names who took the goods; the adapter words it Delivered and drops the name."
+    },
+    {
+      "wording": "Scanned in BRISBANE Depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "A depot's scan of a consignment on its way. The depot's name stands between \"Scanned in\" and \"Depot\", and the map reads any depot's scan so."
+    },
+    {
+      "wording": "On-board for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The scan before the public sample's delivery, as the lookup of AirRoad's customer portal names it."
+    }
+  ]
 }

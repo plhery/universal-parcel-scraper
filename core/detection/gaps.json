@@ -159,6 +159,12 @@
     "reason": "Eleven digits are printed by many carriers and nothing in the number points to Airpak Express."
   },
   {
+    "carrier": "airroad",
+    "pattern": "^GFL\\d{7}$",
+    "kind": "open",
+    "reason": "ParcelPanel's AirRoad samples are GFL and seven digits. AirRoad publishes no layout and the letters may be the sender's code, so no rule offers AirRoad for the shape."
+  },
+  {
     "carrier": "ait-worldwide",
     "pattern": "^\\d{7,9}$",
     "kind": "by_design",

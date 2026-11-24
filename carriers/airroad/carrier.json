@@ -21,18 +21,46 @@
   "timezone": "Australia/Sydney",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "airroad",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "location",
+    "eta"
+  ],
   "portal": {
     "searchUrl": "https://www.airroad.com.au/quick-track/",
     "helpUrl": "https://www.airroad.com.au/support/",
-    "canaryUrl": "https://myclient.airroad.com.au/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://www.airroad.com.au/quick-track/",
+    "shows": [
+      "status",
+      "scan_times",
+      "location",
+      "eta",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "scan_times",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "signatory"
+    ],
+    "unavailable": [
+      "history",
+      "offset_timestamps",
+      "service_name",
+      "weight",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []
