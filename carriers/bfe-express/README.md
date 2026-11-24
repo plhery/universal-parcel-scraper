@@ -36,7 +36,7 @@ destination country is kept; postcodes and proof of delivery are left out.
 Its contact form checks numbers by country: CK54 and twelve or thirteen digits in Argentina, CK512
 and twelve digits in Peru, CK598 and twelve digits in Uruguay, WYB and nine digits in Peru, and two
 nineteen-digit series in Argentina. Rules `bfe-express-1` and `bfe-express-2` suggest BFE Express
-for the CK and WYB layouts; a universal provider named BFE Express for a CK54 parcel. Other
+for the CK and WYB layouts. Universal providers name it BFE Express or, as 17TRACK does, BFE. Other
 carriers print nineteen plain digits too, so nothing suggests BFE Express for those series.
 
 ## Links

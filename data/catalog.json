@@ -12172,7 +12172,8 @@
     "displayName": "BFE Express",
     "color": "#122a88",
     "aliases": [
-      "BFEexpress"
+      "BFEexpress",
+      "BFE"
     ],
     "countries": [
       "AR",
@@ -49321,7 +49322,7 @@
     "detectionRules": [
       {
         "pattern": "^AMZPSR\\d{9}$",
-        "confidence": "low"
+        "confidence": "high"
       }
     ]
   },

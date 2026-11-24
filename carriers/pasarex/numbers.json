@@ -15,11 +15,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "pasarex"
-        ]
+        "carrier": "pasarex",
+        "confidence": "high"
       },
       "note": "Archived lookup of an Amazon number on PasarEX's tracker; the capture keeps only the search form."
     },
@@ -37,11 +34,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "pasarex"
-        ]
+        "carrier": "pasarex",
+        "confidence": "high"
       },
       "note": "Archived lookup of an Amazon number on PasarEX's tracker; the capture keeps only the search form."
     },
@@ -59,11 +53,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "pasarex"
-        ]
+        "carrier": "pasarex",
+        "confidence": "high"
       },
       "note": "Archived lookup of an Amazon number on PasarEX's tracker; the capture keeps only the search form."
     },
@@ -81,11 +72,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "pasarex"
-        ]
+        "carrier": "pasarex",
+        "confidence": "high"
       },
       "note": "Archived lookup of an Amazon number on PasarEX's tracker; the capture keeps only the search form."
     },
@@ -103,11 +91,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "pasarex"
-        ]
+        "carrier": "pasarex",
+        "confidence": "high"
       },
       "note": "Archived lookup of an Amazon number on PasarEX's tracker; the capture keeps only the search form."
     }

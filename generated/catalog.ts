@@ -12176,7 +12176,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "BFE Express",
     "color": "#122a88",
     "aliases": [
-      "BFEexpress"
+      "BFEexpress",
+      "BFE"
     ],
     "countries": [
       "AR",
@@ -49325,7 +49326,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^AMZPSR\\d{9}$",
-        "confidence": "low"
+        "confidence": "high"
       }
     ]
   },

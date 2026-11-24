@@ -10,6 +10,7 @@ describe('brand networks', () => {
     expect(brandCarrierIds('gls')).toEqual(expect.arrayContaining(['gls-ch', 'gls-de', 'gls-fr']));
     expect(brandCarrierIds('GOFO')).toEqual(expect.arrayContaining(['gofo', 'gofo-fr', 'gofo-it', 'gofo-nl', 'gofo-es']));
     expect(carrierIdFromName('GOFO')).toBeUndefined();
+    expect(carrierIdFromName('BFE')).toBe('bfe-express');
     expect(carrierIdFromName('GOFO France')).toBe('gofo-fr');
     expect(carrierIdFromName('GOFO Italy')).toBe('gofo-it');
     expect(carrierIdFromName('GOFO Netherlands')).toBe('gofo-nl');

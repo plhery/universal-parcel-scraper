@@ -2,7 +2,8 @@
   "id": "bfe-express",
   "displayName": "BFE Express",
   "aliases": [
-    "BFEexpress"
+    "BFEexpress",
+    "BFE"
   ],
   "region": {
     "countries": [

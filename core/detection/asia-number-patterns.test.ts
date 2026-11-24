@@ -720,10 +720,11 @@ describe('QLS, HSD Express, Expedico, PasarEX, Parceljet, LetterTrack, Frontier 
       .not.toBe('frontier-ca');
   });
 
-  it('suggests PasarEX for AMZPSR and nine digits', () => {
-    expect(detectCarrierMatch('AMZPSR012345678')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pasarex'] });
+  it('routes AMZPSR and nine digits to PasarEX', () => {
+    expect(detectCarrierMatch('AMZPSR012345678')).toMatchObject({ carrier: 'pasarex', confidence: 'high' });
     for (const number of ['AMZPSR01234567', 'AMZPSR0123456789', 'AMZPSX012345678', 'XAMZPSR012345678']) {
-      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('pasarex');
+      const match = detectCarrierMatch(number);
+      expect([match.carrier, ...(match.candidates ?? [])], number).not.toContain('pasarex');
     }
   });
 });

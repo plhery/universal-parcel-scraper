@@ -31,8 +31,9 @@ Without the browser service there is no lookup. The page has no ETA, weight, sen
 
 ## Numbers
 
-Amazon numbers of AMZPSR and nine digits were looked up on PasarEX's tracker, as archived copies
-show, and the tracker answers them. The copies come from one source, so the rule is low.
+Amazon numbers of AMZPSR and nine digits name PasarEX (`PSR`). They were looked up on its tracker,
+as archived copies show, the tracker answers them, and no other carrier's rules take the shape,
+so the rule is high: PasarEX has no recognition step that could confirm a lower rule.
 
 ## Links
 

@@ -74,7 +74,7 @@
     {
       "id": "pasarex-1",
       "pattern": "^AMZPSR\\d{9}$",
-      "confidence": "low"
+      "confidence": "high"
     }
   ]
 }
