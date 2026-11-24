@@ -54,7 +54,9 @@ features. References
 start with the destination postcode, after any `CN` country prefix, so samples
 and fixtures use zeros there. An 18-digit label is a Spanish postcode, four zeros and
 a nine-digit counter. No other carrier's 18-digit numbers in the corpus follow that
-layout, so detection names Ecoscooting for it. A label that starts like bpost's
+layout, so detection names Ecoscooting for it. Las Palmas labels, from 35, are the exception:
+Ecoscooting lists them without scans while AliExpress's tracker holds the parcel, so detection
+suggests both and recognition asks both. A label that starts like bpost's
 `3232` numbers or Quickpac's `44` ones only puts Ecoscooting first when a number is
 recognised. Other 18-digit numbers are not asked: the query error that also
 answers a label not yet announced cannot settle that Ecoscooting does not know one.

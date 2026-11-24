@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionCandidates, recognitionAskedCarriers } from '../catalog/recognition.js';
+import { settleRecognition, type RecognitionOutcome } from '../recognition/index.js';
 import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
 import { isBrtTrackingNumber } from './brt.js';
 import { isPosteItalianeTrackingNumber } from './posteItaliane.js';
@@ -438,6 +439,31 @@ describe('Paack label numbers of eighteen digits', () => {
     expect(detectCarrierMatch('534100000000000001').candidates).toEqual(expect.arrayContaining(['bpost', 'ecoscooting']));
     for (const number of ['534100000000000001', '53400000000000001', '5340000000000000001', '354000000000000001']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('paack');
+    }
+  });
+});
+
+describe('Ecoscooting labels for Las Palmas', () => {
+  it('suggests Ecoscooting and AliExpress for a Las Palmas label, asks both, and takes the one with scans', () => {
+    // Ecoscooting lists Las Palmas labels without scans while AliExpress's tracker holds the parcel.
+    const number = '350010000999999980';
+    const detected = detectCarrierMatch(number);
+    expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['ecoscooting'] });
+    expect(detected.candidates.slice(0, 2)).toEqual(['ecoscooting', 'aliexpress']);
+    for (const countryHint of ['ES', 'FR', undefined]) {
+      expect(recognitionAskedCarriers(number, { countryHint }), countryHint).toEqual(['ecoscooting', 'aliexpress']);
+    }
+    // Ecoscooting's label without a scan has no clock, so AliExpress's dated answer settles the parcel.
+    const outcomes: RecognitionOutcome[] = recognitionCandidates(number).map((candidate) => candidate.carrier === 'aliexpress'
+      ? { ...candidate, status: 'known', lastActivityAt: '2026-11-23T07:50:00Z' }
+      : { ...candidate, status: 'known', lastActivityAt: null });
+    expect(settleRecognition(outcomes, new Date('2026-11-24T12:00:00Z'))).toEqual({ carrier: 'aliexpress', choices: [] });
+    // Other Spanish labels, Santa Cruz de Tenerife's included, stay Ecoscooting's.
+    for (const label of ['380030000999999980', '280010000999999980', '070010000999999980']) {
+      expect(detectCarrierMatch(label), label).toMatchObject({ carrier: 'ecoscooting', confidence: 'high', candidates: ['ecoscooting'] });
+    }
+    for (const other of ['35001000099999998', '3500100009999999801', '350011000999999980']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('aliexpress');
     }
   });
 });

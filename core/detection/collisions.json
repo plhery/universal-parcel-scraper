@@ -206,6 +206,16 @@
       "bpost",
       "ecoscooting",
       "gls-es",
+      "aliexpress"
+    ],
+    "reason": "Ecoscooting's labels for Las Palmas, from 35, are listed without scans while Cainiao's tracker holds the parcel, so AliExpress is suggested beside Ecoscooting, which is preferred; recognition asks both."
+  },
+  {
+    "shape": "9{18}",
+    "carriers": [
+      "bpost",
+      "ecoscooting",
+      "gls-es",
       "dhl"
     ],
     "reason": "DHL claims the 34043-prefixed 18-digit range that bpost, Ecoscooting and GLS Spain match broadly: an SSCC under DHL Paket's own GS1 prefixes typed without its 00. The DHL rule and its GS1 check digit decide."

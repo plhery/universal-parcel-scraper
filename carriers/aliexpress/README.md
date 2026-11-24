@@ -33,7 +33,9 @@ one, YFH's did not know it and Ekart's knew neither. It suggests AliExpress for 
 digits and N as well: Cainiao's tracker followed such a number from its warehouse in China. So does `RN` or `RS`, ten digits and `Y`: Cainiao's
 tracker followed such numbers to Israel and South Africa, and Israel Post did not know one yet.
 Sixteen digits opening with `694788` are suggested too: Cainiao's tracker followed such numbers
-from its warehouse in China to Pakistan and the United States. The rules are in [`carrier.json`](carrier.json)
+from its warehouse in China to Pakistan and the United States. So are Ecoscooting's 18-digit
+labels for Las Palmas, from `35`: Ecoscooting lists them without scans while Cainiao's tracker
+holds the parcel. The rules are in [`carrier.json`](carrier.json)
 and their evidence in [`numbers.json`](numbers.json).
 
 Once the parcel has crossed the border both know the number. It is one journey, so recognition

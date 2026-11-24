@@ -44302,6 +44302,24 @@
     ]
   },
   {
+    "input": "350010000999999980",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "ecoscooting",
+      "aliexpress",
+      "bpost",
+      "gls-es"
+    ],
+    "preferred": [
+      "ecoscooting"
+    ],
+    "asked": [
+      "ecoscooting",
+      "aliexpress"
+    ]
+  },
+  {
     "input": "35007947741",
     "carrier": "unknown",
     "confidence": "low",
