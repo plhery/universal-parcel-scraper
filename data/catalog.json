@@ -38251,6 +38251,28 @@
       }
     ]
   },
+  "kargolife": {
+    "displayName": "Kargolife",
+    "color": "#2d86c7",
+    "aliases": [
+      "Kargo Life",
+      "KargoLife Lojistik"
+    ],
+    "countries": [
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Istanbul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "kargolife"
+    },
+    "canaryUrl": "https://kargolife.com/",
+    "trackingSearchUrl": "https://kargolife.com/index.php?url=kargolife/main",
+    "helpUrl": "https://kargolife.com/index.php?url=kargolife/contact",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kargoturk": {
     "displayName": "KargoTurk",
     "color": "#4d148c",
@@ -57093,6 +57115,36 @@
         "confidence": "high"
       }
     ]
+  },
+  "shipagent-in": {
+    "displayName": "ShipAgent",
+    "color": "#4f46e5",
+    "aliases": [
+      "Shipagent Express"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "shipagent-in",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.shipagent.in/track",
+    "trackingUrlTemplate": "https://www.shipagent.in/track/{trackingNumber}",
+    "trackingSearchUrl": "https://www.shipagent.in/track",
+    "linkRules": [
+      {
+        "domains": [
+          "shipagent.in",
+          "www.shipagent.in"
+        ],
+        "path": "^/track/([A-Za-z0-9]{6,40})/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "shipblu": {
     "displayName": "ShipBlu",

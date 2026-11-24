@@ -542,6 +542,7 @@ import { adapter as jumppointInternational } from '../carriers/jumppoint-interna
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
 import { adapter as justShipSg } from '../carriers/just-ship-sg/adapter.js';
 import { adapter as kLineRoro } from '../carriers/k-line-roro/adapter.js';
+import { adapter as kargolife } from '../carriers/kargolife/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
 import { adapter as kecEcommerce } from '../carriers/kec-ecommerce/adapter.js';
@@ -857,6 +858,7 @@ import { adapter as sfydExpress } from '../carriers/sfyd-express/adapter.js';
 import { adapter as shadowfax } from '../carriers/shadowfax/adapter.js';
 import { adapter as sheensync } from '../carriers/sheensync/adapter.js';
 import { adapter as shipa } from '../carriers/shipa/adapter.js';
+import { adapter as shipagentIn } from '../carriers/shipagent-in/adapter.js';
 import { adapter as shipblu } from '../carriers/shipblu/adapter.js';
 import { adapter as shipentegra } from '../carriers/shipentegra/adapter.js';
 import { adapter as shipgce } from '../carriers/shipgce/adapter.js';
@@ -1655,6 +1657,7 @@ export const REGISTRY: RegistryDefinition = {
     "junfeng-international": junfengInternational,
     "just-ship-sg": justShipSg,
     "k-line-roro": kLineRoro,
+    "kargolife": kargolife,
     "kargoturk": kargoturk,
     "kazpost": kazpost,
     "kec-ecommerce": kecEcommerce,
@@ -1970,6 +1973,7 @@ export const REGISTRY: RegistryDefinition = {
     "shadowfax": shadowfax,
     "sheensync": sheensync,
     "shipa": shipa,
+    "shipagent-in": shipagentIn,
     "shipblu": shipblu,
     "shipentegra": shipentegra,
     "shipgce": shipgce,
@@ -3225,6 +3229,7 @@ export const REGISTRY: RegistryDefinition = {
     "kakao-t-same-day": "universal",
     "kanga-services": "universal",
     "kargoist": "universal",
+    "kargolife": "kargolife",
     "kargoturk": "kargoturk",
     "kart2door": "universal",
     "kaukokiito": "universal",
@@ -3810,6 +3815,7 @@ export const REGISTRY: RegistryDefinition = {
     "sheensync": "sheensync",
     "shenghang": "universal",
     "shipa": "shipa",
+    "shipagent-in": "shipagent-in",
     "shipblu": "shipblu",
     "shipentegra": "shipentegra",
     "shipgce": "shipgce",

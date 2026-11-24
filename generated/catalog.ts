@@ -38255,6 +38255,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "kargolife": {
+    "displayName": "Kargolife",
+    "color": "#2d86c7",
+    "aliases": [
+      "Kargo Life",
+      "KargoLife Lojistik"
+    ],
+    "countries": [
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Istanbul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "kargolife"
+    },
+    "canaryUrl": "https://kargolife.com/",
+    "trackingSearchUrl": "https://kargolife.com/index.php?url=kargolife/main",
+    "helpUrl": "https://kargolife.com/index.php?url=kargolife/contact",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kargoturk": {
     "displayName": "KargoTurk",
     "color": "#4d148c",
@@ -57098,6 +57120,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "shipagent-in": {
+    "displayName": "ShipAgent",
+    "color": "#4f46e5",
+    "aliases": [
+      "Shipagent Express"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "shipagent-in",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.shipagent.in/track",
+    "trackingUrlTemplate": "https://www.shipagent.in/track/{trackingNumber}",
+    "trackingSearchUrl": "https://www.shipagent.in/track",
+    "linkRules": [
+      {
+        "domains": [
+          "shipagent.in",
+          "www.shipagent.in"
+        ],
+        "path": "^/track/([A-Za-z0-9]{6,40})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "shipblu": {
     "displayName": "ShipBlu",
     "color": "#1c5bfe",
@@ -72896,6 +72948,7 @@ export const CARRIER_IDS = [
   "kakao-t-same-day",
   "kanga-services",
   "kargoist",
+  "kargolife",
   "kargoturk",
   "kart2door",
   "kaukokiito",
@@ -73455,6 +73508,7 @@ export const CARRIER_IDS = [
   "sheensync",
   "shenghang",
   "shipa",
+  "shipagent-in",
   "shipblu",
   "shipentegra",
   "shipgce",
@@ -74949,6 +75003,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kakao-t-same-day": [],
   "kanga-services": [],
   "kargoist": ["kargoist-1"],
+  "kargolife": [],
   "kargoturk": [],
   "kart2door": [],
   "kaukokiito": [],
@@ -75508,6 +75563,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sheensync": [],
   "shenghang": [],
   "shipa": ["shipa-1"],
+  "shipagent-in": [],
   "shipblu": [],
   "shipentegra": ["shipentegra-1"],
   "shipgce": ["shipgce-1"],
