@@ -87,6 +87,9 @@ describe('UPU postal tracking', () => {
     expect(summer.events?.[1]).not.toHaveProperty('time');
     expect(parseUpuResponse(route([at('GBLALA', '2026-01-08T06:22:00')]), number).events?.[0]?.time).toBe('2026-01-08T06:22:00+00:00');
     expect(parseUpuResponse(route([at('HRZAGA', '2026-10-18T09:00:00', 'EMD')]), number).events?.[0]?.time).toBe('2026-10-18T09:00:00+02:00');
+    // Argentina's code is Arkansas's too; its offices keep Argentina's one clock.
+    expect(parseUpuResponse([{ ID: number, Events: [at('ARBUEA', '2026-09-12T23:15:00')], State: 3, OriginCountryCd: 'AR', DestinationCountryCd: 'AU' }],
+      number).events?.[0]?.time).toBe('2026-09-12T23:15:00-03:00');
     // An office in a country with several clocks, off the route, a name and a wall clock the zone skips keep only the wall clock.
     for (const [location, wall] of [['AUSYDB', '2026-10-08T05:46:00'], ['DEFRAA', '2026-10-17T03:36:00'], ['SYDNEY', '2026-10-17T03:36:00'],
       ['GBLALA', '2026-03-29T01:30:00']]) {

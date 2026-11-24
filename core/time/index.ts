@@ -206,9 +206,9 @@ const COUNTRY_ZONES: Record<string, string> = {
 };
 // Single-zone countries and territories whose code a US state, territory or Canadian province
 // also uses: "Phoenix, AZ" is in Arizona, so they are read by their name alone ("Azerbaijan").
-// Georgia's name is a state's too, so it has neither.
+// Georgia's name is a state's too, so it has neither. Argentina's zones have all kept -03:00 since 2009.
 const NAMED_COUNTRY_ZONES: Record<string, string> = {
-  AL: 'Europe/Tirane', AS: 'Pacific/Pago_Pago', AZ: 'Asia/Baku', GA: 'Africa/Libreville', GU: 'Pacific/Guam',
+  AL: 'Europe/Tirane', AR: 'America/Argentina/Buenos_Aires', AS: 'Pacific/Pago_Pago', AZ: 'Asia/Baku', GA: 'Africa/Libreville', GU: 'Pacific/Guam',
   KY: 'America/Cayman', LA: 'Asia/Vientiane', MA: 'Africa/Casablanca', MD: 'Europe/Chisinau', ME: 'Europe/Podgorica',
   MO: 'Asia/Macau', MP: 'Pacific/Saipan', MS: 'America/Montserrat', NC: 'Pacific/Noumea', NE: 'Africa/Niamey',
   NU: 'Pacific/Niue', PA: 'America/Panama', PE: 'America/Lima', PR: 'America/Puerto_Rico', SC: 'Indian/Mahe',
