@@ -1,8 +1,32 @@
 {
   "carrier": "codexpress",
   "entries": [
-    {"code": "Created", "wording": "Order received and dispatched from depot", "stage": "registered", "language": "en", "confirmedBy": "official-doc", "note": "From the tracker's own script; it labels this first event Dispatched."},
-    {"code": "Onboard", "wording": "Package picked up by courier", "stage": "out_for_delivery", "language": "en", "confirmedBy": "official-doc", "note": "From the tracker's own script; the driver has the parcel on board for same-day delivery."},
-    {"code": "Delivered", "wording": "Successfully delivered", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "From the tracker's own script."}
+    {
+      "code": "Created",
+      "wording": "Order received and dispatched from depot",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Locate2u wrote the parcel's record. The tracker's script labels it Dispatched and gives it this wording."
+    },
+    {
+      "code": "Onboard",
+      "wording": "Package picked up by courier",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The parcel went on board the driver's vehicle for its delivery run; the wording is the tracker script's."
+    },
+    {
+      "code": "Delivered",
+      "wording": "Successfully delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The wording is the tracker script's."
+    }
   ]
 }

@@ -1,5 +1,43 @@
 {
   "carrier": "codexpress",
-  "gap": "No public page shows a whole CODExpress tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "CODE012951468",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516085348/https://www.parcelpanel.com/couriers/cod-express/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ParcelPanel's CODExpress page published it as the courier's sample number to try. CODExpress's tracker answers it with a parcel created, put on board and delivered on one day."
+    },
+    {
+      "number": "CODE010988136",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260120184846/https://www.parcelpanel.com/couriers/cod-express/",
+        "date": "2026-01-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An earlier capture of ParcelPanel's CODExpress page published it as the sample number. CODExpress's tracker answers it with a parcel created in the evening and delivered the next day."
+    }
+  ]
 }

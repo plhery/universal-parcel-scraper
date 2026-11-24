@@ -6137,6 +6137,12 @@
     "reason": "Chinz's published shipment reference has a CR prefix and six digits. Detection suggests other carriers and does not offer Chinz."
   },
   {
+    "carrier": "codexpress",
+    "pattern": "^CODE\\d{9}$",
+    "kind": "open",
+    "reason": "Two ParcelPanel samples show CODExpress barcodes as CODE and nine digits, and the tracker's placeholder starts with CODE too. No rule offers CODExpress for the shape yet."
+  },
+  {
     "carrier": "cope-sensitive-freight",
     "pattern": "^BRU\\d{7}$",
     "kind": "open",

@@ -18,18 +18,44 @@
   "timezone": "Australia/Sydney",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "codexpress",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "searchUrl": "https://cbd-tracking.locate2u.com/",
     "helpUrl": "https://www.codexpress.com.au/#/support",
     "canaryUrl": "https://cbd-tracking.locate2u.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "map"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "map"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "offset_timestamps",
+      "service_name",
+      "weight",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []
