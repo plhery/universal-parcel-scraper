@@ -2483,6 +2483,25 @@ describe('ParcelsApp result parsing', () => {
       .toEqual(['2026-11-17T14:10:12.000Z', 'America/Toronto']);
     // Another country's code places nothing.
     expect(read('US', scan('2026-11-17T09:10:12Z', 'Start Customs Clearence', 0, 'EXAMPLE TOWN NORTH SAXONY DE'))?.[0]?.[2]).not.toMatch(/^America\//);
+    // Its scans with no place at the airport the flight lands at are on its placed clearance's clock.
+    const airport = (clearance: string) => [
+      scan('2026-11-19T01:36:00Z', 'Delivered to local carrier', 0, ''),
+      scan('2026-11-18T18:50:00Z', 'International flight has arrived', 0, ''),
+      scan('2026-11-18T18:46:00Z', 'Collected at Cargo Terminal', 0, ''),
+      scan('2026-11-18T09:03:00Z', 'Customs released - Import', 0, ''),
+      scan('2026-11-17T20:12:12Z', 'Start Customs Clearence', 0, clearance),
+      scan('2026-11-16T00:54:21Z', 'Arrived at the origin international airport', 0, 'Example City, People\'s Republic of China'),
+    ];
+    expect(read('US', ...airport('EXAMPLE CITY TEXAS US'))?.map(([, time, zone]) => [time, zone])).toEqual([
+      ['2026-11-19T07:36:00.000Z', 'America/Chicago'],
+      ['2026-11-19T00:50:00.000Z', 'America/Chicago'],
+      ['2026-11-19T00:46:00.000Z', 'America/Chicago'],
+      ['2026-11-18T15:03:00.000Z', 'America/Chicago'],
+      ['2026-11-18T02:12:12.000Z', 'America/Chicago'],
+      ['2026-11-15T16:54:21.000Z', 'Asia/Shanghai'],
+    ]);
+    // Without a placed clearance they keep their label.
+    expect(read('US', ...airport(''))?.slice(0, 4).map(([, , zone]) => zone)).toEqual(['UTC', 'UTC', 'UTC', 'UTC']);
   });
 
   it('reads YunExpress\'s origin facility arrival as the acceptance when no pick-up came before it, as its own adapter does', () => {

@@ -773,7 +773,10 @@ step exists for future protocol changes.
   share it. Its scans at a place in a US state or a Canadian province are on that place's
   clock: USPS's facility on its copies of USPS's scans ("EXAMPLE CITY TX DISTRIBUTION CENTER"),
   six hours early as labeled, and a town, its state and the country's code with spaces alone
-  ("EXAMPLE CITY TEXAS US") on its own. In a
+  ("EXAMPLE CITY TEXAS US") on its own. Its scans with no place at the airport the flight
+  lands at there (the arrival, the import clearance, the cargo terminal's collection and the
+  hand-over to the last-mile carrier) take the clock of its clearance placed at a town, when
+  its placed clearance rows share one, as its own adapter dates them on that airport's. In a
   destination of several clocks outside North America, YunExpress writes a town, its state
   and the country's code with spaces alone ("EXAMPLE TOWN STATE AU"), on the town's clock,
   and gives its other scans there the same digits: its copy of Australia Post's receipt, at

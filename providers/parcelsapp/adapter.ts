@@ -55,7 +55,7 @@ import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
 import { destinationRelay, europeanAbroad, royalMailPartnerCountry, royalMailPartnerWall, royalMailRelayClock } from '../../carriers/royal-mail/clock.js';
 import { USPS_FACILITY_KIND, uspsScanZone } from '../../carriers/usps/clock.js';
-import { yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
+import { YUNEXPRESS_IMPORT_CUSTOMS, yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
 import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
@@ -2081,12 +2081,14 @@ function yunExpressRegionZone(location: string, inNorthAmerica: boolean, distrus
  * copy of Australia Post's receipt had Australia Post's own digits, eleven hours late as labeled.
  * Such a scan takes the zone of YunExpress's scans placed in the destination when they share one:
  * one at the country alone, or one with no place after the first of them. In the US and Canada its
- * scans with no place are its partners' on their facilities' clocks (`relayTwinZones`).
+ * other scans with no place are its partners' on their facilities' clocks (`relayTwinZones`), and
+ * only those at the airport the flight lands at take a zone (`yunExpressAirportZones`).
  */
-function yunExpressDestinationZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined }[],
+function yunExpressDestinationZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined; wording: string }[],
   zones: readonly { zone: string | null }[], destination: string | null): (string | null)[] {
   const none = items.map(() => null);
-  if (!destination || countryTimeZone(destination) || destination === 'US' || destination === 'CA') return none;
+  if (destination === 'US' || destination === 'CA') return yunExpressAirportZones(items, zones, destination);
+  if (!destination || countryTimeZone(destination)) return none;
   const yun = (name: unknown) => nameKey(name) === 'yunexpress';
   const placed = items.flatMap((item, index) => {
     const zone = zones[index]!.zone;
@@ -2102,6 +2104,34 @@ function yunExpressDestinationZones(items: readonly { name: unknown; date: unkno
     const location = item.location.trim();
     const wall = mislabeledWallTime(item.date) ?? '';
     return (location ? countryCode(location) === destination : Boolean(first && wall > first)) ? zone! : null;
+  });
+}
+
+// The flight's arrival, the import clearance (`YUNEXPRESS_IMPORT_CUSTOMS`), the cargo terminal's
+// collection and the hand-over to the last-mile carrier: YunExpress's scans at the arrival airport.
+const YUNEXPRESS_AIRPORT_LEG = /^(?:international flight has arrived|collected at cargo terminal|delivered to local carrier)$/;
+
+/**
+ * The clock of YunExpress's scans with no place at the airport its flight lands at in the US or
+ * Canada: that of its import clearance placed at a town there (`yunExpressRegionZone`), when its
+ * placed clearance rows share one zone. Its own adapter dates the arrival and the clearance on that
+ * airport's clock. The arrival, the clearance's completion, the release, the cargo terminal's
+ * collection and the hand-over to USPS came six hours early as labeled, beside its own tracker's
+ * copies on its clearance town's Central time.
+ */
+function yunExpressAirportZones(items: readonly { name: unknown; location: string; offset: string | null | undefined; wording: string }[],
+  zones: readonly { zone: string | null }[], destination: string): (string | null)[] {
+  const yun = (name: unknown) => nameKey(name) === 'yunexpress';
+  const words = (wording: string) => wording.replace(/\s+/g, ' ').trim().toLowerCase();
+  const cleared = new Set(items.flatMap((item, index) => {
+    const zone = zones[index]!.zone;
+    return yun(item.name) && item.location.trim() && zone && YUNEXPRESS_IMPORT_CUSTOMS.test(words(item.wording))
+      && (timeZoneCountry(zone) ?? STATE_ZONES.get(zone)) === destination ? [zone] : [];
+  }));
+  const [zone] = cleared.size === 1 ? [...cleared] : [];
+  return items.map((item, index) => {
+    const leg = YUNEXPRESS_AIRPORT_LEG.test(words(item.wording)) || YUNEXPRESS_IMPORT_CUSTOMS.test(words(item.wording));
+    return zone && yun(item.name) && leg && !item.location.trim() && !item.offset && !zones[index]!.zone ? zone : null;
   });
 }
 
