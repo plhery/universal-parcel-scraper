@@ -18,18 +18,53 @@
   "timezone": "America/Guayaquil",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "correos-ecuador",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
   "portal": {
     "searchUrl": "https://sipostal.serviciopostal.gob.ec/Navegacion/Tracking",
     "helpUrl": "https://www.serviciopostal.gob.ec/contactos/",
-    "canaryUrl": "https://www.serviciopostal.gob.ec/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "canaryUrl": "https://sipostal.serviciopostal.gob.ec/Navegacion/Tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "signatory",
+      "recipient_id",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "destination_country"
+    ],
+    "discarded": [
+      "signatory",
+      "recipient_id",
+      "remarks"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

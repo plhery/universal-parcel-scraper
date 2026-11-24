@@ -1,4 +1,15 @@
 {
   "carrier": "correos-ecuador",
-  "entries": []
+  "entries": [
+    {"wording": "Envío recibido del cliente", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "The sending post accepted the item; the scan names its country."},
+    {"wording": "Despachado a destino", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Dispatched toward its destination from the sending country."},
+    {"wording": "Paquete enviado a país destino", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Sent abroad to the destination country."},
+    {"wording": "Recibido Ecuador- inicio procesamiento", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Ecuador's office of exchange in Quito received the item from abroad and began processing it."},
+    {"wording": "Proceso de revisión aduana - importación - Otro", "stage": "customs", "language": "es", "confirmedBy": "live", "note": "Customs inspection of the import. The last part names the kind of check; the map reads every kind as customs."},
+    {"wording": "Salida de aduana - importación", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Customs released the import."},
+    {"wording": "Despachado a oficina Centro Clasificación Quito", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Dispatched to the office the wording names, here Quito's sorting centre; the scan's place is the office it left. The map reads every office alike, and the wording without one."},
+    {"wording": "Recibido en oficina", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "An office, named as the scan's place, received the item."},
+    {"wording": "Recibido en oficina de Distribución", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The delivering agency received the item."},
+    {"wording": "Entregado al cliente", "stage": "delivered", "language": "es", "confirmedBy": "live", "note": "Delivered. The tracker follows it with who took the item and their cédula, which the adapter drops and the map ignores."}
+  ]
 }

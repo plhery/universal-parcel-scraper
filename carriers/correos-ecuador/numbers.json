@@ -1,5 +1,24 @@
 {
   "carrier": "correos-ecuador",
-  "gap": "No public page shows a Servicios Postales del Ecuador number.",
-  "records": []
+  "records": [
+    {
+      "number": "CH166241282US",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251008094216/https://www.parcelpanel.com/couriers/correos-del-ecuador/",
+        "date": "2025-10-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "usps",
+        "confidence": "high"
+      },
+      "note": "An archived ParcelPanel Correos del Ecuador page offered it to try. Servicios Postales del Ecuador's tracker answers it with a USPS parcel that cleared customs in Quito and was delivered from one of its agencies."
+    }
+  ]
 }
