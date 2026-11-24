@@ -2383,6 +2383,12 @@
     "reason": "Janio's order-based numbers carry a merchant or service prefix and a destination country suffix, and each prefix has too few samples to show who issues it."
   },
   {
+    "carrier": "jcw-express",
+    "pattern": "^JCW[01]\\d{10}$",
+    "kind": "open",
+    "reason": "One ParcelPanel sample shows a JCW Express number as JCW and eleven digits, and the tracking page sends only numbers that start JCW0 or JCW1. No rule offers JCW Express for the shape yet."
+  },
+  {
     "carrier": "jeebly",
     "pattern": "^JBP?\\d{6}$",
     "kind": "by_design",

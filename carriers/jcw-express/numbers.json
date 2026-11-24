@@ -1,5 +1,24 @@
 {
   "carrier": "jcw-express",
-  "gap": "No public page shows a JCW Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "JCW00002276193",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251008092515id_/https://www.parcelpanel.com/couriers/jcwexpress/",
+        "date": "2025-10-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "ParcelPanel's JCW Express page published it as the courier's sample number to try. JCW's tracking endpoint now answers it with an empty list, as it answers a number it does not hold."
+    }
+  ]
 }

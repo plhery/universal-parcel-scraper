@@ -8,16 +8,18 @@ jcwexpress.com.
 
 ## Numbers
 
-Its tracking page sends only numbers that start `JCW0` or `JCW1`, five to fifty letters and digits long. No
-public page shows one, and the number of characters after the prefix is unknown, so there is no rule.
+Its tracking page sends only numbers that start `JCW0` or `JCW1`, five to fifty letters and digits long.
+ParcelPanel's archived JCW Express page shows one, JCW and eleven digits. One sample does not document the
+format, so there is no rule.
 
 ## Why there is no adapter
 
 Its tracking page posts the numbers to an open JSON endpoint behind Cloudflare, without a session or CAPTCHA:
 `POST jcwexpress.com/api/v1/public/tracking` with `{"tracks": "<numbers, comma-separated>"}`. An unknown
 number gets HTTP 200 with an empty `data` list. Its replies carry TrackingMore's field names and statuses, from
-a cache in front of an outside tracking service, so an adapter should first check what they add. No public
-number is known to see a found reply.
+a cache in front of an outside tracking service, so an adapter should first check what they add. The
+ParcelPanel sample gets the same empty list as a number JCW does not hold, so no found reply has been seen, and
+an empty list does not tell an expired number from an unknown one.
 
 ## Links
 
