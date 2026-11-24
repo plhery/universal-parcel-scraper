@@ -500,3 +500,9 @@ pause, solves it by audio, and sends the form. Only that main-frame POST, with t
 one token, goes out, once. The reply does not repeat the code. The helper returns its outcome and
 each scan's country, event, wall clock, office and non-delivery details; the signatory, next
 office, token, cookies and page HTML stay in the context.
+
+moc.gov.kw sends its certificate without the DigiCert intermediate that signs it, and Firefox
+does not fetch a missing intermediate, so the browser cannot open the site itself. The helper
+relays the site's own requests over Node's TLS with the system roots and that intermediate,
+which it bundles; reCAPTCHA and other hosts load directly. The relay keeps the page's cookies,
+refuses redirects and images, and caps each response.

@@ -12,7 +12,8 @@ and sends the form ([helper](../../trawl/kuwait-post-browser.mjs)). The checkbox
 without a picture; the service's audio solver is the fallback. The form posts the code and the
 checkbox's token to a Next.js server action at the page's own address, whose id changes with
 each deployment of the site, so the page sends its own. The helper binds that one request to the
-whole code and returns the reply's outcome and scans. The token stays in the browser.
+whole code and returns the reply's outcome and scans. The token stays in the browser. The site
+omits its certificate's intermediate, so the helper relays the site's own requests with it.
 
 ## Notes
 
@@ -28,8 +29,9 @@ whole code and returns the reply's outcome and scans. The token stays in the bro
 
 ## Limitations
 
-Without the browser service there is no lookup. The reply has no ETA, weight, sender or
-recipient.
+Without the browser service there is no lookup. Google refuses the reCAPTCHA's audio from
+addresses it marks as automated, and the checkbox then asks for pictures, so a browser service on
+such an address gets a challenge. The reply has no ETA, weight, sender or recipient.
 
 ## Numbers
 
