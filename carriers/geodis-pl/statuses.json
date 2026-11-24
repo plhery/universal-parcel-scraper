@@ -23,6 +23,7 @@
     {"code": "400", "wording": "Request for Return", "language": "en", "stage": "exception", "confirmedBy": "portal", "note": "A return instruction: on its way back, not yet returned."},
     {"code": "450", "wording": "Awaiting designation of new delivery date", "language": "en", "stage": "in_transit", "confirmedBy": "portal", "note": "Waiting for a new delivery date."},
     {"code": "500", "wording": "Claim Received", "language": "en", "confirmedBy": "portal", "note": "A claim filed with the carrier, not a movement: the shipment keeps the stage it had."},
+    {"wording": "Transferred Data", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The search summary's status of a shipment whose data the sender transferred, while its history holds no scan."},
     {"code": "10", "wording": "Odebrana od nadawcy", "language": "pl", "stage": "accepted", "confirmedBy": "live", "note": "The Polish page's label for each code; the adapter reads the English page."},
     {"code": "15", "wording": "Odebrana (SMS)", "language": "pl", "stage": "accepted", "confirmedBy": "portal"},
     {"code": "14", "wording": "Nieodebrana (SMS)", "language": "pl", "stage": "exception", "confirmedBy": "portal"},

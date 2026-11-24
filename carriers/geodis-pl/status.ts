@@ -1,5 +1,5 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /**
  * The scan codes of the tracker's history, with the English label its page
@@ -68,6 +68,20 @@ export const GEODIS_PL_CANCELLED = new Set(['100', '400', '500']);
 /** A claim filed with the carrier: a record about the shipment, not a movement. */
 export const GEODIS_PL_CLAIM = '500';
 
+/**
+ * The search summary's status of a shipment whose history holds no scans,
+ * mapped whole; another status goes to the shared wording rules.
+ */
+const SUMMARY: ReadonlyMap<string, Stage> = new Map([
+  // The sender transferred the shipment's data; GEODIS has not scanned it yet.
+  [normalizeStatusWording('Transferred Data'), 'registered'],
+]);
+
+/** The stage the search summary's status gives a shipment without scans, if mapped. */
+export function geodisPlSummaryStage(status: string): Stage | undefined {
+  return SUMMARY.get(normalizeStatusWording(status));
+}
+
 /** The stage a scan code gives, if any. */
 export function geodisPlCodeStage(code: string): Stage | undefined {
   return CODES.get(code);
@@ -83,7 +97,7 @@ export function geodisPlStage(code: string, wording: string): ClassifiedWording 
 }
 
 export const statusMap: CarrierStatusMap = {
-  stage: (code) => (code ? CODES.get(code) : undefined),
+  stage: (code, wording) => (code ? CODES.get(code) : SUMMARY.get(wording)),
   gaps: [
     { code: GEODIS_PL_CLAIM, note: 'A claim filed with the carrier, not a movement: the shipment keeps the stage it had.' },
     { code: GEODIS_PL_CANCEL, note: 'A bookkeeping row that cancels earlier delivery, return and claim scans; the adapter drops it with them.' },

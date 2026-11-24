@@ -8,7 +8,7 @@ import { zonedTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import {
-  GEODIS_PL_CANCEL, GEODIS_PL_CANCELLED, GEODIS_PL_CLAIM, GEODIS_PL_LABELS, geodisPlStage,
+  GEODIS_PL_CANCEL, GEODIS_PL_CANCELLED, GEODIS_PL_CLAIM, GEODIS_PL_LABELS, geodisPlStage, geodisPlSummaryStage,
 } from './status.js';
 
 export const PROVIDER = 'GEODIS Poland';
@@ -163,7 +163,8 @@ function projectRow(row: unknown): Scan {
 
 /** A shipment the search page knows but whose history holds no scans (yet). */
 function summaryOnly(summary: GeodisPlSummary): CarrierResult {
-  const worded = classifyWording(summary.status, 'registered');
+  const mapped = geodisPlSummaryStage(summary.status);
+  const worded = mapped ? { stage: mapped, source: 'carrier_map' as const } : classifyWording(summary.status, 'registered');
   return {
     status: languageStageStatus(worded.stage),
     current_stage: worded.stage,

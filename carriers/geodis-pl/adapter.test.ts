@@ -120,6 +120,9 @@ describe('GEODIS Poland HTTP adapter', () => {
         last_status_text: 'Shipment in Line-haul', status: 'in_transit', current_stage: 'in_transit', destination_country: 'DE' });
     }
     expect(JSON.parse(text('history-none.json'))).toBeNull();
+    // The status of a shipment whose data the sender transferred is mapped.
+    expect(parseGeodisPlHistory(null, { ...summary, status: 'Transferred Data' }, LATER)).toMatchObject({ summary_only: true,
+      status: 'pending', current_stage: 'registered', current_stage_source: 'carrier_map' });
   });
 
   it('rejects a changed history', () => {
@@ -268,7 +271,7 @@ describe('GEODIS Poland status vocabulary', () => {
   it('records every code the map knows with the stage it gives, and the codes it leaves out on purpose', () => {
     for (const entry of statuses.entries) {
       const stage = 'stage' in entry ? entry.stage : undefined;
-      expect(statusMap.stage(entry.code, entry.wording.toLowerCase()), entry.wording).toBe(stage);
+      expect(statusMap.stage(entry.code ?? null, entry.wording.toLowerCase()), entry.wording).toBe(stage);
       if (!stage) {
         expect(statusMapAnswer({ carrier: 'geodis-pl', providerCode: entry.code, description: entry.wording }).kind, entry.wording).toBe('intentional_gap');
       }

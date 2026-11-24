@@ -38,7 +38,8 @@ the separate [`geodis`](../geodis/README.md) carrier.
   keeps the stage the shipment had. It never decides the status.
 - Identical rows, which a shipment of several items can repeat, become one scan. A scan dated
   over an hour after the read is held back.
-- A shipment without scans gives the summary's status alone.
+- A shipment without scans gives the summary's status alone. A status in the catalog is mapped
+  whole, such as the one for data the sender transferred; another goes to the shared wording rules.
 - The summary also shows terminals, dates, the shipment type and the item list. The adapter
   reads the status, the delivery country and the delivery postcode and town, which become the
   recipient's address. The remarks of the delivery that decides the status name who signed;
