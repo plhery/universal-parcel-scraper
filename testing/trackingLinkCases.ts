@@ -267,6 +267,16 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/portal\.vtfe\.com\.au\/Track\/VTFE\/ZZZ0000000000$/,
     marker: /Missing or incorrect tracking number|Consignment Details/,
     forwarding: { notFound: /Missing or incorrect tracking number/ } },
+  // Obibox's tracker repeats an unknown number beside its notice.
+  { carrier: 'obibox', number: 'ZZ00000000',
+    route: /^https:\/\/tracking\.obibox\.io\/ZZ00000000$/,
+    marker: /No tracking data found|Back to Search/ },
+  // Délivro's Dispatch Science page drops an unknown order id and shows a notice. The app renders
+  // it after its scripts load, which once took longer than the default ten seconds.
+  { carrier: 'delivro', number: 'DEL0000000',
+    route: /^https:\/\/delivro\.dsapp\.io\/customer\/DEL0000000$/,
+    marker: /Unable to find order|Track an order/, renderTimeoutMs: 20_000,
+    forwarding: { notFound: /Unable to find order/ } },
   { carrier: 'parcel-one', number: '4002109876543',
     route: /^https:\/\/parcel\.one\/(?:de|en)\/tracking\/\?trackno=4002109876543$/,
     marker: /Sendung verfolgen|Track (?:a |your )?shipment/i },
