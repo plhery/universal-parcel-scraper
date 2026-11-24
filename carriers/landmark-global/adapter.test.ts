@@ -140,6 +140,14 @@ describe('Landmark Global history', () => {
       expect(landmarkStatus(description), description).toBeUndefined();
     }
   });
+  it('reads the data upload as registered, the partner\'s first round as the round, and the hub and depot before it in transit', () => {
+    const cases: [string, string][] = [['Data upload, shipments not yet arrived at HUB', 'registered'], ['Grouped at Landmark facility', 'in_transit'],
+      ['Arrived last mile HUB', 'in_transit'], ['Arrived at Final Depot', 'in_transit'], ['Out for delivery - First Delivery Attempt', 'out_for_delivery']];
+    for (const [description, stage] of cases) {
+      expect(landmarkStatus(description)?.stage, description).toBe(stage);
+      expect(statusMapAnswer({ carrier: 'landmark-global', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage });
+    }
+  });
   it('maps deposit delivery explicitly without exposing the delivery permission', () => {
     const $ = load(fixture());
     const wording = 'Delivered - Delivery / deposit with non-recurring authority';

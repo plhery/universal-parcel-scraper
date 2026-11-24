@@ -12,8 +12,13 @@ const WORDINGS = new Map<string, ClassifiedStatus>([
   ['Delivered', { status: 'delivered', stage: 'delivered' }],
   ['Delivered - Delivery / deposit with non-recurring authority', { status: 'delivered', stage: 'delivered' }],
   ['Delivered to your community mailbox, parcel locker or apt./condo mailbox', { status: 'delivered', stage: 'delivered' }],
-  ...['Onboard for delivery', 'Item out for delivery', 'Out for Delivery'].map(wording => [wording, { status: 'out_for_delivery', stage: 'out_for_delivery' }] as [string, ClassifiedStatus]),
+  // The partner's first round, which the shared rules read as a failed attempt for its "Delivery Attempt": the failure,
+  // when there is one, is a later row.
+  ...['Onboard for delivery', 'Item out for delivery', 'Out for Delivery', 'Out for delivery - First Delivery Attempt']
+    .map(wording => [wording, { status: 'out_for_delivery', stage: 'out_for_delivery' }] as [string, ClassifiedStatus]),
   ['Shipment Data Uploaded', { status: 'pending', stage: 'registered' }],
+  // The data alone, at the minute of the upload, which the shared rules read as transit for its "arrived".
+  ['Data upload, shipments not yet arrived at HUB', { status: 'pending', stage: 'registered' }],
   ['Item arrival at collection point for pick-up', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
   ['Transmitted customs information', { status: 'in_transit', stage: 'customs' }],
   ...['Customs cleared', 'Item processed at facility', 'Item processed', 'Received in destination country',
@@ -35,7 +40,9 @@ const WORDINGS = new Map<string, ClassifiedStatus>([
     // The export from the sending country's office of exchange, after the crossing.
     'Departure from office of exchange',
     // The arrival in the destination country from the crossing, beside the destination post's own row.
-    'Arrival from abroad'].map(wording => [wording, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
+    'Arrival from abroad',
+    // Landmark's facility grouping the parcel after its processing, then the partner's hub and depot before its round.
+    'Grouped at Landmark facility', 'Arrived last mile HUB', 'Arrived at Final Depot'].map(wording => [wording, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
 ]);
 
 export function landmarkStatus(wording: string): ClassifiedStatus | undefined { return WORDINGS.get(palletKey(wording)); }

@@ -206,6 +206,46 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-23",
       "note": "The arrival in the destination country, days after the departure to it, at the minute of the destination post's own row saying the same."
+    },
+    {
+      "wording": "Data upload, shipments not yet arrived at HUB",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The parcel's data alone, at the minute of the upload, before Landmark's processing; the shared rules would read its \"arrived\" as transit."
+    },
+    {
+      "wording": "Grouped at Landmark facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Landmark's facility grouping the parcel, days after its processing and before its outgoing scan."
+    },
+    {
+      "wording": "Arrived last mile HUB",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The delivery partner's hub, at the minute of the partner's own receipt."
+    },
+    {
+      "wording": "Arrived at Final Depot",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The delivery partner's depot, before its round."
+    },
+    {
+      "wording": "Out for delivery - First Delivery Attempt",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The partner's first round, at the minute of its own out-for-delivery row; a failure is a later row. The shared rules would read \"Delivery Attempt\" as a failed attempt."
     }
   ]
 }
