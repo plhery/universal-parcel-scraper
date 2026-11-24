@@ -362,6 +362,14 @@
       "note": "Earlier trace pages: a parcel held until the sender says what to do, alone or after a refusal."
     },
     {
+      "wording": "necessite un complement d information",
+      "language": "fr",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "\"L'adresse de livraison nécessite un complément d'informations de la part de l'expéditeur\": the parcel waits until the sender completes the address. Substring match on the accent-free wording; the result status becomes exception."
+    },
+    {
       "wording": "prise de rendez vous necessaire",
       "language": "fr",
       "stage": "failed_attempt",
@@ -464,6 +472,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-17",
       "note": "\"Les instructions de livraison ont bien été prises en compte. Le destinataire a programmé une nouvelle livraison à son adresse pour le <day>\": the recipient booked a new day, which is read as the expected delivery while the booking is the newest recognized row."
+    },
+    {
+      "wording": "adresse de livraison a ete completee ou modifiee",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "\"Les instructions de livraison ont bien été prises en compte. L'adresse de livraison a été complétée ou modifiée\": the address was put right, and the parcel waits in the network for its next round."
     },
     {"wording": "Votre colis est disponible au retrait dans votre agence DPD", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "live"},
     {

@@ -515,6 +515,13 @@ describe('DPD France status vocabulary', () => {
       .toEqual({ status: 'exception', stage: 'failed_attempt' });
   });
 
+  it('holds a parcel whose address the sender must complete, and moves it on once the address is put right', () => {
+    expect(classifyStatus("L'adresse de livraison nécessite un complément d'informations de la part de l'expéditeur"))
+      .toEqual({ status: 'exception', stage: 'exception' });
+    expect(classifyStatus("Les instructions de livraison ont bien été prises en compte. L'adresse de livraison a été complétée ou modifiée"))
+      .toEqual({ status: 'in_transit', stage: 'in_transit' });
+  });
+
   it('keeps the same-day delivery notices on the delivery round and gives acceptance notices no stage', () => {
     for (const channel of ['SMS', 'e-mail']) {
       expect(classifyStatus(`Le destinataire est informé par ${channel} de la livraison de son colis ce jour`))

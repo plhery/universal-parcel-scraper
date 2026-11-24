@@ -98,6 +98,9 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'refuse',
     'perdu',
     'en attente de vos instructions',
+    // "L'adresse de livraison nécessite un complément d'informations de la part de l'expéditeur": the parcel waits
+    // until the sender completes the address.
+    'necessite un complement d information',
   ])) return { status: 'exception', stage: 'exception' };
 
   if (includesAny(value, [
@@ -180,6 +183,9 @@ export function classifyStatus(description: string): ClassifiedStatus {
     // adapter reads as the expected delivery.
     'suite a une prise de rendez vous',
     'a programme une nouvelle livraison',
+    // "Les instructions de livraison ont bien été prises en compte. L'adresse de livraison a été complétée ou
+    // modifiée": the address was put right, and the parcel waits in the network for its next round.
+    'adresse de livraison a ete completee ou modifiee',
   ])) return { status: 'in_transit', stage: 'in_transit' };
 
   // Wording this map does not recognize keeps the row visible without claiming
