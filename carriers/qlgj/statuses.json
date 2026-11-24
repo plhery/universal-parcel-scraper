@@ -79,6 +79,14 @@
       "firstSeen": "2026-11-23"
     },
     {
+      "wording": "Arrived at … Airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The flight's landing, naming the airport, read as an ellipsis, after the take-off."
+    },
+    {
       "wording": "航班已抵达",
       "language": "zh",
       "english": "Flight arrived",
