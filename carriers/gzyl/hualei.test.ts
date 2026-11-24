@@ -376,6 +376,20 @@ describe('Hualei delivery partners', () => {
     expect(parseHualeiTrack(handedOver('DHL', DHL, 'IT'), NUMBER, GZYL, READ_AT)!.delivery_carrier).toBeUndefined();
   });
 
+  it('binds a lone record of the tenant’s own number to the partner’s number the interface found it by, on a tenant whose interface does', () => {
+    const DHL = 'CJ000000005DE';
+    const plain = { ...GZYL, ownNumber: /^GZTEST\d{8}$/, unlabelledPartners: ['dhl'] } as const;
+    const tenant = { ...plain, partnerNumbers: true } as const;
+    const result = parseHualeiTrack(fixture('track'), DHL, tenant, READ_AT)!;
+    expect(result).toMatchObject({ status: 'in_transit', delivery_carrier: 'dhl', canonical_tracking_number: NUMBER });
+    expect(result.delivery_tracking_number).toBeUndefined();
+    // Not on another tenant, for a number no partner of the tenant claims whole, nor for a record whose tracking number is not the tenant's.
+    for (const [asked, other] of [[DHL, plain], [DHL, { ...tenant, unlabelledPartners: ['swiss-post'] }], ['GZTEST00000009', tenant],
+      [DHL, { ...tenant, ownNumber: /^ZZ\d{10}CN$/ }]] as const) {
+      expect(() => parseHualeiTrack(fixture('track'), asked, other, READ_AT), asked).toThrow(IndeterminateError);
+    }
+  });
+
   it('takes a tracking number the line filled with the partner’s number as the hand-off, not as the order’s own', () => {
     const payload = edited((record) => {
       record.channel_name = '瑞士邮政';

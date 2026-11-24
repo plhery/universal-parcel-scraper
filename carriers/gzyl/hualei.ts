@@ -94,6 +94,13 @@ export interface HualeiTenant {
    */
   readonly ownNumber?: RegExp;
   /**
+   * The track interface also finds an order by its delivery carrier's number, which it returns in no
+   * field: a lone record that holds none of the number answers it when its tracking number is one of
+   * the tenant's own (`ownNumber`) and the number is the one the record's delivery carrier would take
+   * as a hand-off, from `unlabelledPartners`. That carrier then delivers the parcel under the number.
+   */
+  readonly partnerNumbers?: true;
+  /**
    * The tenant's scripts end in a delivery row the platform writes on its own day, in an evening
    * batch, rather than ahead: on a record with rows written ahead, a delivery row is the script's
    * too, and is held back and named with them. The page shows no creation times, so a delivery
@@ -603,6 +610,9 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
   const bound = records.filter((record) => IDENTITY_FIELDS.some((key) => identity(text(record, key, provider, 64)) === identity(number)));
   const own = (value: string) => Boolean(tenant.ownNumber?.test(value));
   const trackingOf = (record: JsonObject) => identity(text(record, 'trackingNumber', provider, 64));
+  const countryOf = (record: JsonObject) => text(record, 'consigneeCountry', provider, 8).toUpperCase();
+  // The delivery carrier's number the interface found a lone record by, when it returns it in no field.
+  let foundBy = '';
   if (!bound.length) {
     // The names of the fields that still carry the number, a list such as a child parcel's included, or eight
     // characters or more of it, never their values, tell a number the platform moved from another shipment or wrote
@@ -614,9 +624,15 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
     const whole = fields((value) => value.includes(identity(number)), true);
     const part = whole.length ? [] : fields((value) => value.length >= 8 && identity(number).includes(value));
     // A tenant's own number the record holds nowhere is the one the interface found it by, once the delivery
-    // carrier's number has taken its tracking number.
-    if (own(number) && records.length === 1 && !whole.length && !part.length && !own(trackingOf(records[0]!))) {
-      bound.push(records[0]!);
+    // carrier's number has taken its tracking number. On a tenant that finds orders by their delivery
+    // carrier's number too, so is that carrier's, beside the tenant's own tracking number.
+    const lone = records.length === 1 && !whole.length && !part.length ? records[0]! : undefined;
+    if (lone && own(number) && !own(trackingOf(lone))) {
+      bound.push(lone);
+    } else if (lone && tenant.partnerNumbers && own(trackingOf(lone))
+      && partnerOf(lone, countryOf(lone), tenant, identity(number))?.number === identity(number)) {
+      bound.push(lone);
+      foundBy = identity(number);
     } else {
       const shapes = whole.length || part.length ? [] : [...new Set(records.flatMap((record) => IDENTITY_FIELDS
         .map((key) => [key, text(record, key, provider, 64)] as const)
@@ -632,7 +648,7 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
   const record = bound[0]!;
   const details = record.trackDetails ?? [];
   if (!Array.isArray(details) || details.length > MAX_ROWS) throw new SchemaError(provider, `${provider} returned an invalid history`);
-  const destination = text(record, 'consigneeCountry', provider, 8).toUpperCase();
+  const destination = countryOf(record);
   const tracking = trackingOf(record);
   // On a tenant that names its own numbers, a tracking number of another shape is the delivery carrier's.
   const downstream = tenant.ownNumber && tracking && !own(tracking) ? tracking : '';
@@ -640,9 +656,10 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
   // Else the number the newest row that hands the parcel on names, the rows coming newest first.
   const handed = downstream || text(record, 'business_channeltransfercode', provider, 64) || !tenant.handOff ? ''
     : rows.map((row) => identity(tenant.handOff!(row.content) ?? '')).find((value) => value && value !== identity(number)) ?? '';
+  const onward = downstream || handed || foundBy;
   return result(rows, {
-    number, destination, partner: partnerOf(record, destination, tenant, downstream || handed),
-    tracking: downstream ? '' : tracking, ...(downstream || handed ? { downstream: downstream || handed } : {}),
+    number, destination, partner: partnerOf(record, destination, tenant, onward),
+    tracking: downstream ? '' : tracking, ...(onward ? { downstream: onward } : {}),
     service: hualeiServiceName(text(record, 'productKindName', provider, 100)) || undefined,
   }, tenant, readAt);
 }

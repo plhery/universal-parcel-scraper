@@ -949,6 +949,7 @@ import { statusMap as yypost } from '../../carriers/yypost/status.js';
 import { statusMap as zajil } from '../../carriers/zajil/status.js';
 import { statusMap as zeleris } from '../../carriers/zeleris/status.js';
 import { statusMap as zecheng } from '../../carriers/zecheng/status.js';
+import { statusMap as zhongzhouLogistics } from '../../carriers/zhongzhou-logistics/status.js';
 import { statusMap as zoomVe } from '../../carriers/zoom-ve/status.js';
 import { statusMap as zrExpress } from '../../carriers/zr-express/status.js';
 import { statusMap as fezDelivery } from '../../carriers/fez-delivery/status.js';
@@ -1290,7 +1291,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, viapost, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, 'vt-freight-express': vtFreightExpress, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, 'western-post': westernPost, whistl, 'whiz-delivery': whizDelivery, wiio, winit, 'wld-express': wldExpress, wooliiporter, 'x-express-rs': xExpressRs, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xingyunyi, xlcourier, 'xpo-ltl': xpoLtl, xpressbees, 'xyl-ships': xylShips,
   yalidine, yamato, yanwen, 'yaoqi-logistics': yaoqiLogistics, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, 'youbang-express': youbangExpress, yto, yunexpress, yunda, yusuda, 'yuxin-logistics': yuxinLogistics, ywbz, ywe, yypost, zto, 'zto-freight': ztoFreight, 'zto-international': ztoInternational,
-  'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
+  'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zhongzhou-logistics': zhongzhouLogistics, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
   'bob-go': bobGo, dypaq, navex,
   'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ots-astracon': otsAstracon,
   'cesco-logistics': cescoLogistics, 'rosalia-express': rosaliaExpress, 'icasa-cargo': icasaCargo, 'flow-progressive-logistics': flowProgressiveLogistics, parcelninja, cootranstame, paqmex, 'astral-aviation': astralAviation, 'ibex-express-bo': ibexExpressBo, redecarga, 'paqueteria-vencedor': paqueteriaVencedor,

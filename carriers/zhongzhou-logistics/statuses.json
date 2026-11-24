@@ -1,4 +1,31 @@
 {
   "carrier": "zhongzhou-logistics",
-  "entries": []
+  "entries": [
+    {"wording": "Your package is being prepared by the sender and will be handed over to us soon", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "GOFO's label row, copied once on Beijing's clock and once on GOFO's: the sender still has the parcel."},
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "Electronic information about the goods has been received", "stage": "registered", "confirmedBy": "live", "note": "The platform's order row; the tracker writes the English row beside it at the same clock."},
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "note": "The platform's first scan at the forwarder, shown in the English the platform's other tenants give it."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "english": "Goods leave the operation center", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Goods arrive at the receiving point at the Shenzhen warehouse", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's warehouse in Shenzhen taking the parcel in."},
+    {"wording": "The goods have been dispatched from the Shenzhen warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Domestic customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "China's export clearance done, before the flight: the parcel is not held."},
+    {"wording": "国内清关完成(Customs export clearance completed)", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The same export clearance in both languages."},
+    {"wording": "Handed over to airline.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "已交航(Package handed over to airline)", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "航班配载中(Loading in progress for flight)", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "预计…航班（Flight scheduled for …）", "language": "zh", "stage": null, "confirmedBy": "live", "note": "The flight booked for the parcel, its day as month.day and in English read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "航班延误至…号飞（The flight has been delayed until the …）", "language": "zh", "stage": null, "confirmedBy": "live", "note": "The booked flight put off to a later day, read as an ellipsis. No movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "航班已起飞,The flight has taken off from the origin", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "航班已起飞(Flight has taken off)", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "航班已抵达(Flight has arrived)", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "航班已到达,清关拆板中 The flight has arrived, customs clearance and unpacking are underway", "language": "zh", "stage": "customs", "confirmedBy": "live", "note": "Landed, with the import clearance under way."},
+    {"wording": "拆板提货中（Deconsolidation & Pickup in Progress）", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's pallets broken down and collected at the destination airport: not a collection by the recipient."},
+    {"code": "QGZ", "wording": "清关中/Customs clearance in progress", "language": "zh", "stage": "customs", "confirmedBy": "live", "note": "Import clearance at the destination."},
+    {"wording": "目的地清关中(Customs clearance in progress at destination)", "language": "zh", "stage": "customs", "confirmedBy": "live"},
+    {"wording": "国外清关完成(Customs import clearance completed)", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Released by the destination's customs."},
+    {"wording": "法国海关查验", "language": "zh", "english": "French Customs inspection", "stage": "customs", "confirmedBy": "live", "note": "French customs inspecting the parcel; the tracker writes the English row beside it at the same clock."},
+    {"wording": "French Customs inspection", "language": "en", "stage": "customs", "confirmedBy": "live"},
+    {"wording": "清关放行，待交仓(Customs cleared,pending handover to local carrier)", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Released by customs, waiting for the hand-over to the delivery carrier."},
+    {"wording": "货物已清关完成, Import customs clearance complete", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "已交服务商(Handed over to local agent)", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The hand-over to the delivery carrier in the destination country."}
+  ]
 }

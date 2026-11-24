@@ -19,16 +19,73 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "zhongzhou-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "destination_country",
+    "canonical_tracking_number",
+    "delivery_partner"
+  ],
   "portal": {
     "canaryUrl": "https://t.17track.net/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number",
+      "delivery_partner"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps",
+      "delivery_tracking_number"
+    ]
   },
   "links": [],
   "detection": []

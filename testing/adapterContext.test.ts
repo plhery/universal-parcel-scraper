@@ -140,6 +140,7 @@ const UNSAMPLED: Readonly<Record<string, readonly string[]>> = {
   'wp-ground': ['WPG0000000001'],
   'logistics-solution': ['LSX000000001'],
   'wangjing-3cq': ['888002000000001'],
+  'zhongzhou-logistics': ['ZZ0000000001CN'],
 };
 
 function credential(validator: string, number: string, carrier: string): string {
