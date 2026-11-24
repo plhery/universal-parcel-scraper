@@ -43494,12 +43494,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Amsterdam",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "max-pakket",
+      "requirements": [
+        {
+          "field": "trackingUrl",
+          "validator": "mendrixCapabilityUrl",
+          "optional": true,
+          "label": "MAX Pakket tracking link",
+          "type": "url",
+          "placeholder": "https://emens.mendrix.cloud/TrackAndTrace/tnt?Tracecode=MXTT…",
+          "help": "The track and trace link from the delivery email names the order the code belongs to. Without it, other sources are asked."
+        }
+      ]
     },
     "canaryUrl": "https://emens.mendrix.cloud/TrackAndTrace",
     "trackingSearchUrl": "https://emens.mendrix.cloud/TrackAndTrace",
     "helpUrl": "https://maxpakket.nl/contact/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "emens.mendrix.cloud"
+        ],
+        "pathPattern": "^/TrackAndTrace/tnt/?$",
+        "query": "^(?=(?:.*&)?orderid=[1-9]\\d{0,11}(?:&|$))(?:.*&)?tracecode=(MXTT[0-9A-F]{8,32})(?=&|$)",
+        "keepsCapabilityUrl": true
+      }
+    ],
     "detectionRules": []
   },
   "maxzeego": {
@@ -63733,7 +63753,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Sydney",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "top-logistics-au",
+      "localClocks": true
     },
     "canaryUrl": "https://toplogistics.com.au/",
     "trackingUrlTemplate": "https://toplogistics.com.au/?s={trackingNumber}",
@@ -65358,16 +65379,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Paris",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "trusk",
+      "requirements": [
+        {
+          "field": "trackingUrl",
+          "validator": "truskCapabilityUrl",
+          "optional": true,
+          "label": "Trusk order link",
+          "type": "url",
+          "placeholder": "https://track.trusk.com/…",
+          "help": "The order link from Trusk's message opens your delivery. Without it, other sources are asked."
+        }
+      ]
     },
     "canaryUrl": "https://track.trusk.com/",
-    "trackingUrlTemplate": "https://track.trusk.com/fr/{trackingNumber}",
     "linkRules": [
       {
         "domains": [
           "track.trusk.com"
         ],
-        "path": "^/[a-z]{2}/([^/?#]+)/?$"
+        "pathPattern": "^/(?:[a-z]{2}/)?[A-Za-z0-9_-]{6,32}/?$",
+        "path": "^/(?:[a-z]{2}/)?([A-Za-z0-9_-]{6,32})/?$",
+        "keepsCapabilityUrl": true
       }
     ],
     "detectionRules": []

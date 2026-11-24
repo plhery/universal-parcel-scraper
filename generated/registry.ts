@@ -646,6 +646,7 @@ import { adapter as marutiAir } from '../carriers/maruti-air/adapter.js';
 import { adapter as matkahuolto } from '../carriers/matkahuolto/adapter.js';
 import { adapter as matson } from '../carriers/matson/adapter.js';
 import { adapter as mauritiusPost } from '../carriers/mauritius-post/adapter.js';
+import { adapter as maxPakket } from '../carriers/max-pakket/adapter.js';
 import { adapter as mayiyinfu } from '../carriers/mayiyinfu/adapter.js';
 import { adapter as mbeEs } from '../carriers/mbe-es/adapter.js';
 import { adapter as mdsCollivery } from '../carriers/mds-collivery/adapter.js';
@@ -1003,6 +1004,7 @@ import { adapter as tntAu } from '../carriers/tnt-au/adapter.js';
 import { adapter as tntIt } from '../carriers/tnt-it/adapter.js';
 import { adapter as todayKr } from '../carriers/today-kr/adapter.js';
 import { adapter as tonami } from '../carriers/tonami/adapter.js';
+import { adapter as topLogisticsAu } from '../carriers/top-logistics-au/adapter.js';
 import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
 import { adapter as topparcel } from '../carriers/topparcel/adapter.js';
 import { adapter as toptrans } from '../carriers/toptrans/adapter.js';
@@ -1024,6 +1026,7 @@ import { adapter as transmission } from '../carriers/transmission/adapter.js';
 import { adapter as transportesChevalier } from '../carriers/transportes-chevalier/adapter.js';
 import { adapter as transportesRapex } from '../carriers/transportes-rapex/adapter.js';
 import { adapter as trendyolExpress } from '../carriers/trendyol-express/adapter.js';
+import { adapter as trusk } from '../carriers/trusk/adapter.js';
 import { adapter as tsLines } from '../carriers/ts-lines/adapter.js';
 import { adapter as tsbEs } from '../carriers/tsb-es/adapter.js';
 import { adapter as tsjy } from '../carriers/tsjy/adapter.js';
@@ -1791,6 +1794,7 @@ export const REGISTRY: RegistryDefinition = {
     "matkahuolto": matkahuolto,
     "matson": matson,
     "mauritius-post": mauritiusPost,
+    "max-pakket": maxPakket,
     "mayiyinfu": mayiyinfu,
     "mbe-es": mbeEs,
     "mds-collivery": mdsCollivery,
@@ -2148,6 +2152,7 @@ export const REGISTRY: RegistryDefinition = {
     "tnt-it": tntIt,
     "today-kr": todayKr,
     "tonami": tonami,
+    "top-logistics-au": topLogisticsAu,
     "topdelivery": topdelivery,
     "topparcel": topparcel,
     "toptrans": toptrans,
@@ -2169,6 +2174,7 @@ export const REGISTRY: RegistryDefinition = {
     "transportes-chevalier": transportesChevalier,
     "transportes-rapex": transportesRapex,
     "trendyol-express": trendyolExpress,
+    "trusk": trusk,
     "ts-lines": tsLines,
     "tsb-es": tsbEs,
     "tsjy": tsjy,
@@ -3447,7 +3453,7 @@ export const REGISTRY: RegistryDefinition = {
     "maty-express": "universal",
     "mauritius-post": "mauritius-post",
     "max-express-ae": "universal",
-    "max-pakket": "universal",
+    "max-pakket": "max-pakket",
     "maxzeego": "universal",
     "may-courier": "universal",
     "mayiyinfu": "mayiyinfu",
@@ -4073,7 +4079,7 @@ export const REGISTRY: RegistryDefinition = {
     "tonami": "tonami",
     "tonda-global": "universal",
     "too-express": "universal",
-    "top-logistics-au": "universal",
+    "top-logistics-au": "top-logistics-au",
     "topdelivery": "topdelivery",
     "topex-logistics": "universal",
     "topnic": "universal",
@@ -4124,7 +4130,7 @@ export const REGISTRY: RegistryDefinition = {
     "tromso-budbil-sentral": "universal",
     "trumpcard": "universal",
     "trunkrs": "universal",
-    "trusk": "universal",
+    "trusk": "trusk",
     "trustexpress": "universal",
     "ts-lines": "ts-lines",
     "tsb-es": "tsb-es",

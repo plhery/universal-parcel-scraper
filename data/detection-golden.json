@@ -105769,6 +105769,12 @@
     "candidates": []
   },
   {
+    "input": "MXTT88F27D091ABA1889",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "MY10002706",
     "carrier": "unknown",
     "confidence": "low",
@@ -107053,6 +107059,17 @@
     ],
     "asked": [
       "gls-it"
+    ]
+  },
+  {
+    "input": "O2AgL1Jhi6",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chit-chats"
+    ],
+    "asked": [
+      "chit-chats"
     ]
   },
   {
@@ -117384,6 +117401,19 @@
     "candidates": []
   },
   {
+    "input": "TPL600042194",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "purolator",
+      "tnt-au"
+    ],
+    "asked": [
+      "tnt-au",
+      "purolator"
+    ]
+  },
+  {
     "input": "TR005133118MT",
     "carrier": "unknown",
     "confidence": "none",
@@ -117607,6 +117637,12 @@
     "candidates": [
       "tusk-logistics"
     ]
+  },
+  {
+    "input": "TVb_j5l55P",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "TW240743518370H",
@@ -123132,6 +123168,17 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "f4JZFWKhwf",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chit-chats"
+    ],
+    "asked": [
+      "chit-chats"
+    ]
   },
   {
     "input": "fmpp3100284908",
