@@ -56,6 +56,7 @@
     {"wording": "Item outbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Item inbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Item has been collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The forwarder's pickup at CJ's warehouse."},
+    {"wording": "Parcel has been received and processed at original facility", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "TechLink's booking-in at its warehouse in China, relayed; TechLink's adapter reads its own copy the same way."},
     {"wording": "Pendiente de recepción en CTT Express", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "The destination courier's notice of the parcel coming, relayed while the forwarder still carries it."},
     {"wording": "Electronic notification of order creation received.", "stage": "registered", "language": "en", "confirmedBy": "live"},
     {"wording": "DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live"},

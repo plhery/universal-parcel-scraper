@@ -54,6 +54,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['parcel electronic information received', 'registered'],
   // The line's pickup at CJ's warehouse.
   ['item has been collected', 'accepted'],
+  // TechLink's booking-in at its warehouse in China, as TechLink's own map reads it.
+  ['parcel has been received and processed at original facility', 'accepted'],
   ['the flight has taken off from its origin', 'in_transit'],
   ['item flight landing', 'in_transit'],
   ['prepared for last mile handover', 'in_transit'],

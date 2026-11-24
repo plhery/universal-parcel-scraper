@@ -335,6 +335,11 @@ describe('CJ Packet status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'cj-packet', providerCode: null, description: 'Parcel electronic information received' }))
       .toEqual({ kind: 'mapped', stage: 'registered' });
+    // TechLink's booking-in, relayed, as TechLink reads it.
+    expect(statusMapAnswer({ carrier: 'cj-packet', providerCode: null, description: 'Parcel has been received and processed at original facility' }))
+      .toEqual({ kind: 'mapped', stage: 'accepted' });
+    expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'Warehousing_Received', description: 'Parcel has been received and processed at original facility' }))
+      .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'cj-packet', providerCode: '6', description: 'Unsuccessful Delivery' }))
       .toEqual({ kind: 'mapped', stage: 'exception' });
     expect(cjPacketStage('Synthetic note')).toBeNull();
