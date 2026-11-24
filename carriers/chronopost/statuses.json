@@ -138,6 +138,24 @@
       "language": "fr"
     },
     {
+      "code": "E",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The customs release under another code, a minute after the hub's transit scan and hours before ST repeats it.",
+      "wording": "Colis dédouané",
+      "language": "fr"
+    },
+    {
+      "code": "PE",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The courier's take-over under another code than PC, at the second of La Poste's PC1 for the same parcel.",
+      "wording": "Colis pris en charge par le transporteur",
+      "language": "fr"
+    },
+    {
       "code": "TS",
       "stage": "in_transit",
       "confirmedBy": "live",

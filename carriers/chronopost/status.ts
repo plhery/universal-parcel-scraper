@@ -18,6 +18,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['DV', 'Colis déposé en point de vente Chronopost', 'accepted'],
   // The courier takes over a parcel dropped at a pickup point, right after the point hands it over.
   ['PC', 'Colis pris en charge par le transporteur', 'accepted'],
+  // The same take-over under another code, at the second of La Poste's PC1 for that parcel.
+  ['PE', 'Colis pris en charge par le transporteur', 'accepted'],
   // The first depot's sort, under either code, as it takes the parcel over.
   ['SC', "Tri effectué dans l'agence de départ", 'in_transit'],
   ['EC', "Tri effectué dans l'agence de départ", 'in_transit'],
@@ -25,6 +27,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['EE', "Colis en cours de traitement dans l'agence export", 'in_transit'],
   ['TS', 'Colis en transit', 'in_transit'],
   ['ST', 'Colis dédouané', 'in_transit'],
+  // The same release under another code, a minute after the hub's transit scan, before ST repeats it.
+  ['E', 'Colis dédouané', 'in_transit'],
   ['TS', "Colis en cours d'acheminement", 'in_transit'],
   ['O', "Colis en cours d'acheminement", 'in_transit'],
   ['TP', "Colis en cours d'acheminement", 'in_transit'],
