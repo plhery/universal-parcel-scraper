@@ -1,9 +1,9 @@
 # TRAWL source
 
-The Dockerfile extends germondai/trawl at tag `v1.11.1`, commit
-`b48f1e8663bdd19878645648c25ef0ab99d0c5e0`, with the image digest pinned in [Dockerfile](Dockerfile).
-[Upstream source](https://github.com/germondai/trawl/tree/b48f1e8663bdd19878645648c25ef0ab99d0c5e0)
-and [source archive](https://github.com/germondai/trawl/archive/b48f1e8663bdd19878645648c25ef0ab99d0c5e0.tar.gz).
+The Dockerfile extends germondai/trawl at tag `v1.12.0`, commit
+`99f90c9a14d9730658f4c51f14ce7503c4c18523`, with the image digest pinned in [Dockerfile](Dockerfile).
+[Upstream source](https://github.com/germondai/trawl/tree/99f90c9a14d9730658f4c51f14ce7503c4c18523)
+and [source archive](https://github.com/germondai/trawl/archive/99f90c9a14d9730658f4c51f14ce7503c4c18523.tar.gz).
 
 The patches, installation script and build instructions live in this folder and are distributed
 under [AGPL-3.0](LICENSE). Release builds attach the matching upstream and patch source archives.
