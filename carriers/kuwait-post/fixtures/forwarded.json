@@ -1,0 +1,90 @@
+{
+  "success": true,
+  "message": "",
+  "data": [
+    {
+      "COUNTRY": "CA",
+      "COUNTRY_NM": "Canada",
+      "EVENT_TYPE_CD": 1,
+      "EVENT_TYPE_NM": "Receive item from customer (Otb)",
+      "DEFAULT_EVENT_TYPE_NM": "Receive item from customer (Otb)",
+      "EVENT_LOCAL_DT": "2017-08-21 15:30:00.000",
+      "LOCATION": "M4J0A0",
+      "NON_DELIVERY_REASON_NM": null,
+      "NON_DELIVERY_MEASURE_NM": null,
+      "RETENTION_REASON_NM": null
+    },
+    {
+      "COUNTRY": "CA",
+      "COUNTRY_NM": "Canada",
+      "EVENT_TYPE_CD": 8,
+      "EVENT_TYPE_NM": "Insert item into bag (Otb)",
+      "DEFAULT_EVENT_TYPE_NM": "Insert item into bag (Otb)",
+      "EVENT_LOCAL_DT": "2017-08-23 10:53:00.000",
+      "LOCATION": "TORONTO-A",
+      "NON_DELIVERY_REASON_NM": null,
+      "NON_DELIVERY_MEASURE_NM": null,
+      "RETENTION_REASON_NM": null
+    },
+    {
+      "COUNTRY": "CA",
+      "COUNTRY_NM": "Canada",
+      "EVENT_TYPE_CD": 12,
+      "EVENT_TYPE_NM": "Send item abroad (EDI-received)",
+      "DEFAULT_EVENT_TYPE_NM": "Send item abroad (EDI-received)",
+      "EVENT_LOCAL_DT": "2017-08-23 17:10:00.000",
+      "LOCATION": "TORONTO-A",
+      "NON_DELIVERY_REASON_NM": null,
+      "NON_DELIVERY_MEASURE_NM": null,
+      "RETENTION_REASON_NM": null
+    },
+    {
+      "COUNTRY": "KW",
+      "COUNTRY_NM": "Kuwait",
+      "EVENT_TYPE_CD": 30,
+      "EVENT_TYPE_NM": "Receive item at office of exchange (Inb)",
+      "DEFAULT_EVENT_TYPE_NM": "Receive item at office of exchange (Inb)",
+      "EVENT_LOCAL_DT": "2017-09-06 10:13:36.070",
+      "LOCATION": "PARCEL OFFICE OF EXCHANGE",
+      "NON_DELIVERY_REASON_NM": null,
+      "NON_DELIVERY_MEASURE_NM": null,
+      "RETENTION_REASON_NM": null
+    },
+    {
+      "COUNTRY": "KW",
+      "COUNTRY_NM": "Kuwait",
+      "EVENT_TYPE_CD": 3,
+      "EVENT_TYPE_NM": "Receive item at office of exchange (Otb)",
+      "DEFAULT_EVENT_TYPE_NM": "Receive item at office of exchange (Otb)",
+      "EVENT_LOCAL_DT": "2018-07-26 10:54:46.347",
+      "LOCATION": "PARCEL OFFICE OF EXCHANGE",
+      "NON_DELIVERY_REASON_NM": null,
+      "NON_DELIVERY_MEASURE_NM": null,
+      "RETENTION_REASON_NM": null
+    },
+    {
+      "COUNTRY": "KW",
+      "COUNTRY_NM": "Kuwait",
+      "EVENT_TYPE_CD": 8,
+      "EVENT_TYPE_NM": "Insert item into bag (Otb)",
+      "DEFAULT_EVENT_TYPE_NM": "Insert item into bag (Otb)",
+      "EVENT_LOCAL_DT": "2018-07-26 11:02:55.987",
+      "LOCATION": "PARCEL OFFICE OF EXCHANGE",
+      "NON_DELIVERY_REASON_NM": null,
+      "NON_DELIVERY_MEASURE_NM": null,
+      "RETENTION_REASON_NM": null
+    },
+    {
+      "COUNTRY": "CH",
+      "COUNTRY_NM": "Switzerland",
+      "EVENT_TYPE_CD": 30,
+      "EVENT_TYPE_NM": "Receive item at office of exchange (Inb)",
+      "DEFAULT_EVENT_TYPE_NM": "Receive item at office of exchange (Inb)",
+      "EVENT_LOCAL_DT": "2018-08-06 06:56:00.000",
+      "LOCATION": "ZURICH-URDORF",
+      "NON_DELIVERY_REASON_NM": null,
+      "NON_DELIVERY_MEASURE_NM": null,
+      "RETENTION_REASON_NM": null
+    }
+  ]
+}

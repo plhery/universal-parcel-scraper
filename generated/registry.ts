@@ -571,6 +571,7 @@ import { adapter as kuayuanExpress } from '../carriers/kuayuan-express/adapter.j
 import { adapter as kuehneNagel } from '../carriers/kuehne-nagel/adapter.js';
 import { adapter as kunExpress } from '../carriers/kun-express/adapter.js';
 import { adapter as kunyoung } from '../carriers/kunyoung/adapter.js';
+import { adapter as kuwaitPost } from '../carriers/kuwait-post/adapter.js';
 import { adapter as kyoungdong } from '../carriers/kyoungdong/adapter.js';
 import { adapter as kyrgyzPost } from '../carriers/kyrgyz-post/adapter.js';
 import { adapter as lPost } from '../carriers/l-post/adapter.js';
@@ -1704,6 +1705,7 @@ export const REGISTRY: RegistryDefinition = {
     "kuehne-nagel": kuehneNagel,
     "kun-express": kunExpress,
     "kunyoung": kunyoung,
+    "kuwait-post": kuwaitPost,
     "kyoungdong": kyoungdong,
     "kyrgyz-post": kyrgyzPost,
     "l-post": lPost,
@@ -3310,7 +3312,7 @@ export const REGISTRY: RegistryDefinition = {
     "kurer-as": "universal",
     "kurierzentrale": "universal",
     "kurly-nextmile": "universal",
-    "kuwait-post": "universal",
+    "kuwait-post": "kuwait-post",
     "kwick-box": "universal",
     "kyoungdong": "kyoungdong",
     "kyrgyz-express-post": "universal",

@@ -14,18 +14,60 @@
   "timezone": "Asia/Kuwait",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "kuwait-post",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true,
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 60
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
   "portal": {
     "searchUrl": "https://moc.gov.kw/en/shipment-tracking",
     "helpUrl": "https://moc.gov.kw/en/contact-us",
     "canaryUrl": "https://moc.gov.kw/en/shipment-tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "event_details",
+      "next_office",
+      "item_category",
+      "item_condition",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "event_details",
+      "scan_times",
+      "destination_country"
+    ],
+    "discarded": [
+      "next_office",
+      "item_category",
+      "item_condition",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
   "links": [],
   "detection": []

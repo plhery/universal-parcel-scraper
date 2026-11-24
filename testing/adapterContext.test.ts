@@ -91,6 +91,7 @@ const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   'turkon-line': ['service'],
   'hapag-lloyd': ['service'],
   'biman-bangladesh': ['service'],
+  'kuwait-post': ['service'],
   'onlog-express': ['service'],
   'jumppoint-international': ['service'],
   'flash-courier': ['service'],

@@ -39746,7 +39746,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kuwait",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "kuwait-post",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 60
+      },
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://moc.gov.kw/en/shipment-tracking",
     "trackingSearchUrl": "https://moc.gov.kw/en/shipment-tracking",
