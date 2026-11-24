@@ -37969,7 +37969,8 @@
     "timezone": "Asia/Manila",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jrs-express",
+      "localClocks": true
     },
     "canaryUrl": "https://jrs-express.com/track",
     "trackingUrlTemplate": "https://jrs-express.com/track?or={trackingNumber}",

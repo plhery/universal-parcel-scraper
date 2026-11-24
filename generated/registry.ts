@@ -543,6 +543,7 @@ import { adapter as jingguangLogistics } from '../carriers/jingguang-logistics/a
 import { adapter as jitsu } from '../carriers/jitsu/adapter.js';
 import { adapter as jne } from '../carriers/jne/adapter.js';
 import { adapter as jordanPost } from '../carriers/jordan-post/adapter.js';
+import { adapter as jrsExpress } from '../carriers/jrs-express/adapter.js';
 import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
 import { adapter as jtlExpressId } from '../carriers/jtl-express-id/adapter.js';
@@ -1675,6 +1676,7 @@ export const REGISTRY: RegistryDefinition = {
     "jitsu": jitsu,
     "jne": jne,
     "jordan-post": jordanPost,
+    "jrs-express": jrsExpress,
     "jrt": jrt,
     "js-express": jsExpress,
     "jtl-express-id": jtlExpressId,
@@ -3253,7 +3255,7 @@ export const REGISTRY: RegistryDefinition = {
     "jordan-post": "jordan-post",
     "jp-home": "universal",
     "jp-logistics": "universal",
-    "jrs-express": "universal",
+    "jrs-express": "jrs-express",
     "jrt": "jrt",
     "js-express": "js-express",
     "jtl-express-id": "jtl-express-id",

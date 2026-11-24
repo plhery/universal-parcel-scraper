@@ -37973,7 +37973,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Manila",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jrs-express",
+      "localClocks": true
     },
     "canaryUrl": "https://jrs-express.com/track",
     "trackingUrlTemplate": "https://jrs-express.com/track?or={trackingNumber}",
