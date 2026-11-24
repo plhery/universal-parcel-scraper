@@ -1,4 +1,16 @@
 {
   "carrier": "urbano-ar",
-  "entries": []
+  "entries": [
+    {"code": "AS", "wording": "Su envio esta en viaje a sucursal", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel is on its way to the delivering branch."},
+    {"code": "AR", "wording": "Su envio llego a la sucursal de destino", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel reached the delivering branch."},
+    {"code": "LD", "wording": "Su envio esta en camino", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The branch loaded the parcel for its round; the delivery or a missed attempt follows the same day."},
+    {"code": "CA", "wording": "No encontramos a nadie en el domicilio", "stage": "failed_attempt", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Nobody was home; another round follows."},
+    {"code": "VN", "wording": "No responde", "stage": "failed_attempt", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The recipient did not answer at the door."},
+    {"code": "EI", "wording": "El chofer informo la entrega de su envio", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The driver reported the delivery; Su envio fue entregado follows in the same minute."},
+    {"code": "DL", "wording": "Su envio fue entregado", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Delivered."},
+    {"code": "DV", "wording": "El envió será devuelto al remitente por devolución al cliente", "stage": "returned", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The parcel will go back to the sender; the wording ends with the reason, so the code sets the stage."},
+    {"code": "RV", "wording": "Devolucion en viaje a la casa central", "stage": "returned", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The returned parcel is on its way to Urbano's head office."},
+    {"code": "RM", "wording": "Rendido a Matriz", "stage": "returned", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The returned parcel was handed to the head office."},
+    {"code": "RC", "wording": "Conformes y devoluciones rendidos al remitente", "stage": "returned", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Returned parcels and delivery receipts were handed back to the sender."}
+  ]
 }

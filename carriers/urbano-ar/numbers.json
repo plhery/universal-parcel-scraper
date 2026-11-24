@@ -1,5 +1,74 @@
 {
   "carrier": "urbano-ar",
-  "gap": "No public page shows an Urbano Argentina number.",
-  "records": []
+  "records": [
+    {
+      "number": "22730000000043041054",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230509190121/https://apis.urbano.com.ar/cespecifica/?shi_codigo=002273&cli_codigo=0000000043041054&xbarra=1",
+        "date": "2023-05-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "An archived lookup on Urbano's own tracker, for shipper 2273 (Mercado Libre) and its code. The tracker still answers it as a parcel delivered by the Paraná branch, with its scans."
+    },
+    {
+      "number": "22730000000037355617",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221206134713/https://apis.urbano.com.ar/cespecifica/?shi_codigo=002273&cli_codigo=0000000037355617&xbarra=1",
+        "date": "2022-12-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "An archived lookup on Urbano's own tracker. The tracker still answers it as a parcel whose recipient did not answer, sent back to the shipper."
+    },
+    {
+      "number": "22730000000021371521",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20210813235512/https://apis.urbano.com.ar/cespecifica/?shi_codigo=002273&cli_codigo=0000000021371521&xbarra=1",
+        "date": "2021-08-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "An archived lookup on Urbano's own tracker. The tracker still answers it as a parcel delivered after a missed attempt."
+    }
+  ]
 }

@@ -4763,6 +4763,12 @@
     "reason": "Eight digits are shared by several carriers and nothing in the number points to Urbano."
   },
   {
+    "carrier": "urbano-ar",
+    "pattern": "^\\d{4}[0-9A-Z]{1,24}$",
+    "kind": "by_design",
+    "reason": "Urbano Argentina numbers are a shipper's four digits followed by a code of the shipper's own, a shape many carriers share, so no rule claims them."
+  },
+  {
     "carrier": "urvaam",
     "pattern": "^2[78]\\d{14}$",
     "kind": "by_design",
