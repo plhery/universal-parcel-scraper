@@ -99,7 +99,7 @@ function isReturnParcel(parcel: JsonObject): boolean {
 
 export function normalizeGLSSwitzerlandTrackingNumber(raw: string): string {
   const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  if (!/^(?:(?=[A-Z0-9]{8}$)(?=.*[A-Z])(?=.*\d)[A-Z0-9]{8}|[A-Z]{6}|\d{11,14})$/.test(value)) {
+  if (!/^(?:(?=[A-Z0-9]{8}$)(?=.*[A-Z])[A-Z0-9]{8}|[A-Z]{6}|\d{11,14})$/.test(value)) {
     throw new InvalidInputError('GLS', 'GLS tracking requires a Track ID of 8 characters or 6 letters, or an 11-to-14-digit parcel number');
   }
   return value;

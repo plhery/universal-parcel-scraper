@@ -153,6 +153,12 @@ describe('GLS Germany', () => {
     await expect(tracker.recognizes('AB12CD34')).resolves.toBe(true);
   });
 
+  it('recognizes a Track ID of eight letters, which GLS translates to its parcel number', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => Response.json({ tuStatus: [parcel()] }));
+    await expect(new GLSGermanyTracker({ fetcher }).recognizes('ABCDEFGH')).resolves.toBe(true);
+    expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('match')).toBe('ABCDEFGH');
+  });
+
   it('keeps the positional timeout the carrier-detection route passes', async () => {
     const tracker = new GLSGermanyTracker(5_000);
     expect(tracker.timeoutMs).toBe(5_000);

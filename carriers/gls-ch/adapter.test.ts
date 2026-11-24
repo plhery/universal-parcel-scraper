@@ -44,8 +44,9 @@ afterEach(() => vi.restoreAllMocks());
 describe('GLS Switzerland tracking input', () => {
   it('accepts official parcel and Track ID forms and builds public URLs', () => {
     expect(normalizeGLSSwitzerlandTrackingNumber('yz8y-o1.1k')).toBe(OFFICIAL_TEST_TRACK_ID);
-    // A notification card's Track ID can be six letters.
+    // A notification card's Track ID can be six letters, and an eight-character Track ID letters alone.
     expect(normalizeGLSSwitzerlandTrackingNumber('abcdef')).toBe('ABCDEF');
+    expect(normalizeGLSSwitzerlandTrackingNumber('abcd efgh')).toBe('ABCDEFGH');
     expect(normalizeGLSSwitzerlandTrackingNumber('99 999 999 9916'))
       .toBe(OFFICIAL_TEST_PARCEL_NUMBER);
     expect(normalizeGLSSwitzerlandPostcode(' 8000 ')).toBe('8000');
@@ -86,7 +87,6 @@ describe('GLS Switzerland tracking input', () => {
   it('rejects unsafe identifiers and non-Swiss postcodes', () => {
     for (const value of [
       'ABC1234',
-      'ABCDEFGH',
       '12345678',
       'ABC123456',
       '1234567890',
