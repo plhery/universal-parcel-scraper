@@ -1389,6 +1389,18 @@
     {"wording": "The flight arrives", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The landing in the destination country."},
     {"wording": "Customs clearance is completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The import cleared in the destination country, two days after the landing."},
     {"wording": "Received at office of exchange", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination post's office of exchange, after the import clearance: the way on, weeks after the warehouse accepted the parcel."},
-    {"wording": "Departed from office of exchange", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination post's office of exchange sending the parcel on to delivery."}
+    {"wording": "Departed from office of exchange", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination post's office of exchange sending the parcel on to delivery."},
+    {"wording": "Arrived at the receiving point", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The partner's receiving point in China, two days after the pick-up and minutes before the operation centre's departure."},
+    {"wording": "Arrived at XX CENTER", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The partner's hub in China, named by a two-letter code, after the operation centre's departure."},
+    {"wording": "Leaving the airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The flight's departure from China."},
+    {"wording": "Arriving at the destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The landing abroad, before the destination's customs."},
+    {"wording": "The customs clearance of the destination country has been completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Released by the destination's customs."},
+    {"wording": "Arriving at the transfer center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination's transfer centre, minutes after customs released the parcel."},
+    {"wording": "Parcel departed from Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's departure without a full stop, as its other lines can come."},
+    {"wording": "Parcel received by local Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's local facility without a full stop, the day before the round."},
+    {"wording": "Parcel is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's round."},
+    {"wording": "Parcel handed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The destination post handing the parcel on after its office of exchange, at the minute of the next partner's terminal arrival."},
+    {"wording": "The package has arrived at terminal (T1).", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The next partner's terminal, named by its number, at the minute of the hand-over."},
+    {"wording": "Delivered by Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The last mile's delivery to the letterbox; the line goes on with its delivery note and the carrier's contact details."}
   ]
 }

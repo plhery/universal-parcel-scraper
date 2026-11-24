@@ -18,8 +18,12 @@ const CODES: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => entr
   .map((entry) => [entry.code!, entry.stage as Stage]));
 const LABELS: ReadonlyMap<string, string> = new Map(ENTRIES.filter((entry) => entry.code && entry.wording)
   .map((entry) => [entry.code!, entry.wording!]));
+// Some lines close the same wording with a full stop ("Hand over to airline."), others not ("Parcel departed from
+// Facility"): the map compares scan wording without it.
+const CLOSING_STOP = /(?<!\.)\.$/;
+const unstopped = (wording: string): string => wording.replace(CLOSING_STOP, '');
 const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => !entry.code && entry.wording && entry.stage)
-  .map((entry) => [normalizeStatusWording(entry.wording!), entry.stage as Stage]));
+  .map((entry) => [unstopped(normalizeStatusWording(entry.wording!)), entry.stage as Stage]));
 
 /**
  * The flight booked for the parcel, before it flies: "Estimated time of take-off", "Scheduled flights", or
@@ -48,6 +52,11 @@ const PATTERNS: readonly [RegExp, Stage][] = [
   // The partner's sort and departure in China after its collection, naming the facility's town.
   [/^arrived at sort facility [a-z][a-z .-]{1,60}$/, 'in_transit'],
   [/^departed facility in [a-z][a-z .-]{1,60}$/, 'in_transit'],
+  // The partner's hub in China named by a two-letter code ("Arrived at XX CENTER"), and a terminal abroad by its number.
+  [/^arrived at [a-z]{2} center$/, 'in_transit'],
+  [/^the package has arrived at terminal \(t\d{1,2}\)\.?$/, 'in_transit'],
+  // A last mile's delivery to the letterbox, followed by its delivery note and its contact details.
+  [/^delivered by mailbox(?:, |$)/, 'delivered'],
   // The Italian last mile's return of a parcel it could not deliver, whatever the reason it names:
   // on its way back, not yet with the sender.
   [/^back to sender for reason: \S/, 'exception'],
@@ -72,19 +81,16 @@ const FEDEX_PLACE = /^[a-z][a-z .'-]{1,60}, [a-z]{2}, us, \d{5}(?:-\d{4})?, (pic
  * iMile's sentences read them.
  */
 function mappedStage(wording: string): Stage | undefined {
-  return WORDINGS.get(FEDEX_PLACE.exec(wording)?.[1] ?? wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? SUB_STATUS_NAMES.get(wording)
+  return WORDINGS.get(unstopped(FEDEX_PLACE.exec(wording)?.[1] ?? wording)) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? SUB_STATUS_NAMES.get(wording)
     ?? imileRelayedStage(wording) ?? relayedSentence(wording) ?? withoutCarrierNote(wording);
 }
 
 function withoutCarrierNote(wording: string): Stage | undefined {
-  const sentence = wording.replace(CARRIER_NOTE, '');
-  return WORDINGS.get(sentence) ?? WORDINGS.get(sentence.replace(CLOSING_STOP, ''));
+  return WORDINGS.get(unstopped(wording.replace(CARRIER_NOTE, '')));
 }
 
 // The last mile's own note appended to a scan: "Arrived at pick-up point. …, Carrier note: …".
 const CARRIER_NOTE = /, carrier note: .*$/;
-// Some lines close the same wording with a full stop: "Hand over to airline."
-const CLOSING_STOP = /(?<!\.)\.$/;
 
 // The French last mile's sentence, which Shouwu gives after the country's code and before its own Chinese
 // label: "FR, Votre envoi a été distribué dans la boîte à lettres.,签收…". The sentence alone is in the map.
@@ -92,7 +98,7 @@ const RELAYED_SENTENCE = /^[a-z]{2}, (.+?)(?:,[^,]*)?$/;
 
 function relayedSentence(wording: string): Stage | undefined {
   const sentence = RELAYED_SENTENCE.exec(wording)?.[1];
-  return sentence === undefined ? undefined : WORDINGS.get(sentence);
+  return sentence === undefined ? undefined : WORDINGS.get(unstopped(sentence));
 }
 
 // Rows that send the parcel back to its sender: DHL's "Shipment will be returned to origin-Bad address" and the

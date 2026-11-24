@@ -684,6 +684,14 @@ describe('Shouwu International status vocabulary', () => {
       expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }), wording).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
     expect(shouwuStage('预计航班')).toBeNull();
+    // A hub named by its code, a terminal by its number, and a letterbox delivery whatever note follows it; a line with
+    // or without its closing full stop.
+    for (const [wording, stage] of [['Arrived at AB CENTER', 'in_transit'], ['The package has arrived at terminal (T2).', 'in_transit'],
+      ['Delivered by Mailbox, Example note: No. If you have any questions, please contact the carrier', 'delivered'],
+      ['Parcel received by local Facility', 'in_transit'], ['Parcel departed from facility.', 'in_transit'],
+      ['Arrived at destination airport', 'in_transit']] as const) {
+      expect(shouwuStage(wording), wording).toEqual({ stage, source: 'carrier_map' });
+    }
     // The delivering partner's data row is no step back once the parcel moved.
     const late = readLateRegistrations({ status: 'in_transit', last_status_text: '', last_update: null, expected_delivery: null, events: [
       { time: '2026-01-02T22:49:56Z', description: '其他 | Client Order Shipped', stage: 'registered', stage_source: 'carrier_map' },
