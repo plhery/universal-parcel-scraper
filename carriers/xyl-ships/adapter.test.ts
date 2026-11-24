@@ -4,6 +4,8 @@ import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter } from './adapter.js';
 import { normalizeXylShipsNumber, parseXylShips } from './parser.js';
+import statuses from './statuses.json' with { type: 'json' };
+import { xylShipsStage } from './status.js';
 
 const NUMBER = 'NUDE9999999980EX';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/tracking.json', import.meta.url), 'utf8'));
@@ -77,6 +79,11 @@ describe('XYL-Ships tracker', () => {
     const fetcher = vi.fn(async () => new Response('refused', { status }));
     await expect(instance(fetcher).track({ number: NUMBER })).rejects.toMatchObject({ kind: status === 403 ? 'challenge' : status === 429 ? 'rate_limited' : status === 503 ? 'maintenance' : 'transport' });
     expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('maps every recorded wording, a customs hold at the border among them', () => {
+    for (const entry of statuses.entries) expect(xylShipsStage(null, entry.wording), entry.wording).toBe(entry.stage);
+    expect(xylShipsStage(null, 'Detained by customs officials')).toBe('customs');
   });
 
   it('keeps HTML challenges and malformed JSON distinct from absence', async () => {

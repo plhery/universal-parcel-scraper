@@ -11,6 +11,8 @@
     {"wording":"Arrival at transportation partner department, waiting for processing","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
     {"wording":"Transfer again, send to the transportation partner department","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
     {"wording":"Package is being transferred locally","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
+    {"wording":"Detained by customs officials","language":"en","stage":"customs","confirmedBy":"live","firstSeen":"2026-11-24","note":"Customs at the border holds the parcel, written again each day it stays held, before its release."},
+    {"wording":"Arrival at the entry customs checkpoint","language":"en","stage":"customs","confirmedBy":"live","firstSeen":"2026-11-24","note":"At the border customs of the country it goes to, after the departure from the origin transportation center."},
     {"wording":"Released and the package is being transferred","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
     {"wording":"Arrived at destination transportation center","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
     {"wording":"Departed from origin transportation center","language":"en","stage":"in_transit","confirmedBy":"live","firstSeen":"2026-11-17"},
