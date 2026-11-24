@@ -40,7 +40,9 @@ export function classifyWording(text: string, fallback: Stage = 'in_transit'): C
   const translated = trackingLanguageStage(text);
   if (translated) return matched(translated, 'language');
   // A delivery still to come is no movement; only the rest of the text counts.
-  const value = (deliveryForecastRemainder(text) ?? text).toLocaleLowerCase('en-US').replaceAll('_', ' ').trim().split(/\s+/).join(' ');
+  // A non-breaking hyphen (U+2011) or Unicode's own (U+2010) reads as an ASCII one.
+  const value = (deliveryForecastRemainder(text) ?? text).toLocaleLowerCase('en-US').replaceAll('_', ' ').replace(/[\u2010\u2011]/g, '-')
+    .trim().split(/\s+/).join(' ');
   if (value.includes('to be delivered')) return matched('in_transit', 'to_be_delivered');
   if (value === 'reported') return matched('registered', 'reported');
   if (['will shortly be handed over', 'shipment information received', 'electronic shipment information']

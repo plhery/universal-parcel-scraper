@@ -25,6 +25,12 @@ describe('classifyWording', () => {
     },
   );
 
+  it('reads a non-breaking or Unicode hyphen as an ASCII one', () => {
+    for (const wording of ['Awaiting pick-up', 'Parcel ready for pick-up at the post office', 'Out-for-delivery']) {
+      for (const hyphen of ['\u2010', '\u2011']) expect(classifyWording(wording.replaceAll('-', hyphen))).toEqual(classifyWording(wording));
+    }
+    expect(classifyWording('Awaiting pick\u2011up')).toEqual({ stage: 'ready_for_pickup', source: 'wording:language' });
+  });
   it('never reads a pickup that did not happen, or is still to come, as the acceptance', () => {
     for (const wording of ['Not picked up', 'Parcel not picked up by the recipient', "Parcel wasn't picked up",
       'The recipient has not picked up the shipment from the retail outlet within the seven-day storage period',

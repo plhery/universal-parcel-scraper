@@ -20,9 +20,10 @@ export function nonterminalEnglishReturn(description: string): boolean {
   return ENGLISH_RETURN_UNDER_WAY.test(text);
 }
 
+// Hyphens, dashes and underscores separate words alike: a non-breaking hyphen (U+2011) or Unicode's own (U+2010) as an ASCII one.
 function comparable(description: string): string {
   return description.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')
-    .replace(/[’‘]/g, "'").replace(/ł/g, 'l').replace(/[_–—-]/g, ' ').replace(/\s+/g, ' ').trim().replace(/[.!]+$/, '');
+    .replace(/[’‘]/g, "'").replace(/ł/g, 'l').replace(/[_–—\u2010\u2011-]/g, ' ').replace(/\s+/g, ' ').trim().replace(/[.!]+$/, '');
 }
 
 // One character of the same sentence: a dot inside a date or "a.m." does not end it.
