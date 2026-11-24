@@ -6023,6 +6023,10 @@
       {
         "pattern": "^AR\\d{10}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^JTC\\d{12}$",
+        "confidence": "low"
       }
     ]
   },
@@ -70526,6 +70530,10 @@
       },
       {
         "pattern": "^XLWL\\d{10}EXP?$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^FXLP\\d{10}DH$",
         "confidence": "high"
       }
     ]

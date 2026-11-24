@@ -41,6 +41,10 @@ a destination country's two letters and ten digits. Detection offers 360Lion for
 digits, the layout its parcels to Argentina carry, with a low rule that Aramex's two letters and
 ten digits share, and recognition asks the tracker. Other countries' letters stay unclaimed.
 
+Parcels to Colombia also carry JTC and twelve digits. The tracker answers some of them with its
+own scans and files others as not found, so a low rule offers 360Lion for the shape and
+recognition asks the tracker.
+
 ## Limitations
 
 The proof of delivery, the days in transit and the route rail's own position are never read,

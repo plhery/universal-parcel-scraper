@@ -58,6 +58,11 @@
       "id": "xyl-ships-2",
       "pattern": "^XLWL\\d{10}EXP?$",
       "confidence": "high"
+    },
+    {
+      "id": "xyl-ships-3",
+      "pattern": "^FXLP\\d{10}DH$",
+      "confidence": "high"
     }
   ]
 }

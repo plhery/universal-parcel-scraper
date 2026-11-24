@@ -6027,6 +6027,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^AR\\d{10}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^JTC\\d{12}$",
+        "confidence": "low"
       }
     ]
   },
@@ -70531,6 +70535,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^XLWL\\d{10}EXP?$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^FXLP\\d{10}DH$",
+        "confidence": "high"
       }
     ]
   },
@@ -74367,7 +74375,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "24curier": [],
   "2ebox": [],
   "2go": ["2go-1"],
-  "360lion": ["360lion-1","360lion-2"],
+  "360lion": ["360lion-1","360lion-2","360lion-3"],
   "360zebra": [],
   "3pe-express": [],
   "4-72": ["4-72-s10"],
@@ -76259,7 +76267,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xuchuan-logistics": ["xuchuan-logistics-1"],
   "xwwt": [],
   "xyl": [],
-  "xyl-ships": ["xyl-ships-1","xyl-ships-2"],
+  "xyl-ships": ["xyl-ships-1","xyl-ships-2","xyl-ships-3"],
   "yalidine": ["yalidine-1"],
   "yamato-america": [],
   "yandex-delivery": [],

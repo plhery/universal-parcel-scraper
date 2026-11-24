@@ -95996,6 +95996,14 @@
     ]
   },
   {
+    "input": "FXLP9999999980DH",
+    "carrier": "xyl-ships",
+    "confidence": "high",
+    "candidates": [
+      "xyl-ships"
+    ]
+  },
+  {
     "input": "FZ246006535JB",
     "carrier": "chronopost",
     "confidence": "high",
@@ -100974,6 +100982,17 @@
     "confidence": "high",
     "candidates": [
       "j-and-t-au"
+    ]
+  },
+  {
+    "input": "JTC999999999901",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "360lion"
+    ],
+    "asked": [
+      "360lion"
     ]
   },
   {

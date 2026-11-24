@@ -62,6 +62,21 @@
         ]
       },
       "note": "Made-up number in the shape of parcels for Argentina that the app tracked: AR and ten digits, which 360Lion's tracker answered with their scans. No public page shows a whole number in this shape. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "JTC999999999901",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-24",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "360lion"
+        ]
+      },
+      "note": "Made-up number in the shape of parcels for Colombia that the app tracked: JTC and twelve digits, which 360Lion's tracker answered for one parcel with its own scans and filed as not found for others. No public page shows a whole number in this shape. Its serial sits far beyond the range in use."
     }
   ]
 }

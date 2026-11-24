@@ -37,6 +37,18 @@
         "confidence": "high"
       },
       "note": "Made-up number in the shape of parcels the app tracked, XLWL, ten digits and EXP, which XYL-Ships's tracker answers with full histories."
+    },
+    {
+      "number": "FXLP9999999980DH",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-24",
+      "expect": {
+        "carrier": "xyl-ships",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of a parcel the app tracked, FXLP, ten digits and DH, which XYL-Ships's tracker answered with its history and 17TRACK filed under FXYL. Its serial sits far beyond the range in use."
     }
   ]
 }

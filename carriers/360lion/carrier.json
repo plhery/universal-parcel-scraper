@@ -112,6 +112,11 @@
       "id": "360lion-2",
       "pattern": "^AR\\d{10}$",
       "confidence": "low"
+    },
+    {
+      "id": "360lion-3",
+      "pattern": "^JTC\\d{12}$",
+      "confidence": "low"
     }
   ]
 }

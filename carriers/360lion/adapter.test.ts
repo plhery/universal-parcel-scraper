@@ -23,6 +23,16 @@ describe('360Lion numbers', () => {
     }
   });
 
+  it('suggests 360Lion for JTC and twelve digits and asks its tracker, and only for that whole shape', () => {
+    for (const number of ['JTC999999999901', 'jtc 999999999901']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['360lion'] });
+      for (const countryHint of [undefined, 'CO', 'CN']) expect(recognitionAskedCarriers(number, { countryHint }), `${number} ${countryHint}`).toContain('360lion');
+    }
+    for (const other of ['JTC99999999990', 'JTC9999999999012', 'JTE999999999901', 'JTCO999999999901', 'XJTC999999999901']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('360lion');
+    }
+  });
+
   it('recognizes a number its tracker lists with scans and not one it files as not found', async () => {
     const lookups = [response(changed(parcel => { parcel.hawbCode = 'AR0000000001'; })), response(missing('AR0000000002'))];
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => lookups.shift()!);

@@ -25,7 +25,9 @@ XYL-Ships publishes no number format and no public page shows one of its numbers
 of NUDE, ten digits and EX are its own: 17TRACK files their histories under FXYL, and no other
 carrier's rule takes the shape, so the rule has high confidence. Numbers of XLWL, ten digits and
 EX or EXP have the same layout, and XYL-Ships's tracker answers them with whole histories, so a
-second high rule takes them. The corpus holds synthetic ones.
+second high rule takes them. Numbers of FXLP, ten digits and DH get the same answers from its
+tracker, and 17TRACK files them under FXYL, so a third high rule takes them. The corpus holds
+synthetic ones.
 
 ## Limitations
 
