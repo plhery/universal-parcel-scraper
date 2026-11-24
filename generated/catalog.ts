@@ -8763,9 +8763,20 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://valls.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://valls.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://valls.factapp.es/IRIS/Seguimiento",
     "helpUrl": "https://www.altcampexpress.com/contacto/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "valls.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "altex-curier": {
@@ -27953,9 +27964,20 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://fiscourier.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
     "helpUrl": "https://fiscourier.com/contacto/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "fiscourier.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "flash-courier": {
@@ -38975,8 +38997,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://kilbourne.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://kilbourne.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://kilbourne.factapp.es/IRIS/Seguimiento",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "kilbourne.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "king-kong-express": {
@@ -41787,8 +41820,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://logisticaalatec.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://logisticaalatec.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://logisticaalatec.factapp.es/IRIS/Seguimiento",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "logisticaalatec.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "logistics-solution": {
@@ -42379,8 +42423,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://maam.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://maam.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://maam.factapp.es/IRIS/Seguimiento",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "maam.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "macau-post": {
@@ -45248,8 +45303,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://zaragoza.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://zaragoza.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://zaragoza.factapp.es/IRIS/Seguimiento",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "zaragoza.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "muser": {
@@ -48873,8 +48939,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://navarra.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://navarra.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://navarra.factapp.es/IRIS/Seguimiento",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "navarra.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "paqmex": {
@@ -54952,8 +55029,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://rojasexpress.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://rojasexpress.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://rojasexpress.factapp.es/IRIS/Seguimiento",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "rojasexpress.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "romocean": {
@@ -58404,8 +58492,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://alcorcon.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://alcorcon.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://alcorcon.factapp.es/IRIS/Seguimiento",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "alcorcon.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "siuntos-autobusais": {
@@ -64317,9 +64416,20 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
+    "trackingUrlTemplate": "https://trablisa.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "trackingSearchUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
     "helpUrl": "https://www.trablisa.es/area-negocio/trablisa-expres#datos-de-contacto",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "trablisa.factapp.es"
+        ],
+        "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "trackings-ge": {
