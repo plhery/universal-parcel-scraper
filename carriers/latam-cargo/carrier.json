@@ -23,17 +23,49 @@
   "timezone": "America/Santiago",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "latam-cargo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://www.latamcargo.com/en/trackshipment",
     "helpUrl": "https://www.latamcargo.com/en/customercare",
     "canaryUrl": "https://www.latamcargo.com/en/trackshipment",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule",
+      "estimated_delivery",
+      "recipient_name",
+      "documents"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule",
+      "estimated_delivery",
+      "recipient_name",
+      "documents"
+    ],
     "unavailable": []
   },
   "links": [],

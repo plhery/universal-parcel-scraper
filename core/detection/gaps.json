@@ -2625,6 +2625,12 @@
     "reason": "Merchant and shipper references that Landmark's tracking page resolves to a parcel. They are not specific to Landmark, so detection leaves them out; the adapter takes them when the user picks Landmark or opens a Landmark link."
   },
   {
+    "carrier": "latam-cargo",
+    "pattern": "^957\\d{8}$",
+    "kind": "by_design",
+    "reason": "LATAM Cargo's air waybills and Brazilian service orders are an airline prefix and eight digits ending in a mod-7 check digit, the format every airline's waybills share; detection keeps no air waybill rule. Select LATAM Cargo explicitly."
+  },
+  {
     "carrier": "last-one-mile-coop",
     "pattern": "^\\d{12}$",
     "kind": "collision",

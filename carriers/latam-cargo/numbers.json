@@ -1,5 +1,38 @@
 {
   "carrier": "latam-cargo",
-  "gap": "No public page shows a LATAM Cargo number.",
-  "records": []
+  "records": [
+    {
+      "number": "957-52555440",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://github.com/Laelmuller/painel/blob/main/index%20(1).html",
+        "date": "2025-07-14",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "LATAM Cargo Brazilian domestic service order",
+        "reportedRole": "A public dashboard page links LATAM Cargo's tracking page with this prefix and number as a domestic order.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "LATAM Cargo's tracker answers it as a domestic service order from São José dos Campos to Manaus, with its receipt, flights, an inspection release and its delivery."
+    }
+  ]
 }

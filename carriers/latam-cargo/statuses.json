@@ -1,4 +1,85 @@
 {
   "carrier": "latam-cargo",
-  "entries": []
+  "entries": [
+    {
+      "code": "BKD",
+      "wording": "Booking Confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "note": "The page's own markup shows a booking under this code."
+    },
+    {
+      "code": "RCS",
+      "wording": "Shipment Received",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "LATAM Cargo received the goods at the origin station."
+    },
+    {
+      "code": "MAN",
+      "wording": "Flight Manifested",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The goods were put on a flight's manifest."
+    },
+    {
+      "code": "DEP",
+      "wording": "Flight Departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The flight carrying the goods left the station."
+    },
+    {
+      "code": "ARR",
+      "wording": "Flight Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The flight carrying the goods reached the station."
+    },
+    {
+      "code": "RCF",
+      "wording": "Received from Flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The station took the goods off the flight."
+    },
+    {
+      "code": "HLD03",
+      "wording": "LIBERADO PELA FISCALIZAÇÃO (LOTE COMPLETO)",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live",
+      "note": "Inspection at the station released the whole lot."
+    },
+    {
+      "code": "OFD",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The goods left the destination station for door delivery."
+    },
+    {
+      "code": "DDL",
+      "wording": "Door Delivery",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The goods were handed over at the door."
+    },
+    {
+      "code": "DLV",
+      "wording": "Shipment Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The destination handed the goods over; the row names who received them."
+    }
+  ]
 }
