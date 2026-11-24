@@ -119,6 +119,7 @@
     {"wording": "Customs clearance completed CN", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "China's export clearance, minutes after the hand-over to the airline."},
     {"wording": "Terminal, arrival terminal, mail in transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The airport terminal holding the mail before the flight, repeated daily until it leaves."},
     {"wording": "包裹清关中", "stage": "customs", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-23", "note": "Import clearance in progress, after the arrival in the destination country (AD001)."},
+    {"wording": "包裹已交付邮局", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Handed to the post office that delivers it, after the import clearance (QG002); not a delivery to the recipient."},
     {"wording": "目的国海关查验", "stage": "customs", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The destination country's customs inspecting the parcel after import clearance."},
     {"code": "YC001", "wording": "Package has been detained", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The hold the day after the destination customs' inspection; 海关扣关 names it in Chinese."},
     {"wording": "海关扣关", "stage": "customs", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Customs detained the parcel."},

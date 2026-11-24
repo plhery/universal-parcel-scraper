@@ -50,6 +50,7 @@ it.each([
   ['Departed from origin airport', 'in_transit'],
   ['Customs deconsolidation delay', 'customs'],
   ['包裹清关中', 'customs'],
+  ['包裹已交付邮局', 'in_transit'],
   ['Pallet deconsolidation in progress', 'in_transit'],
 ] as const)('maps the DHLink scan %s to %s', (wording, stage) => {
   const payload = changed('swiftx-at-warehouse', (parcel) => {

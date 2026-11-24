@@ -200,6 +200,9 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^目的国海关查验$/, 'customs'],
   // Import clearance in progress ("parcel in clearance"), after the arrival in the destination country.
   [/^包裹清关中$/, 'customs'],
+  // Handed to the post office that delivers it ("parcel handed to the post office"), after the import clearance:
+  // 交付 is a hand-over here, not a delivery to the recipient.
+  [/^包裹已交付邮局$/, 'in_transit'],
   [/^海关扣关$/, 'customs'],
   [/^package has been detained\.?$/, 'customs'],
   [/^清关完成[,，]交仓中/, 'in_transit'],
