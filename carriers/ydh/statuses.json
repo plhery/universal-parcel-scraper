@@ -26,6 +26,13 @@
       "note": "Waiting for a flight."
     },
     {
+      "code": "EDC",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "\"海关放行-出口\": export customs in China released the parcel, after the wait for its flight."
+    },
+    {
       "code": "DF",
       "stage": "in_transit",
       "confirmedBy": "live",
