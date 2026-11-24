@@ -1,0 +1,89 @@
+{
+  "id": "cambodia-post",
+  "displayName": "Cambodia Post",
+  "aliases": [
+    "Cambodia-Post",
+    "ប្រៃសណីយ៍កម្ពុជា"
+  ],
+  "region": {
+    "countries": [
+      "KH"
+    ]
+  },
+  "brand": {
+    "color": "#024c3e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Phnom_Penh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cambodia-post",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://www.cambodiapost.com.kh/tracking/search?search={trackingNumber}",
+    "searchUrl": "https://www.cambodiapost.com.kh/tracking/search",
+    "canaryUrl": "https://www.cambodiapost.com.kh/tracking/search",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "event_details",
+      "next_office",
+      "item_category",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "event_details",
+      "scan_times",
+      "destination_country"
+    ],
+    "discarded": [
+      "next_office",
+      "item_category",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "offset_timestamps",
+      "proof_of_delivery",
+      "sender_name",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "cambodiapost.com.kh",
+        "www.cambodiapost.com.kh"
+      ],
+      "path": "^/tracking/search/([A-Za-z]{2}\\d{9}[A-Za-z]{2})/?$"
+    },
+    {
+      "domains": [
+        "cambodiapost.com.kh",
+        "www.cambodiapost.com.kh"
+      ],
+      "pathPattern": "^/tracking/search/?$",
+      "params": [
+        "search"
+      ]
+    }
+  ],
+  "detection": []
+}

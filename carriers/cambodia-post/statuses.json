@@ -1,0 +1,17 @@
+{
+  "carrier": "cambodia-post",
+  "entries": [
+    {"wording": "Receive item from customer (Otb)", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The posting country's office accepted the item; reported by that post."},
+    {"wording": "Insert item into bag (Otb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Bagged at the posting country's office of exchange; the next office names Phnom Penh."},
+    {"wording": "Send item abroad (EDI-received)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The posting country's dispatch, received as data."},
+    {"wording": "Receive item at office of exchange (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Cambodia's office of exchange in Phnom Penh received the item."},
+    {"wording": "Send item to customs (Inb)", "stage": "customs", "language": "en", "confirmedBy": "live"},
+    {"wording": "Record item customs information (Inb)", "stage": "customs", "language": "en", "confirmedBy": "live"},
+    {"wording": "Return item from customs (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Customs handed the item back to the post."},
+    {"wording": "Send item to domestic location (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Receive item at delivery office (Inb)", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Handover item to delivery agent (Inb)", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"wording": "Unsuccessful item delivery attempt (Inb)", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The extra information gives the reason and what happens next, which follow the event name after a colon."},
+    {"wording": "Deliver item (Inb)", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The extra information names who signed, which the adapter drops."}
+  ]
+}

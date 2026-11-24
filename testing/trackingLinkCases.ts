@@ -244,6 +244,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/operaciones\.correospanama\.gob\.pa\/IPSWebTracking\/IPSWeb_item_events\.aspx\?itemid=RR999999995PA$/,
     marker: /No information, please check your item identifier/,
     forwarding: { notFound: /No information, please check your item identifier/ } },
+  // The page names the code in its heading and answers it with a "Not Found" row.
+  { carrier: 'cambodia-post', number: 'RR999999995KH',
+    route: /^https:\/\/www\.cambodiapost\.com\.kh\/tracking\/search\?search=RR999999995KH$/,
+    marker: /Item N\s*o\s+RR999999995KH/ },
   { carrier: 'aruba-post', number: 'RR999999995AW',
     route: /^https:\/\/cds\.postaruba\.com\/ipswt\/IPSWeb_item_events\.aspx\?itemid=RR999999995AW$/,
     marker: /No information, please check your item identifier/,

@@ -1,0 +1,24 @@
+{
+  "carrier": "cambodia-post",
+  "records": [
+    {
+      "number": "RU833689939NL",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516090201/https://www.parcelpanel.com/couriers/cambodia-post/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "An archived ParcelPanel Cambodia Post page offered it to try. Cambodia Post's tracker answers it as an item from the Netherlands, accepted by PostNL, cleared by customs in Phnom Penh and delivered there after one failed attempt."
+    }
+  ]
+}
