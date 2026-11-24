@@ -6,6 +6,8 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['FIRST_MILE_ARRIVE', 'accepted'],
   ['FIRST_MILE_DEPART', 'in_transit'],
   ['DEPART_CONFIRM_OC', 'in_transit'],
+  // Export customs in the country of origin, before the flight.
+  ['ARRIVE_ORIN_CUSTOMS', 'in_transit'],
   ['ARRIVE_CONFIRM_OC', 'in_transit'],
   ['MAIN_LINE_DEPART', 'in_transit'],
   ['MAIN_LINE_ARRIVE', 'in_transit'],

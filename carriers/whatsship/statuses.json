@@ -30,6 +30,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "ARRIVE_ORIN_CUSTOMS",
+      "wording": "The country of origin commences customs declaration.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "Export customs in the country of origin, after the departure for the next facility and before the airport."
+    },
+    {
       "code": "ARRIVE_CONFIRM_OC",
       "wording": "Arrived at the origin international airport",
       "language": "en",
