@@ -31,7 +31,7 @@ export function hasGs1CheckDigitInDigits(value: string): boolean {
   return hasGs1CheckDigit(longestDigitRun(value));
 }
 
-/** Luhn over the longest run of digits: Straightship's `STRCA` numbers. */
+/** Luhn over the longest run of digits: Straightship's `STRCA` numbers and Commercive Parcel's `CMV` ones. */
 export function hasLuhnCheckDigitInDigits(value: string): boolean {
   return hasLuhnCheckDigit(longestDigitRun(value));
 }

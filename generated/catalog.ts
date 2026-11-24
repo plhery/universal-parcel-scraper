@@ -16969,6 +16969,43 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "commercive-parcel": {
+    "displayName": "Commercive Parcel",
+    "color": "#2e1065",
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "commercive-parcel"
+    },
+    "canaryUrl": "https://commerciveparcel.com/",
+    "trackingUrlTemplate": "https://commerciveparcel.com/?numbers={trackingNumber}",
+    "trackingSearchUrl": "https://commerciveparcel.com/#track",
+    "linkRules": [
+      {
+        "domains": [
+          "commerciveparcel.com",
+          "www.commerciveparcel.com"
+        ],
+        "pathPattern": "^/$",
+        "params": [
+          "numbers",
+          "number",
+          "n"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^CMV\\d{20}$",
+        "confidence": "high",
+        "checksum": "luhn-digits"
+      }
+    ]
+  },
   "comone-express": {
     "displayName": "ComOne Express",
     "color": "#29166f",
@@ -72344,6 +72381,7 @@ export const CARRIER_IDS = [
   "codexpress",
   "colis-gros-volume",
   "collicare",
+  "commercive-parcel",
   "comone-express",
   "conexiones-empresariales",
   "connect-couriers",
@@ -74399,6 +74437,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "codexpress": [],
   "colis-gros-volume": [],
   "collicare": [],
+  "commercive-parcel": ["commercive-parcel-1"],
   "comone-express": [],
   "conexiones-empresariales": [],
   "connect-couriers": [],

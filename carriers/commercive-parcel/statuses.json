@@ -1,0 +1,29 @@
+{
+  "carrier": "commercive-parcel",
+  "entries": [
+    {"code": "delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The parcel's status code and label."},
+    {"code": "out_for_delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "A status code the tracking page colours as moving."},
+    {"code": "in_transit", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A status code the tracking page colours as moving."},
+    {"code": "customs", "stage": "customs", "language": "en", "confirmedBy": "bundle", "note": "A status code the tracking page colours as a warning."},
+    {"code": "available_for_pickup", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "bundle", "note": "A status code the tracking page colours as a warning."},
+    {"code": "exception", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "A status code the tracking page colours as a failure."},
+    {"code": "returned", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "A status code the tracking page colours as a failure."},
+    {"code": "cancelled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "A status code the tracking page colours as a failure: the order will not ship."},
+    {"wording": "Order information received", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at our fulfillment center", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Commercive's own warehouse takes the parcel in."},
+    {"wording": "Departed our fulfillment center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "In transit to national distribution hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at national distribution hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Processing at regional sorting center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departed national distribution hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at destination distribution center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Processing at destination distribution center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Processing complete", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Handed to local delivery carrier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The line hands the parcel to a last-mile carrier it does not name."},
+    {"wording": "Arrived at local carrier facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "In transit with local carrier", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departed local carrier facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at your local delivery station", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"}
+  ]
+}

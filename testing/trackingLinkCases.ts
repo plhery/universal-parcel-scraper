@@ -464,6 +464,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'shipagent-in', number: 'SA000000000001',
     route: /^https:\/\/www\.shipagent\.in\/track\/SA000000000001$/,
     marker: /Shipment Not Found/i },
+  // A valid number with no parcel; the page says it has no information yet.
+  { carrier: 'commercive-parcel', number: 'CMV99999999999999999999',
+    route: /^https:\/\/commerciveparcel\.com\/\?numbers=CMV99999999999999999999$/,
+    marker: /No information yet\. Tracking usually appears/ },
   { carrier: 'pflogistics', number: 'NEXAU1000000025YQ',
     route: /^https:\/\/pflogistics\.com\.au\/tracking-result\?tracking=NEXAU1000000025YQ$/,
     marker: /We couldn't find your tracking number|Tracking Number/ },

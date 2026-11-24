@@ -1,0 +1,39 @@
+{
+  "carrier": "commercive-parcel",
+  "records": [
+    {
+      "number": "CMV20126303007059175636",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://commerciveparcel.com/",
+        "date": "2026-11-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Parcel Priority",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "commercive-parcel",
+        "confidence": "high"
+      },
+      "note": "The example tracking number Commercive Parcel's tracker offers under its search box. The tracker answers it with a delivered parcel and its scans from the order to the door."
+    },
+    {
+      "number": "CMV20126303007059175637",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none",
+        "not": [
+          "commercive-parcel"
+        ]
+      },
+      "note": "The example with its last digit changed, which fails the Luhn check; the tracker calls it not a valid Commercive tracking number."
+    }
+  ]
+}
