@@ -523,6 +523,22 @@
       "note": "Cleared at the destination and waiting for the hand-over to the delivering carrier."
     },
     {
+      "wording": "In transit to last mile operator",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "On its way to the delivering carrier after the clearance, before the hand-over to it."
+    },
+    {
+      "wording": "Delivery to last mile operator",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The hand-over to the delivering carrier, which delivers the last leg."
+    },
+    {
       "wording": "The goods have been handed over to the carrier",
       "language": "en",
       "stage": "in_transit",
@@ -1073,6 +1089,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
       "note": "CTT Express's pre-advice of a parcel in international transit to it, its code 3900, copied on the line into Spain in CTT's words and at CTT's instant, between JRT's own transit rows after the parcel left. Read as the transit its words name: a pending step there would read as a step back."
+    },
+    {
+      "wording": "Enviado, Tu envío está en camino",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "CTT Express's code 1000 with its explanation, copied on the line into Spain in CTT's words once CTT has the parcel on its way."
     },
     {
       "wording": "Pre-clearance completed",
