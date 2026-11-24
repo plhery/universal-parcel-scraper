@@ -58,6 +58,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "International flight has departed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The international flight's departure, in other words."
+    },
+    {
       "wording": "Initial landing",
       "language": "en",
       "stage": "in_transit",

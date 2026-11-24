@@ -84,6 +84,11 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['the parcel arrives at the distribution center and is prepared for transport to the next destination.', 'in_transit'],
   // iMile's run in Germany that ended before it reached the parcel: no door was tried, so a delay, not an attempt.
   ['<route not completed>', 'in_transit'],
+  // A connecting airport's arrival and departure, relayed without a code beside the line-haul's coded copies, and the
+  // last-mile partner's record of the parcel's data at the minute of its depot's receipt: the journey goes on.
+  ['parcel arrives at transit airport, parcel arrival', 'in_transit'],
+  ['parcel is leaving transit airport, parcel leaving port', 'in_transit'],
+  ['shipment data processed', 'in_transit'],
 ]);
 
 // Partners' lines WanbExpress files under a code their words contradict, by code and `normalizeStatusWording` wording:

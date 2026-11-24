@@ -531,6 +531,30 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-19",
       "note": "The last-mile partner's distribution centre taking the parcel in, without a code, before its out-for-delivery line."
+    },
+    {
+      "wording": "Parcel arrives at Transit Airport, Parcel Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "A connecting airport's arrival, without a code, beside the line-haul's coded copy."
+    },
+    {
+      "wording": "Parcel is leaving Transit Airport, Parcel Leaving Port",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "A connecting airport's departure, without a code, beside the line-haul's coded copy."
+    },
+    {
+      "wording": "Shipment Data Processed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The last-mile partner's record of the parcel's data, without a code, at the minute of its depot's receipt: the journey goes on."
     }
   ]
 }

@@ -195,6 +195,13 @@ describe('WanbExpress', () => {
     // clearance, which carries the parcel on rather than accepting it.
     expect(wanbStage(null, 'processing center collecting')).toBe('in_transit');
     expect(wanbStage(null, 'Arrive dest customs')).toBe('customs');
+    // A connecting airport's uncoded copies of the line-haul's arrival and departure, and the last-mile partner's record
+    // of the parcel's data at its depot's receipt, carry the parcel on, and the app closes them by the map.
+    for (const wording of ['Parcel arrives at Transit Airport, Parcel Arrival', 'Parcel is leaving Transit Airport, Parcel Leaving Port',
+      'Shipment Data Processed']) {
+      expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: wording }), wording)
+        .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     // The origin's export inspection, coded, before the line-haul agent's departure: the journey goes on.
     expect(wanbStage('CustomsArrival', 'Customs inspection has not yet released')).toBe('in_transit');
     expect(wanbStage(null, 'The parcel has been successfully picked up and is being prepared for transportation.')).toBe('in_transit');

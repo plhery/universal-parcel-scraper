@@ -50,6 +50,8 @@ export function cjPacketCurrentStage(summary: CjPacketSummary | undefined, scann
 const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['label created. warehouse is processing this order. please wait in patience.', 'registered'],
   ['shipment info received', 'registered'],
+  // The line's record of the order's data, hours after the label and before any scan.
+  ['parcel electronic information received', 'registered'],
   // The line's pickup at CJ's warehouse.
   ['item has been collected', 'accepted'],
   ['the flight has taken off from its origin', 'in_transit'],

@@ -333,6 +333,8 @@ describe('CJ Packet status vocabulary', () => {
     }
     expect(statusMapAnswer({ carrier: 'cj-packet', providerCode: null, description: 'Item has been collected' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
+    expect(statusMapAnswer({ carrier: 'cj-packet', providerCode: null, description: 'Parcel electronic information received' }))
+      .toEqual({ kind: 'mapped', stage: 'registered' });
     expect(statusMapAnswer({ carrier: 'cj-packet', providerCode: '6', description: 'Unsuccessful Delivery' }))
       .toEqual({ kind: 'mapped', stage: 'exception' });
     expect(cjPacketStage('Synthetic note')).toBeNull();
