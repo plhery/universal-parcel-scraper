@@ -8,7 +8,8 @@ the Hualei (华磊) forwarder platform. [Tianhui Hengyuan](../thhy/README.md),
 [Kun Express](../kun-express/README.md), [JHGJ](../jhgj/README.md),
 [SPT Express](../sptexp/README.md), [Huaya Express](../huaya-express/README.md),
 [Lingdong International](../lingdong/README.md), [Meso-global](../meso-global/README.md),
-[Wiio](../wiio/README.md) and [Yilong Logistics](../yilong-logistics/README.md) run tenants of
+[Wiio](../wiio/README.md), [Yilong Logistics](../yilong-logistics/README.md) and
+[YouBang Express](../youbang-express/README.md) run tenants of
 the same platform; they share the client in [hualei.ts](hualei.ts) and keep their own hosts and
 status maps.
 [Xinghe Freight](../xinghe-freight/README.md) tracks on GZYL's own tenant.

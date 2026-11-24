@@ -1,4 +1,17 @@
 {
   "carrier": "youbang-express",
-  "entries": []
+  "entries": [
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse's receipt: arrived at the receiving point."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The warehouse's departure: the goods leave the operation centre."},
+    {"code": "CO_C_CR", "wording": "exit customs clearance complete", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: export clearance done."},
+    {"code": "CO_C_CR", "wording": "Wait for a flight", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row."},
+    {"code": "CO_C_CR", "wording": "To be shipped by airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row."},
+    {"code": "CO_C_CR", "wording": "SZX, FLIGHT DEPARTED", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: the flight left the airport it names by its code. Any airport code reads the same."},
+    {"code": "CO_C_CR", "wording": "FLIGHT ARRIVED", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row."},
+    {"code": "CO_C_CR", "wording": "lmport customs clearance complete", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row, \"Import\" written with a lower-case L: import clearance done."},
+    {"code": "CO_C_CR", "wording": "Item Received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row after import clearance: the destination's receipt, not the forwarder's acceptance."},
+    {"code": "CO_C_CR", "wording": "Hand it over to local service provider, waiting for pickup", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's scripted row: the hand-over to the local carrier, which names neither."},
+    {"code": "CO_C_CR", "wording": "Due to be delivered today", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The platform's scripted row."},
+    {"code": "CO_C_CR", "wording": "Delivered, Front Door/Porch", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The platform's scripted row, in USPS's words whatever the destination."}
+  ]
 }
