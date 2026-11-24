@@ -480,6 +480,30 @@ interface Reading {
   /** Whether it is the postal union's copy of a scan. */
   upu?: boolean;
   zulu?: { digits: string; home: string } | null;
+  /** The feed it came from (`courier.crawler_code`). */
+  courier?: string;
+}
+
+/**
+ * Feeds that relay another feed's scans. DPD's group service repeats Jadlog's
+ * scans, a bare "In transit" with no place, seconds after the minute Jadlog dates them.
+ */
+const RELAYING_FEEDS: ReadonlyMap<string, ReadonlySet<string>> = new Map([['dpd-tracking', new Set(['dpd-br-tracking'])]]);
+
+const minuteOf = (event: CarrierEvent) => event.time ? Math.floor(Date.parse(event.time) / 60_000) : Number.NaN;
+
+/**
+ * Whether a relaying feed's scan with no place repeats a scan with no place of
+ * the feed it relays, at the same minute and stage, as Jadlog's adapter drops
+ * the group's copies of its scans (carriers/jadlog/identity.ts).
+ */
+function relayedCopy(index: number, events: readonly CarrierEvent[], readings: readonly Reading[]): boolean {
+  const sources = RELAYING_FEEDS.get(readings[index]!.courier ?? '');
+  const copy = events[index]!;
+  const minute = minuteOf(copy);
+  return !!sources && !copy.location && !!copy.stage && Number.isFinite(minute)
+    && events.some((event, other) => sources.has(readings[other]!.courier ?? '') && !event.location
+      && event.stage === copy.stage && minuteOf(event) === minute);
 }
 
 /**
@@ -617,7 +641,8 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
       ?? (sent !== undefined ? carrierZone(sent) : placedZone(journey, raw, wall, feed)
         ?? (unnamed ? null : carrierZone(scanCourierZone(journey, raw, wall) ?? namedZone(journey, wall))));
     readings.push({ event: parsed, wall, feed, country: feed?.country ?? locationCountry(raw.location), zone: placed?.zone ?? null, basis: placed?.basis,
-      upu: isRecord(raw.courier) && raw.courier.crawler_code === UPU_FEED, zulu: zuluWall(raw) });
+      upu: isRecord(raw.courier) && raw.courier.crawler_code === UPU_FEED, zulu: zuluWall(raw),
+      courier: isRecord(raw.courier) && typeof raw.courier.crawler_code === 'string' ? raw.courier.crawler_code : undefined });
   }
   // A scan the feed dated without an offset is read on a zone chosen here, which it names.
   const events = readings.map((reading): CarrierEvent => {
@@ -633,7 +658,8 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     delete timed.local_time;
     return timed;
   });
-  return { ...result(events, SOURCE), ...names, ...listedPartner(data, data.events, number) };
+  const kept = events.filter((_event, index) => !relayedCopy(index, events, readings));
+  return { ...result(kept, SOURCE), ...names, ...listedPartner(data, data.events, number) };
 }
 
 /**

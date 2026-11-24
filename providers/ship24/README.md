@@ -201,6 +201,10 @@ No account, cookie, fingerprint or issued token is used.
 - Each scan keeps its `location`, a town, region and country or a hub's code, unless it
   is Posti's "ULKOMAILLA" ("abroad"), which names no place. A hub's code such as "GOFO-PR" stays: the places module pins nothing for it, and
   its suffix is the hub's province for a reader who knows the codes.
+- `dpd-tracking`, DPD's group service, repeats Jadlog's scans (`dpd-br-tracking`) as a bare
+  "In transit" with no place, seconds after the minute Jadlog dates them. Such a row is left
+  out when Jadlog's feed has a row with no place at the same minute and stage, as
+  [Jadlog](../../carriers/jadlog/README.md) drops the group's copies of its own scans.
 - `dispatch_code_id: 7` is treated as delivered.
 - `couriers[].translation.name` becomes `reported_carriers`, and becomes
   `discovered_carrier` only when exactly one name maps to a catalog id. A bare brand

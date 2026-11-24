@@ -58,6 +58,24 @@ describe('Ship24 result parsing', () => {
     expect(JSON.stringify(parsed)).not.toMatch(/PRIVATE (?:recipient|street|city)|private\.example/);
   });
 
+  it('leaves out the DPD group feed\'s placeless copy of a Jadlog scan at the same minute and stage', () => {
+    const jadlog = { crawler_code: 'dpd-br-tracking', country_code: 'BR', translation: { name: 'DPD Brazil (Jadlog)' } };
+    const dpd = { slug: 'dpd-tracking', crawler_code: 'dpd-tracking', country_code: null, translation: { name: 'DPD' } };
+    const transfer = 'Seu produto está em transferência interna para Jadlog destino.';
+    const parsed = parseShip24Response({ data: { tracking_number: number, events: [
+      { timestamp: '2026-09-22T14:41:30', status: 'In transit', dispatch_code_id: 3, courier: dpd },
+      { timestamp: '2026-09-22T14:40:45', status: 'In transit', dispatch_code_id: 3, location: 'Example Hub', courier: dpd },
+      { timestamp: '2026-09-22T14:40:21', status: 'In transit', dispatch_code_id: 3, courier: dpd },
+      { timestamp: '2026-09-22T14:40:00', status: transfer, courier: jadlog },
+    ] } }, number, 'America/Sao_Paulo');
+    // A copy a minute later, or at a place, is another scan.
+    expect(parsed.events?.map((event) => [event.time, event.description, event.location])).toEqual([
+      ['2026-09-22T17:41:30.000Z', 'In transit', undefined],
+      ['2026-09-22T17:40:45.000Z', 'In transit', 'Example Hub'],
+      ['2026-09-22T17:40:00.000Z', transfer, undefined],
+    ]);
+  });
+
   it('reads offset-less scans named "Correos de España" on Correos\'s Madrid clock', () => {
     const result = parseShip24Response({ data: { tracking_number: number,
       couriers: [{ translation: { name: 'Correos de España' } }],
