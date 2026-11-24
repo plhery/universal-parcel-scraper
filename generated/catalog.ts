@@ -14243,6 +14243,47 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cambodia-post": {
+    "displayName": "Cambodia Post",
+    "color": "#024c3e",
+    "aliases": [
+      "Cambodia-Post",
+      "ប្រៃសណីយ៍កម្ពុជា"
+    ],
+    "countries": [
+      "KH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Phnom_Penh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cambodia-post",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.cambodiapost.com.kh/tracking/search",
+    "trackingUrlTemplate": "https://www.cambodiapost.com.kh/tracking/search?search={trackingNumber}",
+    "trackingSearchUrl": "https://www.cambodiapost.com.kh/tracking/search",
+    "linkRules": [
+      {
+        "domains": [
+          "cambodiapost.com.kh",
+          "www.cambodiapost.com.kh"
+        ],
+        "path": "^/tracking/search/([A-Za-z]{2}\\d{9}[A-Za-z]{2})/?$"
+      },
+      {
+        "domains": [
+          "cambodiapost.com.kh",
+          "www.cambodiapost.com.kh"
+        ],
+        "pathPattern": "^/tracking/search/?$",
+        "params": [
+          "search"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "campos-cadilhe": {
     "displayName": "Campos&Cadilhe",
     "color": "#536b8f",
@@ -34809,7 +34850,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Santo_Domingo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "inposdom",
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://inposdomtech.com/Inposoft/cliente/",
     "trackingSearchUrl": "https://inposdomtech.com/Inposoft/cliente/",
@@ -72302,6 +72345,7 @@ export const CARRIER_IDS = [
   "cadena-courier",
   "calidex-courier",
   "callcourier",
+  "cambodia-post",
   "campos-cadilhe",
   "campost",
   "canada-air-express",
@@ -74358,6 +74402,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cadena-courier": [],
   "calidex-courier": [],
   "callcourier": [],
+  "cambodia-post": [],
   "campos-cadilhe": [],
   "campost": [],
   "canada-air-express": [],

@@ -132,6 +132,7 @@ import { adapter as c3x } from '../carriers/c3x/adapter.js';
 import { adapter as cacesa } from '../carriers/cacesa/adapter.js';
 import { adapter as cadenaCourier } from '../carriers/cadena-courier/adapter.js';
 import { adapter as calidexCourier } from '../carriers/calidex-courier/adapter.js';
+import { adapter as cambodiaPost } from '../carriers/cambodia-post/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
 import { adapter as cargologic } from '../carriers/cargologic/adapter.js';
@@ -491,6 +492,7 @@ import { adapter as imile } from '../carriers/imile/adapter.js';
 import { adapter as indahLogistik } from '../carriers/indah-logistik/adapter.js';
 import { adapter as indiaPost } from '../carriers/india-post/adapter.js';
 import { adapter as indigoCargo } from '../carriers/indigo-cargo/adapter.js';
+import { adapter as inposdom } from '../carriers/inposdom/adapter.js';
 import { adapter as inpost } from '../carriers/inpost/adapter.js';
 import { adapter as instabox } from '../carriers/instabox/adapter.js';
 import { adapter as integralPack } from '../carriers/integral-pack/adapter.js';
@@ -1248,6 +1250,7 @@ export const REGISTRY: RegistryDefinition = {
     "cacesa": cacesa,
     "cadena-courier": cadenaCourier,
     "calidex-courier": calidexCourier,
+    "cambodia-post": cambodiaPost,
     "canada-post": canadaPost,
     "canpar": canpar,
     "cargologic": cargologic,
@@ -1607,6 +1610,7 @@ export const REGISTRY: RegistryDefinition = {
     "indah-logistik": indahLogistik,
     "india-post": indiaPost,
     "indigo-cargo": indigoCargo,
+    "inposdom": inposdom,
     "inpost": inpost,
     "instabox": instabox,
     "integral-pack": integralPack,
@@ -2496,6 +2500,7 @@ export const REGISTRY: RegistryDefinition = {
     "cadena-courier": "cadena-courier",
     "calidex-courier": "calidex-courier",
     "callcourier": "universal",
+    "cambodia-post": "cambodia-post",
     "campos-cadilhe": "universal",
     "campost": "universal",
     "canada-air-express": "universal",
@@ -3125,7 +3130,7 @@ export const REGISTRY: RegistryDefinition = {
     "indigo-cargo": "indigo-cargo",
     "indopaket": "universal",
     "inntralog": "universal",
-    "inposdom": "universal",
+    "inposdom": "inposdom",
     "inpost": "inpost",
     "instabox": "instabox",
     "instapack": "universal",

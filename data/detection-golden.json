@@ -102565,6 +102565,14 @@
     ]
   },
   {
+    "input": "LF065150446SG",
+    "carrier": "singapore-post",
+    "confidence": "high",
+    "candidates": [
+      "singapore-post"
+    ]
+  },
+  {
     "input": "LF079877211FR",
     "carrier": "la-poste",
     "confidence": "high",
@@ -113422,6 +113430,14 @@
   },
   {
     "input": "RU658372378NL",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
+    "input": "RU833689939NL",
     "carrier": "spring-gds",
     "confidence": "high",
     "candidates": [
