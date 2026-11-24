@@ -240,6 +240,14 @@
       "note": "The delivery partner's depot, before its round."
     },
     {
+      "wording": "Arrival at facilities",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "A facility's arrival in bpost's words, a day after the depot's departure and two before the outgoing scan."
+    },
+    {
       "wording": "Out for delivery - First Delivery Attempt",
       "language": "en",
       "stage": "out_for_delivery",

@@ -33,8 +33,9 @@ const WORDINGS = new Map<string, ClassifiedStatus>([
     'Out For Delivery To Courier',
     // The hand-over to the destination's postal operator for the last mile, which the shared rules read as a delivery.
     'Item deposited to local postal operator',
-    // A carrier's facility, seen after Landmark's processing.
-    'Package scanned at carrier facility',
+    // A carrier's facility, seen after Landmark's processing, and a facility's arrival in bpost's words, between the
+    // depot's departure and the outgoing scan.
+    'Package scanned at carrier facility', 'Arrival at facilities',
     // The parcel put on a pallet for the crossing to the destination country, before the export.
     PALLET,
     // The export from the sending country's office of exchange, after the crossing.
