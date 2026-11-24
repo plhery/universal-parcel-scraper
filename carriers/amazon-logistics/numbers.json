@@ -86,18 +86,6 @@
       "note": "Made-up number that follows the published format. Its serial sits far beyond the range in use. Its serial sits far beyond the range in use."
     },
     {
-      "number": "GB9999999980",
-      "role": "shipment",
-      "evidence": "synthetic",
-      "derivedFrom": "invented",
-      "shapeConfirmed": "2026-09-12",
-      "expect": {
-        "carrier": "amazon-logistics",
-        "confidence": "high"
-      },
-      "note": "Invented placeholder for the GB marketplace prefix. Its serial sits far beyond the range in use."
-    },
-    {
       "number": "IE9999999980",
       "role": "shipment",
       "evidence": "synthetic",

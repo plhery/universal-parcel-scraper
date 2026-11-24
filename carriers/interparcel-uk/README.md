@@ -29,6 +29,11 @@ the delivery town, the signer and the courier's scans. Tracked through that page
 - The page gives clocks without a zone, and a courier's scans can come from several countries,
   so each row keeps its wall clock as `local_time` alone.
 - Interparcel's own steps take place "Online", which is not kept as a location.
+- Detection names Interparcel UK for GB and ten digits, the reference its
+  [help page](https://uk.interparcel.com/help/knowledge-base/general-advice/how-do-i-track-my-parcel)
+  describes. Amazon's British shipment ids
+  [start with UK](https://developer-docs.shipping.amazon.com/apis/changelog/pre-launch-announcement-amazon-shipping-tracking-id-format-update-for-uk)
+  instead, so Amazon's rule leaves GB out.
 - The code and shared reading live in [interparcel.ts](interparcel.ts), which
   [Interparcel Australia](../interparcel-au/README.md) also uses.
 
@@ -37,8 +42,6 @@ the delivery town, the signer and the courier's scans. Tracked through that page
 - No delivery estimate, weight or recipient. The sender's order reference and the courier's own
   tracking number are not kept, so the courier's tracking is not linked.
 - TRAWL is required in practice: the direct request meets Cloudflare's check.
-- Amazon's British shipment ids take the same shape, so detection names Amazon for a bare
-  reference. Select Interparcel UK or paste its tracking link.
 
 ## Testing
 

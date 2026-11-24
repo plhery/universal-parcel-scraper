@@ -10,7 +10,7 @@ check proves the tracker knows it.
 
 1. `direct`: `GET {origin}/api/tracker/{number}` with the public tracking page as `Referer`
    (15 s timeout, 2 MB cap). The origin comes from the number's prefix
-   (`core/catalog/amazon.ts`): `IT`, `ES` and `UK`/`GB` have their own `track.amazon.*`
+   (`core/catalog/amazon.ts`): `IT`, `ES` and `UK` have their own `track.amazon.*`
    host, `TBA`, `TBC`, `TBM` and `TBAU` use `.com`, every other European prefix uses `track.amazon.fr`.
    `track.amazon.com` is Amazon's North American tracker. Its page lists only the US, so the
    European tracker's list of sites (GB, IT, IN, FR, ES) leaves it out, and the European hosts

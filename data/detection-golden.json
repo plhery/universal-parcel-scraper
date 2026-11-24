@@ -96220,34 +96220,26 @@
   },
   {
     "input": "GB5206570633",
-    "carrier": "amazon-logistics",
+    "carrier": "interparcel-uk",
     "confidence": "high",
     "candidates": [
-      "amazon-logistics"
+      "interparcel-uk"
     ]
   },
   {
     "input": "GB6234015339",
-    "carrier": "amazon-logistics",
+    "carrier": "interparcel-uk",
     "confidence": "high",
     "candidates": [
-      "amazon-logistics"
+      "interparcel-uk"
     ]
   },
   {
     "input": "GB9221006391",
-    "carrier": "amazon-logistics",
+    "carrier": "interparcel-uk",
     "confidence": "high",
     "candidates": [
-      "amazon-logistics"
-    ]
-  },
-  {
-    "input": "GB9999999980",
-    "carrier": "amazon-logistics",
-    "confidence": "high",
-    "candidates": [
-      "amazon-logistics"
+      "interparcel-uk"
     ]
   },
   {

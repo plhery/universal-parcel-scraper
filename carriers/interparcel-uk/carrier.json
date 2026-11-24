@@ -79,5 +79,11 @@
       "path": "^/tracking/(GB\\d{10})(?:/nocache)?/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "interparcel-uk-1",
+      "pattern": "^GB\\d{10}$",
+      "confidence": "high"
+    }
+  ]
 }

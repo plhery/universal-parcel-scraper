@@ -15,7 +15,7 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "amazon-logistics",
+        "carrier": "interparcel-uk",
         "confidence": "high"
       },
       "note": "A review on Interparcel's Trustpilot page gives it as the tracking number of a parcel for France. Interparcel UK's tracker answers it with its booking and FedEx's scans from Leeds to a signed delivery in Brittany."
@@ -34,7 +34,7 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "amazon-logistics",
+        "carrier": "interparcel-uk",
         "confidence": "high"
       },
       "note": "A review on Interparcel's Trustpilot page gives it as a UPS UK Standard tracking number, as Interparcel's page labels its references. Interparcel UK's tracker answers it with its booking and UPS's scans to a delivery in Oxford."
@@ -53,7 +53,7 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "amazon-logistics",
+        "carrier": "interparcel-uk",
         "confidence": "high"
       },
       "note": "An archived page of Interparcel UK's tracker shows this reference with Parcelforce's scans. The tracker still answers it, from a failed collection to a delivery in Guernsey, without the booking in its summary."

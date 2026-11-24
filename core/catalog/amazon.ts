@@ -50,7 +50,7 @@ export function amazonOrdersUrl(raw: string, country = ''): string {
 // These public portals share Amazon's European tracker; DE/BE have no portal of their own.
 export function amazonShippingOrigin(raw: string): string {
   const prefix = raw.replace(/[\s.-]/g, '').toUpperCase().slice(0, 2);
-  const domains: Record<string, string> = { IT: 'it', ES: 'es', UK: 'co.uk', GB: 'co.uk', TB: 'com' };
+  const domains: Record<string, string> = { IT: 'it', ES: 'es', UK: 'co.uk', TB: 'com' };
   return `https://track.amazon.${domains[prefix] ?? 'fr'}`;
 }
 

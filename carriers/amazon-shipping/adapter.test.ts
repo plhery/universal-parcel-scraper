@@ -436,7 +436,7 @@ describe('Amazon Shipping France tracker', () => {
 });
 
 describe('Amazon Shipping discovery boundaries', () => {
-  it.each(['FR', 'DE', 'BE', 'UK', 'GB', 'IT', 'ES', 'NL', 'AT', 'IE', 'PL', 'SE', 'PT', 'CH'])(
+  it.each(['FR', 'DE', 'BE', 'UK', 'IT', 'ES', 'NL', 'AT', 'IE', 'PL', 'SE', 'PT', 'CH'])(
     'supports the %s format', (prefix) => expect(normalizeAmazonShippingTrackingNumber(`${prefix}0000000001`)).toBe(`${prefix}0000000001`),
   );
   it('uses official regional portals and recognizes US numbers', () => {

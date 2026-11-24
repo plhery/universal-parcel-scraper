@@ -6604,12 +6604,6 @@
     "reason": "Gold Star Line tracks the containers it leases by their owners' ISO 6346 numbers, and lessors' containers travel with many lines, so no rule claims them; select Gold Star Line explicitly."
   },
   {
-    "carrier": "interparcel-uk",
-    "pattern": "^GB\\d{10}$",
-    "kind": "collision",
-    "reason": "Interparcel UK's references, GB and ten digits, take the shape of Amazon's British shipment ids, which Amazon's rule names. Select Interparcel UK explicitly."
-  },
-  {
     "carrier": "interparcel-au",
     "pattern": "^AU\\d{10}$",
     "kind": "collision",
