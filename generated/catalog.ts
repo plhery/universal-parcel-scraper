@@ -10105,7 +10105,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "aqx-logistics"
     },
     "canaryUrl": "https://aqxlogistics.com/",
     "trackingUrlTemplate": "https://aqxlogistics.com/track?id={trackingNumber}",
@@ -21502,7 +21502,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "dnipro-llc",
+      "localClocks": true
     },
     "canaryUrl": "https://dniprollc.com/en/packages-tracking/",
     "trackingUrlTemplate": "https://dniprollc.com/en/packages-tracking/?tracking={trackingNumber}",
@@ -23962,12 +23963,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "edi-express",
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
+    "trackingUrlTemplate": "https://my.ediexpressinc.com/prodetail.asp?proNum={trackingNumber}",
     "trackingSearchUrl": "https://my.ediexpressinc.com/pro_pu_trace.asp",
     "helpUrl": "https://www.ediexpressinc.com/contact-us",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "ediexpressinc.com"
+        ],
+        "pathPattern": "^/prodetail\\.asp$",
+        "params": [
+          "proNum"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "eek-logistikk": {

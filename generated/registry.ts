@@ -67,6 +67,7 @@ import { adapter as apmLogistics } from '../carriers/apm-logistics/adapter.js';
 import { adapter as appleExpress } from '../carriers/apple-express/adapter.js';
 import { adapter as aquantuo } from '../carriers/aquantuo/adapter.js';
 import { adapter as aquiline } from '../carriers/aquiline/adapter.js';
+import { adapter as aqxLogistics } from '../carriers/aqx-logistics/adapter.js';
 import { adapter as aramex } from '../carriers/aramex/adapter.js';
 import { adapter as aramexAu } from '../carriers/aramex-au/adapter.js';
 import { adapter as aramexNz } from '../carriers/aramex-nz/adapter.js';
@@ -268,6 +269,7 @@ import { adapter as diakinisis } from '../carriers/diakinisis/adapter.js';
 import { adapter as directFreightExpress } from '../carriers/direct-freight-express/adapter.js';
 import { adapter as direx } from '../carriers/direx/adapter.js';
 import { adapter as disuLogistics } from '../carriers/disu-logistics/adapter.js';
+import { adapter as dniproLlc } from '../carriers/dnipro-llc/adapter.js';
 import { adapter as dobropost } from '../carriers/dobropost/adapter.js';
 import { adapter as dohrnTransfer } from '../carriers/dohrn-transfer/adapter.js';
 import { adapter as domainLogistics } from '../carriers/domain-logistics/adapter.js';
@@ -309,6 +311,7 @@ import { adapter as ecomLogistics } from '../carriers/ecom-logistics/adapter.js'
 import { adapter as econt } from '../carriers/econt/adapter.js';
 import { adapter as ecoscooting } from '../carriers/ecoscooting/adapter.js';
 import { adapter as ecourier } from '../carriers/ecourier/adapter.js';
+import { adapter as ediExpress } from '../carriers/edi-express/adapter.js';
 import { adapter as egxpress } from '../carriers/egxpress/adapter.js';
 import { adapter as egyptPost } from '../carriers/egypt-post/adapter.js';
 import { adapter as eimskip } from '../carriers/eimskip/adapter.js';
@@ -1228,6 +1231,7 @@ export const REGISTRY: RegistryDefinition = {
     "apple-express": appleExpress,
     "aquantuo": aquantuo,
     "aquiline": aquiline,
+    "aqx-logistics": aqxLogistics,
     "aramex": aramex,
     "aramex-au": aramexAu,
     "aramex-nz": aramexNz,
@@ -1429,6 +1433,7 @@ export const REGISTRY: RegistryDefinition = {
     "direct-freight-express": directFreightExpress,
     "direx": direx,
     "disu-logistics": disuLogistics,
+    "dnipro-llc": dniproLlc,
     "dobropost": dobropost,
     "dohrn-transfer": dohrnTransfer,
     "domain-logistics": domainLogistics,
@@ -1470,6 +1475,7 @@ export const REGISTRY: RegistryDefinition = {
     "econt": econt,
     "ecoscooting": ecoscooting,
     "ecourier": ecourier,
+    "edi-express": ediExpress,
     "egxpress": egxpress,
     "egypt-post": egyptPost,
     "eimskip": eimskip,
@@ -2454,7 +2460,7 @@ export const REGISTRY: RegistryDefinition = {
     "apx-logistics": "universal",
     "aquantuo": "aquantuo",
     "aquiline": "aquiline",
-    "aqx-logistics": "universal",
+    "aqx-logistics": "aqx-logistics",
     "aramex": "aramex",
     "aramex-au": "aramex-au",
     "aramex-nz": "aramex-nz",
@@ -2814,7 +2820,7 @@ export const REGISTRY: RegistryDefinition = {
     "dk-express-gr": "universal",
     "dk-logistics-ee": "universal",
     "dm-express-me": "universal",
-    "dnipro-llc": "universal",
+    "dnipro-llc": "dnipro-llc",
     "dnx-cargo": "universal",
     "dobropost": "dobropost",
     "dohrn-transfer": "dohrn-transfer",
@@ -2880,7 +2886,7 @@ export const REGISTRY: RegistryDefinition = {
     "ecourier": "ecourier",
     "ecourier-uk": "universal",
     "ecparcel": "universal",
-    "edi-express": "universal",
+    "edi-express": "edi-express",
     "eek-logistikk": "universal",
     "ees-logistics": "universal",
     "efs-asia": "universal",

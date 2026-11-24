@@ -60365,6 +60365,14 @@
     ]
   },
   {
+    "input": "605323877",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-ie"
+    ]
+  },
+  {
     "input": "605946924196000013606727",
     "carrier": "unknown",
     "confidence": "low",
@@ -91356,6 +91364,28 @@
     ]
   },
   {
+    "input": "CV044917241US",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
+    "input": "CV044917309US",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "CV09919478246",
     "carrier": "unknown",
     "confidence": "low",
@@ -98953,6 +98983,18 @@
       "tnt-au",
       "purolator"
     ]
+  },
+  {
+    "input": "HF-BC5DCC0A",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HF-BD4A920D",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "HGDGY1910830544YQ",
