@@ -288,6 +288,22 @@ describe('dateLocalClocks', () => {
     ]);
   });
 
+  it('lends the clock of a registration in a country where the carrier does not work to no scan that handles the parcel', () => {
+    // The German carrier's record of the sender's data, which a line from China copies before the parcel leaves.
+    const events = [
+      { local_time: '2030-03-01T07:00:00', description: 'The instruction data for this shipment have been provided by the sender to DHL electronically',
+        location: 'DE', stage: 'registered' },
+      { local_time: '2030-03-03T11:30:00', description: 'Arrived at origin facility', stage: 'in_transit' },
+    ];
+    expect(dateLocalClocks('prd', { status: 'in_transit', destination_country: 'DE', events }).events!.map(dated)).toEqual([
+      ['2030-03-01T07:00:00+01:00', 'Europe/Berlin', 'place'],
+      ['2030-03-03T11:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+    ]);
+    // A carrier that works there keeps the parcel on that clock.
+    expect(dated(dateLocalClocks('gls-de', { status: 'in_transit', destination_country: 'DE', events }).events![1]))
+      .toEqual(['2030-03-03T11:30:00+01:00', 'Europe/Berlin', 'neighbour']);
+  });
+
   it('borrows the clock of an airport its code alone names', () => {
     const result = dateLocalClocks('yunexpress', { status: 'in_transit', events: [
       { local_time: '2026-10-15T10:00:00', description: 'Accepted', location: 'Hanoi' },

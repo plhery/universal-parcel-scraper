@@ -20,6 +20,8 @@ export type ZoneBasis = 'place' | 'neighbour' | 'destination' | 'carrier';
 type Zoned = { zone: string; basis: ZoneBasis };
 
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
+// Scans that record the parcel rather than handle it.
+const PAPERWORK = new Set(['registered', 'pending']);
 
 const text = (value: unknown): string => typeof value === 'string' ? value.trim() : '';
 // Wording that says the parcel came off a crossing: it landed, reached its destination or
@@ -98,7 +100,9 @@ function destinationZone(carrier: string, country: string, home: string | null):
  * Dates each scan that has a wall clock and no instant. The zone comes
  * from the scan's place, read with the scans around it, or an airport its
  * code alone names; a scan filed away from the parcel takes the clock of the
- * office that filed it and lends it to no other; else from the leg the parcel was on: the last scan before
+ * office that filed it and lends it to no other, and a registration in a country
+ * where the carrier does not work lends its clock to no scan that handles the
+ * parcel; else from the leg the parcel was on: the last scan before
  * it with a zone of its own, or, once a scan since says the parcel landed or
  * reached its destination, or is a customs scan after the export's clearance, the next one after, else the destination's clock unless
  * the last one is on a clock the destination keeps; or with none before, the next
@@ -140,13 +144,20 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     ? placeTimeZone(place) : null;
   // A scan's own zone: its place's, or an airport's its code alone names.
   const own = places.map((place, at) => place ? zoneOf(place) : airportTimeZone(text(scans[at]!.location)));
+  // A registration in a country where the carrier does not work is the carrier that delivers there recording the
+  // parcel ahead of it, as DHL's record of the sender's data that lines from China copy before the parcel leaves: that
+  // office's clock, which the paperwork it files beside it shares (UPS's note minutes after its label), but no scan
+  // that handles the parcel.
+  const serves = definition(carrier)?.countries ?? [];
+  const paperwork = (at: number) => PAPERWORK.has(text(scans[at]!.stage));
+  const ahead = places.map((place, at) => Boolean(place && serves.length > 0 && !serves.includes(place.country)
+    && text(scans[at]!.stage) === 'registered'));
   const neighbour = (zone: string | null | undefined): Zoned | null => zone ? { zone, basis: 'neighbour' } : null;
   const crossed = crossings(scans);
   const country = reading.destinationCountry;
   // Landed with no zoned scan since: the last zoned scan's clock if the destination keeps it,
   // else the destination's own, not the clock of the country the parcel left.
-  const arrival = (before: number): Zoned | null => {
-    const zone = own[before];
+  const arrival = (zone: string | null): Zoned | null => {
     const landing = country && !(zone && keepsZone(country, zone)) ? mainZone(country) : null;
     return landing ? { zone: landing, basis: 'destination' } : neighbour(zone);
   };
@@ -154,14 +165,15 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
   // or once a scan since says the parcel landed (`crossed`), the next one after, else what `landing`
   // makes of the last one. With none before, the next one, unless the parcel lands on the way there.
   const leg = (at: number, fits: (place: EventPlace | null) => boolean,
-    landing: (before: number) => Zoned | null = (before) => neighbour(own[before])): Zoned | null => {
-    const zoned = (other: number) => own[other] && fits(places[other] ?? null);
+    landing: (zone: string | null) => Zoned | null = neighbour): Zoned | null => {
+    const lent = (other: number) => (ahead[other] && !paperwork(at) ? null : own[other]) ?? null;
+    const zoned = (other: number) => lent(other) && fits(places[other] ?? null);
     let before = at - 1;
     while (before >= 0 && !zoned(before)) before -= 1;
     let after = at + 1;
     while (after < scans.length && !zoned(after)) after += 1;
-    if (crossed.slice(before + 1, at + 1).includes(true)) return neighbour(own[after]) ?? landing(before);
-    return neighbour(own[before]) ?? (crossed.slice(at + 1, after).includes(true) ? null : neighbour(own[after]));
+    if (crossed.slice(before + 1, at + 1).includes(true)) return neighbour(lent(after)) ?? landing(lent(before));
+    return neighbour(lent(before)) ?? (crossed.slice(at + 1, after).includes(true) ? null : neighbour(lent(after)));
   };
   const home = carrierHomeZone(carrier, result);
   const destination = destinationZone(carrier, country ?? '', home);

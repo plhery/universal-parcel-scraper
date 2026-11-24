@@ -223,7 +223,9 @@ bare code the parcel's way does not bear out places nothing, but it tells a forw
 `dateLocalClocks(carrier, result)` dates the scans a carrier gives on a wall clock in no stated
 zone (`local_time`). The zone comes from the scan's place, read with the scans around it; a scan
 filed away from the parcel is on the clock of the office that filed it, which it lends to no other
-scan; else from the leg the parcel was on: the last scan before it with a zone of its own (a town, a state,
+scan; a registration in a country where the carrier does not work, the carrier that delivers there
+recording the parcel ahead of it, lends its clock to the paperwork beside it but to no scan that handles
+the parcel: a line from China copies DHL's record of the sender's data before the parcel leaves; else from the leg the parcel was on: the last scan before it with a zone of its own (a town, a state,
 a country of one clock or an airport), or once a scan since says the parcel landed or reached its
 destination (a flight that took off and awaits its arrival has not), or is a customs scan after the
 export's clearance, the next one after, so later scans do not move it, or with none, the destination's
