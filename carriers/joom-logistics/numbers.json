@@ -1,5 +1,240 @@
 {
   "carrier": "joom-logistics",
-  "gap": "Joom Logistics tracks parcels under other carriers' numbers, national posts' S10 numbers and USPS barcodes among them, and has no layout of its own.",
-  "records": []
+  "records": [
+    {
+      "number": "RA103984139MN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250719075314/https://joomlogistics.com/en/track?id=RA103984139MN",
+        "date": "2025-07-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from China to Russia, checked in at a Dongguan warehouse and delivered by Russian Post."
+    },
+    {
+      "number": "4208000792612927005645000002516253",
+      "role": "full_barcode",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230308225416/https://joomlogistics.com/en/track/?id=4208000792612927005645000002516253",
+        "date": "2023-03-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link, with the tracker's reply captured beside it. Its tracker answers it with a parcel from Japan through Hong Kong to the United States, carried by Pitney Bowes and delivered by USPS."
+    },
+    {
+      "number": "4209408592748927005645000005530306",
+      "role": "full_barcode",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230913022957/https://joomlogistics.com/en/track/?id=4209408592748927005645000005530306",
+        "date": "2023-09-13",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from Japan to the United States, delivered by USPS."
+    },
+    {
+      "number": "4209811592748927005645000004650272",
+      "role": "full_barcode",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230404211803/https://joomlogistics.com/en/track/?id=4209811592748927005645000004650272",
+        "date": "2023-04-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps"
+        ]
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from Japan through Hong Kong to the United States, delivered by USPS."
+    },
+    {
+      "number": "RJ231427443RU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221216011615/https://joomlogistics.com/en/track/?id=RJ231427443RU",
+        "date": "2022-12-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "russian-post",
+        "confidence": "high"
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from Hong Kong to Russia, delivered by Russian Post."
+    },
+    {
+      "number": "RJ231423716RU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221019110513/https://joomlogistics.com/en/track?id=RJ231423716RU",
+        "date": "2022-10-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "russian-post",
+        "confidence": "high"
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from Hong Kong handed to Russian Post's office in Berlin and dispatched to Russia."
+    },
+    {
+      "number": "RJ231407775RU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221029073948/https://joomlogistics.com/en/track/?id=RJ231407775RU",
+        "date": "2022-10-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "russian-post",
+        "confidence": "high"
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from Hong Kong handed to Russian Post's office in Berlin and dispatched to Russia."
+    },
+    {
+      "number": "RY160739485HK",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20220608225010/https://joomlogistics.com/en/track/?id=RY160739485HK",
+        "date": "2022-06-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "hongkong-post",
+        "confidence": "high"
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from Joom Logistics' Shenzhen sorting centre that arrived in Russia."
+    },
+    {
+      "number": "99970849367338",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221203043949/https://joomlogistics.com/en/track?id=99970849367338",
+        "date": "2022-12-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog",
+          "xpressbees"
+        ]
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link. Its tracker answers it with a parcel from Hong Kong to Russia, delivered by 5Post to a store."
+    },
+    {
+      "number": "H1002710936861101050",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20221203063707/https://joomlogistics.com/de/track?id=H1002710936861101050",
+        "date": "2022-12-03",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "hermes-de",
+        "confidence": "high"
+      },
+      "note": "A Wayback capture of Joom Logistics' German tracking link. Its tracker answers it with a parcel from Japan through Hong Kong, flown by SEKO to Liège and delivered by Hermes in Germany."
+    },
+    {
+      "number": "EL356-230927-0298",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230928102441/https://joomlogistics.com/en/track/?id=EL356-230927-0298",
+        "date": "2023-09-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Wayback capture of Joom Logistics' tracking link, with the tracker's reply captured beside it. Its tracker answers it, with its hyphens, with a parcel within the United Kingdom delivered by Royal Mail; without them it finds nothing."
+    }
+  ]
 }

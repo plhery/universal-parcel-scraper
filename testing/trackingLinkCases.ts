@@ -2844,6 +2844,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'jrs-express', number: '9999999990-9990',
     route: /^https:\/\/jrs-express\.com\/track\?or=9999999990-9990$/,
     marker: /No tracking records were found for this tracking number/ },
+  // Joom Logistics' page asks its tracking interface for the number in its address on load.
+  { carrier: 'joom-logistics', number: 'ZZ729461835XX',
+    route: /^https:\/\/joomlogistics\.com\/en\/track\?id=ZZ729461835XX$/,
+    marker: /No tracking with such tracking number|Actual tracking number:/ },
 ];
 
 /**

@@ -3183,6 +3183,27 @@
     "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
+    "shape": "14 digits starting 9, ending 7, 8 or 9",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "jadlog",
+      "gls-nl"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Joom Logistics relays 5Post parcels under such numbers."
+  },
+  {
     "shape": "14 digits",
     "carriers": [
       "brt",

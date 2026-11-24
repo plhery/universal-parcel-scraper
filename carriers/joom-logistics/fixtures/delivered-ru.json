@@ -1,0 +1,195 @@
+{
+  "data": {
+    "trackingNumber": "RA103984139MN",
+    "trackingNumbers": [
+      "RA103984139MN"
+    ],
+    "actualTrackingNumber": "RA103984139MN",
+    "sourceCountry": "CN",
+    "destinationCountry": "RU",
+    "delivered": true,
+    "successUpdatedTime": "2024-05-22T16:59:59.887Z",
+    "checkpoints": [
+      {
+        "operationTime": "2024-02-03T12:25:31.011Z",
+        "time": "2024-02-03T12:25:31.011Z",
+        "zip": "518172",
+        "country": "CN",
+        "location": "Shenzhen",
+        "message": "Order is created, JL is waiting for check-in at the warehouse",
+        "event": "informationReceived"
+      },
+      {
+        "operationTime": "2024-02-16T07:49:04Z",
+        "time": "2024-02-16T07:49:04Z",
+        "country": "CN",
+        "location": "Dongguan",
+        "message": "Parcel check in at warehouse",
+        "event": "parcelCheckIn"
+      },
+      {
+        "operationTime": "2024-02-16T07:49:07.708Z",
+        "time": "2024-02-16T07:49:07.708Z",
+        "country": "CN",
+        "message": "Order(s) LP467ROJE9 updated to status 'checkIn'",
+        "event": "parcelCheckIn"
+      },
+      {
+        "operationTime": "2024-02-17T09:35:46.167Z",
+        "time": "2024-02-17T09:35:46.167Z",
+        "country": "CN",
+        "message": "Order(s) LP467ROJE9 updated to status 'received'",
+        "event": "parcelCheckIn"
+      },
+      {
+        "operationTime": "2024-02-18T01:12:34.043Z",
+        "time": "2024-02-18T01:12:34.043Z",
+        "message": "Package sent from the warehouse",
+        "event": "inTransit"
+      },
+      {
+        "operationTime": "2024-02-18T07:44:01Z",
+        "time": "2024-02-18T07:44:01Z",
+        "location": "China",
+        "message": "Package handed over to carrier",
+        "event": "originCountry"
+      },
+      {
+        "operationTime": "2024-02-18T09:44:01Z",
+        "time": "2024-02-18T09:44:01Z",
+        "location": "China",
+        "message": "Package arrived at sorting centre",
+        "event": "originCountry"
+      },
+      {
+        "operationTime": "2024-02-29T13:35:34Z",
+        "time": "2024-02-29T13:35:34Z",
+        "location": "Dongguan",
+        "message": "Depart from warehouse",
+        "event": "inTransit"
+      },
+      {
+        "operationTime": "2024-03-01T11:35:00Z",
+        "time": "2024-03-01T11:35:00Z",
+        "location": "Changsha, China",
+        "message": "Arrive at the customs clearance port",
+        "event": "inTransit"
+      },
+      {
+        "operationTime": "2024-03-10T10:44:18Z",
+        "time": "2024-03-10T10:44:18Z",
+        "zip": "630311",
+        "country": "RU",
+        "location": "Novosibirsk LPTs MMPO UOPK",
+        "message": "Package arrived at customs",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-10T10:44:18.001Z",
+        "time": "2024-03-10T10:44:18.001Z",
+        "zip": "630310",
+        "country": "RU",
+        "location": "Novosibirsk LPC MMPO",
+        "message": "Package arrived at sorting centre",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-10T22:39:33Z",
+        "time": "2024-03-10T22:39:33Z",
+        "zip": "630311",
+        "country": "RU",
+        "location": "Novosibirsk LPTs MMPO UOPK",
+        "message": "Received not assigned",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-11T02:42:45Z",
+        "time": "2024-03-11T02:42:45Z",
+        "zip": "630322",
+        "country": "RU",
+        "location": "Novosibirsk LPC Sps-2-Cm",
+        "message": "Package arrived at sorting centre",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-11T02:43:38Z",
+        "time": "2024-03-11T02:43:38Z",
+        "zip": "630322",
+        "country": "RU",
+        "location": "Novosibirsk LPC Sps-2-Cm",
+        "message": "Package is being processed",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-11T03:03:05Z",
+        "time": "2024-03-11T03:03:05Z",
+        "zip": "630310",
+        "country": "RU",
+        "location": "Novosibirsk LPC MMPO",
+        "message": "Package left the international sorting centre",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-11T03:03:05.001Z",
+        "time": "2024-03-11T03:03:05.001Z",
+        "zip": "630310",
+        "country": "RU",
+        "location": "Novosibirsk LPC MMPO",
+        "message": "Package left the sorting centre",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-11T05:58:15.001Z",
+        "time": "2024-03-11T05:58:15.001Z",
+        "zip": "630300",
+        "country": "RU",
+        "location": "Novosibirsk LPC",
+        "message": "Package left the sorting centre",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-12T10:51:35.001Z",
+        "time": "2024-03-12T10:51:35.001Z",
+        "zip": "620960",
+        "country": "RU",
+        "location": "Ekaterinburg MSC",
+        "message": "Package arrived at sorting centre",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-12T12:08:04Z",
+        "time": "2024-03-12T12:08:04Z",
+        "zip": "620965",
+        "country": "RU",
+        "location": "Ekaterinburg MSC COSP",
+        "message": "Package is being processed",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-13T01:44:13.001Z",
+        "time": "2024-03-13T01:44:13.001Z",
+        "zip": "620960",
+        "country": "RU",
+        "location": "Ekaterinburg MSC",
+        "message": "Package left the sorting centre",
+        "event": "destinationCountry"
+      },
+      {
+        "operationTime": "2024-03-13T07:26:42Z",
+        "time": "2024-03-13T07:26:42Z",
+        "zip": "620085",
+        "message": "Package arrived at delivery location",
+        "event": "issuingPoint"
+      },
+      {
+        "operationTime": "2024-03-13T13:53:42.884Z",
+        "time": "2024-03-13T13:53:42.884Z",
+        "zip": "620085",
+        "country": "RU",
+        "location": "Yekaterinburg 85",
+        "message": "Package received",
+        "event": "confirmedDelivery"
+      }
+    ]
+  }
+}

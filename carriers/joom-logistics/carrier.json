@@ -17,18 +17,49 @@
   "timezone": "Asia/Hong_Kong",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "joom-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://joomlogistics.com/en/track?id={trackingNumber}",
     "searchUrl": "https://joomlogistics.com/en/track",
     "canaryUrl": "https://joomlogistics.com/en/track",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "history",
+      "location",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight",
+      "delivered_at",
+      "service_name",
+      "pickup_point",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

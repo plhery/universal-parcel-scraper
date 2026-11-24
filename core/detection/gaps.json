@@ -2437,6 +2437,11 @@
     "reason": "Fifteen- and sixteen-digit resi numbers carry no JNE marker and other carriers print the same lengths."
   },
   {
+    "carrier": "joom-logistics",
+    "kind": "by_design",
+    "reason": "Joom Logistics tracks parcels under the numbers of the posts, lines and couriers that carry them, so it has no number layout of its own."
+  },
+  {
     "carrier": "jrs-express",
     "pattern": "^\\d{6}(?:\\d{3,4})?$",
     "kind": "by_design",
