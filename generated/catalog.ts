@@ -18916,6 +18916,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ctl-group-pl": {
+    "displayName": "CTL Group",
+    "color": "#FF0000",
+    "aliases": [
+      "ctlgroup.pl",
+      "CTL Group Centrum Transportowo-Logistyczne"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ctl-group-pl",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.ctlgroup.pl/tracking",
+    "trackingUrlTemplate": "https://www.ctlgroup.pl/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.ctlgroup.pl/tracking",
+    "helpUrl": "https://www.ctlgroup.pl/kontakt",
+    "linkRules": [
+      {
+        "domains": [
+          "ctlgroup.pl",
+          "www.ctlgroup.pl"
+        ],
+        "path": "^/tracking/(\\d{6,12})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "ctm-messagerie": {
     "displayName": "CTM Messagerie",
     "color": "#043882",
@@ -72635,6 +72667,7 @@ export const CARRIER_IDS = [
   "csomagpiac",
   "cst-italia",
   "ctc-express",
+  "ctl-group-pl",
   "ctm-messagerie",
   "cts-group",
   "cttyex",
@@ -74696,6 +74729,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "csomagpiac": [],
   "cst-italia": ["cst-italia-1","cst-italia-2"],
   "ctc-express": [],
+  "ctl-group-pl": [],
   "ctm-messagerie": [],
   "cts-group": [],
   "cttyex": ["cttyex-1"],

@@ -218,6 +218,7 @@ import { adapter as courieritNz } from '../carriers/courierit-nz/adapter.js';
 import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js';
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
 import { adapter as cseRussia } from '../carriers/cse-russia/adapter.js';
+import { adapter as ctlGroupPl } from '../carriers/ctl-group-pl/adapter.js';
 import { adapter as ctt } from '../carriers/ctt/adapter.js';
 import { adapter as cttExpress } from '../carriers/ctt-express/adapter.js';
 import { adapter as cttyex } from '../carriers/cttyex/adapter.js';
@@ -1349,6 +1350,7 @@ export const REGISTRY: RegistryDefinition = {
     "couriersplease": couriersplease,
     "cruz-del-sur": cruzDelSur,
     "cse-russia": cseRussia,
+    "ctl-group-pl": ctlGroupPl,
     "ctt": ctt,
     "ctt-express": cttExpress,
     "cttyex": cttyex,
@@ -2675,6 +2677,7 @@ export const REGISTRY: RegistryDefinition = {
     "csomagpiac": "universal",
     "cst-italia": "universal",
     "ctc-express": "universal",
+    "ctl-group-pl": "ctl-group-pl",
     "ctm-messagerie": "universal",
     "cts-group": "universal",
     "ctt": "ctt",
