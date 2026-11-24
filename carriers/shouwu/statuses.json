@@ -131,6 +131,14 @@
       "note": "A sorting centre on the way, seen in the destination country the day after the handover to the local courier."
     },
     {
+      "wording": "The package left sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The same sorting centre in the destination country let the parcel go, hours after its arrival there."
+    },
+    {
       "wording": "First parcel scan along Poste Italiane’s logistic network",
       "stage": "in_transit",
       "language": "en",
