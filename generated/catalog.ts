@@ -13831,7 +13831,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^BUFZA(?:\\d{10}|\\dSK\\d{5}BU)YQ$",
+        "pattern": "^BUFZA(?:\\d{10}|\\d[A-Z]{2}\\d{5}[A-Z]{2})YQ$",
         "confidence": "high"
       }
     ]

@@ -8,7 +8,8 @@ South African customs and delivers them from its own depots or hands them to a l
 ## Numbers
 
 BUFFALO's tracker calls its number the order number. Archived lookups on its tracker show
-BUFZA, ten digits and YQ; ParcelsApp names BUFFALO for BUFZA, a digit, SK, five digits and BUYQ.
+BUFZA, ten digits and YQ; ParcelsApp names BUFFALO for BUFZA, a digit, two letters, five digits,
+two letters and YQ, with letter codes that vary (SK and BU, CL and another pair).
 The high-confidence rule claims both layouts: the BUFZA prefix and YQ suffix are BUFFALO's own. The former tracker used fifteen-digit order numbers; no rule claims
 them, since many carriers print bare digit runs of that length. The customs reference the
 tracker shows next to the number is not a tracking number.
