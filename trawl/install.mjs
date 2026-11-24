@@ -12,8 +12,9 @@ const solverPath = '/app/packages/tiers/src/solvers/recaptcha.ts';
 const solver = fastRecaptchaAudio(readFileSync(solverPath, 'utf8'));
 writeFileSync(solverPath, solver);
 const speech = readFileSync('/app/packages/tiers/src/solvers/stt.ts', 'utf8');
-// Magyar Posta's helper hands the speech-to-text a page whose request client serves the clip it has read.
-for (const part of ['export async function transcribeAudio(\n  audioUrl: string,\n  signal: AbortSignal | undefined,\n  page: Page,\n  timeoutMs: number,\n)',
+// Magyar Posta's helper hands the speech-to-text a page whose request client serves the clip it has read,
+// and leaves the clip's language at English.
+for (const part of ['export async function transcribeAudio(\n  audioUrl: string,\n  signal: AbortSignal | undefined,\n  page: Page,\n  timeoutMs: number,\n  language = "en",\n)',
   'await page.request.get(audioUrl, { headers, timeout: Math.max(1, timeoutMs) })']) {
   if (speech.split(part).length !== 2) throw new Error('TRAWL speech-to-text changed: review the Magyar Posta transcription');
 }

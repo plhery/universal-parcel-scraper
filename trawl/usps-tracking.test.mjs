@@ -96,26 +96,29 @@ test('a USPS session sent to the outage page is dropped after a replay and never
     'import { x } from "./x"',
     '      if (hasUsablePayload(t2) && !crossed2) {',
     '        if (t2.cookies && t2.cookies.length > 0) {',
-    '          await deps.saveSession(domain, {})',
+    '          await deps.saveSession(cacheKey, {',
+    '          })',
     '        }',
     '      }',
     '      if (hasUsablePayload(t3) && !crossed3) {',
     '        const cookies: Cookie[] = t3.cookies ?? []',
-    '        if (cookies.length > 0 && !explicitProxy && !privateRequest) {',
-    '          await deps.saveSession(domain, {})',
+    '        if (cookies.length > 0 && cacheAllowed) {',
+    '          await deps.saveSession(cacheKey, {})',
     '        }',
     '      }',
     '      if (hasUsablePayload(t4) && !crossed4) {',
     '      const cookies: Cookie[] = t4.cookies ?? []',
-    '      if (cookies.length > 0 && !explicitProxy && !privateRequest) {',
+    '      if (cookies.length > 0 && cacheAllowed) {',
   ].join('\n');
   const patched = forgetUspsOutageSessions(source);
   assert.match(patched, /^import \{ uspsOutage \} from "\.\/utils\/usps-tracking\.mjs"\n/);
-  assert.match(patched, /if \(uspsOutage\(t2\)\) await deps\.invalidateSession\(domain\)\n {8}else if \(t2\.cookies/);
-  assert.match(patched, /!privateRequest && !uspsOutage\(t3\)\) \{/);
+  assert.match(patched, /if \(uspsOutage\(t2\)\) await deps\.invalidateSession\(cacheKey\)\n {8}else if \(t2\.cookies/);
+  assert.match(patched, /cacheAllowed && !uspsOutage\(t3\)\) \{/);
   assert.equal(patched.split('uspsOutage(').length, 3);
   assert.throws(() => forgetUspsOutageSessions(source.replace('t2.cookies &&', 't2.cookies?.length &&')), /review the USPS outage session patch/);
-  assert.throws(() => forgetUspsOutageSessions(source + '\n        if (t2.cookies && t2.cookies.length > 0) {'), /review the USPS outage session patch/);
+  assert.throws(() => forgetUspsOutageSessions(source + '\n        if (t2.cookies && t2.cookies.length > 0) {\n          await deps.saveSession(cacheKey, {'), /review the USPS outage session patch/);
+  // The replayed session is dropped under the key it was saved under.
+  assert.throws(() => forgetUspsOutageSessions(source.replace('saveSession(cacheKey, {\n', 'saveSession(domain, {\n')), /review the USPS outage session patch/);
 });
 
 // Mocked clock and timers: `advance` lets the background preparation and the reads run for that long.
