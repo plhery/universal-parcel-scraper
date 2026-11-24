@@ -358,6 +358,14 @@ describe('Austrian Post public tracking', () => {
     expect(statusMap.stage('TRA', 'konsolidierung für export')).toBe('in_transit');
     expect(austrianPostEventStatus('TRA', '', 'Transit')?.stage).toBe('in_transit');
     expect(statusMap.stage('TRA', 'transit')).toBe('in_transit');
+    // The partner abroad processing an export and breaking its dispatch up again.
+    expect(austrianPostEventStatus('TRA', 'TR', 'Sendung ist bei Logistikpartner∗in in Bearbeitung')?.stage).toBe('in_transit');
+    expect(statusMap.stage('TRA', 'sendung ist bei logistikpartner∗in in bearbeitung')).toBe('in_transit');
+    expect(austrianPostEventStatus('TRA', 'TRD', 'Auflösung einer konsolidierten Sendung')?.stage).toBe('in_transit');
+    expect(statusMap.stage('TRA', 'auflösung einer konsolidierten sendung')).toBe('in_transit');
+    // That partner keeping the parcel for its recipient to collect.
+    expect(austrianPostEventStatus('RU', 'HS', 'Sendung zur Selbstabholung hinterlegt')?.stage).toBe('ready_for_pickup');
+    expect(statusMap.stage('RU', 'sendung zur selbstabholung hinterlegt')).toBe('ready_for_pickup');
     // The arrival's code yields to a return or a delivery round its wording names, as the scan does.
     expect(statusMap.stage('IMP', 'sendung im zielland angekommen')).toBe('in_transit');
     expect(statusMap.stage('IMP', '')).toBe('in_transit');

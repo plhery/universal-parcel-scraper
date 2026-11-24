@@ -27,6 +27,11 @@ delivery, as the page's summary has them. So is an `IZ` scan of the parcel hande
 to the recipient ("an Empfänger∗in übergeben").
 A `BEI` scan is processing in a logistics centre, except the parcel's first
 scan "Zum Transport erhalten", which the summary reads as accepted (`AN`).
+A parcel sent abroad goes from the export hub's consolidation to a logistics
+partner, whose processing and the breaking up of that dispatch (`TRA`) are
+transit. The partner's notice that it keeps the parcel for its recipient to
+collect (`RU`, reason `HS`) is ready for collection, while the page's summary,
+which the status follows, can still read out for delivery.
 Timestamps carry explicit offsets, which are preserved. A scan place given
 only as `PLZ` and a postcode, or as `PLZ` and a country code with or without
 part of a postcode (`PLZ DE`), is the delivery area and is dropped, also when a

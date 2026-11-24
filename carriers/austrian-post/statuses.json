@@ -264,6 +264,33 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-02",
       "note": "The recipient answered the obstacle to the customs declaration; the item stays in customs until it is cleared."
+    },
+    {
+      "code": "TRA",
+      "wording": "Sendung ist bei Logistikpartner∗in in Bearbeitung",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The logistics partner that carries an export abroad is processing it."
+    },
+    {
+      "code": "TRA",
+      "wording": "Auflösung einer konsolidierten Sendung",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "The outgoing dispatch the export hub gathered is broken up again on the way."
+    },
+    {
+      "code": "RU",
+      "wording": "Sendung zur Selbstabholung hinterlegt",
+      "language": "de",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-24",
+      "note": "A notice, with reason HS, of a parcel the partner abroad keeps for its recipient to collect."
     }
   ]
 }

@@ -60,6 +60,8 @@ const WORDINGS: Readonly<Record<string, ClassifiedStatus | undefined>> = {
   'sendung ins zielland unterwegs': SUMMARY.IV,
   'sendung in bearbeitung österreich': SUMMARY.IV,
   eingeworfen: SUMMARY.ZU,
+  // A notice (RU, reason HS) of a parcel a partner abroad keeps for its recipient to collect.
+  'sendung zur selbstabholung hinterlegt': SUMMARY.EB,
 };
 const byWording = (text: string) => WORDINGS[text.trim().toLowerCase()];
 // Customs scans of an item from abroad: the declaration under way (CUS), the item
@@ -87,9 +89,13 @@ export function austrianPostEventStatus(code: string, reason: string, text: stri
   return byWording(text) ?? SUMMARY[code];
 }
 
-/** A transit scan: the export hub gathers the item into an outgoing dispatch, or the item is in transit. */
+/**
+ * A transit scan: the export hub gathers the item into an outgoing dispatch, the
+ * logistics partner abroad processes it and breaks that dispatch up again, or the
+ * item is in transit.
+ */
 function transitScan(code: string, text: string): boolean {
-  return code === 'TRA' && /^(?:konsolidierung für (?:den )?export|transit)$/i.test(text.trim());
+  return code === 'TRA' && /^(?:konsolidierung für (?:den )?export|sendung ist bei logistikpartner(?:[∗*:_/]?in)? in bearbeitung|auflösung einer konsolidierten sendung|transit)$/i.test(text.trim().split(/\s+/).join(' '));
 }
 
 /**
