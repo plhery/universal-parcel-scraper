@@ -689,7 +689,8 @@ describe('Shouwu International status vocabulary', () => {
     for (const [wording, stage] of [['Arrived at AB CENTER', 'in_transit'], ['The package has arrived at terminal (T2).', 'in_transit'],
       ['Delivered by Mailbox, Example note: No. If you have any questions, please contact the carrier', 'delivered'],
       ['Parcel received by local Facility', 'in_transit'], ['Parcel departed from facility.', 'in_transit'],
-      ['Arrived at destination airport', 'in_transit']] as const) {
+      ['Arrived at destination airport', 'in_transit'], ['Arrived at GOFO Regional Destination Facility', 'in_transit'],
+      ['The driver is out for delivery', 'out_for_delivery']] as const) {
       expect(shouwuStage(wording), wording).toEqual({ stage, source: 'carrier_map' });
     }
     // The delivering partner's data row is no step back once the parcel moved.
