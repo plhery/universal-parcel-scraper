@@ -65,6 +65,22 @@
       "note": "The last-mile carrier's transfer from its sorting centre to the delivery office."
     },
     {
+      "code": "WSD05",
+      "wording": "package arrived at delivery office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The last-mile carrier's delivery office receiving the parcel after the transfer from its sorting centre."
+    },
+    {
+      "code": "WSD06",
+      "wording": "out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The last-mile courier taking the parcel out from the delivery office: the reply's own status then reads Out for delivery, and the page files the parcel under no group."
+    },
+    {
       "code": "PRECESSING",
       "wording": "Processing",
       "stage": "registered",

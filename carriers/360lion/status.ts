@@ -42,6 +42,8 @@ const SCANS: ReadonlyMap<string, LionStatus> = new Map<string, LionStatus>([
   ['WSD02', { en: 'handover to lastmile', stage: 'in_transit' }],
   ['WSD051', { en: 'Arrived at sorting center', stage: 'in_transit' }],
   ['WSD050', { en: 'package on the way to delivery office', stage: 'in_transit' }],
+  ['WSD05', { en: 'package arrived at delivery office', stage: 'in_transit' }],
+  ['WSD06', { en: 'out for delivery', stage: 'out_for_delivery' }],
 ]);
 
 /** A group the page files a number under, by its code. */

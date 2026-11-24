@@ -22,9 +22,10 @@ says in transit.
 The group decides where the parcel stands. A parcel in transit takes a later stage its newest
 scan states, such as customs. "Pre-alert", 预警 in Chinese, can be an advance notice or a
 warning, so it sets no stage: the scans decide, and a pre-alert parcel without a scan that
-says where it stands is a schema error, which leaves it to the universal providers. A delivery
-under a newer scan neither its code nor its icon stages may have been undone, so it no longer
-sets the stage.
+says where it stands is a schema error, which leaves it to the universal providers. The page
+files a parcel out for delivery under no group, and the reply then names none: its scans decide
+the same way. A delivery under a newer scan neither its code nor its icon stages may have been
+undone, so it no longer sets the stage.
 
 Each scan states its place's offset in hours, "-3" in Argentina and "+8" at Pudong. The page
 shows the wall clock alone; the adapter reads the wall clock with that offset, and rejects a

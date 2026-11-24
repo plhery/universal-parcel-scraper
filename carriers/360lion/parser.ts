@@ -78,9 +78,10 @@ export function parseLion(data: unknown, rawNumber: string): CarrierResult {
   // The page asks for one number and lists it by its own code; a list without that code answers another number.
   const parcel: unknown = (data.trackList as unknown[]).find(item => isRecord(item) && folded(item.hawbCode) === number);
   if (!isRecord(parcel)) throw new SchemaError(PROVIDER, '360Lion did not identify the requested number');
-  const group = typeof parcel.groupCode === 'string' ? parcel.groupCode : '';
-  const filed = lionGroup(group);
-  if (!filed) throw new SchemaError(PROVIDER, '360Lion filed the parcel under a group it does not name');
+  // The page files a parcel out for delivery under no group, and the reply then names none: its scans decide.
+  const group = parcel.groupCode == null ? null : typeof parcel.groupCode === 'string' ? parcel.groupCode : '';
+  const filed = group === null ? null : lionGroup(group);
+  if (filed === undefined) throw new SchemaError(PROVIDER, '360Lion filed the parcel under a group it does not name');
 
   const listed = parcel.trackItemList ?? [];
   if (!Array.isArray(listed) || listed.length > 300 || !listed.every(isRecord)) throw new SchemaError(PROVIDER, '360Lion returned an invalid scan list');
@@ -113,15 +114,18 @@ export function parseLion(data: unknown, rawNumber: string): CarrierResult {
   const moving = new Set<Stage>(['customs', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'exception']);
   const stage = group === 'IN_TRANSIT' ? (newest && moving.has(newest) ? newest : 'in_transit')
     : group === 'PRECESSING' ? (newest ?? 'registered')
-      : group === 'WARNING' ? newest : filed.stage;
-  if (!stage && !events.some(event => event.stage)) throw new SchemaError(PROVIDER, '360Lion filed a parcel under "Pre-alert" without a scan that says where it stands');
+      : group === 'WARNING' || !filed ? newest : filed.stage;
+  if (!stage && !events.some(event => event.stage)) {
+    throw new SchemaError(PROVIDER, filed ? '360Lion filed a parcel under "Pre-alert" without a scan that says where it stands'
+      : '360Lion filed a parcel under no group without a scan that says where it stands');
+  }
   const stated = clean(parcel.lastTrackStatusEn, 120);
   const delivered = stage === 'delivered' ? events.find(event => event.stage === 'delivered')?.time : undefined;
   // The page names the destination country in English ("ARGENTINA").
   const destination = countryCode(clean(parcel.destinationCountryEn, 60));
   const summary = { status: stage ? languageStageStatus(stage) : 'unknown' as const,
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
-    last_status_text: stated && !/^未知$/.test(stated) ? stated : filed.en, provider_code: group,
+    last_status_text: stated && !/^未知$/.test(stated) ? stated : filed?.en ?? events[0]?.description ?? null, ...(group ? { provider_code: group } : {}),
     ...(destination ? { destination_country: destination } : {}) };
   if (!events.length) return { ...summary, last_update: null, expected_delivery: null, summary_only: true, events: [] };
   return { ...summary, last_update: events[0]!.time ?? null, expected_delivery: null, ...(delivered ? { delivered_at: delivered } : {}),

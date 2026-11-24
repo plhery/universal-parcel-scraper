@@ -138,6 +138,15 @@ describe('360Lion guest adapter', () => {
     expect(undone.current_stage).toBeUndefined();
     expect(undone.delivered_at).toBeUndefined();
     for (const unread of ['ALL', 'LOST', 'in_transit', '', 5]) expect(() => filed(unread as string)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    // The page files a parcel out for delivery under no group: its scans decide, as under "Pre-alert".
+    const unfiled = (edit: (parcel: ReturnType<typeof fixture>) => void = () => {}) => parseLion(changed(p => { delete p.groupCode; edit(p); }).data, NUMBER);
+    const out = unfiled(p => { p.trackItemList.unshift(scan({ occurDate: '2026-03-14 12:00:00', icon: 'DISPATCH', trackCode: 'WSD06', description: 'out for delivery' })); p.lastTrackStatusEn = 'Out for delivery'; });
+    expect(out).toMatchObject({ status: languageStageStatus('out_for_delivery'), current_stage: 'out_for_delivery', last_status_text: 'Out for delivery', last_update: '2026-03-14T12:00:00-03:00' });
+    expect(out).not.toHaveProperty('provider_code');
+    const quiet = unfiled(p => { delete p.lastTrackStatusEn; });
+    expect(quiet).toMatchObject({ current_stage: 'in_transit', last_status_text: quiet.events![0]!.description });
+    expect(() => unfiled(p => { p.trackItemList = [scan({})]; })).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    expect(() => unfiled(p => { p.trackItemList = []; })).toThrowError(expect.objectContaining({ kind: 'schema' }));
     // The status the card shows, else the group's own wording.
     expect(filed('IN_TRANSIT', p => { p.lastTrackStatusEn = '未知'; }).last_status_text).toBe('In transit.');
     expect(filed('IN_TRANSIT', p => { delete p.destinationCountryEn; }).destination_country).toBeUndefined();
