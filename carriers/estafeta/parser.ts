@@ -16,6 +16,8 @@ export interface EstafetaLookup {
   service?: string;
   // Set when the guide exists but Estafeta has not yet received the parcel.
   registered?: string;
+  // Set when the summary shows the current step in red: the parcel is held back after that step's scan.
+  held?: true;
 }
 
 const LABEL_ONLY = 'la guia ha sido generada sin embargo el envio aun no es depositado en estafeta';
@@ -64,7 +66,9 @@ export function parseEstafetaLookup(html: string, rawNumber: string): EstafetaLo
   if (controls.length !== 1 || controls.attr('data-shipment-index') !== guide) throw new SchemaError('Estafeta', 'Estafeta returned a different history target');
   const services = cards.find('.shipmentInfoSeparator').filter((_, node) => clean($(node).children('.fontRoman').text()) === 'Servicio:');
   const service = services.length === 1 ? clean(services.children('.fontBold').text(), 80) : '';
-  const state = cards.find('.stateDescription.fontColorCurrentProcess');
+  // The current step, in the colour of a step under way, or in red with a "!" beside it while the parcel is held back,
+  // as when it waits to be scheduled for a round. The newest scan then gives the stage.
+  const state = cards.find('.stateDescription.fontColorCurrentProcess, .stateDescription.fontColorError');
   const messages = cards.find('.fontColorCurrentProcessMessage');
   const notice = cards.find('#i09');
   if (!state.length && !messages.length && notice.length === 1 && estafetaWording(notice.text()) === LABEL_ONLY) {
@@ -72,7 +76,8 @@ export function parseEstafetaLookup(html: string, rawNumber: string): EstafetaLo
   }
   const parts = messages.contents().filter((_, node) => node.nodeType === 3).map((_, node) => clean($(node).text(), 100)).get().filter(Boolean);
   if (state.length !== 1 || messages.length !== 1 || parts.length < 2) throw new SchemaError('Estafeta', 'Estafeta returned incomplete latest activity');
-  return { number, guide, state: clean(state.text(), 200), latestClock: parts[0]!, latestDate: parts[1]!, ...(service ? { service } : {}) };
+  return { number, guide, state: clean(state.text(), 200), latestClock: parts[0]!, latestDate: parts[1]!, ...(service ? { service } : {}),
+    ...(state.is('.fontColorError') ? { held: true as const } : {}) };
 }
 
 // A label-only guide has no scans yet, so the notice stands alone as its status.
@@ -100,8 +105,7 @@ export function parseEstafetaHistory(html: string, lookup: EstafetaLookup): Carr
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
   let scanCount = 0;
-  let firstDate = '';
-  let firstClock = '';
+  const scans: Array<{ day: string; clock: string; description: string }> = [];
   for (const group of groups.toArray()) {
     const root = $(group);
     const bindings = root.find('.remainingHistoryEvents[data-shipmentindex]');
@@ -118,7 +122,8 @@ export function parseEstafetaHistory(html: string, lookup: EstafetaLookup): Carr
       const time = clean(cells.eq(0).text(), 64);
       const description = clean(cells.eq(2).text(), 500);
       if (!description) throw new SchemaError('Estafeta', 'Estafeta returned an empty scan');
-      if (scanCount++ === 0) { firstDate = day; firstClock = clockText(time); }
+      scanCount++;
+      scans.push({ day, clock: clockText(time), description });
       const mapped = estafetaStatus(description);
       const event: CarrierEvent = { ...clock(day, time), description, location: clean(cells.eq(1).text(), 200), ...(mapped ? { stage: mapped.stage } : {}) };
       const key = JSON.stringify(event);
@@ -126,7 +131,10 @@ export function parseEstafetaHistory(html: string, lookup: EstafetaLookup): Carr
     }
   }
   if (scanCount !== $('.eventInfo').length) throw new SchemaError('Estafeta', 'Estafeta returned scans outside its parcel groups');
-  if (firstDate !== lookup.latestDate || firstClock !== clockText(lookup.latestClock)) throw new IndeterminateError('Estafeta', 'Estafeta latest summary does not match its first scan');
+  // The summary dates the newest scan, or, for a parcel held back, the newest scan of the step it shows in red: the
+  // notice that holds the parcel, such as the wait to be scheduled for a round, comes after it.
+  const anchor = lookup.held ? scans.find(({ description }) => estafetaWording(description) === estafetaWording(lookup.state)) : scans[0];
+  if (anchor?.day !== lookup.latestDate || anchor.clock !== clockText(lookup.latestClock)) throw new IndeterminateError('Estafeta', 'Estafeta latest summary does not match its first scan');
   const latest = events[0]!;
   const current = estafetaStatus(String(latest.description));
   const summary = estafetaStatus(lookup.state);

@@ -114,6 +114,26 @@ describe('Estafeta bound history', () => {
     const $ = load(historyHtml()); $('.eventInfo').first().children().first().text(`${clock} hrs.`);
     const result = parseEstafetaHistory($.html(), { ...lookup(), latestClock: clock }); expect(result.events?.[0]).not.toHaveProperty('local_time'); expect(result.last_update).toBeNull();
   });
+  it('reads the current step Estafeta shows in red while the parcel waits to be scheduled for a round', () => {
+    const $ = load(lookupHtml());
+    $('.stateDescription.fontColorCurrentProcess').removeClass('fontColorCurrentProcess').addClass('fontColorError').text('En Tránsito');
+    $('.fontColorCurrentProcessMessage').html('08:57<br>04/01/2026<br>Example City');
+    const held = parseEstafetaLookup($.html(), NUMBER);
+    expect(held).toMatchObject({ guide: GUIDE, state: 'En Tránsito', latestClock: '08:57', latestDate: '04/01/2026', held: true });
+    // The summary dates the step's own scan; the notice holding the parcel comes three minutes later.
+    const history = load(historyHtml());
+    const [notice, step] = history('.historyEventRow').first().find('.eventInfo').toArray().map((row) => history(row).children());
+    notice!.first().text('09:00 hrs.'); notice!.last().text('Pendiente programación para salida a ruta (Ver fecha programada de entrega )');
+    step!.first().text('08:57 hrs.'); step!.last().text('En tránsito');
+    const result = parseEstafetaHistory(history.html(), held);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update_local: '2026-01-04T09:00:00' });
+    expect(result.events?.[0]?.description).toMatch(/^Pendiente programación/);
+    // Shown as under way, the same summary must date the newest scan; held, it must date a scan of the step it shows.
+    expect(() => parseEstafetaHistory(history.html(), { ...held, held: undefined })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseEstafetaHistory(history.html(), { ...held, latestClock: '08:58' })).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    $('.stateStatusLineDiv').append('<p class="stateDescription fontColorCurrentProcess">Entregado</p>');
+    expect(() => parseEstafetaLookup($.html(), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
   it('keeps external transport delays nonterminal', () => {
     expect(estafetaStatus('CARGA DEMORADA POR BLOQUEO O ACCIDENTE EXTERNO EN VIA FEDERAL')).toEqual({ status: 'exception', stage: 'exception' });
     expect(estafetaStatus('No entregado')).toBeUndefined();

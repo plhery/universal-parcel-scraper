@@ -22,7 +22,11 @@ progress. Missing history stays inconclusive; a terminal summary does not
 fabricate a scan. The generic unavailable-information page omits the requested
 reference and does not prove absence. A guide whose label exists but whose
 parcel Estafeta has not yet received has no scans; its notice is read as
-registered without a history request. The service name is kept.
+registered without a history request. The service name is kept. The summary
+shows the current step in red, with a "!" beside it, while the parcel is held
+back, as when it waits to be scheduled for a round. It then dates that step's
+newest scan, and the notice holding the parcel comes after it, so the summary
+is matched to the step's scan and the newest scan gives the stage.
 
 Recipient names, postcodes, signatures, proof images and report actions are
 excluded. Scheduled-date controls retain dates after delivery and are omitted.
