@@ -257,6 +257,16 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.azerpost\.az\/az\/xidmetler\/gonderislerin-izlenmesi\?package_id=RR999999995AZ$/,
     marker: /bağlama kodu nümunə/ },
   // The page moves to its German or English path and keeps the number in its search field.
+  // The home page's form opens the tracker with the number in its query; an unknown one gets a notice and no waybill.
+  { carrier: 'runner-express', number: 'ZYIL0000000000000',
+    route: /^https:\/\/runnerexpress\.co\.il\/track\/\?search_query=ZYIL0000000000000$/,
+    marker: /This logistics item was not found|Way Bill No/i,
+    forwarding: { notFound: /This logistics item was not found/i } },
+  // Hunter Express's Transvirtual portal under VTFE's code; an unknown number gets the empty form and a notice.
+  { carrier: 'vt-freight-express', number: 'ZZZ0000000000',
+    route: /^https:\/\/portal\.vtfe\.com\.au\/Track\/VTFE\/ZZZ0000000000$/,
+    marker: /Missing or incorrect tracking number|Consignment Details/,
+    forwarding: { notFound: /Missing or incorrect tracking number/ } },
   { carrier: 'parcel-one', number: '4002109876543',
     route: /^https:\/\/parcel\.one\/(?:de|en)\/tracking\/\?trackno=4002109876543$/,
     marker: /Sendung verfolgen|Track (?:a |your )?shipment/i },
@@ -2936,6 +2946,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'evri-uk': 'the protected key request rejects the default automated browser and leaves the domestic result panel empty, so number forwarding cannot be verified',
   liccardi: 'my.liccarditrasporti.com answers automated Chrome with SafeLine\'s browser check (HTTP 468), which asks for a confirmation click before the tracking page, so number forwarding cannot be verified',
   logistiq: 'the gecko.logistiq.io tracker is a Flutter page drawn on a canvas, which exposes no visible body text until accessibility is enabled, so number forwarding cannot be verified',
+  'paket-cl': 'the track.paket.cl tracker is a Flutter page drawn on a canvas, which exposes no visible body text until accessibility is enabled, so number forwarding cannot be verified',
   'm-one': 'm-one.rs sends its certificate without the intermediate one, which headless Chromium and Node do not fetch, so the page cannot be opened',
   'magyar-posta': 'www.posta.hu fills the number into its tracker frame, which the rendered-page check does not read, and the tracker asks for a reCAPTCHA checkbox before each lookup',
   'nim-express': 'www.nimexpress.com drops connections from the daily check\'s network while other networks in the United States get its page, so number forwarding cannot be verified daily; the page looks up the number in its address and names it above its not-found notice',
