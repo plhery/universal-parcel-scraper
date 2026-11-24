@@ -182,6 +182,7 @@ import { adapter as ckLine } from '../carriers/ck-line/adapter.js';
 import { adapter as closerLogistics } from '../carriers/closer-logistics/adapter.js';
 import { adapter as cmtExpress } from '../carriers/cmt-express/adapter.js';
 import { adapter as cne } from '../carriers/cne/adapter.js';
+import { adapter as codexpress } from '../carriers/codexpress/adapter.js';
 import { adapter as colisPrive } from '../carriers/colis-prive/adapter.js';
 import { adapter as colisweb } from '../carriers/colisweb/adapter.js';
 import { adapter as commerciveParcel } from '../carriers/commercive-parcel/adapter.js';
@@ -1320,6 +1321,7 @@ export const REGISTRY: RegistryDefinition = {
     "closer-logistics": closerLogistics,
     "cmt-express": cmtExpress,
     "cne": cne,
+    "codexpress": codexpress,
     "colis-prive": colisPrive,
     "colisweb": colisweb,
     "commercive-parcel": commerciveParcel,
@@ -2623,7 +2625,7 @@ export const REGISTRY: RegistryDefinition = {
     "cmt-express": "cmt-express",
     "cn-express-za": "universal",
     "cne": "cne",
-    "codexpress": "universal",
+    "codexpress": "codexpress",
     "colis-gros-volume": "universal",
     "colis-prive": "colis-prive",
     "colisweb": "colisweb",

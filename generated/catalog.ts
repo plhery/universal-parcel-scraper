@@ -16969,7 +16969,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Sydney",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "codexpress",
+      "localClocks": true
     },
     "canaryUrl": "https://cbd-tracking.locate2u.com/",
     "trackingSearchUrl": "https://cbd-tracking.locate2u.com/",

@@ -13,7 +13,7 @@ The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/p
 [![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg)](LICENSE)
 
 <!-- GENERATED:summary -->
-**4,500+ carriers** through **1135 dedicated adapters** and **5 universal fallbacks**
+**4,500+ carriers** through **1136 dedicated adapters** and **5 universal fallbacks**
 
 <sub>2057 catalog entries · 166 countries represented</sub>
 <!-- /GENERATED:summary -->
