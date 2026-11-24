@@ -177,9 +177,10 @@ S10 serial as a zero when the check digit then holds, since the serial holds onl
 drops the slashes of a NO LIMIT shipment number, which reads the same without them, and NO
 LIMIT's adapter puts them back for its form. It also drops the slash MRW's receipts print after the office's five
 digits; MRW's tracker knows the number without it. A Tiui folio keeps its hyphens when Tiui is
-the carrier, since its digits alone do not give the folio back: `carrierTrackingNumber()` gives
-the number as its carrier knows it, for consumers to store, and the same shape under another
-carrier normalizes. A
+the carrier, and a JRS Express reference, an airbill and its branch code, its hyphen when JRS
+Express is, since their digits alone do not give them back: `carrierTrackingNumber()` gives the
+number as its carrier knows it, for consumers to store, and the same shape under another carrier
+normalizes. A
 postcode the carrier does not read goes to the enabled fallbacks only, since ParcelsApp and
 17TRACK can ask for one. Phone digits reach only a carrier whose catalog entry asks for them,
 never a fallback, and its adapter's errors never repeat them.

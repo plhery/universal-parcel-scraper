@@ -1,3 +1,4 @@
+import { jrsReference } from '../../carriers/jrs-express/number.js';
 import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { CHECKSUMS } from './checksums.js';
@@ -102,11 +103,13 @@ export function normalizeTrackingNumber(raw: string): string {
 
 /**
  * The number as its carrier knows it, to store and look up: the normalized number, except a Tiui
- * folio, which keeps its hyphens since the digits alone do not give it back. The exception is
- * Tiui's alone: another carrier's number of the same shape, Seino's or Flip Post's, normalizes.
+ * folio and a JRS Express reference, an airbill and its branch code, which keep their hyphens
+ * since the digits alone do not give them back. The exception is the carrier's alone: another
+ * carrier's number of the same shape, Seino's or Flip Post's, normalizes.
  */
 export function carrierTrackingNumber(raw: string, carrier: string | undefined): string {
-  return (carrier === 'tiui' && raw.length <= 64 ? tiuiFolio(raw) : undefined) ?? normalizeTrackingNumber(raw);
+  const kept = raw.length > 64 ? undefined : carrier === 'tiui' ? tiuiFolio(raw) : carrier === 'jrs-express' ? jrsReference(raw) : undefined;
+  return kept ?? normalizeTrackingNumber(raw);
 }
 
 /** Capability-link shipment numbers look like 999.90.########. */
@@ -114,7 +117,7 @@ export function isPlanzerSharedTrackingNumber(raw: string): boolean {
   return /^99990\d{8}$/.test(normalizeTrackingNumber(raw));
 }
 
-/** Swiss carriers show 18-digit barcodes as 99.34.123456.12345678; a Tiui folio shows its hyphens. */
+/** Swiss carriers show 18-digit barcodes as 99.34.123456.12345678; a Tiui folio and a JRS Express reference show their hyphens. */
 export function formatTrackingNumber(raw: string, carrier?: string): string {
   if (carrier === 'postlogistics') return postlogisticsIdentifier(raw);
   const value = carrierTrackingNumber(raw, carrier);

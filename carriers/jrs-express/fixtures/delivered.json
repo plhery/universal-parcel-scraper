@@ -1,0 +1,57 @@
+[
+  {
+    "trackingID": "66088",
+    "trackingCode": 3033,
+    "receiver": "Alabang South Supermarket (JRS Office+)",
+    "relation": null,
+    "statusText": "Accepted at JRS Branch",
+    "dateReceived": "2025-12-18T05:33:09.1506393Z",
+    "location": "Alabang South Supermarket (JRS Office+)",
+    "remarks": null,
+    "branchLocation": "Alabang South Supermarket (JRS Office+), Muntinlupa City"
+  },
+  {
+    "trackingID": "66088",
+    "trackingCode": 3033,
+    "receiver": null,
+    "relation": null,
+    "statusText": "Departed",
+    "dateReceived": "2025-12-18T09:05:28.457Z",
+    "location": "Alabang South Supermarket (JRS Office+)",
+    "remarks": "LUZON CARGO",
+    "branchLocation": "Alabang South Supermarket (JRS Office+), Muntinlupa City"
+  },
+  {
+    "trackingID": "66088",
+    "trackingCode": 3033,
+    "receiver": null,
+    "relation": null,
+    "statusText": "Departed",
+    "dateReceived": "2025-12-18T13:40:37.947Z",
+    "location": "Head Office",
+    "remarks": "RXS",
+    "branchLocation": "Head Office, Pasig  City"
+  },
+  {
+    "trackingID": "66088",
+    "trackingCode": 3033,
+    "receiver": null,
+    "relation": null,
+    "statusText": "Received at Delivery Branch",
+    "dateReceived": "2025-12-19T02:10:23.073Z",
+    "location": "San Mateo, Isabela",
+    "remarks": "HEAD OFFICE",
+    "branchLocation": "San Mateo, Isabela, Isabela"
+  },
+  {
+    "trackingID": "66088",
+    "trackingCode": 3033,
+    "receiver": "RECEIVER NAME",
+    "relation": null,
+    "statusText": "Released To / Delivered To",
+    "dateReceived": "2025-12-18T22:30:56.295+00:00",
+    "location": null,
+    "remarks": "PICK UP",
+    "branchLocation": "San Mateo, Isabela, Isabela"
+  }
+]

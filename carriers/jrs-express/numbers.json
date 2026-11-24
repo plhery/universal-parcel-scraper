@@ -2,6 +2,28 @@
   "carrier": "jrs-express",
   "records": [
     {
+      "number": "66088-3033",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260410161847/https://www.parcelpanel.com/couriers/jrs-express/",
+        "date": "2026-04-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-ie"
+        ]
+      },
+      "note": "An archived ParcelPanel JRS Express page offered it to try, the airbill and the branch code joined by a hyphen. JRS Express's tracker answers it as a parcel accepted at a Muntinlupa branch, sent through the head office and released at the San Mateo, Isabela branch."
+    },
+    {
       "number": "481817",
       "role": "shipment",
       "evidence": "official_documentation_example",

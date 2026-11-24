@@ -1,9 +1,12 @@
 {
   "carrier": "jrs-express",
   "entries": [
+    {"wording": "Accepted at JRS Branch", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The tracker's first scan: the branch that took the parcel in, which the scan names."},
     {"wording": "Accepted at Origin Branch", "stage": "accepted", "language": "en", "confirmedBy": "official-doc", "note": "Named in the history renderer of JRS Express's tracker script (jrs-express.com, main.c006f2e1.js); the page shows it instead of the server's text when the status id is 1."},
+    {"wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The parcel left the branch or hub the scan names, the origin branch or the head office in Pasig."},
+    {"wording": "Received at Delivery Branch", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The branch that delivers the parcel or releases it at its counter received it; the scan does not say which it will do."},
     {"wording": "Delivered To", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Named in the history renderer of JRS Express's tracker script (jrs-express.com, main.c006f2e1.js); the receiver and the relationship follow."},
-    {"wording": "Released To / Delivered To", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "Named in the history renderer of JRS Express's tracker script (jrs-express.com, main.c006f2e1.js); released to the receiver, whose name and relationship follow."},
+    {"wording": "Released To / Delivered To", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Released to the receiver at the branch or delivered to them; the page shows the receiver's name and relationship after it, which the adapter drops."},
     {"wording": "RTS Received", "stage": "returned", "language": "en", "confirmedBy": "official-doc", "note": "Named in the history renderer of JRS Express's tracker script (jrs-express.com, main.c006f2e1.js); the parcel came back to the sender (RTS, return to sender), with the receiver after it."}
   ]
 }
