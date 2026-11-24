@@ -26,7 +26,7 @@ import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '.
 import { classifyEvent, event, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
 import {
-  borrowsRoutingZone, cainiaoStampCopies, carrierHomeZone, formerCopies, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
+  borrowsRoutingZone, cainiaoStampCopies, carrierHomeZone, destinationLeg, formerCopies, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
 } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
@@ -117,7 +117,9 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   const journey = { number, destination, fallback: timezone ?? carrierHomeZone(carrier), services,
     alone: payload.track.events !== undefined && services.size === 1
       && (!isValidS10TrackingNumber(number) || number.slice(-2) === destination) };
-  const scans: { wall: string | null; service: string; origin: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
+  // A scan's leg, among its service's: its origin's clock, the destination's, or neither established.
+  type Leg = 'origin' | 'destination' | 'other';
+  const scans: { wall: string | null; service: string; leg: Leg; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
   // The destination Royal Mail's scan leaving the UK has left for, whose post's scans the later ones are.
   let leftFor: string | null = null;
   const listed = (rawEvents as unknown[]).map((raw) => isRecord(raw)
@@ -141,13 +143,14 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     const reporting = named.has(service) ? { reporting_carrier: service } : {};
     if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
       const parsed = event(wall, description, serviceStage(service, description));
-      if (parsed) scans.push({ wall: null, service, origin: false, zone: null, event: { ...parsed, ...reporting } });
+      if (parsed) scans.push({ wall: null, service, leg: 'other', zone: null, event: { ...parsed, ...reporting } });
     } else {
       const classified = classifyEvent(description, serviceStage(service, description));
       const { stage } = classified;
       // A scan's location (loc) is read only for its clock.
       const scan = { service, description, wall, location: text(raw.loc), delivered: stage === 'delivered' };
-      scans.push({ wall, service, origin: originLeg(scan), zone: partner ? false : serviceZone(scan, journey),
+      const leg: Leg = originLeg(scan) ? 'origin' : destinationLeg(scan) ? 'destination' : 'other';
+      scans.push({ wall, service, leg, zone: partner ? false : serviceZone(scan, journey),
         event: { description, ...classified, ...reporting } });
     }
   }
@@ -160,10 +163,11 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   // (false) keeps its wall time. A deduced instant names its zone and how it was
   // chosen; a UTC stamp is the instant itself.
   const zoneAt = (index: number, wall: string): Zoned | null => {
-    const { zone, service, origin } = scans[index]!;
+    const { zone, service, leg } = scans[index]!;
     if (zone !== null) return zone || null;
-    // A service's scans on its origin's clock (a post's copies of the origin post's, Cainiao's in China) borrow among themselves.
-    const established = (other: typeof scans[number]) => other.service === service && other.origin === origin
+    // A service's scans on its origin's clock (a post's copies of the origin post's, Cainiao's in China), or Cainiao's in the
+    // destination, borrow among themselves.
+    const established = (other: typeof scans[number]) => other.service === service && other.leg === leg
       && other.zone ? other.zone.zone : null;
     const borrowed = (zone: string): Zoned => ({ zone, basis: 'neighbour' });
     for (let earlier = index - 1; earlier >= 0; earlier -= 1) { const zone = established(scans[earlier]!); if (zone) return borrowed(zone); }

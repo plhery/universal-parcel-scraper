@@ -344,12 +344,30 @@ export function originLeg({ service, description }: Pick<Scan, 'service' | 'desc
 }
 
 /**
+ * Cainiao's steps in the destination, in Postal Ninja's translation: its import
+ * customs, the delivering carrier's receipt, sorting and round. They are on the
+ * destination's clock: on a PostNL item to the UK, its customs arrival at 12:24 was
+ * Royal Mail's receipt and AliExpress's copy at 12:24 UTC, an hour early on the
+ * Amsterdam clock routing passes for PostNL. The transit hub's steps before them can be on
+ * another clock.
+ */
+const CAINIAO_DESTINATION_LEG = new RegExp(`^(?:${[
+  'arrived at customs', 'import customs clearance started', 'import customs clearance complete', 'departed from customs',
+  'received by local delivery company', 'arrived at the destination country or region sorting center', 'out for delivery',
+].join('|')})(?:\\.\\s.*)?$`, 'is');
+
+/** Whether a scan is Cainiao's step in the destination, on the destination's clock and lending it to no other step. */
+export function destinationLeg({ service, description }: Pick<Scan, 'service' | 'description'>): boolean {
+  return service === CAINIAO && CAINIAO_DESTINATION_LEG.test(description.trim());
+}
+
+/**
  * The established zone of a scan's wall time, from the service that reported
  * it: the destination post's clock for a scan Swiss Post relays from it, the
  * office's for DHL Germany's copies that name one, a UTC
  * post's or the origin's that an S10 suffix names for its copies, its fixed
  * or network clock in any history (Beijing's for DHLink's beside GOFO's), China's for Cainiao's steps in China, the
- * facility's for USPS's scans that name its state, else
+ * facility's for USPS's scans that name its state, the destination's for Cainiao's steps there when it keeps one clock, else
  * in a history it reports alone its location's clock, or a local clock's
  * country: the destination's, else the service's (`courierZone`) or the
  * carrier's. A destination on another clock than the service's may be a
@@ -375,6 +393,8 @@ export function serviceZone(scan: Scan, journey: Journey): Zoned | null | false 
   if (fixed) return fixed;
   if (MIDNIGHT.test(wall) || (TWELVE_HOUR_CLOCKS.has(service) && wall.slice(11, 13) === '12' && !delivered)) return false;
   if (service === CAINIAO && originLeg(scan)) return at(CAINIAO_CHINA_ZONE, 'carrier');
+  const arrived = destinationLeg(scan) && journey.destination ? at(countryTimeZone(journey.destination), 'destination') : null;
+  if (arrived) return arrived;
   if (service === FOUR_PX && locationCountry(locationParts(location)) === 'CN') return at('UTC', 'carrier');
   if (isUsps(service)) return at(uspsScanZone(location) ?? locationZone(location), 'place');
   if (!journey.alone) return null;

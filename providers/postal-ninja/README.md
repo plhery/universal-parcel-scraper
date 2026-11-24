@@ -127,8 +127,11 @@ capture failure.
   showed on two parcels. Its steps in China, from the seller's to the departing flight, are
   read on China's clock by their wording ([shared with ParcelsApp](../../carriers/aliexpress/clock.ts)),
   with the sorting centre's town in brackets before some, whatever the parcel's carrier: read on the Zurich clock routing passes for a Swiss Post
-  item, they came six hours late. Its later scans, on the transit hub's or the
-  destination's clock, borrow no zone from them.
+  item, they came six hours late. Its steps in the destination, from import customs to the
+  delivering carrier's round, are read on the destination's clock when it keeps one: on a PostNL
+  item to the UK, read on the Amsterdam clock routing passes for PostNL, they came an hour before
+  Royal Mail's own scans. Its scans at the transit hub, between the two, borrow no zone from
+  either.
   4PX's scans in China are in UTC: its pickup at 21:08:31 on 4PX's own +08:00 came at
   13:08:31, and read on the Berlin zone routing passes for the DHL Germany parcel it went on,
   an hour early. They are placed by the country their location names, in any history, and its
