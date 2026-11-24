@@ -464,6 +464,14 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00+08:00', 'Wait for a flight to be booked')).toMatchObject({ stage_source: 'none' });
   });
 
+  it("reads a line's truck towards the airport and its hand-over to the airlines, as ParcelsApp relays them", () => {
+    for (const wording of ['On truck', 'Handovered to airlines']) {
+      expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+    }
+    // A truck named in a longer sentence is not this scan.
+    expect(event('2026-01-07T12:45:00+08:00', 'On truck for delivery')).not.toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+  });
+
   it("reads HuaHan's pallet broken down after the flight and its transfer to the last mile's number, and a return, as providers relay them", () => {
     for (const wording of ['Dismantling in progress', '拆板中。—Dismantling in progress', 'Re-route: 1Z9K99F99999999999']) {
       expect(event('2026-01-07T12:45:00+08:00', wording), wording).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });

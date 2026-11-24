@@ -535,6 +535,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // A forwarder's parcel waiting at the airport for its flight, and that flight taking off, as aggregators relay
   // its English ("Wait for a flight", "The airline has taken off."): on the way, as Lion Parcel's map reads the wait.
   if (/^wait(?:ing)? for (?:a |the )?flight[.!]?$|^the airline has taken off[.!]?$/i.test(value)) return 'in_transit';
+  // A line's truck taking the parcel from its hub towards the airport, and the hand-over to the airlines after the
+  // truck arrived, in the forwarder's English as ParcelsApp relays it naming no carrier: "On truck", "Handovered to airlines".
+  if (/^on (?:the )?truck[.!]?$|^handovered to (?:the )?airlines?[.!]?$/i.test(value)) return 'in_transit';
   // A forwarder's arrival at the destination port, worded as a delivery, also after its Chinese
   // ("picked up at the destination port"), and its order data sent to the last-mile carrier.
   if (/^(?:目的港已提货\s*)?delivery has been made at the destination port[.!]?$|^目的港已提货$/iu.test(value)) return 'in_transit';
