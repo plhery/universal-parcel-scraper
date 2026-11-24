@@ -14,9 +14,10 @@ xingyunyi.com. Tracked through the service its tracking page asks.
 - The reply lists one shipment per number asked, under `InputTrackingNumber`. A number XingYunYi holds
   an order for comes with the order's id, XingYunYi's number (`SystemNo`), which must be the whole
   number asked, the line's number, the countries, the page's status for the shipment and the scans.
-- A number it holds no order for comes back as an empty order with the id 0, no scan and the status
-  Transit, which the page shows as in transit without tracking information. No answer says the
-  number is unknown, so this stays inconclusive with the reason `portal_not_found`.
+- A number it holds no order for comes back as an empty order with the id 0, no scan, no XingYunYi
+  number and the default order time 0001-01-01, which the page shows as in transit without tracking
+  information. Every invented number gets that order, and an order XingYunYi holds keeps its id with
+  or without scans, so the empty order is not found.
 - An order without a scan is no history with the reason `listed`, unless the page's status for it
   says more than Transit, such as Delivered: that status is then the answer, as a summary.
 - A reply code other than 200 is inconclusive, a redirect or a 404 is a moved route, HTTP 403 or a

@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, InvalidInputError, NoHistoryError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { leadingScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
@@ -112,9 +112,9 @@ function scansOf(shipment: Record<string, unknown>): CarrierEvent[] {
  * (`SystemNo`), the line's number (`TrackingNumber`), the countries, the
  * page's status for it (`LatestLogisticsStatus`) and the scans, each a clock,
  * a place and a wording that starts with the place. A number it holds no
- * order for comes back as an empty order with the id 0, no scan and the
- * status Transit: the page shows it as in transit without tracking
- * information, so it stays inconclusive.
+ * order for comes back as an empty order with the id 0, no scan, no
+ * XingYunYi number and the default order time: not found. An order it holds,
+ * scanned or not, keeps its id.
  */
 export function parseXingyunyi(payload: unknown, raw: string): CarrierResult {
   const number = normalizeXingyunyiNumber(raw);
@@ -136,7 +136,7 @@ export function parseXingyunyi(payload: unknown, raw: string): CarrierResult {
   const events = scansOf(shipment);
   if (id === 0) {
     if (events.length || text(shipment, 'SystemNo', 64)) throw new SchemaError(PROVIDER, 'XingYunYi returned an order without its id');
-    throw new IndeterminateError(PROVIDER, 'XingYunYi holds no order under the number', { reason: 'portal_not_found' });
+    throw new NotFoundError(PROVIDER, 'XingYunYi holds no order under the number');
   }
   if (normalizeTrackingNumber(text(shipment, 'SystemNo', 64)) !== number) {
     throw new IndeterminateError(PROVIDER, 'XingYunYi answered for another shipment');

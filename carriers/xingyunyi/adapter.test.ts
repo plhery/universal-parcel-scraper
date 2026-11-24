@@ -154,9 +154,9 @@ describe('XingYunYi HTTP adapter', () => {
     }
   });
 
-  it('keeps a number without an order inconclusive, and other refusals apart', () => {
+  it('reads a number without an order as not found, and keeps other refusals apart', () => {
     expect(() => parseXingyunyi(fixture('not-found'), UNKNOWN))
-      .toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'portal_not_found' }));
+      .toThrow(expect.objectContaining({ kind: 'not_found', message: 'XingYunYi holds no order under the number' }));
     // The empty order must name the number asked.
     expect(() => parseXingyunyi(fixture('not-found'), IN_TRANSIT))
       .toThrow(expect.objectContaining({ kind: 'indeterminate', message: 'XingYunYi answered for another shipment' }));
@@ -213,7 +213,7 @@ describe('XingYunYi HTTP adapter', () => {
 
   it('keeps an unknown number, a moved route, a refusal, a browser check and a broken reply apart', async () => {
     const lookup = (response: () => Response) => carrier(vi.fn<typeof fetch>().mockImplementation(async () => response())).track({ number: UNKNOWN });
-    await expect(lookup(() => json(fixture('not-found')))).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    await expect(lookup(() => json(fixture('not-found')))).rejects.toMatchObject({ kind: 'not_found' });
     await expect(lookup(() => json('', { status: 404 }))).rejects.toMatchObject({ kind: 'transport' });
     await expect(lookup(() => json('', { status: 302, headers: { Location: 'https://www.xingyunyi.com/' } }))).rejects.toMatchObject({ kind: 'transport' });
     // The service's refusal of a request with another token.

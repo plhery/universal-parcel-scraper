@@ -24,8 +24,8 @@ describe('XingYunYi live retrieval', () => {
     }
   }, 45_000);
 
-  it('keeps a number XingYunYi holds no order for inconclusive', async () => {
+  it('reads a number XingYunYi holds no order for as not found', async () => {
     await expect(direct().track({ number: process.env.XINGYUNYI_UNKNOWN_NUMBER ?? 'XYYEX9999999990YQ' }))
-      .rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+      .rejects.toMatchObject({ kind: 'not_found' });
   }, 45_000);
 });
