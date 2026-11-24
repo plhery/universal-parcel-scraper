@@ -30,6 +30,14 @@ describe('Pengyou numbers', () => {
       expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('pengyou');
     }
   });
+
+  it('suggests AMS, an S10 serial and YQ, the series its tracker answered, and asks the tracker about it', () => {
+    expect(detectCarrierMatch('ams 999 999 987 yq')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pengyou'] });
+    expect(recognitionCandidates('AMS999999987YQ', {}).map((candidate) => candidate.carrier)).toEqual(['pengyou']);
+    for (const other of ['AMS999999980YQ', 'AMS99999987YQ', 'AMS9999999987YQ', 'AMT999999987YQ', 'AM999999987YQ', 'AMS999999987YX']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('pengyou');
+    }
+  });
 });
 
 describe('Pengyou tracking adapter', () => {

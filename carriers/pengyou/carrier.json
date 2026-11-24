@@ -93,6 +93,12 @@
       "pattern": "^ZXA\\d{9}PY$",
       "confidence": "high",
       "checksum": "s10-serial"
+    },
+    {
+      "id": "pengyou-3",
+      "pattern": "^AMS\\d{9}YQ$",
+      "confidence": "low",
+      "checksum": "s10-serial"
     }
   ]
 }

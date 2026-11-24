@@ -84309,6 +84309,23 @@
     ]
   },
   {
+    "input": "AMS999999980YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "AMS999999987YQ",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "pengyou"
+    ],
+    "asked": [
+      "pengyou"
+    ]
+  },
+  {
     "input": "AMTS000176738FS",
     "carrier": "mtscn",
     "confidence": "high",

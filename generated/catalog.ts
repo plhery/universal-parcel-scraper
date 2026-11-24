@@ -49818,6 +49818,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pattern": "^ZXA\\d{9}PY$",
         "confidence": "high",
         "checksum": "s10-serial"
+      },
+      {
+        "pattern": "^AMS\\d{9}YQ$",
+        "confidence": "low",
+        "checksum": "s10-serial"
       }
     ]
   },
@@ -75353,7 +75358,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "peddler": ["peddler-1","peddler-2"],
   "pelican-express": [],
   "penguin-box": [],
-  "pengyou": ["pengyou-1","pengyou-2"],
+  "pengyou": ["pengyou-1","pengyou-2","pengyou-3"],
   "peninsula-truck-lines": [],
   "penta-express": [],
   "peqasus-az": [],

@@ -56,6 +56,10 @@ own tracker answered every parcel the app tracked with `ZXA`, and no other carri
 layout, so `pengyou-2` names Pengyou for that series at high confidence. The nine digits of a `ZXA`
 number are an S10 serial, eight digits and their check digit, which the rule asks for.
 
+Pengyou's tracker also answered a parcel with `AMS`, an S10 serial and `YQ`, a suffix other Chinese
+forwarders use too, so `pengyou-3` suggests Pengyou at low confidence for that series alone, its
+serial checked, and recognition asks the tracker.
+
 ## Links
 
 The tracker's page takes a form post, so no link opens one parcel.
