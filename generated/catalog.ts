@@ -40853,7 +40853,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lexship",
+      "localClocks": true
     },
     "canaryUrl": "https://track.lexship.biz/",
     "trackingUrlTemplate": "https://track.lexship.biz/?tracking={trackingNumber}",
@@ -67004,7 +67005,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "urbano-ar",
+      "localClocks": true
     },
     "canaryUrl": "https://www.urbano.com.ar/segui-tu-envio",
     "trackingSearchUrl": "https://www.urbano.com.ar/segui-tu-envio",

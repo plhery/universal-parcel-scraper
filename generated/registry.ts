@@ -609,6 +609,7 @@ import { adapter as leschaco } from '../carriers/leschaco/adapter.js';
 import { adapter as lexId } from '../carriers/lex-id/adapter.js';
 import { adapter as lexMy } from '../carriers/lex-my/adapter.js';
 import { adapter as lexTh } from '../carriers/lex-th/adapter.js';
+import { adapter as lexship } from '../carriers/lexship/adapter.js';
 import { adapter as lhtex } from '../carriers/lhtex/adapter.js';
 import { adapter as libanpost } from '../carriers/libanpost/adapter.js';
 import { adapter as libertyExpress } from '../carriers/liberty-express/adapter.js';
@@ -1062,6 +1063,7 @@ import { adapter as upaya } from '../carriers/upaya/adapter.js';
 import { adapter as ups } from '../carriers/ups/adapter.js';
 import { adapter as uralExpress } from '../carriers/ural-express/adapter.js';
 import { adapter as urbano } from '../carriers/urbano/adapter.js';
+import { adapter as urbanoAr } from '../carriers/urbano-ar/adapter.js';
 import { adapter as urvaam } from '../carriers/urvaam/adapter.js';
 import { adapter as useaExpress } from '../carriers/usea-express/adapter.js';
 import { adapter as usendChile } from '../carriers/usend-chile/adapter.js';
@@ -1773,6 +1775,7 @@ export const REGISTRY: RegistryDefinition = {
     "lex-id": lexId,
     "lex-my": lexMy,
     "lex-th": lexTh,
+    "lexship": lexship,
     "lhtex": lhtex,
     "libanpost": libanpost,
     "liberty-express": libertyExpress,
@@ -2226,6 +2229,7 @@ export const REGISTRY: RegistryDefinition = {
     "ups": ups,
     "ural-express": uralExpress,
     "urbano": urbano,
+    "urbano-ar": urbanoAr,
     "urvaam": urvaam,
     "usea-express": useaExpress,
     "usend-chile": usendChile,
@@ -3406,7 +3410,7 @@ export const REGISTRY: RegistryDefinition = {
     "lex-my": "lex-my",
     "lex-th": "lex-th",
     "lex-vn": "universal",
-    "lexship": "universal",
+    "lexship": "lexship",
     "lhtex": "lhtex",
     "libang-logistics": "universal",
     "libanpost": "libanpost",
@@ -4210,7 +4214,7 @@ export const REGISTRY: RegistryDefinition = {
     "ups": "ups",
     "ural-express": "ural-express",
     "urbano": "urbano",
-    "urbano-ar": "universal",
+    "urbano-ar": "urbano-ar",
     "urvaam": "urvaam",
     "us-cargo": "universal",
     "usasd": "universal",

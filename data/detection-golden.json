@@ -33683,6 +33683,42 @@
     ]
   },
   {
+    "input": "22730000000021371521",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post"
+    ]
+  },
+  {
+    "input": "22730000000037355617",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post"
+    ]
+  },
+  {
+    "input": "22730000000043041054",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "usps",
+      "nz-post"
+    ],
+    "asked": [
+      "nz-post"
+    ]
+  },
+  {
     "input": "2276314169",
     "carrier": "unknown",
     "confidence": "low",
@@ -113177,6 +113213,14 @@
     "asked": [
       "nipost",
       "chronopost"
+    ]
+  },
+  {
+    "input": "RR057830637AE",
+    "carrier": "emirates-post",
+    "confidence": "high",
+    "candidates": [
+      "emirates-post"
     ]
   },
   {
