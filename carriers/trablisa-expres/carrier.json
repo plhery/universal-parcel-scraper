@@ -23,6 +23,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://trablisa.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
     "helpUrl": "https://www.trablisa.es/area-negocio/trablisa-expres#datos-de-contacto",
     "canaryUrl": "https://trablisa.factapp.es/IRIS/Seguimiento",
@@ -31,6 +32,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "trablisa.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

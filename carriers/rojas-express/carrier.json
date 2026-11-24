@@ -22,6 +22,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://rojasexpress.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://rojasexpress.factapp.es/IRIS/Seguimiento",
     "canaryUrl": "https://rojasexpress.factapp.es/IRIS/Seguimiento",
     "shows": [],
@@ -29,6 +30,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "rojasexpress.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

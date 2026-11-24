@@ -21,6 +21,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://logisticaalatec.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://logisticaalatec.factapp.es/IRIS/Seguimiento",
     "canaryUrl": "https://logisticaalatec.factapp.es/IRIS/Seguimiento",
     "shows": [],
@@ -28,6 +29,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "logisticaalatec.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

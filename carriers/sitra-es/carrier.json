@@ -22,6 +22,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://alcorcon.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://alcorcon.factapp.es/IRIS/Seguimiento",
     "canaryUrl": "https://alcorcon.factapp.es/IRIS/Seguimiento",
     "shows": [],
@@ -29,6 +30,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "alcorcon.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

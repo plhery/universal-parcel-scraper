@@ -21,6 +21,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://navarra.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://navarra.factapp.es/IRIS/Seguimiento",
     "canaryUrl": "https://navarra.factapp.es/IRIS/Seguimiento",
     "shows": [],
@@ -28,6 +29,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "navarra.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

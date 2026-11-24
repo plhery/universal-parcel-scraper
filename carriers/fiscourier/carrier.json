@@ -21,6 +21,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://fiscourier.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
     "helpUrl": "https://fiscourier.com/contacto/",
     "canaryUrl": "https://fiscourier.factapp.es/IRIS/Seguimiento",
@@ -29,6 +30,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "fiscourier.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

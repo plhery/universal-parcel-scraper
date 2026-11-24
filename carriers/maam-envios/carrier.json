@@ -21,6 +21,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://maam.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://maam.factapp.es/IRIS/Seguimiento",
     "canaryUrl": "https://maam.factapp.es/IRIS/Seguimiento",
     "shows": [],
@@ -28,6 +29,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "maam.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

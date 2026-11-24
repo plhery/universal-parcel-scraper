@@ -22,6 +22,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://kilbourne.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://kilbourne.factapp.es/IRIS/Seguimiento",
     "canaryUrl": "https://kilbourne.factapp.es/IRIS/Seguimiento",
     "shows": [],
@@ -29,6 +30,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "kilbourne.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }

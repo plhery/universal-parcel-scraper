@@ -22,6 +22,7 @@
   },
   "capabilities": [],
   "portal": {
+    "url": "https://valls.factapp.es/IRIS/Seguimiento?s={trackingNumber}",
     "searchUrl": "https://valls.factapp.es/IRIS/Seguimiento",
     "helpUrl": "https://www.altcampexpress.com/contacto/",
     "canaryUrl": "https://valls.factapp.es/IRIS/Seguimiento",
@@ -30,6 +31,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "valls.factapp.es"
+      ],
+      "pathPattern": "^/IRIS/Seguimiento(?:\\.aspx)?/?$",
+      "params": [
+        "s"
+      ]
+    }
+  ],
   "detection": []
 }
