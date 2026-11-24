@@ -18,17 +18,52 @@
   "timezone": "Europe/Madrid",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "instapack",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "searchUrl": "https://back.instapack.es/client-dashboard/seguimiento-de-envios/",
     "canaryUrl": "https://www.instapack.es/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "recipient_address",
+      "driver_name",
+      "contact_details",
+      "parcel_count",
+      "customer_reference",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times"
+    ],
+    "discarded": [
+      "recipient_address",
+      "driver_name",
+      "contact_details",
+      "parcel_count",
+      "customer_reference",
+      "coordinates"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "weight",
+      "service_name"
+    ]
   },
   "links": [],
   "detection": []

@@ -2299,6 +2299,18 @@
     "reason": "Two letters and ten digits are already shapes of Amazon, J&T, Relais Colis and Colis Privé numbers, and Instabox's letters vary between parcels, so the user picks Instabox."
   },
   {
+    "carrier": "instapack",
+    "pattern": "^\\d{15}$",
+    "kind": "by_design",
+    "reason": "Instapack's own order ids are the order's day and a counter in fifteen digits, a length BRT, DPD France and other carriers share, and Instapack publishes no number layout, so nothing in the number points to it."
+  },
+  {
+    "carrier": "instapack",
+    "pattern": "^CNES\\d{11}$",
+    "kind": "by_design",
+    "reason": "CNES economy numbers are AliExpress (Cainiao) numbers that several Spanish last-mile carriers deliver, so the shape cannot name Instapack."
+  },
+  {
     "carrier": "integral-pack",
     "pattern": "^\\d{4}[ABP]\\d{1,8}$",
     "kind": "by_design",

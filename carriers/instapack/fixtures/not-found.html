@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CoreUI Bootstrap 4 Admin Template">
+    <meta name="author" content="Lukasz Holeczek">
+    <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
+    <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+
+    <title>Instapack</title>
+    <link rel="shortcut icon" href="/bundles/ipclientdashboard/images/favicon.png">
+
+    <link href="/bundles/ipclientdashboard/modules/font-awesome-old/css/font-awesome.css" rel="stylesheet" />
+    <link href="/bundles/ipclientdashboard/css/style.css" rel="stylesheet" />
+
+
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden pace-done ">
+<header class="app-header navbar navbar-login">
+    <a class="navbar-brand-login" href="http://www.instapack.es/"></a>
+
+    <ul class="nav navbar-nav ml-auto pr-4 pr-lg-5 float-right d-sm-down-none">
+        <li class="nav-item">
+            <a class="nav-link" href="http://www.ics.es/" hidden>
+                <img src="https://back.instapack.es/bundles/ipclientdashboard/images/ics.jpg" class="">
+            </a>
+            <a href="http://www.ics.es/" class="nav-item-login-text" hidden>ICS</a>
+        </li>
+    </ul>
+
+</header>
+
+<div class="app flex-row align-items-center login-background pb-5" >
+<div class="container ">
+    <div class="row justify-content-center">
+            <div class="card-group card-login">
+                <div class="card">
+                    <div class="card-title-blue text-center">
+                        <h1 style="font-size: 30px"> Seguimiento de paquete </h1>
+                    </div>
+
+                                            <div class="alert alert-danger alert-dismissible mb-0" role="alert" id="id_alert">
+                            <button type="button" class="close alert-closed"  aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p id = "id_alert_body" class="mb-0" > No se localiza ningún paquete </p>
+                        </div>
+
+                    <div class="card-body text-center pt-5 pb-0">
+                        <form action="/client-dashboard/seguimiento-de-envios/" method="post">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-cube fa-lg"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="code" name="code" placeholder="Código de seguimiento"  value="" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button type="submit"  value="Submit" class="btn" style="background-color: #f9b047; color: white;">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+            </div>
+    </div>
+    </div>
+</div>
+
+<footer id="footer" class="navbar navbar-fixed-bottom" style="position: fixed; bottom: 0; width: 100%;text-align: center;min-height: 50px;background-color: #fff;color: #333;padding: 10px;border-top: 1px solid #c0c0c0; background-color: white !important;">
+    <div style="display: block; text-align: center; width: 100%;">
+        <a href="https://back.instapack.es/legal">Política de Cookies y Privacidad</a>
+    </div>
+</footer>
+
+
+    <script src="/bundles/ipclientdashboard/modules/jquery/dist/jquery.js"></script>
+    <script src="/bundles/ipclientdashboard/modules/popper.js/dist/umd/popper.js"></script>
+    <script src="/bundles/ipclientdashboard/modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bundles/ipclientdashboard/js/app.js"></script>
+
+
+</body>
+
+<script>
+    $(document).ready(function() {
+        $('.alert-closed').on('click', function () {
+            $('#id_alert').fadeOut( 200 );
+            setTimeout( "cerrar()",202);
+        });
+    });
+</script>

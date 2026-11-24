@@ -1,4 +1,9 @@
 {
   "carrier": "instapack",
-  "entries": []
+  "entries": [
+    {"wording": "Conductor asignado", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A driver took the service, to collect the parcel or to deliver it; Salida a reparto follows within minutes on a delivery round."},
+    {"wording": "Salida a reparto", "language": "es", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"wording": "Incidencias en entrega - Ausente", "language": "es", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "A delivery incident: nobody was in. The page lists incidents in their own panel, each as the incident's type and its reason."},
+    {"wording": "¡Hemos realizado la entrega!", "language": "es", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The delivery panel's heading, dated beside it; the panel's body is the delivery address, which is never read."}
+  ]
 }
