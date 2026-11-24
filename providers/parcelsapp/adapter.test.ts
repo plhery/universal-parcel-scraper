@@ -2462,6 +2462,29 @@ describe('ParcelsApp result parsing', () => {
       .events?.find((event) => event.description === 'In Transit')?.time).not.toBe('2026-10-27T09:10:52.000Z');
   });
 
+  it('reads YunExpress\'s scans at a place in a US state or a Canadian province on that place\'s clock', () => {
+    // Live shape: its copies of USPS's scans name USPS's facility, at USPS's Central digits to the
+    // second, and its own scans a town, its state and the country's code with spaces alone.
+    const scan = (date: string, status: string, carrier: number, location: string) => ({ date, status, carrier, location });
+    const read = (destinationCode: string, ...states: ReturnType<typeof scan>[]) => parseParcelsAppResponse({
+      carriers: ['Yun Express', 'USPS'], originCode: 'CN', destinationCode, states,
+    }, number, identity()).events?.map((event) => [event.description, event.time, event.time_zone]);
+    expect(read('US',
+      scan('2026-11-20T14:23:33Z', 'Departed USPS Regional Facility', 0, 'EXAMPLE CITY TX DISTRIBUTION CENTER'),
+      scan('2026-11-17T09:10:12Z', 'Start Customs Clearence', 0, 'EXAMPLE CITY TEXAS US'),
+      scan('2026-11-16T11:02:40Z', 'Arrived at the origin international airport', 0, 'Example City, People\'s Republic of China'),
+    )).toEqual([
+      ['Departed USPS Regional Facility', '2026-11-20T20:23:33.000Z', 'America/Chicago'],
+      ['Start Customs Clearence', '2026-11-17T15:10:12.000Z', 'America/Chicago'],
+      ['Arrived at the origin international airport', '2026-11-16T03:02:40.000Z', 'Asia/Shanghai'],
+    ]);
+    // "CA" after the province is Canada.
+    expect(read('CA', scan('2026-11-17T09:10:12Z', 'Start Customs Clearence', 0, 'EXAMPLE TOWN ON CA'))?.[0]?.slice(1))
+      .toEqual(['2026-11-17T14:10:12.000Z', 'America/Toronto']);
+    // Another country's code places nothing.
+    expect(read('US', scan('2026-11-17T09:10:12Z', 'Start Customs Clearence', 0, 'EXAMPLE TOWN NORTH SAXONY DE'))?.[0]?.[2]).not.toMatch(/^America\//);
+  });
+
   it('reads YunExpress\'s scans in Australia on the clock of its scans at a town there, and in China on China\'s', () => {
     // Live shape: the town, its state and the country's code with spaces alone, and the rest of the
     // destination's leg at the country alone or no place, all at that town's digits; its copy of

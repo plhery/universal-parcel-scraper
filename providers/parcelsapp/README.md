@@ -768,7 +768,10 @@ step exists for future protocol changes.
   labeled. Such a row takes the clock of the other networks' scans at that second when they
   share one, as does one placed only in a country of several clocks (its copy of GOFO's label
   in the "United States of America"); a second of :00 places nothing, since minute-only clocks
-  share it. In a
+  share it. Its scans at a place in a US state or a Canadian province are on that place's
+  clock: USPS's facility on its copies of USPS's scans ("EXAMPLE CITY TX DISTRIBUTION CENTER"),
+  six hours early as labeled, and a town, its state and the country's code with spaces alone
+  ("EXAMPLE CITY TEXAS US") on its own. In a
   destination of several clocks outside North America, YunExpress writes a town, its state
   and the country's code with spaces alone ("EXAMPLE TOWN STATE AU"), on the town's clock,
   and gives its other scans there the same digits: its copy of Australia Post's receipt, at

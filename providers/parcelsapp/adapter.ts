@@ -1703,6 +1703,8 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   if (relaysFacilityClock(name)) return facilityZone(location);
   if (carrier === 'china-post' && inChina(location)) return CHINA_POST_ZONE;
   if (carrier === 'emirates-post' && UAE_PLACE.test(location)) return EMIRATES_POST_ZONE;
+  const regional = key === 'yunexpress' ? yunExpressRegionZone(location, inNorthAmerica, distrusted) : null;
+  if (regional) return regional;
   const place = (key === 'yunexpress' ? spacedCountry(location) : null) ?? lastPlace(location);
   // A state or province the town confirms beats the country its code also
   // names ("Chicago, IL"); a merely possible one comes after ("Koeln, DE").
@@ -2053,6 +2055,23 @@ const PARTNER_RELAYS = new Set(['yunexpress']);
 function spacedCountry(location: string): string | null {
   const code = /^[^,]+\s([A-Za-z]{2})$/.exec(location.trim())?.[1];
   return code ? countryCode(code) : null;
+}
+
+/**
+ * The clock of YunExpress's scan at a place in a US state or a Canadian province: its feed gives
+ * such a scan that place's wall clock under ParcelsApp's UTC label. It names USPS's facility on its
+ * copies of USPS's scans ("EXAMPLE CITY TX DISTRIBUTION CENTER"), and a town, its state and the
+ * country's code with spaces alone on its own ("EXAMPLE CITY TEXAS US"). Read on the label, its
+ * copies of USPS's scans came six hours before USPS's own on Central time, and its customs
+ * clearance six hours before its own tracker's at that town. The country's code is read as the
+ * country's ("EXAMPLE TOWN ON CA" is in Ontario, not California), and another country's
+ * (`spacedCountry`) places nothing here.
+ */
+function yunExpressRegionZone(location: string, inNorthAmerica: boolean, distrusted: ReadonlySet<string>): string | null {
+  const spaced = spacedCountry(location);
+  if (spaced && spaced !== 'US' && spaced !== 'CA') return null;
+  const region = regionClock(spaced ? location.trim().replace(/\s+[A-Za-z]{2}$/, spaced === 'US' ? ', US' : ', Canada') : location, distrusted);
+  return region && (region.certain || (inNorthAmerica && !region.distrusted)) ? region.zone : null;
 }
 
 /**
