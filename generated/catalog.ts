@@ -502,7 +502,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         }
       ],
       "recognitionRank": 524,
-      "recognitionPattern": "^1810\\d{14}$",
+      "recognitionPattern": "^181\\d{15}$",
       "refresh": {
         "minMinutes": 30
       },
@@ -554,7 +554,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
-        "pattern": "^1810\\d{14}$",
+        "pattern": "^181\\d{15}$",
         "confidence": "low"
       }
     ]

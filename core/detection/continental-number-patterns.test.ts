@@ -1119,12 +1119,12 @@ describe('JP HOME, CargoLine and Ambro Express links', () => {
 });
 
 describe('PostNL eighteen-digit numbers for Italy', () => {
-  it('offers PostNL for 1810 and fourteen digits and asks it, and only for that series', () => {
-    for (const number of ['181011999999999980', '1810 1100 0000 0000 17']) {
+  it('offers PostNL for 181 and fifteen digits and asks it, and only for that series', () => {
+    for (const number of ['181011999999999980', '1810 1100 0000 0000 17', '181199999999999984']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['spring-gds']) });
       expect(recognitionAskedCarriers(number, { countryHint: 'IT' }), number).toEqual(['spring-gds']);
     }
-    for (const number of ['182011000000000017', '18101100000000017', '1810110000000000170']) {
+    for (const number of ['182011000000000017', '180911000000000017', '18101100000000017', '1810110000000000170']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('spring-gds');
       expect(recognitionAskedCarriers(number), number).not.toContain('spring-gds');
     }
