@@ -93,6 +93,15 @@ describe('Posti projection', () => {
     }
     // A main status past pre-advice keeps its own stage.
     expect(waiting('READY_FOR_PICKUP', [departed])).toMatchObject({ current_stage: 'ready_for_pickup' });
+    // Posti receiving the item for transport after the origin's sorting and dispatch is the item on its way.
+    const sorted = { eventDescription: 'The item is in sorting.', city: 'SYNTHETIC HUB', timestamp: '2026-01-11T09:00:00Z' };
+    const sent = { eventDescription: 'The item is on its way to the destination country.', city: 'SYNTHETIC HUB', timestamp: '2026-01-11T12:00:00Z' };
+    const received = { eventDescription: 'Item received for transport', city: 'SYNTHETICTOWN', timestamp: '2026-01-14T09:00:00Z' };
+    const inbound = waiting('WAITING', [received, sent, sorted, advice]);
+    expect(inbound).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(inbound.events?.map(event => event.stage)).toEqual(['in_transit', 'in_transit', 'in_transit', 'pending']);
+    // Its receipt before any movement stays the acceptance.
+    expect(waiting('WAITING', [received, advice]).events?.map(event => event.stage)).toEqual(['accepted', 'pending']);
   });
 
   it('reads its copies of a Polish, French or Albanian post\'s scans in the country of origin on that post\'s clock', () => {

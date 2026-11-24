@@ -64,6 +64,8 @@ Bootstrap, lookup and refresh share one cancellable 15-second budget.
   (`statusMap`) reads the label at the start of a stored wording, never the reason.
 - Registration labels describe repeated handling during transport. Country arrival and
   readiness for delivery remain transit until a scan identifies the delivery round.
+- A receipt after the item moved, as Posti receiving an item from abroad for transport after the
+  origin post's sorting and dispatch, is part of its way and reads as transit.
 - A scan outside Finland has `city` "ULKOMAILLA" ("abroad"), untranslated. It names no
   place, and neither events nor the shipment carry a country the public query can read, so
   such a scan has no location. Nor has a scan whose `city` is "Posti kuljetus" ("Posti

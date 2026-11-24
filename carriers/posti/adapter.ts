@@ -95,6 +95,8 @@ function pickupPoint(raw: unknown): string | null {
 // an inbound item already moves abroad under the origin post's scans.
 const BEFORE_ARRIVAL = new Set(['ORDER_RECEIVED', 'WAITING']);
 const MOVING = new Set(['accepted', 'in_transit', 'customs']);
+/** Stages that do not show the item moving on: pre-advice, its receipt and a hold. */
+const UNMOVED = new Set(['pending', 'registered', 'accepted', 'exception']);
 
 /** The newest scan's movement where the main status still says pre-advice. */
 function currentStatus(main: ClassifiedStatus | undefined, code: string, events: readonly CarrierEvent[]): ClassifiedStatus | undefined {
@@ -181,6 +183,13 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   });
   if (listsNewestFirst(scans) === false) scans.reverse();
   const events = scans.sort((left, right) => (Date.parse(right.time || '') || 0) - (Date.parse(left.time || '') || 0)).slice(0, 100);
+  // Oldest first: a receipt after the item moved is part of its way, as Posti receiving an item from abroad for
+  // transport after the origin post's sorting and dispatch.
+  let moved = false;
+  for (const event of [...events].reverse()) {
+    if (moved && event.stage === 'accepted') event.stage = 'in_transit';
+    else if (event.stage && !UNMOVED.has(event.stage)) moved = true;
+  }
   const current = currentStatus(postiStatus(hit.status.main, hit.status.subStatus), hit.status.main, events);
   const measurements = isRecord(hit.measurements) ? hit.measurements : {};
   const dimensions = ['length', 'width', 'height'].map((field) => measurement(measurements[field], { cm: 1, mm: 0.1, m: 100 }));
