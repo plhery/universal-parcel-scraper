@@ -24,8 +24,9 @@ Tracked through the track query of its order system on wld-exp.com.
 
 ## Notes
 
-- Kuayuan Express runs the same order system, with another not-found wording
-  ([its adapter](../kuayuan-express/README.md)).
+- [Kuayuan Express](../kuayuan-express/README.md) runs the same order system, with another not-found
+  wording. Both read it through [retoms.ts](../kuayuan-express/retoms.ts); this carrier keeps its
+  host, signing key, number format, not-found wording, status map and place format.
 - WLD writes its own first scan under `IR` and relays the line's scans under `ND`, `DD` and `TT`, in
   the line's words. `ND` covers delivery attempts as well as transit, so the map stages those scans by
   their wording. The page names the shipment statuses: `AF` in the network, `CC` delivered, `CF`

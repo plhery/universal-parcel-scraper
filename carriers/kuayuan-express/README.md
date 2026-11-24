@@ -4,6 +4,10 @@ Kuayuan Express (跨源速递), run by Shenzhen Kuayuan Express Supply Chain, sh
 the United States, Europe and other countries, and hands some to China Post. Its site is
 kuayuanexpress.com.cn. Tracked through the tracking form on its home page.
 
+The form queries the re-toms order system, which [WLD Express](../wld-express/README.md) runs too.
+Both read it through [retoms.ts](retoms.ts); this carrier keeps its host, token, number format,
+not-found wording, status map and recipient fields.
+
 ## How it works
 
 1. `direct`: `POST https://kuayuanexpress.com.cn/api/re-toms/v1` with the JSON the home page's script
