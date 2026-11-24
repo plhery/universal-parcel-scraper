@@ -164,6 +164,10 @@ carrier.
   clock. A row is read on the clock of the place it names (`Town / UF`), or its state's when the
   town is not found; one with no place keeps its wall clock in `local_time`, as the
   [Anjun adapter](../../carriers/anjun/README.md) gives every scan.
+- Neighbour Express's leg (carrier key 100864) shows Neighbour Express's wall clocks, and 17TRACK
+  labels them `+00:00`: hours early against the offset Neighbour Express's own service states. A
+  row is read on the clock of the province its place names (`Canada/ON/Town`); one that names none
+  keeps its wall clock in `local_time`.
 - Mexico Post's leg (carrier key 13141) reads the digits Correos de México's tracker shows as
   UTC: `time_utc` keeps them, and `time_raw` and `time_iso` show them six hours earlier under
   `-06:00`, the tracker's own rows six hours later. A row is read from `time_utc`'s digits as the

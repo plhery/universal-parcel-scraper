@@ -594,6 +594,21 @@ describe('17TRACK result parsing', () => {
     expect(parse17TrackResponse(reply(100999, [row('21:09:46', 'São Paulo / SP')]), number).events?.[0]?.time).toBe('2026-11-10T01:09:46.000Z');
   });
 
+  it('reads Neighbour Express\'s rows on the clock of the province they name, not under the +00:00 17TRACK adds', () => {
+    const row = (time: string, location: string | null) => ({
+      time_iso: `2026-11-22T${time}+00:00`, time_utc: `2026-11-22T${time}Z`, time_raw: { date: '2026-11-22', time, timezone: null },
+      description: 'shipment data generated in NE system', location, stage: null, sub_status: 'InfoReceived' });
+    const reply = (key: number, events: unknown[]) => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InfoReceived' }, tracking: { providers: [{ provider: { key, name: 'Neighbour Express', country: 'CA' }, events }] } } }] });
+    const parsed = parse17TrackResponse(reply(100864, [row('13:20:24', 'Canada/ON/Example Town'), row('09:00:00', 'Canada/NS/Sample'), row('08:00:00', null)]), number);
+    // Neighbour Express's own service dates the first at 13:20:24 at UTC-05:00.
+    expect(parsed.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-22T18:20:24.000Z', '2026-11-22T13:00:00.000Z', '2026-11-22T08:00:00']);
+    expect(parsed.events?.[0]).toMatchObject({ time_zone: 'America/Toronto', time_zone_basis: 'place' });
+    expect(parsed.undated_event_count).toBeUndefined();
+    // Another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply(100999, [row('13:20:24', 'Canada/ON/Example Town')]), number).events?.[0]?.time).toBe('2026-11-22T13:20:24.000Z');
+  });
+
   it('reads Quick Rabbit\'s rows on Madrid\'s clock, not under the -04:00 17TRACK adds', () => {
     const row = (date: string, time: string, timezone: string | null = null) => ({
       time_iso: `${date}T${time}${timezone ?? '-04:00'}`, time_utc: null, time_raw: { date, time, timezone },

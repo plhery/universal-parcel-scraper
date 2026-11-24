@@ -17,7 +17,7 @@ import { ChallengeError, IndeterminateError, InputRequiredError, InvalidInputErr
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
-import { countryCode, countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
+import { canadaProvinceTimeZone, countryCode, countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
@@ -368,6 +368,21 @@ const ANJUN_EXPRESS = 191915;
 function anjunExpressZone(location: string): string | null {
   const place = location ? locatePlace(location, { countries: ['BR'], carriers: ['anjun'] }) : null;
   return place ? placeTimeZone(place) : null;
+}
+
+/**
+ * 17TRACK's carrier 100864, Neighbour Express, shows Neighbour Express's wall clocks (`time_raw` has no zone)
+ * and labels them +00:00: a scan Neighbour Express's own service dates 13:20:24 at UTC-05:00 in Ontario came as
+ * 13:20:24+00:00, five hours early. A row is read on the clock of the province its place names
+ * ("Canada/ON/Town"); one whose place names none keeps its wall clock in `local_time`.
+ */
+const NEIGHBOUR_EXPRESS = 100864;
+function neighbourExpressZone(location: string): string | null {
+  for (const part of location.split('/')) {
+    const zone = canadaProvinceTimeZone(part);
+    if (zone) return zone;
+  }
+  return null;
 }
 
 /**
@@ -794,6 +809,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const fedex = reported.key === FEDEX;
     const chile = reported.key === CORREOS_CHILE;
     const anjunExpress = reported.key === ANJUN_EXPRESS;
+    const neighbourExpress = reported.key === NEIGHBOUR_EXPRESS;
     const correiosBr = reported.key === CORREIOS_BRAZIL;
     const correos = reported.key === CORREOS_SPAIN;
     const mexico = reported.key === MEXICO_POST;
@@ -847,10 +863,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const named = ctt ? cttSiteZone(text(raw.location), countries) : null;
       const intake = ctt && !text(raw.location) ? agencyIntake(wallMillis(raw), agencyScans) : null;
       const site = named ?? intake;
-      // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Anjun Express's, Shiprocket's, DAI Post's, Quick Rabbit's, Juxi Express's partner's abroad or an origin post's, on which 17TRACK puts one offset for the whole parcel.
+      // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Anjun Express's, Neighbour Express's, Shiprocket's, DAI Post's, Quick Rabbit's, Juxi Express's partner's abroad or an origin post's, on which 17TRACK puts one offset for the whole parcel.
       // Correios Brazil's copy of the sending post's scan, which 17TRACK labels with Brasília's offset, and Correos de México's at the tracker's digits.
       const read = facility || located !== undefined || juxiAbroad !== undefined || site || relaysFacilityClock(name) || utc || nz || abroad.has(index) || polish || handed || exchange || arrived || own || chile
-        || anjunExpress || shiprocket || daiPost || quickRabbit || sent !== undefined || sending !== undefined || mexican !== undefined;
+        || anjunExpress || neighbourExpress || shiprocket || daiPost || quickRabbit || sent !== undefined || sending !== undefined || mexican !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland || posted ? null : seasonZone(raw, labelled, now);
       // A destination post's copy of the origin post's scan keeps that post's digits under whatever offset labels them, its own included.
@@ -869,6 +885,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         : nz ? at('Pacific/Auckland', 'carrier') : quickRabbit ? at('Europe/Madrid', 'carrier')
         : chile ? at(facilityZone(text(raw.location)), 'place') ?? at('America/Santiago', 'carrier')
         : anjunExpress ? at(anjunExpressZone(text(raw.location)), 'place')
+        : neighbourExpress ? at(neighbourExpressZone(text(raw.location)), 'place')
         : shiprocket ? at(placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null, 'place')
         : at(daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location)), 'place');
       const zone = chosen?.zone ?? null;
@@ -903,11 +920,11 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         latest.see(day, false);
         continue;
       }
-      if (wall && (abroad.has(index) || shiprocket || anjunExpress || hywl || posted || sent !== undefined || sending !== undefined || located !== undefined
+      if (wall && (abroad.has(index) || shiprocket || anjunExpress || neighbourExpress || hywl || posted || sent !== undefined || sending !== undefined || located !== undefined
         || juxiAbroad !== undefined || mexican !== undefined) && !zone) {
         // A scan NZ Post dated abroad or India Post relays from the destination's post, or an origin post's that Correos, Correios, USPS or La Poste relays, or a
         // local carrier's that Juxi Express relays, in a country on several clocks, a Shiprocket row outside India, an Anjun Express row at a place
-        // not found, a Huiyi Logistics row outside China or a Correos de México office off central time, keeps its description as a wall time.
+        // not found, a Neighbour Express row whose place names no province, a Huiyi Logistics row outside China or a Correos de México office off central time, keeps its description as a wall time.
         const local: CarrierEvent = { ...parsed, local_time: wall };
         delete local.time;
         events.push(local);
