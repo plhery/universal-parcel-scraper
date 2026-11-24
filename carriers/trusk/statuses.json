@@ -1,4 +1,16 @@
 {
   "carrier": "trusk",
-  "entries": []
+  "entries": [
+    {"code": "order_created", "wording": "Commande validée", "stage": "registered", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "Trusk has the retailer's order."},
+    {"code": "waiting_for_appointment", "wording": "Choix du créneau de livraison", "stage": "registered", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The recipient has a delivery slot to choose."},
+    {"code": "appointment_validated", "wording": "Créneau validé", "stage": "registered", "language": "fr", "confirmedBy": "bundle", "note": "The delivery slot is booked; the goods are still at the retailer's."},
+    {"code": "pickup_not_started", "wording": "Chargement", "stage": "registered", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The loading at the retailer's warehouse or shop, not done yet."},
+    {"code": "pickup_completed", "wording": "Chargement effectué", "stage": "accepted", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The driver has loaded the goods at the retailer's."},
+    {"code": "pickup_partial", "wording": "Chargement partiel", "stage": "accepted", "language": "fr", "confirmedBy": "bundle", "note": "The driver loaded some of the packages."},
+    {"code": "pickup_failed_label", "wording": "Chargement", "stage": "exception", "language": "fr", "confirmedBy": "bundle", "note": "The tracking page's label for a loading that failed, shown in red."},
+    {"code": "dropoff", "wording": "Livraison", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-24", "note": "The delivery step; it carries a time once the delivery is under way."},
+    {"code": "dropoff_completed", "wording": "Livraison terminée", "stage": "delivered", "language": "fr", "confirmedBy": "live", "firstSeen": "2026-11-24"},
+    {"code": "dropoff_partial", "wording": "Livraison partielle", "stage": "exception", "language": "fr", "confirmedBy": "bundle", "note": "Only some of the packages were delivered."},
+    {"code": "dropoff_failed_label", "wording": "Livraison", "stage": "failed_attempt", "language": "fr", "confirmedBy": "bundle", "note": "The tracking page's label for a delivery that failed, shown in red."}
+  ]
 }

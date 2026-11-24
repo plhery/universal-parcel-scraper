@@ -4598,6 +4598,12 @@
     "reason": "Trunkrs does not document its nine-digit numbers, and nine digits are shared with TNT and other carriers, so the shape cannot name Trunkrs."
   },
   {
+    "carrier": "trusk",
+    "pattern": "^[A-Z0-9_]{6,32}$",
+    "kind": "by_design",
+    "reason": "A Trusk order id is a random run of letters, digits, hyphens and underscores whose letter case the lookup needs, so the order link names the carrier, never the bare id."
+  },
+  {
     "carrier": "tst-cf-express",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

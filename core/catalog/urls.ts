@@ -52,6 +52,32 @@ export function validateInstaboxTrackingUrl(rawUrl: string, trackingNumber: stri
   return url.toString();
 }
 
+// A Trusk order page: `/<order>`, or `/<language>/<order>` as older messages wrote it.
+const TRUSK_PATH = /^\/(?:[a-z]{2}\/)?([A-Za-z0-9_-]{6,32})\/?$/;
+
+/**
+ * A Trusk order link, bound to its whole order id, as `https://track.trusk.com/<order>`. The id
+ * is case-sensitive and the tracking number keeps it only in capitals, so the link carries it.
+ */
+export function validateTruskTrackingUrl(rawUrl: string, trackingNumber: string): string {
+  let url: URL;
+  try { url = new URL(rawUrl.trim()); } catch { throw new TypeError('Paste the complete Trusk order link'); }
+  if (rawUrl.length > 4096 || url.protocol !== 'https:' || url.hostname !== 'track.trusk.com'
+    || url.username || url.password || (url.port && url.port !== '443') || url.hash) {
+    throw new TypeError('Trusk order links must use https://track.trusk.com');
+  }
+  const match = TRUSK_PATH.exec(url.pathname);
+  if (!match || normalizeTrackingNumber(match[1]!) !== normalizeTrackingNumber(trackingNumber)) {
+    throw new TypeError('The Trusk link must name this complete order');
+  }
+  for (const [key, value] of url.searchParams) {
+    if (!/^utm_(?:source|medium|campaign|content|term)$/.test(key) || value.length > 256) {
+      throw new TypeError('The Trusk link contains an unsupported parameter');
+    }
+  }
+  return `https://track.trusk.com/${match[1]}`;
+}
+
 // The Freightways networks' domains. Their receiver sites and older ITNG
 // servlet look a customer printed label up with the sender's account.
 const FREIGHTWAYS_DOMAINS: Readonly<Record<string, string>> = {

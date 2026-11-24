@@ -1,5 +1,68 @@
 {
   "carrier": "trusk",
-  "gap": "No public page shows a Trusk number.",
-  "records": []
+  "records": [
+    {
+      "number": "f4JZFWKhwf",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260824063811/https://track.trusk.com/f4JZFWKhwf",
+        "date": "2026-08-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chit-chats"
+        ]
+      },
+      "note": "An archived Trusk order link. Trusk's order lookup answers it as a delivered IKEA order, with a time on its delivery step only."
+    },
+    {
+      "number": "TVb_j5l55P",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260218132506/https://track.trusk.com/api/order/TVb_j5l55P",
+        "date": "2026-02-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived Trusk order link and its lookup's reply, with the time of each step. Trusk's order lookup answers it as a delivered IKEA order."
+    },
+    {
+      "number": "O2AgL1Jhi6",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250707125048/https://track.trusk.com/api/order/O2AgL1Jhi6",
+        "date": "2025-07-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chit-chats"
+        ]
+      },
+      "note": "An archived Trusk order link and its lookup's reply. Trusk's order lookup answers it as an Emma order whose recipient has a delivery slot to choose."
+    }
+  ]
 }

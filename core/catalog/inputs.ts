@@ -5,6 +5,7 @@ import { isValidMondialRelayBarcode } from '../detection/index.js';
 import { validateDachserTrackingUrl } from './urls.js';
 import { validatePlanzerSharedUrl } from './urls.js';
 import { validateInstaboxTrackingUrl } from './urls.js';
+import { validateTruskTrackingUrl } from './urls.js';
 import { validateFreightwaysTrackingUrl } from './urls.js';
 import { validateAmazonShareUrl } from './urls.js';
 import { DELIVERY_POSTCODE, colisPrivePostcode, deliveryPostcodeText } from './postcode.js';
@@ -49,6 +50,7 @@ function capabilityUrl(validator: CarrierInputValidator, value: string, tracking
     case 'planzerSharedUrl': return validatePlanzerSharedUrl(value, trackingNumber);
     case 'dachserCapabilityUrl': return validateDachserTrackingUrl(value, trackingNumber);
     case 'instaboxCapabilityUrl': return validateInstaboxTrackingUrl(value, trackingNumber);
+    case 'truskCapabilityUrl': return validateTruskTrackingUrl(value, trackingNumber);
     case 'freightwaysCapabilityUrl': return validateFreightwaysTrackingUrl(value, trackingNumber, carrierId);
     case 'amazonShareUrl': return validateAmazonShareUrl(value, trackingNumber);
     default: return undefined;
@@ -131,6 +133,7 @@ export function normalizeCarrierInputs(
       case 'planzerSharedUrl':
       case 'dachserCapabilityUrl':
       case 'instaboxCapabilityUrl':
+      case 'truskCapabilityUrl':
       case 'freightwaysCapabilityUrl':
       case 'amazonShareUrl':
         supplied[field] = capabilityUrl(requirement.validator, value, trackingNumber, carrierId)!;

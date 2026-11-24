@@ -866,6 +866,7 @@ import { statusMap as tracxLogis } from '../../carriers/tracx-logis/status.js';
 import { statusMap as transaher } from '../../carriers/transaher/status.js';
 import { statusMap as transcorp } from '../../carriers/transcorp/status.js';
 import { statusMap as trendyolExpress } from '../../carriers/trendyol-express/status.js';
+import { statusMap as trusk } from '../../carriers/trusk/status.js';
 import { statusMap as transmission } from '../../carriers/transmission/status.js';
 import { statusMap as tsjy } from '../../carriers/tsjy/status.js';
 import { statusMap as tstCfExpress } from '../../carriers/tst-cf-express/status.js';
@@ -1276,7 +1277,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   't-cat': tCat, 't-group': tGroup, takesend, 'tanzania-posts': tanzaniaPosts, taxydema, 'taqbin-hk': taqbinHk, 'tcc-co': tccCo, 'tci-express': tciExpress, 'tcs-pakistan': tcsPakistan, tdn, tealca,
   'team-express-ae': teamExpressAe, 'team-global-express': teamGlobalExpress, 'team-worldwide': teamWorldwide, techlink, teleship, 'tfm-express': tfmExpress, 'tforce-freight': tforceFreight, 'tforce-logistics': tforceLogistics,
   'thailand-post': thailandPost, 'the-courier-guy': theCourierGuy, thhy, tiki, 'timely-titan': timelyTitan, tiui, tipsa, 'tirupati-courier': tirupatiCourier, 'tmm-express': tmmExpress, tnt, 'tnt-au': tntAu, 'tnt-it': tntIt, 'today-kr': todayKr, tonami, toptrans, topyou, 'tp-logistics-th': tpLogisticsTh, torrestir, 'total-express': totalExpress, toyou,
-  'trackings-ge': trackingsGe, trackon, 'tracx-logis': tracxLogis, transaher, transcorp, transmission, 'trendyol-express': trendyolExpress, tsjy, 'tst-cf-express': tstCfExpress, tufesa, 'tws-express': twsExpress,
+  'trackings-ge': trackingsGe, trackon, 'tracx-logis': tracxLogis, transaher, transcorp, transmission, 'trendyol-express': trendyolExpress, trusk, tsjy, 'tst-cf-express': tstCfExpress, tufesa, 'tws-express': twsExpress,
   'ubi-smart-parcel': ubiSmartParcel, 'ukp-worldwide': ukpWorldwide, ukrposhta,
   'united-delivery-service': unitedDeliveryService, uniuni, 'unipost-express': unipostExpress, upaya, ups, urbano, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, viapost, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,

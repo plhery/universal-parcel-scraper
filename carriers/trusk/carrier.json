@@ -14,24 +14,77 @@
   "timezone": "Europe/Paris",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "trusk",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "requirements": [
+      {
+        "field": "trackingUrl",
+        "validator": "truskCapabilityUrl",
+        "optional": true,
+        "label": "Trusk order link",
+        "type": "url",
+        "placeholder": "https://track.trusk.com/…",
+        "help": "The order link from Trusk's message opens your delivery. Without it, other sources are asked."
+      }
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "offset_timestamps",
+    "eta_window",
+    "provider_code",
+    "sender_name",
+    "weight_kg"
+  ],
   "portal": {
-    "url": "https://track.trusk.com/fr/{trackingNumber}",
     "canaryUrl": "https://track.trusk.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "eta_window",
+      "sender_name",
+      "package_count",
+      "weight",
+      "delivery_options",
+      "order_reference",
+      "recipient_name",
+      "recipient_contact",
+      "recipient_address",
+      "driver"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "eta_window",
+      "sender_name",
+      "weight"
+    ],
+    "discarded": [
+      "package_count",
+      "delivery_options",
+      "order_reference",
+      "recipient_name",
+      "recipient_contact",
+      "recipient_address",
+      "driver"
+    ],
+    "unavailable": [
+      "location"
+    ]
   },
   "links": [
     {
       "domains": [
         "track.trusk.com"
       ],
-      "path": "^/[a-z]{2}/([^/?#]+)/?$"
+      "pathPattern": "^/(?:[a-z]{2}/)?[A-Za-z0-9_-]{6,32}/?$",
+      "path": "^/(?:[a-z]{2}/)?([A-Za-z0-9_-]{6,32})/?$",
+      "keepsCapabilityUrl": true
     }
   ],
   "detection": []

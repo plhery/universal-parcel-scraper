@@ -16,6 +16,7 @@ export type CarrierInputValidator =
   | 'planzerSharedUrl'
   | 'dachserCapabilityUrl'
   | 'instaboxCapabilityUrl'
+  | 'truskCapabilityUrl'
   | 'freightwaysCapabilityUrl'
   | 'amazonShareUrl'
   | 'swissPostcode'

@@ -156,6 +156,8 @@ function credential(validator: string, number: string, carrier: string): string 
       return `https://customeriberia.dachser.com/customerarea/utilidades/seguimiento-publico/detalle?numeroUnico=${number}&hash=AAAAAAAA`;
     case 'instaboxCapabilityUrl':
       return `https://track.instabox.com/sv/${number}?authCode=${'A'.repeat(32)}`;
+    case 'truskCapabilityUrl':
+      return `https://track.trusk.com/${number}`;
     case 'freightwaysCapabilityUrl': {
       const receiver = carrierLinkRules(carrier as CarrierId).find((rule) => rule.keepsCapabilityUrl)!.domains[0];
       return `https://${receiver}/?consignmentid=CU..${number}.Z.0000000.1`;
