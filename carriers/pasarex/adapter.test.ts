@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 // The browser helper's reading of the public sample's reply (numbers.json), its rows grouped by status.
 import fixture from './fixtures/delivered.json' with { type: 'json' };
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { TrawlClient } from '../../core/transport/trawl.js';
 import { adapter, PASAREX_RESULT, PasarexTracker, pasarexUrl } from './adapter.js';
@@ -31,7 +32,14 @@ describe('PasarEX tracking', () => {
     expect(result.events!.every(event => !event.time && event.stage_source === 'carrier_map')).toBe(true);
   });
 
-  it.each(statuses.entries)('maps the wording $wording', entry => expect(pasarexStage(entry.wording)?.stage).toBe(entry.stage));
+  it.each(statuses.entries)('maps the wording $wording', entry => expect(pasarexStage(entry.wording)?.stage).toBe(entry.stage ?? undefined));
+
+  it('leaves an arrangement with the recipient during the round without a stage, on purpose', () => {
+    expect(statusMapAnswer({ carrier: 'pasarex', providerCode: null, description: 'A delivery agreement has been made with the consignee' }))
+      .toMatchObject({ kind: 'intentional_gap' });
+    expect(statusMapAnswer({ carrier: 'pasarex', providerCode: null, description: 'No one at home at the time of delivery' }))
+      .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+  });
 
   it('rejects another number, an empty history and a bad clock', () => {
     expect(() => parsePasarex({ ...fixture, number: 'PSRTEST000001' }, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));

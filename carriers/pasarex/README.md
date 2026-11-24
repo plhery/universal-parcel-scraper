@@ -18,7 +18,8 @@ number and returns the number the page names and its rows. The token stays in th
 
 - The page groups its rows under its own statuses (DELIVERED, IN CUSTOMS PROCESS, COMMENTS, …),
   not in time order. The adapter puts them newest first. A row's status is broader than its
-  sentence, and the map reads the sentence.
+  sentence, and the map reads the sentence. A round that ended without trying the door is a delay,
+  not an attempt, and an arrangement with the recipient while the round is out moves nothing.
 - A row has a day and a second without a zone, on the clock of the station that scanned it,
   in Colombia so far; the rows keep them as wall clocks.
 - The tracker's only notice, `Guía no encontrada`, answers both a number it does not hold and a

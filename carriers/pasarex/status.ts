@@ -13,11 +13,15 @@ const mappedStage = (wording: string): Stage | undefined => WORDINGS.stage(wordi
  * without a fallback stage. The status a row is grouped under is broader than its sentence and decides nothing.
  */
 export function pasarexStage(wording: string): ClassifiedWording | null {
-  if (!wording) return null;
+  if (!wording || WORDINGS.unstaged(normalizeStatusWording(wording))) return null;
   const mapped = mappedStage(normalizeStatusWording(wording));
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const staged = classifyWording(wording, 'in_transit');
   return staged.source === 'none' ? null : staged;
 }
 
-export const statusMap: CarrierStatusMap = { stage: (_code, wording) => mappedStage(wording), gaps: [] };
+// Its rows that move nothing, such as an arrangement with the recipient during the round, by their catalog notes.
+const GAPS = statuses.entries.filter((entry) => entry.stage === null)
+  .map((entry) => ({ wording: normalizeStatusWording(entry.wording), note: entry.note ?? 'A row that moves nothing.' }));
+
+export const statusMap: CarrierStatusMap = { stage: (_code, wording) => mappedStage(wording), gaps: GAPS };
