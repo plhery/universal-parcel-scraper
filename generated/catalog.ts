@@ -55491,7 +55491,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rxo",
+      "localClocks": true
     },
     "canaryUrl": "https://rxo.com/",
     "trackingUrlTemplate": "https://track.rxo.com/?trackingnumber={trackingNumber}",

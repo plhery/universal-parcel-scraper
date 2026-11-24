@@ -853,6 +853,7 @@ import { adapter as rpxIndonesia } from '../carriers/rpx-indonesia/adapter.js';
 import { adapter as runforint } from '../carriers/runforint/adapter.js';
 import { adapter as runnerExpress } from '../carriers/runner-express/adapter.js';
 import { adapter as russianPost } from '../carriers/russian-post/adapter.js';
+import { adapter as rxo } from '../carriers/rxo/adapter.js';
 import { adapter as sacoShippingLine } from '../carriers/saco-shipping-line/adapter.js';
 import { adapter as safewayExpressCargo } from '../carriers/safeway-express-cargo/adapter.js';
 import { adapter as safexpress } from '../carriers/safexpress/adapter.js';
@@ -2004,6 +2005,7 @@ export const REGISTRY: RegistryDefinition = {
     "runforint": runforint,
     "runner-express": runnerExpress,
     "russian-post": russianPost,
+    "rxo": rxo,
     "saco-shipping-line": sacoShippingLine,
     "safeway-express-cargo": safewayExpressCargo,
     "safexpress": safexpress,
@@ -3833,7 +3835,7 @@ export const REGISTRY: RegistryDefinition = {
     "runforint": "runforint",
     "runner-express": "runner-express",
     "russian-post": "russian-post",
-    "rxo": "universal",
+    "rxo": "rxo",
     "ryder-last-mile": "universal",
     "saco-shipping-line": "saco-shipping-line",
     "saee": "universal",
