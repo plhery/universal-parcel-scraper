@@ -62,6 +62,9 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Sort - loaded to trailer', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at depot', { status: 'in_transit', stage: 'in_transit' }],
   ['Driver enroute', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  // A European last mile's hub after customs, and its depot before the round.
+  ['Arrived at HUB', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at Last Mile Depot', { status: 'in_transit', stage: 'in_transit' }],
   // GOFO's own scans in the US, read as its codes are: the vehicle is the line haul between its facilities.
   ['Arrived at GOFO Regional Hub', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed GOFO Regional Hub', { status: 'in_transit', stage: 'in_transit' }],

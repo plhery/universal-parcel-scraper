@@ -195,6 +195,20 @@
       "note": "The same last mile's arrival at its delivery depot, before its Out for delivery."
     },
     {
+      "wording": "Arrived at HUB",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Relayed from the last-mile carrier in Europe, without a code: its hub's receipt after customs."
+    },
+    {
+      "wording": "Arrived at Last Mile Depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "That last mile's depot receiving the parcel, before its round."
+    },
+    {
       "wording": "Driver enroute",
       "stage": "out_for_delivery",
       "language": "en",
