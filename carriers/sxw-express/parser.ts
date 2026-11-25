@@ -1,6 +1,8 @@
 import { countryCode } from '../../core/time/index.js';
 import { airportTimeZone, locatePlace } from '../../places/index.js';
 import { countryZones, mainZone } from '../../places/zones.js';
+import { gofoScanZone } from '../gofo/clock.js';
+import { GOFO_CLOCK_ZONE } from '../gofo/parser.js';
 import type { HualeiRow, HualeiTenant, HualeiZoneClock } from '../gzyl/hualei.js';
 import { sxwEnglish, sxwStage } from './status.js';
 
@@ -32,7 +34,16 @@ function abroad(location: string): boolean {
   return australiaPost(place);
 }
 
-const arrivals = new WeakMap<readonly HualeiRow[], string | null>();
+// GOFO's rows in the United States, from its regional hub's on: SXW takes GOFO's Pacific clocks for Eastern ones
+// before writing them on Beijing's, so its copies come three hours before GOFO's own scans, at Carteret, Charlotte
+// and Miami as on a row with no place. They are dated on GOFO's clock and shown on the station's, as GOFO's are.
+const GOFO_ROW = /\bGOFO\b/;
+const gofoClock = (row: HualeiRow): HualeiZoneClock => ({
+  zone: gofoScanZone(row.location, row.content) ?? GOFO_CLOCK_ZONE, basis: 'carrier', misread: { zone: GOFO_CLOCK_ZONE, as: 'America/New_York' },
+});
+
+const arrivals = new WeakMap<readonly HualeiRow[], { abroad: string | null; gofo: string | null }>();
+const earliest = (rows: readonly HualeiRow[], test: (row: HualeiRow) => boolean) => rows.filter(test).map((row) => row.clock).sort()[0] ?? null;
 
 /**
  * The partner abroad gives its rows on the destination's wall clock, and SXW
@@ -40,14 +51,16 @@ const arrivals = new WeakMap<readonly HualeiRow[], string | null>();
  * earliest row placed abroad on, a row keeps its wall clock. Read on Beijing's
  * clock, an Australian row would come before the platform wrote it, and Royal
  * Mail dates the acceptance SXW copies at that wall clock in the UK. Australia
- * Post's rows are on Australia's east coast clock, whatever their place.
+ * Post's rows are on Australia's east coast clock, whatever their place. GOFO's
+ * rows, from the first that names GOFO on, are on GOFO's clock.
  */
 function sxwClock(row: HualeiRow, rows: readonly HualeiRow[]): 'platform' | 'wall' | HualeiZoneClock {
   if (!arrivals.has(rows)) {
-    arrivals.set(rows, rows.filter((other) => abroad(other.location)).map((other) => other.clock).sort()[0] ?? null);
+    arrivals.set(rows, { abroad: earliest(rows, (other) => abroad(other.location)), gofo: earliest(rows, (other) => GOFO_ROW.test(other.content)) });
   }
-  const arrival = arrivals.get(rows);
-  if (!arrival || row.clock < arrival) return 'platform';
+  const arrival = arrivals.get(rows)!;
+  if (arrival.gofo && row.clock >= arrival.gofo) return gofoClock(row);
+  if (!arrival.abroad || row.clock < arrival.abroad) return 'platform';
   return australiaPost(row.location.trim()) ? AUSTRALIA_POST_CLOCK : 'wall';
 }
 

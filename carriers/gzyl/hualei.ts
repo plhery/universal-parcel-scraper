@@ -281,8 +281,26 @@ export interface HualeiRow {
   readonly clock: string; readonly content: string; readonly location: string; readonly code: string; readonly written?: string;
 }
 
-/** A wall clock on a zone the tenant knows, and how that zone was chosen (`time_zone_basis`). */
-export interface HualeiZoneClock { readonly zone: string; readonly basis: 'destination' | 'carrier' }
+/**
+ * A wall clock on a zone the tenant knows, and how that zone was chosen (`time_zone_basis`). `misread` marks
+ * a partner's wall clock on `misread.zone` that the tenant took for one on `misread.as` before writing it on
+ * Beijing's: the row's clock put back on `misread.as` gives the partner's, and the instant is shown on `zone`.
+ */
+export interface HualeiZoneClock {
+  readonly zone: string; readonly basis: 'destination' | 'carrier'; readonly misread?: { readonly zone: string; readonly as: string };
+}
+
+/** A row's time on a zone clock, and its wall clock there: the row's own, or the partner's a misread one stands for. */
+function zonedTime(local: string, platform: string, clock: HualeiZoneClock): { iso: string; wall: string } | undefined {
+  if (!clock.misread) {
+    const iso = isoTime(local, clock.zone)?.iso;
+    return iso ? { iso, wall: local } : undefined;
+  }
+  const partner = DateTime.fromISO(platform, { setZone: true }).setZone(clock.misread.as).toFormat("yyyy-LL-dd'T'HH:mm:ss");
+  const instant = isoTime(partner, clock.misread.zone);
+  const shown = instant ? DateTime.fromMillis(instant.timestamp, { zone: clock.zone }) : undefined;
+  return shown?.isValid ? { iso: shown.toISO({ suppressMilliseconds: true }), wall: shown.toFormat("yyyy-LL-dd'T'HH:mm:ss") } : undefined;
+}
 
 /** When the platform wrote a row, on its own clock, which only the track interface says. */
 function writtenAt(row: HualeiRow): string | undefined {
@@ -364,14 +382,17 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
     const local = clocks[index]!;
     const placed = isoTime(local, HUALEI_ZONE)!;
     const reading = tenant.clock?.(row, rows) ?? (tenant.wallClocks ? 'wall' : 'platform');
+    const zoned = typeof reading === 'object' ? zonedTime(local, placed.iso, reading) : undefined;
+    // A misread clock stands for an instant: the row is named and listed by it.
+    const instant = reading === 'platform' ? placed.iso : typeof reading === 'object' && reading.misread ? zoned?.iso : undefined;
     const { wording, description, location, staged, notice } = read[index]!;
     const english = wording ? tenant.english?.(row.code || null, normalizeStatusWording(wording), wording) : undefined;
     // A row held back is named by its clock as the tenant reads it, and listed as a step at that same clock,
     // in the words a scan would show.
     const hold = () => {
-      const clock = reading === 'platform' ? placed.iso : local;
+      const clock = instant ?? local;
       ahead.add(clock);
-      const step = plannedEvent({ ...(reading === 'platform' ? { time: clock } : { local_time: clock }), description: english ?? description,
+      const step = plannedEvent({ ...(instant ? { time: clock } : { local_time: clock }), description: english ?? description,
         ...(location ? { location } : {}), ...(staged ? { stage: staged.stage } : {}) });
       if (step) held.push({ clock: local, index, step });
     };
@@ -389,10 +410,9 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
       return;
     }
     const written = writtenAt(row);
-    const zoned = typeof reading === 'object' ? isoTime(local, reading.zone)?.iso : undefined;
     kept.push({ clock: local, index, notice, ...(english ? { english } : {}), event: {
-      ...(reading === 'platform' ? { time: placed.iso } : { local_time: reading === 'day' ? local.slice(0, 10) : local }),
-      ...(zoned && typeof reading === 'object' ? { time: zoned, time_zone: reading.zone, time_zone_basis: reading.basis } : {}), description,
+      ...(reading === 'platform' ? { time: placed.iso } : { local_time: reading === 'day' ? local.slice(0, 10) : zoned?.wall ?? local }),
+      ...(zoned && typeof reading === 'object' ? { time: zoned.iso, time_zone: reading.zone, time_zone_basis: reading.basis } : {}), description,
       ...(location ? { location } : {}),
       ...(row.code ? { provider_code: row.code } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),

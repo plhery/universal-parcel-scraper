@@ -13,8 +13,9 @@
  * station's zone.
  */
 const STATION_ZONES: Readonly<Record<string, readonly string[]>> = {
-  'America/New_York': ['Atlanta', 'Brooklyn', 'Carteret', 'Charleston', 'Cincinnati', 'Detroit', 'Doral', 'IND.H', 'Jamaica',
-    'Miami', 'Milford', 'New York', 'Ocala', 'Orlando', 'Suwanee', 'VPC01'],
+  // GOFO dates Charlotte's scans on Eastern time too, the station SXW's copies name.
+  'America/New_York': ['Atlanta', 'Brooklyn', 'Carteret', 'Charleston', 'Charlotte', 'Cincinnati', 'Detroit', 'Doral', 'IND.H',
+    'Jamaica', 'Miami', 'Milford', 'New York', 'Ocala', 'Orlando', 'Suwanee', 'VPC01'],
   // The station serving Pensacola is in Cantonment, Florida's Panhandle: GOFO dates its scans, and the
   // round the feed names after Pensacola, on Central time. So it dates its Texas stations' scans.
   'America/Chicago': ['Austin', 'Cantonment', 'Lewisville', 'Melrose Park', 'Pensacola'],

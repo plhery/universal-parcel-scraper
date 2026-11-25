@@ -169,6 +169,29 @@ describe('SXW Express tracking adapter', () => {
     expect(parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-20T12:00:00Z'))!.events?.[0]?.time).toBe('2026-11-18T21:15:00+08:00');
   });
 
+  it("dates GOFO's rows on GOFO's clock, which SXW takes for Eastern time", () => {
+    // A synthetic record shaped like a parcel GOFO delivers: SXW's copy of each GOFO scan is three hours before GOFO's own.
+    const payload = JSON.parse(own('track.json'));
+    const row = (date: string, written: string, content: string, location: string) =>
+      ({ ...payload[0].data[0].trackDetails[0], track_date: date, track_createdate: written, track_content: content, track_location: location });
+    Object.assign(payload[0].data[0], { trackDetails: [
+      row('2026-11-21 09:40:00', '2026-11-21 23:00:00', 'Loaded on Vehicle', 'Charlotte'),
+      row('2026-11-20 22:10:00', '2026-11-21 08:00:00', 'Arrived at GOFO Regional Hub', 'Charlotte'),
+      row('2026-11-19 23:20:00', '2026-11-20 11:30:00', 'Departed GOFO Regional Hub', 'Carteret'),
+      row('2026-11-19 22:50:00', '2026-11-20 11:30:00', 'Loaded on Vehicle', ''),
+      row('2026-11-19 21:30:00', '2026-11-20 11:30:00', 'Arrived at GOFO Regional Hub', 'Carteret'),
+      row('2026-11-18 07:30:00', '2026-11-18 10:40:00', 'Parcel arrives at Airport, Parcel Arrival', ''),
+    ] });
+    const result = parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-22T00:00:00Z'))!;
+    // 21:30 in Beijing is 08:30 in New York, GOFO's 08:30 in Los Angeles: 11:30 at Carteret. A row with no place stays on Pacific time.
+    expect(result.events?.map((event) => [event.time, event.time_zone])).toEqual([
+      ['2026-11-20T23:40:00-05:00', 'America/New_York'], ['2026-11-20T12:10:00-05:00', 'America/New_York'],
+      ['2026-11-19T13:20:00-05:00', 'America/New_York'], ['2026-11-19T09:50:00-08:00', 'America/Los_Angeles'],
+      ['2026-11-19T11:30:00-05:00', 'America/New_York'], ['2026-11-18T07:30:00+08:00', undefined],
+    ]);
+    expect(result.events?.[4]).toMatchObject({ local_time: '2026-11-19T11:30:00', time_zone_basis: 'carrier' });
+  });
+
   it('reads the rows after the shipper took the parcel back as the parcel sent again', () => {
     const payload = JSON.parse(own('track.json'));
     const row = (date: string, content: string, location: string) =>

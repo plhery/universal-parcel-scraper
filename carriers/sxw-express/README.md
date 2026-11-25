@@ -36,6 +36,11 @@ The site's tracking page is SXW's own tenant of the Hualei (华磊) platform at
 - Australia Post's rows are on the clock of Australia's east coast wherever the suburb lies: SXW's
   copy of a Queensland row reads an hour later than Australia Post's own, a Victorian row the
   same. They are dated on that clock, while the line's own rows at an airport keep the airport's.
+- GOFO's rows, from the first that names GOFO on, are on GOFO's clock. SXW takes GOFO's Pacific
+  clocks for Eastern ones before writing them on Beijing's, so read on Beijing's clock its copies
+  came three hours before GOFO's own scans. The row's clock is put back on Eastern time and read
+  as Pacific, then shown on the station's zone as GOFO's adapter shows it; a row with no place
+  stays on Pacific time.
 - The seller can take a parcel back at the origin ("Returned parcel has been recieved by shipper")
   and send it again under the same waybill. The row reads as returned while it is the newest; once
   rows follow it, it is an exception and the rows after it lead, since an app holds a return over
