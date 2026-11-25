@@ -1,0 +1,29 @@
+{
+  "carrier": "shilianxin",
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "Shipment information received", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse's receipt."},
+    {"wording": "快件出库，货物到达配送中心", "language": "zh", "english": "Left the warehouse for the distribution centre", "stage": "in_transit", "confirmedBy": "live", "note": "In Shenzhen."},
+    {"wording": "ITEMS IN THE CLASSIFICATION CENTER ENTERING THE STATION", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages, in Shenzhen."},
+    {"wording": "ITEM OUTBOUND IN SORTING CENTER", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages, in Shenzhen."},
+    {"wording": "SHIPMENT ARRIVED AT DISTRIBUTION CENTER", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages."},
+    {"wording": "The shipment is in domestic transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages."},
+    {"wording": "Export customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages: export clearance in China."},
+    {"wording": "The shipment has cleared customs and is en route to the airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages."},
+    {"wording": "The flight is waiting to take off", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages."},
+    {"wording": "Flight Departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages: the flight leaves China."},
+    {"wording": "Flight arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages, placed in the United States."},
+    {"wording": "Destination country customs clearance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages: import clearance in the United States."},
+    {"wording": "Pre-Shipment, USPS Awaiting Item", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "USPS's label row, copied with its day alone: USPS has the label's data, not the parcel."},
+    {"wording": "Shipping Label Created, USPS Awaiting Item", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "USPS's label row, copied at New York's induction office while the parcel is still in China."},
+    {"wording": "Accepted at USPS Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's first scan, copied: USPS takes the parcel over from the line, which accepted it in China days before."},
+    {"wording": "Arrived at USPS Regional Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied with its day alone."},
+    {"wording": "Arrived at USPS Regional Destination Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Delivered, Front Door/Porch", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."}
+  ]
+}

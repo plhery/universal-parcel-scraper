@@ -1,3 +1,4 @@
+import { statusMap as shilianxin } from '../../carriers/shilianxin/status.js';
 import { statusMap as wokexp } from '../../carriers/wokexp/status.js';
 import { statusMap as jgex } from '../../carriers/jgex/status.js';
 import { statusMap as edPost } from '../../carriers/ed-post/status.js';
@@ -1305,7 +1306,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, recibelo, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
   rincos, 'riyu-logistics': riyuLogistics, rivigo, 'rl-carriers': rlCarriers, roadrunner, rodonaves, 'rohlig-suus': rohligSuus, 'ross-express': rossExpress, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, 'runner-express': runnerExpress, rxo, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
-  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shengao, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, 'shipagent-in': shipagentIn, shipter, shouwu,
+  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shengao, shilianxin, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, 'shipagent-in': shipagentIn, shipter, shouwu,
   'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skroutz-last-mile': skroutzLastMile,
   skybox, skyking, 'skynet-sa': skynetSa, 'skynet-worldwide': skynetWorldwide, skypostal, skyquick, slgtrax,
   'slovak-parcel-service': slovakParcelService,
