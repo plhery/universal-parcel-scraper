@@ -1,0 +1,24 @@
+{
+  "carrier": "sdk-express",
+  "records": [
+    {
+      "number": "AG085660409CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260416143624/https://www.parcelpanel.com/couriers/sdk-express/",
+        "date": "2026-04-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "china-post",
+        "confidence": "high"
+      },
+      "note": "The example tracking number a tracking directory's SDK Express page shows. SDK Express's tracker answers it with a parcel sent from Guangzhou by land through Khorgos to Moscow and delivered in Irkutsk. Its UPU S10 layout and check digit are China Post's, so postal detection claims it."
+    }
+  ]
+}

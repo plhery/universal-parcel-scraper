@@ -1,0 +1,12 @@
+{
+  "carrier": "sdk-express",
+  "entries": [
+    {"wording": "到达…处理中心", "language": "zh", "english": "Arrived at the processing centre", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's row for a processing centre on the land route, the city's name standing as the ellipsis: Guangzhou, Khorgos on the Kazakh border, then Moscow. The row's place names the city."},
+    {"wording": "离开…处理中心", "language": "zh", "english": "Left the processing centre", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves a processing centre on the land route, the city's name standing as the ellipsis."},
+    {"wording": "Принят в городе отправителя", "language": "ru", "english": "Accepted in the sender's city", "stage": "in_transit", "confirmedBy": "live", "note": "The Russian courier, which the record does not name, takes the parcel in Moscow, its sending city, after the land route; the parcel is already on its way, so this is transit, not acceptance."},
+    {"wording": "Отправлен в транзитный город", "language": "ru", "english": "Sent to a transit city", "stage": "in_transit", "confirmedBy": "live", "note": "The Russian courier sends the parcel on from Moscow."},
+    {"wording": "В транзитном городе", "language": "ru", "english": "In a transit city", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel reaches a transit city of the Russian courier."},
+    {"wording": "Принят в городе получателя. Готов к выдаче", "language": "ru", "english": "Accepted in the recipient's city. Ready for collection", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The parcel waits for the recipient at the courier's point in the recipient's city."},
+    {"wording": "Вручен", "language": "ru", "english": "Delivered", "stage": "delivered", "confirmedBy": "live", "note": "Handed to the recipient."}
+  ]
+}
