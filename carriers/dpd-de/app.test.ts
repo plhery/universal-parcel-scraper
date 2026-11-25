@@ -460,9 +460,11 @@ describe('DPD Germany app projection', () => {
       ['The consignee did not collect the parcel.', 'exception'],
     ]);
     for (const wording of ['the consignee did not collect the parcel.', 'pick-up from the pickup parcelshop by dpd driver',
-      'The data of your delivery specifications has been transmitted']) {
+      'The data of your delivery specifications has been transmitted', 'We are exchanging data internally']) {
       expect(statusMapAnswer({ carrier: 'dpd-de', description: wording })).toMatchObject({ kind: 'intentional_gap' });
     }
+    // DPD's data exchange keeps the stage before it with its code ENA too.
+    expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: 'ENA', description: 'We are exchanging data internally' })).toMatchObject({ kind: 'intentional_gap' });
     // DPD Portugal's notices, relayed on a parcel it delivers, keep their code and wording.
     expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: '714', description: 'DATA PREVISTA DE ENTREGA' })).toMatchObject({ kind: 'intentional_gap' });
     expect(statusMapAnswer({ carrier: 'dpd-de', providerCode: '714', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });

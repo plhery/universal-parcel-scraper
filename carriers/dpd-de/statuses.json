@@ -104,6 +104,13 @@
       "note": "DPD's English for \"Die Daten Ihrer Wunschzustellung wurden übermittelt\": the recipient moved the delivery to another day, address or Pickup shop by phone or online (https://www.paketda.de/status-daten-wunschzustellung-uebermittelt.html). The parcel does not move, so the scans around it give the stage."
     },
     {
+      "wording": "We are exchanging data internally",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "DPD's ENA recorded without its code: a data exchange inside DPD's systems before the parcel reaches the origin depot, not a scan. It keeps the stage of the scan before it, as with its code."
+    },
+    {
       "wording": "Transfer to DPD Pickup station by DPD driver.",
       "language": "en",
       "stage": "in_transit",
