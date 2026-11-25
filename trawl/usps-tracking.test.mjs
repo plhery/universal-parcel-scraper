@@ -161,7 +161,7 @@ function keeper(t, { outcomes = {}, createStatus, options } = {}) {
   const read = (extra = {}) => settled(keep.run({ url: URL, ...OPTIONS, skipHttp: true, maxTier: 3, maxTimeout: 45_000, ...extra }, sessions, scrape));
   return { keep, sessions, read, reads, events, live, advance, most: () => most };
 }
-const states = events => events.map(event => event.reason ?? event.state);
+const states = events => events.filter(event => event.state !== 'trial_read').map(event => event.reason ?? event.state);
 const of = (reads, n) => reads.filter(read => read.id === `usps-tracking-${n}`);
 
 test('only an ordinary USPS tracking read without a proxy, cookies or session of its own uses the kept sessions', () => {
@@ -263,6 +263,33 @@ test('with a single session ready, a lookup it turns away gets the redirect back
   k.read();
   await k.advance(2_500);
   assert.deepEqual([...k.live], ['usps-tracking-1']);
+});
+
+test('each trial read logs what it met, and a session USPS did not accept sums them', async t => {
+  const timeout = Object.assign(new Error(`Navigation to ${URL} timed out`), { name: 'TimeoutError' });
+  const failed = Object.assign(new Error(`Upstream failed for ${URL}`), { statusCode: 502 });
+  const k = keeper(t, { outcomes: { 1: ['r', '?', timeout], 2: [failed, 'T'] }, options: { readySessions: 1 } });
+  k.read();
+  await k.advance(120_000);
+  const trials = k.events.filter(event => event.state === 'trial_read');
+  assert.deepEqual(trials.map(({ read, outcome, error, status }) => ({ read, outcome, error, status })), [
+    { read: 1, outcome: 'outage', error: undefined, status: undefined },
+    { read: 2, outcome: 'other_page', error: undefined, status: undefined },
+    { read: 3, outcome: 'timeout', error: 'TimeoutError', status: undefined },
+    { read: 1, outcome: 'error', error: 'Error', status: 502 },
+    { read: 2, outcome: 'loaded', error: undefined, status: undefined },
+  ]);
+  assert.equal(trials.every(event => event.ms >= 0), true);
+  assert.deepEqual(k.events.find(event => event.reason === 'not_accepted').trials, { outage: 1, other_page: 1, timeout: 1 });
+  // No logged field carries the tracking URL an error's message can hold.
+  assert.equal(JSON.stringify(k.events).includes(NUMBER), false);
+});
+
+test('a session that cannot be opened logs why', async t => {
+  const k = keeper(t, { createStatus: 503, options: { readySessions: 1 } });
+  k.read();
+  await k.advance(5_000);
+  assert.deepEqual(k.events.find(event => event.state === 'trial_failed'), { state: 'trial_failed', error: 'Error', status: 503 });
 });
 
 test('an expired or aged session is replaced, and failed reads end one', async t => {

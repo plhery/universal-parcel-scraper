@@ -101,6 +101,21 @@ const TRACKING = /\bid=["']?trackingNum\b/;
 const reportSession = fields => console.warn(JSON.stringify({ level: 'warn', event: 'usps.session', ...fields }));
 
 const statusOf = error => (typeof error?.statusCode === 'number' ? error.statusCode : undefined);
+const TIMED_OUT = /\btime(?:d)?[ -]?out\b/i;
+
+/**
+ * What one trial read met: the tracking page (`loaded`), USPS's outage page, another page, an error,
+ * or the read's own timeout. Each is logged, so sessions USPS did not accept can be told apart.
+ */
+export function uspsTrialOutcome(result, error) {
+  if (error !== undefined) {
+    const status = statusOf(error);
+    return error?.name === 'TimeoutError' || status === 408 || status === 504 || TIMED_OUT.test(String(error?.message ?? ''))
+      ? 'timeout' : 'error';
+  }
+  if (uspsOutage(result)) return 'outage';
+  return TRACKING.test(result?.html ?? '') ? 'loaded' : 'other_page';
+}
 const unready = () => Object.assign(new Error('No USPS browser session is ready'), { statusCode: 503 });
 
 export class UspsSessions {
@@ -141,7 +156,7 @@ export class UspsSessions {
     if (kept >= 0) this.#ready.splice(kept, 1);
     else if (session.accepted) return;
     this.#report({ state: 'ended', reason, reads: session.reads, accepted: session.accepted,
-      ageMs: Math.max(0, this.now() - session.created) });
+      ageMs: Math.max(0, this.now() - session.created), ...(session.trials ? { trials: session.trials } : {}) });
     try { await this.#sessions.destroy(session.id); } catch { /* Already gone, or its sweep removes it. */ }
     this.#prepare();
   }
@@ -152,7 +167,11 @@ export class UspsSessions {
     while (this.#ready.length + this.#preparing < this.readySessions
       && this.#failedTrials + this.#preparing < this.trialsBeforeRest) {
       this.#preparing++;
-      void this.#trial().catch(() => false).then(accepted => {
+      void this.#trial().catch(error => {
+        // A session that could not be opened or read is a refusal of its own kind, logged with its status.
+        this.#report({ state: 'trial_failed', error: error?.name ?? 'Error', ...(statusOf(error) ? { status: statusOf(error) } : {}) });
+        return false;
+      }).then(accepted => {
         this.#preparing--;
         if (accepted) this.#failedTrials = this.#rests = 0;
         else if (++this.#failedTrials >= this.trialsBeforeRest && this.#restUntil <= this.now()) {
@@ -172,19 +191,26 @@ export class UspsSessions {
   async #trial() {
     const sessions = this.#sessions;
     const session = { id: `${SESSION_PREFIX}${++this.#serial}`, created: this.now(), reads: 0, refusals: 0, failures: 0,
-      accepted: false, busy: false };
+      accepted: false, busy: false, trials: {} };
     await sessions.create({ id: session.id });
     this.#report({ state: 'created' });
     for (let read = 0; read < this.trialReads && !session.accepted; read++) {
       if (read) await this.sleep(this.spacingMs);
       session.reads++;
-      let result;
+      const started = this.now();
+      let result, failure;
       try { result = await this.#scrape({ ...this.#template, sessionId: session.id, maxTimeout: TRIAL_READ_MS }); }
-      catch (error) {
-        if ([404, 410].includes(statusOf(error))) break;
+      catch (error) { failure = error ?? new Error('USPS trial read failed'); }
+      const outcome = uspsTrialOutcome(result, failure);
+      session.trials[outcome] = (session.trials[outcome] ?? 0) + 1;
+      // The error's name and status only: its message can carry the tracking URL.
+      this.#report({ state: 'trial_read', read: session.reads, outcome, ms: Math.max(0, this.now() - started),
+        ...(failure ? { error: failure?.name ?? 'Error', ...(statusOf(failure) ? { status: statusOf(failure) } : {}) } : {}) });
+      if (failure) {
+        if ([404, 410].includes(statusOf(failure))) break;
         continue;
       }
-      session.accepted = !uspsOutage(result) && TRACKING.test(result?.html ?? '');
+      session.accepted = outcome === 'loaded';
     }
     if (!session.accepted) {
       await this.#end(session, 'not_accepted');
