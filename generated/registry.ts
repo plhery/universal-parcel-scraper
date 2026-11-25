@@ -229,6 +229,7 @@ import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
 import { adapter as cseRussia } from '../carriers/cse-russia/adapter.js';
 import { adapter as ctlGroupPl } from '../carriers/ctl-group-pl/adapter.js';
+import { adapter as ctmMessagerie } from '../carriers/ctm-messagerie/adapter.js';
 import { adapter as ctt } from '../carriers/ctt/adapter.js';
 import { adapter as cttExpress } from '../carriers/ctt-express/adapter.js';
 import { adapter as cttyex } from '../carriers/cttyex/adapter.js';
@@ -737,6 +738,7 @@ import { adapter as orlenPaczka } from '../carriers/orlen-paczka/adapter.js';
 import { adapter as osmWorldwide } from '../carriers/osm-worldwide/adapter.js';
 import { adapter as otsAstracon } from '../carriers/ots-astracon/adapter.js';
 import { adapter as overseasExpress } from '../carriers/overseas-express/adapter.js';
+import { adapter as ozonExpressMa } from '../carriers/ozon-express-ma/adapter.js';
 import { adapter as ozonLogistics } from '../carriers/ozon-logistics/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
 import { adapter as pacificInternationalLines } from '../carriers/pacific-international-lines/adapter.js';
@@ -994,6 +996,7 @@ import { adapter as tamex } from '../carriers/tamex/adapter.js';
 import { adapter as tantoIntimLine } from '../carriers/tanto-intim-line/adapter.js';
 import { adapter as tanzaniaPosts } from '../carriers/tanzania-posts/adapter.js';
 import { adapter as taqbinHk } from '../carriers/taqbin-hk/adapter.js';
+import { adapter as tasCourier } from '../carriers/tas-courier/adapter.js';
 import { adapter as taxydema } from '../carriers/taxydema/adapter.js';
 import { adapter as tccCo } from '../carriers/tcc-co/adapter.js';
 import { adapter as tciExpress } from '../carriers/tci-express/adapter.js';
@@ -1408,6 +1411,7 @@ export const REGISTRY: RegistryDefinition = {
     "cruz-del-sur": cruzDelSur,
     "cse-russia": cseRussia,
     "ctl-group-pl": ctlGroupPl,
+    "ctm-messagerie": ctmMessagerie,
     "ctt": ctt,
     "ctt-express": cttExpress,
     "cttyex": cttyex,
@@ -1916,6 +1920,7 @@ export const REGISTRY: RegistryDefinition = {
     "osm-worldwide": osmWorldwide,
     "ots-astracon": otsAstracon,
     "overseas-express": overseasExpress,
+    "ozon-express-ma": ozonExpressMa,
     "ozon-logistics": ozonLogistics,
     "paack": paack,
     "pacific-international-lines": pacificInternationalLines,
@@ -2173,6 +2178,7 @@ export const REGISTRY: RegistryDefinition = {
     "tanto-intim-line": tantoIntimLine,
     "tanzania-posts": tanzaniaPosts,
     "taqbin-hk": taqbinHk,
+    "tas-courier": tasCourier,
     "taxydema": taxydema,
     "tcc-co": tccCo,
     "tci-express": tciExpress,
@@ -2772,7 +2778,7 @@ export const REGISTRY: RegistryDefinition = {
     "cst-italia": "universal",
     "ctc-express": "universal",
     "ctl-group-pl": "ctl-group-pl",
-    "ctm-messagerie": "universal",
+    "ctm-messagerie": "ctm-messagerie",
     "cts-group": "universal",
     "ctt": "ctt",
     "ctt-express": "ctt-express",
@@ -3663,7 +3669,7 @@ export const REGISTRY: RegistryDefinition = {
     "overnite": "universal",
     "overseas-express": "overseas-express",
     "oxperta-express": "universal",
-    "ozon-express-ma": "universal",
+    "ozon-express-ma": "ozon-express-ma",
     "ozon-logistics": "ozon-logistics",
     "paack": "paack",
     "pacific-international-lines": "pacific-international-lines",
@@ -4089,7 +4095,7 @@ export const REGISTRY: RegistryDefinition = {
     "tapuz-delivery": "universal",
     "taqbin-hk": "taqbin-hk",
     "taqbin-sg": "universal",
-    "tas-courier": "universal",
+    "tas-courier": "tas-courier",
     "tawssil": "universal",
     "taxydema": "taxydema",
     "tcc-co": "tcc-co",

@@ -18990,7 +18990,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Casablanca",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ctm-messagerie",
+      "localClocks": true
     },
     "canaryUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
     "trackingSearchUrl": "https://ctm-messagerie.ma/fr/suivi-du-colis",
@@ -48275,7 +48276,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Casablanca",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ozon-express-ma",
+      "localClocks": true
     },
     "canaryUrl": "https://ozonexpress.ma/",
     "trackingUrlTemplate": "https://ozonexpress.ma/tracking-colis/{trackingNumber}",
@@ -62301,7 +62303,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Athens",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tas-courier",
+      "localClocks": true
     },
     "canaryUrl": "https://www.tascourier.gr/track",
     "trackingUrlTemplate": "https://www.tascourier.gr/track?v={trackingNumber}",
