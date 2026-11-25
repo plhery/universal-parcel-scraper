@@ -15,9 +15,11 @@ const RULES: readonly (readonly [RegExp, Stage])[] = [
   [/\biade\b/, 'returned'],
   // "TESLİM EDİLEMEDİ" and the reason, as "Adreste Yok"; abroad, the attempt the foreign post relays.
   [/\bteslim edilemedi\b/, 'failed_attempt'],
+  // "Dağıtım Adreste Yok/Kapalı-Haber Kağıdı Bırakıldı": nobody in, a notice left.
+  [/\bdagitim adreste yok\b/, 'failed_attempt'],
   [/\bteslim edildi\b/, 'delivered'],
-  // Out with the postman.
-  [/\bdagitimda\b/, 'out_for_delivery'],
+  // Out with the postman, or handed to them.
+  [/\b(?:dagitimda|dagiticiya verildi)\b/, 'out_for_delivery'],
   // "(MEVKUF) Elde Kalmış Gönderi": the office holds an item nobody collected.
   [/\bmevkuf\b/, 'exception'],
   // Waiting at the PTT office the scan names, not "PTT İşyerine Girdi" or "İşyerinden Çıktı",
@@ -28,8 +30,8 @@ const RULES: readonly (readonly [RegExp, Stage])[] = [
   [/\bgumru[gk]/, 'customs'],
   // Also "Yurtdışı Kabul Edildi", accepted from abroad.
   [/\bkabul edildi\b/, 'accepted'],
-  // Sent on, within a city, between cities or abroad, or loaded onto a vehicle.
-  [/\b(?:transfer surecinde|il ici aktarmada|araca yuklendi)\b/, 'in_transit'],
+  // Sent on, within a city, between cities or abroad, loaded onto a vehicle, or arrived at an office.
+  [/\b(?:transfer surecinde|il ici aktarmada|araca yuklendi|ptt isyerine geldi)\b/, 'in_transit'],
 ];
 
 /** Lower case with Turkish letters folded to Latin ones: "İL İÇİ" and "il ici" read alike. */

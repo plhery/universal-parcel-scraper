@@ -22,6 +22,23 @@ describe('shared provider result', () => {
     expect(classifyEvent('离开收寄点【示例】')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
   });
 
+  it("reads the destination post's scans relayed in China Post's Chinese as China Post's map reads them", () => {
+    for (const wording of ['到达寄达地处理中心', '离开【示例】处理中心', '寄达地海关允许进口（无需缴税）']) {
+      expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+    }
+  });
+
+  it("reads the posts' IPS event names after the office's country as PHLPost's map reads them", () => {
+    expect(classifyEvent('China Posting of item')).toEqual({ stage: 'accepted', stage_source: 'wording:provider' });
+    for (const wording of ['China Receive item at origin country gateway', 'China Dispatch item to destination country',
+      'China Dispatch to country of destination', 'Philippines Receive at country of destination', 'Philippines Enroute to delivery office',
+      'Hong Kong Dispatch item to destination country']) {
+      expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+    }
+    // Only a country's name: a code or another word before the event names no office's country.
+    for (const wording of ['CN Posting of item', 'Sample Posting of item']) expect(classifyEvent(wording).stage_source, wording).toBe('none');
+  });
+
   it("reads an airline's load device broken down at the destination airport in transit, the parcels awaiting the forwarder", () => {
     for (const wording of ['ULD breakdown completed, awaiting pick\u2011up in Sampletown', 'ULD breakdown completed, awaiting pick-up in Sampletown']) {
       expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });

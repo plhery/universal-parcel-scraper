@@ -65,6 +65,11 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['outgoing scan at facility', 'in_transit'],
   ['out for delivery (on the way)', 'out_for_delivery'],
   ['delivery attempt (delivery not possible)', 'failed_attempt'],
+  // The British line's partner before Royal Mail's own scans: its record of the data, then its depot
+  // taking the parcel in, under IA, and its round, relayed without a code.
+  ['shipment data processed', 'in_transit'],
+  ['shipment received in depot', 'in_transit'],
+  ['out for delivery', 'out_for_delivery'],
   // HuaHan's transfer warehouse in Chinese, and an American partner's scans it relays, written
   // ahead while the parcel is still in China: a hand-off to come, not the parcel's acceptance.
   ['货物离开操作中心', 'in_transit'],

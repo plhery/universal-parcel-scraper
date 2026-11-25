@@ -113,6 +113,14 @@
       "note": "The last-mile courier taking the parcel out from the delivery office: the reply's own status then reads Out for delivery, and the page files the parcel under no group."
     },
     {
+      "code": "WSD22",
+      "wording": "Incidencia de entrega",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "A delivery incident the day after the courier took the parcel out, the reason in brackets after the wording: the round did not deliver."
+    },
+    {
       "code": "PRECESSING",
       "wording": "Processing",
       "stage": "registered",

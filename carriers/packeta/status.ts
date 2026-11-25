@@ -70,12 +70,20 @@ const EVENT_TEXT_STAGES: Array<[substring: string, stage: Stage]> = [
   ['arrived at the depot', 'in_transit'],
   ['arrived at the micro-depot', 'in_transit'],
   ['has been handed over to the carrier', 'in_transit'],
+  // The Z-BOX the parcel was going to is full, so Packeta sends it to another one it names.
+  ['z-box is full. we will deliver the parcel to', 'in_transit'],
   ['on its way to you', 'out_for_delivery'],
   ['ready for pickup', 'ready_for_pickup'],
   ['the parcel is with you', 'delivered'],
   ['investigating the status of the parcel', 'failed_attempt'],
   ['returned the parcel back to the sender', 'returned'],
 ];
+
+/**
+ * Whether a sentence is "Awaiting consignment by the sender.", which Packeta writes at the same
+ * instant as "We are aware of your parcel and are waiting for the sender…": one registration in two lines.
+ */
+export const restatesRegistration = (description?: string): boolean => /^awaiting consignment by the sender\.?$/i.test(description?.trim() ?? '');
 
 /** The stage and status for a `packetStatusId`, or undefined when unmapped. */
 export function classifyPacketaStatus(code: string): ClassifiedStatus | undefined {

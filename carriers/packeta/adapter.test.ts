@@ -179,6 +179,22 @@ describe('Packeta response parsing', () => {
       .toEqual(['The parcel is on its way to you.', 'The parcel is currently on its way to the depot.']);
   });
 
+  it('keeps one row for a registration Packeta writes in two lines at one instant', () => {
+    const descriptions = (details: Array<{ text: string; time: string }>) => parsePacketaTrackingResponse({ item: packet({
+      packetStatusId: '1', trackingDetails: details }) }, TRACKING_NUMBER).events?.map((event) => event.description);
+    const aware = 'We are aware of your parcel and are waiting for the sender to hand it over to us.';
+    const awaiting = 'Awaiting consignment by the sender.';
+    expect(descriptions([{ text: aware, time: '2026-07-04 08:00:00' }, { text: awaiting, time: '2026-07-04 08:00:00' }])).toEqual([aware]);
+    expect(descriptions([{ text: awaiting, time: '2026-07-04 08:00:00' }, { text: aware, time: '2026-07-04 08:00:00' }])).toEqual([aware]);
+    expect(descriptions([{ text: aware, time: '2026-07-04 08:00:00' }, { text: awaiting, time: '2026-07-05 08:00:00' }])).toEqual([awaiting, aware]);
+    expect(descriptions([{ text: awaiting, time: '2026-07-04 08:00:00' }])).toEqual([awaiting]);
+  });
+
+  it('reads a parcel sent on from a full Z-BOX to another one as on its way', () => {
+    expect(packetaEventStage('We are sorry, but the original Z-BOX is full. We will deliver the parcel to Z-BOX Example Street 1, Example Town 65. More information is being sent by e-mail.'))
+      .toBe('in_transit');
+  });
+
   it('retains operational sender and pickup-point names', () => {
     const result = parsePacketaTrackingResponse({ item: packet() }, TRACKING_NUMBER);
     expect(result).toMatchObject({

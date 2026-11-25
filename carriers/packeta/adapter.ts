@@ -9,7 +9,7 @@ import { lastMovement } from '../../core/result/pickup.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { classifyPacketaStatus, packetaEventStage } from './status.js';
+import { classifyPacketaStatus, packetaEventStage, restatesRegistration } from './status.js';
 import { packetaEventLinks, packetaEventText, packetaPlacedText, type PacketaEventLink } from './text.js';
 
 // Protocol provenance:
@@ -120,6 +120,13 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
       timestamp: time.timestamp,
     });
   });
+  // The second line of a registration Packeta writes in two is the same step: it goes beside the first.
+  const registeredAt = new Set(parsed.filter(({ event }) => event.stage === 'registered' && !restatesRegistration(event.description))
+    .map(({ timestamp }) => timestamp));
+  for (let index = parsed.length - 1; index >= 0; index -= 1) {
+    const { event, timestamp } = parsed[index]!;
+    if (restatesRegistration(event.description) && registeredAt.has(timestamp)) parsed.splice(index, 1);
+  }
   if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
   parsed.sort((left, right) => right.timestamp - left.timestamp);
   // Only the first receipt accepts the parcel: one after it, or after a courier set the parcel on its way

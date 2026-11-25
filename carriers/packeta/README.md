@@ -31,6 +31,8 @@ after nine digits is CDL's order number.
 
 - The locale is pinned to English. Event sentences are the only per-event signal, and a
   fixed locale turns them into a stable vocabulary that substring matching can classify.
+- Packeta writes a registration in two lines at one instant, "We are aware of your parcel…" and
+  "Awaiting consignment by the sender.". The adapter keeps the first, so the step gives one row.
 - Two independent maps: `packetStatusId` sets the parcel's stage, the canned sentences set
   each event's stage. The overall stage never borrows from the sentences. The app's review
   asks the sentence map (`statusMap`), since a scan keeps no code.

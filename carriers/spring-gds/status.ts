@@ -96,6 +96,8 @@ const DOMESTIC_STAGE = new Map<string, Stage>([
   ['shipment expected, but not yet arrived or processed at postnl', 'registered'],
   ['not yet processed by postnl', 'registered'],
   ['shipment received by postnl', 'accepted'],
+  // The sender's drop-off at a PostNL parcel machine, observation code C02, after the pre-advice: PostNL's first scan.
+  ['scanned at postnl self-service point', 'accepted'],
   ['driver is en route', 'out_for_delivery'],
   ['shipment sorted in sorting centre', 'in_transit'],
   ['shipment has been sorted', 'in_transit'],

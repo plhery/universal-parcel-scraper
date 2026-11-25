@@ -34,6 +34,7 @@
     {"code": "15", "wording": "Received by line-haul", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
     {"code": "15", "wording": "Hand over to airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
     {"code": "15", "wording": "Airline arrived at transit country or district.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
+    {"code": "15", "wording": "The shipment has been processed in the parcel center of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivery carrier sorting the parcel at its first parcel centre after the hand-off."},
     {"code": "15", "wording": "Airline departed from transit or district country.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
     {"code": "15", "wording": "Airline arrived at destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
     {"code": "15", "wording": "Export clearance success", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "Cleared for export, not held."},

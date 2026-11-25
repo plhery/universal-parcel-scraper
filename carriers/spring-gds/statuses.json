@@ -287,6 +287,13 @@
       "note": "A label of PostNL's domestic tracker; the shared wording rules read it as in transit."
     },
     {
+      "wording": "Scanned at PostNL self-service point",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "A label of PostNL's domestic tracker, with observation code C02, after the shipment was expected: the sender dropped the parcel at a PostNL parcel machine."
+    },
+    {
       "wording": "Driver is en route",
       "language": "en",
       "stage": "out_for_delivery",
