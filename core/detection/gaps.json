@@ -6940,5 +6940,10 @@
     "carrier": "shilianxin",
     "kind": "open",
     "reason": "Shilianxin numbers seen so far are SLX, nine digits and CN, and the only public sample comes from one tracking directory page, too few to claim the shape, which also opens with the initials of the Korean SLX, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "hdgj",
+    "kind": "open",
+    "reason": "Bright East International numbers seen so far are HD, twelve digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape from other forwarders' numbers ending in YQ, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

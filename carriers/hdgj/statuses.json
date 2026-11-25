@@ -1,0 +1,21 @@
+{
+  "carrier": "hdgj",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "Arrival at the delivery point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt in China; the delivery point is where the shipper hands the parcel over, not the recipient's."},
+    {"code": "CO_C_CR", "wording": "Item outbound in sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row, in China. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Departed from origin facility to airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row, in Shenzhen. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Arrived at HK CENTER", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row, in Hong Kong. Listed as a planned step."},
+    {"wording": "Departure From HK Center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The forwarder's row: the parcel leaves Hong Kong."},
+    {"wording": "Arrived at US Airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The forwarder's row, written with `US,` ahead of it; it can be written hours before its clock, as a forecast."},
+    {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The forwarder's row, written with `US,` ahead of it: import clearance in the United States."},
+    {"wording": "Accepted at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's first scan, copied: USPS takes the parcel over from the line, which accepted it in China days before."},
+    {"wording": "Arrived at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied, alone or with USPS's explanation after an arrow."},
+    {"wording": "Departed USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied, alone or with USPS's explanation after an arrow."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Held at Post Office, At Customer Request", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "USPS holds the parcel at the post office for the recipient to collect, copied alone or with USPS's explanation after an arrow."},
+    {"wording": "Delivered, Individual Picked Up at Post Office", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery at the post office counter, copied with USPS's explanation after an arrow, which is cut."}
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "hdgj",
+  "displayName": "Bright East International",
+  "aliases": [
+    "HDGJ",
+    "皓东国际",
+    "深圳市皓东国际供应链有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#2880a8"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hdgj",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "134.175.244.145"
+      ],
+      "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": []
+}

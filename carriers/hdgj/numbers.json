@@ -1,0 +1,24 @@
+{
+  "carrier": "hdgj",
+  "records": [
+    {
+      "number": "HD000000103510YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251008100817/https://www.parcelpanel.com/couriers/hdgj/",
+        "date": "2025-10-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HDGJ page shows. Bright East International's tracker answers it with a parcel flown through Hong Kong and collected at a USPS post office in the United States, under USPS's number."
+    }
+  ]
+}
