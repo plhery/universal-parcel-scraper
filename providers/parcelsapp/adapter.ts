@@ -749,7 +749,10 @@ function cttZone(payload: Record<string, unknown>, location: string, date: unkno
  * DHLink records its warehouse scans within seconds on its system clock,
  * which is China's. On that clock XZG's scans stay one with DHLink's copies,
  * which take DHLink's catalog zone, whether or not a reply has them and
- * whatever zone routing passes. Saudi Post's (SPL's) are Riyadh's at home and
+ * whatever zone routing passes. LIB's, LiBaoTongXu's, a Putian line provider
+ * whose US line DHLink carries, are China's too: its warehouse receipt had the
+ * digits of DHLink's own row of it, on Beijing time, and read at its site code
+ * ("PT") as Portugal, it came eight hours late. Saudi Post's (SPL's) are Riyadh's at home and
  * their place's abroad: its own tracker dates an origin post's scans and an EMS
  * partner's on their own place's clock (carriers/saudi-post), and its copy of
  * a departure from Sydney has the digits of EMS's there. "BRT Bartolini"'s,
@@ -770,7 +773,7 @@ function cttZone(payload: Record<string, unknown>, location: string, date: unkno
  */
 const HOME_COUNTRIES: Readonly<Record<string, string>> = {
   southkoreapost: 'Asia/Seoul', postennorgenorwaypost: 'Europe/Oslo', japanpost: 'Asia/Tokyo',
-  pekaes: 'Europe/Warsaw', yodel: 'Europe/London', inpostuk: 'Europe/London', collect: 'Europe/London', xzg: 'Asia/Shanghai',
+  pekaes: 'Europe/Warsaw', yodel: 'Europe/London', inpostuk: 'Europe/London', collect: 'Europe/London', xzg: 'Asia/Shanghai', lib: 'Asia/Shanghai',
   spl: 'Asia/Riyadh', saudipost: 'Asia/Riyadh', yanwenlogistics: 'Asia/Shanghai',
   brtbartolini: 'Europe/Rome', brtbartoliniparcelid: 'Europe/Rome', brtbartolinidpd: 'Europe/Rome',
   southafricapostoffice: 'Africa/Johannesburg', southafricapost: 'Africa/Johannesburg',
@@ -1087,7 +1090,11 @@ function chinaPostAbroad(location: string, status: string, destination: string |
  * that country, so the clock agrees with the place the scan shows: read as no
  * place, La Poste's scans in Poland kept ParcelsApp's UTC label, two hours late.
  * 4PX's site codes, the country and the city's code ("USHOUA"), read as their town.
+ * LiBaoTongXu's ("LIB") site code in Putian ("PT") names no country and places no scan.
  */
+const LIB_SITES = new Set(['PT']);
+const libSite = (name: unknown, location: unknown) => nameKey(name) === 'lib' && typeof location === 'string'
+  && LIB_SITES.has(location.trim().toUpperCase());
 const FOUR_PX_SITES: ReadonlyMap<string, string> = new Map([
   // 4PX's Houston operation point, which packs a parcel for GOFO before its Houston hub takes it in.
   ['USHOUA', 'Houston, TX, US'],
@@ -1096,6 +1103,7 @@ function scanLocation(name: unknown, location: unknown): string {
   const text = typeof location === 'string' ? location.trim() : '';
   const reported = reportedPlace(text);
   if (!countryCode(lastPlace(text)) && countryTimeZone(reported)) return reported;
+  if (libSite(name, text)) return '';
   if (nameKey(name) !== '4pxexpress') return text;
   const site = FOUR_PX_SITES.get(text.toUpperCase());
   if (site) return site;
@@ -2716,7 +2724,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     if (parsed && (guessedAhead(parsed, entry.location, zone, timezone, readAt) || uspsAhead(name, entry.location, zone, parsed, readAt))) continue;
     if (parsed) {
       // Some Chronopost rows put the service label in the location field.
-      const location = scan?.location ?? reportedPlace(raw.location);
+      const location = scan?.location ?? (libSite(name, raw.location) ? '' : reportedPlace(raw.location));
       if (location && !/^Type de livraison\s*:/i.test(location)) parsed.location = location;
       // China Post words its labels in Chinese only, also those it gives the destination post's scans:
       // they show in English where it is known, staged as the Chinese was, with the place left to the

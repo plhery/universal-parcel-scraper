@@ -2774,6 +2774,19 @@ describe('ParcelsApp result parsing', () => {
     ] }, xzg, identity(xzg)).events?.[0]?.time).toBe('2026-06-16T16:40:00.000Z');
   });
 
+  it('reads LIB on China\'s clock, its site code in Putian as no place', () => {
+    // Live shape: ParcelsApp names LIB beside DHLink and has its warehouse receipt at "PT", at the digits of
+    // DHLink's own row of it on Beijing time; read as Portugal, it came eight hours late.
+    const lib = 'LIB000000000YN';
+    const scan = (location: string) => parseParcelsAppResponse({ carriers: ['LIB', 'DHLink'], originCode: 'CN', destinationCode: 'US', states: [
+      { date: '2026-11-19T16:36:35.000Z', status: 'Package received and scanned at warehouse', carrier: 0, location },
+    ] }, lib, identity(lib), 'Asia/Shanghai').events?.[0];
+    expect(scan('PT')).toMatchObject({ time: '2026-11-19T08:36:35.000Z', time_zone: 'Asia/Shanghai' });
+    expect(scan('PT')).not.toHaveProperty('location');
+    // A place in another country still rules the home clock out.
+    expect(scan('Example Town, Portugal')).toMatchObject({ time: '2026-11-19T16:36:35.000Z', location: 'Example Town, Portugal' });
+  });
+
   it('reads SwiftX\'s EWR hub on Eastern time, so DHLink\'s copies of its scans stay one with them', () => {
     // Live shape: DHLink relays SwiftX's hub scans on China's clock, and
     // SwiftX's copies carry the hub's wall clock; its label is on GMT-07:00.

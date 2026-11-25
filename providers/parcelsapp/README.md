@@ -549,6 +549,9 @@ alone is enough. The browser step exists for future protocol changes.
   give its digits, and DHLink records its warehouse scans within seconds on its system
   clock, which is China's. DHLink's copies take DHLink's catalog zone, so XZG's scans stay
   one with them whether a reply has them or not, whatever zone routing passes. So was
+  "LIB", LiBaoTongXu, a Putian line provider whose US line DHLink carries, on China time:
+  its warehouse receipt had the digits of DHLink's own row of it. Its site code there ("PT")
+  names no country, so it places no scan; read as Portugal, the receipt came eight hours late. So was
   "SPL", Saudi Post, on Riyadh time: its own tracker dates an origin post's scans and an
   EMS partner's abroad on their own place's clock ([Saudi Post](../../carriers/saudi-post/README.md)),
   so a location in another country, or a copy at the same place (above), dates them
