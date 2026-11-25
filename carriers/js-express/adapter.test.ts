@@ -535,6 +535,23 @@ describe('JS Express tracking adapter', () => {
     expect(unstated.events?.[0]).toMatchObject({ local_time: '2026-11-04T12:00:00' });
   });
 
+  it("dates Micro Express's copied rows on UTC, whatever their place, and maps them", () => {
+    const stated = (date: string, address: string, status: string, timeZone: string, code = 'OIT') => ({ ...row(date, address, status), timeZone, code });
+    const result = parseJsExpress(waybill([
+      stated('2026-11-23 03:57:45', 'Sample Suburb(VIC)', 'Item processed by local courier at sorting facility', '+08:00'),
+      stated('2026-11-23 03:56:45', 'Sample Suburb(VIC)', 'Item has been received by local delivery depot', '+08:00'),
+      stated('2026-11-18 10:29:18', 'MEL', 'Delivery to local courier', '+10:00'),
+      stated('2026-11-12 13:38:20', '', 'Order Creation, order submitted, pending to receive.', '+08:00'),
+    ], { country: 'Australia' }), DELIVERED);
+    // Micro Express's own tracker gives the same scans at 14:57:45 and 14:56:45 in Melbourne.
+    expect(result.events?.map((event) => event.time ?? event.local_time)).toEqual([
+      '2026-11-23T03:57:45Z', '2026-11-23T03:56:45Z', '2026-11-18T10:29:18', '2026-11-12T13:38:20Z',
+    ]);
+    expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['registered', 'carrier_map'],
+    ]);
+  });
+
   it("reads a destination post's rows as JS Express relays them, its collection point as waiting for pickup", () => {
     const waiting = parseJsExpress(withList([
       row('2026-05-06 08:00:00', 'Array', 'Item arrival at collection point for pick-up'),

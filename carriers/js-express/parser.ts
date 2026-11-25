@@ -13,6 +13,7 @@ import { hasSeveralClocks, mainZone } from '../../places/zones.js';
 import { cttExpressRelayZone } from '../ctt-express/clock.js';
 import { DHL_PAKET_ROW } from '../dhl/paket-rows.js';
 import { isJAndTGermanyCopy } from '../j-and-t-de/copies.js';
+import { isMicroExpressCopy } from '../micro-express/copies.js';
 import { jsExpressChinaClock } from './clock.js';
 import { imileReceiver } from '../imile/parser.js';
 import { IMILE_RECEIVER, LIST_PLACE, RECEIVER } from './identity.js';
@@ -151,11 +152,13 @@ function canadianTown(location: string, label: string): boolean {
  * without a state: the delivering office's arrival, the round, the delivery
  * and the rest that do not name USPS, and those that came on a whole minute.
  * In a history whose USPS scans to the second name their towns "Town,ST", USPS's
- * rows are on their place's clock instead, labels included.
+ * rows are on their place's clock instead, labels included. Micro Express's rows,
+ * copied once it delivers in Australia, are on UTC, whatever their place.
  * Null otherwise: airports' codes, other rows without a place and other
  * couriers' rows.
  */
 function scanZone(local: string, description: string, location: string, label: string, straightship: boolean, uspsFeed: UspsFeed): string | null {
+  if (isMicroExpressCopy(description)) return 'UTC';
   if (straightship && (STRAIGHTSHIP.test(description) || canadianTown(location, label)
     || (!location && STRAIGHTSHIP_RECORD.test(description)))) return 'UTC';
   const usps = USPS.test(description) || USPS_WORDING.test(description);

@@ -56,6 +56,9 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   province or a city, or written in Chinese other than Hong Kong's, Macau's or Taiwan's, is on
   Beijing time. A flight's departure filed there keeps its wall clock:
   one has come hours after its flight could have left, given the landing that followed.
+- Micro Express's rows, copied in its words once it is the courier in Australia, are on UTC, the
+  instant Micro Express's own tracker gives the same scan to the second; read on Melbourne's clock,
+  they would come eleven hours early. Their place, a suburb and its state, does not change that.
 - In a history that names Straightship, its rows are on UTC, the clock of Straightship's own
   page: those that name it, those whose wording ends with a town and a Canadian province, and its
   placeless "Package information is created in the system", which its page shows on the same wall
