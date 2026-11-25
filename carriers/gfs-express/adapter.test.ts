@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { createTracker } from '../../facade/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, GfsExpressTracker, gfsQuery } from './adapter.js';
 import { parseGfs } from './parser.js';
@@ -96,11 +97,42 @@ describe('GFS Express tracking', () => {
     await expect(instance.track({ number: NUMBER }, {})).rejects.toMatchObject({ reason: 'portal_not_found' });
   });
 
-  it('names GFS Express for its CGD waybills, which then need no recognition', () => {
-    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'gfs-express', confidence: 'high' });
+  it('names GFS Express for its CGD waybills, which then need no recognition, and keeps Cainiao as an origin', () => {
+    expect(detectCarrierMatch(NUMBER)).toEqual({
+      carrier: 'gfs-express', confidence: 'high', candidates: ['gfs-express'], preferred: [], origins: ['aliexpress'],
+    });
     for (const near of ['CGD5830271946', 'CGD583027194641', 'CGE58302719464', 'XCGD58302719464']) {
       expect(detectCarrierMatch(near)?.candidates ?? [], near).not.toContain('gfs-express');
     }
     expect(recognitionAskedCarriers(NUMBER)).toEqual([]);
+  });
+
+  describe('AliExpress orders, which Cainiao follows from China under the GFS waybill', () => {
+    const labelled = () => {
+      const payload = reply();
+      payload.data[0].tracks = payload.data[0].tracks.slice(-1);
+      return payload;
+    };
+    const cainiao = JSON.parse(readFileSync(new URL('../aliexpress/fixtures/in-transit.json', import.meta.url), 'utf8'));
+    const cainiaoMoving = { ...cainiao, module: [{ ...cainiao.module[0], mailNo: NUMBER, destCountry: 'Saudi Arabia' }] };
+    const fetcher = (gfs: unknown) => vi.fn<typeof fetch>((input) => Promise.resolve(
+      json(String(input).startsWith('https://global.cainiao.com/') ? cainiaoMoving : gfs)));
+    const asked = (calls: ReturnType<typeof fetcher>) => calls.mock.calls
+      .map(([input]) => String(input).startsWith('https://global.cainiao.com/') ? 'aliexpress' : 'gfs-express');
+
+    it('files one under AliExpress while GFS holds only the label, proposing GFS', async () => {
+      const calls = fetcher(labelled());
+      await expect(createTracker({ fetcher: calls, providers: [] }).track({ number: NUMBER })).resolves.toMatchObject({
+        carrier: 'aliexpress', source: 'aliexpress', handoff: { carrier: 'gfs-express', number: NUMBER },
+      });
+      expect(asked(calls).slice(0, 2)).toEqual(['gfs-express', 'aliexpress']);
+    });
+
+    it('asks only GFS once it has scanned the parcel', async () => {
+      const calls = fetcher(reply());
+      await expect(createTracker({ fetcher: calls, providers: [] }).track({ number: NUMBER }))
+        .resolves.toMatchObject({ carrier: 'gfs-express', source: 'gfs-express', result: { status: 'delivered' } });
+      expect(asked(calls)).toEqual(['gfs-express']);
+    });
   });
 });

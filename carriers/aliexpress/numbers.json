@@ -1242,6 +1242,18 @@
       "note": "A UniUni number made public with its parcel. Cainiao's tracker returns its history too, from China to UniUni's delivery: an AliExpress parcel UniUni delivers in the United States."
     },
     {
+      "number": "CGD74019263851",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-25",
+      "expect": {
+        "carrier": "gfs-express",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of a GFS Express waybill: CGD and eleven digits. Cainiao's tracker holds such parcels from its warehouse in China, AliExpress orders GFS delivers in Saudi Arabia, before GFS has scanned them."
+    },
+    {
       "number": "CN261130478159",
       "role": "shipment",
       "evidence": "synthetic",

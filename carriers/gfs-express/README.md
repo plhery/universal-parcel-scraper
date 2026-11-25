@@ -30,8 +30,13 @@ last two as customs steps. "Data Registed" is GFS's spelling.
 
 No public page shows a GFS Express number. A parcel GFS's own tracker holds, and universal
 providers file under GFS, has `CGD` and eleven digits. No other carrier in the catalog writes
-`CGD`, so `gfs-express-1` names GFS Express with high confidence. The corpus holds a made-up
-number in that shape.
+`CGD`, so `gfs-express-1` names GFS Express with high confidence. The corpus holds made-up
+numbers in that shape.
+
+GFS delivers AliExpress orders under these waybills, and Cainiao's tracker follows them from
+China before GFS's first scan, with the export and flight legs GFS does not show. Detection lists
+AliExpress in `origins`: while GFS holds only the label, the tracker asks Cainiao, and its movement
+files the parcel under AliExpress with GFS proposed.
 
 ## Links
 

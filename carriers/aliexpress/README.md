@@ -27,7 +27,9 @@ partner. GOFO's `GFUS` waybills in the United States are GOFO's from the label, 
 names GOFO and lists AliExpress in `origins`; while GOFO holds only the label, the tracker asks
 Cainiao, and its movement files the parcel under AliExpress with GOFO proposed. UniUni's `UUSC`
 numbers list AliExpress in `origins` the same way: Cainiao's tracker follows them from China, and
-UniUni lists one it has not received as invalid. Detection also
+UniUni lists one it has not received as invalid. GFS Express's `CGD` waybills list AliExpress in
+`origins` too: Cainiao's tracker follows the AliExpress orders GFS delivers in Saudi Arabia from
+China, with more scans than GFS's own leg. Detection also
 suggests AliExpress for `HRBC` and ten digits, numbers universal providers file under YFH and Cainiao: Cainiao's tracker answered
 one, YFH's did not know it and Ekart's knew neither. It suggests AliExpress for `SK0SCZD`, ten
 digits and N as well: Cainiao's tracker followed such a number from its warehouse in China. So does `RN` or `RS`, ten digits and `Y`: Cainiao's
