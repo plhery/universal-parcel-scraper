@@ -56,7 +56,9 @@ fallback')`.
   `exceptionDescription` for each scan, `ACTUAL_DELIVERY` and `ESTIMATED_DELIVERY` from
   `dateAndTimes`, and `holdAtLocation`. `estimatedDeliveryTimeWindow` on the estimated day, or
   without one, becomes `expected_delivery_from` and `expected_delivery` (a slot on the day when
-  its clocks carry no offset); a window with one end gives that end's day. Every rule below
+  its clocks carry no offset); a window with one end gives that end's day. The page's
+  `estDelTimeWindow`, which it fills once the delivery day is planned, is read the same way
+  against its `estDeliveryDt`. Every rule below
   applies to both. A scan's place is its town and its state or province, else its
   country, as the page writes it; its street and postcode are never read. A scan dated
   midnight without an offset keeps its day, as the page's pickup does. Its `NOTFOUND` answer

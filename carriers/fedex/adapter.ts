@@ -53,8 +53,8 @@ import { FEDEX_CODE_STAGE, fedexScanStage, fedexStage, fedexStatus, statusForSta
  * Response shape provenance: the page bundle's package model (`trackingNbr`,
  * `keyStatus`/`keyStatusCD`, `scanEventList` items with
  * `date`/`time`/`gmtOffset`/`scanLocation`/`status`/`statusCD`/`scanDetails`,
- * and the hold location's `halCmpnyName`/`halAddress`), inspected 2026-09-20
- * and 2026-10-08.
+ * the hold location's `halCmpnyName`/`halAddress`, and the delivery window's
+ * `estDelTimeWindow` `estDelTmWindowStart`/`estDelTmWindowEnd`).
  */
 const TRACKING_BASE = 'https://www.fedex.com/fedextrack/';
 const TRACK_API = 'https://api.fedex.com/track/v2/shipments';
@@ -583,7 +583,7 @@ export function parseFedExTrackingResponse(payload: unknown, trackingNumber: str
     statusText: keyStatus,
     statusCode: keyStatusCD,
     statusDetails,
-    estimate: { expected_delivery: expectedDelivery(shipment.estDeliveryDt) },
+    estimate: pageEstimate(shipment),
     deliveredAt: shipment.actDeliveryDt,
     holdLocation: holdLocation(shipment.halCmpnyName, shipment.halAddress, shipment.halresidential === true),
     receiver: clean(shipment.recipientName, 160) || clean(shipment.recipientCmpnyName, 160),
@@ -603,18 +603,34 @@ function apiDate(result: JsonObject, ...types: string[]): unknown {
 }
 
 /**
- * The API's estimate: the day of `ESTIMATED_DELIVERY`, which FedEx dates at midnight, and
- * `estimatedDeliveryTimeWindow` when it falls on that day or FedEx gives no such date.
- * A window without both ends still gives its end's day.
+ * An estimated day and a window: the window when it falls on that day or there is no such day,
+ * else the day. A window without both ends still gives its end's day.
  */
-function apiEstimate(result: JsonObject): Estimate {
-  const day = expectedDelivery(apiDate(result, 'ESTIMATED_DELIVERY'));
-  const window = isRecord(result.estimatedDeliveryTimeWindow) && isRecord(result.estimatedDeliveryTimeWindow.window)
-    ? result.estimatedDeliveryTimeWindow.window : {};
-  const range = windowEstimate(window.begins, window.ends);
+function dayOrWindow(dayValue: unknown, begins: unknown, ends: unknown): Estimate {
+  const day = expectedDelivery(dayValue);
+  const range = windowEstimate(begins, ends);
   const onDay = (value: string | null | undefined) => !value || value.slice(0, 10) === day;
   if (range && (!day || (onDay(range.expected_delivery_from) && onDay(range.expected_delivery)))) return range;
-  return { expected_delivery: day ?? expectedDelivery(window.ends) };
+  return { expected_delivery: day ?? expectedDelivery(ends) };
+}
+
+/**
+ * The page's estimate: the day of `estDeliveryDt`, which ends the service's commitment, and the
+ * `estDelTimeWindow` the page shows once a delivery day is planned, out for delivery for instance.
+ */
+function pageEstimate(shipment: JsonObject): Estimate {
+  const window = isRecord(shipment.estDelTimeWindow) ? shipment.estDelTimeWindow : {};
+  return dayOrWindow(shipment.estDeliveryDt, window.estDelTmWindowStart, window.estDelTmWindowEnd);
+}
+
+/**
+ * The API's estimate: the day of `ESTIMATED_DELIVERY`, which FedEx dates at midnight, and
+ * `estimatedDeliveryTimeWindow`.
+ */
+function apiEstimate(result: JsonObject): Estimate {
+  const window = isRecord(result.estimatedDeliveryTimeWindow) && isRecord(result.estimatedDeliveryTimeWindow.window)
+    ? result.estimatedDeliveryTimeWindow.window : {};
+  return dayOrWindow(apiDate(result, 'ESTIMATED_DELIVERY'), window.begins, window.ends);
 }
 
 /**

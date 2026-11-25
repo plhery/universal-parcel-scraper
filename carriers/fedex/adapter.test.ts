@@ -176,6 +176,29 @@ describe('FedEx structured response', () => {
     expect(result).not.toHaveProperty('delivered_at');
   });
 
+  it('reads the delivery window the page gives on the estimated day', () => {
+    /** The in-transit parcel with this window, on the fixture's 25 September by default. */
+    const estimate = (start: string, end: string, day = '2026-09-25T18:00:00+02:00') => {
+      const payload = inTransitFixture() as { output: { packages: [Record<string, unknown>] } };
+      const [shipment] = payload.output.packages;
+      shipment.estDeliveryDt = day;
+      shipment.estDelTimeWindow = { estDelTmWindowStart: start, estDelTmWindowEnd: end,
+        displayEstDelTmWindowTmStart: '', displayEstDelTmWindowTmEnd: '', preDeliveryConfirmationAvailable: false };
+      const result = parseFedExTrackingResponse(payload, IN_TRANSIT_NUMBER);
+      return [result.expected_delivery_from ?? null, result.expected_delivery];
+    };
+    expect(estimate('2026-09-25T08:30:00+02:00', '2026-09-25T12:30:00+02:00'))
+      .toEqual(['2026-09-25T08:30:00+02:00', '2026-09-25T12:30:00+02:00']);
+    // No window, one end, a window on another day or one that ends before it starts: the day alone.
+    expect(estimate('', '')).toEqual([null, '2026-09-25']);
+    expect(estimate('', '2026-09-25T12:30:00+02:00')).toEqual([null, '2026-09-25']);
+    expect(estimate('2026-09-26T08:30:00+02:00', '2026-09-26T12:30:00+02:00')).toEqual([null, '2026-09-25']);
+    expect(estimate('2026-09-25T12:30:00+02:00', '2026-09-25T08:30:00+02:00')).toEqual([null, '2026-09-25']);
+    // Without an estimated day, the window stands on its own.
+    expect(estimate('2026-09-25T08:30:00+02:00', '2026-09-25T12:30:00+02:00', ''))
+      .toEqual(['2026-09-25T08:30:00+02:00', '2026-09-25T12:30:00+02:00']);
+  });
+
   it('reads a parcel scanned in after the day\'s cutoff as picked up, not as delayed', () => {
     /** A parcel whose newest scan is `newest`, with this package wording and code. */
     const cutoff = (newest: readonly [string, string, string, string], details = '', code = 'DY', keyStatus = 'We have your package') => {
