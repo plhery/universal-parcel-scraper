@@ -24,13 +24,17 @@ export function splitHjytRow(content: string, location: string): { content: stri
  */
 export const hjytClock = (row: HualeiRow): 'platform' | 'wall' => (row.code || !row.location.trim() ? 'platform' : 'wall');
 
+/** A row copied from iMile, which names its centre or station in 【】 and carries no kind code: "AUH DS Delivery,Your order has arrived at 【AUH DS】". */
+export const isHjytImileRow = (row: HualeiRow): boolean => !row.code && /【[^】]+】/.test(row.content);
+
 /**
  * Hengjie Yutong's (恒捷宇通, HJYT) tenant of the Hualei platform. Its line to the United Arab
- * Emirates hands the parcel to iMile, whose waybill is the record's tracking number; the
- * forwarder's own waybill stays in the invoice field.
+ * Emirates hands the parcel to iMile, whose waybill is the record's tracking number and whose
+ * scans it copies; the forwarder's own waybill stays in the invoice field.
  */
 export const HJYT: HualeiTenant = {
   carrier: 'hjyt', provider: PROVIDER, origin: HJYT_ORIGIN, stage: hjytStage, split: splitHjytRow, clock: hjytClock,
+  copiedPartner: { carrier: 'imile', copies: isHjytImileRow },
 };
 
 /** The track interface's reply, or null when it holds no row for the number. */

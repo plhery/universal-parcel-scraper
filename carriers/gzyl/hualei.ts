@@ -67,10 +67,21 @@ export interface HualeiTenant {
   readonly repeats?: (wording: string, other: string) => boolean;
   /**
    * Carriers the tenant hands records to without naming a channel: one takes a
-   * record whose transfer number its own high-confidence rule claims whole,
-   * under a channel label too unless the label names another carrier.
+   * record whose transfer number, or else invoice number, its own high-confidence
+   * rule claims whole, under a channel label too unless the label names another
+   * carrier. Wokexp's line to Italy gives Poste Italiane's number as the invoice
+   * number alone.
    */
   readonly unlabelledPartners?: readonly CarrierId[];
+  /**
+   * The carrier whose scans the tenant's line copies into a record whose tracking
+   * number is that carrier's waybill, of a shape no rule ties to it with high
+   * confidence, as iMile's thirteen digits on HJYT's and Qyun's lines: the carrier
+   * takes the record when its own detection offers the tracking number, it serves
+   * the destination, a row is one of its copies (`copies`) and no channel names
+   * another carrier.
+   */
+  readonly copiedPartner?: { readonly carrier: CarrierId; readonly copies: (row: HualeiRow) => boolean };
   /**
    * Carriers a product name names, as JRT's line to Ireland names FedEx: on a
    * record of that product without a channel, the delivery carrier's number is
@@ -520,6 +531,17 @@ function unlabelledPartner(numbers: readonly string[], tenant: HualeiTenant): Fa
   return undefined;
 }
 
+/**
+ * The carrier whose scans the record copies under its waybill, the tracking number: its own detection
+ * offers the number, it serves the destination, a row is one of its copies and no channel names another carrier.
+ */
+function copiedPartner(tracking: string, rows: readonly HualeiRow[], destination: string, tenant: HualeiTenant, label = ''): Facts['partner'] {
+  const copied = tenant.copiedPartner;
+  if (!copied || !tracking || !takes(copied.carrier, tracking, destination)) return undefined;
+  if (label && namesAnotherCarrier(label, copied.carrier, tenant)) return undefined;
+  return rows.some(copied.copies) ? { carrier: copied.carrier, number: tracking } : undefined;
+}
+
 /** The carriers a catalog name or a brand names, if any. */
 const namedCarriers = (name: string): string[] => {
   const carrier = /[A-Za-z]/.test(name) ? carrierIdFromName(name) : undefined;
@@ -558,24 +580,28 @@ function namesAnotherCarrier(label: string, partner: CarrierId, tenant: HualeiTe
 /**
  * The delivery carrier and its number. Under a channel the platform's table
  * holds, the channel's transfer number, else the tracking number, which some
- * lines fill with the delivery carrier's. Otherwise the transfer number, or the
+ * lines fill with the delivery carrier's. Otherwise the transfer number, the
  * tracking number a tenant's own number shape marks as the delivery carrier's,
- * of a carrier the tenant hands to unnamed, unless the channel names another
- * carrier; without a channel, also of the carrier the record's product names.
+ * or the invoice number, of a carrier the tenant hands to unnamed, or the
+ * tracking number of the carrier whose scans the record copies, unless the
+ * channel names another carrier; without a channel, also of the carrier the
+ * record's product names.
  */
-function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant, downstream = ''): Facts['partner'] {
+function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant, downstream = '', rows: readonly HualeiRow[] = []): Facts['partner'] {
   const { provider } = tenant;
   const label = text(record, 'channel_name', provider, 100);
+  const number = (key: string) => identity(text(record, key, provider, 64));
   if (label) {
     for (const key of ['business_channeltransfercode', 'trackingNumber']) {
-      const number = identity(text(record, key, provider, 64));
-      const carrier = number ? hualeiPartner(label, number, destination) : undefined;
-      if (carrier) return { carrier, number };
+      const carrier = number(key) ? hualeiPartner(label, number(key), destination) : undefined;
+      if (carrier) return { carrier, number: number(key) };
     }
   }
   // A number the partner's own rule claims whole is the partner's, unless the channel names another carrier.
-  const unlabelled = unlabelledPartner([identity(text(record, 'business_channeltransfercode', provider, 64)), downstream], tenant);
+  const unlabelled = unlabelledPartner([number('business_channeltransfercode'), downstream, number('business_seqinvoicecode')], tenant);
   if (unlabelled) return label && namesAnotherCarrier(label, unlabelled.carrier, tenant) ? undefined : unlabelled;
+  const copied = copiedPartner(number('trackingNumber'), rows, destination, tenant, label);
+  if (copied) return copied;
   if (label) return undefined;
   const product = downstream ? text(record, 'productKindName', provider, 100) : '';
   const named = product ? tenant.productPartners?.find(([pattern]) => pattern.test(product))?.[1] : undefined;
@@ -678,7 +704,7 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
     : rows.map((row) => identity(tenant.handOff!(row.content) ?? '')).find((value) => value && value !== identity(number)) ?? '';
   const onward = downstream || handed || foundBy;
   return result(rows, {
-    number, destination, partner: partnerOf(record, destination, tenant, onward),
+    number, destination, partner: partnerOf(record, destination, tenant, onward, rows),
     tracking: downstream ? '' : tracking, ...(onward ? { downstream: onward } : {}),
     service: hualeiServiceName(text(record, 'productKindName', provider, 100)) || undefined,
   }, tenant, readAt);
@@ -761,10 +787,12 @@ export function parseHualeiPage(html: string, raw: string, tenant: HualeiTenant,
   // tenant that names its own numbers, as on the interface, so is a tracking number of another shape.
   const handed = Boolean(tenant.ownNumber && tracking && !tenant.ownNumber.test(tracking));
   const downstream = tenant.pageEcho ? transfer || tracking : handed ? tracking : '';
-  // The page names no channel or product, so only a partner the tenant hands to unnamed is read.
+  // The page names no channel, product or invoice number, so only a partner the tenant hands to unnamed, or whose
+  // scans it copies, is read.
+  const destination = (waybill.cells.get('目的地') ?? '').toUpperCase();
   return result(waybill.rows, {
-    number, tracking: tenant.pageEcho || handed ? '' : tracking, ...(downstream ? { downstream } : {}),
-    destination: (waybill.cells.get('目的地') ?? '').toUpperCase(), partner: unlabelledPartner([transfer, downstream], tenant),
+    number, tracking: tenant.pageEcho || handed ? '' : tracking, ...(downstream ? { downstream } : {}), destination,
+    partner: unlabelledPartner([transfer, downstream], tenant) ?? copiedPartner(tracking, waybill.rows, destination, tenant),
   }, tenant, readAt, true);
 }
 

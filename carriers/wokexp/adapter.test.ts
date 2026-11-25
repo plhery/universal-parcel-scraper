@@ -12,6 +12,8 @@ import statuses from './statuses.json' with { type: 'json' };
 // The public sample from a tracking directory's Wokexp page, and an invented number.
 const NUMBER = 'WLYK0000082627';
 const UNKNOWN = 'WLYK0000000000';
+// Poste Italiane's number for the parcel, which the record gives as its invoice number.
+const POSTE_ITALIANE = '5P53D52701367';
 // The lookup's moment, after the fixture's newest row.
 const READ_AT = Date.parse('2026-11-25T00:00:00Z');
 type Reply = ReturnType<typeof JSON.parse>;
@@ -49,9 +51,9 @@ describe('Wokexp tracking adapter', () => {
       last_status_text: 'Consegnata, la spedizione è stata consegnata', last_update: null, last_update_local: '2025-07-08T13:55:51',
       service_name: '通用渠道', destination_country: 'IT',
     });
-    // The record's invoice number is Poste Italiane's, but the platform does not give it as a transfer number.
-    expect(result).not.toHaveProperty('delivery_carrier');
-    expect(result).not.toHaveProperty('delivery_tracking_number');
+    // The record's invoice number is Poste Italiane's, which delivers the parcel under it.
+    expect(result).toMatchObject({ delivery_carrier: 'poste-italiane', delivery_tracking_number: POSTE_ITALIANE });
+    expect(result).not.toHaveProperty('canonical_tracking_number');
     const events = result.events!;
     expect(events).toHaveLength(12);
     expect(events.slice(0, 4).map(({ local_time: local, description, time }) => [local, description, time])).toEqual([
@@ -66,6 +68,24 @@ describe('Wokexp tracking adapter', () => {
     expect(events.find(({ provider_code: code }) => code === 'ARRIVAL'))
       .toMatchObject({ time: '2025-06-21T19:37:24+08:00', stage: 'accepted' });
     expect(result.planned_events ?? []).toEqual([]);
+  });
+
+  it('finds the record by Poste Italiane’s number, and hands on only a number its own rule claims', () => {
+    expect(detectCarrierMatch(POSTE_ITALIANE)).toMatchObject({ carrier: 'poste-italiane', confidence: 'high' });
+    expect(parseWokexpTrack(fixture('delivered'), POSTE_ITALIANE, READ_AT)).toMatchObject({
+      current_stage: 'delivered', canonical_tracking_number: NUMBER, delivery_carrier: 'poste-italiane',
+    });
+    const changed = (change: (record: Record<string, unknown>) => void) => {
+      const reply = fixture('delivered');
+      change(reply[0].data[0]);
+      return parseWokexpTrack(reply, NUMBER, READ_AT)!;
+    };
+    // The forwarder's own invoice number, and a number USPS's rule claims, a carrier the line does not hand to.
+    for (const invoice of ['WK2025062100001', '9400100000000000000006']) {
+      expect(changed((record) => { record.business_seqinvoicecode = invoice; })).not.toHaveProperty('delivery_carrier');
+    }
+    // A channel naming another carrier.
+    expect(changed((record) => { record.channel_name = 'DHL Express'; })).not.toHaveProperty('delivery_carrier');
   });
 
   it('tells Poste Italiane’s rows from the line’s', () => {

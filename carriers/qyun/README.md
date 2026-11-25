@@ -33,12 +33,15 @@ is needed.
 - `Abnormal LT` is iMile's abnormal scan at its Mexico City centre, weeks after the parcel's last
   movement and with no delivery round; the record then says the forwarder paid compensation. It
   maps to an exception.
+- The record does not name iMile, and iMile's thirteen digits are a shape it shares with other
+  carriers, which no rule ties to iMile with high confidence. The record is handed to iMile when
+  iMile's detection offers its tracking number, iMile serves the destination and a row is a copy
+  of iMile's, which opens with iMile's category.
 - The record's product name is the service name and its destination the destination country.
 
 ## Limitations
 
-The record does not name iMile, and no detection rule ties iMile's waybill to iMile with enough
-confidence, so the parcel is not handed to iMile. No delivery estimate or weight.
+No delivery estimate or weight.
 
 ## Numbers
 

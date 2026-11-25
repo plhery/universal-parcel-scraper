@@ -5,7 +5,7 @@ import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/ind
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, HjytTracker } from './adapter.js';
-import { HJYT_ORIGIN, hjytClock, parseHjytPage, parseHjytTrack, splitHjytRow } from './parser.js';
+import { HJYT_ORIGIN, hjytClock, isHjytImileRow, parseHjytPage, parseHjytTrack, splitHjytRow } from './parser.js';
 import { statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -55,8 +55,9 @@ describe('Hengjie Yutong tracking adapter', () => {
       last_status_text: 'Delivered,Your order has been delivered successfully.', last_update: null,
       last_update_local: '2025-03-14T19:53:22', service_name: 'D专线-阿联酋纯电', destination_country: 'AE',
     });
+    // The waybill is iMile's, whose scans the record copies: iMile delivers the parcel under the number asked.
+    expect(result).toMatchObject({ delivery_carrier: 'imile' });
     expect(result.canonical_tracking_number).toBeUndefined();
-    expect(result).not.toHaveProperty('delivery_carrier');
     expect(result).not.toHaveProperty('delivery_tracking_number');
     const events = result.events!;
     expect(events).toHaveLength(14);
@@ -83,8 +84,19 @@ describe('Hengjie Yutong tracking adapter', () => {
 
   it('finds the record by the forwarder’s waybill and the shipper’s reference, with iMile’s number as its tracking number', () => {
     for (const number of [WAYBILL, REFERENCE]) {
-      expect(parseHjytTrack(fixture('delivered'), number, READ_AT)).toMatchObject({ canonical_tracking_number: NUMBER, current_stage: 'delivered' });
+      const found = parseHjytTrack(fixture('delivered'), number, READ_AT)!;
+      expect(found).toMatchObject({ delivery_carrier: 'imile', delivery_tracking_number: NUMBER, current_stage: 'delivered' });
+      expect(found).not.toHaveProperty('canonical_tracking_number');
     }
+  });
+
+  it('tells the rows copied from iMile, which name its centre or station, and hands nothing on without one', () => {
+    expect([row('', 'Delivery,Your order has arrived at 【AUH DS】', 'AUH DS'), row('', 'In transit', 'Dubai Center'),
+      row('', 'The item is ready for shipment', 'SHENZHEN', 'SHIPMENT')].map(isHjytImileRow)).toEqual([true, false, false]);
+    const reply = fixture('delivered');
+    const record = reply[0].data[0];
+    record.trackDetails = record.trackDetails.filter((detail: Record<string, string>) => !/【/.test(detail.track_content!));
+    expect(parseHjytTrack(reply, NUMBER, READ_AT)).not.toHaveProperty('delivery_carrier');
   });
 
   it('drops the place the tracker writes again ahead of iMile’s category, and reads a row by its kind code and place', () => {

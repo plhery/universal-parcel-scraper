@@ -23,12 +23,16 @@ export function splitQyunRow(content: string, location: string): { content: stri
  */
 export const qyunClock = (row: HualeiRow): 'platform' | 'day' => (WHOLE_HOUR.test(row.clock.trim()) ? 'day' : 'platform');
 
+/** A row copied from iMile, which the tracker opens with iMile's category: "scan 【HQ-MEX.DS】Received.". */
+export const isQyunImileRow = (row: HualeiRow): boolean => CATEGORY.test(row.content);
+
 /**
  * Qyun Express's (青云物流) tenant of the Hualei platform. Its lines to Mexico hand the parcel to
- * iMile, whose waybill is the record's tracking number.
+ * iMile, whose waybill is the record's tracking number and whose scans it copies.
  */
 export const QYUN: HualeiTenant = {
   carrier: 'qyun', provider: PROVIDER, origin: QYUN_ORIGIN, stage: qyunStage, split: splitQyunRow, clock: qyunClock,
+  copiedPartner: { carrier: 'imile', copies: isQyunImileRow },
 };
 
 /**

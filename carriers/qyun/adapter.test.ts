@@ -5,7 +5,7 @@ import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/ind
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, QyunTracker } from './adapter.js';
-import { parseQyunPage, parseQyunTrack, QYUN_ORIGIN, qyunClock, splitQyunRow } from './parser.js';
+import { isQyunImileRow, parseQyunPage, parseQyunTrack, QYUN_ORIGIN, qyunClock, splitQyunRow } from './parser.js';
 import { statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -54,8 +54,10 @@ describe('Qyun Express tracking adapter', () => {
       status: 'exception', current_stage: 'exception', current_stage_source: 'carrier_map', last_status_text: 'Abnormal LT',
       last_update: '2025-04-05T01:31:31+08:00', service_name: '墨西哥免税专线普货', destination_country: 'MX',
     });
+    // The waybill is iMile's, whose scans the record copies: iMile delivers the parcel under the number asked.
+    expect(result).toMatchObject({ delivery_carrier: 'imile' });
     expect(result.canonical_tracking_number).toBeUndefined();
-    expect(result).not.toHaveProperty('delivery_carrier');
+    expect(result).not.toHaveProperty('delivery_tracking_number');
     expect(result.events!.map(({ time, local_time: local, location, description, stage, provider_code: code }) => [time ?? local, location, description, stage, code]))
       .toEqual([
         ['2025-04-05T01:31:31+08:00', 'Mexico Center', 'Abnormal LT', 'exception', undefined],
@@ -73,11 +75,35 @@ describe('Qyun Express tracking adapter', () => {
         ['2025-01-30T16:01:14+08:00', undefined, 'Shipment information received.', 'registered', undefined],
       ]);
     for (const number of [WAYBILL, REFERENCE]) {
-      expect(parseQyunTrack(fixture('compensated'), number, READ_AT)).toMatchObject({ canonical_tracking_number: NUMBER, current_stage: 'exception' });
+      const found = parseQyunTrack(fixture('compensated'), number, READ_AT)!;
+      expect(found).toMatchObject({ delivery_carrier: 'imile', delivery_tracking_number: NUMBER, current_stage: 'exception' });
+      expect(found).not.toHaveProperty('canonical_tracking_number');
     }
     // The tracker drops the copy too.
     const fetched = await new QyunTracker({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(json(fixture('compensated'))) }).fetch(NUMBER);
     expect(fetched.events!.filter(({ description }) => description === 'Received the package in Shenzhen.')).toHaveLength(1);
+  });
+
+  it('hands the record to iMile only with a copy of its scans, under a waybill its detection offers, to a country it serves', () => {
+    const changed = (change: (record: Record<string, unknown>) => void) => {
+      const reply = fixture('compensated');
+      change(reply[0].data[0]);
+      return parseQyunTrack(reply, NUMBER, READ_AT)!;
+    };
+    expect([row('', 'scan 【HQ-MEX.DS】Received.'), row('', 'submitted Order Submited.'), row('', 'Arrived at the transit point.')].map(isQyunImileRow))
+      .toEqual([true, true, false]);
+    // No row copied from iMile.
+    expect(changed((record) => {
+      record.trackDetails = (record.trackDetails as Record<string, string>[]).filter((detail) => !isQyunImileRow(row('', detail.track_content!)));
+    })).not.toHaveProperty('delivery_carrier');
+    // A country iMile does not serve.
+    expect(changed((record) => { record.consigneeCountry = 'US'; })).not.toHaveProperty('delivery_carrier');
+    // A channel naming another carrier.
+    expect(changed((record) => { record.channel_name = 'DHL Express'; })).not.toHaveProperty('delivery_carrier');
+    // A tracking number iMile's detection does not offer, found by the forwarder's waybill.
+    const other = fixture('compensated');
+    other[0].data[0].trackingNumber = 'QY0000000000MX';
+    expect(parseQyunTrack(other, WAYBILL, READ_AT)).not.toHaveProperty('delivery_carrier');
   });
 
   it('keeps an uncoded row that is no copy of a coded one, and reads a clock by its minutes', () => {

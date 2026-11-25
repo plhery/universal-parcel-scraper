@@ -110,7 +110,13 @@ instead.
   so a channel's partner is read from the interface alone; the page applies a tenant's own-number
   rule and the partners it hands to unnamed as the interface does. A tenant whose rows name the
   number the parcel goes on under, as BYT's "the new tracking number is …", gives the newest one
-  as the delivery carrier's when the record has no transfer number, under the same rule.
+  as the delivery carrier's when the record has no transfer number, under the same rule, and so
+  does the invoice number, which [Wokexp's](../wokexp/README.md) line fills with Poste Italiane's.
+- A tenant can name the carrier whose scans its line copies under that carrier's waybill, as
+  [HJYT's](../hjyt/README.md) and [Qyun's](../qyun/README.md) copy iMile's, a shape that carrier
+  shares with others and no rule ties to it with high confidence. The record is that carrier's
+  when its own detection offers the tracking number, it serves the destination, a row is one of
+  its copies, as the tenant tells them, and no channel names another carrier.
 - Recipient, sender, address, postcode, weight, fee, signature, signatory and delivery photo
   fields are never read; postcodes, with a country's letters before them (`CH-`), and signatories
   are cut from scan text, including a delivery row's place, which can carry the recipient's
@@ -136,8 +142,8 @@ number.
 A reference stored without its dashes, as `normalizeTrackingNumber` stores every number, is not
 found: the tracker matches it only as written. A record with the delivery carrier's number
 but no channel label hands nothing over, except on a tenant that names the carriers it hands
-records to, as [Mayi Yinfu](../mayiyinfu/README.md) does, or the carrier a product names, as
-[JRT's](../jrt/README.md) line to Ireland names FedEx.
+records to, as [Mayi Yinfu](../mayiyinfu/README.md) does, or whose scans it copies, the carrier a
+product names, as [JRT's](../jrt/README.md) line to Ireland names FedEx.
 
 ## Numbers
 

@@ -24,13 +24,14 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
 - Poste Italiane gives a scan twice, its category alone and followed by its sentence
   (`In consegna, la spedizione è in consegna`). At one clock and place, the longer row is that
   scan again and counts once.
+- The record's invoice number is Poste Italiane's, in no transfer field. Poste Italiane's own rule
+  claims it whole, so the parcel is handed to Poste Italiane under it, and the lookup finds the
+  record by it too.
 - The record's product name is the service name and its destination the destination country.
 
 ## Limitations
 
-The record's invoice number is Poste Italiane's, but the platform gives it in no transfer field,
-so the parcel is not handed to Poste Italiane. Poste Italiane's rows keep their wall clock without
-an instant. No delivery estimate or weight.
+Poste Italiane's rows keep their wall clock without an instant. No delivery estimate or weight.
 
 ## Numbers
 

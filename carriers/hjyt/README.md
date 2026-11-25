@@ -29,13 +29,15 @@ is needed.
 - The tracker writes the place again ahead of iMile's category, as `AUH DS Delivered,…` at `AUH DS`;
   the repeated place is dropped. iMile's centre or station named in `【…】` is read as an ellipsis by
   the status map.
+- The record does not name iMile, and iMile's thirteen digits are a shape it shares with other
+  carriers, which no rule ties to iMile with high confidence. The record is handed to iMile when
+  iMile's detection offers its tracking number, iMile serves the destination and a row is a copy
+  of iMile's, which carries no kind code and names iMile's centre or station in `【…】`.
 - The record's product name is the service name and its destination the destination country.
 
 ## Limitations
 
-The record does not name iMile, and no detection rule ties iMile's waybill to iMile with enough
-confidence, so the parcel is not handed to iMile. iMile's rows keep their wall clock without an
-instant. No delivery estimate or weight.
+iMile's rows keep their wall clock without an instant. No delivery estimate or weight.
 
 ## Numbers
 

@@ -29,10 +29,12 @@ export const repeatsWokexpRow = (wording: string, other: string): boolean => wor
 
 /**
  * Wokexp's tenant of the Hualei platform. Its line to Italy flies parcels to Amsterdam and hands
- * them to Poste Italiane, whose scans the tracker copies in Italian.
+ * them to Poste Italiane, whose scans the tracker copies in Italian and whose number is the
+ * record's invoice number.
  */
 export const WOKEXP: HualeiTenant = {
   carrier: 'wokexp', provider: PROVIDER, origin: WOKEXP_ORIGIN, stage: wokexpStage, clock: wokexpClock, repeats: repeatsWokexpRow,
+  unlabelledPartners: ['poste-italiane'],
 };
 
 /** The track interface's reply, or null when it holds no row for the number. */
