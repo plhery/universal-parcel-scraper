@@ -1,0 +1,24 @@
+{
+  "carrier": "szctc",
+  "records": [
+    {
+      "number": "CTC202617802729",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516075337/https://www.parcelpanel.com/couriers/ctc/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample number an archived capture of ParcelPanel's page for CTC, which links CTC Supply Chain's site, offered to try. CTC Supply Chain's lookup answers it with a parcel to the United States handed to GOFO, which held it for the sender's instructions after a failed attempt."
+    }
+  ]
+}

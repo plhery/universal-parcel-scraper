@@ -1121,6 +1121,7 @@ import { statusMap as aquantuo } from '../../carriers/aquantuo/status.js';
 import { statusMap as hitCargoNicaragua } from '../../carriers/hit-cargo-nicaragua/status.js';
 import { statusMap as dragonflyAu } from '../../carriers/dragonfly-au/status.js';
 import { statusMap as ctlGroupPl } from '../../carriers/ctl-group-pl/status.js';
+import { statusMap as szctc } from '../../carriers/szctc/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1130,6 +1131,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'interparcel-uk': interparcelUk, 'interparcel-au': interparcelAu, aquantuo, 'hit-cargo-nicaragua': hitCargoNicaragua, 'dragonfly-au': dragonflyAu,
   'ctl-group-pl': ctlGroupPl,
+  szctc,
   'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh, cargolux, cargologic,
   'copa-airlines-cargo': copaAirlinesCargo,
   'airasia-cargo': airasiaCargo,

@@ -1,0 +1,32 @@
+{
+  "carrier": "szctc",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "CTC's order row (`IR`)."},
+    {"wording": "First Mile - Pickup", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The parcel collected from the sender, its first physical scan."},
+    {"wording": "Arrived at export center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The air line's export center, a minute after the pickup."},
+    {"wording": "Arrived at origin facility, CN", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "CTC's Shenzhen facility takes the parcel in (`AF`)."},
+    {"wording": "Parcel Data Received", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "The air line's record of the parcel's data, hours after CTC's facility took the parcel in: no scan, so it moves nothing."},
+    {"wording": "Departed from origin facility to airport, CN", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "CTC's Shenzhen facility dispatches the parcel (`DF`)."},
+    {"wording": "The warehouse changed the last-mile vendor due to the weight difference, the new tracking number is …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Names GOFO's number after the wording; the map reads it as an ellipsis."},
+    {"wording": "Arrived at weighing district of warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Exports Center Sorting and Packing", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Cargo leave EC warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The export center at Guangzhou dispatches the parcel."},
+    {"wording": "Departed from export center. Tracking no …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Names GOFO's number after the wording; the map reads it as an ellipsis."},
+    {"wording": "Arrived at Origin Port", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Guangzhou's airport."},
+    {"wording": "Customs released from origin port", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance at Guangzhou."},
+    {"wording": "Departed from original country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Custom clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance at JFK."},
+    {"wording": "Arrived at destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Clearance agency picked", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The clearance agent collects the parcel at JFK."},
+    {"wording": "Handover to local carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The hand-over to GOFO."},
+    {"wording": "Arrived at GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Loaded on Vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Departed GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Arrived at GOFO Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Departed GOFO Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "GOFO's scan, copied."},
+    {"wording": "Delivery Exception, …", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "GOFO's failed attempt during its round, copied with GOFO's support line, which the adapter drops. Seen as \"Delivery Exception, Incorrect/Insufficient Address.\"; GOFO's own map reads every reason after the comma as a failed attempt (code 206), and so does this one."},
+    {"wording": "Hold for Instructions Requested.", "language": "en", "stage": "exception", "confirmedBy": "live", "note": "GOFO's scan, copied with GOFO's support line, which the adapter drops: after the failed attempt for the address, GOFO holds the parcel until the sender says what to do with it. It repeated for a week."}
+  ]
+}

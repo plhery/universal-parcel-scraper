@@ -6955,5 +6955,10 @@
     "carrier": "hytd",
     "kind": "open",
     "reason": "HYTD Express numbers seen so far are HY, twelve digits and TD, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "szctc",
+    "kind": "open",
+    "reason": "CTC Supply Chain waybills are CTC and twelve digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]
