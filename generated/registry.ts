@@ -484,10 +484,12 @@ import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
 import { adapter as heronaExpress } from '../carriers/herona-express/adapter.js';
 import { adapter as heungALine } from '../carriers/heung-a-line/adapter.js';
 import { adapter as hgd } from '../carriers/hgd/adapter.js';
+import { adapter as hhh } from '../carriers/hhh/adapter.js';
 import { adapter as hiTrans } from '../carriers/hi-trans/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
 import { adapter as hitCargoNicaragua } from '../carriers/hit-cargo-nicaragua/adapter.js';
 import { adapter as hitch } from '../carriers/hitch/adapter.js';
+import { adapter as hjyt } from '../carriers/hjyt/adapter.js';
 import { adapter as hmm } from '../carriers/hmm/adapter.js';
 import { adapter as hoeghAutoliners } from '../carriers/hoegh-autoliners/adapter.js';
 import { adapter as homeDeliveryTeam } from '../carriers/home-delivery-team/adapter.js';
@@ -840,6 +842,7 @@ import { adapter as pxcPacific } from '../carriers/pxc-pacific/adapter.js';
 import { adapter as qatarAirwaysCargo } from '../carriers/qatar-airways-cargo/adapter.js';
 import { adapter as qatarPost } from '../carriers/qatar-post/adapter.js';
 import { adapter as qlgj } from '../carriers/qlgj/adapter.js';
+import { adapter as qqwy } from '../carriers/qqwy/adapter.js';
 import { adapter as qtExpress } from '../carriers/qt-express/adapter.js';
 import { adapter as quantiumSolutions } from '../carriers/quantium-solutions/adapter.js';
 import { adapter as quickFort } from '../carriers/quick-fort/adapter.js';
@@ -847,6 +850,7 @@ import { adapter as quickRabbit } from '../carriers/quick-rabbit/adapter.js';
 import { adapter as quicksilverSa } from '../carriers/quicksilver-sa/adapter.js';
 import { adapter as quiqup } from '../carriers/quiqup/adapter.js';
 import { adapter as qwintry } from '../carriers/qwintry/adapter.js';
+import { adapter as qyun } from '../carriers/qyun/adapter.js';
 import { adapter as raben } from '../carriers/raben/adapter.js';
 import { adapter as ramHandToHand } from '../carriers/ram-hand-to-hand/adapter.js';
 import { adapter as rayspeed } from '../carriers/rayspeed/adapter.js';
@@ -986,6 +990,7 @@ import { adapter as straightship } from '../carriers/straightship/adapter.js';
 import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
+import { adapter as suocang } from '../carriers/suocang/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
 import { adapter as sutengExpress } from '../carriers/suteng-express/adapter.js';
 import { adapter as sway } from '../carriers/sway/adapter.js';
@@ -1152,6 +1157,7 @@ import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
 import { adapter as xpressCourierLink } from '../carriers/xpress-courier-link/adapter.js';
 import { adapter as xpressLogisticsLu } from '../carriers/xpress-logistics-lu/adapter.js';
 import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
+import { adapter as xsExpress } from '../carriers/xs-express/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
 import { adapter as yalidine } from '../carriers/yalidine/adapter.js';
 import { adapter as yamato } from '../carriers/yamato/adapter.js';
@@ -1677,10 +1683,12 @@ export const REGISTRY: RegistryDefinition = {
     "herona-express": heronaExpress,
     "heung-a-line": heungALine,
     "hgd": hgd,
+    "hhh": hhh,
     "hi-trans": hiTrans,
     "hispapost": hispapost,
     "hit-cargo-nicaragua": hitCargoNicaragua,
     "hitch": hitch,
+    "hjyt": hjyt,
     "hmm": hmm,
     "hoegh-autoliners": hoeghAutoliners,
     "home-delivery-team": homeDeliveryTeam,
@@ -2033,6 +2041,7 @@ export const REGISTRY: RegistryDefinition = {
     "qatar-airways-cargo": qatarAirwaysCargo,
     "qatar-post": qatarPost,
     "qlgj": qlgj,
+    "qqwy": qqwy,
     "qt-express": qtExpress,
     "quantium-solutions": quantiumSolutions,
     "quick-fort": quickFort,
@@ -2040,6 +2049,7 @@ export const REGISTRY: RegistryDefinition = {
     "quicksilver-sa": quicksilverSa,
     "quiqup": quiqup,
     "qwintry": qwintry,
+    "qyun": qyun,
     "raben": raben,
     "ram-hand-to-hand": ramHandToHand,
     "rayspeed": rayspeed,
@@ -2179,6 +2189,7 @@ export const REGISTRY: RegistryDefinition = {
     "suhu": suhu,
     "sundarban-courier": sundarbanCourier,
     "sunyou": sunyou,
+    "suocang": suocang,
     "surat-kargo": suratKargo,
     "suteng-express": sutengExpress,
     "sway": sway,
@@ -2345,6 +2356,7 @@ export const REGISTRY: RegistryDefinition = {
     "xpress-courier-link": xpressCourierLink,
     "xpress-logistics-lu": xpressLogisticsLu,
     "xpressbees": xpressbees,
+    "xs-express": xsExpress,
     "xyl-ships": xylShips,
     "yalidine": yalidine,
     "yamato": yamato,
@@ -3226,12 +3238,14 @@ export const REGISTRY: RegistryDefinition = {
     "hey-couriers": "universal",
     "hfd": "universal",
     "hgd": "hgd",
+    "hhh": "hhh",
     "hi-trans": "hi-trans",
     "hintzen": "universal",
     "hispapost": "hispapost",
     "hit-cargo-nicaragua": "hit-cargo-nicaragua",
     "hitch": "hitch",
     "hiyes": "universal",
+    "hjyt": "hjyt",
     "hkd-express": "universal",
     "hlog-transportes": "universal",
     "hmm": "hmm",
@@ -3854,6 +3868,7 @@ export const REGISTRY: RegistryDefinition = {
     "qiantong-hk": "universal",
     "qlgj": "qlgj",
     "qls-quince": "universal",
+    "qqwy": "qqwy",
     "qt-express": "qt-express",
     "quality-post": "universal",
     "quantium-solutions": "quantium-solutions",
@@ -3868,6 +3883,7 @@ export const REGISTRY: RegistryDefinition = {
     "quriers": "universal",
     "qwintry": "qwintry",
     "qwqer": "universal",
+    "qyun": "qyun",
     "raben": "raben",
     "rail-continent": "universal",
     "ram-hand-to-hand": "ram-hand-to-hand",
@@ -4092,6 +4108,7 @@ export const REGISTRY: RegistryDefinition = {
     "sundarban-courier": "sundarban-courier",
     "suning-logistics": "universal",
     "sunyou": "sunyou",
+    "suocang": "suocang",
     "super-parcel-track": "universal",
     "superb-express": "universal",
     "surat-kargo": "surat-kargo",
@@ -4394,6 +4411,7 @@ export const REGISTRY: RegistryDefinition = {
     "xpress-logistics-lu": "xpress-logistics-lu",
     "xpressbees": "xpressbees",
     "xpressen": "universal",
+    "xs-express": "xs-express",
     "xuchuan-logistics": "universal",
     "xwwt": "universal",
     "xyl": "universal",

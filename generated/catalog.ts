@@ -33264,6 +33264,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hhh": {
+    "displayName": "Haihehui International",
+    "color": "#213780",
+    "aliases": [
+      "HHH",
+      "海河汇国际",
+      "海河汇国际供应链",
+      "深圳市海河汇国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hhh",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szhhh.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hi-trans": {
     "displayName": "Hi-Trans Express",
     "color": "#c82027",
@@ -33435,6 +33468,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://www.hiyes.com.tw/CargoTracking",
     "helpUrl": "https://www.hiyes.com.tw/Contact",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "hjyt": {
+    "displayName": "Hengjie Yutong",
+    "color": "#0084de",
+    "aliases": [
+      "HJYT",
+      "恒捷宇通",
+      "深圳市恒捷宇通物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hjyt"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "120.78.64.88"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "hkd-express": {
@@ -53687,6 +53751,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "qqwy": {
+    "displayName": "Global Security",
+    "color": "#1e1e84",
+    "aliases": [
+      "QQWY",
+      "全球无忧",
+      "深圳市全球无忧国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "qqwy"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.qqwy56.com",
+          "qqwy56.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "qt-express": {
     "displayName": "QT Express",
     "color": "#ee7e22",
@@ -54133,6 +54229,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://qwqer.eu/lv/en/sutijumu-izsekosana",
     "helpUrl": "https://qwqer.eu/lv/en/kontakti",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "qyun": {
+    "displayName": "Qyun Express",
+    "color": "#00397c",
+    "aliases": [
+      "Qyun",
+      "青云物流",
+      "深圳市青云物流供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "qyun"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "106.52.192.65"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "raben": {
@@ -61537,6 +61664,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://wuliu.suning.com/home/toLogisticsDetail.htm",
     "helpUrl": "https://wuliu.suning.com/home/contact.htm",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "suocang": {
+    "displayName": "Suoexpress",
+    "color": "#a264cd",
+    "aliases": [
+      "SUOCANG",
+      "所仓物流",
+      "所仓国际物流",
+      "深圳市所仓国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "suocang"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "42.193.237.14"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "super-parcel-track": {
@@ -71089,6 +71248,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xs-express": {
+    "displayName": "Xinshu Logistics",
+    "color": "#1e418c",
+    "aliases": [
+      "XS Express",
+      "Xin Shu Logistics",
+      "新树物流",
+      "新树国际物流",
+      "深圳市新树国际物流科技有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xs-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "tms.xs-exp.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "xuchuan-logistics": {
     "displayName": "Xuchuan International Logistics",
     "color": "#0a2463",
@@ -73808,12 +74000,14 @@ export const CARRIER_IDS = [
   "hey-couriers",
   "hfd",
   "hgd",
+  "hhh",
   "hi-trans",
   "hintzen",
   "hispapost",
   "hit-cargo-nicaragua",
   "hitch",
   "hiyes",
+  "hjyt",
   "hkd-express",
   "hlog-transportes",
   "hmm",
@@ -74408,6 +74602,7 @@ export const CARRIER_IDS = [
   "qiantong-hk",
   "qlgj",
   "qls-quince",
+  "qqwy",
   "qt-express",
   "quality-post",
   "quantium-solutions",
@@ -74421,6 +74616,7 @@ export const CARRIER_IDS = [
   "quriers",
   "qwintry",
   "qwqer",
+  "qyun",
   "raben",
   "rail-continent",
   "ram-hand-to-hand",
@@ -74634,6 +74830,7 @@ export const CARRIER_IDS = [
   "sumxpress",
   "sundarban-courier",
   "suning-logistics",
+  "suocang",
   "super-parcel-track",
   "superb-express",
   "surat-kargo",
@@ -74925,6 +75122,7 @@ export const CARRIER_IDS = [
   "xpress-logistics-lu",
   "xpressbees",
   "xpressen",
+  "xs-express",
   "xuchuan-logistics",
   "xwwt",
   "xyl",
@@ -75884,12 +76082,14 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hey-couriers": [],
   "hfd": [],
   "hgd": [],
+  "hhh": [],
   "hi-trans": [],
   "hintzen": [],
   "hispapost": [],
   "hit-cargo-nicaragua": [],
   "hitch": ["hitch-1"],
   "hiyes": [],
+  "hjyt": [],
   "hkd-express": [],
   "hlog-transportes": ["hlog-transportes-1"],
   "hmm": [],
@@ -76484,6 +76684,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "qiantong-hk": [],
   "qlgj": ["qlgj-1"],
   "qls-quince": [],
+  "qqwy": [],
   "qt-express": [],
   "quality-post": [],
   "quantium-solutions": [],
@@ -76497,6 +76698,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "quriers": [],
   "qwintry": ["qwintry-1"],
   "qwqer": [],
+  "qyun": [],
   "raben": ["raben-1"],
   "rail-continent": [],
   "ram-hand-to-hand": ["ram-hand-to-hand-1"],
@@ -76710,6 +76912,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sumxpress": [],
   "sundarban-courier": [],
   "suning-logistics": [],
+  "suocang": [],
   "super-parcel-track": [],
   "superb-express": [],
   "surat-kargo": [],
@@ -77001,6 +77204,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xpress-logistics-lu": [],
   "xpressbees": ["xpressbees-awb"],
   "xpressen": [],
+  "xs-express": [],
   "xuchuan-logistics": ["xuchuan-logistics-1"],
   "xwwt": [],
   "xyl": [],

@@ -60234,6 +60234,29 @@
     ]
   },
   {
+    "input": "6013025456576",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "imile",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "preferred": [
+      "imile"
+    ],
+    "asked": [
+      "imile",
+      "aras-kargo"
+    ]
+  },
+  {
     "input": "60133375615",
     "carrier": "unknown",
     "confidence": "low",
@@ -60342,6 +60365,29 @@
     ]
   },
   {
+    "input": "6022725441176",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "imile",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "preferred": [
+      "imile"
+    ],
+    "asked": [
+      "imile",
+      "aras-kargo"
+    ]
+  },
+  {
     "input": "6026547346434",
     "carrier": "unknown",
     "confidence": "low",
@@ -60392,6 +60438,29 @@
     "candidates": [
       "imile",
       "correos-chile",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "preferred": [
+      "imile"
+    ],
+    "asked": [
+      "imile",
+      "aras-kargo"
+    ]
+  },
+  {
+    "input": "6032726450345",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "imile",
+      "correos-chile",
+      "delhivery",
       "yunda",
       "korea-post",
       "aras-kargo",
@@ -60820,6 +60889,29 @@
   },
   {
     "input": "6070826318493",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "imile",
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "preferred": [
+      "imile"
+    ],
+    "asked": [
+      "imile",
+      "aras-kargo"
+    ]
+  },
+  {
+    "input": "6071226294834",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
@@ -92917,6 +93009,18 @@
     "candidates": []
   },
   {
+    "input": "DYY013552509XB",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "DYY666910851XB",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "E20 73619796",
     "carrier": "unknown",
     "confidence": "low",
@@ -99239,6 +99343,18 @@
   },
   {
     "input": "HGDGY1910856105YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HHH1001984021YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HHH1001987474YQ",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
@@ -114805,6 +114921,12 @@
     "candidates": []
   },
   {
+    "input": "SC2026000211102",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SCD0000015902735263",
     "carrier": "unknown",
     "confidence": "none",
@@ -121648,6 +121770,12 @@
     "candidates": [
       "la-poste"
     ]
+  },
+  {
+    "input": "XSECN2201403703YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "XSO000001356184",
