@@ -1,0 +1,24 @@
+{
+  "carrier": "bulongguoji",
+  "records": [
+    {
+      "number": "BL000000691277YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260609123525/https://www.parcelpanel.com/couriers/bulongguoji/",
+        "date": "2026-06-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's BULONGGUOJI page shows. BULONGGUOJI's tracker answers it with a parcel flown from Hong Kong to the United States and delivered by USPS to a parcel locker, under USPS's number."
+    }
+  ]
+}

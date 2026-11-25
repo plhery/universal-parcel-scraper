@@ -1,0 +1,26 @@
+{
+  "carrier": "bulongguoji",
+  "entries": [
+    {"wording": "The electronic information of the goods has been received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's data, before the warehouse has the parcel."},
+    {"code": "ARRIVAL", "wording": "Consignment Received At Transit Point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt in China."},
+    {"code": "CO_C_CR", "wording": "Item outbound in sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Departed from origin facility to airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "InTransit_Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row, placed at Hong Kong. Listed as a planned step."},
+    {"code": "HKC", "wording": "InTransit_Departure", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaving Hong Kong."},
+    {"wording": "Flight Arrived at Airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's landing in the United States."},
+    {"code": "USA", "wording": "InTransit_CustomsProcessing", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Import clearance in the United States under way, after the landing."},
+    {"wording": "Airport Pickup In Progress", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel collected from the airport in the United States."},
+    {"code": "USCC", "wording": "InTransit_CustomsReleased", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance done: the parcel goes on to USPS."},
+    {"wording": "Accepted at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's first scan, copied: USPS takes the parcel over from the line, which accepted it in China weeks before."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "On the Way, Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The same scan with USPS's category ahead; the adapter keeps the shorter copy."},
+    {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "On the Way, Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The same scan with USPS's category ahead; the adapter keeps the shorter copy."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's delivering hub, copied before the delivery round."},
+    {"wording": "Preparing for Delivery, Arrived at Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The same scan with USPS's category ahead; the adapter keeps the shorter copy."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's round, copied."},
+    {"wording": "Out for Delivery, Expected Delivery by 9:00pm", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The same round with USPS's expected time after it; the adapter keeps the shorter copy."},
+    {"wording": "Delivered, Parcel Locker", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery into a parcel locker, copied as the last row."}
+  ]
+}
