@@ -1335,6 +1335,23 @@ describe('ParcelsApp result parsing', () => {
     ]);
   });
 
+  it("reads SXW Express's copies of Royal Mail's scans on the UK's clock, and its own rows on Beijing's", () => {
+    // SXW gives the rows it copies abroad at their place's wall clock: on Beijing's, the acceptance came eight hours early.
+    // A reply naming Monaco as the destination still leaves Royal Mail's mail centre in the UK.
+    for (const destinationCode of ['GB', 'MC']) {
+      const result = parseParcelsAppResponse({ carriers: ['SXW Express'], originCode: 'CN', destinationCode, states: [
+        { date: '2026-11-18T21:19:35Z', status: 'Inward MC - Automation Acceptance', carrier: 0, location: 'Chelmsford MC' },
+        { date: '2026-11-17T11:22:38Z', status: 'Departed from facility', carrier: 0, location: 'Exampletown, Example, GB' },
+        { date: '2026-11-16T13:51:00Z', status: 'International flight has departed', carrier: 0 },
+        { date: '2026-11-15T16:01:59Z', status: 'Arrived at the origin international hub', carrier: 0, location: 'Shenzhen, CN' },
+      ] }, number, identity(), null, Date.parse('2026-11-20T00:00:00Z'));
+      expect(result.events?.map((scan) => [scan.time, scan.time_zone]), destinationCode).toEqual([
+        ['2026-11-18T21:19:35.000Z', 'Europe/London'], ['2026-11-17T11:22:38.000Z', 'Europe/London'],
+        ['2026-11-16T05:51:00.000Z', 'Asia/Shanghai'], ['2026-11-15T08:01:59.000Z', 'Asia/Shanghai'],
+      ]);
+    }
+  });
+
   it("reads Juxi Express's copies of a local carrier's scans abroad on their place's clock, and its own rows on Beijing's", () => {
     // On Beijing's clock a British delivery office's rounds came at night, and a copy of USPS's
     // departure from Chicago before USPS's own acceptance there.

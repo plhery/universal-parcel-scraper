@@ -485,6 +485,12 @@ alone is enough. The browser step exists for future protocol changes.
   there. Such a scan takes the clock of the town, state or province its place names, or the
   single clock of its country, and keeps its wall clock in a country of several. Juxi's own
   rows, in China or with no place, keep Beijing's.
+- SXW Express gives the rows it copies from its partner and the carrier delivering abroad at
+  their place's wall clock, as its own adapter reads them. On Beijing's clock, the catalog's,
+  Royal Mail's acceptance at a mail centre came eight hours early. Such a row takes the clock of
+  the town, region or airport its place names, Australia's east coast for Australia Post's
+  suburb-and-state rows, or its country's single clock, and keeps its wall clock in a country of
+  several. SXW's own rows, in China or with no place, keep Beijing's.
 - Muser's copies of the delivering network's scans in the US follow the wording with the town
   and ZIP Code past a run of spaces, at the town's wall clock. As in Muser's own adapter, the
   town becomes the place, in the state the ZIP Code is in, and the scan takes that state's clock:

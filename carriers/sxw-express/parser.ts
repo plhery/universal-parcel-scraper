@@ -1,5 +1,5 @@
-import { countryCode } from '../../core/time/index.js';
-import { airportTimeZone, locatePlace } from '../../places/index.js';
+import { countryCode, countryTimeZone } from '../../core/time/index.js';
+import { airportTimeZone, locatePlace, placeTimeZone } from '../../places/index.js';
 import { countryZones, mainZone } from '../../places/zones.js';
 import { gofoScanZone } from '../gofo/clock.js';
 import { GOFO_CLOCK_ZONE } from '../gofo/parser.js';
@@ -32,6 +32,29 @@ function abroad(location: string): boolean {
     return zone !== null && !countryZones('CN').includes(zone);
   }
   return australiaPost(place);
+}
+
+/**
+ * The clock of a row SXW copies from abroad, as a universal provider relays it under SXW's name. SXW
+ * gives it at the place's wall clock, as `sxwClock` reads its own tracker, and ParcelsApp has SXW's
+ * digits: on SXW's catalog zone, Beijing's, Royal Mail's acceptance at a mail centre came eight hours
+ * early. The zone of the town, region or airport its place names, Australia's east coast for Australia
+ * Post's suburb-and-state rows, or the country's when it keeps one clock; null keeps the wall clock in a
+ * country of several. Undefined for SXW's own rows: in China, with no place, or at a place the gazetteer
+ * does not find.
+ */
+export function sxwAbroadZone(location: string, destination: string | null): string | null | undefined {
+  const place = location.trim();
+  if (!place) return undefined;
+  if (australiaPost(place)) return AUSTRALIA_POST_CLOCK.zone;
+  if (/^[A-Z]{3}$/.test(place)) {
+    const zone = airportTimeZone(place);
+    return zone && !countryZones('CN').includes(zone) ? zone : undefined;
+  }
+  const bound = countryCode(destination);
+  const found = locatePlace(place, { countries: bound ? [bound] : [], carriers: ['sxw-express'] });
+  if (!found || ['CN', 'HK', 'MO'].includes(found.country)) return undefined;
+  return found.precision === 'country' && !found.region ? countryTimeZone(found.country) : placeTimeZone(found);
 }
 
 // GOFO's rows in the United States, from its regional hub's on: SXW takes GOFO's Pacific clocks for Eastern ones

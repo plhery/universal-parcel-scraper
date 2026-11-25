@@ -47,6 +47,7 @@ import { EMIRATES_POST_ZONE, UAE_PLACE } from '../../carriers/emirates-post/cloc
 import { epostGlobalCopyZone } from '../../carriers/epost-global/status.js';
 import { FIRST_LINE_CHINA_ZONE, firstLineInChina } from '../../carriers/first-line/clock.js';
 import { juxiExpressAbroadZone } from '../../carriers/juxi-express/clock.js';
+import { sxwAbroadZone } from '../../carriers/sxw-express/parser.js';
 import { HAYPOST_ZONE, haypostEdiReceived } from '../../carriers/haypost/clock.js';
 import { hrvatskaPostaForeignZone } from '../../carriers/hrvatska-posta/parser.js';
 import { imileCountryClock } from '../../carriers/imile/clock.js';
@@ -1589,6 +1590,9 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // place's clock, or null for its wall clock in a country of several. Its own rows are Beijing's.
   const juxi = carrier === 'juxi-express' ? juxiExpressAbroadZone(scanLocation(name, state.location), status, destination) : undefined;
   if (juxi !== undefined) return juxi;
+  // SXW Express copies the rows of its partner and of the carrier delivering abroad at their place's wall clock.
+  const sxw = carrier === 'sxw-express' ? sxwAbroadZone(scanLocation(name, state.location), destination) : undefined;
+  if (sxw !== undefined) return sxw;
   // Posta Shqiptare's relays of a foreign post's scans, under that post's country ("Finland"), run
   // hours ahead of the foreign post's own clock by an amount that differs between countries: they
   // keep their wall clock, as Posta Shqiptare's own tracker leaves them.
@@ -1838,7 +1842,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null || (partner !== null && relay === partner)
-    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international', 'posta-shqiptare', 'juxi-express'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
+    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international', 'posta-shqiptare', 'juxi-express', 'sxw-express'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
     || PLACE_CLOCK_LINES.has(ownCarrier) || (nameKey(name) === 'easyship' && epostGlobalCopyZone(status, feedWordings(payload)) === null));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination, distrusted) : undefined;
   const placed = own !== undefined ? own : sited;
