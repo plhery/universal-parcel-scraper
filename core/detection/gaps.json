@@ -6965,5 +6965,10 @@
     "carrier": "lulu-express",
     "kind": "open",
     "reason": "luluExpress waybills are LULU and ten digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "chengchain",
+    "kind": "open",
+    "reason": "Chengchuang Supply Chain waybills seen so far are CC, ten digits and GY, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

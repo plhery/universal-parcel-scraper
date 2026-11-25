@@ -1,0 +1,26 @@
+{
+  "carrier": "chengchain",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's order row (`IR`)."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's Yiwu facility takes the parcel in (`AF`)."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's Yiwu facility dispatches the parcel (`DF`)."},
+    {"wording": "Shipping Label Created", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "The delivering network's label, made the day after the line's facility dispatched the parcel, in the wording GOFO uses: no scan of the parcel, so it moves nothing."},
+    {"wording": "The goods have been sent to the next station", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The electronic information of the goods has been received", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "A record of the parcel's data after the line's facility dispatched it: no scan, so it moves nothing."},
+    {"wording": "parcel arrived at exchange office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At Yiwu, after the facility dispatched the parcel."},
+    {"wording": "Goods leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The shipment is being transshipped via the hub", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Shipment is in transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Before the flight, and again in the United States."},
+    {"wording": "Arrived at the origin international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "International flight has departed", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "International flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Clearance processing completed - Import", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States."},
+    {"wording": "Arrived at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In the United States, after clearance."},
+    {"wording": "The local carrier is delivering urgently", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Repeated for days among transit rows, so not a delivery round."},
+    {"wording": "The shipment is waiting for transit", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "In transit, next stop shortly", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "In transit, normal transfer ongoing", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The shipment is in domestic transit", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Label Cancelled", "language": "en", "stage": "exception", "confirmedBy": "live", "note": "GOFO's wording for a voided label, read as GOFO's map reads its code 101: no parcel is coming under the label."}
+  ]
+}
