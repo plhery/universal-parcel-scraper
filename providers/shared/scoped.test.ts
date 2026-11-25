@@ -36,6 +36,13 @@ describe('carrier-scoped wording', () => {
     // The courier collecting the parcel from BUFFALO's depot, not the sender handing it over.
     expect(scopedWordingStage('COLLECTED', { carrier: 'buffalo-ex', provider: 'ParcelsApp' })).toBe('in_transit');
     expect(classifyEvent('COLLECTED')).toMatchObject({ stage: 'accepted' });
+    // TopYou's clearance warehouse, after the import release, from every provider that names TopYou.
+    for (const provider of ['Ship24', '17TRACK']) {
+      expect(scopedWordingStage('Customs clearance warehouse entry', { carrier: 'topyou', provider })).toBe('in_transit');
+      expect(scopedWordingStage('Customs clearance warehouse outbound', { carrier: 'topyou', provider })).toBe('in_transit');
+    }
+    expect(scopedWordingStage('Customs clearance warehouse entry', { carrier: 'jrt', provider: 'Ship24' })).toBeUndefined();
+    expect(classifyEvent('Customs clearance warehouse entry')).toMatchObject({ stage: 'customs' });
   });
 
   const answer = (overrides: Partial<CarrierResult> = {}): CarrierResult => ({

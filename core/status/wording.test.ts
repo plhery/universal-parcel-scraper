@@ -467,6 +467,8 @@ describe('classifyWording', () => {
       'Destination customs: Released', 'Destination customs. Released',
       // China Post's release label in English, as forwarders and providers relay it.
       'Export customs release', 'Export customs/release [Example City]',
+      // The clearance and the release that ends it, as TopYou labels the step and Ship24 relays it.
+      'Import customs clearance and customs release',
       'The package was released by the clearing agency.',
       // An export declaration done, as Take Send, Yanwen and their peers word it.
       'Export customs declaration completed', 'Export customs declaration has been completed',

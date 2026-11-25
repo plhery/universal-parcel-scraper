@@ -35,6 +35,16 @@ export const SCOPED_WORDINGS: readonly ScopedWordingRule[] = [
     note: "The local courier's delivery round on a BUFFALO parcel, as ParcelsApp relays it: each departure came early in the "
       + "morning, the parcel was back at the depot that evening, and no round ran on the Sunday. Elsewhere a vehicle can leave for another depot.",
   },
+  {
+    carrier: 'topyou', wording: 'customs clearance warehouse entry', stage: 'in_transit',
+    note: "TopYou's clearance warehouse taking the parcel in hours after its import clearance and release, as TopYou's own map "
+      + "reads it and universal providers relay it. Elsewhere a parcel entering a clearance warehouse can be held for customs.",
+  },
+  {
+    carrier: 'topyou', wording: 'customs clearance warehouse outbound', stage: 'in_transit',
+    note: "The parcel leaving TopYou's clearance warehouse, cleared and released, for the delivering carrier, as TopYou's own map "
+      + "reads it and universal providers relay it.",
+  },
 ];
 
 /** The carrier behind a scan and the provider that relayed it, when one did. */

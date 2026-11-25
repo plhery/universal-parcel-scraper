@@ -65,7 +65,10 @@ its notice that a parcel left at a Pickup parcelshop was not collected, a proble
 it back. On a line a post delivers, the first-mile warehouse's outbound scan
 ends with ", Lastmile Number:" and the post's number, which the wording shown leaves aside: the
 result gives it as the hand-off when the reply has no `transferNo`. The tracker's
-summary code settles a delivered or returned parcel.
+summary code settles a delivered or returned parcel. Its import clearance and release, its clearance
+warehouse's entry and its exit come after customs let the parcel go, so they are transit; a universal
+provider's copies read so too, the release by the shared rules and the warehouse's lines by rules
+scoped to TopYou, since elsewhere a parcel entering a clearance warehouse can be held for customs.
 
 TopYou's own scans name the destination country even at the origin airport, so a place that is
 only countries, by name, code or both ("France,FRA", "PRT"), is left out of them. The destination
