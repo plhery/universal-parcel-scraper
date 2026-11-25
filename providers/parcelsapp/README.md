@@ -48,7 +48,8 @@ Other outcomes:
   no history, and gets no browser attempt: the tracking page gets the same refusal.
   `IP_BLOCKED`, the website's block of the requesting network, is read the same way.
   Requests from some data-centre networks get these refusals whatever they send, the
-  ticket included, in a browser as well.
+  ticket included, in a browser as well. A consumer whose address is refused can route
+  `parcelsapp.com` through another exit.
 - `DOWN`, `BUSY`, `PARSER`, `CAPTCHA` and `MAINTENANCE` mean ParcelsApp's own lookup at
   the carrier failed: its page says the carrier's website is down, busy, unreadable,
   refusing automated tracking or under maintenance. They are inconclusive (reason
