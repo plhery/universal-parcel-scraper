@@ -1,5 +1,125 @@
 {
   "carrier": "premo",
-  "gap": "No public page shows a Premo number.",
-  "records": []
+  "records": [
+    {
+      "number": "00373402216232626881",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.parcelpanel.com/couriers/earlybird/",
+        "date": "2026-10-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["early-bird", "swiss-post-cargo", "postnord", "usps", "nz-post", "matkahuolto"]
+      },
+      "note": "ParcelPanel's Early Bird page offered it as a sample to try. Premo's tracking page answers it with the parcel booked, reloaded at Premo's terminal and delivered by Premo's newspaper carrier."
+    },
+    {
+      "number": "00373402216215907075",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.parcelpanel.com/couriers/earlybird/",
+        "date": "2026-10-11",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["early-bird", "swiss-post-cargo", "postnord", "usps", "nz-post", "matkahuolto"]
+      },
+      "note": "ParcelPanel's Early Bird page offered it as a sample to try. Premo's tracking page answers it with two failed delivery rounds, then a partner carrier it does not name delivering the parcel."
+    },
+    {
+      "number": "00373402216212923450",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260908095611/https://track.earlybird.se/?a=00373402216212923450&b=idiq",
+        "date": "2026-09-08",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["early-bird", "swiss-post-cargo", "postnord", "usps", "nz-post", "matkahuolto"]
+      },
+      "note": "An archived lookup on Early Bird's tracker shows it. Premo's tracking page answers it with a delivery by Premo's newspaper carrier."
+    },
+    {
+      "number": "00373402216212923719",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260903135451/https://track.earlybird.se/?a=00373402216212923719&b=0qnb",
+        "date": "2026-09-03",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["early-bird", "swiss-post-cargo", "postnord", "usps", "nz-post", "matkahuolto"]
+      },
+      "note": "An archived lookup on Early Bird's tracker shows it. Premo's tracking page answers it with a delivery by Premo's newspaper carrier."
+    },
+    {
+      "number": "00373402216195216754",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260717180316/https://track.earlybird.se/?a=00373402216195216754&b=w8d8",
+        "date": "2026-07-17",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["early-bird", "swiss-post-cargo", "postnord", "usps", "nz-post", "matkahuolto"]
+      },
+      "note": "An archived lookup on Early Bird's tracker shows it. Premo's tracking page answers it with a delivery by Premo's newspaper carrier."
+    },
+    {
+      "number": "00373402216179908927",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260611152629/https://track.earlybird.se/home?a=00373402216179908927&b=j1a3",
+        "date": "2026-06-11",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["early-bird", "swiss-post-cargo", "postnord", "usps", "nz-post", "matkahuolto"]
+      },
+      "note": "An archived lookup on Early Bird's tracker shows it. Premo's tracking page answers it with a delivery by Premo's newspaper carrier."
+    }
+  ]
 }

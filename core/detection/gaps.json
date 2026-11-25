@@ -3599,6 +3599,12 @@
     "reason": "One archived reply of Precision's tracking API shows PRE, six digits and five letters or digits; a single sample is too thin to claim it."
   },
   {
+    "carrier": "premo",
+    "pattern": "^00373402216\\d{9}$",
+    "kind": "by_design",
+    "reason": "Premo delivers some Early Bird parcels in Greater Stockholm under Early Bird's SSCCs, and its tracking page answers them. Early Bird tracks every one of them and Premo only some, so the rule names Early Bird and not Premo."
+  },
+  {
     "carrier": "pro-carrier",
     "pattern": "^UBG\\d{9}$",
     "kind": "open",

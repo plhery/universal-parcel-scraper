@@ -16,19 +16,47 @@
   "timezone": "Europe/Stockholm",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "premo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.premo.se/paketsparning?id={trackingNumber}",
     "searchUrl": "https://www.premo.se/paketsparning",
     "helpUrl": "https://www.premo.se/fragor-svar",
     "canaryUrl": "https://www.premo.se/paketsparning",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "event_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "provider_code"
+    ],
+    "discarded": [
+      "event_details"
+    ],
+    "unavailable": [
+      "eta",
+      "location",
+      "offset_timestamps",
+      "delivery_partner",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

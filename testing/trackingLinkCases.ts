@@ -1142,6 +1142,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'comone-express', number: 'CM9900000017',
     route: /^https:\/\/www\.com1logistics\.com\/tracking\.html\?trackNo=CM9900000017$/,
     marker: /Can key in up to 5 no with \(,\) in between/ },
+  // Premo's page reads the number from its address and answers on its server.
+  { carrier: 'premo', number: 'PR9900000000017',
+    route: /^https:\/\/www\.premo\.se\/paketsparning\?id=PR9900000000017$/,
+    marker: /Vi kunde inte hitta något paket|Spåra ditt paket/ },
   // DER KURIER's widget looks the number up on load and shows its search form again for one it lacks.
   { carrier: 'der-kurier', number: '99999999999',
     route: /^https:\/\/derkurier\.de\/sendungsverfolgung\/\?d-pt-search=99999999999$/,

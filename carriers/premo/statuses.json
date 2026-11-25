@@ -1,4 +1,11 @@
 {
   "carrier": "premo",
-  "entries": []
+  "entries": [
+    {"code": "1", "wording": "Vi är redo och väntar på att ditt paket ska överlämnas till oss", "stage": "registered", "language": "sv", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Premo is ready and waits for the parcel to be handed over: the sender has booked it and Premo does not have it yet."},
+    {"code": "2", "wording": "Paketet har ankommit till vår terminal och lastas om för att delas ut", "stage": "in_transit", "language": "sv", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Arrived at Premo's terminal and being reloaded for its delivery round."},
+    {"code": "13", "wording": "Ditt paket har nu levererats med Premos tidningsbud", "stage": "delivered", "language": "sv", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Delivered by Premo's newspaper carrier."},
+    {"code": "26", "wording": "Paketet levereras av samarbetstransportör", "stage": "in_transit", "language": "sv", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A partner carrier delivers the parcel; the page does not name it."},
+    {"code": "28", "wording": "Ett nytt försök att dela ditt paket kommer att göras", "stage": "in_transit", "language": "sv", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A new delivery attempt is booked after a failed round; the parcel is on its way again."},
+    {"code": "57", "wording": "Vi kunde tyvärr inte leverera ditt paket", "stage": "failed_attempt", "language": "sv", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The round could not deliver the parcel. Premo makes two attempts on consecutive days."}
+  ]
 }
