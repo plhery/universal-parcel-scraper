@@ -13,7 +13,9 @@ Tracked through the search its tracking page makes.
    page's script does. A `POST` to the same address with the token, `ProNumbers={pro};` and an
    empty `TrackingByPROresponseToken`, as the page's search form sends them, returns the page
    with one result card per PRO. It needs no key, account or browser.
-2. `retry`: one more session and search after a network failure or a timeout.
+2. `retry`: one more session and search after a network failure or a timeout. The first attempt
+   waits for half of the budget and at least two and a half seconds, or the whole budget when it
+   is shorter: its two requests take close to two seconds, longer than half of a recognition's.
 
 - An unknown PRO gets a card with the status `Not Available` and "Please check ProNumber"
   naming it. Only that answer is not found. A card without the notice, or a page without a card

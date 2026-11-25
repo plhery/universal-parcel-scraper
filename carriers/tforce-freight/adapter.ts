@@ -12,6 +12,12 @@ export const TFORCE_FREIGHT_TRACKING = 'https://www.tforcefreight.com/ltl/apps/T
 // The pages are about 180 to 220 kB.
 const MAX_BYTES = 1_000_000;
 const REDIRECTS = [301, 302, 303, 307, 308];
+/**
+ * A search is two requests, a session and the post, which take close to two seconds together, so
+ * the first attempt waits at least this long, or the whole budget when it is shorter: half of
+ * recognition's three seconds would time out twice.
+ */
+const FIRST_TRY_MS = 2_500;
 // The anti-forgery cookie, named after the application's path, and the firewall's own.
 const SESSION_COOKIE = /^(?:__RequestVerificationToken(?:_[A-Za-z0-9_-]{1,40})?|TS[0-9a-f]{6,32})$/;
 const COOKIE_VALUE = /^[^\s;,]{1,1024}$/;
@@ -59,9 +65,9 @@ export class TforceFreightTracker {
       return parseTforceFreight(decodeText(lookup.bytes), pro);
     };
     // An attempt that fails to reach the site, or hangs, gets one more in a new session: the
-    // first gets half of the budget, so the retry fits in the rest.
+    // first gets half of the budget, and at least FIRST_TRY_MS, and the retry the rest.
     return runSteps({ carrier: 'tforce-freight', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => attempt(signal, firstAttemptMs(remainingMs)) },
+      { id: 'direct', run: ({ signal, remainingMs }) => attempt(signal, Math.min(remainingMs, Math.max(firstAttemptMs(remainingMs), FIRST_TRY_MS))) },
       networkRetryStep(({ signal, remainingMs }) => attempt(signal, remainingMs)),
     ]);
   }

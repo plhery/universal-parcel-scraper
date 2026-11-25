@@ -302,6 +302,16 @@ describe('TForce Freight tracking page', () => {
     expect(fetcher).toHaveBeenCalledTimes(3);
   });
 
+  it('waits for a search slower than half of a short budget instead of opening another session', async () => {
+    // Each request answers after 120 ms: the two of a search take longer than half of the budget.
+    const fetcher = vi.fn<typeof fetch>((_input, init) => new Promise<Response>((resolve, reject) => {
+      const timer = setTimeout(() => resolve(init?.method === 'POST' ? new Response(fixture('delivered')) : formPage()), 120);
+      init?.signal?.addEventListener('abort', () => { clearTimeout(timer); reject(init.signal!.reason); }, { once: true });
+    }));
+    await expect(new TforceFreightTracker({ fetcher }).fetch(DELIVERED, { budgetMs: 400 })).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
   it('rejects other numbers before I/O and bounds cancellation, elapsed time and response size', async () => {
     const unused = vi.fn<typeof fetch>();
     // A wrong check digit, other lengths, a PARS number with a wrong PRO, letters, two PROs and an oversized paste.
