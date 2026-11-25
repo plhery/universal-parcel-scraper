@@ -196,6 +196,13 @@
       "language": "fr"
     },
     {
+      "code": "PM",
+      "confirmedBy": "live",
+      "note": "A payment notice, a minute after the last of several notices to the recipient while the parcel waited in its destination country, before it moved on. It moves nothing: the scan keeps the stage the parcel already had.",
+      "wording": "Information paiement",
+      "language": "fr"
+    },
+    {
       "code": "I",
       "confirmedBy": "live",
       "firstSeen": "2026-11-21",

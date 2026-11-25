@@ -101,14 +101,16 @@ for (const [code, label, stage] of OBSERVED) observed.set(code, (observed.get(co
 
 const NOTIFICATION = 'Destinataire informé par SMS ou mail';
 const INSTRUCTION = 'Instruction de livraison reçue';
+// A word on a payment, among the notices to the recipient of a parcel waiting in its destination country.
+const PAYMENT = 'Information paiement';
 // A hold at an agency, seen at the delivery agency after the delivery was put off to the next Monday.
 const HOLD = 'Colis en attente';
 /** Chronopost's notice to the recipient, which providers relay as it is. */
 export const CHRONOPOST_NOTIFICATION = NOTIFICATION;
 
-/** A notice to the recipient, or the recipient's own delivery instruction: neither is a scan. */
+/** A notice to the recipient, a payment notice, or the recipient's own delivery instruction: none is a scan. */
 export function isChronopostNotification(label: string): boolean {
-  return label === NOTIFICATION || label === INSTRUCTION;
+  return label === NOTIFICATION || label === INSTRUCTION || label === PAYMENT;
 }
 
 /** The scan that sends the parcel back to its sender. */
@@ -147,6 +149,9 @@ export const statusMap: CarrierStatusMap = {
   }, {
     code: 'CL', wording: normalizeStatusWording(INSTRUCTION),
     note: "The recipient's delivery instruction, not a scan: it keeps the stage the parcel already had.",
+  }, {
+    code: 'PM', wording: normalizeStatusWording(PAYMENT),
+    note: 'A payment notice, not a scan: it keeps the stage the parcel already had.',
   }, {
     code: 'I', wording: normalizeStatusWording(HOLD),
     note: 'A hold at an agency, which moves nothing: it keeps the stage the parcel already had.',

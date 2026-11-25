@@ -363,7 +363,17 @@ describe('Chronopost direct tracking', () => {
     expect(parseChronopostTrackingXml(history(instruction('2026-06-27T10:07:00+02:00')), number))
       .toMatchObject({ current_stage: 'pending', current_stage_source: 'none' });
     expect(statusMap.stage('CL', normalizeStatusWording('Instruction de livraison reçue'))).toBeUndefined();
-    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['SM', 'CL', 'I']);
+    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['SM', 'CL', 'PM', 'I']);
+  });
+
+  it('keeps the stage the parcel already had through a payment notice', () => {
+    const arrived = scan('EI', '2026-06-28T09:00:00+02:00', 'Colis entré dans le pays de destination');
+    const notified = scan('SM', '2026-06-30T08:00:00+02:00', 'Destinataire informé par SMS ou mail');
+    const payment = scan('PM', '2026-06-30T08:01:00+02:00', 'Information paiement');
+    const result = parseChronopostTrackingXml(history(prepared, arrived, notified, payment), number);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Information paiement' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'PM', stage: 'in_transit', stage_source: 'none' });
+    expect(statusMap.stage('PM', normalizeStatusWording('Information paiement'))).toBeUndefined();
   });
 
   it("reads the departure agency's sort right after the sender's announcement as the collection", () => {
