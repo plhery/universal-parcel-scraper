@@ -1,0 +1,16 @@
+{
+  "carrier": "huayutong",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's order row (`IR`)."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's facility takes the parcel in (`AF`)."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's facility dispatches the parcel (`DF`)."},
+    {"wording": "arrived at the distribution center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`ZY1`, 到达分拔中心."},
+    {"wording": "Depart from the sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`ZY2`, 离开分拔中心."},
+    {"wording": "Flight departure scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`DA2`, once per leg."},
+    {"wording": "Flight arrival scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`AA2`, once per leg."},
+    {"wording": "Delivery in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering network in Britain has the parcel, days before its courier round."},
+    {"wording": "Out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The delivering network's courier round."},
+    {"wording": "Unsuccessful Delivery(Due to Customer is not available, shipment has been placed in post office/access point for self-pickup)", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The courier found no one, and left the parcel at a post office or access point for collection."},
+    {"wording": "Your express has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"}
+  ]
+}

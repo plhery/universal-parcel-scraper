@@ -7036,5 +7036,10 @@
     "carrier": "xys-logistics",
     "kind": "open",
     "reason": "XYS Logistics waybills seen so far are XYS, nine digits and CN, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "huayutong",
+    "kind": "open",
+    "reason": "Huayutong waybills seen so far are JCY, ten digits and DH, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

@@ -1,0 +1,24 @@
+{
+  "carrier": "huayutong",
+  "records": [
+    {
+      "number": "JCY0806041625DH",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516145058/https://www.parcelpanel.com/couriers/hyt/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HYT page shows. Huayutong's tracker answers it with a parcel flown to Britain, left at an access point after a missed delivery and then delivered."
+    }
+  ]
+}

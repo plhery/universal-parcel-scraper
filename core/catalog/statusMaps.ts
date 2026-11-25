@@ -1140,6 +1140,7 @@ import { statusMap as chengchain } from '../../carriers/chengchain/status.js';
 import { statusMap as jytd } from '../../carriers/jytd/status.js';
 import { statusMap as kekeInternational } from '../../carriers/keke-international/status.js';
 import { statusMap as xysLogistics } from '../../carriers/xys-logistics/status.js';
+import { statusMap as huayutong } from '../../carriers/huayutong/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../status/statusMap.js';
@@ -1155,6 +1156,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   jytd,
   'keke-international': kekeInternational,
   'xys-logistics': xysLogistics,
+  huayutong,
   'apm-logistics': apmLogistics, gintracom, 'transglobal-express': transglobalExpress, 'turkon-line': turkonLine, 'hapag-lloyd': hapagLloyd, 'biman-bangladesh': bimanBangladesh, cargolux, cargologic,
   'copa-airlines-cargo': copaAirlinesCargo,
   'airasia-cargo': airasiaCargo,
