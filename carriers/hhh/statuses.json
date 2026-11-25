@@ -1,0 +1,27 @@
+{
+  "carrier": "hhh",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's order row (`IR`)."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's Shenzhen facility takes the parcel in (`AF`)."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's Shenzhen facility dispatches the parcel (`DF`)."},
+    {"wording": "Shipping Label Created, USPS Awaiting Item", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "USPS's label, made hours after the line's facility dispatched the parcel: no scan of it, so it moves nothing."},
+    {"wording": "Order received", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "UniUni's order record at its data center, made after the line's facility dispatched the parcel: no scan of it, so it moves nothing."},
+    {"wording": "Leave the warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At Guangzhou, on the line to UniUni."},
+    {"wording": "Master Airway Bill Number Received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's air waybill, after the parcel left the warehouse."},
+    {"wording": "Arriving at the departure airport in the process of arranging", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Export customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed from airport of Origin", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Customs clearance to release", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States."},
+    {"wording": "Gateway transit in", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "UniUni's scan, copied."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "UniUni's scan, copied."},
+    {"wording": "Arrival scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "UniUni's scan at its delivery station, copied."},
+    {"wording": "Arrived Shipping Partner Facility, USPS Awaiting Item", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan at the line's injection partner in the United States, copied."},
+    {"wording": "Departed Shipping Partner Facility, USPS Awaiting Item", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan at the line's injection partner in the United States, copied."},
+    {"wording": "Arrived at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Accepted at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied: USPS takes the parcel over from the line, which accepted it in China days before."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's and UniUni's scan, copied."},
+    {"wording": "Delivered, Front Door/Porch", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."}
+  ]
+}

@@ -7007,5 +7007,10 @@
     "carrier": "xs-express",
     "kind": "open",
     "reason": "Xinshu Logistics numbers seen so far are XSECN, ten digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "hhh",
+    "kind": "open",
+    "reason": "Haihehui International waybills seen so far are HHH, ten digits and YQ, and the two public samples come from captures of one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

@@ -1,0 +1,43 @@
+{
+  "carrier": "hhh",
+  "records": [
+    {
+      "number": "HHH1001984021YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260208225705/https://www.parcelpanel.com/couriers/hhh/",
+        "date": "2026-02-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HHH page shows. Haihehui International's tracker answers it with a parcel sent from Shenzhen and delivered by USPS in the United States."
+    },
+    {
+      "number": "HHH1001987474YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260719031815/https://www.parcelpanel.com/couriers/hhh/",
+        "date": "2026-07-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a later capture of the same directory page shows. Haihehui International's tracker answers it with a parcel flown from Guangzhou and handed to UniUni in the United States."
+    }
+  ]
+}
