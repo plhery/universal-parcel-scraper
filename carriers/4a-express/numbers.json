@@ -1,5 +1,25 @@
 {
   "carrier": "4a-express",
-  "gap": "No public page shows a 4A Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "010790148121",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSUMxanZfQm9BRRAB!2m1!1s0x0:0x796fed140838685d",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["dpd-fr", "mondial-relay", "colis-prive", "mrw", "brt", "japan-post", "sf-express", "sto", "zto", "yamato", "j-and-t", "lbc-express", "metropolitan-warehouse", "paquetexpress", "sagawa", "sending"]
+      },
+      "note": "A Google Maps review of 4A Express's Nicosia office complains about the shipment under this number, booked in December 2023. 4A Express's tracker answers it with a booking in Athens on the day the review gives and a delivery in Larnaca in January 2024."
+    }
+  ]
 }

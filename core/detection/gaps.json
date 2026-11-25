@@ -18,6 +18,12 @@
     "reason": "AA and seven digits is a short generic reference shape, seen with 2GO only in its tracking API and one complaint."
   },
   {
+    "carrier": "4a-express",
+    "pattern": "^\\d{12}$",
+    "kind": "by_design",
+    "reason": "4A Express's air waybills are twelve bare digits, a shape many carriers print, and nothing in the number points to 4A Express."
+  },
+  {
     "carrier": "5post",
     "pattern": "^99(?:99|88|11)\\d{10}$",
     "kind": "by_design",

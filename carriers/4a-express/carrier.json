@@ -18,18 +18,53 @@
   "timezone": "Asia/Nicosia",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "4a-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://cms.4aexpress.com/Query/TrackAwbNoQuery.aspx",
     "helpUrl": "https://4aexpress.com/%ce%b5%cf%80%ce%b9%ce%ba%ce%bf%ce%b9%ce%bd%cf%89%ce%bd%ce%af%ce%b1/",
     "canaryUrl": "https://cms.4aexpress.com/Query/TrackAwbNoQuery.aspx",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "ship_date",
+      "origin",
+      "destination",
+      "delivered_at",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times"
+    ],
+    "discarded": [
+      "ship_date",
+      "origin",
+      "destination",
+      "delivered_at",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "service_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []

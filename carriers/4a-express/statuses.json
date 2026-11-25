@@ -1,4 +1,11 @@
 {
   "carrier": "4a-express",
-  "entries": []
+  "entries": [
+    {"wording": "SHIPMENT BOOKED", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The sender booked the shipment at the origin station."},
+    {"wording": "SHIPMENT PICKED UP", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The origin station collected the shipment."},
+    {"wording": "IN TRANSIT TO LCA 4AEXPRESS", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The shipment leaves the origin station for 4A Express's Larnaca station."},
+    {"wording": "PIECES RECEIVED AT LCA 4AEXPRESS.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "4A Express's Larnaca station received the shipment's pieces."},
+    {"wording": "OUT FOR DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A courier took the shipment out for delivery."},
+    {"wording": "SHIPMENT DELIVERED", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The shipment is delivered."}
+  ]
 }
