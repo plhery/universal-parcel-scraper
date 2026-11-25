@@ -48,8 +48,8 @@ export function parseEstafetaLookup(html: string, rawNumber: string): EstafetaLo
   if (!cards.length && $('.TimeLineErrorRow h4').length === 1
     && clean($('.TimeLineErrorRow h4').text()) === 'Lo sentimos, no se encontró información') {
     // The observed error omits the requested reference and also describes
-    // unavailable information; it does not prove parcel absence.
-    throw new IndeterminateError('Estafeta', 'Estafeta returned no bound parcel information');
+    // unavailable information; it does not prove parcel absence. It is still Estafeta's own empty answer.
+    throw new IndeterminateError('Estafeta', 'Estafeta returned no bound parcel information', { reason: 'portal_not_found' });
   }
   if (cards.length !== 1 || cards.find('.shipmentInfoDiv').length !== 1 || $('title').text().trim() !== 'Resultado') throw new SchemaError('Estafeta');
   const field = (label: string) => {

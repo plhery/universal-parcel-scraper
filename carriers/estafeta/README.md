@@ -38,7 +38,7 @@ excluded. Scheduled-date controls retain dates after delivery and are omitted.
 Recognition makes the same lookup. It is asked first for a parcel in Mexico, and for any other
 only after every other carrier has missed the number, since ten bare digits are printed
 elsewhere too. A found parcel, or a label Estafeta has not yet received, confirms the number;
-the generic page leaves it unknown.
+the generic page leaves it unknown, as Estafeta's own empty answer (`portal_not_found`).
 
 Links to cs.estafeta.com's home page and its `Tracking/searchByGet` page, in any
 language, name Estafeta; its other pages name none.
