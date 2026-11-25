@@ -35,8 +35,8 @@ wall clock without an instant. No delivery estimate or weight.
 
 ## Numbers
 
-The sample comes from a tracking directory's Shilianxin page. No detection rule claims
-Shilianxin's layout yet.
+The samples come from two captures of a tracking directory's Shilianxin page. No detection rule
+claims Shilianxin's layout yet.
 
 ## Links
 
