@@ -149,7 +149,7 @@ describe('SXW Express tracking adapter', () => {
       ['2026-11-18T20:40:00+08:00', undefined], ['2026-11-17T05:40:00+08:00', undefined],
     ]);
     // Places date the landing on Melbourne's clock; Australia Post's row is on the east coast's.
-    expect(result.events?.[2]).toMatchObject({ time_zone: 'Australia/Sydney', time_zone_basis: 'destination' });
+    expect(result.events?.[2]).toMatchObject({ time_zone: 'Australia/Sydney', time_zone_basis: 'destination', stage: 'registered' });
     expect(dateLocalClocks('sxw-express', result).events?.slice(0, 3).map((event) => event.time))
       .toEqual(['2026-11-20T14:40:00+11:00', '2026-11-20T10:30:00+11:00', '2026-11-18T21:15:00+11:00']);
 
