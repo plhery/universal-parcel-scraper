@@ -15419,6 +15419,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "centex": {
+    "displayName": "CENTEX",
+    "color": "#3E63BC",
+    "aliases": [
+      "忠进"
+    ],
+    "countries": [
+      "CN",
+      "BR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "centex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.baxida.cn/default/index/get-track-detail",
+    "trackingUrlTemplate": "https://www.baxida.cn/default/index/track?trackNos={trackingNumber}",
+    "trackingSearchUrl": "https://www.baxida.cn/default/index/get-track-detail",
+    "linkRules": [
+      {
+        "domains": [
+          "www.baxida.cn",
+          "baxida.cn"
+        ],
+        "pathPattern": "^/default/index/track/?$",
+        "query": "^(?:.*&)?trackNos=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "central-transport": {
     "displayName": "Central Transport",
     "color": "#fae800",
@@ -73913,6 +73945,7 @@ export const CARRIER_IDS = [
   "cel-changda",
   "celeritas",
   "celero",
+  "centex",
   "central-transport",
   "centurion-transport",
   "certipostal",
@@ -76007,6 +76040,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cel-changda": [],
   "celeritas": [],
   "celero": [],
+  "centex": [],
   "central-transport": [],
   "centurion-transport": [],
   "certipostal": [],

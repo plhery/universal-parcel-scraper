@@ -160,6 +160,7 @@ import { adapter as cdek } from '../carriers/cdek/adapter.js';
 import { adapter as cdl } from '../carriers/cdl/adapter.js';
 import { adapter as celeritas } from '../carriers/celeritas/adapter.js';
 import { adapter as celero } from '../carriers/celero/adapter.js';
+import { adapter as centex } from '../carriers/centex/adapter.js';
 import { adapter as centralTransport } from '../carriers/central-transport/adapter.js';
 import { adapter as certipostal } from '../carriers/certipostal/adapter.js';
 import { adapter as cescoLogistics } from '../carriers/cesco-logistics/adapter.js';
@@ -1372,6 +1373,7 @@ export const REGISTRY: RegistryDefinition = {
     "cdl": cdl,
     "celeritas": celeritas,
     "celero": celero,
+    "centex": centex,
     "central-transport": centralTransport,
     "certipostal": certipostal,
     "cesco-logistics": cescoLogistics,
@@ -2723,6 +2725,7 @@ export const REGISTRY: RegistryDefinition = {
     "cel-changda": "universal",
     "celeritas": "celeritas",
     "celero": "celero",
+    "centex": "centex",
     "central-transport": "central-transport",
     "centurion-transport": "universal",
     "certipostal": "certipostal",
