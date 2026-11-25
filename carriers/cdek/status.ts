@@ -25,6 +25,9 @@ const CODES: Readonly<Record<string, Stage>> = {
   // "Курьер забрал заказ у отправителя": collected from the sender.
   COURIER_DELIVERY_COMPLETED: 'accepted',
   ACCEPTED_FOR_DELIVERY: 'accepted',
+  // An international order: cleared through the sending country's customs, then sent to the destination country.
+  SENDER_COUNTRY_CUSTOM_CLEARANCE: 'customs',
+  SENT_TO_RECEIVER_COUNTRY: 'in_transit',
   // An order from abroad entered CDEK's Russian network.
   ACCEPTED_AT_RUSSIA: 'in_transit',
   SENT_TO_SORTING_CENTER: 'in_transit',

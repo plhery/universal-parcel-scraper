@@ -270,6 +270,11 @@ describe('CDEK status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
     expect(statusMapAnswer({ carrier: 'cdek', providerCode: 'UNKNOWN', description: 'Неизвестно' }))
       .toEqual({ kind: 'intentional_gap', note: expect.any(String) });
+    // An international order's export clearance holds it in customs; its dispatch abroad moves it on.
+    expect(statusMapAnswer({ carrier: 'cdek', providerCode: 'SENDER_COUNTRY_CUSTOM_CLEARANCE', description: 'Таможенное оформление в стране отправления' }))
+      .toEqual({ kind: 'mapped', stage: 'customs' });
+    expect(statusMapAnswer({ carrier: 'cdek', providerCode: 'SENT_TO_RECEIVER_COUNTRY', description: 'Отправлен в страну назначения' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
   it('stages the leg labels ParcelsApp relays, which carry no code', () => {

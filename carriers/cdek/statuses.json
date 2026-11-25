@@ -5,6 +5,8 @@
     { "code": "COURIER_APPOINTED", "wording": "Назначен курьер", "language": "ru", "stage": "registered", "confirmedBy": "live", "note": "A courier is on the way to collect the order from its sender." },
     { "code": "COURIER_DELIVERY_COMPLETED", "wording": "Курьер забрал заказ у отправителя", "language": "ru", "stage": "accepted", "confirmedBy": "live" },
     { "code": "ACCEPTED_FOR_DELIVERY", "wording": "Принят на доставку", "language": "ru", "stage": "accepted", "confirmedBy": "live" },
+    { "code": "SENDER_COUNTRY_CUSTOM_CLEARANCE", "wording": "Таможенное оформление в стране отправления", "language": "ru", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "An international order's customs clearance in the sending country." },
+    { "code": "SENT_TO_RECEIVER_COUNTRY", "wording": "Отправлен в страну назначения", "language": "ru", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "An international order sent on to the destination country." },
     { "code": "IN_PROGRESS", "wording": "В пути", "language": "ru", "stage": "in_transit", "confirmedBy": "live", "note": "The milestone that holds the scans between acceptance and the last leg." },
     { "code": "ACCEPTED_AT_RUSSIA", "wording": "Принят СДЭК на территории РФ", "language": "ru", "stage": "in_transit", "confirmedBy": "live", "note": "An order from abroad entered CDEK's Russian network." },
     { "code": "SENT_TO_SORTING_CENTER", "wording": "Отправлен в сортировочный центр", "language": "ru", "stage": "in_transit", "confirmedBy": "live" },
