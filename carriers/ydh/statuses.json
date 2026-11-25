@@ -57,6 +57,12 @@
       "note": "\"Shipment arrived at airport\" or \"航班到达\"."
     },
     {
+      "code": "NOAP",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "\"目的港货站通知提货\": the destination airport's cargo terminal telling the agent to collect the parcel, after the flight's arrival."
+    },
+    {
       "code": "RC",
       "stage": "in_transit",
       "confirmedBy": "live",
