@@ -1,0 +1,43 @@
+{
+  "carrier": "qqwy",
+  "records": [
+    {
+      "number": "DYY013552509XB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250719023910/https://www.parcelpanel.com/couriers/qqwy/",
+        "date": "2025-07-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's QQWY page shows. Global Security's tracker answers it with a parcel flown from Shenzhen to New York and delivered by SpeedX, whose number the record holds as its transfer number."
+    },
+    {
+      "number": "DYY666910851XB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251216032819/https://www.parcelpanel.com/couriers/qqwy/",
+        "date": "2025-12-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a later capture of the same directory page shows. Global Security's tracker answers it with a parcel delivered by UniUni near Seattle, whose number the record holds as its transfer number."
+    }
+  ]
+}

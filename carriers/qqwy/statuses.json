@@ -1,0 +1,29 @@
+{
+  "carrier": "qqwy",
+  "entries": [
+    {"wording": "The electronic information of the goods has been received.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "Shipment information received", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"wording": "Item information received.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The US line's registration of the order."},
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line supplier's registration of the order, with a Chinese copy."},
+    {"wording": "Order received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "UniUni's registration at its data centre."},
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the collection point", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse takes the parcel in."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line supplier's Shenzhen facility takes the parcel in."},
+    {"wording": "Arrived at Sort Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's sorting centre in China."},
+    {"wording": "Departed Facility In processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed from Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves the line's facility in China for the airport."},
+    {"wording": "Last mile, tracking number …", "language": "en", "stage": null, "confirmedBy": "live", "note": "The line names the last-mile carrier's number, read as an ellipsis: a notice, not a movement."},
+    {"wording": "Arrived at AIRPORT of Origin", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Flight Depart", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance is done; the line writes it before the flight's arrival."},
+    {"wording": "Flight Arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Customs clearance agent received the shipment in destnation country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Written after the line's clearance completed, so the parcel is not held."},
+    {"wording": "Delivery to local courier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the last-mile carrier."},
+    {"wording": "Processing at Designated Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "SpeedX's facility, copied."},
+    {"wording": "Gateway transit in", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "UniUni's gateway, copied."},
+    {"wording": "Arrival scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "UniUni's delivery station, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The last-mile carrier's round, copied."},
+    {"wording": "Failed delivery attempt, returning to the warehouse. (…)", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "UniUni's failed attempt, copied, with its reason in brackets, read as an ellipsis."},
+    {"wording": "Delivered. Position: …", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "SpeedX's delivery, copied, with where the parcel was left, read as an ellipsis."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "UniUni's delivery, copied."}
+  ]
+}
