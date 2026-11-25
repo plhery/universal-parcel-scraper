@@ -130,6 +130,33 @@ describe('SXW Express tracking adapter', () => {
     ]);
   });
 
+  it('keeps the wall clock of Australia Post\'s suburb-and-state rows and of a landing named by its airport', () => {
+    // A synthetic record shaped like a parcel to Australia: no place there ends in a country code.
+    const payload = JSON.parse(own('track.json'));
+    const row = (date: string, written: string, content: string, location: string) =>
+      ({ ...payload[0].data[0].trackDetails[0], track_date: date, track_createdate: written, track_content: content, track_location: location });
+    Object.assign(payload[0].data[0], { consigneeCountry: 'AU', trackDetails: [
+      // Written at 14:20 on Beijing's clock: 14:40 there would be a row written before it happened.
+      row('2026-11-20 14:40:00', '2026-11-20 14:20:00', 'NOA-Notification of arrival from GHA', 'MEL'),
+      row('2026-11-20 10:30:00', '2026-11-20 12:10:00', 'International flight has arrived', 'MEL'),
+      row('2026-11-18 21:15:00', '2026-11-20 12:10:00', 'Shipping information approved by Australia Post', 'DANDENONG SOUTH VIC'),
+      row('2026-11-18 20:40:00', '2026-11-19 11:10:00', 'International flight has departed', 'China'),
+      row('2026-11-17 05:40:00', '2026-11-17 06:30:00', 'Arrived at the origin international hub', 'PVG'),
+    ] });
+    const result = parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-20T12:00:00Z'))!;
+    expect(result.events?.map((event) => [event.time, event.local_time])).toEqual([
+      [undefined, '2026-11-20T14:40:00'], [undefined, '2026-11-20T10:30:00'], [undefined, '2026-11-18T21:15:00'],
+      ['2026-11-18T20:40:00+08:00', undefined], ['2026-11-17T05:40:00+08:00', undefined],
+    ]);
+    // Places date them on Melbourne's clock.
+    expect(dateLocalClocks('sxw-express', result).events?.slice(0, 3).map((event) => event.time))
+      .toEqual(['2026-11-20T14:40:00+11:00', '2026-11-20T10:30:00+11:00', '2026-11-18T21:15:00+11:00']);
+    // A suburb and state the gazetteer does not place in Australia is no row abroad.
+    payload[0].data[0].trackDetails[2].track_location = 'EXAMPLE NOWHERE VIC';
+    payload[0].data[0].trackDetails.splice(0, 2);
+    expect(parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-20T12:00:00Z'))!.events?.[0]?.time).toBe('2026-11-18T21:15:00+08:00');
+  });
+
   it('reads the rows after the shipper took the parcel back as the parcel sent again', () => {
     const payload = JSON.parse(own('track.json'));
     const row = (date: string, content: string, location: string) =>
