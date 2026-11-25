@@ -105,7 +105,9 @@ export function rtb56Wording(row: Record<string, unknown>, provider: string): { 
  * A parcel's scans, newest first. With `offsets`, a scan whose place states
  * its offset gets its instant; any other scan keeps its wall clock. Some
  * tenants state China's offset for scans at the destination too, so a tenant
- * whose offsets were not seen to follow the scan's place keeps wall clocks.
+ * whose offsets were not seen to follow the scan's place keeps wall clocks,
+ * and a tenant that believes some rows' offsets and not others' passes the
+ * test of a row in place of `true`.
  * With `codes`, a scan keeps its `track_code`, which the stage is asked with,
  * and a row without a code repeating a coded scan's Chinese wording at its
  * clock and place is that scan relayed.
@@ -115,11 +117,11 @@ export function rtb56Wording(row: Record<string, unknown>, provider: string): { 
  * read once.
  */
 export function rtb56Scans(rows: unknown[], provider: string, stage: (wording: string, code: string) => ClassifiedWording | null,
-  { offsets, codes = false }: { offsets: boolean; codes?: boolean }): CarrierEvent[] {
+  { offsets, codes = false }: { offsets: boolean | ((row: Record<string, unknown>) => boolean); codes?: boolean }): CarrierEvent[] {
   const read = rows.flatMap((row) => {
     if (!isRecord(row)) throw new SchemaError(provider, `${provider} returned an invalid scan`);
     const clock = rtb56Clock(row, provider);
-    const instant = offsets ? clock.instant : undefined;
+    const instant = (typeof offsets === 'function' ? offsets(row) : offsets) ? clock.instant : undefined;
     const { description, location } = rtb56Wording(row, provider);
     if (!description) return [];
     const code = codes ? rtb56Text(row, 'track_code', provider, 16).toUpperCase() : '';

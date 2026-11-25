@@ -22,11 +22,14 @@ The webservice needs no slider, session, cookie or account, and answers plain HT
   digits, and reads only the entry whose `server_hawbcode` is the number asked.
 - The request names no referring page: [JTHQ](../jthq/README.md)'s tenant of the platform answers
   `null` to a request that does. `null` reads as indeterminate.
-- The line's own rows state `+08:00` and get their instant, at its US gateways too: on that clock
-  the flights from Hong Kong take the 16 to 18 hours of a cargo routing. USPS's copies at Los
-  Angeles state `+08:00` as well. Its other copies state `America/New_York` whatever their place,
-  and SpeedX's state their place's offset without a sign; neither reads as an offset, so those
-  rows keep the wall clock the tracker gives them.
+- The line's own rows state `+08:00`, each with its `track_code`, and get their instant, at its US
+  gateways too: on that clock the flights from Hong Kong take the 16 to 18 hours of a cargo routing.
+- `+08:00` is the platform's own zone. On a row without a code, such as USPS's copies at Los
+  Angeles, it is a label rather than an offset USPS stated, so the row keeps its wall clock, which
+  the app reads in its place's zone. The platform keeps USPS's own offset on other tenants' copies,
+  and the Los Angeles rows were copied in one batch after the delivery. USPS's other copies here
+  state `America/New_York` whatever their place, and SpeedX's state their place's offset without a
+  sign; neither reads as an offset, so those rows keep their wall clocks too.
 - The tracker copies the delivering network's scans, some with the line's code `PU`; the English
   wording decides the stage.
 - SpeedX's "Shipping Label Created", made while the parcel was still at the line's Shanghai

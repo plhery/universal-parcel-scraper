@@ -55,19 +55,20 @@ describe('WCXEX tracking lookup', () => {
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'wcxex', step: 'direct', outcome: 'ok' }));
   });
 
-  it('reads a parcel USPS delivered, the rows stating +08:00 at that instant and the rest on wall clocks', () => {
+  it('reads a parcel USPS delivered, the line’s coded rows at the +08:00 they state and the rest on wall clocks', () => {
     const result = parseWcxex(fixture('delivered-usps'), SAMPLE);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-      last_status_text: 'Delivered, In/At Mailbox', last_update: '2026-04-27T16:01:00+08:00', expected_delivery: null,
+      last_status_text: 'Delivered, In/At Mailbox', last_update: null, last_update_local: '2026-04-27T16:01:00', expected_delivery: null,
       destination_country: 'US' });
     // The reply holds no number for USPS and names no carrier.
     expect(result).not.toHaveProperty('delivery_tracking_number');
     expect(result).not.toHaveProperty('delivery_carrier');
     expect(rows(result)).toEqual([
-      ['2026-04-27T16:01:00+08:00', 'Los Angeles,CA,US', 'Delivered, In/At Mailbox', 'delivered'],
-      ['2026-04-26T02:21:00+08:00', 'Los Angeles,CA,US', 'Out for Delivery', 'out_for_delivery'],
-      ['2026-04-25T23:14:00+08:00', 'Los Angeles,CA,US', 'Arrived at Post Office', 'in_transit'],
-      ['2026-04-25T17:00:00+08:00', 'Los Angeles,CA,US', 'Arrived at USPS Facility', 'in_transit'],
+      // USPS's copies at Los Angeles state the platform's +08:00 without a code, as a label: they keep their wall clocks.
+      ['2026-04-27T16:01:00', 'Los Angeles,CA,US', 'Delivered, In/At Mailbox', 'delivered'],
+      ['2026-04-26T02:21:00', 'Los Angeles,CA,US', 'Out for Delivery', 'out_for_delivery'],
+      ['2026-04-25T23:14:00', 'Los Angeles,CA,US', 'Arrived at Post Office', 'in_transit'],
+      ['2026-04-25T17:00:00', 'Los Angeles,CA,US', 'Arrived at USPS Facility', 'in_transit'],
       // USPS's other copies state America/New_York, whichever their place, which is no offset.
       ['2026-04-23T13:53:00', undefined, 'In Transit, Arriving On Time', 'in_transit'],
       ['2026-04-23T11:43:00', 'AVONDALE,AZ', 'Departed USPS Facility', 'in_transit'],
@@ -91,6 +92,9 @@ describe('WCXEX tracking lookup', () => {
       ['2026-04-04T15:00:27+08:00', undefined, 'Shipment information received', 'registered'],
     ]);
     expect(result.events!.every((event) => !event.provider_code)).toBe(true);
+    // A copy stating another signed offset is the partner's own, and gets its instant.
+    const pacific = parseWcxex(changed((reply) => { reply.data[0]!.details[0]!.gmt_offset = '-07:00'; }), SAMPLE);
+    expect(pacific.events![0]).toMatchObject({ time: '2026-04-27T16:01:00-07:00', description: 'Delivered, In/At Mailbox' });
     // The merchant's reference is never read.
     expect(JSON.stringify(result)).not.toMatch(/0000000000/);
   });
