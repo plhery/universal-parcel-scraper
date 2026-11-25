@@ -4,6 +4,8 @@
     {"wording": "Item inbound scanning", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first row, under the platform's kind ARRIVAL at the receiving point (JRT's 到达收货点): SPT's warehouse in China takes the parcel in."},
     {"wording": "Item outbound scanning", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Under the platform's kind SHIPMENT, the parcel leaving the operation centre (JRT's 货物离开操作中心)."},
     {"wording": "Arrived at export center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed from export center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaving the export center after its arrival there."},
+    {"wording": "Item is ready for departure.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for its flight, as the lines that write the same row read it."},
     {"wording": "国内清关完成 / Customs export clearance completed", "language": "mul", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China, written in Chinese and English in one row; the destination's customs come later."},
     {"wording": "Arrived at Origin Port", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
   ]

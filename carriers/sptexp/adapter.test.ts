@@ -85,5 +85,9 @@ describe('SPT Express tracking adapter', () => {
     expect(statusMap.stage('ARRIVAL', normalizeStatusWording('Item inbound scanning'))).toBe('accepted');
     expect(statusMapAnswer({ carrier: 'sptexp', providerCode: 'SHIPMENT', description: 'Item outbound scanning' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'sptexp', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
+    // The departure from the export center and the wait for the flight move the parcel on.
+    for (const description of ['departed from export center', 'item is ready for departure.']) {
+      expect(statusMapAnswer({ carrier: 'sptexp', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
   });
 });
