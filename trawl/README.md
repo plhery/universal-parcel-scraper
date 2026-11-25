@@ -499,6 +499,10 @@ Give the health check room for the wait (start period plus retries times interva
 three minutes). A `fedex.warmup` warning records whether the port was held, how the wait
 ended, the lookups made and the duration.
 
+On SIGTERM the worker closes its port, so callers connect to the worker replacing it, and
+lets the lookups already running finish, up to 45 seconds, before it closes their tunnels and
+its browsers. Give it a stop grace period above that.
+
 J&T Brazil opens a fresh number-only guest form and solves its supported Tencent jigsaw in
 the page. The match requires texture and shape agreement, stable native-image geometry and
 a measured slider movement. A refreshed challenge cancels the held drag. The helper keeps

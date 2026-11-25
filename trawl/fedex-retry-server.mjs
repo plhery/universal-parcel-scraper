@@ -29,8 +29,11 @@ function reportRefusals(refused) {
     pageTunnels: refused.page, apiTunnels: refused.api, status: refused.status, reason: refused.reason }));
 }
 
+// A lookup's budget and its lease's grace: the lookups running at SIGTERM finish within it.
+const DRAIN_MS = 45_000;
+// With a drain, TRAWL's pool leaves SIGTERM to this server; without one, Playwright closed the browsers at once.
 const pool = new BrowserPool({ poolSize, recycleAfterTemporaryContexts: 0, contentProcesses: 2,
-  label: `fedex-${route}`, blockAds: true, memoryUsage: () => containerMemory() });
+  label: `fedex-${route}`, blockAds: true, memoryUsage: () => containerMemory(), drainTimeoutMs: DRAIN_MS });
 // The image's pool is patched to send a lookup to a browser whose FedEx session is verified, else to the one least
 // recently used, so each warm browser keeps its session (fedexBrowserPool); it consults this shared instance.
 const sessions = fedexSessions;
@@ -42,8 +45,17 @@ let sessionVerified = false;
 let server;
 async function shutdown() {
   if (stopping) return;
-  stopping = true; leases.closeAll(); server?.stop(true);
-  await pool.shutdown();
+  stopping = true;
+  // The port closes, so a caller connects to the worker replacing this one, and idle connections close at once.
+  // Lookups already running finish before their tunnels and browsers close: cut, they failed the caller's read.
+  if (server) {
+    let timer;
+    await Promise.race([server.stop(), new Promise(resolve => { timer = setTimeout(resolve, DRAIN_MS); })]);
+    clearTimeout(timer);
+  }
+  leases.closeAll(); server?.stop(true);
+  // Lookups still running end with their tunnels; the browsers close a few seconds later at most.
+  await pool.shutdown(5_000);
   await Promise.allSettled([...proxies].map(proxy => proxy.close()));
 }
 process.once('SIGTERM', () => { void shutdown(); });
