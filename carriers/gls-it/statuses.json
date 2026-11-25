@@ -138,6 +138,46 @@
       "note": "The next GLS country's morning scan of the delivery round."
     },
     {
+      "wording": "The parcel has been picked up by GLS.",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "A GLS group sentence: GLS collected the parcel from its sender, as GLS Netherlands reads it. Not the next GLS country's receipt from GLS Italy, which is a hand-over."
+    },
+    {
+      "wording": "The parcel has reached the parcel center and was sorted manually.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "A GLS group sentence: a parcel centre received the parcel and sorted it by hand."
+    },
+    {
+      "wording": "The parcel is stored in the parcel center.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "A GLS group sentence: the parcel centre's row for a parcel it keeps, which GLS Switzerland's map reads in transit too."
+    },
+    {
+      "wording": "The parcel has been delivered at the ParcelShop (see ParcelShop information).",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "A GLS group sentence: left at a ParcelShop for the recipient to collect. GLS calls it delivered; the recipient does not have it yet."
+    },
+    {
+      "wording": "Handing over the parcel to the recipient at the GLS ParcelShop.",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "A GLS group sentence: the ParcelShop hands the parcel to its recipient, after it was left there, as GLS Poland and Switzerland read it."
+    },
+    {
       "wording": "Area served in <n> hours, we will deliver within the next two business days.",
       "language": "en",
       "stage": "in_transit",

@@ -33,6 +33,13 @@ export const GLS_ITALY_SCANS: Readonly<Record<string, Stage>> = {
   'The parcel has left the parcel center.': 'in_transit',
   'The parcel has reached the parcel center.': 'in_transit',
   'The parcel is expected to be delivered during the day.': 'out_for_delivery',
+  // The group's collection from the sender, its sorting by hand, and the parcel centre's row for a parcel it keeps.
+  'The parcel has been picked up by GLS.': 'accepted',
+  'The parcel has reached the parcel center and was sorted manually.': 'in_transit',
+  'The parcel is stored in the parcel center.': 'in_transit',
+  // Left at a ParcelShop for the recipient, which GLS calls delivered; then the shop hands it to the recipient.
+  'The parcel has been delivered at the ParcelShop (see ParcelShop information).': 'ready_for_pickup',
+  'Handing over the parcel to the recipient at the GLS ParcelShop.': 'delivered',
 };
 
 /**

@@ -125,6 +125,14 @@ describe('GLS Italy direct tracking', () => {
     for (const wording of ['constructor', 'toString', 'Zxq.']) expect(glsItalyScanStage(wording), wording).toBeNull();
     expect(glsItalyScanStage('Area served in 72 hours, we will deliver within the next three business days.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(glsItalyScanStage('Area served in many hours, we will deliver within the next two business days.')).toBeNull();
+    // The GLS group's sentences: its collection, its parcel centres, and a ParcelShop that holds the parcel, then hands it over.
+    for (const [description, stage] of [
+      ['The parcel has been picked up by GLS.', 'accepted'],
+      ['The parcel has reached the parcel center and was sorted manually.', 'in_transit'],
+      ['The parcel is stored in the parcel center.', 'in_transit'],
+      ['The parcel has been delivered at the ParcelShop (see ParcelShop information).', 'ready_for_pickup'],
+      ['Handing over the parcel to the recipient at the GLS ParcelShop.', 'delivered'],
+    ] as const) expect(statusMapAnswer({ carrier: 'gls-it', description }), description).toEqual({ kind: 'mapped', stage });
   });
 
   it('shows the English locale sentence for an Italian one', () => {
