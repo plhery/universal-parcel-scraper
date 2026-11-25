@@ -7,6 +7,25 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const scratch = mkdtempSync(path.join(tmpdir(), 'parcel-scraper-package-'));
+// A dependency published a minute ago can be listed before the registry serves its tarball.
+const REGISTRY_LAG = /\bE404\b|\bETARGET\b|\bECONNRESET\b|\bETIMEDOUT\b|\bEAI_AGAIN\b/;
+const INSTALL_ATTEMPTS = 3;
+const INSTALL_RETRY_MS = 60_000;
+
+function installPacked(file) {
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      execFileSync('npm', ['install','--ignore-scripts','--omit=optional','--no-audit','--no-fund',file], { cwd: scratch, stdio: 'pipe' });
+      return;
+    } catch (error) {
+      const output = `${error.stdout ?? ''}${error.stderr ?? ''}`;
+      if (attempt >= INSTALL_ATTEMPTS || !REGISTRY_LAG.test(output)) throw error;
+      console.warn(`npm install of the packed tarball failed (attempt ${attempt}); retrying in ${INSTALL_RETRY_MS / 1000} s:\n${output.trim().split('\n').slice(-5).join('\n')}`);
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, INSTALL_RETRY_MS);
+    }
+  }
+}
+
 let tarball;
 try {
   // The JSON lists every packed file, which outgrows the default 1 MiB buffer.
@@ -14,7 +33,7 @@ try {
   tarball = path.join(scratch, packed.filename);
   assert(packed.files.every(file => !/fixtures|private\.numbers|\.env|\.test\.|\.git\//.test(file.path)));
   writeFileSync(path.join(scratch,'package.json'), JSON.stringify({ private: true, type: 'module' }));
-  execFileSync('npm', ['install','--ignore-scripts','--omit=optional','--no-audit','--no-fund',tarball], { cwd: scratch, stdio: 'pipe' });
+  installPacked(tarball);
   const dpdAppReplies = Object.fromEntries([
     ['getSessionFullState', 'session'], ['getTrackingData', 'tracking'], ['getTrackingScanList', 'scans'],
   ].map(([operation, fixture]) => [operation, readFileSync(path.join(root, 'carriers/dpd-de/fixtures', `app-${fixture}.xml`), 'utf8')]));
