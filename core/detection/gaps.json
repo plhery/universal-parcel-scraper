@@ -7016,5 +7016,10 @@
     "carrier": "sdh-express",
     "kind": "open",
     "reason": "Lightning Monkey numbers seen so far are SDH and ten digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "ycex",
+    "kind": "open",
+    "reason": "YCEX numbers seen so far are YC, an eight-digit date and five digits, and the only public sample comes from one tracking directory page, too few to claim a shape that close to other forwarders' date-based numbers, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

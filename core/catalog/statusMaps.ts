@@ -1,3 +1,4 @@
+import { statusMap as ycex } from '../../carriers/ycex/status.js';
 import { statusMap as sdkExpress } from '../../carriers/sdk-express/status.js';
 import { statusMap as sdhExpress } from '../../carriers/sdh-express/status.js';
 import { statusMap as bulongguoji } from '../../carriers/bulongguoji/status.js';
@@ -1343,7 +1344,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'united-delivery-service': unitedDeliveryService, uniuni, 'unipost-express': unipostExpress, upaya, ups, 'ural-express': uralExpress, urbano, 'urbano-ar': urbanoAr, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veho, veloces, venipak, 'via-cargo': viaCargo, viadireta, viapost, 'viettel-post': viettelPost, 'vitran-express': vitranExpress, vnpost,
   vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, 'vt-freight-express': vtFreightExpress, vyang, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, 'western-post': westernPost, whistl, 'whiz-delivery': whizDelivery, wiio, winit, 'wld-express': wldExpress, wokexp, wooliiporter, 'x-express-rs': xExpressRs, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xingyunyi, xlcourier, 'xpo-ltl': xpoLtl, 'xpress-courier-link': xpressCourierLink, xpressbees, 'xs-express': xsExpress, 'xyl-ships': xylShips,
-  yalidine, yamato, yanwen, 'yaoqi-logistics': yaoqiLogistics, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, 'youbang-express': youbangExpress, yto, yunexpress, yunda, yusuda, 'yuxin-logistics': yuxinLogistics, ywbz, ywe, yypost, zto, 'zto-freight': ztoFreight, 'zto-international': ztoInternational,
+  yalidine, yamato, yanwen, 'yaoqi-logistics': yaoqiLogistics, ycex, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, 'youbang-express': youbangExpress, yto, yunexpress, yunda, yusuda, 'yuxin-logistics': yuxinLogistics, ywbz, ywe, yypost, zto, 'zto-freight': ztoFreight, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zhongzhou-logistics': zhongzhouLogistics, 'zoom-ve': zoomVe, 'zr-express': zrExpress, zxsy,
   'bob-go': bobGo, dypaq, navex,
   'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ots-astracon': otsAstracon,

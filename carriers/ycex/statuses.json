@@ -1,0 +1,24 @@
+{
+  "carrier": "ycex",
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "Shipment information received", "stage": "registered", "confirmedBy": "live", "note": "The platform's order row: the shipment's data received, before or just after the warehouse has the parcel."},
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "note": "The Guangzhou warehouse takes the parcel in; the receiving point is where the shipper hands it over."},
+    {"wording": "货物已交机场,等待航班安排中", "language": "zh", "english": "Handed to the airport, awaiting a flight", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the export airport before a flight is booked."},
+    {"wording": "The instruction data for this shipment have been provided by the sender to DHL electronically", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "Copied from DHL on the line into Germany: the parcel announced to DHL, on DHL's wall clock, before the flight."},
+    {"wording": "The shipment is in transit to DHL", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from DHL: the parcel is on its way to DHL, which does not have it yet."},
+    {"wording": "货物已交机场，预计…号的航班", "language": "zh", "english": "Handed to the airport, booked on the flight of the …", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the airport, with the day of the month of the booked flight, which the map reads as an ellipsis and the English names as an ordinal."},
+    {"wording": "航班起飞，预计…号落地", "language": "zh", "english": "Flight departed, expected to land on the …", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has left, with the day of the month it should land, read as an ellipsis."},
+    {"wording": "航班延误，预计…号落地", "language": "zh", "english": "Flight delayed, expected to land on the …", "stage": "in_transit", "confirmedBy": "live", "note": "The flight is late, with the day of the month it should now land, read as an ellipsis. The parcel is on its way all the same."},
+    {"wording": "航班落地，拆板中 Flight landing, dismantling board in progress", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Landed in Amsterdam: the flight's pallets are broken down."},
+    {"wording": "已提货，清关中 The goods have been picked up and are currently undergoing customs clearance", "language": "zh", "stage": "customs", "confirmedBy": "live", "note": "Collected at the destination airport and in import clearance."},
+    {"wording": "清关延误，目前还在排队清关中", "language": "zh", "english": "Customs clearance delayed, still queuing for clearance", "stage": "customs", "confirmedBy": "live", "note": "Import clearance running late, the parcel still waiting its turn."},
+    {"wording": "清关完成，待转运Customs clearance completed, awaiting transfer", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Cleared; the parcel waits to move on."},
+    {"wording": "转运中In transit", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "On its way from Amsterdam towards the delivery carrier."},
+    {"wording": "待交服务商awaiting delivery to the service provider", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting to be handed to the delivery carrier, which the row does not name."},
+    {"wording": "已交服务商Delivered to service provider", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the delivery carrier, DHL on the line into Germany; the parcel is not delivered."},
+    {"wording": "The shipment has been processed in the parcel center of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied."},
+    {"wording": "The shipment arrived in the region of recipient and will be transported to the delivery base in the next step.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "DHL's scan, copied."},
+    {"wording": "The shipment has been loaded onto the delivery vehicle", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "DHL's delivery round, copied."},
+    {"wording": "The shipment has been successfully delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "DHL's delivery, copied."}
+  ]
+}
