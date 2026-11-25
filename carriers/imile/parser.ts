@@ -6,6 +6,8 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { placesForEvents } from '../../places/index.js';
+import { mainZone } from '../../places/zones.js';
 import { imileCountryClock } from './clock.js';
 import { imileReturnStart, imileStage } from './status.js';
 import { imileDisplayWording } from './wording.js';
@@ -243,12 +245,13 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
   const code = text(shipment, 'country', 8).toUpperCase();
   const country = Object.hasOwn(COUNTRIES, code) ? COUNTRIES[code] : undefined;
   // Every scan shows the recipient country's clock: a country of one zone
-  // places them all, and one of several leaves them local.
+  // places them all, and one of several leaves them local but for the scans
+  // away from it.
   const zone = country ? imileCountryClock(country) : null;
   const placed = zone ? newestFirst.map(({ local_time, ...event }): CarrierEvent => {
     const time = isoTime(local_time, zone)?.iso;
     return time ? { time, ...event } : { local_time, ...event };
-  }) : newestFirst;
+  }) : country ? awayOnCountryClock(newestFirst, country) : newestFirst;
   const summary = imileSummary(placed);
   const delivered = summary.current_stage === 'delivered'
     ? newestFirst.find((event) => event.stage === 'delivered' && event.stage_source !== 'none') : undefined;
@@ -261,6 +264,32 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
     events: placed.slice(0, MAX_EVENTS),
     ...(newestFirst.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };
+}
+
+/**
+ * A history in a country of several zones, which the reply does not tell apart, with the scans away
+ * from that country on its main clock once a scan is placed in another: those placed abroad, and
+ * those placed nowhere before the parcel reached the country, such as the order record and the
+ * take-off. They are still on the recipient country's clock, never the clock where they happened:
+ * read on Shenzhen's, a Mexican parcel's dispatch there would come fourteen hours early. They say
+ * how their zone was chosen; the scans in the country keep their wall clocks alone.
+ */
+function awayOnCountryClock(newestFirst: readonly CarrierEvent[], country: string): CarrierEvent[] {
+  const zone = mainZone(country);
+  if (!zone) return [...newestFirst];
+  const oldestFirst = [...newestFirst].reverse();
+  const places = placesForEvents(oldestFirst.map(({ location }) => typeof location === 'string' ? location : null),
+    { destinationCountry: country, carriers: ['imile'] });
+  const abroad = places.map((place) => Boolean(place && place.country !== country));
+  if (!abroad.includes(true)) return [...newestFirst];
+  // Where the parcel reached the country, or with no scan placed there, past the last scan placed abroad.
+  const reached = places.findIndex((place) => place?.country === country);
+  const arrival = reached >= 0 ? reached : abroad.lastIndexOf(true) + 1;
+  const away = new Set(oldestFirst.filter((_, at) => abroad[at] || (!places[at] && at < arrival)));
+  return newestFirst.map((event) => {
+    const time = away.has(event) && typeof event.local_time === 'string' ? isoTime(event.local_time, zone)?.iso : undefined;
+    return time ? { ...event, time, time_zone: zone, time_zone_basis: 'destination' } : event;
+  });
 }
 
 // The delivery day iMile books, "Shipment is scheduled to [2026-05-20].", after any centre heading the sentence.

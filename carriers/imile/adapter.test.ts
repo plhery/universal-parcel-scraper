@@ -6,6 +6,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { keepAdapterHolds, resetAdapterHolds, serviceTag, type AdapterHold } from '../../core/runner/holds.js';
 import { adapter, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_PAGE, IMILE_SIGNING, ImileTracker, imileSignature, scriptSigning, type ImileSigning } from './adapter.js';
 import { cainiaoScans, withCainiaoLeg } from './cainiao.js';
@@ -331,6 +332,46 @@ describe('iMile HTTP adapter', () => {
       expect(result).toMatchObject({ last_update: null, last_update_local: '2026-06-04T02:15:00' });
       expect(result.events!.every((event) => event.time === undefined && event.local_time !== undefined)).toBe(true);
     }
+  });
+
+  it('dates the scans away from a country of several zones on its main clock, not the clock where they happened', () => {
+    // A Mexican parcel as iMile shows it: the Shenzhen centre's scans fourteen hours behind the forwarder's
+    // copy of them on Beijing's clock, because iMile gives every scan on Mexico's clock.
+    const row = (time: string, trackStage: number | null, content: string, operateStationName: string | null = null) =>
+      ({ content, trackStage, trackStageTx: null, time, operateStationName, proofs: null });
+    const result = parseImile(changed('delivered', (shipment) => {
+      shipment.country = 'MEX';
+      shipment.trackInfos = [
+        row('2026-04-13 17:11:47', 2060, 'Your order has been delivered successfully.'),
+        row('2026-04-09 16:23:02', 1002, 'Your order has arrived at Mexico Center', 'Mexico Center'),
+        row('2026-04-03 10:00:00', 1002, 'Flight Arrived - Waiting for customs clearance.'),
+        row('2026-04-02 10:00:00', 1002, '【HKG】The flight has taken off.'),
+        row('2026-03-31 02:49:35', null, 'Your order has been shipped from 【shenzhen】.', 'shenzhen'),
+        row('2026-03-30 23:38:55', null, 'Your order has been received at 【shenzhen】.', 'shenzhen'),
+        row('2026-03-27 02:46:47', 1001, 'Order submitted, pending to receive.'),
+      ];
+    }), DELIVERED);
+    const clocks = (events: typeof result.events) => events!.map(({ local_time: local, time, time_zone: zone, time_zone_basis: basis }) => [local, time, zone, basis]);
+    const away = (local: string, time: string) => [local, time, 'America/Mexico_City', 'destination'];
+    const kept = (local: string) => [local, undefined, undefined, undefined];
+    expect(result).toMatchObject({ destination_country: 'MX', last_update: null, last_update_local: '2026-04-13T17:11:47' });
+    expect(clocks(result.events)).toEqual([
+      kept('2026-04-13T17:11:47'),
+      kept('2026-04-09T16:23:02'),
+      away('2026-04-03T10:00:00', '2026-04-03T10:00:00-06:00'),
+      away('2026-04-02T10:00:00', '2026-04-02T10:00:00-06:00'),
+      away('2026-03-31T02:49:35', '2026-03-31T02:49:35-06:00'),
+      away('2026-03-30T23:38:55', '2026-03-30T23:38:55-06:00'),
+      away('2026-03-27T02:46:47', '2026-03-27T02:46:47-06:00'),
+    ]);
+    // The runner dates the scans in Mexico by their places and leaves those dated here.
+    expect(clocks(dateLocalClocks('imile', result).events).slice(2)).toEqual(clocks(result.events).slice(2));
+    // Without a scan placed abroad, every scan keeps its wall clock.
+    const home = parseImile(changed('delivered', (shipment) => {
+      shipment.country = 'MEX';
+      shipment.trackInfos = shipment.trackInfos.filter((info) => info.operateStationName !== 'shenzhen');
+    }), DELIVERED);
+    expect(home.events!.every((event) => event.time === undefined)).toBe(true);
   });
 
   it('takes phones, proof links and support contacts out of the wording and keeps who took the parcel', () => {

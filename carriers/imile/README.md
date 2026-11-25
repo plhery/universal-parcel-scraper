@@ -69,7 +69,12 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   Zealand, whose other zone is the Chatham Islands' (its delivery stations keep Auckland's clock),
   and Australia, whose scans are all on Sydney's clock: read on Brisbane's, a Queensland hub's
   arrival would come after a consumer first saw it. Brazil, Mexico and the United States span
-  several zones and the reply does not say which, so their clocks stay `local_time`. Ship24 and
+  several zones and the reply does not say which, so their clocks stay `local_time`, except the
+  scans away from the country once one is placed abroad: those, and the scans placed nowhere
+  before the parcel reaches the country, such as the order record and the take-off, are on its
+  main clock, with `time_zone_basis` `destination`. A Mexican parcel's scans at iMile's Shenzhen
+  centre read fourteen hours behind the forwarder's copy of them on Beijing's clock; dated by their
+  place, they would come fourteen hours early. Ship24 and
   ParcelsApp relay these digits and read them on the same clock ([`clock.ts`](clock.ts)). They
   relay iMile's sentences without its codes, and the map reads those sentences whole, as on
   iMile's page.
@@ -119,8 +124,9 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
 - No estimate before iMile books a delivery day, no weight or service, and no delivery time as an instant.
 - Cainiao has no record of the parcels it did not carry, such as other marketplaces'
   thirteen-digit waybills, and still gets asked. Its departure scan can sit beside iMile's
-  take-off scan for the same flight. In a country with several zones, the Cainiao scans in the
-  fourteen hours before iMile's first stay out, and its record of iMile's order stays in.
+  take-off scan for the same flight. In a country with several zones, unless iMile has a scan
+  placed abroad, the Cainiao scans in the fourteen hours before iMile's first stay out, and its
+  record of iMile's order stays in.
 - The tracker also answers marketplace references with CNBR and AP prefixes, which belong to
   the sender's logistics partner. The adapter tracks one filed under iMile, but no rule claims
   them.
