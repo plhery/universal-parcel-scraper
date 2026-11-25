@@ -21,6 +21,9 @@ const receivingBox = () => JSON.parse(readFileSync(new URL('./fixtures/receiving
 const ABROAD = '1000000000000000000003';
 const EURODIS = '019999999999999999999980';
 const eurodis = () => JSON.parse(readFileSync(new URL('./fixtures/eurodis.json', import.meta.url), 'utf8'));
+// A parcel for Germany under the plate from DHL's number range Austrian Post gives it, announced by its sender.
+const PLATE = 'JJATA9999999999999990';
+const plate = () => JSON.parse(readFileSync(new URL('./fixtures/germany-plate.json', import.meta.url), 'utf8'));
 // A letter Deutsche Post sends to Austria, put through the letterbox.
 const INBOUND = 'LY000000005DE';
 const inbound = () => JSON.parse(readFileSync(new URL('./fixtures/inbound.json', import.meta.url), 'utf8'));
@@ -128,6 +131,15 @@ describe('Austrian Post public tracking', () => {
     const unbound = fixture();
     unbound.data.einzelsendung.sendungsnummer = '019999999999999999999980';
     expect(() => parseAustrianPostResponse(unbound, NUMBER)).toThrow('different shipment');
+  });
+
+  it('reads a parcel for Germany under its JJATA plate and keeps the plate as its number', () => {
+    const result = parseAustrianPostResponse(plate(), PLATE);
+    expect(result).toMatchObject({ status: 'pending', current_stage: 'registered',
+      last_status_text: 'Versender∗in bereitet die Sendung für den Versand vor', last_update: '2026-11-25T13:21:42Z' });
+    expect(result).not.toHaveProperty('canonical_tracking_number');
+    // Its 22-digit number alone binds the reply only when that number is asked.
+    expect(parseAustrianPostResponse(plate(), '1000000000000000000005')).toMatchObject({ canonical_tracking_number: PLATE });
   });
 
   it('follows an item another post sends to Austria from its posting abroad to the letterbox', () => {
@@ -416,6 +428,11 @@ describe('Austrian Post public tracking', () => {
     // S10 numbers of its own and of mail from abroad, with a valid check digit.
     expect(normalizeAustrianPostNumber(INBOUND.toLowerCase())).toBe(INBOUND);
     expect(() => normalizeAustrianPostNumber('LY000000006DE')).toThrow(InvalidInputError);
+    // The JJATA plate of a parcel for Germany, whole.
+    expect(normalizeAustrianPostNumber(PLATE.toLowerCase())).toBe(PLATE);
+    for (const near of [PLATE.slice(0, -1), `${PLATE}0`, PLATE.replace('JJATA', 'JJATB'), PLATE.replace('JJATA', 'JJAT'), PLATE.slice(2)]) {
+      expect(() => normalizeAustrianPostNumber(near), near).toThrow(InvalidInputError);
+    }
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(fixture())));
     const tracker = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(tracker.recognize!('123')).resolves.toEqual({ known: false });
@@ -434,6 +451,13 @@ describe('Austrian Post detection', () => {
     expect(other.preferred).not.toContain('austrian-post');
     expect(detectCarrierMatch('9400100000000000000001').preferred).not.toContain('austrian-post');
     expect(detectCarrierMatch('10000000000000000000001').candidates).not.toContain('austrian-post');
+  });
+
+  it('names Austrian Post for the JJATA plate of a parcel it sends to Germany, and only for the whole plate', () => {
+    expect(detectCarrierMatch(PLATE)).toMatchObject({ carrier: 'austrian-post', confidence: 'high' });
+    for (const near of [PLATE.slice(0, -1), `${PLATE}0`, PLATE.replace('JJATA', 'JJATB'), PLATE.replace('JJATA', 'JJAT')]) {
+      expect(detectCarrierMatch(near).candidates, near).not.toContain('austrian-post');
+    }
   });
 });
 

@@ -1,0 +1,22 @@
+{
+  "data": {
+    "einzelsendung": {
+      "sendungsnummer": "JJATA9999999999999990",
+      "activeIdentityCode": "JJATA9999999999999990",
+      "originalIdentityCode": "1000000000000000000005",
+      "status": "AV",
+      "weight": null,
+      "dimensions": null,
+      "estimatedDelivery": null,
+      "sendungsEvents": [
+        {
+          "timestamp": "2026-11-25T13:21:42.000+00:00",
+          "status": "AV",
+          "reasontypecode": "SE",
+          "trackingDesc": "Versender∗in bereitet die Sendung für den Versand vor",
+          "eventPlaceName": ""
+        }
+      ]
+    }
+  }
+}

@@ -2730,6 +2730,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
+        "pattern": "^JJATA\\d{16}$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^[A-Z]{2}\\d{9}AT$",
         "confidence": "high",
         "checksum": "s10"
@@ -75649,7 +75653,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "inpost": ["inpost-answered-prefix","inpost-1","inpost-2","inpost-3","inpost-4","inpost-5"],
   "an-post": ["an-post-1"],
   "bpost": ["bpost-numeric-prefix","bpost-1","bpost-2","bpost-3","bpost-jjbe"],
-  "austrian-post": ["austrian-post-4","austrian-post-1","austrian-post-3","austrian-post-2"],
+  "austrian-post": ["austrian-post-4","austrian-post-1","austrian-post-3","austrian-post-5","austrian-post-2"],
   "postnord": ["postnord-1","postnord-2","postnord-5","postnord-3"],
   "posti": ["posti-1","posti-2","posti-3"],
   "correos-express": ["correos-express-1","correos-express-2"],

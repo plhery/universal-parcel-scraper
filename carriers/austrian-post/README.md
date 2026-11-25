@@ -6,7 +6,9 @@ anonymous GraphQL read. It also takes the 24-digit EURODIS
 barcode of a parcel it sends abroad through that network, which its tracker
 follows to the partner that delivers it, and the fourteen-digit number of a
 Hermes Austria parcel it delivers, which Hermes's tracker links to Austrian
-Post's.
+Post's. A parcel it sends to Germany can carry a plate from DHL's number range,
+`JJATA` and sixteen digits ([Paketda](https://www.paketda.de/news-oesterreich-20191002.html)),
+which its tracker follows beside its own 22-digit number.
 
 ## How it works
 
@@ -79,7 +81,9 @@ first for them and recognition settles on it when several carriers answer.
 `austrian-post-3` suggests Austrian Post for 24 digits at low confidence, beside
 the other carriers whose rules take that length, so recognition can ask its
 tracker. No public EURODIS barcode of an Austrian Post parcel has been found,
-so the corpus holds a synthetic one. No rule suggests Austrian Post for fourteen digits, which
+so the corpus holds a synthetic one. `austrian-post-5` names Austrian Post
+for the `JJATA` plate: the plate's issuer is in its name, as in the national
+posts' other `JJ` plates. No rule suggests Austrian Post for fourteen digits, which
 Hermes Germany's and DPD's numbers share, so a Hermes number reaches it when
 Hermes Austria's lookup hands the parcel over or the caller names Austrian
 Post. Account-only delivery

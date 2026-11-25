@@ -339,6 +339,37 @@
         "confidence": "high"
       },
       "note": "A parcel sent from Germany to Austria, quoted in a review of Deutsche Post. Austrian Post's tracker answers for it under the same number, from the pre-advice to the delivery."
+    },
+    {
+      "number": "JJATA8244936002831084",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260516081133/https://www.parcelpanel.com/couriers/austria-post/",
+        "date": "2026-05-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "austrian-post",
+        "confidence": "high"
+      },
+      "note": "An archived ParcelPanel Austrian Post page offered it to try. Austrian Post gives parcels it sends to Germany a plate from DHL's number range, JJATA and sixteen digits (https://www.paketda.de/news-oesterreich-20191002.html); its tracker no longer lists this one."
+    },
+    {
+      "number": "JJATA9999999999999990",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-25",
+      "expect": {
+        "carrier": "austrian-post",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of the plate Austrian Post gives a parcel it sends to Germany: JJ, AT, A and sixteen digits. Austrian Post's tracker follows the whole plate and keeps its own 22-digit number beside it."
     }
   ]
 }

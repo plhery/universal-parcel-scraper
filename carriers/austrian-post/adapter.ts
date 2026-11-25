@@ -51,13 +51,14 @@ function estimateOf(range: unknown): Estimate | null {
 
 /**
  * Its 22-digit parcels, the 24-digit EURODIS barcodes of parcels it sends
- * abroad, S10 items, its own and those other posts send to Austria, and the
- * 14-digit numbers of the Hermes Austria parcels it delivers.
+ * abroad, the JJATA plates of parcels it sends to Germany, S10 items, its own
+ * and those other posts send to Austria, and the 14-digit numbers of the
+ * Hermes Austria parcels it delivers.
  */
 export function normalizeAustrianPostNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^(?:\d{14}|\d{22}|\d{24})$/.test(number) && !isValidS10TrackingNumber(number)) {
-    throw new InvalidInputError(PROVIDER, 'Austrian Post requires a 14-, 22- or 24-digit or valid S10 postal identifier');
+  if (!/^(?:\d{14}|\d{22}|\d{24}|JJATA\d{16})$/.test(number) && !isValidS10TrackingNumber(number)) {
+    throw new InvalidInputError(PROVIDER, 'Austrian Post requires a 14-, 22- or 24-digit number, a JJATA plate or a valid S10 postal identifier');
   }
   return number;
 }
