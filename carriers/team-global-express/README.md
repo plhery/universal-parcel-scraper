@@ -76,7 +76,9 @@ four-character sender prefix and six digits; deliveries for JB Hi-Fi also use ot
 New Zealand consignments are a four-letter sender prefix and seven digits; their labels print
 five more digits, which are cut before Fast Tracker is asked. All of these are shapes other
 carriers print: four letters and six digits is C Chez Vous's layout, and the digit runs are
-shared widely. No rule claims them, so a lookup needs the carrier named. The samples and their
+shared widely. The twelve-digit numbers seen, Keke International's hand-over among them, end in
+the remainder of the first eleven divided by seven, a check digit Sagawa's, Japan Post's and many
+other carriers' numbers carry too. No rule claims them, so a lookup needs the carrier named. The samples and their
 sources are in [`numbers.json`](numbers.json).
 
 ## Links

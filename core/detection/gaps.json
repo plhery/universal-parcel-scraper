@@ -4496,7 +4496,7 @@
     "carrier": "team-global-express",
     "pattern": "^\\d{12,13}$",
     "kind": "by_design",
-    "reason": "Twelve and thirteen digits are shared by many carriers, and nothing in the number points to Team Global Express."
+    "reason": "Twelve and thirteen digits are shared by many carriers, and nothing in the number points to Team Global Express. The twelve-digit numbers seen end in the remainder of the first eleven divided by seven, a check digit Sagawa's, Japan Post's and many other carriers' twelve-digit numbers carry too."
   },
   {
     "carrier": "team-global-express",
