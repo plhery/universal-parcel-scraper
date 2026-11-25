@@ -11,9 +11,10 @@ no rule of its own.
 
 ## Links
 
-The tracking page at track.afghanpost.gov.af posts the number to a script that answers in a
-pop-up window, so no address opens one parcel. The former tracker on afghanpost.gov.af read the
-number from the `ID` parameter of `/track/index.php`.
+Afghan Post's site still sends visitors to its tracking page at track.afghanpost.gov.af, which
+answers no network, so the catalog links no page. That page posted the number to a script that
+answered in a pop-up window, so no address opened one parcel. The former tracker on
+afghanpost.gov.af read the number from the `ID` parameter of `/track/index.php`.
 
 ## Testing
 

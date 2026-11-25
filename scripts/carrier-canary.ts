@@ -8,9 +8,9 @@ import { writeCanaryReport } from './canary-report.mjs';
 import type { CarrierId } from '../generated/catalog.js';
 
 /**
- * Automatic carriers whose front door does not answer the runner's network,
- * and why. Each was seen answering other networks. The probe lists them in its
- * summary instead of probing them.
+ * Automatic carriers whose front door the probe skips, and why: each was seen
+ * answering networks other than the runner's, or its carrier no longer runs a
+ * site. The probe lists them in its summary instead of probing them.
  */
 export const unreachableFrontDoors: Partial<Record<CarrierId, string>> = {
   'aaa-cooper': 'www.aaacooper.com drops connections from outside the Americas and from the runner\'s network; other networks in the United States get its home page',
@@ -18,6 +18,7 @@ export const unreachableFrontDoors: Partial<Record<CarrierId, string>> = {
   'asyad-express': 'www.asyadexpress.om answers only Omani networks',
   azerpost: 'www.azerpost.az does not answer connections from the United States; European networks get its tracking page',
   'cargo-expreso': 'cargoexpreso.com does not answer connections from European and American networks; the Internet Archive reaches it',
+  'correos-cuba': 'www.correos.cu answers only Cuban networks',
   cupost: 'www.cupost.co.kr does not answer connections from European and American networks; the Internet Archive reaches it',
   'dpd-by': 'mydpd.dpd.by does not answer connections from the United States; European networks get its tracking page',
   'dpd-ru': 'mydpd.dpd.kz does not answer connections from the United States; European networks get its tracking page',
@@ -29,13 +30,16 @@ export const unreachableFrontDoors: Partial<Record<CarrierId, string>> = {
   'kerry-tj': 'www.kerrytj.com answers only Taiwanese networks',
   'kyrgyz-post': 'post.kg answers only Kyrgyz networks',
   'la-poste-tunisienne': 'www.poste.tn answers only Tunisian networks',
+  'makati-express': 'makati-express.com answers no network, and Philippine Customs has revoked the company\'s registration',
   pakettipiste: 'pakettipisteseuranta.r2web.fi does not answer connections from the United States; European networks get its tracking page',
   'pavan-courier': 'pavancourierservice.com refuses connections from the United States and France; Indian and German networks get its tracking page',
   'pink-post': 'trackawb.izzygo.ro does not answer connections from the United States; European networks get its tracking page',
   'pullman-cargo': 'pullmancargo.cl does not answer the runner\'s network; Chilean, American and German networks get its tracking page',
+  saee: 'www.saee.sa and its sister sites answer HTTP 503 on every network, and Saee\'s apps have left the stores',
   slgtrax: 'sonic.pk drops connections from the runner\'s network and some others; European and other American networks get its tracking page',
   't-cat': 'www.t-cat.com.tw answers only Taiwanese networks',
   tdn: 'www.tdn.es answers the United States with HTTP 503; Spanish and German networks get its tracking page',
+  'tpl-rider': 'track.withrider.com answers no network, and withrider.com shows a domain host\'s placeholder page',
   'walkers-transport': 'tracking.walkers-transport.co.uk does not answer connections from the United States; British and German networks get its tracker',
   'wise-express': 'www.shwise.cn does not answer connections from the United States; Chinese and German networks get its home page',
 };

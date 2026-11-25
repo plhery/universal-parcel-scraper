@@ -6878,9 +6878,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://tms.acrocargo.com/echobase-web/track-order.xhtml",
-    "trackingUrlTemplate": "https://tms.acrocargo.com/echobase-web/track-order.xhtml?trackNumber={trackingNumber}",
-    "trackingSearchUrl": "https://tms.acrocargo.com/echobase-web/track-order.xhtml",
+    "canaryUrl": "https://acex.co/",
     "linkRules": [
       {
         "domains": [
@@ -7433,8 +7431,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://track.afghanpost.gov.af/",
-    "trackingSearchUrl": "https://track.afghanpost.gov.af/",
+    "canaryUrl": "https://afghanpost.gov.af/",
     "helpUrl": "https://afghanpost.gov.af/dr/%D8%AA%D9%85%D8%A7%D8%B3-%D8%A8%D8%A7-%D9%85%D8%A7",
     "linkRules": [
       {
@@ -32993,9 +32990,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://ecom.yolka.io/tracknumber",
-    "trackingUrlTemplate": "https://ecom.yolka.io/parcels/{trackingNumber}",
-    "trackingSearchUrl": "https://ecom.yolka.io/tracknumber",
+    "canaryUrl": "https://hecny-cis.com/",
     "linkRules": [
       {
         "domains": [
@@ -43591,8 +43586,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://makati-express.com/tracking/",
-    "trackingUrlTemplate": "https://makati-express.com/tracking/?awbnumber={trackingNumber}",
-    "trackingSearchUrl": "https://makati-express.com/tracking/",
     "linkRules": [],
     "detectionRules": [
       {
@@ -47837,8 +47830,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://www.okayparcel.com/en",
-    "trackingSearchUrl": "https://www.okayparcel.com/en",
+    "canaryUrl": "https://okayparcel.com/",
     "linkRules": [
       {
         "domains": [
@@ -56383,8 +56375,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://www.saee.sa/en/track-your-shipment",
-    "trackingUrlTemplate": "https://www.saee.sa/en/track-your-shipment?waybill={trackingNumber}",
-    "trackingSearchUrl": "https://www.saee.sa/en/track-your-shipment",
     "linkRules": [
       {
         "domains": [
@@ -65266,8 +65256,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://track.withrider.com/",
-    "trackingUrlTemplate": "https://track.withrider.com/#/track/{trackingNumber}",
-    "trackingSearchUrl": "https://track.withrider.com/",
     "linkRules": [
       {
         "domains": [

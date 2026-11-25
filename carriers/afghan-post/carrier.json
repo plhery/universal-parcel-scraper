@@ -22,9 +22,8 @@
   },
   "capabilities": [],
   "portal": {
-    "searchUrl": "https://track.afghanpost.gov.af/",
     "helpUrl": "https://afghanpost.gov.af/dr/%D8%AA%D9%85%D8%A7%D8%B3-%D8%A8%D8%A7-%D9%85%D8%A7",
-    "canaryUrl": "https://track.afghanpost.gov.af/",
+    "canaryUrl": "https://afghanpost.gov.af/",
     "shows": [],
     "scraped": [],
     "discarded": [],

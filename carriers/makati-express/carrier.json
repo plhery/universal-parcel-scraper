@@ -36,8 +36,6 @@
     "history"
   ],
   "portal": {
-    "url": "https://makati-express.com/tracking/?awbnumber={trackingNumber}",
-    "searchUrl": "https://makati-express.com/tracking/",
     "canaryUrl": "https://makati-express.com/tracking/",
     "shows": [
       "status",

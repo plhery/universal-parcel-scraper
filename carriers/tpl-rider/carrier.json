@@ -21,8 +21,6 @@
   },
   "capabilities": [],
   "portal": {
-    "url": "https://track.withrider.com/#/track/{trackingNumber}",
-    "searchUrl": "https://track.withrider.com/",
     "canaryUrl": "https://track.withrider.com/",
     "shows": [],
     "scraped": [],

@@ -2601,10 +2601,6 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.mrlglobal\.com\/tracking\/\?connoteno=CAAA000000$/,
     marker: /Invalid Connote number|Tracking history/i,
     forwarding: { notFound: /Error : Invalid Connote number/ } },
-  // The page looks up the AWB in its address on the server and names an unknown one in its notice.
-  { carrier: 'makati-express', number: 'DXB0000000',
-    route: /^https:\/\/makati-express\.com\/tracking\/\?awbnumber=DXB0000000$/,
-    marker: /Data not found \/ its not updated in the server|Shipment Progress of AWB No\./ },
   // The server renders the lookup for the guía in the address, repeats it in the history's
   // heading and answers an unknown one with a notice.
   { carrier: 'aex-paraguay', number: 'A000000000',

@@ -22,8 +22,6 @@
   },
   "capabilities": [],
   "portal": {
-    "url": "https://www.saee.sa/en/track-your-shipment?waybill={trackingNumber}",
-    "searchUrl": "https://www.saee.sa/en/track-your-shipment",
     "canaryUrl": "https://www.saee.sa/en/track-your-shipment",
     "shows": [],
     "scraped": [],

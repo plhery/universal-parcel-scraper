@@ -24,9 +24,7 @@
   },
   "capabilities": [],
   "portal": {
-    "url": "https://ecom.yolka.io/parcels/{trackingNumber}",
-    "searchUrl": "https://ecom.yolka.io/tracknumber",
-    "canaryUrl": "https://ecom.yolka.io/tracknumber",
+    "canaryUrl": "https://hecny-cis.com/",
     "shows": [],
     "scraped": [],
     "discarded": [],

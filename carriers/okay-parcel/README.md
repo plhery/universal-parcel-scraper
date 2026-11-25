@@ -4,7 +4,7 @@ Okay Parcel parcels use enabled universal providers. There is no dedicated adapt
 
 Okay Parcel is the parcel brand of EAE Global Limited in Hong Kong, which carries online shops'
 parcels from Hong Kong to warehouses in Europe and hands them to local carriers for delivery. Its
-site is okayparcel.com.
+site, okayparcel.com, shows its web host's notice that the site's subscription has expired.
 
 ## Numbers
 
@@ -16,7 +16,9 @@ Its tracker, at sys.okayparcel.com, answers only over plain HTTP.
 
 ## Links
 
-Tracking links carry the number as `q` on the `showtracking.php` page at sys.okayparcel.com.
+Tracking links carry the number as `q` on the `showtracking.php` page at sys.okayparcel.com, which
+the library reads. The catalog links no page: the tracker answers only over plain HTTP, and the site
+shows only its host's notice.
 
 ## Testing
 

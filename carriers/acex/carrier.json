@@ -23,9 +23,7 @@
   },
   "capabilities": [],
   "portal": {
-    "url": "https://tms.acrocargo.com/echobase-web/track-order.xhtml?trackNumber={trackingNumber}",
-    "searchUrl": "https://tms.acrocargo.com/echobase-web/track-order.xhtml",
-    "canaryUrl": "https://tms.acrocargo.com/echobase-web/track-order.xhtml",
+    "canaryUrl": "https://acex.co/",
     "shows": [],
     "scraped": [],
     "discarded": [],

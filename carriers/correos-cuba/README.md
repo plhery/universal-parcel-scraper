@@ -27,6 +27,8 @@ zone and stay local.
 
 ## Limitations
 
+`www.correos.cu` answers only Cuban networks; elsewhere every lookup fails.
+
 A code with no scans this year or last gets the same empty answer as one the tracker never saw,
 so it is a `NoHistoryError`, inconclusive rather than not-found. The countries above the history
 are in Spanish and do not always name both ends, and the progress rail repeats the states, so

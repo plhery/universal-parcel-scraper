@@ -23,8 +23,7 @@
   },
   "capabilities": [],
   "portal": {
-    "searchUrl": "https://www.okayparcel.com/en",
-    "canaryUrl": "https://www.okayparcel.com/en",
+    "canaryUrl": "https://okayparcel.com/",
     "shows": [],
     "scraped": [],
     "discarded": [],

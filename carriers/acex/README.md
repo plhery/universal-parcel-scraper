@@ -3,8 +3,8 @@
 ACEX+ parcels use enabled universal providers. There is no dedicated adapter.
 
 ACEX+ Express, run by Dadao Systems in Richmond, British Columbia, and formerly Ulala Express,
-delivers the last mile of online orders in the Vancouver area with its own drivers. Its tracker runs
-on the platform of the Acrocargo group, which it belongs to. Its site is acex.co.
+delivers the last mile of online orders in the Vancouver area with its own drivers. It belongs to
+the Acrocargo group. Its site, acex.co, shows a maintenance notice.
 
 ## Numbers
 
@@ -14,11 +14,12 @@ so there is no rule.
 
 ## Why there is no adapter
 
-Its terms of use forbid automated access.
+Its tracker, on the Acrocargo group's platform at tms.acrocargo.com, refuses every connection.
 
 ## Links
 
-Tracking links carry the number as `trackNumber` on the track-order page.
+Tracking links carried the number as `trackNumber` on the track-order page, which the library
+reads. The catalog links no page while the tracker refuses connections.
 
 ## Testing
 

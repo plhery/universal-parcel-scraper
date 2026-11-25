@@ -40,6 +40,9 @@ and other countries to addresses across the Philippines. Tracked through its tra
 
 ## Limitations
 
+- `makati-express.com` answers no network, and Philippine Customs has revoked the company's
+  registration ([report](https://tribune.net.ph/2026/05/29/cargo-firm-facing-raps-over-abandoned-balikbayan-boxes-boc)),
+  so every lookup fails.
 - No clock, location, estimate or service: a row is a day and an activity.
 - Branch serials come round again, so an AWB from years ago can open a later shipment.
 
@@ -55,8 +58,8 @@ the adapter takes any three letters and six to nine digits.
 
 ## Links
 
-The page also reads the AWB from its address, so
-`makati-express.com/tracking/?awbnumber={number}` opens one parcel.
+The tracker read the AWB from its address, `makati-express.com/tracking/?awbnumber={number}`.
+It no longer answers, so the catalog links no page.
 
 ## Testing
 
