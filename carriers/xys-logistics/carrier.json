@@ -1,0 +1,80 @@
+{
+  "id": "xys-logistics",
+  "displayName": "XYS Logistics",
+  "aliases": [
+    "XYS",
+    "新源晟",
+    "新源晟（深圳）国际物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#002cc0"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "xys-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number",
+      "customer_reference",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "szxys.rtb56.com"
+      ],
+      "pathPattern": "^/track_query\\.aspx$",
+      "params": [
+        "track_number"
+      ]
+    }
+  ],
+  "detection": []
+}

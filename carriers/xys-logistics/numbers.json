@@ -1,0 +1,24 @@
+{
+  "carrier": "xys-logistics",
+  "records": [
+    {
+      "number": "XYS106664200CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260716203749/https://www.parcelpanel.com/couriers/xyslogistics/",
+        "date": "2026-07-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's XYS Logistics page shows. XYS Logistics's tracker answers it with a parcel flown from Hong Kong to Amsterdam and delivered by DHL in Germany."
+    }
+  ]
+}

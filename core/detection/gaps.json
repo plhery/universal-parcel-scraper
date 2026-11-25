@@ -7031,5 +7031,10 @@
     "carrier": "keke-international",
     "kind": "open",
     "reason": "Keke International's tracker answers by the delivering carrier's number as well as its own waybill, KK and eight digits, and the only public sample, from one tracking directory page, is Team Global Express's twelve-digit number, a shape many carriers share, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "xys-logistics",
+    "kind": "open",
+    "reason": "XYS Logistics waybills seen so far are XYS, nine digits and CN, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

@@ -1,0 +1,17 @@
+{
+  "carrier": "xys-logistics",
+  "entries": [
+    {"wording": "The waybill has been created; tracking updates upon package receipt.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's order row (`IR`), before its warehouse has the parcel."},
+    {"wording": "Has been put into storage", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's Shenzhen warehouse takes the parcel in (`AF`)."},
+    {"wording": "Has left the warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's Shenzhen warehouse dispatches the parcel (`DF`)."},
+    {"wording": "Export customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance at Hong Kong (`CKWC`)."},
+    {"wording": "Handover to airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`YJH`, at Hong Kong."},
+    {"wording": "The flight has taken off from the origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`HBQF`, from Hong Kong."},
+    {"wording": "Flight arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`HBDD`, at Amsterdam."},
+    {"wording": "Import clearance start", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "`QGKS`: the parcel is held for import clearance."},
+    {"wording": "Import customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`QGWC`: cleared, so the parcel goes on in transit."},
+    {"wording": "Shipment been picked up by the destination partner", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "`WCLS`: the delivering network, DHL in Germany, takes the parcel over from the line."},
+    {"wording": "Out of delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The delivering network's courier round (`OK`)."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "`CC`."}
+  ]
+}
