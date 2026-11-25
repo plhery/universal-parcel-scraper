@@ -1405,6 +1405,7 @@
     {"wording": "The driver is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "GOFO's round, after its regional facility and before the letterbox delivery."},
     {"wording": "Parcel has been delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The last mile's delivery, as Shouwu relays it."},
     {"wording": "Arrived at destination hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A hub in the destination country, days after customs released the parcel and before its departure from it."},
-    {"wording": "Departed destination hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination hub sending the parcel on, after its arrival there."}
+    {"wording": "Departed destination hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination hub sending the parcel on, after its arrival there."},
+    {"wording": "Arrived at warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A delivering partner's warehouse, as the lines that relay the same partners read it: after its destination hub, before the delivery round. Shouwu words its own intake otherwise (Arrival processing center, Shipment arrived at facility)."}
   ]
 }

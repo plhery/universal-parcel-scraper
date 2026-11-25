@@ -710,9 +710,11 @@ describe('Shouwu International status vocabulary', () => {
       ['Delivered by Mailbox, Example note: No. If you have any questions, please contact the carrier', 'delivered'],
       ['Parcel received by local Facility', 'in_transit'], ['Parcel departed from facility.', 'in_transit'],
       ['Arrived at destination airport', 'in_transit'], ['Arrived at GOFO Regional Destination Facility', 'in_transit'],
-      ['The driver is out for delivery', 'out_for_delivery']] as const) {
+      ['The driver is out for delivery', 'out_for_delivery'], ['Arrived At Warehouse', 'in_transit']] as const) {
       expect(shouwuStage(wording), wording).toEqual({ stage, source: 'carrier_map' });
     }
+    // A delivering partner's warehouse on the way, as the app keys it.
+    expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: 'arrived at warehouse' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // The delivering partner's data row is no step back once the parcel moved.
     const late = readLateRegistrations({ status: 'in_transit', last_status_text: '', last_update: null, expected_delivery: null, events: [
       { time: '2026-01-02T22:49:56Z', description: '其他 | Client Order Shipped', stage: 'registered', stage_source: 'carrier_map' },
