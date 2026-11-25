@@ -19,6 +19,7 @@ import {
   UpstreamHttpError,
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import { airportTimeZone } from '../../places/index.js';
 import { exchangeCodeCountry } from './office.js';
 import { classifyIndiaPostEvent, indiaPostEventText, RETURN_START } from './status.js';
 
@@ -199,7 +200,20 @@ function airportClockZone(providerCode: string, office: string, trackedAt: strin
   if (providerCode !== TAKE_OFF_CODE && providerCode !== HAND_OVER_CODE) return null;
   const airport = officeAirport(office);
   if (airport) return AIRPORT_ZONES[airport] ?? null;
-  return providerCode === HAND_OVER_CODE && office ? INDIA_ZONE : null;
+  return providerCode === HAND_OVER_CODE && office ? exchangeZone(office) : null;
+}
+
+/**
+ * The clock of the office of exchange a hand-over names. An Indian office, by its name or its UPU
+ * code, keeps India's. One abroad named by its UPU code ("Office - CHZRH") keeps its airport's or
+ * its country's: Zurich's hand-overs for a Zurich–New York flight carry the wall clock its
+ * take-off there does. Null for an office abroad whose clock is unknown, read as labelled.
+ */
+function exchangeZone(office: string): string | null {
+  const code = office.replace(/^Office - /, '').replace(/ \d+$/, '');
+  const country = exchangeCodeCountry(code);
+  if (!country || country === 'IN') return INDIA_ZONE;
+  return airportTimeZone(code.slice(2, 5)) ?? countryTimeZone(country);
 }
 
 // The bag's rows the airline reports with a hand-over: its unloading and its receipt.

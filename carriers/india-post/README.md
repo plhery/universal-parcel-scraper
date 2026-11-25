@@ -95,7 +95,9 @@ Outcomes:
   read like any other row. The mail's hand-over to the airport (`HandedOverToAirportFacility`)
   comes the same way, to the minute: labelled as UTC, a hand-over at Delhi's office of exchange
   followed its flight's take-off there. It is read on its airport's clock when the office names
-  one, else on India's. The airline reports the bag's unloading ("Bag unloaded at destination
+  one, on the clock of an office of exchange abroad its UPU code names (`Office - CHZRH`, Zurich,
+  whose hand-overs carry the clock of the take-offs there), else on India's; an office abroad whose
+  clock is unknown keeps its label. The airline reports the bag's unloading ("Bag unloaded at destination
   Airport") and receipt ("RECEIVED") with it, labelled at most a minute apart, at its office or an
   airport on its clock. They take its clock, also once a flight's arrival in the destination
   country has opened the destination's rows: read as UTC, an unloading came after its flight left

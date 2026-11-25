@@ -397,6 +397,15 @@ describe('India Post response normalization', () => {
     ])).toEqual([['2026-11-08T14:05:00+05:30', 'AircraftTakeOff'], ['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
     // At an airport the office names, its clock; an offset other than UTC stays.
     expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - FRA 00000003')])).toEqual([['2026-11-08T09:57:00+01:00', 'HandedOverToAirportFacility']]);
+    // An office of exchange abroad, by its UPU code: its airport's clock, as its flight's take-off there.
+    expect(times([
+      handOver('2026-11-10T20:15:00.000000Z', 'Office - CHZRH'),
+      takeOff('2026-11-11T12:40:00.000000Z', 'Office - ZRH'),
+    ])).toEqual([['2026-11-11T12:40:00+01:00', 'AircraftTakeOff'], ['2026-11-10T20:15:00+01:00', 'HandedOverToAirportFacility']]);
+    expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - DEFRAA')])).toEqual([['2026-11-08T09:57:00+01:00', 'HandedOverToAirportFacility']]);
+    // India's own office of exchange by its code keeps India's clock; one abroad with no known clock keeps its label.
+    expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - INMAAB')])).toEqual([['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
+    expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - USNYCA')])).toEqual([['2026-11-08T09:57:00Z', 'HandedOverToAirportFacility']]);
     expect(times([handOver('2026-11-08T09:57:00+05:30', 'EXAMPLE FOREIGN POST OFFICE')])).toEqual([['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
     // The destination's hand-over names no office: its clock is unknown, so it keeps its label.
     expect(times([handOver('2026-11-08T09:57:00.000000Z', '')])).toEqual([['2026-11-08T09:57:00Z', 'HandedOverToAirportFacility']]);
