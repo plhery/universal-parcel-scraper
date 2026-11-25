@@ -2400,6 +2400,17 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "parcelnumber"
         ],
         "detectFromNumber": true
+      },
+      {
+        "domains": [
+          "delivery-status.com",
+          "prtl.parcellab.com"
+        ],
+        "params": [
+          "trackingNo",
+          "tno"
+        ],
+        "detectFromNumber": true
       }
     ],
     "detectionRules": []

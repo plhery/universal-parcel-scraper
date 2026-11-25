@@ -426,6 +426,15 @@ can still identify its own operation. A link marked `ownNumbersOnly` names its c
 only for a number that carrier's detection rules offer; any other number it holds
 is detected on its own. A link printed without its scheme, as text messages give
 them, is read as a link only on a host a link rule names.
+A shop's own tracking page, run by a platform such as parcelLab
+(`<shop>.delivery-status.com`), is no carrier's link. `shopTrackingLinks` finds such links in
+a text or an HTML email and `resolveShopTrackingLink` reads each parcel's number and carrier
+from the link, or from the platform's anonymous API when the link carries only an order and
+its hash. The courier's own tracking link names the carrier when the catalog reads the same
+number from it, then the platform's courier code, then the number. A link that names no
+parcel says why: not found or expired, no number yet, refused, rate-limited, unavailable or
+unsupported. The resolver keeps no name or address. parcelLab links that carry `trackingNo`
+also go through `parseTrackingInput`, with the carrier left to the number.
 Consumers bound concurrency, cache answers and
 decide when another check is due. `recognizeAll` passes cancellation and its budget to each
 callback and discards late answers. A failed outcome that threw a carrier error carries its kind
