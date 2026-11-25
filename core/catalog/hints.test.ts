@@ -349,10 +349,12 @@ describe('carrier names reported by universal providers', () => {
     expect(carrierIdFromName('La Poste du Senegal')).toBe('la-poste-senegal');
   });
 
-  it('reads FedEx International Connect by its name and abbreviation, never its Plus service or the old Cross Border name', () => {
+  it('reads FedEx International Connect by its name, its abbreviation and the Cross Border name P2P traded under, never its Plus service', () => {
     expect(carrierIdFromName('FedEx® International Connect (FIC)')).toBe('fedex-international-connect');
     expect(carrierIdFromName('FedEx International Connect')).toBe('fedex-international-connect');
-    for (const name of ['FedEx International Connect Plus', 'FedEx® Cross Border (UK)', 'FIC']) {
+    // ParcelsApp files TrakPak as "FedEx Cross Border".
+    for (const name of ['FedEx Cross Border', 'FedEx® Cross Border (UK)']) expect(carrierIdFromName(name), name).toBe('fedex-international-connect');
+    for (const name of ['FedEx International Connect Plus', 'FIC']) {
       expect(carrierIdFromName(name), name).not.toBe('fedex-international-connect');
     }
   });

@@ -27484,6 +27484,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "FedEx International Connect",
     "color": "#4d148c",
     "aliases": [
+      "FedEx Cross Border",
       "FedEx International Connect (FIC)",
       "P2P Mailing",
       "P2P TrakPak",
