@@ -24,6 +24,15 @@ describe('XYL-Ships tracker', () => {
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE/);
   });
 
+  it('reads the flight, the clearance and the duties customs waits on', () => {
+    expect(xylShipsStage(null, 'Package in transit. Flight containing package has departed.')).toBe('in_transit');
+    expect(xylShipsStage(null, 'Initiated customs clearance at destination country.')).toBe('customs');
+    for (const wording of ['Customs clearance delayed: 81.97 EUR in duties pending payment', 'Customs clearance delayed: 12,50 GBP in duties pending payment.']) {
+      expect(xylShipsStage(null, wording), wording).toBe('customs');
+    }
+    expect(xylShipsStage(null, 'Customs clearance delayed: inspection pending')).toBeUndefined();
+  });
+
   it('reads the explicit absence, and keeps other refusals and malformed replies apart', () => {
     expect(() => parseXylShips({ code: -1, message: { error: '未找到对应的物流订单' } }, NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     for (const payload of [{ code: -1, message: { error: '系统繁忙' } }, { code: 1, data: null }]) {
