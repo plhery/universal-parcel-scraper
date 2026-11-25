@@ -731,6 +731,8 @@ describe('JS Express tracking adapter', () => {
       .events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-12T20:52:18+08:00', '2026-11-12T12:53:21Z', '2026-11-12T07:53:21']);
     expect(parseJsExpress(waybill([inbound, { ...label, address: 'Sample Town' }], { country: 'Canada' }), DELIVERED).events?.[1]?.local_time)
       .toBe('2026-11-12T12:53:21');
+    // The code alone is the parcel's destination, not the row's place.
+    expect(parseJsExpress(waybill([inbound, label], { country: 'Canada' }), DELIVERED).events?.[1]).not.toHaveProperty('location');
     // London keeps +00:00 in winter, so in summer that offset leaves the wall clock.
     for (const [date, expected] of [['2026-07-12 12:53:21', '2026-07-12T12:53:21'], ['2026-11-12 12:53:21', '2026-11-12T12:53:21Z']]) {
       const event = parseJsExpress(waybill([{ ...data, date }], { country: 'United Kingdom' }), DELIVERED).events?.[0];

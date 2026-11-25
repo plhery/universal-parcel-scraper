@@ -343,9 +343,10 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     const placeless = !location || location.toUpperCase() === country;
     const time = stated ?? (zone ? isoTime(local, zone)?.iso : placeless ? destinationInstant(local, offset, country) : undefined);
     const staged = jsExpressStage(description, code);
+    // Nor does it place the row: the destination courier's waybill, made in China, gives it as its address.
     const event: CarrierEvent = {
       ...(time ? { time } : { local_time: local }),
-      ...(location ? { location } : {}),
+      ...(placeless ? {} : { location }),
       description: whole !== description ? whole : jsExpressEnglish(description) ?? description,
       ...(code ? { provider_code: code } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
