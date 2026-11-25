@@ -28,6 +28,8 @@ const CODES: Readonly<Record<string, Stage>> = {
   EMH: 'failed_attempt',
   // UPU's final delivery to the recipient, after the inward events above.
   EMI: 'delivered',
+  // UPU's arrival at the point where the recipient collects the item.
+  EDH: 'ready_for_pickup',
   // "Pošiljka bo predvidoma dostavljena danes": with the postman, on its way to the address.
   N: 'out_for_delivery',
   // On its way to the parcel locker the recipient chose, then waiting in it.
