@@ -103,6 +103,16 @@ const NAME_SISTERS: Readonly<Record<string, readonly string[]>> = {
   'fan-courier': ['fan-courier-international'],
 };
 
+/**
+ * Shapes a carrier's adapter takes that its detection rules leave to a provider's name, since
+ * many carriers print them: DPD UK finds a parcel by the ten digits after its depot prefix. A
+ * provider naming the carrier for such a number names it, not a network of its brand or a
+ * sister company whose rule fits the number (DPD Ireland's ten digits).
+ */
+const NAMED_NUMBERS: Readonly<Record<string, (trackingNumber: string) => boolean>> = {
+  'dpd-uk': (trackingNumber) => /^\d{10}$/.test(trackingNumber),
+};
+
 // A carrier's name: letters with their marks (Thai, Lao and Indic scripts write vowels as marks), digits and
 // the punctuation names carry (GO! Express, Kuehne+Nagel, WE|DO, time:matters, A/S, «…», （…）), but no address.
 const CARRIER_NAME = /^(?!.*:\/\/)[\p{L}\p{M}\p{N} .,&'’‘()（）«»+!:/|@·・–—-]+$/u;
@@ -144,10 +154,12 @@ export function universalCarrierHints(raw: unknown[], trackingNumber?: string): 
     const partner = named && trackingNumber ? partnerNumberOwner(named, trackingNumber) : undefined;
     // A brand's network none of whose rules fits the number names the network of the
     // brand the number points to: ParcelsApp files DPD UK's depot numbers under DPD France.
+    const fits = own !== undefined && trackingNumber !== undefined
+      && (fitting.includes(own) || NAMED_NUMBERS[own]?.(trackingNumber) === true);
     const brand = own ? carrierBrand(own) : undefined;
-    const sibling = !partner && brand && trackingNumber && !fitting.includes(own!)
+    const sibling = !partner && brand && trackingNumber && !fits
       ? brandCarrierForNumber(brand, trackingNumber, leg) : undefined;
-    const sister = !partner && !sibling && own && trackingNumber && !fitting.includes(own)
+    const sister = !partner && !sibling && own && trackingNumber && !fits
       ? NAME_SISTERS[own]?.find((id) => fitting.includes(id)) : undefined;
     const carrier = partner ?? sibling ?? sister ?? named;
     const networks = carrier || !trackingNumber ? [] : brandCarrierIds(name);

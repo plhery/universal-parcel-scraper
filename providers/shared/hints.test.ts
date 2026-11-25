@@ -166,6 +166,11 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['DPD France'], '15501000324679').discovered_carrier).toBe('dpd-fr');
     // A network whose rule fits keeps its name.
     expect(universalCarrierHints(['DPD Germany'], '15501000324679R').discovered_carrier).toBe('dpd-de');
+    // DPD UK finds a parcel by the ten digits after its depot prefix, a shape detection leaves to
+    // a provider's name: the name stands, though only DPD Ireland's rule fits ten digits.
+    expect(universalCarrierHints(['DPD UK'], '1000324679').discovered_carrier).toBe('dpd-uk');
+    expect(universalCarrierHints(['DPD Local'], '1000324679').discovered_carrier).toBe('dpd-uk');
+    expect(universalCarrierHints(['DPD Ireland'], '1000324679').discovered_carrier).toBe('dpd-ie');
   });
 
   it('names the carrier beside Cainiao for a number no rule of either fits', () => {
