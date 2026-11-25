@@ -102,7 +102,9 @@ Outcomes:
   airport on its clock. They take its clock, also once a flight's arrival in the destination
   country has opened the destination's rows: read as UTC, an unloading came after its flight left
   Delhi and before it could land. The destination's hand-over, beside the flight's arrival, names
-  no office and keeps its label.
+  no office and keeps its label. Replies that give India Post's own codes write the hand-over
+  as a receipt (`ItemReceived`, "RECEIVED") whose flight remark leaves from the office, and the
+  landing as `TransportLegCompleted`: they are read the same way.
 - The flight's landing (`AircraftArrived`, "Aircraft arrival in Transit country") keeps the
   take-off's office and its remark names the route. It carries the landing airport's wall clock
   labelled `Z`: read as UTC, a Zurich–Boston flight landed three hours after take-off. It is read

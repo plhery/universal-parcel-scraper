@@ -120,8 +120,11 @@ function parseTrackingRequest(html: string): JsonObject {
 const TAKE_OFF_CODE = 'AircraftTakeOff';
 // Its code for the mail handed to the airport for that flight.
 const HAND_OVER_CODE = 'HandedOverToAirportFacility';
-// Its code for that flight's landing ("Aircraft arrival in Transit country"), at the take-off's office.
-const LANDING_CODE = 'AircraftArrived';
+// Its codes for that flight's landing ("Aircraft arrival in Transit country", or "TRANSPORT_LEG_COMPLETED"
+// in the replies that give India Post's own codes), at the take-off's office.
+const LANDING_CODES = new Set(['AircraftArrived', 'TransportLegCompleted']);
+// In those replies the hand-over is a receipt ("RECEIVED") whose flight remark leaves from the office.
+const RECEIPT_CODE = 'ItemReceived';
 // The label a take-off's wall clock arrives under; any other offset is kept.
 const UTC_LABEL = /(?:Z|[+-]00:?00)$/i;
 // The zones of the airports a take-off row may name, by IATA code.
@@ -193,14 +196,22 @@ function flightDetails(providerCode: string, remarks: unknown, office: string): 
  */
 function airportClockZone(providerCode: string, office: string, trackedAt: string, remarks: unknown = null): string | null {
   if (!UTC_LABEL.test(trackedAt)) return null;
-  if (providerCode === LANDING_CODE) {
+  if (LANDING_CODES.has(providerCode)) {
     const landing = flightRoute(remarks, office)?.[3];
     return landing ? AIRPORT_ZONES[landing] ?? null : null;
   }
-  if (providerCode !== TAKE_OFF_CODE && providerCode !== HAND_OVER_CODE) return null;
+  const handOver = providerCode === HAND_OVER_CODE || exchangeReceipt(providerCode, office, remarks);
+  if (providerCode !== TAKE_OFF_CODE && !handOver) return null;
   const airport = officeAirport(office);
   if (airport) return AIRPORT_ZONES[airport] ?? null;
-  return providerCode === HAND_OVER_CODE && office ? exchangeZone(office) : null;
+  return handOver && office ? exchangeZone(office) : null;
+}
+
+/** A receipt at an office of exchange for a flight leaving from it: "Flight No: … (From CHZRH To USJFK)" at "Office - CHZRH". */
+function exchangeReceipt(providerCode: string, office: string, remarks: unknown): boolean {
+  if (providerCode !== RECEIPT_CODE) return false;
+  const from = /^Flight No:\s*[A-Z0-9]{2}\d{1,4}[A-Z]?\s*\(From ([A-Z]{5}[A-Z\d]?) To [A-Z]{5}[A-Z\d]?\)$/.exec(clean(remarks, 500))?.[1];
+  return Boolean(from) && office.replace(/^Office - /, '').replace(/ \d+$/, '') === from;
 }
 
 /**

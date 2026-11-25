@@ -406,6 +406,18 @@ describe('India Post response normalization', () => {
     // India's own office of exchange by its code keeps India's clock; one abroad with no known clock keeps its label.
     expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - INMAAB')])).toEqual([['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
     expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - USNYCA')])).toEqual([['2026-11-08T09:57:00Z', 'HandedOverToAirportFacility']]);
+    // Replies with India Post's own codes give the hand-over as a receipt for a flight leaving the office,
+    // and the landing as a completed leg: the same clocks. A receipt with no such flight keeps its label.
+    const coded = (trackedAt: string, eventType: string, event: string, office: string, remarks: string) =>
+      ({ tracked_at: trackedAt, event, event_type: eventType, office, pincode: '', remarks });
+    expect(times([
+      coded('2026-11-11T15:40:00.000000Z', 'TransportLegCompleted', 'TRANSPORT_LEG_COMPLETED', 'Office - ZRH', 'Flight No: ZZ0102 (From ZRH To JFK)'),
+      coded('2026-11-10T20:15:00.000000Z', 'ItemReceived', 'RECEIVED', 'Office - CHZRH', 'Flight No: ZZ0102 (From CHZRH To USJFK)'),
+      coded('2026-11-06T15:23:20.000000Z', 'ItemReceived', 'ITEM_RECEIVE', 'EXAMPLE AIR', ''),
+    ])).toEqual([['2026-11-11T15:40:00-05:00', 'TransportLegCompleted'], ['2026-11-10T20:15:00+01:00', 'ItemReceived'],
+      ['2026-11-06T15:23:20Z', 'ItemReceived']]);
+    expect(times([coded('2026-11-10T20:15:00.000000Z', 'ItemReceived', 'RECEIVED', 'Office - CHZRH', '')]))
+      .toEqual([['2026-11-10T20:15:00Z', 'ItemReceived']]);
     expect(times([handOver('2026-11-08T09:57:00+05:30', 'EXAMPLE FOREIGN POST OFFICE')])).toEqual([['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
     // The destination's hand-over names no office: its clock is unknown, so it keeps its label.
     expect(times([handOver('2026-11-08T09:57:00.000000Z', '')])).toEqual([['2026-11-08T09:57:00Z', 'HandedOverToAirportFacility']]);
