@@ -207,6 +207,29 @@ describe('SF Express public route parsing', () => {
     expect(events[2]?.location).toBe('Sample Point');
   });
 
+  it('reads the remarks SF words in Chinese only in English, keeping their places', () => {
+    const value = copy(); const routes = value.result[0]!.routes;
+    const flight = '快件在【样本城】飞往【Sample Hub】航班上，已起飞。';
+    routes[1]!.opCode = '105';
+    routes[1]!.remark = `${flight}为保障时效，我们已为您配置邻近机场城市的最优航班资源发运，时效更优，安全无忧。`;
+    routes[2]!.opCode = '310'; routes[2]!.remark = '车辆正在长途运输中，车辆临近【样本市】，距离下一站约【120】KM，请您放心';
+    routes[3]!.opCode = '36'; routes[3]!.remark = '快件离开 【Sample Point】，已在发往样本中转场的路上';
+    routes[4]!.opCode = '310'; routes[4]!.remark = '车辆正在长途运输中，车辆临近【样本市】，请您放心';
+    const events = parse(value, NUMBER).events!;
+    expect(events.slice(1, 5).map((event) => [event.provider_code, event.description, event.location, event.stage])).toEqual([
+      ['310', 'The vehicle is on a long-distance run, near 【样本市】.', '样本市', 'in_transit'],
+      ['36', 'The shipment has departed from 【Sample Point】 and is on its way to 样本中转场', 'Sample Point', 'in_transit'],
+      ['310', 'The vehicle is on a long-distance run, near 【样本市】, about 【120】 km from the next station.', '样本市', 'in_transit'],
+      ['105', 'The shipment is on the flight from 【样本城】 to 【Sample Hub】, and the flight has taken off. To keep to the delivery time, '
+        + 'we have sent it on the best flight from a nearby airport city.', '样本城', 'in_transit'],
+    ]);
+    // The flight without the note, and a remark of another wording, as SF gives it.
+    routes[1]!.remark = flight; routes[2]!.remark = '车辆正在长途运输中，请耐心等待';
+    const plain = parse(value, NUMBER).events!;
+    expect(plain[4]?.description).toBe('The shipment is on the flight from 【样本城】 to 【Sample Hub】, and the flight has taken off.');
+    expect(plain[3]?.description).toBe('车辆正在长途运输中，请耐心等待');
+  });
+
   it("keeps a courier's name and number and a service point's address in the remark, and places it without them", () => {
     const value = copy(); const routes = value.result[0]!.routes;
     routes[2]!.remark = 'The shipment has arrived at【Sample Service Point，Address：样本区样本路1号A1-A9）】';

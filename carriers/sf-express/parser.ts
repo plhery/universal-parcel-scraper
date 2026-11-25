@@ -54,6 +54,29 @@ function remarkText(raw: unknown): string {
 const BILINGUAL_SITE = /【([^【】（）()]*\p{Script=Han}[^【】（）()]*)[（(]([^【】（）()\p{Script=Han}]*\p{Script=Latin}[^【】（）()\p{Script=Han}]*)[）)]】/gu;
 const englishSites = (text: string): string => text.replace(BILINGUAL_SITE, (_, _chinese: string, english: string) => `【${english.trim()}】`);
 
+// Some remarks come in Chinese whatever the reader's language, one template each: the flight SF put the shipment on
+// from an airport city near the planned one (105), a truck on a long-distance run near a city, with the distance to the
+// next station (310), and a departure for a site named without brackets (36). They read in English, the places as SF
+// writes them; the flight's closing assurance, faster and safe, is left out.
+const CHINESE_REMARKS: readonly (readonly [RegExp, (...parts: string[]) => string])[] = [
+  [/^快件在【([^【】]+)】飞往【([^【】]+)】航班上，已起飞。(为保障时效，我们已为您配置邻近机场城市的最优航班资源发运，时效更优，安全无忧。)?$/u,
+    (from, to, nearby) => `The shipment is on the flight from 【${from}】 to 【${to}】, and the flight has taken off.`
+      + (nearby ? ' To keep to the delivery time, we have sent it on the best flight from a nearby airport city.' : '')],
+  [/^车辆正在长途运输中，车辆临近【([^【】]+)】(?:，距离下一站约【([^【】]+)】KM)?，请您放心。?$/iu,
+    (near, distance) => `The vehicle is on a long-distance run, near 【${near}】${distance ? `, about 【${distance}】 km from the next station` : ''}.`],
+  [/^快件离开\s*【([^【】]+)】\s*[，,]\s*已在发往(\S.{0,60}?)的路上。?$/u,
+    (from, to) => `The shipment has departed from 【${from}】 and is on its way to ${to}`],
+];
+
+/** A remark SF words in Chinese only, in English; any other remark as it is. */
+function englishRemark(text: string): string {
+  for (const [template, english] of CHINESE_REMARKS) {
+    const match = template.exec(text);
+    if (match) return english(...match.slice(1).map((part) => part ?? ''));
+  }
+  return text;
+}
+
 // A service point's brackets can hold its street address after its name: "【<name>，Address：<address>】".
 const ADDRESS = /\s*[，,]\s*(?:address|地址)\s*[:：]/iu;
 function withoutAddresses(text: string): string {
@@ -128,8 +151,9 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     const reason = clean(raw.stayWhyCode, 64);
     if (!/^[A-Z0-9_-]{1,64}$/.test(code)) throw new SchemaError(PROVIDER, 'SF Express returned an invalid operation code');
     const status = sfExpressEventStatus(code, reason, text);
-    // The remark keeps SF's wording, with the English name of a site it also names in Chinese.
-    const description = englishSites(text);
+    // The remark keeps SF's wording, with the English name of a site it also names in Chinese, and the English of a
+    // remark SF words in Chinese only.
+    const description = englishRemark(englishSites(text));
     const site = status?.status === 'delivered' ? undefined : scanSite(withoutContact(englishSites(withoutAddresses(text))), code);
     const event: CarrierEvent = { time, provider_code: code, description,
       ...(site ? { location: site } : {}),

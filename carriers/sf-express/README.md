@@ -72,9 +72,13 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
   and the scan's place is read without them.
 - The English remarks name some sites in Chinese with their English name in brackets,
   `【<Chinese>（<English>）】`; the remark keeps the English name. The stage still reads the whole
-  remark. A remark SF words in Chinese only, such as the distance left on a `310` scan, keeps it:
-  no English for it is known. The app lets the scan take over the row stored with the Chinese
-  name when each is the only one at that instant.
+  remark. A few remarks come in Chinese whatever the language asked, one template each: the
+  flight SF put the shipment on from an airport city near the planned one (`105`), a truck on a
+  long-distance run near a city, with the distance to the next station (`310`), and a departure
+  for a site named without brackets (`36`). They read in English with their places as SF writes
+  them; the flight's closing assurance is left out, and any other wording stays as SF gives it.
+  The app lets the scan take over the row stored with the Chinese name or wording when each is
+  the only one at that instant.
 - A scan's `location` is the first site its remark names in brackets ("arrived at 【…】",
   "loaded at 【…】, prepare to send to 【…】"), or the place a remark waits at without them ("in
   transit at US,TX,TOWN, please wait"), read town first as `TOWN, TX, US` so its country ends it as
