@@ -44248,8 +44248,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "mayiyinfu",
-      "recognitionRank": 751,
-      "recognitionPattern": "^MYYF\\d{8}CN$",
       "localClocks": true
     },
     "canaryUrl": "https://t.17track.net/",
@@ -44272,7 +44270,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^MYYF\\d{8}CN$",
-        "confidence": "low"
+        "confidence": "high"
       }
     ]
   },

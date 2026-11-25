@@ -323,7 +323,6 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "maltapost": 50,
   "maruti-air": 575,
   "matkahuolto": 715,
-  "mayiyinfu": 751,
   "mds-collivery": 705,
   "meest": 340,
   "memphis-courier": 17,

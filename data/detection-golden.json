@@ -106916,12 +106916,9 @@
   },
   {
     "input": "MYYF99000017CN",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "mayiyinfu",
+    "confidence": "high",
     "candidates": [
-      "mayiyinfu"
-    ],
-    "asked": [
       "mayiyinfu"
     ]
   },

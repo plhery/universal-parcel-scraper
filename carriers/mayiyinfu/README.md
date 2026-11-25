@@ -66,8 +66,9 @@ with high confidence hands nothing over.
 Its tracking numbers are MY, ten digits and US, MY standing for 蚂蚁 (Mayi). The suffix does
 not name the destination. The shape is fixed and no other carrier's rule takes it, so the rule
 has high confidence. Some parcels carry MYYF, the forwarder's own short name, eight digits and
-CN instead: one parcel only, so that rule has low confidence, and recognition asks the tracker
-about those numbers alone. The tracker also accepts the shipper's reference, which no rule
+CN instead. Every parcel seen with them has been Mayi Yinfu's, by its tracker's own history or
+record, and no other carrier's rule takes them, so that rule has high confidence too and the
+tracker is asked at once. The tracker also accepts the shipper's reference, which no rule
 claims. No public number has been found, so the corpus holds synthetic ones.
 
 ## Links
