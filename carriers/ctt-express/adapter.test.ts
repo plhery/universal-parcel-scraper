@@ -92,6 +92,11 @@ describe('CTT Express direct tracking', () => {
       { data: { shipping_code: NUMBER, shipping_history: { item_code: null, events: [] } }, error: null }]) {
       expect(() => parseCttExpress(payload, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     }
+    // The token error is the tracker's own: it answers it for every shipment for an hour or so, so it is not read again at once.
+    const lapsed = vi.fn(async () => json({ error: 'Invalid token.' })) as unknown as typeof fetch;
+    await expect(new CttExpressTracker({ fetcher: lapsed }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate',
+      reason: 'carrier_unavailable', message: 'CTT Express returned an inconclusive tracking response (invalid token)' });
+    expect(lapsed).toHaveBeenCalledTimes(1);
     // CTT repeats an error reply for the shipment, so it is not read again at once; its description names the error.
     const fetcher = vi.fn(async () => json({ data: null, error: { errorDescription: 'Envío 0012345 no disponible: a@b.es' } })) as unknown as typeof fetch;
     await expect(new CttExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate',

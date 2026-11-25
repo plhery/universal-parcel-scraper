@@ -13,10 +13,14 @@ The public response contains only one package's scans, so a multi-piece shipment
 reference stays inconclusive: it answers with another package's scans, which cannot
 say the shipment is complete. A package code of a multi-piece shipment reads its own
 package's scans. Portuguese postal references use the universal providers.
-A few percent of lookups get an error reply, the one the tracking page shows as "Ha ocurrido un
-error". CTT repeats it for that shipment for a quarter of an hour or more while other shipments
-read normally, so it is not read again at once; the parcel reads on a later poll, and the
-exception uses a fixed description to keep recipient details out of diagnostics. A body that is not JSON and a request that
+In spells of about an hour, CTT's tracker answers `Invalid token.` for every shipment, the
+official tracking page included: its own credential for the history service has lapsed. Nothing
+in the request changes it, and a number it does not know still gets the empty reply. The lookup
+is inconclusive with the reason `carrier_unavailable` and is not read again at once; the parcel
+reads on a later poll or through the universal providers. Other error replies, the ones the
+tracking page shows as "Ha ocurrido un error", concern one shipment: CTT repeats one for a
+quarter of an hour or more while other shipments read normally, so it is not read again at once
+either, and the exception uses a fixed description to keep recipient details out of diagnostics. A body that is not JSON and a request that
 fails to reach the service are read once more. A number with no shipment gets HTTP 200 with an empty body, which the
 tracking page reads as a shipment it has not located; two empty reads in a row are not found.
 Every code in CTT Express's [agency list](https://transfer.cttexpress.com/IT/export/integra/CANALREC.csv)

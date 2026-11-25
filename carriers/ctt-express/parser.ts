@@ -50,13 +50,16 @@ function lisbonClock(clock: ScanClock): ScanClock {
 export function parseCttExpress(payload: unknown, number: string): CarrierResult {
   const requested = normalizeCttExpressNumber(number);
   if (!isRecord(payload)) throw new SchemaError('CTT Express');
-  // An upstream Invalid token reply can precede successful anonymous retrieval.
-  // No error signature has established a reliable parcel-negative response.
+  // CTT's tracker answers Invalid token for every shipment while its own credential for the
+  // history service has lapsed, in spells of about an hour: the tracker is unavailable, not the
+  // shipment. No error signature has established a reliable parcel-negative response.
   if (payload.error != null) {
     const error = payload.error;
     const text = isRecord(error) ? error.errorDescription ?? error.message : error;
-    const description = text === 'Invalid token.' ? 'invalid token' : 'carrier error';
-    throw new CttExpressErrorReply('CTT Express', `CTT Express returned an inconclusive tracking response (${description})`, { reason: 'carrier_error' });
+    if (text === 'Invalid token.') {
+      throw new CttExpressErrorReply('CTT Express', 'CTT Express returned an inconclusive tracking response (invalid token)', { reason: 'carrier_unavailable' });
+    }
+    throw new CttExpressErrorReply('CTT Express', 'CTT Express returned an inconclusive tracking response (carrier error)', { reason: 'carrier_error' });
   }
   const data = payload.data;
   if (!isRecord(data) || data.shipping_code !== requested || !isRecord(data.shipping_history)) {
