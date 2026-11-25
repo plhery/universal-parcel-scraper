@@ -159,6 +159,8 @@ describe('DPD UK public history projection', () => {
     ['In transit', 'in_transit'],
     ['Your parcel will be with you today ', 'out_for_delivery'],
     ['Your parcel will be with you today between 9:05 and 10:05.', 'out_for_delivery'],
+    ['Your parcel is on its way to your DPD Pickup Shop', 'in_transit'],
+    ['Your parcel is ready for you to collect at your DPD Pickup Shop', 'ready_for_pickup'],
     ['Your delivery has been cancelled, please contact Example Merchant for further details', 'exception'],
     ["We missed you. Your driver Sample won’t be back today but we'll be back Thu 05 November with your parcel", 'failed_attempt'],
   ])('reads the current summary %s', (summary, stage) => {

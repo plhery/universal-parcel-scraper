@@ -1203,6 +1203,8 @@ describe('classifyWording', () => {
       ['As requested, the UPS My Choice® delivery change was completed.', 'in_transit'], ['The address was changed as the receiver requested.', 'in_transit'],
       ["The company or receiver name is incorrect. This will delay delivery. We're attempting to update this information.", 'exception'],
       ['Due for delivery today', 'out_for_delivery'], ['NOA received', 'in_transit'],
+      ['Your parcel will be with you today', 'out_for_delivery'], ['Your parcel will be with you today between 9:05 and 10:05.', 'out_for_delivery'],
+      ['Your parcel is ready for you to collect at your DPD Pickup Shop', 'ready_for_pickup'],
       ['The NOA has been received', 'in_transit'], ['NOA-Notification of arrival from GHA', 'in_transit'],
     ['There has been a delay with your delivery', 'in_transit'], ['There has been a delay with your delivery. Your parcel is on hold', 'exception'],
       ['Shipment in Transit to the ePost Global Processing Center', 'registered'],
