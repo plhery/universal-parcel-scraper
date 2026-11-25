@@ -12204,7 +12204,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "bfe-express"
+      "adapter": "bfe-express",
+      "recognitionRank": 41
     },
     "canaryUrl": "https://www.bfeexpress.com/tracking",
     "trackingUrlTemplate": "https://www.bfeexpress.com/track?track_number={trackingNumber}",
@@ -21112,6 +21113,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^LIB\\d{9}YN$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^YB\\d{10}CN$",
+        "confidence": "low",
+        "preferred": true
       },
       {
         "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
@@ -75195,7 +75201,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill","dhl-express-piece","dhl-express-piece-label","dhl-express-piece-label-after"],
   "dhl-freight": ["dhl-freight-se-domestic","dhl-freight-2"],
-  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe","dhlink-yhkj","dhlink-by","dhlink-tdt","dhlink-yle","dhlink-aus","dhlink-qye","dhlink-cys","dhlink-jas","dhlink-xyl","dhlink-lib","dhlink-jxc"],
+  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe","dhlink-yhkj","dhlink-by","dhlink-tdt","dhlink-yle","dhlink-aus","dhlink-qye","dhlink-cys","dhlink-jas","dhlink-xyl","dhlink-lib","dhlink-yb","dhlink-jxc"],
   "dhx": [],
   "diakinisis": [],
   "dialogo-logistica": [],

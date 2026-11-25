@@ -8426,6 +8426,14 @@
     "reason": "Juxi Express's waybills carry its code, and its high-confidence rule names it. DHLink's tracker knows those it carries on the lines coded YI, ZO, US and ZI and not those on its other lines. Only universal providers track Juxi Express, so DHLink's preferred rule still has recognition ask DHLink, and a parcel DHLink knows is DHLink's."
   },
   {
+    "shape": "YB, ten digits and CN",
+    "carriers": [
+      "dhlink",
+      "youbang-express"
+    ],
+    "reason": "YouBang Express's line runs on DHLink: DHLink's tracker holds YouBang's warehouse rows at the same clocks and the rest of the journey, where YouBang's shows scripted rows. Both rules are low-confidence; DHLink's is preferred, so recognition files a number both know under DHLink and one only YouBang knows under YouBang."
+  },
+  {
     "shape": "TDT, ten digits and CN",
     "carriers": [
       "dhlink",

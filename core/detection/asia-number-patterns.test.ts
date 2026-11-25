@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
+import { settleRecognition, type RecognitionOutcome } from '../recognition/index.js';
 import { CHECKSUMS } from './checksums.js';
 import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
 
@@ -338,6 +339,24 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
+  it('asks DHLink, then YouBang, about YouBang’s YB numbers and files one both know under DHLink', () => {
+    const number = 'YB9999999970CN';
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'youbang-express'], preferred: ['dhlink'] });
+    for (const countryHint of ['ES', 'FR', undefined]) {
+      expect(recognitionAskedCarriers(number, { countryHint }), countryHint).toEqual(['dhlink', 'youbang-express']);
+    }
+    // YouBang's tracker stops at its warehouse rows, which DHLink's holds at the same clocks before the rest.
+    const answers = (dhlink: boolean): RecognitionOutcome[] => recognitionCandidates(number).map((candidate) => candidate.carrier === 'dhlink'
+      ? { ...candidate, status: dhlink ? 'known' : 'unknown', lastActivityAt: dhlink ? '2026-11-20T10:45:55+08:00' : null }
+      : { ...candidate, status: 'known', lastActivityAt: '2026-11-15T09:45:54+08:00' });
+    const now = new Date('2026-11-25T00:00:00Z');
+    expect(settleRecognition(answers(true), now)).toEqual({ carrier: 'dhlink', choices: [] });
+    expect(settleRecognition(answers(false), now)).toEqual({ carrier: 'youbang-express', choices: [] });
+    for (const other of ['YB999999997CN', 'YB99999999700CN', 'YB9999999970US', 'YC9999999970CN']) {
+      expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('dhlink');
+    }
+  });
+
   it('names Juxi Express for its waybills and asks DHLink about those on the lines its tracker knows, and no other', () => {
     for (const number of ['JXCYI0000000001YQ', 'JXCZO0000000001YQ', 'JXCUS0000000001YQ', 'JXCZI0000000001YQ']) {
       expect(detectCarrierMatch(number), number).toMatchObject({
@@ -481,9 +500,9 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
-  it('suggests YouBang Express for YB, ten digits and CN, and only that layout', () => {
+  it('suggests YouBang Express for YB, ten digits and CN, after DHLink, and only that layout', () => {
     for (const number of ['YB9999999980CN', 'yb 0000 0000 17 cn']) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['youbang-express'] });
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'youbang-express'] });
     }
     for (const number of ['YB000000017CN', 'YB00000000017CN', 'YC0000000017CN', 'YB0000000017CX']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('youbang-express');

@@ -12200,7 +12200,8 @@
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "bfe-express"
+      "adapter": "bfe-express",
+      "recognitionRank": 41
     },
     "canaryUrl": "https://www.bfeexpress.com/tracking",
     "trackingUrlTemplate": "https://www.bfeexpress.com/track?track_number={trackingNumber}",
@@ -21108,6 +21109,11 @@
       {
         "pattern": "^LIB\\d{9}YN$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^YB\\d{10}CN$",
+        "confidence": "low",
+        "preferred": true
       },
       {
         "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",

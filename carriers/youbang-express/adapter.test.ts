@@ -24,7 +24,8 @@ const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORD
 
 describe('YouBang Express numbers', () => {
   it('keeps its low rule and reads the number out of a link to its tracker', () => {
-    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['youbang-express'] });
+    // Its line runs on DHLink, whose tracker holds the whole journey and is asked first.
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'youbang-express'] });
     expect(parseTrackingInput(`http://119.29.254.121:8082/trackIndex.htm?documentCode=${NUMBER}`))
       .toMatchObject({ trackingNumber: NUMBER, carrier: 'youbang-express' });
     expect(carrierIdFromName('YBWL')).toBe('youbang-express');
@@ -91,7 +92,7 @@ describe('YouBang Express tracking adapter', () => {
     await expect(adapter(environment(unknown)).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const known = vi.fn<typeof fetch>().mockResolvedValue(json(fixture('track')));
     await expect(adapter(environment(known)).recognize!(NUMBER)).resolves.toMatchObject({ known: true });
-    expect(recognitionCandidates(NUMBER).map(({ carrier }) => carrier)).toEqual(['youbang-express']);
+    expect(recognitionCandidates(NUMBER).map(({ carrier }) => carrier)).toEqual(['dhlink', 'youbang-express']);
   });
 
   it('refuses a number the tracker cannot be asked for without a request', async () => {

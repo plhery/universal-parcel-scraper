@@ -12,6 +12,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "dhlink",
           "youbang-express"
         ]
       },

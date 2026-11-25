@@ -41,6 +41,9 @@ No public source shows a whole YouBang Express number. A parcel a universal prov
 YBWL has `YB`, ten digits and `CN`, so a low rule suggests YouBang Express for that layout; the
 corpus holds a made-up number in that shape. Other Shenzhen and Guangdong forwarders share the
 initials, so the rule stays low, and recognition asks YouBang's tracker whether it holds the number.
+YouBang's line runs on [DHLink](../dhlink/README.md): DHLink's tracker holds YouBang's warehouse rows
+at the same clocks and the rest of the journey, where YouBang's shows only scripted rows, so
+DHLink's preferred rule for the layout has recognition file the parcel under DHLink when both know it.
 
 ## Links
 

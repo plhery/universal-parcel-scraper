@@ -52,6 +52,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "bestfulfill": 151,
   "better-trucks": 738,
   "bex-express": 827,
+  "bfe-express": 41,
   "bjs-home-delivery": 844,
   "blue-dart": 599,
   "blue-express": 971,

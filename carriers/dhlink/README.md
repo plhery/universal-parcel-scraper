@@ -30,7 +30,9 @@ page makes.
   17TRACK names QYEXP beside DHLink, `CYS` and eleven digits, on a US line UniUni delivers, which it names
   beside DHLink and UniUni, `JAS`, eight digits and `CN`, on a US line, `XYL`, nine digits and `CH`, on a
   line to Switzerland, and `LIB`, nine digits and `YN`, LiBaoTongXu's numbers on a US line, which ParcelsApp
-  names LIB beside DHLink. Juxi Express's waybills on four of its lines, `JXC`, `YI`, `ZO`, `US` or `ZI`,
+  names LIB beside DHLink. YouBang Express's `YB`, ten digits and `CN` are DHLink's too: its
+  tracker holds YouBang's warehouse rows at the same clocks and the rest of the journey, so a
+  preferred rule has recognition take DHLink over [YouBang](../youbang-express/README.md) when both know a number. Juxi Express's waybills on four of its lines, `JXC`, `YI`, `ZO`, `US` or `ZI`,
   ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel. Juxi issues them and detection
   names it, but only universal providers track Juxi, so DHLink's preferred rule still has recognition ask DHLink; the
   tracker does not know Juxi's other lines. Their rules are low confidence, so

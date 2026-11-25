@@ -175,6 +175,12 @@
       "confidence": "low"
     },
     {
+      "id": "dhlink-yb",
+      "pattern": "^YB\\d{10}CN$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
       "id": "dhlink-jxc",
       "pattern": "^JXC(?:YI|ZO|US|ZI)\\d{10}YQ$",
       "confidence": "low",
