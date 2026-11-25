@@ -17,7 +17,10 @@
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
-        "candidates": ["tnt-it"]
+        "candidates": [
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "A reviewer gives it as the reference of a parcel Evri delayed. Transglobal's tracker answers it with a collection by Transglobal and Evri's rows, the last two a day without a delivery."
     },
@@ -37,7 +40,10 @@
       "expect": {
         "carrier": "unknown",
         "confidence": "low",
-        "candidates": ["tnt-it"]
+        "candidates": [
+          "gls-it",
+          "tnt-it"
+        ]
       },
       "note": "A reviewer gives it as the reference of a parcel for Canada. Transglobal's tracker answers it with a booking for drop-off and Spring as the partner."
     }

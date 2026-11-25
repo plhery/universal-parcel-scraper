@@ -19,6 +19,7 @@
         "confidence": "low",
         "candidates": [
           "dhl-ecommerce-es",
+          "gls-it",
           "nhat-tin",
           "tnt-it"
         ]
@@ -42,6 +43,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "gls-it",
           "nhat-tin",
           "tnt-it"
         ]

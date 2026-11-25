@@ -163,10 +163,11 @@ describe('InPost Spain tracking page', () => {
     expect(fetcher).toHaveBeenCalledTimes(3);
   });
 
-  it('is offered and asked first for FV and eight digits, and asked about no other number', async () => {
+  it('is offered and asked for FV and eight digits, and asked about no other number', async () => {
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch(NUMBER).candidates).toContain('mondial-relay');
-    expect(recognitionAskedCarriers(NUMBER)[0]).toBe('mondial-relay');
+    // GLS Italy's and TNT Italy's two letters and eight digits take the same characters.
+    expect(recognitionAskedCarriers(NUMBER)).toEqual(['gls-it', 'mondial-relay', 'tnt-it']);
     for (const number of ['FV9999998', 'FV099999981', 'FW99999981']) expect(detectCarrierMatch(number).candidates, number).not.toContain('mondial-relay');
     for (const number of ['12345678', '1234567890', '123456789012']) expect(recognitionAskedCarriers(number), number).not.toContain('mondial-relay');
     vi.useFakeTimers({ now: new Date('2026-10-23T12:00:00Z'), toFake: ['Date'] });

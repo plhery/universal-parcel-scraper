@@ -953,7 +953,7 @@ describe('Komon Express, BEL, ParcelABC, PAGO Logistics, Safe Way Express Cargo,
 
   it('suggests Komon Express for KOMON, ten digits and YQ, and Safe Way for BH and eight digits', () => {
     expect(detectCarrierMatch('KOMON1234567890YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['komon-express'] });
-    expect(detectCarrierMatch('BH12345678')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['safeway-express-cargo', 'tnt-it'] });
+    expect(detectCarrierMatch('BH12345678')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['gls-it', 'safeway-express-cargo', 'tnt-it'] });
     for (const number of ['KOMON123456789YQ', 'KOMON12345678901YQ', 'KOMAN1234567890YQ', 'KOMON1234567890YZ']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('komon-express');
     }

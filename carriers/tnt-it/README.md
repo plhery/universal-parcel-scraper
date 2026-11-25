@@ -59,7 +59,7 @@ A national waybill is two identifying letters and eight digits, as the tracking 
 tracking guide give it. Labels add a check digit after a dash, which the guide says to leave out.
 tnt.it publishes no list of branch letters, so `tnt-it-1` offers any two letters and eight digits
 as a low-confidence candidate and recognition asks the tracker. DHL eCommerce Spain, Swiss Post
-Cargo and Prompt Xpress numbers share that shape. Normalization drops the dash, which leaves a
+Cargo, Prompt Xpress and GLS Italy numbers share that shape. Normalization drops the dash, which leaves a
 GLS Italy shape, so `tnt-it-check` offers TNT Italy first only when the check digit is typed after
 a dash, and the adapter and the tracking link drop the check digit. TNT does not publish how it is
 computed. The samples and their sources are in

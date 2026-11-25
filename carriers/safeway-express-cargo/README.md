@@ -36,7 +36,7 @@ Other carriers the page names are not delivery partners yet.
 ## Numbers
 
 The tracking page's example is BH and eight digits, and its tracker answers it. It is one sample,
-so the rule is low and shared with TNT Italy's; recognition asks the tracker. Other branches may
+so the rule is low and shared with GLS Italy's and TNT Italy's; recognition asks the tracker. Other branches may
 use other prefixes, so the adapter asks about any number of letters and digits.
 
 ## Links

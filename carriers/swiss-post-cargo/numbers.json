@@ -48,6 +48,7 @@
         "confidence": "low",
         "candidates": [
           "swiss-post-cargo",
+          "gls-it",
           "tnt-it"
         ]
       },
@@ -121,6 +122,7 @@
         "candidates": [
           "swiss-post-cargo",
           "dhl-ecommerce-es",
+          "gls-it",
           "tnt-it"
         ]
       },

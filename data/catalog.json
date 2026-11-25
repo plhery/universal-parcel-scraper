@@ -31065,6 +31065,10 @@
         "confidence": "low"
       },
       {
+        "pattern": "^[A-Z]{2}\\d{8}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^[A-Z]\\d{10}$",
         "confidence": "low"
       }

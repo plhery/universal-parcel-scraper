@@ -162,8 +162,8 @@ shipment → `SchemaError`.
   the postcode, so an answer does not single out a parcel; random `FV` numbers
   do not answer.
 - Recognition asks that page about `FV` numbers alone, and `mondial-relay-3` offers
-  Mondial Relay for them at low confidence: TNT Italy's two letters and eight
-  digits take the same characters. A 404 is unknown; a postcode request or a bot
+  Mondial Relay for them at low confidence: GLS Italy's and TNT Italy's two
+  letters and eight digits take the same characters. A 404 is unknown; a postcode request or a bot
   check is no answer. Mondial Relay's own numbers are not recognized, since they
   need the app or a browser.
 - Lead: a 26-digit label barcode of a parcel for Spain answers on the same page

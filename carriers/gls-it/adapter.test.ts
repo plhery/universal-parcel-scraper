@@ -233,6 +233,12 @@ describe('GLS Italy direct tracking', () => {
 
   it('keeps detection as it was and reads GLS Italy links', () => {
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ confidence: 'low', candidates: ['gls-it'] });
+    // Eight digits after two letters is TNT Italy's waybill shape too, so both are offered.
+    expect(detectCarrierMatch('ZZ90000001')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('ZZ90000001').candidates).toEqual(expect.arrayContaining(['gls-it', 'tnt-it']));
+    for (const number of ['ZZ9000001', 'Z990000001', '9Z90000001']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('gls-it');
+    }
     expect(parseTrackingInput(`https://gls-group.com/IT/it/servizi-online/ricerca-spedizioni/?match=${NUMBER}&type=NAT`))
       .toMatchObject({ trackingNumber: NUMBER, carrier: 'gls-it', source: 'link' });
   });

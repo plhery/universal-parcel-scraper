@@ -50,8 +50,8 @@ delivery service takes over. Tracked through the lookup its tracking page makes.
 ## Numbers
 
 Qwintry's tracker shows its number as `QRXXXXXXXX`, and archived and live lookups show `QR` and
-eight digits with whole histories. `qwintry-1` claims that layout. TNT Italy's low rule accepts
-any two letters and eight digits, so it stays a suggestion there. The tracker also follows the
+eight digits with whole histories. `qwintry-1` claims that layout. TNT Italy's and GLS Italy's low rules
+accept any two letters and eight digits, so it stays a suggestion there. The tracker also follows the
 Russian Post number of a parcel Qwintry handed to the post, which the adapter reads; generic
 postal detection keeps those numbers. Later histories also print the local carrier's own
 number, while Qwintry's number keeps the whole history. The samples and their sources are in

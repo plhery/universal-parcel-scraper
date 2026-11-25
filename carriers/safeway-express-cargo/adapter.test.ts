@@ -27,12 +27,12 @@ const withDetail = (label: string, value: string) => handOff().replace(
 const withStatus = (status: string) => handOff().replace(/(<span>Status:<\/span>\s*<strong>)(<\/strong>)/, `$1${status}$2`);
 
 describe('Safe Way Express Cargo numbers', () => {
-  it('asks the tracker about letters and digits, and is offered for BH and eight digits beside TNT Italy', () => {
+  it('asks the tracker about letters and digits, and is offered for BH and eight digits beside GLS Italy and TNT Italy', () => {
     expect(normalizeSafewayNumber(` ${NUMBER.toLowerCase()} `)).toBe(NUMBER);
     for (const other of ['BH', 'ABCDEFGHIJ', 'BH9900/0017', '12345', `${NUMBER}${'0'.repeat(30)}`]) {
       expect(() => normalizeSafewayNumber(other), other).toThrow('letters and digits');
     }
-    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['safeway-express-cargo', 'tnt-it'] });
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['gls-it', 'safeway-express-cargo', 'tnt-it'] });
     expect(recognitionCandidates(NUMBER, {}).map(({ carrier: id }) => id)).toContain('safeway-express-cargo');
   });
 

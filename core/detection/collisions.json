@@ -3459,7 +3459,8 @@
     "carriers": [
       "dhl-ecommerce-es",
       "ontrac",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "DHL's Iberian alias for an inbound parcel fits OnTrac's letter-prefixed shape and TNT Italy's national waybills. OnTrac's high-confidence rule decides; direct tracking must confirm the carrier."
   },
@@ -5262,7 +5263,8 @@
     "carriers": [
       "dhl-ecommerce-es",
       "swiss-post-cargo",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "DHL eCommerce Spain accepts two letters and eight digits ending in 0, and TNT Italy any two letters and eight digits, which covers Swiss Post Cargo's PL- references; all stay low-confidence suggestions and carrier recognition asks each."
   },
@@ -6931,7 +6933,8 @@
     "carriers": [
       "dhl-ecommerce-es",
       "nhat-tin",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "DHL eCommerce Spain accepts any two letters, seven digits and a final 0, and TNT Italy any two letters and eight digits; the CP layout only suggests Nhat Tin Logistics, and all stay low-confidence suggestions that carrier recognition asks."
   },
@@ -6939,7 +6942,8 @@
     "shape": "CP followed by eight digits",
     "carriers": [
       "nhat-tin",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "Nhat Tin Logistics CP numbers have the shape of TNT Italy national waybills, two letters and eight digits; both stay low-confidence suggestions and carrier recognition asks each."
   },
@@ -7140,7 +7144,8 @@
     "shape": "Two letters, seven digits and a final zero",
     "carriers": [
       "dhl-ecommerce-es",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "DHL eCommerce Spain's inbound aliases have the shape of TNT Italy's national waybills, two letters and eight digits; both stay low-confidence suggestions and carrier recognition asks each."
   },
@@ -7148,7 +7153,8 @@
     "shape": "L[AIEHNX] followed by eight digits",
     "carriers": [
       "ontrac",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "OnTrac's letter-prefixed numbers have the shape of TNT Italy waybills from branches whose letters match; OnTrac's high-confidence rule decides."
   },
@@ -7156,7 +7162,8 @@
     "shape": "MC, NC or RP followed by eight digits",
     "carriers": [
       "prompt-xpress",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "Prompt Xpress numbers have the shape of TNT Italy's national waybills; both stay low-confidence suggestions."
   },
@@ -7164,7 +7171,8 @@
     "shape": "PL followed by eight digits",
     "carriers": [
       "swiss-post-cargo",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "Swiss Post Cargo's PL- references have the shape of TNT Italy's national waybills; both stay low-confidence suggestions and carrier recognition asks each."
   },
@@ -7192,7 +7200,8 @@
     "shape": "^[A-Z]{2}\\d{8}$",
     "carriers": [
       "forza-delivery",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "Forza guías with eight digits are two letters and eight digits, the layout TNT Italy's low rule takes; both rules are low, so recognition asks each carrier."
   },
@@ -8087,7 +8096,8 @@
     "shape": "QR and eight digits",
     "carriers": [
       "qwintry",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "TNT Italy's low rule accepts any two letters and eight digits; the QR prefix of Qwintry's own numbers is the only high-confidence rule."
   },
@@ -8096,7 +8106,8 @@
     "carriers": [
       "dhl-ecommerce-es",
       "qwintry",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "qwintry numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -8352,7 +8363,8 @@
     "shape": "FV and eight digits",
     "carriers": [
       "mondial-relay",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "TNT Italy's waybill code takes any two letters and eight digits; InPost Spain's FV numbers are offered to Mondial Relay at low confidence and recognition asks both trackers."
   },
@@ -8546,7 +8558,8 @@
     "shape": "BH and eight digits",
     "carriers": [
       "safeway-express-cargo",
-      "tnt-it"
+      "tnt-it",
+      "gls-it"
     ],
     "reason": "Safe Way Express Cargo's Bahrain numbers have the shape of TNT Italy's national waybills, two letters and eight digits; both stay low-confidence suggestions."
   },

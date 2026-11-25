@@ -11,8 +11,8 @@ for groupage and home delivery in Italy.
 DACHSER & FERCAM Italia's tracker asks for the letter O, the two-digit year and eight digits.
 The layout is the tracker's own, but GLS Italy's `gls-it-digit-depot` takes any letter and ten
 digits, and no public sample is known, so `fercam-1` only suggests FERCAM. FERCAM's FAQ gives
-an older layout, a two-letter branch code, the year and six digits. TNT Italy's rule takes the
-same shape, so no rule claims it.
+an older layout, a two-letter branch code, the year and six digits. TNT Italy's and GLS Italy's
+rules take the same shape, so no rule claims it.
 
 ## Links
 

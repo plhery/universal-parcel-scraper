@@ -84380,9 +84380,11 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -84392,9 +84394,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -87219,10 +87223,12 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "safeway-express-cargo",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "safeway-express-cargo"
     ]
@@ -88248,9 +88254,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -88584,9 +88592,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -88685,9 +88695,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -90436,9 +90448,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -90447,9 +90461,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -90458,9 +90474,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -90823,10 +90841,12 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "nhat-tin",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -90836,10 +90856,12 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "nhat-tin",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -91530,9 +91552,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -91541,9 +91565,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -91552,9 +91578,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -92500,9 +92528,11 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -92529,9 +92559,11 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -93692,9 +93724,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -95072,9 +95106,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -95524,9 +95560,11 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -96241,9 +96279,11 @@
     "confidence": "low",
     "candidates": [
       "forza-delivery",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "forza-delivery"
     ]
@@ -96749,9 +96789,11 @@
     "confidence": "low",
     "candidates": [
       "mondial-relay",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "mondial-relay",
       "tnt-it"
     ]
@@ -103350,9 +103392,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -103362,9 +103406,11 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -104852,9 +104898,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -105581,9 +105629,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -105616,10 +105666,12 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "prompt-xpress",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "prompt-xpress"
     ]
@@ -106615,9 +106667,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -106626,9 +106680,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -106669,9 +106725,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -106955,9 +107013,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -107073,9 +107133,11 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -108333,9 +108395,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -108344,9 +108408,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -108356,9 +108422,11 @@
     "confidence": "low",
     "candidates": [
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es"
     ]
@@ -109190,9 +109258,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -109201,9 +109271,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -110093,9 +110165,11 @@
     "candidates": [
       "swiss-post-cargo",
       "dhl-ecommerce-es",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "dhl-ecommerce-es",
       "swiss-post-cargo"
@@ -110107,9 +110181,11 @@
     "confidence": "low",
     "candidates": [
       "swiss-post-cargo",
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "swiss-post-cargo"
     ]
@@ -110229,9 +110305,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -110240,9 +110318,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -113056,9 +113136,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -113310,10 +113392,12 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "prompt-xpress",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "prompt-xpress"
     ]
@@ -113362,10 +113446,12 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "prompt-xpress",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "prompt-xpress"
     ]
@@ -115629,9 +115715,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -116207,9 +116295,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -116218,9 +116308,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -116253,9 +116345,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -118336,9 +118430,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -118347,9 +118443,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -121357,9 +121455,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -121379,9 +121479,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -123131,9 +123233,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -123494,9 +123598,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },
@@ -124609,10 +124715,12 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "prompt-xpress",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it",
       "prompt-xpress"
     ]
@@ -124746,9 +124854,11 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
+      "gls-it",
       "tnt-it"
     ],
     "asked": [
+      "gls-it",
       "tnt-it"
     ]
   },

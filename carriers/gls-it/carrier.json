@@ -100,6 +100,11 @@
       "confidence": "low"
     },
     {
+      "id": "gls-it-8-digits",
+      "pattern": "^[A-Z]{2}\\d{8}$",
+      "confidence": "low"
+    },
+    {
       "id": "gls-it-digit-depot",
       "pattern": "^[A-Z]\\d{10}$",
       "confidence": "low"

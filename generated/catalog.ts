@@ -31069,6 +31069,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
+        "pattern": "^[A-Z]{2}\\d{8}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^[A-Z]\\d{10}$",
         "confidence": "low"
       }
@@ -76328,7 +76332,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gls-ca": [],
   "gls-es": ["gls-es-1","gls-es-2"],
   "gls-hu": ["gls-hu-1"],
-  "gls-it": ["gls-it-1","gls-it-digit-depot"],
+  "gls-it": ["gls-it-1","gls-it-8-digits","gls-it-digit-depot"],
   "gls-nl": ["gls-nl-1","gls-nl-2","gls-nl-3"],
   "gls-pl": ["gls-pl-1","gls-pl-2"],
   "gls-us": ["gls-us-1"],

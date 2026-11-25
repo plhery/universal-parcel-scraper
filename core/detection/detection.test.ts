@@ -962,10 +962,10 @@ describe('the detection engine', () => {
   });
 
   it('suggests Swiss Post Cargo for a PL reference, printed or compact, and asks it to confirm', () => {
-    // TNT Italy's national waybills have the compact shape too, so both are asked.
+    // TNT Italy's national waybills and GLS Italy's shipments have the compact shape too, so all are asked.
     for (const number of ['PL-99999981', 'pl99999981']) {
-      expect(parseTrackingInput(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['swiss-post-cargo', 'tnt-it'] });
-      expect(recognitionAskedCarriers(number)).toEqual(['tnt-it', 'swiss-post-cargo']);
+      expect(parseTrackingInput(number)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['swiss-post-cargo', 'gls-it', 'tnt-it'] });
+      expect(recognitionAskedCarriers(number)).toEqual(['gls-it', 'tnt-it', 'swiss-post-cargo']);
     }
     for (const number of ['PL-9999998', 'PL-999999819', 'PX-99999981']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('swiss-post-cargo');
