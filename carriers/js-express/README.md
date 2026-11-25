@@ -78,12 +78,14 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   place's clock, as USPS's own tracker gives the same acceptance, arrival and label to the minute.
 - Each row also carries an offset, often another place's: Straightship's rows carry China's,
   Amsterdam's carry its winter offset in summer, and Gatwick's and Singapore's others. A row
-  without a place is read on the destination's clock when the destination keeps one clock and the
-  row's offset is that clock's at its wall clock, as the destination post's and courier's rows
-  are, and on UTC when its offset is +00:00 and the destination's clock never is: the destination
-  courier's record of the merchant's data, which then comes a minute after the Chinese warehouse's
-  inbound scan, at the instant the courier's own tracker gives it. Other rows at an airport's code or without a place keep `local_time`, as do other
-  couriers' rows: iMile's name no country. CTT Express's statuses ("Pendiente de recepción en
+  without a place, or placed at the destination's country code alone, is read on the destination's
+  clock when the destination keeps one clock and the row's offset is that clock's at its wall clock,
+  as the destination post's and courier's rows are, and on UTC when its offset is +00:00 and none of
+  the destination's clocks ever is: the destination courier's record of the merchant's data, which
+  then comes a minute after the Chinese warehouse's inbound scan, at the instant the courier's own
+  tracker gives it, and at which a universal provider's copy of it lands. Other rows at an
+  airport's code or without a place keep `local_time`, as do other couriers' rows: iMile's name
+  no country. CTT Express's statuses ("Pendiente de recepción en
   CTT Express", "En reparto", "Entregado") come two hours after CTT Express's instant, to the
   second, whatever Madrid's offset, as CNE relays them: they are read so, whatever offset the row
   states. The newest row's instant, when it has one, is the last update, and a dated delivery's

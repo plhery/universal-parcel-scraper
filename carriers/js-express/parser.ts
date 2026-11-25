@@ -9,7 +9,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { calendarDay, canadaProvinceTimeZone, countryCode, isoTime, usStateTimeZone } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { hasSeveralClocks, mainZone } from '../../places/zones.js';
+import { countryZones, hasSeveralClocks, mainZone } from '../../places/zones.js';
 import { cttExpressRelayZone } from '../ctt-express/clock.js';
 import { DHL_PAKET_ROW } from '../dhl/paket-rows.js';
 import { isJAndTGermanyCopy } from '../j-and-t-de/copies.js';
@@ -173,22 +173,25 @@ function scanZone(local: string, description: string, location: string, label: s
 type UspsFeed = 'utc' | 'town' | null;
 
 /**
- * The destination's clock for a row without a place, when the destination
- * keeps one clock and the offset the row states is that clock's at the row's
- * wall clock: the destination courier's and post's rows, relayed from another
- * country's post or not. A row at +00:00, where the destination's clock never
- * is, is on UTC: the destination courier's record of the merchant's data, as
- * that courier's own tracker clocks it. Other rows' offsets are not read:
+ * The destination's clock for a row without a place, or placed at the
+ * destination's country code alone, when the destination keeps one clock and
+ * the offset the row states is that clock's at the row's wall clock: the
+ * destination courier's and post's rows, relayed from another country's post or
+ * not. A row at +00:00, where none of the destination's clocks ever is, is on
+ * UTC: the destination courier's record of the merchant's data, as that
+ * courier's own tracker clocks it. Other rows' offsets are not read:
  * Straightship's carry China's, and the airports' can be another country's.
  */
 function destinationInstant(local: string, offset: string, country: string | null): string | null {
-  const zone = country && OFFSET.test(offset) && !hasSeveralClocks(country) ? mainZone(country) : null;
-  if (!zone) return null;
+  if (!country || !OFFSET.test(offset)) return null;
   const stated = DateTime.fromISO(local + offset, { setZone: true });
   if (!stated.isValid) return null;
-  if (stated.setZone(zone).toFormat("yyyy-MM-dd'T'HH:mm:ss") === local) return stated.toISO({ suppressMilliseconds: true });
+  const zone = hasSeveralClocks(country) ? null : mainZone(country);
+  if (zone && stated.setZone(zone).toFormat("yyyy-MM-dd'T'HH:mm:ss") === local) return stated.toISO({ suppressMilliseconds: true });
   // A clock that keeps +00:00 in winter, as London's, can be stated at it in summer.
-  const neverUtc = [0, 6].every((month) => IANAZone.create(zone).offset(Date.UTC(stated.year, month, 1)) !== 0);
+  const zones = zone ? [zone] : countryZones(country);
+  const neverUtc = zones.length > 0
+    && zones.every((clock) => [0, 6].every((month) => IANAZone.create(clock).offset(Date.UTC(stated.year, month, 1)) !== 0));
   return offset === '+00:00' && neverUtc ? stated.toISO({ suppressMilliseconds: true }) : null;
 }
 
@@ -336,7 +339,9 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     const ctt = cttExpressRelayZone(description, country === 'PT');
     const stated = ctt ? null : statedInstant(local, offset, description);
     const zone = stated ? null : ctt ?? scanZone(local, description, location, label, straightship, uspsFeed);
-    const time = stated ?? (zone ? isoTime(local, zone)?.iso : !location ? destinationInstant(local, offset, country) : undefined);
+    // A place that is the destination's country code alone names no place within it.
+    const placeless = !location || location.toUpperCase() === country;
+    const time = stated ?? (zone ? isoTime(local, zone)?.iso : placeless ? destinationInstant(local, offset, country) : undefined);
     const staged = jsExpressStage(description, code);
     const event: CarrierEvent = {
       ...(time ? { time } : { local_time: local }),

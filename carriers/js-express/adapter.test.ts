@@ -724,6 +724,13 @@ describe('JS Express tracking adapter', () => {
     const inbound = stated('2026-11-12 20:52:18', 'Shenzhen General Warehouse', 'Item inbound in Shenzhen General Warehouse', '+08:00', 'OIT');
     expect(parseJsExpress(waybill([inbound, data], { country: 'Netherlands' }), DELIVERED).events?.map((event) => event.time ?? event.local_time))
       .toEqual(['2026-11-12T20:52:18+08:00', '2026-11-12T12:53:21Z']);
+    // So it is in a destination of several clocks none of which is ever +00:00, and at the destination's country code alone,
+    // where another offset still leaves the wall clock.
+    const label = stated('2026-11-12 12:53:21', 'CA', 'Label Generated for', '+00:00', 'OIT');
+    expect(parseJsExpress(waybill([inbound, label, { ...label, date: '2026-11-12 07:53:21', timeZone: '-05:00' }], { country: 'Canada' }), DELIVERED)
+      .events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-12T20:52:18+08:00', '2026-11-12T12:53:21Z', '2026-11-12T07:53:21']);
+    expect(parseJsExpress(waybill([inbound, { ...label, address: 'Sample Town' }], { country: 'Canada' }), DELIVERED).events?.[1]?.local_time)
+      .toBe('2026-11-12T12:53:21');
     // London keeps +00:00 in winter, so in summer that offset leaves the wall clock.
     for (const [date, expected] of [['2026-07-12 12:53:21', '2026-07-12T12:53:21'], ['2026-11-12 12:53:21', '2026-11-12T12:53:21Z']]) {
       const event = parseJsExpress(waybill([{ ...data, date }], { country: 'United Kingdom' }), DELIVERED).events?.[0];
