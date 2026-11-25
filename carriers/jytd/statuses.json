@@ -1,0 +1,23 @@
+{
+  "carrier": "jytd",
+  "entries": [
+    {"wording": "The electronic information of the package has been received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"wording": "The package has been sent out", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The shipper sends the parcel to the forwarder's operation centre, which has not received it yet."},
+    {"code": "ARRIVAL", "wording": "The package has arrived at the operation center", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The forwarder's operation centre in Shenzhen receives the parcel."},
+    {"code": "SHIPMENT", "wording": "The package leaves the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves the Shenzhen operation centre for export."},
+    {"wording": "Parcel manifest received", "language": "en", "stage": null, "confirmedBy": "live", "note": "Israel Post's eCommerce System receives the parcel's manifest before it flies: a notice, not a movement."},
+    {"wording": "Export clearance success", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "China's export clearance."},
+    {"wording": "Arrive at departure airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel reaches the departure airport, Hong Kong on the Israel line."},
+    {"wording": "Cargo manifest received", "language": "en", "stage": null, "confirmedBy": "live", "note": "Israel Post's eCommerce System receives the flight's cargo manifest: a notice, not a movement."},
+    {"wording": "The flight has departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves the departure airport."},
+    {"wording": "Arrive at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight reaches the destination airport, Tel Aviv on the Israel line."},
+    {"wording": "Landed in Israel", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Israel Post's copy of the landing at Ben Gurion airport."},
+    {"wording": "Arrived Post terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Israel Post's terminal receives the parcel."},
+    {"wording": "Arrived sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Israel Post's eCommerce sorting centre receives the parcel."},
+    {"wording": "Arrival at inward office of exchange", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Israel Post's office of exchange receives the parcel."},
+    {"wording": "Sorted to delivery point (after Customs)", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Sorted to its delivery unit once customs has cleared it."},
+    {"wording": "Parcel cleared", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Israel's customs clear the parcel, so it goes on in transit."},
+    {"wording": "Item received at delivery unit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "An Israel Post delivery unit receives the parcel."},
+    {"wording": "Final delivery", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Israel Post's delivery."}
+  ]
+}

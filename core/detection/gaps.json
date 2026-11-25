@@ -7021,5 +7021,10 @@
     "carrier": "ycex",
     "kind": "open",
     "reason": "YCEX numbers seen so far are YC, an eight-digit date and five digits, and the only public sample comes from one tracking directory page, too few to claim a shape that close to other forwarders' date-based numbers, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "jytd",
+    "kind": "open",
+    "reason": "Jieyi Tongda waybills seen so far are JYD, the destination's country code, ten digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]
