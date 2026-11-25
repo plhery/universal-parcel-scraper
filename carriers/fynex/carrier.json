@@ -18,19 +18,74 @@
   "timezone": "Asia/Dubai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fynex",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "service_name",
+    "weight"
+  ],
   "portal": {
+    "url": "https://fynexcourierdubai.com/tracking/?trackno={trackingNumber}",
     "searchUrl": "https://fynexcourierdubai.com/tracking/",
     "helpUrl": "https://fynexcourierdubai.com/contacts/",
     "canaryUrl": "https://fynexcourierdubai.com/tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "progress_rail",
+      "origin",
+      "destination_country",
+      "service_name",
+      "weight",
+      "pieces",
+      "signed_by"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "destination_country",
+      "service_name",
+      "weight"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "pieces",
+      "signed_by"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "delivery_partner",
+      "proof_of_delivery"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "fynexcourierdubai.com",
+        "www.fynexcourierdubai.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "trackno"
+      ]
+    }
+  ],
   "detection": []
 }

@@ -1,4 +1,8 @@
 {
   "carrier": "fynex",
-  "entries": []
+  "entries": [
+    {"wording": "Shipment Collected at Despatch Center", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "FyNEX collected the shipment and booked it in at its despatch centre; the scan's place is FyNEX itself."},
+    {"wording": "Shipment out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"wording": "Shipment Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The page goes on with \"Received By\" and who took the shipment, which the adapter cuts off."}
+  ]
 }

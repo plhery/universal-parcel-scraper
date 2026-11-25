@@ -1817,6 +1817,12 @@
     "reason": "Ten digits are shared by many carriers, Seino among them, and nothing in the number points to Fukuyama."
   },
   {
+    "carrier": "fynex",
+    "pattern": "^\\d{7}$",
+    "kind": "by_design",
+    "reason": "FyNEX's tracking numbers seen are seven bare digits, a length many carriers share, and FyNEX publishes no layout, so nothing in the number points to FyNEX."
+  },
+  {
     "carrier": "g2-ocean",
     "kind": "open",
     "reason": "The public search accepts the bare bill reference. Select G2 Ocean explicitly."
