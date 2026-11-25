@@ -16,6 +16,7 @@ import { isRecord } from '../../core/types.js';
 import { airportTimeZone, locatePlace, placeTimeZone } from '../../places/index.js';
 import { hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { chinaPostAirline, chinaPostDestinationScan } from '../china-post/status.js';
+import { readImileStationReturns } from '../imile/status.js';
 import { jAndTAuRelayedStage, relaysJAndTAu } from '../j-and-t-au/status.js';
 import { YUNEXPRESS_IMPORT_CUSTOMS, YUNEXPRESS_ORIGIN_ZONE as ORIGIN_ZONE, yunExpressOriginLeg } from './clock.js';
 import { chinaPostOffice, chinaPostRelayEnglish, isYunExpressDataRecord, isYunExpressNotice, keepBrokerAfterClearance, withoutMarkup, withoutRepeatedParts, yunExpressCodeStatus, yunExpressStatus } from './status.js';
@@ -335,6 +336,9 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   if (!events.length) throw new IndeterminateError('YunExpress');
   keepBrokerAfterClearance(events);
+  // iMile's parcel back at its station after a run that never reached it is no attempt.
+  readImileStationReturns(events);
+  if (decider && current && decider.stage !== current.stage && decider.stage === 'in_transit') current = { status: 'in_transit', stage: 'in_transit' };
   // A parcel its sender brings to the origin facility has no pick-up: that facility's arrival, the first scan to move
   // it, is YunExpress taking it in.
   const first = [...events].reverse().find((event) => event.stage && event.stage !== 'registered' && event.stage !== 'pending');

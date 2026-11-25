@@ -44,6 +44,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Delivered to local carrier', { status: 'in_transit', stage: 'in_transit' }],
   // The hand-over to iMile, in the words 4PX gives it too.
   ['Shipment delivered to iMile RDC or Lastmile vendor', { status: 'in_transit', stage: 'in_transit' }],
+  // iMile's run that ended before it reached the parcel: no door was tried, so a delay, as WanbExpress relays it too.
+  ['<Route not completed>', { status: 'in_transit', stage: 'in_transit' }],
   // The sorting before import customs, and the last-mile carrier's steps it relays up to the delivery round.
   ['Processing at sort facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at destination', { status: 'in_transit', stage: 'in_transit' }],

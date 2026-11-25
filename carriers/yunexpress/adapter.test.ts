@@ -110,6 +110,26 @@ describe('YunExpress captured response projection', () => {
     expect(beforeClearance.events![0]!.stage).toBe('customs');
   });
 
+  it("reads iMile's run that never reached the parcel, and its return to the station after, as no attempt", () => {
+    const payload = (run: string) => {
+      const reply = fixture();
+      const item = reply.ResultList[0];
+      const scan = (date: string, content: string) => ({ ProcessDetailList: [{ ProcessDate: date, ProcessContent: `${content}----Example facility`, IsSignature: false, Comments: [], marks: [] }] });
+      item.TrackData.ProcessGroupList.splice(0, 0, scan('2026-03-25T20:41:00', '【Sample DS】 Back To DS.'), scan('2026-03-25T15:35:00', run),
+        scan('2026-03-25T08:12:00', '【Sample DS】Shipment out for delivery.'));
+      Object.assign(item.TrackInfo.LastTrackEvent, { ProcessDate: '2026-03-25T20:41:00', ProcessContent: '【Sample DS】 Back To DS.', ProcessLocation: 'Example facility' });
+      return reply;
+    };
+    const unreached = parse(payload('<Route not completed>'), NUMBER);
+    expect(unreached).toMatchObject({ current_stage: 'in_transit' });
+    expect(unreached.events!.slice(0, 3).map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'out_for_delivery']);
+    // After the driver's failed attempt, the return to the station is that attempt told again.
+    const attempted = parse(payload('【Sample DS】Consignee not at home.'), NUMBER);
+    expect(attempted).toMatchObject({ current_stage: 'failed_attempt' });
+    expect(attempted.events!.slice(0, 2).map((event) => event.stage)).toEqual(['failed_attempt', 'failed_attempt']);
+    expect(attempted.events![0]).toMatchObject({ stage_source: 'none' });
+  });
+
   it("names no place for DPD's data record, relayed with the depot that will receive the parcel", () => {
     const reply = fixture();
     const item = reply.ResultList[0];

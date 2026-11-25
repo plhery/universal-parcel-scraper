@@ -312,6 +312,13 @@
       "note": "The handover to iMile, the last mile, whose scans follow with its centre in 【】."
     },
     {
+      "wording": "<Route not completed>",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "iMile's driver's run that ended before it reached the parcel, so no door was tried: a delay. The parcel back at the station after it (\"Back To DS.\") is no attempt either."
+    },
+    {
       "wording": "Processing at sort facility",
       "stage": "in_transit",
       "language": "en",

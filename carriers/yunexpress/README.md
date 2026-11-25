@@ -86,7 +86,11 @@ reference. That reference is the hand-off when the notes' carrier offers it,
 else when detection gives it to one carrier alone and that carrier delivers in
 the destination country. The feed relays the last-mile carrier's wording
 without codes, so the status map also holds the partner lines seen there.
-iMile's lines, which open with its centre in 【】, read as iMile's map reads them.
+iMile's lines, which open with its centre in 【】, read as iMile's map reads them,
+except a run that ended before it reached the parcel ("<Route not completed>"), which
+tried no door and is a delay, as WanbExpress reads it. The parcel back at the station
+("Back To DS.") after that run is no attempt either, and after the driver's failed
+attempt it is that attempt told again.
 
 The reply carries a weight without a unit and with placeholder values for some
 services, and estimate fields the page never shows, so neither is read. The

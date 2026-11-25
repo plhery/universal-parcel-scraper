@@ -9,6 +9,7 @@ import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { repairMisreadUtf8 } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
+import { readImileStationReturns } from '../imile/status.js';
 import { jAndTAuMappedStage } from '../j-and-t-au/status.js';
 import { wanbStage } from './status.js';
 
@@ -75,25 +76,6 @@ function wanbPlace(location: string, stage: Stage | null | undefined): string | 
   return place;
 }
 
-// iMile's parcel back at its delivery station after a run, "【Erkelenz01】 Back To DS.".
-const BACK_TO_STATION = /\bback to ds\.?$/i;
-
-/**
- * The parcel back at the station ends the run before it, newest first: after the driver's failed
- * attempt it is that attempt told again, a notice; after a run that never reached the parcel it is
- * no attempt either. Alone after the round, it is the failed attempt.
- */
-function readStationReturns(events: readonly CarrierEvent[]): void {
-  let previous: CarrierEvent | undefined;
-  for (const event of [...events].reverse()) {
-    if (event.stage === 'failed_attempt' && BACK_TO_STATION.test(event.description ?? '')) {
-      if (previous?.stage === 'failed_attempt') event.stage_source = 'none';
-      else if (previous?.stage === 'in_transit') event.stage = 'in_transit';
-    }
-    if (event.stage) previous = event;
-  }
-}
-
 export function parseWanb(payload: unknown, raw: string): CarrierResult {
   const number = normalizeWanbLookup(raw);
   if (!isRecord(payload) || typeof payload.Succeeded !== 'boolean') throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid envelope');
@@ -139,7 +121,7 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
   if (listsNewestFirst(events) === false) events.reverse();
   events.sort((a, b) => (b.time ?? '').localeCompare(a.time ?? ''));
   if (!events.length) throw new IndeterminateError(PROVIDER, 'WanbExpress returned no scans');
-  readStationReturns(events);
+  readImileStationReturns(events);
   if (data.Status != null && typeof data.Status !== 'string') throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid status');
   const current = events.find(event => event.stage);
   const mapped = typeof data.Status === 'string' && Object.hasOwn(CURRENT, data.Status) ? CURRENT[data.Status] : undefined;

@@ -1,4 +1,5 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
+import type { CarrierEvent } from '../../core/result/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { statusMap as cainiaoStatusMap } from '../aliexpress/status.js';
 
@@ -192,6 +193,26 @@ export function imileReturnStart(code: string, wording: string): boolean {
   if (code === RETURNING) return true;
   const phrase = imilePhrase(wording);
   return RETURN_START.test(phrase.slice(HEADING.exec(phrase)?.[0].length ?? 0));
+}
+
+// iMile's parcel back at its delivery station after a run, "【Erkelenz01】 Back To DS.", as lines relay it.
+const BACK_TO_STATION = /\bback to ds\.?$/i;
+
+/**
+ * The parcel back at the station ends the run before it, in a history newest first: after the
+ * driver's failed attempt it is that attempt told again, a notice; after a run that never reached
+ * the parcel ("<Route not completed>", in transit) it is no attempt either. Alone after the round,
+ * it is the failed attempt. Lines that relay iMile's scans without its codes read them so.
+ */
+export function readImileStationReturns(events: readonly CarrierEvent[]): void {
+  let previous: CarrierEvent | undefined;
+  for (const event of [...events].reverse()) {
+    if (event.stage === 'failed_attempt' && BACK_TO_STATION.test(event.description ?? '')) {
+      if (previous?.stage === 'failed_attempt') event.stage_source = 'none';
+      else if (previous?.stage === 'in_transit') event.stage = 'in_transit';
+    }
+    if (event.stage) previous = event;
+  }
 }
 
 /** The stage iMile's code and sentences give a scan, null for one that moves nothing, undefined when neither decides. */
