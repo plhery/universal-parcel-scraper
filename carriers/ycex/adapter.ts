@@ -1,14 +1,14 @@
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { dateHualeiDhlRows } from '../gzyl/dhl-rows.js';
 import { HualeiTracker } from '../gzyl/hualei.js';
-import { dateSuocangDhlRows } from '../suocang/parser.js';
 import { YCEX } from './parser.js';
 
 export class YcexTracker extends HualeiTracker {
   constructor(options: ConstructorParameters<typeof HualeiTracker>[1] = {}) { super(YCEX, options); }
 
   override async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
-    return dateSuocangDhlRows(await super.fetch(raw, context));
+    return dateHualeiDhlRows(await super.fetch(raw, context));
   }
 }
 

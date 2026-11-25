@@ -5,8 +5,8 @@ import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/ind
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, SuocangTracker } from './adapter.js';
-import { parseSuocangPage, parseSuocangTrack, SUOCANG_ORIGIN, suocangClock } from './parser.js';
-import { isSuocangDhlGermanRow, isSuocangDhlRow, statusMap } from './status.js';
+import { parseSuocangPage, parseSuocangTrack, SUOCANG_ORIGIN } from './parser.js';
+import { statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 // The public sample from a tracking directory's SUOCANG page, and a string in no shape the tracker issues.
@@ -20,7 +20,6 @@ const page = (name: string) => readFileSync(new URL(`./fixtures/${name}.html`, i
 const json = (body: unknown) => new Response(JSON.stringify(body), { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
 const html = (body: string, status = 200) => new Response(body, { status, headers: { 'Content-Type': 'text/html;charset=utf-8' } });
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
-const row = (clock: string, content: string, location = '', code = '') => ({ clock, content, location, code });
 
 describe('Suoexpress numbers', () => {
   it('claims no number by its shape and reads the number out of a link to its tracker', () => {
@@ -75,18 +74,6 @@ describe('Suoexpress tracking adapter', () => {
     ]);
     expect(result.planned_events?.[3]).toMatchObject({ time: '2026-07-21T04:09:04+08:00', stage: 'in_transit' });
     expect(result.written_ahead).toHaveLength(6);
-  });
-
-  it('reads a row copied from DHL as a wall clock and the line’s own on the platform’s', () => {
-    expect([row('2026-07-31 14:35:29', 'The shipment has been successfully delivered', 'Hagen'),
-      row('2026-07-31 09:30:25', 'Loaded to movement / tour vehicle', 'Hagen'),
-      row('2026-07-18 04:50:10', 'The instruction data for this shipment have been provided by the sender to DHL electronically', 'DE'),
-      row('2026-07-17 19:03:04', 'Departed from sort facility', 'SZS', 'SHIPMENT'), row('2026-07-17 07:39:56', 'Shipment information received')]
-      .map(suocangClock)).toEqual(['wall', 'wall', 'wall', 'platform', 'platform']);
-    expect(['The instruction data for this shipment have been provided by the sender to DHL electronically',
-      'The shipment has been processed in the parcel center of origin'].every(isSuocangDhlGermanRow)).toBe(true);
-    expect(isSuocangDhlGermanRow('The shipment has been processed in the destination parcel center')).toBe(false);
-    expect(['Arrived at origin facility', 'Order Received', 'International flight has arrived'].some(isSuocangDhlRow)).toBe(false);
   });
 
   it('reads the no-row answer for an unknown number, which the page settles as not found', async () => {

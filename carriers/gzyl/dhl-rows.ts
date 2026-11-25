@@ -3,6 +3,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
 import { mainZone } from '../../places/zones.js';
+import type { HualeiRow } from './hualei.js';
 
 /** Which rows of a tenant's record are DHL's, and which of those DHL wrote in Germany. */
 export interface DhlRows {
@@ -47,3 +48,24 @@ export function dateDhlRows(result: CarrierResult, rows: DhlRows): CarrierResult
   const { last_update_local: local, ...rest } = result;
   return { ...rest, last_update: newest?.time ?? result.last_update, ...(newest?.time || !local ? {} : { last_update_local: local }), events };
 }
+
+// DHL's English sentences a tenant copies on a line into Germany, on DHL's wall clock where it scanned the parcel, and
+// those from Germany before the parcel leaves for another destination country. Suoexpress's and YCEX's lines copy them.
+const DHL_SENTENCE = /^(?:the (?:international )?shipment\b|the instruction data for this shipment\b|(?:un)?loaded (?:to|from) movement \/ tour vehicle\b)/i;
+const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:of origin|export parcel center|transported to the destination country)\b/i;
+
+/** Whether a row is one of DHL's sentences a tenant copies, on DHL's wall clock. */
+export const isHualeiDhlRow = (wording: string): boolean => DHL_SENTENCE.test(wording.trim());
+/** Whether a DHL row is one from Germany, before the parcel leaves for the destination country. */
+export const isHualeiDhlGermanRow = (wording: string): boolean => DHL_GERMAN_ROW.test(wording);
+
+/**
+ * The clock of a tenant whose rows are its own or DHL's sentences: its own, in China or without a
+ * place, are on the platform's Beijing clock. A row copied from DHL, placed or not, keeps its wall
+ * clock: it is on DHL's clock where DHL scanned the parcel, and the tracker writes no zone.
+ */
+export const hualeiDhlClock = ({ content }: HualeiRow): 'platform' | 'wall' => (isHualeiDhlRow(content) ? 'wall' : 'platform');
+
+/** The result with the rows such a tenant copies from DHL dated, each keeping its wall clock. */
+export const dateHualeiDhlRows = (result: CarrierResult): CarrierResult =>
+  dateDhlRows(result, { isRow: isHualeiDhlRow, isGermanRow: isHualeiDhlGermanRow });

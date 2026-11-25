@@ -16,13 +16,3 @@ export function suocangStage(_code: string | null, wording: string): Stage | und
 }
 
 export const statusMap: CarrierStatusMap = { stage: suocangStage, gaps: [] };
-
-// DHL's sentences the tracker copies on the line into Germany, on DHL's wall clock where it scanned the parcel, and
-// those from Germany before the parcel leaves for another destination country.
-const DHL_SENTENCE = /^(?:the (?:international )?shipment\b|the instruction data for this shipment\b|(?:un)?loaded (?:to|from) movement \/ tour vehicle\b)/i;
-const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:of origin|export parcel center|transported to the destination country)\b/i;
-
-/** Whether a row is one the tracker copies from DHL, on DHL's wall clock. */
-export const isSuocangDhlRow = (wording: string): boolean => DHL_SENTENCE.test(wording.trim());
-/** Whether a DHL row is one from Germany, before the parcel leaves for the destination country. */
-export const isSuocangDhlGermanRow = (wording: string): boolean => DHL_GERMAN_ROW.test(wording);
