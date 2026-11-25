@@ -16,11 +16,8 @@ export type {
 } from './types.js';
 export { AMAZON_NUMBER_PATTERN, isAmazonTrackingNumber } from './amazon.js';
 export { SHEIN_PACKAGE_NUMBER, isSheinPackageNumber } from './shein.js';
-export {
-  TRACKING_CANDIDATE_PATTERNS,
-  keywordNumberInText,
-  recognizedNumberInText,
-} from './candidates.js';
+export { TRACKING_CANDIDATE_PATTERNS } from './candidatePatterns.js';
+export { keywordNumberInText, recognizedNumberInText } from './candidates.js';
 export { isValidCorreosSpainCheckLetter } from './correosSpain.js';
 export { isValidDpdParcelNumber } from './dpd.js';
 export { checksumRejections, detectCarrier, detectCarrierMatch } from './detect.js';

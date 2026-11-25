@@ -207,4 +207,7 @@ Versions up to 0.1293.2, and their `-main` prereleases, were released under
 parts that bo0tzz, bkoroglu1 and Lewis Carter contributed under Apache-2.0 also stay available
 under it; [NOTICE](NOTICE) lists them.
 
+From 0.1387.0, the carrier catalog and the tracking-number patterns, which apps bundle, are
+[AGPL-3.0-only](LICENSES/AGPL-3.0.txt); [NOTICE](NOTICE) lists their files.
+
 The optional TRAWL image is [AGPL-3.0](trawl/LICENSE). Credits are in [NOTICE](NOTICE).

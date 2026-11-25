@@ -113,10 +113,11 @@ the app built on this package, needs a database migration for a release that add
 id or input. The maintainers write it when they merge, so a carrier needs no pull request there.
 
 By sending a contribution, you license it under the [PolyForm Noncommercial License 1.0.0](LICENSE)
-like the rest of the code, and you grant Paul-Louis Hery a perpetual, worldwide, non-exclusive,
-royalty-free, irrevocable licence to use, copy, modify and distribute it, and to license it to
-others under other terms, commercial ones included. You keep your copyright. Send only work you
-have the right to license this way.
+like the rest of the code, or under [AGPL-3.0-only](LICENSES/AGPL-3.0.txt) for the catalog and
+pattern files [NOTICE](NOTICE) lists, and you grant Paul-Louis Hery a perpetual, worldwide,
+non-exclusive, royalty-free, irrevocable licence to use, copy, modify and distribute it, and to
+license it to others under other terms, commercial ones included. You keep your copyright. Send
+only work you have the right to license this way.
 
 ## Public and private data
 

@@ -1,41 +1,16 @@
 /**
  * Candidate numbers inside free text.
  *
- * What it is: the shapes worth testing when a whole shipping message, or a URL
- * with no matching link rule, is pasted, and the two scans over them.
+ * What it is: the two scans over a whole shipping message, or a URL with no
+ * matching link rule, for the shapes in candidatePatterns.ts.
  * What it is not: no carrier decision of its own (it defers to the detection
  * engine) and no provider I/O.
  */
 import { calendarDay } from '../time/index.js';
 import { isKnownCarrierName } from '../catalog/hints.js';
-import { AMAZON_NUMBER_PATTERN } from './amazon.js';
+import { TRACKING_CANDIDATE_PATTERNS } from './candidatePatterns.js';
 import { detectCarrierMatch } from './detect.js';
 import { validTrackingNumberInText } from './valid.js';
-
-const AMAZON_TEXT_PATTERN = AMAZON_NUMBER_PATTERN.slice(1, -1).replaceAll('[0-9]', '(?:[\\s.-]*[0-9])');
-
-export const TRACKING_CANDIDATE_PATTERNS = [
-  // Amazon's digits can be printed in groups. A country's two letters set apart from them are
-  // capitals and no abbreviation: "es" in "Su número de seguimiento es 1234567890" and "No." in
-  // "Tracking No. 1234567890" are words, not Amazon's.
-  new RegExp(`\\b(?![A-Z]{2}[\\s.-])${AMAZON_TEXT_PATTERN}\\b`, 'gi'),
-  new RegExp(`\\b(?![A-Z]{2}\\.)${AMAZON_TEXT_PATTERN}\\b`, 'g'),
-  // NACEX agency/shipment composites keep their slash boundary (never stripped).
-  /\b\d{4}\/\d{8}\b/g,
-  // NO LIMIT's shipment numbers are printed with slashes, which normalization drops.
-  /\bP\/\d{1,6}\/L[A-Z]{3}\/20\d{2}\b/gi,
-  // MRW prints a slash after the office's five digits, which normalization drops.
-  /\b\d{5}\/(?:\d{7}|[A-Z]\d{6})\b/gi,
-  /\b\d{26}\b/g,
-  /\bH\d{15,19}\b/gi,
-  /\b1Z[A-Z0-9]{16}\b/gi,
-  /\b1G[A-Z0-9]{10}\b/gi,
-  /\b[A-Z]{2}\s*\d(?:[\s.-]?\d){8}\s*[A-Z]{2}\b/gi,
-  /\b(?:JJD|JVGL)[A-Z0-9]{8,}\b/gi,
-  /\b\d(?:[\s.-]?\d){9,19}\b/g,
-  // Let catalog rules claim other complete identifiers without copying their shapes here.
-  /\b[A-Z0-9]{4,40}\b/gi,
-];
 
 /**
  * The most distinct candidates one reading of a text asks the detection

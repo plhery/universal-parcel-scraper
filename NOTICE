@@ -6,6 +6,18 @@ From version 0.1294.0, the core code is distributed under the PolyForm Noncommer
 License 1.0.0; see LICENSE. Versions up to 0.1293.2 were distributed under the Apache
 License 2.0 (LICENSES/Apache-2.0.txt) and remain so.
 
+From version 0.1387.0 and its -main prereleases, the carrier catalog and the
+tracking-number patterns, which apps bundle, are distributed under the GNU Affero
+General Public License, version 3 only (AGPL-3.0-only, LICENSES/AGPL-3.0.txt):
+- each carrier's carriers/<id>/carrier.json, with core/catalog/carrier.schema.json,
+  data/carrier-order.json and data/stages.json;
+- scripts/generate-catalog.mjs and what it writes: generated/catalog.ts,
+  data/catalog.json, data/carrier.schema.json, and dist/generated/catalog.js with
+  its declarations;
+- core/detection/candidatePatterns.ts and dist/core/detection/candidatePatterns.js
+  with its declarations.
+Earlier versions distributed them under the licences above.
+
 These contributions were made under the Apache License 2.0 and remain available under it:
 - bo0tzz: PostNL's 3S barcodes, the Dutch network's MDP codes and JJD plates, and items
   from abroad and delivery slots on PostNL's domestic tracker (bb613f47f, 876d2b81c,
