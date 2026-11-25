@@ -116004,6 +116004,12 @@
     ]
   },
   {
+    "input": "SLX200058555GB",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SLX200119352CN",
     "carrier": "unknown",
     "confidence": "none",
