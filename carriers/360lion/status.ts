@@ -33,6 +33,13 @@ const RAIL: ReadonlyMap<string, Stage> = new Map<string, Stage>([
 // The scan codes seen in replies, with 360Lion's English for each. `WSO` codes are scans at origin
 // and `WSD` codes at destination.
 const SCANS: ReadonlyMap<string, LionStatus> = new Map<string, LionStatus>([
+  // The order's data, then the pickup at the shipper's warehouse, 360Lion's acceptance, and its
+  // operation hub. The departure from the hub names the last mile's tracking number, shown here as
+  // <number>: the code stages the scan whatever the number.
+  ['IR', { en: 'shipment information received', stage: 'registered' }],
+  ['IR01', { en: "pick up at shipper's warehouse", stage: 'accepted' }],
+  ['AF', { en: 'package processed in operation hub', stage: 'in_transit' }],
+  ['DF', { en: 'package left operation hub (lastmile tracking number <number> )', stage: 'in_transit' }],
   ['WSO04', { en: 'departed from airport', stage: 'in_transit' }],
   // The transit country's customs letting the parcel out, the day after the flight from China, and the
   // gateway's release to the destination country, an hour before the landing there.

@@ -198,6 +198,17 @@ describe('360Lion guest adapter', () => {
     expect(statusMapAnswer({ carrier: '360lion', providerCode: 'WSD02', description: 'Recibido(Ya recibió el paquete.)' })).toMatchObject({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: '360lion', providerCode: 'WARNING', description: 'Pre-alert' })).toMatchObject({ kind: 'intentional_gap' });
     expect(statusMapAnswer({ carrier: '360lion', providerCode: 'WSD999', description: 'Synthetic wording' })).toMatchObject({ kind: 'unknown' });
+    // The scans at origin: the order's data, the pickup from the shipper, and the operation hub, whose
+    // departure names the last mile's number.
+    for (const [providerCode, description, stage] of [['IR', 'shipment information received', 'registered'], ['IR01', "pick up at shipper's warehouse", 'accepted'],
+      ['AF', 'package processed in operation hub', 'in_transit'], ['DF', 'package left operation hub (lastmile tracking number SYNTH0000000001 )', 'in_transit']] as const) {
+      expect(statusMapAnswer({ carrier: '360lion', providerCode, description }), providerCode).toEqual({ kind: 'mapped', stage });
+    }
+    const origin = parseLion(changed(p => { p.groupCode = 'PRECESSING'; p.trackItemList = [
+      scan({ occurDate: '2026-02-26 18:00:00', timeZone: '+8', location: 'CN', trackCode: 'AF', icon: 'HUB', oriDescription: 'package processed in operation hub' }),
+      scan({ occurDate: '2026-02-26 09:00:00', timeZone: '+8', location: 'CN', trackCode: 'IR01', icon: 'HUB', oriDescription: "pick up at shipper's warehouse" }),
+      scan({ occurDate: '2026-02-25 12:00:00', timeZone: '+8', location: 'CN', trackCode: 'IR', oriDescription: 'shipment information received' })]; }).data, NUMBER);
+    expect(origin.events!.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([['AF', 'in_transit', 'carrier_map'], ['IR01', 'accepted', 'carrier_map'], ['IR', 'registered', 'carrier_map']]);
     expect(lionRail('DISPATCH')).toBe('in_transit');
     expect(lionRail('dispatch')).toBeUndefined();
     expect(statusMap.stage(null, 'arrived at airport')).toBeUndefined();

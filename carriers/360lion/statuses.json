@@ -2,6 +2,38 @@
   "carrier": "360lion",
   "entries": [
     {
+      "code": "IR",
+      "wording": "shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The order's data, before 360Lion has the parcel."
+    },
+    {
+      "code": "IR01",
+      "wording": "pick up at shipper's warehouse",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "360Lion collecting the parcel from the shipper's warehouse: its acceptance, as the route rail's hub step reads."
+    },
+    {
+      "code": "AF",
+      "wording": "package processed in operation hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "360Lion's operation hub processing the parcel after the pickup, before it leaves for the flight."
+    },
+    {
+      "code": "DF",
+      "wording": "package left operation hub (lastmile tracking number <number> )",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel leaving 360Lion's operation hub. The wording names the last mile's tracking number, which the adapter does not read; the code stages it whatever the number."
+    },
+    {
       "code": "WSO04",
       "wording": "departed from airport",
       "stage": "in_transit",
