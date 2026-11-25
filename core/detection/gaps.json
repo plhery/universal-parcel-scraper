@@ -6960,5 +6960,10 @@
     "carrier": "szctc",
     "kind": "open",
     "reason": "CTC Supply Chain waybills are CTC and twelve digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "lulu-express",
+    "kind": "open",
+    "reason": "luluExpress waybills are LULU and ten digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

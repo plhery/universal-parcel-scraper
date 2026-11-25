@@ -1,0 +1,20 @@
+{
+  "carrier": "lulu-express",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "luluExpress's order row (`IR`)."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "luluExpress's Shenzhen facility takes the parcel in (`AF`)."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "luluExpress's Shenzhen facility dispatches the parcel (`DF`)."},
+    {"wording": "Export Released", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance at Shenzhen."},
+    {"wording": "Flight Departure", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves Hong Kong."},
+    {"wording": "Flight Arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Clearance Complete", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in the United States."},
+    {"wording": "Shipment in transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's last row before USPS's scans."},
+    {"wording": "Accepted at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied: its acceptance after the line's hand-over, so the parcel is already on its way."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Delivered, In/At Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's scan, copied, without the sentence after its status, which the parser drops."}
+  ]
+}

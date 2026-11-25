@@ -1,0 +1,24 @@
+{
+  "carrier": "lulu-express",
+  "records": [
+    {
+      "number": "LULU1000674156",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260609111644/https://www.parcelpanel.com/couriers/lulu/",
+        "date": "2026-06-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample number an archived capture of ParcelPanel's page for lulu, which links luluExpress's site, offered to try. luluExpress's lookup answers it with a parcel to the United States that USPS delivered."
+    }
+  ]
+}
