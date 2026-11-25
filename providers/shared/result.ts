@@ -783,6 +783,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // 360Lion's English "handover to lastmile" (WSD02) and the Argentine last mile's Spanish beside it, "Recibido(Ya
   // recibió el paquete.)", a second before the station's arrival.
   if (/^hand ?over to (?:last ?mile|lm)[.!]?$|^recibido ?\(ya recibi[oó] el paquete\.?\)$/i.test(value)) return 'in_transit';
+  // A first-mile warehouse's steps before iMile's own acceptance, as ParcelsApp relays them on iMile's parcels: the
+  // order waiting for the warehouse to check the parcel in, then the check-in.
+  if (/^order is created, [a-z]{2} is waiting for check-in at the warehouse[.!]?$/i.test(value)) return 'registered';
+  if (/^package checked in at warehouse[.!]?$/i.test(value)) return 'accepted';
   // A shipment's data created, as 17TRACK relays it beside "Shipment data has entered the system", before the pickup.
   if (/^(?:the )?shipment was successfully created[.!]?$/i.test(value)) return 'registered';
   // GLS's parcel made ready by its sender for GLS to collect, as Postal Ninja relays it and GLS's own maps read it.

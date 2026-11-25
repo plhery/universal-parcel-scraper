@@ -54,6 +54,14 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['in transit, scanned by dpd at parcel delivery centre.', 'in_transit'],
   ['in transit, at parcel delivery centre.', 'in_transit'],
   ['the courier will deliver the parcel soon. additional details are available in the sameday app, email or sms.', 'out_for_delivery'],
+  // The same line's central and local warehouses, and a locker too busy to take the parcel, which goes to another
+  // pickup point at the recipient's request before it arrives there: on the way, not an attempt.
+  ['the parcel has arrived in the central warehouse. as soon as it is processed it will go to the local warehouse.', 'in_transit'],
+  ['the parcel is in the local warehouse and is to be processed soon.', 'in_transit'],
+  ['the parcel is in the local warehouse and will be processed shortly.', 'in_transit'],
+  ['the delivery point is busy. we will try loading your parcel again later, and get back to you with news.', 'in_transit'],
+  ['in transit, delivery address changed upon addressees request', 'in_transit'],
+  ['we have redirected your parcel to the nearest available pickup point. we will let you know when you can collect it.', 'in_transit'],
   ['delivery attempted', 'failed_attempt'],
   ['delivery attempted, unfortunately we have not been able to deliver your parcel. pickup parcelshop delivery after first delivery attempt.', 'failed_attempt'],
   ['awaiting pickup, parcel was deposited in pickup parcel station', 'ready_for_pickup'],

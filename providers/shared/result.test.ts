@@ -39,6 +39,11 @@ describe('shared provider result', () => {
     for (const wording of ['CN Posting of item', 'Sample Posting of item']) expect(classifyEvent(wording).stage_source, wording).toBe('none');
   });
 
+  it("reads a first-mile warehouse's order and check-in before iMile's acceptance, as ParcelsApp relays them", () => {
+    expect(classifyEvent('Order is created, XX is waiting for check-in at the warehouse')).toEqual({ stage: 'registered', stage_source: 'wording:provider' });
+    expect(classifyEvent('Package checked in at warehouse')).toEqual({ stage: 'accepted', stage_source: 'wording:provider' });
+  });
+
   it("reads an airline's load device broken down at the destination airport in transit, the parcels awaiting the forwarder", () => {
     for (const wording of ['ULD breakdown completed, awaiting pick\u2011up in Sampletown', 'ULD breakdown completed, awaiting pick-up in Sampletown']) {
       expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
