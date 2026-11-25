@@ -1,0 +1,24 @@
+{
+  "carrier": "xs-express",
+  "records": [
+    {
+      "number": "XSECN2201403703YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250916233328/https://www.parcelpanel.com/couriers/xs-exp/",
+        "date": "2025-09-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's Xin Shu Logistics page shows. Xinshu Logistics's tracker answers it with a parcel sorted in Shenzhen and delivered by USPS in the United States."
+    }
+  ]
+}

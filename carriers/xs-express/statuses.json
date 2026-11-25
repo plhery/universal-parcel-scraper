@@ -1,0 +1,19 @@
+{
+  "carrier": "xs-express",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "Shipment inbound in sorting center", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen sorting center's intake, the line's first scan."},
+    {"code": "SHIPMENT", "wording": "Departed from sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Shenzhen sorting center's departure."},
+    {"wording": "Shipping Label Created, USPS Awaiting Item", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "USPS's label, copied: USPS has the number but not the parcel."},
+    {"wording": "Arrived Shipping Partner Facility, USPS Awaiting Item", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan at the line's injection partner in the United States, copied."},
+    {"wording": "Departed Shipping Partner Facility, USPS Awaiting Item", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan at the line's injection partner in the United States, copied."},
+    {"wording": "Accepted at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's first scan, copied: USPS takes the parcel over from the line, which accepted it in China days before."},
+    {"wording": "Arrived at USPS Regional Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Regional Destination Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Delivered, In/At Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."}
+  ]
+}

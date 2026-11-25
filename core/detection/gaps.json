@@ -7002,5 +7002,10 @@
     "carrier": "suocang",
     "kind": "open",
     "reason": "Suoexpress numbers seen so far are SC and thirteen digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "xs-express",
+    "kind": "open",
+    "reason": "Xinshu Logistics numbers seen so far are XSECN, ten digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]
