@@ -503,6 +503,20 @@ describe('Postal Ninja result parsing', () => {
       .find((scan) => scan.description === 'Inbound into customs')).toMatchObject({ time: '2026-11-02T11:00:29.000Z', time_zone: 'America/Los_Angeles' });
   });
 
+  it('dates Kerry eCommerce\'s scans by their places, as KEC\'s adapter does, not on its home clock', () => {
+    const kerry = (dt: string, dsc: string, loc?: string) => ({ ds: 'Kerry eCommerce', dt, dsc, ...(loc ? { loc } : {}) });
+    const parsed = parsePostalNinjaResponse(withEvents([
+      kerry('2026-08-10T12:00:00', 'Order created'),
+      kerry('2026-08-11T08:00:00', 'Linehaul pickup', 'Hong Kong'),
+      kerry('2026-08-13T09:00:00', 'Parcel arrived at destination country', 'United Kingdom'),
+      kerry('2026-08-13T15:00:00', 'Import customs clearance completed', 'London'),
+    ]), number, null, 'kec-ecommerce');
+    expect(times(parsed)).toEqual(['2026-08-13T14:00:00.000Z', '2026-08-13T08:00:00.000Z', '2026-08-11T00:00:00.000Z', '2026-08-10T04:00:00.000Z']);
+    expect(parsed.events?.map((scan) => [scan.time_zone, scan.time_zone_basis])).toEqual([
+      ['Europe/London', 'place'], ['Europe/London', 'place'], ['Asia/Hong_Kong', 'place'], ['Asia/Hong_Kong', 'neighbour']]);
+    expect(parsed.events?.[0]).not.toHaveProperty('location');
+  });
+
   it('reads local clocks beside other services, or for a postal item that crosses a border, only in the carrier\'s zone', () => {
     // DHL Germany repeats the origin post's scans at the origin's clock, read on Berlin's and written in UTC.
     const relayed = withEvents([

@@ -82,6 +82,7 @@ capture failure.
   | One zone per network, by destination | GOFO Express: US Los Angeles, FR Paris | 20/20 on two US parcels, with New Jersey and New York scans; 7/7 on a French parcel and the newest scan of a YunExpress parcel GOFO delivered in France |
   | The scanning office's | An Post Ireland, CTT Express, Correos de España, DHL Parcel Netherlands, DPD, DPD Poland, DPD UK, GLS, Hermes Germany, MRW, Nova Poshta, Packeta, Poczta Polska, PostNord, Posten Norge, UkrPoshta | Domestic parcels in their countries, `DPD` on the Polish, German and Spanish networks; UkrPoshta's Ukrainian scans of an item to China |
   | The scanning office's, named by its location | FedEx, UPS | UPS 12/12 on two parcels across Eastern, Central and Mountain time; FedEx 16/17 on two parcels from Washington to Florida and from Ohio to Kentucky |
+  | Each place's along the way, dated as the carrier's adapter dates its own | Kerry eCommerce (KEC eCommerce) | 8/8 on a parcel from Hong Kong against KEC's feed, which states no zone for them; Hong Kong's clock put its scans abroad hours off |
 
   Every other service's clock is unknown, but for Cainiao's steps in China (below). Two
   services also relay scans at another clock. Swiss Post relays the destination post's arrival, customs, sorting and delivery

@@ -19,6 +19,7 @@ import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { relayedWordingStage } from '../../core/catalog/statusMaps.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/index.js';
 import { scrapeUniversalPage, type UniversalBrowserOptions } from '../../core/transport/browser.js';
 import { isRecord } from '../../core/types.js';
@@ -26,7 +27,8 @@ import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '.
 import { classifyEvent, event, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
 import {
-  borrowsRoutingZone, cainiaoStampCopies, carrierHomeZone, destinationLeg, formerCopies, originLeg, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock, type Zoned,
+  borrowsRoutingZone, cainiaoStampCopies, carrierHomeZone, destinationLeg, formerCopies, originLeg, PLACED_CLOCKS, royalMailLeavesFor, royalMailPartnerScanWall, serviceZone, wallClock,
+  type Zoned,
 } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
@@ -119,7 +121,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
       && (!isValidS10TrackingNumber(number) || number.slice(-2) === destination) };
   // A scan's leg, among its service's: its origin's clock, the destination's, or neither established.
   type Leg = 'origin' | 'destination' | 'other';
-  const scans: { wall: string | null; service: string; leg: Leg; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
+  const scans: { wall: string | null; service: string; leg: Leg; location: string; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
   // The destination Royal Mail's scan leaving the UK has left for, whose post's scans the later ones are.
   let leftFor: string | null = null;
   const listed = (rawEvents as unknown[]).map((raw) => isRecord(raw)
@@ -143,16 +145,30 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     const reporting = named.has(service) ? { reporting_carrier: service } : {};
     if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
       const parsed = event(wall, description, serviceStage(service, description));
-      if (parsed) scans.push({ wall: null, service, leg: 'other', zone: null, event: { ...parsed, ...reporting } });
+      if (parsed) scans.push({ wall: null, service, leg: 'other', location: '', zone: null, event: { ...parsed, ...reporting } });
     } else {
       const classified = classifyEvent(description, serviceStage(service, description));
       const { stage } = classified;
       // A scan's location (loc) is read only for its clock.
       const scan = { service, description, wall, location: text(raw.loc), delivered: stage === 'delivered' };
       const leg: Leg = originLeg(scan) ? 'origin' : destinationLeg(scan) ? 'destination' : 'other';
-      scans.push({ wall, service, leg, zone: partner ? false : serviceZone(scan, journey),
+      scans.push({ wall, service, leg, location: scan.location, zone: partner ? false : serviceZone(scan, journey),
         event: { description, ...classified, ...reporting } });
     }
+  }
+  const readAt = Date.parse(text(payload.track.lastFetch));
+  // A service on its places' clocks has its scans dated by them as its carrier's adapter dates its own, the
+  // destination giving the clock of a scan that names no place.
+  const placedTimes = new Map<number, CarrierEvent>();
+  for (const [service, carrierId] of PLACED_CLOCKS) {
+    const indexes = scans.flatMap((scan, index) => scan.service === service && scan.wall !== null && scan.zone !== false ? [index] : []);
+    if (!indexes.length) continue;
+    const dated = dateLocalClocks(carrierId, { ...(destination ? { destination_country: destination } : {}),
+      events: indexes.map((index): CarrierEvent => {
+        const { wall, location, event } = scans[index]!;
+        return { local_time: wall!, ...(location ? { location } : {}), ...(typeof event.stage === 'string' ? { stage: event.stage } : {}) };
+      }) }, Number.isNaN(readAt) ? undefined : readAt).events ?? [];
+    indexes.forEach((index, at) => { const scan = dated[at]; if (scan?.time) placedTimes.set(index, scan); });
   }
   // A scan whose service's clock is unknown here borrows a zone: that of the
   // nearest earlier scan of the same service with an established one, else of
@@ -178,6 +194,13 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   };
   const events = scans.map((scan, index): CarrierEvent => {
     if (scan.wall === null) return scan.event;
+    if (PLACED_CLOCKS.has(scan.service)) {
+      const dated = placedTimes.get(index);
+      const instant = dated ? DateTime.fromISO(String(dated.time), { setZone: true }) : null;
+      if (!dated || !instant?.isValid) return { local_time: scan.wall, ...scan.event };
+      const named = !dated.time_zone || dated.time_zone === 'UTC' ? {} : { time_zone: dated.time_zone, time_zone_basis: dated.time_zone_basis };
+      return { time: instant.toUTC().toISO(), ...named, ...scan.event };
+    }
     const placed = zoneAt(index, scan.wall);
     const instant = placed ? firstOccurrence(DateTime.fromISO(scan.wall, { zone: placed.zone })) : null;
     if (!placed || !instant?.isValid) return { local_time: scan.wall, ...scan.event };
@@ -188,7 +211,6 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   // Besides those it names, a row dated after Postal Ninja last read the
   // carrier (lastFetch) is one. A wall time is after that read only when it
   // is in every zone.
-  const readAt = Date.parse(text(payload.track.lastFetch));
   const after = (scan: CarrierEvent) => (scan.time ? Date.parse(scan.time)
     : Date.parse(`${String(scan.local_time)}Z`) - EARLIEST_ZONE_MS) > readAt + CLOCK_SKEW_MS;
   const kept = events.filter((scan) => !after(scan));

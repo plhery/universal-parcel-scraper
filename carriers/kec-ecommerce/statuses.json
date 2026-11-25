@@ -84,6 +84,62 @@
       "stage": "delivered",
       "language": "en",
       "confirmedBy": "live"
+    },
+    {
+      "code": "package_created",
+      "wording": "Order created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "linehaul_pickup",
+      "wording": "Linehaul pickup",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "air_freight_arrived",
+      "wording": "Parcel arrived at destination country",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "import_customs_received",
+      "wording": "Parcel arrived at destination country",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "import_customs_clearance_start",
+      "wording": "Import customs clearance in progress",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "import_customs_clearance_success",
+      "wording": "Import customs clearance completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "lastmile_received",
+      "wording": "Processed at destination sorting facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "lastmile_in_transit",
+      "wording": "In transit to delivery facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
     }
   ]
 }

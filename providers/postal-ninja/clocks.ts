@@ -232,6 +232,13 @@ const LOCAL_CLOCKS: ReadonlySet<string> = new Set([
  */
 const LOCATED_CLOCKS: ReadonlySet<string> = new Set(['FedEx', 'UPS']);
 /**
+ * Services on the wall clock of each place along the parcel's way, as their carrier's own tracker
+ * gives the scans it states no zone for, by the catalog carrier whose adapter dates them. KEC's home
+ * clock put Kerry eCommerce's scans in the destination hours off. Their scans are dated by their
+ * places as that adapter's are (`dateLocalClocks`), and keep their wall clock when no place dates them.
+ */
+export const PLACED_CLOCKS: ReadonlyMap<string, string> = new Map([['Kerry eCommerce', 'kec-ecommerce']]);
+/**
  * Services whose scans between midnight and 1 a.m. reach Postal Ninja twelve
  * hours late: UPS's arrival in Lenexa at 00:25 is dated 12:25. A scan they
  * date 12:xx may be either, except a delivery, which is read as afternoon.

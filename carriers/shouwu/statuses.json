@@ -174,6 +174,13 @@
       "note": "The local post's delivery to the recipient."
     },
     {
+      "wording": "Package delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The last-mile carrier's delivery to the recipient."
+    },
+    {
       "wording": "Shipment arrived at facility",
       "stage": "accepted",
       "language": "en",

@@ -158,6 +158,15 @@ describe('KEC eCommerce status evidence', () => {
     expect(statusMap.stage('lastmile_first_delivery_attempt', 'Delivery attempt failed')).toBeUndefined();
   });
 
+  it('maps the plainer wording some routes give each code', () => {
+    expect(statusMap.stage('package_created', 'Order created')).toBe('registered');
+    expect(statusMap.stage('import_customs_clearance_start', 'Import customs clearance in progress')).toBe('customs');
+    for (const code of ['air_freight_arrived', 'import_customs_received']) {
+      expect(statusMap.stage(code, 'Parcel arrived at destination country')).toBe('in_transit');
+    }
+    expect(kecStage('lastmile_received', 'Processed at destination sorting facility')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+  });
+
   it('does not promote a code with unknown wording into a delivery', () => {
     expect(kecStage('lastmile_delivered', 'Synthetic processing notice')).toBeNull();
     expect(statusMap.stage('lastmile_delivered', 'Synthetic processing notice')).toBeUndefined();
