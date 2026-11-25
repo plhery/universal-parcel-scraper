@@ -1,0 +1,35 @@
+{
+  "carrier": "hjyt",
+  "records": [
+    {
+      "number": "6022725441176",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250718203700/https://www.parcelpanel.com/couriers/hjyt56/",
+        "date": "2025-07-18",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "imile",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The example tracking number a tracking directory's HJYT page shows. Hengjie Yutong's tracker answers it with a parcel flown from Shenzhen to the United Arab Emirates and delivered by iMile, whose waybill it is: iMile's own tracker holds it with the same scans."
+    }
+  ]
+}

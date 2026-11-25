@@ -6982,5 +6982,10 @@
     "carrier": "chengchain",
     "kind": "open",
     "reason": "Chengchuang Supply Chain waybills seen so far are CC, ten digits and GY, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "hjyt",
+    "kind": "open",
+    "reason": "Hengjie Yutong's tracker answers by the delivering carrier's number, and the only public sample, from one tracking directory page, is iMile's thirteen-digit waybill, a shape many carriers share, so the adapter answers explicit selection or a link to its tracker."
   }
 ]
