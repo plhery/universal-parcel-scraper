@@ -143,6 +143,11 @@ export class UspsSessions {
       && (req.maxTier ?? 4) >= 3 && uspsCaptureNumber(req.url, req) !== null;
   }
 
+  /** Sessions USPS has let through and kept. */
+  get readyCount() {
+    return this.#ready.length;
+  }
+
   #report(fields) {
     try { this.report(fields); } catch { /* Diagnostics never change a read. */ }
   }
@@ -292,7 +297,60 @@ export class UspsSessions {
   }
 }
 
-export const uspsSessions = new UspsSessions();
+// One per process, however the module is reached: the server's warm-up and the orchestrator share it.
+export const uspsSessions = globalThis[Symbol.for('upc.uspsSessions')] ??= new UspsSessions();
+
+// A new container prepares its sessions before it opens its port, while the container it replaces still
+// serves: a client that finds the new port closed connects to the old container under the same network
+// alias, and the deploy stops the old one once the new one answers its health check. The warm-up reads a
+// public sample's tracking page as a lookup would, and the port opens once the kept sessions are ready, or
+// after five minutes when USPS refuses new sessions for a while.
+export const USPS_WARMUP_MS = 5 * 60_000;
+const reportWarmup = fields => console.warn(JSON.stringify({ level: 'warn', event: 'usps.warmup', ...fields }));
+
+/** The warm-up's read of a tracking page, made the way the USPS adapter asks for one; null for another number. */
+export function uspsWarmupRequest(number) {
+  const url = `${ORIGIN}/tracking/${String(number ?? '').trim()}`;
+  const req = { url, skipHttp: true, maxTier: 3, maxTimeout: 60_000, contentWaitForSelector: '#trackingNum',
+    captureResponses: [url] };
+  return uspsCaptureNumber(url, req) ? req : null;
+}
+
+/** Starts preparing the kept sessions through `scrape`; resolves once they are ready or after `limitMs`. */
+export async function warmUspsSessions({ number, deps, scrape, sessions = uspsSessions, limitMs = USPS_WARMUP_MS,
+  pollMs = 1_000, now = Date.now, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)), report = reportWarmup }) {
+  const say = fields => { try { report(fields); } catch { /* Diagnostics never hold the port. */ } };
+  const started = now();
+  const req = uspsWarmupRequest(number);
+  if (!req || !sessions.routes(req, deps?.sessions)) {
+    say({ state: 'skipped', reason: req ? 'no_sessions' : 'invalid_number' });
+    return { ready: 0, ms: 0 };
+  }
+  say({ state: 'started' });
+  // The read itself waits briefly and usually ends unanswered: the sessions it starts are what count.
+  void Promise.resolve().then(() => scrape(req, deps)).catch(() => {});
+  while (sessions.readyCount < sessions.readySessions && now() - started < limitMs) await sleep(pollMs);
+  const ready = sessions.readyCount, ms = Math.max(0, now() - started);
+  say({ state: ready >= sessions.readySessions ? 'ready' : 'gave_up', ready, ms });
+  return { ready, ms };
+}
+
+const API_LISTEN = 'const app = createApiApp().listen(PORT)\n';
+const API_POOL = 'const poolReady = initPool()\n';
+
+/** With USPS_WARMUP_NUMBER set, opens TRAWL's port after the warm-up; stops the build when the server's start moved. */
+export function listenAfterUspsWarmup(source) {
+  for (const needle of [API_LISTEN, API_POOL]) {
+    if (source.split(needle).length !== 2) throw new Error('TRAWL server start changed: review the USPS warm-up');
+  }
+  return 'import { scrape as uspsWarmupScrape } from "@trawl/tiers"\n'
+    + 'import { warmUspsSessions } from "../../../packages/tiers/src/utils/usps-tracking.mjs"\n' + source
+    .replace(API_LISTEN, 'const app = createApiApp()\nconst uspsWarmupNumber = process.env.USPS_WARMUP_NUMBER?.trim()\n'
+      + 'if (!uspsWarmupNumber) app.listen(PORT)\n')
+    .replace(API_POOL, API_POOL + 'if (uspsWarmupNumber) void poolReady\n'
+      + '  .then(() => warmUspsSessions({ number: uspsWarmupNumber, deps: getDeps(), scrape: uspsWarmupScrape }))\n'
+      + '  .catch(() => {})\n  .finally(() => app.listen(PORT))\n');
+}
 
 const SCRAPE_ENTRY = 'export async function scrape(\n  req: ScrapeRequest,\n  deps: OrchestratorDeps,\n'
   + '  runners: OrchestratorRunners = {},\n): Promise<ScrapeResult> {\n';

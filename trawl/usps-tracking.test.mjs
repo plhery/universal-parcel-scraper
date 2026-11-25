@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, USPS_IDLE_MS, USPS_SESSION_MAX_AGE_MS, UspsSessions, uspsCaptureNumber, uspsOutage } from './usps-tracking.mjs';
+import { attachUspsTrackingCapture, forgetUspsOutageSessions, keepUspsSession, listenAfterUspsWarmup, USPS_IDLE_MS, USPS_SESSION_MAX_AGE_MS, USPS_WARMUP_MS, UspsSessions, uspsCaptureNumber, uspsOutage, uspsSessions, uspsWarmupRequest, warmUspsSessions } from './usps-tracking.mjs';
 
 const NUMBER = '9400111899223397910421';
 const URL = `https://tools.usps.com/tracking/${NUMBER}`;
@@ -159,7 +159,7 @@ function keeper(t, { outcomes = {}, createStatus, options } = {}) {
   };
   const settled = promise => { const state = {}; promise.then(value => { state.value = value; }, error => { state.error = error; }); return state; };
   const read = (extra = {}) => settled(keep.run({ url: URL, ...OPTIONS, skipHttp: true, maxTier: 3, maxTimeout: 45_000, ...extra }, sessions, scrape));
-  return { keep, sessions, read, reads, events, live, advance, most: () => most };
+  return { keep, sessions, scrape, read, reads, events, live, advance, most: () => most };
 }
 const states = events => events.filter(event => event.state !== 'trial_read').map(event => event.reason ?? event.state);
 const of = (reads, n) => reads.filter(read => read.id === `usps-tracking-${n}`);
@@ -361,4 +361,68 @@ test('the orchestrator sends ordinary USPS reads through the kept session', () =
   assert.match(patched, /^import \{ uspsSessions \} from "\.\/utils\/usps-tracking\.mjs"\n/);
   assert.match(patched, /Promise<ScrapeResult> \{\n {2}if \(uspsSessions\.routes\(req, deps\.sessions\)\) return uspsSessions\.run\(req, deps\.sessions!, \(read\) => scrape\(read, deps, runners\)\)\n {2}const started/);
   assert.throws(() => keepUspsSession(entry.replace('runners: OrchestratorRunners = {}', 'runners = {}')), /review the USPS kept session/);
+});
+
+test('the warm-up reads a tracking page the way the adapter does, and only for a USPS number', () => {
+  const req = uspsWarmupRequest(` ${NUMBER} `);
+  assert.deepEqual(req, { url: URL, skipHttp: true, maxTier: 3, maxTimeout: 60_000, contentWaitForSelector: '#trackingNum', captureResponses: [URL] });
+  assert.equal(new UspsSessions().routes(req, {}), true);
+  for (const number of ['', undefined, '1', `${NUMBER}?x=1`, `${NUMBER}/x`]) assert.equal(uspsWarmupRequest(number), null, String(number));
+  assert.equal(globalThis[Symbol.for('upc.uspsSessions')], uspsSessions);
+});
+
+test('the warm-up ends once both sessions are ready, through the lookup path', async t => {
+  const k = keeper(t, { outcomes: { 1: ['r', 'T'], 2: ['r', 'r', 'T'] } });
+  const events = [];
+  const scrapes = [];
+  const warm = warmUspsSessions({ number: NUMBER, deps: { sessions: k.sessions }, sessions: k.keep, report: fields => events.push(fields),
+    scrape: (req, deps) => { scrapes.push(req); return k.keep.run(req, deps.sessions, k.scrape); } });
+  const done = {};
+  warm.then(value => { done.value = value; });
+  await k.advance(20_000);
+  assert.equal(done.value, undefined);
+  assert.deepEqual(scrapes.map(req => req.url), [URL]);
+  await k.advance(10_000);
+  assert.equal(k.keep.readyCount, 2);
+  assert.equal(done.value.ready, 2);
+  assert.ok(done.value.ms >= 24_000 && done.value.ms <= 28_000, String(done.value.ms));
+  assert.deepEqual(events.map(event => event.state), ['started', 'ready']);
+});
+
+test('the warm-up gives up after its limit while USPS refuses every session', async t => {
+  const refusals = Object.fromEntries(Array.from({ length: 40 }, (_, n) => [n + 1, ['r', 'r', 'r']]));
+  const k = keeper(t, { outcomes: refusals });
+  const events = [];
+  const done = {};
+  warmUspsSessions({ number: NUMBER, deps: { sessions: k.sessions }, sessions: k.keep, report: fields => events.push(fields),
+    scrape: (req, deps) => k.keep.run(req, deps.sessions, k.scrape) }).then(value => { done.value = value; });
+  await k.advance(USPS_WARMUP_MS - 5_000);
+  assert.equal(done.value, undefined);
+  await k.advance(10_000);
+  assert.equal(done.value.ready, 0);
+  assert.deepEqual(events.map(event => event.state), ['started', 'gave_up']);
+});
+
+test('the warm-up is skipped without a USPS number or kept sessions', async () => {
+  for (const [number, deps, reason] of [['1', { sessions: {} }, 'invalid_number'], [NUMBER, {}, 'no_sessions']]) {
+    const events = [];
+    let scraped = false;
+    const result = await warmUspsSessions({ number, deps, sessions: new UspsSessions(), report: fields => events.push(fields),
+      scrape: () => { scraped = true; } });
+    assert.deepEqual(result, { ready: 0, ms: 0 });
+    assert.deepEqual(events, [{ state: 'skipped', reason }]);
+    assert.equal(scraped, false);
+  }
+});
+
+test('the server opens its port after the warm-up only when a warm-up number is set', () => {
+  const source = 'import { getDeps, initPool } from "./deps"\n\nconst app = createApiApp().listen(PORT)\n\nconsole.log("x")\n'
+    + 'const poolReady = initPool()\n\npoolReady.catch(() => {})\n';
+  const patched = listenAfterUspsWarmup(source);
+  assert.match(patched, /^import \{ scrape as uspsWarmupScrape \} from "@trawl\/tiers"\nimport \{ warmUspsSessions \} from "\.\.\/\.\.\/\.\.\/packages\/tiers\/src\/utils\/usps-tracking\.mjs"\n/);
+  assert.match(patched, /const app = createApiApp\(\)\nconst uspsWarmupNumber = process\.env\.USPS_WARMUP_NUMBER\?\.trim\(\)\nif \(!uspsWarmupNumber\) app\.listen\(PORT\)\n/);
+  assert.match(patched, /const poolReady = initPool\(\)\nif \(uspsWarmupNumber\) void poolReady\n {2}\.then\(\(\) => warmUspsSessions\(\{ number: uspsWarmupNumber, deps: getDeps\(\), scrape: uspsWarmupScrape \}\)\)\n {2}\.catch\(\(\) => \{\}\)\n {2}\.finally\(\(\) => app\.listen\(PORT\)\)\n\npoolReady\.catch/);
+  assert.doesNotMatch(patched, /createApiApp\(\)\.listen/);
+  assert.throws(() => listenAfterUspsWarmup(source.replace('.listen(PORT)', '.listen({ port: PORT })')), /review the USPS warm-up/);
+  assert.throws(() => listenAfterUspsWarmup(source.replace('initPool()', 'initPool({})')), /review the USPS warm-up/);
 });
