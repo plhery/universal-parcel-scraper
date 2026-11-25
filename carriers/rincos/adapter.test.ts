@@ -200,6 +200,7 @@ describe('Rincos HTTP adapter', () => {
   it('refuses invalid numbers, spent budgets and cancelled calls before requesting', async () => {
     const fetcher = vi.fn<typeof fetch>();
     const tracker = new RincosTracker({ fetcher });
+    expect(normalizeRincosNumber('81100000000010')).toBe('81100000000010');
     for (const number of ['10000000000017', '8210000000001', NUMBER + '9', 'EXAMPLE']) {
       expect(() => normalizeRincosNumber(number)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
       await expect(tracker.fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });

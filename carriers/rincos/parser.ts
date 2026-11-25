@@ -14,10 +14,13 @@ const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 const BLOCKED = /captcha|_cf_chl_opt|cf-chl-|cf-turnstile|<title>\s*(?:Just a moment|Attention Required|Access Denied)|Incapsula incident|Request unsuccessful|_Incapsula_Resource|verify (?:that )?you are human|bot verification|403 Forbidden/i;
 
-/** This is lookup validation, not a detection rule or evidence of ownership. */
+/**
+ * This is lookup validation, not a detection rule or evidence of ownership. Rincos numbers seen
+ * so far start with 81 or 82.
+ */
 export function normalizeRincosNumber(raw: string): string {
   const number = typeof raw === 'string' && raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
-  if (!/^82\d{12}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Rincos needs its own fourteen-digit tracking number');
+  if (!/^8\d{13}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Rincos needs its own fourteen-digit tracking number');
   return number;
 }
 
