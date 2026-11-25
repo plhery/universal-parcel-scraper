@@ -1,0 +1,33 @@
+{
+  "carrier": "wcxex",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's order row (`IR`), before its warehouse has the parcel."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's warehouse at Shanghai Pudong takes the parcel in (`AF`)."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's warehouse is done with the parcel (`DF`); packing for the flight follows."},
+    {"wording": "Scan packing", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The warehouse packs the parcel into a bag for the flight (`SP`)."},
+    {"wording": "Process at Location", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The packing is complete (`PL`)."},
+    {"wording": "Shipment leaving", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The bag leaves the warehouse for the airport (`YCK`)."},
+    {"wording": "Export declaration", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The export declaration at Hong Kong before the flight (`CBG`), a routine step."},
+    {"wording": "Custom Released - Outbound,Flight Scheduled", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export customs released the bag at Hong Kong and a flight is booked (`CF`)."},
+    {"wording": "Flight Departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "From Hong Kong (`FD`)."},
+    {"wording": "Flight Arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the US gateway (`FLD`)."},
+    {"wording": "Transition Domestic Supplier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line hands the bag to the network that carries it on in the United States (`GAW`)."},
+    {"wording": "Shipment arrived at destination facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The bag reaches the line's facility in the United States (`GRW`), before the delivering network takes the parcel."},
+    {"wording": "Shipping Label Created", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "SpeedX's record of its label, made while the parcel was still at the line's Shanghai warehouse: no scan of it, so it moves nothing."},
+    {"wording": "Shipment picked up", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's acceptance, copied with the line's code `PU`, days after the flight landed."},
+    {"wording": "Arrived at USPS Regional Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied, without a place."},
+    {"wording": "Departed USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "In Transit, Arriving On Time", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied, without a place."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering post office's arrival, followed by the delivery round."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's and SpeedX's delivery round, copied."},
+    {"wording": "Delivered, In/At Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."},
+    {"wording": "Processing at Transit Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "SpeedX's scan, copied with the line's code `PU`."},
+    {"wording": "In transit to destination facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "SpeedX's scan, copied."},
+    {"wording": "Arrival at Destination Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "SpeedX's scan, copied."},
+    {"wording": "Processing at Designated Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "SpeedX's scan, copied with the line's code `PU`."},
+    {"wording": "Delivered. Position: Front door", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "SpeedX's delivery, copied with the code `OK`, naming where the parcel was left."}
+  ]
+}

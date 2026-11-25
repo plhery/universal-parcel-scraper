@@ -1,0 +1,43 @@
+{
+  "carrier": "wcxex",
+  "records": [
+    {
+      "number": "WX9G030924917026",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260416143313id_/https://www.parcelpanel.com/couriers/wcxex/",
+        "date": "2026-04-16",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's page for WCXEX (with the site wcxex.com) shows. WCXEX's tracker answers it with a parcel flown from Hong Kong to Los Angeles and delivered to a mailbox by USPS."
+    },
+    {
+      "number": "WX9S080246198026",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://wcxex.com/",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample tracking number beside the tracking box of the carrier's own site. WCXEX's tracker answers it with a parcel flown from Hong Kong to New York and delivered by SpeedX, whose number the reply holds."
+    }
+  ]
+}
