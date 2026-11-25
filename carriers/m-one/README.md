@@ -44,12 +44,13 @@ makes.
 
 ## Numbers
 
-M-ONE's parcels carry numbers in the UPU S10 layout with Serbia's code, the layout Pošta Srbije
-uses, in the P series. Detection names Pošta Srbije for the C, E, L and R series, its own, and
-keeps the others postal, where a valid S10 number with that code also suggests M-ONE
-(`m-one-s10`) after Pošta Srbije, and recognition asks both. The adapter also takes the letters
-RS and twelve digits, the shape of the number in the page's fixed reply. The samples and their
-sources are in [`numbers.json`](numbers.json).
+M-ONE's own numbers are the letters RS and thirteen digits. Every parcel seen with that shape has
+been M-ONE's, and no other carrier's rule takes it, so `m-one-rs` names M-ONE at once. Its parcels also carry numbers in the UPU S10 layout with Serbia's
+code, the layout Pošta Srbije uses, in the P series. Detection names Pošta Srbije for the C, E, L
+and R series, its own, and keeps the others postal, where a valid S10 number with that code also
+suggests M-ONE (`m-one-s10`) after Pošta Srbije, and recognition asks both. The adapter also takes
+RS and twelve digits, the shape of the number in the page's fixed reply, which the API does not
+know. The samples and their sources are in [`numbers.json`](numbers.json).
 
 ## Links
 

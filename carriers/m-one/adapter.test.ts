@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
-import { recognitionCandidates } from '../../core/catalog/recognition.js';
+import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
+import { InvalidInputError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, M_ONE_API, MOneTracker } from './adapter.js';
@@ -175,8 +176,10 @@ describe('M-ONE HTTP adapter', () => {
     await expect(carrier(fetcher).track({ number: IN_TRANSIT }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeMOneNumber('pl 000-000-014 rs')).toBe(DELIVERED);
-    // The letters RS and twelve digits, the number of the reply the page shows when its lookup fails.
+    // The letters RS and thirteen digits, M-ONE's own numbers, or twelve, the number of the reply the page shows when its lookup fails.
+    expect(normalizeMOneNumber('rs 2200 0000 00001')).toBe('RS2200000000001');
     expect(normalizeMOneNumber('RS000000000000')).toBe('RS000000000000');
+    for (const number of ['RS22000000000001', 'RS22000000000A1']) expect(() => normalizeMOneNumber(number), number).toThrow(InvalidInputError);
   });
 
   it('routes a number filed under M-ONE to the adapter', async () => {
@@ -189,6 +192,17 @@ describe('M-ONE HTTP adapter', () => {
 });
 
 describe('M-ONE numbers', () => {
+  it('names M-ONE at once for RS and thirteen digits, its own numbers', () => {
+    for (const number of ['RS2200000000001', 'rs 2200 0000 00001']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'm-one', confidence: 'high', candidates: ['m-one'] });
+      expect(recognitionAskedCarriers(number), number).toEqual([]);
+    }
+    // Twelve or fourteen digits, other letters, or RS at the end are not.
+    for (const number of ['RS220000000001', 'RS22000000000001', 'RT2200000000001', '2200000000001RS']) {
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('m-one');
+    }
+  });
+
   it('leaves Serbian S10 numbers with postal detection and asks M-ONE with Pošta Srbije first', () => {
     expect(detectCarrierMatch(DELIVERED)).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     const asked = recognitionCandidates(DELIVERED).map(({ carrier, preferred }) => ({ carrier, preferred }));
@@ -216,7 +230,7 @@ describe('M-ONE status vocabulary', () => {
 
 describe('M-ONE links', () => {
   it('name M-ONE for its two shapes only', () => {
-    for (const number of ['PL000000028RS', 'RS000000000001']) {
+    for (const number of ['PL000000028RS', 'RS000000000001', 'RS2200000000001']) {
       expect(parseTrackingInput(`https://m-one.rs/en?${number}`), number).toMatchObject({ trackingNumber: number, carrier: 'm-one', source: 'link' });
     }
     for (const number of ['SAMPLE1', 'PL00000002RS']) expect(parseTrackingInput(`https://m-one.rs/en?${number}`).carrier, number).not.toBe('m-one');

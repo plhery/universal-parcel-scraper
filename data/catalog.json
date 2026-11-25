@@ -42925,10 +42925,14 @@
           "www.m-one.rs"
         ],
         "pathPattern": "^/(?:en)?/?$",
-        "query": "^([A-Z]{2}\\d{9}RS|RS\\d{12})$"
+        "query": "^([A-Z]{2}\\d{9}RS|RS\\d{12,13})$"
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^RS\\d{13}$",
+        "confidence": "high"
+      },
       {
         "pattern": "^[A-Z]{2}\\d{9}RS$",
         "confidence": "low",

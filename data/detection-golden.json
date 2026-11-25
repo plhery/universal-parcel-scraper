@@ -114536,6 +114536,14 @@
     ]
   },
   {
+    "input": "RS2200000000001",
+    "carrier": "m-one",
+    "confidence": "high",
+    "candidates": [
+      "m-one"
+    ]
+  },
+  {
     "input": "RS220022016792",
     "carrier": "unknown",
     "confidence": "none",

@@ -10,9 +10,9 @@ import { mOneStage } from './status.js';
 export const PROVIDER = 'M-ONE';
 // A history of thirty scans is about ten kilobytes.
 export const M_ONE_MAX_BYTES = 256 * 1024;
-// The UPU S10 layout with Serbia's code, and the letters RS with twelve digits
-// that the tracker's own fallback reply shows.
-const NUMBER = /^(?:[A-Z]{2}\d{9}RS|RS\d{12})$/;
+// The UPU S10 layout with Serbia's code, and the letters RS with thirteen digits, M-ONE's own
+// numbers, or twelve, as in the tracker's own fallback reply.
+const NUMBER = /^(?:[A-Z]{2}\d{9}RS|RS\d{12,13})$/;
 // A wall clock with no zone; the creation of a pickup order carries fractions of a second.
 const CLOCK = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,7})?$/;
 // The placeholder the page's fallback reply puts in an empty field.
@@ -23,7 +23,7 @@ const MAX_EVENTS = 100;
 /** A number for M-ONE's tracker, in capitals; anything else is not one it issues. */
 export function normalizeMOneNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw).toUpperCase() : '';
-  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'M-ONE numbers are two letters, nine digits and RS, or RS and twelve digits');
+  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'M-ONE numbers are two letters, nine digits and RS, or RS and thirteen digits');
   return number;
 }
 

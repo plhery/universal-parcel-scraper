@@ -57,6 +57,18 @@
         "confidence": "none"
       },
       "note": "The tracker script on M-ONE's home page shows this number, with a delivered status, in the fallback reply it displays when the tracking API fails."
+    },
+    {
+      "number": "RS2200000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-26",
+      "expect": {
+        "carrier": "m-one",
+        "confidence": "high"
+      },
+      "note": "Invented placeholder for m-one-rs: RS and thirteen digits, the shape of M-ONE's own numbers. Its serial is all zeros, far from the numbers in use."
     }
   ]
 }

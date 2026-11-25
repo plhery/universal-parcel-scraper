@@ -42930,10 +42930,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "www.m-one.rs"
         ],
         "pathPattern": "^/(?:en)?/?$",
-        "query": "^([A-Z]{2}\\d{9}RS|RS\\d{12})$"
+        "query": "^([A-Z]{2}\\d{9}RS|RS\\d{12,13})$"
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^RS\\d{13}$",
+        "confidence": "high"
+      },
       {
         "pattern": "^[A-Z]{2}\\d{9}RS$",
         "confidence": "low",
@@ -76835,7 +76839,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lvz-post": [],
   "lx-pantos": [],
   "m-and-p": [],
-  "m-one": ["m-one-s10"],
+  "m-one": ["m-one-rs","m-one-s10"],
   "m-xpress": [],
   "m24-logistics": [],
   "m5-continent": [],
