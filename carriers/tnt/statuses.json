@@ -10,6 +10,38 @@
       "note": "National tracking history label; future rail labels are not events."
     },
     {
+      "wording": "Colis pris en compte par l'agence TNT",
+      "language": "fr",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "National tracking history row: the TNT agency takes the parcel in, TNT's first scan of its own."
+    },
+    {
+      "wording": "Colis en cours d'acheminement",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "National tracking history row: on its way between TNT's agencies."
+    },
+    {
+      "wording": "Arrivée à l'agence de destination",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "National tracking history row: at the agency that delivers, before the round."
+    },
+    {
+      "wording": "Départ en livraison",
+      "language": "fr",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "National tracking history row: the delivery round has left the agency."
+    },
+    {
       "code": "PU",
       "wording": "Shipment collected from collection address",
       "language": "en",

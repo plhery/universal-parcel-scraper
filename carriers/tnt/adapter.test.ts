@@ -1,11 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/detect.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { askedLast } from '../../core/testing/recognition.js';
 import { adapter, normalizeTntExpressNumber, normalizeTntFranceNumber, parseTntExpressResponse, parseTntFranceResponse, TntExpressTracker, TntFranceTracker } from './adapter.js';
-import { tntExpressStatus } from './status.js';
+import { tntExpressStatus, tntFranceStatus } from './status.js';
 
 const NUMBER = '1000000000000001';
 const fixture = () => readFileSync(new URL('./fixtures/registered.html', import.meta.url), 'utf8');
@@ -45,6 +46,16 @@ describe('TNT France public tracking', () => {
       .replace('<p>Livré</p>', '<p class="suivi-title-selected">Livré</p>')
       .replace('<div class="roster tnt-even">', '<div class="roster tnt-even"><div class="roster__item">Livré</div><div class="roster__item">29/03/2026 14:00</div><div class="roster__item">Synthetic depot</div></div><div class="roster tnt-even">');
     expect(parseTntFranceResponse(html, NUMBER)).toMatchObject({ status: 'delivered', events: [{ stage: 'delivered', time: '2026-03-29T14:00:00+02:00' }, { stage: 'registered' }] });
+  });
+
+  it.each([
+    ["Colis pris en compte par l'agence TNT", 'accepted'],
+    ["Colis en cours d'acheminement", 'in_transit'],
+    ["Arrivée à l'agence de destination", 'in_transit'],
+    ['Départ en livraison', 'out_for_delivery'],
+  ])('reads the history row %s as %s', (wording, stage) => {
+    expect(tntFranceStatus(wording)?.stage).toBe(stage);
+    expect(statusMapAnswer({ carrier: 'tnt', providerCode: null, description: wording })).toEqual({ kind: 'mapped', stage });
   });
 
   it('sends international numbers to tnt.com and other shapes nowhere', async () => {
