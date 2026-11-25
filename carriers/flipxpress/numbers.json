@@ -1,5 +1,48 @@
 {
   "carrier": "flipxpress",
-  "gap": "No public page shows a Flip Xpress tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "TL202601-023818",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2pGM1QxQndZVnBpYVd0ak5WUlZTelI0U25Sc1duYxAB!2m1!1s0x0:0x93e58fbcc602df2d",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Google Maps review of Flip Xpress Delivery Services gives it as the reviewer's waybill for a delivery to an office in Jumeirah Lake Towers. Flip Xpress's tracker answers it as a delivered shipment from February 2026 with seven statuses."
+    },
+    {
+      "number": "464154997975431",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT2xKTFZuYzNRMk5ZT0VaaFpETlNlWEUzVkVFM1YzYxAB!2m1!1s0x0:0x93e58fbcc602df2d",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "A Google Maps review of Flip Xpress Delivery Services gives it as the waybill of a parcel delivered that day. Flip Xpress's tracker answers it as a delivered shipment from August 2025 with seven statuses."
+    }
+  ]
 }

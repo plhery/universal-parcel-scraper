@@ -1,0 +1,101 @@
+{
+ "status": 1,
+ "message": "Manifest Status",
+ "data": [
+  {
+   "awb_number": "TL202601-023818",
+   "address": {
+    "sender_address": "[sender address]",
+    "receiver_address": "[recipient address]",
+    "description": "TL202601-023818",
+    "service_code": "XPS"
+   },
+   "tracking": [
+    {
+     "status_id": 8343516,
+     "status_code": "12",
+     "status_name": "Created",
+     "status_real_name": "Created",
+     "exception": "",
+     "exception_code": "",
+     "driver_code": null,
+     "timestamp": "2026-02-07T15:09:45.793Z",
+     "date": "07-02-2026",
+     "time": "15:09:45"
+    },
+    {
+     "status_id": 8343839,
+     "status_code": "13",
+     "status_name": "Picked [12]",
+     "status_real_name": "Picked",
+     "exception": "",
+     "exception_code": "",
+     "driver_code": 12,
+     "timestamp": "2026-02-07T16:41:21.565Z",
+     "date": "07-02-2026",
+     "time": "16:41:21"
+    },
+    {
+     "status_id": 8344871,
+     "status_code": "13",
+     "status_name": "Picked [30]",
+     "status_real_name": "Picked",
+     "exception": "",
+     "exception_code": "",
+     "driver_code": 30,
+     "timestamp": "2026-02-09T04:01:31.039Z",
+     "date": "09-02-2026",
+     "time": "04:01:31"
+    },
+    {
+     "status_id": 8344872,
+     "status_code": "6",
+     "status_name": "Out for delivery [30]",
+     "status_real_name": "Out for delivery",
+     "exception": "",
+     "exception_code": "",
+     "driver_code": 30,
+     "timestamp": "2026-02-09T04:01:31.054Z",
+     "date": "09-02-2026",
+     "time": "04:01:31"
+    },
+    {
+     "status_id": 8344979,
+     "status_code": "13",
+     "status_name": "Picked [30]",
+     "status_real_name": "Picked",
+     "exception": "",
+     "exception_code": "",
+     "driver_code": 30,
+     "timestamp": "2026-02-09T04:03:18.849Z",
+     "date": "09-02-2026",
+     "time": "04:03:18"
+    },
+    {
+     "status_id": 8344980,
+     "status_code": "6",
+     "status_name": "Out for delivery [30]",
+     "status_real_name": "Out for delivery",
+     "exception": "",
+     "exception_code": "",
+     "driver_code": 30,
+     "timestamp": "2026-02-09T04:03:18.855Z",
+     "date": "09-02-2026",
+     "time": "04:03:18"
+    },
+    {
+     "status_id": 8349016,
+     "status_code": "2",
+     "status_name": "Delivered  - Normal [30] - Received by [recipient]",
+     "status_real_name": "Delivered  - Normal",
+     "exception": "",
+     "exception_code": "",
+     "driver_code": 30,
+     "timestamp": "2026-02-09T12:40:27.208Z",
+     "date": "09-02-2026",
+     "time": "12:40:27"
+    }
+   ]
+  }
+ ]
+}

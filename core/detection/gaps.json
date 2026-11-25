@@ -1711,6 +1711,18 @@
     "reason": "A Flip Post waybill of three digits and four loses its dash and becomes seven digits, too plain to claim."
   },
   {
+    "carrier": "flipxpress",
+    "pattern": "^\\d{15}$",
+    "kind": "by_design",
+    "reason": "Flip Xpress delivers sellers' parcels under fifteen-digit waybills, a bare digit run several carriers share, and no public page states their layout."
+  },
+  {
+    "carrier": "flipxpress",
+    "pattern": "^TL\\d{12}$",
+    "kind": "by_design",
+    "reason": "Flip Xpress's booking references are known from one public sample only, and their layout is not documented."
+  },
+  {
     "carrier": "fliway",
     "pattern": "^[A-Z]{2}\\d{7}$",
     "kind": "by_design",

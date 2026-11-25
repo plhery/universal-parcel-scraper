@@ -1,4 +1,10 @@
 {
   "carrier": "flipxpress",
-  "entries": []
+  "entries": [
+    {"code": "12", "wording": "Created", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The seller has booked the shipment; Flip Xpress does not have the parcel yet."},
+    {"code": "13", "wording": "Picked", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "A driver has picked the parcel up: from the seller, or at the hub before a delivery run."},
+    {"code": "6", "wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"code": "2", "wording": "Delivered - Normal", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25"},
+    {"code": "2", "wording": "Delivered (POD Closed)", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Delivered, with the proof of delivery filed."}
+  ]
 }

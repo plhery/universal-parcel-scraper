@@ -17,18 +17,44 @@
   "timezone": "Asia/Dubai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "flipxpress",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "searchUrl": "https://www.flipxp.com/track",
     "helpUrl": "https://www.flipxp.com/contact",
     "canaryUrl": "https://www.flipxp.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "provider_code"
+    ],
+    "discarded": [
+      "recipient_name",
+      "recipient_address",
+      "sender_address",
+      "contents"
+    ],
+    "unavailable": [
+      "eta",
+      "location",
+      "weight"
+    ]
   },
   "links": [],
   "detection": []
