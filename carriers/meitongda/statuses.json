@@ -1,0 +1,20 @@
+{
+  "carrier": "meitongda",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's data, before the line has the parcel."},
+    {"wording": "Forecast has been received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's pre-advice of the parcel, before its first scan."},
+    {"wording": "Barcode scannin", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "\"Barcode scanning\" without its \"g\": the line's first scan of the parcel."},
+    {"wording": "Packa ed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "\"Packaged\" without its \"g\": the parcel is bagged for export."},
+    {"wording": "Leavin Scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "\"Leaving Scan\" without its \"g\": the parcel leaves the line's facility."},
+    {"wording": "Export customs declaration completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "China's export clearance."},
+    {"wording": "Hand over to airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel goes to the airline."},
+    {"wording": "Next stop, airport of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves for the destination."},
+    {"wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The landing at Heathrow (`LHR`)."},
+    {"wording": "The packa e is bein submitted for customs clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "\"The package is being submitted for customs clearance\" without its \"g\"s: import clearance at Heathrow under way."},
+    {"wording": "The packa e has been cleared throu h customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "\"The package has been cleared through customs\" without its \"g\"s."},
+    {"wording": "The packa e has been transferred to the service provider", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "\"The package has been transferred to the service provider\" without its \"g\": the line hands the parcel to the delivering network at Heathrow."},
+    {"wording": "Arrived processin center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "\"Arrived processing center\" without its \"g\": the delivering network's hub or mail centre, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The delivering network's round from its delivery office, copied."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The delivering network's delivery, copied as the last row."}
+  ]
+}

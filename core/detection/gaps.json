@@ -7046,5 +7046,10 @@
     "carrier": "we-logistics",
     "kind": "open",
     "reason": "WE Logistics waybills seen so far are WEL, two letters, ten digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "meitongda",
+    "kind": "open",
+    "reason": "MEITONGDA numbers seen so far are MTD and seventeen digits, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]
