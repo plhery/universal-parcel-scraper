@@ -85,6 +85,7 @@ export const STATUSES: Record<string, Milestone> = {
   DELIVERY_FAILED_NOT_MET_4X: milestone('failed_attempt', 'exception', 'Recipient not met; the parcel goes back to the sender'),
   INTERNATIONAL_DELIVERY_FAILED: milestone('failed_attempt', 'exception', 'Delivery attempt unsuccessful'),
   INTERNATIONAL_DELIVERY_FAILED_ADDRESS: milestone('failed_attempt', 'exception', 'Delivery address not found'),
+  INTERNATIONAL_DELIVERY_FAILED_NOT_MET: milestone('failed_attempt', 'exception', 'Recipient not met'),
   INTERNATIONAL_PUDO_READY_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection at a parcel shop'),
   INTERNATIONAL_PUDO_NOT_COLLECTED: milestone('exception', 'exception', 'Not collected from the parcel shop'),
   INTERNATIONAL_UNDELIVERABLE: milestone('exception', 'exception', 'Shipment not deliverable'),

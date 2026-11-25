@@ -408,6 +408,15 @@
       "note": "Delivery abroad failed because the address was not found"
     },
     {
+      "code": "INTERNATIONAL_DELIVERY_FAILED_NOT_MET",
+      "wording": "Receiver was not met.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "Delivery abroad failed because nobody was there to receive it"
+    },
+    {
       "code": "INTERNATIONAL_PUDO_READY_FOR_COLLECTION",
       "wording": "The shipment is ready for pick up in a parcel shop/store.",
       "language": "en",
