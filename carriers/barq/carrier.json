@@ -18,19 +18,44 @@
   "timezone": "Asia/Riyadh",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "barq",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://web.barqfleet.com/en/tracking-details?trackingId={trackingNumber}",
     "searchUrl": "https://web.barqfleet.com/en/tracking",
     "helpUrl": "https://barqapp-help.freshdesk.com/en/support/home",
     "canaryUrl": "https://web.barqfleet.com/en/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "merchant",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times",
+      "provider_code"
+    ],
+    "discarded": [
+      "merchant",
+      "coordinates"
+    ],
+    "unavailable": [
+      "eta",
+      "location",
+      "weight",
+      "recipient_name"
+    ]
   },
   "links": [
     {

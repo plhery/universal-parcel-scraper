@@ -441,6 +441,12 @@
     "reason": "Eleven digits are shared by Aramex, CDEK and other carriers, and nothing in the number points to Azul Cargo Express."
   },
   {
+    "carrier": "barq",
+    "pattern": "^[A-Z]{2}\\d{9}$",
+    "kind": "by_design",
+    "reason": "BARQ's order numbers are two letters and nine digits with no published prefix, a shape other carriers' references share, so nothing in the number points to BARQ."
+  },
+  {
     "carrier": "bermuda-container-line",
     "kind": "open",
     "reason": "The verified ISO container identifier and booking do not establish an exclusive number range. Select Bermuda Container Line explicitly."

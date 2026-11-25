@@ -1166,6 +1166,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'aqx-logistics', number: 'HF-00000000',
     route: /^https:\/\/aqxlogistics\.com\/track\?id=HF-00000000$/,
     marker: /Tracking Number Not Found/ },
+  // BARQ's tracking page posts the number in its query to its GraphQL service and shows the service's answer.
+  { carrier: 'barq', number: 'ZZ000000000',
+    route: /^https:\/\/web\.barqfleet\.com\/en\/tracking-details\?trackingId=ZZ000000000$/,
+    marker: /Invalid Tracking Number|Order not found/ },
   // BoxC's tracking app puts the number in its path into its field.
   { carrier: 'boxc', number: 'BOXC00000000999',
     route: /^https:\/\/boxc\.com\/track\/BOXC00000000999$/,

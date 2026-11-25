@@ -1,4 +1,23 @@
 {
   "carrier": "barq",
-  "entries": []
+  "entries": [
+    {"code": "new_order", "wording": "new order", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's first step, Order Started: the merchant is processing the order."},
+    {"code": "order_confirmed", "wording": "order confirmed", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's Order Started step."},
+    {"code": "processing", "wording": "processing", "stage": "registered", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's In Progress step: the courier is on his way to the pickup."},
+    {"code": "ready_for_delivery", "wording": "Ready for delivery", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The tracking page's In Progress step: the merchant has the order ready and the courier is on his way to the pickup."},
+    {"code": "processing_at_warehouse", "wording": "processing at warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "At a BARQ warehouse."},
+    {"code": "in_warehouse", "wording": "in warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "At a BARQ warehouse."},
+    {"code": "in_transit_to_warehouse", "wording": "in transit to warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"code": "picked_up", "wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The courier has collected the order from the merchant."},
+    {"code": "intransit", "wording": "Intransit", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The tracking page's In Transit step: the courier is on his way for delivery."},
+    {"code": "completed", "wording": "Completed", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The tracking page's Delivered step."},
+    {"code": "delivery_attempt_failed", "wording": "delivery attempt failed", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses."},
+    {"code": "returned", "wording": "returned", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses."},
+    {"code": "cancelled", "wording": "cancelled", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses."},
+    {"code": "exception", "wording": "exception", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses."},
+    {"code": "damaged_or_lost", "wording": "damaged or lost", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses."},
+    {"code": "not_ready_for_pickup", "wording": "not ready for pickup", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses: the merchant did not have the order ready."},
+    {"code": "pickup_failed", "wording": "pickup failed", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses."},
+    {"code": "misrouted", "wording": "misrouted", "stage": "exception", "language": "en", "confirmedBy": "bundle", "note": "One of the tracking page's Failed statuses."}
+  ]
 }
