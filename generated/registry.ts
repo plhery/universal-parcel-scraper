@@ -162,6 +162,7 @@ import { adapter as cescoLogistics } from '../carriers/cesco-logistics/adapter.j
 import { adapter as ceskaPosta } from '../carriers/ceska-posta/adapter.js';
 import { adapter as cevaLogistics } from '../carriers/ceva-logistics/adapter.js';
 import { adapter as chazki } from '../carriers/chazki/adapter.js';
+import { adapter as chengchain } from '../carriers/chengchain/adapter.js';
 import { adapter as chilexpress } from '../carriers/chilexpress/adapter.js';
 import { adapter as chinaAirlinesCargo } from '../carriers/china-airlines-cargo/adapter.js';
 import { adapter as chinaPost } from '../carriers/china-post/adapter.js';
@@ -468,6 +469,7 @@ import { adapter as happyPost } from '../carriers/happy-post/adapter.js';
 import { adapter as haypost } from '../carriers/haypost/adapter.js';
 import { adapter as hcrd } from '../carriers/hcrd/adapter.js';
 import { adapter as hctLogistics } from '../carriers/hct-logistics/adapter.js';
+import { adapter as hdgj } from '../carriers/hdgj/adapter.js';
 import { adapter as hecnyShipping } from '../carriers/hecny-shipping/adapter.js';
 import { adapter as hedeShipping } from '../carriers/hede-shipping/adapter.js';
 import { adapter as hellmann } from '../carriers/hellmann/adapter.js';
@@ -507,6 +509,7 @@ import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
 import { adapter as huiyu } from '../carriers/huiyu/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
 import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
+import { adapter as hytd } from '../carriers/hytd/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
 import { adapter as ibexExpressBo } from '../carriers/ibex-express-bo/adapter.js';
 import { adapter as icasaCargo } from '../carriers/icasa-cargo/adapter.js';
@@ -557,6 +560,7 @@ import { adapter as jetLogistic } from '../carriers/jet-logistic/adapter.js';
 import { adapter as jetizz } from '../carriers/jetizz/adapter.js';
 import { adapter as jetlineCouriers } from '../carriers/jetline-couriers/adapter.js';
 import { adapter as jetspeed } from '../carriers/jetspeed/adapter.js';
+import { adapter as jgex } from '../carriers/jgex/adapter.js';
 import { adapter as jhgj } from '../carriers/jhgj/adapter.js';
 import { adapter as jiayang } from '../carriers/jiayang/adapter.js';
 import { adapter as jifan } from '../carriers/jifan/adapter.js';
@@ -641,6 +645,7 @@ import { adapter as logistiq } from '../carriers/logistiq/adapter.js';
 import { adapter as logoix } from '../carriers/logoix/adapter.js';
 import { adapter as loomisExpress } from '../carriers/loomis-express/adapter.js';
 import { adapter as lotteGlobal } from '../carriers/lotte-global/adapter.js';
+import { adapter as luluExpress } from '../carriers/lulu-express/adapter.js';
 import { adapter as lxPantos } from '../carriers/lx-pantos/adapter.js';
 import { adapter as mAndP } from '../carriers/m-and-p/adapter.js';
 import { adapter as mOne } from '../carriers/m-one/adapter.js';
@@ -910,6 +915,7 @@ import { adapter as sfydExpress } from '../carriers/sfyd-express/adapter.js';
 import { adapter as shadowfax } from '../carriers/shadowfax/adapter.js';
 import { adapter as sheensync } from '../carriers/sheensync/adapter.js';
 import { adapter as shengao } from '../carriers/shengao/adapter.js';
+import { adapter as shilianxin } from '../carriers/shilianxin/adapter.js';
 import { adapter as shipa } from '../carriers/shipa/adapter.js';
 import { adapter as shipagentIn } from '../carriers/shipagent-in/adapter.js';
 import { adapter as shipblu } from '../carriers/shipblu/adapter.js';
@@ -988,6 +994,7 @@ import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.
 import { adapter as swissUniversalExpress } from '../carriers/swiss-universal-express/adapter.js';
 import { adapter as swissconnect } from '../carriers/swissconnect/adapter.js';
 import { adapter as sxwExpress } from '../carriers/sxw-express/adapter.js';
+import { adapter as szctc } from '../carriers/szctc/adapter.js';
 import { adapter as tCat } from '../carriers/t-cat/adapter.js';
 import { adapter as tGroup } from '../carriers/t-group/adapter.js';
 import { adapter as tailwindShippingLines } from '../carriers/tailwind-shipping-lines/adapter.js';
@@ -1124,6 +1131,7 @@ import { adapter as whwdt } from '../carriers/whwdt/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as wldExpress } from '../carriers/wld-express/adapter.js';
+import { adapter as wokexp } from '../carriers/wokexp/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
 import { adapter as wooriTaekbae } from '../carriers/woori-taekbae/adapter.js';
 import { adapter as wpGround } from '../carriers/wp-ground/adapter.js';
@@ -1180,6 +1188,7 @@ import { adapter as zrExpress } from '../carriers/zr-express/adapter.js';
 import { adapter as zto } from '../carriers/zto/adapter.js';
 import { adapter as ztoFreight } from '../carriers/zto-freight/adapter.js';
 import { adapter as ztoInternational } from '../carriers/zto-international/adapter.js';
+import { adapter as zxsy } from '../carriers/zxsy/adapter.js';
 
 export const REGISTRY: RegistryDefinition = {
   factories: {
@@ -1344,6 +1353,7 @@ export const REGISTRY: RegistryDefinition = {
     "ceska-posta": ceskaPosta,
     "ceva-logistics": cevaLogistics,
     "chazki": chazki,
+    "chengchain": chengchain,
     "chilexpress": chilexpress,
     "china-airlines-cargo": chinaAirlinesCargo,
     "china-post": chinaPost,
@@ -1650,6 +1660,7 @@ export const REGISTRY: RegistryDefinition = {
     "haypost": haypost,
     "hcrd": hcrd,
     "hct-logistics": hctLogistics,
+    "hdgj": hdgj,
     "hecny-shipping": hecnyShipping,
     "hede-shipping": hedeShipping,
     "hellmann": hellmann,
@@ -1689,6 +1700,7 @@ export const REGISTRY: RegistryDefinition = {
     "huiyu": huiyu,
     "hunter-express": hunterExpress,
     "huuneh": huuneh,
+    "hytd": hytd,
     "hywl": hywl,
     "ibex-express-bo": ibexExpressBo,
     "icasa-cargo": icasaCargo,
@@ -1739,6 +1751,7 @@ export const REGISTRY: RegistryDefinition = {
     "jetizz": jetizz,
     "jetline-couriers": jetlineCouriers,
     "jetspeed": jetspeed,
+    "jgex": jgex,
     "jhgj": jhgj,
     "jiayang": jiayang,
     "jifan": jifan,
@@ -1823,6 +1836,7 @@ export const REGISTRY: RegistryDefinition = {
     "logoix": logoix,
     "loomis-express": loomisExpress,
     "lotte-global": lotteGlobal,
+    "lulu-express": luluExpress,
     "lx-pantos": lxPantos,
     "m-and-p": mAndP,
     "m-one": mOne,
@@ -2092,6 +2106,7 @@ export const REGISTRY: RegistryDefinition = {
     "shadowfax": shadowfax,
     "sheensync": sheensync,
     "shengao": shengao,
+    "shilianxin": shilianxin,
     "shipa": shipa,
     "shipagent-in": shipagentIn,
     "shipblu": shipblu,
@@ -2170,6 +2185,7 @@ export const REGISTRY: RegistryDefinition = {
     "swiss-universal-express": swissUniversalExpress,
     "swissconnect": swissconnect,
     "sxw-express": sxwExpress,
+    "szctc": szctc,
     "t-cat": tCat,
     "t-group": tGroup,
     "tailwind-shipping-lines": tailwindShippingLines,
@@ -2306,6 +2322,7 @@ export const REGISTRY: RegistryDefinition = {
     "wiio": wiio,
     "winit": winit,
     "wld-express": wldExpress,
+    "wokexp": wokexp,
     "wooliiporter": wooliiporter,
     "woori-taekbae": wooriTaekbae,
     "wp-ground": wpGround,
@@ -2362,6 +2379,7 @@ export const REGISTRY: RegistryDefinition = {
     "zto": zto,
     "zto-freight": ztoFreight,
     "zto-international": ztoInternational,
+    "zxsy": zxsy,
   },
   carriers: {
     "139express": "universal",
@@ -2673,6 +2691,7 @@ export const REGISTRY: RegistryDefinition = {
     "chazki": "chazki",
     "cheetah-delivery": "universal",
     "chemcouriers": "universal",
+    "chengchain": "chengchain",
     "chic-express": "universal",
     "chilexpress": "chilexpress",
     "china-airlines-cargo": "china-airlines-cargo",
@@ -3186,6 +3205,7 @@ export const REGISTRY: RegistryDefinition = {
     "haypost": "haypost",
     "hcrd": "hcrd",
     "hct-logistics": "hct-logistics",
+    "hdgj": "hdgj",
     "hecny-ecom": "universal",
     "hecny-shipping": "hecny-shipping",
     "hede-shipping": "hede-shipping",
@@ -3244,6 +3264,7 @@ export const REGISTRY: RegistryDefinition = {
     "huuneh": "huuneh",
     "hy-express": "universal",
     "hye": "universal",
+    "hytd": "hytd",
     "hywl": "hywl",
     "hzt": "universal",
     "ibex-express-bo": "ibex-express-bo",
@@ -3338,6 +3359,7 @@ export const REGISTRY: RegistryDefinition = {
     "jetline-couriers": "jetline-couriers",
     "jetpak": "universal",
     "jetspeed": "jetspeed",
+    "jgex": "jgex",
     "jhgj": "jhgj",
     "jiachen-express": "universal",
     "jiayang": "jiayang",
@@ -3484,6 +3506,7 @@ export const REGISTRY: RegistryDefinition = {
     "lso": "universal",
     "ltl-kr": "universal",
     "lucky-fast-express": "universal",
+    "lulu-express": "lulu-express",
     "lvz-post": "universal",
     "lx-pantos": "lx-pantos",
     "m-and-p": "m-and-p",
@@ -3959,6 +3982,7 @@ export const REGISTRY: RegistryDefinition = {
     "sheensync": "sheensync",
     "shengao": "shengao",
     "shenghang": "universal",
+    "shilianxin": "shilianxin",
     "shipa": "shipa",
     "shipagent-in": "shipagent-in",
     "shipblu": "shipblu",
@@ -4083,6 +4107,7 @@ export const REGISTRY: RegistryDefinition = {
     "sxw-express": "sxw-express",
     "syd": "universal",
     "szami-group": "universal",
+    "szctc": "szctc",
     "szendex": "universal",
     "t-cat": "t-cat",
     "t-group": "t-group",
@@ -4330,6 +4355,7 @@ export const REGISTRY: RegistryDefinition = {
     "wizmo": "universal",
     "wld-express": "wld-express",
     "wmg-group": "universal",
+    "wokexp": "wokexp",
     "wooliiporter": "wooliiporter",
     "woori-taekbae": "woori-taekbae",
     "world-courier": "universal",
@@ -4426,6 +4452,7 @@ export const REGISTRY: RegistryDefinition = {
     "zto-freight": "zto-freight",
     "zto-international": "zto-international",
     "zufall": "universal",
+    "zxsy": "zxsy",
   },
 };
 

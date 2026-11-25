@@ -15710,6 +15710,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "chengchain": {
+    "displayName": "Chengchuang Supply Chain",
+    "color": "#213780",
+    "aliases": [
+      "ChengChain",
+      "诚创供应链",
+      "浙江诚创供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "chengchain",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "zjcc.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "chic-express": {
     "displayName": "Chic Express",
     "color": "#0e8157",
@@ -32788,6 +32820,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hdgj": {
+    "displayName": "Bright East International",
+    "color": "#2880a8",
+    "aliases": [
+      "HDGJ",
+      "皓东国际",
+      "深圳市皓东国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hdgj"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "134.175.244.145"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hecny-ecom": {
     "displayName": "Hecny E-com",
     "color": "#8328fc",
@@ -34443,6 +34506,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://tms.hyexp.net/outtrack",
     "trackingSearchUrl": "https://tms.hyexp.net/outtrack?companyId=34&companyNo=HYE",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "hytd": {
+    "displayName": "HYTD Express",
+    "color": "#0b3b98",
+    "aliases": [
+      "浩源拓达",
+      "浩源物流",
+      "深圳市浩源拓达物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hytd"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "159.75.218.197"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "hywl": {
@@ -37545,6 +37639,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "jgex": {
+    "displayName": "JGEX",
+    "color": "#00a0e9",
+    "aliases": [
+      "锦鸽",
+      "锦鸽国际物流",
+      "上海锦鸽国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jgex"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.jgex.net",
+          "jgex.net"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "jhgj": {
     "displayName": "Jiuhao International",
@@ -42341,6 +42467,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/selectorder\\.html$",
         "params": [
           "num"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "lulu-express": {
+    "displayName": "luluExpress",
+    "color": "#fe9601",
+    "aliases": [
+      "Lulu Express",
+      "噜噜快跑",
+      "深圳市噜噜快跑国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lulu-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szcxsd.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
         ]
       }
     ],
@@ -57721,6 +57878,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "shilianxin": {
+    "displayName": "Shilianxin",
+    "color": "#014e91",
+    "aliases": [
+      "世联鑫",
+      "深圳市世联鑫国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "shilianxin"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "47.108.154.213"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "shipa": {
     "displayName": "Shipa",
     "color": "#0000ff",
@@ -61889,6 +62076,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "trackingSearchUrl": "https://www.szamigroup.hu/nyomonkovetes/",
     "helpUrl": "https://www.szamigroup.hu/kapcsolat/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "szctc": {
+    "displayName": "CTC Supply Chain",
+    "color": "#d32f2f",
+    "aliases": [
+      "赤兔猫供应链",
+      "深圳市赤兔猫供应链有限公司",
+      "SZCTC"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "szctc"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szctc.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "nums",
+          "track_number"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "szendex": {
@@ -69744,6 +69963,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "wokexp": {
+    "displayName": "Wokexp",
+    "color": "#88c800",
+    "aliases": [
+      "威龙永凯",
+      "威龙永凯供应链管理（上海）有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wokexp"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.wokexp.cn",
+          "wokexp.cn"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "wooliiporter": {
     "displayName": "WooliiPorter",
     "color": "#2c3053",
@@ -72619,6 +72869,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "helpUrl": "https://www.zufall.de/kontakt/",
     "linkRules": [],
     "detectionRules": []
+  },
+  "zxsy": {
+    "displayName": "ZXSY",
+    "color": "#0048a0",
+    "aliases": [
+      "甄兴盛越",
+      "ZhenXingshengyue",
+      "甄兴盛越国际物流(莆田)有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zxsy"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.zxsywl.cn",
+          "zxsywl.cn"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
   }
 };
 
@@ -73022,6 +73304,7 @@ export const CARRIER_IDS = [
   "chazki",
   "cheetah-delivery",
   "chemcouriers",
+  "chengchain",
   "chic-express",
   "chilexpress",
   "china-airlines-cargo",
@@ -73505,6 +73788,7 @@ export const CARRIER_IDS = [
   "haypost",
   "hcrd",
   "hct-logistics",
+  "hdgj",
   "hecny-ecom",
   "hecny-shipping",
   "hede-shipping",
@@ -73559,6 +73843,7 @@ export const CARRIER_IDS = [
   "huuneh",
   "hy-express",
   "hye",
+  "hytd",
   "hywl",
   "hzt",
   "ibex-express-bo",
@@ -73647,6 +73932,7 @@ export const CARRIER_IDS = [
   "jetline-couriers",
   "jetpak",
   "jetspeed",
+  "jgex",
   "jhgj",
   "jiachen-express",
   "jiayang",
@@ -73790,6 +74076,7 @@ export const CARRIER_IDS = [
   "lso",
   "ltl-kr",
   "lucky-fast-express",
+  "lulu-express",
   "lvz-post",
   "lx-pantos",
   "m-and-p",
@@ -74242,6 +74529,7 @@ export const CARRIER_IDS = [
   "sheensync",
   "shengao",
   "shenghang",
+  "shilianxin",
   "shipa",
   "shipagent-in",
   "shipblu",
@@ -74357,6 +74645,7 @@ export const CARRIER_IDS = [
   "sxw-express",
   "syd",
   "szami-group",
+  "szctc",
   "szendex",
   "t-cat",
   "t-group",
@@ -74595,6 +74884,7 @@ export const CARRIER_IDS = [
   "wizmo",
   "wld-express",
   "wmg-group",
+  "wokexp",
   "wooliiporter",
   "woori-taekbae",
   "world-courier",
@@ -74684,7 +74974,8 @@ export const CARRIER_IDS = [
   "zr-express",
   "zto-freight",
   "zto-international",
-  "zufall"
+  "zufall",
+  "zxsy"
 ] as const;
 export type CarrierId = (typeof CARRIER_IDS)[number];
 
@@ -75089,6 +75380,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chazki": [],
   "cheetah-delivery": [],
   "chemcouriers": [],
+  "chengchain": [],
   "chic-express": [],
   "chilexpress": [],
   "china-airlines-cargo": [],
@@ -75572,6 +75864,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "haypost": ["haypost-s10"],
   "hcrd": [],
   "hct-logistics": [],
+  "hdgj": [],
   "hecny-ecom": [],
   "hecny-shipping": [],
   "hede-shipping": [],
@@ -75626,6 +75919,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "huuneh": [],
   "hy-express": [],
   "hye": [],
+  "hytd": [],
   "hywl": ["hywl-1","hywl-2"],
   "hzt": [],
   "ibex-express-bo": [],
@@ -75714,6 +76008,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jetline-couriers": [],
   "jetpak": [],
   "jetspeed": ["jetspeed-1"],
+  "jgex": [],
   "jhgj": ["jhgj-1"],
   "jiachen-express": [],
   "jiayang": ["jiayang-1"],
@@ -75857,6 +76152,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lso": ["lso-1"],
   "ltl-kr": [],
   "lucky-fast-express": [],
+  "lulu-express": [],
   "lvz-post": [],
   "lx-pantos": [],
   "m-and-p": [],
@@ -76309,6 +76605,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sheensync": [],
   "shengao": ["shengao-1"],
   "shenghang": [],
+  "shilianxin": [],
   "shipa": ["shipa-1"],
   "shipagent-in": [],
   "shipblu": [],
@@ -76424,6 +76721,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sxw-express": ["sxw-express-1"],
   "syd": [],
   "szami-group": [],
+  "szctc": [],
   "szendex": [],
   "t-cat": [],
   "t-group": ["t-group-1"],
@@ -76662,6 +76960,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wizmo": ["wizmo-1"],
   "wld-express": [],
   "wmg-group": [],
+  "wokexp": [],
   "wooliiporter": ["wooliiporter-1"],
   "woori-taekbae": [],
   "world-courier": [],
@@ -76752,6 +77051,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "zto-freight": ["zto-freight-1"],
   "zto-international": ["zto-international-1"],
   "zufall": [],
+  "zxsy": [],
 };
 
 export const STAGES = [

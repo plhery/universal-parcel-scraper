@@ -88193,6 +88193,12 @@
     ]
   },
   {
+    "input": "CC2640007786GY",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "CC299999999980",
     "carrier": "relais-colis",
     "confidence": "high",
@@ -91386,6 +91392,12 @@
     "candidates": [
       "dhl"
     ]
+  },
+  {
+    "input": "CTC202617802729",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "CTTY9999999980CN",
@@ -99114,6 +99126,12 @@
     ]
   },
   {
+    "input": "HD000000103510YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "HDMUNBOM63007200",
     "carrier": "unknown",
     "confidence": "none",
@@ -99501,6 +99519,12 @@
     "asked": [
       "c-chez-vous"
     ]
+  },
+  {
+    "input": "HY000000301953TD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "HY9999999999980YQ",
@@ -100611,6 +100635,12 @@
     "candidates": [
       "india-post"
     ]
+  },
+  {
+    "input": "JG912050440363",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "JH9999999980CN",
@@ -104525,6 +104555,12 @@
     "candidates": [
       "ekart"
     ]
+  },
+  {
+    "input": "LULU1000674156",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "LV000550144CY",
@@ -115609,6 +115645,12 @@
     ]
   },
   {
+    "input": "SLX200119352CN",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SM0102725852",
     "carrier": "unknown",
     "confidence": "low",
@@ -120852,6 +120894,12 @@
     "candidates": []
   },
   {
+    "input": "WLYK0000082627",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "WM00AK560100067361529",
     "carrier": "unknown",
     "confidence": "none",
@@ -123406,6 +123454,12 @@
       "gls-de",
       "gls-ch"
     ]
+  },
+  {
+    "input": "ZXSY00055475CN",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "ZXV2BUWM",

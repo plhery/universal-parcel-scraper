@@ -15706,6 +15706,38 @@
     ],
     "detectionRules": []
   },
+  "chengchain": {
+    "displayName": "Chengchuang Supply Chain",
+    "color": "#213780",
+    "aliases": [
+      "ChengChain",
+      "诚创供应链",
+      "浙江诚创供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "chengchain",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "zjcc.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "chic-express": {
     "displayName": "Chic Express",
     "color": "#0e8157",
@@ -32784,6 +32816,37 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "hdgj": {
+    "displayName": "Bright East International",
+    "color": "#2880a8",
+    "aliases": [
+      "HDGJ",
+      "皓东国际",
+      "深圳市皓东国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hdgj"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "134.175.244.145"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hecny-ecom": {
     "displayName": "Hecny E-com",
     "color": "#8328fc",
@@ -34439,6 +34502,37 @@
     "canaryUrl": "https://tms.hyexp.net/outtrack",
     "trackingSearchUrl": "https://tms.hyexp.net/outtrack?companyId=34&companyNo=HYE",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "hytd": {
+    "displayName": "HYTD Express",
+    "color": "#0b3b98",
+    "aliases": [
+      "浩源拓达",
+      "浩源物流",
+      "深圳市浩源拓达物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hytd"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "159.75.218.197"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "hywl": {
@@ -37541,6 +37635,38 @@
         "confidence": "low"
       }
     ]
+  },
+  "jgex": {
+    "displayName": "JGEX",
+    "color": "#00a0e9",
+    "aliases": [
+      "锦鸽",
+      "锦鸽国际物流",
+      "上海锦鸽国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jgex"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.jgex.net",
+          "jgex.net"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "jhgj": {
     "displayName": "Jiuhao International",
@@ -42337,6 +42463,37 @@
         "pathPattern": "^/selectorder\\.html$",
         "params": [
           "num"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "lulu-express": {
+    "displayName": "luluExpress",
+    "color": "#fe9601",
+    "aliases": [
+      "Lulu Express",
+      "噜噜快跑",
+      "深圳市噜噜快跑国际供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lulu-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szcxsd.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
         ]
       }
     ],
@@ -57717,6 +57874,36 @@
     ],
     "detectionRules": []
   },
+  "shilianxin": {
+    "displayName": "Shilianxin",
+    "color": "#014e91",
+    "aliases": [
+      "世联鑫",
+      "深圳市世联鑫国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "shilianxin"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "47.108.154.213"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "shipa": {
     "displayName": "Shipa",
     "color": "#0000ff",
@@ -61885,6 +62072,38 @@
     "trackingSearchUrl": "https://www.szamigroup.hu/nyomonkovetes/",
     "helpUrl": "https://www.szamigroup.hu/kapcsolat/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "szctc": {
+    "displayName": "CTC Supply Chain",
+    "color": "#d32f2f",
+    "aliases": [
+      "赤兔猫供应链",
+      "深圳市赤兔猫供应链有限公司",
+      "SZCTC"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "szctc"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "szctc.rtb56.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "nums",
+          "track_number"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "szendex": {
@@ -69740,6 +69959,37 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "wokexp": {
+    "displayName": "Wokexp",
+    "color": "#88c800",
+    "aliases": [
+      "威龙永凯",
+      "威龙永凯供应链管理（上海）有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wokexp"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.wokexp.cn",
+          "wokexp.cn"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "wooliiporter": {
     "displayName": "WooliiPorter",
     "color": "#2c3053",
@@ -72614,6 +72864,38 @@
     "trackingSearchUrl": "https://connect.zufall.de/Track/",
     "helpUrl": "https://www.zufall.de/kontakt/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "zxsy": {
+    "displayName": "ZXSY",
+    "color": "#0048a0",
+    "aliases": [
+      "甄兴盛越",
+      "ZhenXingshengyue",
+      "甄兴盛越国际物流(莆田)有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zxsy"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.zxsywl.cn",
+          "zxsywl.cn"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
     "detectionRules": []
   }
 }
