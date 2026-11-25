@@ -53,6 +53,8 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'I01H210V': { status: 'delivered', stage: 'delivered' },
   'X120000V': { status: 'delivered', stage: 'delivered' },
   'I010000V': { status: 'delivered', stage: 'delivered' },
+  // Worded "Entregado", like the other delivery codes.
+  'I01E030V': { status: 'delivered', stage: 'delivered' },
   'H010930R': { status: 'exception', stage: 'failed_attempt' },
   'H06P010V': { status: 'exception', stage: 'failed_attempt' },
   'X090100R': { status: 'exception', stage: 'failed_attempt' },

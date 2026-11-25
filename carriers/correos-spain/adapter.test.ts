@@ -121,6 +121,7 @@ describe('Correos Spain response parsing', () => {
       ['I020000V', 'exception', 'returned'],
       ['I01H230V', 'exception', 'returned'],
       ['L03D240R', 'exception', 'returned'],
+      ['I01E030V', 'delivered', 'delivered'],
     ];
     for (const [code, status, stage] of cases) {
       expect(classifyCorreosSpainStatus(code)).toEqual({ status, stage });

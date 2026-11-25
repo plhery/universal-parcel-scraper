@@ -28,6 +28,7 @@
     { "code": "L010000V", "language": "es", "stage": "ready_for_pickup", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Community-integration reconstruction, not re-observed since." },
     { "code": "I01H210V", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-08-24", "note": "Collected; seen on the real ES parcel checked by the prior-art client." },
     { "code": "I010000V", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Community-integration reconstruction, not re-observed since." },
+    { "code": "I01E030V", "wording": "Entregado", "language": "es", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Delivered to the recipient, worded like the other delivery codes." },
     { "code": "X120000V", "language": "es", "stage": "delivered", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Community-integration reconstruction, not re-observed since." },
     { "code": "H010930R", "wording": "Delivery has been attempted", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-08-24", "note": "Failed delivery attempt." },
     { "code": "H06P010V", "wording": "In delivery", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Worded like the out-for-delivery codes in English; the Spanish reads En proceso de entrega." },
