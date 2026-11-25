@@ -24,9 +24,12 @@ import { chinaPostOffice, chinaPostRelayEnglish, isYunExpressDataRecord, isYunEx
 const API = 'https://services.yuntrack.com/Track/Query';
 const MAX_BYTES = 1_000_000;
 
+// YunExpress's waybills: YT and sixteen digits, or JM and sixteen digits for some routes, which its tracker binds alike.
+export const YUNEXPRESS_NUMBER = /^(?:YT|JM)\d{16}$/;
+
 export function normalizeYunExpressNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
-  if (!/^YT\d{16}$/.test(number)) throw new InvalidInputError('YunExpress', 'YunExpress requires a YT parcel reference');
+  if (!YUNEXPRESS_NUMBER.test(number)) throw new InvalidInputError('YunExpress', 'YunExpress requires a YT or JM parcel reference');
   return number;
 }
 

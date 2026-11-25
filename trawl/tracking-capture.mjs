@@ -217,7 +217,7 @@ const SITES = [
     number(page) {
       if (page.origin !== 'https://www.yuntrack.com' || page.pathname !== '/parcelTracking' || page.hash) return null;
       const values = [...page.searchParams];
-      return values.length === 1 && values[0][0] === 'id' && /^YT\d{16}$/.test(values[0][1]) ? values[0][1] : null;
+      return values.length === 1 && values[0][0] === 'id' && /^(?:YT|JM)\d{16}$/.test(values[0][1]) ? values[0][1] : null;
     },
     requestMatches(request, number) {
       try {

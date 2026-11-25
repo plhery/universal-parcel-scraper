@@ -38,6 +38,14 @@ it.each([
 });
 
 describe('YunExpress captured response projection', () => {
+  it('binds a JM waybill as it binds a YT one', () => {
+    const jm = 'JM0000000000000001';
+    const payload = fixture();
+    payload.ResultList[0].Id = jm;
+    payload.ResultList[0].TrackInfo.WaybillNumber = jm;
+    expect(parse(payload, jm).events).toHaveLength(14);
+    expect(() => parse(payload, NUMBER)).toThrow('different or ambiguous');
+  });
   it('binds both result identities, preserves per-event clock evidence and reads the consignee', () => {
     const result = normalizeCarrierResult(parse(fixture(), NUMBER));
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_update: '2026-03-20T13:39:00-04:00',
@@ -827,6 +835,7 @@ describe('YunExpress browser execution', () => {
     const fetcher = vi.fn<typeof fetch>();
     const tracker = new YunExpressTracker({ trawl: new TrawlClient('http://127.0.0.1:8191', fetcher) });
     await expect(tracker.fetch('bad&number')).rejects.toThrow(InvalidInputError);
+    await expect(tracker.fetch('JM000000000000001')).rejects.toThrow(InvalidInputError);
     await expect(tracker.fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(fetcher).not.toHaveBeenCalled();
   });

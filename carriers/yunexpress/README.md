@@ -1,5 +1,10 @@
 # YunExpress
 
+YunExpress's waybills are YT, or JM on some routes, followed by sixteen digits. Its tracker binds
+both alike. Detection names YunExpress for YT numbers only, since no public JM sample is known
+to test a rule against; the adapter takes a JM number a consumer routes to it, such as one a
+universal provider names YunExpress for.
+
 The adapter loads the official Yuntrack page and captures its tracking API
 response. Plain HTTP is rejected by the site's request protection even with the
 current public browser signature. The browser creates the request signature and

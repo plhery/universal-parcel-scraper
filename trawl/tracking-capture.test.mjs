@@ -81,6 +81,7 @@ test('YunExpress capture is restricted to the exact public page and one valid pa
     assert.equal(await attachTrackingCapture({}, url, { captureResponses: [yunApi] }), undefined);
   }
   assert.equal(await attachTrackingCapture({}, yunUrl, { captureResponses: [yunApi + '?other=1'] }), undefined);
+  assert.equal(await attachTrackingCapture({}, yunUrl.replace(yunNumber, 'JA0000000000000001'), { captureResponses: [yunApi] }), undefined);
 });
 
 test('YunExpress captures only the browser POST for exactly the requested NumberList', async () => {
@@ -101,6 +102,14 @@ test('YunExpress captures only the browser POST for exactly the requested Number
   assert.equal(rows.length, 1);
   assert.equal(rows[0].body, yunReply());
   assert.deepEqual(rows[0].headers, {});
+});
+
+test('YunExpress captures a JM waybill as it captures a YT one', async () => {
+  const jm = 'JM0000000000000001';
+  const { capture, respond } = await fixture(yunUrl.replace(yunNumber, jm), yunApi);
+  await respond(yunReply(jm), { method: 'POST', requestBody: yunRequest([jm]) });
+  await capture.settle(100);
+  assert.equal((await capture.drain()).capturedResponses[0]?.body, yunReply(jm));
 });
 
 test('YunExpress keeps returned identity failures for the adapter rather than waiting for an older success', async () => {
