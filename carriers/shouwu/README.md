@@ -90,6 +90,10 @@ numbers `shouwu-1` offers.
   postcode (`SAMPLE TOWN, CA, US, 00000, Arrived at FedEx location`), a delivery's the
   recipient's. The wording is read without them, as the place is `traceLocation`, and a row
   stored with them keeps its identity.
+- On the line into Europe, Shouwu writes a milestone's title and then its description, which can
+  be the same words ("Out for delivery Out for delivery"), and a last mile's note can repeat its
+  scan ("Delivery failed, Carrier note: Delivery failed"). Such wording is read once, and a row
+  stored with it said twice keeps its identity.
 - The destination is `order.countryCodeTwo`. The status text (`traceStatusDesc`) and the
   destination's name are not read.
 - The request carries the page's `x-locale`, `zh-cn` unless a visitor chose another language.

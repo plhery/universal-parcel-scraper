@@ -99,6 +99,25 @@ it('reads a pickup point arrival whatever carrier note follows it', () => {
   }
 });
 
+it('reads a milestone title repeated as its description, and a note that repeats its scan, once', () => {
+  for (const [twice, once, stage] of [
+    ['Out for delivery Out for delivery', 'Out for delivery', 'out_for_delivery'],
+    ['Received by local delivery company Received by local  delivery company', 'Received by local delivery company', 'in_transit'],
+    ['Delivery attempt unsuccessful, Carrier note: Delivery attempt unsuccessful', 'Delivery attempt unsuccessful', 'failed_attempt'],
+  ] as const) {
+    const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, twice)));
+    expect(parseShouwu(payload, DELIVERED).events?.[0]).toMatchObject({ description: once, stage, stage_source: 'carrier_map' });
+    const policy = sameInstantIdentityPolicy('shouwu', { supportsScanMatching: true });
+    const scan = { stage, description: once, location: 'SAMPLE TOWN', providerCode: '' };
+    expect(policy?.matches?.(scan, { ...scan, description: twice })).toBe(true);
+  }
+  // A title and another description, or a note of its own, stay as written.
+  for (const wording of ['Shipment on the way Shipment departed', 'Delivery failed, Carrier note: Recipient absent']) {
+    const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
+    expect(parseShouwu(payload, DELIVERED).events?.[0]?.description).toBe(wording);
+  }
+});
+
 it('leaves a relayed sentence the map has not seen to the shared wording rules', () => {
   const wording = 'FR, Votre envoi est en attente de dédouanement.,运输中';
   const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));

@@ -14,3 +14,18 @@ export function withoutCountryCode(location: string): string {
 export function withoutRelayedPlace(description: string): string {
   return description.replace(RELAYED_PLACE, '');
 }
+
+// The last mile's note after a scan, which can repeat it: "Delivery failed, Carrier note: Delivery failed".
+const REPEATING_NOTE = /^(.+), Carrier note: (.+)$/;
+
+/**
+ * A scan's wording said once: a line's milestone title followed by the same words as its description, as
+ * "Out for delivery Out for delivery", or a scan whose last mile's note repeats it.
+ */
+export function withoutRepeat(description: string): string {
+  const words = description.replace(/\s+/g, ' ').trim();
+  const half = (words.length - 1) / 2;
+  if (half > 0 && Number.isInteger(half) && words[half] === ' ' && words.slice(0, half) === words.slice(half + 1)) return words.slice(0, half);
+  const note = REPEATING_NOTE.exec(words);
+  return note && note[1] === note[2] ? note[1]! : description;
+}
