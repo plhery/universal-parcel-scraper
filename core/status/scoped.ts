@@ -36,6 +36,16 @@ export const SCOPED_WORDINGS: readonly ScopedWordingRule[] = [
       + "morning, the parcel was back at the depot that evening, and no round ran on the Sunday. Elsewhere a vehicle can leave for another depot.",
   },
   {
+    carrier: 'buffalo-ex', providers: ['ParcelsApp'], wording: 'in trip', stage: 'out_for_delivery',
+    note: "The local courier's delivery trip on a BUFFALO parcel, as ParcelsApp relays it: it came after the parcel was scanned "
+      + "into the vehicle's cage and before the delivery. Elsewhere a trip can run between depots.",
+  },
+  {
+    carrier: 'poste-italiane', providers: ['Ship24'], wording: 'processing at warehouse', stage: 'in_transit',
+    note: "A warehouse's handling of a Poste Italiane parcel, as Ship24 relays it: it came between the warehouse's receipt and "
+      + "its departure, which read in transit, as do the same rows Poste's own tracking shows.",
+  },
+  {
     carrier: 'buffalo-ex', wording: 'international shipping', stage: 'in_transit',
     note: "BUFFALO's own status for a parcel that has left China, as its tracker shows it and providers relay it.",
   },
