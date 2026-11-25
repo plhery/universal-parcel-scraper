@@ -41,6 +41,11 @@ const SCHEDULED_FLIGHT = /^(预计)\d{1,2}\.\d{1,2}(航班\/(?:flight scheduled 
 const LOADED_FLIGHT = /^(预计配载航班)\d{1,2}月\d{1,2}日[,，] ?(expected flight on )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
 // Its English half also comes alone, the month cut short: "Expected flight on Nov. 20th".
 const EXPECTED_FLIGHT = /^(expected flight on )[a-z]{3,9}\.? ?\d{1,2}(?:st|nd|rd|th)$/;
+// Another wording of it names the day as month-day, then by the month's name, the outer bracket left open:
+// "预计配载11-26航班（Estimated flight departure time (ETD:November 26)".
+const ETD_FLIGHT = /^预计配载\d{1,2}-\d{1,2}航班[（(] ?estimated flight departure time \(etd: ?[a-z]{3,9}\.? ?\d{1,2}(?:st|nd|rd|th)?\)[）)]?$/;
+// The destination's customs release names the day of the expected hand-over to the warehouse: "已清关放行，预计11/27号交仓".
+const RELEASED_HANDOVER_DAY = /^已清关放行[，,] ?预计(?:\d{4}\/)?\d{1,2}[./]\d{1,2}号交仓$/;
 // On the line into Canada the hand-over to the delivering courier names it: "Your package has been handed over to the courier Example".
 const HANDED_TO_COURIER = /^(your package has been handed over to the courier )\S.*$/;
 // DHL's record of the recipient's choice of another address names it: "The recipient has selected a new one-time delivery address: …".
@@ -66,7 +71,8 @@ export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).repl
   .replace(FLIGHT_DATES, '$1…$2…').replace(DEPARTURE_DATE, '$1…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(PORT_FLIGHT_DAY, '货物到达口岸，预计…号航班起飞').replace(EXPECTED_FLIGHT_DAY, '$1…$2')
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(NEW_ADDRESS, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
-  .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…');
+  .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…')
+  .replace(ETD_FLIGHT, '预计配载…航班（estimated flight departure time (etd:…)').replace(RELEASED_HANDOVER_DAY, '已清关放行，预计…号交仓');
 
 // USPS's status followed by its sentence, which names the time, day and town: "Departed Shipping Partner Facility -> Your
 // item departed a shipping partner facility at … in …". The status before the arrow takes its own entry.

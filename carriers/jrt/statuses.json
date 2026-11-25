@@ -668,6 +668,32 @@
       "note": "The flight the parcel is loaded for, naming its day in both halves (\"11月11日\", \"November 11th\"); the map reads each day as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
     },
     {
+      "wording": "预计配载…航班（Estimated flight departure time (ETD:…)",
+      "language": "zh",
+      "stage": null,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "The flight the parcel is loaded for, its day as month-day in Chinese and as the month's name and day in English, each read as an ellipsis; JRT leaves the outer bracket open. A forecast, not a movement, so the parcel keeps the stage of the scan before it."
+    },
+    {
+      "wording": "货物发往机场",
+      "language": "zh",
+      "english": "Goods sent to the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "On its way to the airport of departure, before the airport's own rows."
+    },
+    {
+      "wording": "货物到达机场",
+      "language": "zh",
+      "english": "Goods arrived at the airport",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "At the airport of departure, waiting for its flight."
+    },
+    {
       "wording": "Expected flight on …",
       "language": "en",
       "stage": null,
@@ -791,6 +817,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-30",
       "note": "The hand-over to the delivering carrier's warehouse, before UPS's first facility scan."
+    },
+    {
+      "wording": "已清关放行，预计…号交仓",
+      "language": "zh",
+      "english": "Customs released, hand-over to the warehouse expected",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "Released by the destination's customs, naming the day of the expected hand-over to the delivering carrier's warehouse as month/day, which the map reads as an ellipsis. The English leaves out the day, which is still to come."
     },
     {
       "wording": "发件人已创建标签，但是 UPS 尚未收到包裹。",
@@ -1097,6 +1132,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-24",
       "note": "CTT Express's code 1000 with its explanation, copied on the line into Spain in CTT's words once CTT has the parcel on its way."
+    },
+    {
+      "wording": "En reparto, Tu envío se entregará hoy",
+      "language": "es",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-25",
+      "note": "CTT Express's delivery round, its code 1500, with its explanation, copied on the line into Spain in CTT's words."
     },
     {
       "wording": "Pre-clearance completed",

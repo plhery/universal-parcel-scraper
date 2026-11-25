@@ -664,6 +664,20 @@ describe('JRT tracking adapter', () => {
     expect(answer('预计配载航班12月2日，Expected flight on December 2nd')).toEqual(notice);
     expect(answer('Expected flight on Nov. 20th')).toEqual(notice);
     expect(answer('Expected flight on December 2nd')).toEqual(notice);
+    // Its wording with the day as month-day and by the month's name, the outer bracket left open or closed.
+    expect(answer('预计配载11-26航班（Estimated flight departure time (ETD:November 26)')).toEqual(notice);
+    expect(answer('预计配载1-3航班（Estimated flight departure time (ETD:January 3)）')).toEqual(notice);
+    // The way to the airport of departure and the arrival there, shown in English.
+    expect(answer('货物发往机场')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('货物到达机场')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(jrtEnglish(null, normalizeStatusWording('货物到达机场'))).toBe('Goods arrived at the airport');
+    // The destination's customs release reads alike whatever day it expects the hand-over to the warehouse.
+    for (const description of ['已清关放行，预计11/27号交仓', '已清关放行,预计12/3号交仓']) {
+      expect(answer(description), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+      expect(jrtEnglish(null, normalizeStatusWording(description)), description).toBe('Customs released, hand-over to the warehouse expected');
+    }
+    // CTT Express's round on the line into Spain, in CTT's words.
+    expect(answer('En reparto, Tu envío se entregará hoy')).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     expect(answer('Departed from Port of Origin')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // On the line into Canada the hand-over to the delivering courier, which it names, is no delivery round.
     expect(answer('Your parcel has been released by customs')).toEqual({ kind: 'mapped', stage: 'in_transit' });
