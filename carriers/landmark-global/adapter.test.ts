@@ -61,6 +61,13 @@ describe('Landmark Global history', () => {
       expect(event, shown).toMatchObject({ local_time: time.replace(' ', 'T') }); expect(event, shown).not.toHaveProperty('time');
     }
   });
+  it('keeps the office of exchange\'s export on its wall clock, whatever Central offset the page names', () => {
+    const $ = load(fixture()); const row = $('tbody tr').eq(1);
+    row.children('td').eq(0).text('Departure from office of exchange');
+    row.find('.time').attr('data-time', '2026-02-10 06:00:00').text('Tue, Feb 10, 6:00 AM CST');
+    const event = parseLandmark($.html(), NUMBER).events?.find(entry => entry.description === 'Departure from office of exchange');
+    expect(event).toMatchObject({ stage: 'in_transit', local_time: '2026-02-10T06:00:00' }); expect(event).not.toHaveProperty('time');
+  });
   it('accepts the canonical bare identity and rejects other identities and multi-parcel pages', () => {
     expect(parseLandmark(fixture(), 'LTN00000001')).not.toHaveProperty('canonical_tracking_number');
     const wrong = load(fixture()); wrong('.delivery-details-col h6').last().next('div').text('LTN00000002');

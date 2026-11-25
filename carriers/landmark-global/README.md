@@ -34,7 +34,9 @@ The page writes every scan's clock in US Central time, wherever the scan was, an
 names its offset beside it, CDT or CST. A clock becomes an instant only when that
 name is the offset Chicago keeps at that clock, which also tells the repeated autumn
 hour apart. Otherwise it stays a local clock, which the host archives while it asks
-providers for dated progress. The single current offset the page's script applies to
+providers for dated progress. The export from the office of exchange is the exception: the postal network
+relays it on a round wall clock that the page labels Central although it is not (one was
+shown hours before that clock came in Chicago), so it always stays a local clock. The single current offset the page's script applies to
 every scan is not used. Scans keep the provider's order. The catalog's
 `tracking.pageClock` tells a consumer to read a scan's day on its place's clock instead.
 
