@@ -252,4 +252,11 @@ describe('WhatsShip public order-reference parser', () => {
     expect(statusMap.stage('UNSEEN_CODE', 'Delivered')).toBeUndefined();
     expect(statusMap.stage(null, 'Delivered')).toBeUndefined();
   });
+
+  it('reads the export clearance done at origin as transit, not customs', () => {
+    const rows = [scan({ ProcessDate: '2026-01-11T09:00:00', TrackNodeCode: 'EXPORT CUSTOMS COMPLETE', ProcessContent: 'Clearence processing completed - Export' }),
+      scan({ ProcessDate: '2026-01-10T09:00:00', TrackNodeCode: 'ARRIVE_ORIN_CUSTOMS', ProcessContent: 'The country of origin commences customs declaration.' })];
+    expect(parseWhatsShip(reply(rows), NUMBER).events![0]).toMatchObject({ provider_code: 'EXPORT CUSTOMS COMPLETE', stage: 'in_transit', stage_source: 'carrier_map' });
+    expect(statusMap.stage('EXPORT CUSTOMS COMPLETE', 'clearence processing completed - export')).toBe('in_transit');
+  });
 });

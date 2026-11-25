@@ -39,6 +39,14 @@
       "note": "Export customs in the country of origin, after the departure for the next facility and before the airport."
     },
     {
+      "code": "EXPORT CUSTOMS COMPLETE",
+      "wording": "Clearence processing completed - Export",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Export clearance done in the country of origin, before the flight, in the partner line's spelling: the parcel is not held. Import customs is the destination's."
+    },
+    {
       "code": "ARRIVE_CONFIRM_OC",
       "wording": "Arrived at the origin international airport",
       "language": "en",
