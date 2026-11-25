@@ -142,6 +142,11 @@ describe('locatePlace', () => {
     // A town of the code's country keeps it.
     expectPlace('MONTE CARLO MC', { country: 'MC', name: 'Monte-Carlo', latitude: 43.74, longitude: 7.43 });
     expectPlace('SANTO DOMINGO DO', { country: 'DO', name: 'Santo Domingo', latitude: 18.47, longitude: -69.89 });
+    // So on a parcel a reply says is bound there: Royal Mail's centre for a British town, the town for one of that country.
+    expect(locatePlace('Chelmsford MC', { countries: ['MC'] })).toMatchObject({ country: 'GB', name: 'Chelmsford' });
+    expect(locatePlace('Coventry South DO', { countries: ['DO'] })).toMatchObject({ country: 'GB', name: 'Coventry' });
+    expect(locatePlace('MONTE CARLO MC', { countries: ['MC'] })).toMatchObject({ country: 'MC', name: 'Monte-Carlo' });
+    expect(locatePlace('SANTO DOMINGO DO', { countries: ['DO'] })).toMatchObject({ country: 'DO', name: 'Santo Domingo' });
     // Turin's province in brackets, not Tonga; the state of Bahia, not the Bahamas.
     expectPlace('PINEROLO (TO)', { country: 'IT', name: 'Pinerolo', latitude: 44.89, longitude: 7.33 });
     expectPlace('SALVADOR, BA', { country: 'BR', name: 'Salvador', latitude: -12.98, longitude: -38.49 });

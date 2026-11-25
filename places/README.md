@@ -127,8 +127,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   (",,,DE"), the code is the country. With no town at all, a
   code in brackets or after a space is no country on a parcel known to be elsewhere, and the
   scan gets no place. MC and DO after a name that is no town of Monaco or
-  the Dominican Republic are Royal Mail's, on any carrier's parcel: its mail centre or a
-  British town of that name, else the United Kingdom for a name with a British region in it
+  the Dominican Republic are Royal Mail's, on any carrier's parcel, even one a reply says is
+  bound there: its mail centre or a British town of that name, else the United Kingdom for a name with a British region in it
   ("Mid Wales MC"), else no place.
 - A field with only facility words and a country's name ("DPD GERMANY DE"), or its "-ian"
   word ("Latvian sorting center"), places that country, when the text's code or the parcel

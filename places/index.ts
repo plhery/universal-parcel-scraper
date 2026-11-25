@@ -1080,12 +1080,15 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   // "Example Town, HOLLAND, NL" is not in Holland, Michigan.
   const worded = outer.some((region) => region.country === country)
     || fields.some((field) => { const named = trackingPlace(field); return named.country === country && !named.place; });
+  // Carriers Royal Mail hands parcels to write its sites its way: "Thames Valley MC" is its
+  // centre in Swindon whatever the carrier, and "Mid Wales MC" somewhere in Wales. So is
+  // "Chelmsford MC" on a parcel a reply says is bound for Monaco, unless a town there has the name.
+  const royalMail = Boolean(rest) && looseCountry && (country === 'MC' || country === 'DO') && !worded;
+  const ownTown = royalMail && context.includes(country!) ? locate(rest, { countries: [country!], carriers }) : null;
+  const british = royalMail && !(ownTown?.place.precision === 'city' && ownTown.place.country === country)
+    ? locate(rest, { countries: ['GB', ...context], carriers: [...carriers, 'royal-mail'] }) : null;
+  if (british?.place.precision === 'city' && british.place.country === 'GB') return british;
   if (rest && (looseCountry || coded) && !context.includes(country!) && !worded) {
-    // Carriers Royal Mail hands parcels to write its sites its way: "Thames Valley MC" is its
-    // centre in Swindon whatever the carrier, and "Mid Wales MC" somewhere in Wales.
-    const royalMail = looseCountry && (country === 'MC' || country === 'DO');
-    const british = royalMail ? locate(rest, { countries: ['GB', ...context], carriers: [...carriers, 'royal-mail'] }) : null;
-    if (british?.place.precision === 'city' && british.place.country === 'GB') return british;
     // Past a comma or a bracket, only a town known on its own: no hamlet where the parcel is.
     const town = locate(rest, looseCountry ? hints : { carriers });
     if (town?.place.precision === 'city' && (looseCountry || context.includes(town.place.country))) return town;
