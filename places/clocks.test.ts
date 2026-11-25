@@ -148,6 +148,16 @@ describe('dateLocalClocks', () => {
     ]);
     // Before the delivery is scanned, the leg's start is the only clock there is.
     expect(events(scans.slice(1))[0]).toMatchObject({ time_zone: 'Australia/Melbourne', time_zone_basis: 'neighbour' });
+    // A round that ends in an attempt with no place, the parcel then back in Victoria a week later: the depot the
+    // round left from, not the return leg.
+    const returned = events([
+      { local_time: '2026-05-28T10:00:00', description: 'Articles in movement', location: 'BROADMEADOWS VIC', stage: 'in_transit' },
+      { local_time: '2026-05-21T15:30:00', description: 'Delivery attempted, card left', stage: 'failed_attempt' },
+      { local_time: '2026-05-21T10:26:00', description: 'Articles loaded for delivery', stage: 'out_for_delivery' },
+      { local_time: '2026-05-21T07:10:00', description: 'Arrived at depot', location: 'ELLENBROOK WA', stage: 'in_transit' },
+      { local_time: '2026-05-12T16:11:00', description: 'Job created', location: 'BROADMEADOWS VIC', stage: 'registered' },
+    ]);
+    expect(dated(returned[2])).toEqual(['2026-05-21T10:26:00+08:00', 'Australia/Perth', 'neighbour']);
   });
 
   it('dates USPS\'s bare "JAMAICA", its international centre at JFK, and the place-less scan after it on New York\'s clock', () => {
@@ -320,6 +330,17 @@ describe('dateLocalClocks', () => {
     // A carrier that works there keeps the parcel on that clock.
     expect(dated(dateLocalClocks('gls-de', { status: 'in_transit', destination_country: 'DE', events }).events![1]))
       .toEqual(['2030-03-03T11:30:00+01:00', 'Europe/Berlin', 'neighbour']);
+    // A registration in another country than the destination is where the parcel starts, and lends its clock.
+    const origin = dateLocalClocks('asendia', { status: 'delivered', destination_country: 'CH', events: [
+      { local_time: '2026-08-29T11:42:00', description: 'Delivered', location: 'Zurich, CH', stage: 'delivered' },
+      { local_time: '2026-08-28T07:18:00', description: 'Arrived at destination', location: 'Zurich, CH', stage: 'in_transit' },
+      { local_time: '2026-08-25T18:30:00', description: 'Item received by carrier', stage: 'accepted' },
+      { local_time: '2026-08-25T16:03:00', description: 'Shipment information received', location: 'Hong Kong, HK', stage: 'registered' },
+    ] }).events!;
+    expect(origin.slice(2).map(dated)).toEqual([
+      ['2026-08-25T18:30:00+08:00', 'Asia/Hong_Kong', 'neighbour'],
+      ['2026-08-25T16:03:00+08:00', 'Asia/Hong_Kong', 'place'],
+    ]);
   });
 
   it('borrows the clock of an airport its code alone names', () => {

@@ -22,6 +22,8 @@ type Zoned = { zone: string; basis: ZoneBasis };
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
 // Scans that record the parcel rather than handle it.
 const PAPERWORK = new Set(['registered', 'pending']);
+// Scans that end a round out for delivery: the parcel handed over, tried or left at a pickup point.
+const ROUND_ENDS = new Set(['delivered', 'failed_attempt', 'ready_for_pickup']);
 
 const text = (value: unknown): string => typeof value === 'string' ? value.trim() : '';
 // Wording that says the parcel came off a crossing: it landed, reached its destination or
@@ -144,13 +146,15 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     ? placeTimeZone(place) : null;
   // A scan's own zone: its place's, or an airport's its code alone names.
   const own = places.map((place, at) => place ? zoneOf(place) : airportTimeZone(text(scans[at]!.location)));
-  // A registration in a country where the carrier does not work is the carrier that delivers there recording the
-  // parcel ahead of it, as DHL's record of the sender's data that lines from China copy before the parcel leaves: that
-  // office's clock, which the paperwork it files beside it shares (UPS's note minutes after its label), but no scan
-  // that handles the parcel.
+  // A registration in a country where the carrier does not work, the parcel's destination when it is known, is the
+  // carrier that delivers there recording the parcel ahead of it, as DHL's record of the sender's data that lines from
+  // China copy before the parcel leaves: that office's clock, which the paperwork it files beside it shares (UPS's note
+  // minutes after its label), but no scan that handles the parcel. One in another country, such as Asendia's in Hong
+  // Kong for a parcel to Switzerland, is where the parcel starts.
   const serves = definition(carrier)?.countries ?? [];
   const paperwork = (at: number) => PAPERWORK.has(text(scans[at]!.stage));
   const ahead = places.map((place, at) => Boolean(place && serves.length > 0 && !serves.includes(place.country)
+    && (!reading.destinationCountry || place.country === reading.destinationCountry)
     && text(scans[at]!.stage) === 'registered'));
   const neighbour = (zone: string | null | undefined): Zoned | null => zone ? { zone, basis: 'neighbour' } : null;
   const crossed = crossings(scans);
@@ -174,8 +178,10 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     while (after < scans.length && !zoned(after)) after += 1;
     // Out for delivery, the parcel is where the next scan with a zone delivers it or tries to, not
     // where the leg began: COPE's "Articles loaded for delivery" hours before its delivery in Perth,
-    // nine days after the pickup in Melbourne.
-    if (text(scans[at]!.stage) === 'out_for_delivery' && after < scans.length) return neighbour(lent(after));
+    // nine days after the pickup in Melbourne. A next one that ends no round, such as the return leg's
+    // a week later, leaves it on the leg's clock.
+    if (text(scans[at]!.stage) === 'out_for_delivery' && after < scans.length
+      && ROUND_ENDS.has(text(scans[after]!.stage))) return neighbour(lent(after));
     if (crossed.slice(before + 1, at + 1).includes(true)) return neighbour(lent(after)) ?? landing(lent(before));
     return neighbour(lent(before)) ?? (crossed.slice(at + 1, after).includes(true) ? null : neighbour(lent(after)));
   };
