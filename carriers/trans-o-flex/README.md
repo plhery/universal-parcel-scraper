@@ -9,6 +9,11 @@ thirteen digits. Shippers' links to the tracker pass the same barcode as twenty-
 which end in `49` and the five-digit delivery postcode. Twenty-four digits is a length other
 carriers share, so no rule claims them; a pasted tracker link names trans-o-flex in either form.
 
+The seventeen digits before `49` start with the shipper's own prefix and carry no check digit, as
+the barcodes in links archived from the former tracker on `track.tof.de` show. A number quoted
+without the postcode part is seventeen digits, DHL eCommerce's and Colis Privé's length, so no
+rule claims that either, and the tracker asks for the postcode and house number whatever is typed.
+
 ## Links
 
 The guest tracker at `www.trans-o-flex.com/sendungsverfolgung/tracking` takes the number as
