@@ -2802,10 +2802,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/lms\.m24logistics\.com\/track-my-order\/o0000000000$/,
     marker: /Order Details|Order Summary|Parcel Summary/ },
   // The page's script fills its box from `nums` and looks the numbers up; an unknown one gets its
-  // "no tracking records" panel, in the page's language.
+  // "no tracking records" panel, in the page's language. The server sends that script slowly, so the
+  // panel can appear more than half a minute after the link opens.
   { carrier: 'wangjing-3cq', number: 'ZZ0000000000',
     route: /^https:\/\/track\.wjdrop\.com\/tracking\/index\?nums=ZZ0000000000$/,
-    marker: /暂无物流轨迹|No tracking records|Nenhum registro de rastreamento/ },
+    marker: /暂无物流轨迹|No tracking records|Nenhum registro de rastreamento/, renderTimeoutMs: 50000 },
   // The page's script fills its box from `awbno` and looks the number up; an unknown one leaves
   // the box filled and the results empty.
   { carrier: 'pxc-pacific', number: 'ZZ0000000000',
