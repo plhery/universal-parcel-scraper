@@ -6992,5 +6992,10 @@
     "carrier": "qqwy",
     "kind": "open",
     "reason": "Global Security numbers seen so far are DYY, nine digits and XB, and the only public samples come from captures of one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "qyun",
+    "kind": "open",
+    "reason": "Qyun Express's tracker answers by the delivering carrier's number, and the only public samples, from captures of one tracking directory page, are iMile's thirteen-digit waybills, a shape many carriers share, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

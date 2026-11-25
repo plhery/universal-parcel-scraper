@@ -1,0 +1,24 @@
+{
+  "carrier": "qyun",
+  "entries": [
+    {"wording": "Shipment information received.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"wording": "Order Submited.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "iMile's order record, copied a second after the registration."},
+    {"code": "ARRIVAL", "wording": "Received the package in Shenzhen.", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse takes the parcel in. iMile's feed writes the row again without its code at the same clock; that copy goes."},
+    {"wording": "Arrived at the processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "iMile's centre in Shenzhen, copied."},
+    {"code": "SHIPMENT", "wording": "Departed from Facility in Shenzhen.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves the Shenzhen warehouse."},
+    {"wording": "Your order has been shipped from 【…】.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "iMile's departure from a warehouse, centre or station, copied; its name is read as an ellipsis."},
+    {"wording": "Customs Clearance Completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance at Hong Kong, written by hand on the whole hour."},
+    {"wording": "Arrived at the port of departure", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Hong Kong's airport, written by hand on the whole hour."},
+    {"wording": "Departure from the original airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves Hong Kong; the line gives its day alone."},
+    {"wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight lands in Mexico City; the line gives its day alone."},
+    {"wording": "Import Customs Clearance Processing", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Mexican import clearance begins; the line gives its day alone."},
+    {"wording": "Import Customs Clearance Completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Mexican import clearance is done; the line gives its day alone."},
+    {"wording": "【…】Received.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "iMile's hub in Mexico City receives the parcel, copied; its name is read as an ellipsis."},
+    {"wording": "Arrived at the processing center.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "An iMile station in Mexico City, copied."},
+    {"wording": "Arrived at the transit point.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "An iMile centre or delivery station, copied."},
+    {"wording": "Out for delivery.", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "iMile's courier round, copied."},
+    {"wording": "No one answer the phone", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "note": "iMile's courier could not reach the recipient, between two rounds, copied."},
+    {"wording": "Delivered.", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "iMile's delivery, copied."},
+    {"wording": "Abnormal LT", "language": "en", "stage": "exception", "confirmedBy": "live", "note": "iMile's abnormal scan at its Mexico City centre, five weeks after the parcel's last movement there and with no delivery round; the record's status then says the forwarder paid compensation (已赔付)."}
+  ]
+}

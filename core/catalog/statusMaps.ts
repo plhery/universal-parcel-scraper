@@ -1,3 +1,4 @@
+import { statusMap as qyun } from '../../carriers/qyun/status.js';
 import { statusMap as qqwy } from '../../carriers/qqwy/status.js';
 import { statusMap as hjyt } from '../../carriers/hjyt/status.js';
 import { statusMap as hytd } from '../../carriers/hytd/status.js';
@@ -1251,7 +1252,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'royale-international': royaleInternational,
 
   'direct-freight-express': directFreightExpress, 'disu-logistics': disuLogistics,
-  'qatar-post': qatarPost, qlgj, qqwy, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, pasarex, 'russian-post': russianPost, 'surat-kargo': suratKargo,
+  'qatar-post': qatarPost, qlgj, qqwy, qyun, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, pasarex, 'russian-post': russianPost, 'surat-kargo': suratKargo,
   '17feia': seventeenFeia, '2go': twoGo, '4-72': fourSeventyTwo, '4a-express': fourAExpress, '4sides': fourSides, '5post': fivePost, '99minutos': ninetynineMinutos,
   'aaa-cooper': aaaCooper, 'a-duie-pyle': aDuiePyle, 'a-tu-hora-express': aTuHoraExpress, 'a1-post': a1Post, 'ab-courier': abCourier, 'abf-freight': abfFreight, 'aci-express-kr': aciExpressKr,
   'acs-courier': acsCourier, 'aex-paraguay': aexParaguay, afimex, 'airpak-express': airpakExpress, airroad, 'latam-cargo': latamCargo, 'ait-worldwide': aitWorldwide, ajex,

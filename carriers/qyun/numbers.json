@@ -1,0 +1,95 @@
+{
+  "carrier": "qyun",
+  "records": [
+    {
+      "number": "6013025456576",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251212184758/https://www.parcelpanel.com/couriers/qyunexpress/",
+        "date": "2025-12-12",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "imile",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The example tracking number a tracking directory's Qyun page shows. Qyun Express's tracker answers it with a parcel flown from Hong Kong to Mexico for iMile, whose waybill it is, that stopped at iMile's Mexico City centre and was compensated."
+    },
+    {
+      "number": "6032726450345",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260410155225/https://www.parcelpanel.com/couriers/qyunexpress/",
+        "date": "2026-04-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "imile",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The example tracking number a later capture of the same directory page shows. Qyun Express's tracker answers it with a parcel flown to Mexico and delivered by iMile, whose waybill it is."
+    },
+    {
+      "number": "6071226294834",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260720004212/https://www.parcelpanel.com/couriers/qyunexpress/",
+        "date": "2026-07-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "imile",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "aras-kargo",
+          "econt",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The example tracking number a still later capture of the same directory page shows. Qyun Express's tracker answers it with a parcel flown to Mexico and delivered by iMile in Guadalajara, whose waybill it is: iMile's own tracker holds it with the same scans."
+    }
+  ]
+}
