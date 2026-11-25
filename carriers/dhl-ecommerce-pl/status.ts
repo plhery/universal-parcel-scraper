@@ -67,8 +67,8 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^(?:The shipment has reached DHL terminal\.|Przesyłka dotarła do oddziału nadawczego DHL Parcel ?\.)$/i, 'accepted'],
   // A terminal that gives the planned delivery day is reached on the way, with the sorting centre's scan. Its town can be blank.
   [/^(?:The shipment has reached DHL terminal(?: in [^.]{0,80})?\. Planned date of delivery to|Przesyłka dotarła do oddziału nadawczego DHL Parcel(?: [^.]{0,80})?\. Przewidywana data doręczenia do): \d{1,2}-\d{1,2}-\d{4}\.$/i, 'in_transit'],
-  // A terminal named on the way, after the first one.
-  [/^(?:The shipment has reached DHL Terminal (?!in )[^.]{1,80}|Przesyłka dotarła do oddziału DHL eCommerce [^.]{1,80})\.?$/i, 'in_transit'],
+  // A terminal named on the way, after the first one, or with its name left blank and no full stop.
+  [/^(?:The shipment has reached DHL Terminal(?: (?!in )[^.]{1,80})?|Przesyłka dotarła do oddziału DHL eCommerce [^.]{1,80})\.?$/i, 'in_transit'],
   // The delivery depot, with the day the courier will take the parcel and, for today, the hours.
   [/^(?:The shipment has reached DHL Terminal(?: [^.]{1,80})?\. Delivery to the Recipient is expected (?:today|on the next working day)\.(?: Delivery hours: from \d{1,2}:\d{2} to \d{1,2}:\d{2}\.)?|Przesyłka dotarła do (?:oddziału DHL eCommerce|Terminala DHL Parcel)(?: [^.]{1,80})?\. (?:Doręczenie do Odbiorcy planowane jest w kolejnym dniu roboczym|W dniu dzisiejszym zostanie przekazana Kurierowi DHL Parcel do doręczenia)\.(?: Planowane godziny doręczenia: od \d{1,2}:\d{2} do \d{1,2}:\d{2}\.)?)$/i, 'in_transit'],
   // The first terminal, named without a delivery day, which DHL can add later; for a parcel sent abroad, then the way out.
