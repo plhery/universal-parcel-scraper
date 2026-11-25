@@ -1,0 +1,20 @@
+{
+  "carrier": "hytd",
+  "entries": [
+    {"wording": "Shipment information received.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"code": "ARRIVAL", "wording": "Received at Location", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt in China, placed at the line's own HY."},
+    {"wording": "Shipment in transit within the country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "Customs cleared to the airport.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China done, on the way to the airport."},
+    {"wording": "Arrived Export Airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "The flight has departed.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves China."},
+    {"wording": "The flight has arrived.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight lands, placed at the destination country."},
+    {"wording": "Released From Import Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance done in the destination country."},
+    {"wording": "Shipment Depart From Transit Airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves the airport for the delivering carrier."},
+    {"wording": "The shipment has been sent to the next station", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In the destination country."},
+    {"wording": "Arrived at Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In the destination country, placed at the country alone."},
+    {"wording": "On the way, In transit to local Post Office - Allow two to three additional days for delivery", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied with its explanation after a comma, at a distribution centre."},
+    {"wording": "At U.S. Postal Service facility, Accepted by U.S. Postal Service", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied, at the delivering post office: the line handed the parcel to USPS days before."},
+    {"wording": "Out for delivery, Out for delivery with the U.S. Postal Service", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Delivered, Package delivered by U.S. Postal Service to addressee", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."}
+  ]
+}

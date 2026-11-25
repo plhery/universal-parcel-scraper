@@ -1,0 +1,24 @@
+{
+  "carrier": "hytd",
+  "records": [
+    {
+      "number": "HY000000301953TD",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260609111720/https://www.parcelpanel.com/couriers/hytd/",
+        "date": "2026-06-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HYTD page shows. HYTD Express's tracker answers it with a parcel flown to the United States and delivered by USPS, under a number of an unnamed delivery carrier."
+    }
+  ]
+}

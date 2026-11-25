@@ -1,3 +1,4 @@
+import { statusMap as hytd } from '../../carriers/hytd/status.js';
 import { statusMap as zxsy } from '../../carriers/zxsy/status.js';
 import { statusMap as hdgj } from '../../carriers/hdgj/status.js';
 import { statusMap as shilianxin } from '../../carriers/shilianxin/status.js';
@@ -1276,7 +1277,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gruber-logistics': gruberLogistics, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
   hanjin, 'happy-post': happyPost, haypost, hcrd, 'hct-logistics': hctLogistics, hdgj, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, 'home-delivery-team': homeDeliveryTeam, homexpress, 'hongkong-post': hongkongPost, 'hongtai-logistics': hongtaiLogistics,
-  horoz, 'hound-express': houndExpress, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaqi-express': huaqiExpress, 'huaya-express': huayaExpress, huiyu, 'hunter-express': hunterExpress, hywl,
+  horoz, 'hound-express': houndExpress, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaqi-express': huaqiExpress, 'huaya-express': huayaExpress, huiyu, 'hunter-express': hunterExpress, hytd, hywl,
   'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, 'ilyang-logis': ilyangLogis, imile,
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, instapack, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
   'intex-paketdienst': intexPaketdienst, 'israel-post': israelPost, 'j-and-t': jAndT, 'j-and-t-au': jAndTAu, 'j-and-t-de': jAndTDe, 'j-and-t-uk': jAndTUk, 'j-and-t-cargo': jntCargo,

@@ -6950,5 +6950,10 @@
     "carrier": "zxsy",
     "kind": "open",
     "reason": "ZXSY numbers seen so far are ZXSY, eight digits and CN, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "hytd",
+    "kind": "open",
+    "reason": "HYTD Express numbers seen so far are HY, twelve digits and TD, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]
