@@ -1,5 +1,4 @@
-import { lookup as dnsLookup } from 'node:dns/promises';
-import { networkInterfaces } from 'node:os';
+import { warmupPeerServing } from './warmup-peer.mjs';
 
 const ORIGIN = 'https://tools.usps.com';
 const OUTAGE = 'https://www.usps.com/root/global/server_responses/anyapp_outage_apology.htm';
@@ -312,7 +311,6 @@ export const uspsSessions = globalThis[Symbol.for('upc.uspsSessions')] ??= new U
 // minutes when USPS refuses new sessions for a while.
 export const USPS_WARMUP_MS = 5 * 60_000;
 const PEER_CHECK_MS = 5_000;
-const PEER_TIMEOUT_MS = 2_000;
 const reportWarmup = fields => console.warn(JSON.stringify({ level: 'warn', event: 'usps.warmup', ...fields }));
 
 /** The warm-up's read of a tracking page, made the way the USPS adapter asks for one; null for another number. */
@@ -323,30 +321,12 @@ export function uspsWarmupRequest(number) {
   return uspsCaptureNumber(url, req) ? req : null;
 }
 
-/** Whether another container under the network name `host` answers its health check on `port`. */
-export async function uspsWarmupPeerServing(host, port, { lookup = dnsLookup, interfaces = networkInterfaces,
-  fetcher = fetch, timeoutMs = PEER_TIMEOUT_MS } = {}) {
-  let addresses;
-  try { addresses = await lookup(host, { all: true }); } catch { return false; }
-  const own = new Set(Object.values(interfaces()).flat().map(entry => entry?.address));
-  for (const { address, family } of addresses) {
-    if (own.has(address)) continue;
-    const origin = family === 6 ? `http://[${address}]:${port}` : `http://${address}:${port}`;
-    try {
-      const response = await fetcher(`${origin}/health`, { signal: AbortSignal.timeout(timeoutMs) });
-      await response.body?.cancel();
-      if (response.ok) return true;
-    } catch { /* That address does not serve. */ }
-  }
-  return false;
-}
-
 /**
  * Starts preparing the kept sessions through `scrape`. Resolves at once when no other container serves under
  * `peerHost`, and otherwise once the sessions are ready, that container stops answering, or `limitMs` passed.
  */
 export async function warmUspsSessions({ number, deps, scrape, peerHost, port, sessions = uspsSessions,
-  peer = peerHost ? () => uspsWarmupPeerServing(peerHost, port) : async () => false, limitMs = USPS_WARMUP_MS,
+  peer = peerHost ? () => warmupPeerServing(peerHost, port) : async () => false, limitMs = USPS_WARMUP_MS,
   pollMs = 1_000, peerEveryMs = PEER_CHECK_MS, now = Date.now, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)),
   report = reportWarmup }) {
   const say = fields => { try { report(fields); } catch { /* Diagnostics never hold the port. */ } };

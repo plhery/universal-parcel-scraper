@@ -487,6 +487,18 @@ tunnels, those for the page and API among them, and gives the gateway's last sta
 the plain-token reason it names in an `x-…-reason` header, such as Webshare's
 `x-webshare-reason`.
 
+With `FEDEX_WARMUP_NUMBER` set to a public FedEx sample and `FEDEX_WARMUP_PEER` to the
+worker's network alias, a new worker prepares a verified FedEx session before it opens its
+port while another worker under that alias answers its health check, as TRAWL does for USPS.
+FedEx usually refuses a new session, so without this a fresh worker's first lookups fail. It
+looks the number up as the adapter would, at most three times and within two and a half
+minutes, and listens once FedEx accepts one, when the attempts are spent, or as soon as the
+other worker stops answering. A worker started alone opens its port at once and makes the
+same lookups between its callers' own. Each lookup spends proxy bytes under its own lease.
+Give the health check room for the wait (start period plus retries times interval above
+three minutes). A `fedex.warmup` warning records whether the port was held, how the wait
+ended, the lookups made and the duration.
+
 J&T Brazil opens a fresh number-only guest form and solves its supported Tencent jigsaw in
 the page. The match requires texture and shape agreement, stable native-image geometry and
 a measured slider movement. A refreshed challenge cancels the held drag. The helper keeps

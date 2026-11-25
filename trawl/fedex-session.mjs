@@ -219,6 +219,12 @@ export class FedExSessions {
     session.timer.unref?.();
   }
 
+  /** Whether `browser` holds a FedEx session that FedEx accepted on its last lookup and that is still kept. */
+  verified(browser) {
+    const session = this.#sessions.get(browser);
+    return Boolean(session && this.#working(session));
+  }
+
   async run({ url, handle, tier, maxTimeout, capture, installPolicy }) {
     const number = fedexSessionNumber(url, capture);
     if (!number) return undefined;

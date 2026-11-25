@@ -9,7 +9,7 @@ const revision = git('rev-parse', 'HEAD');
 const read = name => readFileSync(new URL(name, import.meta.url), 'utf8');
 const image = read('Dockerfile').match(/^FROM (ghcr.io\/germondai\/trawl:[^\s]+)$/m)?.[1];
 if (!image?.includes('@sha256:')) throw new Error('Missing pinned browser image');
-const files = ['fedex-session.mjs', 'fedex-residential-proxy.mjs', 'fedex-retry-server.mjs'];
+const files = ['fedex-session.mjs', 'fedex-residential-proxy.mjs', 'fedex-retry-server.mjs', 'fedex-warmup.mjs', 'warmup-peer.mjs'];
 const payload = gzipSync(JSON.stringify(Object.fromEntries(files.map(name => [name, read(name)])))).toString('base64');
 console.log(`FROM ${image}
 LABEL org.opencontainers.image.revision="${revision}" org.opencontainers.image.source="https://github.com/plhery/universal-parcel-scraper" org.opencontainers.image.licenses="AGPL-3.0-only"

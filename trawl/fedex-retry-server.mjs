@@ -2,6 +2,7 @@
 // Run with Bun inside the same pinned image as the primary TRAWL service.
 import { BrowserPool } from '../../../browser/src/pool.ts';
 import { fedexSessionNumber, fedexSessions } from './fedex-session.mjs';
+import { warmFedExSession } from './fedex-warmup.mjs';
 import { GatewayRotation, LeaseKeeper, WaitHistogram, containerMemory, createFedExResidentialProxy, retryGateways, retryPoolSize,
   retryRoute } from './fedex-residential-proxy.mjs';
 
@@ -36,6 +37,17 @@ const sessions = fedexSessions;
 const proxies = new Set();
 const bindings = new WeakMap();
 let stopping = false;
+// Whether the last lookup left its browser with a verified FedEx session.
+let sessionVerified = false;
+let server;
+async function shutdown() {
+  if (stopping) return;
+  stopping = true; leases.closeAll(); server?.stop(true);
+  await pool.shutdown();
+  await Promise.allSettled([...proxies].map(proxy => proxy.close()));
+}
+process.once('SIGTERM', () => { void shutdown(); });
+process.once('SIGINT', () => { void shutdown(); });
 await pool.init();
 
 // Each browser's binding holds the lookup running on it: its lease, its gateway refusals and the bytes its proxies carried.
@@ -89,67 +101,73 @@ function metrics() {
     ''].join('\n');
 }
 
-const server = Bun.serve({
-  hostname: process.env.HOST ?? '127.0.0.1', port: Number(process.env.PORT ?? 8192),
-  maxRequestBodySize: 16_384, idleTimeout: 60,
-  async fetch(request) {
-    const path = new URL(request.url).pathname;
-    if (path === '/health' && request.method === 'GET') return Response.json({ status: stopping ? 'stopping' : 'ok', mode: `fedex-${route}`,
-      route, gateways: gateways.length, browsers: poolSize }, { status: stopping ? 503 : 200 });
-    if (path === '/metrics' && request.method === 'GET') return new Response(metrics(), { headers: { 'content-type': 'text/plain; version=0.0.4' } });
-    if (path !== '/scrape' || request.method !== 'POST') return new Response(null, { status: 404 });
-    let body;
-    try { body = await request.json(); } catch { return new Response(null, { status: 400 }); }
-    if (!fedexSessionNumber(body?.url, body) || body.skipHttp !== true || body.maxTier !== 3
-      || !Number.isFinite(body.maxTimeout) || body.maxTimeout < 1) return new Response(null, { status: 400 });
-    // Every browser is serving a lookup: the caller waits out Retry-After or takes another route.
-    if (stopping || active >= poolSize) {
-      if (!stopping) requests.busy++;
-      return new Response(null, { status: 503, headers: { 'Retry-After': '1' } });
-    }
-    const issued = leases.issue(body);
-    if (!issued.lease) return new Response(null, { status: issued.status });
-    active++; requests.accepted++;
-    const started = Date.now(); let handle;
-    const budget = Math.min(40_000, body.maxTimeout);
-    try {
-      return await leases.run(issued.lease, budget, async lease => {
-        handle = await pool.acquire('www.fedex.com', budget);
-        browserWait.observe((Date.now() - started) / 1000);
-        const binding = await bind(handle.browser);
-        const remaining = budget - (Date.now() - started);
-        if (remaining <= 0 || request.signal.aborted) return new Response(null, { status: 504 });
-        // A caller that goes away, as when the consumer's worker restarts, closes the lease and with it the
-        // lookup's tunnels. The browser stays: the session code keeps the context only if the lookup was accepted.
-        const cancel = () => { lease.close(); };
-        request.signal.addEventListener('abort', cancel, { once: true });
-        binding.lease = lease; binding.refused = { tunnels: 0, page: 0, api: 0, status: null, reason: null };
-        const before = binding.bytes;
-        let result;
-        try {
-          result = await sessions.run({ url: body.url, handle, tier: 3, maxTimeout: remaining,
-            capture: { captureResponses: body.captureResponses, settleTimeout: 250 } });
-        } finally {
-          request.signal.removeEventListener('abort', cancel); reportRefusals(binding.refused); lease.close();
-          binding.lease = null; binding.refused = null;
-        }
-        // Bytes on this browser's tunnels outside this lease since it began: none, as no tunnel opens without one.
-        const proof = { route, family: 'unknown', pageConnections: lease.page, apiConnections: lease.api,
-          connectionFailures: lease.failures, bytes: lease.bytes, idleBytes: Math.max(0, binding.bytes - before - lease.bytes),
-          lease: lease.id, allowance: lease.allowance, limited: lease.limited };
-        // No rendered page, cookies, proxy address or destination addresses leave this endpoint.
-        return Response.json({ ...result, html: '', body: '', cookies: [], fedexEgress: proof });
-      });
-    } catch { return new Response(null, { status: 502 }); }
-    finally { if (handle) pool.release(handle.id, handle.lease); active--; }
-  },
-});
-
-async function shutdown() {
-  if (stopping) return;
-  stopping = true; leases.closeAll(); server.stop(true);
-  await pool.shutdown();
-  await Promise.allSettled([...proxies].map(proxy => proxy.close()));
+// One lookup on a warm browser, for /scrape and the warm-up; `counted` ones are callers' (fedex_retry_requests_total).
+async function lookup(body, signal, counted = true) {
+  // Every browser is serving a lookup: the caller waits out Retry-After or takes another route.
+  if (stopping || active >= poolSize) {
+    if (!stopping && counted) requests.busy++;
+    return { status: 503, busy: true };
+  }
+  const issued = leases.issue(body);
+  if (!issued.lease) return { status: issued.status };
+  active++; if (counted) requests.accepted++;
+  const started = Date.now(); let handle;
+  const budget = Math.min(40_000, body.maxTimeout);
+  try {
+    return await leases.run(issued.lease, budget, async lease => {
+      handle = await pool.acquire('www.fedex.com', budget);
+      browserWait.observe((Date.now() - started) / 1000);
+      const binding = await bind(handle.browser);
+      const remaining = budget - (Date.now() - started);
+      if (remaining <= 0 || signal.aborted) return { status: 504 };
+      // A caller that goes away, as when the consumer's worker restarts, closes the lease and with it the
+      // lookup's tunnels. The browser stays: the session code keeps the context only if the lookup was accepted.
+      const cancel = () => { lease.close(); };
+      signal.addEventListener('abort', cancel, { once: true });
+      binding.lease = lease; binding.refused = { tunnels: 0, page: 0, api: 0, status: null, reason: null };
+      const before = binding.bytes;
+      let result;
+      try {
+        result = await sessions.run({ url: body.url, handle, tier: 3, maxTimeout: remaining,
+          capture: { captureResponses: body.captureResponses, settleTimeout: 250 } });
+      } finally {
+        signal.removeEventListener('abort', cancel); reportRefusals(binding.refused); lease.close();
+        binding.lease = null; binding.refused = null;
+      }
+      sessionVerified = sessions.verified(handle.browser);
+      // Bytes on this browser's tunnels outside this lease since it began: none, as no tunnel opens without one.
+      const proof = { route, family: 'unknown', pageConnections: lease.page, apiConnections: lease.api,
+        connectionFailures: lease.failures, bytes: lease.bytes, idleBytes: Math.max(0, binding.bytes - before - lease.bytes),
+        lease: lease.id, allowance: lease.allowance, limited: lease.limited };
+      // No rendered page, cookies, proxy address or destination addresses leave this endpoint.
+      return { status: 200, reply: { ...result, html: '', body: '', cookies: [], fedexEgress: proof } };
+    });
+  } catch { return { status: 502 }; }
+  finally { if (handle) pool.release(handle.id, handle.lease); active--; }
 }
-process.once('SIGTERM', () => { void shutdown(); });
-process.once('SIGINT', () => { void shutdown(); });
+
+async function respond(request) {
+  const path = new URL(request.url).pathname;
+  if (path === '/health' && request.method === 'GET') return Response.json({ status: stopping ? 'stopping' : 'ok', mode: `fedex-${route}`,
+    route, gateways: gateways.length, browsers: poolSize }, { status: stopping ? 503 : 200 });
+  if (path === '/metrics' && request.method === 'GET') return new Response(metrics(), { headers: { 'content-type': 'text/plain; version=0.0.4' } });
+  if (path !== '/scrape' || request.method !== 'POST') return new Response(null, { status: 404 });
+  let body;
+  try { body = await request.json(); } catch { return new Response(null, { status: 400 }); }
+  if (!fedexSessionNumber(body?.url, body) || body.skipHttp !== true || body.maxTier !== 3
+    || !Number.isFinite(body.maxTimeout) || body.maxTimeout < 1) return new Response(null, { status: 400 });
+  const answer = await lookup(body, request.signal);
+  if (answer.reply) return Response.json(answer.reply);
+  return new Response(null, { status: answer.status, ...(answer.busy ? { headers: { 'Retry-After': '1' } } : {}) });
+}
+
+const port = Number(process.env.PORT ?? 8192);
+// With FEDEX_WARMUP_NUMBER set, a worker started while another under FEDEX_WARMUP_PEER serves opens its port once
+// a warm-up lookup leaves a verified session, or after FEDEX_WARMUP_MS; alone, it opens at once (fedex-warmup.mjs).
+const warmupNumber = process.env.FEDEX_WARMUP_NUMBER?.trim();
+if (warmupNumber) {
+  await warmFedExSession({ number: warmupNumber, lookup: body => lookup(body, new AbortController().signal, false),
+    verified: () => sessionVerified, stopped: () => stopping, peerHost: process.env.FEDEX_WARMUP_PEER?.trim(), port }).catch(() => {});
+}
+if (!stopping) server = Bun.serve({ hostname: process.env.HOST ?? '127.0.0.1', port, maxRequestBodySize: 16_384, idleTimeout: 60,
+  fetch: respond });

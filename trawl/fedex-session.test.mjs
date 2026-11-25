@@ -113,6 +113,20 @@ test('keeps a verified context across tiers and makes a new request for each num
   assert.equal(f.contexts[0].closed, true);
 });
 
+test('tells whether a browser holds a verified session, for the retry worker\'s warm-up', async () => {
+  const sessions = new FedExSessions({ settleMs: 0, incompleteSettleMs: 0, onRefusal: () => {}, onSessionEnd: () => {} });
+  const refused = fixture([{ status: 403 }], { sessions });
+  assert.equal(sessions.verified(refused.browser), false);
+  await refused.run();
+  assert.equal(sessions.verified(refused.browser), false);
+  const accepted = fixture([{}], { sessions });
+  await accepted.run();
+  assert.equal(sessions.verified(accepted.browser), true);
+  await accepted.close();
+  assert.equal(sessions.verified(accepted.browser), false);
+  await refused.close();
+});
+
 test('ignores a response for another submitted number', async () => {
   const f = fixture([{ unrelated: true }]);
   const result = await f.run();
