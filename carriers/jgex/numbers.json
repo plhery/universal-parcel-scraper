@@ -1,0 +1,24 @@
+{
+  "carrier": "jgex",
+  "records": [
+    {
+      "number": "JG912050440363",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250126090610/https://www.parcelpanel.com/couriers/jgex/",
+        "date": "2025-01-26",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's JGEX page shows. JGEX's tracker answers it with a parcel flown from Shanghai and delivered by USPS in the United States."
+    }
+  ]
+}

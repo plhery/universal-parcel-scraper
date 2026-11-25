@@ -1,0 +1,23 @@
+{
+  "carrier": "jgex",
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "Shipment information received", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"code": "SHIPMENT", "wording": "离开收寄点", "language": "zh", "english": "Departed the collection point", "stage": "in_transit", "confirmedBy": "live", "note": "The Shanghai warehouse's departure."},
+    {"code": "CO_C_CR", "wording": "Leave Scan - Load car", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row, in Shanghai. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "The package is being sent to the airport.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "The Package export customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "The package has left the Sender country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row; the tracker writes two spaces after `the`. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "Arrive at the processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row, placed in the United States. Listed as a planned step."},
+    {"code": "CO_C_CR", "wording": "The package import customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The platform's custom track row. Listed as a planned step."},
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied; the platform's custom track also ends with this wording."},
+    {"wording": "In Transit to Next Facility, Arriving Late", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Accepted at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's first scan, copied: USPS takes the parcel over from the line, which accepted it in China days before."},
+    {"wording": "Arrived at USPS Regional Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Departed USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied."},
+    {"wording": "Delivered, In/At Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."}
+  ]
+}
