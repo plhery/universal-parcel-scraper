@@ -91,6 +91,9 @@ const PAGE = 'https://www.jtexpress.com.br/trajectoryQuery';
 test('production helper is restricted to one carrier form, shape and capture', () => {
   const capture={captureResponses:[API]},url=PAGE+'?waybillNo='+TEST_NUMBER;
   assert.equal(jAndTBrBrowserNumber(url,capture),TEST_NUMBER);
+  assert.equal(jAndTBrBrowserNumber(PAGE+'?waybillNo=999889999999999',capture),'999889999999999');
+  for(const number of ['99988999999999','9998899999999999','999879999999999'])
+    assert.equal(jAndTBrBrowserNumber(PAGE+'?waybillNo='+number,capture),null);
   for(const value of [url+'&waybillNo='+TEST_NUMBER,url+'&type=0',url+'#extra',url.replace('www.','user@www.'),url.replace('888','999'),url.replace('trajectoryQuery','mobile/expressTracking')])
     assert.equal(jAndTBrBrowserNumber(value,capture),null);
   assert.equal(jAndTBrBrowserNumber(url,{captureResponses:[API,API]}),null);

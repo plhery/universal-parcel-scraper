@@ -1,4 +1,4 @@
-/** The domestic waybill format used by J&T Brazil's public guest form. */
+/** The fifteen-digit domestic waybills, 888 and 99988, that J&T Brazil's public guest form answers. */
 export function isJAndTBrReference(raw: string): boolean {
-  return typeof raw === 'string' && /^888\d{12}$/.test(raw.trim());
+  return typeof raw === 'string' && /^(?:888\d{12}|99988\d{10})$/.test(raw.trim());
 }

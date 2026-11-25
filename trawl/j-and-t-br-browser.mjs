@@ -10,7 +10,7 @@ export function jAndTBrBrowserNumber(raw, capture = {}) {
   try { url = new URL(raw); } catch { return null; }
   const number = url.searchParams.get('waybillNo');
   return url.origin + url.pathname === PAGE && !url.username && !url.password && !url.hash
-    && [...url.searchParams].length === 1 && /^888\d{12}$/.test(number ?? '')
+    && [...url.searchParams].length === 1 && /^(?:888\d{12}|99988\d{10})$/.test(number ?? '')
     && capture.captureResponses?.length === 1 && capture.captureResponses[0] === API ? number : null;
 }
 

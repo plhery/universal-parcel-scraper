@@ -29,10 +29,11 @@ Staff, recipient fields, free-form remarks, signatures and proof-of-delivery dat
 
 ## Numbers
 
-The guest flow accepts the fifteen-digit domestic waybills beginning with 888. Every waybill
-seen so far begins with 8880 or, in its next series, 8881, and no other carrier's does, so a
-high-confidence rule files those under J&T Brazil ahead of BRT's and Yunda's fifteen digits. There is no HTTP recognizer, and a
-browser check takes longer than recognition allows, so the rule files the number rather than
+The guest flow answers fifteen-digit domestic waybills beginning with 888 or 99988. Every 888
+waybill seen so far begins with 8880 or, in its next series, 8881, and no other carrier's
+numbers begin with 8880, 8881 or 99988, so high-confidence rules file both series under J&T
+Brazil ahead of BRT's and Yunda's fifteen digits. There is no HTTP recognizer, and a
+browser check takes longer than recognition allows, so the rules file the number rather than
 suggesting it: a parcel J&T Brazil does not know falls back to the other carriers.
 Other aliases and the CPF/CNPJ, account and proof-of-delivery branches are outside this adapter.
 

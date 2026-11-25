@@ -36410,6 +36410,10 @@
       {
         "pattern": "^888[01]\\d{11}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^99988\\d{10}$",
+        "confidence": "high"
       }
     ]
   },

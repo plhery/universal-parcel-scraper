@@ -257,6 +257,18 @@
         "confidence": "high"
       },
       "note": "Made-up number in the shape of the 8881 waybills J&T Express Brazil's own tracker answered for parcels the app tracked, the series after 8880. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "999889999999999",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-25",
+      "expect": {
+        "carrier": "j-and-t-br",
+        "confidence": "high"
+      },
+      "note": "Made-up waybill in the shape of the 99988 series the app tracked, fifteen digits that J&T Express Brazil's guest form answered under the same number with its own scans."
     }
   ]
 }

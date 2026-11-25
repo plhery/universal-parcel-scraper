@@ -83102,6 +83102,14 @@
     ]
   },
   {
+    "input": "999889999999999",
+    "carrier": "j-and-t-br",
+    "confidence": "high",
+    "candidates": [
+      "j-and-t-br"
+    ]
+  },
+  {
     "input": "9999/16070306",
     "carrier": "nacex",
     "confidence": "high",

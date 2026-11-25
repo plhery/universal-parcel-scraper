@@ -36414,6 +36414,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^888[01]\\d{11}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^99988\\d{10}$",
+        "confidence": "high"
       }
     ]
   },
@@ -75975,7 +75979,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "itc-delivery": [],
   "itide": [],
   "j-and-t-au": ["j-and-t-au-1"],
-  "j-and-t-br": ["j-and-t-br-1"],
+  "j-and-t-br": ["j-and-t-br-1","j-and-t-br-2"],
   "j-and-t-cargo": ["j-and-t-cargo-1","j-and-t-cargo-2"],
   "j-and-t-cargo-br": [],
   "j-and-t-cn": ["j-and-t-cn-1"],

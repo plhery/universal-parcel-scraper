@@ -3,10 +3,11 @@ import { describe, expect, it, vi } from 'vitest';
 import { hasDirectHandoffAdapter } from '../../core/catalog/handoff.js';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { TrawlClient } from '../../core/transport/trawl.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, JAndTBrTracker } from './adapter.js';
-import { JT_BR_API, JT_BR_PAGE, parseJAndTBr } from './parser.js';
+import { JT_BR_API, JT_BR_PAGE, normalizeJAndTBrNumber, parseJAndTBr } from './parser.js';
 
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
 const NUMBER = '888746193820571', SERVICE = 'https://trawl.invalid';
@@ -174,5 +175,19 @@ describe('J&T Brazil guest history', () => {
     const result = await createTracker({ providers: [], trawlUrl: SERVICE, fetcher: h.fetcher }).track({ number: NUMBER, carrier: 'j-and-t-br' });
     expect(result).toMatchObject({ source: 'j-and-t-br', result: { current_stage: 'delivered' } });
     expect(result.result.events).toHaveLength(8);
+  });
+});
+
+describe('J&T Brazil numbers', () => {
+  it('files its 888 and 99988 waybills whole and leaves near misses to the other fifteen-digit carriers', () => {
+    for (const number of ['888000000000198', '999889999999999']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'j-and-t-br', confidence: 'high' });
+      expect(normalizeJAndTBrNumber(number)).toBe(number);
+      expect(hasDirectHandoffAdapter('j-and-t-br', number)).toBe(true);
+    }
+    for (const number of ['99988999999999', '9998899999999999', '999879999999999', '899889999999999']) {
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('j-and-t-br');
+      expect(() => normalizeJAndTBrNumber(number), number).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
+    }
   });
 });

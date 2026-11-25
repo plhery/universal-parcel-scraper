@@ -56,6 +56,11 @@
       "id": "j-and-t-br-1",
       "pattern": "^888[01]\\d{11}$",
       "confidence": "high"
+    },
+    {
+      "id": "j-and-t-br-2",
+      "pattern": "^99988\\d{10}$",
+      "confidence": "high"
     }
   ]
 }
