@@ -89,9 +89,9 @@ Outcomes:
   worded around it still reads first.
 - A take-off row (`event_type` `AircraftTakeOff`, whose office starts with the airport's code as in
   `Office - DEL 00000000`) carries the departure airport's wall clock labelled `Z`: a take-off was
-  seen recorded hours before its labelled time. Its digits are read in the airport's zone, from a
-  table of airport codes in the adapter. The row is found by its code because its wording changes.
-  A take-off at an airport outside the table keeps its label, and one whose label is not UTC is
+  seen recorded hours before its labelled time. Its digits are read in the airport's zone, from the
+  shared airport lookup. The row is found by its code because its wording changes.
+  A take-off at an airport the lookup does not know keeps its label, and one whose label is not UTC is
   read like any other row. The mail's hand-over to the airport (`HandedOverToAirportFacility`)
   comes the same way, to the minute: labelled as UTC, a hand-over at Delhi's office of exchange
   followed its flight's take-off there. It is read on its airport's clock when the office names
@@ -108,8 +108,8 @@ Outcomes:
 - The flight's landing (`AircraftArrived`, "Aircraft arrival in Transit country") keeps the
   take-off's office and its remark names the route. It carries the landing airport's wall clock
   labelled `Z`: read as UTC, a Zurich–Boston flight landed three hours after take-off. It is read
-  on the clock of the airport the route lands at, from the same table, and keeps its label when
-  that airport is outside the table or the route does not start at the office.
+  on the clock of the airport the route lands at, from the same lookup, and keeps its label when
+  the lookup does not know that airport or the route does not start at the office.
 - Take-offs use one wording even when the source switches labels. A strictly formatted flight remark
   supplies its flight number and route; other remarks are discarded. Known departure airports are
   named with their country so maps can locate the scan. A departure's route does not prove arrival.

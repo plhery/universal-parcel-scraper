@@ -361,8 +361,9 @@ describe('India Post response normalization', () => {
       takeOff('2026-03-28T22:10:00.000000Z', 'Office - CDG 00000003'),
       takeOff('2026-03-29T22:10:00.000000Z', 'Office - CDG 00000003'),
     ])).toEqual(['2026-03-29T22:10:00+02:00', '2026-03-28T22:10:00+01:00']);
-    // An airport outside the table.
-    expect(times([takeOff('2026-07-11T20:05:00.000000Z', 'Office - GRU 00000004')])).toEqual(['2026-07-11T20:05:00Z']);
+    // Any airport the gazetteer knows, and a code it does not.
+    expect(times([takeOff('2026-07-11T20:05:00.000000Z', 'Office - GRU 00000004')])).toEqual(['2026-07-11T20:05:00-03:00']);
+    expect(times([takeOff('2026-07-11T20:05:00.000000Z', 'Office - ZZZ 00000004')])).toEqual(['2026-07-11T20:05:00Z']);
     // A take-off at an office that names no airport, and another code at an airport.
     expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - 00000001')])).toEqual(['2026-07-11T01:40:00Z']);
     expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - DEL 00000002', 'Unknown')])).toEqual(['2026-07-11T01:40:00Z']);
@@ -378,9 +379,11 @@ describe('India Post response normalization', () => {
       flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'ZRH To BOS'),
       flight('2026-02-10T18:55:00.000000Z', 'AircraftTakeOff', 'AIRCRAFT_DEPARTURE', 'ZRH To BOS'),
     ])).toEqual([['2026-02-10T21:40:00-05:00', 'AircraftArrived'], ['2026-02-10T18:55:00+01:00', 'AircraftTakeOff']]);
-    // A landing airport outside the table, or a route that does not start at the office, keeps its label.
-    expect(times([flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'ZRH To GRU')]))
+    // A landing airport the gazetteer does not know, or a route that does not start at the office, keeps its label.
+    expect(times([flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'ZRH To ZZZ')]))
       .toEqual([['2026-02-10T21:40:00Z', 'AircraftArrived']]);
+    expect(times([flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'ZRH To GRU')]))
+      .toEqual([['2026-02-10T21:40:00-03:00', 'AircraftArrived']]);
     expect(times([flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'FRA To BOS')]))
       .toEqual([['2026-02-10T21:40:00Z', 'AircraftArrived']]);
   });

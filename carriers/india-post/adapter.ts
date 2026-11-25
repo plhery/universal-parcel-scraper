@@ -127,23 +127,6 @@ const LANDING_CODES = new Set(['AircraftArrived', 'TransportLegCompleted']);
 const RECEIPT_CODE = 'ItemReceived';
 // The label a take-off's wall clock arrives under; any other offset is kept.
 const UTC_LABEL = /(?:Z|[+-]00:?00)$/i;
-// The zones of the airports a take-off row may name, by IATA code.
-const AIRPORT_ZONES: Readonly<Record<string, string>> = {
-  BOM: 'Asia/Kolkata', DEL: 'Asia/Kolkata', MAA: 'Asia/Kolkata', CCU: 'Asia/Kolkata',
-  BLR: 'Asia/Kolkata', HYD: 'Asia/Kolkata', COK: 'Asia/Kolkata', AMD: 'Asia/Kolkata',
-  FRA: 'Europe/Berlin', MUC: 'Europe/Berlin', LEJ: 'Europe/Berlin', CGN: 'Europe/Berlin',
-  LHR: 'Europe/London', CDG: 'Europe/Paris', AMS: 'Europe/Amsterdam', ZRH: 'Europe/Zurich',
-  VIE: 'Europe/Vienna', BRU: 'Europe/Brussels', LGG: 'Europe/Brussels', FCO: 'Europe/Rome',
-  MXP: 'Europe/Rome', MAD: 'Europe/Madrid', CPH: 'Europe/Copenhagen', ARN: 'Europe/Stockholm',
-  HEL: 'Europe/Helsinki', IST: 'Europe/Istanbul',
-  DXB: 'Asia/Dubai', AUH: 'Asia/Dubai', DOH: 'Asia/Qatar', SIN: 'Asia/Singapore',
-  HKG: 'Asia/Hong_Kong', BKK: 'Asia/Bangkok', NRT: 'Asia/Tokyo', ICN: 'Asia/Seoul',
-  PVG: 'Asia/Shanghai', KUL: 'Asia/Kuala_Lumpur', CMB: 'Asia/Colombo', DAC: 'Asia/Dhaka',
-  KTM: 'Asia/Kathmandu',
-  JFK: 'America/New_York', EWR: 'America/New_York', BOS: 'America/New_York', ORD: 'America/Chicago',
-  LAX: 'America/Los_Angeles', SFO: 'America/Los_Angeles', YYZ: 'America/Toronto',
-  SYD: 'Australia/Sydney', MEL: 'Australia/Melbourne',
-};
 
 // Only verified names are expanded; other airport codes stay as the carrier wrote them.
 const AIRPORT_PLACES: Readonly<Record<string, { name: string; country: string }>> = {
@@ -191,19 +174,19 @@ function flightDetails(providerCode: string, remarks: unknown, office: string): 
  * office and no clock. A landing keeps the take-off's office and is on the clock of
  * the airport its flight's route lands at: read as UTC, a Zurich–Boston flight landed
  * three hours after take-off; on Boston's clock it took the flight's length. Null for every
- * other row, for an airport outside the table and for a value not labelled UTC:
+ * other row, for an airport the gazetteer does not know and for a value not labelled UTC:
  * those are read as any row is.
  */
 function airportClockZone(providerCode: string, office: string, trackedAt: string, remarks: unknown = null): string | null {
   if (!UTC_LABEL.test(trackedAt)) return null;
   if (LANDING_CODES.has(providerCode)) {
     const landing = flightRoute(remarks, office)?.[3];
-    return landing ? AIRPORT_ZONES[landing] ?? null : null;
+    return landing ? airportTimeZone(landing) : null;
   }
   const handOver = providerCode === HAND_OVER_CODE || exchangeReceipt(providerCode, office, remarks);
   if (providerCode !== TAKE_OFF_CODE && !handOver) return null;
   const airport = officeAirport(office);
-  if (airport) return AIRPORT_ZONES[airport] ?? null;
+  if (airport) return airportTimeZone(airport);
   return handOver && office ? exchangeZone(office) : null;
 }
 
@@ -248,7 +231,7 @@ function handOverReportZones(rows: readonly JsonObject[]): (string | null)[] {
     if (!HAND_OVER_REPORT_CODES.has(code) || !office || !UTC_LABEL.test(trackedAt) || !Number.isFinite(at) || at % 60_000) return null;
     const airport = officeAirport(office);
     return handOvers.find((handOver) => Math.abs(handOver.at - at) <= 60_000
-      && (airport ? AIRPORT_ZONES[airport] === handOver.zone : office === handOver.office))?.zone ?? null;
+      && (airport ? airportTimeZone(airport) === handOver.zone : office === handOver.office))?.zone ?? null;
   });
 }
 
@@ -341,7 +324,7 @@ function arrivalAirport(row: JsonObject): string | null {
 
 function airportCountry(airport: string): string | null {
   const place = AIRPORT_PLACES[airport];
-  return place ? countryCode(place.country) : timeZoneCountry(AIRPORT_ZONES[airport] ?? '');
+  return place ? countryCode(place.country) : timeZoneCountry(airportTimeZone(airport) ?? '');
 }
 
 /**
