@@ -1722,8 +1722,11 @@ describe('TipTop', () => {
   it('reads the name 17TRACK gives it and its company name', () => {
     for (const name of ['TipTop', 'tiptop', '义乌壹皓国际物流有限公司']) expect(carrierIdFromName(name), name).toBe('tiptop');
   });
-  it('offers it for no number shape', () => {
-    for (const number of ['YH000000000017CN', 'TT00000017']) expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('tiptop');
+  it('offers it at low confidence for YHC, twelve digits and CN, and for no other shape', () => {
+    expect(detectCarrierMatch('YHC990000000017CN')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['tiptop'] });
+    for (const number of ['YH000000000017CN', 'YHC99000000017CN', 'YHC9900000000017CN', 'TT00000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('tiptop');
+    }
   });
 });
 

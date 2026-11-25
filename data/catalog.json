@@ -64007,7 +64007,12 @@
     "trackingSearchUrl": "https://www.tiptop56.com/",
     "helpUrl": "https://www.tiptop56.com/aboutus/contact/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^YHC\\d{12}CN$",
+        "confidence": "low"
+      }
+    ]
   },
   "tirupati-courier": {
     "displayName": "Shree Tirupati Courier",
