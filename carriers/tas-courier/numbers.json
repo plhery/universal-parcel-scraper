@@ -1,5 +1,57 @@
 {
   "carrier": "tas-courier",
-  "gap": "No public page shows a TAS Courier voucher number.",
-  "records": []
+  "records": [
+    {
+      "number": "V-4027982",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.tascourier.gr/tracking-service",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The voucher on the map pin of the second step's screenshot in TAS Courier's guide to its tracking service. The voucher search answers it as delivered, with its booking, driver assignment and delivery."
+    },
+    {
+      "number": "V-3975570",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.tascourier.gr/tracking-service",
+        "date": "2026-11-25",
+        "dateKind": "accessed",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      },
+      "note": "The voucher in the text message and the tracking page of the first two steps' screenshots in TAS Courier's guide to its tracking service. The voucher search answers it with its booking and its assignment to an Attica driver."
+    }
+  ]
 }

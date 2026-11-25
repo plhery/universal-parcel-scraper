@@ -18,19 +18,50 @@
   "timezone": "Europe/Athens",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "tas-courier",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://www.tascourier.gr/track?v={trackingNumber}",
     "searchUrl": "https://www.tascourier.gr/track",
     "helpUrl": "https://www.tascourier.gr/contact",
     "canaryUrl": "https://www.tascourier.gr/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "scan_times",
+      "delivery_tracking_number",
+      "recipient_name",
+      "driver_name",
+      "delivered_at",
+      "eta_window"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "scan_times"
+    ],
+    "discarded": [
+      "delivery_tracking_number",
+      "recipient_name",
+      "driver_name",
+      "delivered_at"
+    ],
+    "unavailable": [
+      "location",
+      "offset_timestamps",
+      "weight",
+      "sender_name",
+      "destination",
+      "delivery_partner"
+    ]
   },
   "links": [
     {

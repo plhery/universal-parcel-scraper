@@ -1316,6 +1316,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'quantium-solutions', number: 'UQ000000000TH',
     route: /^https:\/\/track\.quantiumworldwide\.com\/\?trackno=UQ000000000TH$/,
     marker: /Tracking Summary|Track Your Shipments/ },
+  // The page fills its field from `v` and looks the voucher up behind a reCAPTCHA; the served page shows its search help.
+  { carrier: 'tas-courier', number: 'V-99999990',
+    route: /^https:\/\/www\.tascourier\.gr\/track\?v=V-99999990$/,
+    marker: /Για πολλαπλή αναζήτηση \(έως 20\)/ },
   // The page reads the waybill from its address and looks it up on load; an unknown one gets a notice without it.
   { carrier: 'taxydema', number: '400000000000',
     route: /^https:\/\/www\.taxydema\.gr\/entopismos\/400000000000$/,

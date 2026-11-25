@@ -1,4 +1,8 @@
 {
   "carrier": "tas-courier",
-  "entries": []
+  "entries": [
+    {"wording": "Εκκρεμεί Προς Παραλαβή", "stage": "registered", "language": "el", "confirmedBy": "live", "note": "Pending collection from the sender: the voucher is booked."},
+    {"wording": "Έγινε Ανάθεση σε Οδηγό Αττικής", "stage": "in_transit", "language": "el", "confirmedBy": "live", "note": "Assigned to a driver in Attica. The wording does not say whether the run collects or delivers, so it does not mean out for delivery."},
+    {"wording": "Έγινε Παράδοση Στον Παραλήπτη", "stage": "delivered", "language": "el", "confirmedBy": "live", "note": "Delivered to the recipient."}
+  ]
 }

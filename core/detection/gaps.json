@@ -4404,6 +4404,12 @@
     "reason": "The guest form uses container numbers, and equipment ownership does not identify the shipment carrier."
   },
   {
+    "carrier": "tas-courier",
+    "pattern": "^V\\d{6,10}$",
+    "kind": "by_design",
+    "reason": "TAS Courier does not document its voucher shape, a V and digits, which other carriers' references also take, so the shape cannot name TAS Courier."
+  },
+  {
     "carrier": "taxydema",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
