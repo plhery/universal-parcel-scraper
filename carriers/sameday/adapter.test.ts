@@ -177,7 +177,7 @@ describe('Sameday retrieval', () => {
     const instance = adapter(environment(fetcher));
     await expect(instance.recognize!('1234')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
-    await expect(instance.recognize!(AWB)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-07T14:54:30.000Z' });
+    await expect(instance.recognize!(AWB)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-07T14:54:30.000Z', finished: true });
     expect(fetcher).toHaveBeenCalledOnce();
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`https://api.sameday.ro/api/public/awb/${AWB}/awb-history?_locale=en`);

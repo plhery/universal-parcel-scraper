@@ -210,7 +210,7 @@ describe('Pósturinn tracking adapter', () => {
 
   it('recognizes a known item and an unknown code from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered'))).mockResolvedValueOnce(reply(null, 204));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T18:16:13.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T18:16:13.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

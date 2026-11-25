@@ -195,7 +195,7 @@ describe('Aramex New Zealand tracking adapter', () => {
   it('recognizes a parcel the tracker has scans for, with its last activity, and reads its unknown number as unknown', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-05T23:42:09.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-05T23:42:09.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).track({ number: ABSENT })).rejects.toMatchObject({ kind: 'not_found' });
     expect(fetcher).toHaveBeenCalledTimes(3);

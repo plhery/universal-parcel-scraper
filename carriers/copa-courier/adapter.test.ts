@@ -217,7 +217,7 @@ describe('Copa Courier HTTP adapter', () => {
 
   it('recognizes a known HAWB and the unknown-HAWB answer, and asks nothing for a number Copa Courier does not issue', async () => {
     const fetcher = site((body) => page(fixture(body.startsWith(`txtNumeroHAWB=${DELIVERED}&`) ? 'delivered' : 'not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-17T11:35:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-17T11:35:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('H90000011')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

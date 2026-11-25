@@ -235,7 +235,7 @@ describe('Passport HTTP adapter', () => {
 
   it('recognizes a known shipment and the unknown-number answer, and asks nothing for a number Passport does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(page(delivered)).mockResolvedValueOnce(page(absent));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: expect.stringMatching(/-03-03T20:06:00\.000Z$/) });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: expect.stringMatching(/-03-03T20:06:00\.000Z$/), finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(S10)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -115,7 +115,7 @@ describe('FAN Courier retrieval', () => {
     const instance = adapter({ ...environment(fetcher), userAgent: 'ExampleHost/1.0' });
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-07T14:05:51' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-07T14:05:51', finished: true });
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('https://www.fancourier.ro/limit-tracking.php');
     expect(init).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'error' });

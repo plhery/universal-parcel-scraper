@@ -163,7 +163,7 @@ describe('PIN AG HTTP adapter', () => {
 
   it('recognizes a known parcel by its day and the unknown-number answer, and asks nothing for a number PIN does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('delivered')).mockResolvedValueOnce(unknown());
-    await expect(carrier(fetcher).recognize!(PARCEL)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-31T10:55:46' });
+    await expect(carrier(fetcher).recognize!(PARCEL)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-31T10:55:46', finished: true });
     await expect(carrier(fetcher).recognize!(PARCEL)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('01000000000000012')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

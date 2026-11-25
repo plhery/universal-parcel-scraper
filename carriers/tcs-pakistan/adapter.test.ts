@@ -177,7 +177,7 @@ describe('TCS HTTP adapter', () => {
   it('recognizes a consignment with checkpoints, and neither an unknown one nor a number TCS does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T09:42:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T09:42:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('9000000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -273,7 +273,7 @@ describe('DPD Portugal tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(delivered)).mockResolvedValueOnce(reply(page('not-found')))
       .mockResolvedValueOnce(reply(history()));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T11:30:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T11:30:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate' });
     expect(fetcher).toHaveBeenCalledTimes(3);

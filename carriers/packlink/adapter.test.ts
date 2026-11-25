@@ -180,7 +180,7 @@ describe('Packlink HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found'), { status: 404 }));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-13T18:05:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-13T18:05:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('ES2026XYZ0000000101')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

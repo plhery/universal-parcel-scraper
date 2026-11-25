@@ -198,7 +198,7 @@ describe('Vasp Expresso HTTP adapter', () => {
       .mockResolvedValueOnce(reply('', { status: 204 }))
       .mockResolvedValueOnce(reply(raw('in-transit')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-16T14:05:21' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-16T14:05:21', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // An answer for another service is no recognition.
     await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate' });

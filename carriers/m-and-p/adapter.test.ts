@@ -209,7 +209,7 @@ describe('M&P HTTP adapter', () => {
   });
 
   it('recognizes a known number and not an unknown one', async () => {
-    await expect(carrier(answering(() => page(fixture('delivered')))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-12T11:05:00.000Z' });
+    await expect(carrier(answering(() => page(fixture('delivered')))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-12T11:05:00.000Z', finished: true });
     await expect(carrier(answering(() => page(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('1234567')).resolves.toEqual({ known: false });

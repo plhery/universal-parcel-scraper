@@ -165,8 +165,8 @@ describe('FG Delivery HTTP adapter', () => {
       .mockResolvedValueOnce(reply('[]'))
       .mockResolvedValueOnce(reply(raw('in-transit.json')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-13T14:05:21' });
-    await expect(carrier(fetcher).recognize!(CAINIAO)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-13T14:05:21' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-13T14:05:21', finished: true });
+    await expect(carrier(fetcher).recognize!(CAINIAO)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-13T14:05:21', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // An answer for another shipment is no recognition.
     await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate' });

@@ -240,7 +240,7 @@ describe('WINIT HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number WINIT’s tracker does not take', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('in-transit'))).mockResolvedValueOnce(reply(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-01T17:05:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-01T17:05:00.000Z', finished: true });
     // The newest scans' wall clocks cannot date the parcel's last activity; the warehouse's can.
     await expect(carrier(fetcher).recognize!(IN_TRANSIT)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T08:29:19.000Z' });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });

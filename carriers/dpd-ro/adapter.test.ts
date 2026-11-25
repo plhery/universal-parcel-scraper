@@ -165,7 +165,7 @@ describe('DPD Romania HTTP adapter', () => {
 
   it('recognizes a known waybill and the not-found page without a browser or recipient inputs', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('delivered')).mockResolvedValueOnce(missing());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:20:30.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:20:30.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('60000000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -231,7 +231,7 @@ describe('Venipak direct tracking', () => {
     expect(await instance.recognize!('V0000E0000001')).toEqual({ known: false });
     expect(known).not.toHaveBeenCalled();
     // A local clock dates the last activity without an instant.
-    expect(await instance.recognize!(LOCKER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T18:02:00' });
+    expect(await instance.recognize!(LOCKER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T18:02:00', finished: true });
     const unknown = vi.fn(async () => reply(wrap(absent)));
     expect(await adapter(environment(unknown as unknown as typeof fetch)).recognize!(UNKNOWN)).toEqual({ known: false });
     const outage = vi.fn(async () => reply('<html>Maintenance</html>', 200, { 'Content-Type': 'text/html' }));

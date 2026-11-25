@@ -225,7 +225,7 @@ describe('Total Express HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(SERVER_ERROR()).mockResolvedValueOnce(reply(JSON.parse(file('search-empty.json'))));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T10:31:13' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T10:31:13', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('0000000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);

@@ -17,7 +17,7 @@ describe('OnTrac direct tracking', () => {
     const value = payload(); value.Packages[0].Tracking = number;
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(value)));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
-    await expect(instance.recognize!(number, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T22:00:00.000Z' });
+    await expect(instance.recognize!(number, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T22:00:00.000Z', finished: true });
     expect(fetcher.mock.calls[0]?.[0]).toBe(`https://webtrack.ontrac.com/PackageServices/tracking/${number}`);
     await expect(instance.recognize!('OTHER000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);

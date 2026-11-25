@@ -244,7 +244,7 @@ describe('TracX Logis tracking adapter', () => {
 
   it('recognizes a known parcel and an unknown number from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered.rsc'))).mockResolvedValueOnce(reply(text('not-found.rsc')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-12T05:10:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-12T05:10:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

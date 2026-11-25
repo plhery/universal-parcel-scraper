@@ -316,7 +316,7 @@ describe('Allegro One HTTP adapter', () => {
 
   it('recognizes a known parcel and the unknown-number answer, and asks nothing for a number Allegro One does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered'))).mockResolvedValueOnce(empty());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-24T14:05:12.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-24T14:05:12.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('A1ZZ000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -233,7 +233,7 @@ describe('SLGTrax HTTP adapter', () => {
 
   it('recognizes a known number and not an unknown one', async () => {
     await expect(carrier(answering(() => reply(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T11:40:21.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T11:40:21.000Z', finished: true });
     await expect(carrier(answering(() => reply(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('1234567')).resolves.toEqual({ known: false });

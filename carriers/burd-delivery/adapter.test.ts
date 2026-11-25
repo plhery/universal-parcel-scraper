@@ -149,7 +149,7 @@ describe('Burd Delivery HTTP adapter', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Burd does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(unknownReply());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-31T17:48:09.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-31T17:48:09.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('012345600000000013')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

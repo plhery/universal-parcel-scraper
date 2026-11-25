@@ -210,7 +210,7 @@ describe('Teleship HTTP adapter', () => {
   it('recognizes a known number by its newest scan and the unknown-number answer, and asks nothing for a number Teleship does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(raw('not-found'), { status: 404 }));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T18:44:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T18:44:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1234567890')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

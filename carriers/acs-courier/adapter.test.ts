@@ -221,7 +221,7 @@ describe('ACS Courier HTTP adapter', () => {
   it('recognizes a known parcel and the explicit unknown reply with one lookup each', async () => {
     const fetcher = site(() => reply('delivered'), () => reply('not-found'));
     const instance = carrier(fetcher);
-    await expect(instance.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2030-03-07T15:55:24' });
+    await expect(instance.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2030-03-07T15:55:24', finished: true });
     await expect(instance.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(instance.recognize!('900000001')).resolves.toEqual({ known: false });
     expect(urls(fetcher)).toEqual([ACS_PAGE, `${ACS_SEARCH}${DELIVERED}`, `${ACS_SEARCH}${UNKNOWN}`]);

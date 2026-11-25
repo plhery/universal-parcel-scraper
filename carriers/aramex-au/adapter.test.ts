@@ -192,7 +192,7 @@ describe('Aramex Australia tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T13:09:14' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T13:09:14', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).track({ number: ABSENT })).rejects.toMatchObject({ kind: 'not_found' });
     expect(fetcher).toHaveBeenCalledTimes(3);

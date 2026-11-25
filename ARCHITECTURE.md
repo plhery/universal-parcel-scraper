@@ -454,8 +454,9 @@ parcel of its own stays unlikely to settle it.
 `createTracker()` asks those first, the next `MAX_RECOGNITIONS` only while none asked so far
 knows the number and the budget lasts, and last resorts in rounds of their own after them.
 `settleRecognition` sets aside an answer quiet for 60 days, taken for an older parcel that
-reused the number. An answer without an instant is dated by its local clock
-(`lastActivityLocal`); one without any clock counts only when no dated answer is recent.
+reused the number, and a delivered or returned one (`finished`) quiet for 30: a run of digits
+many carriers print finds a stranger's finished parcel. An answer without an instant is dated
+by its local clock (`lastActivityLocal`); one without any clock counts only when no dated answer is recent.
 It takes the only carrier that knows the number. When AliExpress and a
 delivery carrier both know it, the number is the delivery carrier's and AliExpress started
 the journey, so it takes AliExpress. Otherwise it takes the only one number evidence backs,
@@ -463,7 +464,11 @@ unless that evidence is a check digit alone, its rule a bare run of digits, and 
 carrier that knows the number passes a check digit of its own (the candidate lists them as
 `checkDigitPeers`): DHL Express's waybills and ACS's vouchers share theirs. When all that know it are one brand's networks, it takes one that tracks without the user's
 input, then the one serving the country hint (each candidate carries the match as
-`countryMatch`), then the highest rank. Other unrelated carriers stay a choice.
+`countryMatch`), then the highest rank. Other unrelated carriers stay a choice. While a
+carrier number evidence backs has failed without saying it holds nothing under the number
+(`not_found`, `invalid_input`, `input_required` or `portal_not_found`), and answered no other
+ask, neither the only answer nor a brand's pick is taken when the evidence leaves it out and
+it is not among the backed carrier's `checkDigitPeers`: the parcel may be the backed carrier's.
 `recognitionNumberShape` retains only character classes and run lengths for private
 aggregate analysis. Keep direct-confirmed live inputs outside Git; repeated observations
 of one number do not establish independent evidence.

@@ -286,7 +286,7 @@ describe('Courier Center HTTP adapter', () => {
   it('recognizes a known waybill and the "no waybill" notice, and asks nothing for a number Courier Center does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(page(fixture('delivered')))
       .mockResolvedValueOnce(page(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T11:27:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T11:27:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('JJD000000000000000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

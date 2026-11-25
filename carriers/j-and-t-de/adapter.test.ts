@@ -114,7 +114,7 @@ describe('J&T Express Germany HTTP adapter', () => {
 
   it('recognizes a waybill with scans, and an unknown one as unknown, through the same lookup', async () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-05-14T08:45:09.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-05-14T08:45:09.000Z', finished: true });
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('not-found')))).recognize!(UNKNOWN))
       .resolves.toEqual({ known: false });
   });

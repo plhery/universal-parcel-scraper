@@ -20,7 +20,7 @@ describe('Delhivery direct tracking', () => {
   it('recognizes shared numeric formats through matching HTTP shipment activity', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
-    await expect(instance.recognize!(NUMBER, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T08:30:00.000Z' });
+    await expect(instance.recognize!(NUMBER, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T08:30:00.000Z', finished: true });
     await expect(instance.recognize!('YT0000000000000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);
   });

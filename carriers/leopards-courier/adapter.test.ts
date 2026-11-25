@@ -190,7 +190,7 @@ describe('Leopards HTTP adapter', () => {
 
   it('recognizes a consignment with scans, and neither an unknown one nor a number Leopards does not issue', async () => {
     const fetcher = site();
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-14T11:40:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-14T11:40:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('ZZ00000000111')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);

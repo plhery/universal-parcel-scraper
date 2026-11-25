@@ -238,7 +238,7 @@ describe('Southeastern Freight Lines Web Connect tracing', () => {
 
   it('recognizes a known PRO and the unknown-PRO notice, and asks nothing for a number SEFL does not issue', async () => {
     await expect(carrier(reply(fixture('delivered'))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-07-08T15:42:00.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-07-08T15:42:00.000Z', finished: true });
     await expect(carrier(reply(fixture('not-found'))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const unused = vi.fn<typeof fetch>();
     await expect(carrier(unused).recognize!('91000071')).resolves.toEqual({ known: false });

@@ -183,7 +183,7 @@ describe('CDL tracking adapter', () => {
   it('reads an empty HTTP 204 as not found and recognizes a known number with its newest scan, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(empty())
       .mockResolvedValueOnce(empty());
-    await expect(carrier(fetcher).recognize!(LABEL)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-11T15:14:37.000Z' });
+    await expect(carrier(fetcher).recognize!(LABEL)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-11T15:14:37.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).track({ number: ABSENT })).rejects.toMatchObject({ kind: 'not_found' });
   });

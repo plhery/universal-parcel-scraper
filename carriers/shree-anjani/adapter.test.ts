@@ -231,7 +231,7 @@ describe('Shree Anjani HTTP adapter', () => {
   it('recognizes a known number by its newest scan and an unknown one by its empty booking', async () => {
     const fetcher = service({ [DELIVERED]: fixture('delivered') });
     const shreeAnjani = carrier(fetcher);
-    await expect(shreeAnjani.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T13:46:34.000Z' });
+    await expect(shreeAnjani.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T13:46:34.000Z', finished: true });
     await expect(shreeAnjani.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(shreeAnjani.recognize!('990000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

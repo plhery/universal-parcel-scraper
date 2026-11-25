@@ -317,7 +317,7 @@ describe('DPD Ireland direct tracking', () => {
     const instance = adapter(environment(known));
     expect(await instance.recognize!('12345')).toEqual({ known: false });
     expect(known).not.toHaveBeenCalled();
-    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-03-05T10:48:00.000Z' });
+    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-03-05T10:48:00.000Z', finished: true });
     const unknown = tracker(() => redirect('/Custom500.html?aspxerrorpath=/Home/SearchResult'));
     expect(await adapter(environment(unknown)).recognize!(NUMBER)).toEqual({ known: false });
     const lost = tracker(() => redirect('/'));

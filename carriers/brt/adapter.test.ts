@@ -81,7 +81,7 @@ describe('BRT direct tracking', () => {
       expect(init?.signal).toBeInstanceOf(AbortSignal);
       return response(shipmentHtml);
     });
-    expect(await adapter(environment(fetcher)).recognize!(SHIPMENT)).toEqual({ known: true, lastActivityAt: '2026-01-16T20:07:00.000Z' });
+    expect(await adapter(environment(fetcher)).recognize!(SHIPMENT)).toEqual({ known: true, lastActivityAt: '2026-01-16T20:07:00.000Z', finished: true });
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(() => parseBrt(shipmentHtml.replace(SHIPMENT, '990000000002'), SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseBrt(shipmentHtml.replace('N. spedizione', 'BRTcode'), SHIPMENT)).toThrowError(expect.objectContaining({ kind: 'schema' }));
@@ -402,10 +402,10 @@ describe('BRT direct tracking', () => {
     const positive = vi.fn<typeof fetch>().mockResolvedValue(response());
     const instance = adapter(environment(positive));
     expect(await instance.recognize!('unsupported')).toEqual({ known: false }); expect(positive).not.toHaveBeenCalled();
-    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-01-16T20:07:00.000Z' });
+    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-01-16T20:07:00.000Z', finished: true });
     // Without an arrival depot in Italy, only the depot of origin is on Rome's clock.
     const abroad = vi.fn<typeof fetch>().mockResolvedValue(response(edit($ => $('.table_dati_spedizione tr').last().remove())));
-    expect(await adapter(environment(abroad)).recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-16T21:07:00' });
+    expect(await adapter(environment(abroad)).recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-16T21:07:00', finished: true });
     const absent = vi.fn<typeof fetch>().mockResolvedValue(response(negative()));
     expect(await adapter(environment(absent)).recognize!(NUMBER)).toEqual({ known: false });
     const outage = vi.fn<typeof fetch>().mockResolvedValue(response('<html>Unavailable</html>'));

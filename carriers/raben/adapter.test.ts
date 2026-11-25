@@ -208,7 +208,7 @@ describe('Raben tracking adapter', () => {
     await expect(carrier(site(text('not-found'))).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     await expect(carrier(site(text('not-found'))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(site(text('delivered'))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-05-20T07:15:00.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-05-20T07:15:00.000Z', finished: true });
   });
 
   it('binds the answer to the whole number: another search is a changed reply, a reference or colli match is inconclusive', async () => {

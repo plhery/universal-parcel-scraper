@@ -185,7 +185,7 @@ describe('Yurtiçi Kargo HTTP adapter', () => {
 
   it('recognizes a known shipment and the not-found notice without a browser or recipient inputs', async () => {
     const direct = carrier(yurtici({}));
-    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-06T14:45:00' });
+    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-06T14:45:00', finished: true });
     await expect(carrier(yurtici({ search: NOT_FOUND })).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('90000000001')).resolves.toEqual({ known: false });

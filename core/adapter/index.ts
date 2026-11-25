@@ -156,6 +156,8 @@ export interface Recognition {
   lastActivityAt?: string | null;
   /** Without such an instant, the newest scan on the carrier's local clock: an offset-less ISO wall time. */
   lastActivityLocal?: string | null;
+  /** The parcel the check found was delivered or returned. Absent says nothing. */
+  finished?: boolean;
 }
 
 /** Browser confirmation retains the lookup, normalized like any tracking result, so a consumer can reuse its history. */
@@ -255,9 +257,11 @@ export async function recognizeFromLookup(
   const walls = [result.last_update, result.last_update_local, ...(result.events ?? []).flatMap((event) => [event.time, event.local_time])]
     .map((value) => typeof value === 'string' && !EXPLICIT_OFFSET_PATTERN.test(value.trim()) ? Date.parse(eventTimestamp(value, 'UTC') ?? '') : Number.NaN)
     .filter(Number.isFinite);
-  return known && !lastActivityAt && walls.length
-    ? { known, lastActivityAt, lastActivityLocal: new Date(Math.max(...walls)).toISOString().slice(0, 19) }
-    : { known, lastActivityAt };
+  const finished = known && (['delivered', 'returned'].includes(result.current_stage ?? '')
+    || (result.current_stage === undefined && result.status === 'delivered'));
+  return { known, lastActivityAt,
+    ...(known && !lastActivityAt && walls.length ? { lastActivityLocal: new Date(Math.max(...walls)).toISOString().slice(0, 19) } : {}),
+    ...(finished ? { finished } : {}) };
 }
 
 /** Browser shells and undated default statuses do not establish a shipment. */

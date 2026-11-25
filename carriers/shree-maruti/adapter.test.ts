@@ -255,7 +255,7 @@ describe('Shree Maruti HTTP adapter', () => {
   it('recognizes a known number by its newest scan and an unknown one by the empty answer', async () => {
     const fetcher = service({ [DELIVERED]: fixture('delivered') });
     const shreeMaruti = carrier(fetcher);
-    await expect(shreeMaruti.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T09:45:20.000Z' });
+    await expect(shreeMaruti.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T09:45:20.000Z', finished: true });
     await expect(shreeMaruti.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(shreeMaruti.recognize!('9900000000001')).resolves.toEqual({ known: false });
     await expect(shreeMaruti.recognize!('99000000001')).resolves.toEqual({ known: false });

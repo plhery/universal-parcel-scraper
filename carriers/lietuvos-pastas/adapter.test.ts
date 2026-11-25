@@ -195,7 +195,7 @@ describe('Lietuvos paštas tracking adapter', () => {
     expect(() => parseLietuvosPastas(labelOnly, RETURNED)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('locker'))).mockResolvedValueOnce(reply(text('not-found')))
       .mockResolvedValueOnce(reply(text('no-history')));
-    await expect(carrier(fetcher).recognize!(LOCKER)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-04T15:45:00.000Z' });
+    await expect(carrier(fetcher).recognize!(LOCKER)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-04T15:45:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(NO_HISTORY)).rejects.toMatchObject({ kind: 'indeterminate' });
   });

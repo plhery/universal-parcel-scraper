@@ -189,7 +189,7 @@ describe('DAI Post HTTP adapter', () => {
       .mockResolvedValueOnce(reply(bytes('not-found')))
       .mockResolvedValueOnce(reply('', { status: 500, type: 'text/plain' }));
     const direct = carrier(fetcher);
-    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T21:15:00.000Z' });
+    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T21:15:00.000Z', finished: true });
     await expect(direct.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(direct.recognize!(TRANSIT)).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(direct.recognize!('AB12')).resolves.toEqual({ known: false });

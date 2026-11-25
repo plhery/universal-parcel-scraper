@@ -212,7 +212,7 @@ describe('Hrvatska pošta tracking adapter', () => {
 
   it('recognizes a known parcel and the no-data notice, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(page('locker'))).mockResolvedValueOnce(reply(page('not-found')));
-    await expect(carrier(fetcher).recognize!(LOCKER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T09:15:45.000Z' });
+    await expect(carrier(fetcher).recognize!(LOCKER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T09:15:45.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

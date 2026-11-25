@@ -88,7 +88,7 @@ describe('GLS Hungary retrieval', () => {
   it('recognizes a parcel past pre-advice, and a number GLS does not know as unknown', async () => {
     const make = (response: Response) => adapter({ fetcher: vi.fn().mockResolvedValue(response), env: {}, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null });
     await expect(make(json({ tuStatus: [row('1000000001', 'DELIVERED')] })).recognize!('1000000001'))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-02T00:00:00' });
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-02T00:00:00', finished: true });
     await expect(make(json({ tuStatus: [row('1000000001', 'PREADVICE')] })).recognize!('1000000001')).resolves.toMatchObject({ known: false });
     await expect(make(json({ lastError: 'E000' }, 404)).recognize!('1000000001')).resolves.toEqual({ known: false });
     const unused = vi.fn();
@@ -105,7 +105,7 @@ describe('GLS Hungary retrieval', () => {
     await expect(settle('2026-11-02')).resolves.toBe('gls-hu');
     await expect(settle('2026-07-02')).resolves.toBeUndefined();
     // Without a day the answer has no clock, as before.
-    await expect(make('soon').recognize!('3400000001')).resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(make('soon').recognize!('3400000001')).resolves.toEqual({ known: true, lastActivityAt: null, finished: true });
   });
 
   it('reads the day of the requested parcel\'s row only', () => {

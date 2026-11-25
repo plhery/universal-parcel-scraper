@@ -177,7 +177,7 @@ describe('DHL eCommerce Netherlands adapter', () => {
 
   it('recognizes a known parcel, an absent one, and leaves other errors inconclusive', async () => {
     const known = adapter(environment(async () => Response.json(clone())));
-    await expect(known.recognize?.(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-03T10:42:00.269Z' });
+    await expect(known.recognize?.(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-03T10:42:00.269Z', finished: true });
     const unknown = adapter(environment(async () => new Response(MISSING, { status: 404 })));
     await expect(unknown.recognize?.(NUMBER)).resolves.toEqual({ known: false });
     await expect(unknown.recognize?.('00340434160000000001')).resolves.toEqual({ known: false });

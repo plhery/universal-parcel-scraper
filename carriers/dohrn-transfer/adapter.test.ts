@@ -173,7 +173,7 @@ describe('Dohrn Transfer tracking adapter', () => {
 
   it('recognizes a PRO with history as known, an unknown one as unknown and a rate quote as inconclusive', async () => {
     const known = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('delivered')));
-    await expect(carrier(known).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-11T14:31:00' });
+    await expect(carrier(known).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-11T14:31:00', finished: true });
     const unknown = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('not-found')));
     await expect(carrier(unknown).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const quote = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('quote')));

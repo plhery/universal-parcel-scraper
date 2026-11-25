@@ -131,7 +131,7 @@ describe('Navex HTTP adapter', () => {
 
   it('recognizes a known number with its last instant and an unknown one as unknown', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(html(fixture('returned'))).mockResolvedValueOnce(html(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(RETURNED)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-01T00:00:00.000Z' });
+    await expect(carrier(fetcher).recognize!(RETURNED)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-01T00:00:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1234567')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

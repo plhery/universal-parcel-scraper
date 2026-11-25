@@ -223,7 +223,7 @@ describe('Taxydema HTTP adapter', () => {
   it('recognizes a known waybill and the not-found reply, and asks nothing for a number Taxydema does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered')))
       .mockResolvedValueOnce(reply(text('not-found'), { status: 404 }));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T11:58:27.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T11:58:27.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('CV000000000GR')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

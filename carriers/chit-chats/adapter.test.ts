@@ -332,7 +332,7 @@ describe('Chit Chats tracking adapter', () => {
 
   it('recognizes a known shipment from plain HTTP, dated by Chit Chats\' own latest scan', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(payload('delivered'))).mockResolvedValueOnce(json(payload('pickup')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T23:29:51.551Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T23:29:51.551Z', finished: true });
     await expect(carrier(fetcher).recognize!(PICKUP)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T23:10:35.073Z' });
   });
 

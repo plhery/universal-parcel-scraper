@@ -40,7 +40,7 @@ describe('4PX result projection', () => {
     const value = fixture(); value.data[0].queryCode = number;
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(value)));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
-    await expect(instance.recognize!(number, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-03-28T18:30:03.000Z' });
+    await expect(instance.recognize!(number, { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-03-28T18:30:03.000Z', finished: true });
     expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body)).queryCodes).toEqual([number]);
     await expect(instance.recognize!('INVALID')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);

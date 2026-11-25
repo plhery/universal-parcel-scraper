@@ -176,7 +176,7 @@ describe('Nim Express HTTP adapter', () => {
     });
 
   it('recognizes a known number and the card’s error, and asks nothing for a number Nim Express does not issue', async () => {
-    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T07:05:10.000Z' });
+    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T07:05:10.000Z', finished: true });
     await expect(carrier(page('not-found')).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(CHALLENGE))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     // A page for another parcel is no answer either way.

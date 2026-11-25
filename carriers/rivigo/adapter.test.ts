@@ -240,7 +240,7 @@ describe('Rivigo HTTP adapter', () => {
       .mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply(fixture('withheld')))
       .mockResolvedValueOnce(reply(fixture('delivered')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-16T09:15:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-16T09:15:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(WITHHELD)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'tracking_withheld' });
     await expect(carrier(fetcher).recognize!(MOVING)).rejects.toMatchObject({ kind: 'indeterminate' });

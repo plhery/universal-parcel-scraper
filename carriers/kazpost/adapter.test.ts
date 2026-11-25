@@ -203,7 +203,7 @@ describe('Kazpost tracking adapter', () => {
 
   it('recognizes a known item and an unknown code from plain HTTP', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(serve('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-03T16:11:19' });
+    await expect(carrier(serve('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-03T16:11:19', finished: true });
     await expect(carrier(serve('summary-only')).recognize!(SUMMARY_ONLY)).resolves.toEqual({ known: true, lastActivityAt: null });
     await expect(carrier(serve('not-found')).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
   });

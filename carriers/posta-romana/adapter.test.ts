@@ -208,7 +208,7 @@ describe('Poșta Română tracking adapter', () => {
   it('recognizes a known item and an unknown code from plain HTTP, and leaves unregistered mail open', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('collected'))).mockResolvedValueOnce(reply(text('not-found')))
       .mockResolvedValueOnce(reply(text('unregistered')));
-    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-06T13:38:00.000Z' });
+    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-06T13:38:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(EXPORTED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(RETURNED)).rejects.toMatchObject({ kind: 'indeterminate' });
     expect(fetcher).toHaveBeenCalledTimes(3);

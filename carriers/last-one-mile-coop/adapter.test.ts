@@ -207,7 +207,7 @@ describe('Last One Mile Co-op tracking page', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number the co-op does not issue', async () => {
     await expect(carrier(serving(bytes('delivered'))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-18T04:52:09.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-18T04:52:09.000Z', finished: true });
     await expect(carrier(serving(bytes('not-found'))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const unused = vi.fn<typeof fetch>();
     await expect(carrier(unused).recognize!('100000000016')).resolves.toEqual({ known: false });

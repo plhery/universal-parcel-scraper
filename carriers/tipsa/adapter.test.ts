@@ -204,7 +204,7 @@ describe('TIPSA adapter', () => {
   it('recognizes a known reference with its newest scan', async () => {
     const fetcher = vi.fn<typeof fetch>(async (input) => lookup(input));
     await expect(adapter(environment(fetcher)).recognize?.(NUMBER))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-30T16:40:00.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-30T16:40:00.000Z', finished: true });
   });
 
   it('treats a moved or unexpected lookup as a changed page and a blocked one as a challenge', async () => {

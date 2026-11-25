@@ -297,7 +297,7 @@ describe('ePost Global HTTP adapter', () => {
 
   it('recognizes a known shipment and the unknown-number answer, and asks nothing for a number ePost Global does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('spring-delivered'))).mockResolvedValueOnce(reply(text('not-found')));
-    await expect(carrier(fetcher).recognize!(SPRING)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T16:47:00.000Z' });
+    await expect(carrier(fetcher).recognize!(SPRING)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T16:47:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('LX000000005NL')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

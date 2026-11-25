@@ -200,7 +200,7 @@ describe('Envía HTTP adapter', () => {
 
   it('recognizes a known guía and the unknown-guía answer, and asks nothing for a number Envía does not issue', async () => {
     const fetcher = answers('delivered').mockResolvedValueOnce(reply(fixture('not-found'), { status: 404 }));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-14T20:42:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-14T20:42:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('01400000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);

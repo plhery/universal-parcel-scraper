@@ -279,7 +279,7 @@ describe('DPD Poland direct tracking', () => {
     const instance = adapter(environment(positive));
     expect(await instance.recognize!('invalid')).toEqual({ known: false });
     expect(positive).not.toHaveBeenCalled();
-    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-03-05T13:10:00.000Z' });
+    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-03-05T13:10:00.000Z', finished: true });
     const absentLookup = vi.fn().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply(absent()));
     expect(await adapter(environment(absentLookup as unknown as typeof fetch)).recognize!(NUMBER)).toEqual({ known: false });
     const outage = vi.fn().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply('<html>Unavailable</html>'));

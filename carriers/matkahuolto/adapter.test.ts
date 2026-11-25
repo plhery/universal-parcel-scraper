@@ -188,7 +188,7 @@ describe('Matkahuolto tracking adapter', () => {
   it('recognizes a known parcel and the not-found reply, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('collected'))).mockResolvedValueOnce(reply(text('not-found')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T17:42:00' });
+    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T17:42:00', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

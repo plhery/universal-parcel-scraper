@@ -280,7 +280,7 @@ describe('ShipBlu HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number ShipBlu does not issue for a parcel', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found'), { status: 404 }));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T13:32:19.270Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T13:32:19.270Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('4000000000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

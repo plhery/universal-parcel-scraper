@@ -42,7 +42,7 @@ describe('Emile HTTP adapter', () => {
 
   it('recognizes matching activity and explicit absence without a browser or recipient inputs', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(fixture())).mockResolvedValueOnce(new Response(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T16:00:00.000Z' });
+    await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T16:00:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('EM000000001CA')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

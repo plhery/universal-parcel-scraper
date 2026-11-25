@@ -139,7 +139,7 @@ describe('Dropp HTTP adapter', () => {
       .mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply(fixture('in-transit')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-07T17:05:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-07T17:05:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // A reply about another parcel is no answer either way.
     await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate' });

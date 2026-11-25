@@ -277,7 +277,7 @@ describe('DHL Express retrieval', () => {
   it('recognizes over HTTP without invoking the browser', async () => {
     const fetcher = mobileFetcher();
     const carrier = adapter(environment(fetcher));
-    expect(await carrier.recognize!(number, { budgetMs: 1000 })).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-10-05T15:06:00' });
+    expect(await carrier.recognize!(number, { budgetMs: 1000 })).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-10-05T15:06:00', finished: true });
     expect(fetcher).toHaveBeenCalledOnce();
     expect(String(fetcher.mock.calls[0]?.[0])).toBe('https://dhle.dhl.com/access/access/com.dhl.exp.dhlmobile?appVersion=6.1.0&service=shipments-tracking');
     const init = fetcher.mock.calls[0]![1]!;

@@ -318,7 +318,7 @@ describe('Posti recognition', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(tokens()).mockResolvedValueOnce(Response.json(fixture()));
     const signal = new AbortController().signal;
     await expect(makeAdapter(fetcher).recognize!(NUMBER, { signal, budgetMs: 1_000 }))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T13:00:00.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T13:00:00.000Z', finished: true });
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(fetcher.mock.calls.every(([, init]) => init?.signal instanceof AbortSignal)).toBe(true);
   });

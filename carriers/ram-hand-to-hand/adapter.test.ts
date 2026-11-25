@@ -171,7 +171,7 @@ describe('RAM HTTP adapter', () => {
         body.groups[0]!.waybill = DELIVERED;
       })));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T19:30:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T19:30:00', finished: true });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('RAM-0')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

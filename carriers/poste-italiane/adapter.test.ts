@@ -143,7 +143,7 @@ describe('Poste Italiane tracking normalization', () => {
         expect(init?.signal).toBeInstanceOf(AbortSignal);
         return response(parcel({ idTracciatura: number }));
       });
-      expect(await adapter(environment(fetcher)).recognize!(number)).toEqual({ known: true, lastActivityAt: '2026-01-04T00:00:00.000Z' });
+      expect(await adapter(environment(fetcher)).recognize!(number)).toEqual({ known: true, lastActivityAt: '2026-01-04T00:00:00.000Z', finished: true });
       expect(fetcher).toHaveBeenCalledTimes(1);
       const wrong = vi.fn<typeof fetch>().mockResolvedValue(response(parcel({ idTracciatura: TRACKING_NUMBER })));
       await expect(adapter(environment(wrong)).recognize!(number)).rejects.toMatchObject({ kind: 'schema' });
@@ -754,7 +754,7 @@ describe('PosteItalianeTracker fetch', () => {
     const pending = vi.fn<typeof fetch>().mockResolvedValue(response(parcel({ stato: '4', listaMovimenti: [] })));
     expect(await adapter(environment(pending)).recognize!(TRACKING_NUMBER)).toEqual({ known: false, lastActivityAt: null });
     const summary = vi.fn<typeof fetch>().mockResolvedValue(response(parcel({ listaMovimenti: [] })));
-    expect(await adapter(environment(summary)).recognize!(TRACKING_NUMBER)).toEqual({ known: true, lastActivityAt: null });
+    expect(await adapter(environment(summary)).recognize!(TRACKING_NUMBER)).toEqual({ known: true, lastActivityAt: null, finished: true });
   });
 
   it('posts the DoveQuando body with web-channel headers', async () => {

@@ -318,7 +318,7 @@ describe('SMSA Express tracking adapter', () => {
   it('reads the app’s answer for an unknown number as not found and recognizes a known shipment, without the page', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(xml(app('delivered'))).mockResolvedValueOnce(xml(app('not-found')))
       .mockResolvedValueOnce(xml(app('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-05T08:32:45.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-05T08:32:45.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     expect(fetcher).toHaveBeenCalledTimes(3);

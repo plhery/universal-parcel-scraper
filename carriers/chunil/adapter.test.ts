@@ -189,7 +189,7 @@ describe('Chunil Express HTTP adapter', () => {
 
   it('recognizes a known number and the empty answer, and asks nothing for a number Chunil does not issue', async () => {
     // A day alone dates the last activity without an instant.
-    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-04T00:00:00' });
+    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-04T00:00:00', finished: true });
     await expect(carrier(page('not-found')).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(CHALLENGE))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     // A page for another parcel is no answer either way.

@@ -228,7 +228,7 @@ describe('ShipEntegra HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(`1SE${DELIVERED}`)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-14T13:05:00' });
+    await expect(carrier(fetcher).recognize!(`1SE${DELIVERED}`)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-14T13:05:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1SE00000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

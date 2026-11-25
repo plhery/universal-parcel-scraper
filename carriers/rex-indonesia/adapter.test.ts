@@ -142,7 +142,7 @@ describe('REX Indonesia milestones', () => {
 
   it('recognizes actual dated history and the carrier absence signature through HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(history())).mockResolvedValueOnce(reply(absent()));
-    await expect(direct(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-03T15:42:00' });
+    await expect(direct(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-03T15:42:00', finished: true });
     await expect(direct(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
   });
 

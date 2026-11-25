@@ -89,7 +89,7 @@ describe('Envialia app status adapter', () => {
     expect(() => parseEnvialiaStatusXml(fault, DELIVERED)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered'))).mockResolvedValueOnce(reply(text('not-found')))
       .mockResolvedValueOnce(reply(text('no-search')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, finished: true });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(carrier(fetcher).recognize!('0100000001')).resolves.toEqual({ known: false });

@@ -265,7 +265,7 @@ describe('Morning Global HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Morning Global does not issue', async () => {
     const answers = [fixture('delivered'), fixture('not-found')];
     const fetcher = site(() => json(answers.shift()));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-18T18:02:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-18T18:02:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('QQ-00')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

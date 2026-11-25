@@ -46,7 +46,7 @@ describe('recognition from a plain lookup', () => {
   it('keeps the newest local clock when no scan states an instant', async () => {
     await expect(recognizeFromLookup(async () => ({ status: 'delivered', last_update_local: '2026-03-02T09:00:00',
       events: [{ local_time: '2026-03-02T09:00:00', description: 'Delivered' }, { local_time: '2026-02-27T18:30:00', description: 'Collected' }] })))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-02T09:00:00' });
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-02T09:00:00', finished: true });
     // An instant comes first, and an impossible wall time or an offset is no local clock.
     await expect(recognizeFromLookup(async () => ({ status: 'in_transit',
       events: [{ local_time: '2026-09-10T12:00:00', description: 'Local scan' }, { time: '2026-09-09T08:00:00+02:00', description: 'Dated scan' }] })))
@@ -68,7 +68,12 @@ describe('recognition from a plain lookup', () => {
     await expect(recognizeFromLookup(async () => ({ status: 'unknown', events: [] }))).resolves.toEqual({ known: false, lastActivityAt: null });
     // "Tracking information received" for any number is no evidence.
     await expect(recognizeFromLookup(async () => ({ status: 'pending', events: [] }))).resolves.toEqual({ known: false, lastActivityAt: null });
+    // A delivered or returned parcel says so, since a stranger's finished parcel is no answer for a new one.
     await expect(recognizeFromLookup(async () => ({ status: 'delivered', events: [], last_update: '2026-09-09T08:00:00Z' })))
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-09T08:00:00.000Z', finished: true });
+    await expect(recognizeFromLookup(async () => ({ status: 'exception', current_stage: 'returned', events: [], last_update: '2026-09-09T08:00:00Z' })))
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-09T08:00:00.000Z', finished: true });
+    await expect(recognizeFromLookup(async () => ({ status: 'delivered', current_stage: 'out_for_delivery', events: [], last_update: '2026-09-09T08:00:00Z' })))
       .resolves.toEqual({ known: true, lastActivityAt: '2026-09-09T08:00:00.000Z' });
     await expect(recognizeFromLookup(async () => { throw new NotFoundError('Carrier'); })).resolves.toEqual({ known: false });
     // A lookup that rejects the number's format knows it no better than one that cannot find it.
@@ -129,7 +134,7 @@ describe('browser confirmation', () => {
       events: [{ local_time: '2026-03-02T09:00', description: 'Delivered' },
         { local_time: '2026-02-27T18:30', description: 'Collected' }] };
     await expect(recognizeFromBrowserLookup(async () => result)).resolves.toEqual({
-      known: true, lastActivityAt: null, lastActivityLocal: '2026-03-02T09:00:00', result,
+      known: true, lastActivityAt: null, lastActivityLocal: '2026-03-02T09:00:00', finished: true, result,
     });
     for (const local_time of ['2026-02-30T08:00:00', '2026-09-09T08:00:00+99:00', 'broken']) {
       await expect(recognizeFromBrowserLookup(async () => ({ status: 'in_transit', events: [{ local_time, description: 'Sorted' }] })), local_time)

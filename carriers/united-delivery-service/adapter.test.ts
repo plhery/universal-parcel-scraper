@@ -160,7 +160,7 @@ describe('United Delivery Service tracking adapter', () => {
   it('reads the notice for an unknown number as not found and recognizes a known parcel by its dated scan, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(page('delivered'))).mockResolvedValueOnce(reply(page('not-found')))
       .mockResolvedValueOnce(reply(page('not-found'))).mockResolvedValueOnce(reply(page('delivered')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-14T19:16:53.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-14T19:16:53.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     // A page for another number is no answer either way.

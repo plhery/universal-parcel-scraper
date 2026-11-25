@@ -172,7 +172,7 @@ describe('Stallion Express HTTP adapter', () => {
 
   it('recognizes a known shipment and the unknown-number answer, and asks nothing for a number Stallion does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('intelcom-delivered')).mockResolvedValueOnce(reply('not-found'));
-    await expect(carrier(fetcher).recognize!(INTELCOM)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T17:41:05.000Z' });
+    await expect(carrier(fetcher).recognize!(INTELCOM)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T17:41:05.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(INTELCOM)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(USPS_NUMBER)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -233,7 +233,7 @@ describe('Bosta HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found'), { status: 404 }))
       .mockResolvedValueOnce(reply(fixture('draft')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T12:05:47.733Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T12:05:47.733Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(DRAFT)).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(carrier(fetcher).recognize!('BOSTA0001')).resolves.toEqual({ known: false });

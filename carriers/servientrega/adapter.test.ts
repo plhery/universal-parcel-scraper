@@ -211,7 +211,7 @@ describe('Servientrega HTTP adapter', () => {
   it('recognizes a guide with movements, and neither an unknown guide nor a number Servientrega does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T22:30:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T22:30:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('91000000111')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -356,7 +356,7 @@ describe('bpost anonymous batch request', () => {
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify(payload())));
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-04T11:00:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-04T11:00:00.000Z', finished: true });
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify({ error: 'NO_DATA_FOUND' })));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify({ error: 'INVALID_POSTAL_CODE' })));

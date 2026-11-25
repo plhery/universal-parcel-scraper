@@ -182,7 +182,7 @@ describe('Micro Express HTTP adapter', () => {
   it('recognizes a known number with its last activity, and asks nothing for a number Micro Express does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2025-12-13T05:05:57.648Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2025-12-13T05:05:57.648Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('ME000000000000AAA')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

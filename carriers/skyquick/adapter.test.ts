@@ -135,7 +135,7 @@ describe('SkyQuick International HTTP adapter', () => {
   it('recognizes a known number by its last scan and an unknown one by the tracker’s notice', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) =>
       reply(fixture(String(url).endsWith(DELIVERED) ? 'delivered' : 'not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2022-01-03T03:04:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2022-01-03T03:04:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
   });
 

@@ -126,7 +126,7 @@ describe('BOX NOW HTTP adapter', () => {
 
   it('recognizes a known parcel and the explicit empty list without a browser or recipient inputs', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('delivered')).mockResolvedValueOnce(reply('not-found'));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T17:05:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T17:05:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('900000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

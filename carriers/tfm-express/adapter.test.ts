@@ -192,7 +192,7 @@ describe('TFM Express HTTP adapter', () => {
   it('recognizes a known airwaybill and the unknown-airwaybill answer, and asks nothing for a number TFM Express does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (_url, init) =>
       page(fixture(String(init?.body).startsWith(`AWB=${DELIVERED}&`) ? 'delivered' : 'not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T12:40:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T12:40:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('90000000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

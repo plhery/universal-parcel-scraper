@@ -210,7 +210,7 @@ describe('HCT Logistics HTTP adapter', () => {
 
   it('recognizes a known number, and asks nothing for one HCT does not issue', async () => {
     const fetcher = site(fixture('delivered'));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T06:07:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T06:07:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!('900000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);
   });

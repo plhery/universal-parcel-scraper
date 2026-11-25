@@ -178,7 +178,7 @@ describe('DAO tracking adapter', () => {
 
   it('recognizes a parcel with scans from plain HTTP, without ranking it by wall clocks', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('home'))).mockResolvedValueOnce(reply(text('not-found')));
-    await expect(carrier(fetcher).recognize!(HOME)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T06:41:20' });
+    await expect(carrier(fetcher).recognize!(HOME)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T06:41:20', finished: true });
     await expect(carrier(fetcher).recognize!(HOME)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
     const absent = vi.fn<typeof fetch>().mockResolvedValue(reply(text('not-found')));

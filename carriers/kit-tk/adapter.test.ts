@@ -272,7 +272,7 @@ describe('TK KIT HTTP adapter', () => {
   it('recognizes a known consignment and the not-found reply, and asks nothing for a number KIT does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(page()).mockResolvedValueOnce(notFound());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-11T14:20:33' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-11T14:20:33', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('000000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

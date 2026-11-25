@@ -148,7 +148,7 @@ describe('Etomars transport and recognition', () => {
   it('recognizes only a bound dated history and does not turn retention into not-found', async () => {
     const fetcher = vi.fn(async () => new Response(page())) as unknown as typeof fetch;
     const instance = adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T10:20:30' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T10:20:30', finished: true });
     await expect(instance.recognize!('7642097516')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const empty = adapter({ fetcher: vi.fn(async () => new Response(miss())),

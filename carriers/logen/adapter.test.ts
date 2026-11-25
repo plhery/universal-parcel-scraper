@@ -177,7 +177,7 @@ describe('Logen HTTP adapter', () => {
   it('recognizes a known number with its last scan and the unknown-number answer, and asks nothing for a number Logen does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(page(fixture('delivered')))
       .mockResolvedValueOnce(page(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-29T07:43:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-29T07:43:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('10000000005')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

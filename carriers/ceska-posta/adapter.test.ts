@@ -145,7 +145,7 @@ describe('Česká pošta tracking adapter', () => {
   it('reads the no-record notice alone as a missing item, and other notices as inconclusive', async () => {
     expect(() => parseCeskaPosta(JSON.parse(text('not-found')), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('collected'))).mockResolvedValueOnce(reply(text('not-found')));
-    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-06T00:00:00' });
+    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-06T00:00:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const withheld = edited('not-found', item => { item.states.state[0] = { id: '-4', date: '2026-03-10', text: 'Czech Post does not display information for this consignment type.' }; });
     expect(() => parseCeskaPosta(withheld, UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));

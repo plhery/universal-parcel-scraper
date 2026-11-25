@@ -126,7 +126,7 @@ describe('GoGo Xpress HTTP adapter', () => {
     expect(() => parseGogoXpress(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     await expect(carrier(answering(() => reply(text('not-found'), { status: 400 }))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(text('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T07:42:10.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T07:42:10.000Z', finished: true });
     // A shape GoGo Xpress does not issue is unknown without a request.
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('ZXQA-0000-001')).resolves.toEqual({ known: false });

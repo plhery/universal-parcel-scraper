@@ -271,7 +271,7 @@ describe('Apple Express HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply([]));
-    await expect(carrier(fetcher).recognize!(ORDER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T15:31:10.000Z' });
+    await expect(carrier(fetcher).recognize!(ORDER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T15:31:10.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(CAINIAO)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('ABC123')).resolves.toEqual({ known: false });

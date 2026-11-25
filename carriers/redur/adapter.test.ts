@@ -105,7 +105,7 @@ describe('Redur tracking adapter', () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(notFound))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // A local clock dates the last activity without an instant.
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(delivered))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-18T10:44:00' });
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-18T10:44:00', finished: true });
   });
 
   it('binds the answer to the whole number asked: another number is inconclusive, never this shipment', async () => {

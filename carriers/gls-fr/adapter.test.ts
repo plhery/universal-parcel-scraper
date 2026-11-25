@@ -168,7 +168,7 @@ describe('GLS France HTTP recognition', () => {
   it('confirms the requested parcel through the French endpoint and reports its scan clock', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(deliveredFixture())));
     await expect(createAdapter(fetcher).recognize!(TRACKING_NUMBER, { budgetMs: 1_000 })).resolves.toEqual({
-      known: true, lastActivityAt: '2026-08-29T09:42:00.000Z',
+      known: true, lastActivityAt: '2026-08-29T09:42:00.000Z', finished: true
     });
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(String(fetcher.mock.calls[0]![0])).toBe(glsFranceTrackingApiUrl(TRACKING_NUMBER));

@@ -178,7 +178,7 @@ describe('Kunyoung Express HTTP adapter', () => {
     });
 
   it('recognizes a known number and the empty answer, and asks nothing for a number Kunyoung does not issue', async () => {
-    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T06:20:30.000Z' });
+    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T06:20:30.000Z', finished: true });
     await expect(carrier(page('not-found')).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(CHALLENGE))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(carrier(answering(() => reply(JSON.stringify({ msgCode: '9' })))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'indeterminate' });

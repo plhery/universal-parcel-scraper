@@ -270,7 +270,7 @@ describe('Chukou1 HTTP adapter', () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // A local clock dates the last activity without an instant.
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-12T13:48:00' });
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-12T13:48:00', finished: true });
   });
 
   it('signs once more with the gateway’s clock when it refuses one too far from its own', async () => {

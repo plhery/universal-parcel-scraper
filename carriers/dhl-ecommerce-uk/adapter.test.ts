@@ -190,7 +190,7 @@ describe('DHL eCommerce UK adapter', () => {
 
   it('recognizes a shipment the page knows', async () => {
     const instance = adapter(environment(async () => html(fixture('delivered'))));
-    await expect(instance.recognize?.(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-03T17:19:00.000Z' });
+    await expect(instance.recognize?.(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-03T17:19:00.000Z', finished: true });
     const absent = adapter(environment(async () => html(fixture('missing'))));
     await expect(absent.recognize?.(NUMBER)).resolves.toEqual({ known: false });
     await expect(absent.recognize?.('JVGL9999999980')).resolves.toEqual({ known: false });

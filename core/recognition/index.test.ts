@@ -358,6 +358,38 @@ describe('settling on a carrier', () => {
       .toEqual({ carrier: 'ciblex', choices: [] });
     expect(settleRecognition([outcome('dpd', 'unknown')], now)).toEqual({ choices: [] });
   });
+
+  it('sets aside a finished parcel quiet a month, taken for a stranger\'s under a shared run of digits', () => {
+    const finished = { finished: true, lastActivityAt: '2026-08-02T10:00:00Z' };
+    expect(settleRecognition([outcome('dhl-freight', 'known', finished)], now)).toEqual({ choices: [] });
+    expect(settleRecognition([outcome('dhl-freight', 'known', { lastActivityAt: '2026-08-02T10:00:00Z' })], now))
+      .toEqual({ carrier: 'dhl-freight', choices: [] });
+    expect(settleRecognition([outcome('dhl-freight', 'known', { ...finished, lastActivityAt: '2026-08-20T10:00:00Z' })], now))
+      .toEqual({ carrier: 'dhl-freight', choices: [] });
+  });
+
+  it('settles on no carrier the evidence does not back while a backed one has not answered', () => {
+    // Synthetic: DHL Express's check digit fits, DHL Express timed out, and DHL Freight knows the run of digits.
+    const dhlExpress = outcome('dhl-express', 'failed', { preferred: true, checkDigitPeers: ['acs-courier', 'geniki-taxydromiki'] });
+    const freight = outcome('dhl-freight', 'known', { lastActivityAt: '2026-09-09T08:00:00Z' });
+    expect(settleRecognition([dhlExpress, freight], now)).toEqual({ choices: [] });
+    expect(settleRecognition([{ ...dhlExpress, failure: { kind: 'upstream_http' } }, freight], now)).toEqual({ choices: [] });
+    // An answer, or a failure saying the carrier holds nothing under the number, lets the other settle.
+    expect(settleRecognition([{ ...dhlExpress, status: 'unknown' }, freight], now)).toEqual({ carrier: 'dhl-freight', choices: [] });
+    for (const failure of [{ kind: 'not_found' }, { kind: 'invalid_input' }, { kind: 'input_required' }, { kind: 'carrier_unavailable', reason: 'portal_not_found' }]) {
+      expect(settleRecognition([{ ...dhlExpress, failure }, freight], now), failure.kind).toEqual({ carrier: 'dhl-freight', choices: [] });
+    }
+    // So does a browser's answer after the HTTP check failed.
+    expect(settleRecognition([dhlExpress, { ...dhlExpress, status: 'unknown' }, freight], now)).toEqual({ carrier: 'dhl-freight', choices: [] });
+    // A carrier whose own check digit the preference shares is not held back, nor is a backed answer.
+    expect(settleRecognition([dhlExpress, outcome('acs-courier', 'known', { countryMatch: 'home' })], now))
+      .toEqual({ carrier: 'acs-courier', choices: [] });
+    expect(settleRecognition([outcome('dpd', 'failed', { preferred: true }), outcome('dpd-uk', 'known', { preferred: true })], now))
+      .toEqual({ carrier: 'dpd-uk', choices: [] });
+    // One brand's networks wait too.
+    expect(settleRecognition([outcome('dhl-express', 'failed', { preferred: true }),
+      outcome('dhl-freight', 'known'), outcome('dhl', 'known')], now)).toEqual({ choices: [] });
+  });
   it('takes an answer without a clock for one of unknown age, never for a recent one', () => {
     const recentScan = { lastActivityAt: '2026-09-09T08:00:00Z' };
     // A reused number: Happy-Post still knows its old label, dated on its local clock only.

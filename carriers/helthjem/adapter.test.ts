@@ -260,7 +260,7 @@ describe('Helthjem tracking adapter', () => {
 
   it('reads the null parcel as a missing one and recognizes known parcels from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered'))).mockResolvedValueOnce(reply(text('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T02:41:20.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T02:41:20.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
     const absent = vi.fn<typeof fetch>().mockResolvedValue(reply(text('not-found')));

@@ -206,7 +206,7 @@ describe('Barid Al-Maghrib tracking page', () => {
 
   it('recognizes a known code and the not-found answer, and asks nothing about a code Barid Al-Maghrib cannot track', async () => {
     // A day alone dates the last activity without an instant.
-    await expect(carrier(page('delivered.html')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-12T00:00:00' });
+    await expect(carrier(page('delivered.html')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-12T00:00:00', finished: true });
     await expect(carrier(site(() => redirect(), () => new Response(fixture('not-found.json')))).recognize!(UNKNOWN))
       .resolves.toEqual({ known: false });
     const unused = vi.fn<typeof fetch>();

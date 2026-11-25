@@ -247,7 +247,7 @@ describe('Anjun HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Anjun does not issue', async () => {
     const fetcher = routed(() => reply(fixture('delivered')));
     // The delivery in Brazil, on Brasília's clock, dates the last activity.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-14T18:42:10.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-14T18:42:10.000Z', finished: true });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const unknown = routed(() => reply(fixture('not-found')));
     await expect(carrier(unknown).recognize!(UNKNOWN)).resolves.toEqual({ known: false });

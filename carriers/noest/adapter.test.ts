@@ -195,7 +195,7 @@ describe('NOEST HTTP adapter', () => {
   it('recognizes a known number with its last instant and an unknown one as unknown, and asks nothing for a number NOEST does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(async () => page()).mockResolvedValueOnce(html(fixture('delivered')))
       .mockImplementationOnce(async () => page()).mockResolvedValueOnce(html(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T09:00:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T09:00:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('ABC-123-1234567')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

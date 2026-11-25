@@ -197,7 +197,7 @@ describe('AnserX HTTP adapter', () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // Beijing's clock dates the last activity.
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-21T04:40:15.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-21T04:40:15.000Z', finished: true });
   });
 
   it('keeps a failed lookup, a refusal, a moved route, a browser check and a broken reply apart', async () => {

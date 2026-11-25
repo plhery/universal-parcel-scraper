@@ -182,7 +182,7 @@ describe('Tgroup HTTP adapter', () => {
   it('recognizes a shipment the tracker shows and not a number it does not know', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) =>
       reply(fixture(String(url).endsWith(UNKNOWN) ? 'not-found' : 'delivered')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-14T10:22:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-14T10:22:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

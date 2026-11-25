@@ -138,7 +138,7 @@ describe('Redpack HTTP adapter', () => {
   it('recognizes a known guide and an unknown one, and leaves a failing lookup open', async () => {
     const fetcher = redpack(() => json(text('delivered')), () => json(text('not-found')), () => json(text('error')));
     const direct = carrier(fetcher);
-    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T19:47:02.000Z' });
+    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T19:47:02.000Z', finished: true });
     await expect(direct.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(direct.recognize!(FAILING)).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(direct.recognize!('9000001')).resolves.toEqual({ known: false });

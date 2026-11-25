@@ -184,7 +184,7 @@ describe('SEUR simplified anonymous tracking', () => {
     const body = { ...copy(), identificador_busqueda: reference, clave_envio: '990000000000000000002' };
     expect(parseSeur(body, reference).status).toBe('delivered');
     expect(await adapter(environment(vi.fn<typeof fetch>().mockResolvedValue(response(body)))).recognize!(reference))
-      .toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-23T13:13:05' });
+      .toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-23T13:13:05', finished: true });
     expect(() => parseSeur({ ...body, identificador_busqueda: body.clave_envio }, reference)).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
@@ -277,14 +277,14 @@ describe('SEUR simplified anonymous tracking', () => {
     const long = '99000000000002'; const asked = (body = copy()) => ({ ...body, identificador_busqueda: long });
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response(asked())); const instance = adapter(environment(fetcher));
     expect(await instance.recognize!('unsupported')).toEqual({ known: false }); expect(fetcher).not.toHaveBeenCalled();
-    expect(await instance.recognize!(long)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-23T13:13:05' });
+    expect(await instance.recognize!(long)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-23T13:13:05', finished: true });
     const body0 = copy(); body0.situaciones[0]!.fecha = '2026-01-23T13:13:05+01:00';
     const offset = vi.fn<typeof fetch>().mockResolvedValue(response(asked(body0)));
-    expect(await adapter(environment(offset)).recognize!(long)).toEqual({ known: true, lastActivityAt: '2026-01-23T12:13:05.000Z' });
+    expect(await adapter(environment(offset)).recognize!(long)).toEqual({ known: true, lastActivityAt: '2026-01-23T12:13:05.000Z', finished: true });
     const unresolved = vi.fn<typeof fetch>().mockResolvedValue(response(noHistory));
     await expect(adapter(environment(unresolved)).recognize!(long)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
     const body = copy(); body.situaciones.forEach(scan => { scan.fecha = ''; }); const undated = vi.fn<typeof fetch>().mockResolvedValue(response(asked(body)));
-    expect(await adapter(environment(undated)).recognize!(long)).toEqual({ known: true, lastActivityAt: null });
+    expect(await adapter(environment(undated)).recognize!(long)).toEqual({ known: true, lastActivityAt: null, finished: true });
   });
 
   it('tracks a seven-digit expedition number but never asks recognition about one, since SEUR reuses them', async () => {

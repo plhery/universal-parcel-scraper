@@ -296,7 +296,7 @@ describe('GLS Italy direct tracking', () => {
     expect(await instance.recognize!('00000000000')).toEqual({ known: false });
     expect(known).not.toHaveBeenCalled();
     // The newest scan's Italian time dates the shipment.
-    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-03-05T10:42:00.000Z' });
+    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-03-05T10:42:00.000Z', finished: true });
     const unknown = vi.fn(async () => reply(fixture('not-found'), 404));
     expect(await adapter(environment(unknown as unknown as typeof fetch)).recognize!(NUMBER)).toEqual({ known: false });
     const outage = vi.fn(async () => reply({ exceptionText: 'Internal system error [x].' }, 500));

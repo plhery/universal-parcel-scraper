@@ -188,7 +188,7 @@ describe('ShipGlobal India guest tracking', () => {
   it('recognizes exact dated histories over HTTP, rejects other shapes before a request, and retains the number rule', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(reply(fixture('not-found')));
     const current = carrier(fetcher);
-    await expect(current.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-10T15:20:01' });
+    await expect(current.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-10T15:20:01', finished: true });
     await expect(current.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(current.recognize!('ABC123')).resolves.toEqual({ known: false });
     await expect(current.track({ number: 'ABC123' })).rejects.toMatchObject({ kind: 'invalid_input' });

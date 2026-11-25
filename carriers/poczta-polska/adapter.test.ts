@@ -376,7 +376,7 @@ describe('Poczta Polska public widget request', () => {
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T11:00:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T11:00:00.000Z', finished: true });
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
     await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
   });

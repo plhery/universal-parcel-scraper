@@ -137,7 +137,7 @@ describe('Shipter native tracking', () => {
   it('uses dated scan activity for HTTP recognition, not the later refresh clock', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture())).mockResolvedValueOnce(json(absence()));
     const instance = adapter(environment(fetcher));
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-21T03:14:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-21T03:14:00.000Z', finished: true });
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
     for (const foreign of ['SYNTHETICPARTNER4817', 'H3AU482716KR1', 'ABAU482716KR', '482716']) {
       await expect(instance.recognize!(foreign)).resolves.toEqual({ known: false });

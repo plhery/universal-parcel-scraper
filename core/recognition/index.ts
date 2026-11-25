@@ -27,6 +27,18 @@ export {
 
 /** An answer for a parcel quiet this long is taken for an older parcel that reused the number. */
 const RECENT_ACTIVITY_MS = 60 * 24 * 3_600_000;
+
+/**
+ * So is a delivered or returned parcel quiet this long: a number is added for a parcel on its way
+ * or just delivered, and a run of digits many carriers print finds a stranger's finished parcel.
+ */
+const FINISHED_ACTIVITY_MS = 30 * 24 * 3_600_000;
+
+/**
+ * Failures that say the carrier cannot answer for the number at all, rather than not now: it
+ * needs the user's input, or its own search holds nothing under the number.
+ */
+const CANNOT_ANSWER: ReadonlySet<string> = new Set(['not_found', 'invalid_input', 'input_required']);
 /** A local wall time names an instant at most this much later, in the zones from UTC−12 to UTC+14. */
 const WALL_CLOCK_SLACK_MS = 12 * 3_600_000;
 
@@ -36,6 +48,8 @@ export interface RecognitionOutcome extends RecognitionCandidate {
   status: RecognitionStatus;
   lastActivityAt: string | null;
   lastActivityLocal?: string | null;
+  /** The parcel the carrier knows was delivered or returned. */
+  finished?: boolean;
   /**
    * For a `failed` outcome whose check threw a carrier error, that error's kind and reason; absent
    * when the check found no carrier error or did not answer in time. `portal_not_found` is the
@@ -82,7 +96,8 @@ export async function recognizeAll(
       const answer = await recognize(candidate.carrier, context);
       if (controller.signal.aborted) return;
       outcomes[index] = { ...candidate, status: answer.known ? 'known' : 'unknown', lastActivityAt: answer.lastActivityAt ?? null,
-        ...(answer.lastActivityLocal ? { lastActivityLocal: answer.lastActivityLocal } : {}) };
+        ...(answer.lastActivityLocal ? { lastActivityLocal: answer.lastActivityLocal } : {}),
+        ...(answer.known && answer.finished === true ? { finished: true } : {}) };
     } catch (error) {
       // Stays failed: an outage is no answer about the number, and an empty answer does not rule the carrier out.
       const failure = controller.signal.aborted ? undefined : failureOf(error);
@@ -124,15 +139,25 @@ function countryMatchScore(outcome: RecognitionOutcome): number {
  * outweighs a network that knows the number and can track it at once. The
  * country is the hint given to `recognitionCandidates`, carried on each
  * outcome. Other unrelated carriers that all know the number stay a choice for
- * the user.
+ * the user. A carrier number evidence backs that could not answer may hold the
+ * parcel, so no carrier the evidence does not back is settled on while it is
+ * unanswered.
  */
 export function settleRecognition(outcomes: readonly RecognitionOutcome[], now = new Date()): { carrier?: string; choices: string[] } {
   const answers = outcomes.filter((outcome) => outcome.status === 'known').map((outcome) => ({ outcome, quiet: quietFor(outcome, now) }));
-  const recent = answers.filter(({ quiet }) => quiet !== null && quiet < RECENT_ACTIVITY_MS);
+  const recent = answers.filter(({ outcome, quiet }) => quiet !== null
+    && quiet < (outcome.finished ? FINISHED_ACTIVITY_MS : RECENT_ACTIVITY_MS));
   // An answer without a clock is of unknown age: it counts only when no dated answer is recent.
   const known = (recent.length ? recent : answers.filter(({ quiet }) => quiet === null)).map(({ outcome }) => outcome);
   if (known.length === 0) return { choices: [] };
-  if (known.length === 1) return { carrier: known[0]!.carrier, choices: [] };
+  // A backed carrier that failed, and answered no other ask, as a browser's after HTTP's. A carrier
+  // whose own check digit passes is not held back by a preference resting on a check digit alone.
+  const unanswered = outcomes.filter((outcome) => outcome.preferred && outcome.status === 'failed'
+    && !CANNOT_ANSWER.has(outcome.failure?.kind ?? '') && outcome.failure?.reason !== 'portal_not_found'
+    && !outcomes.some((other) => other.carrier === outcome.carrier && other.status !== 'failed'));
+  const waits = (outcome: RecognitionOutcome) => !outcome.preferred
+    && unanswered.some((backed) => backed.carrier !== outcome.carrier && !backed.checkDigitPeers?.includes(outcome.carrier));
+  if (known.length === 1) return waits(known[0]!) ? { choices: [] } : { carrier: known[0]!.carrier, choices: [] };
   // The other answers are the delivery leg of the journey this carrier started.
   // It holds the scans before the border, and a hand-off brings the delivery carrier in.
   const origins = known.filter((outcome) => followsPartnerNumbers(outcome.carrier));
@@ -148,7 +173,7 @@ export function settleRecognition(outcomes: readonly RecognitionOutcome[], now =
     const [best] = [...known].sort((left, right) => Number(!right.needsInput) - Number(!left.needsInput)
       || countryMatchScore(right) - countryMatchScore(left)
       || (CARRIER_RECOGNITION_RANKS[right.carrier] ?? 0) - (CARRIER_RECOGNITION_RANKS[left.carrier] ?? 0));
-    return { carrier: best!.carrier, choices: [] };
+    return waits(best!) ? { choices: [] } : { carrier: best!.carrier, choices: [] };
   }
   return { choices: known.map((outcome) => outcome.carrier) };
 }

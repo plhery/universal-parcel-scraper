@@ -188,7 +188,7 @@ describe('EuroExpress HTTP adapter', () => {
   it('recognizes a known code and an unknown one, and asks nothing for a code EuroExpress does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(redirect()).mockResolvedValueOnce(json(reply('delivered')))
       .mockResolvedValueOnce(redirect()).mockResolvedValueOnce(json(reply('not-found'), { status: 404 }));
-    await expect(carrier(fetcher).recognize!(CODE)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-13T12:42:51.000Z' });
+    await expect(carrier(fetcher).recognize!(CODE)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-13T12:42:51.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(CODE)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('12345678')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

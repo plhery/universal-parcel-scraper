@@ -219,7 +219,7 @@ describe('PBT HTTP adapter', () => {
 
   it('recognizes a known number and the redirect for an unknown one, and asks nothing for a number PBT does not issue', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-07T10:05:00' });
+    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-07T10:05:00', finished: true });
     await expect(carrier(missing(UNKNOWN)).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(CHALLENGE))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     // A page for another consignment is no answer either way.

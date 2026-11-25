@@ -237,7 +237,7 @@ describe('CouriersPlease HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number CouriersPlease does not issue', async () => {
     const answers = [fixture('delivered'), fixture('not-found')];
     const fetcher = site(() => reply(answers.shift()));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-06T12:05:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-06T12:05:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('CP-1')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

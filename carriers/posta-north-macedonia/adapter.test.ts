@@ -174,7 +174,7 @@ describe('Pošta na Severna Makedonija tracking adapter', () => {
 
   it('recognizes a known code and the not-found answer, and asks nothing about a code it cannot track', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(service(text('delivered.json'))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-04T11:25:00' });
+    await expect(carrier(service(text('delivered.json'))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-04T11:25:00', finished: true });
     await expect(carrier(service(text('not-found.json'))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(service(text('rejected.html'))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     const unused = vi.fn<typeof fetch>();

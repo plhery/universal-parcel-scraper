@@ -197,7 +197,7 @@ describe('Canpar retrieval', () => {
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-05T10:00:00' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-05T10:00:00', finished: true });
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('https://canship.canpar.com/api/CanparAddons/trackByBarcodeV2');
     expect(init).toMatchObject({ method: 'POST', cache: 'no-store', redirect: 'error' });

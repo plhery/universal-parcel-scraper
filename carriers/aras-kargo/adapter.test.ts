@@ -273,7 +273,7 @@ describe('Aras Kargo direct tracking', () => {
     expect(await instance.recognize!('990000000000')).toEqual({ known: false });
     expect(known).not.toHaveBeenCalled();
     // A local clock dates the last activity without an instant.
-    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-12T10:20:00' });
+    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-12T10:20:00', finished: true });
     expect(await adapter(environment(session({ lookup: () => reply(absent) }))).recognize!(NUMBER)).toEqual({ known: false });
     await expect(adapter(environment(session({ lookup: () => reply('<html>Bakım</html>') }))).recognize!(NUMBER))
       .rejects.toMatchObject({ kind: 'indeterminate' });

@@ -132,7 +132,7 @@ describe('Parcel Freight Logistics adapter', () => {
 
   it('recognizes a dated parcel and the exact unknown notice through HTTP only', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(reply(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-11T05:31:48.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-11T05:31:48.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(fetcher.mock.calls.every(([url]) => String(url).startsWith(`${PFLOGISTICS_RESULT}?tracking=NEXAU`))).toBe(true);

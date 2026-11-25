@@ -255,7 +255,7 @@ describe('DPEX Worldwide HTTP adapter', () => {
       if (asked.endsWith(DELIVERED)) return reply(fixture('china-delivered'));
       return reply(asked.endsWith(IN_TRANSIT) ? fixture('china-in-transit') : chinaUnknown(UNKNOWN));
     });
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-16T06:41:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-16T06:41:00.000Z', finished: true });
     // DPEX China's wall clocks show the air waybill exists and date it without an instant.
     await expect(carrier(fetcher).recognize!(IN_TRANSIT)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-19T22:15:00' });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });

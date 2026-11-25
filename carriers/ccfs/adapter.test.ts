@@ -265,8 +265,8 @@ describe('CCFS HTTP adapter', () => {
 
   it('recognizes a known number and the unknown answer, and asks nothing for a number CCFS does not issue', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(shipment('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T21:48:09' });
-    await expect(carrier(shipment('delivered')).recognize!(DELIVERED_BILL)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T21:48:09' });
+    await expect(carrier(shipment('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T21:48:09', finished: true });
+    await expect(carrier(shipment('delivered')).recognize!(DELIVERED_BILL)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T21:48:09', finished: true });
     await expect(carrier(missing()).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(CHALLENGE, { headers: { 'Content-Type': 'text/html' } }))).recognize!(UNKNOWN))
       .rejects.toMatchObject({ kind: 'challenge' });

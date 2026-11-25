@@ -181,7 +181,7 @@ describe('VRL Logistics HTTP adapter', () => {
   it('recognizes a known LR number and the unknown-number answer, and asks nothing for a number VRL does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (_url, init) =>
       page(fixture(String(init?.body) === `lrno=${DELIVERED}` ? 'delivered' : 'not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T00:00:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-05T00:00:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('10000000003')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

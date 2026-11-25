@@ -192,7 +192,7 @@ describe('SAT HTTP adapter', () => {
       .mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply({ success: 'true', data: [] }));
     // A day alone dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-09T00:00:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-09T00:00:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // A waybill without cargo at a branch is no evidence of a shipment.
     await expect(carrier(fetcher).recognize!(IN_TRANSIT)).resolves.toMatchObject({ known: false });

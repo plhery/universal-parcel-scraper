@@ -235,7 +235,7 @@ describe('Cyprus Post tracking adapter', () => {
 
   it('recognizes a known item and the no-information notice, from plain HTTP', async () => {
     const fetcher = site();
-    await expect(carrier(fetcher).recognize!(KNOWN)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-09T06:39:00.000Z' });
+    await expect(carrier(fetcher).recognize!(KNOWN)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-09T06:39:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(6);
   });

@@ -219,7 +219,7 @@ describe('CJ Logistics HTTP adapter', () => {
   it('recognizes a known number and an unknown one, and asks nothing for a number CJ Logistics does not issue', async () => {
     const known = service(() => reply(fixture('delivered')));
     // The newest scan dates the parcel's last activity.
-    await expect(carrier(known).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-13T02:25:00.000Z' });
+    await expect(carrier(known).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-13T02:25:00.000Z', finished: true });
     const unknown = service(() => reply(fixture('no-scans')));
     await expect(carrier(unknown).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(unknown).recognize!('00000000012')).resolves.toEqual({ known: false });

@@ -178,7 +178,7 @@ describe('BlueEX HTTP adapter', () => {
 
   it('recognizes a known number and leaves a block without scans inconclusive', async () => {
     await expect(carrier(answering(() => page(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T08:05:00.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T08:05:00.000Z', finished: true });
     await expect(carrier(answering(() => page(fixture('no-history')))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'indeterminate' });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('1234567890')).resolves.toEqual({ known: false });

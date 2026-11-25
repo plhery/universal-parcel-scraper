@@ -227,7 +227,7 @@ describe('Andreani HTTP adapter', () => {
 
   it('recognizes a known number, and asks nothing for one Andreani does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T14:47:05.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T14:47:05.000Z', finished: true });
     await expect(carrier(fetcher).recognize!('36-0')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);
   });

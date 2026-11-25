@@ -133,7 +133,7 @@ describe('Airpak Express HTTP adapter', () => {
   it('recognizes a known connote by its last scan and an unknown one by the tracker’s notice', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) =>
       reply(fixture(String(url).endsWith(DELIVERED) ? 'delivered' : 'not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T05:00:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T05:00:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
   });
 

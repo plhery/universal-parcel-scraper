@@ -150,7 +150,7 @@ describe('guest adapter routing and recognition', () => {
   it('recognizes only the supplied HTTP history, with exact Fez absence negative and ShipGlobal absence inconclusive', async () => {
     for (const entry of [cases[0]!, cases[2]!]) {
       const instance = entry.factory(environment(vi.fn(async () => new Response(body(entry)))));
-      await expect(instance.recognize!(entry.number)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T10:20:30' });
+      await expect(instance.recognize!(entry.number)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T10:20:30', finished: true });
       await expect(instance.recognize!('UNSUPPORTED7')).resolves.toEqual({ known: false });
     }
     const fez = fezDelivery(environment(vi.fn(async () => Response.json({ status: 'Error', description: 'Order Not Found', history: '' }))));

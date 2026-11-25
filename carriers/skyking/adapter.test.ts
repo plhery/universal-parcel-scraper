@@ -217,7 +217,7 @@ describe('SkyKing HTTP adapter', () => {
 
   it('recognizes a known consignment with its last scan and the empty list, and asks nothing for a number SkyKing does not issue', async () => {
     const fetcher = site((url) => json(url === lookupUrl(DELIVERED) ? fixture('delivered') : []));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-14T10:48:09.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-14T10:48:09.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1000000011')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

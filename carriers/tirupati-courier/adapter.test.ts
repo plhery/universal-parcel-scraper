@@ -239,7 +239,7 @@ describe('Shree Tirupati Courier HTTP adapter', () => {
 
   it('recognizes a known number by its booking, and asks nothing for one Shree Tirupati Courier does not issue', async () => {
     const fetcher = site(fixture('delivered'));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-11T09:19:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-11T09:19:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!('90000000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);
   });

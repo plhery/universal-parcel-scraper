@@ -245,7 +245,7 @@ describe('NZ Post bounded anonymous transport', () => {
       .mockResolvedValueOnce(new Response(JSON.stringify(absent())));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
     await expect(instance.recognize!('123')).resolves.toEqual({ known: false });
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T12:00:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T12:00:00.000Z', finished: true });
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`https://tools.nzpost.co.nz/tracking/api/parceltrack/parcels?tracking_reference=${NUMBER}`);

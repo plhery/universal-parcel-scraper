@@ -191,7 +191,7 @@ describe('EGXPRESS domestic HTTP adapter', () => {
   it('recognizes a dated known shipment, a positive unknown and no other number shape', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(response(fixture())).mockResolvedValueOnce(response(missing()))
       .mockResolvedValueOnce(response(CHALLENGE));
-    await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-04T15:21:00' });
+    await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-04T15:21:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     await expect(carrier(fetcher).recognize!('987654321')).resolves.toEqual({ known: false });

@@ -205,7 +205,7 @@ describe('nox tracking adapter', () => {
 
   it('recognizes a known barcode with its last activity and an unknown one from plain HTTP', async () => {
     const fetcher = site();
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-12T06:14:09.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-12T06:14:09.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

@@ -212,7 +212,7 @@ describe('ABF Freight tracking adapter', () => {
   it('recognizes a shipment ArcBest knows and reads its empty answer as unknown', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(reply(fixture('transit')))
       .mockResolvedValueOnce(reply(fixture('not-found'), 404)).mockResolvedValueOnce(reply(fixture('not-found'), 404));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T16:15:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T16:15:00.000Z', finished: true });
     // A local clock dates the last activity without an instant.
     await expect(carrier(fetcher).recognize!(TRANSIT)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-03T08:29:00' });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });

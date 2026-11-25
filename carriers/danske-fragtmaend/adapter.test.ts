@@ -234,7 +234,7 @@ describe('Danske Fragtmænd tracking adapter', () => {
   it('recognizes a known collicode and an unknown one from plain HTTP, and does not ask about a bare consignment number', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered')))
       .mockResolvedValueOnce(reply({ Message: `Failed to find consignment from the given collicode: ${UNKNOWN_COLLI}` }, 404));
-    await expect(carrier(fetcher).recognize!(COLLI)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-10T08:58:21.000Z' });
+    await expect(carrier(fetcher).recognize!(COLLI)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-10T08:58:21.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN_COLLI)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

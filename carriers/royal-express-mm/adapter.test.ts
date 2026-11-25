@@ -197,7 +197,7 @@ describe('Royal Express HTTP adapter', () => {
   it('recognizes a known waybill and the unknown-waybill answer, and asks nothing for a number Royal Express does not issue', async () => {
     const answers = [fixture('delivered'), fixture('not-found')];
     const fetcher = flow(() => html(answers.shift()!));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-12T15:06:38' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-12T15:06:38', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('00000000000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);

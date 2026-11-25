@@ -195,7 +195,7 @@ describe('Skroutz Last Mile HTTP adapter', () => {
 
   it('recognizes a known voucher and the unknown-voucher notice, and asks nothing for a number Skroutz Last Mile does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered'))).mockResolvedValueOnce(notFound());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T13:42:05.520Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T13:42:05.520Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1234567890')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -304,7 +304,7 @@ describe('Correos de México tracking adapter', () => {
 
   it('recognizes a known item and a number no offered year has information on, from plain HTTP', async () => {
     const fetcher = site();
-    await expect(carrier(fetcher).recognize!(KNOWN)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-06T19:20:00.000Z' });
+    await expect(carrier(fetcher).recognize!(KNOWN)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-06T19:20:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);
   });

@@ -278,7 +278,7 @@ describe('UniUni direct retrieval', () => {
   it('probes normalized compact references and rejects neighboring shapes before I/O', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(uuscFixture()));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
-    await expect(instance.recognize!('uusc-000000 000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z' });
+    await expect(instance.recognize!('uusc-000000 000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z', finished: true });
     expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('id')).toBe(UUSC_NUMBER);
     await expect(instance.recognize!('UUSC00000000000A')).resolves.toEqual({ known: false });
     await expect(instance.recognize!('UUSC00000000001')).resolves.toEqual({ known: false });
@@ -289,7 +289,7 @@ describe('UniUni direct retrieval', () => {
     const value = uuscFixture(); value.data.valid_tno[0].tno = U9999_NUMBER;
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(value));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
-    await expect(instance.recognize!('u9999 99999999980')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z' });
+    await expect(instance.recognize!('u9999 99999999980')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z', finished: true });
     expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('id')).toBe(U9999_NUMBER);
   });
 
@@ -299,7 +299,7 @@ describe('UniUni direct retrieval', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(Response.json(value))
       .mockResolvedValueOnce(Response.json({ status: 'SUCCESS', data: { invalid_tno: reference, valid_tno: [] } }));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
-    await expect(instance.recognize!('zz00-caa0 z000000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z' });
+    await expect(instance.recognize!('zz00-caa0 z000000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z', finished: true });
     expect(new URL(String(fetcher.mock.calls[0]![0])).searchParams.get('id')).toBe(reference);
     expect(normalizeUniuniRecognitionNumber('ZZ00USA0Z000000001')).toBe('ZZ00USA0Z000000001');
     expect(normalizeUniuniRecognitionNumber('jy00-ca00 a999999980')).toBe('JY00CA00A999999980');
@@ -320,11 +320,11 @@ describe('UniUni direct retrieval', () => {
     }
     expect(fetcher).not.toHaveBeenCalled();
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify(fixture())));
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-05T22:00:00.000Z', finished: true });
     const local = fixture();
     for (const scan of local.data.valid_tno[0].spath_list) delete scan.dateTime.ts;
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify(local)));
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-05T16:00:00' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-05T16:00:00', finished: true });
     const negative = { status: 'SUCCESS', data: { invalid_tno: NUMBER, valid_tno: [] } };
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify(negative)));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });

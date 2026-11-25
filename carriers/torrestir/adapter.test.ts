@@ -217,7 +217,7 @@ describe('Torrestir HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) =>
       reply(fixture(String(url).includes(UNKNOWN) ? 'not-found' : 'delivered')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-14T11:22:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-01-14T11:22:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

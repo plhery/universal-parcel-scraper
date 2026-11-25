@@ -229,7 +229,7 @@ describe('Mylerz HTTP adapter', () => {
   it('recognizes a known barcode and the unknown-barcode answer, and asks nothing for a number Mylerz does not issue', async () => {
     const fetcher = instances({ [EGYPT]: () => reply(fixture('delivered')) });
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-02T13:20:41' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-02T13:20:41', finished: true });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const nowhere = instances({});
     await expect(carrier(nowhere).recognize!(UNKNOWN)).resolves.toEqual({ known: false });

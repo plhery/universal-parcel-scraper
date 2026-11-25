@@ -141,7 +141,7 @@ describe('Econt HTTP adapter', () => {
   it('recognizes a known shipment and the not-found flag without a browser or recipient inputs', async () => {
     const fetcher = econt(() => json(text('delivered')), () => json(text('not-found')));
     const direct = carrier(fetcher);
-    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T10:00:00.000Z' });
+    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T10:00:00.000Z', finished: true });
     await expect(direct.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(direct.recognize!('900000000001')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);

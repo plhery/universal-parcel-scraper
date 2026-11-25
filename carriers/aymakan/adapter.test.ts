@@ -214,7 +214,7 @@ describe('AyMakan tracking page', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number AyMakan does not issue', async () => {
     // A day alone dates the last activity without an instant.
-    await expect(carrier(serving(fixture('delivered'))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-10-07T00:00:00' });
+    await expect(carrier(serving(fixture('delivered'))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-10-07T00:00:00', finished: true });
     await expect(carrier(serving(fixture('not-found'))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const unused = vi.fn<typeof fetch>();
     await expect(carrier(unused).recognize!('AY12345678')).resolves.toEqual({ known: false });

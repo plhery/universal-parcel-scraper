@@ -197,7 +197,7 @@ describe('Hermes Austria HTTP adapter', () => {
 
   it('recognizes a parcel the tracker lists, and no number it says it does not know', async () => {
     const answer = (body: string) => carrier(vi.fn<typeof fetch>().mockResolvedValue(page(body))).recognize!(DELIVERED);
-    await expect(answer(fixture('delivered'))).resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T13:05:10.000Z' });
+    await expect(answer(fixture('delivered'))).resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T13:05:10.000Z', finished: true });
     await expect(answer(fixture('not-found'))).resolves.toEqual({ known: false });
     await expect(answer(changed('not-found', /<div class="headline5">[^<]+<\/div>/, ''))).rejects.toMatchObject({ kind: 'indeterminate' });
   });

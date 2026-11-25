@@ -37,7 +37,7 @@ describe('Cainiao wrong-number handling', () => {
   it('recognizes LP references through matching HTTP activity', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(jsonResponse(fixture('delivered.json')));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
-    await expect(instance.recognize!('LP00000000000001', { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:15:00.000Z' });
+    await expect(instance.recognize!('LP00000000000001', { budgetMs: 1000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:15:00.000Z', finished: true });
     const url = new URL(String(fetcher.mock.calls[0]?.[0]));
     expect(url.searchParams.get('mailNos')).toBe('LP00000000000001');
     await expect(instance.recognize!('not a parcel')).resolves.toEqual({ known: false });

@@ -258,7 +258,7 @@ describe('R+L Carriers tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(html(fixture('delivered'))).mockResolvedValueOnce(html(fixture('not-found')))
       .mockResolvedValueOnce(refused()).mockResolvedValueOnce(html(fixture('check-digit')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-12T12:10:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-12T12:10:00', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(REFUSED)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(4);
@@ -269,7 +269,7 @@ describe('R+L Carriers tracking adapter', () => {
     await expect(carrier(alias).track({ number: DELIVERED })).resolves.toMatchObject({ canonical_tracking_number: '900000002' });
     await expect(carrier(alias).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate' });
     // The tracer's own form of that PRO, with an I in front, is the PRO itself.
-    await expect(carrier(alias).recognize!('I900000002')).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-12T12:10:00' });
+    await expect(carrier(alias).recognize!('I900000002')).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-12T12:10:00', finished: true });
     expect(String(alias.mock.lastCall![0])).toBe(rlTracingUrl('900000002'));
     const none = vi.fn<typeof fetch>();
     for (const number of ['ZZ12345678', '12345678', 'ABC']) await expect(carrier(none).recognize!(number), number).resolves.toEqual({ known: false });

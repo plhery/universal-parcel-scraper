@@ -232,7 +232,7 @@ describe('Anousith HTTP adapter', () => {
 
   it('recognizes a known bill by its latest instant and the unknown-bill answer, and asks nothing for a number Anousith does not issue', async () => {
     await expect(carrier(answering(fixture('delivered'))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T03:20:30.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T03:20:30.000Z', finished: true });
     await expect(carrier(answering(fixture('not-found'))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('000000000000')).resolves.toEqual({ known: false });

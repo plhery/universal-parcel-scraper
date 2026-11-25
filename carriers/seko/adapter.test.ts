@@ -217,7 +217,7 @@ describe('SEKO HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number SEKO does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(page('delivered'))).mockResolvedValueOnce(missing());
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-16T13:42:00' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-16T13:42:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('ABC123')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
@@ -379,7 +379,7 @@ describe('SEKO OmniParcel route', () => {
 
   it('recognizes a parcel by its newest scan’s instant, and routes a number filed under SEKO to the tracker', async () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(delivered))).recognize!(DELIVERED_GX))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-02T03:10:00.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-02T03:10:00.000Z', finished: true });
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(delivered));
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED_GX, carrier: 'seko' }, { budgetMs: 3000 });
     expect(answer).toMatchObject({ carrier: 'seko', source: 'seko', result: { current_stage: 'delivered', last_update: '2026-09-02T03:10:00Z' } });

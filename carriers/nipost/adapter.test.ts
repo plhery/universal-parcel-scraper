@@ -222,7 +222,7 @@ describe('NIPOST tracking adapter', () => {
   it('recognizes a known item and an unknown code from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered.txt'))).mockResolvedValueOnce(reply(text('in-transit.txt')))
       .mockResolvedValueOnce(reply(text('not-found.txt')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-06T10:41:07.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-06T10:41:07.000Z', finished: true });
     // A local clock dates the last activity without an instant.
     await expect(carrier(fetcher).recognize!(IN_TRANSIT)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-02T18:40:00' });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });

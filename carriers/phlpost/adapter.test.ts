@@ -203,9 +203,9 @@ describe('PHLPost tracking adapter', () => {
   it('recognizes a known item and an unknown code from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('inbound-delivered'))).mockResolvedValueOnce(reply(text('not-found')))
       .mockResolvedValueOnce(reply(text('outbound-delivered')));
-    await expect(carrier(fetcher).recognize!(INBOUND)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-15T03:00:00.000Z' });
+    await expect(carrier(fetcher).recognize!(INBOUND)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-15T03:00:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
-    await expect(carrier(fetcher).recognize!(OUTBOUND)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-20T23:04:58.000Z' });
+    await expect(carrier(fetcher).recognize!(OUTBOUND)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-20T23:04:58.000Z', finished: true });
     expect(fetcher).toHaveBeenCalledTimes(3);
   });
 

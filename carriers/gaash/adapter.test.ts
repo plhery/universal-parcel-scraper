@@ -259,7 +259,7 @@ describe('GAASH HTTP adapter', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number GAASH does not issue', async () => {
     const known = carrier(site(fixture('delivered')));
-    await expect(known.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-18T07:12:13.000Z' });
+    await expect(known.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-18T07:12:13.000Z', finished: true });
     const unknown = site(fixture('not-found'));
     await expect(carrier(unknown).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(unknown).recognize!('GWD00000000')).resolves.toEqual({ known: false });

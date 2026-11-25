@@ -908,7 +908,7 @@ describe('JS Express tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(page('delivered'))).mockResolvedValueOnce(reply(page('in-transit')))
       .mockResolvedValueOnce(reply(page('not-found')));
     // The newest dated row dates the parcel's last activity: the delivery, or the export release before the flight's wall clocks.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T20:41:05.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T20:41:05.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(IN_TRANSIT)).resolves.toEqual({ known: true, lastActivityAt: '2026-04-14T13:58:00.000Z' });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);

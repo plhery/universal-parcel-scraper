@@ -393,7 +393,7 @@ describe('Shouwu International HTTP adapter', () => {
 
   it('recognizes a number the tracker knows, and not one it does not know or Shouwu does not issue', async () => {
     const recognize = (body: string) => carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(body))).recognize!(DELIVERED);
-    await expect(recognize(text('delivered'))).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-17T01:39:12' });
+    await expect(recognize(text('delivered'))).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-04-17T01:39:12', finished: true });
     await expect(recognize(text('not-found'))).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('SWECN99000000001YQ')).resolves.toEqual({ known: false });

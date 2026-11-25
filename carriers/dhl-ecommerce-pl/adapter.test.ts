@@ -234,7 +234,7 @@ describe('DHL eCommerce Poland adapter', () => {
 
   it('recognizes a known parcel and an absent one', async () => {
     const known = adapter(environment(portal(() => Response.json(clone()))));
-    await expect(known.recognize?.(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:15:00.000Z' });
+    await expect(known.recognize?.(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:15:00.000Z', finished: true });
     const unknown = adapter(environment(portal(() => Response.json([{ number: WAYBILL, shipments: [] }]))));
     await expect(unknown.recognize?.(WAYBILL)).resolves.toEqual({ known: false });
     await expect(unknown.track({ number: WAYBILL })).rejects.toMatchObject({ kind: 'not_found' });

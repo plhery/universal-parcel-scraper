@@ -246,7 +246,7 @@ describe('CEVA Logistics HTTP adapter', () => {
       [search(UNKNOWN)]: () => reply(fixture('search-empty')),
     });
     // The window's confirmation is the history's one instant; the terminals' wall clocks cannot date activity.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T17:00:01.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-09T17:00:01.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(3);

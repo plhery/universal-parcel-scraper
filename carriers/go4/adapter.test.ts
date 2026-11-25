@@ -165,7 +165,7 @@ describe('GO4 tracking adapter', () => {
   it('recognizes a shipment the tracker shows and not a number it does not know', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) =>
       reply(text(String(url) === lookupUrl(DELIVERED) ? 'delivered' : 'not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-30T10:00:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-30T10:00:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(SHORT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

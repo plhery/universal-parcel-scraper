@@ -523,10 +523,10 @@ describe('Australia Post recognition', () => {
     const fetcher = vi.fn<typeof fetch>();
     const instance = adapter({ trawl: browserService(browser), fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
     fetcher.mockResolvedValueOnce(Response.json(fixture()));
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z', finished: true });
     // A recognition budget past the lookup's minute still asks.
     fetcher.mockResolvedValueOnce(Response.json(fixture()));
-    await expect(instance.recognize!(NUMBER, { budgetMs: 120_000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z' });
+    await expect(instance.recognize!(NUMBER, { budgetMs: 120_000 })).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z', finished: true });
     const unknown = empty(); unknown[0].trackingIds = [NUMBER];
     fetcher.mockResolvedValueOnce(Response.json(unknown));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });

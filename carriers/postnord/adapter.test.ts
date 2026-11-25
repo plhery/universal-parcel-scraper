@@ -321,7 +321,7 @@ describe('PostNord direct tracking', () => {
     const fetcher = vi.fn<typeof fetch>();
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify(payload())));
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-04T12:00:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-04T12:00:00.000Z', finished: true });
     fetcher.mockResolvedValueOnce(new Response(JSON.stringify({ message: 'Shipment was not found.' }), { status: 404 }));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
     fetcher.mockResolvedValueOnce(new Response('<h1>Not Found</h1>', { status: 404 }));

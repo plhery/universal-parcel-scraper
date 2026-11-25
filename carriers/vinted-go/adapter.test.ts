@@ -195,7 +195,7 @@ describe('Vinted Go HTTP adapter', () => {
 
   it('recognizes a known parcel and the unknown-number answer, and asks nothing for a number Vinted Go does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('delivered')).mockResolvedValueOnce(unknown());
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-24T15:02:10.100Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-09-24T15:02:10.100Z', finished: true });
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('1790000000000011')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

@@ -266,7 +266,7 @@ describe('TForce Freight tracking page', () => {
   it('recognizes a known PRO and the unknown-PRO answer, and asks nothing for a number TForce Freight does not issue', async () => {
     const known = site(() => new Response(fixture('delivered')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(known).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-18T12:40:00' });
+    await expect(carrier(known).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-18T12:40:00', finished: true });
     await expect(carrier(site(() => new Response(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const unused = vi.fn<typeof fetch>();
     await expect(carrier(unused).recognize!('222222222')).resolves.toEqual({ known: false });

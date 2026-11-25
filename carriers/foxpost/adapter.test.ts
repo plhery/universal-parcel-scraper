@@ -253,10 +253,10 @@ describe('Foxpost direct tracking', () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     try {
       vi.setSystemTime(SUMMER);
-      expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-06-04T16:27:00.000Z' });
+      expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-06-04T16:27:00.000Z', finished: true });
       // A summer scan viewed in winter keeps its wall clock, which dates the last activity without an instant.
       vi.setSystemTime(WINTER);
-      expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-04T18:27:00' });
+      expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-04T18:27:00', finished: true });
     } finally {
       vi.useRealTimers();
     }

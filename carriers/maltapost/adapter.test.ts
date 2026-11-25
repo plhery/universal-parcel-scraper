@@ -201,7 +201,7 @@ describe('MaltaPost tracking adapter', () => {
   it('recognizes a known item and the reply without a barcode, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('sendon'))).mockResolvedValueOnce(reply(text('not-found')));
     // Malta's clock dates the last activity.
-    await expect(carrier(fetcher).recognize!(SENDON)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-13T10:42:07.000Z' });
+    await expect(carrier(fetcher).recognize!(SENDON)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-13T10:42:07.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

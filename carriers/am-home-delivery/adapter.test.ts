@@ -247,7 +247,7 @@ describe('AM Home Delivery HTTP adapter', () => {
 
   it('recognizes a known number and the unknown notice, and asks nothing for a number AM Home Delivery does not issue', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(shipment('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T16:37:00' });
+    await expect(carrier(shipment('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T16:37:00', finished: true });
     await expect(carrier(shipment('not-found')).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(serving(() => html(CHALLENGE))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     // A reply for another shipment, or found by a bill of lading number, is no answer either way.

@@ -227,8 +227,8 @@ describe('SP Express HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(html(page('delivered')))
       .mockResolvedValueOnce(html(page('archived'))).mockResolvedValueOnce(sentBack()).mockResolvedValueOnce(html(page('not-found')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-09T15:42:00' });
-    await expect(carrier(fetcher).recognize!(ARCHIVED)).resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-09T15:42:00', finished: true });
+    await expect(carrier(fetcher).recognize!(ARCHIVED)).resolves.toEqual({ known: true, lastActivityAt: null, finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // BRT's and Yunda's fifteen digits without SP Express's prefix and date.
     await expect(carrier(fetcher).recognize!('123456789012345')).resolves.toEqual({ known: false });

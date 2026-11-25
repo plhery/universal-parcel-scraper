@@ -247,7 +247,7 @@ describe('SkyPostal sealed lookup', () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(async () => sealed(fixture('delivered')))
       .mockImplementationOnce(async () => sealed(fixture('not-found')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-20T16:40:12' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-05-20T16:40:12', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('0000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

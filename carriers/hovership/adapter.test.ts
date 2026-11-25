@@ -203,7 +203,7 @@ describe('Hovership HTTP adapter', () => {
     });
 
   it('recognizes a known number and the not-found answer, and asks nothing for a number Hovership does not issue', async () => {
-    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-07-14T22:42:00.000Z' });
+    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-07-14T22:42:00.000Z', finished: true });
     await expect(carrier(page('not-found', 404)).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(CHALLENGE))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     // A page for another parcel is no answer either way.

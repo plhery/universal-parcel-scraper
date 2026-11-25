@@ -205,7 +205,7 @@ describe('D Express HTTP adapter', () => {
 
   it('recognizes a known code with its last scan, the not-found answer, and asks nothing for a code D Express does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered'))).mockResolvedValueOnce(reply(text('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T10:42:07.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T10:42:07.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('ZZ000000000%')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

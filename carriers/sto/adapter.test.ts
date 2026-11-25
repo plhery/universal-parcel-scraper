@@ -215,7 +215,7 @@ describe('STO signed retrieval', () => {
 
   it('recognizes a known waybill and a positively unknown one', async () => {
     const known = vi.fn<typeof fetch>().mockImplementation(async () => reply());
-    await expect(instance(known).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T10:00:00.000Z' });
+    await expect(instance(known).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-03T10:00:00.000Z', finished: true });
     const unknown = vi.fn<typeof fetch>().mockImplementation(async () => reply(read('not-found')));
     await expect(instance(unknown).recognize!(NUMBER)).resolves.toMatchObject({ known: false });
     const unused = vi.fn<typeof fetch>();

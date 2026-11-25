@@ -208,7 +208,7 @@ describe('DobroPost HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number DobroPost does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('delivered')))
       .mockResolvedValueOnce(json(fixture('not-found'), { status: 404 }));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-20T12:41:07.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-20T12:41:07.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('DBRPST00000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

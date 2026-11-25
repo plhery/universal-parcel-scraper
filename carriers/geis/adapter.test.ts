@@ -227,7 +227,7 @@ describe('Geis direct tracking', () => {
     const instance = adapter(environment(known));
     expect(await instance.recognize!('12345')).toEqual({ known: false });
     expect(known).not.toHaveBeenCalled();
-    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-01-15T07:17:00.000Z' });
+    expect(await instance.recognize!(NUMBER)).toEqual({ known: true, lastActivityAt: '2026-01-15T07:17:00.000Z', finished: true });
     const unknown = vi.fn(async () => reply(absent));
     expect(await adapter(environment(unknown as unknown as typeof fetch)).recognize!(NUMBER)).toEqual({ known: false });
     const outage = vi.fn(async (url: string) => String(url) === slovak() ? reply('<html>Service unavailable</html>') : reply(absent));

@@ -176,7 +176,7 @@ describe('CityMail HTTP adapter', () => {
 
   it('recognizes a known parcel and an unknown reference from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(html(fixture('delivered'))).mockResolvedValueOnce(html(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-27T14:42:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-27T14:42:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => html(CHALLENGE))).recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
   });

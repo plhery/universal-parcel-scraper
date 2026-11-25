@@ -222,7 +222,7 @@ describe('Slovak Parcel Service HTTP adapter', () => {
 
   it('recognizes a known parcel and the unknown-number answer, and asks nothing for a number SPS does not issue', async () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply('delivered'))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-19T07:50:09' });
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-19T07:50:09', finished: true });
     await expect(carrier(missing()).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('70299000000011')).resolves.toEqual({ known: false });

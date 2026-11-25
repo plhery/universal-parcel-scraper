@@ -184,7 +184,7 @@ describe('Omniva tracking adapter', () => {
 
   it('reads the empty object as a missing item and recognizes known items from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('collected'))).mockResolvedValueOnce(reply(text('not-found')));
-    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T17:05:22.097Z' });
+    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T17:05:22.097Z', finished: true });
     await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
     const absent = vi.fn<typeof fetch>().mockResolvedValue(reply('{}'));

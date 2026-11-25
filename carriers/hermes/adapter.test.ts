@@ -244,7 +244,7 @@ describe('Hermes no-data response', () => {
       .mockResolvedValueOnce(reply(delivered()));
     const hes = adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
     // A local clock dates the last activity without an instant.
-    await expect(hes.recognize!(DELIVERED_NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-08-05T12:50:00' });
+    await expect(hes.recognize!(DELIVERED_NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-08-05T12:50:00', finished: true });
     await expect(hes.recognize!(WRONG_HERMES_NUMBER)).resolves.toEqual({ known: false });
     // An order for another delivery note is no recognition.
     await expect(hes.recognize!('62100000000000001')).rejects.toBeInstanceOf(SchemaError);

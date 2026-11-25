@@ -194,7 +194,7 @@ describe('Fargo tracking adapter', () => {
 
   it('recognizes an order the tracker has, and not an ID it lacks or one it does not issue', async () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(text('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-05-06T10:20:30.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-05-06T10:20:30.000Z', finished: true });
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(text('not-found'), 404))).recognize!(UNKNOWN))
       .resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();

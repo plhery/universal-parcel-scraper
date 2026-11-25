@@ -153,7 +153,7 @@ describe('Pošta Srbije tracking adapter', () => {
     expect(() => parsePostaSrbije(answer('not-found', (_, value) => { value.StrRezultat = { Poruka: serbian, PorukaKorisnik: serbian }; }), UNKNOWN))
       .toThrow(expect.objectContaining({ kind: 'not_found' }));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(json('abroad'))).mockResolvedValueOnce(reply(json('not-found')));
-    await expect(carrier(fetcher).recognize!(ABROAD)).resolves.toEqual({ known: true, lastActivityAt: '2026-07-06T08:20:00.000Z' });
+    await expect(carrier(fetcher).recognize!(ABROAD)).resolves.toEqual({ known: true, lastActivityAt: '2026-07-06T08:20:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(() => parsePostaSrbije(answer('refused'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     const notice = (code: number, text: string | null) => answer('not-found', (_, value) => {

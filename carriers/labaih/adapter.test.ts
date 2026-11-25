@@ -167,7 +167,7 @@ describe('LaBaih tracking page', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number LaBaih does not issue', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(serving(fixture('delivered'))).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-10-14T21:05:10' });
+    await expect(carrier(serving(fixture('delivered'))).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-10-14T21:05:10', finished: true });
     await expect(carrier(redirecting(NOT_FOUND_LOCATION)).recognize!(OTHER)).resolves.toEqual({ known: false });
     await expect(carrier(serving(fixture('delivered'))).recognize!(OTHER)).rejects.toMatchObject({ kind: 'indeterminate' });
     const unused = vi.fn<typeof fetch>();

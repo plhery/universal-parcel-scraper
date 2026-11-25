@@ -157,7 +157,7 @@ describe('Posta tracking adapter', () => {
 
   it('recognizes a known item and an unknown number from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('delivered'))).mockResolvedValueOnce(reply(null, 204));
-    await expect(carrier(fetcher).recognize!(INBOUND)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-15T13:05:00.000Z' });
+    await expect(carrier(fetcher).recognize!(INBOUND)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-15T13:05:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

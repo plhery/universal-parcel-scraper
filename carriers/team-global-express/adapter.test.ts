@@ -217,7 +217,7 @@ describe('Team Global Express HTTP adapter', () => {
 
   it('recognizes a known number and the empty answer, and asks nothing for a number Team Global Express does not issue', async () => {
     await expect(carrier(site(fixture('search-delivered'), fixture('details-delivered'))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-22T13:42:00' });
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-22T13:42:00', finished: true });
     const fetcher = site(fixture('search-not-found'), '');
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('TGE')).resolves.toEqual({ known: false });

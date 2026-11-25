@@ -66,7 +66,7 @@ describe('Israel Post guest tracking', () => {
 
   it('recognizes only actual history and keeps unknown categories unmapped', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply());
-    await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T00:00:00' });
+    await expect(carrier(fetcher).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T00:00:00', finished: true });
     const data = payload(); data.Maslul[0]!.CategoryCode = 999;
     const result = parseIsraelPost(data, NUMBER);
     expect(result.status).toBe('unknown');

@@ -227,7 +227,7 @@ describe('Pack-Man HTTP adapter', () => {
 
   it('recognizes a voucher the page knows, and not one it does not know or Pack-Man does not issue', async () => {
     const answer = (body: string, init?: ResponseInit) => carrier(vi.fn<typeof fetch>().mockResolvedValue(page(body, init)));
-    await expect(answer(fixture('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T10:53:39.000Z' });
+    await expect(answer(fixture('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-10-26T10:53:39.000Z', finished: true });
     await expect(answer(fixture('not-found')).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(answer(fixture('challenge')).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     const fetcher = vi.fn<typeof fetch>();

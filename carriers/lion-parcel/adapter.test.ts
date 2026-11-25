@@ -253,7 +253,7 @@ describe('Lion Parcel HTTP adapter', () => {
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Lion Parcel does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-10T09:05:00.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-10T09:05:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('SAMPLE01')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

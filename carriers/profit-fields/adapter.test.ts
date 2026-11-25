@@ -112,7 +112,7 @@ describe('Profit Fields guest history', () => {
     expect(hasDirectHandoffAdapter('profit-fields', PARTNER)).toBe(false);
     const fetcher = vi.fn(async () => Response.json(fixture()));
     const instance = adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
-    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-07-04T13:51:00.000Z' });
+    await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-07-04T13:51:00.000Z', finished: true });
     await expect(instance.recognize!(PARTNER)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);
     fetcher.mockImplementation(async () => Response.json(absent()));

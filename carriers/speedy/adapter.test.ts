@@ -131,7 +131,7 @@ describe('Speedy HTTP adapter', () => {
 
   it('recognizes a known number and the missing-resource page without a browser or recipient inputs', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('collected')).mockResolvedValueOnce(missing());
-    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T15:01:30.000Z' });
+    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T15:01:30.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('6900000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

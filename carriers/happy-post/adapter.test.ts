@@ -136,7 +136,7 @@ describe('Happy-Post HTTP adapter', () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(absent())).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // Wall clocks date the parcel's last activity only on its local clock.
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-09T12:47:00' });
+      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-09T12:47:00', finished: true });
   });
 
   it('keeps an unknown number, a moved route, a refusal, a browser check and a broken reply apart', async () => {

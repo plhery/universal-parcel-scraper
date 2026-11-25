@@ -286,7 +286,7 @@ describe('To-Day HTTP adapter', () => {
       .mockResolvedValueOnce(reply(html(fixture('not-found'))))
       .mockResolvedValueOnce(reply(html(fixture('delivered'))))
       .mockResolvedValueOnce(reply(html(fixture('expired'))));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T05:02:09.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-12T05:02:09.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     // Another parcel in the answer is no answer about this one.
     await expect(carrier(fetcher).recognize!(IN_DELIVERY)).rejects.toMatchObject({ kind: 'indeterminate' });

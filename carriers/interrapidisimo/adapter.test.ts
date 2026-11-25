@@ -211,7 +211,7 @@ describe('Inter Rapidísimo HTTP adapter', () => {
     });
 
   it('recognizes a known guide and the unknown-guide answer, and asks nothing for a number Inter Rapidísimo does not issue', async () => {
-    await expect(carrier(gateway()).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T16:52:40.000Z' });
+    await expect(carrier(gateway()).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T16:52:40.000Z', finished: true });
     const unknown = gateway({ search: reply(fixture('search-not-found'), { status: 404 }) });
     await expect(carrier(unknown).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(unknown).toHaveBeenCalledTimes(1);

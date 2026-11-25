@@ -213,7 +213,7 @@ describe('Quantium Solutions HTTP adapter', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Quantium does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('delivered'))).mockResolvedValueOnce(json(fixture('not-found')));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T14:20:05' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T14:20:05', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('UQM-MU00000000')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);

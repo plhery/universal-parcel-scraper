@@ -190,7 +190,7 @@ describe('Pos Indonesia tracking adapter', () => {
   it('reads its not-found notice as a missing item, and an answer without scans apart from it', async () => {
     expect(() => parsePosIndonesia(JSON.parse(source('not-found.json')), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(json('delivered'))).mockResolvedValueOnce(reply(source('not-found.json'), 400));
-    await expect(carrier(fetcher).recognize!(DOMESTIC)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-03T13:50:54' });
+    await expect(carrier(fetcher).recognize!(DOMESTIC)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-03T13:50:54', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const missing = vi.fn<typeof fetch>().mockResolvedValue(reply(source('not-found.json'), 400));
     await expect(carrier(missing).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });

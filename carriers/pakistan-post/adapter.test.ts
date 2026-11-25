@@ -222,7 +222,7 @@ describe('Pakistan Post tracking adapter', () => {
   it('recognizes a known item and an unknown number from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(page('domestic'))).mockResolvedValueOnce(reply(page('not-found')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(DOMESTIC)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T12:00:00' });
+    await expect(carrier(fetcher).recognize!(DOMESTIC)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-07-04T12:00:00', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

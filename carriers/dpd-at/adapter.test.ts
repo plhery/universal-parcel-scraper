@@ -223,7 +223,7 @@ describe('DPD Austria HTTP adapter', () => {
 
   it('recognizes a parcel whose newest scan is in Austria, and no other', async () => {
     const answer = (body: unknown) => carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(body))).recognize!(DELIVERED);
-    await expect(answer(fixture('delivered'))).resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T09:47:00.000Z' });
+    await expect(answer(fixture('delivered'))).resolves.toEqual({ known: true, lastActivityAt: '2026-01-12T09:47:00.000Z', finished: true });
     await expect(answer(fixture('not-found'))).resolves.toEqual({ known: false });
     // Gone on to another network's depot: that network's to claim.
     await expect(answer(changed('delivered', (parcel) => {

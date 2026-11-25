@@ -213,7 +213,7 @@ describe('99minutos tracking adapter', () => {
     await expect(carrier(absent).track({ number: ABSENT })).rejects.toMatchObject({ kind: 'not_found' });
     await expect(carrier(absent).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(absent).toHaveBeenCalledTimes(2);
-    await expect(carrier(found(DELIVERED)).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2031-04-02T19:57:33.000Z' });
+    await expect(carrier(found(DELIVERED)).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2031-04-02T19:57:33.000Z', finished: true });
   });
 
   it('asks for the recipient’s details where the tracker does, and keeps a failed summary or history open', async () => {

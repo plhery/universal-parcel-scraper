@@ -196,7 +196,7 @@ describe('KEX Express Hong Kong HTTP adapter', () => {
   });
 
   it('recognizes a known number and not an unknown one', async () => {
-    await expect(carrier(answering(() => page(fixture('delivered')))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-04T00:00:00' });
+    await expect(carrier(answering(() => page(fixture('delivered')))).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-04T00:00:00', finished: true });
     await expect(carrier(answering(() => page(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('A1')).resolves.toEqual({ known: false });

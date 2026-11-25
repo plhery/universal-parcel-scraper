@@ -315,9 +315,9 @@ describe('Bangladesh Post adapter', () => {
   it('recognizes a known item and an unknown code from plain HTTP', async () => {
     const known = vi.fn<typeof fetch>().mockResolvedValue(reply(text('international-delivered.json')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(known).recognize!(INBOUND)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-09T10:31:17' });
+    await expect(carrier(known).recognize!(INBOUND)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-02-09T10:31:17', finished: true });
     await expect(carrier(domesticTrackers(() => reply(text('domestic-delivered.json')))).recognize!(DOMESTIC))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:56:55.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T09:56:55.000Z', finished: true });
     await expect(carrier(domesticTrackers(() => reply(text('domestic-not-found.json')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
   });
 

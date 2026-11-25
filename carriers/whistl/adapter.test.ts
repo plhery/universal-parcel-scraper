@@ -205,7 +205,7 @@ describe('Whistl tracking adapter', () => {
   it('recognizes a known shipment and the not-found heading, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(page('own'))).mockResolvedValueOnce(reply(page('not-found')));
     // A local clock dates the last activity without an instant.
-    await expect(carrier(fetcher).recognize!(OWN)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-18T12:43:52' });
+    await expect(carrier(fetcher).recognize!(OWN)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-06-18T12:43:52', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

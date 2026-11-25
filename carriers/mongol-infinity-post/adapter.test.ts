@@ -222,7 +222,7 @@ describe('Mongol Infinity Post HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply(fixture('customs-not-found'), { status: 404 }));
-    await expect(carrier(fetcher).recognize!(DELIVERED_ORDER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T07:42:10.115Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED_ORDER)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-04T07:42:10.115Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(CUSTOMS_UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('RR000000001MN')).resolves.toEqual({ known: false });

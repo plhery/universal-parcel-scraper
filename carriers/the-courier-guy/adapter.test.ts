@@ -218,7 +218,7 @@ describe('The Courier Guy bounded anonymous transport', () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(productPayload()));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
     await expect(instance.track({ number: 'ld000001' })).resolves.toMatchObject({ canonical_tracking_number: NUMBER });
-    await expect(instance.recognize!('LD000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T12:00:00.123Z' });
+    await expect(instance.recognize!('LD000001')).resolves.toEqual({ known: true, lastActivityAt: '2026-01-06T12:00:00.123Z', finished: true });
     for (const [url] of fetcher.mock.calls) expect(new URL(String(url)).searchParams.get('tracking_reference')).toBe('LD-000001');
     await expect(instance.recognize!('TESTA1')).resolves.toEqual({ known: false });
     await expect(instance.recognize!('LD00001')).resolves.toEqual({ known: false });

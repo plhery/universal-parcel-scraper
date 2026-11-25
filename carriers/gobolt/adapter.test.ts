@@ -215,7 +215,7 @@ describe('GoBolt HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found'), { status: 404 }))
       .mockResolvedValueOnce(reply(EXPIRED, { status: 404 }));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T18:05:41.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T18:05:41.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'history_expired' });
     await expect(carrier(fetcher).recognize!('ABC123')).resolves.toEqual({ known: false });

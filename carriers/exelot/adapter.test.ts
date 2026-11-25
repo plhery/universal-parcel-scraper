@@ -234,7 +234,7 @@ describe('Exelot HTTP adapter', () => {
 
   it('recognizes a parcel the lookup has, and not one it answers is missing or a number Exelot does not issue', async () => {
     await expect(carrier(answering(() => reply(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T10:47:21.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-03-03T10:47:21.000Z', finished: true });
     await expect(carrier(answering(() => reply(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('XLT00000001')).resolves.toEqual({ known: false });

@@ -248,7 +248,7 @@ describe('Team Worldwide HTTP adapter', () => {
 
   it('recognizes a known bill and the unknown answer, and asks nothing for a number Team does not issue', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T14:40:00' });
+    await expect(carrier(page('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T14:40:00', finished: true });
     await expect(carrier(page('not-found')).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(answering(() => reply(BLOCKED))).recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
     // A page for another bill is no answer either way.

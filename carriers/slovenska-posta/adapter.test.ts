@@ -197,7 +197,7 @@ describe('Slovenská pošta tracking adapter', () => {
   it('reads its not-found answer as a missing item, and its other error answers apart from it', async () => {
     expect(() => parseSlovenskaPosta(JSON.parse(json('not-found')), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(json('collected'))).mockResolvedValueOnce(reply(json('not-found')));
-    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T14:42:10.000Z' });
+    await expect(carrier(fetcher).recognize!(COLLECTED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-05T14:42:10.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const answer = (error: string, barcode = true) => ({ parcels: [{ ...(barcode ? { barcode: UNKNOWN } : {}), error, query: UNKNOWN }] });
     expect(() => parseSlovenskaPosta(answer('invalid_barcode', false), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));

@@ -246,7 +246,7 @@ describe('Precision Deliveries HTTP adapter', () => {
   it('recognizes a known parcel and the unknown-number answer, and asks nothing for a number Precision does not issue', async () => {
     const fetcher = precision(() => json(text('delivered')), () => json(text('not-found'), 404), () => json('{}', 500));
     const direct = carrier(fetcher);
-    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-21T02:41:20.000Z' });
+    await expect(direct.recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-01-21T02:41:20.000Z', finished: true });
     await expect(direct.recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(direct.recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(direct.recognize!('SE000000SMPL')).resolves.toEqual({ known: false });

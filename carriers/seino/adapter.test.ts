@@ -239,7 +239,7 @@ describe('Seino tracking page', () => {
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Seino does not issue', async () => {
     await expect(carrier(serving(fixture('delivered'))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: '2026-10-03T01:45:00.000Z' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-10-03T01:45:00.000Z', finished: true });
     await expect(carrier(serving(fixture('not-found'))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     const unused = vi.fn<typeof fetch>();
     await expect(carrier(unused).recognize!('123456789')).resolves.toEqual({ known: false });

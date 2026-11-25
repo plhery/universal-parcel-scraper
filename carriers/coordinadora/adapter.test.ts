@@ -186,7 +186,7 @@ describe('Coordinadora HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')))
       .mockResolvedValueOnce(reply(changed('short', (guide) => { guide.estado[0]!.fecha = null; })));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-08T21:42:05.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-08T21:42:05.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(SHORT)).resolves.toEqual({ known: false, lastActivityAt: null });
     await expect(carrier(fetcher).recognize!('1230000001')).resolves.toEqual({ known: false });

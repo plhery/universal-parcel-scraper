@@ -210,7 +210,7 @@ describe('Latvijas Pasts tracking adapter', () => {
   it('recognizes a known item and the no-information notice, from plain HTTP', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(text('abroad'))).mockResolvedValueOnce(reply(text('not-found')));
     // The newest scan's clock ranks reuse of a number.
-    await expect(carrier(fetcher).recognize!(ABROAD)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-20T15:05:00.000Z' });
+    await expect(carrier(fetcher).recognize!(ABROAD)).resolves.toEqual({ known: true, lastActivityAt: '2026-02-20T15:05:00.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(ABSENT)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });

@@ -192,7 +192,7 @@ describe('Serpost tracking adapter', () => {
   it('recognizes a known item and an unknown code from plain HTTP', async () => {
     const replies = [text('delivered.json'), text('not-found.json'), text('in-transit.json')];
     const fetcher = site(() => reply(replies.shift()!));
-    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T20:41:09.000Z' });
+    await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-03-12T20:41:09.000Z', finished: true });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!(IN_TRANSIT)).resolves.toMatchObject({ known: true });
     expect(fetcher).toHaveBeenCalledTimes(6);

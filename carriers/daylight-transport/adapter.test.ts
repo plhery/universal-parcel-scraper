@@ -268,7 +268,7 @@ describe('Daylight Transport HTTP adapter', () => {
 
   it('recognizes a known probill and the unknown answer, and asks nothing for a number Daylight does not issue', async () => {
     // A local clock dates the last activity without an instant.
-    await expect(carrier(shipment('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T10:41:00' });
+    await expect(carrier(shipment('delivered')).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-12T10:41:00', finished: true });
     await expect(carrier(missing()).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(replies(() => reply(CHALLENGE, { headers: { 'Content-Type': 'text/html' } }), () => reply(fixture('not-found.history'))))
       .recognize!(UNKNOWN)).rejects.toMatchObject({ kind: 'challenge' });
