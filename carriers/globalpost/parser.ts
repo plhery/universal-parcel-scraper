@@ -299,6 +299,15 @@ function finalMile(container: Cheerio<Element>, number: string): Pick<CarrierRes
 }
 
 /**
+ * GlobalPost's facility taking in a parcel its partner already carried there, as USPS's scans relayed as
+ * "In Transit" on the way, is no step back: that arrival reads in transit. Scans are newest first.
+ */
+function lateAcceptance(events: CarrierEvent[]): CarrierEvent[] {
+  return events.map((event, index) => event.stage === 'accepted' && events.slice(index + 1).some((older) => older.stage === 'in_transit')
+    ? { ...event, stage: 'in_transit' } : event);
+}
+
+/**
  * GlobalPost's tracking page for one number, `/track-detail/?t={number}`, which
  * the site renders on its server: the newest status, the route's towns, the
  * GlobalPost number as asked, the final-mile carrier and its number, the
@@ -327,7 +336,7 @@ export function parseGlobalpost(html: string, raw: string): CarrierResult {
   const from = routeField($, container, 'From:');
   // GlobalPost's numbers end with the origin's code; the older ones are read by the route's.
   const origin = number.startsWith('SDC') ? placeOfRoute(from)?.country : number.slice(-2);
-  const events = dated(returnsHome(scans($, container), from, to), origin === 'US');
+  const events = lateAcceptance(dated(returnsHome(scans($, container), from, to), origin === 'US'));
   if (!events.length) throw new NoHistoryError(PROVIDER);
   const newest = events[0]!;
   // A registration listed after the parcel moved is no step back.

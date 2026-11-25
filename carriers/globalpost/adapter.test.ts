@@ -111,7 +111,7 @@ describe('GlobalPost HTTP adapter', () => {
       ['2026-06-02T06:49:00', 'Arrived at Partner Facility', 'ISC SAMPLE IL (USPS', 'in_transit'],
       ['2026-06-02T06:49:00', 'In Customs', null, 'customs'],
       // A facility's place loses the cut-off ZIP code after it; written as Asendia's are, it keeps its wall clock.
-      ['2026-06-01T10:56:00', 'Arrived at GlobalPost Facility', 'Sampleburg, IL', 'accepted'],
+      ['2026-06-01T10:56:00', 'Arrived at GlobalPost Facility', 'Sampleburg, IL', 'in_transit'],
       ['2026-05-31T21:22:00', 'In-Transit', null, 'in_transit'],
       ['2026-05-30T10:39:00', 'In Transit', 'SAMPLE STREAM,IL', 'in_transit'],
       ['2026-05-29T08:33:00', 'Departed Partner Facility', 'SAMPLE IL DISTRIBUT', 'in_transit'],
@@ -172,9 +172,12 @@ describe('GlobalPost HTTP adapter', () => {
       last_update: '2026-06-01T10:56:00-05:00', last_update_local: undefined });
     expect(read(asOf(fixture('delivered'), 'Feb 27, 2026'), DELIVERED)).toEqual({ current_stage: 'in_transit', last_status_text: 'Departed GlobalPost Facility',
       last_update: '2026-02-27T00:05:00-08:00', last_update_local: undefined });
-    // GlobalPost's own row in transit, without a place, and a facility Asendia runs.
-    expect(read(asOf(illinois(), 'May 31, 2026'), IN_TRANSIT)).toMatchObject({ last_update: null, last_update_local: '2026-05-31T21:22:00' });
-    expect(read(asOf(illinois(), 'Jun 1, 2026'), IN_TRANSIT)).toMatchObject({ current_stage: 'accepted', last_update: null, last_update_local: '2026-06-01T10:56:00' });
+    // GlobalPost's own row in transit, without a place, and a facility Asendia runs, which takes the parcel in
+    // after that row: no step back to its acceptance.
+    expect(read(asOf(illinois(), 'May 31, 2026'), IN_TRANSIT)).toMatchObject({ current_stage: 'in_transit', last_update: null,
+      last_update_local: '2026-05-31T21:22:00' });
+    expect(read(asOf(illinois(), 'Jun 1, 2026'), IN_TRANSIT)).toMatchObject({ current_stage: 'in_transit', last_update: null,
+      last_update_local: '2026-06-01T10:56:00' });
   });
 
   it('keeps the wall clocks of scans whose place does not settle a zone', () => {
