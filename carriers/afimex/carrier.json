@@ -17,18 +17,57 @@
   "timezone": "America/Monterrey",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "afimex",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://afimex.net/rastrea-envio",
     "helpUrl": "https://afimex.net/contacto",
     "canaryUrl": "https://afimex.net/rastrea-envio",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "scan_times",
+      "progress_rail",
+      "origin",
+      "destination",
+      "courier_name",
+      "recipient_name",
+      "signature",
+      "remarks",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "scan_times"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "courier_name",
+      "recipient_name",
+      "signature",
+      "remarks",
+      "coordinates"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "service_name"
+    ]
   },
   "links": [],
   "detection": []

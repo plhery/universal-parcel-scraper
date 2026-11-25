@@ -1,4 +1,13 @@
 {
   "carrier": "afimex",
-  "entries": []
+  "entries": [
+    {"wording": "VENDIDA", "stage": "registered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The guide was sold at an Afimex office, months before the parcel was handed over: a prepaid label, not yet a parcel in Afimex's hands."},
+    {"wording": "DOCUMENTADA", "stage": "accepted", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The origin office documented the parcel under the guide."},
+    {"wording": "EMBARCADA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Loaded on a truck of a route between offices and hubs."},
+    {"wording": "TRANSBORDADA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Moved from one route's truck to another at a hub."},
+    {"wording": "DESEMBARCADA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Unloaded at the destination office."},
+    {"wording": "LISTO PARA ENTREGAR", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "Ready for delivery at the destination office, before a courier takes it out."},
+    {"wording": "EN RUTA", "stage": "out_for_delivery", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25", "note": "The page names the courier with this scan: the parcel is on a delivery round."},
+    {"wording": "ENTREGADA", "stage": "delivered", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-25"}
+  ]
 }

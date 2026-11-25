@@ -1,5 +1,26 @@
 {
   "carrier": "afimex",
-  "gap": "No public page shows a whole Afimex guide.",
-  "records": []
+  "records": [
+    {
+      "number": "98805739",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://afimex.net/img/HOME/img-rastreo.webp",
+        "date": "2026-11-25",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Tracking code on the label the help of Afimex's tracking page (https://afimex.net/rastrea-envio) shows",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["mondial-relay", "colisweb", "heppner"]
+      },
+      "note": "The label in the help of Afimex's tracking page prints it as the tracking code, after the second hyphen of the label's guide. The tracker answers it with a parcel documented at Matamoros and delivered at Ciudad Victoria."
+    }
+  ]
 }

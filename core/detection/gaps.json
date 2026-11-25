@@ -119,6 +119,12 @@
     "reason": "AEX guías of the A series fall inside Allegro One's high-confidence A0 shape, and nothing else in the number names AEX."
   },
   {
+    "carrier": "afimex",
+    "pattern": "^\\d{8}$",
+    "kind": "by_design",
+    "reason": "Afimex tracking codes are eight bare digits with no known check, a length many carriers share, so nothing in the number points to Afimex."
+  },
+  {
     "carrier": "air-europa-cargo",
     "pattern": "^996/?\\d{8}$",
     "kind": "open",

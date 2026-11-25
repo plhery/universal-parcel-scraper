@@ -119,6 +119,7 @@ import { statusMap as abCourier } from '../../carriers/ab-courier/status.js';
 import { statusMap as abfFreight } from '../../carriers/abf-freight/status.js';
 import { statusMap as aciExpressKr } from '../../carriers/aci-express-kr/status.js';
 import { statusMap as acsCourier } from '../../carriers/acs-courier/status.js';
+import { statusMap as afimex } from '../../carriers/afimex/status.js';
 import { statusMap as aexParaguay } from '../../carriers/aex-paraguay/status.js';
 import { statusMap as aitWorldwide } from '../../carriers/ait-worldwide/status.js';
 import { statusMap as airpakExpress } from '../../carriers/airpak-express/status.js';
@@ -1230,7 +1231,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'qatar-post': qatarPost, qlgj, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, pasarex, 'russian-post': russianPost, 'surat-kargo': suratKargo,
   '17feia': seventeenFeia, '2go': twoGo, '4-72': fourSeventyTwo, '4sides': fourSides, '5post': fivePost, '99minutos': ninetynineMinutos,
   'aaa-cooper': aaaCooper, 'a-duie-pyle': aDuiePyle, 'a-tu-hora-express': aTuHoraExpress, 'a1-post': a1Post, 'ab-courier': abCourier, 'abf-freight': abfFreight, 'aci-express-kr': aciExpressKr,
-  'acs-courier': acsCourier, 'aex-paraguay': aexParaguay, 'airpak-express': airpakExpress, airroad, 'latam-cargo': latamCargo, 'ait-worldwide': aitWorldwide, ajex,
+  'acs-courier': acsCourier, 'aex-paraguay': aexParaguay, afimex, 'airpak-express': airpakExpress, airroad, 'latam-cargo': latamCargo, 'ait-worldwide': aitWorldwide, ajex,
   'algerie-poste': algeriePoste, aliexpress, 'allegro-one': allegroOne, alphastline, 'am-home-delivery': amHomeDelivery, 'amazon-shipping': amazonShipping, 'american-west-express': americanWestExpress, 'custom-companies': customCompanies, amerijet, ampm, 'an-post': anPost, 'anc-delivers': ancDelivers,
   andreani, anjun, anousith, anserx, anteraja, 'apc-overnight': apcOvernight, 'apc-postal-logistics': apcPostalLogistics,
   'apple-express': appleExpress, 'aqx-logistics': aqxLogistics, aquiline, aramex, 'aramex-au': aramexAu,
