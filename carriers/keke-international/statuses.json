@@ -1,0 +1,18 @@
+{
+  "carrier": "keke-international",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The line's order row (`IR`)."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The line's Yiwu facility takes the parcel in (`AF`)."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's Yiwu facility dispatches the parcel (`DF`)."},
+    {"wording": "Electronic billing transfer", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "Team Global Express's record of the order, made a day after the line's facility dispatched the parcel: no scan of it, so it moves nothing."},
+    {"wording": "Shipment created", "language": "en", "unmapped": true, "confirmedBy": "live", "note": "Team Global Express's category beside its order record: no scan of the parcel, so it moves nothing."},
+    {"wording": "Linehaul to destination depot: overnight", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Team Global Express's scan, copied."},
+    {"wording": "Into depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Team Global Express's scan, copied."},
+    {"wording": "Depot scan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Team Global Express's scan, copied."},
+    {"wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Team Global Express's category beside a depot scan, copied; dropped when its scan is there."},
+    {"wording": "On for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Team Global Express's courier round, copied."},
+    {"wording": "Out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Team Global Express's category beside its courier round, copied; dropped when its scan is there."},
+    {"wording": "Successful delivery", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Team Global Express's delivery, copied."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Team Global Express's category beside its delivery, copied; dropped when its scan is there."}
+  ]
+}

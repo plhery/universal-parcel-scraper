@@ -1,0 +1,41 @@
+{
+  "carrier": "keke-international",
+  "records": [
+    {
+      "number": "816009764533",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260719033945/https://www.parcelpanel.com/couriers/keke-international/",
+        "date": "2026-07-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "The example tracking number a tracking directory's Keke International page shows. Keke International's tracker answers it with a parcel sent from Yiwu and delivered in Australia by Team Global Express, whose number it is: Team Global Express's own tracker holds it with the same scans, and the line's own waybill is KK and eight digits."
+    }
+  ]
+}

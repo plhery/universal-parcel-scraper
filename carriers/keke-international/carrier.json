@@ -1,0 +1,83 @@
+{
+  "id": "keke-international",
+  "displayName": "Keke International",
+  "aliases": [
+    "科科国际",
+    "科科国际物流",
+    "浙江科科国际物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#c9151e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "keke-international",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "canonical_tracking_number",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "canonical_tracking_number",
+      "delivery_tracking_number",
+      "customer_reference",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "canonical_tracking_number",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference",
+      "signatory",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "delivery_partner"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "ywkk.rtb56.com"
+      ],
+      "pathPattern": "^/track_query\\.aspx$",
+      "params": [
+        "track_number"
+      ]
+    }
+  ],
+  "detection": []
+}
