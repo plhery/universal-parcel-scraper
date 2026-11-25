@@ -1,8 +1,8 @@
 # Shilianxin
 
 Tracks shipments of Shilianxin (世联鑫, 深圳市世联鑫国际物流有限公司), a Shenzhen cross-border
-forwarder whose site is slxexp.com and whose US line hands parcels to USPS, on its own tenant of the
-Hualei (华磊) forwarder platform. The client is shared with [GZYL](../gzyl/README.md), whose README
+forwarder whose site is slxexp.com, whose US line hands parcels to USPS and whose UK line
+(GB皇邮专线) to Royal Mail, on its own tenant of the Hualei (华磊) forwarder platform. The client is shared with [GZYL](../gzyl/README.md), whose README
 describes the platform; this carrier keeps its host, its clocks and its status map.
 
 Its logo reads SLX, as does the Korean forwarder [SLX](../slx-kr/README.md), a different company:
@@ -26,12 +26,20 @@ is needed.
   in English. These rows are on the platform's Beijing clock.
 - The rows the tracker copies from USPS are in English alone and keep the facility's wall clock,
   one at midnight its day alone. Places lose their ZIP code.
+- Royal Mail's copies are in English alone too, but on the platform's clock: each was written
+  within the hour after its clock read on Beijing's, while a USPS copy was written thirteen hours or
+  more after it and a UK wall clock would be written seven hours or more after it. A copy written
+  within six hours of its clock is read on Beijing's.
+- On the Royal Mail line, the rows from the warehouse's dispatch to the import clearance, airport
+  rows included, are coded `CO_C_CR`: the platform's custom track product writes them, so they are
+  planned steps rather than scans (see [GZYL](../gzyl/README.md)). The map still stages them.
 - The record's product name is the service name and its destination the destination country.
 
 ## Limitations
 
-The record does not give USPS's number, so the parcel is not handed to USPS. USPS's rows keep their
-wall clock without an instant. No delivery estimate or weight.
+The record gives neither USPS's nor Royal Mail's number, so the parcel is not handed to either.
+USPS's rows keep their wall clock without an instant. On the page, which shows no creation times,
+Royal Mail's copies are read as wall clocks. No delivery estimate or weight.
 
 ## Numbers
 

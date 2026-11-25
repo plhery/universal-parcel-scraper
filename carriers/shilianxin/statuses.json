@@ -13,7 +13,9 @@
     {"wording": "The flight is waiting to take off", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages."},
     {"wording": "Flight Departed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages: the flight leaves China."},
     {"wording": "Flight arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages, placed in the United States."},
-    {"wording": "Destination country customs clearance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages: import clearance in the United States."},
+    {"wording": "Destination country customs clearance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages: import clearance in the United States, or in the United Kingdom on the Royal Mail line."},
+    {"wording": "Destination airport sorting and unpacking in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The English half of a row worded in both languages, placed in the United Kingdom: the Royal Mail line's freight broken down at the arrival airport."},
+    {"wording": "Destination airport dismantling completed, awaiting customs clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "The English half of a row worded in both languages, placed in the United Kingdom: the freight is unloaded and waits for import clearance."},
     {"wording": "Pre-Shipment, USPS Awaiting Item", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "USPS's label row, copied with its day alone: USPS has the label's data, not the parcel."},
     {"wording": "Shipping Label Created, USPS Awaiting Item", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "USPS's label row, copied at New York's induction office while the parcel is still in China."},
     {"wording": "Accepted at USPS Origin Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's first scan, copied: USPS takes the parcel over from the line, which accepted it in China days before."},
@@ -23,7 +25,9 @@
     {"wording": "Departed USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
     {"wording": "Arrived at USPS Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
     {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "USPS's scan, copied."},
-    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied."},
-    {"wording": "Delivered, Front Door/Porch", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."}
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "USPS's scan, copied, and Royal Mail's on the Royal Mail line."},
+    {"wording": "Delivered, Front Door/Porch", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "USPS's delivery, copied."},
+    {"wording": "Shipment Received in Depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Royal Mail's scan at a parcel hub or mail centre, copied on the Royal Mail line."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Royal Mail's delivery by the delivery office, copied on the Royal Mail line."}
   ]
 }

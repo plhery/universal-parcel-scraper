@@ -19,14 +19,27 @@ export function splitShilianxinRow(content: string, location: string): { content
   return english === content ? splitKunExpressRow(content, location) : { content: english, location };
 }
 
+// Read on Beijing's clock, a USPS copy on its wall clock was written thirteen hours or more after
+// it, and a copy on the United Kingdom's would be written seven hours or more after it. Royal Mail's
+// copies on the Royal Mail line were written within the hour: the tracker dates them on its own clock.
+const PLATFORM_COPY_MS = 6 * 3_600_000;
+const onBeijing = (clock: string | undefined): number => Date.parse(`${(clock ?? '').trim().replace(' ', 'T')}+08:00`);
+
+/** Whether a row was written within hours after its own clock, read on Beijing's. */
+function writtenSoonAfter({ clock, written }: HualeiRow): boolean {
+  const lag = onBeijing(written) - onBeijing(clock);
+  return lag >= 0 && lag <= PLATFORM_COPY_MS;
+}
+
 /**
  * The forwarder words its own rows in Chinese, alone or before their English, on the platform's
  * Beijing clock, to the minute or the second. The rows it copies from USPS are in English alone and
- * keep the facility's wall clock; one at midnight carries only its day.
+ * keep the facility's wall clock; one at midnight carries only its day. Royal Mail's copies, written
+ * as they come, are on the platform's clock.
  */
-export function shilianxinClock({ content, clock }: HualeiRow): 'platform' | 'wall' | 'day' {
-  if (HAN.test(content)) return 'platform';
-  return clock.endsWith(' 00:00:00') ? 'day' : 'wall';
+export function shilianxinClock(row: HualeiRow): 'platform' | 'wall' | 'day' {
+  if (HAN.test(row.content) || writtenSoonAfter(row)) return 'platform';
+  return row.clock.endsWith(' 00:00:00') ? 'day' : 'wall';
 }
 
 /**

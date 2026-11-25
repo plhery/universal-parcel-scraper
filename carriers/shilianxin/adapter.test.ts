@@ -9,8 +9,9 @@ import { parseShilianxinPage, parseShilianxinTrack, SHILIANXIN_ORIGIN, splitShil
 import { statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
-// The public sample from a tracking directory's Shilianxin page, and an invented number.
+// The public samples from a tracking directory's Shilianxin page, of the US and the Royal Mail lines, and an invented number.
 const NUMBER = 'SLX200119352CN';
+const NUMBER_GB = 'SLX200058555GB';
 const UNKNOWN = 'SLX000000000CN';
 // The lookup's moment, after the fixture's newest row.
 const READ_AT = Date.parse('2026-11-25T00:00:00Z');
@@ -64,6 +65,31 @@ describe('Shilianxin tracking adapter', () => {
     expect(events.at(-1)).toMatchObject({ time: '2025-06-10T19:35:02+08:00', description: 'Shipment information received', stage: 'registered' });
     expect(JSON.stringify(result)).not.toMatch(/；|00000/);
     expect(result.planned_events ?? []).toEqual([]);
+  });
+
+  it('reads the Royal Mail line: its custom track as planned steps, and Royal Mail’s copies on the platform’s clock', () => {
+    const result = parseShilianxinTrack(fixture('delivered-gb'), NUMBER_GB, READ_AT)!;
+    expect(result).toMatchObject({
+      status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'Delivered', last_update: '2026-07-28T19:06:43+08:00', service_name: 'GB皇邮专线-F', destination_country: 'GB',
+    });
+    // Royal Mail's copies, written within the hour of their clock read on Beijing's, are on the platform's clock.
+    expect(result.events!.map(({ time, description, stage, stage_source: source }) => [time, description, stage, source])).toEqual([
+      ['2026-07-28T19:06:43+08:00', 'Delivered', 'delivered', 'carrier_map'],
+      ['2026-07-28T15:37:55+08:00', 'Out for Delivery', 'out_for_delivery', 'carrier_map'],
+      ['2026-07-28T12:44:44+08:00', 'Shipment Received in Depot', 'in_transit', 'carrier_map'],
+      ['2026-07-27T09:10:00+08:00', 'Shipment Received in Depot', 'in_transit', 'carrier_map'],
+      ['2026-07-17T10:25:17+08:00', 'Arrived at the receiving point', 'accepted', 'carrier_map'],
+      ['2026-07-15T18:05:37+08:00', 'Shipment information received', 'registered', 'carrier_map'],
+    ]);
+    // The line's rows from the warehouse to the import clearance come from the platform's custom track product.
+    const planned = result.planned_events!;
+    expect(planned).toHaveLength(13);
+    expect(planned.slice(-3).map(({ description, stage }) => [description, stage])).toEqual([
+      ['Destination airport sorting and unpacking in progress', 'in_transit'],
+      ['Destination airport dismantling completed, awaiting customs clearance', 'customs'],
+      ['Destination country customs clearance', 'in_transit'],
+    ]);
   });
 
   it('keeps the English half of a row worded in both languages', () => {
