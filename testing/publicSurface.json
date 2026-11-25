@@ -342,6 +342,7 @@
       "relayedWordingStage",
       "resultTimezone",
       "sameInstantIdentityPolicy",
+      "scopedWordingStage",
       "statusMapAnswer",
       "trackingLocationCountry",
       "trackingPlace",
@@ -355,7 +356,8 @@
       "SameInstantScan",
       "StatusMapAnswer",
       "TrackedParcel",
-      "TrackingPlace"
+      "TrackingPlace",
+      "WordingScope"
     ]
   },
   "./places": {
