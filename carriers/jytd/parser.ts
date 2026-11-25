@@ -1,7 +1,7 @@
 import type { CarrierResult } from '../../core/result/index.js';
 import { airportTimeZone } from '../../places/index.js';
 import { countryZones } from '../../places/zones.js';
-import { parseHualeiPage, parseHualeiTrack, type HualeiRow, type HualeiTenant } from '../gzyl/hualei.js';
+import { hualeiLostToGbk, parseHualeiPage, parseHualeiTrack, type HualeiRow, type HualeiTenant } from '../gzyl/hualei.js';
 import { isJytdNotice, jytdStage } from './status.js';
 
 export const PROVIDER = 'Jieyi Tongda';
@@ -16,13 +16,14 @@ const HOME_ZONES = new Set([...countryZones('CN'), ...countryZones('HK')]);
 
 /**
  * A row's wording and place. The interface replies in GBK, which cannot hold Hebrew: a row Israel
- * Post words in Hebrew arrives as question marks alone and goes. Israel Post's places lose the code
- * in brackets after them, and its eCommerce System is no place.
+ * Post words in Hebrew arrives as question marks, which the tracking page puts right. A wording the
+ * page cannot put right goes with its row, and such a place goes alone. Israel Post's places lose
+ * the code in brackets after them, and its eCommerce System is no place.
  */
 export function splitJytdRow(content: string, location: string): { content: string; location: string } {
-  if (content.includes('?') && !/[\p{L}\p{N}]/u.test(content)) return { content: '', location: '' };
+  if (hualeiLostToGbk(content)) return { content: '', location: '' };
   const place = location.trim().replace(UNIT, '').trim();
-  return { content, location: SYSTEM.test(place) ? '' : place };
+  return { content, location: SYSTEM.test(place) || hualeiLostToGbk(place) ? '' : place };
 }
 
 /** A place in mainland China or Hong Kong: its country's code, or an airport there named by its code alone ("HKG"). */
@@ -53,8 +54,8 @@ export const JYTD: HualeiTenant = {
   notice: (_code, wording) => isJytdNotice(wording),
 };
 
-/** The track interface's reply, or null when it holds no row for the number. */
-export const parseJytdTrack = (payload: unknown, number: string, readAt?: number): CarrierResult | null =>
-  parseHualeiTrack(payload, number, JYTD, readAt);
+/** The track interface's reply, its rows lost to GBK taken from the tracking page when given, or null when it holds no row for the number. */
+export const parseJytdTrack = (payload: unknown, number: string, readAt?: number, page?: string): CarrierResult | null =>
+  parseHualeiTrack(payload, number, JYTD, readAt, page);
 export const parseJytdPage = (html: string, number: string, readAt?: number): CarrierResult =>
   parseHualeiPage(html, number, JYTD, readAt);

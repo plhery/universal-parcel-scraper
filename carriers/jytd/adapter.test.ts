@@ -31,16 +31,56 @@ describe('Jieyi Tongda numbers', () => {
 });
 
 describe('Jieyi Tongda tracking adapter', () => {
-  it('asks its own Hualei tracker for the whole number over plain HTTP', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(json(fixture('delivered')));
-    await expect(new JytdTracker({ fetcher, recorder: NOOP_RECORDER }).fetch(` ${NUMBER} `))
-      .resolves.toMatchObject({ current_stage: 'delivered', destination_country: 'IL' });
+  it('asks its own Hualei tracker for the whole number over plain HTTP, and its page for the rows the interface lost to GBK', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('delivered'))).mockResolvedValueOnce(html(page('page-delivered')));
+    const result = await new JytdTracker({ fetcher, recorder: NOOP_RECORDER }).fetch(` ${NUMBER} `);
+    expect(result).toMatchObject({ current_stage: 'delivered', destination_country: 'IL' });
+    expect(result.events!.map(({ description }) => description)).toContain('יציאה');
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe(`${JYTD_ORIGIN}/selectTrack.htm?documentCode=${NUMBER}`);
     expect(JYTD_ORIGIN).toBe('http://123.207.50.250:8082');
     expect(init).toMatchObject({ method: 'GET', signal: expect.any(AbortSignal) });
-    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(fetcher.mock.calls[1]![0]).toEqual(new URL(`${JYTD_ORIGIN}/trackIndex.htm`));
+    expect(fetcher.mock.calls[1]![1]).toMatchObject({ method: 'POST', body: new URLSearchParams({ documentCode: NUMBER }) });
+    expect(fetcher).toHaveBeenCalledTimes(2);
     expect(adapter(environment(fetcher))).toMatchObject({ id: 'jytd', recordsSteps: true, steps: ['direct', 'retry'] });
+  });
+
+  it('takes Israel Post’s Hebrew rows from the tracking page, keeping the interface’s codes and clocks', () => {
+    const result = parseJytdTrack(fixture('delivered'), NUMBER, READ_AT, page('page-delivered'))!;
+    expect(result).toMatchObject({ current_stage: 'delivered', last_status_text: 'Final delivery', service_name: '以色列敏感', destination_country: 'IL' });
+    const events = result.events!;
+    expect(events).toHaveLength(21);
+    expect(events.some(({ description }) => description?.includes('?'))).toBe(false);
+    expect(events.slice(2, 5).map(({ local_time: local, location, description, stage, time }) => [local, location, description, stage, time])).toEqual([
+      ['2026-07-29T09:52:43', 'Qiryat Ono Postman Unit', 'Item received at delivery unit', 'in_transit', undefined],
+      ['2026-07-29T09:42:43', 'Qiryat Ono Postman Unit', 'החזרה למ"ר - ד.ד.ג', 'in_transit', undefined],
+      ['2026-07-29T09:42:43', 'Qiryat Ono Postman Unit', 'יציאה', 'in_transit', undefined],
+    ]);
+    expect(events.find(({ description }) => description === 'יציאה')).toMatchObject({ stage_source: 'carrier_map', written_at: '2026-07-29T18:53:55+08:00' });
+    // The warehouse's rows keep their kind codes, and so Beijing's clock, which the page alone does not show.
+    expect(events.find(({ provider_code: code }) => code === 'SHIPMENT')).toMatchObject({ time: '2026-07-17T15:31:51+08:00', location: 'SHENZHEN' });
+    expect(JSON.stringify(result)).not.toContain('Synthetic Recipient');
+    expect(JSON.stringify(parseJytdPage(page('page-delivered'), NUMBER, READ_AT))).not.toContain('Synthetic Recipient');
+  });
+
+  it('drops the rows lost to GBK as before when the page cannot be read or does not show the number', async () => {
+    expect(parseJytdTrack(fixture('delivered'), NUMBER, READ_AT, page('page-unknown'))!.events).toHaveLength(19);
+    expect(parseJytdTrack(fixture('delivered'), NUMBER, READ_AT, page('page-delivered').replaceAll(NUMBER, UNKNOWN))!.events).toHaveLength(19);
+    for (const reply of [html('', 500), html('<html><head><title>验证码</title></head><body>aliyun_waf</body></html>'), html(page('page-unknown'))]) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('delivered'))).mockResolvedValueOnce(reply);
+      const result = await adapter(environment(fetcher)).track({ number: NUMBER });
+      expect(result).toMatchObject({ current_stage: 'delivered' });
+      expect(result.events).toHaveLength(19);
+      expect(result.events!.some(({ description }) => description?.includes('?'))).toBe(false);
+    }
+    const aborted = new AbortController();
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('delivered'))).mockImplementationOnce(async () => {
+      aborted.abort();
+      throw new DOMException('aborted', 'AbortError');
+    });
+    // A lookup whose signal ends while the page is read stops, rather than answering without the page.
+    await expect(adapter(environment(fetcher)).track({ number: NUMBER }, { signal: aborted.signal })).rejects.toThrow();
   });
 
   it('keeps Israel Post’s copied scans on their wall clocks and the line’s rows in China and Hong Kong on Beijing’s', () => {
@@ -54,7 +94,7 @@ describe('Jieyi Tongda tracking adapter', () => {
     expect(result).not.toHaveProperty('delivery_tracking_number');
     expect(result.canonical_tracking_number).toBeUndefined();
     const events = result.events!;
-    // The two rows Israel Post words in Hebrew arrive as question marks alone and go.
+    // The two rows Israel Post words in Hebrew arrive as question marks alone and, without the page, go.
     expect(events).toHaveLength(19);
     expect(events.some(({ description }) => description?.includes('?'))).toBe(false);
     expect(events.slice(0, 4).map(({ local_time: local, location, description, stage, time }) => [local, location, description, stage, time])).toEqual([
@@ -93,6 +133,7 @@ describe('Jieyi Tongda tracking adapter', () => {
 
   it('drops a row lost to GBK and Israel Post’s unit codes, and reads a row’s clock by its kind code and place', () => {
     expect(splitJytdRow('?????', 'Qiryat Ono Postman Unit()')).toEqual({ content: '', location: '' });
+    expect(splitJytdRow('Item received at delivery unit', '????? ???()')).toEqual({ content: 'Item received at delivery unit', location: '' });
     expect(splitJytdRow('Final delivery', 'Savyon()')).toEqual({ content: 'Final delivery', location: 'Savyon' });
     expect(splitJytdRow('Cargo manifest received', 'eCommerce System(5C-852)')).toEqual({ content: 'Cargo manifest received', location: '' });
     expect(splitJytdRow('Landed in Israel', 'TLV Airport(*CKS-0271)')).toEqual({ content: 'Landed in Israel', location: 'TLV Airport' });

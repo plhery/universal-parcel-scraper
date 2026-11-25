@@ -18,6 +18,8 @@
     {"wording": "Sorted to delivery point (after Customs)", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Sorted to its delivery unit once customs has cleared it."},
     {"wording": "Parcel cleared", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Israel's customs clear the parcel, so it goes on in transit."},
     {"wording": "Item received at delivery unit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "An Israel Post delivery unit receives the parcel."},
+    {"wording": "יציאה", "language": "he", "stage": "in_transit", "confirmedBy": "live", "note": "'Departure', at an Israel Post postman unit, on the tracking page. In the sample the same unit receives the parcel again ten minutes later and another unit delivers it, so it reads as a move, not as out for delivery."},
+    {"wording": "החזרה למ\"ר - ד.ד.ג", "language": "he", "stage": "in_transit", "confirmedBy": "live", "note": "'Return', at an Israel Post postman unit in the same second as its departure, on the tracking page. In the sample the same unit receives the parcel again ten minutes later and another unit delivers it, so the return stays inside Israel Post's network, not to the sender."},
     {"wording": "Final delivery", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Israel Post's delivery."}
   ]
 }

@@ -132,6 +132,12 @@ instead.
   can arrive as `?`; scan text reads it as the space it was, and a row stored with the `?` is taken
   over by the same row with the space. GBK has no ô, ç or î either: in the French words a
   destination post's rows use ("bient?t", "re?u", "dép?t", "bo?te") scan text puts the letter back.
+- GBK has no room for some scripts either: a partner's row in Hebrew arrives with each letter a
+  `?`. When a row's wording or place is only question marks, spaces and punctuation, the adapter
+  posts the number to the tracking page, which is UTF-8, and takes that wording and place from the
+  page's row on the same clock that reads the same where the interface has no `?`. The row keeps
+  the interface's kind code and creation time. Without a page that shows the number as one
+  shipment, the row stays as it came.
 - A partner's row can come with its markup, escaped or not, such as DHL's help link; scan text
   keeps the words without it.
 

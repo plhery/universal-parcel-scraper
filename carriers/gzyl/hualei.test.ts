@@ -494,6 +494,29 @@ describe('Hualei tracker', () => {
     expect(paged).toHaveBeenCalledTimes(2);
   });
 
+  it('takes a row whose wording or place GBK lost from the page, and leaves it as it came when the page does not show it whole', async () => {
+    // A partner's Hebrew row: GBK holds none of its letters.
+    const lost = edited((record) => record.trackDetails.unshift({ ...row('2026-03-06 09:00:00', '????? ??"?', '?? ????'), track_kind: 'IL' }));
+    const shown = page('page').replace('<table style="table-layout:fixed;display: inline-table;">', `$&
+                        <tr><td>2026-03-06 09:00:00</td><td>תל אביב</td><td>החזרה למ"ר</td></tr>`);
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(lost)).mockResolvedValueOnce(html(shown));
+    await expect(tracker(fetcher).fetch(NUMBER)).resolves.toMatchObject({ events: expect.arrayContaining([
+      expect.objectContaining({ description: 'החזרה למ"ר', location: 'תל אביב', provider_code: 'IL', time: '2026-03-06T09:00:00+08:00' }),
+    ]) });
+    expect(fetcher.mock.calls[1]![1]).toMatchObject({ method: 'POST', body: new URLSearchParams({ documentCode: NUMBER }) });
+    // A page that shows the number as no one shipment, or the row on another clock or of another length, puts nothing right.
+    const kept = (html: string) => parseHualeiTrack(lost, NUMBER, GZYL, READ_AT, html)!.events![0];
+    expect(kept(shown.replaceAll(NUMBER, 'GZTEST00000009'))).toMatchObject({ description: '????? ??"?', location: '?? ????' });
+    expect(kept(shown.replace('2026-03-06 09:00:00', '2026-03-06 09:00:01'))).toMatchObject({ description: '????? ??"?' });
+    expect(kept(shown.replace('החזרה למ"ר', 'החזרה'))).toMatchObject({ description: '????? ??"?' });
+    // Nor does a page that cannot be read, and a reply that lost nothing asks for none.
+    const failed = vi.fn<typeof fetch>().mockResolvedValueOnce(json(lost)).mockResolvedValueOnce(html('', 500));
+    await expect(tracker(failed).fetch(NUMBER)).resolves.toMatchObject({ events: expect.arrayContaining([expect.objectContaining({ description: '????? ??"?' })]) });
+    const whole = vi.fn<typeof fetch>().mockResolvedValue(json(fixture('track')));
+    await tracker(whole).fetch(NUMBER);
+    expect(whole).toHaveBeenCalledTimes(1);
+  });
+
   it('asks the page with the form’s field when the interface has no row', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('no-track'))).mockResolvedValueOnce(html(page('page-unknown')));
     await expect(tracker(fetcher).fetch('notfound000001', { budgetMs: 5000 })).rejects.toMatchObject({ kind: 'not_found' });

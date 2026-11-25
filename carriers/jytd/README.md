@@ -10,8 +10,9 @@ clocks and its status map.
 
 1. `direct`: one GET to `selectTrack.htm?documentCode=<number>` on the tracker at
    `123.207.50.250:8082`, where the site's tracking form, login and price links point, then, when
-   the interface holds no row for the number, one POST of the same `documentCode` to the tracking
-   page `trackIndex.htm`, which settles not-found ([hualei.ts](../gzyl/hualei.ts)).
+   the interface holds no row for the number or lost a row's Hebrew, one POST of the same
+   `documentCode` to the tracking page `trackIndex.htm`, which settles not-found or gives the
+   Hebrew ([hualei.ts](../gzyl/hualei.ts)).
 2. `retry`: the same read once more after a request fails to reach the tracker or hangs.
 
 The tracker answers plain HTTP only, on a bare address. No account, key, cookie, CAPTCHA or browser
@@ -26,7 +27,9 @@ is needed.
   is Hong Kong's too. Rows placed abroad, Israel Post's copies and the landing at Tel Aviv, keep their
   wall clock: on Beijing's clock the postman units would receive the parcel before dawn in Israel.
 - The interface replies in GBK, which cannot hold Hebrew: a row Israel Post words in Hebrew arrives
-  as question marks alone and is dropped. The tracking page shows those rows in Hebrew.
+  as question marks alone. The adapter then reads the tracking page, which is UTF-8, and takes those
+  rows' wording from it ([GZYL's README](../gzyl/README.md)). The page also shows the recipient's
+  name, which is never read.
 - Israel Post's places end with a unit's or flight's code in brackets, which is dropped, and its
   eCommerce System, which writes the manifest and customs rows, is no place.
 - Israel Post's receipt of the parcel's manifest and of the flight's cargo manifest are notices: they
@@ -35,7 +38,8 @@ is needed.
 
 ## Limitations
 
-Rows abroad keep their wall clock without an instant. No delivery estimate or weight.
+Rows abroad keep their wall clock without an instant. A Hebrew row goes when the tracking page
+cannot be read or does not show the number. No delivery estimate or weight.
 
 ## Numbers
 

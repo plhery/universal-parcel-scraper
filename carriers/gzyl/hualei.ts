@@ -191,6 +191,13 @@ const IDENTITY_FIELDS = ['trackingNumber', 'referenceNumber', 'business_seqinvoi
 const PAGE_IDENTITY_COLUMNS = ['参考号', '跟踪号码', '渠道转单号'] as const;
 const PAGE_OWN_COLUMNS = ['跟踪号码', '渠道转单号'] as const;
 const RECIPIENT_COLUMN = '收件人';
+// The track interface replies in GBK: a partner's row in a script GBK cannot hold, as Israel Post's
+// Hebrew, comes with each of its letters a question mark, and only question marks, spaces and
+// punctuation are left of its wording or place. The tracking page is UTF-8 and shows it whole.
+const LOST_TO_GBK = /^(?=[^?]*\?)[\s\p{P}\p{S}]*$/u;
+
+/** Whether a row's wording or place reached the track interface with only question marks, spaces and punctuation left of it. */
+export const hualeiLostToGbk = (value: string): boolean => LOST_TO_GBK.test(value);
 
 /**
  * Delivery carriers by the channel label a record names in `channel_name`, in
@@ -526,6 +533,40 @@ function trackRow(raw: unknown, provider: string): HualeiRow {
   };
 }
 
+/** Whether the page's text is the one the track interface gave: as long, and the same but where the interface has a question mark. */
+function shownAs(given: string, shown: string): boolean {
+  const left = [...given];
+  const right = [...shown];
+  return left.length === right.length && left.every((char, index) => char === '?' || char === right[index]);
+}
+
+/**
+ * The rows, each one whose wording or place GBK lost taken from the page: the first page row not yet
+ * taken on the same clock whose wording and place read as the interface's but where it has a question
+ * mark. The page lists the rows in the interface's order. A row the page does not show whole stays as it came.
+ */
+function restoreLostRows(rows: readonly HualeiRow[], shown: readonly HualeiRow[]): HualeiRow[] {
+  const taken = new Set<number>();
+  return rows.map((row) => {
+    if (!hualeiLostToGbk(row.content) && !hualeiLostToGbk(row.location)) return row;
+    const index = shown.findIndex((other, at) => !taken.has(at) && other.clock === row.clock
+      && !hualeiLostToGbk(other.content) && !hualeiLostToGbk(other.location)
+      && shownAs(row.content, other.content) && shownAs(row.location, other.location));
+    if (index < 0) return row;
+    taken.add(index);
+    return { ...row, content: shown[index]!.content, location: shown[index]!.location };
+  });
+}
+
+/** Whether a row of the track interface's reply lost its wording or place to GBK. */
+function losesText(payload: unknown): boolean {
+  const reply: unknown = Array.isArray(payload) ? payload[0] : undefined;
+  const records: readonly unknown[] = isRecord(reply) && Array.isArray(reply.data) ? reply.data : [];
+  return records.some((record) => isRecord(record) && Array.isArray(record.trackDetails)
+    && (record.trackDetails as unknown[]).some((row) => isRecord(row) && [row.track_content, row.track_location]
+      .some((value) => typeof value === 'string' && hualeiLostToGbk(clean(value)))));
+}
+
 /** The first number whose own high-confidence rule names a carrier the tenant hands to without naming it. */
 function unlabelledPartner(numbers: readonly string[], tenant: HualeiTenant): Facts['partner'] {
   for (const number of numbers) {
@@ -634,9 +675,11 @@ function echoesOnly(records: readonly JsonObject[], number: string): boolean {
  * The reply of `selectTrack.htm` for one number: the record whose own numbers
  * include the one asked, or null when the service says it holds no row for
  * it, or answers with a record that only echoes the number. Recipient, sender,
- * signature, fee and weight fields are never read.
+ * signature, fee and weight fields are never read. `page`, the tracking page for
+ * the number, gives the rows whose wording or place GBK lost, when it shows the
+ * number as one shipment.
  */
-export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTenant, readAt = Date.now()): CarrierResult | null {
+export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTenant, readAt = Date.now(), page?: string): CarrierResult | null {
   const { provider } = tenant;
   const number = normalizeHualeiNumber(raw, provider);
   if (!Array.isArray(payload) || payload.length !== 1 || !isRecord(payload[0])) {
@@ -703,7 +746,9 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
   const tracking = trackingOf(record);
   // On a tenant that names its own numbers, a tracking number of another shape is the delivery carrier's.
   const downstream = tenant.ownNumber && tracking && !own(tracking) ? tracking : '';
-  const rows = details.map((row) => trackRow(row, provider));
+  const given = details.map((row) => trackRow(row, provider));
+  const rows = page !== undefined && given.some((row) => hualeiLostToGbk(row.content) || hualeiLostToGbk(row.location))
+    ? restoreLostRows(given, shownRows(page, number, tenant)) : given;
   // Else the number the newest row that hands the parcel on names, the rows coming newest first.
   const handed = downstream || text(record, 'business_channeltransfercode', provider, 64) || !tenant.handOff ? ''
     : rows.map((row) => identity(tenant.handOff!(row.content) ?? '')).find((value) => value && value !== identity(number)) ?? '';
@@ -754,14 +799,9 @@ function isUnknown(waybill: PageWaybill, number: string): boolean {
     && !cells.get('目的地') && !cells.get('当地时间') && !cells.get('渠道转单号');
 }
 
-/**
- * The tracking page `trackIndex.htm` for one number. It finds an order by its
- * tracking number or the shipper's reference, and shows the platform's own row
- * for an order without scans, which the track interface leaves out.
- */
-export function parseHualeiPage(html: string, raw: string, tenant: HualeiTenant, readAt = Date.now()): CarrierResult {
+/** The page's waybill bound to the number. */
+function boundWaybill(html: string, number: string, tenant: HualeiTenant): PageWaybill {
   const { provider } = tenant;
-  const number = normalizeHualeiNumber(raw, provider);
   const $ = load(html);
   const blocks = $('div.div_canta div.div_cont').toArray();
   if (!blocks.length || blocks.length > MAX_RECORDS) throw new SchemaError(provider, `${provider} returned a page without its results`);
@@ -786,6 +826,26 @@ export function parseHualeiPage(html: string, raw: string, tenant: HualeiTenant,
   if (bound.length !== 1) throw new IndeterminateError(provider, `${provider} did not show the number as one shipment`);
   const waybill = bound[0]!;
   if (waybill.rows.length > MAX_ROWS) throw new SchemaError(provider, `${provider} returned an invalid history`);
+  return waybill;
+}
+
+/** The page's rows for the number, or none when it does not show the number as one shipment. */
+function shownRows(html: string, number: string, tenant: HualeiTenant): readonly HualeiRow[] {
+  try {
+    return boundWaybill(html, number, tenant).rows;
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * The tracking page `trackIndex.htm` for one number. It finds an order by its
+ * tracking number or the shipper's reference, and shows the platform's own row
+ * for an order without scans, which the track interface leaves out.
+ */
+export function parseHualeiPage(html: string, raw: string, tenant: HualeiTenant, readAt = Date.now()): CarrierResult {
+  const number = normalizeHualeiNumber(raw, tenant.provider);
+  const waybill = boundWaybill(html, number, tenant);
   const tracking = identity(waybill.cells.get('跟踪号码') ?? '');
   const transfer = identity(waybill.cells.get('渠道转单号') ?? '');
   // The numbers a page-echo tenant's page shows are the delivery carrier's, never its own; on a
@@ -829,11 +889,11 @@ export class HualeiTracker {
     if (GONE.includes(response.status)) throw new TransportError(provider, `${provider} tracking lookup is unavailable`);
   }
 
-  private async track(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult | null> {
+  private async track(number: string, signal: AbortSignal, left: () => number): Promise<CarrierResult | null> {
     const { provider } = this.tenant;
     const { response, bytes } = await fetchBounded(hualeiTrackUrl(this.tenant, number), { method: 'GET', signal, headers: {
       Accept: 'application/json, text/plain, */*', 'User-Agent': userAgentOf(this.options.userAgent),
-    } }, { provider, timeoutMs, maxBytes: TRACK_MAX_BYTES, redirect: 'manual', fetcher: this.options.fetcher,
+    } }, { provider, timeoutMs: left(), maxBytes: TRACK_MAX_BYTES, redirect: 'manual', fetcher: this.options.fetcher,
       allowHttpStatuses: [...REDIRECTS, ...GONE, 429] });
     this.refuse(response);
     const body = trackText(response, bytes);
@@ -844,10 +904,16 @@ export class HualeiTracker {
       if (CHALLENGE.test(body.slice(0, 64_000))) throw new ChallengeError(provider, `${provider} answered with a block page`, { cause });
       throw new SchemaError(provider, `${provider} returned a reply that is not JSON`, { cause });
     }
-    return parseHualeiTrack(payload, number, this.tenant, Date.now());
+    // A row whose wording or place GBK lost is read from the page, which is UTF-8. A page that cannot
+    // be read leaves the reply as it came; a lookup whose signal has ended stops.
+    const page = losesText(payload) ? await this.pageHtml(number, signal, left()).catch((error: unknown) => {
+      if (signal.aborted) throw error;
+      return undefined;
+    }) : undefined;
+    return parseHualeiTrack(payload, number, this.tenant, Date.now(), page);
   }
 
-  private async page(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
+  private async pageHtml(number: string, signal: AbortSignal, timeoutMs: number): Promise<string> {
     const { provider } = this.tenant;
     const { response, bytes } = await fetchBounded(new URL(HUALEI_PAGE_PATH, this.tenant.origin), { method: 'POST', signal, headers: {
       Accept: 'text/html,application/xhtml+xml', 'Content-Type': 'application/x-www-form-urlencoded',
@@ -860,7 +926,11 @@ export class HualeiTracker {
       if (CHALLENGE.test(html.slice(0, 64_000))) throw new ChallengeError(provider, `${provider} answered with a block page`);
       throw new SchemaError(provider, `${provider} returned a page without its results`);
     }
-    return parseHualeiPage(html, number, this.tenant, Date.now());
+    return html;
+  }
+
+  private async page(number: string, signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> {
+    return parseHualeiPage(await this.pageHtml(number, signal, timeoutMs), number, this.tenant, Date.now());
   }
 
   /**
@@ -883,7 +953,7 @@ export class HualeiTracker {
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
       const deadline = performance.now() + timeoutMs;
       const left = () => Math.max(1, Math.floor(deadline - performance.now()));
-      return await this.track(number, signal, left()) ?? await this.page(number, signal, left());
+      return await this.track(number, signal, left) ?? await this.page(number, signal, left());
     };
     // A request that fails to reach the tracker, or hangs, gets one more try:
     // the first gets half of the budget, so the retry fits in the rest.
