@@ -244,6 +244,18 @@ describe('classifyWording', () => {
     }
   });
 
+  it('reads the data registered, and a collection that failed for a parcel not ready, as registered', () => {
+    for (const wording of ['Data registered', 'Shipment data has been registered', 'Pickup failed: parcel not ready',
+      'Pick-up failed - parcel not ready', 'Collection unsuccessful, the parcel was not ready for collection']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'registered', source: 'wording:language' });
+      expect(trackingLanguageStage(wording), wording).toBe('registered');
+    }
+    // Customs data, a failed delivery and a failed collection for another reason are not.
+    expect(wordingStage('Customs data registered', 'pending')).not.toBe('registered');
+    expect(wordingStage('Delivery failed: parcel not ready', 'pending')).not.toBe('registered');
+    expect(trackingLanguageStage('Pickup failed: business closed')).toBeUndefined();
+  });
+
   it('reads a handover that has not happened as registered in French, German and Italian too', () => {
     for (const wording of [
       "Le colis n'a pas encore été remis à GLS.", "Le colis n'a pas été remis au transporteur",

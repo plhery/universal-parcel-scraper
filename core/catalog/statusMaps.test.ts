@@ -2100,6 +2100,7 @@ describe('declared status maps', () => {
       ['spring-gds', 'Shipment manifested for departure', 'in_transit'],
       ['spring-gds', 'Departed Site', 'in_transit'],
       ['unknown', '交寄郵件', 'accepted'], ['unknown', '到達出口互換局', 'in_transit'], ['unknown', '已出口－資料詳如右方', 'in_transit'],
+      ['unknown', 'Data registered', 'registered'], ['unknown', 'Pickup failed: parcel not ready', 'registered'],
     ] as const) expect(answer(carrier, null, wording), `${carrier}: ${wording}`).toEqual(mapped(stage));
     // iMile's round out for delivery with the hotline a stored wording keeps.
     expect(answer('imile', '1003', 'Our delivery associate is out for delivery. Customer Service Hotline:')).toEqual(mapped('out_for_delivery'));

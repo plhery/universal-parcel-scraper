@@ -489,6 +489,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (!/\bintento de recogida\b|\brecogida (?:fallida|no realizada|no efectuada)\b|\btentativa de (?:recolha|coleta)\b|\b(?:recolha|coleta) (?:falhada|sem sucesso|nao (?:realizada|efetuada|efectuada))\b/.test(text)
     && !/\b(?:si|caso)\b[^.;:]*\b(?:ausen|nadie|ninguem|cerrad|fechad|no (?:esta|se encuentra)|nao (?:esta|se encontra))|\bse (?:o |a )?(?:destinatari[oa] |cliente )?(?:estiver|for|nao estiver)\b/.test(text)
     && /\bausen(?:te|tes|cia)\b|\b(?:destinatari[oa]|cliente|consignatari[oa]) (?:no (?:esta|estaba|se encuentra|se encontraba|disponible|presente)|nao (?:esta|estava|se encontra|se encontrava|disponivel|presente))\b|\bnadie en (?:casa|el domicilio)\b|\bninguem em casa\b|\b(?:establecimiento|negocio|empresa|comercio|tienda) (?:esta |estaba |se encontraba )?cerrad[oa]\b|\b(?:estabelecimento|empresa|loja|comercio|negocio) (?:esta |estava |se encontrava )?fechad[oa]\b/.test(text)) return 'failed_attempt';
+  // A collection from the sender that failed because the parcel was not ready, as ParcelsApp relays it with no carrier
+  // ("Pickup failed: parcel not ready"): the parcel is still with its sender, as Janio's and SPX's maps read their own.
+  if (/^(?:pick ?up|collection) (?:failed|unsuccessful)[:;,]? (?:the )?(?:parcel|package|shipment|item|goods|order) (?:(?:is|was) )?not (?:yet )?ready(?: for (?:pick ?up|collection))?$/.test(text)) return 'registered';
 
   // A hold the recipient asked for is a delivery choice, not a problem: the parcel
   // waits for its new date, or at the counter when the scan names one.
@@ -614,6 +617,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/shipment (?:information|details) (?:received|sent to)|\binformation about the (?:shipment|parcel|package) (?:has been |was )?received\b|\bdata received\b|^(?:transferred|received) data$|(?:package|parcel|shipment) data (?:was |has been )?sent to|\bpre ?notification\b|informations d'expedition recues|sendungsinformationen erhalten|informazioni.*spedizione ricevute|(?:consignment|shipment|parcel|package) recorded by|envoi enregistre par|sendung.*absender.*erfasst|spedizione registrata dal/.test(text)) return 'registered';
   // wnDirect's first scan as Ship24 relays it, the sender's manifest: the data, before the parcel.
   if (/^manifest received$/.test(text)) return 'registered';
+  // The shipment's data recorded, the whole scan, as a provider relays it with no carrier: "Data registered".
+  if (/^(?:(?:shipment|parcel|package|order) )?data (?:(?:has been|was) )?registered$/.test(text)) return 'registered';
   // DPD's notice that the sender's parcel data reached it, before the parcel: "Parcelinfo handed to DPD", as ParcelsApp relays it.
   if (/^parcel ?info(?:rmation)? (?:(?:has been|was) )?handed (?:over )?to\b/.test(text)) return 'registered';
   // A carrier's notice before it has the parcel: "We're expecting your parcel to arrive with us", or
