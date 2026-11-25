@@ -55,7 +55,10 @@ clock. CTT Express's own scans before the hand-over keep the instant it gives.
 A new round planned (2400, "Nuevo reparto"), which the official widget groups with the round,
 reads as in transit: the round itself (1500) follows an hour or more later.
 Customer service cases are skipped: they are not scans and carry the
-recipient's contact details. Other measurements, contact information and
+recipient's contact details. Universal providers relay CTT Express's wording without its codes.
+A rule scoped to CTT Express reads the depot hold, "Almacenado temporalmente", as the exception its
+code 1700 is, and the providers' map leaves out a relayed case such as "Cambio nueva fecha de
+entrega" as no scan. Other measurements, contact information and
 free-form delivery comments are excluded.
 
 ## Testing

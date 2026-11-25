@@ -44,6 +44,11 @@ export const SCOPED_WORDINGS: readonly ScopedWordingRule[] = [
     note: "BUFFALO's own status at its depot minutes before a driver takes the parcel, as its tracker shows it and providers "
       + "relay it: not the round itself. Elsewhere a seller can be dispatching an order no carrier has.",
   },
+  {
+    carrier: 'ctt-express', wording: 'almacenado temporalmente', stage: 'exception',
+    note: "CTT Express's status 1700, as providers relay its wording without the code: the parcel held at the depot after a "
+      + "failed delivery, until a new round or a return, as CTT Express's map reads the code. Elsewhere a parcel can be stored on its way.",
+  },
   // PTT's Turkish statuses in a provider's English, as 17TRACK relays them: each as PTT's own map reads the Turkish.
   {
     carrier: 'ptt', wording: 'ptt in the workplace', stage: 'ready_for_pickup',

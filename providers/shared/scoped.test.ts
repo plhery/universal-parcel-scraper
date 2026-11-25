@@ -67,6 +67,13 @@ describe('carrier-scoped wording', () => {
     expect(classifyEvent('Distribution')).toMatchObject({ stage: 'pending', stage_source: 'none' });
   });
 
+  it("reads CTT Express's depot hold after a failed delivery, relayed without its code, as its map reads the code", () => {
+    for (const provider of ['17TRACK', 'ParcelsApp']) {
+      expect(scopedWordingStage('Almacenado temporalmente', { carrier: 'ctt-express', provider })).toBe('exception');
+    }
+    expect(scopedWordingStage('Almacenado temporalmente', { carrier: 'tipsa', provider: '17TRACK' })).toBeUndefined();
+  });
+
   const answer = (overrides: Partial<CarrierResult> = {}): CarrierResult => ({
     tracking_provider: 'ParcelsApp', status: 'pending', current_stage: 'pending', discovered_carrier: 'buffalo-ex',
     reported_carriers: ['Buffalo Logistics'],

@@ -119,6 +119,10 @@ export const statusMap: CarrierStatusMap = {
     wording: 'en demora - el envío ha sufrido un retraso provocando una posible demora en la entrega.',
     note: "SEUR's delay notice as Ship24 relays it, group before wording: not a scan, so it keeps the stage the parcel already had.",
   }, {
+    wording: 'cambio nueva fecha de entrega',
+    note: "CTT Express's customer service case recording a new delivery date, as 17TRACK and ParcelsApp relay it: a case is no scan, "
+      + "and CTT Express's own adapter skips it, so it keeps the stage the parcel already had.",
+  }, {
     wording: 'there has been a delay with your delivery',
     note: "DPD UK's delay notice, as ParcelsApp relays it, which DPD UK's own map reads as no scan: it keeps the stage the parcel already had, a missed delivery's among others.",
   }, {

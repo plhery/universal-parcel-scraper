@@ -2042,6 +2042,8 @@ describe("universal providers' answers", () => {
       'destinataire informé par sms ou mail. type du message : retard média utilisé : e-mail', 'estimated delivery',
       'recipient information updated', 'change of delivery address', 'last-mile delivery forecast']);
     expect(answer('unknown', null, 'EN DEMORA - EL ENVÍO HA SUFRIDO UN RETRASO PROVOCANDO UNA POSIBLE DEMORA EN LA ENTREGA.')).toEqual(gap);
+    // CTT Express's customer service case for a new delivery date, as 17TRACK and ParcelsApp relay it.
+    expect(answer('unknown', null, 'Cambio nueva fecha de entrega')).toEqual(gap);
     expect(answer('unknown', null, 'Last-mile delivery forecast')).toEqual(gap);
     // DPD UK's delay notice, which the shared rules read as transit for the carriers that rely on them.
     expect(answer('unknown', null, 'There has been a delay with your delivery')).toEqual(gap);
