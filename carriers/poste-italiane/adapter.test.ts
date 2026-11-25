@@ -268,8 +268,13 @@ describe('Poste Italiane response parsing', () => {
     // The Italian estimate text reduces to its local calendar day on active parcels.
     expect(parsePosteItalianeTrackingResponse(parcel({
       stato: '4',
-      listaMovimenti: [movement('la spedizione è in consegna', 1767484800000)],
+      listaMovimenti: [movement('presso il Centro di lavorazione Internazionale', 1767484800000)],
     }), TRACKING_NUMBER).expected_delivery).toBe('2026-01-02');
+    // It is a deadline ("entro"): out for delivery, the parcel is due on its round's day in Italy, here 00:30 on 4 January.
+    expect(parsePosteItalianeTrackingResponse(parcel({
+      stato: '4',
+      listaMovimenti: [movement('la spedizione è in consegna', 1767484800000 - 1_800_000)],
+    }), TRACKING_NUMBER).expected_delivery).toBe('2026-01-04');
     expect(classifyPosteItalianeStatus('qualcosa di completamente nuovo')).toBeUndefined();
     const unknown = parsePosteItalianeTrackingResponse(parcel({
       stato: '4',
@@ -404,7 +409,8 @@ describe('Poste Italiane response parsing', () => {
     const result = parsePosteItalianeTrackingResponse(FROM_ABROAD, 'lx 123 456 785 jp');
     expect(result).toMatchObject({
       status: 'out_for_delivery', current_stage: 'out_for_delivery', last_update: '2026-01-03T00:00:00.000Z',
-      expected_delivery: '2026-01-05',
+      // The envelope's "Consegna prevista entro" day is a deadline: on the round, the parcel is due that day, in Italy.
+      expected_delivery: '2026-01-03',
     });
     expect(result.events?.map((event) => [event.stage, event.time])).toEqual([
       ['out_for_delivery', '2026-01-03T00:00:00.000Z'],
@@ -585,7 +591,7 @@ describe('Poste Italiane response parsing', () => {
     // The estimate only exists while the parcel is still moving.
     const active = parsePosteItalianeTrackingResponse(parcel({
       stato: '4',
-      listaMovimenti: [movement('la spedizione è in consegna', 1767484800000)],
+      listaMovimenti: [movement('presso il Centro di lavorazione Internazionale', 1767484800000)],
     }), TRACKING_NUMBER);
     expect(active.expected_delivery).toBe('2026-01-02');
     // A delivery or return scan ends it before the envelope's stato does.

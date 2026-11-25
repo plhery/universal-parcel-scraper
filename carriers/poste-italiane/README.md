@@ -178,6 +178,8 @@ it is its receipt from that post and reads as transit.
   what is left is paid on delivery. Every code stays in `status_code`.
 - `dataPrevistaConsegna` is Italian prose ("Consegna prevista entro Venerdì 2 Gennaio 2026"),
   reduced to a calendar day and cleared once delivered. Unparsable text yields no estimate.
+  The day is a deadline ("entro"): once the parcel is out for delivery, it is due on the
+  round's day on Italy's clock, which replaces it.
 - `dataOra` is epoch milliseconds, so there is no zone to guess. A local helper renders it
   with milliseconds (`.000Z`) because those strings are persisted and `core/time`'s
   `epochMillisTime` would drop them.

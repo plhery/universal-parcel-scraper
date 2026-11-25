@@ -40,6 +40,13 @@ const ITALIAN_MONTHS: Record<string, number> = {
   luglio: 7, agosto: 8, settembre: 9, ottobre: 10, novembre: 11, dicembre: 12,
 };
 
+/** The day of the round a scan puts the parcel on, on Italy's clock. */
+function roundDay(event: CarrierEvent): string | null {
+  if (typeof event.time !== 'string') return null;
+  const day = DateTime.fromISO(event.time, { setZone: true }).setZone('Europe/Rome');
+  return day.isValid ? day.toISODate() : null;
+}
+
 function expectedDeliveryDay(value: unknown): string | null {
   // dataPrevistaConsegna reads like "Consegna prevista entro Giovedì 1 Gennaio
   // 2026": reduce it to the local calendar day, never a timestamp.
@@ -325,14 +332,16 @@ export function parsePosteItalianeTrackingResponse(payload: unknown, trackingNum
     }
     throw new IndeterminateError('Poste Italiane', 'Poste Italiane returned no shipment activity or native result');
   }
-  // A delivery or return the envelope has not caught up with ends the estimate too.
+  // A delivery or return the envelope has not caught up with ends the estimate too. The estimate is a
+  // deadline ("entro"): a parcel out for delivery is due on its round's day, in Italy, not by the deadline.
   const final = latest.classified!.stage === 'delivered' || latest.classified!.stage === 'returned';
+  const round = latest.classified!.stage === 'out_for_delivery' ? roundDay(latest.event) : null;
   return {
     status: latest.classified!.status,
     current_stage: latest.classified!.stage,
     last_status_text: latest.event.description,
     last_update: latest.event.time ?? null,
-    expected_delivery: final ? null : expectedDeliveryDay(payload.dataPrevistaConsegna),
+    expected_delivery: final ? null : round ?? expectedDeliveryDay(payload.dataPrevistaConsegna),
     ...facts,
     ...(latest.classified!.stage === 'delivered' ? signerOf(payload) : {}),
     events,
