@@ -231,7 +231,7 @@ jobs:
           cat > release-notes.md <<'NOTES'
           Standalone parcel detection and tracking, with a Node library, CLI and stateless HTTP API.
 
-          The core package is PolyForm Noncommercial 1.0.0; versions before 0.1294.0 were Apache-2.0. Optional TRAWL artifacts are AGPL-3.0 and include matching source archives.
+          The core package is PolyForm Noncommercial 1.0.0; its carrier catalog and tracking-number patterns are AGPL-3.0-only. Optional TRAWL artifacts are AGPL-3.0 and include matching source archives.
           NOTES
           files=("universal-parcel-scraper-$RELEASE_VERSION.tgz")
           if [ -f trawl-upstream-source.tar.gz ]; then files+=(trawl-upstream-source.tar.gz trawl-patch-source.tar.gz); fi
