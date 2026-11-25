@@ -119,6 +119,8 @@ function parseTrackingRequest(html: string): JsonObject {
 const TAKE_OFF_CODE = 'AircraftTakeOff';
 // Its code for the mail handed to the airport for that flight.
 const HAND_OVER_CODE = 'HandedOverToAirportFacility';
+// Its code for that flight's landing ("Aircraft arrival in Transit country"), at the take-off's office.
+const LANDING_CODE = 'AircraftArrived';
 // The label a take-off's wall clock arrives under; any other offset is kept.
 const UTC_LABEL = /(?:Z|[+-]00:?00)$/i;
 // The zones of the airports a take-off row may name, by IATA code.
@@ -134,7 +136,7 @@ const AIRPORT_ZONES: Readonly<Record<string, string>> = {
   HKG: 'Asia/Hong_Kong', BKK: 'Asia/Bangkok', NRT: 'Asia/Tokyo', ICN: 'Asia/Seoul',
   PVG: 'Asia/Shanghai', KUL: 'Asia/Kuala_Lumpur', CMB: 'Asia/Colombo', DAC: 'Asia/Dhaka',
   KTM: 'Asia/Kathmandu',
-  JFK: 'America/New_York', EWR: 'America/New_York', ORD: 'America/Chicago',
+  JFK: 'America/New_York', EWR: 'America/New_York', BOS: 'America/New_York', ORD: 'America/Chicago',
   LAX: 'America/Los_Angeles', SFO: 'America/Los_Angeles', YYZ: 'America/Toronto',
   SYD: 'Australia/Sydney', MEL: 'Australia/Melbourne',
 };
@@ -182,11 +184,19 @@ function flightDetails(providerCode: string, remarks: unknown, office: string): 
  * at 14:05 there. A take-off's office names the airport first, as in
  * "Office - DEL 00000000"; a hand-over names the office of exchange, on India's
  * clock. The destination's hand-over, beside the flight's arrival, names no
- * office and no clock. Null for every other row, for an airport outside the
- * table and for a value not labelled UTC: those are read as any row is.
+ * office and no clock. A landing keeps the take-off's office and is on the clock of
+ * the airport its flight's route lands at: read as UTC, a Zurich–Boston flight landed
+ * three hours after take-off; on Boston's clock it took the flight's length. Null for every
+ * other row, for an airport outside the table and for a value not labelled UTC:
+ * those are read as any row is.
  */
-function airportClockZone(providerCode: string, office: string, trackedAt: string): string | null {
-  if ((providerCode !== TAKE_OFF_CODE && providerCode !== HAND_OVER_CODE) || !UTC_LABEL.test(trackedAt)) return null;
+function airportClockZone(providerCode: string, office: string, trackedAt: string, remarks: unknown = null): string | null {
+  if (!UTC_LABEL.test(trackedAt)) return null;
+  if (providerCode === LANDING_CODE) {
+    const landing = flightRoute(remarks, office)?.[3];
+    return landing ? AIRPORT_ZONES[landing] ?? null : null;
+  }
+  if (providerCode !== TAKE_OFF_CODE && providerCode !== HAND_OVER_CODE) return null;
   const airport = officeAirport(office);
   if (airport) return AIRPORT_ZONES[airport] ?? null;
   return providerCode === HAND_OVER_CODE && office ? INDIA_ZONE : null;
@@ -545,7 +555,7 @@ function indiaPostResult(rows: readonly JsonObject[], { destination, service, sy
     // airline reports with the hand-over, are read on its airport's clock, even
     // after a flight's arrival in the destination country; a scan abroad on the
     // destination's.
-    const zone = airportClockZone(providerCode, office, clean(rawEvent.tracked_at, 100)) ?? reported[index]!;
+    const zone = airportClockZone(providerCode, office, clean(rawEvent.tracked_at, 100), rawEvent.remarks) ?? reported[index]!;
     const foreign = abroad.has(index) && !zone ? foreignClock(rawEvent.tracked_at, abroad.get(index) ?? null) : null;
     const time = foreign ? ('time' in foreign ? foreign.time : null) : zone
       ? mislabeledLocalTime(rawEvent.tracked_at, zone, 100)

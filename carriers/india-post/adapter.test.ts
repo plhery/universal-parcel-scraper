@@ -368,6 +368,23 @@ describe('India Post response normalization', () => {
     expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - DEL 00000002', 'Unknown')])).toEqual(['2026-07-11T01:40:00Z']);
   });
 
+  it("reads a flight's landing on the clock of the airport its route lands at", () => {
+    const flight = (trackedAt: string, eventType: string, event: string, route: string) => ({ tracked_at: trackedAt, event, event_type: eventType,
+      office: 'Office - ZRH', pincode: '', remarks: `Flight No: ZZ0052 (From ${route})` });
+    const times = (events: Array<Record<string, unknown>>) =>
+      parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, events), SAMPLE_NUMBER).events?.map((event) => [event.time, event.provider_code]);
+    // Labelled 21:40Z, under four hours into a transatlantic flight; on Boston's clock it lands 8 h 45 after take-off.
+    expect(times([
+      flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'ZRH To BOS'),
+      flight('2026-02-10T18:55:00.000000Z', 'AircraftTakeOff', 'AIRCRAFT_DEPARTURE', 'ZRH To BOS'),
+    ])).toEqual([['2026-02-10T21:40:00-05:00', 'AircraftArrived'], ['2026-02-10T18:55:00+01:00', 'AircraftTakeOff']]);
+    // A landing airport outside the table, or a route that does not start at the office, keeps its label.
+    expect(times([flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'ZRH To GRU')]))
+      .toEqual([['2026-02-10T21:40:00Z', 'AircraftArrived']]);
+    expect(times([flight('2026-02-10T21:40:00.000000Z', 'AircraftArrived', 'Aircraft arrival in Transit country', 'FRA To BOS')]))
+      .toEqual([['2026-02-10T21:40:00Z', 'AircraftArrived']]);
+  });
+
   it("reads the mail's hand-over to the airport on that airport's clock, before its flight", () => {
     const handOver = (trackedAt: string, office: string) => ({ tracked_at: trackedAt, event: 'Handed over to Airport facility by Airlines',
       event_type: 'HandedOverToAirportFacility', office, pincode: '', remarks: '' });

@@ -101,6 +101,11 @@ Outcomes:
   country has opened the destination's rows: read as UTC, an unloading came after its flight left
   Delhi and before it could land. The destination's hand-over, beside the flight's arrival, names
   no office and keeps its label.
+- The flight's landing (`AircraftArrived`, "Aircraft arrival in Transit country") keeps the
+  take-off's office and its remark names the route. It carries the landing airport's wall clock
+  labelled `Z`: read as UTC, a Zurich–Boston flight landed three hours after take-off. It is read
+  on the clock of the airport the route lands at, from the same table, and keeps its label when
+  that airport is outside the table or the route does not start at the office.
 - Take-offs use one wording even when the source switches labels. A strictly formatted flight remark
   supplies its flight number and route; other remarks are discarded. Known departure airports are
   named with their country so maps can locate the scan. A departure's route does not prove arrival.
