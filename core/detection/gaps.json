@@ -6945,5 +6945,10 @@
     "carrier": "hdgj",
     "kind": "open",
     "reason": "Bright East International numbers seen so far are HD, twelve digits and YQ, and the only public sample comes from one tracking directory page, too few to claim the shape from other forwarders' numbers ending in YQ, so the adapter answers explicit selection or a link to its tracker."
+  },
+  {
+    "carrier": "zxsy",
+    "kind": "open",
+    "reason": "ZXSY numbers seen so far are ZXSY, eight digits and CN, and the only public sample comes from one tracking directory page, too few to claim the shape, so the adapter answers explicit selection or a link to its tracker."
   }
 ]

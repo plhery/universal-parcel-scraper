@@ -1,0 +1,30 @@
+{
+  "carrier": "zxsy",
+  "entries": [
+    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The order's registration, before the warehouse has the parcel."},
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "note": "The Fujian warehouse's receipt."},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "english": "Departed the operations centre", "stage": "in_transit", "confirmedBy": "live", "note": "The Fujian warehouse's departure."},
+    {"wording": "Shipment arrived at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's facility in Shenzhen."},
+    {"wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "From the line's facility in Shenzhen."},
+    {"wording": "In transit to airport.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "Arrived at airpost security.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The airport's security check in China; the tracker writes airport as airpost."},
+    {"wording": "Domestic customs clearance in progress.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China, a routine step before the flight, not a hold."},
+    {"wording": "国内清关完成", "language": "zh", "english": "Domestic customs clearance completed", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China done, written once in Chinese and once in English."},
+    {"wording": "Domestic customs clearance completed.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China done."},
+    {"wording": "Handed over to airline.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In China."},
+    {"wording": "Awaiting flight assignment.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel is with the airline and waits for a flight."},
+    {"wording": "Flight ETD …", "language": "en", "stage": null, "confirmedBy": "live", "note": "Names the booked flight's departure day, read as an ellipsis. A forecast, not a movement, so the parcel keeps the stage of the scan before it."},
+    {"wording": "The flight has departed …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight leaves China; the day it names is read as an ellipsis."},
+    {"wording": "Flight ETA …", "language": "en", "stage": null, "confirmedBy": "live", "note": "Names the flight's arrival day, read as an ellipsis, placed in the destination country before the landing. A forecast, not a movement."},
+    {"wording": "Arrival to the destination airport.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight lands, in Norway."},
+    {"wording": "OSL, Customs clearance agent received the shipment in destnation country.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The customs agent at Oslo takes the parcel for import clearance."},
+    {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance in Norway done, placed at the country."},
+    {"wording": "The shipment has been customs cleared and released by customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Import clearance done, placed at Oslo's airport."},
+    {"wording": "Released from customs: customs cleared.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line's own row for the import clearance."},
+    {"wording": "In transit，Cargo is loaded and shipped to the carrier.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The line hands the parcel to the delivering carrier in Norway."},
+    {"wording": "Parcel is being loaded for transport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Helthjem's scan, copied, at its sorter and again at its local depot."},
+    {"wording": "Parcel has been received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Helthjem's scan, copied: the parcel reaches its terminal."},
+    {"wording": "Parcel activated", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Helthjem's booking of the night round, copied, at its local distributor: no courier has the parcel yet, as Helthjem's own adapter reads it."},
+    {"wording": "Parcel delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Helthjem's delivery, copied."}
+  ]
+}

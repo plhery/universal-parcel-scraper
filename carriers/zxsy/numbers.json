@@ -1,0 +1,24 @@
+{
+  "carrier": "zxsy",
+  "records": [
+    {
+      "number": "ZXSY00055475CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260609114246/https://www.parcelpanel.com/couriers/zxsy/",
+        "date": "2026-06-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's ZXSY page shows. ZXSY's tracker answers it with a parcel flown to Oslo and delivered by Helthjem in Norway, under Helthjem's number."
+    }
+  ]
+}
