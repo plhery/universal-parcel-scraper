@@ -491,7 +491,7 @@ With `FEDEX_WARMUP_NUMBER` set to a public FedEx sample and `FEDEX_WARMUP_PEER` 
 worker's network alias, a new worker prepares a verified FedEx session before it opens its
 port while another worker under that alias answers its health check, as TRAWL does for USPS.
 FedEx usually refuses a new session, so without this a fresh worker's first lookups fail. It
-looks the number up as the adapter would, at most three times and within two and a half
+looks the number up as the adapter would, at most five times and within two and a half
 minutes, and listens once FedEx accepts one, when the attempts are spent, or as soon as the
 other worker stops answering. A worker started alone opens its port at once and makes the
 same lookups between its callers' own. Each lookup spends proxy bytes under its own lease.

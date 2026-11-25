@@ -5,9 +5,10 @@ import { warmupPeerServing } from './warmup-peer.mjs';
 
 const PAGE = 'https://www.fedex.com/fedextrack/';
 const API = 'https://api.fedex.com/track/v2/shipments';
-// At most three lookups of the worker's 40 seconds, five seconds apart. Each one spends proxy bytes.
+// FedEx refuses about two new sessions in three, each refusal in about 13 seconds: five lookups, five seconds
+// apart, find an accepted one about five times in six, within the time limit. Each one spends proxy bytes.
 export const FEDEX_WARMUP_MS = 150_000;
-export const FEDEX_WARMUP_ATTEMPTS = 3;
+export const FEDEX_WARMUP_ATTEMPTS = 5;
 const PAUSE_MS = 5_000;
 // Too little time left for a lookup to reach FedEx's reply.
 const MIN_LOOKUP_MS = 10_000;
